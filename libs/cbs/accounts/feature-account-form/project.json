@@ -1,5 +1,5 @@
 {
-  "root": "libs/cbs/accounts/feature-account-form",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/accounts/feature-account-form/src",
   "projectType": "library",
   "tags": [],
@@ -17,7 +17,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/cbs/accounts/feature-account-form"],
       "options": {
-        "jestConfig": "libs/cbs/accounts/feature-account-form/jest.config.js",
+        "jestConfig": "libs/cbs/accounts/feature-account-form/jest.config.ts",
         "passWithNoTests": true
       }
     }

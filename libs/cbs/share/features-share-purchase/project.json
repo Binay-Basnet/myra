@@ -1,5 +1,5 @@
 {
-  "root": "libs/cbs/share/features-share-purchase",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/share/features-share-purchase/src",
   "projectType": "library",
   "tags": [],
@@ -17,7 +17,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/cbs/share/features-share-purchase"],
       "options": {
-        "jestConfig": "libs/cbs/share/features-share-purchase/jest.config.js",
+        "jestConfig": "libs/cbs/share/features-share-purchase/jest.config.ts",
         "passWithNoTests": true
       }
     }

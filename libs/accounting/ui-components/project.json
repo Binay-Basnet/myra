@@ -1,5 +1,5 @@
 {
-  "root": "libs/accounting/ui-components",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/accounting/ui-components/src",
   "projectType": "library",
   "tags": [],
@@ -17,7 +17,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/accounting/ui-components"],
       "options": {
-        "jestConfig": "libs/accounting/ui-components/jest.config.js",
+        "jestConfig": "libs/accounting/ui-components/jest.config.ts",
         "passWithNoTests": true
       }
     }

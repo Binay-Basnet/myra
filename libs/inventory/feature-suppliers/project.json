@@ -1,5 +1,4 @@
 {
-  "root": "libs/inventory/feature-vendors",
   "sourceRoot": "libs/inventory/feature-vendors/src",
   "projectType": "library",
   "tags": [],

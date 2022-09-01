@@ -1,5 +1,5 @@
 {
-  "root": "libs/inventory/ui-layout",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/inventory/ui-layout/src",
   "projectType": "library",
   "tags": [],
@@ -15,7 +15,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/inventory/ui-layout"],
       "options": {
-        "jestConfig": "libs/inventory/ui-layout/jest.config.js",
+        "jestConfig": "libs/inventory/ui-layout/jest.config.ts",
         "passWithNoTests": true
       }
     }

@@ -1,5 +1,5 @@
 {
-  "root": "libs/ebanking/feature-accounts",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/ebanking/feature-accounts/src",
   "projectType": "library",
   "tags": [],
@@ -17,7 +17,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/ebanking/feature-accounts"],
       "options": {
-        "jestConfig": "libs/ebanking/feature-accounts/jest.config.js",
+        "jestConfig": "libs/ebanking/feature-accounts/jest.config.ts",
         "passWithNoTests": true
       }
     }

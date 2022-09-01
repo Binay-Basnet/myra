@@ -1,5 +1,5 @@
 {
-  "root": "libs/cbs/members/feature-list",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/members/feature-list/src",
   "projectType": "library",
   "tags": [],
@@ -17,7 +17,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/cbs/members/feature-list"],
       "options": {
-        "jestConfig": "libs/cbs/members/feature-list/jest.config.js",
+        "jestConfig": "libs/cbs/members/feature-list/jest.config.ts",
         "passWithNoTests": true
       }
     }

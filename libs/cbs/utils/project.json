@@ -1,5 +1,5 @@
 {
-  "root": "libs/cbs/utils",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/utils/src",
   "projectType": "library",
   "tags": [],
@@ -15,7 +15,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/cbs/utils"],
       "options": {
-        "jestConfig": "libs/cbs/utils/jest.config.js",
+        "jestConfig": "libs/cbs/utils/jest.config.ts",
         "passWithNoTests": true
       }
     }

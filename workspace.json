@@ -78,5 +78,6 @@
     "shared-table": "libs/shared/table",
     "shared-ui": "libs/shared/ui",
     "shared-utils": "libs/shared/utils"
-  }
+  },
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }

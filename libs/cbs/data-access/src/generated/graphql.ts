@@ -33,6 +33,16 @@ export type Scalars = {
   Email: any;
   HTML: any;
   InvalidData: Record<string, Array<string>>;
+  /**
+   * # For Localization of every data from backend
+   * ```javascript
+   * {
+   *    local: "localized data based on user lang setting",
+   *    en: "data in english",
+   *    np: "data in nepali"
+   * }
+   * ```
+   */
   Localized: Record<'local' | 'en' | 'np', string>;
   Map: Record<string, string>;
   Time: string;
@@ -313,9 +323,9 @@ export type AgentRecord = {
 };
 
 export type AgentTodayList = {
-  account?: Maybe<Scalars['String']>;
+  account?: Maybe<DepositLoanAccount>;
   amount?: Maybe<Scalars['Amount']>;
-  member?: Maybe<Scalars['String']>;
+  member?: Maybe<Member>;
 };
 
 export type AgentTodayListData = {

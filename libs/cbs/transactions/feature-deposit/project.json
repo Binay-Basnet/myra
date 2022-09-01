@@ -1,5 +1,5 @@
 {
-  "root": "libs/cbs/transactions/feature-deposit",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/transactions/feature-deposit/src",
   "projectType": "library",
   "tags": [],
@@ -17,7 +17,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/cbs/transactions/feature-deposit"],
       "options": {
-        "jestConfig": "libs/cbs/transactions/feature-deposit/jest.config.js",
+        "jestConfig": "libs/cbs/transactions/feature-deposit/jest.config.ts",
         "passWithNoTests": true
       }
     }
