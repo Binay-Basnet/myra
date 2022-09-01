@@ -133,7 +133,7 @@ export function MemberListPage() {
         noDataTitle={t['member']}
         pagination={{
           total: data?.members?.list?.totalCount ?? 'Many',
-          pageInfo: data?.members.list.pageInfo,
+          pageInfo: data?.members?.list?.pageInfo,
         }}
       />
     </>
