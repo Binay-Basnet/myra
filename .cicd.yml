@@ -1,14 +1,14 @@
 # # TODO: add test step before merging to dev
 # # Trigger pipeline
-kind: pipeline
-name: Build and Push myra-ui
-type: docker
+# kind: pipeline
+# name: Build and Push myra-ui
+# type: docker
 
-platform:
-  arch: amd64
-  os: linux
+# platform:
+#   arch: amd64
+#   os: linux
 
-steps:
+# steps:
 #   - name: publishing myra-ui-main
 #     failure: ignore
 #     image: plugins/ecr
@@ -41,39 +41,39 @@ steps:
 #       event:
 #         - push
 
-  - name: publishing myra-ui-dev
-    failure: ignore
-    image: plugins/ecr
-    environment:
-      PLUGIN_STORAGE_DRIVER: overlay2
-      PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui:dev
-    settings:
-      access_key:
-        from_secret: aws_access_key
-      secret_key:
-        from_secret: aws_secret_key
-      nx_schema_path:
-        from_secret: NX_SCHEMA_PATH_DEV
-      repo: myra-ui
-      registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
-      region: us-east-1
-      tags: dev
-      dockerfile: Dockerfile.myra
-      build_args:
-        - NX_SCHEMA_PATH=$nx_schema_path
-        # - MYRA_CONTAINER_NAME=${MYRA_CONTAINER_NAME_DEV}
-        # - MYRA_PORT=${MYRA_PORT_DEV}
-        # - ADMIN_CONTAINER_NAME=${ADMIN_CONTAINER_NAME_DEV}
-        # - ADMIN_PORT=${ADMIN_PORT_DEV}
-        # - EBANKING_CONTAINER_NAME=${EBANKING_CONTAINER_NAME_DEV}
-        # - EBANKING_PORT=${EBANKING_PORT_DEV}
-        # - STORYBOOK_CONTAINER_NAME=${STORYBOOK_CONTAINER_NAME_DEV}
-        # - STORYBOOK_PORT=${STORYBOOK_PORT_DEV}
-    when:
-      branch:
-      - dev
-      event:
-      - push
+  # - name: publishing myra-ui-dev
+  #   failure: ignore
+  #   image: plugins/ecr
+  #   environment:
+  #     PLUGIN_STORAGE_DRIVER: overlay2
+  #     PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui:dev
+  #   settings:
+  #     access_key:
+  #       from_secret: aws_access_key
+  #     secret_key:
+  #       from_secret: aws_secret_key
+  #     nx_schema_path:
+  #       from_secret: NX_SCHEMA_PATH_DEV
+  #     repo: myra-ui
+  #     registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
+  #     region: us-east-1
+  #     tags: dev
+  #     dockerfile: Dockerfile.myra
+  #     build_args:
+  #       - NX_SCHEMA_PATH=$nx_schema_path
+  #       # - MYRA_CONTAINER_NAME=${MYRA_CONTAINER_NAME_DEV}
+  #       # - MYRA_PORT=${MYRA_PORT_DEV}
+  #       # - ADMIN_CONTAINER_NAME=${ADMIN_CONTAINER_NAME_DEV}
+  #       # - ADMIN_PORT=${ADMIN_PORT_DEV}
+  #       # - EBANKING_CONTAINER_NAME=${EBANKING_CONTAINER_NAME_DEV}
+  #       # - EBANKING_PORT=${EBANKING_PORT_DEV}
+  #       # - STORYBOOK_CONTAINER_NAME=${STORYBOOK_CONTAINER_NAME_DEV}
+  #       # - STORYBOOK_PORT=${STORYBOOK_PORT_DEV}
+  #   when:
+  #     branch:
+  #     - dev
+  #     event:
+  #     - push
 
 # ---
 # kind: pipeline
@@ -118,15 +118,15 @@ steps:
 #         - push
 
 # ---
-# kind: pipeline
-# name: Build and push myra-ui-admin
-# type: docker
+kind: pipeline
+name: Build and push myra-ui-admin
+type: docker
 
-# platform:
-#   arch: amd64
-#   os: linux
+platform:
+  arch: amd64
+  os: linux
 
-# steps:
+steps:
 #   - name: publishing myra-ui-admin-main
 #     failure: ignore
 #     image: plugins/ecr
@@ -159,37 +159,37 @@ steps:
 #       event:
 #         - push
 
-#   - name: publishing myra-ui-admin-dev
-#     failure: ignore
-#     image: plugins/ecr
-#     environment:
-#       PLUGIN_STORAGE_DRIVER: overlay2
-#       PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui-admin:dev
-#     settings:
-#       access_key:
-#         from_secret: aws_access_key
-#       secret_key:
-#         from_secret: aws_secret_key
-#       repo: myra-ui-admin
-#       registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
-#       region: us-east-1
-#       tags: dev
-#       dockerfile: Dockerfile.neosys-admin
-#       build_args:
-#         - NX_SCHEMA_PATH=${NX_SCHEMA_PATH_DEV}
-#         - MYRA_CONTAINER_NAME=${MYRA_CONTAINER_NAME_DEV}
-#         - MYRA_PORT=${MYRA_PORT_DEV}
-#         - ADMIN_CONTAINER_NAME=${ADMIN_CONTAINER_NAME_DEV}
-#         - ADMIN_PORT=${ADMIN_PORT_DEV}
-#         - EBANKING_CONTAINER_NAME=${EBANKING_CONTAINER_NAME_DEV}
-#         - EBANKING_PORT=${EBANKING_PORT_DEV}
-#         - STORYBOOK_CONTAINER_NAME=${STORYBOOK_CONTAINER_NAME_DEV}
-#         - STORYBOOK_PORT=${STORYBOOK_PORT_DEV}
-#     when:
-#       branch:
-#         - dev
-#       event:
-#         - push
+  - name: publishing myra-ui-admin-dev
+    failure: ignore
+    image: plugins/ecr
+    environment:
+      PLUGIN_STORAGE_DRIVER: overlay2
+      PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui-admin:dev
+    settings:
+      access_key:
+        from_secret: aws_access_key
+      secret_key:
+        from_secret: aws_secret_key
+      repo: myra-ui-admin
+      registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
+      region: us-east-1
+      tags: dev
+      dockerfile: Dockerfile.neosys-admin
+      build_args:
+        - NX_SCHEMA_PATH=${NX_SCHEMA_PATH_DEV}
+        # - MYRA_CONTAINER_NAME=${MYRA_CONTAINER_NAME_DEV}
+        # - MYRA_PORT=${MYRA_PORT_DEV}
+        # - ADMIN_CONTAINER_NAME=${ADMIN_CONTAINER_NAME_DEV}
+        # - ADMIN_PORT=${ADMIN_PORT_DEV}
+        # - EBANKING_CONTAINER_NAME=${EBANKING_CONTAINER_NAME_DEV}
+        # - EBANKING_PORT=${EBANKING_PORT_DEV}
+        # - STORYBOOK_CONTAINER_NAME=${STORYBOOK_CONTAINER_NAME_DEV}
+        # - STORYBOOK_PORT=${STORYBOOK_PORT_DEV}
+    when:
+      branch:
+        - dev
+      event:
+        - push
 
 # ---
 # kind: pipeline
@@ -368,13 +368,13 @@ steps:
       - aws configure set aws_access_key_id $access_key
       - aws configure set aws_secret_access_key $secret_key
       - aws ecr get-login-password --region us-east-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.us-east-1.amazonaws.com
-      # - docker-compose -f docker-compose.neosys.yml pull
+      - docker-compose -f docker-compose.neosys.yml pull
       # - docker-compose -f docker-compose.ebanking.yml pull
-      - docker-compose -f docker-compose.myra.yml pull
+      # - docker-compose -f docker-compose.myra.yml pull
       # - docker-compose -f docker-compose.storybook.yml pull
-      # - docker-compose --project-name myra-ui-neosys-dev -f docker-compose.neosys.yml up --no-build --force-recreate -d
+      - docker-compose --project-name myra-ui-neosys-dev -f docker-compose.neosys.yml up --no-build --force-recreate -d
       # - docker-compose --project-name myra-ui-ebanking-dev -f docker-compose.ebanking.yml up --no-build --force-recreate -d
-      - docker-compose --project-name myra-ui-myra-dev -f docker-compose.myra.yml up --no-build --force-recreate -d
+      # - docker-compose --project-name myra-ui-myra-dev -f docker-compose.myra.yml up --no-build --force-recreate -d
       # - docker-compose --project-name myra-ui-storybook-dev -f docker-compose.storybook.yml up --no-build --force-recreate -d
       - echo UI deployed successfully
       - docker image prune -a -f || true
@@ -386,6 +386,6 @@ steps:
       - push
 
 depends_on:
-  - Build and Push myra-ui
-#   - Build and push myra-ui-admin
+  # - Build and Push myra-ui
+  - Build and push myra-ui-admin
 #   - Build and push myra-ui-ebanking
