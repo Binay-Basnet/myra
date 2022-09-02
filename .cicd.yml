@@ -71,8 +71,6 @@ steps:
         - dev
       event:
         - push
-<<<<<<< HEAD
-=======
 
 ---
 kind: pipeline
@@ -116,7 +114,6 @@ steps:
       event:
         - push
 
->>>>>>> 6a15196217fed7aac606e58d2c08dd9a361e62f9
 ---
 kind: pipeline
 name: Build and push myra-ui-admin
@@ -264,50 +261,6 @@ steps:
         - dev
       event:
         - push
-<<<<<<< HEAD
-
----
-kind: pipeline
-name: Build and push myra-ui-storybook
-type: docker
-
-platform:
-  arch: amd64
-  os: linux
-
-steps:
-  - name: publishing storybook-dev
-    image: plugins/ecr
-    environment:
-      PLUGIN_STORAGE_DRIVER: overlay2
-      PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/storybook:dev
-    settings:
-      access_key:
-        from_secret: aws_access_key
-      secret_key:
-        from_secret: aws_secret_key
-      repo: storybook
-      registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
-      region: us-east-1
-      tags: dev
-      dockerfile: Dockerfile.storybook
-      build_args:
-        - NX_SCHEMA_PATH=${NX_SCHEMA_PATH}
-        - MYRA_CONTAINER_NAME=${MYRA_CONTAINER_NAME}
-        - MYRA_PORT=${MYRA_PORT}
-        - ADMIN_CONTAINER_NAME=${ADMIN_CONTAINER_NAME}
-        - ADMIN_PORT=${ADMIN_PORT}
-        - EBANKING_CONTAINER_NAME=${EBANKING_CONTAINER_NAME}
-        - EBANKING_PORT=${EBANKING_PORT}
-        - STORYBOOK_CONTAINER_NAME=${STORYBOOK_CONTAINER_NAME}
-        - STORYBOOK_PORT=${STORYBOOK_PORT}
-    when:
-      branch:
-        - dev
-      event:
-        - push
-=======
->>>>>>> 6a15196217fed7aac606e58d2c08dd9a361e62f9
 
 ---
 kind: pipeline
@@ -382,25 +335,6 @@ steps:
       secret_key:
         from_secret: aws_secret_key
       nx_schema_path:
-<<<<<<< HEAD
-        from_secret: NX_SCHEMA_PATH
-      myra_container_name:
-        from_secret: MYRA_CONTAINER_NAME
-      myra_port:
-        from_secret: MYRA_PORT
-      admin_container_name:
-        from_secret: ADMIN_CONTAINER_NAME
-      admin_port:
-        from_secret: ADMIN_PORT
-      ebank_container_name:
-        from_secret: EBANKING_CONTAINER_NAME
-      ebank_port:
-        from_secret: EBANKING_PORT
-      storybook_container_name:
-        from_secret: STORYBOOK_CONTAINER_NAME
-      storybook_port:
-        from_secret: STORYBOOK_PORT
-=======
         from_secret: NX_SCHEMA_PATH_DEV
       myra_container_name:
         from_secret: MYRA_CONTAINER_NAME_DEV
@@ -418,7 +352,6 @@ steps:
         from_secret: STORYBOOK_CONTAINER_NAME_DEV
       storybook_port:
         from_secret: STORYBOOK_PORT_DEV
->>>>>>> 6a15196217fed7aac606e58d2c08dd9a361e62f9
     commands:
       - echo "NX_SCHEMA_PATH=$nx_schema_path" >> .env
       - echo "MYRA_CONTAINER_NAME=$myra_container_name" >> .env
