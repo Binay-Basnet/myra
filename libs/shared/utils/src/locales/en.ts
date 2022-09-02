@@ -3268,6 +3268,8 @@ const en: Record<string, string> = {
   sharePurchaseTableShareCr: 'Share Issue',
   sharePurchaseTableShareDr: 'Share Credit',
   previous: 'Previous',
+  settingsShareIssues: 'Share Issues',
+  settingsShareReturn: 'Share Return',
   viewAll: 'View All',
   payableAmount: 'Payable Amount',
   shareReturnBankCheque: 'Bank Cheque',

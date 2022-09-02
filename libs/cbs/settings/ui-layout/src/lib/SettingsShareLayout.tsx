@@ -24,8 +24,12 @@ const tabList = [
     to: '/settings/general/share/dividend',
   },
   {
-    title: 'settingsShareFeeAndCharges',
-    to: '/settings/general/share/fee-and-charges',
+    title: 'settingsShareIssues',
+    to: '/settings/general/share/issues',
+  },
+  {
+    title: 'settingsShareReturn',
+    to: '/settings/general/share/return',
   },
   {
     title: 'settingsShareTransfer',

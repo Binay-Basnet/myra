@@ -2859,6 +2859,8 @@ const ne: Record<string, string> = {
   sharePurchaseTableShareDr: 'Share Credit',
   shareReturnBankCheque: 'Bank Cheque',
   previous: 'Previous',
+  settingsShareIssues: 'Share Issues',
+  settingsShareReturn: 'Share Return',
   viewAll: 'View All',
   totalDepositAmount: 'Total Deposit Amount',
 };
