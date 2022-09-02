@@ -170,13 +170,15 @@ steps:
         from_secret: aws_access_key
       secret_key:
         from_secret: aws_secret_key
+      nx_schema_path:
+        from_secret: NX_SCHEMA_PATH_DEV
       repo: myra-ui-admin
       registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
       region: us-east-1
       tags: dev
       dockerfile: Dockerfile.neosys-admin
       build_args:
-        - NX_SCHEMA_PATH=${NX_SCHEMA_PATH_DEV}
+        - NX_SCHEMA_PATH=$nx_schema_path
         # - MYRA_CONTAINER_NAME=${MYRA_CONTAINER_NAME_DEV}
         # - MYRA_PORT=${MYRA_PORT_DEV}
         # - ADMIN_CONTAINER_NAME=${ADMIN_CONTAINER_NAME_DEV}
@@ -187,9 +189,9 @@ steps:
         # - STORYBOOK_PORT=${STORYBOOK_PORT_DEV}
     when:
       branch:
-        - dev
+      - dev
       event:
-        - push
+      - push
 
 # ---
 # kind: pipeline
