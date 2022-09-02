@@ -172,7 +172,6 @@ const en: Record<string, string> = {
 
   // share purchase
 
-  sharePurchaseNewSharePurchase: 'New Share Purchase',
   sharePurchaseSelectMember: 'Select Member',
   sharePurchaseEnterMemberID: 'Enter Member ID',
   sharePurchaseID: 'ID',
@@ -190,9 +189,6 @@ const en: Record<string, string> = {
   sharePurchasePaymentMode: 'Payment Mode',
   sharePurchaseSelectAccount: 'Select Account',
   sharePurchaseAvailableBalance: 'Available balance',
-  sharePurchaseSelectBank: 'Select Bank',
-  sharePurchaseEnterVoucherNumber: 'Enter Voucher Number',
-  sharePurchaseEnterCashAmount: 'Enter Cash Amount',
   sharePurchaseBankVoucher: 'Bank Voucher',
   sharePurchaseCash: 'Cash',
   sharePurchaseAccount: 'Account',
@@ -207,7 +203,6 @@ const en: Record<string, string> = {
   shareReturnViewProfile: 'View Profile',
   shareReturnShareHistory: 'Share History',
   shareReturnShareInformation: 'Share Information',
-  shareReturnNoOfShares: 'No. of Share',
   shareReturnSelectAllShares: 'Select All Shares',
   shareReturnRemainingShare: 'Remaining Share',
   shareReturnRemainingShareValue: 'Remaining Share Value',
@@ -3246,7 +3241,31 @@ const en: Record<string, string> = {
   // AcountOpen
   accinstallmentAmount: 'Installment Amount',
 
+  editQuickLink: 'Edit Quick Link',
   transactionsAgentListViewDetail: 'View Detail',
+
+  memberInfo: 'Member Info',
+  proceedToPayment: 'Proceed to Payment',
+  sharePurchaseNewShareIssue: 'New Share Issue',
+  sharePurchaseShareIssue: 'Share Issue',
+  sharePurchaseBankName: 'Bank Name',
+  sharePurchaseAmount: 'Amount',
+  sharePurchaseDepositedDate: 'Deposited Date',
+  sharePurchaseDepositedBy: 'Deposited By',
+  sharePurchaseAccountAmount: 'Amount',
+  sharePurchaseNote: 'Note',
+  sharePurchaseSourceofFund: 'Source of Fund',
+  sharePurchaseTotal: 'Total',
+  sharePurchaseReturn: 'Return',
+  sharePurchaseGrandTotal: 'Grand Total',
+  sharePurchaseDisableDenomination: 'Disable Denomination',
+  sharePurchaseFileUpload: 'File Upload (Optional)',
+  sharePurchaseVoucherId: 'Voucher ID',
+
+  shareReturneBankName: 'Bank Name',
+  shareReturnChequeNo: 'Cheque No',
+  shareReturnNoOfShares: 'No of Shares to Return',
+  previous: 'Previous',
 };
 
 export default en;

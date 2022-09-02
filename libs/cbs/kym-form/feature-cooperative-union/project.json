@@ -1,5 +1,5 @@
 {
-  "root": "libs/cbs/kym-form/feature-cooperative-union",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/kym-form/feature-cooperative-union/src",
   "projectType": "library",
   "tags": [],
@@ -17,7 +17,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/cbs/kym-form/feature-cooperative-union"],
       "options": {
-        "jestConfig": "libs/cbs/kym-form/feature-cooperative-union/jest.config.js",
+        "jestConfig": "libs/cbs/kym-form/feature-cooperative-union/jest.config.ts",
         "passWithNoTests": true
       }
     }

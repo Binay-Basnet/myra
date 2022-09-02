@@ -1,12 +1,9 @@
 import { createContext, useContext, useState } from 'react';
 // import { AiOutlineCaretRight } from 'react-icons/ai';
-import {
-  BsCaretDownFill,
-  // BsCaretRight,
-  // BsFillCaretRightFill,
-} from 'react-icons/bs';
+import { BsCaretDownFill } from 'react-icons/bs';
 import { MdOutlineCircle } from 'react-icons/md';
 import { Box, HStack, Icon, Text } from '@chakra-ui/react';
+
 const AccordionContext = createContext<{
   isOpen: boolean;
   onClick: (value: boolean) => void;
@@ -109,7 +106,7 @@ function Tree() {
           <Icon as={BsCaretDownFill} color="gray.500" />
           <HStack>
             <Text fontWeight="bold" fontSize="14px">
-              10
+              101
             </Text>{' '}
             <Text fontWeight="400" fontSize="14px">
               Share Capital{' '}

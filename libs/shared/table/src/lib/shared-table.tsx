@@ -33,6 +33,7 @@ export const Table = <T extends Record<string, unknown>>({
   getRowId,
   variant = 'simple',
   showFooter,
+  rowOnClick,
 }: TableProps<T>) => {
   const [tableSize, setTableSize] = React.useState(size);
   const [rowSelection, setRowSelection] = React.useState({});
@@ -148,6 +149,8 @@ export const Table = <T extends Record<string, unknown>>({
                   key={row.id}
                   _hover={isStatic ? {} : { bg: 'background.500' }}
                   bg={row.getIsSelected() ? 'primary.0' : 'white'}
+                  cursor={rowOnClick ? 'pointer' : 'default'}
+                  onClick={() => (rowOnClick ? rowOnClick(row.original) : null)}
                 >
                   {row.getVisibleCells().map((cell) => {
                     return (

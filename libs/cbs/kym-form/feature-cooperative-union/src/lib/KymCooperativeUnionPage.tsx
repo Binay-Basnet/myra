@@ -1,5 +1,5 @@
 /* eslint-disable-next-line */
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 import React from 'react';
 import {
   Box,
@@ -9,6 +9,7 @@ import {
   FormHeader,
   Icon,
   Text,
+  toast,
 } from '@coop/shared/ui';
 
 import {
@@ -22,6 +23,8 @@ import {
 import { BiSave } from 'react-icons/bi';
 import { AccorrdianAddCOOPUnion } from '@coop/myra/components';
 import { useRouter } from 'next/router';
+import { useGetCoopUnionSectionStatusQuery } from '@coop/cbs/data-access';
+import { checkKYMValidity } from '../utils/checkKYMValidity';
 
 export function KYMCooperativeUnionPage() {
   const { t } = useTranslation();
@@ -36,6 +39,20 @@ export function KYMCooperativeUnionPage() {
   const setSection = (section?: { section: string; subSection: string }) => {
     setKymCurrentSection(section);
   };
+
+  const { data: sectionStatusData, refetch } =
+    useGetCoopUnionSectionStatusQuery(
+      {
+        id,
+      },
+      {
+        enabled: false,
+      }
+    );
+
+  const sectionStatus =
+    sectionStatusData?.members?.cooperativeUnion?.formState.sectionStatus;
+
   return (
     <>
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
@@ -102,7 +119,23 @@ export function KYMCooperativeUnionPage() {
               </Button>
             }
             mainButtonLabel={t['next']}
-            mainButtonHandler={() => router.push(`/members/translation/${id}`)}
+            mainButtonHandler={async () => {
+              await refetch().then(() => {
+                if (sectionStatus) {
+                  if (checkKYMValidity(sectionStatus)) {
+                    router.push(`/members/translation/${id}`);
+                  } else {
+                    toast({
+                      id: 'validation-error',
+                      message: 'Some fields are empty or have error',
+                      type: 'error',
+                    });
+                  }
+                }
+              });
+
+              //
+            }}
           />
         </Container>
       </Box>

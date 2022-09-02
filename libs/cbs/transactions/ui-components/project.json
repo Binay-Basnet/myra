@@ -1,5 +1,5 @@
 {
-  "root": "libs/cbs/transactions/ui-components",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/transactions/ui-components/src",
   "projectType": "library",
   "tags": [],
@@ -17,7 +17,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/cbs/transactions/ui-components"],
       "options": {
-        "jestConfig": "libs/cbs/transactions/ui-components/jest.config.js",
+        "jestConfig": "libs/cbs/transactions/ui-components/jest.config.ts",
         "passWithNoTests": true
       }
     }

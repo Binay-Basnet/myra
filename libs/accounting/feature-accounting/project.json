@@ -1,5 +1,5 @@
 {
-  "root": "libs/accounting/feature-accounting",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/accounting/feature-accounting/src",
   "projectType": "library",
   "tags": [],
@@ -17,7 +17,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/accounting/feature-accounting"],
       "options": {
-        "jestConfig": "libs/accounting/feature-accounting/jest.config.js",
+        "jestConfig": "libs/accounting/feature-accounting/jest.config.ts",
         "passWithNoTests": true
       }
     }

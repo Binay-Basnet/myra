@@ -150,6 +150,9 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
           flexDirection="column"
           id="kymCoopUnionAccEquityandLiailibities"
           scrollMarginTop={'200px'}
+          borderBottom="1px solid"
+          pb="s20"
+          borderBottomColor="border.layout"
         >
           <Grid
             columnGap={10}

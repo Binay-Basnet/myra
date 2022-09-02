@@ -95,6 +95,24 @@ export type AccountActivityListEdges = {
   node?: Maybe<AccountActivityEntry>;
 };
 
+export type AccountAgent = {
+  agentName?: Maybe<Scalars['String']>;
+  assignedMember?: Maybe<Scalars['Int']>;
+  id: Scalars['ID'];
+  phoneNo?: Maybe<Scalars['String']>;
+};
+
+export type AccountAgentListConnection = {
+  edges?: Maybe<Array<Maybe<AccountAgentListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type AccountAgentListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<AccountAgent>;
+};
+
 export enum AccountClosePaymentMode {
   AccountTransfer = 'ACCOUNT_TRANSFER',
   BankCheque = 'BANK_CHEQUE',
@@ -201,24 +219,25 @@ export type AccountTypeDetailsUnion =
   | JournalChartsOfAccount;
 
 export type AddCoaAccountInput = {
+  accountClass: Scalars['String'];
+  accountCode: Scalars['String'];
   accountType: CoaTypesOfAccount;
-  allowFreeEntry: Scalars['Boolean'];
-  allowTransaction: Scalars['Boolean'];
-  balanceSheetAccount: Scalars['Boolean'];
   bankAccountNumber?: InputMaybe<Scalars['String']>;
   bankGLCode?: InputMaybe<Scalars['String']>;
   bankId?: InputMaybe<Scalars['ID']>;
-  classId: Scalars['ID'];
-  code: Scalars['String'];
   currency: Scalars['String'];
-  ibtAccount: Scalars['Boolean'];
-  inTransitAccount: Scalars['Boolean'];
+  isAllowFreeEntry: Scalars['Boolean'];
+  isAllowTransaction: Scalars['Boolean'];
+  isApplicableToAllBranches: Scalars['Boolean'];
+  isBalanceSheetAccount: Scalars['Boolean'];
+  isIbtAccount: Scalars['Boolean'];
+  isInTransitAccount: Scalars['Boolean'];
+  isLedgerAccount: Scalars['Boolean'];
+  isProfitAndLossAccount: Scalars['Boolean'];
+  isSummationAccount: Scalars['Boolean'];
   journalCode?: InputMaybe<Scalars['String']>;
-  ledgerAccount: Scalars['Boolean'];
   name: Scalars['String'];
   openingBalance: Scalars['Float'];
-  profitAndLossAccount: Scalars['Boolean'];
-  summationAccount: Scalars['Boolean'];
   under?: InputMaybe<Scalars['ID']>;
 };
 
@@ -291,6 +310,41 @@ export type AffiliatedDirectorDetailsType = {
   yearlyIncome?: Maybe<Scalars['Float']>;
 };
 
+export type AgentDetails = {
+  branch?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  totalMembers?: Maybe<Scalars['Int']>;
+};
+
+export type AgentRecord = {
+  data?: Maybe<AgentDetails>;
+  error?: Maybe<QueryError>;
+};
+
+export type AgentTodayList = {
+  account?: Maybe<DepositLoanAccount>;
+  amount?: Maybe<Scalars['Amount']>;
+  member?: Maybe<Member>;
+};
+
+export type AgentTodayListData = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<Array<Maybe<AgentTodayList>>>;
+};
+
+export type AgentTodayListInput = {
+  account?: InputMaybe<Scalars['String']>;
+  amount?: InputMaybe<Scalars['Amount']>;
+  member?: InputMaybe<Scalars['String']>;
+};
+
+export type AgentTodayListResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<TransactionQuery>;
+  record?: Maybe<Array<Maybe<AgentTodayList>>>;
+};
+
 export type AmountLimit = {
   avgAmount?: InputMaybe<Scalars['Amount']>;
   maxAmount?: InputMaybe<Scalars['Amount']>;
@@ -307,6 +361,35 @@ export enum Arrange {
   Asc = 'ASC',
   Desc = 'DESC',
 }
+
+export type AssignMembersInput = {
+  accountId: Scalars['String'];
+  memberId: Scalars['String'];
+};
+
+export type AssignedMemberList = {
+  account?: Maybe<DepositLoanAccount>;
+  assignedDate?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  member?: Maybe<Member>;
+};
+
+export type AssignedMemberListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<AssignedMemberList>;
+};
+
+export type AssignedMemberListFiler = {
+  agentId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
+export type AssignedMembersListConnection = {
+  edges?: Maybe<Array<Maybe<AssignedMemberListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
 
 export type AuthMutation = {
   login?: Maybe<LoginResult>;
@@ -1615,6 +1698,11 @@ export type DepositLoanAccountConnection = {
   edges?: Maybe<Array<DepositLoanAccountEdge>>;
   pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
+};
+
+export type DepositLoanAccountData = {
+  data?: Maybe<DepositLoanAccount>;
+  error?: Maybe<MutationError>;
 };
 
 export type DepositLoanAccountEdge = {
@@ -7386,19 +7474,19 @@ export type ShareExtraChargesInput = {
   value?: InputMaybe<Scalars['String']>;
 };
 
-export type ShareFeeAndChargesInput = {
+export type ShareHistory = {
+  balance?: Maybe<ShareBalance>;
+  history?: Maybe<Array<Maybe<ShareRegister>>>;
+};
+
+export type ShareIssueChargesInput = {
   other?: InputMaybe<Array<InputMaybe<ShareChargeInput>>>;
   shareCertificate?: InputMaybe<Array<InputMaybe<ShareChargeInput>>>;
 };
 
-export type ShareFeeAndChargesResult = {
+export type ShareIssueChargesResult = {
   other?: Maybe<Array<Maybe<ShareCharge>>>;
   shareCertificate?: Maybe<Array<Maybe<ShareCharge>>>;
-};
-
-export type ShareHistory = {
-  balance?: Maybe<ShareBalance>;
-  history?: Maybe<Array<Maybe<ShareRegister>>>;
 };
 
 export type ShareMutation = {
@@ -7501,6 +7589,14 @@ export type ShareRegisterFilter = {
   transactionDirection?: InputMaybe<Share_Transaction_Direction>;
 };
 
+export type ShareReturnChargesInput = {
+  other?: InputMaybe<Array<InputMaybe<ShareChargeInput>>>;
+};
+
+export type ShareReturnChargesResult = {
+  other?: Maybe<Array<Maybe<ShareCharge>>>;
+};
+
 export type ShareReturnError = InvalidDataError;
 
 export type ShareReturnInput = {
@@ -7524,8 +7620,9 @@ export type ShareReturnResult = {
 export type ShareSettingsAddMutation = {
   bonus?: Maybe<ShareSettingsQuery>;
   dividend?: Maybe<ShareSettingsQuery>;
-  feeAndCharges?: Maybe<ShareSettingsQuery>;
   general?: Maybe<ShareSettingsQuery>;
+  shareIssueCharges?: Maybe<ShareSettingsQuery>;
+  shareReturnCharges?: Maybe<ShareSettingsQuery>;
   transfer?: Maybe<ShareSettingsQuery>;
 };
 
@@ -7537,12 +7634,16 @@ export type ShareSettingsAddMutationDividendArgs = {
   data?: InputMaybe<ShareDividendSettingsInput>;
 };
 
-export type ShareSettingsAddMutationFeeAndChargesArgs = {
-  data?: InputMaybe<ShareFeeAndChargesInput>;
-};
-
 export type ShareSettingsAddMutationGeneralArgs = {
   data?: InputMaybe<ShareSettingsGeneralInput>;
+};
+
+export type ShareSettingsAddMutationShareIssueChargesArgs = {
+  data?: InputMaybe<ShareIssueChargesInput>;
+};
+
+export type ShareSettingsAddMutationShareReturnChargesArgs = {
+  data?: InputMaybe<ShareReturnChargesInput>;
 };
 
 export type ShareSettingsAddMutationTransferArgs = {
@@ -7588,8 +7689,9 @@ export type ShareSettingsMutation = {
 export type ShareSettingsQuery = {
   bonus?: Maybe<ShareBonusSettingsBonusResult>;
   dividend?: Maybe<ShareDividendSettingsResult>;
-  feeAndCharges?: Maybe<ShareFeeAndChargesResult>;
   general?: Maybe<ShareSettingsGeneralResult>;
+  shareIssueCharges?: Maybe<ShareIssueChargesResult>;
+  shareReturnCharges?: Maybe<ShareReturnChargesResult>;
   transfer?: Maybe<ShareTransferSettingsResult>;
 };
 
@@ -7754,9 +7856,21 @@ export type TransactionFilter = {
 };
 
 export type TransactionMutation = {
+  addMemberToAgent?: Maybe<DepositLoanAccountData>;
+  agentTodayList?: Maybe<AgentTodayListResult>;
   deposit: DepositResult;
   transfer: TransferResult;
   withdraw: WithdrawResult;
+};
+
+export type TransactionMutationAddMemberToAgentArgs = {
+  agentId: Scalars['String'];
+  data?: InputMaybe<AssignMembersInput>;
+};
+
+export type TransactionMutationAgentTodayListArgs = {
+  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>>>;
+  id: Scalars['ID'];
 };
 
 export type TransactionMutationDepositArgs = {
@@ -7772,9 +7886,31 @@ export type TransactionMutationWithdrawArgs = {
 };
 
 export type TransactionQuery = {
+  agentDetail?: Maybe<AgentRecord>;
+  assignedMemberList: AssignedMembersListConnection;
+  listAgent: AccountAgentListConnection;
+  listAgentTask?: Maybe<AgentTodayListData>;
   listDeposit: AccountActivityListConnection;
   listTransfer: AccountTransferListConnection;
   listWithdraw: AccountActivityListConnection;
+};
+
+export type TransactionQueryAgentDetailArgs = {
+  id: Scalars['ID'];
+};
+
+export type TransactionQueryAssignedMemberListArgs = {
+  filter?: InputMaybe<AssignedMemberListFiler>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type TransactionQueryListAgentArgs = {
+  filter?: InputMaybe<AccountTransactionFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type TransactionQueryListAgentTaskArgs = {
+  id: Scalars['ID'];
 };
 
 export type TransactionQueryListDepositArgs = {
@@ -8177,6 +8313,25 @@ export enum WithdrawWith {
   WithdrawSlip = 'WITHDRAW_SLIP',
 }
 
+export type SetAccountCloseDataMutationVariables = Exact<{
+  data?: InputMaybe<DepositAccountClose>;
+}>;
+
+export type SetAccountCloseDataMutation = {
+  account: {
+    close?: {
+      recordId: string;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type SetAccountOpenDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: DepositLoanAccountInput;
@@ -8187,10 +8342,11 @@ export type SetAccountOpenDataMutation = {
     add?: {
       recordId: string;
       error?:
-        | { message: string }
-        | { in: string }
-        | { message: string }
-        | {}
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
         | null;
     } | null;
   };
@@ -8244,6 +8400,29 @@ export type RefreshMutation = {
         | MutationError_ServerError_Fragment
         | MutationError_ValidationError_Fragment
         | null;
+    } | null;
+  };
+};
+
+export type AddNewAccountInCoaMutationVariables = Exact<{
+  data: AddCoaAccountInput;
+}>;
+
+export type AddNewAccountInCoaMutation = {
+  settings: {
+    chartsOfAccount?: {
+      account?: {
+        add: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
     } | null;
   };
 };
@@ -9342,16 +9521,38 @@ export type SetSettingsShareDividendMutation = {
   };
 };
 
-export type SetSettingsShareFeeAndChargesMutationVariables = Exact<{
-  data?: InputMaybe<ShareFeeAndChargesInput>;
+export type SetSettingsShareIssueChargesMutationVariables = Exact<{
+  data?: InputMaybe<ShareIssueChargesInput>;
 }>;
 
-export type SetSettingsShareFeeAndChargesMutation = {
+export type SetSettingsShareIssueChargesMutation = {
   settings: {
     general?: {
       share?: {
         add?: {
-          feeAndCharges?: {
+          shareIssueCharges?: {
+            bonus?: {
+              taxPayer?: TaxPayerOptions | null;
+              taxRate?: number | null;
+              accountMapping?: string | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetSettingsShareReturnChargesMutationVariables = Exact<{
+  data?: InputMaybe<ShareReturnChargesInput>;
+}>;
+
+export type SetSettingsShareReturnChargesMutation = {
+  settings: {
+    general?: {
+      share?: {
+        add?: {
+          shareReturnCharges?: {
             bonus?: {
               taxPayer?: TaxPayerOptions | null;
               taxRate?: number | null;
@@ -11544,6 +11745,58 @@ export type GetIndividualKymIdentificationListQuery = {
   };
 };
 
+export type GetMemberDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetMemberDetailsQuery = {
+  members: {
+    details: {
+      data?: {
+        id: string;
+        name?: Record<'local' | 'en' | 'np', string> | null;
+        code: string;
+        contact?: string | null;
+        profilePicUrl?: Array<string | null> | null;
+        signaturePicUrl?: Array<string | null> | null;
+        address?: {
+          state?: Record<'local' | 'en' | 'np', string> | null;
+          district?: Record<'local' | 'en' | 'np', string> | null;
+          localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+          wardNo?: string | null;
+          locality?: Record<'local' | 'en' | 'np', string> | null;
+          houseNo?: string | null;
+        } | null;
+        share?: {
+          summary?: {
+            memberId?: string | null;
+            count: number;
+            amount: number;
+            member: {
+              id: string;
+              name?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null;
+        } | null;
+        profile?:
+          | {
+              data?: {
+                formData?: {
+                  basicInformation?: {
+                    gender?: Record<'local' | 'en' | 'np', string> | null;
+                    dateOfBirth?: string | null;
+                    age?: number | null;
+                  } | null;
+                } | null;
+              } | null;
+            }
+          | {}
+          | null;
+      } | null;
+    };
+  };
+};
+
 export type GetMemberPdfQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -11754,6 +12007,25 @@ export type GetCoaListQuery = {
           }> | null;
         };
       } | null;
+    } | null;
+  };
+};
+
+export type GetCoaFullViewQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetCoaFullViewQuery = {
+  settings: {
+    chartsOfAccount?: {
+      fullView: {
+        data?: Array<{
+          id: string;
+          name: Record<'local' | 'en' | 'np', string>;
+          under?: string | null;
+          accountType: CoaTypesOfAccount;
+          accountClass: string;
+          accountCode: string;
+        } | null> | null;
+      };
     } | null;
   };
 };
@@ -12349,21 +12621,43 @@ export type GetSettingsShareDividendDataQuery = {
   };
 };
 
-export type GetSettingsShareFeesAndChargesDataQueryVariables = Exact<{
+export type GetSettingsShareIssueChargesDataQueryVariables = Exact<{
   [key: string]: never;
 }>;
 
-export type GetSettingsShareFeesAndChargesDataQuery = {
+export type GetSettingsShareIssueChargesDataQuery = {
   settings: {
     general?: {
       share?: {
-        feeAndCharges?: {
+        shareIssueCharges?: {
           shareCertificate?: Array<{
             minShare?: number | null;
             maxShare?: number | null;
             type?: ShareChargeType | null;
             charge?: number | null;
           } | null> | null;
+          other?: Array<{
+            name?: string | null;
+            minShare?: number | null;
+            maxShare?: number | null;
+            type?: ShareChargeType | null;
+            charge?: number | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSettingsShareReturnChargesDataQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetSettingsShareReturnChargesDataQuery = {
+  settings: {
+    general?: {
+      share?: {
+        shareReturnCharges?: {
           other?: Array<{
             name?: string | null;
             minShare?: number | null;
@@ -12776,26 +13070,53 @@ export const PaginationFragmentDoc = `
   hasPreviousPage
 }
     `;
+export const SetAccountCloseDataDocument = `
+    mutation setAccountCloseData($data: DepositAccountClose) {
+  account {
+    close(data: $data) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetAccountCloseDataMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetAccountCloseDataMutation,
+    TError,
+    SetAccountCloseDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAccountCloseDataMutation,
+    TError,
+    SetAccountCloseDataMutationVariables,
+    TContext
+  >(
+    ['setAccountCloseData'],
+    useAxios<SetAccountCloseDataMutation, SetAccountCloseDataMutationVariables>(
+      SetAccountCloseDataDocument
+    ),
+    options
+  );
 export const SetAccountOpenDataDocument = `
     mutation setAccountOpenData($id: ID!, $data: DepositLoanAccountInput!) {
   account {
     add(id: $id, data: $data) {
       recordId
       error {
-        ... on AuthorizationError {
-          message
-        }
-        ... on BadRequestError {
-          in: message
-        }
-        ... on ServerError {
-          message
-        }
+        ...MutationError
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useSetAccountOpenDataMutation = <
   TError = unknown,
   TContext = unknown
@@ -12916,6 +13237,45 @@ export const useRefreshMutation = <TError = unknown, TContext = unknown>(
   useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
     ['refresh'],
     useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
+    options
+  );
+export const AddNewAccountInCoaDocument = `
+    mutation addNewAccountInCOA($data: AddCOAAccountInput!) {
+  settings {
+    chartsOfAccount {
+      account {
+        add(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddNewAccountInCoaMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    AddNewAccountInCoaMutation,
+    TError,
+    AddNewAccountInCoaMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    AddNewAccountInCoaMutation,
+    TError,
+    AddNewAccountInCoaMutationVariables,
+    TContext
+  >(
+    ['addNewAccountInCOA'],
+    useAxios<AddNewAccountInCoaMutation, AddNewAccountInCoaMutationVariables>(
+      AddNewAccountInCoaDocument
+    ),
     options
   );
 export const SetCooperativeDataDocument = `
@@ -15114,13 +15474,13 @@ export const useSetSettingsShareDividendMutation = <
     >(SetSettingsShareDividendDocument),
     options
   );
-export const SetSettingsShareFeeAndChargesDocument = `
-    mutation setSettingsShareFeeAndCharges($data: ShareFeeAndChargesInput) {
+export const SetSettingsShareIssueChargesDocument = `
+    mutation setSettingsShareIssueCharges($data: ShareIssueChargesInput) {
   settings {
     general {
       share {
         add {
-          feeAndCharges(data: $data) {
+          shareIssueCharges(data: $data) {
             bonus {
               taxPayer
               taxRate
@@ -15133,28 +15493,71 @@ export const SetSettingsShareFeeAndChargesDocument = `
   }
 }
     `;
-export const useSetSettingsShareFeeAndChargesMutation = <
+export const useSetSettingsShareIssueChargesMutation = <
   TError = unknown,
   TContext = unknown
 >(
   options?: UseMutationOptions<
-    SetSettingsShareFeeAndChargesMutation,
+    SetSettingsShareIssueChargesMutation,
     TError,
-    SetSettingsShareFeeAndChargesMutationVariables,
+    SetSettingsShareIssueChargesMutationVariables,
     TContext
   >
 ) =>
   useMutation<
-    SetSettingsShareFeeAndChargesMutation,
+    SetSettingsShareIssueChargesMutation,
     TError,
-    SetSettingsShareFeeAndChargesMutationVariables,
+    SetSettingsShareIssueChargesMutationVariables,
     TContext
   >(
-    ['setSettingsShareFeeAndCharges'],
+    ['setSettingsShareIssueCharges'],
     useAxios<
-      SetSettingsShareFeeAndChargesMutation,
-      SetSettingsShareFeeAndChargesMutationVariables
-    >(SetSettingsShareFeeAndChargesDocument),
+      SetSettingsShareIssueChargesMutation,
+      SetSettingsShareIssueChargesMutationVariables
+    >(SetSettingsShareIssueChargesDocument),
+    options
+  );
+export const SetSettingsShareReturnChargesDocument = `
+    mutation setSettingsShareReturnCharges($data: ShareReturnChargesInput) {
+  settings {
+    general {
+      share {
+        add {
+          shareReturnCharges(data: $data) {
+            bonus {
+              taxPayer
+              taxRate
+              accountMapping
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetSettingsShareReturnChargesMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetSettingsShareReturnChargesMutation,
+    TError,
+    SetSettingsShareReturnChargesMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsShareReturnChargesMutation,
+    TError,
+    SetSettingsShareReturnChargesMutationVariables,
+    TContext
+  >(
+    ['setSettingsShareReturnCharges'],
+    useAxios<
+      SetSettingsShareReturnChargesMutation,
+      SetSettingsShareReturnChargesMutationVariables
+    >(SetSettingsShareReturnChargesDocument),
     options
   );
 export const SetSettingsShareGeneralDocument = `
@@ -18240,6 +18643,68 @@ export const useGetIndividualKymIdentificationListQuery = <
     >(GetIndividualKymIdentificationListDocument).bind(null, variables),
     options
   );
+export const GetMemberDetailsDocument = `
+    query getMemberDetails($id: ID!) {
+  members {
+    details(id: $id) {
+      data {
+        id
+        name
+        code
+        address {
+          state
+          district
+          localGovernment
+          wardNo
+          locality
+          houseNo
+        }
+        contact
+        share {
+          summary {
+            memberId
+            member {
+              id
+              name
+            }
+            count
+            amount
+          }
+        }
+        profilePicUrl
+        signaturePicUrl
+        profile {
+          ... on KymIndFormStateQuery {
+            data {
+              formData {
+                basicInformation {
+                  gender
+                  dateOfBirth
+                  age
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberDetailsQuery = <
+  TData = GetMemberDetailsQuery,
+  TError = unknown
+>(
+  variables: GetMemberDetailsQueryVariables,
+  options?: UseQueryOptions<GetMemberDetailsQuery, TError, TData>
+) =>
+  useQuery<GetMemberDetailsQuery, TError, TData>(
+    ['getMemberDetails', variables],
+    useAxios<GetMemberDetailsQuery, GetMemberDetailsQueryVariables>(
+      GetMemberDetailsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetMemberPdfDocument = `
     query getMemberPDF($id: ID!) {
   members {
@@ -18533,6 +18998,40 @@ export const useGetCoaListQuery = <TData = GetCoaListQuery, TError = unknown>(
     ['getCOAList', variables],
     useAxios<GetCoaListQuery, GetCoaListQueryVariables>(
       GetCoaListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetCoaFullViewDocument = `
+    query getCoaFullView {
+  settings {
+    chartsOfAccount {
+      fullView {
+        data {
+          id
+          name
+          under
+          accountType
+          accountClass
+          accountCode
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoaFullViewQuery = <
+  TData = GetCoaFullViewQuery,
+  TError = unknown
+>(
+  variables?: GetCoaFullViewQueryVariables,
+  options?: UseQueryOptions<GetCoaFullViewQuery, TError, TData>
+) =>
+  useQuery<GetCoaFullViewQuery, TError, TData>(
+    variables === undefined
+      ? ['getCoaFullView']
+      : ['getCoaFullView', variables],
+    useAxios<GetCoaFullViewQuery, GetCoaFullViewQueryVariables>(
+      GetCoaFullViewDocument
     ).bind(null, variables),
     options
   );
@@ -19301,12 +19800,12 @@ export const useGetSettingsShareDividendDataQuery = <
     >(GetSettingsShareDividendDataDocument).bind(null, variables),
     options
   );
-export const GetSettingsShareFeesAndChargesDataDocument = `
-    query getSettingsShareFeesAndChargesData {
+export const GetSettingsShareIssueChargesDataDocument = `
+    query getSettingsShareIssueChargesData {
   settings {
     general {
       share {
-        feeAndCharges {
+        shareIssueCharges {
           shareCertificate {
             minShare
             maxShare
@@ -19326,25 +19825,65 @@ export const GetSettingsShareFeesAndChargesDataDocument = `
   }
 }
     `;
-export const useGetSettingsShareFeesAndChargesDataQuery = <
-  TData = GetSettingsShareFeesAndChargesDataQuery,
+export const useGetSettingsShareIssueChargesDataQuery = <
+  TData = GetSettingsShareIssueChargesDataQuery,
   TError = unknown
 >(
-  variables?: GetSettingsShareFeesAndChargesDataQueryVariables,
+  variables?: GetSettingsShareIssueChargesDataQueryVariables,
   options?: UseQueryOptions<
-    GetSettingsShareFeesAndChargesDataQuery,
+    GetSettingsShareIssueChargesDataQuery,
     TError,
     TData
   >
 ) =>
-  useQuery<GetSettingsShareFeesAndChargesDataQuery, TError, TData>(
+  useQuery<GetSettingsShareIssueChargesDataQuery, TError, TData>(
     variables === undefined
-      ? ['getSettingsShareFeesAndChargesData']
-      : ['getSettingsShareFeesAndChargesData', variables],
+      ? ['getSettingsShareIssueChargesData']
+      : ['getSettingsShareIssueChargesData', variables],
     useAxios<
-      GetSettingsShareFeesAndChargesDataQuery,
-      GetSettingsShareFeesAndChargesDataQueryVariables
-    >(GetSettingsShareFeesAndChargesDataDocument).bind(null, variables),
+      GetSettingsShareIssueChargesDataQuery,
+      GetSettingsShareIssueChargesDataQueryVariables
+    >(GetSettingsShareIssueChargesDataDocument).bind(null, variables),
+    options
+  );
+export const GetSettingsShareReturnChargesDataDocument = `
+    query getSettingsShareReturnChargesData {
+  settings {
+    general {
+      share {
+        shareReturnCharges {
+          other {
+            name
+            minShare
+            maxShare
+            type
+            charge
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSettingsShareReturnChargesDataQuery = <
+  TData = GetSettingsShareReturnChargesDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsShareReturnChargesDataQueryVariables,
+  options?: UseQueryOptions<
+    GetSettingsShareReturnChargesDataQuery,
+    TError,
+    TData
+  >
+) =>
+  useQuery<GetSettingsShareReturnChargesDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsShareReturnChargesData']
+      : ['getSettingsShareReturnChargesData', variables],
+    useAxios<
+      GetSettingsShareReturnChargesDataQuery,
+      GetSettingsShareReturnChargesDataQueryVariables
+    >(GetSettingsShareReturnChargesDataDocument).bind(null, variables),
     options
   );
 export const GetSettingsShareGeneralDataDocument = `

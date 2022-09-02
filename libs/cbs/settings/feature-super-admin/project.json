@@ -1,5 +1,5 @@
 {
-  "root": "libs/cbs/settings/feature-super-admin",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/settings/feature-super-admin/src",
   "projectType": "library",
   "tags": [],
@@ -17,7 +17,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/cbs/settings/feature-super-admin"],
       "options": {
-        "jestConfig": "libs/cbs/settings/feature-super-admin/jest.config.js",
+        "jestConfig": "libs/cbs/settings/feature-super-admin/jest.config.ts",
         "passWithNoTests": true
       }
     }

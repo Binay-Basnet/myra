@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { pickBy } from 'lodash';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
+import map from 'lodash/map';
+import pickBy from 'lodash/pickBy';
 
 import {
   CoopUnionEconomicDetailsInput,
@@ -41,6 +42,14 @@ export const useCooperativeUnionEconomicDetails = ({
             (v) => v !== null
           ),
         };
+        const dataToBeSent: Record<string, unknown> = {};
+        map(data, (val, key) => {
+          if (val === '') {
+            dataToBeSent[key] = null;
+          } else {
+            dataToBeSent[key] = val;
+          }
+        });
 
         if (
           id &&
@@ -48,7 +57,7 @@ export const useCooperativeUnionEconomicDetails = ({
           !isDeepEmpty(data) &&
           !isEqual(economicDetail, data)
         ) {
-          mutateAsync({ id, data }).then(() => refetch());
+          mutateAsync({ id, data: dataToBeSent }).then(() => refetch());
         }
       }, 800)
     );

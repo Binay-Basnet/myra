@@ -18,3 +18,22 @@ query getCOAList($filter: ChartsOfAccountFilter!) {
     }
   }
 }
+
+
+
+query getCoaFullView{
+  settings {
+    chartsOfAccount {
+      fullView {
+        data {
+          id
+          name
+          under
+          accountType
+          accountClass
+          accountCode
+        }
+      }
+    }
+  }
+}

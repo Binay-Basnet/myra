@@ -15,6 +15,7 @@
     "**/*.test.jsx",
     "**/*.spec.jsx",
     "**/*.d.ts",
-    "src/lib/table/types/react-table.ts"
+    "src/lib/table/types/react-table.ts",
+    "jest.config.ts"
   ]
 }

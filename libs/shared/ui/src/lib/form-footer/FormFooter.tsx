@@ -9,12 +9,14 @@ export interface FormFooterProps {
   statusHandler?: () => void;
   draftButton?: React.ReactNode;
   mainButtonLabel?: string;
+  dangerButton?: boolean;
   mainButtonHandler?: () => void;
 }
 
 export function FormFooter({
   status,
   draftButton,
+  dangerButton,
   mainButtonLabel,
   mainButtonHandler,
 }: FormFooterProps) {
@@ -35,7 +37,11 @@ export function FormFooter({
       <Box display="flex" gap="s16">
         {draftButton}
 
-        <Button width="160px" onClick={mainButtonHandler}>
+        <Button
+          width="160px"
+          onClick={mainButtonHandler}
+          shade={dangerButton ? 'danger' : 'primary'}
+        >
           {mainButtonLabel ?? t['next']}
         </Button>
       </Box>

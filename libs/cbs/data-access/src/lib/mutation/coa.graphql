@@ -1,0 +1,14 @@
+mutation addNewAccountInCOA($data: AddCOAAccountInput!) {
+  settings {
+    chartsOfAccount {
+      account {
+        add(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "root": "libs/cbs/kym-form/feature-cooperative",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/kym-form/feature-cooperative/src",
   "projectType": "library",
   "tags": [],
@@ -17,7 +17,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/cbs/kym-form/feature-cooperative"],
       "options": {
-        "jestConfig": "libs/cbs/kym-form/feature-cooperative/jest.config.js",
+        "jestConfig": "libs/cbs/kym-form/feature-cooperative/jest.config.ts",
         "passWithNoTests": true
       }
     }

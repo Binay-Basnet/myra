@@ -1,5 +1,5 @@
 {
-  "root": "apps/neosys-admin",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/neosys-admin",
   "projectType": "application",
   "targets": {
@@ -14,6 +14,9 @@
       "configurations": {
         "production": {
           "outputPath": "apps/neosys-admin/dist"
+        },
+        "development": {
+          "outputPath": "apps/neosys-admin"
         }
       }
     },
@@ -28,8 +31,13 @@
         "production": {
           "buildTarget": "neosys-admin:build:production",
           "dev": false
+        },
+        "development": {
+          "buildTarget": "neosys-admin:build:development",
+          "dev": true
         }
-      }
+      },
+      "defaultConfiguration": "development"
     },
     "export": {
       "executor": "@nrwl/next:export",
@@ -41,7 +49,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/apps/neosys-admin"],
       "options": {
-        "jestConfig": "apps/neosys-admin/jest.config.js",
+        "jestConfig": "apps/neosys-admin/jest.config.ts",
         "passWithNoTests": true
       }
     },

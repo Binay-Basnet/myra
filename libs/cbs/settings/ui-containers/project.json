@@ -1,5 +1,5 @@
 {
-  "root": "libs/cbs/settings/ui-containers",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/settings/ui-containers/src",
   "projectType": "library",
   "tags": [],
@@ -17,7 +17,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/cbs/settings/ui-containers"],
       "options": {
-        "jestConfig": "libs/cbs/settings/ui-containers/jest.config.js",
+        "jestConfig": "libs/cbs/settings/ui-containers/jest.config.ts",
         "passWithNoTests": true
       }
     }

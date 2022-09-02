@@ -1,5 +1,5 @@
 {
-  "root": "libs/neosys/ui-components",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/neosys/ui-components/src",
   "projectType": "library",
   "tags": [],
@@ -15,7 +15,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/neosys/ui-components"],
       "options": {
-        "jestConfig": "libs/neosys/ui-components/jest.config.js",
+        "jestConfig": "libs/neosys/ui-components/jest.config.ts",
         "passWithNoTests": true
       }
     }

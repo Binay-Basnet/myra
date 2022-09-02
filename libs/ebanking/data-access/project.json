@@ -1,5 +1,5 @@
 {
-  "root": "libs/ebanking/data-access",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/ebanking/data-access/src",
   "projectType": "library",
   "tags": [],
@@ -15,7 +15,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/ebanking/data-access"],
       "options": {
-        "jestConfig": "libs/ebanking/data-access/jest.config.js",
+        "jestConfig": "libs/ebanking/data-access/jest.config.ts",
         "passWithNoTests": true
       }
     }

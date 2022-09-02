@@ -28,6 +28,7 @@
     "cbs-reports-ui-layouts": "libs/cbs/reports/ui-layouts",
     "cbs-settings--feature-loan": "libs/cbs/settings/feature-loan",
     "cbs-settings-feature-branches": "libs/cbs/settings/feature-branches",
+    "cbs-settings-feature-coa": "libs/cbs/settings/feature-coa",
     "cbs-settings-feature-deposit": "libs/cbs/settings/feature-deposit",
     "cbs-settings-feature-deposit-products": "libs/cbs/settings/feature-deposit-products",
     "cbs-settings-feature-loan-products": "libs/cbs/settings/feature-loan-products",
@@ -77,5 +78,6 @@
     "shared-table": "libs/shared/table",
     "shared-ui": "libs/shared/ui",
     "shared-utils": "libs/shared/utils"
-  }
+  },
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }
