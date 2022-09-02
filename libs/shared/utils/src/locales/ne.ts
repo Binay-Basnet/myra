@@ -2858,11 +2858,14 @@ const ne: Record<string, string> = {
   sharePurchaseTableShareCr: 'Share Issue',
   sharePurchaseTableShareDr: 'Share Credit',
   shareReturnBankCheque: 'Bank Cheque',
+  sharePurchaseName: 'Name',
+  sharePurchaseCitizenshipDocument: 'Citizenship Document',
   previous: 'Previous',
-  settingsShareIssues: 'Share Issues',
-  settingsShareReturn: 'Share Return',
   viewAll: 'View All',
   totalDepositAmount: 'Total Deposit Amount',
+  cancel: 'Cancel',
+  settingsShareIssues: 'Share Issues',
+  settingsShareReturn: 'Share Return',
 };
 
 export default ne;

@@ -11,12 +11,12 @@ import Text from '../text/Text';
 /* eslint-disable-next-line */
 export interface ShareMemberCardProps {
   memberDetails: Partial<Member>;
-  payment?: boolean;
+  totalAmount: number;
 }
 
 export function ShareMemberCard({
   memberDetails,
-  payment,
+  totalAmount,
 }: ShareMemberCardProps) {
   const { t } = useTranslation();
   const router = useRouter();
@@ -177,36 +177,33 @@ export function ShareMemberCard({
           </Box>
         </Box>
 
-        {payment && (
-          <Box
-            bg="gray.100"
-            display="flex"
-            gap="s8"
-            p="s16"
-            mt="s32"
-            border="1px solid"
-            borderColor="border.layout"
-            borderRadius="br2"
-            justifyContent="space-between"
+        <Box
+          bg="gray.100"
+          display="flex"
+          gap="s8"
+          p="s16"
+          mt="s32"
+          border="1px solid"
+          borderColor="border.layout"
+          borderRadius="br2"
+          justifyContent="space-between"
+        >
+          <Text
+            fontWeight="Medium"
+            fontSize="s3"
+            color="neutralColorLight.Gray-60"
           >
-            <Text
-              fontWeight="Medium"
-              fontSize="s3"
-              color="neutralColorLight.Gray-60"
-            >
-              {t['payableAmount']}
-            </Text>
-            <Text
-              as="span"
-              fontWeight="SemiBold"
-              fontSize="s3"
-              color="neutralColorLight.Gray-80"
-            >
-              {/* {totalAmount} */}
-              29000
-            </Text>
-          </Box>
-        )}
+            {t['payableAmount']}
+          </Text>
+          <Text
+            as="span"
+            fontWeight="SemiBold"
+            fontSize="s3"
+            color="neutralColorLight.Gray-80"
+          >
+            {totalAmount ?? 0}
+          </Text>
+        </Box>
       </Box>
     </Box>
   );

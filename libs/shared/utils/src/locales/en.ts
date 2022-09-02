@@ -3267,6 +3267,8 @@ const en: Record<string, string> = {
   memberShareCardTotalShareBalance: 'Total Share Balance',
   sharePurchaseTableShareCr: 'Share Issue',
   sharePurchaseTableShareDr: 'Share Credit',
+  sharePurchaseName: 'Name',
+  sharePurchaseCitizenshipDocument: 'Citizenship Document',
   previous: 'Previous',
   settingsShareIssues: 'Share Issues',
   settingsShareReturn: 'Share Return',
@@ -3274,6 +3276,7 @@ const en: Record<string, string> = {
   payableAmount: 'Payable Amount',
   shareReturnBankCheque: 'Bank Cheque',
   totalDepositAmount: 'Total Deposit Amount',
+  cancel: 'Cancel',
 };
 
 export default en;

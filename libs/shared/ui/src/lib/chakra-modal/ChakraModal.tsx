@@ -13,6 +13,7 @@ import {
 
 import { Button } from '@coop/shared/ui';
 import { Icon, IconButton, TextFields } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface ModalChakraProps
@@ -20,7 +21,7 @@ export interface ModalChakraProps
   open: boolean;
   onClose: () => void;
   children: React.ReactNode;
-  title?: React.ReactNode;
+  title?: string;
   primaryButtonLabel?: string;
   secondaryButtonLabel?: string;
   primaryButtonHandler?: () => null;
@@ -46,6 +47,8 @@ export function ChakraModal(props: ModalChakraProps) {
     ...rest
   } = props;
 
+  const { t } = useTranslation();
+
   return (
     <Modal {...rest} isOpen={open} onClose={onClose}>
       <ModalOverlay />
@@ -59,7 +62,7 @@ export function ChakraModal(props: ModalChakraProps) {
             display={'flex'}
             alignItems="center"
           >
-            <TextFields variant="pageHeader">{title}</TextFields>
+            <TextFields variant="pageHeader">{t[title]}</TextFields>
           </Box>
         )}
         <ModalCloseButton _focus={{}} p={0}>
@@ -85,7 +88,7 @@ export function ChakraModal(props: ModalChakraProps) {
             <Box>
               {linkButtonLabel && (
                 <Button variant="link" onClick={linkButtonHandler}>
-                  {linkButtonLabel}
+                  {t[linkButtonLabel]}
                 </Button>
               )}
             </Box>
@@ -102,7 +105,7 @@ export function ChakraModal(props: ModalChakraProps) {
                   shade="neutral"
                   onClick={secondaryButtonHandler}
                 >
-                  {secondaryButtonLabel}
+                  {t[secondaryButtonLabel]}
                 </Button>
               )}
               {primaryButtonLabel && (
@@ -112,7 +115,7 @@ export function ChakraModal(props: ModalChakraProps) {
                   width={'100px'}
                   shade={isDanger ? 'danger' : 'primary'}
                 >
-                  {primaryButtonLabel}
+                  {t[primaryButtonLabel]}
                 </Button>
               )}
             </Box>

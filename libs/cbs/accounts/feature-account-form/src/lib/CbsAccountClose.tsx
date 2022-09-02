@@ -19,7 +19,7 @@ import omit from 'lodash/omit';
 
 import { FormInput, FormRadioGroup, FormTextArea } from '@coop/shared/form';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   NatureOfDepositProduct,
   useGetAccountTableListQuery,
@@ -194,14 +194,17 @@ export function CbsAccountClose() {
       )?.node,
     [accountId]
   );
+
   const mainButtonHandlermode0 = () => {
     if (memberId) {
       setMode('1');
     }
   };
+
   const previousButtonHandler = () => {
     setMode('0');
   };
+
   const handleSubmit = () => {
     const values = getValues();
     let filteredValues = {
@@ -263,7 +266,6 @@ export function CbsAccountClose() {
           </Box>
           <Box display={'flex'} flexDirection="row" minH="calc(100vh - 230px)">
             <Box display={'flex'} flexDirection="column" w="100%">
-              {' '}
               <Box
                 display={mode === '0' ? 'flex' : 'none'}
                 flexDirection={'column'}
@@ -630,7 +632,7 @@ export function CbsAccountClose() {
                 dangerButton={true}
                 mainButtonHandler={mainButtonHandlermode0}
               />
-            )}{' '}
+            )}
             {mode === '1' && (
               <FormFooter
                 status={
