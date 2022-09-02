@@ -1,0 +1,9 @@
+docker-compose.ebanking.yml merge=dont
+docker-compose.mya.yml merge=dont
+docker-compose.neosys.yml merge=dont
+docker-compose.storybook.yml merge=dont
+Dockerfile.ebanking merge=dont
+Dockerfile.myra merge=dont
+Dockerfile.neosys-admin merge=dont
+Dockerfile.storybook merge=dont
+.cicd.yml merge=dont
