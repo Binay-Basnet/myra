@@ -385,7 +385,7 @@ steps:
       event:
       - push
 
-# depends_on:
-#   - Build and Push myra-ui
+depends_on:
+  - Build and Push myra-ui
 #   - Build and push myra-ui-admin
 #   - Build and push myra-ui-ebanking
