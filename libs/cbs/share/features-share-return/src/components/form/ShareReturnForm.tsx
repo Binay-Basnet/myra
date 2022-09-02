@@ -352,7 +352,7 @@ const ShareReturnForm = () => {
                     as="i"
                     fontSize="r1"
                   >
-                    Press Done to save form
+                    {t['totalDepositAmount']}
                   </Text>
                 </Box>
               }

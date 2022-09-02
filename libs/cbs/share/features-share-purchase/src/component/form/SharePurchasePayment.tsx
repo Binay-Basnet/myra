@@ -23,6 +23,7 @@ import {
   FormTextArea,
 } from '@coop/shared/form';
 import {
+  Alert,
   asyncToast,
   Box,
   Button,
@@ -81,9 +82,14 @@ const SharePurchaseForm = () => {
   const { mutateAsync } = useAddSharePurchaseMutation();
 
   const accountList = [
-    { label: t['sharePurchaseBankVoucher'], value: Payment_Mode.BankVoucher },
+    { label: t['shareReturnBankCheque'], value: Payment_Mode.BankVoucher },
     { label: t['sharePurchaseAccount'], value: Payment_Mode.Account },
     { label: t['sharePurchaseCash'], value: Payment_Mode.Cash },
+  ];
+
+  const depositedByList = [
+    { label: 'Self', value: 'Self' },
+    { label: 'Other', value: 'Other' },
   ];
 
   const memberId = watch('memberId');
@@ -91,7 +97,7 @@ const SharePurchaseForm = () => {
   const printingFee = watch('printingFee');
   const adminFee = watch('adminFee');
   const paymentModes = watch('paymentMode');
-  // const accountId = watch('accountId');
+  const accountId = watch('accountId');
 
   const [totalAmount, setTotalAmount] = useState(0);
 
@@ -129,9 +135,9 @@ const SharePurchaseForm = () => {
     }
   );
 
-  // const availableBalance = accountListData?.account?.list?.edges?.filter(
-  //   (item) => item?.node?.id === accountId
-  // );
+  const availableBalance = accountListData?.account?.list?.edges?.filter(
+    (item) => item?.node?.id === accountId
+  );
 
   const accountTypes = {
     [NatureOfDepositProduct.Mandatory]: 'Mandatory Saving Account',
@@ -297,6 +303,17 @@ const SharePurchaseForm = () => {
                             })
                           )}
                         />
+                        <Box mt="s8">
+                          <Alert
+                            status="info"
+                            title={`${t['sharePurchaseAvailableBalance']} ${
+                              (availableBalance &&
+                                availableBalance[0]?.node?.balance) ??
+                              0
+                            }`}
+                            showUndo={false}
+                          />
+                        </Box>
                       </GridItem>
 
                       <GridItem colSpan={1}>
@@ -307,23 +324,6 @@ const SharePurchaseForm = () => {
                           label={t['sharePurchaseAccountAmount']}
                         />
                       </GridItem>
-                      {/* <Box
-                        px="s16"
-                        py="s8"
-                        bg="background.500"
-                        color="neutralColorLight.Gray-70"
-                        mt="s16"
-                      >
-                        <Text fontWeight="400" fontSize="s2">
-                          {t['sharePurchaseAvailableBalance']}
-                        </Text>
-                        <Text fontWeight="600" fontSize="r1">
-                          Rs.
-                          {(availableBalance &&
-                            availableBalance[0]?.node?.balance) ??
-                            0}
-                        </Text>
-                      </Box> */}
                     </FormSection>
                   )}
 
@@ -479,6 +479,16 @@ const SharePurchaseForm = () => {
 
                   <FormSection>
                     <GridItem colSpan={3}>
+                      <FormSwitchTab
+                        label="Deposited By"
+                        name="depositedBy"
+                        options={depositedByList}
+                      />
+                    </GridItem>
+                  </FormSection>
+
+                  <FormSection>
+                    <GridItem colSpan={3}>
                       <Text
                         color="neutralColorLight.Gray-70"
                         fontSize="s3"
@@ -494,7 +504,10 @@ const SharePurchaseForm = () => {
               </GridItem>
               <GridItem colSpan={memberDetail ? 2 : 0}>
                 {memberDetail && (
-                  <ShareMemberCard memberDetails={memberDetail as Member} />
+                  <ShareMemberCard
+                    memberDetails={memberDetail as Member}
+                    payment={true}
+                  />
                 )}
               </GridItem>
             </Grid>

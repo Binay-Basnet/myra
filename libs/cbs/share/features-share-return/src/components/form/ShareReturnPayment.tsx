@@ -24,6 +24,7 @@ import {
   FormTextArea,
 } from '@coop/shared/form';
 import {
+  Alert,
   asyncToast,
   Box,
   Button,
@@ -83,7 +84,7 @@ const ShareReturnPayment = () => {
   const disableDenomination = watch('disableDenomination');
 
   const accountList = [
-    { label: t['shareReturnBankVoucher'], value: Payment_Mode.BankVoucher },
+    { label: t['shareReturnBankCheque'], value: Payment_Mode.BankVoucher },
     { label: t['shareReturnAccount'], value: Payment_Mode.Account },
     { label: t['shareReturnCash'], value: Payment_Mode.Cash },
   ];
@@ -94,7 +95,7 @@ const ShareReturnPayment = () => {
   const printingFees = watch('printingFee');
   const adminFees = watch('adminFee');
   const paymentModes = watch('paymentMode');
-  // const accountId = watch('accountId');
+  const accountId = watch('accountId');
 
   const [totalAmount, setTotalAmount] = useState(0);
 
@@ -162,9 +163,9 @@ const ShareReturnPayment = () => {
     }
   );
 
-  // const availableBalance = accountListData?.account?.list?.edges?.filter(
-  //   (item) => item?.node?.id === accountId
-  // );
+  const availableBalance = accountListData?.account?.list?.edges?.filter(
+    (item) => item?.node?.id === accountId
+  );
 
   const accountTypes = {
     [NatureOfDepositProduct.Mandatory]: 'Mandatory Saving Account',
@@ -299,6 +300,17 @@ const ShareReturnPayment = () => {
                               })
                             )}
                           />
+                          <Box mt="s8">
+                            <Alert
+                              status="info"
+                              title={`${t['sharePurchaseAvailableBalance']} ${
+                                (availableBalance &&
+                                  availableBalance[0]?.node?.balance) ??
+                                0
+                              }`}
+                              showUndo={false}
+                            />
+                          </Box>
                         </GridItem>
 
                         <GridItem colSpan={1}>
@@ -309,23 +321,6 @@ const ShareReturnPayment = () => {
                             label={t['sharePurchaseAccountAmount']}
                           />
                         </GridItem>
-                        {/* <Box
-                        px="s16"
-                        py="s8"
-                        bg="background.500"
-                        color="neutralColorLight.Gray-70"
-                        mt="s16"
-                      >
-                        <Text fontWeight="400" fontSize="s2">
-                          {t['sharePurchaseAvailableBalance']}
-                        </Text>
-                        <Text fontWeight="600" fontSize="r1">
-                          Rs.
-                          {(availableBalance &&
-                            availableBalance[0]?.node?.balance) ??
-                            0}
-                        </Text>
-                      </Box> */}
                       </FormSection>
                     )}
                     {paymentModes === Payment_Mode.Cash && (
@@ -496,7 +491,10 @@ const ShareReturnPayment = () => {
               </GridItem>
               <GridItem colSpan={data ? 2 : 0}>
                 {data && (
-                  <ShareMemberCard memberDetails={memberDetail as Member} />
+                  <ShareMemberCard
+                    memberDetails={memberDetail as Member}
+                    payment={true}
+                  />
                 )}
               </GridItem>
             </Grid>

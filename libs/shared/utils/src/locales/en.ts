@@ -330,8 +330,6 @@ const en: Record<string, string> = {
   // share purchase table
   sharePurchaseTableDate: 'Date',
   sharePurchaseTableShareNumber: 'Share Number',
-  sharePurchaseTableShareDr: 'Share Dr',
-  sharePurchaseTableShareCr: 'Share Cr',
   sharePurchaseTableBalance: 'Balance',
 
   // settings COA table
@@ -3265,7 +3263,15 @@ const en: Record<string, string> = {
   shareReturneBankName: 'Bank Name',
   shareReturnChequeNo: 'Cheque No',
   shareReturnNoOfShares: 'No of Shares to Return',
+  memberShareCardTotalShareCount: 'Total Share Count',
+  memberShareCardTotalShareBalance: 'Total Share Balance',
+  sharePurchaseTableShareCr: 'Share Issue',
+  sharePurchaseTableShareDr: 'Share Credit',
   previous: 'Previous',
+  viewAll: 'View All',
+  payableAmount: 'Payable Amount',
+  shareReturnBankCheque: 'Bank Cheque',
+  totalDepositAmount: 'Total Deposit Amount',
 };
 
 export default en;
