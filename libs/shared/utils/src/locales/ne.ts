@@ -237,8 +237,6 @@ const ne: Record<string, string> = {
   shareReturnTableBalance: 'मौज्दात',
   sharePurchaseTableDate: 'मिति',
   sharePurchaseTableShareNumber: 'शेयर नं',
-  sharePurchaseTableShareDr: 'शेयर Dr',
-  sharePurchaseTableShareCr: 'शेयर Cr',
   sharePurchaseTableBalance: 'मौज्दात',
   settingsCoaTableAccountCode: 'खाता कोड',
   settingsCoaTableAccountName: 'खाता नाम',
@@ -2855,7 +2853,19 @@ const ne: Record<string, string> = {
   sharePurchaseVoucherId: 'Voucher ID',
   shareReturneBankName: 'Bank Name',
   shareReturnNoOfShares: 'No of Shares to Return',
+  memberShareCardTotalShareCount: 'Total Share Count',
+  memberShareCardTotalShareBalance: 'Total Share Balance',
+  sharePurchaseTableShareCr: 'Share Issue',
+  sharePurchaseTableShareDr: 'Share Credit',
+  shareReturnBankCheque: 'Bank Cheque',
+  sharePurchaseName: 'Name',
+  sharePurchaseCitizenshipDocument: 'Citizenship Document',
   previous: 'Previous',
+  viewAll: 'View All',
+  totalDepositAmount: 'Total Deposit Amount',
+  cancel: 'Cancel',
+  settingsShareIssues: 'Share Issues',
+  settingsShareReturn: 'Share Return',
 };
 
 export default ne;

@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
+import { IoChevronBackOutline } from 'react-icons/io5';
 
 import { Member, useGetMemberIndividualDataQuery } from '@coop/cbs/data-access';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormInput } from '@coop/shared/form';
 import {
   Box,
+  Button,
   Container,
   FormFooter,
   FormHeader,
@@ -21,6 +22,8 @@ import {
 } from '@coop/shared/ui';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
+import SharePurchasePayment from './SharePurchasePayment';
+
 const Header = () => {
   return (
     <>
@@ -32,7 +35,6 @@ const Header = () => {
 
 const SharePurchaseForm = () => {
   const { t } = useTranslation();
-  const router = useRouter();
   const methods = useForm();
   const { watch } = methods;
 
@@ -42,6 +44,7 @@ const SharePurchaseForm = () => {
   const adminFee = watch('adminFee');
 
   const [totalAmount, setTotalAmount] = useState(0);
+  const [mode, setMode] = useState('0');
 
   const { data } = useGetMemberIndividualDataQuery(
     {
@@ -59,6 +62,15 @@ const SharePurchaseForm = () => {
       noOfShares * 100 + Number(adminFee ?? 0) + Number(printingFee ?? 0)
     );
   }, [noOfShares, adminFee, printingFee]);
+
+  const mainButtonHandlermode0 = () => {
+    if (memberId) {
+      setMode('1');
+    }
+  };
+  const previousButtonHandler = () => {
+    setMode('0');
+  };
 
   // const onSubmit = () => {
   //   const values = getValues();
@@ -104,7 +116,7 @@ const SharePurchaseForm = () => {
           >
             <Header />
           </Box>
-          <Container minW="container.lg" p="0" mb="60px">
+          <Container minW="container.xl" p="0" mb="60px">
             <Box
               position="sticky"
               top="110px"
@@ -115,7 +127,10 @@ const SharePurchaseForm = () => {
               <FormHeader title={t['sharePurchaseNewShareIssue']} />
             </Box>
             <Grid templateColumns="repeat(6,1fr)">
-              <GridItem colSpan={data ? 4 : 6}>
+              <GridItem
+                display={mode === '0' ? null : 'none'}
+                colSpan={data ? 4 : 6}
+              >
                 <Box
                   mb="50px"
                   display="flex"
@@ -135,7 +150,6 @@ const SharePurchaseForm = () => {
                         />
                       </GridItem>
                     </FormSection>
-                    {/* <SharePurchaseHistoryTable id={memberId} /> */}
 
                     {data && (
                       <Box
@@ -262,9 +276,20 @@ const SharePurchaseForm = () => {
                   </Box>
                 </Box>
               </GridItem>
+
+              <GridItem
+                display={mode === '1' ? null : 'none'}
+                colSpan={data ? 4 : 6}
+              >
+                <SharePurchasePayment />
+              </GridItem>
+
               <GridItem colSpan={data ? 2 : 0}>
                 {data && (
-                  <ShareMemberCard memberDetails={memberDetail as Member} />
+                  <ShareMemberCard
+                    totalAmount={totalAmount}
+                    memberDetails={memberDetail as Member}
+                  />
                 )}
               </GridItem>
             </Grid>
@@ -274,25 +299,40 @@ const SharePurchaseForm = () => {
 
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.lg" height="fit-content" p="0">
-            <FormFooter
-              status={
-                <Box display="flex" gap="s8">
-                  <Text
-                    color="neutralColorLight.Gray-60"
-                    fontWeight="Regular"
-                    as="i"
-                    fontSize="r1"
+          <Container minW="container.xl" height="fit-content" p="0">
+            {mode === '0' && (
+              <FormFooter
+                status={
+                  <Box display="flex" gap="s8">
+                    <Text
+                      color="neutralColorLight.Gray-60"
+                      fontWeight="Regular"
+                      as="i"
+                      fontSize="r1"
+                    >
+                      Form details saved to draft 09:41 AM
+                    </Text>
+                  </Box>
+                }
+                mainButtonLabel={t['proceedToPayment']}
+                mainButtonHandler={mainButtonHandlermode0}
+              />
+            )}
+            {mode === '1' && (
+              <FormFooter
+                status={
+                  <Button
+                    variant="outline"
+                    leftIcon={<IoChevronBackOutline />}
+                    onClick={previousButtonHandler}
                   >
-                    Press Done to save form
-                  </Text>
-                </Box>
-              }
-              mainButtonLabel={t['proceedToPayment']}
-              mainButtonHandler={() =>
-                router.push(`/share/share-purchase/${memberId}/payment`)
-              }
-            />
+                    {t['previous']}
+                  </Button>
+                }
+                mainButtonLabel={t['proceedToPayment']}
+                // mainButtonHandler={handleSubmit}
+              />
+            )}
           </Container>
         </Box>
       </Box>
