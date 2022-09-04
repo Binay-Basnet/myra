@@ -1668,13 +1668,14 @@ export type DepositIroResult = {
 };
 
 export type DepositLoanAccount = Base & {
+  accountName?: Maybe<Scalars['String']>;
   agentId?: Maybe<Scalars['ID']>;
   atmFacility?: Maybe<Scalars['Boolean']>;
   boardAuthority?: Maybe<Scalars['Boolean']>;
   ceoAuthority?: Maybe<Scalars['Boolean']>;
-  chequeIssue?: Maybe<Scalars['Boolean']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
+  defaultAmountDepositAccountName?: Maybe<Scalars['String']>;
   depositFrequencyDay?: Maybe<Scalars['Int']>;
   depositFrequencyDayOfWeek?: Maybe<Week>;
   depositFrequencyFrequencyDay?: Maybe<FrequencyDay>;
@@ -1682,10 +1683,14 @@ export type DepositLoanAccount = Base & {
   depositFrequencyWeekly?: Maybe<Week>;
   depositFrequencyYearlyDay?: Maybe<Scalars['Int']>;
   depositFrequencyYearlyMonth?: Maybe<Months>;
+  eBanking?: Maybe<Scalars['Boolean']>;
   id: Scalars['ID'];
+  initialDepositAmount?: Maybe<Scalars['Amount']>;
   installmentAmount?: Maybe<Scalars['String']>;
   interestRate?: Maybe<Scalars['Float']>;
   memberId: Scalars['ID'];
+  minor?: Maybe<Scalars['String']>;
+  mobileBanking?: Maybe<Scalars['Boolean']>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   objState: ObjState;
@@ -1716,11 +1721,12 @@ export type DepositLoanAccountFormStateResult = {
 };
 
 export type DepositLoanAccountInput = {
+  accountName?: InputMaybe<Scalars['String']>;
   agentId?: InputMaybe<Scalars['ID']>;
   atmFacility?: InputMaybe<Scalars['Boolean']>;
   boardAuthority?: InputMaybe<Scalars['Boolean']>;
   ceoAuthority?: InputMaybe<Scalars['Boolean']>;
-  chequeIssue?: InputMaybe<Scalars['Boolean']>;
+  defaultAmountDepositAccountName?: InputMaybe<Scalars['String']>;
   depositFrequencyDay?: InputMaybe<Scalars['Int']>;
   depositFrequencyDayOfWeek?: InputMaybe<Week>;
   depositFrequencyFrequencyDay?: InputMaybe<FrequencyDay>;
@@ -1728,9 +1734,13 @@ export type DepositLoanAccountInput = {
   depositFrequencyWeekly?: InputMaybe<Week>;
   depositFrequencyYearlyDay?: InputMaybe<Scalars['Int']>;
   depositFrequencyYearlyMonth?: InputMaybe<Months>;
+  eBanking?: InputMaybe<Scalars['Boolean']>;
+  initialDepositAmount?: InputMaybe<Scalars['Amount']>;
   installmentAmount?: InputMaybe<Scalars['String']>;
   interestRate?: InputMaybe<Scalars['Float']>;
   memberId: Scalars['ID'];
+  minor?: InputMaybe<Scalars['String']>;
+  mobileBanking?: InputMaybe<Scalars['Boolean']>;
   productId: Scalars['ID'];
   tenure?: InputMaybe<FrequencyTenure>;
   tenureNumber?: InputMaybe<Scalars['Int']>;
@@ -1825,6 +1835,25 @@ export type DepositProductConnection = {
   totalCount: Scalars['Int'];
 };
 
+export type DepositProductCriteria = {
+  cooperativeType?: Maybe<Array<Maybe<Scalars['String']>>>;
+  cooperativeUnion?: Maybe<Array<Maybe<Scalars['String']>>>;
+  educationQualification?: Maybe<Array<Maybe<Scalars['String']>>>;
+  ethnicity?: Maybe<Array<Maybe<Scalars['String']>>>;
+  foreignEmployment?: Maybe<Scalars['Boolean']>;
+  gender?: Maybe<Array<Maybe<Scalars['String']>>>;
+  institutionType?: Maybe<Array<Maybe<Scalars['String']>>>;
+  maritalStatus?: Maybe<Array<Maybe<Scalars['String']>>>;
+  maxAge?: Maybe<Scalars['Int']>;
+  minAge?: Maybe<Scalars['Int']>;
+  occupation?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type DepositProductCriteriaResult = {
+  data?: Maybe<DepositProductCriteria>;
+  error?: Maybe<QueryError>;
+};
+
 export type DepositProductEdge = {
   cursor: Scalars['Cursor'];
   node: DepositProduct;
@@ -1855,6 +1884,7 @@ export type DepositProductFormStateData = {
   isForMinors?: Maybe<Scalars['Boolean']>;
   ladderRate?: Maybe<Scalars['Boolean']>;
   ladderRateData?: Maybe<Array<Maybe<LadderRateFormState>>>;
+  ledgerMapping?: Maybe<LedgerMappingFormState>;
   maritalStatusId?: Maybe<Array<Maybe<Scalars['ID']>>>;
   maxAge?: Maybe<Scalars['Int']>;
   maxPostingFreqDifference?: Maybe<Scalars['Int']>;
@@ -1868,6 +1898,7 @@ export type DepositProductFormStateData = {
   nature?: Maybe<NatureOfDepositProduct>;
   natureOFBusinessCoop?: Maybe<Array<Maybe<Scalars['ID']>>>;
   natureOfBusinessInstitution?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  noOftransactionAllowed?: Maybe<Scalars['Int']>;
   occupation?: Maybe<Array<Maybe<Scalars['ID']>>>;
   penalty?: Maybe<Scalars['Boolean']>;
   penaltyData?: Maybe<PenaltyFormState>;
@@ -1882,8 +1913,10 @@ export type DepositProductFormStateData = {
   specifyWithdrawRestriction?: Maybe<Scalars['String']>;
   staffProduct?: Maybe<Scalars['Boolean']>;
   supportMultiple?: Maybe<Scalars['Boolean']>;
+  transactionAllowed?: Maybe<DepositFrequency>;
   typeOfMember?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
   wealthBuildingProduct?: Maybe<Scalars['Boolean']>;
+  withdrawAmountLimit?: Maybe<AmountLimitFormState>;
   withdrawPenalty?: Maybe<WithdrawPenaltyFormState>;
   withdrawRestricted?: Maybe<Scalars['Boolean']>;
 };
@@ -1922,6 +1955,7 @@ export type DepositProductInput = {
   isForMinors?: InputMaybe<Scalars['Boolean']>;
   ladderRate?: InputMaybe<Scalars['Boolean']>;
   ladderRateData?: InputMaybe<Array<InputMaybe<LadderRate>>>;
+  ledgerMapping?: InputMaybe<LedgerMapping>;
   maritalStatusId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   maxAge?: InputMaybe<Scalars['Int']>;
   maxPostingFreqDifference?: InputMaybe<Scalars['Int']>;
@@ -1935,6 +1969,7 @@ export type DepositProductInput = {
   nature: NatureOfDepositProduct;
   natureOFBusinessCoop?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   natureOfBusinessInstitution?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  noOftransactionAllowed?: InputMaybe<Scalars['Int']>;
   occupation?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   penalty?: InputMaybe<Scalars['Boolean']>;
   penaltyData?: InputMaybe<PenaltyInput>;
@@ -1949,8 +1984,10 @@ export type DepositProductInput = {
   specifyWithdrawRestriction?: InputMaybe<Scalars['String']>;
   staffProduct?: InputMaybe<Scalars['Boolean']>;
   supportMultiple?: InputMaybe<Scalars['Boolean']>;
+  transactionAllowed?: InputMaybe<DepositFrequency>;
   typeOfMember?: InputMaybe<Array<InputMaybe<KymMemberTypesEnum>>>;
   wealthBuildingProduct?: InputMaybe<Scalars['Boolean']>;
+  withdrawAmountLimit?: InputMaybe<AmountLimit>;
   withdrawPenalty?: InputMaybe<WithdrawPenalty>;
   withdrawRestricted?: InputMaybe<Scalars['Boolean']>;
 };
@@ -1985,6 +2022,8 @@ export type DepositProductSettingsMutationAddArgs = {
 export type DepositProductSettingsQuery = {
   formState?: Maybe<DepositProductFormStateResult>;
   get?: Maybe<DepositProduct>;
+  getPenaltyRebateInfo?: Maybe<PenaltyRebateResult>;
+  getProductCriteria?: Maybe<DepositProductCriteriaResult>;
   getProductList?: Maybe<DepositProductList>;
   list?: Maybe<DepositProductConnection>;
 };
@@ -1995,6 +2034,14 @@ export type DepositProductSettingsQueryFormStateArgs = {
 
 export type DepositProductSettingsQueryGetArgs = {
   id: Scalars['ID'];
+};
+
+export type DepositProductSettingsQueryGetPenaltyRebateInfoArgs = {
+  productId: Scalars['ID'];
+};
+
+export type DepositProductSettingsQueryGetProductCriteriaArgs = {
+  productId: Scalars['ID'];
 };
 
 export type DepositProductSettingsQueryGetProductListArgs = {
@@ -5941,6 +5988,18 @@ export enum Language {
   Nepali = 'NEPALI',
 }
 
+export type LedgerMapping = {
+  interestAccuredDaily?: InputMaybe<Scalars['String']>;
+  interestIncome?: InputMaybe<Scalars['String']>;
+  principal?: InputMaybe<Scalars['String']>;
+};
+
+export type LedgerMappingFormState = {
+  interestAccuredDaily?: Maybe<Scalars['String']>;
+  interestIncome?: Maybe<Scalars['String']>;
+  principal?: Maybe<Scalars['String']>;
+};
+
 export type Level1 = {
   level2: Level2;
 };
@@ -6985,6 +7044,18 @@ export enum PenaltyRateType {
   FlatRate = 'FLAT_RATE',
   RelativeRate = 'RELATIVE_RATE',
 }
+
+export type PenaltyRebate = {
+  penalty?: Maybe<PenaltyFormState>;
+  prematurePenalty?: Maybe<PrematurePenaltyFormState>;
+  rebate?: Maybe<RebateFormState>;
+  withdrawPenalty?: Maybe<WithdrawPenaltyFormState>;
+};
+
+export type PenaltyRebateResult = {
+  data?: Maybe<PenaltyRebate>;
+  error?: Maybe<QueryError>;
+};
 
 export type PersonalInformation = {
   citizenship?: Maybe<Citizenship>;
@@ -9763,7 +9834,6 @@ export type GetAccountOpenProductDetailsQuery = {
             percentageOfDeposit?: number | null;
             alternativeChannels?: boolean | null;
             atmFacility?: boolean | null;
-            chequeIssue?: boolean | null;
             supportMultiple?: boolean | null;
             staffProduct?: boolean | null;
             withdrawRestricted?: boolean | null;
@@ -9854,7 +9924,6 @@ export type GetAccountOpenEditDataQuery = {
         depositFrequencyYearlyMonth?: Months | null;
         depositFrequencyYearlyDay?: number | null;
         atmFacility?: boolean | null;
-        chequeIssue?: boolean | null;
         agentId?: string | null;
       } | null;
     } | null;
@@ -16039,7 +16108,6 @@ export const GetAccountOpenProductDetailsDocument = `
             percentageOfDeposit
             alternativeChannels
             atmFacility
-            chequeIssue
             supportMultiple
             staffProduct
             withdrawRestricted
@@ -16096,7 +16164,6 @@ export const GetAccountOpenEditDataDocument = `
         depositFrequencyYearlyMonth
         depositFrequencyYearlyDay
         atmFacility
-        chequeIssue
         agentId
       }
     }
