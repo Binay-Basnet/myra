@@ -1,5 +1,5 @@
 {
-  "root": "libs/cbs/kym-form/ui-form-elements",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/kym-form/ui-form-elements/src",
   "projectType": "library",
   "tags": [],
@@ -17,7 +17,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/cbs/kym-form/ui-form-elements"],
       "options": {
-        "jestConfig": "libs/cbs/kym-form/ui-form-elements/jest.config.js",
+        "jestConfig": "libs/cbs/kym-form/ui-form-elements/jest.config.ts",
         "passWithNoTests": true
       }
     }

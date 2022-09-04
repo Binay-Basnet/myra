@@ -1,5 +1,5 @@
 {
-  "root": "libs/cbs/reports/ui-layouts",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/reports/ui-layouts/src",
   "projectType": "library",
   "tags": [],
@@ -15,7 +15,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/cbs/reports/ui-layouts"],
       "options": {
-        "jestConfig": "libs/cbs/reports/ui-layouts/jest.config.js",
+        "jestConfig": "libs/cbs/reports/ui-layouts/jest.config.ts",
         "passWithNoTests": true
       }
     }

@@ -1,5 +1,10 @@
 FROM node:14-alpine AS builder
 
+ARG NX_SCHEMA_PATH
+
+ENV NX_SCHEMA_PATH $NX_SCHEMA_PATH
+
+
 WORKDIR /app
 
 COPY package* .

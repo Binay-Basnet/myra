@@ -1,5 +1,5 @@
 {
-  "root": "libs/neosys/feature-users",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/neosys/feature-users/src",
   "projectType": "library",
   "tags": [],
@@ -15,7 +15,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/neosys/feature-users"],
       "options": {
-        "jestConfig": "libs/neosys/feature-users/jest.config.js",
+        "jestConfig": "libs/neosys/feature-users/jest.config.ts",
         "passWithNoTests": true
       }
     }

@@ -6,9 +6,13 @@ import {
 
 export const useGetSectionStatus = (id: string) => {
   const { data: coopUnionCooperativeData } =
-    useGetCooperativeUnionKymEditDataQuery({
-      id,
-    });
+    useGetCooperativeUnionKymEditDataQuery(
+      {
+        id,
+      },
+
+      { enabled: !!id }
+    );
   const { data: bodEditValues } = useGetBoardOfDirectorsDetailsListQuery({
     id: String(id),
   });

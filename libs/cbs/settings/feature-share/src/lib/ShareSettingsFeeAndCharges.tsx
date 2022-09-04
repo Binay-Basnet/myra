@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 
 import {
   ShareChargeType,
-  useGetSettingsShareFeesAndChargesDataQuery,
-  useSetSettingsShareFeeAndChargesMutation,
+  useGetSettingsShareIssueChargesDataQuery,
+  useSetSettingsShareIssueChargesMutation,
 } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 import { asyncToast, Box, SettingsFooter, Text, toast } from '@coop/shared/ui';
@@ -45,10 +45,10 @@ export const ShareSettingsFeeAndCharges = () => {
 
   const { reset, getValues } = methods;
   const router = useRouter();
-  const { mutateAsync } = useSetSettingsShareFeeAndChargesMutation();
-  const { data, refetch } = useGetSettingsShareFeesAndChargesDataQuery();
+  const { mutateAsync } = useSetSettingsShareIssueChargesMutation();
+  const { data, refetch } = useGetSettingsShareIssueChargesDataQuery();
   const settingsFeesAndChargesData =
-    data?.settings?.general?.share?.feeAndCharges;
+    data?.settings?.general?.share?.shareIssueCharges;
 
   useEffect(() => {
     if (settingsFeesAndChargesData) {
@@ -64,7 +64,7 @@ export const ShareSettingsFeeAndCharges = () => {
         success: 'Saved',
         loading: 'Saving Changes ',
       },
-      onSuccess: () => router.push('/settings/general/share/fee-and-charges'),
+      onSuccess: () => router.push('/settings/general/share/issues'),
       promise: mutateAsync(
         {
           data: {

@@ -1,5 +1,5 @@
 {
-  "root": "libs/cbs/data-access",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/data-access/src",
   "projectType": "library",
   "tags": [],
@@ -15,7 +15,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/cbs/data-access"],
       "options": {
-        "jestConfig": "libs/cbs/data-access/jest.config.js",
+        "jestConfig": "libs/cbs/data-access/jest.config.ts",
         "passWithNoTests": true
       }
     }

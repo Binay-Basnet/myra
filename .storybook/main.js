@@ -1,15 +1,12 @@
+const { workspaceRoot } = require('nx/src/utils/workspace-root');
+
+const configStorybook = require(`${workspaceRoot}/tools/config/webpack/storybook`);
+
 module.exports = {
   stories: [],
-  addons: ['@storybook/addon-essentials'],
-  features: {
-    emotionAlias: false,
+  addons: ['@storybook/addon-a11y', '@storybook/addon-essentials'],
+  webpackFinal: async (config) => configStorybook(config),
+  core: {
+    builder: 'webpack5',
   },
-
-  // uncomment the property below if you want to apply some webpack config globally
-  // webpackFinal: async (config, { configType }) => {
-  //   // Make whatever fine-grained changes you need that should apply to all storybook configs
-
-  //   // Return the altered config
-  //   return config;
-  // },
 };

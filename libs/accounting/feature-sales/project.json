@@ -1,5 +1,5 @@
 {
-  "root": "libs/accounting/feature-sales",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/accounting/feature-sales/src",
   "projectType": "library",
   "tags": [],
@@ -17,7 +17,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/accounting/feature-sales"],
       "options": {
-        "jestConfig": "libs/accounting/feature-sales/jest.config.js",
+        "jestConfig": "libs/accounting/feature-sales/jest.config.ts",
         "passWithNoTests": true
       }
     }

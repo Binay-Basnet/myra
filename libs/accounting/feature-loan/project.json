@@ -1,5 +1,5 @@
 {
-  "root": "libs/accounting/feature-loan",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/accounting/feature-loan/src",
   "projectType": "library",
   "tags": [],
@@ -17,7 +17,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/accounting/feature-loan"],
       "options": {
-        "jestConfig": "libs/accounting/feature-loan/jest.config.js",
+        "jestConfig": "libs/accounting/feature-loan/jest.config.ts",
         "passWithNoTests": true
       }
     }

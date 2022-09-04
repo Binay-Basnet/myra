@@ -95,6 +95,24 @@ export type AccountActivityListEdges = {
   node?: Maybe<AccountActivityEntry>;
 };
 
+export type AccountAgent = {
+  agentName?: Maybe<Scalars['String']>;
+  assignedMember?: Maybe<Scalars['Int']>;
+  id: Scalars['ID'];
+  phoneNo?: Maybe<Scalars['String']>;
+};
+
+export type AccountAgentListConnection = {
+  edges?: Maybe<Array<Maybe<AccountAgentListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type AccountAgentListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<AccountAgent>;
+};
+
 export enum AccountClosePaymentMode {
   AccountTransfer = 'ACCOUNT_TRANSFER',
   BankCheque = 'BANK_CHEQUE',
@@ -201,24 +219,25 @@ export type AccountTypeDetailsUnion =
   | JournalChartsOfAccount;
 
 export type AddCoaAccountInput = {
+  accountClass: Scalars['String'];
+  accountCode: Scalars['String'];
   accountType: CoaTypesOfAccount;
-  allowFreeEntry: Scalars['Boolean'];
-  allowTransaction: Scalars['Boolean'];
-  balanceSheetAccount: Scalars['Boolean'];
   bankAccountNumber?: InputMaybe<Scalars['String']>;
   bankGLCode?: InputMaybe<Scalars['String']>;
   bankId?: InputMaybe<Scalars['ID']>;
-  classId: Scalars['ID'];
-  code: Scalars['String'];
   currency: Scalars['String'];
-  ibtAccount: Scalars['Boolean'];
-  inTransitAccount: Scalars['Boolean'];
+  isAllowFreeEntry: Scalars['Boolean'];
+  isAllowTransaction: Scalars['Boolean'];
+  isApplicableToAllBranches: Scalars['Boolean'];
+  isBalanceSheetAccount: Scalars['Boolean'];
+  isIbtAccount: Scalars['Boolean'];
+  isInTransitAccount: Scalars['Boolean'];
+  isLedgerAccount: Scalars['Boolean'];
+  isProfitAndLossAccount: Scalars['Boolean'];
+  isSummationAccount: Scalars['Boolean'];
   journalCode?: InputMaybe<Scalars['String']>;
-  ledgerAccount: Scalars['Boolean'];
   name: Scalars['String'];
   openingBalance: Scalars['Float'];
-  profitAndLossAccount: Scalars['Boolean'];
-  summationAccount: Scalars['Boolean'];
   under?: InputMaybe<Scalars['ID']>;
 };
 
@@ -291,6 +310,41 @@ export type AffiliatedDirectorDetailsType = {
   yearlyIncome?: Maybe<Scalars['Float']>;
 };
 
+export type AgentDetails = {
+  branch?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  totalMembers?: Maybe<Scalars['Int']>;
+};
+
+export type AgentRecord = {
+  data?: Maybe<AgentDetails>;
+  error?: Maybe<QueryError>;
+};
+
+export type AgentTodayList = {
+  account?: Maybe<DepositLoanAccount>;
+  amount?: Maybe<Scalars['Amount']>;
+  member?: Maybe<Member>;
+};
+
+export type AgentTodayListData = {
+  error?: Maybe<QueryError>;
+  record?: Maybe<Array<Maybe<AgentTodayList>>>;
+};
+
+export type AgentTodayListInput = {
+  account?: InputMaybe<Scalars['String']>;
+  amount?: InputMaybe<Scalars['Amount']>;
+  member?: InputMaybe<Scalars['String']>;
+};
+
+export type AgentTodayListResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<TransactionQuery>;
+  record?: Maybe<Array<Maybe<AgentTodayList>>>;
+};
+
 export type AmountLimit = {
   avgAmount?: InputMaybe<Scalars['Amount']>;
   maxAmount?: InputMaybe<Scalars['Amount']>;
@@ -307,6 +361,35 @@ export enum Arrange {
   Asc = 'ASC',
   Desc = 'DESC',
 }
+
+export type AssignMembersInput = {
+  accountId: Scalars['String'];
+  memberId: Scalars['String'];
+};
+
+export type AssignedMemberList = {
+  account?: Maybe<DepositLoanAccount>;
+  assignedDate?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  member?: Maybe<Member>;
+};
+
+export type AssignedMemberListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<AssignedMemberList>;
+};
+
+export type AssignedMemberListFiler = {
+  agentId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
+export type AssignedMembersListConnection = {
+  edges?: Maybe<Array<Maybe<AssignedMemberListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
 
 export type AuthMutation = {
   login?: Maybe<LoginResult>;
@@ -1615,6 +1698,11 @@ export type DepositLoanAccountConnection = {
   edges?: Maybe<Array<DepositLoanAccountEdge>>;
   pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
+};
+
+export type DepositLoanAccountData = {
+  data?: Maybe<DepositLoanAccount>;
+  error?: Maybe<MutationError>;
 };
 
 export type DepositLoanAccountEdge = {
@@ -7768,9 +7856,21 @@ export type TransactionFilter = {
 };
 
 export type TransactionMutation = {
+  addMemberToAgent?: Maybe<DepositLoanAccountData>;
+  agentTodayList?: Maybe<AgentTodayListResult>;
   deposit: DepositResult;
   transfer: TransferResult;
   withdraw: WithdrawResult;
+};
+
+export type TransactionMutationAddMemberToAgentArgs = {
+  agentId: Scalars['String'];
+  data?: InputMaybe<AssignMembersInput>;
+};
+
+export type TransactionMutationAgentTodayListArgs = {
+  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>>>;
+  id: Scalars['ID'];
 };
 
 export type TransactionMutationDepositArgs = {
@@ -7786,9 +7886,31 @@ export type TransactionMutationWithdrawArgs = {
 };
 
 export type TransactionQuery = {
+  agentDetail?: Maybe<AgentRecord>;
+  assignedMemberList: AssignedMembersListConnection;
+  listAgent: AccountAgentListConnection;
+  listAgentTask?: Maybe<AgentTodayListData>;
   listDeposit: AccountActivityListConnection;
   listTransfer: AccountTransferListConnection;
   listWithdraw: AccountActivityListConnection;
+};
+
+export type TransactionQueryAgentDetailArgs = {
+  id: Scalars['ID'];
+};
+
+export type TransactionQueryAssignedMemberListArgs = {
+  filter?: InputMaybe<AssignedMemberListFiler>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type TransactionQueryListAgentArgs = {
+  filter?: InputMaybe<AccountTransactionFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type TransactionQueryListAgentTaskArgs = {
+  id: Scalars['ID'];
 };
 
 export type TransactionQueryListDepositArgs = {
@@ -8278,6 +8400,29 @@ export type RefreshMutation = {
         | MutationError_ServerError_Fragment
         | MutationError_ValidationError_Fragment
         | null;
+    } | null;
+  };
+};
+
+export type AddNewAccountInCoaMutationVariables = Exact<{
+  data: AddCoaAccountInput;
+}>;
+
+export type AddNewAccountInCoaMutation = {
+  settings: {
+    chartsOfAccount?: {
+      account?: {
+        add: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
     } | null;
   };
 };
@@ -11600,6 +11745,58 @@ export type GetIndividualKymIdentificationListQuery = {
   };
 };
 
+export type GetMemberDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetMemberDetailsQuery = {
+  members: {
+    details: {
+      data?: {
+        id: string;
+        name?: Record<'local' | 'en' | 'np', string> | null;
+        code: string;
+        contact?: string | null;
+        profilePicUrl?: Array<string | null> | null;
+        signaturePicUrl?: Array<string | null> | null;
+        address?: {
+          state?: Record<'local' | 'en' | 'np', string> | null;
+          district?: Record<'local' | 'en' | 'np', string> | null;
+          localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+          wardNo?: string | null;
+          locality?: Record<'local' | 'en' | 'np', string> | null;
+          houseNo?: string | null;
+        } | null;
+        share?: {
+          summary?: {
+            memberId?: string | null;
+            count: number;
+            amount: number;
+            member: {
+              id: string;
+              name?: Record<'local' | 'en' | 'np', string> | null;
+            };
+          } | null;
+        } | null;
+        profile?:
+          | {
+              data?: {
+                formData?: {
+                  basicInformation?: {
+                    gender?: Record<'local' | 'en' | 'np', string> | null;
+                    dateOfBirth?: string | null;
+                    age?: number | null;
+                  } | null;
+                } | null;
+              } | null;
+            }
+          | {}
+          | null;
+      } | null;
+    };
+  };
+};
+
 export type GetMemberPdfQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -13040,6 +13237,45 @@ export const useRefreshMutation = <TError = unknown, TContext = unknown>(
   useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
     ['refresh'],
     useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
+    options
+  );
+export const AddNewAccountInCoaDocument = `
+    mutation addNewAccountInCOA($data: AddCOAAccountInput!) {
+  settings {
+    chartsOfAccount {
+      account {
+        add(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddNewAccountInCoaMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    AddNewAccountInCoaMutation,
+    TError,
+    AddNewAccountInCoaMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    AddNewAccountInCoaMutation,
+    TError,
+    AddNewAccountInCoaMutationVariables,
+    TContext
+  >(
+    ['addNewAccountInCOA'],
+    useAxios<AddNewAccountInCoaMutation, AddNewAccountInCoaMutationVariables>(
+      AddNewAccountInCoaDocument
+    ),
     options
   );
 export const SetCooperativeDataDocument = `
@@ -18405,6 +18641,68 @@ export const useGetIndividualKymIdentificationListQuery = <
       GetIndividualKymIdentificationListQuery,
       GetIndividualKymIdentificationListQueryVariables
     >(GetIndividualKymIdentificationListDocument).bind(null, variables),
+    options
+  );
+export const GetMemberDetailsDocument = `
+    query getMemberDetails($id: ID!) {
+  members {
+    details(id: $id) {
+      data {
+        id
+        name
+        code
+        address {
+          state
+          district
+          localGovernment
+          wardNo
+          locality
+          houseNo
+        }
+        contact
+        share {
+          summary {
+            memberId
+            member {
+              id
+              name
+            }
+            count
+            amount
+          }
+        }
+        profilePicUrl
+        signaturePicUrl
+        profile {
+          ... on KymIndFormStateQuery {
+            data {
+              formData {
+                basicInformation {
+                  gender
+                  dateOfBirth
+                  age
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberDetailsQuery = <
+  TData = GetMemberDetailsQuery,
+  TError = unknown
+>(
+  variables: GetMemberDetailsQueryVariables,
+  options?: UseQueryOptions<GetMemberDetailsQuery, TError, TData>
+) =>
+  useQuery<GetMemberDetailsQuery, TError, TData>(
+    ['getMemberDetails', variables],
+    useAxios<GetMemberDetailsQuery, GetMemberDetailsQueryVariables>(
+      GetMemberDetailsDocument
+    ).bind(null, variables),
     options
   );
 export const GetMemberPdfDocument = `

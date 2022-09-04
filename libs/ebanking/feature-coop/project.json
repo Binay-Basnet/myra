@@ -1,5 +1,5 @@
 {
-  "root": "libs/ebanking/feature-coop",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/ebanking/feature-coop/src",
   "projectType": "library",
   "tags": [],
@@ -15,7 +15,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/ebanking/feature-coop"],
       "options": {
-        "jestConfig": "libs/ebanking/feature-coop/jest.config.js",
+        "jestConfig": "libs/ebanking/feature-coop/jest.config.ts",
         "passWithNoTests": true
       }
     }

@@ -1,5 +1,5 @@
 {
-  "root": "libs/cbs/settings/feature-loan-products",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/settings/feature-loan-products/src",
   "projectType": "library",
   "tags": [],
@@ -17,7 +17,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/cbs/settings/feature-loan-products"],
       "options": {
-        "jestConfig": "libs/cbs/settings/feature-loan-products/jest.config.js",
+        "jestConfig": "libs/cbs/settings/feature-loan-products/jest.config.ts",
         "passWithNoTests": true
       }
     }

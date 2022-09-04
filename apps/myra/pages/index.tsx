@@ -1,5 +1,4 @@
 import { ReactElement, useState } from 'react';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import {
   AiFillInfoCircle,
   AiOutlineBarcode,
@@ -21,9 +20,9 @@ import { HomePageLayout } from '@coop/myra/components';
 import {
   Box,
   Button,
+  ChakraModal,
   Grid,
   GridItem,
-  Modal,
   QuickLinks,
   Text,
 } from '@coop/shared/ui';
@@ -76,7 +75,7 @@ const Dashboard = () => {
       icon: FiSettings,
     },
     {
-      text: 'Ram Krishna (CA2234)',
+      text: 'Ram Krishna',
       subText: 'Member Profile',
       icon: AiOutlineUser,
     },
@@ -90,9 +89,9 @@ const Dashboard = () => {
     },
   ];
 
-  const handleDragEnd = async () => {
-    setOpenModal(false);
-  };
+  // const handleDragEnd = async () => {
+  //   setOpenModal(false);
+  // };
 
   return (
     <Box height="fit-content" p="0" pb="55px">
@@ -132,21 +131,15 @@ const Dashboard = () => {
         </Grid>
       </Box>
 
-      <Modal
+      <ChakraModal
         open={openModal}
         onClose={onCloseModal}
         isCentered={true}
-        title={
-          <Text
-            fontSize="r2"
-            color="neutralColorLight.Gray-80"
-            fontWeight="SemiBold"
-          >
-            {t['editQuickLink']}
-          </Text>
-        }
+        title="editQuickLink"
+        primaryButtonLabel="save"
+        secondaryButtonLabel="cancel"
       >
-        <DragDropContext onDragEnd={handleDragEnd}>
+        {/* <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId={'quick'}>
             {(provided) => (
               <Box {...provided.droppableProps} ref={provided.innerRef}>
@@ -184,9 +177,26 @@ const Dashboard = () => {
               </Box>
             )}
           </Droppable>
-        </DragDropContext>
-        {/* </Grid> */}
-      </Modal>
+        </DragDropContext> */}
+
+        <Grid
+          templateColumns="repeat(3,1fr)"
+          py="s16"
+          columnGap="s16"
+          rowGap="s8"
+        >
+          {quickLinksList?.map((item, index) => (
+            <QuickLinks
+              key={index}
+              editable={true}
+              icon={item.icon}
+              text={item.text}
+              subText={item.subText}
+              onclick={item.onclick}
+            />
+          ))}
+        </Grid>
+      </ChakraModal>
 
       <Box mt="s32" display="flex" flexDir="column" gap="s16">
         <Box>
@@ -258,9 +268,7 @@ const Dashboard = () => {
                 <Box mt="24px">
                   <HStack spacing="20px">
                     <Box>
-                      {' '}
                       <Text fontSize="20px" fontWeight="500" color="#FC814A">
-                        {' '}
                         96,934.00
                       </Text>
                     </Box>

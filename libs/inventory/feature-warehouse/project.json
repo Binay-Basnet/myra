@@ -1,5 +1,5 @@
 {
-  "root": "libs/inventory/feature-warehouse",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/inventory/feature-warehouse/src",
   "projectType": "library",
   "tags": [],
@@ -17,7 +17,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/inventory/feature-warehouse"],
       "options": {
-        "jestConfig": "libs/inventory/feature-warehouse/jest.config.js",
+        "jestConfig": "libs/inventory/feature-warehouse/jest.config.ts",
         "passWithNoTests": true
       }
     }

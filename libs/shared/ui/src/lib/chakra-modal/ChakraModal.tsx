@@ -13,14 +13,15 @@ import {
 
 import { Button } from '@coop/shared/ui';
 import { Icon, IconButton, TextFields } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
-export interface ModalProps
+export interface ModalChakraProps
   extends Omit<ChakraModalProps, 'isOpen' | 'onClose'> {
   open: boolean;
   onClose: () => void;
   children: React.ReactNode;
-  title?: React.ReactNode;
+  title?: string;
   primaryButtonLabel?: string;
   secondaryButtonLabel?: string;
   primaryButtonHandler?: () => null;
@@ -30,7 +31,7 @@ export interface ModalProps
   isDanger?: boolean;
 }
 
-export function ChakraModal(props: ModalProps) {
+export function ChakraModal(props: ModalChakraProps) {
   const {
     open,
     onClose,
@@ -46,6 +47,8 @@ export function ChakraModal(props: ModalProps) {
     ...rest
   } = props;
 
+  const { t } = useTranslation();
+
   return (
     <Modal {...rest} isOpen={open} onClose={onClose}>
       <ModalOverlay />
@@ -59,7 +62,7 @@ export function ChakraModal(props: ModalProps) {
             display={'flex'}
             alignItems="center"
           >
-            <TextFields variant="pageHeader">{title}</TextFields>
+            <TextFields variant="pageHeader">{t[title]}</TextFields>
           </Box>
         )}
         <ModalCloseButton _focus={{}} p={0}>
@@ -85,7 +88,7 @@ export function ChakraModal(props: ModalProps) {
             <Box>
               {linkButtonLabel && (
                 <Button variant="link" onClick={linkButtonHandler}>
-                  {linkButtonLabel}
+                  {t[linkButtonLabel]}
                 </Button>
               )}
             </Box>
@@ -102,7 +105,7 @@ export function ChakraModal(props: ModalProps) {
                   shade="neutral"
                   onClick={secondaryButtonHandler}
                 >
-                  {secondaryButtonLabel}
+                  {t[secondaryButtonLabel]}
                 </Button>
               )}
               {primaryButtonLabel && (
@@ -112,7 +115,7 @@ export function ChakraModal(props: ModalProps) {
                   width={'100px'}
                   shade={isDanger ? 'danger' : 'primary'}
                 >
-                  {primaryButtonLabel}
+                  {t[primaryButtonLabel]}
                 </Button>
               )}
             </Box>

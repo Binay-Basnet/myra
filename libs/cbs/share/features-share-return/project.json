@@ -1,5 +1,5 @@
 {
-  "root": "libs/cbs/share/features-share-return",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/share/features-share-return/src",
   "projectType": "library",
   "tags": [],
@@ -17,7 +17,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/cbs/share/features-share-return"],
       "options": {
-        "jestConfig": "libs/cbs/share/features-share-return/jest.config.js",
+        "jestConfig": "libs/cbs/share/features-share-return/jest.config.ts",
         "passWithNoTests": true
       }
     }

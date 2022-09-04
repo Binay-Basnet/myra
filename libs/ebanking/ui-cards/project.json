@@ -1,5 +1,5 @@
 {
-  "root": "libs/ebanking/ui-cards",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/ebanking/ui-cards/src",
   "projectType": "library",
   "tags": [],
@@ -15,7 +15,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/ebanking/ui-cards"],
       "options": {
-        "jestConfig": "libs/ebanking/ui-cards/jest.config.js",
+        "jestConfig": "libs/ebanking/ui-cards/jest.config.ts",
         "passWithNoTests": true
       }
     }

@@ -1,49 +1,28 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { BsFillTelephoneFill } from 'react-icons/bs';
-import { GrMail } from 'react-icons/gr';
-import { IoLocationSharp } from 'react-icons/io5';
-import { RiShareBoxFill } from 'react-icons/ri';
-import { useRouter } from 'next/router';
-import omit from 'lodash/omit';
+import { IoChevronBackOutline } from 'react-icons/io5';
 
-import { InputGroupContainer } from '@coop/accounting/ui-components';
-import {
-  KymIndFormStateQuery,
-  NatureOfDepositProduct,
-  Payment_Mode,
-  useAddSharePurchaseMutation,
-  useGetAccountTableListQuery,
-  useGetBankListQuery,
-  useGetMemberIndividualDataQuery,
-  useGetMemberListQuery,
-} from '@coop/cbs/data-access';
-import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
-import { SharePurchaseHistoryTable } from '@coop/myra/components';
+import { Member, useGetMemberIndividualDataQuery } from '@coop/cbs/data-access';
 import { FieldCardComponents } from '@coop/shared/components';
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { FormInput } from '@coop/shared/form';
 import {
-  asyncToast,
-  Avatar,
   Box,
+  Button,
   Container,
-  DEFAULT_PAGE_SIZE,
   FormFooter,
   FormHeader,
   FormMemberSelect,
+  FormSection,
   Grid,
   GridItem,
-  Icon,
   Navbar,
+  ShareMemberCard,
   TabMenu,
   Text,
-  TextFields,
 } from '@coop/shared/ui';
-import {
-  amountConverter,
-  getRouterQuery,
-  useTranslation,
-} from '@coop/shared/utils';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
+
+import SharePurchasePayment from './SharePurchasePayment';
 
 const Header = () => {
   return (
@@ -56,37 +35,16 @@ const Header = () => {
 
 const SharePurchaseForm = () => {
   const { t } = useTranslation();
-  const router = useRouter();
   const methods = useForm();
-  const { watch, getValues } = methods;
-
-  const { mutateAsync } = useAddSharePurchaseMutation();
-
-  const accountList = [
-    { label: t['sharePurchaseBankVoucher'], value: Payment_Mode.BankVoucher },
-    { label: t['sharePurchaseAccount'], value: Payment_Mode.Account },
-    { label: t['sharePurchaseCash'], value: Payment_Mode.Cash },
-  ];
+  const { watch } = methods;
 
   const memberId = watch('memberId');
   const noOfShares = watch('shareCount');
   const printingFee = watch('printingFee');
   const adminFee = watch('adminFee');
-  const paymentModes = watch('paymentMode');
-  const accountId = watch('accountId');
 
   const [totalAmount, setTotalAmount] = useState(0);
-
-  const { data: bankData } = useGetBankListQuery();
-
-  const bankListArr = bankData?.bank?.bank?.list;
-
-  const bankList = bankListArr?.map((item) => {
-    return {
-      label: item?.name as string,
-      value: item?.id as string,
-    };
-  });
+  const [mode, setMode] = useState('0');
 
   const { data } = useGetMemberIndividualDataQuery(
     {
@@ -97,47 +55,7 @@ const SharePurchaseForm = () => {
     }
   );
 
-  const { data: accountListData } = useGetAccountTableListQuery(
-    {
-      paginate: {
-        first: DEFAULT_PAGE_SIZE,
-        after: '',
-      },
-      filter: { memberId },
-    },
-    {
-      staleTime: 0,
-      enabled: !!memberId,
-    }
-  );
-
-  const availableBalance = accountListData?.account?.list?.edges?.filter(
-    (item) => item?.node?.id === accountId
-  );
-
-  const accountTypes = {
-    [NatureOfDepositProduct.Mandatory]: 'Mandatory Saving Account',
-    [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
-    [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
-    [NatureOfDepositProduct.VoluntaryOrOptional]: 'Voluntary Saving Account',
-  };
-
-  const { data: memberList } = useGetMemberListQuery(
-    {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    },
-    {
-      staleTime: 0,
-    }
-  );
-
-  const memberListData = memberList?.members?.list?.edges;
-
-  const memberDetail =
-    memberListData &&
-    memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
-
-  const memberProfile = memberDetail?.profile as KymIndFormStateQuery;
+  const memberDetail = data && data?.members?.details?.data;
 
   useEffect(() => {
     setTotalAmount(
@@ -145,36 +63,45 @@ const SharePurchaseForm = () => {
     );
   }, [noOfShares, adminFee, printingFee]);
 
-  const onSubmit = () => {
-    const values = getValues();
-
-    const updatedValues = {
-      ...omit(values, ['printingFee', 'adminFee']),
-      extraFee: [
-        {
-          name: 'adminFee',
-          value: adminFee,
-        },
-        {
-          name: 'printFee',
-          value: printingFee,
-        },
-      ],
-      totalAmount: totalAmount.toString(),
-      shareCount: Number(values['shareCount']),
-      memberId,
-    };
-
-    asyncToast({
-      id: 'share-purchase-id',
-      msgs: {
-        success: 'Share Purchased',
-        loading: 'Purchasing Share',
-      },
-      onSuccess: () => router.push('/share/register'),
-      promise: mutateAsync({ data: updatedValues }),
-    });
+  const mainButtonHandlermode0 = () => {
+    if (memberId) {
+      setMode('1');
+    }
   };
+  const previousButtonHandler = () => {
+    setMode('0');
+  };
+
+  // const onSubmit = () => {
+  //   const values = getValues();
+
+  //   const updatedValues = {
+  //     ...omit(values, ['printingFee', 'adminFee']),
+  //     extraFee: [
+  //       {
+  //         name: 'adminFee',
+  //         value: adminFee,
+  //       },
+  //       {
+  //         name: 'printFee',
+  //         value: printingFee,
+  //       },
+  //     ],
+  //     totalAmount: totalAmount.toString(),
+  //     shareCount: Number(values['shareCount']),
+  //     memberId,
+  //   };
+
+  //   asyncToast({
+  //     id: 'share-purchase-id',
+  //     msgs: {
+  //       success: 'Share Purchased',
+  //       loading: 'Purchasing Share',
+  //     },
+  //     onSuccess: () => router.push('/share/register'),
+  //     promise: mutateAsync({ data: updatedValues }),
+  //   });
+  // };
 
   return (
     <>
@@ -189,7 +116,7 @@ const SharePurchaseForm = () => {
           >
             <Header />
           </Box>
-          <Container minW="container.lg" p="0" mb="60px">
+          <Container minW="container.xl" p="0" mb="60px">
             <Box
               position="sticky"
               top="110px"
@@ -197,454 +124,215 @@ const SharePurchaseForm = () => {
               width="100%"
               zIndex="10"
             >
-              <FormHeader title={t['sharePurchaseNewSharePurchase']} />
+              <FormHeader title={t['sharePurchaseNewShareIssue']} />
             </Box>
-            <Box
-              mb="50px"
-              display="flex"
-              width="100%"
-              background="white"
-              minH="calc(100vh - 170px)"
-            >
-              <Box w="100%">
+            <Grid templateColumns="repeat(6,1fr)">
+              <GridItem
+                display={mode === '0' ? null : 'none'}
+                colSpan={data ? 4 : 6}
+              >
                 <Box
-                  background="white"
-                  p={5}
-                  borderBottom="1px solid"
-                  borderBottomColor={'border.layout'}
-                >
-                  <Box w="50%">
-                    <FormMemberSelect
-                      name="memberId"
-                      label={t['sharePurchaseSelectMember']}
-                    />
-                  </Box>
-
-                  {data && (
-                    <Box
-                      mt="s16"
-                      border="1px solid"
-                      borderColor="border.layout"
-                      borderTopLeftRadius="br2"
-                      borderTopRightRadius="br2"
-                      display="flex"
-                      flexDirection="column"
-                      gap="s16"
-                    >
-                      <Box bg="background.500">
-                        <Grid
-                          templateRows="repeat(1,1fr)"
-                          templateColumns="repeat(5,1fr)"
-                          gap={2}
-                          p="s16"
-                        >
-                          <GridItem
-                            display="flex"
-                            alignSelf="center"
-                            colSpan={2}
-                          >
-                            <Box m="10px">
-                              <Avatar
-                                src="/passport.jpg"
-                                size="lg"
-                                name={memberDetail?.name?.local}
-                              />
-                            </Box>
-                            <Box>
-                              <TextFields
-                                color="neutralColorLight.Gray-80"
-                                fontWeight="Medium"
-                                fontSize="s3"
-                              >
-                                {memberDetail?.name?.local}
-                              </TextFields>
-                              <Text
-                                color="neutralColorLight.Gray-80"
-                                fontSize="s3"
-                                fontWeight="Regular"
-                              >
-                                {t['sharePurchaseID']}:&nbsp;{memberDetail?.id}
-                              </Text>
-
-                              <Text
-                                color="neutralColorLight.Gray-60"
-                                fontWeight="Regular"
-                                fontSize="s3"
-                              >
-                                {t['sharePurchaseMemberSince']}:&nbsp;
-                                {/* {memberDetail?.personalInformation?.dateOfBirth} */}
-                                2054/10/12
-                              </Text>
-
-                              <Text
-                                color="neutralColorLight.Gray-60"
-                                fontWeight="Regular"
-                                fontSize="s3"
-                              >
-                                {t['sharePurchaseBranch']}:&nbsp;
-                                {memberDetail?.address?.district?.local ?? '-'}
-                              </Text>
-                            </Box>
-                          </GridItem>
-
-                          <GridItem
-                            display="flex"
-                            flexDirection="column"
-                            alignSelf="center"
-                            colSpan={2}
-                            gap={3}
-                          >
-                            <Box display="flex">
-                              <Icon
-                                size="sm"
-                                as={BsFillTelephoneFill}
-                                color="primary.500"
-                              />
-                              <TextFields
-                                ml="10px"
-                                color="neutralColorLight.Gray-80"
-                                fontSize="s3"
-                                fontWeight="Regular"
-                              >
-                                {memberDetail?.contact ?? '-'}
-                              </TextFields>
-                            </Box>
-
-                            <Box display="flex">
-                              <Icon size="sm" as={GrMail} color="primary.500" />
-                              <TextFields
-                                ml="10px"
-                                color="neutralColorLight.Gray-80"
-                                fontSize="s3"
-                                fontWeight="Regular"
-                              >
-                                {memberProfile?.data?.formData?.contactDetails
-                                  ?.email ?? '-'}
-                              </TextFields>
-                            </Box>
-
-                            <Box display="flex">
-                              <Icon
-                                size="sm"
-                                as={IoLocationSharp}
-                                color="primary.500"
-                              />
-                              <TextFields
-                                ml="10px"
-                                color="neutralColorLight.Gray-80"
-                                fontSize="s3"
-                                fontWeight="Regular"
-                              >
-                                {memberDetail?.address?.district?.local ?? '-'}{' '}
-                                ,{memberDetail?.address?.locality?.local} -
-                                {memberDetail?.address?.wardNo}
-                              </TextFields>
-                            </Box>
-                          </GridItem>
-                          <GridItem
-                            display="flex"
-                            justifyContent="flex-end"
-                            mr="s32"
-                          >
-                            <TextFields variant="link">
-                              {t['sharePurchaseViewProfile']}{' '}
-                            </TextFields>
-                            <Icon
-                              ml="5px"
-                              size="sm"
-                              as={RiShareBoxFill}
-                              color="primary.500"
-                            />
-                          </GridItem>
-                        </Grid>
-                      </Box>
-
-                      <Box p="2px">
-                        <Box p="s16">
-                          <Text
-                            color="neutralColorLight.Gray-80"
-                            fontWeight="SemiBold"
-                            fontSize="r1"
-                          >
-                            {t['sharePurchaseShareHistory']}
-                          </Text>
-                        </Box>
-                        <SharePurchaseHistoryTable id={memberId} />
-                      </Box>
-                    </Box>
-                  )}
-                </Box>
-
-                <Box
+                  mb="50px"
                   display="flex"
-                  flexDirection="column"
-                  p="5"
-                  pb="28px"
-                  background="white"
-                  borderBottom="1px solid "
+                  width="100%"
+                  h="100%"
+                  background="gray.0"
+                  minH="calc(100vh - 170px)"
+                  border="1px solid"
                   borderColor="border.layout"
-                  borderTopRadius={5}
                 >
-                  <Text
-                    fontWeight="SemiBold"
-                    fontSize="r1"
-                    color="neutralColorLight.Gray-60"
-                  >
-                    {t['sharePurchaseShareInformation']}
-                  </Text>
+                  <Box w="100%">
+                    <FormSection>
+                      <GridItem colSpan={2}>
+                        <FormMemberSelect
+                          name="memberId"
+                          label={t['sharePurchaseSelectMember']}
+                        />
+                      </GridItem>
+                    </FormSection>
 
-                  <Grid mt="s16" gap={5} templateColumns="repeat(2,1fr)">
-                    <GridItem>
-                      <FormInput
-                        type={'number'}
-                        textAlign="right"
-                        id="noOfShares"
-                        name="shareCount"
-                        max={10}
-                        label={t['sharePurchaseNoOfShares']}
-                        __placeholder="0"
-                      />
-                    </GridItem>
-
-                    {noOfShares ? (
-                      <FieldCardComponents rows={'repeat(4,1fr)'}>
-                        <GridItem
-                          display="flex"
-                          justifyContent="space-between"
-                          alignItems="center"
-                        >
-                          <Text
-                            color="neutralLightColor.Gray-60"
-                            fontWeight="Medium"
-                            fontSize="s3"
-                          >
-                            {t['sharePurchaseShareAmount']}
-                          </Text>
-
-                          <Box p="s12">
-                            <Text
-                              color="neutralLightColor.Gray-80"
-                              fontWeight="SemiBold"
-                              fontSize="r1"
-                            >
-                              {amountConverter(noOfShares * 100)}
-                            </Text>
-                          </Box>
-                        </GridItem>
-
-                        <GridItem display="flex" justifyContent="space-between">
-                          <Text
-                            color="neutralLightColor.Gray-60"
-                            fontWeight="Medium"
-                            fontSize="s3"
-                            display="flex"
-                            alignItems="center"
-                          >
-                            {t['sharePurchaseAdministrationFees']}
-                          </Text>
-                          <Box width="300px">
-                            <FormInput
-                              name="adminFee"
-                              type="number"
-                              textAlign={'right'}
-                              __placeholder="0.00"
-                            />
-
-                            {/* <FormNumberInput
-                              name="adminFee"
-                              id="administrationFees"
-                              __placeholder="34000.00"
-                              bg="gray.0"
-                            /> */}
-                          </Box>
-                        </GridItem>
-
-                        <GridItem
-                          display="flex"
-                          justifyContent="space-between"
-                          alignItems="center"
-                        >
-                          <Text
-                            color="neutralLightColor.Gray-60"
-                            fontWeight="Medium"
-                            fontSize="s3"
-                          >
-                            {t['sharePurchasePrintingFees']}
-                          </Text>
-                          <Box width="300px">
-                            <FormInput
-                              name="printingFee"
-                              type="number"
-                              textAlign={'right'}
-                              __placeholder="0.00"
-                            />
-
-                            {/* <FormNumberInput
-                              name="printingFee"
-                              id="printingFees"
-                              label=""
-                              __placeholder="54.00"
-                              bg="gray.0"
-                            /> */}
-                          </Box>
-                        </GridItem>
-
-                        <GridItem
-                          display="flex"
-                          justifyContent="space-between"
-                          alignItems="center"
-                        >
-                          <Text
-                            color="neutralLightColor.Gray-80"
-                            fontWeight="SemiBold"
-                            fontSize="s3"
-                          >
-                            {t['sharePurchaseTotalAmount']}
-                          </Text>
-
-                          <Box p="s12">
-                            <Text
-                              color="neutralLightColor.Gray-80"
-                              fontWeight="SemiBold"
-                              fontSize="r1"
-                            >
-                              {t['rs']} {amountConverter(totalAmount)}
-                            </Text>
-                          </Box>
-                        </GridItem>
-                      </FieldCardComponents>
-                    ) : null}
-                  </Grid>
-                </Box>
-
-                <Box background="white" p={5}>
-                  <Text
-                    color="neutralColorLight.Gray-60"
-                    fontSize="r2"
-                    fontWeight="600"
-                    mb="8px"
-                  >
-                    {t['sharePurchasePaymentInformation']}
-                  </Text>
-                  <Text
-                    color="neutralColorLight.Gray-80"
-                    fontSize="s3"
-                    fontWeight="500"
-                    mb="s16"
-                  >
-                    {t['sharePurchasePaymentMode']}
-                  </Text>
-
-                  <FormSwitchTab
-                    name="paymentMode"
-                    options={accountList.map((value) => ({
-                      label: value.label,
-                      value: value.value,
-                    }))}
-                  />
-
-                  {paymentModes === Payment_Mode.Account && (
-                    <Box mt="s16" mb="220px" w="40%">
-                      <FormCustomSelect
-                        name="accountId"
-                        label={t['sharePurchaseSelectAccount']}
-                        __placeholder={t['sharePurchaseSelectAccount']}
-                        options={accountListData?.account?.list?.edges?.map(
-                          (account) => ({
-                            accountInfo: {
-                              accountName: account.node?.product.productName,
-                              accountId: account.node?.product?.id,
-                              accountType: account?.node?.product?.nature
-                                ? accountTypes[account?.node?.product?.nature]
-                                : '',
-                            },
-                            value: account.node?.id as string,
-                          })
-                        )}
-                      />
-
+                    {data && (
                       <Box
-                        px="s16"
-                        py="s8"
-                        bg="background.500"
-                        color="neutralColorLight.Gray-70"
-                        mt="s16"
+                        display="flex"
+                        flexDirection="column"
+                        pb="s24"
+                        background="white"
+                        borderTopRadius={5}
                       >
-                        <Text fontWeight="400" fontSize="s2">
-                          {t['sharePurchaseAvailableBalance']}
-                        </Text>
-                        <Text fontWeight="600" fontSize="r1">
-                          Rs.
-                          {(availableBalance &&
-                            availableBalance[0]?.node?.balance) ??
-                            0}
-                        </Text>
-                      </Box>
-                    </Box>
-                  )}
-                  {paymentModes === Payment_Mode.BankVoucher && (
-                    <Box
-                      mt="s16"
-                      mb="s16"
-                      display="flex"
-                      flexDirection="column"
-                      gap="s16"
-                    >
-                      <InputGroupContainer>
-                        <FormSelect
-                          name="bankId"
-                          label={t['sharePurchaseSelectBank']}
-                          __placeholder={t['sharePurchaseSelectBank']}
-                          options={bankList}
-                        />
-                      </InputGroupContainer>
-                      <InputGroupContainer>
-                        <FormInput
-                          type="text"
-                          name="voucherNumber"
-                          __placeholder={t['sharePurchaseEnterVoucherNumber']}
-                          label={t['sharePurchaseEnterVoucherNumber']}
-                        />
-                      </InputGroupContainer>
-                    </Box>
-                  )}
+                        <FormSection header="sharePurchaseShareInformation">
+                          <GridItem colSpan={3}>
+                            <FormInput
+                              type={'number'}
+                              textAlign="right"
+                              id="noOfShares"
+                              name="shareCount"
+                              max={10}
+                              label={t['sharePurchaseNoOfShares']}
+                              __placeholder="0"
+                            />
+                          </GridItem>
 
-                  {paymentModes === Payment_Mode.Cash && (
-                    <Box mt="s16" w="25%">
-                      <FormInput
-                        type="text"
-                        name="totalAmount"
-                        __placeholder={t['sharePurchaseEnterCashAmount']}
-                        label={t['sharePurchaseEnterCashAmount']}
-                      />
-                    </Box>
-                  )}
+                          <GridItem colSpan={3}>
+                            {noOfShares ? (
+                              <FieldCardComponents rows={'repeat(4,1fr)'}>
+                                <GridItem
+                                  display="flex"
+                                  justifyContent="space-between"
+                                  alignItems="center"
+                                >
+                                  <Text
+                                    color="neutralLightColor.Gray-60"
+                                    fontWeight="Medium"
+                                    fontSize="s3"
+                                  >
+                                    {t['sharePurchaseShareAmount']}
+                                  </Text>
+
+                                  <Box p="s12">
+                                    <Text
+                                      color="neutralLightColor.Gray-80"
+                                      fontWeight="SemiBold"
+                                      fontSize="r1"
+                                    >
+                                      {amountConverter(noOfShares * 100)}
+                                    </Text>
+                                  </Box>
+                                </GridItem>
+
+                                <GridItem
+                                  display="flex"
+                                  justifyContent="space-between"
+                                >
+                                  <Text
+                                    color="neutralLightColor.Gray-60"
+                                    fontWeight="Medium"
+                                    fontSize="s3"
+                                    display="flex"
+                                    alignItems="center"
+                                  >
+                                    {t['sharePurchaseAdministrationFees']}
+                                  </Text>
+                                  <Box width="300px">
+                                    <FormInput
+                                      name="adminFee"
+                                      type="number"
+                                      textAlign={'right'}
+                                      __placeholder="0.00"
+                                    />
+                                  </Box>
+                                </GridItem>
+
+                                <GridItem
+                                  display="flex"
+                                  justifyContent="space-between"
+                                  alignItems="center"
+                                >
+                                  <Text
+                                    color="neutralLightColor.Gray-60"
+                                    fontWeight="Medium"
+                                    fontSize="s3"
+                                  >
+                                    {t['sharePurchasePrintingFees']}
+                                  </Text>
+                                  <Box width="300px">
+                                    <FormInput
+                                      name="printingFee"
+                                      type="number"
+                                      textAlign={'right'}
+                                      __placeholder="0.00"
+                                    />
+                                  </Box>
+                                </GridItem>
+
+                                <GridItem
+                                  display="flex"
+                                  justifyContent="space-between"
+                                  alignItems="center"
+                                >
+                                  <Text
+                                    color="neutralLightColor.Gray-80"
+                                    fontWeight="SemiBold"
+                                    fontSize="s3"
+                                  >
+                                    {t['sharePurchaseTotalAmount']}
+                                  </Text>
+
+                                  <Box p="s12">
+                                    <Text
+                                      color="neutralLightColor.Gray-80"
+                                      fontWeight="SemiBold"
+                                      fontSize="r1"
+                                    >
+                                      {t['rs']} {amountConverter(totalAmount)}
+                                    </Text>
+                                  </Box>
+                                </GridItem>
+                              </FieldCardComponents>
+                            ) : null}
+                          </GridItem>
+                        </FormSection>
+                      </Box>
+                    )}
+                  </Box>
                 </Box>
-              </Box>
-            </Box>
+              </GridItem>
+
+              <GridItem
+                display={mode === '1' ? null : 'none'}
+                colSpan={data ? 4 : 6}
+              >
+                <SharePurchasePayment />
+              </GridItem>
+
+              <GridItem colSpan={data ? 2 : 0}>
+                {data && (
+                  <ShareMemberCard
+                    totalAmount={totalAmount}
+                    memberDetails={memberDetail as Member}
+                  />
+                )}
+              </GridItem>
+            </Grid>
           </Container>
         </form>
       </FormProvider>
 
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.lg" height="fit-content" p="0">
-            <FormFooter
-              status={
-                <Box display="flex" gap="s8">
-                  <Text
-                    color="neutralColorLight.Gray-60"
-                    fontWeight="Regular"
-                    as="i"
-                    fontSize="r1"
+          <Container minW="container.xl" height="fit-content" p="0">
+            {mode === '0' && (
+              <FormFooter
+                status={
+                  <Box display="flex" gap="s8">
+                    <Text
+                      color="neutralColorLight.Gray-60"
+                      fontWeight="Regular"
+                      as="i"
+                      fontSize="r1"
+                    >
+                      Form details saved to draft 09:41 AM
+                    </Text>
+                  </Box>
+                }
+                mainButtonLabel={t['proceedToPayment']}
+                mainButtonHandler={mainButtonHandlermode0}
+              />
+            )}
+            {mode === '1' && (
+              <FormFooter
+                status={
+                  <Button
+                    variant="outline"
+                    leftIcon={<IoChevronBackOutline />}
+                    onClick={previousButtonHandler}
                   >
-                    Press Done to save form
-                  </Text>
-                </Box>
-              }
-              mainButtonLabel={t['done']}
-              mainButtonHandler={onSubmit}
-            />
+                    {t['previous']}
+                  </Button>
+                }
+                mainButtonLabel={t['proceedToPayment']}
+                // mainButtonHandler={handleSubmit}
+              />
+            )}
           </Container>
         </Box>
       </Box>

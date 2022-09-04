@@ -5,9 +5,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.ebanking
+    image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/myra-ui-ebanking:dev
     container_name: ${EBANKING_CONTAINER_NAME}
     env_file: .env
     ports:
       - ${EBANKING_PORT}:3000
     restart: unless-stopped
-

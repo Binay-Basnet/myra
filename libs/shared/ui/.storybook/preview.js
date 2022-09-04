@@ -17,6 +17,9 @@ export const parameters = {
   chakra: {
     theme,
   },
+  backgrounds: {
+    default: 'light',
+  },
   nextRouter: {
     Provider: RouterContext.Provider,
   },

@@ -11,7 +11,6 @@ interface FormAccountInputProps<T> extends InputProps {
 
 export const FormAccountInput = <T,>({
   name,
-  label,
   __placeholder,
   ...rest
 }: FormAccountInputProps<T>) => {
@@ -28,11 +27,8 @@ export const FormAccountInput = <T,>({
       name={name}
       render={({ field: { onChange, value, ...fieldProps } }) => (
         <AmountInput
-          label={String(label)}
           id={name}
-          type="number"
           onChange={onChange}
-          textAlign="right"
           value={value}
           errorText={errors[name]?.message}
           {...fieldProps}

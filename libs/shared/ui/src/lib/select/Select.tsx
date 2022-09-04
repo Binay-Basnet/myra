@@ -39,7 +39,7 @@ export function Select({
   value,
   hasRadioOption,
   placeholder,
-
+  name,
   ...rest
 }: SelectProps) {
   const { t } = useTranslation();
@@ -63,6 +63,7 @@ export function Select({
             : 'isMulti'
         }
         id="select"
+        data-testId={name}
         instanceId="select"
         onMenuClose={() => {
           if (isMulti) {
