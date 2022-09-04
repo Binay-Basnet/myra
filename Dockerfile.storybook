@@ -14,7 +14,7 @@ RUN yarn
 
 COPY . .
 
-RUN npx nx run shared-ui:build-storybook
+RUN npx nx run shared-ui:build-storybook --verbose
 
 FROM nginx:alpine AS server
 
