@@ -78,6 +78,7 @@
     "@chakra-ui/storybook-addon": "^2.0.0",
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
+    "@commitlint/config-nx-scopes": "^17.0.0",
     "@graphql-codegen/add": "^3.1.1",
     "@graphql-codegen/cli": "2.6.2",
     "@graphql-codegen/introspection": "2.1.1",
@@ -115,6 +116,7 @@
     "@types/react-table": "^7.7.11",
     "@typescript-eslint/eslint-plugin": "5.33.1",
     "@typescript-eslint/parser": "5.33.1",
+    "@webpro/nx-tsc": "^0.0.1",
     "babel-jest": "28.1.3",
     "babel-loader": "8.1.0",
     "cypress": "^9.1.0",
@@ -148,6 +150,7 @@
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
+      "yarn nx affected --target=tsc --uncommitted",
       "yarn eslint --fix",
       "yarn nx format:write --uncommitted"
     ]

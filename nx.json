@@ -1,7 +1,7 @@
 {
   "npmScope": "coop",
   "affected": {
-    "defaultBase": "main"
+    "defaultBase": "HEAD~1"
   },
   "implicitDependencies": {
     "package.json": {
