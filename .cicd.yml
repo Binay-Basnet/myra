@@ -309,10 +309,8 @@ steps:
       from_secret: aws_access_key
     secret_key:
       from_secret: aws_secret_key
-  volumes:
-    - name: env-file
-      path: /drone/src/.env
   commands:
+  - cp /apps/myra-ui-dev/.env .
   - aws configure set aws_access_key_id $access_key
   - aws configure set aws_secret_access_key $secret_key
   - aws ecr get-login-password --region us-east-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.us-east-1.amazonaws.com
@@ -326,11 +324,6 @@ steps:
   - docker-compose --project-name myra-ui-storybook -f docker-compose.storybook.yml up --no-build --force-recreate -d
   - docker image prune -a -f || true
   - docker container prune -a -f || true
-
-volumes:
-- name: env-file
-  host:
-    path: /apps/myra-ui-dev/.env
 
 depends_on:
 - Publish myra-app - dev
@@ -605,6 +598,7 @@ steps:
     - name: env-file
       path: /drone/src/.env
   commands:
+  - cp /apps/myra-ui-main/.env .
   - aws configure set aws_access_key_id $access_key
   - aws configure set aws_secret_access_key $secret_key
   - aws ecr get-login-password --region us-east-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.us-east-1.amazonaws.com
