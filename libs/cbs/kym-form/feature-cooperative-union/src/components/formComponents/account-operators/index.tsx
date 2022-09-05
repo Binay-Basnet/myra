@@ -5,7 +5,9 @@ import { useTranslation } from '@coop/shared/utils';
 import { AccountOperatorInfo } from './AccountOperatorDetails';
 
 interface directorDetailsProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
+  setSection: React.Dispatch<
+    React.SetStateAction<{ section: string; subSection: string }>
+  >;
 }
 
 export const AccountOperatorDetails = (props: directorDetailsProps) => {

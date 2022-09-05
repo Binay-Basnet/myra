@@ -16,8 +16,11 @@ import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 import { useInstitution } from '../hooks/useInstitution';
 
 interface IProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
+  setSection: React.Dispatch<
+    React.SetStateAction<{ section: string; subSection: string }>
+  >;
 }
+
 export const AccountHolderDeclarationInstitution = (props: IProps) => {
   const { t } = useTranslation();
 
@@ -67,7 +70,9 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
       <form
         onFocus={(e) => {
           const kymSection = getKymSectionInstitution(e.target.id);
-          setSection(kymSection);
+          setSection((prev) =>
+            prev?.subSection !== kymSection.subSection ? kymSection : prev
+          );
         }}
       >
         <FormSection

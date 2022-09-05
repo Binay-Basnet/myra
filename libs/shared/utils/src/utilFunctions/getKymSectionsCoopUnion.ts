@@ -18,6 +18,7 @@ const registerDetails = [
   'regdAddress.localGovernmentId',
   'regdAddress.wardNo',
   'regdAddress.locality',
+  'regdAddress.houseNo',
   'regdAddress.coordinates',
 ];
 
@@ -354,5 +355,8 @@ export const getKymSectionCoOperativeUnion = (id: string) => {
       subSection: 'kymCoopUnionAccAccountHolderDeclaration',
     };
   }
-  return;
+  return {
+    section: 'na',
+    subSection: 'na',
+  };
 };

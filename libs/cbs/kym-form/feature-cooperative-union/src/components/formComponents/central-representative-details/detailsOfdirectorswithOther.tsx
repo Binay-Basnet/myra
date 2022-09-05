@@ -39,7 +39,9 @@ import {
 import { CentralRepresentativeTraining } from './centralRepresentativeTraining';
 
 interface ICRDirectorsSelectionProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
+  setSection: React.Dispatch<
+    React.SetStateAction<{ section: string; subSection: string }>
+  >;
   refetch: () => void;
   crId: string;
   setCRId: React.Dispatch<React.SetStateAction<string>>;
@@ -192,7 +194,9 @@ const CRDirectorsSelection = ({
         onFocus={(e) => {
           const kymSection = getKymSectionCoOperativeUnion(e.target.id);
 
-          setSection(kymSection);
+          setSection((prev) =>
+            prev?.subSection !== kymSection.subSection ? kymSection : prev
+          );
         }}
       >
         <GroupContainer>
@@ -221,7 +225,9 @@ const CRDirectorsSelection = ({
 };
 
 interface IAddRepresentativeProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
+  setSection: React.Dispatch<
+    React.SetStateAction<{ section: string; subSection: string }>
+  >;
 }
 
 export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
@@ -407,7 +413,11 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                         e.target.id
                       );
 
-                      setSection(kymSection);
+                      setSection((prev) =>
+                        prev?.subSection !== kymSection.subSection
+                          ? kymSection
+                          : prev
+                      );
                     }}
                   >
                     <SectionContainer gap="s20">

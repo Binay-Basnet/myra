@@ -7,14 +7,13 @@ import isEqual from 'lodash/isEqual';
 
 import {
   GetCooperativeUnionKymEditDataQuery,
-  KymInsInput,
   useGetCooperativeUnionKymEditDataQuery,
   useSetCooperativeUnionInstitutionDataMutation,
 } from '@coop/cbs/data-access';
 import { isDeepEmpty } from '@coop/shared/utils';
 
 interface ICooperativeUnionHookProps {
-  methods: UseFormReturn<KymInsInput>;
+  methods: UseFormReturn<any>;
 }
 
 const getInstiutionData = (
@@ -58,7 +57,7 @@ export const useCooperativeUnionInstitution = ({
 }: ICooperativeUnionHookProps) => {
   const router = useRouter();
   const id = router?.query?.['id'];
-  const { watch, reset } = methods;
+  const { watch, reset, setError } = methods;
   const { mutateAsync } = useSetCooperativeUnionInstitutionDataMutation();
 
   const {
@@ -69,11 +68,21 @@ export const useCooperativeUnionInstitution = ({
     {
       id: String(id),
     },
-    { enabled: !!id }
+    {
+      enabled: !!id,
+      onSuccess: () => {
+        setError('branchOfficeAddress.provinceId', {
+          message: 'THIS IS STUPID',
+        });
+        setError('contactEmail', { message: 'THIS IS STUPID' });
+        setError('nameOfInstitutionEn', { message: 'THIS IS STUPID 11' });
+      },
+    }
   );
+
   const sectionStatus =
     editValues?.members?.cooperativeUnion?.formState?.formData
-      ?.institutionInformation?.sectionStatus;
+      ?.institutionInformation?.sectionStatus.errors;
 
   useEffect(() => {
     if (editValues) {

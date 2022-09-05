@@ -14,7 +14,9 @@ import {
 import { KymMemberdetailsCOOP } from './memberDetails';
 
 interface memberDetailsProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
+  setSection: React.Dispatch<
+    React.SetStateAction<{ section: string; subSection: string }>
+  >;
 }
 
 export const MemberDetails = (props: memberDetailsProps) => {
@@ -31,7 +33,9 @@ export const MemberDetails = (props: memberDetailsProps) => {
         onFocus={(e) => {
           const kymSection = getKymSectionCoOperativeUnion(e.target.id);
 
-          setSection(kymSection);
+          setSection((prev) =>
+            prev?.subSection !== kymSection.subSection ? kymSection : prev
+          );
         }}
       >
         <SectionContainer>

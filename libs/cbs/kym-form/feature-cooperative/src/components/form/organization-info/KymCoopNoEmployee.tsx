@@ -9,7 +9,9 @@ import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 import { useCooperative } from '../../hooks/useCooperative';
 
 interface IProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
+  setSection: React.Dispatch<
+    React.SetStateAction<{ section: string; subSection: string }>
+  >;
 }
 
 export const KymCoopNoEmployee = (props: IProps) => {
@@ -33,7 +35,9 @@ export const KymCoopNoEmployee = (props: IProps) => {
       <form
         onFocus={(e) => {
           const kymSection = getKymCoopSection(e.target.id);
-          setSection(kymSection);
+          setSection((prev) =>
+            prev?.subSection !== kymSection.subSection ? kymSection : prev
+          );
         }}
       >
         <FormSection

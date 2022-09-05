@@ -70,10 +70,6 @@ export function FileInput({
     { url?: string; fileName: string }[] | null
   >(null);
 
-  //
-  //
-  //
-
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFiles((prev) => [...prev, ...acceptedFiles]);
   }, []);
@@ -145,7 +141,7 @@ export function FileInput({
               <Text color="gray.800"> Add File</Text>
             </Button>
           ) : size === 'md' ? (
-            <Text fontSize="r1" fontWeight="500">
+            <Text fontSize="r1" fontWeight="500" as="div">
               <Text color="gray.800"> Add File</Text>
             </Text>
           ) : null}

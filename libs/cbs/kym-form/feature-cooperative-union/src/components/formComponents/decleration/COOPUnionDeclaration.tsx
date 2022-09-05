@@ -13,7 +13,9 @@ import {
 import { useCooperativeUnionInstitution } from '../../../hooks';
 
 interface IDocumentDeclarationInstitutionCOOPUnionProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
+  setSection: React.Dispatch<
+    React.SetStateAction<{ section: string; subSection: string }>
+  >;
 }
 
 export const DocumentDeclarationInstitutionCOOPUnion = ({
@@ -104,7 +106,9 @@ export const DocumentDeclarationInstitutionCOOPUnion = ({
             onFocus={(e) => {
               const kymSection = getKymSectionCoOperativeUnion(e.target.id);
 
-              setSection(kymSection);
+              setSection((prev) =>
+                prev?.subSection !== kymSection.subSection ? kymSection : prev
+              );
             }}
           >
             <Box p="s20" display="flex" gap="s16" alignItems="center">

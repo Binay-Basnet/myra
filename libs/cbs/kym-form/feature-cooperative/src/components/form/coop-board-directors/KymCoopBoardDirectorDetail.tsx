@@ -13,7 +13,9 @@ import { useTranslation } from '@coop/shared/utils';
 import { AddDirector } from '../../accordion-component/KymCoopDirectorAccordion';
 
 interface IProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
+  setSection: React.Dispatch<
+    React.SetStateAction<{ section: string; subSection: string }>
+  >;
 }
 
 export const KymCoopBoardDirectorDetail = (props: IProps) => {

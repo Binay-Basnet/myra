@@ -32,6 +32,7 @@ import {
   DirectorTopPart,
   DocumentComponent,
 } from './AccordianComponents';
+
 interface IAddDirector {
   removeDirector: (directorId: string) => void;
   setKymCurrentSection: (section?: {
@@ -189,7 +190,9 @@ const AddDirector = ({
 };
 
 interface IProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
+  setSection: React.Dispatch<
+    React.SetStateAction<{ section: string; subSection: string }>
+  >;
 }
 
 export const BoardDirectorInfo = (props: IProps) => {
@@ -254,7 +257,9 @@ export const BoardDirectorInfo = (props: IProps) => {
       <form
         onFocus={(e) => {
           const kymSection = getKymSectionInstitution(e.target.id);
-          setSection(kymSection);
+          setSection((prev) =>
+            prev?.subSection !== kymSection.subSection ? kymSection : prev
+          );
         }}
       >
         <FormSection

@@ -11,7 +11,9 @@ import {
 import { useCooperativeUnionEconomicDetails } from '../../../hooks';
 
 interface IExpenseDetailsProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
+  setSection: React.Dispatch<
+    React.SetStateAction<{ section: string; subSection: string }>
+  >;
 }
 
 export const ExpenseDetails = ({ setSection }: IExpenseDetailsProps) => {
@@ -77,7 +79,9 @@ export const ExpenseDetails = ({ setSection }: IExpenseDetailsProps) => {
         onFocus={(e) => {
           const kymSection = getKymSectionCoOperativeUnion(e.target.id);
 
-          setSection(kymSection);
+          setSection((prev) =>
+            prev?.subSection !== kymSection.subSection ? kymSection : prev
+          );
         }}
       >
         <Box

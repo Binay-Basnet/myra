@@ -34,7 +34,9 @@ import { Bottomdirectorcoop } from './boardDirectorDocuments';
 
 interface ICOOPDirector {
   removeDirector: (sisterId: string) => void;
-  setSection: (section?: { section: string; subSection: string }) => void;
+  setSection: React.Dispatch<
+    React.SetStateAction<{ section: string; subSection: string }>
+  >;
   directorId: string;
 }
 
@@ -229,7 +231,9 @@ export const AddDirector = ({
             <form
               onFocus={(e) => {
                 const kymSection = getKymCoopSection(e.target.id);
-                setSection(kymSection);
+                setSection((prev) =>
+                  prev?.subSection !== kymSection.subSection ? kymSection : prev
+                );
               }}
             >
               <Box display={'flex'} flexDirection="column" gap="s48">

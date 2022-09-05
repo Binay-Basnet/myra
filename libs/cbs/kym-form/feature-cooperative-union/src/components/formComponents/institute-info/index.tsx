@@ -13,13 +13,14 @@ import { InstituteBasicInfo } from './InstituteBasicInfo';
 import { OperatingOfficeAddress } from './OperatingOfficeAddress';
 import { RegisteredDetails } from './RegisteredDetails';
 
-interface interfaceInfoProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
+interface IInstitutionInfoProps {
+  setSection: React.Dispatch<
+    React.SetStateAction<{ section: string; subSection: string }>
+  >;
 }
 
-export const InstituteInfo = (props: interfaceInfoProps) => {
+export const InstituteInfo = ({ setSection }: IInstitutionInfoProps) => {
   const { t } = useTranslation();
-  const { setSection } = props;
 
   return (
     <SectionContainer>
@@ -35,7 +36,5 @@ export const InstituteInfo = (props: interfaceInfoProps) => {
       <ApplicantDetails setSection={setSection} />
       <CooperativeMemberInformation setSection={setSection} />
     </SectionContainer>
-    //   </form>
-    // </FormProvider>
   );
 };

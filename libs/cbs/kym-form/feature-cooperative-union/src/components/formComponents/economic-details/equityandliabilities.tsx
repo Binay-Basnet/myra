@@ -11,7 +11,9 @@ import {
 import { useCooperativeUnionEconomicDetails } from '../../../hooks';
 
 interface IKymEquilitiesProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
+  setSection: React.Dispatch<
+    React.SetStateAction<{ section: string; subSection: string }>
+  >;
 }
 
 export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
@@ -142,7 +144,9 @@ export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {
         onFocus={(e) => {
           const kymSection = getKymSectionCoOperativeUnion(e.target.id);
 
-          setSection(kymSection);
+          setSection((prev) =>
+            prev?.subSection !== kymSection.subSection ? kymSection : prev
+          );
         }}
       >
         <Box

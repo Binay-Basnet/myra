@@ -3,13 +3,17 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import { FormEmailInput, FormInput, FormPhoneNumber } from '@coop/shared/form';
 import { FormSection } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
-import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
+import {
+  getKymSectionCoOperativeUnion,
+  useTranslation,
+} from '@coop/shared/utils';
 
 import { useCooperativeUnionInstitution } from '../../../hooks';
 
 interface IContactDetailsProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
+  setSection: React.Dispatch<
+    React.SetStateAction<{ section: string; subSection: string }>
+  >;
 }
 
 export const ContactDetails = ({ setSection }: IContactDetailsProps) => {
@@ -17,84 +21,48 @@ export const ContactDetails = ({ setSection }: IContactDetailsProps) => {
 
   const methods = useForm<CoopUnionInstitutionInformationInput>();
 
-  const { sectionStatus } = useCooperativeUnionInstitution({ methods });
-  const sectionErrors = sectionStatus?.errors?.[0]?.errors;
+  useCooperativeUnionInstitution({ methods });
 
   return (
     <FormProvider {...methods}>
       <form
         onFocus={(e) => {
           const kymSection = getKymSectionCoOperativeUnion(e.target.id);
-
-          setSection(kymSection);
+          setSection((prev) =>
+            prev?.subSection !== kymSection.subSection ? kymSection : prev
+          );
         }}
       >
         <FormSection
           id="kymCoopUnionAccContactDetails"
           header="kymCoopUnionContactDetails"
         >
-          <FormPhoneNumber
-            name="phone"
-            label={t['kymCoopUnionPhone']}
-            __placeholder={t['kymCoopUnionEnterPhoneNumber']}
-            errorText={sectionErrors?.['phone'] && sectionErrors['phone'][0]}
-          />
+          <FormPhoneNumber name="phone" label={t['kymCoopUnionPhone']} />
 
-          <FormInput
-            type="number"
-            name="fax"
-            label={t['kymCoopUnionFax']}
-            __placeholder={t['kymCoopUnionEnterFax']}
-            errorText={sectionErrors?.['fax'] && sectionErrors['fax'][0]}
-          />
+          <FormInput type="number" name="fax" label={t['kymCoopUnionFax']} />
 
-          <FormEmailInput
-            name="contactEmail"
-            label={t['kymCoopUnionEmail']}
-            __placeholder={t['kymCoopUnionEnterEmailAddress']}
-            errorText={
-              sectionErrors?.['contactEmail'] &&
-              sectionErrors['contactEmail'][0]
-            }
-          />
+          <FormEmailInput name="contactEmail" label={t['kymCoopUnionEmail']} />
 
           <FormInput
             type="text"
             name="website"
             label={t['kymCoopUnionWebsiteLinkAny']}
-            __placeholder={t['kymCoopUnionEnterWebsiteURL']}
-            errorText={
-              sectionErrors?.['website'] && sectionErrors['website'][0]
-            }
           />
 
           <FormInput
             type="number"
             name="postBoxNo"
             label={t['kymCoopUnionPostBoxNo']}
-            __placeholder={t['kymCoopUnionEnterPostBoxNo']}
-            errorText={
-              sectionErrors?.['postBoxNo'] && sectionErrors['postBoxNo'][0]
-            }
           />
           <FormInput
             type="number"
             name="noOfEmployee"
             label={t['kymCoopUnionNumberOfEmployees']}
-            __placeholder={t['kymCoopUnionEnterNumberOfEmployees']}
-            errorText={
-              sectionErrors?.['noOfEmployee'] &&
-              sectionErrors['noOfEmployee'][0]
-            }
           />
           <FormInput
             type="date"
             name="lastAgmDate"
             label={t['kymCoopUnionAGMDetailsDate']}
-            __placeholder="DD-MM-YYYY"
-            errorText={
-              sectionErrors?.['lastAgmDate'] && sectionErrors['lastAgmDate'][0]
-            }
           />
         </FormSection>
       </form>

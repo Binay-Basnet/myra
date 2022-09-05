@@ -7498,6 +7498,7 @@ export type ShareBonusSettingsInput = {
 
 export type ShareCharge = {
   charge?: Maybe<Scalars['Float']>;
+  ledgerMapping?: Maybe<Scalars['ID']>;
   maxShare?: Maybe<Scalars['Int']>;
   minShare?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
@@ -7506,6 +7507,7 @@ export type ShareCharge = {
 
 export type ShareChargeInput = {
   charge?: InputMaybe<Scalars['Float']>;
+  ledgerMapping?: InputMaybe<Scalars['ID']>;
   maxShare?: InputMaybe<Scalars['Int']>;
   minShare?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;

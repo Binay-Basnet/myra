@@ -11,7 +11,9 @@ import {
 import { useCooperativeUnionEconomicDetails } from '../../../hooks';
 
 interface IKymAssestsAndtargetProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
+  setSection: React.Dispatch<
+    React.SetStateAction<{ section: string; subSection: string }>
+  >;
 }
 
 export const KymAssestsAndtarget = ({
@@ -80,7 +82,9 @@ export const KymAssestsAndtarget = ({
         onFocus={(e) => {
           const kymSection = getKymSectionCoOperativeUnion(e.target.id);
 
-          setSection(kymSection);
+          setSection((prev) =>
+            prev?.subSection !== kymSection.subSection ? kymSection : prev
+          );
         }}
       >
         <Box

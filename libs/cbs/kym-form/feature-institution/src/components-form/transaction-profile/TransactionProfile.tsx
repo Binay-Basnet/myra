@@ -13,7 +13,9 @@ import { useInstitution } from '../hooks/useInstitution';
 import { getOption } from '../../utils/getOptionsInstitution';
 
 interface IProps {
-  setSection: (section?: { section: string; subSection: string }) => void;
+  setSection: React.Dispatch<
+    React.SetStateAction<{ section: string; subSection: string }>
+  >;
 }
 
 export const TransactionProfileInstitution = (props: IProps) => {
@@ -36,7 +38,9 @@ export const TransactionProfileInstitution = (props: IProps) => {
       <form
         onFocus={(e) => {
           const kymSection = getKymSectionInstitution(e.target.id);
-          setSection(kymSection);
+          setSection((prev) =>
+            prev?.subSection !== kymSection.subSection ? kymSection : prev
+          );
         }}
       >
         <FormSection id="kymInsTransactionProfile">
