@@ -7206,6 +7206,11 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
+"@webpro/nx-tsc@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@webpro/nx-tsc/-/nx-tsc-0.0.1.tgz#dd1ce5fc5e7681c47bb2c1f4545f31a90c689bac"
+  integrity sha512-snYRGq3xG/tgPEUWV4ES/4gbEJtKAqfwou/Denq14G7hQ2aqP52mej26iS4Sb/2nd7ryEz1cml8efsNNgtbs6A==
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.npmjs.org/@xtuc/ieee754/-/ieee754-1.2.0.tgz"

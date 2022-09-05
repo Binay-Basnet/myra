@@ -1,4 +1,5 @@
-# Trigger pipeline
+# # # TODO: add test step before merging to dev
+# # # Trigger pipeline
 kind: pipeline
 name: Build and Push myra-ui
 type: docker
@@ -11,29 +12,24 @@ steps:
   - name: publishing myra-ui-main
     failure: ignore
     image: plugins/ecr
-    environment:
-      PLUGIN_STORAGE_DRIVER: overlay2
-      PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui:main
     settings:
       access_key:
         from_secret: aws_access_key
       secret_key:
         from_secret: aws_secret_key
+      cache_from:
+        - 110278083494.dkr.ecr.us-east-1.amazonaws.com/myra-ui:main
       repo: myra-ui
       registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
       region: us-east-1
-      tags: main
+      tags:
+        - ${DRONE_COMMIT_SHA}
+        - main
+      use_cache: true
       dockerfile: Dockerfile.myra
       build_args:
-        - NX_SCHEMA_PATH=${NX_SCHEMA_PATH}
-        - MYRA_CONTAINER_NAME=${MYRA_CONTAINER_NAME}
-        - MYRA_PORT=${MYRA_PORT}
-        - ADMIN_CONTAINER_NAME=${ADMIN_CONTAINER_NAME}
-        - ADMIN_PORT=${ADMIN_PORT}
-        - EBANKING_CONTAINER_NAME=${EBANKING_CONTAINER_NAME}
-        - EBANKING_PORT=${EBANKING_PORT}
-        - STORYBOOK_CONTAINER_NAME=${STORYBOOK_CONTAINER_NAME}
-        - STORYBOOK_PORT=${STORYBOOK_PORT}
+        - NX_SCHEMA_PATH=https://myra-api.raralabs.live/query
+
     when:
       branch:
         - main
@@ -43,29 +39,24 @@ steps:
   - name: publishing myra-ui-dev
     failure: ignore
     image: plugins/ecr
-    environment:
-      PLUGIN_STORAGE_DRIVER: overlay2
-      PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui:dev
     settings:
       access_key:
         from_secret: aws_access_key
       secret_key:
         from_secret: aws_secret_key
+      cache_from:
+        - 110278083494.dkr.ecr.us-east-1.amazonaws.com/myra-ui:dev
       repo: myra-ui
       registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
+      use_cache: true
       region: us-east-1
-      tags: dev
+      tags:
+        - ${DRONE_COMMIT_SHA}
+        - dev
       dockerfile: Dockerfile.myra
       build_args:
-        - NX_SCHEMA_PATH=${NX_SCHEMA_PATH}
-        - MYRA_CONTAINER_NAME=${MYRA_CONTAINER_NAME}
-        - MYRA_PORT=${MYRA_PORT}
-        - ADMIN_CONTAINER_NAME=${ADMIN_CONTAINER_NAME}
-        - ADMIN_PORT=${ADMIN_PORT}
-        - EBANKING_CONTAINER_NAME=${EBANKING_CONTAINER_NAME}
-        - EBANKING_PORT=${EBANKING_PORT}
-        - STORYBOOK_CONTAINER_NAME=${STORYBOOK_CONTAINER_NAME}
-        - STORYBOOK_PORT=${STORYBOOK_PORT}
+        - NX_SCHEMA_PATH=https://myra-api-dev.raralabs.live/query
+
     when:
       branch:
         - dev
@@ -85,29 +76,24 @@ steps:
   - name: publishing storybook-dev
     failure: ignore
     image: plugins/ecr
-    environment:
-      PLUGIN_STORAGE_DRIVER: overlay2
-      PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/storybook:dev
     settings:
       access_key:
         from_secret: aws_access_key
       secret_key:
         from_secret: aws_secret_key
+      cache_from:
+        - 110278083494.dkr.ecr.us-east-1.amazonaws.com/storybook:dev
       repo: storybook
+      use_cache: true
       registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
       region: us-east-1
-      tags: dev
+      tags:
+        - ${DRONE_COMMIT_SHA}
+        - dev
       dockerfile: Dockerfile.storybook
       build_args:
-        - NX_SCHEMA_PATH=${NX_SCHEMA_PATH_DEV}
-        - MYRA_CONTAINER_NAME=${MYRA_CONTAINER_NAME_DEV}
-        - MYRA_PORT=${MYRA_PORT_DEV}
-        - ADMIN_CONTAINER_NAME=${ADMIN_CONTAINER_NAME_DEV}
-        - ADMIN_PORT=${ADMIN_PORT_DEV}
-        - EBANKING_CONTAINER_NAME=${EBANKING_CONTAINER_NAME_DEV}
-        - EBANKING_PORT=${EBANKING_PORT_DEV}
-        - STORYBOOK_CONTAINER_NAME=${STORYBOOK_CONTAINER_NAME_DEV}
-        - STORYBOOK_PORT=${STORYBOOK_PORT_DEV}
+        - NX_SCHEMA_PATH=https://myra-api-dev.raralabs.live/query
+
     when:
       branch:
         - dev
@@ -127,29 +113,24 @@ steps:
   - name: publishing myra-ui-admin-main
     failure: ignore
     image: plugins/ecr
-    environment:
-      PLUGIN_STORAGE_DRIVER: overlay2
-      PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui-admin:main
     settings:
       access_key:
         from_secret: aws_access_key
       secret_key:
         from_secret: aws_secret_key
+      cache_from:
+        - 110278083494.dkr.ecr.us-east-1.amazonaws.com/myra-ui-admin:main
       repo: myra-ui-admin
       registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
       region: us-east-1
-      tags: main
+      tags:
+        - ${DRONE_COMMIT_SHA}
+        - main
+      use_cache: true
       dockerfile: Dockerfile.neosys-admin
       build_args:
-        - NX_SCHEMA_PATH=${NX_SCHEMA_PATH}
-        - MYRA_CONTAINER_NAME=${MYRA_CONTAINER_NAME}
-        - MYRA_PORT=${MYRA_PORT}
-        - ADMIN_CONTAINER_NAME=${ADMIN_CONTAINER_NAME}
-        - ADMIN_PORT=${ADMIN_PORT}
-        - EBANKING_CONTAINER_NAME=${EBANKING_CONTAINER_NAME}
-        - EBANKING_PORT=${EBANKING_PORT}
-        - STORYBOOK_CONTAINER_NAME=${STORYBOOK_CONTAINER_NAME}
-        - STORYBOOK_PORT=${STORYBOOK_PORT}
+        - NX_SCHEMA_PATH=https://myra-api.raralabs.live/query
+
     when:
       branch:
         - main
@@ -159,9 +140,6 @@ steps:
   - name: publishing myra-ui-admin-dev
     failure: ignore
     image: plugins/ecr
-    environment:
-      PLUGIN_STORAGE_DRIVER: overlay2
-      PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui-admin:dev
     settings:
       access_key:
         from_secret: aws_access_key
@@ -169,19 +147,17 @@ steps:
         from_secret: aws_secret_key
       repo: myra-ui-admin
       registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
+      cache_from:
+        - 110278083494.dkr.ecr.us-east-1.amazonaws.com/myra-ui-admin:dev
       region: us-east-1
-      tags: dev
+      tags:
+        - ${DRONE_COMMIT_SHA}
+        - dev
+      use_cache: true
       dockerfile: Dockerfile.neosys-admin
       build_args:
-        - NX_SCHEMA_PATH=${NX_SCHEMA_PATH}
-        - MYRA_CONTAINER_NAME=${MYRA_CONTAINER_NAME}
-        - MYRA_PORT=${MYRA_PORT}
-        - ADMIN_CONTAINER_NAME=${ADMIN_CONTAINER_NAME}
-        - ADMIN_PORT=${ADMIN_PORT}
-        - EBANKING_CONTAINER_NAME=${EBANKING_CONTAINER_NAME}
-        - EBANKING_PORT=${EBANKING_PORT}
-        - STORYBOOK_CONTAINER_NAME=${STORYBOOK_CONTAINER_NAME}
-        - STORYBOOK_PORT=${STORYBOOK_PORT}
+        - NX_SCHEMA_PATH=https://myra-api-dev.raralabs.live/query
+
     when:
       branch:
         - dev
@@ -201,29 +177,24 @@ steps:
   - name: publishing myra-ui-ebanking-main
     failure: ignore
     image: plugins/ecr
-    environment:
-      PLUGIN_STORAGE_DRIVER: overlay2
-      PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui-ebanking:main
     settings:
       access_key:
         from_secret: aws_access_key
       secret_key:
         from_secret: aws_secret_key
+      cache_from:
+        - 110278083494.dkr.ecr.us-east-1.amazonaws.com/myra-ui-ebanking:main
       repo: myra-ui-ebanking
       registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
       region: us-east-1
-      tags: main
+      tags:
+        - ${DRONE_COMMIT_SHA}
+        - main
+      use_cache: true
       dockerfile: Dockerfile.ebanking
       build_args:
-        - NX_SCHEMA_PATH=${NX_SCHEMA_PATH}
-        - MYRA_CONTAINER_NAME=${MYRA_CONTAINER_NAME}
-        - MYRA_PORT=${MYRA_PORT}
-        - ADMIN_CONTAINER_NAME=${ADMIN_CONTAINER_NAME}
-        - ADMIN_PORT=${ADMIN_PORT}
-        - EBANKING_CONTAINER_NAME=${EBANKING_CONTAINER_NAME}
-        - EBANKING_PORT=${EBANKING_PORT}
-        - STORYBOOK_CONTAINER_NAME=${STORYBOOK_CONTAINER_NAME}
-        - STORYBOOK_PORT=${STORYBOOK_PORT}
+        - NX_SCHEMA_PATH=https://myra-api.raralabs.live/query
+
     when:
       branch:
         - main
@@ -233,29 +204,24 @@ steps:
   - name: publishing myra-ui-ebanking-dev
     failure: ignore
     image: plugins/ecr
-    environment:
-      PLUGIN_STORAGE_DRIVER: overlay2
-      PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui-ebanking:dev
     settings:
       access_key:
         from_secret: aws_access_key
       secret_key:
         from_secret: aws_secret_key
+      cache_from:
+        - 110278083494.dkr.ecr.us-east-1.amazonaws.com/myra-ui-ebanking:dev
       repo: myra-ui-ebanking
       registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
       region: us-east-1
-      tags: dev
+      tags:
+        - ${DRONE_COMMIT_SHA}
+        - dev
+      use_cache: true
       dockerfile: Dockerfile.ebanking
       build_args:
-        - NX_SCHEMA_PATH=${NX_SCHEMA_PATH}
-        - MYRA_CONTAINER_NAME=${MYRA_CONTAINER_NAME}
-        - MYRA_PORT=${MYRA_PORT}
-        - ADMIN_CONTAINER_NAME=${ADMIN_CONTAINER_NAME}
-        - ADMIN_PORT=${ADMIN_PORT}
-        - EBANKING_CONTAINER_NAME=${EBANKING_CONTAINER_NAME}
-        - EBANKING_PORT=${EBANKING_PORT}
-        - STORYBOOK_CONTAINER_NAME=${STORYBOOK_CONTAINER_NAME}
-        - STORYBOOK_PORT=${STORYBOOK_PORT}
+        - NX_SCHEMA_PATH=https://myra-api-dev.raralabs.live/query
+
     when:
       branch:
         - dev

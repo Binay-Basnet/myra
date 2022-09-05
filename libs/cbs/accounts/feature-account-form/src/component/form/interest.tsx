@@ -1,17 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { IoInformationCircleOutline } from 'react-icons/io5';
 
 import {
   NatureOfDepositProduct,
   useGetAccountOpenProductDetailsQuery,
 } from '@coop/cbs/data-access';
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
+import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormCheckbox, FormInput } from '@coop/shared/form';
-import { Box, Icon, Text, TextFields } from '@coop/shared/ui';
+import { Alert, Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const Interest = () => {
@@ -46,17 +42,11 @@ export const Interest = () => {
     (ceoInterest ? Number(ProductData?.interest?.ceoAuthority) : 0) +
     (BoardInterest ? Number(ProductData?.interest?.boardAuthority) : 0);
   return (
-    <GroupContainer
-      scrollMarginTop={'200px'}
-      display="flex"
-      flexDirection={'column'}
-      gap="s16"
-    >
+    <Box display="flex" flexDirection={'column'} gap="s16">
       <Box
         display="flex"
         flexDirection="column"
         w="100%"
-        p="s20"
         background="neutralColorLight.Gray-0"
       >
         <Text
@@ -100,77 +90,17 @@ export const Interest = () => {
             </Box>
           </InputGroupContainer>
           {ProductType === NatureOfDepositProduct.RecurringSaving && (
-            <Box
-              display="flex"
-              gap="s12"
-              px="s16"
-              paddingTop="s16"
-              bg="primary.0"
-              borderRadius="br2"
-            >
-              <Icon
-                as={IoInformationCircleOutline}
-                color="neutralColorLight.Gray-80"
-              />
-              <Box display="flex" flexDirection="column">
-                <Box display="flex" flexDirection="column" gap="s8">
-                  <TextFields
-                    fontSize="s3"
-                    fontWeight="SemiBold"
-                    color="neutralColorLight.Gray-80"
-                  >
-                    {t['accountOpenInterestRate']}
-                  </TextFields>
-                  <Box display="flex" flexDirection="column">
-                    <TextFields
-                      fontSize="s3"
-                      fontWeight="Regular"
-                      color="neutralColorLight.Gray-80"
-                    >
-                      Minimum Interest Rate:{' '}
-                      <b>{ProductData?.interest?.minRate}</b>
-                      <TextFields
-                        fontSize="s3"
-                        fontWeight="Regular"
-                        color="neutralColorLight.Gray-80"
-                        mb="s16"
-                      >
-                        Maximum Interest Rate:{' '}
-                        <b>{ProductData?.interest?.maxRate}</b>
-                      </TextFields>
-                    </TextFields>
-                  </Box>
-                </Box>
-                {ProductData?.ladderRate && (
-                  <Box display="flex" flexDirection="column" gap="s8">
-                    <TextFields
-                      fontSize="s3"
-                      fontWeight="SemiBold"
-                      color="neutralColorLight.Gray-80"
-                    >
-                      {t['accoutnOpenLadderRateInfo']}
-                    </TextFields>
-
-                    <Box display="flex" flexDirection="column">
-                      {ProductData?.ladderRateData?.map((data) => (
-                        <TextFields
-                          fontSize="s3"
-                          fontWeight="Regular"
-                          color="neutralColorLight.Gray-80"
-                          key={data?.type}
-                        >
-                          For More than <b>{data?.amount}</b> Ladder Rate is
-                          {data?.rate}
-                        </TextFields>
-                      ))}
-                    </Box>
-                  </Box>
-                )}
-              </Box>
-            </Box>
+            <Alert status="info" title="Rates">
+              <Box display={'flex'} flexDirection="column" gap="s4">
+                <Text fontWeight={'400'} fontSize="r1">
+                  Interest Rate: {ProductData?.interest?.minRate} -{' '}
+                  {ProductData?.interest?.maxRate}
+                </Text>
+              </Box>{' '}
+            </Alert>
           )}
         </Box>
       </Box>
-    </GroupContainer>
+    </Box>
   );
 };

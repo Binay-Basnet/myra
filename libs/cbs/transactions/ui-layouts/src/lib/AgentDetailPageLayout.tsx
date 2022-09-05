@@ -9,33 +9,35 @@ interface AgentDetailPageLayoutProps {
   // tabList: { title: string; to: string }[];
 }
 
-const tabList = [
-  {
-    title: 'Overview',
-    to: '/transactions/agent/123456/overview',
-  },
-  {
-    title: 'Assigned Members',
-    to: '/transactions/agent/123456/assigned-members',
-  },
-  {
-    title: 'Tasks',
-    to: '/transactions/agent/123456/tasks',
-  },
-  {
-    title: 'Documents',
-    to: '/transactions/agent/123456/documents',
-  },
-  {
-    title: 'Activity',
-    to: '/transactions/agent/123456/activity',
-  },
-];
-
 export const AgentDetailPageLayout = ({
   children,
 }: AgentDetailPageLayoutProps) => {
   const router = useRouter();
+
+  const id = router?.query?.['id'];
+
+  const tabList = [
+    {
+      title: 'Overview',
+      to: `/transactions/agent/${id}/overview`,
+    },
+    {
+      title: 'Assigned Members',
+      to: `/transactions/agent/${id}/assigned-members`,
+    },
+    {
+      title: 'Tasks',
+      to: `/transactions/agent/${id}/tasks`,
+    },
+    {
+      title: 'Documents',
+      to: `/transactions/agent/${id}/documents`,
+    },
+    {
+      title: 'Activity',
+      to: `/transactions/agent/${id}/activity`,
+    },
+  ];
 
   return (
     <>

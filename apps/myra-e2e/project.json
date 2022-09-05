@@ -3,6 +3,12 @@
   "sourceRoot": "apps/myra-e2e/src",
   "projectType": "application",
   "targets": {
+    "tsc": {
+      "executor": "@webpro/nx-tsc:tsc",
+      "options": {
+        "tsConfig": ["tsconfig.json"]
+      }
+    },
     "e2e": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
