@@ -59,9 +59,9 @@ steps:
 
     when:
       branch:
-      - dev
+        - dev
       event:
-      - push
+        - push
 
 ---
 kind: pipeline
@@ -160,9 +160,9 @@ steps:
 
     when:
       branch:
-      - dev
+        - dev
       event:
-      - push
+        - push
 
 ---
 kind: pipeline
@@ -344,9 +344,9 @@ steps:
       - docker container prune -a -f || true
     when:
       branch:
-      - dev
+        - dev
       event:
-      - push
+        - push
 
 depends_on:
   - Build and Push myra-ui

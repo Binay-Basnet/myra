@@ -70,13 +70,13 @@ export const DepositFrequency = () => {
   ];
 
   return (
-    productNature !== NatureOfDepositProduct?.VoluntaryOrOptional && (
-      <GroupContainer
-        scrollMarginTop={'200px'}
-        display="flex"
-        flexDirection={'column'}
-        gap="s16"
-      >
+    <GroupContainer
+      scrollMarginTop={'200px'}
+      display="flex"
+      flexDirection={'column'}
+      gap="s16"
+    >
+      {productNature !== NatureOfDepositProduct?.VoluntaryOrOptional && (
         <Box
           display="flex"
           flexDirection="column"
@@ -259,7 +259,7 @@ export const DepositFrequency = () => {
             />
           </Box>
         </Box>
-      </GroupContainer>
-    )
+      )}
+    </GroupContainer>
   );
 };

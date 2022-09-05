@@ -1,0 +1,9 @@
+mutation setAddMemberToAgentData($agentId: String!, $data: AssignMembersInput) {
+  transaction {
+    addMemberToAgent(agentId: $agentId, data: $data) {
+      data {
+        id
+      }
+    }
+  }
+}

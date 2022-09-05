@@ -75,7 +75,7 @@ const AddNewAccount = () => {
   const underAccounts =
     coaFullView?.settings?.chartsOfAccount.fullView.data?.map((d) => ({
       label: d.name.en,
-      value: d.id,
+      value: d.accountCode,
     }));
 
   useEffect(() => {
