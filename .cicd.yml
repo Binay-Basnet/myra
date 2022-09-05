@@ -319,7 +319,7 @@ steps:
   - docker-compose -f docker-compose.neosys.yml pull
   - docker-compose -f docker-compose.ebanking.yml pull
   - docker-compose -f docker-compose.myra.yml pull
-- docker-compose -f docker-compose.storybook.yml pull
+  - docker-compose -f docker-compose.storybook.yml pull
   - docker-compose --project-name myra-ui-neosys-dev -f docker-compose.neosys.yml up --no-build --force-recreate -d
   - docker-compose --project-name myra-ui-ebanking-dev -f docker-compose.ebanking.yml up --no-build --force-recreate -d
   - docker-compose --project-name myra-ui-myra-dev -f docker-compose.myra.yml up --no-build --force-recreate -d
@@ -614,11 +614,9 @@ steps:
   - docker-compose -f docker-compose.neosys.yml pull
   - docker-compose -f docker-compose.ebanking.yml pull
   - docker-compose -f docker-compose.myra.yml pull
-- docker-compose -f docker-compose.storybook.yml pull
   - docker-compose --project-name myra-ui-neosys-dev -f docker-compose.neosys.yml up --no-build --force-recreate -d
   - docker-compose --project-name myra-ui-ebanking-dev -f docker-compose.ebanking.yml up --no-build --force-recreate -d
   - docker-compose --project-name myra-ui-myra-dev -f docker-compose.myra.yml up --no-build --force-recreate -d
-  - docker-compose --project-name myra-ui-storybook -f docker-compose.storybook.yml up --no-build --force-recreate -d
   - docker image prune -a -f || true
   - docker container prune -a -f || true
 
