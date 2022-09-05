@@ -8433,6 +8433,15 @@ export type SetAccountDocumentDataMutation = {
   document: { Subscription: { Upsert: { recordId?: string | null } } };
 };
 
+export type SetAddMemberToAgentDataMutationVariables = Exact<{
+  agentId: Scalars['String'];
+  data?: InputMaybe<AssignMembersInput>;
+}>;
+
+export type SetAddMemberToAgentDataMutation = {
+  transaction: { addMemberToAgent?: { data?: { id: string } | null } | null };
+};
+
 export type LoginMutationVariables = Exact<{
   data: LoginInput;
 }>;
@@ -10023,6 +10032,81 @@ export type AllAdministrationQuery = {
         }>;
       }>;
     }>;
+  };
+};
+
+export type GetAgentListDataQueryVariables = Exact<{
+  filter?: InputMaybe<AccountTransactionFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetAgentListDataQuery = {
+  transaction: {
+    listAgent: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          agentName?: string | null;
+          phoneNo?: string | null;
+          assignedMember?: number | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    };
+  };
+};
+
+export type GetAgentDetailDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetAgentDetailDataQuery = {
+  transaction: {
+    agentDetail?: {
+      data?: {
+        id?: string | null;
+        name?: string | null;
+        branch?: string | null;
+        totalMembers?: number | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAgentAssignedMemberListDataQueryVariables = Exact<{
+  filter?: InputMaybe<AssignedMemberListFiler>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetAgentAssignedMemberListDataQuery = {
+  transaction: {
+    assignedMemberList: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          assignedDate?: string | null;
+          member?: {
+            name?: Record<'local' | 'en' | 'np', string> | null;
+          } | null;
+          account?: { id: string } | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    };
   };
 };
 
@@ -13244,6 +13328,41 @@ export const useSetAccountDocumentDataMutation = <
     >(SetAccountDocumentDataDocument),
     options
   );
+export const SetAddMemberToAgentDataDocument = `
+    mutation setAddMemberToAgentData($agentId: String!, $data: AssignMembersInput) {
+  transaction {
+    addMemberToAgent(agentId: $agentId, data: $data) {
+      data {
+        id
+      }
+    }
+  }
+}
+    `;
+export const useSetAddMemberToAgentDataMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetAddMemberToAgentDataMutation,
+    TError,
+    SetAddMemberToAgentDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAddMemberToAgentDataMutation,
+    TError,
+    SetAddMemberToAgentDataMutationVariables,
+    TContext
+  >(
+    ['setAddMemberToAgentData'],
+    useAxios<
+      SetAddMemberToAgentDataMutation,
+      SetAddMemberToAgentDataMutationVariables
+    >(SetAddMemberToAgentDataDocument),
+    options
+  );
 export const LoginDocument = `
     mutation login($data: LoginInput!) {
   auth {
@@ -16324,6 +16443,119 @@ export const useAllAdministrationQuery = <
     useAxios<AllAdministrationQuery, AllAdministrationQueryVariables>(
       AllAdministrationDocument
     ).bind(null, variables),
+    options
+  );
+export const GetAgentListDataDocument = `
+    query getAgentListData($filter: AccountTransactionFilter, $pagination: Pagination) {
+  transaction {
+    listAgent(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          agentName
+          phoneNo
+          assignedMember
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useGetAgentListDataQuery = <
+  TData = GetAgentListDataQuery,
+  TError = unknown
+>(
+  variables?: GetAgentListDataQueryVariables,
+  options?: UseQueryOptions<GetAgentListDataQuery, TError, TData>
+) =>
+  useQuery<GetAgentListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getAgentListData']
+      : ['getAgentListData', variables],
+    useAxios<GetAgentListDataQuery, GetAgentListDataQueryVariables>(
+      GetAgentListDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAgentDetailDataDocument = `
+    query getAgentDetailData($id: ID!) {
+  transaction {
+    agentDetail(id: $id) {
+      data {
+        id
+        name
+        branch
+        totalMembers
+      }
+    }
+  }
+}
+    `;
+export const useGetAgentDetailDataQuery = <
+  TData = GetAgentDetailDataQuery,
+  TError = unknown
+>(
+  variables: GetAgentDetailDataQueryVariables,
+  options?: UseQueryOptions<GetAgentDetailDataQuery, TError, TData>
+) =>
+  useQuery<GetAgentDetailDataQuery, TError, TData>(
+    ['getAgentDetailData', variables],
+    useAxios<GetAgentDetailDataQuery, GetAgentDetailDataQueryVariables>(
+      GetAgentDetailDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAgentAssignedMemberListDataDocument = `
+    query getAgentAssignedMemberListData($filter: AssignedMemberListFiler, $pagination: Pagination) {
+  transaction {
+    assignedMemberList(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          member {
+            name
+          }
+          account {
+            id
+          }
+          assignedDate
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useGetAgentAssignedMemberListDataQuery = <
+  TData = GetAgentAssignedMemberListDataQuery,
+  TError = unknown
+>(
+  variables?: GetAgentAssignedMemberListDataQueryVariables,
+  options?: UseQueryOptions<GetAgentAssignedMemberListDataQuery, TError, TData>
+) =>
+  useQuery<GetAgentAssignedMemberListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getAgentAssignedMemberListData']
+      : ['getAgentAssignedMemberListData', variables],
+    useAxios<
+      GetAgentAssignedMemberListDataQuery,
+      GetAgentAssignedMemberListDataQueryVariables
+    >(GetAgentAssignedMemberListDataDocument).bind(null, variables),
     options
   );
 export const GetMeDocument = `

@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, chakra, Tab, Tabs, Text } from '@chakra-ui/react';
 
-import { Avatar, Divider, Icon, toast } from '@coop/shared/ui';
+import { useGetAgentDetailDataQuery } from '@coop/cbs/data-access';
+import { Divider, Icon, toast } from '@coop/shared/ui';
 
 const TabCol = chakra(Tab, {
   baseStyle: {
@@ -50,7 +51,11 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
     [router.pathname]
   );
 
-  const handleCopyAgentId = (agentId: string) => {
+  const handleCopyAgentId = (agentId: string | undefined | null) => {
+    if (!agentId) {
+      return;
+    }
+
     navigator.clipboard.writeText(agentId).then(() => {
       toast({
         id: 'copy-agent-id',
@@ -60,11 +65,18 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
     });
   };
 
+  const id = router?.query?.['id'];
+
+  const { data: agentDetailQueryData } = useGetAgentDetailDataQuery(
+    { id: id as string },
+    { enabled: !!id }
+  );
+
   return (
     <Box display="flex" flexDirection="column" gap="s16">
       <Box display="flex" flexDirection="column" p="s16" gap="s16">
         <Box display="flex" gap="s16">
-          <Avatar
+          {/* <Avatar
             name={'Rani Dhakal'}
             size="lg"
             src={'memberDetails.avatar'}
@@ -75,25 +87,31 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
             //   )
             // }
             cursor="pointer"
-          />
+          /> */}
 
           <Box display="flex" flexDirection="column" gap="s4">
             <Text fontSize="r1" fontWeight="500" color="primary.500">
-              {'Rani Dhakal'}
+              {agentDetailQueryData?.transaction?.agentDetail?.data?.name}
             </Text>
             <Text fontSize="s3" fontWeight="400" color="gray.800">
-              {'Kathmandu Branch'}
+              {agentDetailQueryData?.transaction?.agentDetail?.data?.branch}
             </Text>
             <Box display="flex" alignItems="center" gap="s10">
               <Text fontSize="s3" fontWeight="400" color="gray.800">
-                {'123456'}
+                {agentDetailQueryData?.transaction?.agentDetail?.data?.id}
               </Text>
-              <Icon
-                _hover={{ cursor: 'pointer' }}
-                size="sm"
-                as={IoCopyOutline}
-                onClick={() => handleCopyAgentId('123456')}
-              />
+              {agentDetailQueryData?.transaction?.agentDetail?.data?.id && (
+                <Icon
+                  _hover={{ cursor: 'pointer' }}
+                  size="sm"
+                  as={IoCopyOutline}
+                  onClick={() =>
+                    handleCopyAgentId(
+                      agentDetailQueryData?.transaction?.agentDetail?.data?.id
+                    )
+                  }
+                />
+              )}
             </Box>
           </Box>
         </Box>

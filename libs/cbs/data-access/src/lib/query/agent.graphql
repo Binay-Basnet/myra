@@ -1,0 +1,68 @@
+query getAgentListData(
+  $filter: AccountTransactionFilter
+  $pagination: Pagination
+) {
+  transaction {
+    listAgent(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          agentName
+          phoneNo
+          assignedMember
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+
+query getAgentDetailData($id: ID!) {
+  transaction {
+    agentDetail(id: $id) {
+      data {
+        id
+        name
+        branch
+        totalMembers
+      }
+    }
+  }
+}
+
+query getAgentAssignedMemberListData(
+  $filter: AssignedMemberListFiler
+  $pagination: Pagination
+) {
+  transaction {
+    assignedMemberList(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          member {
+            name
+          }
+          account {
+            id
+          }
+          assignedDate
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}

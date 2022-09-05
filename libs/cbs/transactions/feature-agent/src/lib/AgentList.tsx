@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
+import { useGetAgentListDataQuery } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, PageHeader, Text } from '@coop/shared/ui';
@@ -27,20 +27,30 @@ export function AgentList() {
 
   const router = useRouter();
 
-  const { data, isFetching } = useGetMemberListQuery({
+  // const { data, isFetching } = useGetMemberListQuery({
+  //   pagination: getRouterQuery({ type: ['PAGINATION'] }),
+  //   filter: {
+  //     objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+  //   },
+  // });
+
+  const { data, isFetching } = useGetAgentListDataQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    filter: {
-      objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    },
+    // filter: {
+    //   objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+    // },
   });
 
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
+  const rowData = useMemo(
+    () => data?.transaction?.listAgent?.edges ?? [],
+    [data]
+  );
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         header: t['memberListTablePhoneNo'],
-        accessorFn: (row) => row?.node?.contact,
+        accessorFn: (row) => row?.node?.phoneNo,
         // meta: {
         //   width: '20%',
         // },
@@ -50,7 +60,7 @@ export function AgentList() {
         accessorFn: (row) => row?.node?.id,
       },
       {
-        accessorFn: (row) => row?.node?.name?.local,
+        accessorFn: (row) => row?.node?.agentName,
         header: 'Agent Name',
         cell: (props) => {
           return (
@@ -78,7 +88,7 @@ export function AgentList() {
       },
       {
         header: 'Member Assigned',
-        accessorFn: (row) => row?.node?.code,
+        accessorFn: (row) => row?.node?.assignedMember,
       },
       {
         id: '_actions',
@@ -91,7 +101,9 @@ export function AgentList() {
                 {
                   title: 'transactionsAgentListViewDetail',
                   onClick: () => {
-                    router.push('/transactions/agent/123456/overview');
+                    router.push(
+                      `/transactions/agent/${cell?.row?.original?.node?.id}/overview`
+                    );
                   },
                 },
               ]}
@@ -116,10 +128,10 @@ export function AgentList() {
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
         columns={columns}
-        noDataTitle={t['member']}
+        noDataTitle={'Agent'}
         pagination={{
-          total: data?.members?.list?.totalCount ?? 'Many',
-          pageInfo: data?.members.list.pageInfo,
+          total: data?.transaction?.listAgent?.totalCount ?? 'Many',
+          pageInfo: data?.transaction?.listAgent?.pageInfo,
         }}
       />
     </>
