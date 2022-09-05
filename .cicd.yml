@@ -336,6 +336,7 @@ depends_on:
 - Publish myra-app - dev
 - Publish neosys-admin-app - dev
 - Publish ebanking-app - dev
+- Publish storybook
 
 trigger:
   branch:
@@ -364,11 +365,7 @@ volumes:
     path: /build-cache/myra-ui-dev/previous-success-build-commit-sha
 
 depends_on:
-- Publish myra-app - dev
-- Publish neosys-admin-app - dev
-- Publish ebanking-app - dev
-- Publish storybook
-
+- Pull images and deploy all the apps - dev
 trigger:
   branch:
   - dev
@@ -657,9 +654,7 @@ volumes:
     path: /build-cache/myra-ui-main/previous-success-build-commit-sha
 
 depends_on:
-- Publish myra-app - main
-- Publish neosys-admin-app - main
-- Publish ebanking-app - main
+- Pull images and deploy all the apps - main
 
 trigger:
   branch:
