@@ -117,7 +117,7 @@ const CRDirectorsSelection = ({
     if (crDetailsEditData) {
       const crDetail =
         crDetailsEditData?.members?.cooperativeUnion?.formState?.formData
-          ?.centralRepresentativeDetails;
+          ?.centralRepresentativeDetails?.data;
 
       if (crDetail) {
         reset({
@@ -127,7 +127,7 @@ const CRDirectorsSelection = ({
           ),
         });
 
-        setNotAmongDirectors(crDetail.data?.notAmongDirectors ?? false);
+        setNotAmongDirectors(crDetail?.notAmongDirectors ?? false);
       }
     }
   }, [crDetailsEditData]);
@@ -149,7 +149,7 @@ const CRDirectorsSelection = ({
           ...omit(
             pickBy(
               crDetailsEditData?.members?.cooperativeUnion?.formState?.formData
-                ?.centralRepresentativeDetails,
+                ?.centralRepresentativeDetails?.data,
               (v) => v !== null
             ),
             ['id']
@@ -162,10 +162,7 @@ const CRDirectorsSelection = ({
               personnelId: null,
               sectionType:
                 CooperativeUnionPersonnelSection.CentralRepresentative,
-              data: omit(data?.data ? data?.data : data, [
-                'id',
-                'cooperativeUnionId',
-              ]),
+              data: omit(data, ['id', 'cooperativeUnionId']),
             });
           }
 
@@ -175,10 +172,7 @@ const CRDirectorsSelection = ({
               personnelId: crId,
               sectionType:
                 CooperativeUnionPersonnelSection.CentralRepresentative,
-              data: omit(data?.data ? data?.data : data, [
-                'id',
-                'cooperativeUnionId',
-              ]),
+              data: omit(data, ['id', 'cooperativeUnionId']),
             });
           }
         }
@@ -302,7 +296,7 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
     if (crDetailsEditData) {
       const crDetail =
         crDetailsEditData?.members?.cooperativeUnion?.formState?.formData
-          ?.centralRepresentativeDetails;
+          ?.centralRepresentativeDetails?.data;
 
       if (crDetail) {
         reset({
@@ -312,11 +306,11 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
           ),
         });
 
-        if (crDetail?.data?.id) {
-          setCRId(crDetail?.data?.id);
+        if (crDetail?.id) {
+          setCRId(crDetail?.id);
         }
 
-        setNotAmongDirectors(crDetail.data?.notAmongDirectors ?? false);
+        setNotAmongDirectors(crDetail.notAmongDirectors ?? false);
       }
     }
   }, [crDetailsEditData]);
