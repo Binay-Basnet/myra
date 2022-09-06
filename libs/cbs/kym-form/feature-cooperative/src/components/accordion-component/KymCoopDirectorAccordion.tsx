@@ -1,5 +1,4 @@
-import React, { useMemo } from 'react';
-import { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
@@ -34,9 +33,7 @@ import { Bottomdirectorcoop } from './boardDirectorDocuments';
 
 interface ICOOPDirector {
   removeDirector: (sisterId: string) => void;
-  setSection: React.Dispatch<
-    React.SetStateAction<{ section: string; subSection: string }>
-  >;
+  setSection: (section: { section: string; subSection: string }) => void;
   directorId: string;
 }
 
@@ -231,9 +228,7 @@ export const AddDirector = ({
             <form
               onFocus={(e) => {
                 const kymSection = getKymCoopSection(e.target.id);
-                setSection((prev) =>
-                  prev?.subSection !== kymSection.subSection ? kymSection : prev
-                );
+                setSection(kymSection);
               }}
             >
               <Box display={'flex'} flexDirection="column" gap="s48">

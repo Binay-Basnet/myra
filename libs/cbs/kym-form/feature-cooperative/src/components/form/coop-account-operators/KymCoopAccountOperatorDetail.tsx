@@ -13,9 +13,7 @@ import { useTranslation } from '@coop/shared/utils';
 import { AddOperator } from '../../accordion-component/KymCoopAccountOperator';
 
 interface IProps {
-  setSection: React.Dispatch<
-    React.SetStateAction<{ section: string; subSection: string }>
-  >;
+  setSection: (section: { section: string; subSection: string }) => void;
 }
 
 export const KymCoopAccountOperatorDetail = (props: IProps) => {

@@ -13,9 +13,7 @@ import { FormSection } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 interface IProps {
-  setSection: React.Dispatch<
-    React.SetStateAction<{ section: string; subSection: string }>
-  >;
+  setSection: (section: { section: string; subSection: string }) => void;
 }
 
 export const DocumentDeclarationInstitution = (props: IProps) => {
@@ -63,9 +61,7 @@ export const DocumentDeclarationInstitution = (props: IProps) => {
 };
 
 interface IKYMDocumentDeclarationFieldProps {
-  setSection: React.Dispatch<
-    React.SetStateAction<{ section: string; subSection: string }>
-  >;
+  setSection: (section: { section: string; subSection: string }) => void;
   name: string;
   label: string;
 }
@@ -135,9 +131,7 @@ const KYMDocumentDeclarationField = ({
       <form
         onFocus={(e) => {
           const kymSection = getKymSectionInstitution(e.target.id);
-          setSection((prev) =>
-            prev?.subSection !== kymSection.subSection ? kymSection : prev
-          );
+          setSection(kymSection);
         }}
       >
         <FormFileInput size="lg" label={label} name={name} />

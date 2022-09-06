@@ -487,9 +487,7 @@ const AddAccountDetails = ({
 };
 
 interface IProps {
-  setSection: React.Dispatch<
-    React.SetStateAction<{ section: string; subSection: string }>
-  >;
+  setSection: (section: { section: string; subSection: string }) => void;
 }
 
 export const InstitutionKYMAccountDetail = (props: IProps) => {

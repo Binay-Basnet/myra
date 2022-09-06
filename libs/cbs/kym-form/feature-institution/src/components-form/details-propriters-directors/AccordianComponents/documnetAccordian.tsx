@@ -3,9 +3,7 @@ import { Grid } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 interface IProps {
-  setSection: React.Dispatch<
-    React.SetStateAction<{ section: string; subSection: string }>
-  >;
+  setSection: (section: { section: string; subSection: string }) => void;
   directorId: string;
 }
 

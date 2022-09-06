@@ -14,9 +14,7 @@ import { useCooperative } from '../../hooks/useCooperative';
 import { getFieldOption } from '../../../utils/getFieldOption';
 
 interface IProps {
-  setSection: React.Dispatch<
-    React.SetStateAction<{ section: string; subSection: string }>
-  >;
+  setSection: (section: { section: string; subSection: string }) => void;
 }
 
 export const KymCoopAddCoopDetails = (props: IProps) => {
@@ -37,9 +35,7 @@ export const KymCoopAddCoopDetails = (props: IProps) => {
       <form
         onFocus={(e) => {
           const kymSection = getKymCoopSection(e.target.id);
-          setSection((prev) =>
-            prev?.subSection !== kymSection.subSection ? kymSection : prev
-          );
+          setSection(kymSection);
         }}
       >
         <FormSection

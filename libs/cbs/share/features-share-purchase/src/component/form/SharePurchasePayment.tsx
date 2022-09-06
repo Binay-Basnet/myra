@@ -2,7 +2,6 @@ import { useFormContext } from 'react-hook-form';
 
 import {
   NatureOfDepositProduct,
-  Payment_Mode,
   useGetAccountTableListQuery,
   useGetBankListQuery,
 } from '@coop/cbs/data-access';
@@ -45,6 +44,12 @@ const denominationsOptions = [
   { label: '2x', value: '2' },
   { label: '1x', value: '1' },
 ];
+
+enum Payment_Mode {
+  BankVoucher = 'Bank Voucher',
+  Account = 'Account',
+  Cash = 'Cash',
+}
 
 const SharePurchasePayment = () => {
   const { t } = useTranslation();

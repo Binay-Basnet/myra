@@ -3,7 +3,6 @@ import { useFormContext } from 'react-hook-form';
 
 import {
   NatureOfDepositProduct,
-  Payment_Mode,
   useGetAccountTableListQuery,
   useGetBankListQuery,
   useGetShareHistoryQuery,
@@ -32,6 +31,12 @@ type PaymentTableType = {
   quantity: string;
   amount: string;
 };
+
+enum Payment_Mode {
+  BankVoucher = 'Bank Voucher',
+  Account = 'Account',
+  Cash = 'Cash',
+}
 
 const denominationsOptions = [
   { label: '1000x', value: '1000' },

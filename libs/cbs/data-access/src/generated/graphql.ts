@@ -6992,12 +6992,6 @@ export type OrganizationStatistics = {
   totalMembers: Scalars['Int'];
 };
 
-export enum Payment_Mode {
-  Account = 'ACCOUNT',
-  BankVoucher = 'BANK_VOUCHER',
-  Cash = 'CASH',
-}
-
 export type PageInfo = {
   endCursor?: Maybe<Scalars['Cursor']>;
   hasNextPage: Scalars['Boolean'];
@@ -7497,7 +7491,7 @@ export type ShareBonusSettingsInput = {
 };
 
 export type ShareCharge = {
-  charge?: Maybe<Scalars['Float']>;
+  charge?: Maybe<Scalars['String']>;
   ledgerMapping?: Maybe<Scalars['ID']>;
   maxShare?: Maybe<Scalars['Int']>;
   minShare?: Maybe<Scalars['Int']>;
@@ -7506,7 +7500,7 @@ export type ShareCharge = {
 };
 
 export type ShareChargeInput = {
-  charge?: InputMaybe<Scalars['Float']>;
+  charge?: InputMaybe<Scalars['String']>;
   ledgerMapping?: InputMaybe<Scalars['ID']>;
   maxShare?: InputMaybe<Scalars['Int']>;
   minShare?: InputMaybe<Scalars['Int']>;
@@ -7518,6 +7512,11 @@ export enum ShareChargeType {
   FixedAmount = 'FIXED_AMOUNT',
   Percentage = 'PERCENTAGE',
 }
+
+export type ShareCharges = {
+  charge?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+};
 
 export type ShareDividendSettingsInput = {
   accountForFractionalDividends?: InputMaybe<Scalars['ID']>;
@@ -7580,17 +7579,23 @@ export type ShareNumber = {
   start?: Maybe<Scalars['Int']>;
 };
 
+export enum SharePaymentMode {
+  Account = 'ACCOUNT',
+  BankVoucherOrCheque = 'BANK_VOUCHER_OR_CHEQUE',
+  Cash = 'CASH',
+}
+
 export type SharePurchaseError = InvalidDataError;
 
 export type SharePurchaseInput = {
-  accountId?: InputMaybe<Scalars['String']>;
-  bankId?: InputMaybe<Scalars['String']>;
+  account?: InputMaybe<ShareTransactionAccountPayment>;
+  bankVoucher?: InputMaybe<ShareTransactionVoucherPayment>;
+  cash?: InputMaybe<ShareTransactionCash>;
   extraFee?: InputMaybe<Array<InputMaybe<ShareExtraChargesInput>>>;
   memberId: Scalars['String'];
-  paymentMode?: InputMaybe<Payment_Mode>;
+  paymentMode?: InputMaybe<SharePaymentMode>;
   shareCount: Scalars['Int'];
   totalAmount?: InputMaybe<Scalars['String']>;
-  voucherNumber?: InputMaybe<Scalars['String']>;
 };
 
 export type SharePurchaseResult = {
@@ -7602,6 +7607,7 @@ export type SharePurchaseResult = {
 
 export type ShareQuery = {
   balance?: Maybe<ShareBalanceConnection>;
+  charges?: Maybe<Array<Maybe<ShareCharges>>>;
   history?: Maybe<ShareHistory>;
   register?: Maybe<ShareRegisterConnection>;
 };
@@ -7609,6 +7615,11 @@ export type ShareQuery = {
 export type ShareQueryBalanceArgs = {
   filter?: InputMaybe<ShareBalanceFilter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type ShareQueryChargesArgs = {
+  shareCount: Scalars['Int'];
+  transactionType: Share_Transaction_Direction;
 };
 
 export type ShareQueryHistoryArgs = {
@@ -7631,7 +7642,7 @@ export type ShareRegister = {
   id?: Maybe<Scalars['ID']>;
   member?: Maybe<Member>;
   memberId?: Maybe<Scalars['String']>;
-  paymentMode?: Maybe<Payment_Mode>;
+  paymentMode?: Maybe<SharePaymentMode>;
   shareAmount?: Maybe<Scalars['Float']>;
   startNumber: Scalars['Int'];
   status?: Maybe<Share_Status>;
@@ -7673,14 +7684,14 @@ export type ShareReturnChargesResult = {
 export type ShareReturnError = InvalidDataError;
 
 export type ShareReturnInput = {
-  accountId?: InputMaybe<Scalars['String']>;
-  bankId?: InputMaybe<Scalars['String']>;
+  account?: InputMaybe<ShareTransactionAccountPayment>;
+  bankCheque?: InputMaybe<ShareTransactionChequePayment>;
+  cash?: InputMaybe<ShareTransactionCash>;
   extraFee?: InputMaybe<Array<InputMaybe<ShareExtraChargesInput>>>;
   memberId: Scalars['String'];
   noOfReturnedShares: Scalars['Int'];
-  paymentMode?: InputMaybe<Payment_Mode>;
+  paymentMode?: InputMaybe<SharePaymentMode>;
   totalAmount?: InputMaybe<Scalars['String']>;
-  voucherNumber?: InputMaybe<Scalars['String']>;
 };
 
 export type ShareReturnResult = {
@@ -7796,11 +7807,45 @@ export type ShareStatementReportSettingsType = {
   periodType: ReportPeriodType;
 };
 
+export type ShareTransactionAccountPayment = {
+  accountId: Scalars['ID'];
+  note?: InputMaybe<Scalars['String']>;
+};
+
+export type ShareTransactionCash = {
+  cashPaid: Scalars['String'];
+  denominations?: InputMaybe<Array<Denomination>>;
+  disableDenomination: Scalars['Boolean'];
+  fileUpload?: InputMaybe<Scalars['String']>;
+  note?: InputMaybe<Scalars['String']>;
+  returned_amount: Scalars['String'];
+  sourceOfFund?: InputMaybe<Scalars['String']>;
+  total: Scalars['String'];
+};
+
+export type ShareTransactionChequePayment = {
+  bankId: Scalars['ID'];
+  chequeNo: Scalars['String'];
+  note?: InputMaybe<Scalars['String']>;
+};
+
 export enum ShareTransactionType {
   All = 'ALL',
   Issue = 'ISSUE',
   Return = 'RETURN',
 }
+
+export type ShareTransactionVoucherPayment = {
+  bankId: Scalars['ID'];
+  citizenshipDocument?: InputMaybe<Scalars['String']>;
+  depositedBy: ShareVoucherDepositedBy;
+  depositedByOtherName?: InputMaybe<Scalars['String']>;
+  depositedDate: Scalars['String'];
+  fileUpload?: InputMaybe<Scalars['String']>;
+  note?: InputMaybe<Scalars['String']>;
+  sourceOfFund?: InputMaybe<Scalars['String']>;
+  voucherId: Scalars['String'];
+};
 
 export type ShareTransferSettingsInput = {
   accountForShareFund?: InputMaybe<Scalars['ID']>;
@@ -7817,6 +7862,11 @@ export type ShareTransferSettingsResult = {
 export enum ShareTransferType {
   MemberToMember = 'MEMBER_TO_MEMBER',
   ShareRefund = 'SHARE_REFUND',
+}
+
+export enum ShareVoucherDepositedBy {
+  Other = 'OTHER',
+  Self = 'SELF',
 }
 
 export type SisterConcernDetails = {
@@ -7939,6 +7989,7 @@ export type TransactionMutation = {
 export type TransactionMutationAddMemberToAgentArgs = {
   agentId: Scalars['String'];
   data?: InputMaybe<AssignMembersInput>;
+  override?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type TransactionMutationAgentTodayListArgs = {
@@ -12789,14 +12840,14 @@ export type GetSettingsShareIssueChargesDataQuery = {
             minShare?: number | null;
             maxShare?: number | null;
             type?: ShareChargeType | null;
-            charge?: number | null;
+            charge?: string | null;
           } | null> | null;
           other?: Array<{
             name?: string | null;
             minShare?: number | null;
             maxShare?: number | null;
             type?: ShareChargeType | null;
-            charge?: number | null;
+            charge?: string | null;
           } | null> | null;
         } | null;
       } | null;
@@ -12818,7 +12869,7 @@ export type GetSettingsShareReturnChargesDataQuery = {
             minShare?: number | null;
             maxShare?: number | null;
             type?: ShareChargeType | null;
-            charge?: number | null;
+            charge?: string | null;
           } | null> | null;
         } | null;
       } | null;
@@ -13048,7 +13099,7 @@ export type GetShareHistoryQuery = {
         balance?: number | null;
         shareAmount?: number | null;
         totalAmount?: number | null;
-        paymentMode?: Payment_Mode | null;
+        paymentMode?: SharePaymentMode | null;
         bankId?: string | null;
         voucherNumber?: string | null;
         accountId?: string | null;

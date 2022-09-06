@@ -26,9 +26,7 @@ const booleanList = [
 ];
 
 interface IProps {
-  setSection: React.Dispatch<
-    React.SetStateAction<{ section: string; subSection: string }>
-  >;
+  setSection: (section: { section: string; subSection: string }) => void;
 }
 
 export const AccountOperationInstitution = (props: IProps) => {
@@ -54,9 +52,7 @@ export const AccountOperationInstitution = (props: IProps) => {
         <form
           onFocus={(e) => {
             const kymSection = getKymSectionInstitution(e.target.id);
-            setSection((prev) =>
-              prev?.subSection !== kymSection.subSection ? kymSection : prev
-            );
+            setSection(kymSection);
           }}
         >
           <FormSection

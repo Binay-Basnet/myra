@@ -15,9 +15,7 @@ import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 import { useInstitution } from '../hooks/useInstitution';
 
 interface IProps {
-  setSection: React.Dispatch<
-    React.SetStateAction<{ section: string; subSection: string }>
-  >;
+  setSection: (section: { section: string; subSection: string }) => void;
 }
 
 export const InstitutionAccountOpnDocument = (props: IProps) => {
@@ -89,9 +87,7 @@ export const InstitutionAccountOpnDocument = (props: IProps) => {
         <form
           onFocus={(e) => {
             const kymSection = getKymSectionInstitution(e.target.id);
-            setSection((prev) =>
-              prev?.subSection !== kymSection.subSection ? kymSection : prev
-            );
+            setSection(kymSection);
           }}
         >
           <Box w="13%">
