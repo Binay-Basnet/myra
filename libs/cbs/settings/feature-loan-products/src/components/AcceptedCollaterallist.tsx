@@ -1,46 +1,110 @@
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormCheckboxGroup } from '@coop/shared/form';
 // import debounce from 'lodash/debounce';
-import { Box, Text } from '@coop/shared/ui';
+import { useState } from 'react';
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  DropResult,
+} from 'react-beautiful-dnd';
+
+import { LoanGeneralSettings } from '@coop/cbs/data-access';
+import { Box, Icon, Switch, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface CbsSettingsFeatureLoanProductsProps {}
 
-export const AcceptedCollateral = () => {
+const GRID2X3 = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="10"
+      height="14"
+      viewBox="0 0 10 14"
+      fill="none"
+    >
+      <path
+        d="M4.16659 11.9997C4.16659 12.9163 3.41659 13.6663 2.49992 13.6663C1.58325 13.6663 0.833252 12.9163 0.833252 11.9997C0.833252 11.083 1.58325 10.333 2.49992 10.333C3.41659 10.333 4.16659 11.083 4.16659 11.9997ZM2.49992 5.33301C1.58325 5.33301 0.833252 6.08301 0.833252 6.99967C0.833252 7.91634 1.58325 8.66634 2.49992 8.66634C3.41659 8.66634 4.16659 7.91634 4.16659 6.99967C4.16659 6.08301 3.41659 5.33301 2.49992 5.33301ZM2.49992 0.333008C1.58325 0.333008 0.833252 1.08301 0.833252 1.99967C0.833252 2.91634 1.58325 3.66634 2.49992 3.66634C3.41659 3.66634 4.16659 2.91634 4.16659 1.99967C4.16659 1.08301 3.41659 0.333008 2.49992 0.333008ZM7.49992 3.66634C8.41659 3.66634 9.16659 2.91634 9.16659 1.99967C9.16659 1.08301 8.41659 0.333008 7.49992 0.333008C6.58325 0.333008 5.83325 1.08301 5.83325 1.99967C5.83325 2.91634 6.58325 3.66634 7.49992 3.66634ZM7.49992 5.33301C6.58325 5.33301 5.83325 6.08301 5.83325 6.99967C5.83325 7.91634 6.58325 8.66634 7.49992 8.66634C8.41659 8.66634 9.16659 7.91634 9.16659 6.99967C9.16659 6.08301 8.41659 5.33301 7.49992 5.33301ZM7.49992 10.333C6.58325 10.333 5.83325 11.083 5.83325 11.9997C5.83325 12.9163 6.58325 13.6663 7.49992 13.6663C8.41659 13.6663 9.16659 12.9163 9.16659 11.9997C9.16659 11.083 8.41659 10.333 7.49992 10.333Z"
+        fill="#636972"
+      />
+    </svg>
+  );
+};
+
+interface ICollateralProps {
+  loanGeneralData?: LoanGeneralSettings | null;
+}
+export const AcceptedCollateral = (props: ICollateralProps) => {
+  const { loanGeneralData } = props;
   const { t } = useTranslation();
-  const Vehicle = [{ label: t['settingsLoanVehicle'], value: 'vehicle' }];
-  const Land = [{ label: t['settingsLoanLand'], value: 'land' }];
-  const House = [{ label: t['settingsLoanHouse'], value: 'house' }];
-  const LiveStock = [{ label: t['settingsLoanLivestock'], value: 'livestock' }];
-  const Building = [{ label: t['settingsLoanLivestock'], value: 'building' }];
+  const [data, setData] = useState(loanGeneralData?.collateralList);
+  const handleOnDragEnd = async (result: DropResult) => {
+    const items = Array.from(data ?? []);
+    const [reorderedItem] = items.splice(result.source.index, 1);
 
-  const DepositAcc = [{ label: t['settingsLoanDeposit'], value: 'depositAcc' }];
-
-  const Equipment = [{ label: t['settingsLoanEquipment'], value: 'equipment' }];
-
-  const Goods = [{ label: t['settingsLoanGoods'], value: 'goods' }];
+    if (result.destination) {
+      items.splice(result.destination.index, 0, reorderedItem);
+      setData(items);
+      // if (reorderedItem.id) {
+      //   await moveOption({
+      //     fieldId: reorderedItem.id,
+      //     to: result.destination.index,
+      //   });
+      // }
+    }
+  };
   return (
     <Box display="flex" flexDirection={'column'} gap="s16">
       <Box display="flex" flexDirection={'column'} gap="s4">
         <Text fontSize="r1" fontWeight="500">
           {t['settingsLoanAccepted']}
         </Text>
-        <Text fontSize="s2" fontWeight="400">
-          {t['settingsLoanChecklist']}
-          Checklist is configured from Document Master
-        </Text>
       </Box>
-      <InputGroupContainer>
-        <FormCheckboxGroup name="vehicleCollateral" list={Vehicle} />
-        <FormCheckboxGroup name="landCollateral" list={Land} />
-        <FormCheckboxGroup name="houseCollateral" list={House} />
-        <FormCheckboxGroup name="livestockCollateral" list={LiveStock} />
-        <FormCheckboxGroup name="buildingCollateral" list={Building} />
-        <FormCheckboxGroup name="depositaccCollateral" list={DepositAcc} />
-        <FormCheckboxGroup name="equipmentCollateral" list={Equipment} />
-        <FormCheckboxGroup name="goodsCollateral" list={Goods} />
-      </InputGroupContainer>
+      <DragDropContext onDragEnd={handleOnDragEnd}>
+        <Droppable droppableId="collateral-list">
+          {(provided) => (
+            <Box
+              display="flex"
+              flexDir="column"
+              gap="s36"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {data?.map(
+                (
+                  item: {
+                    name?: string | null;
+                    enabled?: boolean | null;
+                  } | null,
+                  index: number
+                ) => (
+                  <Draggable
+                    key={item?.name}
+                    draggableId={item?.name || ''}
+                    index={index}
+                  >
+                    {(provided) => (
+                      <Box
+                        display="flex"
+                        gap="s20"
+                        alignItems="center"
+                        fontSize="r1"
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <Icon as={GRID2X3} />
+                        <Switch name={item?.name || ''} />
+                        <Text fontSize="r1">{item?.name}</Text>
+                      </Box>
+                    )}
+                  </Draggable>
+                )
+              )}
+            </Box>
+          )}
+        </Droppable>
+      </DragDropContext>
     </Box>
   );
 };
