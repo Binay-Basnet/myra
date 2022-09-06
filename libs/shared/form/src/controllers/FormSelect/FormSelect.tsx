@@ -36,7 +36,7 @@ export const FormSelect = <T,>(props: IFormSelectProps<T>) => {
     <Controller
       control={formControl}
       rules={rest.rules}
-      name={name}
+      name={name ?? ''}
       render={({ field }) => {
         return <FormControl field={field} errors={errors} {...props} />;
       }}
@@ -74,7 +74,7 @@ const FormControl = <T,>({
 
   return (
     <Select
-      errorText={errors[name]?.message}
+      errorText={errors[name as string]?.message as string}
       options={options}
       value={rest.isMulti ? filteredValue : foundValue}
       inputId={name}

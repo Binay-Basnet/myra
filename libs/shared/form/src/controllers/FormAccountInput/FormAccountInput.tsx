@@ -30,7 +30,7 @@ export const FormAccountInput = <T,>({
           id={name}
           onChange={onChange}
           value={value}
-          errorText={errors[name]?.message}
+          errorText={errors[name]?.message as string}
           {...fieldProps}
           {...rest}
         />

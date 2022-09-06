@@ -46,7 +46,7 @@ export const SavedReportList = () => {
         header: 'Saved By',
         accessorFn: (row) => row?.node?.savedBy,
         cell: ({ getValue }) => (
-          <Box textTransform="capitalize">{getValue()}</Box>
+          <Box textTransform="capitalize">{getValue() as string}</Box>
         ),
       },
       {

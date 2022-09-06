@@ -68,11 +68,11 @@ export const ShareRegisterTable = () => {
           return (
             <Box display="flex" alignItems="center" gap="2">
               <Avatar
-                name={props.getValue()}
+                name={props.getValue() as string}
                 size="sm"
                 src="https://bit.ly/dan-abramov"
               />
-              <span>{props.getValue()}</span>
+              <span>{props.getValue() as string}</span>
             </Box>
           );
         },
@@ -85,7 +85,8 @@ export const ShareRegisterTable = () => {
         cell: (props) => {
           return (
             <span>
-              {props.getValue()} - {props?.row?.original?.node?.endNumber}
+              {props.getValue() as string} -{' '}
+              {props?.row?.original?.node?.endNumber}
             </span>
           );
         },
