@@ -106,6 +106,7 @@
       "@coop/cbs/share-return": [
         "libs/cbs/share/features-share-return/src/index.ts"
       ],
+      "@coop/cbs/share/shared-ui": ["libs/cbs/share/shared-ui/src/index.ts"],
       "@coop/cbs/transactions/account-transfer": [
         "libs/cbs/transactions/feature-account-transfer/src/index.ts"
       ],

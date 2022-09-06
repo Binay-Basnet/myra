@@ -123,7 +123,7 @@ export function HomePageLayout(props: HomePageLayoutProps) {
                   minH={'48px'}
                   alignItems="center"
                   cursor="pointer"
-                  _hover={{ bg: 'neutralColorLight.Gray-0' }}
+                  _hover={{ bg: 'gray.200' }}
                   onClick={() => router.push(item.link)}
                 >
                   <Box
@@ -174,7 +174,7 @@ export function HomePageLayout(props: HomePageLayoutProps) {
                   gap="s16"
                   alignItems="center"
                   cursor="pointer"
-                  _hover={{ bg: 'neutralColorLight.Gray-0', filter: 'none' }}
+                  _hover={{ bg: 'gray.200', filter: 'none' }}
                   onClick={() => router.push(item.link)}
                   filter="grayscale(100%)"
                 >

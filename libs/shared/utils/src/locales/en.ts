@@ -3277,6 +3277,8 @@ const en: Record<string, string> = {
   shareReturnBankCheque: 'Bank Cheque',
   totalDepositAmount: 'Total Deposit Amount',
   cancel: 'Cancel',
+  sharePurchaseSelf: 'Self',
+  sharePurchaseOthers: 'Others',
 };
 
 export default en;

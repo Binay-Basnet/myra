@@ -1,103 +1,60 @@
-/* eslint-disable-next-line */
-import { useEffect } from 'react';
-import {
-  Control,
-  Controller,
-  FieldValues,
-  useFormContext,
-} from 'react-hook-form';
-import {
-  ControllerRenderProps,
-  UseControllerProps,
-} from 'react-hook-form/dist/types/controller';
+import { useGetAccountTableListQuery } from '@coop/cbs/data-access';
+import { getRouterQuery } from '@coop/shared/utils';
 
-// import { Select, SelectProps } from '@coop/shared/ui';
-import { Select, SelectProps } from './CustomSelect';
+import { Option } from './CustomSelect';
+import FormCustomSelect from './FormCustomSelect';
 
-interface IFormCustomSelectProps<T> extends SelectProps {
-  control?: Control<T>;
+interface IAccountSelectProps {
   name: string;
-  rules?: UseControllerProps['rules'];
-}
-
-interface Option {
   label?: string;
-  value: string;
-  accountInfo?: {
-    accountName?: string;
-    accountId?: string;
-    accountType?: string;
-    balance?: string;
-    fine?: string;
-  };
+  memberId: string;
+  __placeholder?: string;
+  placeholder?: string;
 }
 
-export const FormAccountSelect = <T,>(props: IFormCustomSelectProps<T>) => {
-  const { name, ...rest } = props;
-
-  const methods = useFormContext();
-  const {
-    formState: { errors },
-    control: formControl,
-  } = methods;
-
-  return (
-    <Controller
-      control={formControl}
-      rules={rest.rules}
-      name={name}
-      render={({ field }) => {
-        return <FormControl field={field} errors={errors} {...props} />;
-      }}
-    />
-  );
-};
-
-interface FormControlProps<T> extends IFormCustomSelectProps<T> {
-  errors: any;
-  field: ControllerRenderProps<FieldValues, string>;
-}
-
-const FormControl = <T,>({
+export const FormAccountSelect = ({
   name,
-  options,
-  errors,
-  field: { onChange, value },
-  ...rest
-}: FormControlProps<T>) => {
-  const foundValue = options?.find((option) => option.value === value);
-
-  const filteredValue = rest.isMulti
-    ? options?.filter(
-        (option) =>
-          value?.some((v: Option) => v?.value === option.value) ||
-          value?.includes(option?.value)
-      )
-    : [];
-
-  useEffect(() => {
-    if (rest.isMulti) {
-      onChange(filteredValue);
+  label,
+  memberId,
+  placeholder,
+}: IAccountSelectProps) => {
+  const { data: accountListData, isFetching } = useGetAccountTableListQuery(
+    {
+      paginate: getRouterQuery({ type: ['PAGINATION'] }),
+      filter: { memberId },
+    },
+    {
+      staleTime: 0,
     }
-  }, []);
+  );
+
+  const availableBalance = accountListData?.account?.list?.edges;
+
+  const accountOptions: Option[] =
+    availableBalance?.reduce((prevVal, curVal) => {
+      return [
+        ...prevVal,
+        {
+          label: `${curVal?.node?.product?.productName} (ID:${curVal?.node?.id})`,
+          value: curVal?.node?.id as string,
+          accountInfo: {
+            accountName: curVal?.node?.product?.productName,
+            accountId: curVal?.node?.id,
+            accountType: curVal?.node?.product?.nature,
+            balance: curVal?.node?.balance as string,
+            fine: curVal?.node?.fine as string,
+          },
+        },
+      ];
+    }, [] as Option[]) ?? [];
 
   return (
-    <Select
-      errorText={errors[name]?.message}
-      options={options}
-      value={rest.isMulti ? filteredValue : foundValue}
-      inputId={name}
-      {...rest}
-      onChange={(newValue: Option | Option[]) => {
-        if (Array.isArray(newValue)) {
-          onChange(newValue);
-        } else {
-          const { value } = newValue as Option;
-          onChange(value);
-        }
-      }}
+    <FormCustomSelect
+      name={name}
+      label={label}
+      isLoading={isFetching}
+      placeholder={placeholder}
+      options={accountOptions}
     />
   );
 };
-
-export default FormAccountSelect;

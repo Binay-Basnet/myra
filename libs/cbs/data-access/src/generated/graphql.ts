@@ -22,16 +22,6 @@ export type Scalars = {
   Email: any;
   HTML: any;
   InvalidData: Record<string, Array<string>>;
-  /**
-   * # For Localization of every data from backend
-   * ```javascript
-   * {
-   *    local: "localized data based on user lang setting",
-   *    en: "data in english",
-   *    np: "data in nepali"
-   * }
-   * ```
-   */
   Localized: Record<"local"|"en"|"np",string>;
   Map: Record<string, string>;
   Time: string;
@@ -710,6 +700,17 @@ export type CoaFullView = {
   error?: Maybe<QueryError>;
 };
 
+export type CoaMinimal = {
+  accountCode: Scalars['String'];
+  id: Scalars['ID'];
+  name: Scalars['Localized'];
+};
+
+export type CoaMinimalResult = {
+  data?: Maybe<Array<Maybe<CoaMinimal>>>;
+  error?: Maybe<QueryError>;
+};
+
 export enum CoaTypesOfAccount {
   Bank = 'BANK',
   Cash = 'CASH',
@@ -821,6 +822,7 @@ export type ChartsOfAccountSettingsMutation = {
 
 export type ChartsOfAccountSettingsQuery = {
   accounts: ChartsOfAccountResult;
+  accountsUnder?: Maybe<CoaMinimalResult>;
   class?: Maybe<ChartsOfAccountClassResult>;
   fullView: CoaFullView;
 };
@@ -828,6 +830,11 @@ export type ChartsOfAccountSettingsQuery = {
 
 export type ChartsOfAccountSettingsQueryAccountsArgs = {
   filter: ChartsOfAccountFilter;
+};
+
+
+export type ChartsOfAccountSettingsQueryAccountsUnderArgs = {
+  accountCode: Scalars['String'];
 };
 
 export type ChequePastRequest = {
@@ -9754,6 +9761,14 @@ export type GetShareHistoryQueryVariables = Exact<{
 
 export type GetShareHistoryQuery = { share: { history?: { history?: Array<{ id?: string | null, status?: Share_Status | null, transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, balance?: number | null, shareAmount?: number | null, totalAmount?: number | null, paymentMode?: SharePaymentMode | null, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null } | null, extraFee?: Array<{ name: string, value: number } | null> | null } | null> | null, balance?: { count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null } } | null } | null } };
 
+export type GetShareChargesQueryVariables = Exact<{
+  transactionType: Share_Transaction_Direction;
+  shareCount: Scalars['Int'];
+}>;
+
+
+export type GetShareChargesQuery = { share: { charges?: Array<{ name?: string | null, charge?: string | null } | null> | null } };
+
 export type GetDepositListDataQueryVariables = Exact<{
   filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
@@ -15828,6 +15843,28 @@ export const useGetShareHistoryQuery = <
     useQuery<GetShareHistoryQuery, TError, TData>(
       ['getShareHistory', variables],
       useAxios<GetShareHistoryQuery, GetShareHistoryQueryVariables>(GetShareHistoryDocument).bind(null, variables),
+      options
+    );
+export const GetShareChargesDocument = `
+    query getShareCharges($transactionType: SHARE_TRANSACTION_DIRECTION!, $shareCount: Int!) {
+  share {
+    charges(transactionType: $transactionType, shareCount: $shareCount) {
+      name
+      charge
+    }
+  }
+}
+    `;
+export const useGetShareChargesQuery = <
+      TData = GetShareChargesQuery,
+      TError = unknown
+    >(
+      variables: GetShareChargesQueryVariables,
+      options?: UseQueryOptions<GetShareChargesQuery, TError, TData>
+    ) =>
+    useQuery<GetShareChargesQuery, TError, TData>(
+      ['getShareCharges', variables],
+      useAxios<GetShareChargesQuery, GetShareChargesQueryVariables>(GetShareChargesDocument).bind(null, variables),
       options
     );
 export const GetDepositListDataDocument = `

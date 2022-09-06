@@ -18,7 +18,7 @@ const TabCol = chakra(Tab, {
     justifyContent: 'flex-start',
     alignItems: 'center',
     _hover: {
-      bg: 'highlight.500',
+      bg: 'gray.200',
       borderRadius: 'br2',
     },
     _focus: {

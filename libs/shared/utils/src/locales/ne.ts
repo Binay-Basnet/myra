@@ -2866,6 +2866,8 @@ const ne: Record<string, string> = {
   cancel: 'Cancel',
   settingsShareIssues: 'Share Issues',
   settingsShareReturn: 'Share Return',
+  sharePurchaseSelf: 'Self',
+  sharePurchaseOthers: 'Others',
 };
 
 export default ne;
