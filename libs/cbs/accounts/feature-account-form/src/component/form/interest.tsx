@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import {
-  NatureOfDepositProduct,
-  useGetAccountOpenProductDetailsQuery,
-} from '@coop/cbs/data-access';
+import { useGetAccountOpenProductDetailsQuery } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormCheckbox, FormInput } from '@coop/shared/form';
 import { Alert, Box, Text } from '@coop/shared/ui';
@@ -25,8 +22,6 @@ export const Interest = () => {
 
   const ProductData =
     poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
-
-  const ProductType = ProductData?.nature;
 
   useEffect(() => {
     if (products) {
@@ -89,16 +84,27 @@ export const Interest = () => {
               />
             </Box>
           </InputGroupContainer>
-          {ProductType === NatureOfDepositProduct.RecurringSaving && (
-            <Alert status="info" title="Rates">
-              <Box display={'flex'} flexDirection="column" gap="s4">
+
+          <Alert status="info" title="Rates">
+            <Box display={'flex'} flexDirection="column" gap="s4">
+              <Text fontWeight={'400'} fontSize="r1">
+                Interest Rate: {ProductData?.interest?.minRate} -{' '}
+                {ProductData?.interest?.maxRate}
+              </Text>
+              <Box display={'flex'} flexDirection="row" gap="s4">
                 <Text fontWeight={'400'} fontSize="r1">
-                  Interest Rate: {ProductData?.interest?.minRate} -{' '}
-                  {ProductData?.interest?.maxRate}
+                  Ladder Rate:
                 </Text>
-              </Box>{' '}
-            </Alert>
-          )}
+                {ProductData?.ladderRateData?.map((item, index) => {
+                  return (
+                    <Text fontWeight={'400'} fontSize="r1" key={index}>
+                      {item?.amount} and more : {item?.rate} |
+                    </Text>
+                  );
+                })}
+              </Box>
+            </Box>{' '}
+          </Alert>
         </Box>
       </Box>
     </Box>

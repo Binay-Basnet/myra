@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { IoChevronBackOutline } from 'react-icons/io5';
+import { useRouter } from 'next/router';
+import { omit } from 'lodash';
 
-import { Member, useGetMemberIndividualDataQuery } from '@coop/cbs/data-access';
-import { FieldCardComponents } from '@coop/shared/components';
-import { FormInput } from '@coop/shared/form';
 import {
+  CashValue,
+  Member,
+  SharePaymentMode,
+  SharePurchaseInput,
+  useAddSharePurchaseMutation,
+  useGetMemberIndividualDataQuery,
+} from '@coop/cbs/data-access';
+import {
+  asyncToast,
   Box,
-  Button,
   Container,
-  FormFooter,
   FormHeader,
   FormMemberSelect,
   FormSection,
@@ -18,10 +23,12 @@ import {
   Navbar,
   ShareMemberCard,
   TabMenu,
-  Text,
 } from '@coop/shared/ui';
-import { amountConverter, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
+import ShareInfoFooter from './ShareInfoFooter';
+import SharePaymentFooter from './SharePaymentFooter';
+import SharePurchaseInfo from './SharePurchaseInfo';
 import SharePurchasePayment from './SharePurchasePayment';
 
 const Header = () => {
@@ -33,18 +40,49 @@ const Header = () => {
   );
 };
 
+const cashOptions: Record<string, string> = {
+  '1000': CashValue.Cash_1000,
+  '500': CashValue.Cash_500,
+  '100': CashValue.Cash_100,
+  '50': CashValue.Cash_50,
+  '25': CashValue.Cash_25,
+  '20': CashValue.Cash_20,
+  '10': CashValue.Cash_10,
+  '5': CashValue.Cash_5,
+  '2': CashValue.Cash_2,
+  '1': CashValue.Cash_1,
+};
+
 const SharePurchaseForm = () => {
   const { t } = useTranslation();
   const methods = useForm();
-  const { watch } = methods;
+  const { watch, getValues } = methods;
+
+  const router = useRouter();
 
   const memberId = watch('memberId');
   const noOfShares = watch('shareCount');
   const printingFee = watch('printingFee');
   const adminFee = watch('adminFee');
+  const denominations = watch('cash.denominations');
+  const cashPaid = watch('cash.cashPaid');
+  const disableDenomination = watch('cash.disableDenomination');
 
   const [totalAmount, setTotalAmount] = useState(0);
-  const [mode, setMode] = useState('0');
+  const [mode, setMode] = useState('shareInfo');
+
+  const denominationTotal =
+    denominations?.reduce(
+      (accumulator: number, curr: { amount: string }) =>
+        accumulator + Number(curr.amount),
+      0 as number
+    ) ?? 0;
+
+  const totalCashPaid: number = disableDenomination
+    ? Number(cashPaid)
+    : Number(denominationTotal);
+
+  const returnAmount = totalAmount - totalCashPaid;
 
   const { data } = useGetMemberIndividualDataQuery(
     {
@@ -55,6 +93,8 @@ const SharePurchaseForm = () => {
     }
   );
 
+  const { mutateAsync } = useAddSharePurchaseMutation();
+
   const memberDetail = data && data?.members?.details?.data;
 
   useEffect(() => {
@@ -63,45 +103,83 @@ const SharePurchaseForm = () => {
     );
   }, [noOfShares, adminFee, printingFee]);
 
-  const mainButtonHandlermode0 = () => {
-    if (memberId) {
-      setMode('1');
+  const paymentButtonHandler = () => memberId && setMode('sharePayment');
+
+  const previousButtonHandler = () => setMode('shareInfo');
+
+  const handleSubmit = () => {
+    const values = getValues();
+
+    let updatedValues: SharePurchaseInput = {
+      ...omit(values, [
+        'printingFee',
+        'adminFee',
+        'amount',
+        'accountAmount',
+        'accountId',
+      ]),
+      extraFee: [
+        {
+          name: 'adminFee',
+          value: adminFee,
+        },
+        {
+          name: 'printFee',
+          value: printingFee,
+        },
+      ],
+      totalAmount: totalAmount.toString(),
+      shareCount: Number(values['shareCount']),
+      memberId,
+    };
+
+    if (values['paymentMode'] === SharePaymentMode.Cash) {
+      updatedValues = omit({ ...updatedValues }, ['account', 'bankVoucher']);
+      updatedValues['cash'] = {
+        ...values['cash'],
+        cashPaid: values['cash']?.cashPaid as string,
+        disableDenomination: Boolean(values['cash']?.disableDenomination),
+        total: String(totalCashPaid),
+        returned_amount: String(returnAmount),
+        fileUpload:
+          values['cash']?.fileUpload?.length > 0
+            ? values['cash']?.fileUpload[0]
+            : null,
+        denominations:
+          values['cash']?.denominations?.map(
+            ({ value, quantity }: { value: string; quantity: number }) => ({
+              value: cashOptions[value as string],
+              quantity,
+            })
+          ) ?? [],
+      };
     }
+
+    if (values['paymentMode'] === SharePaymentMode?.BankVoucherOrCheque) {
+      updatedValues = omit({ ...updatedValues }, ['account', 'cash']);
+      updatedValues['bankVoucher'] = {
+        ...values['bankVoucher'],
+        fileUpload:
+          values['bankVoucher']?.fileUpload?.length > 0
+            ? values['bankVoucher']?.fileUpload[0]
+            : null,
+      };
+    }
+
+    if (values['paymentMode'] === SharePaymentMode?.Account) {
+      updatedValues = omit({ ...updatedValues }, ['bankVoucher', 'cash']);
+    }
+
+    asyncToast({
+      id: 'share-purchase-id',
+      msgs: {
+        success: 'Share Purchased',
+        loading: 'Purchasing Share',
+      },
+      onSuccess: () => router.push('/share/register'),
+      promise: mutateAsync({ data: updatedValues }),
+    });
   };
-  const previousButtonHandler = () => {
-    setMode('0');
-  };
-
-  // const onSubmit = () => {
-  //   const values = getValues();
-
-  //   const updatedValues = {
-  //     ...omit(values, ['printingFee', 'adminFee']),
-  //     extraFee: [
-  //       {
-  //         name: 'adminFee',
-  //         value: adminFee,
-  //       },
-  //       {
-  //         name: 'printFee',
-  //         value: printingFee,
-  //       },
-  //     ],
-  //     totalAmount: totalAmount.toString(),
-  //     shareCount: Number(values['shareCount']),
-  //     memberId,
-  //   };
-
-  //   asyncToast({
-  //     id: 'share-purchase-id',
-  //     msgs: {
-  //       success: 'Share Purchased',
-  //       loading: 'Purchasing Share',
-  //     },
-  //     onSuccess: () => router.push('/share/register'),
-  //     promise: mutateAsync({ data: updatedValues }),
-  //   });
-  // };
 
   return (
     <>
@@ -127,167 +205,51 @@ const SharePurchaseForm = () => {
               <FormHeader title={t['sharePurchaseNewShareIssue']} />
             </Box>
             <Grid templateColumns="repeat(6,1fr)">
-              <GridItem
-                display={mode === '0' ? null : 'none'}
-                colSpan={data ? 4 : 6}
-              >
-                <Box
-                  mb="50px"
-                  display="flex"
-                  width="100%"
-                  h="100%"
-                  background="gray.0"
-                  minH="calc(100vh - 170px)"
-                  border="1px solid"
-                  borderColor="border.layout"
-                >
-                  <Box w="100%">
-                    <FormSection>
-                      <GridItem colSpan={2}>
-                        <FormMemberSelect
-                          name="memberId"
-                          label={t['sharePurchaseSelectMember']}
-                        />
-                      </GridItem>
-                    </FormSection>
+              {mode === 'shareInfo' && (
+                <GridItem colSpan={data ? 4 : 6}>
+                  <Box
+                    mb="50px"
+                    display="flex"
+                    width="100%"
+                    h="100%"
+                    background="gray.0"
+                    minH="calc(100vh - 170px)"
+                    border="1px solid"
+                    borderColor="border.layout"
+                  >
+                    <Box w="100%">
+                      <FormSection>
+                        <GridItem colSpan={2}>
+                          <FormMemberSelect
+                            name="memberId"
+                            label={t['sharePurchaseSelectMember']}
+                          />
+                        </GridItem>
+                      </FormSection>
 
-                    {data && (
-                      <Box
-                        display="flex"
-                        flexDirection="column"
-                        pb="s24"
-                        background="white"
-                        borderTopRadius={5}
-                      >
-                        <FormSection header="sharePurchaseShareInformation">
-                          <GridItem colSpan={3}>
-                            <FormInput
-                              type={'number'}
-                              textAlign="right"
-                              id="noOfShares"
-                              name="shareCount"
-                              max={10}
-                              label={t['sharePurchaseNoOfShares']}
-                              __placeholder="0"
-                            />
-                          </GridItem>
-
-                          <GridItem colSpan={3}>
-                            {noOfShares ? (
-                              <FieldCardComponents rows={'repeat(4,1fr)'}>
-                                <GridItem
-                                  display="flex"
-                                  justifyContent="space-between"
-                                  alignItems="center"
-                                >
-                                  <Text
-                                    color="neutralLightColor.Gray-60"
-                                    fontWeight="Medium"
-                                    fontSize="s3"
-                                  >
-                                    {t['sharePurchaseShareAmount']}
-                                  </Text>
-
-                                  <Box p="s12">
-                                    <Text
-                                      color="neutralLightColor.Gray-80"
-                                      fontWeight="SemiBold"
-                                      fontSize="r1"
-                                    >
-                                      {amountConverter(noOfShares * 100)}
-                                    </Text>
-                                  </Box>
-                                </GridItem>
-
-                                <GridItem
-                                  display="flex"
-                                  justifyContent="space-between"
-                                >
-                                  <Text
-                                    color="neutralLightColor.Gray-60"
-                                    fontWeight="Medium"
-                                    fontSize="s3"
-                                    display="flex"
-                                    alignItems="center"
-                                  >
-                                    {t['sharePurchaseAdministrationFees']}
-                                  </Text>
-                                  <Box width="300px">
-                                    <FormInput
-                                      name="adminFee"
-                                      type="number"
-                                      textAlign={'right'}
-                                      __placeholder="0.00"
-                                    />
-                                  </Box>
-                                </GridItem>
-
-                                <GridItem
-                                  display="flex"
-                                  justifyContent="space-between"
-                                  alignItems="center"
-                                >
-                                  <Text
-                                    color="neutralLightColor.Gray-60"
-                                    fontWeight="Medium"
-                                    fontSize="s3"
-                                  >
-                                    {t['sharePurchasePrintingFees']}
-                                  </Text>
-                                  <Box width="300px">
-                                    <FormInput
-                                      name="printingFee"
-                                      type="number"
-                                      textAlign={'right'}
-                                      __placeholder="0.00"
-                                    />
-                                  </Box>
-                                </GridItem>
-
-                                <GridItem
-                                  display="flex"
-                                  justifyContent="space-between"
-                                  alignItems="center"
-                                >
-                                  <Text
-                                    color="neutralLightColor.Gray-80"
-                                    fontWeight="SemiBold"
-                                    fontSize="s3"
-                                  >
-                                    {t['sharePurchaseTotalAmount']}
-                                  </Text>
-
-                                  <Box p="s12">
-                                    <Text
-                                      color="neutralLightColor.Gray-80"
-                                      fontWeight="SemiBold"
-                                      fontSize="r1"
-                                    >
-                                      {t['rs']} {amountConverter(totalAmount)}
-                                    </Text>
-                                  </Box>
-                                </GridItem>
-                              </FieldCardComponents>
-                            ) : null}
-                          </GridItem>
-                        </FormSection>
-                      </Box>
-                    )}
+                      {data && <SharePurchaseInfo />}
+                    </Box>
                   </Box>
-                </Box>
-              </GridItem>
+                </GridItem>
+              )}
 
-              <GridItem
-                display={mode === '1' ? null : 'none'}
-                colSpan={data ? 4 : 6}
-              >
-                <SharePurchasePayment />
-              </GridItem>
+              {mode === 'sharePayment' && (
+                <GridItem colSpan={data ? 4 : 6}>
+                  <SharePurchasePayment
+                    totalAmount={totalAmount}
+                    denominationTotal={denominationTotal}
+                    totalCashPaid={totalCashPaid}
+                    returnAmount={returnAmount}
+                  />
+                </GridItem>
+              )}
 
               <GridItem colSpan={data ? 2 : 0}>
                 {data && (
                   <ShareMemberCard
+                    mode={mode}
                     totalAmount={totalAmount}
+                    memberId={memberId}
                     memberDetails={memberDetail as Member}
                   />
                 )}
@@ -300,37 +262,13 @@ const SharePurchaseForm = () => {
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.xl" height="fit-content" p="0">
-            {mode === '0' && (
-              <FormFooter
-                status={
-                  <Box display="flex" gap="s8">
-                    <Text
-                      color="neutralColorLight.Gray-60"
-                      fontWeight="Regular"
-                      as="i"
-                      fontSize="r1"
-                    >
-                      Form details saved to draft 09:41 AM
-                    </Text>
-                  </Box>
-                }
-                mainButtonLabel={t['proceedToPayment']}
-                mainButtonHandler={mainButtonHandlermode0}
-              />
+            {mode === 'shareInfo' && (
+              <ShareInfoFooter paymentButtonHandler={paymentButtonHandler} />
             )}
-            {mode === '1' && (
-              <FormFooter
-                status={
-                  <Button
-                    variant="outline"
-                    leftIcon={<IoChevronBackOutline />}
-                    onClick={previousButtonHandler}
-                  >
-                    {t['previous']}
-                  </Button>
-                }
-                mainButtonLabel={t['proceedToPayment']}
-                // mainButtonHandler={handleSubmit}
+            {mode === 'sharePayment' && (
+              <SharePaymentFooter
+                previousButtonHandler={previousButtonHandler}
+                handleSubmit={handleSubmit}
               />
             )}
           </Container>

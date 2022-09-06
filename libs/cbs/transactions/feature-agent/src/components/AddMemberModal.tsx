@@ -12,15 +12,12 @@ import {
 
 import {
   AssignMembersInput,
-  NatureOfDepositProduct,
-  useGetAccountTableListQuery,
   useSetAddMemberToAgentDataMutation,
 } from '@coop/cbs/data-access';
 import {
   asyncToast,
   Box,
   Button,
-  DEFAULT_PAGE_SIZE,
   Divider,
   FormAccountSelect,
   FormMemberSelect,
@@ -32,13 +29,6 @@ interface IAddMemberModalProps {
   onClose: () => void;
   refetchAssignedMembersList: () => void;
 }
-
-const accountTypes = {
-  [NatureOfDepositProduct.Mandatory]: 'Mandatory Saving Account',
-  [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
-  [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
-  [NatureOfDepositProduct.VoluntaryOrOptional]: 'Voluntary Saving Account',
-};
 
 export const AddMemberModal = ({
   isOpen,
@@ -54,20 +44,6 @@ export const AddMemberModal = ({
   const { watch, getValues, reset } = methods;
 
   const memberId = watch('memberId');
-
-  const { data: accountListData } = useGetAccountTableListQuery(
-    {
-      paginate: {
-        first: DEFAULT_PAGE_SIZE,
-        after: '',
-      },
-      filter: { memberId },
-    },
-    {
-      staleTime: 0,
-      enabled: !!memberId,
-    }
-  );
 
   const { mutateAsync: assignMemberToAgent } =
     useSetAddMemberToAgentDataMutation();
@@ -115,26 +91,7 @@ export const AddMemberModal = ({
               <FormAccountSelect
                 name="accountId"
                 label="Account"
-                options={accountListData?.account?.list?.edges?.map(
-                  (account) => ({
-                    accountInfo: {
-                      accountName: account.node?.product.productName,
-                      accountId: account.node?.id,
-                      accountType: account?.node?.product?.nature
-                        ? accountTypes[account?.node?.product?.nature]
-                        : '',
-                      balance: account?.node?.balance ?? '0',
-                      fine:
-                        account?.node?.product?.nature ===
-                          NatureOfDepositProduct.RecurringSaving ||
-                        account?.node?.product?.nature ===
-                          NatureOfDepositProduct.Mandatory
-                          ? (account?.node?.fine as string)
-                          : '',
-                    },
-                    value: account.node?.id as string,
-                  })
-                )}
+                memberId={memberId}
               />
             </Box>
           </FormProvider>

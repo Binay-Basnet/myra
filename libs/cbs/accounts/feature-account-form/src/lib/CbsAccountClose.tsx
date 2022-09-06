@@ -4,7 +4,6 @@ import {
   Container,
   FormHeader,
   FormMemberSelect,
-  FormAccountSelect,
   DEFAULT_PAGE_SIZE,
   MemberCard,
   FormFooter,
@@ -13,6 +12,7 @@ import {
   Grid,
   asyncToast,
   Button,
+  FormAccountSelect,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 import omit from 'lodash/omit';
@@ -242,7 +242,7 @@ export function CbsAccountClose() {
         success: 'Account has been deleted',
         loading: 'Deleting Account',
       },
-      onSuccess: () => router.push('/settings/general/share/transfer'),
+      onSuccess: () => router.push('/accounts/account-close/'),
       promise: mutateAsync({
         data: {
           ...(filteredValues as DepositAccountClose),
@@ -281,28 +281,8 @@ export function CbsAccountClose() {
                 {memberId && (
                   <FormAccountSelect
                     name="accountID"
+                    memberId={memberId}
                     label="Select Deposit Account"
-                    placeholder="Select Account"
-                    options={accountListData?.account?.list?.edges?.map(
-                      (account) => ({
-                        accountInfo: {
-                          accountName: account.node?.product.productName,
-                          accountId: account.node?.id,
-                          accountType: account?.node?.product?.nature
-                            ? accountTypes[account?.node?.product?.nature]
-                            : '',
-                          balance: account?.node?.balance ?? '0',
-                          fine:
-                            account?.node?.product?.nature ===
-                              NatureOfDepositProduct.RecurringSaving ||
-                            account?.node?.product?.nature ===
-                              NatureOfDepositProduct.Mandatory
-                              ? FINE
-                              : '',
-                        },
-                        value: account.node?.id as string,
-                      })
-                    )}
                   />
                 )}
                 {memberId && accountId && (

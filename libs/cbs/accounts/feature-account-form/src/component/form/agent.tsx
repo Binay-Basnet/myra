@@ -1,17 +1,12 @@
-import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { SubHeadingText } from '@coop/shared/components';
-import { FormSelect } from '@coop/shared/form';
+import {
+  GroupContainer,
+  InputGroupContainer,
+} from '@coop/cbs/kym-form/ui-containers';
 import { Box } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
 
-const agentList = [
-  { label: 'Agent', value: 'agent' },
-  { label: 'Agent2', value: 'agent2' },
-];
+import { AgentSelect } from './AgentSelect';
 
 export const Agent = () => {
-  const { t } = useTranslation();
-
   return (
     <GroupContainer
       scrollMarginTop={'200px'}
@@ -19,7 +14,7 @@ export const Agent = () => {
       flexDirection={'column'}
       gap="s16"
     >
-      <Box p="s16" bg="neutralColorLight.Gray-0">
+      <Box bg="neutralColorLight.Gray-0">
         <Box
           display={'flex'}
           flexDirection="column"
@@ -29,14 +24,9 @@ export const Agent = () => {
           borderRadius="br2"
           background="neutralColorLight.Gray-0"
         >
-          <SubHeadingText>Agent</SubHeadingText>
-          <Box w="300px">
-            <FormSelect
-              name="agentId"
-              __placeholder={t['accountOpenSelectAgent']}
-              options={agentList}
-            />
-          </Box>
+          <InputGroupContainer>
+            <AgentSelect name="agentId" label="Agent" />
+          </InputGroupContainer>
         </Box>
       </Box>
     </GroupContainer>

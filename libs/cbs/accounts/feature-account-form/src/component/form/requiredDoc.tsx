@@ -14,7 +14,7 @@ import { FormFileInput } from '@coop/shared/form';
 import { Grid } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-import { FileListType } from '../../lib/CbsAccountOpen';
+import { FileListType } from '../../lib/AccountOpenNew';
 
 interface Iprops {
   setFileList: React.Dispatch<React.SetStateAction<FileListType>>;

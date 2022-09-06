@@ -66,7 +66,7 @@ export const FeesAndCharge = () => {
           {ProductDatalist?.map((data) => {
             return (
               <Box
-                key={data?.ledgerName}
+                key={`${data?.ledgerName}${data?.serviceName}`}
                 display="flex"
                 flexDirection={'row'}
                 justifyContent="space-between"

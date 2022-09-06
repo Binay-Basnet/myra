@@ -1,5 +1,3 @@
-import { useRouter } from 'next/router';
-
 import { Member, useGetShareHistoryQuery } from '@coop/cbs/data-access';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
@@ -12,23 +10,21 @@ import Text from '../text/Text';
 export interface ShareMemberCardProps {
   memberDetails: Partial<Member>;
   totalAmount: number;
+  memberId: string;
+  mode: string;
 }
 
 export function ShareMemberCard({
   memberDetails,
   totalAmount,
+  memberId,
+  mode,
 }: ShareMemberCardProps) {
   const { t } = useTranslation();
-  const router = useRouter();
-
-  const id = String(router?.query?.['id']);
-
-  // const memberProfile =
-  //   memberDetails?.profile && memberDetails?.profile?.data?.formData;
 
   const { data } = useGetShareHistoryQuery(
     {
-      memberId: id,
+      memberId,
     },
     {
       staleTime: 0,
@@ -177,33 +173,35 @@ export function ShareMemberCard({
           </Box>
         </Box>
 
-        <Box
-          bg="gray.100"
-          display="flex"
-          gap="s8"
-          p="s16"
-          mt="s32"
-          border="1px solid"
-          borderColor="border.layout"
-          borderRadius="br2"
-          justifyContent="space-between"
-        >
-          <Text
-            fontWeight="Medium"
-            fontSize="s3"
-            color="neutralColorLight.Gray-60"
+        {mode === 'sharePayment' && (
+          <Box
+            bg="gray.100"
+            display="flex"
+            gap="s8"
+            p="s16"
+            mt="s32"
+            border="1px solid"
+            borderColor="border.layout"
+            borderRadius="br2"
+            justifyContent="space-between"
           >
-            {t['payableAmount']}
-          </Text>
-          <Text
-            as="span"
-            fontWeight="SemiBold"
-            fontSize="s3"
-            color="neutralColorLight.Gray-80"
-          >
-            {totalAmount ?? 0}
-          </Text>
-        </Box>
+            <Text
+              fontWeight="Medium"
+              fontSize="s3"
+              color="neutralColorLight.Gray-60"
+            >
+              {t['payableAmount']}
+            </Text>
+            <Text
+              as="span"
+              fontWeight="SemiBold"
+              fontSize="s3"
+              color="neutralColorLight.Gray-80"
+            >
+              {totalAmount ? totalAmount : 0}
+            </Text>
+          </Box>
+        )}
       </Box>
     </Box>
   );

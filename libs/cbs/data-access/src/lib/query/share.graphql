@@ -88,3 +88,15 @@ query getShareHistory($memberId: ID!) {
     }
   }
 }
+
+query getShareCharges(
+  $transactionType: SHARE_TRANSACTION_DIRECTION!
+  $shareCount: Int!
+) {
+  share {
+    charges(transactionType: $transactionType, shareCount: $shareCount) {
+      name
+      charge
+    }
+  }
+}

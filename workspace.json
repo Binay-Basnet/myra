@@ -3,6 +3,7 @@
   "projects": {
     "-cbs-share--features-share-purchase": "libs/cbs/share/features-share-purchase",
     "-cbs-share--features-share-return": "libs/cbs/share/features-share-return",
+    "-cbs-share--shared-ui": "libs/cbs/share/shared-ui",
     "-inventory--feature-inventory": "libs/inventory/feature-inventory",
     "-inventory--feature-item": "libs/inventory/feature-item",
     "-inventory--feature-suppliers": "libs/inventory/feature-suppliers",

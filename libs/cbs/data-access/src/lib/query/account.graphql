@@ -39,8 +39,11 @@ query getProductList($memberId: ID!) {
             productName
           }
           notAllowed {
-            id
-            productName
+            data {
+              id
+              productName
+            }
+            error
           }
         }
       }
@@ -262,6 +265,68 @@ query getAccountDocumentsList($subscriptionId: String!) {
         docData {
           identifier
           url
+        }
+      }
+    }
+  }
+}
+
+query getAccountOpenProductCriteria($productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        getProductCriteria(productId: $productId) {
+          data {
+            gender
+            minAge
+            maxAge
+            ethnicity
+            educationQualification
+            maritalStatus
+            foreignEmployment
+            occupation
+            institutionType
+            cooperativeUnion
+            cooperativeType
+          }
+        }
+      }
+    }
+  }
+}
+query getAccountOpenProductPenalty($productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        getPenaltyRebateInfo(productId: $productId) {
+          data {
+            penalty {
+              dayAfterInstallmentDate
+              minimumAmount
+              rateType
+              flatRatePenalty
+              penaltyRate
+              penaltyAmount
+            }
+            rebate {
+              daysBeforeInstallmentDate
+              noOfInstallment
+              rebateAmount
+              percentage
+            }
+            prematurePenalty {
+              penaltyDateType
+              noOfDays
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+            withdrawPenalty {
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+          }
         }
       }
     }

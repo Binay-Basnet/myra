@@ -710,6 +710,17 @@ export type CoaFullView = {
   error?: Maybe<QueryError>;
 };
 
+export type CoaMinimal = {
+  accountCode: Scalars['String'];
+  id: Scalars['ID'];
+  name: Scalars['Localized'];
+};
+
+export type CoaMinimalResult = {
+  data?: Maybe<Array<Maybe<CoaMinimal>>>;
+  error?: Maybe<QueryError>;
+};
+
 export enum CoaTypesOfAccount {
   Bank = 'BANK',
   Cash = 'CASH',
@@ -821,6 +832,7 @@ export type ChartsOfAccountSettingsMutation = {
 
 export type ChartsOfAccountSettingsQuery = {
   accounts: ChartsOfAccountResult;
+  accountsUnder?: Maybe<CoaMinimalResult>;
   class?: Maybe<ChartsOfAccountClassResult>;
   fullView: CoaFullView;
 };
@@ -828,6 +840,11 @@ export type ChartsOfAccountSettingsQuery = {
 
 export type ChartsOfAccountSettingsQueryAccountsArgs = {
   filter: ChartsOfAccountFilter;
+};
+
+
+export type ChartsOfAccountSettingsQueryAccountsUnderArgs = {
+  accountCode: Scalars['String'];
 };
 
 export type ChequePastRequest = {
@@ -1701,6 +1718,7 @@ export type DepositLoanAccount = Base & {
   modifiedBy: Identity;
   objState: ObjState;
   productId: Scalars['ID'];
+  serviceCharge?: Maybe<Array<Maybe<ServiceCharge>>>;
   tenure?: Maybe<FrequencyTenure>;
   tenureNumber?: Maybe<Scalars['Int']>;
 };
@@ -1748,6 +1766,7 @@ export type DepositLoanAccountInput = {
   minor?: InputMaybe<Scalars['String']>;
   mobileBanking?: InputMaybe<Scalars['Boolean']>;
   productId: Scalars['ID'];
+  serviceCharge?: InputMaybe<Array<InputMaybe<ServiceChargeInput>>>;
   tenure?: InputMaybe<FrequencyTenure>;
   tenureNumber?: InputMaybe<Scalars['Int']>;
 };
@@ -1780,6 +1799,7 @@ export type DepositLoanAccountQuery = {
   get?: Maybe<DepositLoanAccount>;
   getInstallments?: Maybe<InstallmentResult>;
   list?: Maybe<DepositLoanAccountConnection>;
+  listMinors?: Maybe<KymIndFamilyMemberQueryResult>;
 };
 
 
@@ -1805,6 +1825,11 @@ export type DepositLoanAccountQueryGetInstallmentsArgs = {
 export type DepositLoanAccountQueryListArgs = {
   filter?: InputMaybe<DepositLoanAccountSearchFilter>;
   paginate?: InputMaybe<Pagination>;
+};
+
+
+export type DepositLoanAccountQueryListMinorsArgs = {
+  memberId: Scalars['ID'];
 };
 
 export type DepositLoanAccountResult = {
@@ -2004,7 +2029,12 @@ export type DepositProductInput = {
 export type DepositProductList = {
   allowed?: Maybe<Array<Maybe<DepositProduct>>>;
   error?: Maybe<QueryError>;
-  notAllowed?: Maybe<Array<Maybe<DepositProduct>>>;
+  notAllowed?: Maybe<Array<Maybe<DepositProductListData>>>;
+};
+
+export type DepositProductListData = {
+  data?: Maybe<DepositProduct>;
+  error?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type DepositProductResult = {
@@ -7529,6 +7559,16 @@ export type ServerError = {
   message: Scalars['String'];
 };
 
+export type ServiceCharge = {
+  amount?: Maybe<Scalars['Amount']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type ServiceChargeInput = {
+  amount?: InputMaybe<Scalars['Amount']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
 export type ServiceType = {
   amount?: InputMaybe<Scalars['Amount']>;
   ledgerName?: InputMaybe<Scalars['String']>;
@@ -9177,7 +9217,7 @@ export type GetProductListQueryVariables = Exact<{
 }>;
 
 
-export type GetProductListQuery = { settings: { general?: { depositProduct?: { getProductList?: { allowed?: Array<{ id: string, productName: string } | null> | null, notAllowed?: Array<{ id: string, productName: string } | null> | null } | null } | null } | null } };
+export type GetProductListQuery = { settings: { general?: { depositProduct?: { getProductList?: { allowed?: Array<{ id: string, productName: string } | null> | null, notAllowed?: Array<{ error?: Array<string | null> | null, data?: { id: string, productName: string } | null } | null> | null } | null } | null } | null } };
 
 export type GetAccountOpenProductDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -9207,6 +9247,20 @@ export type GetAccountDocumentsListQueryVariables = Exact<{
 
 
 export type GetAccountDocumentsListQuery = { document: { listSubscriptionDocuments: { data?: Array<{ fieldId?: string | null, docData: Array<{ identifier: string, url: string } | null> } | null> | null } } };
+
+export type GetAccountOpenProductCriteriaQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+
+export type GetAccountOpenProductCriteriaQuery = { settings: { general?: { depositProduct?: { getProductCriteria?: { data?: { gender?: Array<string | null> | null, minAge?: number | null, maxAge?: number | null, ethnicity?: Array<string | null> | null, educationQualification?: Array<string | null> | null, maritalStatus?: Array<string | null> | null, foreignEmployment?: boolean | null, occupation?: Array<string | null> | null, institutionType?: Array<string | null> | null, cooperativeUnion?: Array<string | null> | null, cooperativeType?: Array<string | null> | null } | null } | null } | null } | null } };
+
+export type GetAccountOpenProductPenaltyQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+
+export type GetAccountOpenProductPenaltyQuery = { settings: { general?: { depositProduct?: { getPenaltyRebateInfo?: { data?: { penalty?: { dayAfterInstallmentDate?: number | null, minimumAmount?: string | null, rateType?: PenaltyRateType | null, flatRatePenalty?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null } | null, rebate?: { daysBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, percentage?: number | null } | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null, withdrawPenalty?: { penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
 
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -9753,6 +9807,14 @@ export type GetShareHistoryQueryVariables = Exact<{
 
 
 export type GetShareHistoryQuery = { share: { history?: { history?: Array<{ id?: string | null, status?: Share_Status | null, transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, balance?: number | null, shareAmount?: number | null, totalAmount?: number | null, paymentMode?: SharePaymentMode | null, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null } | null, extraFee?: Array<{ name: string, value: number } | null> | null } | null> | null, balance?: { count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null } } | null } | null } };
+
+export type GetShareChargesQueryVariables = Exact<{
+  transactionType: Share_Transaction_Direction;
+  shareCount: Scalars['Int'];
+}>;
+
+
+export type GetShareChargesQuery = { share: { charges?: Array<{ name?: string | null, charge?: string | null } | null> | null } };
 
 export type GetDepositListDataQueryVariables = Exact<{
   filter?: InputMaybe<AccountTransactionFilter>;
@@ -11711,8 +11773,11 @@ export const GetProductListDocument = `
             productName
           }
           notAllowed {
-            id
-            productName
+            data {
+              id
+              productName
+            }
+            error
           }
         }
       }
@@ -11990,6 +12055,95 @@ export const useGetAccountDocumentsListQuery = <
     useQuery<GetAccountDocumentsListQuery, TError, TData>(
       ['getAccountDocumentsList', variables],
       useAxios<GetAccountDocumentsListQuery, GetAccountDocumentsListQueryVariables>(GetAccountDocumentsListDocument).bind(null, variables),
+      options
+    );
+export const GetAccountOpenProductCriteriaDocument = `
+    query getAccountOpenProductCriteria($productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        getProductCriteria(productId: $productId) {
+          data {
+            gender
+            minAge
+            maxAge
+            ethnicity
+            educationQualification
+            maritalStatus
+            foreignEmployment
+            occupation
+            institutionType
+            cooperativeUnion
+            cooperativeType
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountOpenProductCriteriaQuery = <
+      TData = GetAccountOpenProductCriteriaQuery,
+      TError = unknown
+    >(
+      variables: GetAccountOpenProductCriteriaQueryVariables,
+      options?: UseQueryOptions<GetAccountOpenProductCriteriaQuery, TError, TData>
+    ) =>
+    useQuery<GetAccountOpenProductCriteriaQuery, TError, TData>(
+      ['getAccountOpenProductCriteria', variables],
+      useAxios<GetAccountOpenProductCriteriaQuery, GetAccountOpenProductCriteriaQueryVariables>(GetAccountOpenProductCriteriaDocument).bind(null, variables),
+      options
+    );
+export const GetAccountOpenProductPenaltyDocument = `
+    query getAccountOpenProductPenalty($productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        getPenaltyRebateInfo(productId: $productId) {
+          data {
+            penalty {
+              dayAfterInstallmentDate
+              minimumAmount
+              rateType
+              flatRatePenalty
+              penaltyRate
+              penaltyAmount
+            }
+            rebate {
+              daysBeforeInstallmentDate
+              noOfInstallment
+              rebateAmount
+              percentage
+            }
+            prematurePenalty {
+              penaltyDateType
+              noOfDays
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+            withdrawPenalty {
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountOpenProductPenaltyQuery = <
+      TData = GetAccountOpenProductPenaltyQuery,
+      TError = unknown
+    >(
+      variables: GetAccountOpenProductPenaltyQueryVariables,
+      options?: UseQueryOptions<GetAccountOpenProductPenaltyQuery, TError, TData>
+    ) =>
+    useQuery<GetAccountOpenProductPenaltyQuery, TError, TData>(
+      ['getAccountOpenProductPenalty', variables],
+      useAxios<GetAccountOpenProductPenaltyQuery, GetAccountOpenProductPenaltyQueryVariables>(GetAccountOpenProductPenaltyDocument).bind(null, variables),
       options
     );
 export const AllAdministrationDocument = `
@@ -15828,6 +15982,28 @@ export const useGetShareHistoryQuery = <
     useQuery<GetShareHistoryQuery, TError, TData>(
       ['getShareHistory', variables],
       useAxios<GetShareHistoryQuery, GetShareHistoryQueryVariables>(GetShareHistoryDocument).bind(null, variables),
+      options
+    );
+export const GetShareChargesDocument = `
+    query getShareCharges($transactionType: SHARE_TRANSACTION_DIRECTION!, $shareCount: Int!) {
+  share {
+    charges(transactionType: $transactionType, shareCount: $shareCount) {
+      name
+      charge
+    }
+  }
+}
+    `;
+export const useGetShareChargesQuery = <
+      TData = GetShareChargesQuery,
+      TError = unknown
+    >(
+      variables: GetShareChargesQueryVariables,
+      options?: UseQueryOptions<GetShareChargesQuery, TError, TData>
+    ) =>
+    useQuery<GetShareChargesQuery, TError, TData>(
+      ['getShareCharges', variables],
+      useAxios<GetShareChargesQuery, GetShareChargesQueryVariables>(GetShareChargesDocument).bind(null, variables),
       options
     );
 export const GetDepositListDataDocument = `
