@@ -3,7 +3,7 @@ import { Grid } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 interface IProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
   directorId: string;
 }
 

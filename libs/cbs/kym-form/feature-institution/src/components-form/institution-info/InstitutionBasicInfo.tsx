@@ -10,7 +10,7 @@ import { useInstitution } from '../hooks/useInstitution';
 import { getOption } from '../../utils/getOptionsInstitution';
 
 interface IProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const BasicDetailsInstitution = (props: IProps) => {

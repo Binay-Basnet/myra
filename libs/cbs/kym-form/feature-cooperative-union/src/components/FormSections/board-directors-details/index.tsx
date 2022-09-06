@@ -5,7 +5,7 @@ import { useTranslation } from '@coop/shared/utils';
 import { BoardDirectorInfo } from './BoardDirectorInfo';
 
 interface directorDetailsProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const DirectorDetails = (props: directorDetailsProps) => {

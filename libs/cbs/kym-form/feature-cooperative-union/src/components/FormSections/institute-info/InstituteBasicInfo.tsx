@@ -17,7 +17,7 @@ import { useCooperativeUnionInstitution } from '../../../hooks';
 import { getFieldOption } from '../../../utils/getFieldOption';
 
 interface IInstituteBasicInfoProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const InstituteBasicInfo = ({

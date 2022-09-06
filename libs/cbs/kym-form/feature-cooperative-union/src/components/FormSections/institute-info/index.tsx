@@ -14,7 +14,7 @@ import { OperatingOfficeAddress } from './OperatingOfficeAddress';
 import { RegisteredDetails } from './RegisteredDetails';
 
 interface IInstitutionInfoProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const InstituteInfo = ({ setSection }: IInstitutionInfoProps) => {

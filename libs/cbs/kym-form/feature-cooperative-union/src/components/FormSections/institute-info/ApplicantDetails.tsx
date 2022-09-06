@@ -14,7 +14,7 @@ import {
 import { useCooperativeUnionInstitution } from '../../../hooks';
 
 interface IApplicantDetailsProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {

@@ -11,7 +11,7 @@ import {
 import { useCooperativeUnionEconomicDetails } from '../../../hooks';
 
 interface IIncomeDetailsProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const IncomeDetails = ({ setSection }: IIncomeDetailsProps) => {

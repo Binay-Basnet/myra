@@ -11,7 +11,7 @@ import {
 import { useCooperativeUnionInstitution } from '../../../hooks';
 
 interface IRegisteredDetailsProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const RegisteredDetails = ({ setSection }: IRegisteredDetailsProps) => {

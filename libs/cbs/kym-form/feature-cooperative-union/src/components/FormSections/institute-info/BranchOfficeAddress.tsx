@@ -7,7 +7,7 @@ import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
 import { useCooperativeUnionInstitution } from '../../../hooks';
 
 interface IBranchOfficeAddressProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const BranchOfficeAddress = ({

@@ -33,7 +33,7 @@ import { Bottomdirectorcoop } from './boardDirectorDocuments';
 
 interface ICOOPDirector {
   removeDirector: (sisterId: string) => void;
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
   directorId: string;
 }
 

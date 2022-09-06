@@ -8,7 +8,7 @@ import { ExpenseDetails } from './expenseDetails';
 import { IncomeDetails } from './incomeDetails';
 
 interface economicDetailsProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const EconomicDetails = (props: economicDetailsProps) => {

@@ -11,7 +11,7 @@ import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 import { useCooperative } from '../../hooks/useCooperative';
 
 interface IProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const KymAccountHolderDeclaration = (props: IProps) => {
@@ -51,7 +51,7 @@ export const KymAccountHolderDeclaration = (props: IProps) => {
 };
 
 interface IDocProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 const Documents = ({ setSection }: IDocProps) => {

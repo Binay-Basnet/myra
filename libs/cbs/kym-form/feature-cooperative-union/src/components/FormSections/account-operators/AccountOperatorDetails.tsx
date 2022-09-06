@@ -50,7 +50,7 @@ import {
 import { AccountOperatorTraining } from './accountOperatorTraining';
 
 interface IAddDirectorProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
   removeAccount: (accountOperatorId: string) => void;
   index: number;
   accountOperatorId: string;
@@ -397,7 +397,7 @@ const AddDirector = ({
 };
 
 interface IAccountOperatorInfoProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const AccountOperatorInfo = ({

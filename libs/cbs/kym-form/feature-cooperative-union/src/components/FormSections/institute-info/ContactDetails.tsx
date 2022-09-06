@@ -11,7 +11,7 @@ import {
 import { useCooperativeUnionInstitution } from '../../../hooks';
 
 interface IContactDetailsProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const ContactDetails = ({ setSection }: IContactDetailsProps) => {

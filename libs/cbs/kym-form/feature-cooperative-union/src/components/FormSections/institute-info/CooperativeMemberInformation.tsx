@@ -16,7 +16,7 @@ import {
 import { useCooperativeUnionInstitution } from '../../../hooks';
 
 interface ICooperativeMemberInformationProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const CooperativeMemberInformation = ({

@@ -11,7 +11,7 @@ import {
 import { useCooperativeUnionEconomicDetails } from '../../../hooks';
 
 interface IKymAssestsAndtargetProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const KymAssestsAndtarget = ({

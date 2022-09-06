@@ -11,7 +11,7 @@ import {
 import { useCooperativeUnionEconomicDetails } from '../../../hooks';
 
 interface IKymEquilitiesProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const KymEquilities = ({ setSection }: IKymEquilitiesProps) => {

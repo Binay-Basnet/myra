@@ -14,7 +14,7 @@ import {
 import { KymMemberdetailsCOOP } from './memberDetails';
 
 interface memberDetailsProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const MemberDetails = (props: memberDetailsProps) => {

@@ -52,7 +52,7 @@ interface IAddDirectorProps {
   removeDirector: (directorId: string) => void;
   index: number;
   directorId: string;
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
   directorDetail: CoopUnionPersonnelDetails | null | undefined;
   refetch: () => void;
 }
@@ -347,7 +347,7 @@ const AddDirector = ({
 };
 
 interface IBoardDirectorInfoProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {

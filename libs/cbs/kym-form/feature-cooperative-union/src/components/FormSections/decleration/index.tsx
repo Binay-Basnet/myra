@@ -5,7 +5,7 @@ import { useTranslation } from '@coop/shared/utils';
 import { DocumentDeclarationInstitutionCOOPUnion } from './COOPUnionDeclaration';
 
 interface declarationProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const Declaration = (props: declarationProps) => {

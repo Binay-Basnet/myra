@@ -20,7 +20,7 @@ import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 import { useCooperative } from '../../hooks/useCooperative';
 
 interface IProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const KymCoopRepresentative = (props: IProps) => {

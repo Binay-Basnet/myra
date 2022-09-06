@@ -13,7 +13,7 @@ import {
 import { useCooperativeUnionInstitution } from '../../../hooks';
 
 interface IDocumentDeclarationInstitutionCOOPUnionProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const DocumentDeclarationInstitutionCOOPUnion = ({

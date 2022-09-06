@@ -5,7 +5,7 @@ import { useTranslation } from '@coop/shared/utils';
 import { AddRepresentative } from './DetailsOfdirectorswithOther';
 
 interface centralRepresntativeDetailsProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const CentralRepresentativeDetails = (

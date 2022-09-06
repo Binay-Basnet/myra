@@ -14,7 +14,7 @@ import { useCooperative } from '../../hooks/useCooperative';
 import { getFieldOption } from '../../../utils/getFieldOption';
 
 interface IProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const KymCoopAddCoopDetails = (props: IProps) => {

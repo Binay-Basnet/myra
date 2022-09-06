@@ -13,7 +13,7 @@ import { useTranslation } from '@coop/shared/utils';
 import { AddDirector } from '../../accordion-component/KymCoopDirectorAccordion';
 
 interface IProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const KymCoopBoardDirectorDetail = (props: IProps) => {

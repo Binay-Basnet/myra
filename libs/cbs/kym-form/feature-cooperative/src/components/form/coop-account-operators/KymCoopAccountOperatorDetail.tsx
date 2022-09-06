@@ -13,7 +13,7 @@ import { useTranslation } from '@coop/shared/utils';
 import { AddOperator } from '../../accordion-component/KymCoopAccountOperator';
 
 interface IProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const KymCoopAccountOperatorDetail = (props: IProps) => {

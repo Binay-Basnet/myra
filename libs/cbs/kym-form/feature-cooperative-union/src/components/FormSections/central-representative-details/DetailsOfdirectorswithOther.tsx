@@ -39,7 +39,7 @@ import {
 import { CentralRepresentativeTraining } from './CentralRepresentativeTraining';
 
 interface ICRDirectorsSelectionProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
   refetch: () => void;
   crId: string;
   setCRId: React.Dispatch<React.SetStateAction<string>>;
@@ -215,7 +215,7 @@ const CRDirectorsSelection = ({
 };
 
 interface IAddRepresentativeProps {
-  setSection: (section: { section: string; subSection: string }) => void;
+  setSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
