@@ -4,7 +4,7 @@ services:
   myra:
     build:
       context: .
-      dockerfile: Dockerfile.myra
+      dockerfile: apps/myra/Dockerfile
     image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/myra-ui:dev
     container_name: ${MYRA_CONTAINER_NAME}
     env_file: .env
