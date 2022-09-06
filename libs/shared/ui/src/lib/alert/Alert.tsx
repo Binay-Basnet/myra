@@ -69,7 +69,7 @@ export function Alert({
 
             <Box display="flex" flexDir="column" gap="s8">
               {title && <AlertTitle>{title}</AlertTitle>}
-              {subtitle && (
+              {(subtitle || children) && (
                 <AlertDescription>
                   {subtitle}
                   {children}
