@@ -1,7 +1,5 @@
-# # TODO: add test step before merging to dev
-# # Trigger pipeline
 kind: pipeline
-name: Build and Push myra-ui
+name: Build all the apps - dev
 type: docker
 
 platform:
@@ -9,59 +7,55 @@ platform:
   os: linux
 
 steps:
-  - name: publishing myra-ui-main
-    failure: ignore
-    image: plugins/ecr
-    environment:
-      PLUGIN_STORAGE_DRIVER: overlay2
-      PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui:main
-    settings:
-      access_key:
-        from_secret: aws_access_key
-      secret_key:
-        from_secret: aws_secret_key
-      repo: myra-ui
-      registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
-      region: us-east-1
-      tags: main
-      dockerfile: Dockerfile.myra
-      build_args:
-        - NX_SCHEMA_PATH=https://myra-api.raralabs.live/query
+- name: build affected modules - dev
+  image: node:16
+  volumes:
+  - name: node_modules
+    path: /drone/src/node_modules
+  - name: commit-sha
+    path: /drone/previous-success-build-commit-sha
+  - name: env-file
+    path: /drone/src/.env
+  - name: ebanking-app
+    path: /drone/src/apps/ebanking/dist
+  - name: myra-app
+    path: /drone/src/apps/myra/dist
+  - name: neosys-admin-app
+    path: /drone/src/apps/neosys-admin/dist
+  commands:
+  - yarn
+  - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD
 
-    when:
-      branch:
-        - main
-      event:
-        - push
+volumes:
+- name: node_modules
+  host:
+    path: /build-cache/myra-ui-dev/node_modules
+- name: commit-sha
+  host:
+    path: /build-cache/myra-ui-dev/previous-success-build-commit-sha
+- name: env-file
+  host:
+    path: /build-cache/myra-ui-dev/.env
+- name: ebanking-app
+  host:
+    path: /build-cache/myra-ui-dev/ebanking-app
+- name: myra-app
+  host:
+    path: /build-cache/myra-ui-dev/myra-app
+- name: neosys-admin-app
+  host:
+    path: /build-cache/myra-ui-dev/neosys-admin-app
 
-  - name: publishing myra-ui-dev
-    failure: ignore
-    image: plugins/ecr
-    environment:
-      PLUGIN_STORAGE_DRIVER: overlay2
-      PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui:dev
-    settings:
-      access_key:
-        from_secret: aws_access_key
-      secret_key:
-        from_secret: aws_secret_key
-      repo: myra-ui
-      registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
-      region: us-east-1
-      tags: dev
-      dockerfile: Dockerfile.myra
-      build_args:
-        - NX_SCHEMA_PATH=https://myra-api-dev.raralabs.live/query
-
-    when:
-      branch:
-      - dev
-      event:
-      - push
+trigger:
+  branch:
+  - dev
+  event:
+  - push
 
 ---
+
 kind: pipeline
-name: Build and push myra-ui-storybook
+name: Build storybook
 type: docker
 
 platform:
@@ -69,34 +63,40 @@ platform:
   os: linux
 
 steps:
-  - name: publishing storybook-dev
-    failure: ignore
-    image: plugins/ecr
-    environment:
-      PLUGIN_STORAGE_DRIVER: overlay2
-      PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/storybook:dev
-    settings:
-      access_key:
-        from_secret: aws_access_key
-      secret_key:
-        from_secret: aws_secret_key
-      repo: storybook
-      registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
-      region: us-east-1
-      tags: dev
-      dockerfile: Dockerfile.storybook
-      build_args:
-        - NX_SCHEMA_PATH=https://myra-api-dev.raralabs.live/query
+- name: build storybook
+  image: node:16
+  volumes:
+  - name: node_modules
+    path: /drone/src/node_modules
+  - name: commit-sha
+    path: /drone/previous-success-build-commit-sha
+  - name: storybook-build
+    path: /drone/src/dist
+  commands:
+  - yarn
+  - npx nx affected --target=build-storybook --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD
 
-    when:
-      branch:
-        - dev
-      event:
-        - push
+volumes:
+- name: node_modules
+  host:
+    path: /build-cache/myra-ui-dev/node_modules
+- name: commit-sha
+  host:
+    path: /build-cache/myra-ui-dev/previous-success-build-commit-sha
+- name: storybook-build
+  host:
+    path: /build-cache/myra-ui-dev/storybook
+
+trigger:
+  branch:
+  - dev
+  event:
+  - push
 
 ---
+
 kind: pipeline
-name: Build and push myra-ui-admin
+name: Publish myra-app - dev
 type: docker
 
 platform:
@@ -104,59 +104,48 @@ platform:
   os: linux
 
 steps:
-  - name: publishing myra-ui-admin-main
-    failure: ignore
-    image: plugins/ecr
-    environment:
-      PLUGIN_STORAGE_DRIVER: overlay2
-      PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui-admin:main
-    settings:
-      access_key:
-        from_secret: aws_access_key
-      secret_key:
-        from_secret: aws_secret_key
-      repo: myra-ui-admin
-      registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
-      region: us-east-1
-      tags: main
-      dockerfile: Dockerfile.neosys-admin
-      build_args:
-        - NX_SCHEMA_PATH=https://myra-api.raralabs.live/query
+- name: publishing myra-app - dev
+  image: plugins/ecr
+  settings:
+    cache_from:
+    - 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui:dev
+    access_key:
+      from_secret: aws_access_key
+    secret_key:
+      from_secret: aws_secret_key
+    repo: myra-ui
+    registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
+    region: us-east-1
+    tags: dev
+    context: /drone/src/apps/myra
+    dockerfile: /drone/src/apps/myra/Dockerfile
+  volumes:
+  - name: myra-app
+    path: /drone/src/apps/myra/dist
+  - name: docker-sock
+    path: /var/run/docker.sock
 
-    when:
-      branch:
-        - main
-      event:
-        - push
+volumes:
+- name: myra-app
+  host:
+    path: /build-cache/myra-ui-dev/myra-app
+- name: docker-sock
+  host:
+    path: /var/run/docker.sock
 
-  - name: publishing myra-ui-admin-dev
-    failure: ignore
-    image: plugins/ecr
-    environment:
-      PLUGIN_STORAGE_DRIVER: overlay2
-      PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui-admin:dev
-    settings:
-      access_key:
-        from_secret: aws_access_key
-      secret_key:
-        from_secret: aws_secret_key
-      repo: myra-ui-admin
-      registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
-      region: us-east-1
-      tags: dev
-      dockerfile: Dockerfile.neosys-admin
-      build_args:
-        - NX_SCHEMA_PATH=https://myra-api-dev.raralabs.live/query
+depends_on:
+- Build all the apps - dev
 
-    when:
-      branch:
-      - dev
-      event:
-      - push
+trigger:
+  branch:
+  - dev
+  event:
+  - push
 
 ---
+
 kind: pipeline
-name: Build and push myra-ui-ebanking
+name: Publish neosys-admin-app - dev
 type: docker
 
 platform:
@@ -164,60 +153,146 @@ platform:
   os: linux
 
 steps:
-  - name: publishing myra-ui-ebanking-main
-    failure: ignore
-    image: plugins/ecr
-    environment:
-      PLUGIN_STORAGE_DRIVER: overlay2
-      PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui-ebanking:main
-    settings:
-      access_key:
-        from_secret: aws_access_key
-      secret_key:
-        from_secret: aws_secret_key
-      repo: myra-ui-ebanking
-      registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
-      region: us-east-1
-      tags: main
-      dockerfile: Dockerfile.ebanking
-      build_args:
-        - NX_SCHEMA_PATH=https://myra-api.raralabs.live/query
+- name: publishing neosys-admin-app - dev
+  image: plugins/ecr
+  settings:
+    cache_from:
+    - 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui-admin:dev
+    access_key:
+      from_secret: aws_access_key
+    secret_key:
+      from_secret: aws_secret_key
+    repo: myra-ui-admin
+    registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
+    region: us-east-1
+    tags: dev
+    context: /drone/src/apps/neosys-admin
+    dockerfile: /drone/src/apps/neosys-admin/Dockerfile
+  volumes:
+  - name: neosys-admin-app
+    path: /drone/src/apps/neosys-admin/dist
+  - name: docker-sock
+    path: /var/run/docker.sock
 
-    when:
-      branch:
-        - main
-      event:
-        - push
+volumes:
+- name: neosys-admin-app
+  host:
+    path: /build-cache/myra-ui-dev/neosys-admin-app
+- name: docker-sock
+  host:
+    path: /var/run/docker.sock
 
-  - name: publishing myra-ui-ebanking-dev
-    failure: ignore
-    image: plugins/ecr
-    environment:
-      PLUGIN_STORAGE_DRIVER: overlay2
-      PLUGIN_CACHE_FROM: 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui-ebanking:dev
-    settings:
-      access_key:
-        from_secret: aws_access_key
-      secret_key:
-        from_secret: aws_secret_key
-      repo: myra-ui-ebanking
-      registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
-      region: us-east-1
-      tags: dev
-      dockerfile: Dockerfile.ebanking
-      build_args:
-        - NX_SCHEMA_PATH=https://myra-api-dev.raralabs.live/query
+depends_on:
+- Build all the apps - dev
 
-    when:
-      branch:
-        - dev
-      event:
-        - push
+trigger:
+  branch:
+  - dev
+  event:
+  - push
 
 ---
+
+kind: pipeline
+name: Publish ebanking-app - dev
+type: docker
+
+platform:
+  arch: amd64
+  os: linux
+
+steps:
+- name: publishing ebanking-app - dev
+  image: plugins/ecr
+  settings:
+    cache_from:
+    - 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui-ebanking:dev
+    access_key:
+      from_secret: aws_access_key
+    secret_key:
+      from_secret: aws_secret_key
+    repo: myra-ui-ebanking
+    registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
+    region: us-east-1
+    tags: dev
+    context: /drone/src/apps/ebanking
+    dockerfile: /drone/src/apps/ebanking/Dockerfile
+  volumes:
+  - name: ebanking-app
+    path: /drone/src/apps/ebanking/dist
+  - name: docker-sock
+    path: /var/run/docker.sock
+
+volumes:
+- name: ebanking-app
+  host:
+    path: /build-cache/myra-ui-dev/ebanking-app
+- name: docker-sock
+  host:
+    path: /var/run/docker.sock
+
+depends_on:
+- Build all the apps - dev
+
+trigger:
+  branch:
+  - dev
+  event:
+  - push
+
+---
+
+kind: pipeline
+name: Publish storybook
+type: docker
+
+platform:
+  arch: amd64
+  os: linux
+
+steps:
+- name: publishing storybook
+  image: plugins/ecr
+  settings:
+    cache_from:
+    - 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/storybook:dev
+    access_key:
+      from_secret: aws_access_key
+    secret_key:
+      from_secret: aws_secret_key
+    repo: storybook
+    registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
+    region: us-east-1
+    tags: dev
+    dockerfile: /drone/src/Dockerfile.storybook
+  volumes:
+  - name: storybook
+    path: /drone/src/dist
+  - name: docker-sock
+    path: /var/run/docker.sock
+
+volumes:
+- name: storybook
+  host:
+    path: /build-cache/myra-ui-dev/storybook
+- name: docker-sock
+  host:
+    path: /var/run/docker.sock
+
+depends_on:
+- Build storybook
+
+trigger:
+  branch:
+  - dev
+  event:
+  - push
+
+---
+
 kind: pipeline
 type: ssh
-name: Pull image and deploy
+name: Pull images and deploy all the apps - dev
 
 server:
   host:
@@ -228,113 +303,355 @@ server:
     from_secret: ssh_key
 
 steps:
-  - name: Deploy frontend main
-    environment:
-      access_key:
-        from_secret: aws_access_key
-      secret_key:
-        from_secret: aws_secret_key
-      nx_schema_path:
-        from_secret: NX_SCHEMA_PATH
-      myra_container_name:
-        from_secret: MYRA_CONTAINER_NAME
-      myra_port:
-        from_secret: MYRA_PORT
-      admin_container_name:
-        from_secret: ADMIN_CONTAINER_NAME
-      admin_port:
-        from_secret: ADMIN_PORT
-      ebank_container_name:
-        from_secret: EBANKING_CONTAINER_NAME
-      ebank_port:
-        from_secret: EBANKING_PORT
-      storybook_container_name:
-        from_secret: STORYBOOK_CONTAINER_NAME
-      storybook_port:
-        from_secret: STORYBOOK_PORT
-    commands:
-      - echo "NX_SCHEMA_PATH=$nx_schema_path" >> .env
-      - echo "MYRA_CONTAINER_NAME=$myra_container_name" >> .env
-      - echo "MYRA_PORT=$myra_port" >> .env
-      - echo "ADMIN_CONTAINER_NAME=$admin_container_name" >> .env
-      - echo "ADMIN_PORT=$admin_port" >> .env
-      - echo "EBANKING_CONTAINER_NAME=$ebank_container_name" >> .env
-      - echo "EBANKING_PORT=$ebank_port" >> .env
-      - echo "STORYBOOK_CONTAINER_NAME=$storybook_container_name" >> .env
-      - echo "STORYBOOK_PORT=$storybook_port" >> .env
-      - aws configure set aws_access_key_id $access_key
-      - aws configure set aws_secret_access_key $secret_key
-      - aws ecr get-login-password --region us-east-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.us-east-1.amazonaws.com
-      - docker-compose -f docker-compose.neosys.yml pull
-      - docker-compose -f docker-compose.ebanking.yml pull
-      - docker-compose -f docker-compose.myra.yml pull
-      - docker-compose --project-name myra-ui-neosys-main -f docker-compose.neosys.yml up --no-build --force-recreate -d
-      - docker-compose --project-name myra-ui-ebanking-main -f docker-compose.ebanking.yml up --no-build --force-recreate -d
-      - docker-compose --project-name myra-ui-myra-main -f docker-compose.myra.yml up --no-build --force-recreate -d
-      - echo UI deployed successfully
-      - docker image prune -a -f || true
-      - docker container prune -a -f || true
-    when:
-      branch:
-        - main
-      event:
-        - push
-
-  - name: Deploy frontend dev
-    environment:
-      access_key:
-        from_secret: aws_access_key
-      secret_key:
-        from_secret: aws_secret_key
-      nx_schema_path:
-        from_secret: NX_SCHEMA_PATH_DEV
-      myra_container_name:
-        from_secret: MYRA_CONTAINER_NAME_DEV
-      myra_port:
-        from_secret: MYRA_PORT_DEV
-      admin_container_name:
-        from_secret: ADMIN_CONTAINER_NAME_DEV
-      admin_port:
-        from_secret: ADMIN_PORT_DEV
-      ebank_container_name:
-        from_secret: EBANKING_CONTAINER_NAME_DEV
-      ebank_port:
-        from_secret: EBANKING_PORT_DEV
-      storybook_container_name:
-        from_secret: STORYBOOK_CONTAINER_NAME_DEV
-      storybook_port:
-        from_secret: STORYBOOK_PORT_DEV
-    commands:
-      - echo "NX_SCHEMA_PATH=$nx_schema_path" >> .env
-      - echo "MYRA_CONTAINER_NAME=$myra_container_name" >> .env
-      - echo "MYRA_PORT=$myra_port" >> .env
-      - echo "ADMIN_CONTAINER_NAME=$admin_container_name" >> .env
-      - echo "ADMIN_PORT=$admin_port" >> .env
-      - echo "EBANKING_CONTAINER_NAME=$ebank_container_name" >> .env
-      - echo "EBANKING_PORT=$ebank_port" >> .env
-      - echo "STORYBOOK_CONTAINER_NAME=$storybook_container_name" >> .env
-      - echo "STORYBOOK_PORT=$storybook_port" >> .env
-      - aws configure set aws_access_key_id $access_key
-      - aws configure set aws_secret_access_key $secret_key
-      - aws ecr get-login-password --region us-east-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.us-east-1.amazonaws.com
-      - docker-compose -f docker-compose.neosys.yml pull
-      - docker-compose -f docker-compose.ebanking.yml pull
-      - docker-compose -f docker-compose.myra.yml pull
-      - docker-compose -f docker-compose.storybook.yml pull
-      - docker-compose --project-name myra-ui-neosys-dev -f docker-compose.neosys.yml up --no-build --force-recreate -d
-      - docker-compose --project-name myra-ui-ebanking-dev -f docker-compose.ebanking.yml up --no-build --force-recreate -d
-      - docker-compose --project-name myra-ui-myra-dev -f docker-compose.myra.yml up --no-build --force-recreate -d
-      - docker-compose --project-name myra-ui-storybook-dev -f docker-compose.storybook.yml up --no-build --force-recreate -d
-      - echo UI deployed successfully
-      - docker image prune -a -f || true
-      - docker container prune -a -f || true
-    when:
-      branch:
-      - dev
-      event:
-      - push
+- name: deploy all the apps - dev
+  environment:
+    access_key:
+      from_secret: aws_access_key
+    secret_key:
+      from_secret: aws_secret_key
+  commands:
+  - cp /apps/myra-ui-dev/.env .
+  - aws configure set aws_access_key_id $access_key
+  - aws configure set aws_secret_access_key $secret_key
+  - aws ecr get-login-password --region us-east-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.us-east-1.amazonaws.com
+  - docker-compose -f docker-compose.neosys.yml pull
+  - docker-compose -f docker-compose.ebanking.yml pull
+  - docker-compose -f docker-compose.myra.yml pull
+  - docker-compose -f docker-compose.storybook.yml pull
+  - docker-compose --project-name myra-ui-neosys-dev -f docker-compose.neosys.yml up --no-build --force-recreate -d
+  - docker-compose --project-name myra-ui-ebanking-dev -f docker-compose.ebanking.yml up --no-build --force-recreate -d
+  - docker-compose --project-name myra-ui-myra-dev -f docker-compose.myra.yml up --no-build --force-recreate -d
+  - docker-compose --project-name myra-ui-storybook -f docker-compose.storybook.yml up --no-build --force-recreate -d
+  - docker image prune -a -f || true
+  - docker container prune -a -f || true
 
 depends_on:
-  - Build and Push myra-ui
-  - Build and push myra-ui-admin
-  - Build and push myra-ui-ebanking
+- Publish myra-app - dev
+- Publish neosys-admin-app - dev
+- Publish ebanking-app - dev
+- Publish storybook
+
+trigger:
+  branch:
+  - dev
+  event:
+  - push
+
+---
+
+kind: pipeline
+type: docker
+name: Update last successful build commit SHA - dev
+
+steps:
+- name: update content in host file - dev
+  image: alpine:latest
+  volumes:
+  - name: commit-sha
+    path: /drone/previous-success-build-commit-sha
+  commands:
+  - echo $DRONE_COMMIT_SHA > /drone/previous-success-build-commit-sha
+
+volumes:
+- name: commit-sha
+  host:
+    path: /build-cache/myra-ui-dev/previous-success-build-commit-sha
+
+depends_on:
+- Pull images and deploy all the apps - dev
+trigger:
+  branch:
+  - dev
+  event:
+  - push
+
+---
+############################################################################################
+############################################################################################
+####                                      Main branch                                   ####
+############################################################################################
+############################################################################################
+
+kind: pipeline
+name: Build all the apps - main
+type: docker
+
+platform:
+  arch: amd64
+  os: linux
+
+steps:
+- name: build affected modules - main
+  image: node:16
+  volumes:
+  - name: node_modules
+    path: /drone/src/node_modules
+  - name: commit-sha
+    path: /drone/previous-success-build-commit-sha
+  - name: env-file
+    path: /drone/src/.env
+  - name: ebanking-app
+    path: /drone/src/apps/ebanking/dist
+  - name: myra-app
+    path: /drone/src/apps/myra/dist
+  - name: neosys-admin-app
+    path: /drone/src/apps/neosys-admin/dist
+  commands:
+  - yarn
+  - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD
+
+volumes:
+- name: node_modules
+  host:
+    path: /build-cache/myra-ui-main/node_modules
+- name: commit-sha
+  host:
+    path: /build-cache/myra-ui-main/previous-success-build-commit-sha
+- name: env-file
+  host:
+    path: /build-cache/myra-ui-main/.env
+- name: ebanking-app
+  host:
+    path: /build-cache/myra-ui-main/ebanking-app
+- name: myra-app
+  host:
+    path: /build-cache/myra-ui-main/myra-app
+- name: neosys-admin-app
+  host:
+    path: /build-cache/myra-ui-main/neosys-admin-app
+
+trigger:
+  branch:
+  - main
+  event:
+  - push
+
+---
+
+kind: pipeline
+name: Publish myra-app - main
+type: docker
+
+platform:
+  arch: amd64
+  os: linux
+
+steps:
+- name: publishing myra-app - main
+  image: plugins/ecr
+  settings:
+    cache_from:
+    - 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui:main
+    access_key:
+      from_secret: aws_access_key
+    secret_key:
+      from_secret: aws_secret_key
+    repo: myra-ui
+    registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
+    region: us-east-1
+    tags: main
+    context: /drone/src/apps/myra
+    dockerfile: /drone/src/apps/myra/Dockerfile
+  volumes:
+  - name: myra-app
+    path: /drone/src/apps/myra/dist
+  - name: docker-sock
+    path: /var/run/docker.sock
+
+volumes:
+- name: myra-app
+  host:
+    path: /build-cache/myra-ui-main/myra-app
+- name: docker-sock
+  host:
+    path: /var/run/docker.sock
+
+depends_on:
+- Build all the apps - main
+
+trigger:
+  branch:
+  - main
+  event:
+  - push
+
+---
+
+kind: pipeline
+name: Publish neosys-admin-app - main
+type: docker
+
+platform:
+  arch: amd64
+  os: linux
+
+steps:
+- name: publishing neosys-admin-app - main
+  image: plugins/ecr
+  settings:
+    cache_from:
+    - 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui-admin:main
+    access_key:
+      from_secret: aws_access_key
+    secret_key:
+      from_secret: aws_secret_key
+    repo: myra-ui-admin
+    registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
+    region: us-east-1
+    tags: main
+    context: /drone/src/apps/neosys-admin
+    dockerfile: /drone/src/apps/neosys-admin/Dockerfile
+  volumes:
+  - name: neosys-admin-app
+    path: /drone/src/apps/neosys-admin/dist
+  - name: docker-sock
+    path: /var/run/docker.sock
+
+volumes:
+- name: neosys-admin-app
+  host:
+    path: /build-cache/myra-ui-main/neosys-admin-app
+- name: docker-sock
+  host:
+    path: /var/run/docker.sock
+
+depends_on:
+- Build all the apps - main
+
+trigger:
+  branch:
+  - main
+  event:
+  - push
+
+---
+
+kind: pipeline
+name: Publish ebanking-app - main
+type: docker
+
+platform:
+  arch: amd64
+  os: linux
+
+steps:
+- name: publishing ebanking-app - main
+  image: plugins/ecr
+  settings:
+    cache_from:
+    - 110278083494.dkr.ecr.ap-southeast-1.amazonaws.com/myra-ui-ebanking:main
+    access_key:
+      from_secret: aws_access_key
+    secret_key:
+      from_secret: aws_secret_key
+    repo: myra-ui-ebanking
+    registry: 110278083494.dkr.ecr.us-east-1.amazonaws.com
+    region: us-east-1
+    tags: main
+    context: /drone/src/apps/ebanking
+    dockerfile: /drone/src/apps/ebanking/Dockerfile
+  volumes:
+  - name: ebanking-app
+    path: /drone/src/apps/ebanking/dist
+  - name: docker-sock
+    path: /var/run/docker.sock
+
+volumes:
+- name: ebanking-app
+  host:
+    path: /build-cache/myra-ui-main/ebanking-app
+- name: docker-sock
+  host:
+    path: /var/run/docker.sock
+
+depends_on:
+- Build all the apps - main
+
+trigger:
+  branch:
+  - main
+  event:
+  - push
+
+---
+
+kind: pipeline
+type: ssh
+name: Pull images and deploy all the apps - main
+
+server:
+  host:
+    from_secret: hostname
+  user:
+    from_secret: host_user
+  ssh_key:
+    from_secret: ssh_key
+
+steps:
+- name: deploy all the apps - main
+  environment:
+    access_key:
+      from_secret: aws_access_key
+    secret_key:
+      from_secret: aws_secret_key
+  volumes:
+    - name: env-file
+      path: /drone/src/.env
+  commands:
+  - cp /apps/myra-ui-main/.env .
+  - aws configure set aws_access_key_id $access_key
+  - aws configure set aws_secret_access_key $secret_key
+  - aws ecr get-login-password --region us-east-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.us-east-1.amazonaws.com
+  - docker-compose -f docker-compose.neosys.yml pull
+  - docker-compose -f docker-compose.ebanking.yml pull
+  - docker-compose -f docker-compose.myra.yml pull
+  - docker-compose --project-name myra-ui-neosys-dev -f docker-compose.neosys.yml up --no-build --force-recreate -d
+  - docker-compose --project-name myra-ui-ebanking-dev -f docker-compose.ebanking.yml up --no-build --force-recreate -d
+  - docker-compose --project-name myra-ui-myra-dev -f docker-compose.myra.yml up --no-build --force-recreate -d
+  - docker image prune -a -f || true
+  - docker container prune -a -f || true
+
+volumes:
+- name: env-file
+  host:
+    path: /apps/myra-ui-main/.env
+
+depends_on:
+- Publish myra-app - main
+- Publish neosys-admin-app - main
+- Publish ebanking-app - main
+
+trigger:
+  branch:
+  - main
+  event:
+  - push
+
+---
+
+kind: pipeline
+type: docker
+name: Update last successful build commit SHA - main
+
+steps:
+- name: update content in host file - main
+  image: alpine:latest
+  volumes:
+  - name: commit-sha
+    path: /drone/previous-success-build-commit-sha
+  commands:
+  - echo $DRONE_COMMIT_SHA > /drone/previous-success-build-commit-sha
+
+volumes:
+- name: commit-sha
+  host:
+    path: /build-cache/myra-ui-main/previous-success-build-commit-sha
+
+depends_on:
+- Pull images and deploy all the apps - main
+
+trigger:
+  branch:
+  - main
+  event:
+  - push

@@ -1,6 +1,18 @@
+import { useRouter } from 'next/router';
+
+import { useGetAgentDetailDataQuery } from '@coop/cbs/data-access';
 import { Box, Button, Grid, Text } from '@coop/shared/ui';
 
 export const AssignedMembersCard = () => {
+  const router = useRouter();
+
+  const id = router?.query?.['id'];
+
+  const { data: agentDetailQueryData } = useGetAgentDetailDataQuery(
+    { id: id as string },
+    { enabled: !!id }
+  );
+
   return (
     <Grid
       p="s16"
@@ -19,7 +31,8 @@ export const AssignedMembersCard = () => {
           Total Assigned Members
         </Text>
         <Text fontSize="l1" fontWeight={500} color="neutralColorLight.Gray-60">
-          1000
+          {agentDetailQueryData?.transaction?.agentDetail?.data?.totalMembers ??
+            0}
         </Text>
 
         <Button variant="link">View All Members</Button>

@@ -115,6 +115,7 @@
     "@types/react-table": "^7.7.11",
     "@typescript-eslint/eslint-plugin": "5.33.1",
     "@typescript-eslint/parser": "5.33.1",
+    "@webpro/nx-tsc": "^0.0.1",
     "babel-jest": "28.1.3",
     "babel-loader": "8.1.0",
     "cypress": "^9.1.0",
@@ -148,6 +149,7 @@
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
+      "yarn nx affected --target=tsc --uncommitted",
       "yarn eslint --fix",
       "yarn nx format:write --uncommitted"
     ]

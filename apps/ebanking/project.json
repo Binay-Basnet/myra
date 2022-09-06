@@ -3,6 +3,12 @@
   "sourceRoot": "apps/ebanking",
   "projectType": "application",
   "targets": {
+    "tsc": {
+      "executor": "@webpro/nx-tsc:tsc",
+      "options": {
+        "tsConfig": ["tsconfig.json"]
+      }
+    },
     "build": {
       "executor": "@nrwl/next:build",
       "outputs": ["{options.outputPath}"],

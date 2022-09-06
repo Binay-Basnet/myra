@@ -65,6 +65,7 @@ const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
 
   const reverseGeoCodeAddress = (lat: number, lon: number) =>
     lat !== undefined &&
+    lat !== null &&
     axios.get(
       `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
     );

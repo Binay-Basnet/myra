@@ -10,6 +10,7 @@ import { CoaTree } from '../../types';
 interface ITestProps {
   data: CoaTree;
 }
+
 function LeafNode(props: ITestProps) {
   const router = useRouter();
 
@@ -40,7 +41,7 @@ function LeafNode(props: ITestProps) {
             _groupHover={{ display: 'flex' }}
             onClick={() =>
               router.push(
-                `/settings/general/charts-of-accounts/add-new-account?under=${props.data.id}`
+                `/settings/general/charts-of-accounts/add-new-account?under=${props.data.accountCode}`
               )
             }
           >
@@ -52,4 +53,5 @@ function LeafNode(props: ITestProps) {
     </NodeWrapper>
   );
 }
+
 export default LeafNode;

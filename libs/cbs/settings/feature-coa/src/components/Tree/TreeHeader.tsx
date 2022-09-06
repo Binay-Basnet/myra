@@ -48,7 +48,7 @@ function TreeHeader(props: ITreeHeaderProps) {
           _groupHover={{ display: 'flex' }}
           onClick={() =>
             router.push(
-              `/settings/general/charts-of-accounts/add-new-account?under=${props.data.id}`
+              `/settings/general/charts-of-accounts/add-new-account?under=${props.data.accountCode}`
             )
           }
         >

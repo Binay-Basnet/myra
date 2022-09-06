@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
+import { useGetAgentAssignedMemberListDataQuery } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Box, DetailPageContentCard, Text } from '@coop/shared/ui';
@@ -16,23 +16,38 @@ export const AgentAssignedMembers = () => {
   const [isOverrideMemberAlertOpen, setIsOverrideMemberAlertOpen] =
     useState<boolean>(false);
 
-  const router = useRouter();
-
   const { t } = useTranslation();
 
-  const { data, isFetching } = useGetMemberListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    filter: {
-      objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    },
-  });
+  const router = useRouter();
 
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
+  const id = router?.query?.['id'];
+
+  const {
+    data,
+    isFetching,
+    refetch: refetchAssignedMembersList,
+  } = useGetAgentAssignedMemberListDataQuery(
+    {
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      filter: {
+        agentId: id as string,
+      },
+      // filter: {
+      //   objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+      // },
+    },
+    { enabled: !!id }
+  );
+
+  const rowData = useMemo(
+    () => data?.transaction?.assignedMemberList?.edges ?? [],
+    [data]
+  );
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        accessorFn: (row) => row?.node?.name?.local,
+        accessorFn: (row) => row?.node?.member?.name?.local,
         header: t['memberListTableName'],
         cell: (props) => {
           return (
@@ -55,14 +70,14 @@ export const AgentAssignedMembers = () => {
       },
       {
         header: 'Account',
-        accessorFn: (row) => row?.node?.contact,
+        accessorFn: (row) => row?.node?.account?.id,
         meta: {
           width: '30%',
         },
       },
       {
         header: 'Assigned Date',
-        accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
+        accessorFn: (row) => row?.node?.assignedDate?.split(' ')[0] ?? 'N/A',
       },
       {
         id: '_actions',
@@ -90,7 +105,7 @@ export const AgentAssignedMembers = () => {
 
   const handleAddMemberModalClose = () => {
     setIsAddMemberModalOpen(false);
-    setIsOverrideMemberAlertOpen(true);
+    // setIsOverrideMemberAlertOpen(true);
   };
 
   const handleCancelOverrideMemberAlert = () => {
@@ -113,10 +128,10 @@ export const AgentAssignedMembers = () => {
           getRowId={(row) => String(row?.node?.id)}
           isLoading={isFetching}
           columns={columns}
-          noDataTitle={t['member']}
+          noDataTitle={'Assigned Members'}
           pagination={{
-            total: data?.members?.list?.totalCount ?? 'Many',
-            pageInfo: data?.members.list.pageInfo,
+            total: data?.transaction?.assignedMemberList?.totalCount ?? 'Many',
+            pageInfo: data?.transaction?.assignedMemberList?.pageInfo,
           }}
         />
       </DetailPageContentCard>
@@ -124,6 +139,7 @@ export const AgentAssignedMembers = () => {
       <AddMemberModal
         isOpen={isAddMemberModalOpen}
         onClose={handleAddMemberModalClose}
+        refetchAssignedMembersList={refetchAssignedMembersList}
       />
 
       <OverrideAlertModal
