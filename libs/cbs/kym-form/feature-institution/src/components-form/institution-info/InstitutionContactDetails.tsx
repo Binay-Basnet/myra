@@ -10,6 +10,7 @@ import { useInstitution } from '../hooks/useInstitution';
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
+
 export const ContactDetailsInstitution = (props: IProps) => {
   const { t } = useTranslation();
   const methods = useForm<KymInsInput>({

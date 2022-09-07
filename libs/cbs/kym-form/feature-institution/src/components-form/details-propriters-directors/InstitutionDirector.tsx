@@ -32,6 +32,7 @@ import {
   DirectorTopPart,
   DocumentComponent,
 } from './AccordianComponents';
+
 interface IAddDirector {
   removeDirector: (directorId: string) => void;
   setKymCurrentSection: (section?: {

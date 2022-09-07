@@ -36,7 +36,7 @@ import {
   useTranslation,
 } from '@coop/shared/utils';
 
-import { CentralRepresentativeTraining } from './centralRepresentativeTraining';
+import { CentralRepresentativeTraining } from './CentralRepresentativeTraining';
 
 interface ICRDirectorsSelectionProps {
   setSection: (section?: { section: string; subSection: string }) => void;

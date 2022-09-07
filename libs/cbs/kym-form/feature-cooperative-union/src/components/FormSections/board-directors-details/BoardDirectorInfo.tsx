@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
@@ -12,7 +12,6 @@ import {
   CooperativeUnionPersonnelSection,
   CoopUnionPersonnelDetails,
   CoopUnionPersonnelInput,
-  useAllAdministrationQuery,
   useDeletePersonnelDetailsMutation,
   useGetBoardOfDirectorsDetailsListQuery,
   useGetNewIdMutation,
@@ -25,10 +24,9 @@ import {
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
+  FormAddress,
   FormEmailInput,
   FormInput,
-  FormMap,
-  FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
 import {
@@ -72,8 +70,6 @@ const AddDirector = ({
   const router = useRouter();
 
   const id = String(router?.query?.['id']);
-
-  const { data } = useAllAdministrationQuery();
 
   const methods = useForm<CoopUnionPersonnelInput>();
 
@@ -132,68 +128,6 @@ const AddDirector = ({
   );
 
   const [isOpen, setIsOpen] = React.useState(true);
-
-  // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch(`permanentAddress.provinceId`);
-  const currentDistrictId = watch(`permanentAddress.districtId`);
-  const currentLocalGovernmentId = watch('permanentAddress.localGovernmentId');
-
-  // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch(`temporaryAddress.provinceId`);
-  const currentTemptDistrictId = watch(`temporaryAddress.districtId`);
-  const currentTempLocalGovernmentId = watch(
-    'temporaryAddress.localGovernmentId'
-  );
-
-  const province = useMemo(() => {
-    return (
-      data?.administration?.all?.map((d) => ({
-        label: d.name,
-        value: d.id,
-      })) ?? []
-    );
-  }, [data?.administration?.all]);
-
-  const districtList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
-        ?.districts ?? [],
-    [currentProvinceId]
-  );
-
-  const localityList = useMemo(
-    () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
-    [currentDistrictId]
-  );
-
-  const wardList = useMemo(
-    () =>
-      localityList.find((d) => d.id === currentLocalGovernmentId)?.wards ?? [],
-    [currentLocalGovernmentId]
-  );
-
-  const districtTempList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentTempProvinceId)
-        ?.districts ?? [],
-    [currentTempProvinceId]
-  );
-
-  const localityTempList = useMemo(
-    () =>
-      districtTempList.find((d) => d.id === currentTemptDistrictId)
-        ?.municipalities ?? [],
-    [currentTemptDistrictId]
-  );
-
-  const wardTempList = useMemo(
-    () =>
-      localityTempList.find((d) => d.id === currentTempLocalGovernmentId)
-        ?.wards ?? [],
-    [currentTempLocalGovernmentId]
-  );
 
   return (
     <>
@@ -281,60 +215,7 @@ const AddDirector = ({
                     </Text>
 
                     <InputGroupContainer>
-                      <FormSelect
-                        name={`permanentAddress.provinceId`}
-                        id="boardOfDirectors.permanentAddress.provinceId"
-                        label={t['kymCoopUnionState']}
-                        __placeholder={t['kymCoopUnionSelectState']}
-                        options={province}
-                      />
-                      <FormSelect
-                        name={`permanentAddress.districtId`}
-                        id="boardOfDirectors.permanentAddress.districtId"
-                        label={t['kymCoopUnionDistrict']}
-                        __placeholder={t['kymCoopUnionSelectDistrict']}
-                        options={districtList.map((d) => ({
-                          label: d.name,
-                          value: d.id,
-                        }))}
-                      />
-                      <FormSelect
-                        name={`permanentAddress.localGovernmentId`}
-                        id="boardOfDirectors.permanentAddress.localGovernmentId"
-                        label={t['kymCoopUnionVDCMunicipality']}
-                        __placeholder={t['kymCoopUnionSelectVDCMunicipality']}
-                        options={localityList.map((d) => ({
-                          label: d.name,
-                          value: d.id,
-                        }))}
-                      />
-                      <FormSelect
-                        name={`permanentAddress.wardNo`}
-                        id="boardOfDirectors.permanentAddress.wardNo"
-                        label={t['kymCoopUnionWardNo']}
-                        __placeholder={t['kymCoopUnionEnterWardNo']}
-                        options={wardList?.map((d) => ({ label: d, value: d }))}
-                      />
-                      <FormInput
-                        type="text"
-                        name={`permanentAddress.locality`}
-                        id="boardOfDirectors.permanentAddress.locality"
-                        label={t['kymCoopUnionLocality']}
-                        __placeholder={t['kymCoopUnionEnterLocality']}
-                      />
-                      <FormInput
-                        type="text"
-                        name={`permanentAddress.houseNo`}
-                        id="boardOfDirectors.permanentAddress.houseNo"
-                        label={t['kymIndHouseNo']}
-                        __placeholder={t['kymIndEnterHouseNo']}
-                      />
-                      <GridItem colSpan={2} mt="s16">
-                        <FormMap
-                          name={`permanentAddress.coordinates`}
-                          id="boardOfDirectors.permanentAddress.coordinates"
-                        />
-                      </GridItem>
+                      <FormAddress name="permanentAddress" />
                     </InputGroupContainer>
                   </Box>
 
@@ -357,71 +238,12 @@ const AddDirector = ({
                         label={t['kymCoopUnionTemporaryAddressPermanent']}
                       />
                       {!isPermanentAndTemporaryAddressSame && (
-                        <>
-                          <InputGroupContainer>
-                            <FormSelect
-                              name={`temporaryAddress.provinceId`}
-                              id="boardOfDirectors.temporaryAddress.provinceId"
-                              label={t['kymCoopUnionState']}
-                              __placeholder={t['kymCoopUnionSelectState']}
-                              options={province}
-                            />
-                            <FormSelect
-                              name={`temporaryAddress.districtId`}
-                              id="boardOfDirectors.temporaryAddress.districtId"
-                              label={t['kymCoopUnionDistrict']}
-                              __placeholder={t['kymCoopUnionSelectDistrict']}
-                              options={districtTempList.map((d) => ({
-                                label: d.name,
-                                value: d.id,
-                              }))}
-                            />
-                            <FormSelect
-                              name={`temporaryAddress.localGovernmentId`}
-                              id="boardOfDirectors.temporaryAddress.localGovernmentId"
-                              label={t['kymCoopUnionVDCMunicipality']}
-                              __placeholder={
-                                t['kymCoopUnionSelectVDCMunicipality']
-                              }
-                              options={localityTempList.map((d) => ({
-                                label: d.name,
-                                value: d.id,
-                              }))}
-                            />
-                            <FormSelect
-                              name={`temporaryAddress.wardNo`}
-                              id="boardOfDirectors.temporaryAddress.wardNo"
-                              label={t['kymCoopUnionWardNo']}
-                              __placeholder={t['kymCoopUnionEnterWardNo']}
-                              options={wardTempList?.map((d) => ({
-                                label: d,
-                                value: d,
-                              }))}
-                            />
-                            <FormInput
-                              type="text"
-                              name={`temporaryAddress.locality`}
-                              id="boardOfDirectors.temporaryAddress.locality"
-                              label={t['kymCoopUnionLocality']}
-                              __placeholder={t['kymCoopUnionEnterLocality']}
-                            />
-                            <FormInput
-                              type="text"
-                              name={`temporaryAddress.houseNo`}
-                              id="boardOfDirectors.temporaryAddress.houseNo"
-                              label={t['kymIndHouseNo']}
-                              __placeholder={t['kymIndEnterHouseNo']}
-                            />
-                          </InputGroupContainer>
-
-                          <Box>
-                            <FormMap
-                              name={`temporaryAddress.coordinates`}
-                              id="boardOfDirectors.temporaryAddress.coordinates"
-                            />
-                          </Box>
-                        </>
+                        <InputGroupContainer>
+                          <FormAddress name="temporaryAddress" />
+                        </InputGroupContainer>
                       )}
+
+                      <Box />
                     </Box>
                     <InputGroupContainer>
                       <FormInput
@@ -510,13 +332,6 @@ const AddDirector = ({
           h="60px"
           px="s20"
         >
-          {/* <Button
-            variant="ghost"
-            leftIcon={<GrRotateRight />}
-            onClick={resetDirectorForm}
-          >
-            {t['kymInsReset']}
-          </Button> */}
           <Button
             variant="outline"
             shade="danger"
@@ -527,7 +342,6 @@ const AddDirector = ({
           </Button>
         </Box>
       </Collapse>
-      {/* </DynamicBoxGroupContainer> */}
     </>
   );
 };
@@ -535,12 +349,8 @@ const AddDirector = ({
 interface IBoardDirectorInfoProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
+
 export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {
-  // const {
-  //   fields: directorFields,
-  //   append: directorAppend,
-  //   remove: directorRemove,
-  // } = useFieldArray({ control, name: 'boardOfDirectorsDetails' });
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -571,10 +381,6 @@ export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {
       );
     }
   }, [bodEditValues]);
-
-  // useEffect(() => {
-  //   refetch();
-  // }, []);
 
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {

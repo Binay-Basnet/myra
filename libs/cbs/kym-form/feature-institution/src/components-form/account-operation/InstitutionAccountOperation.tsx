@@ -24,9 +24,11 @@ const booleanList = [
     value: KymInsAccountOperationType.Joint,
   },
 ];
+
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
+
 export const AccountOperationInstitution = (props: IProps) => {
   const { t } = useTranslation();
   const router = useRouter();

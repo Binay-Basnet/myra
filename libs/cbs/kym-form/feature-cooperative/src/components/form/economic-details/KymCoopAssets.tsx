@@ -6,6 +6,7 @@ import { FormInput } from '@coop/shared/form';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { useCooperative } from '../../hooks/useCooperative';
+
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }

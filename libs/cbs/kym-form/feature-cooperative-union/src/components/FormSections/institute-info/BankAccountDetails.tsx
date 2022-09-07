@@ -6,8 +6,10 @@ import {
 } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { FormSection } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
-import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
+import {
+  getKymSectionCoOperativeUnion,
+  useTranslation,
+} from '@coop/shared/utils';
 
 import { useCooperativeUnionInstitution } from '../../../hooks';
 
@@ -19,13 +21,11 @@ export const BankAccountDetails = ({
   setSection,
 }: IBankAccountDetailsProps) => {
   const { t } = useTranslation();
+  const { data: bankList } = useGetBankListQuery();
 
   const methods = useForm<CoopUnionInstitutionInformationInput>();
 
-  const { sectionStatus } = useCooperativeUnionInstitution({ methods });
-  const sectionErrors = sectionStatus?.errors?.[0]?.errors;
-
-  const { data: bankList } = useGetBankListQuery();
+  useCooperativeUnionInstitution({ methods });
 
   return (
     <FormProvider {...methods}>
@@ -43,34 +43,21 @@ export const BankAccountDetails = ({
           <FormSelect
             name="nameOfBank"
             label={t['kymCoopUnionNameOfBank']}
-            __placeholder={t['kymCoopUnionSelectBank']}
             options={bankList?.bank?.bank?.list?.map((bank) => ({
               label: bank?.name,
               value: bank?.id,
             }))}
-            errorText={
-              sectionErrors?.['nameOfBank'] && sectionErrors['nameOfBank'][0]
-            }
           />
           <FormInput
             type="text"
             name="accountNumber"
             label={t['kymCoopUnionAccountNumber']}
-            __placeholder={t['kymCoopUnionEnterAccountNumber']}
-            errorText={
-              sectionErrors?.['accountNumber'] &&
-              sectionErrors['accountNumber'][0]
-            }
           />
 
           <FormInput
             type="text"
             name="accountName"
             label={t['kymCoopUnionAccountName']}
-            __placeholder={t['kymCoopUnionEnterAccountName']}
-            errorText={
-              sectionErrors?.['accountName'] && sectionErrors['accountName'][0]
-            }
           />
         </FormSection>
       </form>

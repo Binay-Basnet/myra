@@ -11,9 +11,11 @@ import {
 import { FormFileInput } from '@coop/shared/form';
 import { FormSection } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
+
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
+
 export const DocumentDeclarationInstitution = (props: IProps) => {
   const { t } = useTranslation();
   const { setSection } = props;
@@ -57,11 +59,13 @@ export const DocumentDeclarationInstitution = (props: IProps) => {
     </FormSection>
   );
 };
+
 interface IKYMDocumentDeclarationFieldProps {
   setSection: (section?: { section: string; subSection: string }) => void;
   name: string;
   label: string;
 }
+
 const KYMDocumentDeclarationField = ({
   setSection,
   name,

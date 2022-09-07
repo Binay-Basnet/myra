@@ -489,6 +489,7 @@ const AddAccountDetails = ({
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
+
 export const InstitutionKYMAccountDetail = (props: IProps) => {
   const { t } = useTranslation();
 

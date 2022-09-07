@@ -2,14 +2,16 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import {
+  ContainerWithDivider,
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { ContainerWithDivider } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
 import { Input, Text, TextFields } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
-import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
+import {
+  getKymSectionCoOperativeUnion,
+  useTranslation,
+} from '@coop/shared/utils';
 
 import { useCooperativeUnionInstitution } from '../../../hooks';
 
@@ -206,12 +208,7 @@ export const CooperativeMemberInformation = ({
                 value={currentTotal}
               />
 
-              <Input
-                type="number"
-                // __placeholder={'0'}
-                isDisabled
-                value={targetTotal}
-              />
+              <Input type="number" isDisabled value={targetTotal} />
             </InputGroupContainer>
           </ContainerWithDivider>
         </GroupContainer>
