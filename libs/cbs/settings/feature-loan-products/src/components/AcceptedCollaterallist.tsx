@@ -1,14 +1,17 @@
 // import debounce from 'lodash/debounce';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   DragDropContext,
   Draggable,
   Droppable,
   DropResult,
 } from 'react-beautiful-dnd';
+import { AiOutlinePlus } from 'react-icons/ai';
+import { IoMdClose } from 'react-icons/io';
+import { RiArrowDownSLine, RiArrowUpSLine } from 'react-icons/ri';
 
 import { LoanGeneralSettings } from '@coop/cbs/data-access';
-import { Box, Icon, Switch, Text } from '@coop/shared/ui';
+import { Box, Collapse, Icon, Switch, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -38,6 +41,12 @@ export const AcceptedCollateral = (props: ICollateralProps) => {
   const { loanGeneralData } = props;
   const { t } = useTranslation();
   const [data, setData] = useState(loanGeneralData?.collateralList);
+  const [isOpen, setIsOpen] = React.useState(true);
+
+  React.useEffect(() => {
+    setData(loanGeneralData?.collateralList);
+  }, [loanGeneralData?.collateralList]);
+
   const handleOnDragEnd = async (result: DropResult) => {
     const items = Array.from(data ?? []);
     const [reorderedItem] = items.splice(result.source.index, 1);
@@ -54,57 +63,103 @@ export const AcceptedCollateral = (props: ICollateralProps) => {
     }
   };
   return (
-    <Box display="flex" flexDirection={'column'} gap="s16">
-      <Box display="flex" flexDirection={'column'} gap="s4">
+    <Box
+      display="flex"
+      flexDirection={'column'}
+      gap="s16"
+      margin="s4"
+      border="1px"
+      borderColor="gray.200"
+      borderRadius={5}
+      mb="s48"
+    >
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        gap="s4"
+        py="s20"
+        px="s12"
+        borderBottom="1px"
+        borderColor="gray.200"
+      >
         <Text fontSize="r1" fontWeight="500">
           {t['settingsLoanAccepted']}
         </Text>
+        {isOpen ? (
+          <Icon
+            as={RiArrowUpSLine}
+            color="gray.600"
+            onClick={() => setIsOpen(false)}
+          />
+        ) : (
+          <Icon
+            as={RiArrowDownSLine}
+            color="gray.600"
+            onClick={() => setIsOpen(true)}
+          />
+        )}
       </Box>
-      <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId="collateral-list">
-          {(provided) => (
-            <Box
-              display="flex"
-              flexDir="column"
-              gap="s36"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {data?.map(
-                (
-                  item: {
-                    name?: string | null;
-                    enabled?: boolean | null;
-                  } | null,
-                  index: number
-                ) => (
-                  <Draggable
-                    key={item?.name}
-                    draggableId={item?.name || ''}
-                    index={index}
-                  >
-                    {(provided) => (
-                      <Box
-                        display="flex"
-                        gap="s20"
-                        alignItems="center"
-                        fontSize="r1"
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
-                        <Icon as={GRID2X3} />
-                        <Switch name={item?.name || ''} />
-                        <Text fontSize="r1">{item?.name}</Text>
-                      </Box>
-                    )}
-                  </Draggable>
-                )
-              )}
-            </Box>
-          )}
-        </Droppable>
-      </DragDropContext>
+      <Collapse in={isOpen} style={{ marginTop: '0px' }}>
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Droppable droppableId="collateral-list">
+            {(provided) => (
+              <Box
+                display="flex"
+                flexDir="column"
+                gap="s36"
+                py="s20"
+                px="s12"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {data?.map(
+                  (
+                    item: {
+                      name?: string | null;
+                      enabled?: boolean | null;
+                    } | null,
+                    index: number
+                  ) => (
+                    <Draggable
+                      key={item?.name}
+                      draggableId={item?.name || ''}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <Box
+                          display="flex"
+                          gap="s20"
+                          alignItems="center"
+                          justifyContent="space-between"
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        >
+                          <Box display="flex" gap="s20" alignItems="center">
+                            <Icon as={GRID2X3} />
+                            <Switch size="sm" name={item?.name || ''} />
+                            <Text fontSize="r1">{item?.name}</Text>
+                          </Box>
+                          <Icon size="sm" color="gray.600" as={IoMdClose} />
+                        </Box>
+                      )}
+                    </Draggable>
+                  )
+                )}
+
+                {provided.placeholder}
+              </Box>
+            )}
+          </Droppable>
+        </DragDropContext>
+        <Box borderTop="1px" borderColor="gray.200" p="s16">
+          <Box display="flex" gap={2} alignItems="center">
+            <Icon size="sm" color="gray.600" as={AiOutlinePlus} />
+            <Text fontSize="r1">Add New Option</Text>
+          </Box>
+        </Box>
+      </Collapse>
     </Box>
   );
 };

@@ -34,12 +34,15 @@ export function AgentList() {
   //   },
   // });
 
-  const { data, isFetching } = useGetAgentListDataQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    // filter: {
-    //   objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    // },
-  });
+  const { data, isFetching } = useGetAgentListDataQuery(
+    {
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      // filter: {
+      //   objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+      // },
+    },
+    { staleTime: 0 }
+  );
 
   const rowData = useMemo(
     () => data?.transaction?.listAgent?.edges ?? [],
