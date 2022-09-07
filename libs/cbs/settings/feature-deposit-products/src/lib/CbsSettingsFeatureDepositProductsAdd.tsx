@@ -36,11 +36,14 @@ import {
   Interest,
   MaximumTenure,
   MinimunTenure,
+  Penalty,
   PostingFrequency,
   PrematuredPenalty,
   Questions,
+  Rebate,
   RequiredDocumentSetup,
   TypesOfMember,
+  WithdrawPenalty,
 } from '../components/form';
 
 type SelectOption = {
@@ -171,13 +174,13 @@ export function SettingsDepositProductsAdd() {
       penaltyData: {
         dayAfterInstallmentDate:
           values?.penaltyData?.dayAfterInstallmentDate ?? null,
-        flatRatePenalty: values?.penaltyData?.flatRatePenalty ?? null,
-        minimumAmount: values?.penaltyData?.minimumAmount ?? null,
+        // flatRatePenalty: values?.penaltyData?.flatRatePenalty ?? null,
+        // minimumAmount: values?.penaltyData?.minimumAmount ?? null,
         penaltyAmount: values?.penaltyData?.penaltyAmount ?? null,
         penaltyRate: values?.penaltyData?.penaltyRate ?? null,
-        rateType: values?.penaltyData?.rateType
-          ? values?.penaltyData?.rateType
-          : null,
+        // rateType: values?.penaltyData?.rateType
+        //   ? values?.penaltyData?.rateType
+        //   : null,
       },
       rebateData: {
         daysBeforeInstallmentDate:
@@ -242,21 +245,19 @@ export function SettingsDepositProductsAdd() {
   }, [refetch]);
 
   useEffect(() => {
-    if (depositNature === NatureOfDepositProduct.Mandatory) {
-      resetField('minAge');
-      resetField('maxAge');
-      resetField('genderId');
-      resetField('maritalStatusId');
-      resetField('educationQualification');
-      resetField('ethnicity');
-      resetField('occupation');
-      resetField('natureOfBusinessInstitution');
-      resetField('foreignEmployment');
-      resetField('cooperativeType');
-      resetField('natureOFBusinessCoop');
-      resetField('typeOfMember');
-      resetField('criteria');
-    }
+    resetField('minAge');
+    resetField('maxAge');
+    resetField('genderId');
+    resetField('maritalStatusId');
+    resetField('educationQualification');
+    resetField('ethnicity');
+    resetField('occupation');
+    resetField('natureOfBusinessInstitution');
+    resetField('foreignEmployment');
+    resetField('cooperativeType');
+    resetField('natureOFBusinessCoop');
+    resetField('typeOfMember');
+    resetField('criteria');
   }, [JSON.stringify(depositNature)]);
 
   return (
@@ -317,29 +318,32 @@ export function SettingsDepositProductsAdd() {
                     />
                   </InputGroupContainer>
                 </Box>
-                {depositNature !== NatureOfDepositProduct.Mandatory && (
-                  <TypesOfMember />
-                )}
 
-                {depositNature !== NatureOfDepositProduct.Mandatory && (
-                  <Box display="flex" flexDirection={'column'} gap="s16">
-                    {typesOfMember && <Critera />}
-                    <GridItems />
-                  </Box>
-                )}
+                <TypesOfMember />
+
+                <Box display="flex" flexDirection={'column'} gap="s16">
+                  {typesOfMember && <Critera />}
+                  <GridItems />
+                </Box>
 
                 {(depositNature === NatureOfDepositProduct.RecurringSaving ||
                   depositNature === NatureOfDepositProduct.Mandatory) && (
-                  <DepositFrequency />
+                  <>
+                    <DepositFrequency />
+                    <Penalty />
+                    <Rebate />
+                  </>
                 )}
-                {depositNature !==
-                  NatureOfDepositProduct.VoluntaryOrOptional && (
-                  <MinimunTenure />
-                )}
-                {depositNature !==
-                  NatureOfDepositProduct.VoluntaryOrOptional && (
-                  <MaximumTenure />
-                )}
+                {depositNature === NatureOfDepositProduct.RecurringSaving ||
+                  (depositNature === NatureOfDepositProduct.TermSavingOrFd && (
+                    <MinimunTenure />
+                  ))}
+
+                {depositNature === NatureOfDepositProduct.RecurringSaving ||
+                  (depositNature === NatureOfDepositProduct.TermSavingOrFd && (
+                    <MaximumTenure />
+                  ))}
+
                 {depositNature !== NatureOfDepositProduct.RecurringSaving && (
                   <BalanceLimit />
                 )}
@@ -360,9 +364,14 @@ export function SettingsDepositProductsAdd() {
                   <DormantSetup />
                 )}
 
-                {depositNature !==
-                  NatureOfDepositProduct.VoluntaryOrOptional && (
+                {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                  depositNature === NatureOfDepositProduct.TermSavingOrFd) && (
                   <PrematuredPenalty />
+                )}
+
+                {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                  depositNature === NatureOfDepositProduct.TermSavingOrFd) && (
+                  <WithdrawPenalty />
                 )}
 
                 {(typesOfMember?.includes(KymMemberTypesEnum.Individual) ||
@@ -371,8 +380,6 @@ export function SettingsDepositProductsAdd() {
                   typesOfMember?.includes(
                     KymMemberTypesEnum.CooperativeUnion
                   )) && <RequiredDocumentSetup />}
-
-                {/* <WithdrawPenalty /> */}
               </ContainerWithDivider>
             </Box>
           </form>

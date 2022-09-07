@@ -33,7 +33,7 @@ const shareColumns = [
 const addButtoncolumns = [
   {
     title: 'shareLayoutSharePurchase',
-    link: '/share/share-purchase',
+    link: '/share/share-issue',
   },
   {
     title: 'shareLayoutShareReturn',
