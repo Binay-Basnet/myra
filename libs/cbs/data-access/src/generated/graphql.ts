@@ -33,6 +33,16 @@ export type Scalars = {
   Email: any;
   HTML: any;
   InvalidData: Record<string, Array<string>>;
+  /**
+   * # For Localization of every data from backend
+   * ```javascript
+   * {
+   *    local: "localized data based on user lang setting",
+   *    en: "data in english",
+   *    np: "data in nepali"
+   * }
+   * ```
+   */
   Localized: Record<'local' | 'en' | 'np', string>;
   Map: Record<string, string>;
   Time: string;
@@ -9962,6 +9972,7 @@ export type GetAccountOpenProductDetailsQuery = {
             percentageOfDeposit?: number | null;
             alternativeChannels?: boolean | null;
             atmFacility?: boolean | null;
+            isForMinors?: boolean | null;
             supportMultiple?: boolean | null;
             staffProduct?: boolean | null;
             withdrawRestricted?: boolean | null;
@@ -10201,6 +10212,21 @@ export type GetAccountOpenProductPenaltyQuery = {
           } | null;
         } | null;
       } | null;
+    } | null;
+  };
+};
+
+export type GetAccountOpenMinorListQueryVariables = Exact<{
+  memberId: Scalars['ID'];
+}>;
+
+export type GetAccountOpenMinorListQuery = {
+  account: {
+    listMinors?: {
+      data?: Array<{
+        fullName?: Record<'local' | 'en' | 'np', string> | null;
+        familyMemberId?: string | null;
+      } | null> | null;
     } | null;
   };
 };
@@ -16492,6 +16518,7 @@ export const GetAccountOpenProductDetailsDocument = `
             percentageOfDeposit
             alternativeChannels
             atmFacility
+            isForMinors
             supportMultiple
             staffProduct
             withdrawRestricted
@@ -16768,6 +16795,33 @@ export const useGetAccountOpenProductPenaltyQuery = <
       GetAccountOpenProductPenaltyQuery,
       GetAccountOpenProductPenaltyQueryVariables
     >(GetAccountOpenProductPenaltyDocument).bind(null, variables),
+    options
+  );
+export const GetAccountOpenMinorListDocument = `
+    query getAccountOpenMinorList($memberId: ID!) {
+  account {
+    listMinors(memberId: $memberId) {
+      data {
+        fullName
+        familyMemberId
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountOpenMinorListQuery = <
+  TData = GetAccountOpenMinorListQuery,
+  TError = unknown
+>(
+  variables: GetAccountOpenMinorListQueryVariables,
+  options?: UseQueryOptions<GetAccountOpenMinorListQuery, TError, TData>
+) =>
+  useQuery<GetAccountOpenMinorListQuery, TError, TData>(
+    ['getAccountOpenMinorList', variables],
+    useAxios<
+      GetAccountOpenMinorListQuery,
+      GetAccountOpenMinorListQueryVariables
+    >(GetAccountOpenMinorListDocument).bind(null, variables),
     options
   );
 export const AllAdministrationDocument = `

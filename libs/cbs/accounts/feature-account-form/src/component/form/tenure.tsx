@@ -73,7 +73,6 @@ export const Tenure = () => {
         display="flex"
         flexDirection="column"
         gap="s16"
-        p="s16"
         bg="neutralColorLight.Gray-0"
       >
         <SubHeadingText>{t['accountOpenTenure']} </SubHeadingText>
@@ -117,16 +116,19 @@ export const Tenure = () => {
               />
             </Box>
           </Box>
-          <Alert status="info" title={'Tenure'}>
-            <ul>
-              <li>
-                {' '}
-                {productData?.minTenureUnitNumber} {productData?.minTenureUnit}{' '}
-                - {productData?.maxTenureUnitNumber}{' '}
-                {productData?.maxTenureUnit}
-              </li>
-            </ul>
-          </Alert>
+          <Box p="s16">
+            <Alert status="info" title={'Tenure'}>
+              <ul>
+                <li>
+                  {' '}
+                  {productData?.minTenureUnitNumber}{' '}
+                  {productData?.minTenureUnit} -{' '}
+                  {productData?.maxTenureUnitNumber}{' '}
+                  {productData?.maxTenureUnit}
+                </li>
+              </ul>
+            </Alert>
+          </Box>
         </Box>
       </Box>
     </GroupContainer>

@@ -2863,6 +2863,8 @@ const ne: Record<string, string> = {
   settingsShareReturn: 'Share Return',
   sharePurchaseSelf: 'Self',
   sharePurchaseOthers: 'Others',
+  // ///////share return
+  shareLayoutShareReturnAdd: 'Share Return',
   loanProductSupportMultipleAccount:
     'Does this product support Multiple Account ?',
   depositProductPostingFrequency: 'Interest Posting Frequency',

@@ -76,191 +76,192 @@ export const DepositFrequency = () => {
       flexDirection={'column'}
       gap="s16"
     >
-      {productNature !== NatureOfDepositProduct?.VoluntaryOrOptional && (
-        <Box
-          display="flex"
-          flexDirection="column"
-          background="neutralColorLight.Gray-0"
-        >
-          <Text
-            fontWeight="SemiBold"
-            fontSize="r1"
-            color="neutralColorLight.Gray-60"
+      {productNature !== NatureOfDepositProduct?.VoluntaryOrOptional &&
+        productNature !== NatureOfDepositProduct?.TermSavingOrFd && (
+          <Box
+            display="flex"
+            flexDirection="column"
+            background="neutralColorLight.Gray-0"
           >
-            {t['accDepositFrequency']}
-          </Text>
-          {productDeposit === Frequency?.Weekly && (
-            <Box
-              display="flex"
-              flexDirection="column"
-              p="s16"
-              mt="s16"
-              gap={5}
-              justifyContent="space-between"
-              border="1px solid"
-              borderColor="border.layout"
-              borderRadius="br2"
+            <Text
+              fontWeight="SemiBold"
+              fontSize="r1"
+              color="neutralColorLight.Gray-60"
             >
-              <Text
-                fontSize="s3"
-                color="neutralColorLight.Gray-80"
-                fontWeight="Medium"
+              {t['accDepositFrequency']}
+            </Text>
+            {productDeposit === Frequency?.Weekly && (
+              <Box
+                display="flex"
+                flexDirection="column"
+                p="s16"
+                mt="s16"
+                gap={5}
+                justifyContent="space-between"
+                border="1px solid"
+                borderColor="border.layout"
+                borderRadius="br2"
               >
-                {t['accWeekly']}
-              </Text>
-              <Box display="flex" flexDirection="column" gap="s4">
                 <Text
                   fontSize="s3"
                   color="neutralColorLight.Gray-80"
                   fontWeight="Medium"
                 >
-                  {t['accDayoftheWeek']}
+                  {t['accWeekly']}
                 </Text>
+                <Box display="flex" flexDirection="column" gap="s4">
+                  <Text
+                    fontSize="s3"
+                    color="neutralColorLight.Gray-80"
+                    fontWeight="Medium"
+                  >
+                    {t['accDayoftheWeek']}
+                  </Text>
+                  <FormSwitchTab
+                    name="depositFrequencyWeekly"
+                    options={daysList.map((value) => ({
+                      label: value.label,
+                      value: value.value,
+                    }))}
+                  />
+                </Box>
+              </Box>
+            )}
+            {productDeposit === Frequency?.Monthly && (
+              <Box
+                display="flex"
+                flexDirection="column"
+                p="s20"
+                mt="s16"
+                background="neutralColorLight.Gray-0"
+                border="1px solid"
+                borderColor="border.layout"
+                borderRadius="br2"
+              >
+                <Box mb="s16">
+                  <Text
+                    fontWeight="SemiBold"
+                    fontSize="r1"
+                    color="neutralColorLight.Gray-60"
+                    mb="s4"
+                  >
+                    {t['accMonthly']}
+                  </Text>
+                  <Text
+                    fontSize="s3"
+                    color="neutralColorLight.Gray-80"
+                    fontWeight="Medium"
+                  >
+                    {t['accAddfrequencydayorweek']}
+                  </Text>
+                </Box>
                 <FormSwitchTab
-                  name="depositFrequencyWeekly"
-                  options={daysList.map((value) => ({
+                  name="depositFrequencyMonthly"
+                  options={monthlyList.map((value) => ({
                     label: value.label,
                     value: value.value,
                   }))}
                 />
-              </Box>
-            </Box>
-          )}
-          {productDeposit === Frequency?.Monthly && (
-            <Box
-              display="flex"
-              flexDirection="column"
-              p="s20"
-              mt="s16"
-              background="neutralColorLight.Gray-0"
-              border="1px solid"
-              borderColor="border.layout"
-              borderRadius="br2"
-            >
-              <Box mb="s16">
-                <Text
-                  fontWeight="SemiBold"
-                  fontSize="r1"
-                  color="neutralColorLight.Gray-60"
-                  mb="s4"
-                >
-                  {t['accMonthly']}
-                </Text>
-                <Text
-                  fontSize="s3"
-                  color="neutralColorLight.Gray-80"
-                  fontWeight="Medium"
-                >
-                  {t['accAddfrequencydayorweek']}
-                </Text>
-              </Box>
-              <FormSwitchTab
-                name="depositFrequencyMonthly"
-                options={monthlyList.map((value) => ({
-                  label: value.label,
-                  value: value.value,
-                }))}
-              />
-              {monthly === WeeklyFrequency.Day && (
-                <Box
-                  display="grid"
-                  mt="s16"
-                  gridTemplateColumns="repeat(3, 1fr)"
-                  gap="s16"
-                >
-                  <FormInput
-                    type="text"
-                    name="depositFrequencyDay"
-                    label={t['accDay']}
-                    __placeholder={t['accEnterDay']}
-                  />
-                </Box>
-              )}
+                {monthly === WeeklyFrequency.Day && (
+                  <Box
+                    display="grid"
+                    mt="s16"
+                    gridTemplateColumns="repeat(3, 1fr)"
+                    gap="s16"
+                  >
+                    <FormInput
+                      type="text"
+                      name="depositFrequencyDay"
+                      label={t['accDay']}
+                      __placeholder={t['accEnterDay']}
+                    />
+                  </Box>
+                )}
 
-              {monthly === WeeklyFrequency.DayOfTheWeek && (
+                {monthly === WeeklyFrequency.DayOfTheWeek && (
+                  <Box
+                    display="grid"
+                    mt="s16"
+                    gridTemplateColumns="repeat(3, 1fr)"
+                    gap="s16"
+                  >
+                    <FormInput
+                      name="depositFrequencyFrequencyDay"
+                      label={t['accFrequencyDay']}
+                      __placeholder={t['accFrequencyDay']}
+                    />
+
+                    <FormSelect
+                      name="depositFrequencyDayOfWeek"
+                      label={t['accDayOfWeek']}
+                      __placeholder={t['accDayOfWeek']}
+                      options={daysList}
+                    />
+                  </Box>
+                )}
+              </Box>
+            )}
+            {productDeposit === Frequency?.Yearly && (
+              <Box
+                display="flex"
+                flexDirection="column"
+                p="s16"
+                mt="s16"
+                background="neutralColorLight.Gray-0"
+                border="1px solid"
+                borderColor="border.layout"
+                borderRadius="br2"
+              >
+                <Box>
+                  <Text
+                    fontWeight="SemiBold"
+                    fontSize="r1"
+                    color="neutralColorLight.Gray-60"
+                    mb="s4"
+                  >
+                    {t['accYearly']}
+                  </Text>
+                </Box>
                 <Box
                   display="grid"
                   mt="s16"
                   gridTemplateColumns="repeat(3, 1fr)"
-                  gap="s16"
+                  gap={6}
                 >
-                  <FormInput
-                    name="depositFrequencyFrequencyDay"
-                    label={t['accFrequencyDay']}
-                    __placeholder={t['accFrequencyDay']}
+                  <FormSelect
+                    name="depositFrequencyYearlyMonth"
+                    label={t['accSelectMonth']}
+                    __placeholder={t['accSelectMonth']}
+                    options={monthsList}
                   />
 
                   <FormSelect
-                    name="depositFrequencyDayOfWeek"
-                    label={t['accDayOfWeek']}
-                    __placeholder={t['accDayOfWeek']}
+                    name="depositFrequencyYearlyDay"
+                    label={t['accSelectDay']}
+                    __placeholder={t['accSelectDay']}
                     options={daysList}
                   />
                 </Box>
-              )}
-            </Box>
-          )}
-          {productDeposit === Frequency?.Yearly && (
-            <Box
-              display="flex"
-              flexDirection="column"
-              p="s16"
-              mt="s16"
-              background="neutralColorLight.Gray-0"
-              border="1px solid"
-              borderColor="border.layout"
-              borderRadius="br2"
-            >
-              <Box>
-                <Text
-                  fontWeight="SemiBold"
-                  fontSize="r1"
-                  color="neutralColorLight.Gray-60"
-                  mb="s4"
-                >
-                  {t['accYearly']}
-                </Text>
               </Box>
+            )}
+            {productNature === NatureOfDepositProduct?.RecurringSaving && (
               <Box
                 display="grid"
                 mt="s16"
                 gridTemplateColumns="repeat(3, 1fr)"
-                gap={6}
+                gap="s16"
               >
-                <FormSelect
-                  name="depositFrequencyYearlyMonth"
-                  label={t['accSelectMonth']}
-                  __placeholder={t['accSelectMonth']}
-                  options={monthsList}
-                />
-
-                <FormSelect
-                  name="depositFrequencyYearlyDay"
-                  label={t['accSelectDay']}
-                  __placeholder={t['accSelectDay']}
-                  options={daysList}
+                <FormInput
+                  name="installmentAmount"
+                  label={t['accinstallmentAmount']}
+                  __placeholder={'0.00'}
+                  type="text"
+                  textAlign={'right'}
                 />
               </Box>
-            </Box>
-          )}
-          {productNature === NatureOfDepositProduct?.RecurringSaving && (
-            <Box
-              display="grid"
-              mt="s16"
-              gridTemplateColumns="repeat(3, 1fr)"
-              gap="s16"
-            >
-              <FormInput
-                name="installmentAmount"
-                label={t['accinstallmentAmount']}
-                __placeholder={'0.00'}
-                type="text"
-                textAlign={'right'}
-              />
-            </Box>
-          )}
-        </Box>
-      )}
+            )}
+          </Box>
+        )}
     </GroupContainer>
   );
 };
