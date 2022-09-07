@@ -5,7 +5,7 @@ import {
   NatureOfDepositProduct,
 } from '@coop/cbs/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { FormSection } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const TypesOfMember = () => {
@@ -45,35 +45,20 @@ export const TypesOfMember = () => {
   ];
 
   return (
-    <Box display="flex" flexDirection={'column'} gap="s16">
-      <Text fontWeight="500" fontSize={'s3'} color="gray.700">
-        {t['depositProductTypeofmember']}
-      </Text>
-      {/* <Box w="16%">
+    <FormSection header="depositProductTypeofmember">
+      {depositNature === NatureOfDepositProduct.Mandatory ? (
+        <FormCheckboxGroup
+          name="typeOfMember"
+          list={typesOfMemberForMandatory}
+          orientation="column"
+        />
+      ) : (
         <FormCheckboxGroup
           name="typeOfMember"
           list={typesOfMember}
           orientation="column"
         />
-      </Box> */}
-
-      {depositNature === NatureOfDepositProduct.Mandatory ? (
-        <Box w="16%">
-          <FormCheckboxGroup
-            name="typeOfMember"
-            list={typesOfMemberForMandatory}
-            orientation="column"
-          />
-        </Box>
-      ) : (
-        <Box w="16%">
-          <FormCheckboxGroup
-            name="typeOfMember"
-            list={typesOfMember}
-            orientation="column"
-          />
-        </Box>
       )}
-    </Box>
+    </FormSection>
   );
 };

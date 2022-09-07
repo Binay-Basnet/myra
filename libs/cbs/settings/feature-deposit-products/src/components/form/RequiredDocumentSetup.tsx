@@ -6,10 +6,10 @@ import {
   KymMemberTypesEnum,
 } from '@coop/cbs/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
-import { Box, Grid } from '@coop/shared/ui';
+import { Box, FormSection } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { BoxContainer, TopText } from '../formui';
+import { TopText } from '../formui';
 
 export const RequiredDocumentSetup = () => {
   const { t } = useTranslation();
@@ -56,33 +56,33 @@ export const RequiredDocumentSetup = () => {
   ];
 
   return (
-    <BoxContainer>
-      <TopText> {t['depositProductRequiredDocumentSetup']} </TopText>
-      <Grid templateColumns={'repeat(2,1fr)'}>
-        {typesOfMember?.includes(KymMemberTypesEnum.Individual) && (
-          <Box display="flex" flexDirection="column" gap="s16" w="40%">
-            <TopText>{t['depositProductIndividual']} </TopText>
-            <FormCheckboxGroup
-              name="individualDocuments"
-              list={individualList}
-              orientation="column"
-            />
-          </Box>
-        )}
+    <FormSection
+      header="depositProductRequiredDocumentSetup"
+      templateColumns={2}
+    >
+      {typesOfMember?.includes(KymMemberTypesEnum.Individual) && (
+        <Box display="flex" flexDirection="column" gap="s16" w="40%">
+          <TopText>{t['depositProductIndividual']} </TopText>
+          <FormCheckboxGroup
+            name="individualDocuments"
+            list={individualList}
+            orientation="column"
+          />
+        </Box>
+      )}
 
-        {(typesOfMember?.includes(KymMemberTypesEnum.Institution) ||
-          typesOfMember?.includes(KymMemberTypesEnum.Cooperative) ||
-          typesOfMember?.includes(KymMemberTypesEnum.CooperativeUnion)) && (
-          <Box display="flex" flexDirection="column" gap="s16" w="25%">
-            <TopText>{t['depositProductInstitutional']} </TopText>
-            <FormCheckboxGroup
-              name="institutionDocuments"
-              list={instutionList}
-              orientation="column"
-            />
-          </Box>
-        )}
-      </Grid>
-    </BoxContainer>
+      {(typesOfMember?.includes(KymMemberTypesEnum.Institution) ||
+        typesOfMember?.includes(KymMemberTypesEnum.Cooperative) ||
+        typesOfMember?.includes(KymMemberTypesEnum.CooperativeUnion)) && (
+        <Box display="flex" flexDirection="column" gap="s16" w="25%">
+          <TopText>{t['depositProductInstitutional']} </TopText>
+          <FormCheckboxGroup
+            name="institutionDocuments"
+            list={instutionList}
+            orientation="column"
+          />
+        </Box>
+      )}
+    </FormSection>
   );
 };

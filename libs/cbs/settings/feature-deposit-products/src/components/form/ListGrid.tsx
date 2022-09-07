@@ -7,14 +7,13 @@ import {
   FormFieldSearchTerm,
   useGetSettingsOptionsFieldsQuery,
 } from '@coop/cbs/data-access';
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
   FormCheckboxGroup,
   FormInput,
   FormSelect,
   FormSwitchTab,
 } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, FormSection, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer } from '../formui';
@@ -179,121 +178,115 @@ export const GridItems = () => {
     return null;
   }
   return (
-    <BoxContainer
-      p="s16"
-      border={'1px solid'}
-      borderColor="border.layout"
-      borderRadius={'4px'}
-    >
-      <InputGroupContainer rowGap={'s32'}>
-        {memberType &&
-          memberType?.indexOf('INDIVIDUAL') !== -1 &&
-          criteria?.includes('AGE') && (
-            <FormInput name="minAge" label={t['depositProductMinAge']} />
-          )}
-        {memberType &&
-          memberType?.indexOf('INDIVIDUAL') !== -1 &&
-          criteria?.includes('AGE') && (
-            <FormInput name="maxAge" label={t['depositProductMaxAge']} />
-          )}
-        {memberType &&
-          memberType?.indexOf('INDIVIDUAL') !== -1 &&
-          criteria?.includes('GENDER') && (
-            <FormSelect
-              name="genderId"
-              options={GenderList}
-              label={t['depositProductGender']}
-              isMulti
-            />
-          )}
-        {memberType &&
-          memberType?.indexOf('INDIVIDUAL') !== -1 &&
-          criteria?.includes('MARITAL_STATUS') && (
-            <FormSelect
-              name="maritalStatusId"
-              options={MartialOptions}
-              label={t['depositProductMaritalStatus']}
-              isMulti
-            />
-          )}
-        {memberType &&
-          memberType?.indexOf('INDIVIDUAL') !== -1 &&
-          criteria?.includes('EDUCATION_QUALIFICATION') && (
-            <FormSelect
-              name="educationQualification"
-              options={EducationalOptions}
-              label={t['depositProductEducationQualification']}
-              isMulti
-            />
-          )}
-        {memberType &&
-          memberType?.indexOf('INDIVIDUAL') !== -1 &&
-          criteria?.includes('ETHNICITY') && (
-            <FormSelect
-              name="ethnicity"
-              options={EthnicityList}
-              label={t['depositProductEthinicity']}
-              isMulti
-            />
-          )}
-        {memberType &&
-          memberType?.indexOf('INDIVIDUAL') !== -1 &&
-          criteria?.includes('OCCUPATION_DETAILS') && (
-            <FormSelect
-              name="occupation"
-              options={OccupationOptions}
-              label={t['depositProductOccupationDetails']}
-              isMulti
-            />
-          )}
-        {memberType &&
-          memberType?.indexOf('INDIVIDUAL') !== -1 &&
-          criteria?.includes('FOREIGN_EMPLOYMENT') && (
-            <BoxContainer>
-              <Text fontSize={'s3'} fontWeight="500" color="gray.700">
-                {t['depositProductForeignEmploymentDetails']}
-              </Text>
-              <FormSwitchTab name="foreignEmployment" options={CheckboxYesNo} />
-            </BoxContainer>
-          )}
-        {memberType &&
-          memberType?.indexOf('INSTITUTION') !== -1 &&
-          criteria?.includes('NATURE_OF_BUSINESS_INSTITUTIONS') && (
-            <FormSelect
-              name="natureOfBusinessInstitution"
-              label={t['depositProductNatureofBusinessIns']}
-              options={InstituitionList}
-              isMulti
-            />
-          )}
-        {memberType &&
-          memberType?.indexOf('COOPERATIVE_UNION') !== -1 &&
-          criteria?.includes('NATURE_OF_BUSINESS_COOPUNION') && (
-            <FormSelect
-              name="natureOFBusinessCoop"
-              options={CoopUnionList}
-              label={t['depositProductNatureofBusinessCoopUnion']}
-              isMulti
-            />
-          )}
-        {memberType &&
-          memberType?.indexOf('COOPERATIVE') !== -1 &&
-          criteria?.includes('COOPERATIVE_TYPE') && (
-            <BoxContainer>
-              <Text fontSize={'s3'} fontWeight="500" color="gray.700">
-                {t['depositProductCoorperativeType']}
-              </Text>
-              <Box w="40%">
-                <FormCheckboxGroup
-                  name="cooperativeType"
-                  label={t['depositProductCoorperativeType']}
-                  list={CoopTypeList}
-                  orientation="column"
-                />
-              </Box>
-            </BoxContainer>
-          )}
-      </InputGroupContainer>
-    </BoxContainer>
+    <FormSection>
+      {' '}
+      {memberType &&
+        memberType?.indexOf('INDIVIDUAL') !== -1 &&
+        criteria?.includes('AGE') && (
+          <FormInput name="minAge" label={t['depositProductMinAge']} />
+        )}
+      {memberType &&
+        memberType?.indexOf('INDIVIDUAL') !== -1 &&
+        criteria?.includes('AGE') && (
+          <FormInput name="maxAge" label={t['depositProductMaxAge']} />
+        )}
+      {memberType &&
+        memberType?.indexOf('INDIVIDUAL') !== -1 &&
+        criteria?.includes('GENDER') && (
+          <FormSelect
+            name="genderId"
+            options={GenderList}
+            label={t['depositProductGender']}
+            isMulti
+          />
+        )}
+      {memberType &&
+        memberType?.indexOf('INDIVIDUAL') !== -1 &&
+        criteria?.includes('MARITAL_STATUS') && (
+          <FormSelect
+            name="maritalStatusId"
+            options={MartialOptions}
+            label={t['depositProductMaritalStatus']}
+            isMulti
+          />
+        )}
+      {memberType &&
+        memberType?.indexOf('INDIVIDUAL') !== -1 &&
+        criteria?.includes('EDUCATION_QUALIFICATION') && (
+          <FormSelect
+            name="educationQualification"
+            options={EducationalOptions}
+            label={t['depositProductEducationQualification']}
+            isMulti
+          />
+        )}
+      {memberType &&
+        memberType?.indexOf('INDIVIDUAL') !== -1 &&
+        criteria?.includes('ETHNICITY') && (
+          <FormSelect
+            name="ethnicity"
+            options={EthnicityList}
+            label={t['depositProductEthinicity']}
+            isMulti
+          />
+        )}
+      {memberType &&
+        memberType?.indexOf('INDIVIDUAL') !== -1 &&
+        criteria?.includes('OCCUPATION_DETAILS') && (
+          <FormSelect
+            name="occupation"
+            options={OccupationOptions}
+            label={t['depositProductOccupationDetails']}
+            isMulti
+          />
+        )}
+      {memberType &&
+        memberType?.indexOf('INDIVIDUAL') !== -1 &&
+        criteria?.includes('FOREIGN_EMPLOYMENT') && (
+          <BoxContainer>
+            <Text fontSize={'s3'} fontWeight="500" color="gray.700">
+              {t['depositProductForeignEmploymentDetails']}
+            </Text>
+            <FormSwitchTab name="foreignEmployment" options={CheckboxYesNo} />
+          </BoxContainer>
+        )}
+      {memberType &&
+        memberType?.indexOf('INSTITUTION') !== -1 &&
+        criteria?.includes('NATURE_OF_BUSINESS_INSTITUTIONS') && (
+          <FormSelect
+            name="natureOfBusinessInstitution"
+            label={t['depositProductNatureofBusinessIns']}
+            options={InstituitionList}
+            isMulti
+          />
+        )}
+      {memberType &&
+        memberType?.indexOf('COOPERATIVE_UNION') !== -1 &&
+        criteria?.includes('NATURE_OF_BUSINESS_COOPUNION') && (
+          <FormSelect
+            name="natureOFBusinessCoop"
+            options={CoopUnionList}
+            label={t['depositProductNatureofBusinessCoopUnion']}
+            isMulti
+          />
+        )}
+      {memberType &&
+        memberType?.indexOf('COOPERATIVE') !== -1 &&
+        criteria?.includes('COOPERATIVE_TYPE') && (
+          <BoxContainer>
+            <Text fontSize={'s3'} fontWeight="500" color="gray.700">
+              {t['depositProductCoorperativeType']}
+            </Text>
+            <Box w="40%">
+              <FormCheckboxGroup
+                name="cooperativeType"
+                label={t['depositProductCoorperativeType']}
+                list={CoopTypeList}
+                orientation="column"
+              />
+            </Box>
+          </BoxContainer>
+        )}
+    </FormSection>
   );
 };

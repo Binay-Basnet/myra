@@ -1,16 +1,10 @@
-// import debounce from 'lodash/debounce';
-import { InterestMethod } from '@coop/cbs/data-access';
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { DepositFrequency } from '@coop/cbs/data-access';
+import { SubText } from '@coop/shared/components';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import {
-  BoxContainer,
-  SubHeadingText,
-  TextBoxContainer,
-  TopText,
-} from '../formui';
+import { SubHeadingText } from '../formui';
 
 export const Interest = () => {
   const { t } = useTranslation();
@@ -20,101 +14,119 @@ export const Interest = () => {
     { label: t['no'], value: false },
   ];
 
-  const interestMethodList = [
+  const postingFrequency = [
     {
-      label: t['depositProductFlat'],
-      value: InterestMethod.Flat,
+      label: t['monthly'],
+      value: DepositFrequency.Monthly,
     },
     {
-      label: t['depositProductDiminishing'],
-      value: InterestMethod.Diminishing,
+      label: t['quaterly'],
+      value: DepositFrequency.Quarterly,
+    },
+    {
+      label: t['halfYearly'],
+      value: DepositFrequency.HalfYearly,
+    },
+    {
+      label: t['yearly'],
+      value: DepositFrequency.Yearly,
     },
   ];
 
   return (
-    <BoxContainer>
-      <TextBoxContainer>
-        <TopText>{t['loanProductInterest']} </TopText>
-      </TextBoxContainer>
-      <InputGroupContainer>
-        <FormInput
-          name="interest.minRate"
-          type="number"
-          label={t['loanProductMinimumRate']}
-          textAlign={'right'}
-          __placeholder="0.00"
-          rightElement={
-            <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-              %
-            </Text>
-          }
-        />
-        <FormInput
-          name="interest.maxRate"
-          type="number"
-          label={t['loanProductMaximumRate']}
-          textAlign={'right'}
-          __placeholder="0.00"
-          rightElement={
-            <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-              %
-            </Text>
-          }
-        />
-        <FormInput
-          name="interest.defaultRate"
-          type="number"
-          label={t['loanProductDefaultRate']}
-          textAlign={'right'}
-          __placeholder="0.00"
-          rightElement={
-            <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-              %
-            </Text>
-          }
-        />
-        <FormInput
-          name="interest.ceoAuthority"
-          type="number"
-          label={t['loanProductCEOAuthority']}
-          textAlign={'right'}
-          __placeholder="0.00"
-          rightElement={
-            <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-              %
-            </Text>
-          }
-        />
-        <FormInput
-          name="interest.boardAuthority"
-          type="number"
-          label={t['loanProductBoardAuthority']}
-          textAlign={'right'}
-          __placeholder="0.00"
-          rightElement={
-            <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-              %
-            </Text>
-          }
-        />
-
-        <FormSelect
-          name="interest.interestMethod"
-          label={t['loanProductInterestMethod']}
-          __placeholder={t['loanProductSelectInterestMethod']}
-          options={interestMethodList}
-        />
-      </InputGroupContainer>
-      <Box
-        display={'flex'}
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems={'center'}
-        mt="s16"
-      >
-        <SubHeadingText>{t['loanProductOverrideInterest']} </SubHeadingText>
-        <FormSwitchTab name="overrideInterest" options={yesNo} />
-      </Box>
-    </BoxContainer>
+    <FormSection header="loanProductInterest">
+      <FormInput
+        name="interest.minRate"
+        type="number"
+        label={t['loanProductMinimumRate']}
+        textAlign={'right'}
+        rightElement={
+          <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+            %
+          </Text>
+        }
+      />
+      <FormInput
+        name="interest.maxRate"
+        type="number"
+        label={t['loanProductMaximumRate']}
+        textAlign={'right'}
+        rightElement={
+          <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+            %
+          </Text>
+        }
+      />
+      <FormInput
+        name="interest.defaultRate"
+        type="number"
+        label={t['loanProductDefaultRate']}
+        textAlign={'right'}
+        rightElement={
+          <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+            %
+          </Text>
+        }
+      />
+      <FormInput
+        name="interest.ceoAuthority"
+        type="number"
+        label={t['loanProductCEOAuthority']}
+        textAlign={'right'}
+        rightElement={
+          <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+            %
+          </Text>
+        }
+      />
+      <FormInput
+        name="interest.boardAuthority"
+        type="number"
+        label={t['loanProductBoardAuthority']}
+        textAlign={'right'}
+        rightElement={
+          <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+            %
+          </Text>
+        }
+      />
+      <GridItem colSpan={3}>
+        <Box display="flex" flexDirection="column" gap="s48">
+          <Box
+            display={'flex'}
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems={'center'}
+            mt="s16"
+          >
+            <Box>
+              <SubHeadingText>{t['loanProductUpdateInterest']} </SubHeadingText>
+              <SubText>{t['loanProductUpdateInterestForIndividual']}</SubText>
+            </Box>
+            <FormSwitchTab name="updateInterest" options={yesNo} />
+          </Box>
+          <Box
+            display={'flex'}
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems={'center'}
+            mt="s16"
+          >
+            <Box>
+              <SubHeadingText>{t['loanProductWaiveInterest']} </SubHeadingText>
+              <SubText>{t['loanProductWaiveInterestforindividual']}</SubText>
+            </Box>
+            <FormSwitchTab name="waiveInterest" options={yesNo} />
+          </Box>
+          <Box w="35%">
+            <FormSelect
+              name="postingFrequency"
+              label={t['loanProductPostingFrequency']}
+              options={postingFrequency}
+            />
+          </Box>
+        </Box>
+      </GridItem>
+    </FormSection>
   );
 };

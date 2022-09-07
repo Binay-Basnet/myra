@@ -6,7 +6,7 @@ import { FormInput, FormSelect } from '@coop/shared/form';
 import { FormSection, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-export const PrematuredPenalty = () => {
+export const PrematurePenalty = () => {
   const { t } = useTranslation();
 
   const penaltyDataType = [

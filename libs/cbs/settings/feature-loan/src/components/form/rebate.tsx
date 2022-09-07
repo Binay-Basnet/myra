@@ -1,8 +1,10 @@
 import { useFormContext } from 'react-hook-form';
 
+import { useGetCoaListQuery } from '@coop/cbs/data-access';
+import { InputGroupContainer } from '@coop/cbs/settings/ui-containers';
 import { SubHeadingText, SubText } from '@coop/shared/components';
-import { FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
+import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, TextBoxContainer } from '../formui';
@@ -23,69 +25,72 @@ export const Rebate = () => {
     },
   ];
 
-  return (
-    <BoxContainer>
-      <Box display={'flex'} justifyContent="space-between">
-        <TextBoxContainer>
-          <SubHeadingText>{t['loanProductRebate']} </SubHeadingText>
-          <SubText>{t['loanProductEnterRebatedetails']} </SubText>
-        </TextBoxContainer>
-        <FormSwitchTab name="isRebateApplicable" options={enableSwitch} />
-      </Box>
-      {rebate && (
-        <BoxContainer
-          p="s16"
-          border={'1px solid'}
-          borderColor="border.layout"
-          borderRadius={'4px'}
-        >
-          <Grid templateColumns="repeat(3,1fr)" gap="s16">
-            <GridItem>
-              <FormInput
-                name="rebate.daysBeforeInstallmentDate"
-                type="number"
-                label={t['loanProductDaysafterinstallmentdate']}
-                __placeholder={t['loanProductDayfromenddate']}
-              />
-            </GridItem>
-            <GridItem>
-              <FormInput
-                name="rebate.noOfInstallment"
-                type="number"
-                label={t['loanProductNoInstallment']}
-                __placeholder="0"
-                helperText={t['loanProductEnterNumberInstallments']}
-                textAlign={'right'}
-              />
-            </GridItem>
-          </Grid>
+  const { data: coa } = useGetCoaListQuery({
+    filter: {
+      active: true,
+    },
+  });
 
-          <Grid templateColumns="repeat(3,1fr)" gap="s16">
-            <GridItem>
-              <FormInput
-                name="rebate.rebateAmount"
-                type="number"
-                label={t['loanProductRebateAmount']}
-                __placeholder={t['loanProductRebateAmount']}
-              />
-            </GridItem>
-            <GridItem>
-              <FormInput
-                name="rebate.percentage"
-                type="number"
-                label={t['loanProductPercentageDepositedAmount']}
-                textAlign={'right'}
-                __placeholder="0.00"
-                rightElement={
-                  <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-                    %
-                  </Text>
-                }
-              />
-            </GridItem>
-          </Grid>
+  const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
+
+  const coaList = coaData?.map((item) => {
+    return {
+      label: item?.name?.en as string,
+      value: item?.id as string,
+    };
+  });
+
+  return (
+    <FormSection>
+      <GridItem colSpan={3}>
+        <BoxContainer>
+          <Box display={'flex'} justifyContent="space-between">
+            <TextBoxContainer>
+              <SubHeadingText>{t['loanProductRebate']} </SubHeadingText>
+              <SubText>{t['loanProductEnterRebatedetails']} </SubText>
+            </TextBoxContainer>
+            <FormSwitchTab name="isRebateApplicable" options={enableSwitch} />
+          </Box>
+          {rebate && (
+            <BoxContainer
+              p="s16"
+              border={'1px solid'}
+              borderColor="border.layout"
+              borderRadius="br2"
+            >
+              <InputGroupContainer>
+                <FormInput
+                  name="rebate.daysBeforeInstallmentDate"
+                  type="number"
+                  label={t['loanProductDaysafterinstallmentdate']}
+                />
+                <FormInput
+                  name="rebate.rebate"
+                  type="number"
+                  label={t['loanProductRebate']}
+                  textAlign={'right'}
+                  rightElement={
+                    <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+                      %
+                    </Text>
+                  }
+                />
+                <FormInput
+                  name="rebate.rebateAmount"
+                  type="number"
+                  label={t['loanProductRebateAmount']}
+                />
+
+                <FormSelect
+                  name="penalty.penaltyLedgerMapping"
+                  label={t['loanProductPenaltyedgerMapping']}
+                  options={coaList}
+                />
+              </InputGroupContainer>
+            </BoxContainer>
+          )}
         </BoxContainer>
-      )}
-    </BoxContainer>
+      </GridItem>
+    </FormSection>
   );
 };
