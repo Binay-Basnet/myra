@@ -9,7 +9,7 @@ import Head from 'next/head';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 
 import { Box, FloatingShortcutButton, Toaster } from '@coop/shared/ui';
-import { store, theme, useInit } from '@coop/shared/utils';
+import { store, theme, useInit, useSnap } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
 
@@ -41,7 +41,7 @@ const queryClient = new QueryClient({
 
 function MainApp({ Component, pageProps }: AppPropsWithLayout) {
   useInit();
-  // useSnap();
+  useSnap();
 
   const getLayout = Component.getLayout || ((page) => page);
 
