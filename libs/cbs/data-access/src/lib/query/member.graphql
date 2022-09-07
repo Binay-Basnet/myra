@@ -80,10 +80,10 @@ query getKymFormStatus($id: String!) {
         data {
           sectionStatus {
             id
-            errors {
-              sectionName
-              errors
-            }
+            #            errors {
+            #              sectionName
+            #              errors
+            #            }
           }
         }
       }

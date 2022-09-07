@@ -9682,7 +9682,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymIndAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -12128,7 +12128,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymIndAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -12690,7 +12690,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymIndAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -40610,7 +40610,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "KymIndAddSectionStatus",
+                "name": "KymFormStatus",
                 "ofType": null
               }
             },
@@ -40626,7 +40626,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "KymIndAddSectionStatus",
+                "name": "KymFormStatus",
                 "ofType": null
               }
             },
@@ -40639,7 +40639,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymIndAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -40651,7 +40651,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymIndAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -40663,7 +40663,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymIndAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -40675,7 +40675,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymIndAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -45125,7 +45125,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "KymIndAddSectionStatus",
+                "name": "KymFormStatus",
                 "ofType": null
               }
             },
@@ -45514,6 +45514,104 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "KymFormSectionStatus",
+        "description": null,
+        "fields": [
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "incomplete",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "KymFormStatus",
+        "description": null,
+        "fields": [
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "InvalidData",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "sectionStatus",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "KymFormSectionStatus",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "INPUT_OBJECT",
         "name": "KymIdentification",
         "description": null,
@@ -45810,7 +45908,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymIndAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -45990,61 +46088,6 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "ID",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "KymIndAddSectionStatus",
-        "description": null,
-        "fields": [
-          {
-            "name": "errors",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "SectionWiseError",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "ID",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "incomplete",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "IncompleteSection",
                 "ofType": null
               }
             },
@@ -46706,7 +46749,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymIndAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -73356,7 +73399,7 @@
       },
       {
         "name": "deprecated",
-        "description": "Marks an element of a GraphQL schema as no longer supported.",
+        "description": "The @deprecated built-in directive is used within the type system definition language to indicate deprecated portions of a GraphQL service's schema, such as deprecated fields on a type, arguments on a field, input fields on an input type, or values of an enum type.",
         "isRepeatable": false,
         "locations": [
           "ARGUMENT_DEFINITION",
@@ -73367,7 +73410,7 @@
         "args": [
           {
             "name": "reason",
-            "description": "Explains why this element was deprecated, usually also including a suggestion for how to access supported similar data. Formatted using the Markdown syntax, as specified by [CommonMark](https://commonmark.org/).",
+            "description": null,
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -73473,7 +73516,7 @@
       },
       {
         "name": "include",
-        "description": "Directs the executor to include this field or fragment only when the `if` argument is true.",
+        "description": "The @include directive may be provided for fields, fragment spreads, and inline fragments, and allows for conditional inclusion during execution as described by the if argument.",
         "isRepeatable": false,
         "locations": [
           "FIELD",
@@ -73483,7 +73526,7 @@
         "args": [
           {
             "name": "if",
-            "description": "Included when true.",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -73639,6 +73682,18 @@
             "deprecationReason": null
           },
           {
+            "name": "required",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "section_name",
             "description": null,
             "type": {
@@ -73654,7 +73709,7 @@
       },
       {
         "name": "skip",
-        "description": "Directs the executor to skip this field or fragment when the `if` argument is true.",
+        "description": "The @skip directive may be provided for fields, fragment spreads, and inline fragments, and allows for conditional exclusion during execution as described by the if argument.",
         "isRepeatable": false,
         "locations": [
           "FIELD",
@@ -73664,7 +73719,7 @@
         "args": [
           {
             "name": "if",
-            "description": "Skipped when true.",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -73682,7 +73737,7 @@
       },
       {
         "name": "specifiedBy",
-        "description": "Exposes a URL that specifies the behavior of this scalar.",
+        "description": "The @specifiedBy built-in directive is used within the type system definition language to provide a scalar specification URL for specifying the behavior of custom scalar types.",
         "isRepeatable": false,
         "locations": [
           "SCALAR"
@@ -73690,7 +73745,7 @@
         "args": [
           {
             "name": "url",
-            "description": "The URL that specifies the behavior of this scalar.",
+            "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
