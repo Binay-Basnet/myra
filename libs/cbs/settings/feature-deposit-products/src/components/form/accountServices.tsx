@@ -11,11 +11,6 @@ type AccountServiceTable = {
   amount: number;
 };
 
-const service_name = [
-  { label: 'Cheque Book Issue', value: 'chequeBookIssue' },
-  { label: 'Atm issue', value: 'atmIssue' },
-];
-
 export const AccountServicesCharge = () => {
   const { t } = useTranslation();
 
@@ -47,9 +42,7 @@ export const AccountServicesCharge = () => {
           {
             accessor: 'serviceName',
             header: t['depositProductAccServiceTableServiceName'],
-            fieldType: 'select',
             cellWidth: 'auto',
-            selectOptions: service_name,
           },
           {
             accessor: 'ledgerName',
@@ -78,9 +71,7 @@ export const AccountServicesCharge = () => {
           {
             accessor: 'serviceName',
             header: t['depositProductAccServiceTableServiceName'],
-            fieldType: 'select',
             cellWidth: 'auto',
-            selectOptions: service_name,
           },
           {
             accessor: 'ledgerName',

@@ -103,7 +103,7 @@ export function TabMenu() {
                   gap="s8"
                   border="none"
                   _hover={{
-                    bg: 'gray.0',
+                    bg: 'background.500',
                     color: 'neutralColorLight.Gray-60',
                     borderRadius: 'br2',
                   }}

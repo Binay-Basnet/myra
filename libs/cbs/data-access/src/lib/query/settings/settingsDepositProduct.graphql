@@ -59,6 +59,7 @@ query getDepositProductSettingsEditData($id: ID!) {
               prefix
               initialNo
             }
+            description
             typeOfMember
             criteria
             minAge
@@ -80,11 +81,7 @@ query getDepositProductSettingsEditData($id: ID!) {
             penalty
             penaltyData {
               dayAfterInstallmentDate
-              minimumAmount
-              rateType
-              flatRatePenalty
               penaltyRate
-
               penaltyAmount
             }
             rebate
@@ -134,6 +131,11 @@ query getDepositProductSettingsEditData($id: ID!) {
             dormantSetup {
               duration
               condition
+            }
+            withdrawPenalty {
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
             }
             autoOpen
             allowLoan

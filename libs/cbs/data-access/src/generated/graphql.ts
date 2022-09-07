@@ -8519,10 +8519,43 @@ export type SetAccountDocumentDataMutation = {
 export type SetAddMemberToAgentDataMutationVariables = Exact<{
   agentId: Scalars['String'];
   data?: InputMaybe<AssignMembersInput>;
+  override?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type SetAddMemberToAgentDataMutation = {
-  transaction: { addMemberToAgent?: { data?: { id: string } | null } | null };
+  transaction: {
+    addMemberToAgent?: {
+      data?: { id: string } | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
+export type SetAgentTodayListDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data?: InputMaybe<
+    Array<InputMaybe<AgentTodayListInput>> | InputMaybe<AgentTodayListInput>
+  >;
+}>;
+
+export type SetAgentTodayListDataMutation = {
+  transaction: {
+    agentTodayList?: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
 };
 
 export type LoginMutationVariables = Exact<{
@@ -10252,6 +10285,7 @@ export type GetAgentAssignedMemberListDataQuery = {
           id: string;
           assignedDate?: string | null;
           member?: {
+            id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
           } | null;
           account?: { id: string } | null;
@@ -10264,6 +10298,22 @@ export type GetAgentAssignedMemberListDataQuery = {
         endCursor?: string | null;
       } | null;
     };
+  };
+};
+
+export type GetAgentTodayListDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetAgentTodayListDataQuery = {
+  transaction: {
+    listAgentTask?: {
+      record?: Array<{
+        amount?: any | null;
+        member?: { id: string } | null;
+        account?: { id: string } | null;
+      } | null> | null;
+    } | null;
   };
 };
 
@@ -12750,6 +12800,7 @@ export type GetDepositProductSettingsEditDataQuery = {
           data?: {
             productName?: string | null;
             nature?: NatureOfDepositProduct | null;
+            description?: string | null;
             typeOfMember?: Array<KymMemberTypesEnum | null> | null;
             criteria?: Array<CriteriaSection | null> | null;
             minAge?: number | null;
@@ -12796,9 +12847,6 @@ export type GetDepositProductSettingsEditDataQuery = {
             } | null;
             penaltyData?: {
               dayAfterInstallmentDate?: number | null;
-              minimumAmount?: string | null;
-              rateType?: PenaltyRateType | null;
-              flatRatePenalty?: number | null;
               penaltyRate?: number | null;
               penaltyAmount?: any | null;
             } | null;
@@ -12839,6 +12887,11 @@ export type GetDepositProductSettingsEditDataQuery = {
               duration?: string | null;
               condition?: string | null;
             } | null> | null;
+            withdrawPenalty?: {
+              penaltyLedgerMapping?: string | null;
+              penaltyAmount?: any | null;
+              penaltyRate?: number | null;
+            } | null;
             prematurePenalty?: {
               penaltyDateType?: PrematurePenaltyDateType | null;
               noOfDays?: number | null;
@@ -13500,16 +13553,19 @@ export const useSetAccountDocumentDataMutation = <
     options
   );
 export const SetAddMemberToAgentDataDocument = `
-    mutation setAddMemberToAgentData($agentId: String!, $data: AssignMembersInput) {
+    mutation setAddMemberToAgentData($agentId: String!, $data: AssignMembersInput, $override: Boolean) {
   transaction {
-    addMemberToAgent(agentId: $agentId, data: $data) {
+    addMemberToAgent(agentId: $agentId, data: $data, override: $override) {
       data {
         id
+      }
+      error {
+        ...MutationError
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useSetAddMemberToAgentDataMutation = <
   TError = unknown,
   TContext = unknown
@@ -13532,6 +13588,41 @@ export const useSetAddMemberToAgentDataMutation = <
       SetAddMemberToAgentDataMutation,
       SetAddMemberToAgentDataMutationVariables
     >(SetAddMemberToAgentDataDocument),
+    options
+  );
+export const SetAgentTodayListDataDocument = `
+    mutation setAgentTodayListData($id: ID!, $data: [AgentTodayListInput]) {
+  transaction {
+    agentTodayList(id: $id, data: $data) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetAgentTodayListDataMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetAgentTodayListDataMutation,
+    TError,
+    SetAgentTodayListDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAgentTodayListDataMutation,
+    TError,
+    SetAgentTodayListDataMutationVariables,
+    TContext
+  >(
+    ['setAgentTodayListData'],
+    useAxios<
+      SetAgentTodayListDataMutation,
+      SetAgentTodayListDataMutationVariables
+    >(SetAgentTodayListDataDocument),
     options
   );
 export const LoginDocument = `
@@ -16791,6 +16882,7 @@ export const GetAgentAssignedMemberListDataDocument = `
         node {
           id
           member {
+            id
             name
           }
           account {
@@ -16825,6 +16917,37 @@ export const useGetAgentAssignedMemberListDataQuery = <
       GetAgentAssignedMemberListDataQuery,
       GetAgentAssignedMemberListDataQueryVariables
     >(GetAgentAssignedMemberListDataDocument).bind(null, variables),
+    options
+  );
+export const GetAgentTodayListDataDocument = `
+    query getAgentTodayListData($id: ID!) {
+  transaction {
+    listAgentTask(id: $id) {
+      record {
+        member {
+          id
+        }
+        account {
+          id
+        }
+        amount
+      }
+    }
+  }
+}
+    `;
+export const useGetAgentTodayListDataQuery = <
+  TData = GetAgentTodayListDataQuery,
+  TError = unknown
+>(
+  variables: GetAgentTodayListDataQueryVariables,
+  options?: UseQueryOptions<GetAgentTodayListDataQuery, TError, TData>
+) =>
+  useQuery<GetAgentTodayListDataQuery, TError, TData>(
+    ['getAgentTodayListData', variables],
+    useAxios<GetAgentTodayListDataQuery, GetAgentTodayListDataQueryVariables>(
+      GetAgentTodayListDataDocument
+    ).bind(null, variables),
     options
   );
 export const GetMeDocument = `
@@ -20130,6 +20253,7 @@ export const GetDepositProductSettingsEditDataDocument = `
               prefix
               initialNo
             }
+            description
             typeOfMember
             criteria
             minAge
@@ -20151,9 +20275,6 @@ export const GetDepositProductSettingsEditDataDocument = `
             penalty
             penaltyData {
               dayAfterInstallmentDate
-              minimumAmount
-              rateType
-              flatRatePenalty
               penaltyRate
               penaltyAmount
             }
@@ -20204,6 +20325,11 @@ export const GetDepositProductSettingsEditDataDocument = `
             dormantSetup {
               duration
               condition
+            }
+            withdrawPenalty {
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
             }
             autoOpen
             allowLoan
