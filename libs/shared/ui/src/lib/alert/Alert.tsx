@@ -25,7 +25,8 @@ export interface AlertProps {
   undoText?: string;
   undoHandler?: () => void;
   showAlert?: boolean;
-
+  bottomButtonlabel?: string;
+  bottomButtonHandler?: () => void;
   children?: React.ReactNode;
 }
 
@@ -52,6 +53,8 @@ export function Alert({
   undoHandler,
   undoText,
   children,
+  bottomButtonlabel,
+  bottomButtonHandler,
 }: AlertProps) {
   const [isAlertShown, setIsAlertShown] = useState(showAlert);
 
@@ -73,6 +76,17 @@ export function Alert({
                 <AlertDescription>
                   {subtitle}
                   {children}
+                  {bottomButtonlabel && (
+                    <Box
+                      display={'flex'}
+                      flexDirection="row"
+                      justifyContent={'flex-start'}
+                    >
+                      <Button variant="link" onClick={bottomButtonHandler}>
+                        {bottomButtonlabel}
+                      </Button>
+                    </Box>
+                  )}
                 </AlertDescription>
               )}
             </Box>

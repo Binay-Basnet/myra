@@ -3273,6 +3273,8 @@ const en: Record<string, string> = {
   cancel: 'Cancel',
   sharePurchaseSelf: 'Self',
   sharePurchaseOthers: 'Others',
+  // ///////share return
+  shareLayoutShareReturnAdd: 'Share Return',
   loanProductSupportMultipleAccount:
     'Does this product support Multiple Account ?',
   shareLayoutSharePurchase: 'Share Issue',
