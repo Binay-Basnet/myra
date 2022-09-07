@@ -2264,9 +2264,7 @@ const ne: Record<string, string> = {
   depositProductDecision: 'Decision',
   depositProductRegistered: 'Registered',
   depositProductTaxClearance: 'Tax Clearance',
-  depositProductPrematuredPenaltySetup: 'Prematured Penalty Setup',
   depositProductEffectiveDaysfromStart: 'Effective Days from Start',
-  depositProductPenaltyRs: 'Penalty Rs',
   depositProductPenaltyRate: 'Penalty Rate',
   depositProductPenaltyLedgerMapping: 'Penalty Ledger Mapping',
   depositProductAverage: 'Average',
@@ -2352,7 +2350,6 @@ const ne: Record<string, string> = {
   loanProductSelectModePayment: 'Select Mode of Payment',
   loanProductInstallmentType: 'Installment Type',
   loanProductSelectInstallmentType: 'Select Installment Type',
-  loanProductAllowPartialInstallment: 'Allow Partial Installment',
   loanProductIsMonthlyInterestCompulsory: 'Is Monthly Interest Compulsory',
   loanProductLoanRepaymentStartGraceDuration:
     'Loan Repayment Start Grace Duration',
@@ -2371,7 +2368,6 @@ const ne: Record<string, string> = {
   loanProductInterestMethod: 'Interest Method',
   loanProductSelectInterestMethod: 'Select Interest Method',
   loanProductOverrideInterest: 'Override Interest ',
-  loanProductAccountServiceCharge: 'Account Service Charge',
   loanProductAdddifferentservicecharges: 'Add different service charges.',
   loanProductServiceName: 'Service Name',
   loanProductLedgerName: 'Ledger Name',
@@ -2385,7 +2381,6 @@ const ne: Record<string, string> = {
   loanProductDisburementDMV: 'Disburement % of DMV',
   loanProductRebate: 'Rebate',
   loanProductStaffProduct: 'Staff Product',
-  loanProductLoanScheduleChangeOverride: 'Loan Schedule Change Override',
   loanProductRequiredDocumentSetup: 'Required Document Setup',
   loanProductPolicyDocument: 'Policy Document',
   loanProductLoanChangeDocument: 'Loan Change Document',
@@ -2874,6 +2869,13 @@ const ne: Record<string, string> = {
   depositProductChequeIssue: 'Allow Cheque Issue?',
   depositProductSupportMultipleAccount:
     'Does this product support Multiple Account ?',
+  loanProductAllowPartialInstallment: 'Partial payment on Principal Amount',
+  loanProductPenaltyedgerMapping: 'Penalty Ledger Mapping',
+  loanProductPenaltyonPrincipal: 'Penalty on Principal',
+  loanProductPenaltyonInterest: 'Penalty on Interest',
+  loanProductPenaltyonInstallment: 'Penalty on Installment',
+  loanProductRebateLedgerMapping: 'Rebate Ledger Mapping',
+  depositProductPrematuredPenaltySetup: 'Premature Penalty Setup',
 };
 
 export default ne;

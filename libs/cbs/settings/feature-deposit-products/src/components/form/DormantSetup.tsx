@@ -1,8 +1,6 @@
-import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormEditableTable } from '@coop/shared/form';
+import { FormSection, GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-
-import { TextBoxContainer, TopText } from '../formui';
 
 type DormantSetupTable = {
   condition: string;
@@ -24,35 +22,29 @@ export const DormantSetup = () => {
   const { t } = useTranslation();
 
   return (
-    <GroupContainer
-      scrollMarginTop={'200px'}
-      display="flex"
-      flexDirection={'column'}
-      gap="s16"
-    >
-      <TextBoxContainer>
-        <TopText>{t['depositProductDormantSetup']} </TopText>
-      </TextBoxContainer>
-      <FormEditableTable<DormantSetupTable>
-        name="dormantSetup"
-        debug={false}
-        columns={[
-          {
-            accessor: 'condition',
-            header: t['depositProductCondition'],
-            fieldType: 'select',
-            cellWidth: 'auto',
-            selectOptions: conditionList,
-          },
-          {
-            accessor: 'duration',
-            header: t['depositProductDuration'],
-            fieldType: 'select',
-            cellWidth: 'auto',
-            selectOptions: durationList,
-          },
-        ]}
-      />
-    </GroupContainer>
+    <FormSection header="depositProductDormantSetup">
+      <GridItem colSpan={3}>
+        <FormEditableTable<DormantSetupTable>
+          name="dormantSetup"
+          debug={false}
+          columns={[
+            {
+              accessor: 'condition',
+              header: t['depositProductCondition'],
+              fieldType: 'select',
+              cellWidth: 'auto',
+              selectOptions: conditionList,
+            },
+            {
+              accessor: 'duration',
+              header: t['depositProductDuration'],
+              fieldType: 'select',
+              cellWidth: 'auto',
+              selectOptions: durationList,
+            },
+          ]}
+        />
+      </GridItem>
+    </FormSection>
   );
 };

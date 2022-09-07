@@ -1,6 +1,6 @@
 import { KymMemberTypesEnum } from '@coop/cbs/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, FormSection } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const TypesOfMember = () => {
@@ -22,18 +22,14 @@ export const TypesOfMember = () => {
     },
   ];
   return (
-    <Box display="flex" flexDirection={'column'} gap="s16">
-      <Text fontWeight="500" fontSize={'s3'} color="gray.700">
-        {t['loanProductMemberCategory']}
-      </Text>
-
-      <Box w="16%">
+    <FormSection header="loanProductMemberCategory">
+      <Box>
         <FormCheckboxGroup
           name="typeOfMember"
           list={typesOfMember}
           orientation="column"
         />
       </Box>
-    </Box>
+    </FormSection>
   );
 };

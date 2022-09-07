@@ -1,11 +1,9 @@
 import { useFormContext } from 'react-hook-form';
 
 import { CriteriaSection } from '@coop/cbs/data-access';
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormCheckboxGroup } from '@coop/shared/form';
+import { FormSection } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-
-import { BoxContainer, SubText, TextBoxContainer, TopText } from '../formui';
 
 export const Critera = () => {
   const { watch } = useFormContext();
@@ -65,46 +63,38 @@ export const Critera = () => {
   ];
 
   return (
-    <BoxContainer>
-      <TextBoxContainer>
-        <TopText> {t['depositProductCriteria']} </TopText>
-        <SubText>{t['depositProductSelectedChecklistwillgenerate']}</SubText>
-      </TextBoxContainer>
-      <InputGroupContainer>
-        {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
-          <FormCheckboxGroup name="criteria" list={age} />
-        )}
-        {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
-          <FormCheckboxGroup name="criteria" list={gender} />
-        )}
-        {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
-          <FormCheckboxGroup name="criteria" list={maritalStatus} />
-        )}
-
-        {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
-          <FormCheckboxGroup name="criteria" list={educationalQuality} />
-        )}
-        {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
-          <FormCheckboxGroup name="criteria" list={ethnicity} />
-        )}
-        {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
-          <FormCheckboxGroup name="criteria" list={occupationDetails} />
-        )}
-
-        {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
-          <FormCheckboxGroup name="criteria" list={foreignEmployment} />
-        )}
-        {memberType && memberType?.indexOf('INSTITUTION') !== -1 && (
-          <FormCheckboxGroup name="criteria" list={NOBInstitution} />
-        )}
-
-        {memberType && memberType?.indexOf('COOPERATIVE') !== -1 && (
-          <FormCheckboxGroup name="criteria" list={CoperativeType} />
-        )}
-        {memberType && memberType?.indexOf('COOPERATIVE_UNION') !== -1 && (
-          <FormCheckboxGroup name="criteria" list={NOBCoopUnion} />
-        )}
-      </InputGroupContainer>
-    </BoxContainer>
+    <FormSection header="depositProductCriteria">
+      {' '}
+      {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
+        <FormCheckboxGroup name="criteria" list={age} />
+      )}
+      {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
+        <FormCheckboxGroup name="criteria" list={gender} />
+      )}
+      {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
+        <FormCheckboxGroup name="criteria" list={maritalStatus} />
+      )}
+      {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
+        <FormCheckboxGroup name="criteria" list={educationalQuality} />
+      )}
+      {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
+        <FormCheckboxGroup name="criteria" list={ethnicity} />
+      )}
+      {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
+        <FormCheckboxGroup name="criteria" list={occupationDetails} />
+      )}
+      {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
+        <FormCheckboxGroup name="criteria" list={foreignEmployment} />
+      )}
+      {memberType && memberType?.indexOf('INSTITUTION') !== -1 && (
+        <FormCheckboxGroup name="criteria" list={NOBInstitution} />
+      )}
+      {memberType && memberType?.indexOf('COOPERATIVE') !== -1 && (
+        <FormCheckboxGroup name="criteria" list={CoperativeType} />
+      )}
+      {memberType && memberType?.indexOf('COOPERATIVE_UNION') !== -1 && (
+        <FormCheckboxGroup name="criteria" list={NOBCoopUnion} />
+      )}
+    </FormSection>
   );
 };
