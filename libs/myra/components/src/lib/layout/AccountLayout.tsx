@@ -33,21 +33,20 @@ const accountColumns = [
   },
 ];
 
+const addButtoncolumns = [
+  {
+    title: 'newAccountOpen',
+    link: '/accounts/account-open',
+  },
+  {
+    title: 'accountClose',
+    link: '/accounts/account-close',
+  },
+];
 export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
   const { t } = useTranslation();
   const router = useRouter();
   const newId = useGetNewIdMutation();
-
-  const addButtoncolumns = [
-    {
-      title: 'accountList',
-      link: `/accounts/account-open/add`,
-    },
-    {
-      title: 'accountClose',
-      link: `/accounts/account-close/add`,
-    },
-  ];
 
   return (
     <Box display="flex">
@@ -56,6 +55,21 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
           {t['accountLayout']}
         </Text>
         <Divider my="s16" />
+        {/* <Button
+          width="full"
+          size="lg"
+          justifyContent="start"
+          leftIcon={<AddIcon h="11px" />}
+          onClick={() =>
+            newId
+              .mutateAsync({})
+              .then((res) =>
+                router.push(`/accounts/account-open/add/${res?.newId}`)
+              )
+          }
+        >
+          {t['accountLayoutNewAccount']}
+        </Button> */}
 
         <PopOverComponentForButtonList buttonLabel="accountLayoutNewAccount">
           {addButtoncolumns.map((item, index) => {
@@ -66,14 +80,15 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
                   onClick={() =>
                     newId
                       .mutateAsync({})
-                      .then((res) => router.push(`${item.link}/${res?.newId}`))
+                      .then((res) =>
+                        router.push(`${item.link}/add/${res?.newId}`)
+                      )
                   }
                 />
               </Box>
             );
           })}
         </PopOverComponentForButtonList>
-
         <Divider my="s16" />
         <TabColumn list={accountColumns} />
         <Divider my="s16" />

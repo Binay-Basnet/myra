@@ -71,7 +71,9 @@ export function CbsAccountOpen() {
   const router = useRouter();
   const id = String(router?.query?.['id']);
 
-  const methods = useForm<DepositLoanAccountInput>();
+  const methods = useForm<DepositLoanAccountInput>({
+    defaultValues: {},
+  });
 
   const { mutateAsync } = useSetAccountOpenDataMutation();
   const { mutate: mutateDocs } = useSetAccountDocumentDataMutation();

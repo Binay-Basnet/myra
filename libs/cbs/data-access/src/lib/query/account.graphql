@@ -140,6 +140,7 @@ query getAccountOpenProductDetails($id: ID!) {
             percentageOfDeposit
             alternativeChannels
             atmFacility
+            isForMinors
             #            chequeIssue
             supportMultiple
             staffProduct
@@ -328,6 +329,17 @@ query getAccountOpenProductPenalty($productId: ID!) {
             }
           }
         }
+      }
+    }
+  }
+}
+
+query getAccountOpenMinorList($memberId: ID!) {
+  account {
+    listMinors(memberId: $memberId) {
+      data {
+        fullName
+        familyMemberId
       }
     }
   }

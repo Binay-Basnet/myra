@@ -7,6 +7,7 @@ import {
   DepositLoanAccountInput,
   NatureOfDepositProduct,
   useGetAccountOpenEditDataQuery,
+  useGetAccountOpenMinorListQuery,
   useGetAccountOpenProductDetailsQuery,
   useGetProductListQuery,
   useSetAccountDocumentDataMutation,
@@ -20,6 +21,7 @@ import {
   Box,
   Button,
   Container,
+  Divider,
   FormFooter,
   FormHeader,
   FormMemberSelect,
@@ -78,6 +80,7 @@ export const AccountOpenNew = () => {
   });
   const { t } = useTranslation();
   const [triggerQuery, setTriggerQuery] = useState(false);
+  const [showCriteria, setShowCriteria] = useState(false);
   const [triggerProductQuery, setTriggerProductQuery] = useState(false);
   const [mode, setMode] = useState('0');
 
@@ -151,15 +154,24 @@ export const AccountOpenNew = () => {
       setTriggerProductQuery(true);
     }
   }, [productID]);
-  const mainButtonHandlermode0 = () => {
-    if (memberId) {
-      setMode('1');
-    }
-  };
+
   const previousButtonHandler = () => {
     setMode('0');
   };
+  const { data: minorData } = useGetAccountOpenMinorListQuery(
+    {
+      memberId,
+    },
+    { enabled: triggerQuery }
+  );
 
+  const minorDetails = minorData?.account?.listMinors?.data;
+  const minorOptions = minorDetails?.map((data) => {
+    return {
+      label: data?.fullName?.local as string,
+      value: data?.familyMemberId as string,
+    };
+  });
   const submitForm = () => {
     const values = getValues();
     const updatedData = {
@@ -250,8 +262,20 @@ export const AccountOpenNew = () => {
                 p="s20"
                 w="100%"
               >
+                <FormMemberSelect name="memberId" label="Member" />
+                <FormSelect
+                  name="productId"
+                  label={t['accProductName']}
+                  __placeholder={t['accSelectProduct']}
+                  isLoading={isFetching}
+                  options={productOptions}
+                />
                 {errors && (
-                  <Alert status="error">
+                  <Alert
+                    status="error"
+                    bottomButtonlabel="View All Criteria"
+                    bottomButtonHandler={() => setShowCriteria(true)}
+                  >
                     <Box p="s20">
                       <ul>
                         {errors?.error?.map((item, index) => {
@@ -261,62 +285,109 @@ export const AccountOpenNew = () => {
                     </Box>
                   </Alert>
                 )}
-                <FormMemberSelect name="memberId" label="Member" />
-                <FormSelect
-                  name="productId"
-                  label={t['accProductName']}
-                  __placeholder={t['accSelectProduct']}
-                  isLoading={isFetching}
-                  options={productOptions}
-                />
-                {productType !== NatureOfDepositProduct?.Mandatory && (
-                  <Box
-                    border={'1px solid'}
-                    borderColor="border.layout"
-                    borderRadius={'br2'}
-                    p="s16"
-                  >
-                    <CriteriaCard productId={productID} />
-                  </Box>
-                )}
-                <FormInput name="accountName" label="Account Name" />
-                {productType !== NatureOfDepositProduct?.VoluntaryOrOptional &&
-                  productType !== NatureOfDepositProduct?.Mandatory && (
-                    <Tenure />
-                  )}
-                <Interest />
-                <DepositFrequency />
-                {(ProductData?.alternativeChannels ||
-                  ProductData?.atmFacility) && (
-                  <Box display={'flex'} flexDirection="column" gap="s16">
-                    <Text fontWeight={'600'} fontSize="r1">
-                      Other Services
-                    </Text>
-                    <Box display="flex" flexDirection={'column'} gap="s8">
-                      {ProductData?.alternativeChannels && (
-                        <Box display="flex" flexDirection={'column'} gap="s8">
-                          <FormCheckbox
-                            name="mobileBankig"
-                            label="Mobile Banking"
-                          />
-                          <FormCheckbox name="eBanking" label="eBanking" />
-                        </Box>
-                      )}
-                      {ProductData?.atmFacility && (
-                        <FormCheckbox name="atmFacility" label="ATM Facility" />
-                      )}
+                {productType !== NatureOfDepositProduct?.Mandatory &&
+                  showCriteria && (
+                    <Box
+                      border={'1px solid'}
+                      borderColor="border.layout"
+                      borderRadius={'br2'}
+                      p="s16"
+                    >
+                      <CriteriaCard productId={productID} />
                     </Box>
+                  )}
+                {memberId && productID && !errors && (
+                  <Box
+                    display={'flex'}
+                    flexDirection={'column'}
+                    gap="s32"
+                    w="100%"
+                  >
+                    <FormInput name="accountName" label="Account Name" />
+                    {ProductData?.isForMinors && (
+                      <FormSelect
+                        name="minor"
+                        label="Minor"
+                        options={minorOptions}
+                      />
+                    )}
+                    {productType !==
+                      NatureOfDepositProduct?.VoluntaryOrOptional &&
+                      productType !== NatureOfDepositProduct?.Mandatory && (
+                        <Tenure />
+                      )}
+                    <Divider />
+                    <Interest />
+                    <DepositFrequency />
+                    {(productType === NatureOfDepositProduct?.TermSavingOrFd ||
+                      productType ===
+                        NatureOfDepositProduct?.RecurringSaving) && (
+                      <Box display={'flex'} flexDirection="column" gap="s16">
+                        <Box display={'flex'} flexDirection="column" gap="s4">
+                          <Text fontWeight={'500'} fontSize="r1">
+                            {' '}
+                            Default Amount Deposit Account Name
+                          </Text>
+                          <Text fontWeight={'400'} fontSize="s2">
+                            {' '}
+                            If the member does not specify particular account
+                            for deposit, this mapped account will be set
+                            globally. Normally this is a compulsory account
+                            type.
+                          </Text>
+                        </Box>
+
+                        <FormSelect
+                          name="defaultAmountDepositAccountName"
+                          label="Account Type"
+                        />
+                      </Box>
+                    )}
+
+                    {(ProductData?.alternativeChannels ||
+                      ProductData?.atmFacility) && (
+                      <Box display={'flex'} flexDirection="column" gap="s16">
+                        <Text fontWeight={'600'} fontSize="r1">
+                          Other Services
+                        </Text>
+                        <Box display="flex" flexDirection={'column'} gap="s8">
+                          {ProductData?.alternativeChannels && (
+                            <Box
+                              display="flex"
+                              flexDirection={'column'}
+                              gap="s8"
+                            >
+                              <FormCheckbox
+                                name="mobileBanking"
+                                label="Mobile Banking"
+                              />
+                              <FormCheckbox name="eBanking" label="eBanking" />
+                            </Box>
+                          )}
+                          {ProductData?.atmFacility && (
+                            <FormCheckbox
+                              name="atmFacility"
+                              label="ATM Facility"
+                            />
+                          )}
+                        </Box>
+                      </Box>
+                    )}
+                    <Grid
+                      templateColumns="repeat(3, 1fr)"
+                      rowGap="s16"
+                      columnGap="s20"
+                    >
+                      <FormInput
+                        name="initialDepositAmount"
+                        label="Initial Deposit Amount"
+                        type={'number'}
+                      />
+                    </Grid>
+                    <Agent />
+                    <FeesAndCharge />
                   </Box>
                 )}
-                <Grid templateColumns={'repeat(3,1fr'} gap="s16">
-                  <FormInput
-                    name="initialDepositAmount"
-                    label="Initial Deposit Amount"
-                    type={'number'}
-                  />
-                </Grid>
-                <Agent />
-                <FeesAndCharge />
               </Box>
             </form>
           </FormProvider>
@@ -354,9 +425,11 @@ export const AccountOpenNew = () => {
             <Box p="s16">
               {productID && <ProductCard productId={productID} />}
             </Box>
-            <Box p="s16">
-              <AccordianComponent productId={productID} />
-            </Box>
+            {productID && (
+              <Box p="s16">
+                <AccordianComponent productId={productID} />
+              </Box>
+            )}
           </Box>
         )}
       </Box>
@@ -364,8 +437,8 @@ export const AccountOpenNew = () => {
         <Box>
           {mode === '0' && (
             <FormFooter
-              mainButtonLabel="Proceed to Payment"
-              mainButtonHandler={mainButtonHandlermode0}
+              mainButtonLabel="Submit Form"
+              mainButtonHandler={submitForm}
             />
           )}{' '}
           {mode === '1' && (

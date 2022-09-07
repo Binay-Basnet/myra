@@ -215,7 +215,7 @@ const ShareReturnForm = () => {
               width="100%"
               zIndex="10"
             >
-              <FormHeader title={t['shareReturnNewShareReturn']} />
+              <FormHeader title={t['shareLayoutShareReturnAdd']} />
             </Box>
 
             <Grid templateColumns="repeat(6,1fr)">
