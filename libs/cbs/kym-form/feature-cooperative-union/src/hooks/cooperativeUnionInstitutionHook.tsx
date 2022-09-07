@@ -57,7 +57,7 @@ export const useCooperativeUnionInstitution = ({
 }: ICooperativeUnionHookProps) => {
   const router = useRouter();
   const id = router?.query?.['id'];
-  const { watch, reset, setError } = methods;
+  const { watch, reset } = methods;
   const { mutateAsync } = useSetCooperativeUnionInstitutionDataMutation();
 
   const {
@@ -71,11 +71,11 @@ export const useCooperativeUnionInstitution = ({
     {
       enabled: !!id,
       onSuccess: () => {
-        setError('branchOfficeAddress.provinceId', {
-          message: 'THIS IS STUPID',
-        });
-        setError('contactEmail', { message: 'THIS IS STUPID' });
-        setError('nameOfInstitutionEn', { message: 'THIS IS STUPID 11' });
+        // setError('branchOfficeAddress.provinceId', {
+        //   message: 'THIS IS STUPID',
+        // });
+        // setError('contactEmail', { message: 'THIS IS STUPID' });
+        // setError('nameOfInstitutionEn', { message: 'THIS IS STUPID 11' });
       },
     }
   );
