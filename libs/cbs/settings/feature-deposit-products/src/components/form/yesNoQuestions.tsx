@@ -3,6 +3,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { SubText } from '@coop/shared/components';
 import {
   FormEditableTable,
   FormInput,
@@ -69,9 +70,12 @@ export const Questions = () => {
         <FormSwitchTab name="autoOpen" options={yesNo} />
       </Box>
       <Box display="flex" flexDirection={'row'} justifyContent="space-between">
-        <SubHeadingText>
-          {t['depositProductAlternativeChannels']}
-        </SubHeadingText>
+        <Box>
+          <SubHeadingText>
+            {t['depositProductAlternativeChannels']}
+          </SubHeadingText>
+          <SubText>{t['depositProductAlternativeChannelseBanking']}</SubText>
+        </Box>
         <FormSwitchTab name={'alternativeChannels'} options={yesNo} />
       </Box>
       {depositNature === NatureOfDepositProduct.VoluntaryOrOptional && (
@@ -119,7 +123,6 @@ export const Questions = () => {
                 textAlign="right"
                 name="percentageOfDeposit"
                 label={t['depositProductPercentageDeposit']}
-                __placeholder="0.00"
                 rightElement={
                   <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                     %
@@ -176,7 +179,6 @@ export const Questions = () => {
                 <FormTextArea
                   name="specifyWithdrawRestriction"
                   label={t['depositProductSpecify']}
-                  __placeholder={t['depositProductNote']}
                   rows={3}
                 />
               </Box>
@@ -196,7 +198,7 @@ export const Questions = () => {
           <FormSwitchTab name={'wealthBuildingProduct'} options={yesNo} />
         </Box>
       )}
-      {depositNature === NatureOfDepositProduct.RecurringSaving && (
+      {depositNature === NatureOfDepositProduct.VoluntaryOrOptional && (
         <Box display={'flex'} flexDirection="column" gap="s20">
           <Box
             alignItems="center"

@@ -31,7 +31,7 @@ export const FormPhoneNumber = <T,>({
           onChange={onChange}
           value={value}
           leftElement={<Icon as={HiPhone} size="sm" />}
-          errorText={errors[name]?.message}
+          errorText={errors[name]?.message as string}
           {...fieldProps}
           {...rest}
         />

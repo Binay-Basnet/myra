@@ -4,7 +4,7 @@ services:
   ebanking:
     build:
       context: .
-      dockerfile: Dockerfile.ebanking
+      dockerfile: apps/ebanking/Dockerfile
     image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/myra-ui-ebanking:dev
     container_name: ${EBANKING_CONTAINER_NAME}
     env_file: .env

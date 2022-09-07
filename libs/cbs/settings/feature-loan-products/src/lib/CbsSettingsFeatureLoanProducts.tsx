@@ -69,7 +69,7 @@ export function CbsSettingsFeatureLoanProducts() {
               </FormCheckbox>
             </Box>
             <Divider />
-            <AcceptedCollateral />
+            <AcceptedCollateral loanGeneralData={loanGeneralData} />
           </Box>
           <SettingsFooter handleSave={handleSave} />
         </form>

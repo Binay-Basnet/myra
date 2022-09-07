@@ -1,7 +1,8 @@
 import React from 'react';
 import { Control, Controller, useFormContext } from 'react-hook-form';
+import { Box } from '@chakra-ui/react';
 
-import { Box, RadioGroup, RadioGroupProps, TextFields } from '@coop/shared/ui';
+import { RadioGroup, RadioGroupProps, TextFields } from '@coop/shared/ui';
 
 interface IFormSelectProps extends RadioGroupProps {
   control?: Control;
@@ -23,6 +24,8 @@ export const FormRadioGroup = ({ name, label, ...rest }: IFormSelectProps) => {
       control={control}
       name={name}
       render={({ field: { onChange, value } }) => (
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         <Box display="flex" flexDirection="column" gap="s16">
           <TextFields variant="formLabel">{label}</TextFields>
           <RadioGroup

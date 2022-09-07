@@ -20,7 +20,7 @@ import {
   Text,
   Textarea,
 } from '@chakra-ui/react';
-import { Select } from 'chakra-react-select';
+import { AsyncSelect, Select } from 'chakra-react-select';
 import { isEmpty, isEqual, uniqueId, xorWith } from 'lodash';
 
 import { Grid, GridItem } from '@coop/shared/ui';
@@ -54,6 +54,9 @@ export type Column<T extends RecordWithId & Record<string, string | number>> = {
     | 'select';
   selectOptions?: { label: string; value: string }[];
   searchOptions?: { label: string; value: string }[];
+
+  loadOptions?: (row: T) => Promise<{ label: string; value: string }[]>;
+
   isNumeric?: boolean;
 
   cell?: (row: T) => React.ReactNode;
@@ -407,6 +410,12 @@ const EditableTableRow = <
 }: IEditableTableRowProps<T>) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  // useEffect(async () => {
+  //   columns?.map((column) => {
+  //     column?.asyncSearchOption();
+  //   });
+  // }, []);
+
   return (
     <>
       <HStack
@@ -555,23 +564,47 @@ const EditableTableRow = <
 
                   {column.fieldType === 'select' ? (
                     <Box w="100%">
-                      <Select
-                        value={column.selectOptions?.find(
-                          (option) => option.value === data[column.accessor]
-                        )}
-                        onChange={(newValue) => {
-                          dispatch({
-                            type: EditableTableActionKind.EDIT,
-                            payload: {
-                              data: data,
-                              newValue: newValue.value,
-                              column: column,
-                            },
-                          });
-                        }}
-                        chakraStyles={chakraDefaultStyles}
-                        options={column.selectOptions}
-                      />
+                      {column.loadOptions ? (
+                        <AsyncSelect
+                          value={column.selectOptions?.find(
+                            (option) => option.value === data[column.accessor]
+                          )}
+                          onChange={(newValue) => {
+                            dispatch({
+                              type: EditableTableActionKind.EDIT,
+                              payload: {
+                                data: data,
+                                newValue: newValue.value,
+                                column: column,
+                              },
+                            });
+                          }}
+                          cacheOptions
+                          defaultOptions
+                          chakraStyles={chakraDefaultStyles}
+                          loadOptions={() =>
+                            column.loadOptions && column.loadOptions(data)
+                          }
+                        />
+                      ) : (
+                        <Select
+                          value={column.selectOptions?.find(
+                            (option) => option.value === data[column.accessor]
+                          )}
+                          onChange={(newValue) => {
+                            dispatch({
+                              type: EditableTableActionKind.EDIT,
+                              payload: {
+                                data: data,
+                                newValue: newValue.value,
+                                column: column,
+                              },
+                            });
+                          }}
+                          chakraStyles={chakraDefaultStyles}
+                          options={column.selectOptions}
+                        />
+                      )}
                     </Box>
                   ) : (
                     <Input

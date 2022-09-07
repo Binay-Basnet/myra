@@ -149,7 +149,6 @@
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
-      "yarn nx affected --target=tsc --uncommitted",
       "yarn eslint --fix",
       "yarn nx format:write --uncommitted"
     ]

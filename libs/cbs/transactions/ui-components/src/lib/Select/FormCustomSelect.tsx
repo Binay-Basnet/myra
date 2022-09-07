@@ -82,7 +82,7 @@ const FormControl = <T,>({
 
   return (
     <Select
-      errorText={errors[name]?.message}
+      errorText={errors[name]?.message as string}
       options={options}
       value={rest.isMulti ? filteredValue : foundValue}
       inputId={name}

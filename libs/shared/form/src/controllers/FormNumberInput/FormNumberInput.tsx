@@ -29,7 +29,7 @@ export const FormNumberInput = <T,>({
         return (
           <NumberInput
             id={name}
-            errorText={errors[name]?.message}
+            errorText={errors[name]?.message as string}
             handleChange={onChange}
             value={value}
             {...rest}

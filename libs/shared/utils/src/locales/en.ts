@@ -280,7 +280,6 @@ const en: Record<string, string> = {
   shareLayout: 'Share',
   shareLayoutNewShare: 'New Share',
   shareLayoutSelectShareType: 'Select Share Type',
-  shareLayoutSharePurchase: 'Share Purchase',
   shareLayoutShareReturn: 'Share Return',
   shareLayoutShareSettings: 'Share Settings',
 
@@ -2583,7 +2582,6 @@ const en: Record<string, string> = {
   depositProductLadderRate: 'Ladder Rate',
   depositProductType: 'Type',
   depositProductLadderAmount: 'Ladder Amount',
-  depositProductPostingFrequency: 'Posting Frequency',
   depositProductMinimumPostingFrequency: 'Minimum Posting Frequency',
   depositProductSelectPostingFrequency: 'Select Posting Frequency',
   depositProductMaximumPostingFrequency: 'Maximum Posting Frequency',
@@ -2621,8 +2619,6 @@ const en: Record<string, string> = {
     'If the member does not specify particular account for deposit, this mapped account will be set globally. Normally this is a compulsory account type.',
   depositProductAccountType: 'Account Type',
   depositProductSelectAccount: 'Select Account',
-  depositProductATMFacility: 'ATM Facility',
-  depositProductChequeIssue: 'Cheque Issue',
   depositProductSelectDuration: 'Select Duration',
   depositProductCondition: 'Condition',
   depositProductSelectCondition: 'Select Condition',
@@ -2731,7 +2727,6 @@ const en: Record<string, string> = {
   loanProductDisburementDMV: 'Disburement % of DMV',
   loanProductRebate: 'Rebate',
   loanProductStaffProduct: 'Staff Product',
-  loanProductSupportMultipleAccount: 'Support Multiple Account',
   loanProductLoanScheduleChangeOverride: 'Loan Schedule Change Override',
   loanProductRequiredDocumentSetup: 'Required Document Setup',
   loanProductPolicyDocument: 'Policy Document',
@@ -3222,7 +3217,6 @@ const en: Record<string, string> = {
   depositProductAlternativeChannels:
     'Does this product allow Alternative Channels?',
   depositProductPercentageDeposit: 'Maximum percentage of Deposit',
-  depositProductSupportMultipleAccount: 'Support Multiple Account',
   depositProductAutoOpenwhenmemberjoins: 'Auto Open when member joins?',
   depositProductAllowLoan: 'Allow Loan from this product ?',
   depositProductStaffProduct: 'Is this a Staff Product ?',
@@ -3277,6 +3271,18 @@ const en: Record<string, string> = {
   shareReturnBankCheque: 'Bank Cheque',
   totalDepositAmount: 'Total Deposit Amount',
   cancel: 'Cancel',
+  sharePurchaseSelf: 'Self',
+  sharePurchaseOthers: 'Others',
+  loanProductSupportMultipleAccount:
+    'Does this product support Multiple Account ?',
+  shareLayoutSharePurchase: 'Share Issue',
+  depositProductPostingFrequency: 'Interest Posting Frequency',
+  depositProductAlternativeChannelseBanking:
+    'Alternative Channels include Mobile banking and eBanking',
+  depositProductATMFacility: 'Does this product provide ATM Facility?',
+  depositProductChequeIssue: 'Allow Cheque Issue?',
+  depositProductSupportMultipleAccount:
+    'Does this product support Multiple Account ?',
 };
 
 export default en;

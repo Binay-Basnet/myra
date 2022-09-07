@@ -1,6 +1,8 @@
 import { ColumnDef, Row, Table } from '@tanstack/react-table';
 
 declare module '@tanstack/table-core' {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   interface ColumnMeta {
     isNumeric?: boolean;
     width?: number | string;

@@ -35,5 +35,4 @@ Primary.args = {
   icon: <AddIcon />,
   iconColor: 'white.400',
   isIndeterminate: true,
-  ref: null,
 };

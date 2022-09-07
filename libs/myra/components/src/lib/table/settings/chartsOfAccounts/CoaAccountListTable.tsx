@@ -46,7 +46,11 @@ export const CoaAccountListTable = () => {
         header: t['settingsCoaTableAccountClass'],
         accessorFn: (row) => row?.accountClass,
         cell: (props) => {
-          return <span>{props.getValue() ? `${props.getValue()}` : '-'}</span>;
+          return (
+            <span>
+              {props.getValue() ? `${props.getValue() as string}` : '-'}
+            </span>
+          );
         },
       },
 

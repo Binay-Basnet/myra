@@ -1,5 +1,7 @@
 import { Box, Divider, Text } from '@chakra-ui/react';
 
+import { useTranslation } from '@coop/shared/utils';
+
 import { VerticalSideBarForSettings } from '../components/VerticalSideBarForSettings';
 
 type TabList = {
@@ -51,6 +53,7 @@ const tabList: TabList[] = [
 ];
 
 export const SettingSideBar = () => {
+  const { t } = useTranslation();
   return (
     <Box
       position="fixed"
@@ -63,7 +66,7 @@ export const SettingSideBar = () => {
       minWidth="250px"
     >
       <Text fontSize="l1" fontWeight="600" color="gray.800">
-        General
+        {t['settingsGeneral']}
       </Text>
       <Divider borderColor="border.layout" />
       <VerticalSideBarForSettings tablinks={tabList} />

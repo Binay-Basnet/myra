@@ -35,9 +35,17 @@ import {
   Tenure,
 } from '../component/form';
 
-type FileList = 'signature' | 'nominee' | 'photo' | 'fingerPrintPhoto';
+type FileList =
+  | 'signature'
+  | 'nominee'
+  | 'photo'
+  | 'fingerPrintPhoto'
+  | 'decisionDocuments'
+  | 'registeredPhotos'
+  | 'InsSignature'
+  | 'taxClearance';
 
-export type FileListType = {
+type FileListType = {
   signature: string[];
   nominee: string[];
   photo: string[];
