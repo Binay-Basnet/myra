@@ -60,7 +60,7 @@ export function AccountingFeatureQuickPaymentList() {
                 textOverflow="ellipsis"
                 overflow="hidden"
               >
-                {props.getValue()}
+                {props.getValue() as string}
               </Text>
             </Box>
           );

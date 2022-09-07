@@ -153,8 +153,8 @@ export const ProductTest = () => {
         return [
           ...prevVal,
           {
-            label: curVal?.productName as string,
-            value: curVal?.id as string,
+            label: curVal?.data?.productName as string,
+            value: curVal?.data?.id as string,
             disabled: true,
           },
         ];

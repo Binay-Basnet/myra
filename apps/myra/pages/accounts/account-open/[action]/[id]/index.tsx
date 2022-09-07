@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react';
 
-import { CbsAccountOpen } from '@coop/cbs/accounts/account-form';
+import { AccountOpenNew } from '@coop/cbs/accounts/account-form';
 import { MainLayout } from '@coop/shared/ui';
 
 const AccountOpen = () => {
-  return <CbsAccountOpen />;
+  return <AccountOpenNew />;
 };
 
 export default AccountOpen;

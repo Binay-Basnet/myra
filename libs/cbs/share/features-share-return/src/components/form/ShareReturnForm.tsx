@@ -1,19 +1,21 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { IoChevronBackOutline } from 'react-icons/io5';
+import { useRouter } from 'next/router';
+import { omit } from 'lodash';
 
 import {
+  CashValue,
   Member,
+  SharePaymentMode,
+  ShareReturnInput,
+  useAddShareReturnMutation,
   useGetMemberIndividualDataQuery,
   useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
-import { FieldCardComponents } from '@coop/shared/components';
-import { FormCheckbox, FormInput } from '@coop/shared/form';
 import {
+  asyncToast,
   Box,
-  Button,
   Container,
-  FormFooter,
   FormHeader,
   FormMemberSelect,
   FormSection,
@@ -22,13 +24,14 @@ import {
   Navbar,
   ShareMemberCard,
   TabMenu,
-  Text,
 } from '@coop/shared/ui';
-import { amountConverter, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
+import ShareInfoFooter from './ShareInfoFooter';
+import SharePaymentFooter from './SharePaymentFooter';
+import ShareReturnInfo from './ShareReturnInfo';
 import ShareReturnPayment from './ShareReturnPayment';
 
-// TODO! use Layout
 const Header = () => {
   return (
     <>
@@ -38,77 +41,142 @@ const Header = () => {
   );
 };
 
+const cashOptions: Record<string, string> = {
+  '1000': CashValue.Cash_1000,
+  '500': CashValue.Cash_500,
+  '100': CashValue.Cash_100,
+  '50': CashValue.Cash_50,
+  '25': CashValue.Cash_25,
+  '20': CashValue.Cash_20,
+  '10': CashValue.Cash_10,
+  '5': CashValue.Cash_5,
+  '2': CashValue.Cash_2,
+  '1': CashValue.Cash_1,
+};
+
 const ShareReturnForm = () => {
   const { t } = useTranslation();
   const methods = useForm();
   const { watch, getValues, reset } = methods;
 
-  // const { mutateAsync } = useAddShareReturnMutation();
+  const router = useRouter();
+
+  const { mutateAsync } = useAddShareReturnMutation();
 
   const memberId = watch('memberId');
   const noOfShares = watch('noOfReturnedShares');
   const allShares = watch('selectAllShares');
   const printingFees = watch('printingFee');
   const adminFees = watch('adminFee');
+  const denominations = watch('cash.denominations');
+  const cashPaid = watch('cash.cashPaid');
+  const disableDenomination = watch('cash.disableDenomination');
 
   const [totalAmount, setTotalAmount] = useState(0);
-  const [mode, setMode] = useState('0');
+  const [mode, setMode] = useState('shareInfo');
+
+  const denominationTotal =
+    denominations?.reduce(
+      (accumulator: number, curr: { amount: string }) =>
+        accumulator + Number(curr.amount),
+      0 as number
+    ) ?? 0;
+
+  const totalCashPaid: number = disableDenomination
+    ? Number(cashPaid)
+    : Number(denominationTotal);
+
+  const returnAmount = totalAmount - totalCashPaid;
 
   const { data } = useGetMemberIndividualDataQuery({ id: memberId });
 
   const memberDetail = data && data?.members?.details?.data;
-  // const memberProfile = memberDetail?.profile as KymIndFormStateQuery;
+
+  const { data: shareHistoryTableData } = useGetShareHistoryQuery(
+    {
+      memberId,
+    },
+    {
+      staleTime: 0,
+    }
+  );
+
+  const balanceData = shareHistoryTableData?.share?.history?.balance;
+
+  const paymentButtonHandler = () => memberId && setMode('sharePayment');
+
+  const previousButtonHandler = () => setMode('shareInfo');
+
+  const handleSubmit = () => {
+    const values = getValues();
+    let updatedValues: ShareReturnInput = {
+      ...omit(values, [
+        'printingFee',
+        'adminFee',
+        'selectAllShares',
+        'accountAmount',
+      ]),
+      extraFee: [
+        {
+          name: 'adminFee',
+          value: adminFees,
+        },
+        {
+          name: 'printFee',
+          value: printingFees,
+        },
+      ],
+      totalAmount: totalAmount.toString(),
+      noOfReturnedShares: Number(values['noOfReturnedShares']),
+      memberId,
+    };
+
+    if (values['paymentMode'] === SharePaymentMode.Cash) {
+      updatedValues = omit({ ...updatedValues }, ['account', 'bankCheque']);
+      updatedValues['cash'] = {
+        ...values['cash'],
+        cashPaid: values['cash']?.cashPaid as string,
+        disableDenomination: Boolean(values['cash']?.disableDenomination),
+        total: String(totalCashPaid),
+        returned_amount: String(returnAmount),
+        fileUpload:
+          values['cash']?.fileUpload?.length > 0
+            ? values['cash']?.fileUpload[0]
+            : null,
+        denominations:
+          values['cash']?.denominations?.map(
+            ({ value, quantity }: { value: string; quantity: number }) => ({
+              value: cashOptions[value as string],
+              quantity,
+            })
+          ) ?? [],
+      };
+    }
+
+    if (values['paymentMode'] === SharePaymentMode?.BankVoucherOrCheque) {
+      updatedValues = omit({ ...updatedValues }, ['account', 'cash']);
+    }
+
+    if (values['paymentMode'] === SharePaymentMode?.Account) {
+      updatedValues = omit({ ...updatedValues }, ['bankCheque', 'cash']);
+    }
+
+    asyncToast({
+      id: 'share-return-id',
+      msgs: {
+        success: 'Share Returned',
+        loading: 'Returning Share',
+      },
+      onSuccess: () => router.push('/share/register'),
+      promise: mutateAsync({ data: updatedValues }),
+    });
+  };
 
   useEffect(() => {
     setTotalAmount(
       noOfShares * 100 - (Number(adminFees ?? 0) + Number(printingFees ?? 0))
     );
   }, [noOfShares, adminFees, printingFees]);
-
-  const { data: shareHistoryTableData } = useGetShareHistoryQuery({
-    memberId,
-  });
-
-  const balanceData = shareHistoryTableData?.share?.history?.balance;
-
-  const mainButtonHandlermode0 = () => {
-    if (memberId) {
-      setMode('1');
-    }
-  };
-  const previousButtonHandler = () => {
-    setMode('0');
-  };
-
-  // const onSubmit = () => {
-  //   const values = getValues();
-  //   const updatedValues = {
-  //     ...omit(values, ['printingFee', 'adminFee', 'selectAllShares']),
-  //     extraFee: [
-  //       {
-  //         name: 'adminFee',
-  //         value: adminFees,
-  //       },
-  //       {
-  //         name: 'printFee',
-  //         value: printingFees,
-  //       },
-  //     ],
-  //     totalAmount: totalAmount.toString(),
-  //     noOfReturnedShares: Number(values['noOfReturnedShares']),
-  //     memberId,
-  //   };
-
-  //   asyncToast({
-  //     id: 'share-return-id',
-  //     msgs: {
-  //       success: 'Share Returned',
-  //       loading: 'Returning Share',
-  //     },
-  //     onSuccess: () => router.push('/share/register'),
-  //     promise: mutateAsync({ data: updatedValues }),
-  //   });
-  // };
 
   useEffect(() => {
     if (balanceData) {
@@ -124,7 +192,7 @@ const ShareReturnForm = () => {
         });
       }
     }
-  }, [allShares, balanceData, getValues, memberDetail, methods, reset]);
+  }, [allShares, balanceData, getValues, reset]);
 
   return (
     <>
@@ -147,212 +215,53 @@ const ShareReturnForm = () => {
               width="100%"
               zIndex="10"
             >
-              <FormHeader title={t['shareReturnNewShareReturn']} />
+              <FormHeader title={t['shareLayoutShareReturnAdd']} />
             </Box>
 
             <Grid templateColumns="repeat(6,1fr)">
-              <GridItem
-                display={mode === '0' ? 'flex' : 'none'}
-                colSpan={data ? 4 : 6}
-              >
-                <Box
-                  mb="50px"
-                  width="100%"
-                  h="100%"
-                  background="gray.0"
-                  minH="calc(100vh - 170px)"
-                  border="1px solid"
-                  borderColor="border.layout"
-                >
-                  <Box w="100%">
-                    <FormSection>
-                      <GridItem colSpan={2}>
-                        <FormMemberSelect
-                          name="memberId"
-                          label={t['sharePurchaseSelectMember']}
-                        />
-                      </GridItem>
-                    </FormSection>
+              {mode === 'shareInfo' && (
+                <GridItem colSpan={data ? 4 : 6}>
+                  <Box
+                    mb="50px"
+                    width="100%"
+                    h="100%"
+                    background="gray.0"
+                    minH="calc(100vh - 170px)"
+                    border="1px solid"
+                    borderColor="border.layout"
+                  >
+                    <Box w="100%">
+                      <FormSection>
+                        <GridItem colSpan={2}>
+                          <FormMemberSelect
+                            name="memberId"
+                            label={t['sharePurchaseSelectMember']}
+                          />
+                        </GridItem>
+                      </FormSection>
 
-                    {memberDetail && (
-                      <Box
-                        display="flex"
-                        flexDirection="column"
-                        pb="28px"
-                        background="gray.0"
-                      >
-                        <FormSection header="shareReturnShareInformation">
-                          <GridItem colSpan={3}>
-                            <FormInput
-                              type="text"
-                              id="noOfShares"
-                              name="noOfReturnedShares"
-                              label={t['shareReturnNoOfShares']}
-                              isDisabled={allShares}
-                            />
-                          </GridItem>
-                          <GridItem colSpan={3}>
-                            <FormCheckbox
-                              name="selectAllShares"
-                              label={t['shareReturnSelectAllShares']}
-                            />
-                          </GridItem>
-
-                          {noOfShares ? (
-                            <GridItem colSpan={3}>
-                              <Box
-                                display="flex"
-                                borderRadius="br2"
-                                gap="s60"
-                                p="s16"
-                                bg="background.500"
-                              >
-                                <Box>
-                                  <Text fontWeight="400" fontSize="s2">
-                                    {t['shareReturnRemainingShare']}
-                                  </Text>
-                                  <Text fontWeight="600" fontSize="r1">
-                                    {balanceData
-                                      ? allShares
-                                        ? 0
-                                        : Number(balanceData?.count) -
-                                          Number(noOfShares)
-                                      : 0}
-                                  </Text>
-                                </Box>
-
-                                <Box>
-                                  <Text fontWeight="400" fontSize="s2">
-                                    {t['shareReturnRemainingShareValue']}
-                                  </Text>
-                                  <Text fontWeight="600" fontSize="r1">
-                                    {balanceData
-                                      ? allShares
-                                        ? 0
-                                        : (Number(balanceData?.count) -
-                                            Number(noOfShares)) *
-                                          100
-                                      : 0}
-                                  </Text>
-                                </Box>
-                              </Box>
-                            </GridItem>
-                          ) : null}
-
-                          {noOfShares ? (
-                            <GridItem colSpan={3}>
-                              <FieldCardComponents rows={'repeat(4,1fr)'}>
-                                <GridItem
-                                  display="flex"
-                                  justifyContent="space-between"
-                                  alignItems="center"
-                                >
-                                  <Text
-                                    color="neutralLightColor.Gray-60"
-                                    fontWeight="Medium"
-                                    fontSize="s3"
-                                  >
-                                    {t['shareReturnWithdrawAmount']}
-                                  </Text>
-
-                                  <Box p="s12">
-                                    <Text
-                                      color="neutralLightColor.Gray-80"
-                                      fontWeight="SemiBold"
-                                      fontSize="r1"
-                                    >
-                                      {amountConverter(noOfShares * 100)}
-                                    </Text>
-                                  </Box>
-                                </GridItem>
-
-                                <GridItem
-                                  display="flex"
-                                  justifyContent="space-between"
-                                  alignItems="center"
-                                >
-                                  <Text
-                                    color="neutralLightColor.Gray-60"
-                                    fontWeight="Medium"
-                                    fontSize="s3"
-                                  >
-                                    {t['shareReturnAdministrationFees']}
-                                  </Text>
-                                  <Box width="300px">
-                                    <FormInput
-                                      name="adminFee"
-                                      type="number"
-                                      textAlign={'right'}
-                                      __placeholder="0.00"
-                                    />
-                                  </Box>
-                                </GridItem>
-
-                                {/* todo */}
-                                <GridItem
-                                  display="flex"
-                                  justifyContent="space-between"
-                                  alignItems="center"
-                                >
-                                  <Text
-                                    color="neutralLightColor.Gray-60"
-                                    fontWeight="Medium"
-                                    fontSize="s3"
-                                  >
-                                    {t['shareReturnPrintingFees']}
-                                  </Text>
-                                  <Box width="300px">
-                                    <FormInput
-                                      name="printingFee"
-                                      type="number"
-                                      textAlign={'right'}
-                                      __placeholder="0.00"
-                                    />
-                                  </Box>
-                                </GridItem>
-
-                                <GridItem
-                                  display="flex"
-                                  justifyContent="space-between"
-                                  alignItems="center"
-                                >
-                                  <Text
-                                    color="neutralLightColor.Gray-80"
-                                    fontWeight="600"
-                                    fontSize="s3"
-                                  >
-                                    {t['shareReturnTotalAmount']}
-                                  </Text>
-
-                                  <Box p="s12">
-                                    <Text
-                                      color="neutralLightColor.Gray-80"
-                                      fontWeight="SemiBold"
-                                      fontSize="r1"
-                                    >
-                                      {t['rs']} {amountConverter(totalAmount)}
-                                    </Text>
-                                  </Box>
-                                </GridItem>
-                              </FieldCardComponents>
-                            </GridItem>
-                          ) : null}
-                        </FormSection>
-                      </Box>
-                    )}
+                      {memberDetail && <ShareReturnInfo />}
+                    </Box>
                   </Box>
-                </Box>
-              </GridItem>
+                </GridItem>
+              )}
 
-              <GridItem
-                display={mode === '1' ? 'flex' : 'none'}
-                colSpan={data ? 4 : 6}
-              >
-                <ShareReturnPayment />
-              </GridItem>
+              {mode === 'sharePayment' && (
+                <GridItem colSpan={data ? 4 : 6}>
+                  <ShareReturnPayment
+                    totalAmount={totalAmount}
+                    denominationTotal={denominationTotal}
+                    totalCashPaid={totalCashPaid}
+                    returnAmount={returnAmount}
+                  />
+                </GridItem>
+              )}
+
               <GridItem colSpan={data ? 2 : 0}>
                 {data && (
                   <ShareMemberCard
+                    mode={mode}
+                    memberId={memberId}
                     totalAmount={totalAmount}
                     memberDetails={memberDetail as Member}
                   />
@@ -366,37 +275,13 @@ const ShareReturnForm = () => {
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.xl" height="fit-content" p="0">
-            {mode === '0' && (
-              <FormFooter
-                status={
-                  <Box display="flex" gap="s8">
-                    <Text
-                      color="neutralColorLight.Gray-60"
-                      fontWeight="Regular"
-                      as="i"
-                      fontSize="r1"
-                    >
-                      Form details saved to draft 09:41 AM
-                    </Text>
-                  </Box>
-                }
-                mainButtonLabel={t['proceedToPayment']}
-                mainButtonHandler={mainButtonHandlermode0}
-              />
+            {mode === 'shareInfo' && (
+              <ShareInfoFooter paymentButtonHandler={paymentButtonHandler} />
             )}
-            {mode === '1' && (
-              <FormFooter
-                status={
-                  <Button
-                    variant="outline"
-                    leftIcon={<IoChevronBackOutline />}
-                    onClick={previousButtonHandler}
-                  >
-                    {t['previous']}
-                  </Button>
-                }
-                mainButtonLabel={t['proceedToPayment']}
-                // mainButtonHandler={handleSubmit}
+            {mode === 'sharePayment' && (
+              <SharePaymentFooter
+                previousButtonHandler={previousButtonHandler}
+                handleSubmit={handleSubmit}
               />
             )}
           </Container>

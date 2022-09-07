@@ -1,10 +1,10 @@
 import { useFormContext } from 'react-hook-form';
 
-import { PenaltyRateType } from '@coop/cbs/data-access';
+import { useGetCoaListQuery } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { SubHeadingText, SubText } from '@coop/shared/components';
-import { FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
+import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, TextBoxContainer } from '../formui';
@@ -13,7 +13,6 @@ export const Penalty = () => {
   const { t } = useTranslation();
   const { watch } = useFormContext();
   const penalty = watch('isPenaltyApplicable');
-  const penaltyType = watch('penalty.rateType');
 
   const enableSwitch = [
     {
@@ -26,91 +25,167 @@ export const Penalty = () => {
     },
   ];
 
-  const penaltyTypeList = [
-    {
-      label: t['depositProductFlatRate'],
-      value: PenaltyRateType.FlatRate,
+  const { data: coa } = useGetCoaListQuery({
+    filter: {
+      active: true,
     },
-    {
-      label: t['depositProductRelativeRate'],
-      value: PenaltyRateType.RelativeRate,
-    },
-  ];
+  });
+
+  const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
+
+  const coaList = coaData?.map((item) => {
+    return {
+      label: item?.name?.en as string,
+      value: item?.id as string,
+    };
+  });
 
   return (
-    <BoxContainer>
-      <Box display={'flex'} justifyContent="space-between">
-        <TextBoxContainer>
-          <SubHeadingText>{t['loanProductpenalty']} </SubHeadingText>
-          <SubText>{t['loanProductEnterPenaltydetails']} </SubText>
-        </TextBoxContainer>
-        <FormSwitchTab name="isPenaltyApplicable" options={enableSwitch} />
-      </Box>
-      {penalty && (
-        <BoxContainer
-          p="s16"
-          border={'1px solid'}
-          borderColor="border.layout"
-          borderRadius={'4px'}
-        >
-          <Grid templateColumns="repeat(3,1fr)" gap="s16">
-            <GridItem>
-              <FormInput
-                name="penalty.dayAfterInstallmentDate"
-                type="number"
-                label={t['loanProductDaysafterinstallmentdate']}
-                __placeholder={t['loanProductDayfromenddate']}
-              />
-            </GridItem>
-            <GridItem>
-              <FormSwitchTab
-                name="penalty.rateType"
-                options={penaltyTypeList}
-                label={t['loanProductPenaltyType']}
-              />
-            </GridItem>
-          </Grid>
-          <InputGroupContainer>
-            {penaltyType === PenaltyRateType.FlatRate && (
-              <FormInput
-                name="penalty.flatRatePenalty"
-                type="number"
-                label={t['loanProductFlatratePenalty']}
-                textAlign={'right'}
-                __placeholder={'00.0'}
-                rightElement={
-                  <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-                    %
-                  </Text>
-                }
-              />
-            )}
-            {penaltyType === PenaltyRateType.RelativeRate && (
-              <FormInput
-                name="penalty.penaltyRate"
-                type="number"
-                label={t['loanProductpenalty']}
-                textAlign={'right'}
-                __placeholder="0.00"
-                rightElement={
-                  <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-                    %
-                  </Text>
-                }
-              />
-            )}
+    <FormSection>
+      <GridItem colSpan={3}>
+        <BoxContainer>
+          <Box display={'flex'} justifyContent="space-between">
+            <TextBoxContainer>
+              <SubHeadingText>{t['loanProductpenalty']} </SubHeadingText>
+              <SubText>{t['loanProductEnterPenaltydetails']} </SubText>
+            </TextBoxContainer>
+            <FormSwitchTab name="isPenaltyApplicable" options={enableSwitch} />
+          </Box>
+          {penalty && (
+            <Box display="flex" flexDirection="column" gap="s16">
+              <BoxContainer
+                p="s16"
+                border={'1px solid'}
+                borderColor="border.layout"
+                borderRadius="br2"
+              >
+                <SubHeadingText>
+                  {t['loanProductPenaltyonPrincipal']}
+                </SubHeadingText>
+                <InputGroupContainer>
+                  <FormInput
+                    name="penalty.dayAfterInstallmentDate"
+                    type="number"
+                    label={t['loanProductDaysafterinstallmentdate']}
+                  />
 
-            {penaltyType === PenaltyRateType.RelativeRate && (
-              <FormInput
-                name="penalty.penaltyAmount"
-                type="number"
-                label={t['loanProductPenaltyAmount']}
-                __placeholder={t['loanProductPenaltyAmount']}
-              />
-            )}
-          </InputGroupContainer>
+                  <FormInput
+                    name="penalty.penaltyRate"
+                    type="number"
+                    label={t['loanProductpenalty']}
+                    textAlign={'right'}
+                    rightElement={
+                      <Text
+                        fontWeight="Medium"
+                        fontSize="r1"
+                        color="primary.500"
+                      >
+                        %
+                      </Text>
+                    }
+                  />
+                  <FormInput
+                    name="penalty.penaltyAmount"
+                    type="number"
+                    label={t['loanProductPenaltyAmount']}
+                  />
+                  <FormSelect
+                    name="penalty.penaltyLedgerMapping"
+                    label={t['loanProductPenaltyedgerMapping']}
+                    options={coaList}
+                  />
+                </InputGroupContainer>
+              </BoxContainer>
+              <BoxContainer
+                p="s16"
+                border={'1px solid'}
+                borderColor="border.layout"
+                borderRadius="br2"
+              >
+                <SubHeadingText>
+                  {t['loanProductPenaltyonInterest']}
+                </SubHeadingText>
+                <InputGroupContainer>
+                  <FormInput
+                    name="penalty.dayAfterInstallmentDate"
+                    type="number"
+                    label={t['loanProductDaysafterinstallmentdate']}
+                  />
+
+                  <FormInput
+                    name="penalty.penaltyRate"
+                    type="number"
+                    label={t['loanProductpenalty']}
+                    textAlign={'right'}
+                    rightElement={
+                      <Text
+                        fontWeight="Medium"
+                        fontSize="r1"
+                        color="primary.500"
+                      >
+                        %
+                      </Text>
+                    }
+                  />
+                  <FormInput
+                    name="penalty.penaltyAmount"
+                    type="number"
+                    label={t['loanProductPenaltyAmount']}
+                  />
+                  <FormSelect
+                    name="penalty.penaltyLedgerMapping"
+                    label={t['loanProductPenaltyedgerMapping']}
+                    options={coaList}
+                  />
+                </InputGroupContainer>
+              </BoxContainer>
+              <BoxContainer
+                p="s16"
+                border={'1px solid'}
+                borderColor="border.layout"
+                borderRadius="br2"
+              >
+                <SubHeadingText>
+                  {t['loanProductPenaltyonInstallment']}
+                </SubHeadingText>
+                <InputGroupContainer>
+                  <FormInput
+                    name="penalty.dayAfterInstallmentDate"
+                    type="number"
+                    label={t['loanProductDaysafterinstallmentdate']}
+                  />
+
+                  <FormInput
+                    name="penalty.penaltyRate"
+                    type="number"
+                    label={t['loanProductpenalty']}
+                    textAlign={'right'}
+                    rightElement={
+                      <Text
+                        fontWeight="Medium"
+                        fontSize="r1"
+                        color="primary.500"
+                      >
+                        %
+                      </Text>
+                    }
+                  />
+                  <FormInput
+                    name="penalty.penaltyAmount"
+                    type="number"
+                    label={t['loanProductPenaltyAmount']}
+                  />
+                  <FormSelect
+                    name="penalty.penaltyLedgerMapping"
+                    label={t['loanProductPenaltyedgerMapping']}
+                    options={coaList}
+                  />
+                </InputGroupContainer>
+              </BoxContainer>
+            </Box>
+          )}
         </BoxContainer>
-      )}
-    </BoxContainer>
+      </GridItem>
+    </FormSection>
   );
 };

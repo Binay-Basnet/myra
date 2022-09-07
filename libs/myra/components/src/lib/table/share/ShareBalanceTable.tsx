@@ -34,11 +34,11 @@ export const ShareBalanceTable = () => {
           return (
             <Box display="flex" alignItems="center" gap="2">
               <Avatar
-                name={props.getValue()}
+                name={props.getValue() as string}
                 size="sm"
                 src="https://bit.ly/dan-abramov"
               />
-              <span>{props.getValue()}</span>
+              <span>{props.getValue() as string}</span>
             </Box>
           );
         },

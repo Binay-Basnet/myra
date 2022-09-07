@@ -1,6 +1,6 @@
 import { Control, Controller, useFormContext } from 'react-hook-form';
 
-import { Box, TextAreaInput, TextAreaInputProps } from '@coop/shared/ui';
+import { TextAreaInput, TextAreaInputProps } from '@coop/shared/ui';
 
 interface IFormInputProps extends TextAreaInputProps {
   control?: Control;
@@ -19,7 +19,7 @@ export const FormTextArea = ({ name, rows, ...rest }: IFormInputProps) => {
   const error = errors[name];
 
   return (
-    <Box>
+    <>
       <Controller
         control={formControl}
         name={name}
@@ -34,6 +34,6 @@ export const FormTextArea = ({ name, rows, ...rest }: IFormInputProps) => {
         )}
       />
       {error ? error?.message : null}
-    </Box>
+    </>
   );
 };

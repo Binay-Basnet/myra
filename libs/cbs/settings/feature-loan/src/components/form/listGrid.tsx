@@ -6,28 +6,27 @@ import {
   FormFieldSearchTerm,
   useGetSettingsOptionsFieldsQuery,
 } from '@coop/cbs/data-access';
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
   FormCheckboxGroup,
   FormInput,
   FormSelect,
   FormSwitchTab,
 } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, FormSection, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer } from '../formui';
-
-const CheckboxYesNo = [
-  { label: 'Yes', value: true },
-  { label: 'No', value: false },
-];
 
 export const GridItems = () => {
   const { t } = useTranslation();
   const { watch, resetField } = useFormContext();
   const criteria = watch('criteria');
   const memberType = watch('typeOfMember');
+
+  const CheckboxYesNo = [
+    { label: t['yes'], value: true },
+    { label: t['no'], value: false },
+  ];
 
   useEffect(() => {
     if (!criteria?.includes('AGE')) {
@@ -170,156 +169,143 @@ export const GridItems = () => {
 
   if (criteria) {
     return (
-      <BoxContainer
-        p="s16"
-        border={'1px solid'}
-        borderColor="border.layout"
-        borderRadius={'4px'}
-      >
-        <InputGroupContainer rowGap={'s32'}>
-          {memberType &&
-            memberType?.indexOf('INDIVIDUAL') !== -1 &&
-            criteria &&
-            criteria.indexOf('AGE') !== -1 && (
-              <FormInput
-                name="maxAge"
-                __placeholder={t['loanProductMinAgeEnter']}
-                label={t['loanProductMinAge']}
-              />
-            )}
-          {memberType &&
-            memberType?.indexOf('INDIVIDUAL') !== -1 &&
-            criteria &&
-            criteria.indexOf('AGE') !== -1 && (
-              <FormInput
-                name="minAge"
-                __placeholder={t['loanProductMaxAgeEnter']}
-                label={t['loanProductMaxAge']}
-              />
-            )}
-          {memberType &&
-            memberType?.indexOf('INDIVIDUAL') !== -1 &&
-            criteria &&
-            criteria.indexOf('GENDER') !== -1 && (
-              <FormSelect
-                name="genderId"
-                options={GenderList}
-                label={t['loanProductGender']}
-                __placeholder={t['loanProductSelectGender']}
-                isMulti
-              />
-            )}
-          {memberType &&
-            memberType?.indexOf('INDIVIDUAL') !== -1 &&
-            criteria &&
-            criteria.indexOf('MARITAL_STATUS') !== -1 && (
-              <FormSelect
-                name="maritalStatusId"
-                options={MartialOptions}
-                label={t['loanProductMarital']}
-                __placeholder={t['loanProductSelectMaritalStatus']}
-                isMulti
-              />
-            )}
-          {memberType &&
-            memberType?.indexOf('INDIVIDUAL') !== -1 &&
-            criteria &&
-            criteria.indexOf('EDUCATION_QUALIFICATION') !== -1 && (
-              <FormSelect
-                name="educationQualification"
-                options={EducationalOptions}
-                label={t['loanProductEducationQualification']}
-                __placeholder={t['loanProductSelectEducationQualification']}
-                isMulti
-              />
-            )}
-          {memberType &&
-            memberType?.indexOf('INDIVIDUAL') !== -1 &&
-            criteria &&
-            criteria.indexOf('ETHNICITY') !== -1 && (
-              <FormSelect
-                name="ethnicity"
-                options={EthnicityList}
-                label={t['loanProductEthinicity']}
-                __placeholder={t['loanProductSelectEthinicity']}
-                isMulti
-              />
-            )}
-          {memberType &&
-            memberType?.indexOf('INDIVIDUAL') !== -1 &&
-            criteria &&
-            criteria.indexOf('OCCUPATION_DETAILS') !== -1 && (
-              <FormSelect
-                name="occupation"
-                options={OccupationOptions}
-                label={t['loanProductOccupationDetails']}
-                __placeholder={t['loanProductSelectOccupationDetails']}
-                isMulti
-              />
-            )}
-
-          {memberType &&
-            memberType?.indexOf('INSTITUTION') !== -1 &&
-            criteria &&
-            criteria.indexOf('NATURE_OF_BUSINESS_INSTITUTIONS') !== -1 && (
-              <FormSelect
-                name="natureOfBusinessInstitution"
-                options={InstituitionList}
-                label={t['loanProductNatureBusinessIns']}
-                __placeholder={t['loanProductSelectNatureofBusiness']}
-                isMulti
-              />
-            )}
-
-          {memberType &&
-            memberType?.indexOf('INDIVIDUAL') !== -1 &&
-            criteria &&
-            criteria.indexOf('FOREIGN_EMPLOYMENT') !== -1 && (
-              <Box display="flex" flexDirection="column" gap="s4">
-                <Text fontSize={'s3'} fontWeight="500" color="gray.700">
-                  {t['loanProductForeignEmployment']}
-                </Text>
-                <FormSwitchTab
-                  name="foreignEmployment"
-                  options={CheckboxYesNo}
+      <FormSection>
+        {memberType &&
+          memberType?.indexOf('INDIVIDUAL') !== -1 &&
+          criteria &&
+          criteria.indexOf('AGE') !== -1 && (
+            <FormInput
+              name="maxAge"
+              __placeholder={t['loanProductMinAgeEnter']}
+              label={t['loanProductMinAge']}
+            />
+          )}
+        {memberType &&
+          memberType?.indexOf('INDIVIDUAL') !== -1 &&
+          criteria &&
+          criteria.indexOf('AGE') !== -1 && (
+            <FormInput
+              name="minAge"
+              __placeholder={t['loanProductMaxAgeEnter']}
+              label={t['loanProductMaxAge']}
+            />
+          )}
+        {memberType &&
+          memberType?.indexOf('INDIVIDUAL') !== -1 &&
+          criteria &&
+          criteria.indexOf('GENDER') !== -1 && (
+            <FormSelect
+              name="genderId"
+              options={GenderList}
+              label={t['loanProductGender']}
+              __placeholder={t['loanProductSelectGender']}
+              isMulti
+            />
+          )}
+        {memberType &&
+          memberType?.indexOf('INDIVIDUAL') !== -1 &&
+          criteria &&
+          criteria.indexOf('MARITAL_STATUS') !== -1 && (
+            <FormSelect
+              name="maritalStatusId"
+              options={MartialOptions}
+              label={t['loanProductMarital']}
+              __placeholder={t['loanProductSelectMaritalStatus']}
+              isMulti
+            />
+          )}
+        {memberType &&
+          memberType?.indexOf('INDIVIDUAL') !== -1 &&
+          criteria &&
+          criteria.indexOf('EDUCATION_QUALIFICATION') !== -1 && (
+            <FormSelect
+              name="educationQualification"
+              options={EducationalOptions}
+              label={t['loanProductEducationQualification']}
+              __placeholder={t['loanProductSelectEducationQualification']}
+              isMulti
+            />
+          )}
+        {memberType &&
+          memberType?.indexOf('INDIVIDUAL') !== -1 &&
+          criteria &&
+          criteria.indexOf('ETHNICITY') !== -1 && (
+            <FormSelect
+              name="ethnicity"
+              options={EthnicityList}
+              label={t['loanProductEthinicity']}
+              __placeholder={t['loanProductSelectEthinicity']}
+              isMulti
+            />
+          )}
+        {memberType &&
+          memberType?.indexOf('INDIVIDUAL') !== -1 &&
+          criteria &&
+          criteria.indexOf('OCCUPATION_DETAILS') !== -1 && (
+            <FormSelect
+              name="occupation"
+              options={OccupationOptions}
+              label={t['loanProductOccupationDetails']}
+              __placeholder={t['loanProductSelectOccupationDetails']}
+              isMulti
+            />
+          )}
+        {memberType &&
+          memberType?.indexOf('INSTITUTION') !== -1 &&
+          criteria &&
+          criteria.indexOf('NATURE_OF_BUSINESS_INSTITUTIONS') !== -1 && (
+            <FormSelect
+              name="natureOfBusinessInstitution"
+              options={InstituitionList}
+              label={t['loanProductNatureBusinessIns']}
+              __placeholder={t['loanProductSelectNatureofBusiness']}
+              isMulti
+            />
+          )}
+        {memberType &&
+          memberType?.indexOf('INDIVIDUAL') !== -1 &&
+          criteria &&
+          criteria.indexOf('FOREIGN_EMPLOYMENT') !== -1 && (
+            <Box display="flex" flexDirection="column" gap="s4">
+              <Text fontSize={'s3'} fontWeight="500" color="gray.700">
+                {t['loanProductForeignEmployment']}
+              </Text>
+              <FormSwitchTab name="foreignEmployment" options={CheckboxYesNo} />
+            </Box>
+          )}
+        {memberType &&
+          memberType?.indexOf('COOPERATIVE') !== -1 &&
+          criteria &&
+          criteria.indexOf('COOPERATIVE_TYPE') !== -1 && (
+            <BoxContainer>
+              <Text fontSize={'s3'} fontWeight="500" color="gray.700">
+                {t['loanProductCoorperativeType']}
+              </Text>
+              <Box w="40%">
+                <FormCheckboxGroup
+                  name="cooperativeType"
+                  label={t['loanProductCoorperativeType']}
+                  list={CoopTypeList}
+                  orientation="column"
                 />
               </Box>
-            )}
-
-          {memberType &&
-            memberType?.indexOf('COOPERATIVE') !== -1 &&
-            criteria &&
-            criteria.indexOf('COOPERATIVE_TYPE') !== -1 && (
-              <BoxContainer>
-                <Text fontSize={'s3'} fontWeight="500" color="gray.700">
-                  {t['loanProductCoorperativeType']}
-                </Text>
-                <Box w="40%">
-                  <FormCheckboxGroup
-                    name="cooperativeType"
-                    label={t['loanProductCoorperativeType']}
-                    list={CoopTypeList}
-                    orientation="column"
-                  />
-                </Box>
-              </BoxContainer>
-            )}
-          {memberType &&
-            memberType?.indexOf('COOPERATIVE_UNION') !== -1 &&
-            criteria &&
-            criteria.indexOf('NATURE_OF_BUSINESS_COOPUNION') !== -1 && (
-              <FormSelect
-                name="natureOFBusinessCoop"
-                options={CoopUnionList}
-                label={t['loanProductNatureBusinessCoopUnion']}
-                __placeholder={t['loanProductSelectNatureofBusiness']}
-                isMulti
-              />
-            )}
-        </InputGroupContainer>
-      </BoxContainer>
+            </BoxContainer>
+          )}
+        {memberType &&
+          memberType?.indexOf('COOPERATIVE_UNION') !== -1 &&
+          criteria &&
+          criteria.indexOf('NATURE_OF_BUSINESS_COOPUNION') !== -1 && (
+            <FormSelect
+              name="natureOFBusinessCoop"
+              options={CoopUnionList}
+              label={t['loanProductNatureBusinessCoopUnion']}
+              __placeholder={t['loanProductSelectNatureofBusiness']}
+              isMulti
+            />
+          )}
+      </FormSection>
     );
   } else {
-    return <Box></Box>;
+    return null;
   }
 };

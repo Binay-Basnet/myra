@@ -1,98 +1,69 @@
 import { useFormContext } from 'react-hook-form';
 
-import {
-  LoanPaymentInstallmentType,
-  LoanPaymentMode,
-  LoanRepaymentScheme,
-} from '@coop/cbs/data-access';
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box } from '@coop/shared/ui';
+import { InterestMethod, LoanRepaymentScheme } from '@coop/cbs/data-access';
+import { FormCheckboxGroup, FormSelect } from '@coop/shared/form';
+import { FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-
-import { BoxContainer, SubHeadingText, TopText } from '../formui';
 
 export const LoanRepaymentSchemes = () => {
   const { watch } = useFormContext();
-  const loanScheme = watch('repaymentScheme');
+  const interestMethod = watch('interestMethod');
   const { t } = useTranslation();
 
-  const loanschemeOptions = [
+  const loanschemeOptionsI = [
+    { label: t['loanProductEPI'], value: LoanRepaymentScheme.Epi },
+  ];
+
+  const loanschemeOptionsII = [
     { label: t['loanProductEPI'], value: LoanRepaymentScheme.Epi },
     { label: t['loanProductEMI'], value: LoanRepaymentScheme.Emi },
     { label: t['loanProductFlat'], value: LoanRepaymentScheme.Flat },
   ];
-  const YesNoOptions = [
-    { label: t['yes'], value: true },
-    { label: t['no'], value: false },
-  ];
 
-  const modeOfPaymentList = [
-    { label: t['loanProductInstallment'], value: LoanPaymentMode.Installment },
-  ];
-
-  const installmentTypeList = [
-    { label: t['monthly'], value: LoanPaymentInstallmentType.Monthly },
-    { label: t['quaterly'], value: LoanPaymentInstallmentType.Quarterly },
+  const interestMethodtList = [
+    { label: t['loanProductDiminishing'], value: InterestMethod.Diminishing },
+    { label: t['loanProductStraight'], value: InterestMethod.Flat },
   ];
 
   return (
-    <BoxContainer>
-      <Box
-        display={'flex'}
-        flexDirection="row"
-        justifyContent={'space-between'}
-      >
-        <TopText>{t['loanProductLoanRepaymentScheme']}</TopText>
-        <FormSwitchTab name="repaymentScheme" options={loanschemeOptions} />
-      </Box>
-
-      {loanScheme &&
-        (loanScheme === LoanRepaymentScheme.Epi ||
-          loanScheme === LoanRepaymentScheme.Emi) && (
-          <InputGroupContainer>
-            <FormSelect
-              name="modeOfPayment"
-              label={t['loanProductModePayment']}
-              __placeholder={t['loanProductSelectModePayment']}
-              options={modeOfPaymentList}
-            />
-            <FormSelect
-              name="installmentType"
-              label={t['loanProductInstallmentType']}
-              __placeholder={t['loanProductSelectInstallmentType']}
-              options={installmentTypeList}
-            />
-          </InputGroupContainer>
-        )}
-
-      <Box
-        display={'flex'}
-        flexDirection="row"
-        justifyContent={'space-between'}
-        alignItems="center"
-        pt="s16"
-      >
-        <SubHeadingText>
-          {t['loanProductAllowPartialInstallment']}
-        </SubHeadingText>
-        <FormSwitchTab name="allowPartialInstallment" options={YesNoOptions} />
-      </Box>
-      <Box
-        display={'flex'}
-        flexDirection="row"
-        justifyContent={'space-between'}
-        alignItems="center"
-        pt="s16"
-      >
-        <SubHeadingText>
-          {t['loanProductIsMonthlyInterestCompulsory']}
-        </SubHeadingText>
-        <FormSwitchTab
-          name="isMonthlyInstallmentCompulsory"
-          options={YesNoOptions}
+    <FormSection>
+      <GridItem colSpan={1}>
+        <FormSelect
+          name="interestMethod"
+          label={t['loanProductInterestMethod']}
+          options={interestMethodtList}
         />
-      </Box>
-    </BoxContainer>
+      </GridItem>
+
+      {(interestMethod === InterestMethod.Flat ||
+        interestMethod === InterestMethod.Diminishing) && (
+        <GridItem colSpan={3}>
+          <Text
+            mb="s16"
+            fontSize="r1"
+            fontWeight="SemiBold"
+            color="neutralColorLight.Gray-80"
+          >
+            {t['loanProductLoanRepaymentScheme']}
+          </Text>
+
+          {interestMethod === InterestMethod.Flat && (
+            <FormCheckboxGroup
+              orientation="column"
+              name="repaymentScheme"
+              list={loanschemeOptionsI}
+            />
+          )}
+
+          {interestMethod === InterestMethod.Diminishing && (
+            <FormCheckboxGroup
+              orientation="column"
+              name="repaymentScheme"
+              list={loanschemeOptionsII}
+            />
+          )}
+        </GridItem>
+      )}
+    </FormSection>
   );
 };

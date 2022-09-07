@@ -11,6 +11,7 @@ import { useInstitution } from '../hooks/useInstitution';
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
+
 export const RegisteredDetailsInstitution = (props: IProps) => {
   const { t } = useTranslation();
 

@@ -40,8 +40,8 @@ export function CbsSettingsFeatureOrganization() {
           borderRightColor="border.layout"
           minHeight="100vh"
         >
-          <Box bg="#EEF2F7" p="s16" borderRadius={'br2'}>
-            <Text fontSize={'r1'} fontWeight="600">
+          <Box bg="gray.200" p="s16" borderRadius={'br2'}>
+            <Text fontSize={'r1'} fontWeight="SemiBold">
               {t['settingsOrganization']}
             </Text>
           </Box>
@@ -63,14 +63,13 @@ export function CbsSettingsFeatureOrganization() {
               flexDirection={'column'}
             >
               <Box py={'s24'}>
-                <Text fontWeight="600">
+                <Text fontWeight="SemiBold">
                   {t['settingsOrganizationBasicDetails']}
                 </Text>
                 <Box mt="s24" w="100%">
                   <FormInput
                     label={t['settingsOrganizationOrganizationName']}
                     __placeholder={t['settingsOrganizationEntername']}
-                    // control={control}
                     name="name"
                     type="text"
                   />
@@ -100,7 +99,7 @@ export function CbsSettingsFeatureOrganization() {
                   />
                 </Box>
                 <Box mt="s16" py="s24">
-                  <Text fontSize="r1" fontWeight="600" color={'gray.800'}>
+                  <Text fontSize="r1" fontWeight="SemiBold" color={'gray.800'}>
                     {' '}
                     {t['settingsOrganizationContactDetails']}
                   </Text>
@@ -109,7 +108,7 @@ export function CbsSettingsFeatureOrganization() {
                   </Box>
                 </Box>
                 <Box mt="s16" py="s24">
-                  <Text fontSize="r1" fontWeight="600" color={'gray.800'}>
+                  <Text fontSize="r1" fontWeight="SemiBold" color={'gray.800'}>
                     {' '}
                     {t['settingsOrganizationMainContactPerson']}
                   </Text>
@@ -118,7 +117,7 @@ export function CbsSettingsFeatureOrganization() {
                   </Box>
                 </Box>
                 <Box mt="s16" py="s24">
-                  <Text fontSize="r1" fontWeight="600" color={'gray.800'}>
+                  <Text fontSize="r1" fontWeight="SemiBold" color={'gray.800'}>
                     {' '}
                     {t['settingsOrganizationAddress']}
                   </Text>
@@ -135,7 +134,7 @@ export function CbsSettingsFeatureOrganization() {
                 </Button> */}
               </Box>
               <Box mt="s16" py="s24">
-                <Text fontSize="r1" fontWeight="600" color={'gray.800'}>
+                <Text fontSize="r1" fontWeight="SemiBold" color={'gray.800'}>
                   {' '}
                   {t['settingsOrganizationRegistrationDetails']}
                 </Text>
@@ -144,7 +143,7 @@ export function CbsSettingsFeatureOrganization() {
                 </Box>
               </Box>
               <Box mt="s16" py="s24">
-                <Text fontSize="r1" fontWeight="600" color={'gray.800'}>
+                <Text fontSize="r1" fontWeight="SemiBold" color={'gray.800'}>
                   {' '}
                   {t['settingsOrganizationDocumnents']}
                 </Text>

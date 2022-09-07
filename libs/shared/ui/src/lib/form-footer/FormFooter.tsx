@@ -33,7 +33,9 @@ export function FormFooter({
       borderTop="1px solid"
       borderColor="border.layout"
     >
-      <Text fontStyle={'italic'}>{status}</Text>
+      <Text fontStyle={'italic'} as="div">
+        {status}
+      </Text>
       <Box display="flex" gap="s16">
         {draftButton}
 

@@ -59,7 +59,7 @@ export const CbsSettingsFeatureValuatorList = () => {
                 textOverflow="ellipsis"
                 overflow="hidden"
               >
-                {props.getValue()}
+                {props.getValue() as string}
               </Text>
             </Box>
           );

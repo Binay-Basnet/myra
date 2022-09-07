@@ -2,7 +2,6 @@ import React from 'react';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { Box, Collapse, Text } from '@chakra-ui/react';
 
-import { KymIndAddSectionStatus } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
 const PersonalInformation = [
@@ -50,7 +49,7 @@ const Decleration: string[] = [
 ];
 
 interface AccordianProps {
-  formStatus?: KymIndAddSectionStatus | null;
+  formStatus?: any | null;
   kymCurrentSection?: {
     section: string;
     subSection: string;

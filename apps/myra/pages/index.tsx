@@ -1,5 +1,11 @@
 import { ReactElement, useState } from 'react';
 import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  DropResult,
+} from 'react-beautiful-dnd';
+import {
   AiFillInfoCircle,
   AiOutlineBarcode,
   AiOutlineUnorderedList,
@@ -34,6 +40,59 @@ const Dashboard = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const newId = useGetNewIdMutation();
+  const quickLinksList = [
+    {
+      id: 'a',
+      text: 'Add New Member',
+      icon: IoMdPersonAdd,
+      onclick: () =>
+        newId
+          .mutateAsync({ idType: Id_Type.Kymindividual })
+          .then((res) => router.push(`/members/individual/add/${res?.newId}`)),
+    },
+    {
+      id: 'b',
+      text: 'Ledgers',
+      icon: RiNewspaperLine,
+    },
+    {
+      id: 'c',
+      text: 'Applications',
+      icon: AiOutlineBarcode,
+    },
+    {
+      id: 'd',
+      text: 'List Pages',
+      icon: AiOutlineUnorderedList,
+    },
+    {
+      id: 'e',
+      text: 'Items',
+      icon: BsLockFill,
+    },
+    {
+      id: 'f',
+      text: 'Settings',
+      icon: FiSettings,
+    },
+    {
+      id: 'g',
+      text: 'Ram Krishna',
+      subText: 'Member Profile',
+      icon: AiOutlineUser,
+    },
+    {
+      id: 'h',
+      text: 'Form Pages',
+      icon: AiOutlineUserAdd,
+    },
+    {
+      id: 'i',
+      text: 'Reports',
+      icon: AiFillInfoCircle,
+    },
+  ];
+  const [characters, setCharacters] = useState(quickLinksList);
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -45,53 +104,21 @@ const Dashboard = () => {
     setOpenModal(false);
   };
 
-  const quickLinksList = [
-    {
-      text: 'Add New Member',
-      icon: IoMdPersonAdd,
-      onclick: () =>
-        newId
-          .mutateAsync({ idType: Id_Type.Kymindividual })
-          .then((res) => router.push(`/members/individual/add/${res?.newId}`)),
-    },
-    {
-      text: 'Ledgers',
-      icon: RiNewspaperLine,
-    },
-    {
-      text: 'Applications',
-      icon: AiOutlineBarcode,
-    },
-    {
-      text: 'List Pages',
-      icon: AiOutlineUnorderedList,
-    },
-    {
-      text: 'Items',
-      icon: BsLockFill,
-    },
-    {
-      text: 'Settings',
-      icon: FiSettings,
-    },
-    {
-      text: 'Ram Krishna',
-      subText: 'Member Profile',
-      icon: AiOutlineUser,
-    },
-    {
-      text: 'Form Pages',
-      icon: AiOutlineUserAdd,
-    },
-    {
-      text: 'Reports',
-      icon: AiFillInfoCircle,
-    },
-  ];
+  const handleOnDragEnd = async (result: DropResult) => {
+    const items = Array.from(characters);
+    const [reorderedItem] = items.splice(result.source.index, 1);
 
-  // const handleDragEnd = async () => {
-  //   setOpenModal(false);
-  // };
+    if (result.destination) {
+      items.splice(result.destination.index, 0, reorderedItem);
+      setCharacters(items);
+      // if (reorderedItem.id) {
+      //   await moveOption({
+      //     fieldId: reorderedItem.id,
+      //     to: result.destination.index,
+      //   });
+      // }
+    }
+  };
 
   return (
     <Box height="fit-content" p="0" pb="55px">
@@ -138,64 +165,49 @@ const Dashboard = () => {
         title="editQuickLink"
         primaryButtonLabel="save"
         secondaryButtonLabel="cancel"
+        size="5xl"
       >
-        {/* <DragDropContext onDragEnd={handleDragEnd}>
-          <Droppable droppableId={'quick'}>
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Droppable droppableId="characters">
             {(provided) => (
-              <Box {...provided.droppableProps} ref={provided.innerRef}>
-                <Grid
-                  templateColumns="repeat(3,1fr)"
-                  py="s16"
-                  columnGap="s16"
-                  rowGap="s8"
-                >
-                  {quickLinksList?.map((item, index) => (
-                    <Draggable
-                      key={item?.text}
-                      draggableId={item?.text ?? 'no-id'}
-                      index={index}
-                    >
-                      {(provided) => (
-                        <Box
-                          key={index}
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                        >
-                          <QuickLinks
-                            editable={true}
-                            icon={item.icon}
-                            text={item.text}
-                            subText={item.subText}
-                            onclick={item.onclick}
-                          />
-                        </Box>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </Grid>
-              </Box>
+              <Grid
+                templateColumns="repeat(3,1fr)"
+                py="s16"
+                columnGap="s16"
+                rowGap="s8"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {characters?.map((item, index) => (
+                  <Draggable
+                    key={item?.id}
+                    draggableId={item?.id}
+                    index={index}
+                  >
+                    {(provided) => (
+                      <Box
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <QuickLinks
+                          // key={index}
+                          editable={true}
+                          icon={item.icon}
+                          text={item.text}
+                          subText={item.subText}
+                          onclick={item.onclick}
+                          editLinks
+                        />
+                      </Box>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </Grid>
             )}
           </Droppable>
-        </DragDropContext> */}
-
-        <Grid
-          templateColumns="repeat(3,1fr)"
-          py="s16"
-          columnGap="s16"
-          rowGap="s8"
-        >
-          {quickLinksList?.map((item, index) => (
-            <QuickLinks
-              key={index}
-              editable={true}
-              icon={item.icon}
-              text={item.text}
-              subText={item.subText}
-              onclick={item.onclick}
-            />
-          ))}
-        </Grid>
+        </DragDropContext>
       </ChakraModal>
 
       <Box mt="s32" display="flex" flexDir="column" gap="s16">

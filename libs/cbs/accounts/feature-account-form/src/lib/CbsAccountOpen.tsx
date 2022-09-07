@@ -35,9 +35,17 @@ import {
   Tenure,
 } from '../component/form';
 
-type FileList = 'signature' | 'nominee' | 'photo' | 'fingerPrintPhoto';
+type FileList =
+  | 'signature'
+  | 'nominee'
+  | 'photo'
+  | 'fingerPrintPhoto'
+  | 'decisionDocuments'
+  | 'registeredPhotos'
+  | 'InsSignature'
+  | 'taxClearance';
 
-export type FileListType = {
+type FileListType = {
   signature: string[];
   nominee: string[];
   photo: string[];
@@ -63,7 +71,9 @@ export function CbsAccountOpen() {
   const router = useRouter();
   const id = String(router?.query?.['id']);
 
-  const methods = useForm<DepositLoanAccountInput>();
+  const methods = useForm<DepositLoanAccountInput>({
+    defaultValues: {},
+  });
 
   const { mutateAsync } = useSetAccountOpenDataMutation();
   const { mutate: mutateDocs } = useSetAccountDocumentDataMutation();

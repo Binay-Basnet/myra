@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { FrequencyTenure } from '@coop/cbs/data-access';
+import {
+  FrequencyTenure,
+  useGetAccountOpenProductDetailsQuery,
+} from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { SubHeadingText } from '@coop/shared/components';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Box } from '@coop/shared/ui';
+import { Alert, Box } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const unitOptions = [
@@ -30,8 +33,27 @@ const unitOptions = [
 export const Tenure = () => {
   const { t } = useTranslation();
   const [rightElement, setRightElement] = useState('day');
+  const [triggerQuery, setTriggerQuery] = useState(false);
 
   const { resetField, watch } = useFormContext();
+
+  const products = watch('productId');
+
+  const poductDetails = useGetAccountOpenProductDetailsQuery(
+    { id: products },
+    {
+      enabled: triggerQuery,
+    }
+  );
+
+  const productData =
+    poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
+
+  useEffect(() => {
+    if (products) {
+      setTriggerQuery(true);
+    }
+  }, [products]);
 
   const tenureUnit = watch('tenure');
 
@@ -51,7 +73,6 @@ export const Tenure = () => {
         display="flex"
         flexDirection="column"
         gap="s16"
-        p="s16"
         bg="neutralColorLight.Gray-0"
       >
         <SubHeadingText>{t['accountOpenTenure']} </SubHeadingText>
@@ -94,6 +115,19 @@ export const Tenure = () => {
                 }
               />
             </Box>
+          </Box>
+          <Box p="s16">
+            <Alert status="info" title={'Tenure'}>
+              <ul>
+                <li>
+                  {' '}
+                  {productData?.minTenureUnitNumber}{' '}
+                  {productData?.minTenureUnit} -{' '}
+                  {productData?.maxTenureUnitNumber}{' '}
+                  {productData?.maxTenureUnit}
+                </li>
+              </ul>
+            </Alert>
           </Box>
         </Box>
       </Box>

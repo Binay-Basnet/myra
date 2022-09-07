@@ -1,8 +1,25 @@
-mutation setAddMemberToAgentData($agentId: String!, $data: AssignMembersInput) {
+mutation setAddMemberToAgentData(
+  $agentId: String!
+  $data: AssignMembersInput
+  $override: Boolean
+) {
   transaction {
-    addMemberToAgent(agentId: $agentId, data: $data) {
+    addMemberToAgent(agentId: $agentId, data: $data, override: $override) {
       data {
         id
+      }
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation setAgentTodayListData($id: ID!, $data: [AgentTodayListInput]) {
+  transaction {
+    agentTodayList(id: $id, data: $data) {
+      error {
+        ...MutationError
       }
     }
   }

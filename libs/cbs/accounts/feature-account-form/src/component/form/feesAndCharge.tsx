@@ -1,37 +1,102 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useGetAccountOpenProductDetailsQuery } from '@coop/cbs/data-access';
+import {
+  ServiceTypeFormState,
+  useGetAccountOpenProductDetailsQuery,
+} from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { FormInput } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const FeesAndCharge = () => {
   const { t } = useTranslation();
+
+  const [productData, setProductData] = useState<ServiceTypeFormState[]>([]);
+
   const [triggerQuery, setTriggerQuery] = useState(false);
-  const { watch } = useFormContext();
+  const { watch, register, unregister } = useFormContext();
   const products = watch('productId');
-  const poductDetails = useGetAccountOpenProductDetailsQuery(
+  const { data, isLoading } = useGetAccountOpenProductDetailsQuery(
     { id: products },
     {
       enabled: triggerQuery,
     }
   );
 
-  const ProductData =
-    poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
+  // const ProductData =
+  //   poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
 
-  const ProductDatalist = ProductData?.serviceCharge;
-  let sum = 0;
-  ProductDatalist?.map((tot) => {
-    return (sum = Number(sum) + Number(tot?.amount));
-  });
+  // const ProductDatalist = ProductData?.serviceCharge;
+  // let sum = 0;
+  // ProductDatalist?.map((tot) => {
+  //   return (sum = Number(sum) + Number(tot?.amount));
+  // });
+
+  const isEbankingEnabled = watch('eBanking');
+  const isMobileBanking = watch('mobileBanking');
+  const serviceCharge = watch('serviceCharge');
 
   useEffect(() => {
     if (products) {
       setTriggerQuery(true);
     }
   }, [products]);
+
+  useEffect(() => {
+    setProductData(
+      data?.settings.general?.depositProduct?.formState?.data
+        ?.serviceCharge as ServiceTypeFormState[]
+    );
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (productData && typeof isEbankingEnabled === 'boolean') {
+      if (isEbankingEnabled) {
+        setProductData((prev) =>
+          prev
+            ? [...prev, { amount: 0, serviceName: 'E-Banking' }]
+            : [{ amount: 0, serviceName: 'E-Banking' }]
+        );
+      } else {
+        const index = productData.findIndex(
+          (product) => product.serviceName === 'E-Banking'
+        );
+
+        unregister(`serviceCharge.${index}.name`);
+        unregister(`serviceCharge.${index}.amount`);
+
+        setProductData((prev) =>
+          prev.filter((product) => product.serviceName !== 'E-Banking')
+        );
+      }
+    }
+  }, [isEbankingEnabled]);
+
+  useEffect(() => {
+    if (productData && typeof isMobileBanking === 'boolean') {
+      if (isMobileBanking) {
+        setProductData((prev) =>
+          prev
+            ? [...prev, { amount: 0, serviceName: 'Mobile-Banking' }]
+            : [{ amount: 0, serviceName: 'Mobile-Banking' }]
+        );
+      } else {
+        const index = productData.findIndex(
+          (product) => product.serviceName === 'Mobile-Banking'
+        );
+
+        unregister(`serviceCharge.${index}.name`);
+        unregister(`serviceCharge.${index}.amount`);
+
+        setProductData((prev) =>
+          prev.filter((product) => product.serviceName !== 'Mobile-Banking')
+        );
+      }
+    }
+  }, [isMobileBanking]);
+
   return (
     <GroupContainer
       scrollMarginTop={'200px'}
@@ -63,22 +128,39 @@ export const FeesAndCharge = () => {
           borderRadius={'br2'}
           p="s16"
         >
-          {ProductDatalist?.map((data) => {
+          {productData?.map((data, index) => {
+            register(`serviceCharge.${index}.name`, {
+              value: data?.serviceName,
+            });
+
+            register(`serviceCharge.${index}.amount`, {
+              value: data?.amount,
+            });
+
+            // register(`serviceCharge.${index}.ledgerCode`, {
+            //   value: data?.ledgerName,
+            // });
+
             return (
               <Box
-                key={data?.ledgerName}
+                key={`${data?.ledgerName}${data?.serviceName}`}
                 display="flex"
                 flexDirection={'row'}
                 justifyContent="space-between"
                 py="s16"
               >
-                <Text fontSize={'s3'} fontWeight="500">
-                  {data?.serviceName}
-                </Text>
-
-                <Text fontSize={'s3'} fontWeight="500">
-                  {data?.amount}
-                </Text>
+                <Box>
+                  <Text fontSize={'s3'} fontWeight="500">
+                    {data?.serviceName}
+                  </Text>
+                </Box>
+                <Box w="300px">
+                  <FormInput
+                    textAlign={'right'}
+                    name={`serviceCharge.${index}.amount`}
+                    defaultValue={data?.amount}
+                  />
+                </Box>
               </Box>
             );
           })}
@@ -93,7 +175,13 @@ export const FeesAndCharge = () => {
             </Text>
 
             <Text fontSize={'s3'} fontWeight="600">
-              {sum}
+              {serviceCharge
+                ? serviceCharge?.reduce((a, b) => {
+                    return a + Number(b.amount);
+                  }, 0)
+                : productData?.reduce((a, b) => {
+                    return a + Number(b.amount);
+                  }, 0)}
             </Text>
           </Box>
         </Box>

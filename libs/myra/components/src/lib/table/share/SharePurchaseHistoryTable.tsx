@@ -53,7 +53,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         cell: (props) => {
           return (
             <span>
-              {props.getValue()} to {props?.row?.original?.endNumber}
+              {props.getValue() as string} to {props?.row?.original?.endNumber}
             </span>
           );
         },
@@ -68,7 +68,9 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         cell: (props) => {
           return (
             <span>
-              {props.getValue() ? `${amountConverter(props.getValue())}` : '-'}
+              {props.getValue()
+                ? `${amountConverter(props.getValue() as string)}`
+                : '-'}
             </span>
           );
         },
@@ -85,7 +87,9 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         cell: (props) => {
           return (
             <span>
-              {props.getValue() ? `${amountConverter(props.getValue())}` : '-'}
+              {props.getValue()
+                ? `${amountConverter(props.getValue() as string)}`
+                : '-'}
             </span>
           );
         },
@@ -96,7 +100,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         accessorFn: (row) => row?.balance,
         footer: () => shareHistoryTableData?.share.history?.balance?.amount,
         cell: (props) => {
-          return <span>{amountConverter(props.getValue())}</span>;
+          return <span>{amountConverter(props.getValue() as string)}</span>;
         },
         meta: {
           isNumeric: true,

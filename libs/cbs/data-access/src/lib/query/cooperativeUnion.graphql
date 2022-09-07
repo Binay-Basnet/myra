@@ -104,14 +104,15 @@ query getCooperativeUnionKymEditData($id: ID!) {
             }
             sectionStatus {
               id
-              errors {
-                sectionName
-                errors
-              }
-              incomplete {
-                sectionName
-                incomplete
-              }
+              #              errors {
+              #                sectionName
+              #                errors
+              #              }
+              #              incomplete {
+              #                sectionName
+              #                incomplete
+              #              }
+              #            }
             }
           }
         }
@@ -168,14 +169,14 @@ query getEconimicDetailsEditData($id: ID!) {
             }
             sectionStatus {
               id
-              errors {
-                sectionName
-                errors
-              }
-              incomplete {
-                sectionName
-                incomplete
-              }
+              #              errors {
+              #                sectionName
+              #                errors
+              #              }
+              #              incomplete {
+              #                sectionName
+              #                incomplete
+              #              }
             }
           }
         }
@@ -237,14 +238,14 @@ query getBoardOfDirectorsDetailsList($id: ID!) {
             }
             sectionStatus {
               id
-              errors {
-                sectionName
-                errors
-              }
-              incomplete {
-                sectionName
-                incomplete
-              }
+              #              errors {
+              #                sectionName
+              #                errors
+              #              }
+              #              incomplete {
+              #                sectionName
+              #                incomplete
+              #              }
             }
           }
         }
@@ -306,14 +307,14 @@ query getAccountOperatorDetailsList($id: ID!) {
             }
             sectionStatus {
               id
-              errors {
-                sectionName
-                errors
-              }
-              incomplete {
-                sectionName
-                incomplete
-              }
+              #              errors {
+              #                sectionName
+              #                errors
+              #              }
+              #              incomplete {
+              #                sectionName
+              #                incomplete
+              #              }
             }
           }
         }
@@ -375,14 +376,14 @@ query getCentralRepresentativeDetails($id: ID!) {
             }
             sectionStatus {
               id
-              errors {
-                sectionName
-                errors
-              }
-              incomplete {
-                sectionName
-                incomplete
-              }
+              #              errors {
+              #                sectionName
+              #                errors
+              #              }
+              #              incomplete {
+              #                sectionName
+              #                incomplete
+              #              }
             }
           }
         }
@@ -396,72 +397,7 @@ query getCoopUnionSectionStatus($id: ID!) {
     cooperativeUnion {
       formState(id: $id) {
         sectionStatus {
-          institutionInformation {
-            incomplete {
-              sectionName
-              incomplete
-            }
-
-            errors {
-              sectionName
-              errors
-            }
-          }
-          economicDetails {
-            incomplete {
-              sectionName
-              incomplete
-            }
-
-            errors {
-              sectionName
-              errors
-            }
-          }
-          bodDetails {
-            incomplete {
-              sectionName
-              incomplete
-            }
-
-            errors {
-              sectionName
-              errors
-            }
-          }
-          accountOperatorDetails {
-            incomplete {
-              sectionName
-              incomplete
-            }
-
-            errors {
-              sectionName
-              errors
-            }
-          }
-          centralRepresentativeDetails {
-            incomplete {
-              sectionName
-              incomplete
-            }
-
-            errors {
-              sectionName
-              errors
-            }
-          }
-          declaration {
-            incomplete {
-              sectionName
-              incomplete
-            }
-
-            errors {
-              sectionName
-              errors
-            }
-          }
+          __typename
         }
       }
     }

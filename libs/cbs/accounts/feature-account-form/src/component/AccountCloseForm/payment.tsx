@@ -2,8 +2,6 @@ import { useFormContext } from 'react-hook-form';
 
 import {
   AccountClosePaymentMode,
-  NatureOfDepositProduct,
-  useGetAccountTableListQuery,
   useGetBankListQuery,
 } from '@coop/cbs/data-access';
 import {
@@ -18,14 +16,7 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import {
-  Box,
-  DEFAULT_PAGE_SIZE,
-  FormAccountSelect,
-  Grid,
-  GridItem,
-  Text,
-} from '@coop/shared/ui';
+import { Box, FormAccountSelect, Grid, GridItem, Text } from '@coop/shared/ui';
 
 const paymentModes = [
   {
@@ -41,20 +32,6 @@ const paymentModes = [
     value: AccountClosePaymentMode?.Cash,
   },
 ];
-
-// const denominationsOptions = [
-//   { label: '1000x', value: CashValue.Cash_1000 },
-//   { label: '500x', value: CashValue.Cash_500 },
-//   { label: '100x', value: CashValue.Cash_100 },
-//   { label: '50x', value: CashValue.Cash_50 },
-//   { label: '25x', value: CashValue.Cash_25 },
-//   { label: '20x', value: CashValue.Cash_20 },
-//   { label: '10x', value: CashValue.Cash_10 },
-//   { label: '5x', value: CashValue.Cash_5 },
-//   { label: '2x', value: CashValue.Cash_2 },
-//   { label: '1x', value: CashValue.Cash_1 },
-// ];
-const FINE = '0';
 
 const denominationsOptions = [
   { label: '1000x', value: '1000' },
@@ -99,36 +76,12 @@ export function Payment({ totalDeposit }: PaymentProps) {
 
   const cashPaid = watch('cash.cashPaid');
   const memberId = watch('memberID');
-  const accountId = watch('accountID');
 
   const totalCashPaid: number = disableDenomination
     ? Number(cashPaid)
     : Number(denominationTotal);
 
   const returnAmount = totalCashPaid - totalDeposit;
-  const { data: accountListData } = useGetAccountTableListQuery(
-    {
-      paginate: {
-        first: DEFAULT_PAGE_SIZE,
-        after: '',
-      },
-      filter: { memberId },
-    },
-    {
-      staleTime: 0,
-      enabled: !!memberId,
-    }
-  );
-  const accountTypes = {
-    [NatureOfDepositProduct.Mandatory]: 'Mandatory Saving Account',
-    [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
-    [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
-    [NatureOfDepositProduct.VoluntaryOrOptional]: 'Voluntary Saving Account',
-  };
-
-  const applicableAccountData = accountListData?.account?.list?.edges?.filter(
-    (item) => item?.node?.id !== accountId
-  );
 
   return (
     <ContainerWithDivider
@@ -150,24 +103,7 @@ export function Payment({ totalDeposit }: PaymentProps) {
               <FormAccountSelect
                 name="accountTransfer.destination_account"
                 label={'Destination Account'}
-                options={applicableAccountData?.map((account) => ({
-                  accountInfo: {
-                    accountName: account.node?.product.productName,
-                    accountId: account.node?.id,
-                    accountType: account?.node?.product?.nature
-                      ? accountTypes[account?.node?.product?.nature]
-                      : '',
-                    balance: account?.node?.balance ?? '0',
-                    fine:
-                      account?.node?.product?.nature ===
-                        NatureOfDepositProduct.RecurringSaving ||
-                      account?.node?.product?.nature ===
-                        NatureOfDepositProduct.Mandatory
-                        ? FINE
-                        : '',
-                  },
-                  value: account.node?.id as string,
-                }))}
+                memberId={memberId}
               />
             </GridItem>
 

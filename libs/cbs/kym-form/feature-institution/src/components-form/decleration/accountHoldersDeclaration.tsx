@@ -18,6 +18,7 @@ import { useInstitution } from '../hooks/useInstitution';
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
+
 export const AccountHolderDeclarationInstitution = (props: IProps) => {
   const { t } = useTranslation();
 

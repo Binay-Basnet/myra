@@ -10,37 +10,39 @@ import {
   useSetDepositProductMutation,
 } from '@coop/cbs/data-access';
 import {
-  ContainerWithDivider,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSelect } from '@coop/shared/form';
-import {
   asyncToast,
   Box,
   Container,
   FormFooter,
   FormHeader,
-  GridItem,
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
-  AccountServicesCharge,
+  AccountCloseServices,
+  AccountOpenServices,
   BalanceLimit,
   Critera,
   DefaultAccountName,
+  DepositAmount,
   DepositFrequency,
   DormantSetup,
   GridItems,
   Interest,
+  LadderRate,
   MaximumTenure,
   MinimunTenure,
+  Penalty,
   PostingFrequency,
   PrematuredPenalty,
+  Product,
+  ProductCode,
   Questions,
+  Rebate,
   RequiredDocumentSetup,
   TypesOfMember,
+  WithdrawPenalty,
 } from '../components/form';
 
 type SelectOption = {
@@ -73,25 +75,6 @@ export function SettingsDepositProductsAdd() {
   const id = String(router?.query?.['id']);
 
   const { mutateAsync } = useSetDepositProductMutation();
-
-  const optionsSaving = [
-    {
-      label: t['depositProductRecurringSaving'],
-      value: NatureOfDepositProduct.RecurringSaving,
-    },
-    {
-      label: t['depositProductMandatory'],
-      value: NatureOfDepositProduct.Mandatory,
-    },
-    {
-      label: t['depositProductVoluntaryOptional'],
-      value: NatureOfDepositProduct.VoluntaryOrOptional,
-    },
-    {
-      label: t['depositProductTermSaving'],
-      value: NatureOfDepositProduct.TermSavingOrFd,
-    },
-  ];
 
   const methods = useForm<DepositForm>({});
 
@@ -171,13 +154,8 @@ export function SettingsDepositProductsAdd() {
       penaltyData: {
         dayAfterInstallmentDate:
           values?.penaltyData?.dayAfterInstallmentDate ?? null,
-        flatRatePenalty: values?.penaltyData?.flatRatePenalty ?? null,
-        minimumAmount: values?.penaltyData?.minimumAmount ?? null,
         penaltyAmount: values?.penaltyData?.penaltyAmount ?? null,
         penaltyRate: values?.penaltyData?.penaltyRate ?? null,
-        rateType: values?.penaltyData?.rateType
-          ? values?.penaltyData?.rateType
-          : null,
       },
       rebateData: {
         daysBeforeInstallmentDate:
@@ -242,21 +220,19 @@ export function SettingsDepositProductsAdd() {
   }, [refetch]);
 
   useEffect(() => {
-    if (depositNature === NatureOfDepositProduct.Mandatory) {
-      resetField('minAge');
-      resetField('maxAge');
-      resetField('genderId');
-      resetField('maritalStatusId');
-      resetField('educationQualification');
-      resetField('ethnicity');
-      resetField('occupation');
-      resetField('natureOfBusinessInstitution');
-      resetField('foreignEmployment');
-      resetField('cooperativeType');
-      resetField('natureOFBusinessCoop');
-      resetField('typeOfMember');
-      resetField('criteria');
-    }
+    resetField('minAge');
+    resetField('maxAge');
+    resetField('genderId');
+    resetField('maritalStatusId');
+    resetField('educationQualification');
+    resetField('ethnicity');
+    resetField('occupation');
+    resetField('natureOfBusinessInstitution');
+    resetField('foreignEmployment');
+    resetField('cooperativeType');
+    resetField('natureOFBusinessCoop');
+    resetField('typeOfMember');
+    resetField('criteria');
   }, [JSON.stringify(depositNature)]);
 
   return (
@@ -275,105 +251,78 @@ export function SettingsDepositProductsAdd() {
       >
         <FormProvider {...methods}>
           <form>
-            {/* main */}
-            <Box px="s20" py="s24">
-              <ContainerWithDivider>
-                <Box background="white">
-                  <InputGroupContainer>
-                    <GridItem colSpan={2}>
-                      <FormInput
-                        name="productName"
-                        label={t['depositProductProductName']}
-                      />
-                    </GridItem>
-                    <FormSelect
-                      label={t['depositProductNatureofDepositProduct']}
-                      name="nature"
-                      options={optionsSaving}
-                    />
-                    <GridItem colSpan={3}>
-                      <FormInput
-                        name="description"
-                        label={t['depositProductDescription']}
-                      />
-                    </GridItem>
-                  </InputGroupContainer>
-                </Box>
-                <Box>
-                  <Text fontWeight="Medium" fontSize={'r1'} color="gray.700">
-                    {t['depositProductProductCode']}
-                  </Text>
-                  <Text fontWeight="Regular" fontSize="s2" color="gray.700">
-                    {t['depositProductAddprefixintial']}
-                  </Text>
-                  <InputGroupContainer mt="s16">
-                    <FormInput
-                      label={t['depositProductPrefix']}
-                      name="productCode.prefix"
-                    />
-                    <FormInput
-                      label={t['depositProductIntitialNumber']}
-                      name="productCode.initialNo"
-                    />
-                  </InputGroupContainer>
-                </Box>
-                {depositNature !== NatureOfDepositProduct.Mandatory && (
-                  <TypesOfMember />
-                )}
+            <Box>
+              <Product />
+              <ProductCode />
+              <TypesOfMember />
 
-                {depositNature !== NatureOfDepositProduct.Mandatory && (
-                  <Box display="flex" flexDirection={'column'} gap="s16">
-                    {typesOfMember && <Critera />}
-                    <GridItems />
-                  </Box>
-                )}
+              <Box display="flex" flexDirection={'column'} gap="s16">
+                {typesOfMember && <Critera />}
+                <GridItems />
+              </Box>
 
-                {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                  depositNature === NatureOfDepositProduct.Mandatory) && (
+              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                depositNature === NatureOfDepositProduct.Mandatory) && (
+                <>
+                  <DepositAmount />
                   <DepositFrequency />
-                )}
-                {depositNature !==
-                  NatureOfDepositProduct.VoluntaryOrOptional && (
-                  <MinimunTenure />
-                )}
-                {depositNature !==
-                  NatureOfDepositProduct.VoluntaryOrOptional && (
-                  <MaximumTenure />
-                )}
-                {depositNature !== NatureOfDepositProduct.RecurringSaving && (
-                  <BalanceLimit />
-                )}
+                  <Penalty />
+                  <Rebate />
+                </>
+              )}
+              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                depositNature === NatureOfDepositProduct.TermSavingOrFd) && (
+                <MinimunTenure />
+              )}
 
-                <Interest />
-                <PostingFrequency />
-                {depositNature !== NatureOfDepositProduct.TermSavingOrFd && (
-                  <AccountServicesCharge />
-                )}
+              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                depositNature === NatureOfDepositProduct.TermSavingOrFd) && (
+                <MaximumTenure />
+              )}
 
-                {depositNature === NatureOfDepositProduct.TermSavingOrFd && (
-                  <DefaultAccountName />
-                )}
+              {depositNature !== NatureOfDepositProduct.RecurringSaving && (
+                <BalanceLimit />
+              )}
 
-                <Questions />
+              <Interest />
+              <PostingFrequency />
+              {depositNature !== NatureOfDepositProduct.TermSavingOrFd && (
+                <>
+                  <AccountOpenServices />
+                  <AccountCloseServices />
+                </>
+              )}
 
-                {depositNature !== NatureOfDepositProduct.TermSavingOrFd && (
-                  <DormantSetup />
-                )}
+              {depositNature === NatureOfDepositProduct.TermSavingOrFd && (
+                <DefaultAccountName />
+              )}
 
-                {depositNature !==
-                  NatureOfDepositProduct.VoluntaryOrOptional && (
-                  <PrematuredPenalty />
-                )}
+              <Questions />
 
-                {(typesOfMember?.includes(KymMemberTypesEnum.Individual) ||
-                  typesOfMember?.includes(KymMemberTypesEnum.Institution) ||
-                  typesOfMember?.includes(KymMemberTypesEnum.Cooperative) ||
-                  typesOfMember?.includes(
-                    KymMemberTypesEnum.CooperativeUnion
-                  )) && <RequiredDocumentSetup />}
+              {depositNature === NatureOfDepositProduct.VoluntaryOrOptional && (
+                <LadderRate />
+              )}
 
-                {/* <WithdrawPenalty /> */}
-              </ContainerWithDivider>
+              {depositNature !== NatureOfDepositProduct.TermSavingOrFd && (
+                <DormantSetup />
+              )}
+
+              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                depositNature === NatureOfDepositProduct.TermSavingOrFd) && (
+                <PrematuredPenalty />
+              )}
+
+              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                depositNature === NatureOfDepositProduct.TermSavingOrFd) && (
+                <WithdrawPenalty />
+              )}
+
+              {(typesOfMember?.includes(KymMemberTypesEnum.Individual) ||
+                typesOfMember?.includes(KymMemberTypesEnum.Institution) ||
+                typesOfMember?.includes(KymMemberTypesEnum.Cooperative) ||
+                typesOfMember?.includes(
+                  KymMemberTypesEnum.CooperativeUnion
+                )) && <RequiredDocumentSetup />}
             </Box>
           </form>
         </FormProvider>

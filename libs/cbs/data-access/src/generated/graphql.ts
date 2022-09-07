@@ -33,16 +33,6 @@ export type Scalars = {
   Email: any;
   HTML: any;
   InvalidData: Record<string, Array<string>>;
-  /**
-   * # For Localization of every data from backend
-   * ```javascript
-   * {
-   *    local: "localized data based on user lang setting",
-   *    en: "data in english",
-   *    np: "data in nepali"
-   * }
-   * ```
-   */
   Localized: Record<'local' | 'en' | 'np', string>;
   Map: Record<string, string>;
   Time: string;
@@ -709,6 +699,17 @@ export type CoaFullView = {
   error?: Maybe<QueryError>;
 };
 
+export type CoaMinimal = {
+  accountCode: Scalars['String'];
+  id: Scalars['ID'];
+  name: Scalars['Localized'];
+};
+
+export type CoaMinimalResult = {
+  data?: Maybe<Array<Maybe<CoaMinimal>>>;
+  error?: Maybe<QueryError>;
+};
+
 export enum CoaTypesOfAccount {
   Bank = 'BANK',
   Cash = 'CASH',
@@ -819,12 +820,17 @@ export type ChartsOfAccountSettingsMutation = {
 
 export type ChartsOfAccountSettingsQuery = {
   accounts: ChartsOfAccountResult;
+  accountsUnder?: Maybe<CoaMinimalResult>;
   class?: Maybe<ChartsOfAccountClassResult>;
   fullView: CoaFullView;
 };
 
 export type ChartsOfAccountSettingsQueryAccountsArgs = {
   filter: ChartsOfAccountFilter;
+};
+
+export type ChartsOfAccountSettingsQueryAccountsUnderArgs = {
+  accountCode: Scalars['String'];
 };
 
 export type ChequePastRequest = {
@@ -1075,7 +1081,7 @@ export type CoopUnionPersonnelDetailsResult = {
 export type CoopUnionPersonnelDetailsResultType = {
   data?: Maybe<CoopUnionPersonnelDetails>;
   id?: Maybe<Scalars['ID']>;
-  sectionStatus?: Maybe<KymIndAddSectionStatus>;
+  sectionStatus?: Maybe<KymFormStatus>;
 };
 
 export type CoopUnionPersonnelInput = {
@@ -1315,7 +1321,7 @@ export type CooperativeUnionEconomicDetails = {
 export type CooperativeUnionEconomicDetailsResult = {
   data?: Maybe<CooperativeUnionEconomicDetails>;
   id?: Maybe<Scalars['ID']>;
-  sectionStatus?: Maybe<KymIndAddSectionStatus>;
+  sectionStatus?: Maybe<KymFormStatus>;
 };
 
 export type CooperativeUnionInstitutionInformation = {
@@ -1366,7 +1372,7 @@ export type CooperativeUnionInstitutionInformation = {
 export type CooperativeUnionInstitutionInformationResult = {
   data?: Maybe<CooperativeUnionInstitutionInformation>;
   id?: Maybe<Scalars['ID']>;
-  sectionStatus?: Maybe<KymIndAddSectionStatus>;
+  sectionStatus?: Maybe<KymFormStatus>;
 };
 
 export type CooperativeUnionMember = {
@@ -1695,6 +1701,7 @@ export type DepositLoanAccount = Base & {
   modifiedBy: Identity;
   objState: ObjState;
   productId: Scalars['ID'];
+  serviceCharge?: Maybe<Array<Maybe<ServiceCharge>>>;
   tenure?: Maybe<FrequencyTenure>;
   tenureNumber?: Maybe<Scalars['Int']>;
 };
@@ -1742,6 +1749,7 @@ export type DepositLoanAccountInput = {
   minor?: InputMaybe<Scalars['String']>;
   mobileBanking?: InputMaybe<Scalars['Boolean']>;
   productId: Scalars['ID'];
+  serviceCharge?: InputMaybe<Array<InputMaybe<ServiceChargeInput>>>;
   tenure?: InputMaybe<FrequencyTenure>;
   tenureNumber?: InputMaybe<Scalars['Int']>;
 };
@@ -1771,6 +1779,7 @@ export type DepositLoanAccountQuery = {
   get?: Maybe<DepositLoanAccount>;
   getInstallments?: Maybe<InstallmentResult>;
   list?: Maybe<DepositLoanAccountConnection>;
+  listMinors?: Maybe<KymIndFamilyMemberQueryResult>;
 };
 
 export type DepositLoanAccountQueryFormStateArgs = {
@@ -1792,6 +1801,10 @@ export type DepositLoanAccountQueryGetInstallmentsArgs = {
 export type DepositLoanAccountQueryListArgs = {
   filter?: InputMaybe<DepositLoanAccountSearchFilter>;
   paginate?: InputMaybe<Pagination>;
+};
+
+export type DepositLoanAccountQueryListMinorsArgs = {
+  memberId: Scalars['ID'];
 };
 
 export type DepositLoanAccountResult = {
@@ -1995,7 +2008,12 @@ export type DepositProductInput = {
 export type DepositProductList = {
   allowed?: Maybe<Array<Maybe<DepositProduct>>>;
   error?: Maybe<QueryError>;
-  notAllowed?: Maybe<Array<Maybe<DepositProduct>>>;
+  notAllowed?: Maybe<Array<Maybe<DepositProductListData>>>;
+};
+
+export type DepositProductListData = {
+  data?: Maybe<DepositProduct>;
+  error?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type DepositProductResult = {
@@ -4690,12 +4708,12 @@ export type KymCoopUnionAddLus =
   | KymCoopUnionInstitutionInformationLus;
 
 export type KymCoopUnionAddSectionStatus = {
-  accountOperatorDetails?: Maybe<Array<Maybe<KymIndAddSectionStatus>>>;
-  bodDetails?: Maybe<Array<Maybe<KymIndAddSectionStatus>>>;
-  centralRepresentativeDetails?: Maybe<KymIndAddSectionStatus>;
-  declaration?: Maybe<KymIndAddSectionStatus>;
-  economicDetails?: Maybe<KymIndAddSectionStatus>;
-  institutionInformation?: Maybe<KymIndAddSectionStatus>;
+  accountOperatorDetails?: Maybe<Array<Maybe<KymFormStatus>>>;
+  bodDetails?: Maybe<Array<Maybe<KymFormStatus>>>;
+  centralRepresentativeDetails?: Maybe<KymFormStatus>;
+  declaration?: Maybe<KymFormStatus>;
+  economicDetails?: Maybe<KymFormStatus>;
+  institutionInformation?: Maybe<KymFormStatus>;
 };
 
 export type KymCoopUnionBodDetails = {
@@ -5215,7 +5233,7 @@ export type KymCooperativeUnionPersonnelDetails = {
 export type KymCooperativeUnionPersonnelDetailsResult = {
   data?: Maybe<KymCooperativeUnionPersonnelDetails>;
   id?: Maybe<Scalars['ID']>;
-  sectionStatus?: Maybe<Array<Maybe<KymIndAddSectionStatus>>>;
+  sectionStatus?: Maybe<Array<Maybe<KymFormStatus>>>;
 };
 
 export type KymDocuments = {
@@ -5264,6 +5282,17 @@ export type KymFamilyMemberDetailsInThisCooperativeType = {
   relationshipId: Scalars['ID'];
 };
 
+export type KymFormSectionStatus = {
+  errors?: Maybe<Array<Scalars['String']>>;
+  incomplete?: Maybe<Array<Scalars['String']>>;
+};
+
+export type KymFormStatus = {
+  errors?: Maybe<Scalars['InvalidData']>;
+  id?: Maybe<Scalars['ID']>;
+  sectionStatus?: Maybe<KymFormSectionStatus>;
+};
+
 export type KymIdentification = {
   fields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
   id?: InputMaybe<Scalars['ID']>;
@@ -5300,7 +5329,7 @@ export type KymIndAddError = KymIndAddInvalidDataError;
 
 export type KymIndAddFormStatus = {
   lastUpdated?: Maybe<KymIndAddLus>;
-  sectionStatus?: Maybe<KymIndAddSectionStatus>;
+  sectionStatus?: Maybe<KymFormStatus>;
 };
 
 export type KymIndAddInvalidDataError = {
@@ -5325,12 +5354,6 @@ export type KymIndAddResult = {
   query?: Maybe<KymIndQuery>;
   record?: Maybe<KymIndGetResult>;
   recordId: Scalars['ID'];
-};
-
-export type KymIndAddSectionStatus = {
-  errors?: Maybe<Array<Maybe<SectionWiseError>>>;
-  id?: Maybe<Scalars['ID']>;
-  incomplete?: Maybe<Array<Maybe<IncompleteSection>>>;
 };
 
 export type KymIndCooperativeLus = {
@@ -5405,7 +5428,7 @@ export type KymIndFormData = {
 export type KymIndFormState = {
   formData?: Maybe<KymIndFormData>;
   lastUpdated: KymIndAddLus;
-  sectionStatus?: Maybe<KymIndAddSectionStatus>;
+  sectionStatus?: Maybe<KymFormStatus>;
 };
 
 export type KymIndFormStateQuery = {
@@ -6457,9 +6480,11 @@ export type Member = Base & {
   name?: Maybe<Scalars['Localized']>;
   objState: ObjState;
   profile?: Maybe<MemberProfile>;
-  profilePicUrl?: Maybe<Array<Maybe<Scalars['String']>>>;
+  profilePic?: Maybe<Scalars['String']>;
+  profilePicUrl?: Maybe<Scalars['String']>;
   share?: Maybe<MemberShare>;
-  signaturePicUrl?: Maybe<Array<Maybe<Scalars['String']>>>;
+  signaturePicUrl?: Maybe<Scalars['String']>;
+  signaturepic?: Maybe<Scalars['String']>;
   type: KymMemberTypesEnum;
 };
 
@@ -6992,12 +7017,6 @@ export type OrganizationStatistics = {
   totalMembers: Scalars['Int'];
 };
 
-export enum Payment_Mode {
-  Account = 'ACCOUNT',
-  BankVoucher = 'BANK_VOUCHER',
-  Cash = 'CASH',
-}
-
 export type PageInfo = {
   endCursor?: Maybe<Scalars['Cursor']>;
   hasNextPage: Scalars['Boolean'];
@@ -7424,6 +7443,16 @@ export type ServerError = {
   message: Scalars['String'];
 };
 
+export type ServiceCharge = {
+  amount?: Maybe<Scalars['Amount']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type ServiceChargeInput = {
+  amount?: InputMaybe<Scalars['Amount']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
 export type ServiceType = {
   amount?: InputMaybe<Scalars['Amount']>;
   ledgerName?: InputMaybe<Scalars['String']>;
@@ -7497,7 +7526,8 @@ export type ShareBonusSettingsInput = {
 };
 
 export type ShareCharge = {
-  charge?: Maybe<Scalars['Float']>;
+  charge?: Maybe<Scalars['String']>;
+  ledgerMapping?: Maybe<Scalars['ID']>;
   maxShare?: Maybe<Scalars['Int']>;
   minShare?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
@@ -7505,7 +7535,8 @@ export type ShareCharge = {
 };
 
 export type ShareChargeInput = {
-  charge?: InputMaybe<Scalars['Float']>;
+  charge?: InputMaybe<Scalars['String']>;
+  ledgerMapping?: InputMaybe<Scalars['ID']>;
   maxShare?: InputMaybe<Scalars['Int']>;
   minShare?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
@@ -7516,6 +7547,11 @@ export enum ShareChargeType {
   FixedAmount = 'FIXED_AMOUNT',
   Percentage = 'PERCENTAGE',
 }
+
+export type ShareCharges = {
+  charge?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+};
 
 export type ShareDividendSettingsInput = {
   accountForFractionalDividends?: InputMaybe<Scalars['ID']>;
@@ -7578,17 +7614,23 @@ export type ShareNumber = {
   start?: Maybe<Scalars['Int']>;
 };
 
+export enum SharePaymentMode {
+  Account = 'ACCOUNT',
+  BankVoucherOrCheque = 'BANK_VOUCHER_OR_CHEQUE',
+  Cash = 'CASH',
+}
+
 export type SharePurchaseError = InvalidDataError;
 
 export type SharePurchaseInput = {
-  accountId?: InputMaybe<Scalars['String']>;
-  bankId?: InputMaybe<Scalars['String']>;
+  account?: InputMaybe<ShareTransactionAccountPayment>;
+  bankVoucher?: InputMaybe<ShareTransactionVoucherPayment>;
+  cash?: InputMaybe<ShareTransactionCash>;
   extraFee?: InputMaybe<Array<InputMaybe<ShareExtraChargesInput>>>;
   memberId: Scalars['String'];
-  paymentMode?: InputMaybe<Payment_Mode>;
+  paymentMode?: InputMaybe<SharePaymentMode>;
   shareCount: Scalars['Int'];
   totalAmount?: InputMaybe<Scalars['String']>;
-  voucherNumber?: InputMaybe<Scalars['String']>;
 };
 
 export type SharePurchaseResult = {
@@ -7600,6 +7642,7 @@ export type SharePurchaseResult = {
 
 export type ShareQuery = {
   balance?: Maybe<ShareBalanceConnection>;
+  charges?: Maybe<Array<Maybe<ShareCharges>>>;
   history?: Maybe<ShareHistory>;
   register?: Maybe<ShareRegisterConnection>;
 };
@@ -7607,6 +7650,11 @@ export type ShareQuery = {
 export type ShareQueryBalanceArgs = {
   filter?: InputMaybe<ShareBalanceFilter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type ShareQueryChargesArgs = {
+  shareCount: Scalars['Int'];
+  transactionType: Share_Transaction_Direction;
 };
 
 export type ShareQueryHistoryArgs = {
@@ -7629,7 +7677,7 @@ export type ShareRegister = {
   id?: Maybe<Scalars['ID']>;
   member?: Maybe<Member>;
   memberId?: Maybe<Scalars['String']>;
-  paymentMode?: Maybe<Payment_Mode>;
+  paymentMode?: Maybe<SharePaymentMode>;
   shareAmount?: Maybe<Scalars['Float']>;
   startNumber: Scalars['Int'];
   status?: Maybe<Share_Status>;
@@ -7671,14 +7719,14 @@ export type ShareReturnChargesResult = {
 export type ShareReturnError = InvalidDataError;
 
 export type ShareReturnInput = {
-  accountId?: InputMaybe<Scalars['String']>;
-  bankId?: InputMaybe<Scalars['String']>;
+  account?: InputMaybe<ShareTransactionAccountPayment>;
+  bankCheque?: InputMaybe<ShareTransactionChequePayment>;
+  cash?: InputMaybe<ShareTransactionCash>;
   extraFee?: InputMaybe<Array<InputMaybe<ShareExtraChargesInput>>>;
   memberId: Scalars['String'];
   noOfReturnedShares: Scalars['Int'];
-  paymentMode?: InputMaybe<Payment_Mode>;
+  paymentMode?: InputMaybe<SharePaymentMode>;
   totalAmount?: InputMaybe<Scalars['String']>;
-  voucherNumber?: InputMaybe<Scalars['String']>;
 };
 
 export type ShareReturnResult = {
@@ -7794,11 +7842,45 @@ export type ShareStatementReportSettingsType = {
   periodType: ReportPeriodType;
 };
 
+export type ShareTransactionAccountPayment = {
+  accountId: Scalars['ID'];
+  note?: InputMaybe<Scalars['String']>;
+};
+
+export type ShareTransactionCash = {
+  cashPaid: Scalars['String'];
+  denominations?: InputMaybe<Array<Denomination>>;
+  disableDenomination: Scalars['Boolean'];
+  fileUpload?: InputMaybe<Scalars['String']>;
+  note?: InputMaybe<Scalars['String']>;
+  returned_amount: Scalars['String'];
+  sourceOfFund?: InputMaybe<Scalars['String']>;
+  total: Scalars['String'];
+};
+
+export type ShareTransactionChequePayment = {
+  bankId: Scalars['ID'];
+  chequeNo: Scalars['String'];
+  note?: InputMaybe<Scalars['String']>;
+};
+
 export enum ShareTransactionType {
   All = 'ALL',
   Issue = 'ISSUE',
   Return = 'RETURN',
 }
+
+export type ShareTransactionVoucherPayment = {
+  bankId: Scalars['ID'];
+  citizenshipDocument?: InputMaybe<Scalars['String']>;
+  depositedBy: ShareVoucherDepositedBy;
+  depositedByOtherName?: InputMaybe<Scalars['String']>;
+  depositedDate: Scalars['String'];
+  fileUpload?: InputMaybe<Scalars['String']>;
+  note?: InputMaybe<Scalars['String']>;
+  sourceOfFund?: InputMaybe<Scalars['String']>;
+  voucherId: Scalars['String'];
+};
 
 export type ShareTransferSettingsInput = {
   accountForShareFund?: InputMaybe<Scalars['ID']>;
@@ -7815,6 +7897,11 @@ export type ShareTransferSettingsResult = {
 export enum ShareTransferType {
   MemberToMember = 'MEMBER_TO_MEMBER',
   ShareRefund = 'SHARE_REFUND',
+}
+
+export enum ShareVoucherDepositedBy {
+  Other = 'OTHER',
+  Self = 'SELF',
 }
 
 export type SisterConcernDetails = {
@@ -7937,6 +8024,7 @@ export type TransactionMutation = {
 export type TransactionMutationAddMemberToAgentArgs = {
   agentId: Scalars['String'];
   data?: InputMaybe<AssignMembersInput>;
+  override?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type TransactionMutationAgentTodayListArgs = {
@@ -8436,10 +8524,43 @@ export type SetAccountDocumentDataMutation = {
 export type SetAddMemberToAgentDataMutationVariables = Exact<{
   agentId: Scalars['String'];
   data?: InputMaybe<AssignMembersInput>;
+  override?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type SetAddMemberToAgentDataMutation = {
-  transaction: { addMemberToAgent?: { data?: { id: string } | null } | null };
+  transaction: {
+    addMemberToAgent?: {
+      data?: { id: string } | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
+export type SetAgentTodayListDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data?: InputMaybe<
+    Array<InputMaybe<AgentTodayListInput>> | InputMaybe<AgentTodayListInput>
+  >;
+}>;
+
+export type SetAgentTodayListDataMutation = {
+  transaction: {
+    agentTodayList?: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
 };
 
 export type LoginMutationVariables = Exact<{
@@ -9698,6 +9819,28 @@ export type SetSettingsUserDataMutation = {
   settings: { myraUser?: { add?: { recordId?: string | null } | null } | null };
 };
 
+export type SetPreferenceMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: UserPreferenceInput;
+}>;
+
+export type SetPreferenceMutation = {
+  user: {
+    preference?: {
+      update?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type AddSharePurchaseMutationVariables = Exact<{
   data: SharePurchaseInput;
 }>;
@@ -9793,7 +9936,10 @@ export type GetProductListQuery = {
       depositProduct?: {
         getProductList?: {
           allowed?: Array<{ id: string; productName: string } | null> | null;
-          notAllowed?: Array<{ id: string; productName: string } | null> | null;
+          notAllowed?: Array<{
+            error?: Array<string | null> | null;
+            data?: { id: string; productName: string } | null;
+          } | null> | null;
         } | null;
       } | null;
     } | null;
@@ -9843,6 +9989,7 @@ export type GetAccountOpenProductDetailsQuery = {
             percentageOfDeposit?: number | null;
             alternativeChannels?: boolean | null;
             atmFacility?: boolean | null;
+            isForMinors?: boolean | null;
             supportMultiple?: boolean | null;
             staffProduct?: boolean | null;
             withdrawRestricted?: boolean | null;
@@ -10015,6 +10162,92 @@ export type GetAccountDocumentsListQuery = {
   };
 };
 
+export type GetAccountOpenProductCriteriaQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+export type GetAccountOpenProductCriteriaQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        getProductCriteria?: {
+          data?: {
+            gender?: Array<string | null> | null;
+            minAge?: number | null;
+            maxAge?: number | null;
+            ethnicity?: Array<string | null> | null;
+            educationQualification?: Array<string | null> | null;
+            maritalStatus?: Array<string | null> | null;
+            foreignEmployment?: boolean | null;
+            occupation?: Array<string | null> | null;
+            institutionType?: Array<string | null> | null;
+            cooperativeUnion?: Array<string | null> | null;
+            cooperativeType?: Array<string | null> | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAccountOpenProductPenaltyQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+export type GetAccountOpenProductPenaltyQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        getPenaltyRebateInfo?: {
+          data?: {
+            penalty?: {
+              dayAfterInstallmentDate?: number | null;
+              minimumAmount?: string | null;
+              rateType?: PenaltyRateType | null;
+              flatRatePenalty?: number | null;
+              penaltyRate?: number | null;
+              penaltyAmount?: any | null;
+            } | null;
+            rebate?: {
+              daysBeforeInstallmentDate?: number | null;
+              noOfInstallment?: number | null;
+              rebateAmount?: any | null;
+              percentage?: number | null;
+            } | null;
+            prematurePenalty?: {
+              penaltyDateType?: PrematurePenaltyDateType | null;
+              noOfDays?: number | null;
+              penaltyLedgerMapping?: string | null;
+              penaltyAmount?: any | null;
+              penaltyRate?: number | null;
+            } | null;
+            withdrawPenalty?: {
+              penaltyLedgerMapping?: string | null;
+              penaltyAmount?: any | null;
+              penaltyRate?: number | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAccountOpenMinorListQueryVariables = Exact<{
+  memberId: Scalars['ID'];
+}>;
+
+export type GetAccountOpenMinorListQuery = {
+  account: {
+    listMinors?: {
+      data?: Array<{
+        fullName?: Record<'local' | 'en' | 'np', string> | null;
+        familyMemberId?: string | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never }>;
 
 export type AllAdministrationQuery = {
@@ -10095,6 +10328,7 @@ export type GetAgentAssignedMemberListDataQuery = {
           id: string;
           assignedDate?: string | null;
           member?: {
+            id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
           } | null;
           account?: { id: string } | null;
@@ -10107,6 +10341,22 @@ export type GetAgentAssignedMemberListDataQuery = {
         endCursor?: string | null;
       } | null;
     };
+  };
+};
+
+export type GetAgentTodayListDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetAgentTodayListDataQuery = {
+  transaction: {
+    listAgentTask?: {
+      record?: Array<{
+        amount?: any | null;
+        member?: { id: string } | null;
+        account?: { id: string } | null;
+      } | null> | null;
+    } | null;
   };
 };
 
@@ -10514,17 +10764,7 @@ export type GetCooperativeUnionKymEditDataQuery = {
                 } | null;
               } | null;
             } | null;
-            sectionStatus?: {
-              id?: string | null;
-              errors?: Array<{
-                sectionName?: string | null;
-                errors?: Record<string, Array<string>> | null;
-              } | null> | null;
-              incomplete?: Array<{
-                sectionName?: string | null;
-                incomplete?: Array<string | null> | null;
-              } | null> | null;
-            } | null;
+            sectionStatus?: { id?: string | null } | null;
           } | null;
         } | null;
       } | null;
@@ -10583,17 +10823,7 @@ export type GetEconimicDetailsEditDataQuery = {
               riskManagementCost?: number | null;
               deferredTaxExpense?: number | null;
             } | null;
-            sectionStatus?: {
-              id?: string | null;
-              errors?: Array<{
-                sectionName?: string | null;
-                errors?: Record<string, Array<string>> | null;
-              } | null> | null;
-              incomplete?: Array<{
-                sectionName?: string | null;
-                incomplete?: Array<string | null> | null;
-              } | null> | null;
-            } | null;
+            sectionStatus?: { id?: string | null } | null;
           } | null;
         } | null;
       } | null;
@@ -10657,17 +10887,7 @@ export type GetBoardOfDirectorsDetailsListQuery = {
                 } | null> | null;
               } | null> | null;
             } | null;
-            sectionStatus?: Array<{
-              id?: string | null;
-              errors?: Array<{
-                sectionName?: string | null;
-                errors?: Record<string, Array<string>> | null;
-              } | null> | null;
-              incomplete?: Array<{
-                sectionName?: string | null;
-                incomplete?: Array<string | null> | null;
-              } | null> | null;
-            } | null> | null;
+            sectionStatus?: Array<{ id?: string | null } | null> | null;
           } | null;
         } | null;
       } | null;
@@ -10731,17 +10951,7 @@ export type GetAccountOperatorDetailsListQuery = {
                 } | null> | null;
               } | null> | null;
             } | null;
-            sectionStatus?: Array<{
-              id?: string | null;
-              errors?: Array<{
-                sectionName?: string | null;
-                errors?: Record<string, Array<string>> | null;
-              } | null> | null;
-              incomplete?: Array<{
-                sectionName?: string | null;
-                incomplete?: Array<string | null> | null;
-              } | null> | null;
-            } | null> | null;
+            sectionStatus?: Array<{ id?: string | null } | null> | null;
           } | null;
         } | null;
       } | null;
@@ -10805,17 +11015,7 @@ export type GetCentralRepresentativeDetailsQuery = {
                 trainingOrganization?: string | null;
               } | null> | null;
             } | null;
-            sectionStatus?: {
-              id?: string | null;
-              errors?: Array<{
-                sectionName?: string | null;
-                errors?: Record<string, Array<string>> | null;
-              } | null> | null;
-              incomplete?: Array<{
-                sectionName?: string | null;
-                incomplete?: Array<string | null> | null;
-              } | null> | null;
-            } | null;
+            sectionStatus?: { id?: string | null } | null;
           } | null;
         } | null;
       } | null;
@@ -10831,68 +11031,7 @@ export type GetCoopUnionSectionStatusQuery = {
   members: {
     cooperativeUnion?: {
       formState?: {
-        sectionStatus?: {
-          institutionInformation?: {
-            incomplete?: Array<{
-              sectionName?: string | null;
-              incomplete?: Array<string | null> | null;
-            } | null> | null;
-            errors?: Array<{
-              sectionName?: string | null;
-              errors?: Record<string, Array<string>> | null;
-            } | null> | null;
-          } | null;
-          economicDetails?: {
-            incomplete?: Array<{
-              sectionName?: string | null;
-              incomplete?: Array<string | null> | null;
-            } | null> | null;
-            errors?: Array<{
-              sectionName?: string | null;
-              errors?: Record<string, Array<string>> | null;
-            } | null> | null;
-          } | null;
-          bodDetails?: Array<{
-            incomplete?: Array<{
-              sectionName?: string | null;
-              incomplete?: Array<string | null> | null;
-            } | null> | null;
-            errors?: Array<{
-              sectionName?: string | null;
-              errors?: Record<string, Array<string>> | null;
-            } | null> | null;
-          } | null> | null;
-          accountOperatorDetails?: Array<{
-            incomplete?: Array<{
-              sectionName?: string | null;
-              incomplete?: Array<string | null> | null;
-            } | null> | null;
-            errors?: Array<{
-              sectionName?: string | null;
-              errors?: Record<string, Array<string>> | null;
-            } | null> | null;
-          } | null> | null;
-          centralRepresentativeDetails?: {
-            incomplete?: Array<{
-              sectionName?: string | null;
-              incomplete?: Array<string | null> | null;
-            } | null> | null;
-            errors?: Array<{
-              sectionName?: string | null;
-              errors?: Record<string, Array<string>> | null;
-            } | null> | null;
-          } | null;
-          declaration?: {
-            incomplete?: Array<{
-              sectionName?: string | null;
-              incomplete?: Array<string | null> | null;
-            } | null> | null;
-            errors?: Array<{
-              sectionName?: string | null;
-              errors?: Record<string, Array<string>> | null;
-            } | null> | null;
-          } | null;
-        } | null;
+        sectionStatus?: { __typename: 'KymCoopUnionAddSectionStatus' } | null;
       } | null;
     } | null;
   };
@@ -11524,8 +11663,8 @@ export type GetMemberListQuery = {
           name?: Record<'local' | 'en' | 'np', string> | null;
           code: string;
           type: KymMemberTypesEnum;
-          profilePicUrl?: Array<string | null> | null;
-          signaturePicUrl?: Array<string | null> | null;
+          profilePicUrl?: string | null;
+          signaturePicUrl?: string | null;
           contact?: string | null;
           createdAt: string;
           dateJoined?: string | null;
@@ -11604,15 +11743,7 @@ export type GetKymFormStatusQuery = {
   members: {
     individual?: {
       formState?: {
-        data?: {
-          sectionStatus?: {
-            id?: string | null;
-            errors?: Array<{
-              sectionName?: string | null;
-              errors?: Record<string, Array<string>> | null;
-            } | null> | null;
-          } | null;
-        } | null;
+        data?: { sectionStatus?: { id?: string | null } | null } | null;
       } | null;
     } | null;
   };
@@ -11910,8 +12041,8 @@ export type GetMemberDetailsQuery = {
         name?: Record<'local' | 'en' | 'np', string> | null;
         code: string;
         contact?: string | null;
-        profilePicUrl?: Array<string | null> | null;
-        signaturePicUrl?: Array<string | null> | null;
+        profilePicUrl?: string | null;
+        signaturePicUrl?: string | null;
         address?: {
           state?: Record<'local' | 'en' | 'np', string> | null;
           district?: Record<'local' | 'en' | 'np', string> | null;
@@ -12593,6 +12724,7 @@ export type GetDepositProductSettingsEditDataQuery = {
           data?: {
             productName?: string | null;
             nature?: NatureOfDepositProduct | null;
+            description?: string | null;
             typeOfMember?: Array<KymMemberTypesEnum | null> | null;
             criteria?: Array<CriteriaSection | null> | null;
             minAge?: number | null;
@@ -12639,9 +12771,6 @@ export type GetDepositProductSettingsEditDataQuery = {
             } | null;
             penaltyData?: {
               dayAfterInstallmentDate?: number | null;
-              minimumAmount?: string | null;
-              rateType?: PenaltyRateType | null;
-              flatRatePenalty?: number | null;
               penaltyRate?: number | null;
               penaltyAmount?: any | null;
             } | null;
@@ -12682,6 +12811,11 @@ export type GetDepositProductSettingsEditDataQuery = {
               duration?: string | null;
               condition?: string | null;
             } | null> | null;
+            withdrawPenalty?: {
+              penaltyLedgerMapping?: string | null;
+              penaltyAmount?: any | null;
+              penaltyRate?: number | null;
+            } | null;
             prematurePenalty?: {
               penaltyDateType?: PrematurePenaltyDateType | null;
               noOfDays?: number | null;
@@ -12787,14 +12921,14 @@ export type GetSettingsShareIssueChargesDataQuery = {
             minShare?: number | null;
             maxShare?: number | null;
             type?: ShareChargeType | null;
-            charge?: number | null;
+            charge?: string | null;
           } | null> | null;
           other?: Array<{
             name?: string | null;
             minShare?: number | null;
             maxShare?: number | null;
             type?: ShareChargeType | null;
-            charge?: number | null;
+            charge?: string | null;
           } | null> | null;
         } | null;
       } | null;
@@ -12816,7 +12950,7 @@ export type GetSettingsShareReturnChargesDataQuery = {
             minShare?: number | null;
             maxShare?: number | null;
             type?: ShareChargeType | null;
-            charge?: number | null;
+            charge?: string | null;
           } | null> | null;
         } | null;
       } | null;
@@ -13046,7 +13180,7 @@ export type GetShareHistoryQuery = {
         balance?: number | null;
         shareAmount?: number | null;
         totalAmount?: number | null;
-        paymentMode?: Payment_Mode | null;
+        paymentMode?: SharePaymentMode | null;
         bankId?: string | null;
         voucherNumber?: string | null;
         accountId?: string | null;
@@ -13065,6 +13199,20 @@ export type GetShareHistoryQuery = {
         };
       } | null;
     } | null;
+  };
+};
+
+export type GetShareChargesQueryVariables = Exact<{
+  transactionType: Share_Transaction_Direction;
+  shareCount: Scalars['Int'];
+}>;
+
+export type GetShareChargesQuery = {
+  share: {
+    charges?: Array<{
+      name?: string | null;
+      charge?: string | null;
+    } | null> | null;
   };
 };
 
@@ -13329,16 +13477,19 @@ export const useSetAccountDocumentDataMutation = <
     options
   );
 export const SetAddMemberToAgentDataDocument = `
-    mutation setAddMemberToAgentData($agentId: String!, $data: AssignMembersInput) {
+    mutation setAddMemberToAgentData($agentId: String!, $data: AssignMembersInput, $override: Boolean) {
   transaction {
-    addMemberToAgent(agentId: $agentId, data: $data) {
+    addMemberToAgent(agentId: $agentId, data: $data, override: $override) {
       data {
         id
+      }
+      error {
+        ...MutationError
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useSetAddMemberToAgentDataMutation = <
   TError = unknown,
   TContext = unknown
@@ -13361,6 +13512,41 @@ export const useSetAddMemberToAgentDataMutation = <
       SetAddMemberToAgentDataMutation,
       SetAddMemberToAgentDataMutationVariables
     >(SetAddMemberToAgentDataDocument),
+    options
+  );
+export const SetAgentTodayListDataDocument = `
+    mutation setAgentTodayListData($id: ID!, $data: [AgentTodayListInput]) {
+  transaction {
+    agentTodayList(id: $id, data: $data) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetAgentTodayListDataMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    SetAgentTodayListDataMutation,
+    TError,
+    SetAgentTodayListDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAgentTodayListDataMutation,
+    TError,
+    SetAgentTodayListDataMutationVariables,
+    TContext
+  >(
+    ['setAgentTodayListData'],
+    useAxios<
+      SetAgentTodayListDataMutation,
+      SetAgentTodayListDataMutationVariables
+    >(SetAgentTodayListDataDocument),
     options
   );
 export const LoginDocument = `
@@ -15868,6 +16054,40 @@ export const useSetSettingsUserDataMutation = <
     ),
     options
   );
+export const SetPreferenceDocument = `
+    mutation setPreference($id: ID!, $data: UserPreferenceInput!) {
+  user {
+    preference {
+      update(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetPreferenceMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetPreferenceMutation,
+    TError,
+    SetPreferenceMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetPreferenceMutation,
+    TError,
+    SetPreferenceMutationVariables,
+    TContext
+  >(
+    ['setPreference'],
+    useAxios<SetPreferenceMutation, SetPreferenceMutationVariables>(
+      SetPreferenceDocument
+    ),
+    options
+  );
 export const AddSharePurchaseDocument = `
     mutation addSharePurchase($data: SharePurchaseInput!) {
   share {
@@ -16115,8 +16335,11 @@ export const GetProductListDocument = `
             productName
           }
           notAllowed {
-            id
-            productName
+            data {
+              id
+              productName
+            }
+            error
           }
         }
       }
@@ -16227,6 +16450,7 @@ export const GetAccountOpenProductDetailsDocument = `
             percentageOfDeposit
             alternativeChannels
             atmFacility
+            isForMinors
             supportMultiple
             staffProduct
             withdrawRestricted
@@ -16410,6 +16634,128 @@ export const useGetAccountDocumentsListQuery = <
     >(GetAccountDocumentsListDocument).bind(null, variables),
     options
   );
+export const GetAccountOpenProductCriteriaDocument = `
+    query getAccountOpenProductCriteria($productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        getProductCriteria(productId: $productId) {
+          data {
+            gender
+            minAge
+            maxAge
+            ethnicity
+            educationQualification
+            maritalStatus
+            foreignEmployment
+            occupation
+            institutionType
+            cooperativeUnion
+            cooperativeType
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountOpenProductCriteriaQuery = <
+  TData = GetAccountOpenProductCriteriaQuery,
+  TError = unknown
+>(
+  variables: GetAccountOpenProductCriteriaQueryVariables,
+  options?: UseQueryOptions<GetAccountOpenProductCriteriaQuery, TError, TData>
+) =>
+  useQuery<GetAccountOpenProductCriteriaQuery, TError, TData>(
+    ['getAccountOpenProductCriteria', variables],
+    useAxios<
+      GetAccountOpenProductCriteriaQuery,
+      GetAccountOpenProductCriteriaQueryVariables
+    >(GetAccountOpenProductCriteriaDocument).bind(null, variables),
+    options
+  );
+export const GetAccountOpenProductPenaltyDocument = `
+    query getAccountOpenProductPenalty($productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        getPenaltyRebateInfo(productId: $productId) {
+          data {
+            penalty {
+              dayAfterInstallmentDate
+              minimumAmount
+              rateType
+              flatRatePenalty
+              penaltyRate
+              penaltyAmount
+            }
+            rebate {
+              daysBeforeInstallmentDate
+              noOfInstallment
+              rebateAmount
+              percentage
+            }
+            prematurePenalty {
+              penaltyDateType
+              noOfDays
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+            withdrawPenalty {
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountOpenProductPenaltyQuery = <
+  TData = GetAccountOpenProductPenaltyQuery,
+  TError = unknown
+>(
+  variables: GetAccountOpenProductPenaltyQueryVariables,
+  options?: UseQueryOptions<GetAccountOpenProductPenaltyQuery, TError, TData>
+) =>
+  useQuery<GetAccountOpenProductPenaltyQuery, TError, TData>(
+    ['getAccountOpenProductPenalty', variables],
+    useAxios<
+      GetAccountOpenProductPenaltyQuery,
+      GetAccountOpenProductPenaltyQueryVariables
+    >(GetAccountOpenProductPenaltyDocument).bind(null, variables),
+    options
+  );
+export const GetAccountOpenMinorListDocument = `
+    query getAccountOpenMinorList($memberId: ID!) {
+  account {
+    listMinors(memberId: $memberId) {
+      data {
+        fullName
+        familyMemberId
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountOpenMinorListQuery = <
+  TData = GetAccountOpenMinorListQuery,
+  TError = unknown
+>(
+  variables: GetAccountOpenMinorListQueryVariables,
+  options?: UseQueryOptions<GetAccountOpenMinorListQuery, TError, TData>
+) =>
+  useQuery<GetAccountOpenMinorListQuery, TError, TData>(
+    ['getAccountOpenMinorList', variables],
+    useAxios<
+      GetAccountOpenMinorListQuery,
+      GetAccountOpenMinorListQueryVariables
+    >(GetAccountOpenMinorListDocument).bind(null, variables),
+    options
+  );
 export const AllAdministrationDocument = `
     query allAdministration {
   administration {
@@ -16522,6 +16868,7 @@ export const GetAgentAssignedMemberListDataDocument = `
         node {
           id
           member {
+            id
             name
           }
           account {
@@ -16556,6 +16903,37 @@ export const useGetAgentAssignedMemberListDataQuery = <
       GetAgentAssignedMemberListDataQuery,
       GetAgentAssignedMemberListDataQueryVariables
     >(GetAgentAssignedMemberListDataDocument).bind(null, variables),
+    options
+  );
+export const GetAgentTodayListDataDocument = `
+    query getAgentTodayListData($id: ID!) {
+  transaction {
+    listAgentTask(id: $id) {
+      record {
+        member {
+          id
+        }
+        account {
+          id
+        }
+        amount
+      }
+    }
+  }
+}
+    `;
+export const useGetAgentTodayListDataQuery = <
+  TData = GetAgentTodayListDataQuery,
+  TError = unknown
+>(
+  variables: GetAgentTodayListDataQueryVariables,
+  options?: UseQueryOptions<GetAgentTodayListDataQuery, TError, TData>
+) =>
+  useQuery<GetAgentTodayListDataQuery, TError, TData>(
+    ['getAgentTodayListData', variables],
+    useAxios<GetAgentTodayListDataQuery, GetAgentTodayListDataQueryVariables>(
+      GetAgentTodayListDataDocument
+    ).bind(null, variables),
     options
   );
 export const GetMeDocument = `
@@ -16985,14 +17363,6 @@ export const GetCooperativeUnionKymEditDataDocument = `
             }
             sectionStatus {
               id
-              errors {
-                sectionName
-                errors
-              }
-              incomplete {
-                sectionName
-                incomplete
-              }
             }
           }
         }
@@ -17066,14 +17436,6 @@ export const GetEconimicDetailsEditDataDocument = `
             }
             sectionStatus {
               id
-              errors {
-                sectionName
-                errors
-              }
-              incomplete {
-                sectionName
-                incomplete
-              }
             }
           }
         }
@@ -17152,14 +17514,6 @@ export const GetBoardOfDirectorsDetailsListDocument = `
             }
             sectionStatus {
               id
-              errors {
-                sectionName
-                errors
-              }
-              incomplete {
-                sectionName
-                incomplete
-              }
             }
           }
         }
@@ -17238,14 +17592,6 @@ export const GetAccountOperatorDetailsListDocument = `
             }
             sectionStatus {
               id
-              errors {
-                sectionName
-                errors
-              }
-              incomplete {
-                sectionName
-                incomplete
-              }
             }
           }
         }
@@ -17324,14 +17670,6 @@ export const GetCentralRepresentativeDetailsDocument = `
             }
             sectionStatus {
               id
-              errors {
-                sectionName
-                errors
-              }
-              incomplete {
-                sectionName
-                incomplete
-              }
             }
           }
         }
@@ -17361,66 +17699,7 @@ export const GetCoopUnionSectionStatusDocument = `
     cooperativeUnion {
       formState(id: $id) {
         sectionStatus {
-          institutionInformation {
-            incomplete {
-              sectionName
-              incomplete
-            }
-            errors {
-              sectionName
-              errors
-            }
-          }
-          economicDetails {
-            incomplete {
-              sectionName
-              incomplete
-            }
-            errors {
-              sectionName
-              errors
-            }
-          }
-          bodDetails {
-            incomplete {
-              sectionName
-              incomplete
-            }
-            errors {
-              sectionName
-              errors
-            }
-          }
-          accountOperatorDetails {
-            incomplete {
-              sectionName
-              incomplete
-            }
-            errors {
-              sectionName
-              errors
-            }
-          }
-          centralRepresentativeDetails {
-            incomplete {
-              sectionName
-              incomplete
-            }
-            errors {
-              sectionName
-              errors
-            }
-          }
-          declaration {
-            incomplete {
-              sectionName
-              incomplete
-            }
-            errors {
-              sectionName
-              errors
-            }
-          }
+          __typename
         }
       }
     }
@@ -18533,10 +18812,6 @@ export const GetKymFormStatusDocument = `
         data {
           sectionStatus {
             id
-            errors {
-              sectionName
-              errors
-            }
           }
         }
       }
@@ -19861,6 +20136,7 @@ export const GetDepositProductSettingsEditDataDocument = `
               prefix
               initialNo
             }
+            description
             typeOfMember
             criteria
             minAge
@@ -19882,9 +20158,6 @@ export const GetDepositProductSettingsEditDataDocument = `
             penalty
             penaltyData {
               dayAfterInstallmentDate
-              minimumAmount
-              rateType
-              flatRatePenalty
               penaltyRate
               penaltyAmount
             }
@@ -19935,6 +20208,11 @@ export const GetDepositProductSettingsEditDataDocument = `
             dormantSetup {
               duration
               condition
+            }
+            withdrawPenalty {
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
             }
             autoOpen
             allowLoan
@@ -20544,6 +20822,30 @@ export const useGetShareHistoryQuery = <
     ['getShareHistory', variables],
     useAxios<GetShareHistoryQuery, GetShareHistoryQueryVariables>(
       GetShareHistoryDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetShareChargesDocument = `
+    query getShareCharges($transactionType: SHARE_TRANSACTION_DIRECTION!, $shareCount: Int!) {
+  share {
+    charges(transactionType: $transactionType, shareCount: $shareCount) {
+      name
+      charge
+    }
+  }
+}
+    `;
+export const useGetShareChargesQuery = <
+  TData = GetShareChargesQuery,
+  TError = unknown
+>(
+  variables: GetShareChargesQueryVariables,
+  options?: UseQueryOptions<GetShareChargesQuery, TError, TData>
+) =>
+  useQuery<GetShareChargesQuery, TError, TData>(
+    ['getShareCharges', variables],
+    useAxios<GetShareChargesQuery, GetShareChargesQueryVariables>(
+      GetShareChargesDocument
     ).bind(null, variables),
     options
   );

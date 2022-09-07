@@ -7,3 +7,16 @@ mutation setSettingsUserData($id: ID!, $data: MyraUserInput) {
     }
   }
 }
+
+mutation setPreference($id: ID!, $data: UserPreferenceInput!) {
+  user {
+    preference {
+      update(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

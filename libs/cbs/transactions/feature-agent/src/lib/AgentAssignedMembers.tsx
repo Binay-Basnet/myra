@@ -7,14 +7,14 @@ import { Column, Table } from '@coop/shared/table';
 import { Box, DetailPageContentCard, Text } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-import { AddMemberModal, OverrideAlertModal } from '../components';
+import { AddMemberModal } from '../components';
 
 export const AgentAssignedMembers = () => {
   const [isAddMemberModalOpen, setIsAddMemberModalOpen] =
     useState<boolean>(false);
 
-  const [isOverrideMemberAlertOpen, setIsOverrideMemberAlertOpen] =
-    useState<boolean>(false);
+  // const [isOverrideMemberAlertOpen, setIsOverrideMemberAlertOpen] =
+  //   useState<boolean>(false);
 
   const { t } = useTranslation();
 
@@ -58,7 +58,7 @@ export const AgentAssignedMembers = () => {
                 textOverflow="ellipsis"
                 overflow="hidden"
               >
-                {props.getValue()}
+                {props.getValue() as string}
               </Text>
             </Box>
           );
@@ -108,14 +108,6 @@ export const AgentAssignedMembers = () => {
     // setIsOverrideMemberAlertOpen(true);
   };
 
-  const handleCancelOverrideMemberAlert = () => {
-    setIsOverrideMemberAlertOpen(false);
-  };
-
-  const handleConfirmOverrideMemberAlert = () => {
-    setIsOverrideMemberAlertOpen(false);
-  };
-
   return (
     <>
       <DetailPageContentCard
@@ -142,11 +134,11 @@ export const AgentAssignedMembers = () => {
         refetchAssignedMembersList={refetchAssignedMembersList}
       />
 
-      <OverrideAlertModal
+      {/* <OverrideAlertModal
         isOpen={isOverrideMemberAlertOpen}
         onCancel={handleCancelOverrideMemberAlert}
         onConfirm={handleConfirmOverrideMemberAlert}
-      />
+      /> */}
     </>
   );
 };

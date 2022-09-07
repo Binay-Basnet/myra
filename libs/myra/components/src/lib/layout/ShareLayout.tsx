@@ -33,7 +33,7 @@ const shareColumns = [
 const addButtoncolumns = [
   {
     title: 'shareLayoutSharePurchase',
-    link: '/share/share-purchase',
+    link: '/share/share-issue',
   },
   {
     title: 'shareLayoutShareReturn',
@@ -48,7 +48,7 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
   return (
     <Box display="flex">
       <Box width="275px" p="s24" flexShrink={0} position="fixed" zIndex={1}>
-        <Text fontSize="l1" fontWeight="600" color="gray.800">
+        <Text fontSize="l1" fontWeight="SemiBold" color="gray.800">
           {t['shareLayout']}
         </Text>
         <Divider my="s16" />

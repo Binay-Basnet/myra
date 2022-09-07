@@ -1,10 +1,17 @@
 import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import { AddIcon } from '@chakra-ui/icons';
 
 import { useGetNewIdMutation } from '@coop/cbs/data-access';
-import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
+import {
+  AddButtonList,
+  Box,
+  Button,
+  Divider,
+  Icon,
+  PopOverComponentForButtonList,
+  Text,
+} from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { TabColumn } from '../tab/TabforMemberPage';
@@ -26,6 +33,16 @@ const accountColumns = [
   },
 ];
 
+const addButtoncolumns = [
+  {
+    title: 'newAccountOpen',
+    link: '/accounts/account-open',
+  },
+  {
+    title: 'accountClose',
+    link: '/accounts/account-close',
+  },
+];
 export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
   const { t } = useTranslation();
   const router = useRouter();
@@ -38,7 +55,7 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
           {t['accountLayout']}
         </Text>
         <Divider my="s16" />
-        <Button
+        {/* <Button
           width="full"
           size="lg"
           justifyContent="start"
@@ -52,7 +69,26 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
           }
         >
           {t['accountLayoutNewAccount']}
-        </Button>
+        </Button> */}
+
+        <PopOverComponentForButtonList buttonLabel="accountLayoutNewAccount">
+          {addButtoncolumns.map((item, index) => {
+            return (
+              <Box key={`${item}${index}`}>
+                <AddButtonList
+                  label={t[item.title]}
+                  onClick={() =>
+                    newId
+                      .mutateAsync({})
+                      .then((res) =>
+                        router.push(`${item.link}/add/${res?.newId}`)
+                      )
+                  }
+                />
+              </Box>
+            );
+          })}
+        </PopOverComponentForButtonList>
         <Divider my="s16" />
         <TabColumn list={accountColumns} />
         <Divider my="s16" />

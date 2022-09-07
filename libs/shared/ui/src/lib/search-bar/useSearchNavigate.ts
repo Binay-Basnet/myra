@@ -26,16 +26,18 @@ export const useSearchNavigate = ({
 
   useEffect(() => {
     const arrowKeyEvent = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowDown') {
-        setFocusState((prev) =>
-          prev === 'EMPTY' ? 0 : prev === list.length - 1 ? 0 : prev + 1
-        );
-      }
+      if ((e.target as Element).id === 'search-input') {
+        if (e.key === 'ArrowDown') {
+          setFocusState((prev) =>
+            prev === 'EMPTY' ? 0 : prev === list.length - 1 ? 0 : prev + 1
+          );
+        }
 
-      if (e.key === 'ArrowUp') {
-        setFocusState((prev) =>
-          prev === 'EMPTY' ? 0 : prev === 0 ? 0 : prev - 1
-        );
+        if (e.key === 'ArrowUp') {
+          setFocusState((prev) =>
+            prev === 'EMPTY' ? 0 : prev === 0 ? 0 : prev - 1
+          );
+        }
       }
     };
 
@@ -46,14 +48,16 @@ export const useSearchNavigate = ({
 
   useEffect(() => {
     const enterKeyEvent = (e: KeyboardEvent) => {
-      if (e.key === 'Enter' && e.shiftKey && focusState !== 'EMPTY') {
-        window.open(list[focusState].link, '_blank');
-      } else if (e.key === 'Enter' && focusState !== 'EMPTY') {
-        router.push(list[focusState].link).then(() => {
-          setSearchAction('EMPTY');
-          searchBarRef?.current?.blur();
-          setInputSearch('');
-        });
+      if ((e.target as Element).id === 'search-input') {
+        if (e.key === 'Enter' && e.shiftKey && focusState !== 'EMPTY') {
+          window.open(list[focusState].link, '_blank');
+        } else if (e.key === 'Enter' && focusState !== 'EMPTY') {
+          router.push(list[focusState].link).then(() => {
+            setSearchAction('EMPTY');
+            searchBarRef?.current?.blur();
+            setInputSearch('');
+          });
+        }
       }
     };
 
