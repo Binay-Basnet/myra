@@ -35,7 +35,14 @@ export const AssignedMembersCard = () => {
             0}
         </Text>
 
-        <Button variant="link">View All Members</Button>
+        <Button
+          variant="link"
+          onClick={() =>
+            router.push(`/transactions/agent/${id}/assigned-members`)
+          }
+        >
+          View All Members
+        </Button>
       </Box>
       <Box
         display="flex"
@@ -50,9 +57,9 @@ export const AssignedMembersCard = () => {
           0
         </Text>
 
-        <Button variant="link" disabled>
+        {/* <Button variant="link" disabled>
           View Members
-        </Button>
+        </Button> */}
       </Box>
     </Grid>
   );
