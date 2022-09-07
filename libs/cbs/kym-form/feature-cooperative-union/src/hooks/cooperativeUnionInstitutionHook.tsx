@@ -80,9 +80,7 @@ export const useCooperativeUnionInstitution = ({
     }
   );
 
-  const sectionStatus =
-    editValues?.members?.cooperativeUnion?.formState?.formData
-      ?.institutionInformation?.sectionStatus.errors;
+  const sectionStatus = {};
 
   useEffect(() => {
     if (editValues) {

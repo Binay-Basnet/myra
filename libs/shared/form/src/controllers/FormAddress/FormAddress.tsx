@@ -1,5 +1,3 @@
-import { useFormContext } from 'react-hook-form';
-
 import { FormSection, GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -36,9 +34,9 @@ interface IAddressGroupProps {
 
 const AddressGroup = ({ name }: IAddressGroupProps) => {
   const { t } = useTranslation();
-  const {
-    formState: { errors },
-  } = useFormContext();
+  // const {
+  //   formState: { errors },
+  // } = useFormContext();
 
   const { provinceList, districtList, localityList, wardList } = useAddress({
     name,
@@ -50,12 +48,12 @@ const AddressGroup = ({ name }: IAddressGroupProps) => {
         name={`${name}.provinceId`}
         label={t['kymIndProvince']}
         options={provinceList}
-        errorText={errors?.[name]?.provinceId?.message}
+        // errorText={errors?.[name]?.provinceId?.message}
       />
       <FormSelect
         name={`${name}.districtId`}
         label={t['kymIndDistrict']}
-        errorText={errors?.[name]?.districtId?.message}
+        // errorText={errors?.[name]?.districtId?.message}
         options={districtList.map((d) => ({
           label: d.name,
           value: d.id,
@@ -64,7 +62,7 @@ const AddressGroup = ({ name }: IAddressGroupProps) => {
       <FormSelect
         name={`${name}.localGovernmentId`}
         label={t['kymIndLocalGovernment']}
-        errorText={errors?.[name]?.localGovernmentId?.message}
+        // errorText={errors?.[name]?.localGovernmentId?.message}
         options={localityList.map((d) => ({
           label: d.name,
           value: d.id,
@@ -73,7 +71,7 @@ const AddressGroup = ({ name }: IAddressGroupProps) => {
       <FormSelect
         name={`${name}.wardNo`}
         label={t['kymIndWardNo']}
-        errorText={errors?.[name]?.wardNo?.message}
+        // errorText={errors?.[name]?.wardNo?.message}
         options={wardList?.map((d) => ({
           label: d,
           value: d,
@@ -81,12 +79,12 @@ const AddressGroup = ({ name }: IAddressGroupProps) => {
       />
       <FormInput
         name={`${name}.locality`}
-        errorText={errors?.[name]?.locality?.message}
+        // errorText={errors?.[name]?.locality?.message}
         label={t['kymIndLocality']}
       />
       <FormInput
         name={`${name}.houseNo`}
-        errorText={errors?.[name]?.houseNo?.message}
+        // errorText={errors?.[name]?.houseNo?.message}
         label={t['kymIndHouseNo']}
       />
       <GridItem colSpan={2}>

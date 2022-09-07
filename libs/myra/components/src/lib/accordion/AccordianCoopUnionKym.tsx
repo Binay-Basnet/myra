@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { AiFillCloseCircle } from 'react-icons/ai';
-import { BsCheckCircleFill } from 'react-icons/bs';
-import { useRouter } from 'next/router';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { Box, Collapse, Text } from '@chakra-ui/react';
 
 import { KymInsAddSectionStatus } from '@coop/cbs/data-access';
-import { Icon } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { useGetSectionStatus } from '../hooks/useGetSectionStatus';
+// import { useGetSectionStatus } from '../hooks/useGetSectionStatus';
 
 const OrganizationInformation = [
   'kymCoopUnionAccBasicInformation',
@@ -46,29 +42,29 @@ interface AccordianProps {
   };
 }
 
-const cooperativeInfoObject: Record<typeof OrganizationInformation[0], string> =
-  {
-    kymCoopUnionAccBasicInformation: 'BASIC_INFORMATION',
-    kymCoopUnionAccRegisteredDetails: 'REGISTERED_DETAILS',
-    kymCoopUnionAccOperatingOfficeAddress: 'OPERATING_OFFICE_ADDRESS',
-    serviceCenterOfficeAddress: 'SERVICE_CENTER_OFFICE',
-    kymCoopUnionAccContactDetails: 'CONTACT_DETAILS',
-    kymCoopUnionAccBankAccountDetails: 'ANK_ACCOUNT_DETAILS',
-    kymCoopUnionAccApplicant: 'APPLICANT',
-  };
+// const cooperativeInfoObject: Record<typeof OrganizationInformation[0], string> =
+//   {
+//     kymCoopUnionAccBasicInformation: 'BASIC_INFORMATION',
+//     kymCoopUnionAccRegisteredDetails: 'REGISTERED_DETAILS',
+//     kymCoopUnionAccOperatingOfficeAddress: 'OPERATING_OFFICE_ADDRESS',
+//     serviceCenterOfficeAddress: 'SERVICE_CENTER_OFFICE',
+//     kymCoopUnionAccContactDetails: 'CONTACT_DETAILS',
+//     kymCoopUnionAccBankAccountDetails: 'ANK_ACCOUNT_DETAILS',
+//     kymCoopUnionAccApplicant: 'APPLICANT',
+//   };
 
 export function AccorrdianAddCOOPUnion(props: AccordianProps) {
   const { t } = useTranslation();
   const { section = '', subSection = '' } = props.kymCurrentSection || {};
-  const route = useRouter();
-  const id = route?.query['id'] as string;
-  const {
-    getBodInfoStatus,
-    getAccountOperatorStatus,
-    cooperativeInfoIncompleteSections,
-    cooperativeInfoSectionsWithError,
-    cooperativeInfo,
-  } = useGetSectionStatus(id);
+  // const route = useRouter();
+  // const id = route?.query['id'] as string;
+  // const {
+  //   getBodInfoStatus,
+  //   getAccountOperatorStatus,
+  //   cooperativeInfoIncompleteSections,
+  //   cooperativeInfoSectionsWithError,
+  //   cooperativeInfo,
+  // } = useGetSectionStatus(id);
 
   const [isOpenOrganizational, setIsOpenOrganizational] = useState(false);
   const [isOpenDirector, setIsOpenDirector] = useState(false);
@@ -119,17 +115,17 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
                   {t[item]}
                 </Text>
               </a>
-              {cooperativeInfo ===
-              undefined ? null : cooperativeInfoIncompleteSections?.includes(
-                  cooperativeInfoObject[item]
-                ) ||
-                cooperativeInfoSectionsWithError?.includes(
-                  cooperativeInfoObject[item]
-                ) ? (
-                <Icon size="sm" as={AiFillCloseCircle} color="danger.500" />
-              ) : (
-                <Icon size="sm" as={BsCheckCircleFill} color="primary.500" />
-              )}
+              {/* {cooperativeInfo ===*/}
+              {/* undefined ? null : cooperativeInfoIncompleteSections?.includes(*/}
+              {/*    cooperativeInfoObject[item]*/}
+              {/*  ) ||*/}
+              {/*  cooperativeInfoSectionsWithError?.includes(*/}
+              {/*    cooperativeInfoObject[item]*/}
+              {/*  ) ? (*/}
+              {/*  <Icon size="sm" as={AiFillCloseCircle} color="danger.500" />*/}
+              {/* ) : (*/}
+              {/*  <Icon size="sm" as={BsCheckCircleFill} color="primary.500" />*/}
+              {/* )}*/}
             </Box>
           ))}
         </Box>
@@ -165,11 +161,11 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
                   {t[item]}
                 </Text>
               </a>
-              {getBodInfoStatus() === null ? null : getBodInfoStatus() ? (
-                <Icon size="sm" as={BsCheckCircleFill} color="primary.500" />
-              ) : (
-                <Icon size="sm" as={AiFillCloseCircle} color="danger.500" />
-              )}
+              {/* {getBodInfoStatus() === null ? null : getBodInfoStatus() ? (*/}
+              {/*  <Icon size="sm" as={BsCheckCircleFill} color="primary.500" />*/}
+              {/* ) : (*/}
+              {/*  <Icon size="sm" as={AiFillCloseCircle} color="danger.500" />*/}
+              {/* )}*/}
             </Box>
           ))}
         </Box>
@@ -205,12 +201,12 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
                   {t[item]}
                 </Text>
               </a>
-              {getAccountOperatorStatus() ===
-              null ? null : getAccountOperatorStatus() ? (
-                <Icon size="sm" as={BsCheckCircleFill} color="primary.500" />
-              ) : (
-                <Icon size="sm" as={AiFillCloseCircle} color="danger.500" />
-              )}
+              {/* {getAccountOperatorStatus() ===*/}
+              {/* null ? null : getAccountOperatorStatus() ? (*/}
+              {/*  <Icon size="sm" as={BsCheckCircleFill} color="primary.500" />*/}
+              {/* ) : (*/}
+              {/*  <Icon size="sm" as={AiFillCloseCircle} color="danger.500" />*/}
+              {/* )}*/}
             </Box>
           ))}
         </Box>

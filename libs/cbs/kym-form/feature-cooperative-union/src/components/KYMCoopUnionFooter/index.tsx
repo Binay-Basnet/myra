@@ -2,7 +2,6 @@ import React from 'react';
 import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 
-import { useGetCoopUnionSectionStatusQuery } from '@coop/cbs/data-access';
 import {
   Box,
   Button,
@@ -12,25 +11,6 @@ import {
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-
-const useCoopUnionSectionStatus = () => {
-  const router = useRouter();
-
-  const { data: sectionStatusData, refetch } =
-    useGetCoopUnionSectionStatusQuery(
-      {
-        id: router.query['id'] as string,
-      },
-      {
-        enabled: false,
-      }
-    );
-
-  const sectionStatus =
-    sectionStatusData?.members?.cooperativeUnion?.formState.sectionStatus;
-
-  return { sectionStatus, refetch };
-};
 
 export const KYMCoopUnionFooter = () => {
   const router = useRouter();
