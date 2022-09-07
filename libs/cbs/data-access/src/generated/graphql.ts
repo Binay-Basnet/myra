@@ -9814,6 +9814,28 @@ export type SetSettingsUserDataMutation = {
   settings: { myraUser?: { add?: { recordId?: string | null } | null } | null };
 };
 
+export type SetPreferenceMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: UserPreferenceInput;
+}>;
+
+export type SetPreferenceMutation = {
+  user: {
+    preference?: {
+      update?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type AddSharePurchaseMutationVariables = Exact<{
   data: SharePurchaseInput;
 }>;
@@ -16127,6 +16149,40 @@ export const useSetSettingsUserDataMutation = <
     ['setSettingsUserData'],
     useAxios<SetSettingsUserDataMutation, SetSettingsUserDataMutationVariables>(
       SetSettingsUserDataDocument
+    ),
+    options
+  );
+export const SetPreferenceDocument = `
+    mutation setPreference($id: ID!, $data: UserPreferenceInput!) {
+  user {
+    preference {
+      update(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetPreferenceMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetPreferenceMutation,
+    TError,
+    SetPreferenceMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetPreferenceMutation,
+    TError,
+    SetPreferenceMutationVariables,
+    TContext
+  >(
+    ['setPreference'],
+    useAxios<SetPreferenceMutation, SetPreferenceMutationVariables>(
+      SetPreferenceDocument
     ),
     options
   );
