@@ -273,13 +273,26 @@ export const AccountOpenNew = () => {
                 {errors && (
                   <Alert
                     status="error"
-                    bottomButtonlabel="View All Criteria"
-                    bottomButtonHandler={() => setShowCriteria(true)}
+                    title="Error"
+                    bottomButtonlabel={
+                      productType === NatureOfDepositProduct?.Mandatory
+                        ? ''
+                        : 'View All Criteria'
+                    }
+                    bottomButtonHandler={() => setShowCriteria((prev) => !prev)}
+                    hideCloseIcon={true}
                   >
-                    <Box p="s20">
+                    <Box pt="s8">
                       <ul>
                         {errors?.error?.map((item, index) => {
-                          return <li key={index}> {item}</li>;
+                          return (
+                            <li key={index}>
+                              {' '}
+                              <Text fontWeight={'400'} fontSize="s2">
+                                {item}
+                              </Text>
+                            </li>
+                          );
                         })}
                       </ul>
                     </Box>
@@ -391,12 +404,14 @@ export const AccountOpenNew = () => {
               </Box>
             </form>
           </FormProvider>
-          <RequiredDocuments
-            setFileList={setFileList}
-            id={id}
-            productId={productID}
-            memberId={memberId}
-          />
+          {memberId && productID && !errors && (
+            <RequiredDocuments
+              setFileList={setFileList}
+              id={id}
+              productId={productID}
+              memberId={memberId}
+            />
+          )}
         </Box>
 
         {memberId && (
