@@ -12932,6 +12932,7 @@ export type GetSettingsShareIssueChargesDataQuery = {
             maxShare?: number | null;
             type?: ShareChargeType | null;
             charge?: string | null;
+            ledgerMapping?: string | null;
           } | null> | null;
           other?: Array<{
             name?: string | null;
@@ -12939,6 +12940,7 @@ export type GetSettingsShareIssueChargesDataQuery = {
             maxShare?: number | null;
             type?: ShareChargeType | null;
             charge?: string | null;
+            ledgerMapping?: string | null;
           } | null> | null;
         } | null;
       } | null;
@@ -20418,6 +20420,7 @@ export const GetSettingsShareIssueChargesDataDocument = `
             maxShare
             type
             charge
+            ledgerMapping
           }
           other {
             name
@@ -20425,6 +20428,7 @@ export const GetSettingsShareIssueChargesDataDocument = `
             maxShare
             type
             charge
+            ledgerMapping
           }
         }
       }
