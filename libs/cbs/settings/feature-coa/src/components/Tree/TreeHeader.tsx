@@ -36,7 +36,7 @@ function TreeHeader(props: ITreeHeaderProps) {
           {props.data.accountCode}
         </Text>
         <Text fontWeight="400" fontSize="14px" color="gray.800">
-          {props.data?.name?.en}
+          {props.data?.name?.local}
         </Text>
         <Button
           variant="link"

@@ -32,6 +32,41 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
+type FullViewData = {
+  id: string;
+  name: Record<'en' | 'local' | 'np', string>;
+  under?: string;
+  accountType: CoaTypesOfAccount;
+  accountClass: string;
+  accountCode: string;
+};
+
+const getNewAccountCode = (coaFullViewData: FullViewData[], under: string) => {
+  const foundAccount = coaFullViewData?.find((d) => d.under === under);
+
+  if (!foundAccount) {
+    return under + '.0';
+  }
+
+  const childAccount =
+    coaFullViewData
+      .filter((d) => d.under === foundAccount.under)
+      .sort((a, b) =>
+        Number(
+          a?.accountCode?.localeCompare(b?.accountCode as string, undefined, {
+            numeric: true,
+            sensitivity: 'base',
+          })
+        )
+      ) ?? [];
+
+  const accountCode = childAccount[childAccount.length - 1]?.accountCode;
+  const accountCodeArray = accountCode.split('.');
+  const lastCode = accountCodeArray.pop();
+
+  return accountCodeArray.join('.') + '.' + (Number(lastCode[0]) + 1);
+};
+
 const AddNewAccount = () => {
   const queryClient = useQueryClient();
   const { t } = useTranslation();
@@ -78,6 +113,13 @@ const AddNewAccount = () => {
       value: d.accountCode,
     }));
 
+  const coaFullViewData = coaFullView?.settings?.chartsOfAccount.fullView.data;
+
+  const newCode = getNewAccountCode(
+    coaFullViewData,
+    router.query['under'] as string
+  );
+
   useEffect(() => {
     methods.reset({
       ...methods.getValues(),
@@ -87,8 +129,12 @@ const AddNewAccount = () => {
       bankAccountNumber: undefined,
       bankGLCode: undefined,
       bankId: undefined,
+      accountCode: newCode,
+      accountClass: coaFullView?.settings?.chartsOfAccount.fullView.data.find(
+        (d) => d.accountCode === router.query['under']
+      )?.accountClass,
     });
-  }, [accountType]);
+  }, [accountType, newCode]);
 
   return (
     <>
@@ -149,6 +195,7 @@ const AddNewAccount = () => {
                     <FormSelect
                       id="accountName"
                       name="under"
+                      isDisabled={!!router.query['under']}
                       label={t['settingsCoaUnder']}
                       options={underAccounts}
                     />
@@ -158,6 +205,7 @@ const AddNewAccount = () => {
                     <FormSelect
                       id="type"
                       name="accountClass"
+                      isDisabled={!!router.query['under']}
                       label={t['settingsCoaFormAccountClass']}
                       options={[
                         {
@@ -181,6 +229,7 @@ const AddNewAccount = () => {
                   </GridItem>
                   <GridItem>
                     <FormInput
+                      isDisabled={!!router.query['under']}
                       id="type"
                       name="accountCode"
                       label={t['settingsCoaFormAccountCode']}

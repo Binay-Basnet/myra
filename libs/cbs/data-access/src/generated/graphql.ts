@@ -1091,7 +1091,7 @@ export type CoopUnionPersonnelDetailsResult = {
 export type CoopUnionPersonnelDetailsResultType = {
   data?: Maybe<CoopUnionPersonnelDetails>;
   id?: Maybe<Scalars['ID']>;
-  sectionStatus?: Maybe<KymIndAddSectionStatus>;
+  sectionStatus?: Maybe<KymFormStatus>;
 };
 
 export type CoopUnionPersonnelInput = {
@@ -1331,7 +1331,7 @@ export type CooperativeUnionEconomicDetails = {
 export type CooperativeUnionEconomicDetailsResult = {
   data?: Maybe<CooperativeUnionEconomicDetails>;
   id?: Maybe<Scalars['ID']>;
-  sectionStatus?: Maybe<KymIndAddSectionStatus>;
+  sectionStatus?: Maybe<KymFormStatus>;
 };
 
 export type CooperativeUnionInstitutionInformation = {
@@ -1382,7 +1382,7 @@ export type CooperativeUnionInstitutionInformation = {
 export type CooperativeUnionInstitutionInformationResult = {
   data?: Maybe<CooperativeUnionInstitutionInformation>;
   id?: Maybe<Scalars['ID']>;
-  sectionStatus?: Maybe<KymIndAddSectionStatus>;
+  sectionStatus?: Maybe<KymFormStatus>;
 };
 
 export type CooperativeUnionMember = {
@@ -4718,12 +4718,12 @@ export type KymCoopUnionAddLus =
   | KymCoopUnionInstitutionInformationLus;
 
 export type KymCoopUnionAddSectionStatus = {
-  accountOperatorDetails?: Maybe<Array<Maybe<KymIndAddSectionStatus>>>;
-  bodDetails?: Maybe<Array<Maybe<KymIndAddSectionStatus>>>;
-  centralRepresentativeDetails?: Maybe<KymIndAddSectionStatus>;
-  declaration?: Maybe<KymIndAddSectionStatus>;
-  economicDetails?: Maybe<KymIndAddSectionStatus>;
-  institutionInformation?: Maybe<KymIndAddSectionStatus>;
+  accountOperatorDetails?: Maybe<Array<Maybe<KymFormStatus>>>;
+  bodDetails?: Maybe<Array<Maybe<KymFormStatus>>>;
+  centralRepresentativeDetails?: Maybe<KymFormStatus>;
+  declaration?: Maybe<KymFormStatus>;
+  economicDetails?: Maybe<KymFormStatus>;
+  institutionInformation?: Maybe<KymFormStatus>;
 };
 
 export type KymCoopUnionBodDetails = {
@@ -5243,7 +5243,7 @@ export type KymCooperativeUnionPersonnelDetails = {
 export type KymCooperativeUnionPersonnelDetailsResult = {
   data?: Maybe<KymCooperativeUnionPersonnelDetails>;
   id?: Maybe<Scalars['ID']>;
-  sectionStatus?: Maybe<Array<Maybe<KymIndAddSectionStatus>>>;
+  sectionStatus?: Maybe<Array<Maybe<KymFormStatus>>>;
 };
 
 export type KymDocuments = {
@@ -5292,6 +5292,17 @@ export type KymFamilyMemberDetailsInThisCooperativeType = {
   relationshipId: Scalars['ID'];
 };
 
+export type KymFormSectionStatus = {
+  errors?: Maybe<Array<Scalars['String']>>;
+  incomplete?: Maybe<Array<Scalars['String']>>;
+};
+
+export type KymFormStatus = {
+  errors?: Maybe<Scalars['InvalidData']>;
+  id?: Maybe<Scalars['ID']>;
+  sectionStatus?: Maybe<KymFormSectionStatus>;
+};
+
 export type KymIdentification = {
   fields?: InputMaybe<Array<InputMaybe<KymAdditionalFields>>>;
   id?: InputMaybe<Scalars['ID']>;
@@ -5328,7 +5339,7 @@ export type KymIndAddError = KymIndAddInvalidDataError;
 
 export type KymIndAddFormStatus = {
   lastUpdated?: Maybe<KymIndAddLus>;
-  sectionStatus?: Maybe<KymIndAddSectionStatus>;
+  sectionStatus?: Maybe<KymFormStatus>;
 };
 
 export type KymIndAddInvalidDataError = {
@@ -5353,12 +5364,6 @@ export type KymIndAddResult = {
   query?: Maybe<KymIndQuery>;
   record?: Maybe<KymIndGetResult>;
   recordId: Scalars['ID'];
-};
-
-export type KymIndAddSectionStatus = {
-  errors?: Maybe<Array<Maybe<SectionWiseError>>>;
-  id?: Maybe<Scalars['ID']>;
-  incomplete?: Maybe<Array<Maybe<IncompleteSection>>>;
 };
 
 export type KymIndCooperativeLus = {
@@ -5433,7 +5438,7 @@ export type KymIndFormData = {
 export type KymIndFormState = {
   formData?: Maybe<KymIndFormData>;
   lastUpdated: KymIndAddLus;
-  sectionStatus?: Maybe<KymIndAddSectionStatus>;
+  sectionStatus?: Maybe<KymFormStatus>;
 };
 
 export type KymIndFormStateQuery = {
@@ -9824,6 +9829,28 @@ export type SetSettingsUserDataMutation = {
   settings: { myraUser?: { add?: { recordId?: string | null } | null } | null };
 };
 
+export type SetPreferenceMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: UserPreferenceInput;
+}>;
+
+export type SetPreferenceMutation = {
+  user: {
+    preference?: {
+      update?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type AddSharePurchaseMutationVariables = Exact<{
   data: SharePurchaseInput;
 }>;
@@ -10747,17 +10774,7 @@ export type GetCooperativeUnionKymEditDataQuery = {
                 } | null;
               } | null;
             } | null;
-            sectionStatus?: {
-              id?: string | null;
-              errors?: Array<{
-                sectionName?: string | null;
-                errors?: Record<string, Array<string>> | null;
-              } | null> | null;
-              incomplete?: Array<{
-                sectionName?: string | null;
-                incomplete?: Array<string | null> | null;
-              } | null> | null;
-            } | null;
+            sectionStatus?: { id?: string | null } | null;
           } | null;
         } | null;
       } | null;
@@ -10816,17 +10833,7 @@ export type GetEconimicDetailsEditDataQuery = {
               riskManagementCost?: number | null;
               deferredTaxExpense?: number | null;
             } | null;
-            sectionStatus?: {
-              id?: string | null;
-              errors?: Array<{
-                sectionName?: string | null;
-                errors?: Record<string, Array<string>> | null;
-              } | null> | null;
-              incomplete?: Array<{
-                sectionName?: string | null;
-                incomplete?: Array<string | null> | null;
-              } | null> | null;
-            } | null;
+            sectionStatus?: { id?: string | null } | null;
           } | null;
         } | null;
       } | null;
@@ -10890,17 +10897,7 @@ export type GetBoardOfDirectorsDetailsListQuery = {
                 } | null> | null;
               } | null> | null;
             } | null;
-            sectionStatus?: Array<{
-              id?: string | null;
-              errors?: Array<{
-                sectionName?: string | null;
-                errors?: Record<string, Array<string>> | null;
-              } | null> | null;
-              incomplete?: Array<{
-                sectionName?: string | null;
-                incomplete?: Array<string | null> | null;
-              } | null> | null;
-            } | null> | null;
+            sectionStatus?: Array<{ id?: string | null } | null> | null;
           } | null;
         } | null;
       } | null;
@@ -10964,17 +10961,7 @@ export type GetAccountOperatorDetailsListQuery = {
                 } | null> | null;
               } | null> | null;
             } | null;
-            sectionStatus?: Array<{
-              id?: string | null;
-              errors?: Array<{
-                sectionName?: string | null;
-                errors?: Record<string, Array<string>> | null;
-              } | null> | null;
-              incomplete?: Array<{
-                sectionName?: string | null;
-                incomplete?: Array<string | null> | null;
-              } | null> | null;
-            } | null> | null;
+            sectionStatus?: Array<{ id?: string | null } | null> | null;
           } | null;
         } | null;
       } | null;
@@ -11038,17 +11025,7 @@ export type GetCentralRepresentativeDetailsQuery = {
                 trainingOrganization?: string | null;
               } | null> | null;
             } | null;
-            sectionStatus?: {
-              id?: string | null;
-              errors?: Array<{
-                sectionName?: string | null;
-                errors?: Record<string, Array<string>> | null;
-              } | null> | null;
-              incomplete?: Array<{
-                sectionName?: string | null;
-                incomplete?: Array<string | null> | null;
-              } | null> | null;
-            } | null;
+            sectionStatus?: { id?: string | null } | null;
           } | null;
         } | null;
       } | null;
@@ -11064,68 +11041,7 @@ export type GetCoopUnionSectionStatusQuery = {
   members: {
     cooperativeUnion?: {
       formState?: {
-        sectionStatus?: {
-          institutionInformation?: {
-            incomplete?: Array<{
-              sectionName?: string | null;
-              incomplete?: Array<string | null> | null;
-            } | null> | null;
-            errors?: Array<{
-              sectionName?: string | null;
-              errors?: Record<string, Array<string>> | null;
-            } | null> | null;
-          } | null;
-          economicDetails?: {
-            incomplete?: Array<{
-              sectionName?: string | null;
-              incomplete?: Array<string | null> | null;
-            } | null> | null;
-            errors?: Array<{
-              sectionName?: string | null;
-              errors?: Record<string, Array<string>> | null;
-            } | null> | null;
-          } | null;
-          bodDetails?: Array<{
-            incomplete?: Array<{
-              sectionName?: string | null;
-              incomplete?: Array<string | null> | null;
-            } | null> | null;
-            errors?: Array<{
-              sectionName?: string | null;
-              errors?: Record<string, Array<string>> | null;
-            } | null> | null;
-          } | null> | null;
-          accountOperatorDetails?: Array<{
-            incomplete?: Array<{
-              sectionName?: string | null;
-              incomplete?: Array<string | null> | null;
-            } | null> | null;
-            errors?: Array<{
-              sectionName?: string | null;
-              errors?: Record<string, Array<string>> | null;
-            } | null> | null;
-          } | null> | null;
-          centralRepresentativeDetails?: {
-            incomplete?: Array<{
-              sectionName?: string | null;
-              incomplete?: Array<string | null> | null;
-            } | null> | null;
-            errors?: Array<{
-              sectionName?: string | null;
-              errors?: Record<string, Array<string>> | null;
-            } | null> | null;
-          } | null;
-          declaration?: {
-            incomplete?: Array<{
-              sectionName?: string | null;
-              incomplete?: Array<string | null> | null;
-            } | null> | null;
-            errors?: Array<{
-              sectionName?: string | null;
-              errors?: Record<string, Array<string>> | null;
-            } | null> | null;
-          } | null;
-        } | null;
+        sectionStatus?: { __typename: 'KymCoopUnionAddSectionStatus' } | null;
       } | null;
     } | null;
   };
@@ -11837,15 +11753,7 @@ export type GetKymFormStatusQuery = {
   members: {
     individual?: {
       formState?: {
-        data?: {
-          sectionStatus?: {
-            id?: string | null;
-            errors?: Array<{
-              sectionName?: string | null;
-              errors?: Record<string, Array<string>> | null;
-            } | null> | null;
-          } | null;
-        } | null;
+        data?: { sectionStatus?: { id?: string | null } | null } | null;
       } | null;
     } | null;
   };
@@ -16156,6 +16064,40 @@ export const useSetSettingsUserDataMutation = <
     ),
     options
   );
+export const SetPreferenceDocument = `
+    mutation setPreference($id: ID!, $data: UserPreferenceInput!) {
+  user {
+    preference {
+      update(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetPreferenceMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetPreferenceMutation,
+    TError,
+    SetPreferenceMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetPreferenceMutation,
+    TError,
+    SetPreferenceMutationVariables,
+    TContext
+  >(
+    ['setPreference'],
+    useAxios<SetPreferenceMutation, SetPreferenceMutationVariables>(
+      SetPreferenceDocument
+    ),
+    options
+  );
 export const AddSharePurchaseDocument = `
     mutation addSharePurchase($data: SharePurchaseInput!) {
   share {
@@ -17431,14 +17373,6 @@ export const GetCooperativeUnionKymEditDataDocument = `
             }
             sectionStatus {
               id
-              errors {
-                sectionName
-                errors
-              }
-              incomplete {
-                sectionName
-                incomplete
-              }
             }
           }
         }
@@ -17512,14 +17446,6 @@ export const GetEconimicDetailsEditDataDocument = `
             }
             sectionStatus {
               id
-              errors {
-                sectionName
-                errors
-              }
-              incomplete {
-                sectionName
-                incomplete
-              }
             }
           }
         }
@@ -17598,14 +17524,6 @@ export const GetBoardOfDirectorsDetailsListDocument = `
             }
             sectionStatus {
               id
-              errors {
-                sectionName
-                errors
-              }
-              incomplete {
-                sectionName
-                incomplete
-              }
             }
           }
         }
@@ -17684,14 +17602,6 @@ export const GetAccountOperatorDetailsListDocument = `
             }
             sectionStatus {
               id
-              errors {
-                sectionName
-                errors
-              }
-              incomplete {
-                sectionName
-                incomplete
-              }
             }
           }
         }
@@ -17770,14 +17680,6 @@ export const GetCentralRepresentativeDetailsDocument = `
             }
             sectionStatus {
               id
-              errors {
-                sectionName
-                errors
-              }
-              incomplete {
-                sectionName
-                incomplete
-              }
             }
           }
         }
@@ -17807,66 +17709,7 @@ export const GetCoopUnionSectionStatusDocument = `
     cooperativeUnion {
       formState(id: $id) {
         sectionStatus {
-          institutionInformation {
-            incomplete {
-              sectionName
-              incomplete
-            }
-            errors {
-              sectionName
-              errors
-            }
-          }
-          economicDetails {
-            incomplete {
-              sectionName
-              incomplete
-            }
-            errors {
-              sectionName
-              errors
-            }
-          }
-          bodDetails {
-            incomplete {
-              sectionName
-              incomplete
-            }
-            errors {
-              sectionName
-              errors
-            }
-          }
-          accountOperatorDetails {
-            incomplete {
-              sectionName
-              incomplete
-            }
-            errors {
-              sectionName
-              errors
-            }
-          }
-          centralRepresentativeDetails {
-            incomplete {
-              sectionName
-              incomplete
-            }
-            errors {
-              sectionName
-              errors
-            }
-          }
-          declaration {
-            incomplete {
-              sectionName
-              incomplete
-            }
-            errors {
-              sectionName
-              errors
-            }
-          }
+          __typename
         }
       }
     }
@@ -18979,10 +18822,6 @@ export const GetKymFormStatusDocument = `
         data {
           sectionStatus {
             id
-            errors {
-              sectionName
-              errors
-            }
           }
         }
       }

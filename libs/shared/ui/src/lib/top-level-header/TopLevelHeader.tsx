@@ -9,7 +9,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { format } from 'date-fns';
 
-import { useAppDispatch } from '@coop/cbs/data-access';
+import {
+  Language,
+  useAppDispatch,
+  useSetPreferenceMutation,
+} from '@coop/cbs/data-access';
 import {
   Avatar,
   Box,
@@ -29,7 +33,7 @@ import {
   Text,
   TextFields,
 } from '@coop/shared/ui';
-import { logout, useTranslation } from '@coop/shared/utils';
+import { logout, useAppSelector, useTranslation } from '@coop/shared/utils';
 
 import SearchBar from '../search-bar/SearchBar';
 
@@ -79,6 +83,8 @@ export function TopLevelHeader() {
   const { t } = useTranslation();
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const { mutateAsync } = useSetPreferenceMutation();
+  const userId = useAppSelector((state) => state?.auth?.user?.id);
 
   const helpOptions = [
     {
@@ -642,6 +648,15 @@ export function TopLevelHeader() {
                             value={router?.locale}
                             options={languageList}
                             onChange={(value) => {
+                              mutateAsync({
+                                id: userId || '',
+                                data: {
+                                  language:
+                                    value === 'en'
+                                      ? Language?.English
+                                      : Language?.Nepali,
+                                },
+                              });
                               router.push(`/${router.asPath}`, undefined, {
                                 locale: value,
                               });

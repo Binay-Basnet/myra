@@ -17,6 +17,7 @@ import { useInstitution } from '../hooks/useInstitution';
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
+
 export const InstitutionAccountOpnDocument = (props: IProps) => {
   const router = useRouter();
   const { t } = useTranslation();

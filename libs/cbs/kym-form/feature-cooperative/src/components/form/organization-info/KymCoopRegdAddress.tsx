@@ -14,6 +14,7 @@ import { useCooperative } from '../../hooks/useCooperative';
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
+
 export const KymCoopRegdAddress = (props: IProps) => {
   const { t } = useTranslation();
   const { setSection } = props;

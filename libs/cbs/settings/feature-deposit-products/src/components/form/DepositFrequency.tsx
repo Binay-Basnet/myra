@@ -1,10 +1,7 @@
 import { Frequency } from '@coop/cbs/data-access';
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Box } from '@coop/shared/ui';
+import { FormSwitchTab } from '@coop/shared/form';
+import { FormSection } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-
-import { BoxContainer, SubText, TextBoxContainer, TopText } from '../formui';
 
 export const DepositFrequency = () => {
   const { t } = useTranslation();
@@ -29,32 +26,15 @@ export const DepositFrequency = () => {
   ];
 
   return (
-    <BoxContainer>
-      <Box>
-        <TextBoxContainer>
-          <TopText>{t['depositProductDepositAmountLimit']} </TopText>
-        </TextBoxContainer>
-        <InputGroupContainer mt="s16">
-          <FormInput
-            name="depositAmount.minAmount"
-            label={t['depositProductMinimumAmount']}
-          />
-          <FormInput
-            name="depositAmount.maxAmount"
-            label={t['depositProductMaximumAmount']}
-          />
-        </InputGroupContainer>
-      </Box>
-
-      <TextBoxContainer>
-        <TopText> {t['depositProductDepositFrequency']} </TopText>
-        <SubText>{t['depositProductSelectdepositfrequency']}</SubText>
-      </TextBoxContainer>
+    <FormSection
+      header="depositProductDepositFrequency"
+      subHeader="depositProductSelectdepositfrequency"
+    >
       <FormSwitchTab
         defaultValue={Frequency.Daily}
         name={'depositFrequency'}
         options={DepositFrequencyOptions}
       />
-    </BoxContainer>
+    </FormSection>
   );
 };

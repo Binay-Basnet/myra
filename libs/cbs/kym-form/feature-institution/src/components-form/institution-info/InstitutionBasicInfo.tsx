@@ -8,6 +8,7 @@ import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useInstitution } from '../hooks/useInstitution';
 import { getOption } from '../../utils/getOptionsInstitution';
+
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }

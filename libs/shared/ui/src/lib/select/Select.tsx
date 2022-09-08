@@ -63,7 +63,7 @@ export function Select({
             : 'isMulti'
         }
         id="select"
-        data-testId={name}
+        data-testid={name}
         instanceId="select"
         onMenuClose={() => {
           if (isMulti) {

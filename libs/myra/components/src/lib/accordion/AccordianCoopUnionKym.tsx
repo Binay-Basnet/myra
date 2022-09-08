@@ -1,15 +1,11 @@
-import React from 'react';
-import { AiFillCloseCircle } from 'react-icons/ai';
-import { BsCheckCircleFill } from 'react-icons/bs';
-import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { Box, Collapse, Text } from '@chakra-ui/react';
 
 import { KymInsAddSectionStatus } from '@coop/cbs/data-access';
-import { Icon } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { useGetSectionStatus } from '../hooks/useGetSectionStatus';
+// import { useGetSectionStatus } from '../hooks/useGetSectionStatus';
 
 const OrganizationInformation = [
   'kymCoopUnionAccBasicInformation',
@@ -26,10 +22,7 @@ const AccountOperators = ['kymCoopUnionAccDetailsofAccountOperators'];
 const CentralRepresentative = [
   'kymCoopUnionAccDetailsofdirectorsaffiliatedwithotherFirms',
 ];
-// const memberDetails = [
-//   'kymCoopUnionAccCurrentMembers',
-//   'kymCoopUnionAccTargetfornextfiscalyear',
-// ];
+
 const EconomicDetails = [
   'kymCoopUnionAccAssets',
   'kymCoopUnionAccEquityandLiailibities',
@@ -49,52 +42,46 @@ interface AccordianProps {
   };
 }
 
-const cooperativeInfoObject = {
-  kymCoopUnionAccBasicInformation: 'BASIC_INFORMATION',
-  kymCoopUnionAccRegisteredDetails: 'REGISTERED_DETAILS',
-  kymCoopUnionAccOperatingOfficeAddress: 'OPERATING_OFFICE_ADDRESS',
-  serviceCenterOfficeAddress: 'SERVICE_CENTER_OFFICE',
-  kymCoopUnionAccContactDetails: 'CONTACT_DETAILS',
-  kymCoopUnionAccBankAccountDetails: 'ANK_ACCOUNT_DETAILS',
-  kymCoopUnionAccApplicant: 'APPLICANT',
-};
+// const cooperativeInfoObject: Record<typeof OrganizationInformation[0], string> =
+//   {
+//     kymCoopUnionAccBasicInformation: 'BASIC_INFORMATION',
+//     kymCoopUnionAccRegisteredDetails: 'REGISTERED_DETAILS',
+//     kymCoopUnionAccOperatingOfficeAddress: 'OPERATING_OFFICE_ADDRESS',
+//     serviceCenterOfficeAddress: 'SERVICE_CENTER_OFFICE',
+//     kymCoopUnionAccContactDetails: 'CONTACT_DETAILS',
+//     kymCoopUnionAccBankAccountDetails: 'ANK_ACCOUNT_DETAILS',
+//     kymCoopUnionAccApplicant: 'APPLICANT',
+//   };
 
 export function AccorrdianAddCOOPUnion(props: AccordianProps) {
   const { t } = useTranslation();
-  const { kymCurrentSection } = props;
-  const route = useRouter();
-  const id = route?.query['id'] as string;
-  const {
-    getBodInfoStatus,
-    getAccountOperatorStatus,
-    cooperativeInfoIncompleteSections,
-    cooperativeInfoSectionsWithError,
-    cooperativeInfo,
-  } = useGetSectionStatus(id);
+  const { section = '', subSection = '' } = props.kymCurrentSection || {};
+  // const route = useRouter();
+  // const id = route?.query['id'] as string;
+  // const {
+  //   getBodInfoStatus,
+  //   getAccountOperatorStatus,
+  //   cooperativeInfoIncompleteSections,
+  //   cooperativeInfoSectionsWithError,
+  //   cooperativeInfo,
+  // } = useGetSectionStatus(id);
 
-  const subsection = kymCurrentSection?.subSection;
-  const [isOpenOrganizational, setIsOpenOrganizational] = React.useState(false);
-  const [isopenDirector, setIsopenDirector] = React.useState(false);
-  // const [isOpenmemberDetails, setIsOpenMemberDetails] = React.useState(false);
-  const [isOpenEconmoicDetails, setIsOpenEconomicDetails] =
-    React.useState(false);
-  const [isopenAccountOperators, setIsopenAccountOperators] =
-    React.useState(false);
-  const [isOpenDeclaration, setIsOpenDeclaration] = React.useState(false);
-  const [isopenCentralRepresentatives, setIsopenCentralRepresentatives] =
-    React.useState(false);
+  const [isOpenOrganizational, setIsOpenOrganizational] = useState(false);
+  const [isOpenDirector, setIsOpenDirector] = useState(false);
+  const [isOpenEconomicDetails, setIsOpenEconomicDetails] = useState(false);
+  const [isOpenAccountOperators, setIsOpenAccountOperators] = useState(false);
+  const [isOpenDeclaration, setIsOpenDeclaration] = useState(false);
+  const [isOpenCentralRepresentatives, setIsOpenCentralRepresentatives] =
+    useState(false);
 
-  React.useEffect(() => {
-    const section = kymCurrentSection?.section;
-
+  useEffect(() => {
     setIsOpenOrganizational(section === 'organizationInfo');
-    setIsopenDirector(section === 'directorDetails');
-    setIsopenAccountOperators(section === 'accountOperators');
+    setIsOpenDirector(section === 'directorDetails');
+    setIsOpenAccountOperators(section === 'accountOperators');
     setIsOpenDeclaration(section === 'declaration');
-    setIsopenCentralRepresentatives(section === 'centralRepresentatives');
-    // setIsOpenMemberDetails(section === 'memberDetails');
+    setIsOpenCentralRepresentatives(section === 'centralRepresentatives');
     setIsOpenEconomicDetails(section === 'economicDetails');
-  }, [kymCurrentSection]);
+  }, [section]);
 
   return (
     <Box overflow="auto" h="700px">
@@ -119,7 +106,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
               key={`${item}${index}`}
               display="flex"
               alignItems={'center'}
-              bg={subsection === item ? 'background.500' : 'gray.0'}
+              bg={subSection === item ? 'background.500' : 'gray.0'}
               py="s8"
               gap={2}
             >
@@ -128,17 +115,17 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
                   {t[item]}
                 </Text>
               </a>
-              {cooperativeInfo ===
-              undefined ? null : cooperativeInfoIncompleteSections?.includes(
-                  cooperativeInfoObject[item]
-                ) ||
-                cooperativeInfoSectionsWithError?.includes(
-                  cooperativeInfoObject[item]
-                ) ? (
-                <Icon size="sm" as={AiFillCloseCircle} color="danger.500" />
-              ) : (
-                <Icon size="sm" as={BsCheckCircleFill} color="primary.500" />
-              )}
+              {/* {cooperativeInfo ===*/}
+              {/* undefined ? null : cooperativeInfoIncompleteSections?.includes(*/}
+              {/*    cooperativeInfoObject[item]*/}
+              {/*  ) ||*/}
+              {/*  cooperativeInfoSectionsWithError?.includes(*/}
+              {/*    cooperativeInfoObject[item]*/}
+              {/*  ) ? (*/}
+              {/*  <Icon size="sm" as={AiFillCloseCircle} color="danger.500" />*/}
+              {/* ) : (*/}
+              {/*  <Icon size="sm" as={BsCheckCircleFill} color="primary.500" />*/}
+              {/* )}*/}
             </Box>
           ))}
         </Box>
@@ -149,23 +136,23 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         justifyContent="space-between"
         alignItems="center"
         cursor="pointer"
-        onClick={() => setIsopenDirector(!isopenDirector)}
+        onClick={() => setIsOpenDirector(!isOpenDirector)}
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="SemiBold">
           {t['kymCoopUnionAcc2Detailsofdirectorsboardmemberspartners']}
         </Text>
-        {!isopenDirector ? <ChevronRightIcon /> : <ChevronDownIcon />}
+        {!isOpenDirector ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
-      <Collapse in={isopenDirector}>
+      <Collapse in={isOpenDirector}>
         <Box display={'flex'} flexDirection="column" mb="s16">
           {DirectorDetails.map((item, index) => (
             <Box
               key={`${item}${index}`}
               display="flex"
               alignItems={'center'}
-              bg={subsection === item ? 'background.500' : 'gray.0'}
+              bg={subSection === item ? 'background.500' : 'gray.0'}
               py="s8"
               gap={2}
             >
@@ -174,11 +161,11 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
                   {t[item]}
                 </Text>
               </a>
-              {getBodInfoStatus() === null ? null : getBodInfoStatus() ? (
-                <Icon size="sm" as={BsCheckCircleFill} color="primary.500" />
-              ) : (
-                <Icon size="sm" as={AiFillCloseCircle} color="danger.500" />
-              )}
+              {/* {getBodInfoStatus() === null ? null : getBodInfoStatus() ? (*/}
+              {/*  <Icon size="sm" as={BsCheckCircleFill} color="primary.500" />*/}
+              {/* ) : (*/}
+              {/*  <Icon size="sm" as={AiFillCloseCircle} color="danger.500" />*/}
+              {/* )}*/}
             </Box>
           ))}
         </Box>
@@ -188,24 +175,24 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        onClick={() => setIsopenAccountOperators(!isopenAccountOperators)}
+        onClick={() => setIsOpenAccountOperators(!isOpenAccountOperators)}
         cursor="pointer"
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="SemiBold">
           {t['kymCoopUnionAcc3AccountOperators']}
         </Text>
-        {!isopenAccountOperators ? <ChevronRightIcon /> : <ChevronDownIcon />}
+        {!isOpenAccountOperators ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
-      <Collapse in={isopenAccountOperators}>
+      <Collapse in={isOpenAccountOperators}>
         <Box display={'flex'} flexDirection="column" mb="s16">
           {AccountOperators.map((item, index) => (
             <Box
               key={`${item}${index}`}
               display="flex"
               alignItems={'center'}
-              bg={subsection === item ? 'background.500' : 'gray.0'}
+              bg={subSection === item ? 'background.500' : 'gray.0'}
               py="s8"
               gap={2}
             >
@@ -214,12 +201,12 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
                   {t[item]}
                 </Text>
               </a>
-              {getAccountOperatorStatus() ===
-              null ? null : getAccountOperatorStatus() ? (
-                <Icon size="sm" as={BsCheckCircleFill} color="primary.500" />
-              ) : (
-                <Icon size="sm" as={AiFillCloseCircle} color="danger.500" />
-              )}
+              {/* {getAccountOperatorStatus() ===*/}
+              {/* null ? null : getAccountOperatorStatus() ? (*/}
+              {/*  <Icon size="sm" as={BsCheckCircleFill} color="primary.500" />*/}
+              {/* ) : (*/}
+              {/*  <Icon size="sm" as={AiFillCloseCircle} color="danger.500" />*/}
+              {/* )}*/}
             </Box>
           ))}
         </Box>
@@ -230,7 +217,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         justifyContent="space-between"
         alignItems="center"
         onClick={() =>
-          setIsopenCentralRepresentatives(!isopenCentralRepresentatives)
+          setIsOpenCentralRepresentatives(!isOpenCentralRepresentatives)
         }
         cursor="pointer"
         minH="50px"
@@ -238,21 +225,21 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         <Text fontSize={'r1'} fontWeight="SemiBold">
           {t['kymCoopUnionAcc4DetailsofCentralRepresentative']}
         </Text>
-        {!isopenCentralRepresentatives ? (
+        {!isOpenCentralRepresentatives ? (
           <ChevronRightIcon />
         ) : (
           <ChevronDownIcon />
         )}
       </Box>
 
-      <Collapse in={isopenCentralRepresentatives}>
+      <Collapse in={isOpenCentralRepresentatives}>
         <Box display={'flex'} flexDirection="column" mb="s16">
           {CentralRepresentative.map((item, index) => (
             <Box
               key={`${item}${index}`}
               display="flex"
               alignItems={'center'}
-              bg={subsection === item ? 'background.500' : 'gray.0'}
+              bg={subSection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
               <a href={`#${item}`}>
@@ -291,7 +278,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
               display="flex"
               alignItems={'center'}
 
-              bg={subsection === item ? 'background.500' : 'gray.0'}
+              bg={subSection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
               <a href={`#${item}`}>
@@ -307,24 +294,24 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        onClick={() => setIsOpenEconomicDetails(!isOpenEconmoicDetails)}
+        onClick={() => setIsOpenEconomicDetails(!isOpenEconomicDetails)}
         cursor="pointer"
         minH="50px"
       >
         <Text fontSize={'r1'} fontWeight="SemiBold">
           {t['kymCoopUnionAcc6EconomicDetails']}
         </Text>
-        {!isOpenEconmoicDetails ? <ChevronRightIcon /> : <ChevronDownIcon />}
+        {!isOpenEconomicDetails ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
-      <Collapse in={isOpenEconmoicDetails}>
+      <Collapse in={isOpenEconomicDetails}>
         <Box display={'flex'} flexDirection="column" mb="s16">
           {EconomicDetails.map((item, index) => (
             <Box
               key={`${item}${index}`}
               display="flex"
               alignItems={'center'}
-              bg={subsection === item ? 'background.500' : 'gray.0'}
+              bg={subSection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
               <a href={`#${item}`}>
@@ -357,7 +344,7 @@ export function AccorrdianAddCOOPUnion(props: AccordianProps) {
               key={`${item}${index}`}
               display="flex"
               alignItems={'center'}
-              bg={subsection === item ? 'background.500' : 'gray.0'}
+              bg={subSection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
               <a href={`#${item}`}>

@@ -2,10 +2,8 @@
 
 import { DepositFrequency } from '@coop/cbs/data-access';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Box } from '@coop/shared/ui';
+import { Box, FormSection, GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
-
-import { BoxContainer, TextBoxContainer, TopText } from '../formui';
 
 export const PostingFrequency = () => {
   const { t } = useTranslation();
@@ -30,20 +28,18 @@ export const PostingFrequency = () => {
   ];
 
   return (
-    <BoxContainer>
-      <TextBoxContainer>
-        <TopText>{t['depositProductPostingFrequency']} </TopText>
-      </TextBoxContainer>
-      <FormSwitchTab name={'postingFrequency'} options={postingFrequency} />
+    <FormSection header="depositProductPostingFrequency">
+      <GridItem colSpan={3}>
+        <FormSwitchTab name={'postingFrequency'} options={postingFrequency} />
+      </GridItem>
       <Box w="290px">
         <FormInput
           name="maxPostingFreqDifference"
           textAlign={'right'}
           label={t['depositProductMaximumPostingFrequencyDifference']}
-          __placeholder="0"
           rightAddonText={'days'}
         />
       </Box>
-    </BoxContainer>
+    </FormSection>
   );
 };

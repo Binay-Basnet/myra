@@ -29,7 +29,7 @@ function LeafNode(props: ITestProps) {
             {props.data.accountCode}
           </Text>
           <Text fontWeight="400" fontSize="14px">
-            {props.data.name?.en}
+            {props.data.name?.local}
           </Text>
           <Button
             variant="link"

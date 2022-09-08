@@ -12,6 +12,7 @@ import { useInstitution } from '../hooks/useInstitution';
 interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
+
 export const OperatorOfficeAddress = (props: IProps) => {
   const { t } = useTranslation();
 
