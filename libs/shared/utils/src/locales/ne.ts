@@ -2876,6 +2876,10 @@ const ne: Record<string, string> = {
   loanProductPenaltyonInstallment: 'Penalty on Installment',
   loanProductRebateLedgerMapping: 'Rebate Ledger Mapping',
   depositProductPrematuredPenaltySetup: 'Premature Penalty Setup',
+
+  // share settings
+
+  shareSettingsFeesLedgerMapping: 'Ledger Mapping',
 };
 
 export default ne;

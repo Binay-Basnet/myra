@@ -33,6 +33,16 @@ export type Scalars = {
   Email: any;
   HTML: any;
   InvalidData: Record<string, Array<string>>;
+  /**
+   * # For Localization of every data from backend
+   * ```javascript
+   * {
+   *    local: "localized data based on user lang setting",
+   *    en: "data in english",
+   *    np: "data in nepali"
+   * }
+   * ```
+   */
   Localized: Record<'local' | 'en' | 'np', string>;
   Map: Record<string, string>;
   Time: string;
@@ -12936,6 +12946,26 @@ export type GetSettingsShareIssueChargesDataQuery = {
   };
 };
 
+export type GetLedgerMapingShareQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetLedgerMapingShareQuery = {
+  settings: {
+    general?: {
+      chartsOfAccount?: {
+        accountsUnder?: {
+          data?: Array<{
+            id: string;
+            accountCode: string;
+            name: Record<'local' | 'en' | 'np', string>;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetSettingsShareReturnChargesDataQueryVariables = Exact<{
   [key: string]: never;
 }>;
@@ -20421,6 +20451,39 @@ export const useGetSettingsShareIssueChargesDataQuery = <
       GetSettingsShareIssueChargesDataQuery,
       GetSettingsShareIssueChargesDataQueryVariables
     >(GetSettingsShareIssueChargesDataDocument).bind(null, variables),
+    options
+  );
+export const GetLedgerMapingShareDocument = `
+    query getLedgerMapingShare {
+  settings {
+    general {
+      chartsOfAccount {
+        accountsUnder(accountCode: "160.8") {
+          data {
+            id
+            accountCode
+            name
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLedgerMapingShareQuery = <
+  TData = GetLedgerMapingShareQuery,
+  TError = unknown
+>(
+  variables?: GetLedgerMapingShareQueryVariables,
+  options?: UseQueryOptions<GetLedgerMapingShareQuery, TError, TData>
+) =>
+  useQuery<GetLedgerMapingShareQuery, TError, TData>(
+    variables === undefined
+      ? ['getLedgerMapingShare']
+      : ['getLedgerMapingShare', variables],
+    useAxios<GetLedgerMapingShareQuery, GetLedgerMapingShareQueryVariables>(
+      GetLedgerMapingShareDocument
+    ).bind(null, variables),
     options
   );
 export const GetSettingsShareReturnChargesDataDocument = `

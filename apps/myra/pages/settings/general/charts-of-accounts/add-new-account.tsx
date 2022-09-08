@@ -45,7 +45,7 @@ const getNewAccountCode = (coaFullViewData: FullViewData[], under: string) => {
   const foundAccount = coaFullViewData?.find((d) => d.under === under);
 
   if (!foundAccount) {
-    return under + '.0';
+    return under + '.1';
   }
 
   const childAccount =

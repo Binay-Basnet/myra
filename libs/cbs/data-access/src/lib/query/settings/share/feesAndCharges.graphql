@@ -21,6 +21,22 @@ query getSettingsShareIssueChargesData {
     }
   }
 }
+
+query getLedgerMapingShare {
+  settings {
+    general {
+      chartsOfAccount {
+        accountsUnder(accountCode: "160.8") {
+          data {
+            id
+            accountCode
+            name
+          }
+        }
+      }
+    }
+  }
+}
 query getSettingsShareReturnChargesData {
   settings {
     general {

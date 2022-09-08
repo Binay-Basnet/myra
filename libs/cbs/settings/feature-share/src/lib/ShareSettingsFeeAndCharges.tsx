@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import {
   ShareChargeType,
+  useGetLedgerMapingShareQuery,
   useGetSettingsShareIssueChargesDataQuery,
   useSetSettingsShareIssueChargesMutation,
 } from '@coop/cbs/data-access';
@@ -15,17 +16,19 @@ import ShareSettingsHeader from '../components/ShareSettingsHeader/ShareSettings
 
 type ShareChargeTable = {
   type: string;
+  ledgerMapping: string;
   minShare: string;
   maxShare: string;
-  charge: number;
+  charge: string;
 };
 
 type OtherChargeTable = {
   name: string;
   type: string;
+  ledgerMapping: string;
   minShare: string;
   maxShare: string;
-  charge: number;
+  charge: string;
 };
 
 const type = [
@@ -42,7 +45,16 @@ const type = [
 export const ShareSettingsFeeAndCharges = () => {
   const { t } = useTranslation();
   const methods = useForm({});
+  const { data: ledgerQuery } = useGetLedgerMapingShareQuery();
+  const ledgerData =
+    ledgerQuery?.settings?.general?.chartsOfAccount?.accountsUnder?.data;
 
+  const ledgerOptions = ledgerData?.map((data) => {
+    return {
+      label: data?.name?.local as string,
+      value: data?.id as string,
+    };
+  });
   const { reset, getValues } = methods;
   const router = useRouter();
   const { mutateAsync } = useSetSettingsShareIssueChargesMutation();
@@ -118,6 +130,12 @@ export const ShareSettingsFeeAndCharges = () => {
                       selectOptions: type,
                     },
                     {
+                      accessor: 'ledgerMapping',
+                      header: t['shareSettingsFeesLedgerMapping'],
+                      fieldType: 'select',
+                      selectOptions: ledgerOptions,
+                    },
+                    {
                       accessor: 'minShare',
                       header: t['shareSettingsFeesMinQuantity'],
                       isNumeric: true,
@@ -132,7 +150,6 @@ export const ShareSettingsFeeAndCharges = () => {
                     {
                       accessor: 'charge',
                       header: t['shareSettingsFeesCharge'],
-                      isNumeric: true,
                     },
                   ]}
                 />
@@ -169,6 +186,12 @@ export const ShareSettingsFeeAndCharges = () => {
                       selectOptions: type,
                     },
                     {
+                      accessor: 'ledgerMapping',
+                      header: t['shareSettingsFeesLedgerMapping'],
+                      fieldType: 'select',
+                      selectOptions: ledgerOptions,
+                    },
+                    {
                       accessor: 'minShare',
                       header: t['shareSettingsFeesMinQuantity'],
                       isNumeric: true,
@@ -183,7 +206,6 @@ export const ShareSettingsFeeAndCharges = () => {
                     {
                       accessor: 'charge',
                       header: t['shareSettingsFeesCharge'],
-                      isNumeric: true,
                     },
                   ]}
                 />

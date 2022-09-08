@@ -3323,5 +3323,9 @@ const en: Record<string, string> = {
     'Maximum Percentage of Depriciated Value',
   loanProductMinimumValue: 'Minimum Value',
   loanProductMaximumValue: 'Maximum Value',
+
+  // share settings
+
+  shareSettingsFeesLedgerMapping: 'Ledger Mapping',
 };
 export default en;
