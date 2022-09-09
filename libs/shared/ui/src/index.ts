@@ -35,6 +35,8 @@ export * from './lib/icon/Icon';
 export * from './lib/icon-button/IconButton';
 export * from './lib/indeterminate-checkbox/IndeterminateCheckbox';
 export * from './lib/input-/Input';
+export * from './lib/loader/Loader';
+export * from './lib/loader/Loader';
 export * from './lib/main-layout/MainLayout';
 export * from './lib/main-layout-inventory/MainLayoutInventory';
 export * from './lib/member-card/MemberCard';

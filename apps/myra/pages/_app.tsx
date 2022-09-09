@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import Script from 'next/script';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 
 import { Box, FloatingShortcutButton, Toaster } from '@coop/shared/ui';
@@ -49,6 +50,7 @@ function MainApp({ Component, pageProps }: AppPropsWithLayout) {
       <Head>
         <title>Myra | Cloud Cooperative Platform</title>
       </Head>
+      <Script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></Script>
       <ToastContainer />
       <Toaster />
       <main className="app">{getLayout(<Component {...pageProps} />)}</main>

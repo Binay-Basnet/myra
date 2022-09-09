@@ -50,6 +50,7 @@
     "leaflet-defaulticon-compatibility": "^0.1.1",
     "leaflet-geosearch": "^3.6.1",
     "lodash": "^4.17.21",
+    "lottie-react": "^2.3.1",
     "nepali-date-converter": "^3.3.1",
     "next": "12.2.5",
     "react": "18.2.0",
