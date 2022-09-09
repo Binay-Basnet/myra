@@ -13056,6 +13056,7 @@ export type GetSettingsShareReturnChargesDataQuery = {
             maxShare?: number | null;
             type?: ShareChargeType | null;
             charge?: string | null;
+            ledgerMapping?: string | null;
           } | null> | null;
         } | null;
       } | null;
@@ -20642,6 +20643,7 @@ export const GetSettingsShareReturnChargesDataDocument = `
             maxShare
             type
             charge
+            ledgerMapping
           }
         }
       }
