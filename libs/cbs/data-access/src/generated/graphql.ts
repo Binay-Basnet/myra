@@ -33,16 +33,6 @@ export type Scalars = {
   Email: any;
   HTML: any;
   InvalidData: Record<string, Array<string>>;
-  /**
-   * # For Localization of every data from backend
-   * ```javascript
-   * {
-   *    local: "localized data based on user lang setting",
-   *    en: "data in english",
-   *    np: "data in nepali"
-   * }
-   * ```
-   */
   Localized: Record<'local' | 'en' | 'np', string>;
   Map: Record<string, string>;
   Time: string;
@@ -10774,7 +10764,14 @@ export type GetCooperativeUnionKymEditDataQuery = {
                 } | null;
               } | null;
             } | null;
-            sectionStatus?: { id?: string | null } | null;
+            sectionStatus?: {
+              id?: string | null;
+              errors?: Record<string, Array<string>> | null;
+              sectionStatus?: {
+                errors?: Array<string> | null;
+                incomplete?: Array<string> | null;
+              } | null;
+            } | null;
           } | null;
         } | null;
       } | null;
@@ -10897,7 +10894,14 @@ export type GetBoardOfDirectorsDetailsListQuery = {
                 } | null> | null;
               } | null> | null;
             } | null;
-            sectionStatus?: Array<{ id?: string | null } | null> | null;
+            sectionStatus?: Array<{
+              id?: string | null;
+              errors?: Record<string, Array<string>> | null;
+              sectionStatus?: {
+                errors?: Array<string> | null;
+                incomplete?: Array<string> | null;
+              } | null;
+            } | null> | null;
           } | null;
         } | null;
       } | null;
@@ -10961,7 +10965,14 @@ export type GetAccountOperatorDetailsListQuery = {
                 } | null> | null;
               } | null> | null;
             } | null;
-            sectionStatus?: Array<{ id?: string | null } | null> | null;
+            sectionStatus?: Array<{
+              id?: string | null;
+              errors?: Record<string, Array<string>> | null;
+              sectionStatus?: {
+                errors?: Array<string> | null;
+                incomplete?: Array<string> | null;
+              } | null;
+            } | null> | null;
           } | null;
         } | null;
       } | null;
@@ -11025,7 +11036,14 @@ export type GetCentralRepresentativeDetailsQuery = {
                 trainingOrganization?: string | null;
               } | null> | null;
             } | null;
-            sectionStatus?: { id?: string | null } | null;
+            sectionStatus?: {
+              id?: string | null;
+              errors?: Record<string, Array<string>> | null;
+              sectionStatus?: {
+                errors?: Array<string> | null;
+                incomplete?: Array<string> | null;
+              } | null;
+            } | null;
           } | null;
         } | null;
       } | null;
@@ -11041,7 +11059,56 @@ export type GetCoopUnionSectionStatusQuery = {
   members: {
     cooperativeUnion?: {
       formState?: {
-        sectionStatus?: { __typename: 'KymCoopUnionAddSectionStatus' } | null;
+        sectionStatus?: {
+          institutionInformation?: {
+            id?: string | null;
+            errors?: Record<string, Array<string>> | null;
+            sectionStatus?: {
+              errors?: Array<string> | null;
+              incomplete?: Array<string> | null;
+            } | null;
+          } | null;
+          bodDetails?: Array<{
+            id?: string | null;
+            errors?: Record<string, Array<string>> | null;
+            sectionStatus?: {
+              errors?: Array<string> | null;
+              incomplete?: Array<string> | null;
+            } | null;
+          } | null> | null;
+          accountOperatorDetails?: Array<{
+            id?: string | null;
+            errors?: Record<string, Array<string>> | null;
+            sectionStatus?: {
+              errors?: Array<string> | null;
+              incomplete?: Array<string> | null;
+            } | null;
+          } | null> | null;
+          centralRepresentativeDetails?: {
+            id?: string | null;
+            errors?: Record<string, Array<string>> | null;
+            sectionStatus?: {
+              errors?: Array<string> | null;
+              incomplete?: Array<string> | null;
+            } | null;
+          } | null;
+          economicDetails?: {
+            id?: string | null;
+            errors?: Record<string, Array<string>> | null;
+            sectionStatus?: {
+              errors?: Array<string> | null;
+              incomplete?: Array<string> | null;
+            } | null;
+          } | null;
+          declaration?: {
+            id?: string | null;
+            errors?: Record<string, Array<string>> | null;
+            sectionStatus?: {
+              errors?: Array<string> | null;
+              incomplete?: Array<string> | null;
+            } | null;
+          } | null;
+        } | null;
       } | null;
     } | null;
   };
@@ -12932,6 +12999,7 @@ export type GetSettingsShareIssueChargesDataQuery = {
             maxShare?: number | null;
             type?: ShareChargeType | null;
             charge?: string | null;
+            ledgerMapping?: string | null;
           } | null> | null;
           other?: Array<{
             name?: string | null;
@@ -12939,6 +13007,27 @@ export type GetSettingsShareIssueChargesDataQuery = {
             maxShare?: number | null;
             type?: ShareChargeType | null;
             charge?: string | null;
+            ledgerMapping?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLedgerMapingShareQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetLedgerMapingShareQuery = {
+  settings: {
+    general?: {
+      chartsOfAccount?: {
+        accountsUnder?: {
+          data?: Array<{
+            id: string;
+            accountCode: string;
+            name: Record<'local' | 'en' | 'np', string>;
           } | null> | null;
         } | null;
       } | null;
@@ -17373,6 +17462,11 @@ export const GetCooperativeUnionKymEditDataDocument = `
             }
             sectionStatus {
               id
+              errors
+              sectionStatus {
+                errors
+                incomplete
+              }
             }
           }
         }
@@ -17524,6 +17618,11 @@ export const GetBoardOfDirectorsDetailsListDocument = `
             }
             sectionStatus {
               id
+              errors
+              sectionStatus {
+                errors
+                incomplete
+              }
             }
           }
         }
@@ -17602,6 +17701,11 @@ export const GetAccountOperatorDetailsListDocument = `
             }
             sectionStatus {
               id
+              errors
+              sectionStatus {
+                errors
+                incomplete
+              }
             }
           }
         }
@@ -17680,6 +17784,11 @@ export const GetCentralRepresentativeDetailsDocument = `
             }
             sectionStatus {
               id
+              errors
+              sectionStatus {
+                errors
+                incomplete
+              }
             }
           }
         }
@@ -17709,7 +17818,54 @@ export const GetCoopUnionSectionStatusDocument = `
     cooperativeUnion {
       formState(id: $id) {
         sectionStatus {
-          __typename
+          institutionInformation {
+            id
+            sectionStatus {
+              errors
+              incomplete
+            }
+            errors
+          }
+          bodDetails {
+            id
+            sectionStatus {
+              errors
+              incomplete
+            }
+            errors
+          }
+          accountOperatorDetails {
+            id
+            errors
+            sectionStatus {
+              errors
+              incomplete
+            }
+          }
+          centralRepresentativeDetails {
+            id
+            errors
+            sectionStatus {
+              errors
+              incomplete
+            }
+          }
+          economicDetails {
+            id
+            errors
+            sectionStatus {
+              errors
+              incomplete
+            }
+          }
+          declaration {
+            id
+            errors
+            sectionStatus {
+              errors
+              incomplete
+            }
+          }
         }
       }
     }
@@ -20398,6 +20554,7 @@ export const GetSettingsShareIssueChargesDataDocument = `
             maxShare
             type
             charge
+            ledgerMapping
           }
           other {
             name
@@ -20405,6 +20562,7 @@ export const GetSettingsShareIssueChargesDataDocument = `
             maxShare
             type
             charge
+            ledgerMapping
           }
         }
       }
@@ -20431,6 +20589,39 @@ export const useGetSettingsShareIssueChargesDataQuery = <
       GetSettingsShareIssueChargesDataQuery,
       GetSettingsShareIssueChargesDataQueryVariables
     >(GetSettingsShareIssueChargesDataDocument).bind(null, variables),
+    options
+  );
+export const GetLedgerMapingShareDocument = `
+    query getLedgerMapingShare {
+  settings {
+    general {
+      chartsOfAccount {
+        accountsUnder(accountCode: "160.8") {
+          data {
+            id
+            accountCode
+            name
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLedgerMapingShareQuery = <
+  TData = GetLedgerMapingShareQuery,
+  TError = unknown
+>(
+  variables?: GetLedgerMapingShareQueryVariables,
+  options?: UseQueryOptions<GetLedgerMapingShareQuery, TError, TData>
+) =>
+  useQuery<GetLedgerMapingShareQuery, TError, TData>(
+    variables === undefined
+      ? ['getLedgerMapingShare']
+      : ['getLedgerMapingShare', variables],
+    useAxios<GetLedgerMapingShareQuery, GetLedgerMapingShareQueryVariables>(
+      GetLedgerMapingShareDocument
+    ).bind(null, variables),
     options
   );
 export const GetSettingsShareReturnChargesDataDocument = `

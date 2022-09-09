@@ -13,6 +13,7 @@ export * from './lib/theme';
 export * from './locales';
 export * from './redux/addUserSlice';
 export * from './redux/authSlice';
+export * from './redux/coopUnionSlice';
 export * from './redux/counterSlice';
 export * from './redux/loanSettingsSlice';
 export * from './redux/store';

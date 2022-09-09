@@ -1,5 +1,4 @@
 import React, { ReactElement, ReactNode } from 'react';
-// import '../styles/globals.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
