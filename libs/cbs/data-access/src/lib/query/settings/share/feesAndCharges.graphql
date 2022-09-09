@@ -50,6 +50,7 @@ query getSettingsShareReturnChargesData {
             maxShare
             type
             charge
+            ledgerMapping
           }
         }
       }

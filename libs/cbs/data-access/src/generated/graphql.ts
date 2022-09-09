@@ -4863,6 +4863,7 @@ export type KymCoopUnionQuery = {
 
 export type KymCoopUnionQueryFormStateArgs = {
   id: Scalars['ID'];
+  includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type KymCoopUnionSectionMutation = {
@@ -13050,6 +13051,7 @@ export type GetSettingsShareReturnChargesDataQuery = {
             maxShare?: number | null;
             type?: ShareChargeType | null;
             charge?: string | null;
+            ledgerMapping?: string | null;
           } | null> | null;
         } | null;
       } | null;
@@ -20636,6 +20638,7 @@ export const GetSettingsShareReturnChargesDataDocument = `
             maxShare
             type
             charge
+            ledgerMapping
           }
         }
       }
