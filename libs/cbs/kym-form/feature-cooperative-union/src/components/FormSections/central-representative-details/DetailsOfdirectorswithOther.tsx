@@ -104,6 +104,7 @@ const CRDirectorsSelection = ({
   } = useGetCentralRepresentativeDetailsQuery(
     {
       id: String(id),
+      includeRequiredErrors: false,
     },
     { enabled: !!id }
   );

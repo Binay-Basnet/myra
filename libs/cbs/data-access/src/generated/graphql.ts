@@ -10659,6 +10659,7 @@ export type GetCoOperativeAccountOperatorEditDataQuery = {
 
 export type GetCooperativeUnionKymEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
+  includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type GetCooperativeUnionKymEditDataQuery = {
@@ -10782,6 +10783,7 @@ export type GetCooperativeUnionKymEditDataQuery = {
 
 export type GetEconimicDetailsEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
+  includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type GetEconimicDetailsEditDataQuery = {
@@ -10841,6 +10843,7 @@ export type GetEconimicDetailsEditDataQuery = {
 
 export type GetBoardOfDirectorsDetailsListQueryVariables = Exact<{
   id: Scalars['ID'];
+  includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type GetBoardOfDirectorsDetailsListQuery = {
@@ -10912,6 +10915,7 @@ export type GetBoardOfDirectorsDetailsListQuery = {
 
 export type GetAccountOperatorDetailsListQueryVariables = Exact<{
   id: Scalars['ID'];
+  includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type GetAccountOperatorDetailsListQuery = {
@@ -10983,6 +10987,7 @@ export type GetAccountOperatorDetailsListQuery = {
 
 export type GetCentralRepresentativeDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
+  includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type GetCentralRepresentativeDetailsQuery = {
@@ -17358,10 +17363,10 @@ export const useGetCoOperativeAccountOperatorEditDataQuery = <
     options
   );
 export const GetCooperativeUnionKymEditDataDocument = `
-    query getCooperativeUnionKymEditData($id: ID!) {
+    query getCooperativeUnionKymEditData($id: ID!, $includeRequiredErrors: Boolean) {
   members {
     cooperativeUnion {
-      formState(id: $id) {
+      formState(id: $id, includeRequiredErrors: $includeRequiredErrors) {
         formData {
           institutionInformation {
             data {
@@ -17493,10 +17498,10 @@ export const useGetCooperativeUnionKymEditDataQuery = <
     options
   );
 export const GetEconimicDetailsEditDataDocument = `
-    query getEconimicDetailsEditData($id: ID!) {
+    query getEconimicDetailsEditData($id: ID!, $includeRequiredErrors: Boolean) {
   members {
     cooperativeUnion {
-      formState(id: $id) {
+      formState(id: $id, includeRequiredErrors: $includeRequiredErrors) {
         formData {
           economicDetails {
             data {
@@ -17566,10 +17571,10 @@ export const useGetEconimicDetailsEditDataQuery = <
     options
   );
 export const GetBoardOfDirectorsDetailsListDocument = `
-    query getBoardOfDirectorsDetailsList($id: ID!) {
+    query getBoardOfDirectorsDetailsList($id: ID!, $includeRequiredErrors: Boolean) {
   members {
     cooperativeUnion {
-      formState(id: $id) {
+      formState(id: $id, includeRequiredErrors: $includeRequiredErrors) {
         formData {
           boardOfDirectorsDetails {
             data {
@@ -17649,10 +17654,10 @@ export const useGetBoardOfDirectorsDetailsListQuery = <
     options
   );
 export const GetAccountOperatorDetailsListDocument = `
-    query getAccountOperatorDetailsList($id: ID!) {
+    query getAccountOperatorDetailsList($id: ID!, $includeRequiredErrors: Boolean) {
   members {
     cooperativeUnion {
-      formState(id: $id) {
+      formState(id: $id, includeRequiredErrors: $includeRequiredErrors) {
         formData {
           accountOperatorsDetails {
             data {
@@ -17732,10 +17737,10 @@ export const useGetAccountOperatorDetailsListQuery = <
     options
   );
 export const GetCentralRepresentativeDetailsDocument = `
-    query getCentralRepresentativeDetails($id: ID!) {
+    query getCentralRepresentativeDetails($id: ID!, $includeRequiredErrors: Boolean) {
   members {
     cooperativeUnion {
-      formState(id: $id) {
+      formState(id: $id, includeRequiredErrors: $includeRequiredErrors) {
         formData {
           centralRepresentativeDetails {
             data {

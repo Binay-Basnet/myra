@@ -3,32 +3,30 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // Define a type for the slice state
 interface CoopUnionState {
   isFormDirty: boolean;
+  hasPressedNext: boolean;
   institutionInformation: {
     errors: Record<string, string[]>;
-    incomplete: Record<string, string[]>;
   };
   bod: {
     director: {
       directorId?: string;
       errors?: Record<string, string[]>;
-      incomplete?: Record<string, string[]>;
     }[];
   };
   accountOperator: {
     operator: {
       operatorId?: string;
       errors?: Record<string, string[]>;
-      incomplete?: Record<string, string[]>;
     }[];
   };
   centralRepresentative: {
     errors: Record<string, string[]>;
-    incomplete: Record<string, string[]>;
   };
 }
 
 // Define the initial state using that type
 const initialState: () => CoopUnionState = () => ({
+  hasPressedNext: false,
   isFormDirty: false,
   institutionInformation: {
     errors: {},
@@ -54,31 +52,16 @@ export const coopUnionSLice = createSlice({
     addError: (state, action: PayloadAction<Record<string, string[]>>) => {
       state.institutionInformation.errors = action.payload;
     },
-    addIncomplete: (state, action: PayloadAction<Record<string, string[]>>) => {
-      state.institutionInformation.incomplete = action.payload;
-    },
+
     setFormDirty: (state, action: PayloadAction<boolean>) => {
       state.isFormDirty = action.payload;
     },
-    addBodError: (
-      state,
-      action: PayloadAction<
-        {
-          directorId: string;
-          errors?: Record<string, string[]>;
-          incomplete?: Record<string, string[]>;
-        }[]
-      >
-    ) => {
-      state.bod.director = action.payload.map((d) => ({
-        ...d,
-        incomplete: state.bod.director.find(
-          (d1) => d1.directorId === d.directorId
-        )?.incomplete,
-      }));
+
+    setHasPressedNext: (state, action: PayloadAction<boolean>) => {
+      state.hasPressedNext = action.payload;
     },
 
-    addBodIncomplete: (
+    addBodError: (
       state,
       action: PayloadAction<
         {
@@ -101,24 +84,6 @@ export const coopUnionSLice = createSlice({
         }[]
       >
     ) => {
-      state.accountOperator.operator = action.payload.map((d) => ({
-        ...d,
-        incomplete: state.accountOperator.operator.find(
-          (d1) => d1.operatorId === d.operatorId
-        )?.incomplete,
-      }));
-    },
-
-    addAccountIncomplete: (
-      state,
-      action: PayloadAction<
-        {
-          operatorId: string;
-          errors?: Record<string, string[]>;
-          incomplete?: Record<string, string[]>;
-        }[]
-      >
-    ) => {
       state.accountOperator.operator = action.payload;
     },
 
@@ -129,27 +94,17 @@ export const coopUnionSLice = createSlice({
       state.centralRepresentative.errors = action.payload;
     },
 
-    addCentralRepIncomplete: (
-      state,
-      action: PayloadAction<Record<string, string[]>>
-    ) => {
-      state.centralRepresentative.incomplete = action.payload;
-    },
-
     reset: () => initialState(),
   },
 });
 
 export const {
   addError,
-  addIncomplete,
   setFormDirty,
   addBodError,
-  addBodIncomplete,
   addAccountError,
-  addAccountIncomplete,
   addCentralRepError,
-  addCentralRepIncomplete,
+  setHasPressedNext,
   reset,
 } = coopUnionSLice.actions;
 

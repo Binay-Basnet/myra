@@ -34,12 +34,16 @@ export const useCoopUnionBod = ({
   const bodErrors = useAppSelector((state) => state.coopUnion.bod.director);
   const { watch, reset, setError, clearErrors } = methods;
 
+  const hasPressedNext = useAppSelector(
+    (state) => state.coopUnion.hasPressedNext
+  );
+
   const {
     data: editValues,
     refetch: refetchEdit,
     isLoading: editLoading,
   } = useGetBoardOfDirectorsDetailsListQuery(
-    { id },
+    { id, includeRequiredErrors: hasPressedNext },
     {
       enabled: !!id,
       onSuccess: (response) => {
@@ -123,10 +127,7 @@ export const useCoopUnionBod = ({
         );
 
       if (error.directorId === String(foundIndex)) {
-        Object.entries({
-          ...(error?.errors ?? {}),
-          ...(error?.incomplete ?? {}),
-        }).forEach((value) => {
+        Object.entries(error?.errors ?? {}).forEach((value) => {
           setError(value[0] as keyof CoopUnionPersonnelInput, {
             type: value[1][0].includes('required') ? 'required' : 'value',
             message: value[1][0],
