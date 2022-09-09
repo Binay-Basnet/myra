@@ -8,7 +8,7 @@ import {
   useTranslation,
 } from '@coop/shared/utils';
 
-import { useCooperativeUnionInstitution } from '../../../hooks';
+import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
 
 interface IContactDetailsProps {
   setSection: (section?: { section: string; subSection: string }) => void;
@@ -18,8 +18,7 @@ export const ContactDetails = ({ setSection }: IContactDetailsProps) => {
   const { t } = useTranslation();
 
   const methods = useForm<CoopUnionInstitutionInformationInput>();
-
-  useCooperativeUnionInstitution({ methods });
+  useCoopUnionInstitution({ methods });
 
   return (
     <FormProvider {...methods}>

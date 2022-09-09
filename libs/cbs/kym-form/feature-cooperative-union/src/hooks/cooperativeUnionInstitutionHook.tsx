@@ -14,6 +14,7 @@ import { isDeepEmpty } from '@coop/shared/utils';
 
 interface ICooperativeUnionHookProps {
   methods: UseFormReturn<any>;
+  validate?: 'all' | 'current';
 }
 
 const getInstiutionData = (
@@ -54,10 +55,11 @@ const getInstiutionData = (
 
 export const useCooperativeUnionInstitution = ({
   methods,
+  validate = 'current',
 }: ICooperativeUnionHookProps) => {
   const router = useRouter();
   const id = router?.query?.['id'];
-  const { watch, reset } = methods;
+  const { watch, reset, setError, clearErrors } = methods;
   const { mutateAsync } = useSetCooperativeUnionInstitutionDataMutation();
 
   const {
@@ -70,12 +72,36 @@ export const useCooperativeUnionInstitution = ({
     },
     {
       enabled: !!id,
-      onSuccess: () => {
-        // setError('branchOfficeAddress.provinceId', {
-        //   message: 'THIS IS STUPID',
-        // });
-        // setError('contactEmail', { message: 'THIS IS STUPID' });
-        // setError('nameOfInstitutionEn', { message: 'THIS IS STUPID 11' });
+      onSuccess: (response) => {
+        if (validate === 'current') {
+          const errorObj =
+            response?.members?.cooperativeUnion?.formState?.formData
+              ?.institutionInformation?.sectionStatus?.errors;
+
+          if (errorObj) {
+            clearErrors();
+            Object.entries(errorObj).forEach((value) => {
+              setError(value[0], {
+                message: value[1][0],
+              });
+            });
+          } else {
+            clearErrors();
+          }
+        } else {
+          const errorObj =
+            response?.members?.cooperativeUnion?.formState?.sectionStatus
+              .institutionInformation.errors;
+
+          if (errorObj) {
+            clearErrors();
+            Object.entries(errorObj).forEach((value) => {
+              setError(value[0], {
+                message: value[1][0],
+              });
+            });
+          }
+        }
       },
     }
   );
