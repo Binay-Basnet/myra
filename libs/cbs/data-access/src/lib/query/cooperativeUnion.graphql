@@ -1,7 +1,7 @@
-query getCooperativeUnionKymEditData($id: ID!) {
+query getCooperativeUnionKymEditData($id: ID!, $includeRequiredErrors: Boolean) {
   members {
     cooperativeUnion {
-      formState(id: $id) {
+      formState(id: $id, includeRequiredErrors: $includeRequiredErrors) {
         formData {
           institutionInformation {
             data {
@@ -116,10 +116,10 @@ query getCooperativeUnionKymEditData($id: ID!) {
     }
   }
 }
-query getEconimicDetailsEditData($id: ID!) {
+query getEconimicDetailsEditData($id: ID!, $includeRequiredErrors: Boolean) {
   members {
     cooperativeUnion {
-      formState(id: $id) {
+      formState(id: $id,includeRequiredErrors: $includeRequiredErrors) {
         formData {
           economicDetails {
             data {
@@ -180,10 +180,10 @@ query getEconimicDetailsEditData($id: ID!) {
     }
   }
 }
-query getBoardOfDirectorsDetailsList($id: ID!) {
+query getBoardOfDirectorsDetailsList($id: ID!, $includeRequiredErrors: Boolean) {
   members {
     cooperativeUnion {
-      formState(id: $id) {
+      formState(id: $id,includeRequiredErrors: $includeRequiredErrors) {
         formData {
           boardOfDirectorsDetails {
             data {
@@ -246,10 +246,10 @@ query getBoardOfDirectorsDetailsList($id: ID!) {
     }
   }
 }
-query getAccountOperatorDetailsList($id: ID!) {
+query getAccountOperatorDetailsList($id: ID!, $includeRequiredErrors: Boolean) {
   members {
     cooperativeUnion {
-      formState(id: $id) {
+      formState(id: $id, includeRequiredErrors: $includeRequiredErrors) {
         formData {
           accountOperatorsDetails {
             data {
@@ -312,10 +312,10 @@ query getAccountOperatorDetailsList($id: ID!) {
     }
   }
 }
-query getCentralRepresentativeDetails($id: ID!) {
+query getCentralRepresentativeDetails($id: ID!, $includeRequiredErrors: Boolean) {
   members {
     cooperativeUnion {
-      formState(id: $id) {
+      formState(id: $id, includeRequiredErrors: $includeRequiredErrors) {
         formData {
           centralRepresentativeDetails {
             data {

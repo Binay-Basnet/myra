@@ -13,10 +13,11 @@ import {
   toast,
 } from '@coop/shared/ui';
 import {
-  addAccountIncomplete,
-  addBodIncomplete,
-  addCentralRepIncomplete,
-  addIncomplete,
+  addAccountError,
+  addBodError,
+  addCentralRepError,
+  addError,
+  setHasPressedNext,
   useAppDispatch,
   useAppSelector,
   useTranslation,
@@ -68,6 +69,7 @@ export const KYMCoopUnionFooter = () => {
           mainButtonLabel={t['next']}
           mainButtonHandler={async () => {
             const response = await refetch();
+
             const sectionStatus =
               response?.data?.members?.cooperativeUnion?.formState
                 ?.sectionStatus;
@@ -97,29 +99,30 @@ export const KYMCoopUnionFooter = () => {
                 ?.sectionStatus?.centralRepresentativeDetails?.errors;
 
             if (institutionAllErrors) {
-              dispatch(addIncomplete(institutionAllErrors));
+              dispatch(addError(institutionAllErrors));
             } else {
-              dispatch(addIncomplete(null));
+              dispatch(addError(null));
             }
 
             if (bodAllErrors) {
-              dispatch(addBodIncomplete(bodAllErrors));
+              dispatch(addBodError(bodAllErrors));
             }
 
             if (accountOperatorErrors) {
-              dispatch(addAccountIncomplete(accountOperatorErrors));
+              dispatch(addAccountError(accountOperatorErrors));
             }
 
             if (centralRepErrors) {
-              dispatch(addCentralRepIncomplete(centralRepErrors));
+              dispatch(addCentralRepError(centralRepErrors));
             }
 
             if (response) {
+              dispatch(setHasPressedNext(true));
               if (
-                !sectionStatus.institutionInformation.errors &&
-                !sectionStatus.centralRepresentativeDetails.errors &&
-                sectionStatus.bodDetails.some((bod) => !bod.errors) &&
-                sectionStatus.accountOperatorDetails.some((bod) => !bod.errors)
+                !sectionStatus.institutionInformation?.errors &&
+                !sectionStatus.centralRepresentativeDetails?.errors &&
+                sectionStatus.bodDetails?.some((bod) => !bod.errors) &&
+                sectionStatus.accountOperatorDetails?.some((bod) => !bod.errors)
               ) {
                 router.push(`/members/translation/${router.query['id']}`);
               } else {

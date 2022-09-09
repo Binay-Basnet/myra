@@ -35,8 +35,11 @@ export const useCoopUnionCentralRep = ({
   const id = String(router?.query?.['id']);
 
   const { reset, watch, clearErrors, setError } = methods;
-  const { errors, incomplete } = useAppSelector(
+  const { errors } = useAppSelector(
     (state) => state.coopUnion.centralRepresentative
+  );
+  const hasPressedNext = useAppSelector(
+    (state) => state.coopUnion.hasPressedNext
   );
 
   const { mutate } = useSetPersonnelDetailsMutation({
@@ -73,32 +76,30 @@ export const useCoopUnionCentralRep = ({
     return () => subscription.unsubscribe();
   }, [watch, router.isReady, crId]);
 
-  const {
-    data: crDetailsEditData,
-    isLoading,
-    refetch,
-  } = useGetCentralRepresentativeDetailsQuery(
-    {
-      id: String(id),
-    },
-    {
-      enabled: !!id,
-      onSuccess: (response) => {
-        const errorObj =
-          response?.members?.cooperativeUnion?.formState?.formData
-            ?.centralRepresentativeDetails?.sectionStatus?.errors;
-
-        // Add Error If New Error Is Detected
-        if (errorObj) {
-          dispatch(addCentralRepError(errorObj));
-        } else {
-          dispatch(addCentralRepError(null));
-        }
+  const { data: crDetailsEditData, refetch } =
+    useGetCentralRepresentativeDetailsQuery(
+      {
+        id: String(id),
+        includeRequiredErrors: hasPressedNext,
       },
-    }
-  );
+      {
+        enabled: !!id,
+        onSuccess: (response) => {
+          const errorObj =
+            response?.members?.cooperativeUnion?.formState?.formData
+              ?.centralRepresentativeDetails?.sectionStatus?.errors;
 
-  useEffect(() => {
+          // Add Error If New Error Is Detected
+          if (errorObj) {
+            dispatch(addCentralRepError(errorObj));
+          } else {
+            dispatch(addCentralRepError(null));
+          }
+        },
+      }
+    );
+
+  useDeepCompareEffect(() => {
     if (crDetailsEditData) {
       const crDetail =
         crDetailsEditData?.members?.cooperativeUnion?.formState?.formData
@@ -119,18 +120,18 @@ export const useCoopUnionCentralRep = ({
         setNotAmongDirectors(crDetail.notAmongDirectors ?? false);
       }
     }
-  }, [isLoading]);
+  }, [crDetailsEditData]);
 
   useDeepCompareEffect(() => {
     // Cleanup Previous Errors
     clearErrors();
-    Object.entries({ ...errors, ...incomplete }).forEach((value) => {
+    Object.entries(errors ?? {}).forEach((value) => {
       setError(value[0] as keyof CoopUnionPersonnelInput, {
         type: value[1][0].includes('required') ? 'required' : 'value',
         message: value[1][0],
       });
     });
-  }, [errors, incomplete]);
+  }, [errors]);
 
   return { notAmongDirectors, crId, setCRId };
 };

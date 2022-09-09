@@ -66,8 +66,11 @@ export const useCoopUnionInstitution = ({
   const router = useRouter();
   const id = router.query['id'] as string;
   const dispatch = useAppDispatch();
-  const { errors, incomplete } = useAppSelector(
+  const { errors } = useAppSelector(
     (state) => state.coopUnion.institutionInformation
+  );
+  const hasPressedNext = useAppSelector(
+    (state) => state.coopUnion.hasPressedNext
   );
 
   const { watch, reset, setError, clearErrors } = methods;
@@ -80,6 +83,7 @@ export const useCoopUnionInstitution = ({
   } = useGetCooperativeUnionKymEditDataQuery(
     {
       id,
+      includeRequiredErrors: hasPressedNext,
     },
     {
       enabled: !!id,
@@ -131,17 +135,17 @@ export const useCoopUnionInstitution = ({
     );
 
     return () => subscription.unsubscribe();
-  }, [watch]);
+  }, [watch, id]);
 
   // Trigger Validations When Change In Redux Error Object is Detected
   useDeepCompareEffect(() => {
     // Cleanup Previous Errors
     clearErrors();
-    Object.entries({ ...errors, ...incomplete }).forEach((value) => {
+    Object.entries(errors ?? {}).forEach((value) => {
       setError(value[0] as keyof CoopUnionInstitutionInformationInput, {
         type: value[1][0].includes('required') ? 'required' : 'value',
         message: value[1][0],
       });
     });
-  }, [errors, incomplete]);
+  }, [errors]);
 };
