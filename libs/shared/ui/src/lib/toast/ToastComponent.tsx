@@ -1,9 +1,10 @@
 import React from 'react';
 import { Renderable, Toaster as RHToaster } from 'react-hot-toast';
-import { Box, Spinner, Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 
 import { TOAST_COLORS, TOAST_ICONS } from './utils/constants';
 import Icon from '../icon/Icon';
+import Loader from '../loader/Loader';
 
 export interface ToastProps {
   message: Renderable;
@@ -35,13 +36,7 @@ export function Toast({
     >
       <Box display="flex" alignItems="center" gap="s16">
         {state === 'loading' ? (
-          <Spinner
-            thickness="2px"
-            speed="0.65s"
-            emptyColor="gray.200"
-            color="primary.400"
-            size="md"
-          />
+          <Loader />
         ) : state === 'blank' ? null : (
           <Icon
             as={state ? TOAST_ICONS[state] : TOAST_ICONS[type]}
