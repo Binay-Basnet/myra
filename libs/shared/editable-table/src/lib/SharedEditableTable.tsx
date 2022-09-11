@@ -609,10 +609,10 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number>>(
         column.fieldType === 'search'
           ? column.searchOptions?.find((search) => search.value === data[column.accessor])?.label
           : column.accessorFn
-          ? column?.accessorFn?.(data)
-            ? String(column?.accessorFn?.(data))
+          ? column.accessorFn(data)
+            ? String(column.accessorFn(data))
             : ''
-          : String(data[column.accessor] ?? '')
+          : String(data[column.accessor] ? data[column.accessor] : '')
       }
     >
       {column.cell ? (
@@ -636,7 +636,6 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number>>(
         <Box w="100%">
           {column.loadOptions ? (
             <AsyncSelect
-              value={column.selectOptions?.find((option) => option.value === data[column.accessor])}
               onChange={(newValue: { label: string; value: string }) => {
                 dispatch({
                   type: EditableTableActionKind.EDIT,
@@ -647,8 +646,6 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number>>(
                   },
                 });
               }}
-              cacheOptions
-              defaultOptions
               chakraStyles={chakraDefaultStyles}
               loadOptions={() => column.loadOptions && column.loadOptions(data)}
             />

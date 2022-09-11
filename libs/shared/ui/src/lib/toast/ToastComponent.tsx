@@ -1,10 +1,9 @@
 import React from 'react';
 import { Renderable, Toaster as RHToaster } from 'react-hot-toast';
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Spinner, Text } from '@chakra-ui/react';
 
 import { TOAST_COLORS, TOAST_ICONS } from './utils/constants';
 import Icon from '../icon/Icon';
-import Loader from '../loader/Loader';
 
 export interface ToastProps {
   message: Renderable;
@@ -15,13 +14,7 @@ export interface ToastProps {
   actionTextHandler?: () => void;
 }
 
-export function Toast({
-  message,
-  type,
-  state,
-  actionTextHandler,
-  actionText,
-}: ToastProps) {
+export function Toast({ message, type, state, actionTextHandler, actionText }: ToastProps) {
   return (
     <Box
       width="360px"
@@ -36,13 +29,9 @@ export function Toast({
     >
       <Box display="flex" alignItems="center" gap="s16">
         {state === 'loading' ? (
-          <Loader />
+          <Spinner />
         ) : state === 'blank' ? null : (
-          <Icon
-            as={state ? TOAST_ICONS[state] : TOAST_ICONS[type]}
-            size="lg"
-            color="white"
-          />
+          <Icon as={state ? TOAST_ICONS[state] : TOAST_ICONS[type]} size="lg" color="white" />
         )}
         <Text fontSize="r2" color="white" fontWeight="400" noOfLines={1}>
           {message}
