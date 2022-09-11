@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
@@ -22,14 +21,14 @@ export const LadderRate = () => {
   }>();
   const { t } = useTranslation();
 
-  const ladderRateEditData = watch('ladderRateData');
+  // const ladderRateEditData = watch('ladderRateData');
 
-  useEffect(() => {
-    setValue(
-      'ladderRateData',
-      ladderRateEditData?.map((data) => ({ ...data, type: 'More Than' }))
-    );
-  }, [ladderRateEditData?.length]);
+  // useEffect(() => {
+  //   setValue(
+  //     'ladderRateData',
+  //     ladderRateEditData?.map((data) => ({ ...data, type: 'More Than' }))
+  //   );
+  // }, [ladderRateEditData?.length]);
 
   const ladderRate = watch('ladderRate');
 
@@ -48,16 +47,8 @@ export const LadderRate = () => {
     <FormSection>
       <GridItem colSpan={3}>
         <Box display={'flex'} flexDirection="column" gap="s20">
-          <Box
-            alignItems="center"
-            display={'flex'}
-            justifyContent="space-between"
-          >
-            <Text
-              color="neutralColorLight.Gray-70"
-              fontSize={'s3'}
-              fontWeight="Medium"
-            >
+          <Box alignItems="center" display={'flex'} justifyContent="space-between">
+            <Text color="neutralColorLight.Gray-70" fontSize={'s3'} fontWeight="Medium">
               {t['depositProductLadderRate']}
             </Text>
             <FormSwitchTab name="ladderRate" options={ladderSwitch} />
@@ -69,7 +60,7 @@ export const LadderRate = () => {
                 {
                   accessor: 'type',
                   header: t['depositProductInterestType'],
-                  cell: () => 'More Than',
+                  accessorFn: () => 'More Than',
                 },
                 {
                   accessor: 'amount',

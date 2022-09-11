@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
@@ -9,7 +9,7 @@ import Script from 'next/script';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 
 import { Box, FloatingShortcutButton, Toaster } from '@coop/shared/ui';
-import { store, theme, useInit, useSnap } from '@coop/shared/utils';
+import { store, theme, useSnap } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
 
@@ -39,8 +39,8 @@ const queryClient = new QueryClient({
   },
 });
 
-function MainApp({ Component, pageProps }: AppPropsWithLayout) {
-  useInit();
+const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
+  // useInit();
   useSnap();
 
   const getLayout = Component.getLayout || ((page) => page);
@@ -50,37 +50,35 @@ function MainApp({ Component, pageProps }: AppPropsWithLayout) {
       <Head>
         <title>Myra | Cloud Cooperative Platform</title>
       </Head>
-      <Script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></Script>
+      <Script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" />
       <ToastContainer />
       <Toaster />
       <main className="app">{getLayout(<Component {...pageProps} />)}</main>
       <Box
         position="fixed"
-        bottom={'40px'}
-        left={'32px'}
+        bottom="40px"
+        left="32px"
         display="flex"
-        flexDirection={'row-reverse'}
+        flexDirection="row-reverse"
         zIndex="99"
       >
         <FloatingShortcutButton />
       </Box>
     </>
   );
-}
+};
 
-function CustomApp(props: AppPropsWithLayout) {
-  return (
-    <Provider store={store}>
-      {/* <AuthProvider> */}
-      <QueryClientProvider client={queryClient}>
-        <ChakraProvider theme={theme}>
-          <MainApp {...props} />
-        </ChakraProvider>
-        <ReactQueryDevtools />
-      </QueryClientProvider>
-      {/* </AuthProvider> */}
-    </Provider>
-  );
-}
+const CustomApp = (props: AppPropsWithLayout) => (
+  <Provider store={store}>
+    {/* <AuthProvider> */}
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider theme={theme}>
+        <MainApp {...props} />
+      </ChakraProvider>
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+    {/* </AuthProvider> */}
+  </Provider>
+);
 
 export default CustomApp;
