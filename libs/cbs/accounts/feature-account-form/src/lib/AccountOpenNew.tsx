@@ -180,6 +180,9 @@ export const AccountOpenNew = () => {
       depositFrequencyMonthly: values?.depositFrequencyMonthly
         ? values?.depositFrequencyMonthly
         : null,
+      depositFrequencyFrequencyDay: values?.depositFrequencyFrequencyDay
+        ? values?.depositFrequencyFrequencyDay
+        : null,
       depositFrequencyDayOfWeek: values?.depositFrequencyDayOfWeek
         ? values?.depositFrequencyDayOfWeek
         : null,

@@ -45,18 +45,19 @@ export const FeesAndCharge = () => {
   }, [products]);
 
   useEffect(() => {
-    setProductData(
-      data?.settings.general?.depositProduct?.formState?.data
-        ?.serviceCharge as ServiceTypeFormState[]
-    );
+    const firstArray =
+      (data?.settings.general?.depositProduct?.formState?.data
+        ?.serviceCharge as ServiceTypeFormState[]) ?? [];
+
+    setProductData([...firstArray]);
   }, [isLoading]);
 
   useEffect(() => {
     if (productData && typeof isEbankingEnabled === 'boolean') {
       if (isEbankingEnabled) {
-        setProductData((prev) =>
-          prev
-            ? [...prev, { amount: 0, serviceName: 'E-Banking' }]
+        setProductData((previous) =>
+          previous
+            ? [...previous, { amount: 0, serviceName: 'E-Banking' }]
             : [{ amount: 0, serviceName: 'E-Banking' }]
         );
       } else {
@@ -67,8 +68,8 @@ export const FeesAndCharge = () => {
         unregister(`serviceCharge.${index}.name`);
         unregister(`serviceCharge.${index}.amount`);
 
-        setProductData((prev) =>
-          prev.filter((product) => product.serviceName !== 'E-Banking')
+        setProductData((previous) =>
+          previous.filter((product) => product.serviceName !== 'E-Banking')
         );
       }
     }
@@ -77,9 +78,9 @@ export const FeesAndCharge = () => {
   useEffect(() => {
     if (productData && typeof isMobileBanking === 'boolean') {
       if (isMobileBanking) {
-        setProductData((prev) =>
-          prev
-            ? [...prev, { amount: 0, serviceName: 'Mobile-Banking' }]
+        setProductData((previous) =>
+          previous
+            ? [...previous, { amount: 0, serviceName: 'Mobile-Banking' }]
             : [{ amount: 0, serviceName: 'Mobile-Banking' }]
         );
       } else {
@@ -90,8 +91,8 @@ export const FeesAndCharge = () => {
         unregister(`serviceCharge.${index}.name`);
         unregister(`serviceCharge.${index}.amount`);
 
-        setProductData((prev) =>
-          prev.filter((product) => product.serviceName !== 'Mobile-Banking')
+        setProductData((previous) =>
+          previous.filter((product) => product.serviceName !== 'Mobile-Banking')
         );
       }
     }
@@ -99,9 +100,9 @@ export const FeesAndCharge = () => {
 
   return (
     <GroupContainer
-      scrollMarginTop={'200px'}
+      scrollMarginTop="200px"
       display="flex"
-      flexDirection={'column'}
+      flexDirection="column"
       gap="s16"
     >
       <Box p="s20" background="neutralColorLight.Gray-0">
@@ -123,9 +124,9 @@ export const FeesAndCharge = () => {
         </Box>
         <Box
           display="flex"
-          flexDirection={'column'}
+          flexDirection="column"
           background="background.500"
-          borderRadius={'br2'}
+          borderRadius="br2"
           p="s16"
         >
           {productData?.map((data, index) => {
@@ -145,18 +146,18 @@ export const FeesAndCharge = () => {
               <Box
                 key={`${data?.ledgerName}${data?.serviceName}`}
                 display="flex"
-                flexDirection={'row'}
+                flexDirection="row"
                 justifyContent="space-between"
                 py="s16"
               >
                 <Box>
-                  <Text fontSize={'s3'} fontWeight="500">
+                  <Text fontSize="s3" fontWeight="500">
                     {data?.serviceName}
                   </Text>
                 </Box>
                 <Box w="300px">
                   <FormInput
-                    textAlign={'right'}
+                    textAlign="right"
                     name={`serviceCharge.${index}.amount`}
                     defaultValue={data?.amount}
                   />
@@ -166,22 +167,18 @@ export const FeesAndCharge = () => {
           })}
           <Box
             display="flex"
-            flexDirection={'row'}
+            flexDirection="row"
             justifyContent="space-between"
             py="s16"
           >
-            <Text fontSize={'s3'} fontWeight="600">
+            <Text fontSize="s3" fontWeight="600">
               Total Amount
             </Text>
 
-            <Text fontSize={'s3'} fontWeight="600">
+            <Text fontSize="s3" fontWeight="600">
               {serviceCharge
-                ? serviceCharge?.reduce((a, b) => {
-                    return a + Number(b.amount);
-                  }, 0)
-                : productData?.reduce((a, b) => {
-                    return a + Number(b.amount);
-                  }, 0)}
+                ? serviceCharge?.reduce((a, b) => a + Number(b.amount), 0)
+                : productData?.reduce((a, b) => a + Number(b.amount), 0)}
             </Text>
           </Box>
         </Box>
