@@ -1,0 +1,14 @@
+mutation setValuator($id: ID!, $data: ValuatorInput) {
+  settings {
+    general {
+      valuator {
+        add(id: $id, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
