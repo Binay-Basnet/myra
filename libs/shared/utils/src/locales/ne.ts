@@ -2911,6 +2911,8 @@ const ne: Record<string, string> = {
   loanProductloanLedgerMapping: 'Rebate Ledger Mapping',
   loanProductNatureBusinessIns: 'Institutions Type',
   depositProductNatureofBusinessCoopUnion: 'Cooperatives Union Type',
+  // share settings
+  shareSettingsFeesLedgerMapping: 'Ledger Mapping',
 };
 
 export default ne;

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
@@ -13,8 +12,7 @@ import {
   useSetAccountDocumentDataMutation,
   useSetAccountOpenDataMutation,
 } from '@coop/cbs/data-access';
-import { FormCheckbox, FormSelect } from '@coop/shared/form';
-import { FormInput } from '@coop/shared/form';
+import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
 import {
   Alert,
   asyncToast,
@@ -29,8 +27,10 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { useGetIndividualMemberDetails } from '@coop/shared/utils';
-import { useTranslation } from '@coop/shared/utils';
+import {
+  useGetIndividualMemberDetails,
+  useTranslation,
+} from '@coop/shared/utils';
 
 import {
   Agent,
@@ -107,27 +107,23 @@ export const AccountOpenNew = () => {
   }, [memberId]);
   const productOptions = [
     ...(data?.settings?.general?.depositProduct?.getProductList?.allowed?.reduce(
-      (prevVal, curVal) => {
-        return [
-          ...prevVal,
-          {
-            label: curVal?.productName as string,
-            value: curVal?.id as string,
-          },
-        ];
-      },
+      (previousValue, currentValue) => [
+        ...previousValue,
+        {
+          label: currentValue?.productName as string,
+          value: currentValue?.id as string,
+        },
+      ],
       [] as OptionType[]
     ) ?? []),
     ...(data?.settings?.general?.depositProduct?.getProductList?.notAllowed?.reduce(
-      (prevVal, curVal) => {
-        return [
-          ...prevVal,
-          {
-            label: curVal?.data?.productName as string,
-            value: curVal?.data?.id as string,
-          },
-        ];
-      },
+      (previousValue, currentValue) => [
+        ...previousValue,
+        {
+          label: currentValue?.data?.productName as string,
+          value: currentValue?.data?.id as string,
+        },
+      ],
       [] as OptionType[]
     ) ?? []),
   ];
@@ -166,12 +162,10 @@ export const AccountOpenNew = () => {
   );
 
   const minorDetails = minorData?.account?.listMinors?.data;
-  const minorOptions = minorDetails?.map((data) => {
-    return {
-      label: data?.fullName?.local as string,
-      value: data?.familyMemberId as string,
-    };
-  });
+  const minorOptions = minorDetails?.map((data) => ({
+    label: data?.fullName?.local as string,
+    value: data?.familyMemberId as string,
+  }));
   const submitForm = () => {
     const values = getValues();
     const updatedData = {
@@ -248,10 +242,10 @@ export const AccountOpenNew = () => {
         minH="calc(100vh - 230px)"
       >
         <Box
-          display={'flex'}
+          display="flex"
           flexDirection="column"
           w="100%"
-          borderRight={'1px solid'}
+          borderRight="1px solid"
           borderColor="border.layout"
         >
           {' '}
@@ -259,8 +253,8 @@ export const AccountOpenNew = () => {
             {' '}
             <form>
               <Box
-                display={'flex'}
-                flexDirection={'column'}
+                display="flex"
+                flexDirection="column"
                 gap="s32"
                 p="s20"
                 w="100%"
@@ -281,9 +275,9 @@ export const AccountOpenNew = () => {
                   >
                     <Box p="s20">
                       <ul>
-                        {errors?.error?.map((item, index) => {
-                          return <li key={index}> {item}</li>;
-                        })}
+                        {errors?.error?.map((item, index) => (
+                          <li key={index}> {item}</li>
+                        ))}
                       </ul>
                     </Box>
                   </Alert>
@@ -291,21 +285,16 @@ export const AccountOpenNew = () => {
                 {productType !== NatureOfDepositProduct?.Mandatory &&
                   showCriteria && (
                     <Box
-                      border={'1px solid'}
+                      border="1px solid"
                       borderColor="border.layout"
-                      borderRadius={'br2'}
+                      borderRadius="br2"
                       p="s16"
                     >
                       <CriteriaCard productId={productID} />
                     </Box>
                   )}
                 {memberId && productID && !errors && (
-                  <Box
-                    display={'flex'}
-                    flexDirection={'column'}
-                    gap="s32"
-                    w="100%"
-                  >
+                  <Box display="flex" flexDirection="column" gap="s32" w="100%">
                     <FormInput name="accountName" label="Account Name" />
                     {ProductData?.isForMinors && (
                       <FormSelect
@@ -325,13 +314,13 @@ export const AccountOpenNew = () => {
                     {(productType === NatureOfDepositProduct?.TermSavingOrFd ||
                       productType ===
                         NatureOfDepositProduct?.RecurringSaving) && (
-                      <Box display={'flex'} flexDirection="column" gap="s16">
-                        <Box display={'flex'} flexDirection="column" gap="s4">
-                          <Text fontWeight={'500'} fontSize="r1">
+                      <Box display="flex" flexDirection="column" gap="s16">
+                        <Box display="flex" flexDirection="column" gap="s4">
+                          <Text fontWeight="500" fontSize="r1">
                             {' '}
                             Default Amount Deposit Account Name
                           </Text>
-                          <Text fontWeight={'400'} fontSize="s2">
+                          <Text fontWeight="400" fontSize="s2">
                             {' '}
                             If the member does not specify particular account
                             for deposit, this mapped account will be set
@@ -349,17 +338,13 @@ export const AccountOpenNew = () => {
 
                     {(ProductData?.alternativeChannels ||
                       ProductData?.atmFacility) && (
-                      <Box display={'flex'} flexDirection="column" gap="s16">
-                        <Text fontWeight={'600'} fontSize="r1">
+                      <Box display="flex" flexDirection="column" gap="s16">
+                        <Text fontWeight="600" fontSize="r1">
                           Other Services
                         </Text>
-                        <Box display="flex" flexDirection={'column'} gap="s8">
+                        <Box display="flex" flexDirection="column" gap="s8">
                           {ProductData?.alternativeChannels && (
-                            <Box
-                              display="flex"
-                              flexDirection={'column'}
-                              gap="s8"
-                            >
+                            <Box display="flex" flexDirection="column" gap="s8">
                               <FormCheckbox
                                 name="mobileBanking"
                                 label="Mobile Banking"
@@ -384,7 +369,7 @@ export const AccountOpenNew = () => {
                       <FormInput
                         name="initialDepositAmount"
                         label="Initial Deposit Amount"
-                        type={'number'}
+                        type="number"
                       />
                     </Grid>
                     <Agent />
@@ -403,8 +388,8 @@ export const AccountOpenNew = () => {
         </Box>
 
         {memberId && (
-          <Box position={'sticky'} top="170px" right={'0'} w="320px">
-            <Box display={'flex'} flexDirection="column" gap="s16">
+          <Box position="sticky" top="170px" right="0" w="320px">
+            <Box display="flex" flexDirection="column" gap="s16">
               <MemberCard
                 memberDetails={{
                   name: memberDetailData?.name,
@@ -436,7 +421,7 @@ export const AccountOpenNew = () => {
           </Box>
         )}
       </Box>
-      <Box position={'sticky'} bottom={0}>
+      <Box position="sticky" bottom={0}>
         <Box>
           {mode === '0' && (
             <FormFooter

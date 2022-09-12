@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import {
   ShareChargeType,
+  useGetLedgerMapingShareQuery,
   useGetSettingsShareReturnChargesDataQuery,
   useSetSettingsShareReturnChargesMutation,
 } from '@coop/cbs/data-access';
@@ -16,9 +17,10 @@ import ShareSettingsHeader from '../components/ShareSettingsHeader/ShareSettings
 type OtherChargeTable = {
   name: string;
   type: string;
+  ledgerMapping: string;
   minShare: string;
   maxShare: string;
-  charge: number;
+  charge: string;
 };
 
 const type = [
@@ -42,6 +44,16 @@ export const ShareSettingsReturn = () => {
   const { data, refetch } = useGetSettingsShareReturnChargesDataQuery();
   const settingsFeesAndChargesData =
     data?.settings?.general?.share?.shareReturnCharges;
+  const { data: ledgerQuery } = useGetLedgerMapingShareQuery();
+  const ledgerData =
+    ledgerQuery?.settings?.general?.chartsOfAccount?.accountsUnder?.data;
+
+  const ledgerOptions = ledgerData?.map((data) => {
+    return {
+      label: data?.name?.local as string,
+      value: data?.id as string,
+    };
+  });
 
   useEffect(() => {
     if (settingsFeesAndChargesData) {
@@ -115,6 +127,12 @@ export const ShareSettingsReturn = () => {
                       selectOptions: type,
                     },
                     {
+                      accessor: 'ledgerMapping',
+                      header: t['shareSettingsFeesLedgerMapping'],
+                      fieldType: 'select',
+                      selectOptions: ledgerOptions,
+                    },
+                    {
                       accessor: 'minShare',
                       header: t['shareSettingsFeesMinQuantity'],
                       isNumeric: true,
@@ -129,7 +147,6 @@ export const ShareSettingsReturn = () => {
                     {
                       accessor: 'charge',
                       header: t['shareSettingsFeesCharge'],
-                      isNumeric: true,
                     },
                   ]}
                 />

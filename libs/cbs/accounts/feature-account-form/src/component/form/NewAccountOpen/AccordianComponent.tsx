@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { AccordionPanel } from '@chakra-ui/react';
 
@@ -18,6 +17,7 @@ import { CriteriaCard } from './CriteriaCard';
 interface IcomponentProps {
   productId: string;
 }
+
 export const AccordianComponent = ({ productId }: IcomponentProps) => {
   const [triggerQuery, setTriggerQuery] = useState(false);
   const poductDetails = useGetAccountOpenProductPenaltyQuery(
@@ -197,7 +197,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                         </Text>
 
                         <Text fontWeight={'600'} fontSize="s3">
-                          {rebateData?.daysBeforeInstallmentDate}
+                          {rebateData?.dayBeforeInstallmentDate}
                         </Text>
                       </Box>
                     </li>
@@ -245,7 +245,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                         </Text>
 
                         <Text fontWeight={'600'} fontSize="s3">
-                          {rebateData?.percentage} %
+                          {rebateData?.rebateAmount} %
                         </Text>
                       </Box>
                     </li>
