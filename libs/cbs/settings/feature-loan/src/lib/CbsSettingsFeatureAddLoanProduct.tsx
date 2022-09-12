@@ -37,7 +37,7 @@ import {
   TypesOfMember,
 } from '../components/form';
 
-const SettingsLoanProductForm = () => {
+export const SettingsLoanProductForm = () => {
   const router = useRouter();
   const { t } = useTranslation();
   const id = String(router?.query?.['id']);
@@ -346,5 +346,3 @@ const SettingsLoanProductForm = () => {
     </>
   );
 };
-
-export default SettingsLoanProductForm;

@@ -14,7 +14,7 @@ import { Column, Table } from '@coop/shared/table';
 import { Box, Button, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-export function SettingsLoanProduct() {
+export const SettingsLoanProduct = () => {
   const router = useRouter();
 
   const { t } = useTranslation();
@@ -40,16 +40,12 @@ export function SettingsLoanProduct() {
     }
   );
 
-  const rowData = useMemo(
-    () => data?.settings?.general?.loanProducts?.list?.edges ?? [],
-    [data]
-  );
+  const rowData = useMemo(() => data?.settings?.general?.loanProducts?.list?.edges ?? [], [data]);
 
   const popoverTitle = [
     {
       title: 'edit',
-      onClick: (id: string) =>
-        router.push(`/settings/general/loan-products/edit/${id}`),
+      onClick: (id: string) => router.push(`/settings/general/loan-products/edit/${id}`),
     },
   ];
 
@@ -200,53 +196,41 @@ export function SettingsLoanProduct() {
       {
         header: t['loanProductsProductName'],
         accessorFn: (row) => row?.node.productName,
-        cell: (props) => {
-          return (
-            <Box
-              display="flex"
-              alignItems="center"
-              cursor={'pointer'}
-              gap="s12"
-              onClick={() => {
-                router.push(
-                  '/settings/general/loan-products/detail/12123/overview'
-                );
-              }}
+        cell: (props) => (
+          <Box
+            display="flex"
+            alignItems="center"
+            cursor="pointer"
+            gap="s12"
+            onClick={() => {
+              router.push('/settings/general/loan-products/detail/12123/overview');
+            }}
+          >
+            <Text
+              fontSize="s3"
+              textTransform="capitalize"
+              textOverflow="ellipsis"
+              overflow="hidden"
             >
-              <Text
-                fontSize="s3"
-                textTransform="capitalize"
-                textOverflow="ellipsis"
-                overflow="hidden"
-              >
-                {props.getValue() as string}
-              </Text>
-            </Box>
-          );
-        },
+              {props.getValue() as string}
+            </Text>
+          </Box>
+        ),
       },
       {
         header: t['loanProductsProductType'],
         accessorFn: (row) => row?.node.productType,
-        cell: (props) => {
-          return productTypes(props?.row?.original?.node?.productType);
-        },
+        cell: (props) => productTypes(props?.row?.original?.node?.productType),
       },
       {
         header: t['loanProductsProductSubType'],
         accessorFn: (row) => row?.node.productSubType,
-        cell: (props) => {
-          return productSubTypes(props?.row?.original?.node?.productSubType);
-        },
+        cell: (props) => productSubTypes(props?.row?.original?.node?.productSubType),
       },
       {
         header: t['loanProductsInterest'],
         accessorFn: (row) => row?.node.interest?.defaultRate,
-        cell: (props) => {
-          return (
-            <span>{props?.row?.original?.node?.interest?.defaultRate} %</span>
-          );
-        },
+        cell: (props) => <span>{props?.row?.original?.node?.interest?.defaultRate} %</span>,
       },
       {
         header: t['loanProductsCreatedDate'],
@@ -256,10 +240,7 @@ export function SettingsLoanProduct() {
         id: '_actions',
         header: '',
         cell: (props) => (
-          <ActionPopoverComponent
-            items={popoverTitle}
-            id={props?.row?.original?.node?.id}
-          />
+          <ActionPopoverComponent items={popoverTitle} id={props?.row?.original?.node?.id} />
         ),
         meta: {
           width: '50px',
@@ -272,12 +253,7 @@ export function SettingsLoanProduct() {
   return (
     <>
       <Box borderBottom="1px solid " borderColor="border.layout" p="8px 16px">
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          h="100%"
-        >
+        <Box display="flex" justifyContent="space-between" alignItems="center" h="100%">
           <Text fontSize="r2" fontWeight="600" color="gray.800">
             {t['loanProductsLoanProducts']}
           </Text>
@@ -286,11 +262,7 @@ export function SettingsLoanProduct() {
             onClick={() =>
               newId
                 .mutateAsync({ idType: Id_Type.Loanproduct })
-                .then((res) =>
-                  router.push(
-                    `/settings/general/loan-products/add/${res?.newId}`
-                  )
-                )
+                .then((res) => router.push(`/settings/general/loan-products/add/${res?.newId}`))
             }
           >
             {t['loanProductsNewLoanProduct']}
@@ -303,13 +275,10 @@ export function SettingsLoanProduct() {
         data={rowData}
         columns={columns}
         pagination={{
-          total:
-            data?.settings?.general?.loanProducts?.list?.totalCount ?? 'Many',
+          total: data?.settings?.general?.loanProducts?.list?.totalCount ?? 'Many',
           pageInfo: data?.settings.general?.loanProducts?.list?.pageInfo,
         }}
       />
     </>
   );
-}
-
-export default SettingsLoanProduct;
+};

@@ -4,14 +4,7 @@ import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { AccordionPanel } from '@chakra-ui/react';
 
 import { useGetAccountOpenProductPenaltyQuery } from '@coop/cbs/data-access';
-import {
-  Accordion,
-  AccordionButton,
-  AccordionItem,
-  Box,
-  Icon,
-  Text,
-} from '@coop/shared/ui';
+import { Accordion, AccordionButton, AccordionItem, Box, Icon, Text } from '@coop/shared/ui';
 
 import { CriteriaCard } from './CriteriaCard';
 
@@ -27,17 +20,15 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
     }
   );
   const penaltyData =
-    poductDetails?.data?.settings?.general?.depositProduct?.getPenaltyRebateInfo
-      ?.data?.penalty;
+    poductDetails?.data?.settings?.general?.depositProduct?.getPenaltyRebateInfo?.data?.penalty;
   const rebateData =
-    poductDetails?.data?.settings?.general?.depositProduct?.getPenaltyRebateInfo
-      ?.data?.rebate;
+    poductDetails?.data?.settings?.general?.depositProduct?.getPenaltyRebateInfo?.data?.rebate;
   const prematurePenaltyData =
-    poductDetails?.data?.settings?.general?.depositProduct?.getPenaltyRebateInfo
-      ?.data?.prematurePenalty;
+    poductDetails?.data?.settings?.general?.depositProduct?.getPenaltyRebateInfo?.data
+      ?.prematurePenalty;
   const withdrawData =
-    poductDetails?.data?.settings?.general?.depositProduct?.getPenaltyRebateInfo
-      ?.data?.withdrawPenalty;
+    poductDetails?.data?.settings?.general?.depositProduct?.getPenaltyRebateInfo?.data
+      ?.withdrawPenalty;
 
   useEffect(() => {
     if (productId) {
@@ -47,11 +38,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
 
   return (
     <Box border="1px solid" borderColor={'border.layout'} borderRadius="br2">
-      <Accordion
-        borderBottom="1px"
-        borderBottomColor="border.layout"
-        allowToggle
-      >
+      <Accordion borderBottom="1px" borderBottomColor="border.layout" allowToggle>
         <AccordionItem>
           {({ isExpanded }) => (
             <>
@@ -106,12 +93,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                 <Box px="s20">
                   <ul>
                     <li>
-                      <Box
-                        display={'flex'}
-                        flexDirection="row"
-                        gap="s4"
-                        flexWrap={'wrap'}
-                      >
+                      <Box display={'flex'} flexDirection="row" gap="s4" flexWrap={'wrap'}>
                         <Text fontWeight={'400'} fontSize="s3">
                           Days from end date
                         </Text>
@@ -122,12 +104,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                       </Box>
                     </li>
                     <li>
-                      <Box
-                        display={'flex'}
-                        flexDirection="row"
-                        gap="s4"
-                        flexWrap={'wrap'}
-                      >
+                      <Box display={'flex'} flexDirection="row" gap="s4" flexWrap={'wrap'}>
                         <Text fontWeight={'400'} fontSize="s3">
                           Penalty Rate
                         </Text>
@@ -138,12 +115,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                       </Box>
                     </li>
                     <li>
-                      <Box
-                        display={'flex'}
-                        flexDirection="row"
-                        gap="s4"
-                        flexWrap={'wrap'}
-                      >
+                      <Box display={'flex'} flexDirection="row" gap="s4" flexWrap={'wrap'}>
                         <Text fontWeight={'400'} fontSize="s3">
                           Penalty Amount
                         </Text>
@@ -186,28 +158,18 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                 <Box px="s20">
                   <ul>
                     <li>
-                      <Box
-                        display={'flex'}
-                        flexDirection="row"
-                        gap="s4"
-                        flexWrap={'wrap'}
-                      >
+                      <Box display={'flex'} flexDirection="row" gap="s4" flexWrap={'wrap'}>
                         <Text fontWeight={'400'} fontSize="s3">
                           Days before the installment date
                         </Text>
 
                         <Text fontWeight={'600'} fontSize="s3">
-                          {rebateData?.daysBeforeInstallmentDate}
+                          {rebateData?.dayBeforeInstallmentDate}
                         </Text>
                       </Box>
                     </li>
                     <li>
-                      <Box
-                        display={'flex'}
-                        flexDirection="row"
-                        gap="s4"
-                        flexWrap={'wrap'}
-                      >
+                      <Box display={'flex'} flexDirection="row" gap="s4" flexWrap={'wrap'}>
                         <Text fontWeight={'400'} fontSize="s3">
                           No. of installments
                         </Text>
@@ -218,12 +180,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                       </Box>
                     </li>
                     <li>
-                      <Box
-                        display={'flex'}
-                        flexDirection="row"
-                        gap="s4"
-                        flexWrap={'wrap'}
-                      >
+                      <Box display={'flex'} flexDirection="row" gap="s4" flexWrap={'wrap'}>
                         <Text fontWeight={'400'} fontSize="s3">
                           Amount
                         </Text>
@@ -234,18 +191,13 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                       </Box>
                     </li>
                     <li>
-                      <Box
-                        display={'flex'}
-                        flexDirection="row"
-                        gap="s4"
-                        flexWrap={'wrap'}
-                      >
+                      <Box display={'flex'} flexDirection="row" gap="s4" flexWrap={'wrap'}>
                         <Text fontWeight={'400'} fontSize="s3">
                           Percentage of Deposited Amount
                         </Text>
 
                         <Text fontWeight={'600'} fontSize="s3">
-                          {rebateData?.percentage} %
+                          {rebateData?.rebateAmount} %
                         </Text>
                       </Box>
                     </li>
@@ -282,12 +234,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                 <Box px="s20">
                   <ul>
                     <li>
-                      <Box
-                        display={'flex'}
-                        flexDirection="row"
-                        gap="s4"
-                        flexWrap={'wrap'}
-                      >
+                      <Box display={'flex'} flexDirection="row" gap="s4" flexWrap={'wrap'}>
                         <Text fontWeight={'400'} fontSize="s3">
                           Penalty Date Type
                         </Text>
@@ -298,12 +245,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                       </Box>
                     </li>
                     <li>
-                      <Box
-                        display={'flex'}
-                        flexDirection="row"
-                        gap="s4"
-                        flexWrap={'wrap'}
-                      >
+                      <Box display={'flex'} flexDirection="row" gap="s4" flexWrap={'wrap'}>
                         <Text fontWeight={'400'} fontSize="s3">
                           No. of Days
                         </Text>
@@ -314,12 +256,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                       </Box>
                     </li>
                     <li>
-                      <Box
-                        display={'flex'}
-                        flexDirection="row"
-                        gap="s4"
-                        flexWrap={'wrap'}
-                      >
+                      <Box display={'flex'} flexDirection="row" gap="s4" flexWrap={'wrap'}>
                         <Text fontWeight={'400'} fontSize="s3">
                           Penalty Ledger Mapping
                         </Text>
@@ -330,12 +267,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                       </Box>
                     </li>
                     <li>
-                      <Box
-                        display={'flex'}
-                        flexDirection="row"
-                        gap="s4"
-                        flexWrap={'wrap'}
-                      >
+                      <Box display={'flex'} flexDirection="row" gap="s4" flexWrap={'wrap'}>
                         <Text fontWeight={'400'} fontSize="s3">
                           Penalty Amount
                         </Text>
@@ -346,12 +278,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                       </Box>
                     </li>
                     <li>
-                      <Box
-                        display={'flex'}
-                        flexDirection="row"
-                        gap="s4"
-                        flexWrap={'wrap'}
-                      >
+                      <Box display={'flex'} flexDirection="row" gap="s4" flexWrap={'wrap'}>
                         <Text fontWeight={'400'} fontSize="s3">
                           Penalty Rate
                         </Text>
@@ -394,12 +321,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                 <Box px="s20">
                   <ul>
                     <li>
-                      <Box
-                        display={'flex'}
-                        flexDirection="row"
-                        gap="s4"
-                        flexWrap={'wrap'}
-                      >
+                      <Box display={'flex'} flexDirection="row" gap="s4" flexWrap={'wrap'}>
                         <Text fontWeight={'400'} fontSize="s3">
                           Penalty Amount
                         </Text>
@@ -410,12 +332,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                       </Box>
                     </li>
                     <li>
-                      <Box
-                        display={'flex'}
-                        flexDirection="row"
-                        gap="s4"
-                        flexWrap={'wrap'}
-                      >
+                      <Box display={'flex'} flexDirection="row" gap="s4" flexWrap={'wrap'}>
                         <Text fontWeight={'400'} fontSize="s3">
                           Penalty Rate
                         </Text>
@@ -426,12 +343,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                       </Box>
                     </li>
                     <li>
-                      <Box
-                        display={'flex'}
-                        flexDirection="row"
-                        gap="s4"
-                        flexWrap={'wrap'}
-                      >
+                      <Box display={'flex'} flexDirection="row" gap="s4" flexWrap={'wrap'}>
                         <Text fontWeight={'400'} fontSize="s3">
                           Penalty Ledger Mapping
                         </Text>

@@ -11,7 +11,7 @@ import { useTranslation } from '@coop/shared/utils';
 
 import { AcceptedCollateral } from '../components';
 
-const CbsSettingsFeatureLoanProducts = () => {
+export const CbsSettingsFeatureLoanProducts = () => {
   const { t } = useTranslation();
   const methods = useForm();
   const { watch, reset } = methods;
@@ -68,5 +68,3 @@ const CbsSettingsFeatureLoanProducts = () => {
     </Box>
   );
 };
-
-export default CbsSettingsFeatureLoanProducts;

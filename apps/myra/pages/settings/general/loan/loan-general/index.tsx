@@ -4,6 +4,7 @@ import {
   SettingsLayout,
   SettingsLoanLayout,
 } from '@coop/cbs/settings/ui-layout';
+
 const LoanProducts = () => {
   return <CbsSettingsFeatureLoanProducts />;
 };
