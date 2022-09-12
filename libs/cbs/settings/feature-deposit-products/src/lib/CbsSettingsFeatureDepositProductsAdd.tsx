@@ -159,9 +159,9 @@ export function SettingsDepositProductsAdd() {
       },
       rebateData: {
         daysBeforeInstallmentDate:
-          values?.rebateData?.daysBeforeInstallmentDate ?? null,
+          values?.rebateData?.dayBeforeInstallmentDate ?? null,
         noOfInstallment: values?.rebateData?.noOfInstallment ?? null,
-        percentage: values?.rebateData?.percentage ?? null,
+        rebateRate: values?.rebateData?.rebateRate ?? null,
         rebateAmount: values?.rebateData?.rebateAmount ?? null,
       },
       maxAge: values?.maxAge ? Number(values?.maxAge) : null,

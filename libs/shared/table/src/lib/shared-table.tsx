@@ -3,6 +3,7 @@ import {
   Box,
   Collapse,
   Flex,
+  Spinner,
   Table as ChakraTable,
   TableContainer,
   Tbody,
@@ -14,13 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { flexRender } from '@tanstack/react-table';
 
-import {
-  Loader,
-  NoDataState,
-  Pagination,
-  TableSearch,
-  Text,
-} from '@coop/shared/ui';
+import { NoDataState, Pagination, TableSearch, Text } from '@coop/shared/ui';
 
 import { TableSelectionBar } from '../components';
 import { useTable } from '../hooks/useTable';
@@ -117,7 +112,13 @@ export const Table = <T extends Record<string, unknown>>({
                   justifyContent="center"
                   pt="100px"
                 >
-                  <Loader />
+                  <Spinner
+                    thickness="4px"
+                    speed="0.65s"
+                    emptyColor="gray.200"
+                    color="primary.500"
+                    size="xl"
+                  />
                 </Box>
               </Box>
             ) : (

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Frequency } from '@coop/cbs/data-access';
+import { FrequencyTenure } from '@coop/cbs/data-access';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -24,19 +24,19 @@ export const MaximumTenure = () => {
   const unitOptions = [
     {
       label: t['day'],
-      value: Frequency.Daily,
+      value: FrequencyTenure.Day,
     },
     {
       label: t['week'],
-      value: Frequency.Weekly,
+      value: FrequencyTenure.Week,
     },
     {
       label: t['month'],
-      value: Frequency.Monthly,
+      value: FrequencyTenure.Month,
     },
     {
       label: t['year'],
-      value: Frequency.Yearly,
+      value: FrequencyTenure.Year,
     },
   ];
 
@@ -89,13 +89,13 @@ export const MaximumTenure = () => {
                   textAlign={'right'}
                   label={t['loanProductNumber']}
                   rightAddonText={
-                    rightElement && rightElement === Frequency.Daily
+                    rightElement && rightElement === FrequencyTenure.Day
                       ? t['days']
-                      : rightElement === Frequency.Weekly
+                      : rightElement === FrequencyTenure.Week
                       ? t['weeks']
-                      : rightElement === Frequency.Monthly
+                      : rightElement === FrequencyTenure.Month
                       ? t['months']
-                      : rightElement === Frequency.Yearly
+                      : rightElement === FrequencyTenure.Year
                       ? t['years']
                       : ''
                   }

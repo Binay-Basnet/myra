@@ -15,7 +15,6 @@ export const FormInput = <T,>({ name, ...rest }: IFormInputProps<T>) => {
 
   const {
     formState: { errors },
-    clearErrors,
     control,
   } = methods;
 
@@ -29,12 +28,7 @@ export const FormInput = <T,>({ name, ...rest }: IFormInputProps<T>) => {
           <Input
             id={name}
             errorText={errors[name]?.message as string}
-            onChange={(e) => {
-              onChange(e);
-              if (errors[name]?.type === 'required') {
-                clearErrors(name);
-              }
-            }}
+            onChange={onChange}
             value={value}
             {...rest}
             {...fieldProps}

@@ -19,7 +19,6 @@ export interface Option {
     age?: number;
     maritialStatus?: string;
     address?: string;
-    profilePicUrl?: string | null | undefined;
   };
 }
 
@@ -60,7 +59,7 @@ export const components: SelectComponentsConfig<
         <Box display="flex" p="s8" gap="s16">
           <Box borderRadius="50%">
             <Avatar
-              src={props.data.memberInfo?.profilePicUrl ?? ''}
+              // src="/passport.jpg"
               size="lg"
               name={props.data.memberInfo?.memberName}
             />

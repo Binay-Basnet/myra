@@ -37,7 +37,7 @@ export const NewQuestions = () => {
             <SubHeadingText>
               {t['loanProductSupportMultipleAccount']}
             </SubHeadingText>
-            <FormSwitchTab name="supportMultipleAccount" options={yesNo} />
+            <FormSwitchTab name="supportMultipleAccounts" options={yesNo} />
           </Box>
         </GridItem>
       </FormSection>
@@ -51,7 +51,7 @@ export const NewQuestions = () => {
               justifyContent="space-between"
             >
               <SubHeadingText>
-                {t['loanProductLoanScheduleChangeOverride']}{' '}
+                {t['loanProductLoanScheduleChangeOverride']}
               </SubHeadingText>
               <FormSwitchTab
                 name="loanScheduleChangeOverride"

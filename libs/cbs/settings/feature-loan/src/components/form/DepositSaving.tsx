@@ -14,7 +14,7 @@ export const DepositSaving = () => {
     >
       <Grid templateColumns="repeat(2,1fr)" gap="s16">
         <FormInput
-          name="disburementOfFMV"
+          name="deposit.minValue"
           label={t['loanProductMinimumValue']}
           textAlign={'right'}
           rightElement={
@@ -25,7 +25,7 @@ export const DepositSaving = () => {
           type={'number'}
         />
         <FormInput
-          name="disburementOfDMV"
+          name="deposit.maxValue"
           label={t['loanProductMaximumValue']}
           textAlign={'right'}
           rightElement={

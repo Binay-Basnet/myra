@@ -1,29 +1,25 @@
 {
   "root": true,
+<<<<<<< HEAD
+  "ignorePatterns": ["**/*", "**/graphql.ts"],
+=======
   "ignorePatterns": [
     "**/*",
     "next.config.js",
     "**/graphql.ts"
   ],
+>>>>>>> fc28522d486b693e21666fe45ec548cb543615e2
   "plugins": [
     "unused-imports",
     "@nrwl/nx",
     "@typescript-eslint",
     "simple-import-sort",
-    "unicorn",
     "prettier"
   ],
-  "extends": [
-    "airbnb",
-    "airbnb-typescript",
-    "airbnb/hooks",
-    "plugin:react/jsx-runtime",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "plugin:unicorn/recommended",
-    "prettier"
-  ],
+  "extends": ["eslint:recommended", "google", "prettier"],
   "rules": {
+<<<<<<< HEAD
+=======
     // UNICORN RELATED RULES & FILE NAMING CONVENTIONS
     "unicorn/no-array-for-each": "off",
     "unicorn/no-null": "off",
@@ -57,11 +53,18 @@
     ],
     "react-hooks/exhaustive-deps": "warn",
     // MISC RULES
+>>>>>>> fc28522d486b693e21666fe45ec548cb543615e2
     "require-jsdoc": "off",
     "valid-jsdoc": "off",
+    "camelcase": "off",
     "no-console": "error",
+<<<<<<< HEAD
+    "react-hooks/exhaustive-deps": "off",
+    "@typescript-eslint/no-unused-vars": "error",
+=======
     "prefer-default-export": "off",
     // IMPORTS RELATED RULES
+>>>>>>> fc28522d486b693e21666fe45ec548cb543615e2
     "unused-imports/no-unused-imports-ts": "error",
     "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": [
@@ -100,6 +103,8 @@
           // relative paths up until 3 levels
         ]
       }
+<<<<<<< HEAD
+=======
     ],
     // TYPESCRIPT RULES & VARIABLE NAMING CONVENTIONS
     "@typescript-eslint/no-unsafe-assignment": "off",
@@ -161,10 +166,14 @@
           "will"
         ]
       }
+>>>>>>> fc28522d486b693e21666fe45ec548cb543615e2
     ]
   },
   "overrides": [
     {
+<<<<<<< HEAD
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+=======
       "files": [
         "*.ts",
         "*.tsx",
@@ -178,6 +187,7 @@
           "./tsconfig(.*)?.json"
         ]
       },
+>>>>>>> fc28522d486b693e21666fe45ec548cb543615e2
       "rules": {
         "@nrwl/nx/enforce-module-boundaries": [
           "error",

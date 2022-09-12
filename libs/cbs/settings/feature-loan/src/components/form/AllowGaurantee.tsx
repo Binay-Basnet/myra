@@ -10,7 +10,7 @@ export const AllowGaurantee = () => {
   const { watch } = useFormContext();
   const { t } = useTranslation();
 
-  const allowGuarantee = watch('allowGuarantee');
+  const allowGurantee = watch('allowGurantee');
 
   const yesNo = [
     { label: t['yes'], value: true },
@@ -26,12 +26,12 @@ export const AllowGaurantee = () => {
           justifyContent="space-between"
         >
           <SubHeadingText>{t['loanProductAllowGuarantee']}</SubHeadingText>
-          <FormSwitchTab name="allowGuarantee" options={yesNo} />
+          <FormSwitchTab name="allowGurantee" options={yesNo} />
         </Box>
-        {allowGuarantee && (
+        {allowGurantee && (
           <Box w="35%">
             <FormInput
-              name="max"
+              name="maxPercentOfGurantee"
               type="text"
               label={t['loanProductMaxPercent']}
             />

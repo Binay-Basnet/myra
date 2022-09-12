@@ -5,7 +5,7 @@ import { GroupBase, Props, Select as ChakraSelect } from 'chakra-react-select';
 import { useTranslation } from '@coop/shared/utils';
 
 import { getComponents, Option } from './SelectComponents';
-import { getChakraDefaultStyles } from './SelectStyles';
+import { chakraDefaultStyles } from './SelectStyles';
 import TextFields from '../text-fields/TextFields';
 
 interface SelectOption {
@@ -91,11 +91,10 @@ export function Select({
         hideSelectedOptions={false}
         isOptionDisabled={(option) => !!option.disabled}
         isClearable={false}
-        chakraStyles={getChakraDefaultStyles(!!errorText)}
+        chakraStyles={chakraDefaultStyles}
         components={getComponents(hasRadioOption)}
         {...rest}
       />
-
       {errorText ? (
         <TextFields variant="formHelper" color="danger.500">
           {errorText}

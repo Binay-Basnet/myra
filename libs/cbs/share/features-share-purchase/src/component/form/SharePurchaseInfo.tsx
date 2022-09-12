@@ -34,7 +34,7 @@ const SharePurchaseInfo = () => {
 
   const balanceData = shareHistoryTableData?.share?.history?.balance;
 
-  const { data: chargesData } = useGetShareChargesQuery({
+  const { data: chargesData, refetch } = useGetShareChargesQuery({
     transactionType: Share_Transaction_Direction?.Purchase,
     shareCount: balanceData?.count as number,
   });
@@ -42,6 +42,7 @@ const SharePurchaseInfo = () => {
   const chargeList = chargesData?.share?.charges;
 
   useEffect(() => {
+    refetch();
     setTotalAmount(
       noOfShares * 100 + Number(adminFee ?? 0) + Number(printingFee ?? 0)
     );

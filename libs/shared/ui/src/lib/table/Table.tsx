@@ -7,6 +7,7 @@ import {
   Flex,
   Icon,
   Popover,
+  Spinner,
   Table as ChakraTable,
   TableContainer,
   Tbody,
@@ -18,7 +19,7 @@ import {
   Tr,
 } from '@chakra-ui/react';
 
-import { Loader, Pagination, TableSearch } from '@coop/shared/ui';
+import { Pagination, TableSearch } from '@coop/shared/ui';
 
 import ListFilterPopover from './components/ListFilterPopover';
 import { AmountFilterPopover } from './components/ListFilterPopover/ListFilterPopver';
@@ -95,7 +96,13 @@ export function Table<T extends Record<string, unknown>>({
           justifyContent="center"
           pt="100px"
         >
-          <Loader />
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="primary.500"
+            size="xl"
+          />
         </Box>
       )}
 

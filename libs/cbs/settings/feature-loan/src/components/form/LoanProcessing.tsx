@@ -8,10 +8,6 @@ type LoanProcessingTable = {
   amount: number;
 };
 
-const service_name = [
-  { label: 'Cheque Book Issue', value: 'chequeBookIssue' },
-  { label: 'Atm issue', value: 'atmIssue' },
-];
 const ledger_name = [
   {
     label: 'Purchase Ledger',
@@ -34,15 +30,13 @@ export const LoanProcessing = () => {
       <GridItem colSpan={3}>
         <Box>
           <FormEditableTable<LoanProcessingTable>
-            name="serviceCharge"
+            name="loanProcessingCharge"
             debug={false}
             columns={[
               {
                 accessor: 'serviceName',
                 header: t['loanAccServiceTableServiceName'],
-                fieldType: 'select',
                 cellWidth: 'auto',
-                selectOptions: service_name,
               },
               {
                 accessor: 'ledgerName',

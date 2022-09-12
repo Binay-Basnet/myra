@@ -1,4 +1,5 @@
 import { Controller, Path, useFormContext } from 'react-hook-form';
+import { UseControllerProps } from 'react-hook-form/dist/types/controller';
 
 import { EditableTable, EditableTableProps } from '@coop/shared/editable-table';
 
@@ -6,12 +7,16 @@ interface RecordWithId {
   _id?: number;
 }
 
-interface IFormEditableTableProps<T extends RecordWithId & Record<string, string | number>>
-  extends EditableTableProps<T> {
+interface IFormEditableTableProps<
+  T extends RecordWithId & Record<string, string | number>
+> extends EditableTableProps<T> {
   name: Path<T> | string;
+  rules?: UseControllerProps['rules'];
 }
 
-export const FormEditableTable = <T extends RecordWithId & Record<string, string | number>>({
+export const FormEditableTable = <
+  T extends RecordWithId & Record<string, string | number>
+>({
   name,
   ...rest
 }: IFormEditableTableProps<T>) => {
@@ -25,10 +30,13 @@ export const FormEditableTable = <T extends RecordWithId & Record<string, string
   return (
     <Controller
       name={name}
+      rules={rest.rules}
       control={control}
-      render={({ field: { onChange, value } }) => (
-        <EditableTable defaultData={(value as T[]) ?? []} onChange={onChange} {...rest} />
-      )}
+      render={({ field: { onChange, value } }) => {
+        return (
+          <EditableTable defaultData={value} onChange={onChange} {...rest} />
+        );
+      }}
     />
   );
 };

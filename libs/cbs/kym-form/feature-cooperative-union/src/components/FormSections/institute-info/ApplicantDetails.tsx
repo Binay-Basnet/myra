@@ -11,7 +11,7 @@ import {
   useTranslation,
 } from '@coop/shared/utils';
 
-import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
+import { useCooperativeUnionInstitution } from '../../../hooks';
 
 interface IApplicantDetailsProps {
   setSection: (section?: { section: string; subSection: string }) => void;
@@ -19,12 +19,13 @@ interface IApplicantDetailsProps {
 
 export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
   const router = useRouter();
+
   const id = String(router?.query?.['id']);
 
   const { t } = useTranslation();
 
   const methods = useForm<CoopUnionInstitutionInformationInput>();
-  useCoopUnionInstitution({ methods });
+  useCooperativeUnionInstitution({ methods });
 
   const { watch } = methods;
 

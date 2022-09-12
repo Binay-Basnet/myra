@@ -65,7 +65,6 @@ export const FormMemberSelect = ({
             gender:
               profileData?.data?.formData?.basicInformation?.gender?.local,
             maritialStatus: profileData?.data?.formData?.maritalStatus?.local,
-            profilePicUrl: curVal?.node?.profilePicUrl,
           },
         },
       ];

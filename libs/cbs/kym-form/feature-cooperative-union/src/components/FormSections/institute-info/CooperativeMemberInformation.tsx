@@ -13,7 +13,7 @@ import {
   useTranslation,
 } from '@coop/shared/utils';
 
-import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
+import { useCooperativeUnionInstitution } from '../../../hooks';
 
 interface ICooperativeMemberInformationProps {
   setSection: (section?: { section: string; subSection: string }) => void;
@@ -29,7 +29,7 @@ export const CooperativeMemberInformation = ({
 
   const methods = useForm<CoopUnionInstitutionInformationInput>();
 
-  useCoopUnionInstitution({ methods });
+  useCooperativeUnionInstitution({ methods });
 
   const { watch } = methods;
 
