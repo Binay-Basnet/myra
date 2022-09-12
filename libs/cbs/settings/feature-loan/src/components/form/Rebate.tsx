@@ -60,12 +60,12 @@ export const Rebate = () => {
             >
               <InputGroupContainer>
                 <FormInput
-                  name="rebate.daysBeforeInstallmentDate"
+                  name="rebate.dayBeforeInstallmentDate"
                   type="number"
                   label={t['loanProductDaysafterinstallmentdate']}
                 />
                 <FormInput
-                  name="rebate.rebate"
+                  name="rebate.rebateRate"
                   type="number"
                   label={t['loanProductRebate']}
                   textAlign={'right'}
@@ -82,8 +82,8 @@ export const Rebate = () => {
                 />
 
                 <FormSelect
-                  name="penalty.penaltyLedgerMapping"
-                  label={t['loanProductPenaltyedgerMapping']}
+                  name="rebate.rebateLedgerMapping"
+                  label={t['loanProductloanLedgerMapping']}
                   options={coaList}
                 />
               </InputGroupContainer>

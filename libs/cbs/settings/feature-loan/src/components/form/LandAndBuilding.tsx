@@ -14,7 +14,7 @@ export const LandAndBuilding = () => {
     >
       <Grid templateColumns="repeat(2,1fr)" gap="s16">
         <FormInput
-          name="disburementOfFMV"
+          name="landAndBuilding.minFMV"
           label={t['loanProductMinimumFMV']}
           textAlign={'right'}
           rightElement={
@@ -25,7 +25,7 @@ export const LandAndBuilding = () => {
           type={'number'}
         />
         <FormInput
-          name="disburementOfDMV"
+          name="landAndBuilding.maxFMV"
           label={t['loanProductMaximumFMV']}
           textAlign={'right'}
           rightElement={
@@ -36,7 +36,7 @@ export const LandAndBuilding = () => {
           type={'number'}
         />
         <FormInput
-          name="disburementOfFMV"
+          name="landAndBuilding.minDV"
           label={t['loanProductMinimumDV']}
           textAlign={'right'}
           rightElement={
@@ -47,7 +47,7 @@ export const LandAndBuilding = () => {
           type={'number'}
         />
         <FormInput
-          name="disburementOfDMV"
+          name="landAndBuilding.maxDV"
           label={t['loanProductMaximumDV']}
           textAlign={'right'}
           rightElement={

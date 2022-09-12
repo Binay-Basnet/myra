@@ -1,18 +1,12 @@
-import React from 'react';
+import { useFormContext } from 'react-hook-form';
 
-// import debounce from 'lodash/debounce';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box } from '@coop/shared/ui';
 
-import {
-  BoxContainer,
-  SubHeadingText,
-  SubText,
-  TextBoxContainer,
-  TopText,
-} from '../formui';
-const DepositFrequencyOptions = [
+import { BoxContainer, SubHeadingText, SubText, TextBoxContainer, TopText } from '../formui';
+
+const depositFrequencyOptions = [
   {
     label: 'Daily',
     value: 'Daily',
@@ -34,14 +28,16 @@ const DepositFrequencyOptions = [
 const enableSwitch = [
   {
     label: 'Enable',
-    value: 'enable',
+    value: true,
   },
   {
     label: 'Disable',
-    value: 'disable',
+    value: false,
   },
 ];
-export const DepositFrequency = ({ watch }: any) => {
+
+const DepositFrequency = () => {
+  const { watch } = useFormContext();
   const penalty = watch('enablePenalty');
   const rebate = watch('enableRebate');
   return (
@@ -49,107 +45,64 @@ export const DepositFrequency = ({ watch }: any) => {
       <TextBoxContainer>
         <TopText>Deposit Frequency</TopText>
         <SubText>
-          Select deposit frequency. Further details have to be added during
-          account opening.
+          Select deposit frequency. Further details have to be added during account opening.
         </SubText>
       </TextBoxContainer>
-      <FormSwitchTab
-        name={'depositFrequency'}
-        options={DepositFrequencyOptions}
-      />
-      <Box display={'flex'} justifyContent="space-between">
+      <FormSwitchTab name="depositFrequency" options={depositFrequencyOptions} />
+      <Box display="flex" justifyContent="space-between">
         <TextBoxContainer>
           <SubHeadingText>Penalty</SubHeadingText>
           <SubText>Enter Penalty details.</SubText>
         </TextBoxContainer>
-        <FormSwitchTab name={'enablePenalty'} options={enableSwitch} />
+        <FormSwitchTab name="enablePenalty" options={enableSwitch} />
       </Box>
-      {penalty && penalty === 'enable' && (
-        <BoxContainer
-          p="s16"
-          border={'1px solid'}
-          borderColor="border.layout"
-          borderRadius={'4px'}
-        >
+      {penalty && (
+        <BoxContainer p="s16" border="1px solid" borderColor="border.layout" borderRadius="4px">
           <InputGroupContainer>
-            <FormInput
-              name="dayFromTheEndPenalty"
-              type="number"
-              label="Day from end date"
-              __placeholder="Day from end date"
-            />
-            <FormInput
-              name="minimumAmount"
-              type="number"
-              label="Minimum Amount"
-              __placeholder="Minimum Amount"
-            />
-            <FormInput
-              name="flatRatePenalty"
-              type="number"
-              label="Flat-rate Penalty"
-              __placeholder="Flat-rate penalty"
-            />
+            <FormInput name="dayFromTheEndPenalty" type="number" label="Day from end date" />
+            <FormInput name="minimumAmount" type="number" label="Minimum Amount" />
+            <FormInput name="flatRatePenalty" type="number" label="Flat-rate Penalty" />
             <FormInput
               name="penaltyPercentage"
               type="number"
               label="Penalty"
-              textAlign={'right'}
-              __placeholder="0.00"
-              rightElement={'%'}
+              textAlign="right"
+              rightElement="%"
             />
             <FormInput
               name="penaltyAmount"
               type="number"
               label="Penalty Amount"
-              __placeholder="Penalty Amount"
-              textAlign={'right'}
+              textAlign="right"
             />
           </InputGroupContainer>
         </BoxContainer>
       )}
-      <Box display={'flex'} justifyContent="space-between">
+      <Box display="flex" justifyContent="space-between">
         <TextBoxContainer>
           <SubHeadingText>Rebate</SubHeadingText>
           <SubText>Enter Rebate details.</SubText>
         </TextBoxContainer>
-        <FormSwitchTab name={'enableRebate'} options={enableSwitch} />
+        <FormSwitchTab name="enableRebate" options={enableSwitch} />
       </Box>
-      {rebate && rebate === 'enable' && (
-        <BoxContainer
-          p="s16"
-          border={'1px solid'}
-          borderColor="border.layout"
-          borderRadius={'4px'}
-        >
+      {rebate && (
+        <BoxContainer p="s16" border="1px solid" borderColor="border.layout" borderRadius="4px">
           <InputGroupContainer>
-            <FormInput
-              name="dayFromTheEndRebate"
-              type="number"
-              label="Day from end date"
-              __placeholder="Day from end date"
-            />
-            <FormInput
-              name="rebateAmount"
-              type="number"
-              label="Rebate Amount"
-              __placeholder="Rebate Amount"
-            />
+            <FormInput name="dayFromTheEndRebate" type="number" label="Day from end date" />
+            <FormInput name="rebateAmount" type="number" label="Rebate Amount" />
 
             <FormInput
               name="percentageRebate"
               type="number"
               label="Percentage of Deposited Amount"
-              textAlign={'right'}
-              __placeholder="0.00"
-              rightElement={'%'}
+              textAlign="right"
+              rightElement="%"
             />
             <FormInput
               name="nosOfInstallment"
               type="number"
               label="No. of Installment"
-              __placeholder="Enter Number of Installments"
-              textAlign={'right'}
+              textAlign="right"
             />
           </InputGroupContainer>
         </BoxContainer>
@@ -157,3 +110,5 @@ export const DepositFrequency = ({ watch }: any) => {
     </BoxContainer>
   );
 };
+
+export default DepositFrequency;

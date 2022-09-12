@@ -4,31 +4,24 @@ import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
 import {
+  Collateral,
   LoanProductInput,
   LoanRepaymentScheme,
   useGetLoanProductEditDataQuery,
   useSetLoanProductMutation,
 } from '@coop/cbs/data-access';
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormFooter,
-  FormHeader,
-  Text,
-} from '@coop/shared/ui';
+import { asyncToast, Box, Container, FormFooter, FormHeader, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
   AllowGaurantee,
   AmountLimit,
-  Collateral,
+  CollateralForm,
   Critera,
   GeneralSetup,
   GridItems,
   InsuranceApplicable,
   Interest,
-  LedgerMapping,
   LoanProcessing,
   LoanRepayment,
   LoanRepaymentSchemes,
@@ -44,7 +37,7 @@ import {
   TypesOfMember,
 } from '../components/form';
 
-export function SettingsLoanProductForm() {
+export const SettingsLoanProductForm = () => {
   const router = useRouter();
   const { t } = useTranslation();
   const id = String(router?.query?.['id']);
@@ -54,6 +47,16 @@ export function SettingsLoanProductForm() {
     label: string;
     value: string;
   }[];
+
+  type CollateralValues = {
+    type?: Collateral;
+    minFMV?: number;
+    maxFMV?: number;
+    minDV?: number;
+    maxDV?: number;
+    minValue?: number;
+    maxValue?: number;
+  };
 
   type LoanProvisionType = {
     loanProvision: string;
@@ -70,6 +73,10 @@ export function SettingsLoanProductForm() {
     | 'natureOFBusinessCoop'
     | 'natureOfBusinessInstitution'
     | 'loanProvisiontable'
+    | 'land'
+    | 'landAndBuilding'
+    | 'vehicle'
+    | 'deposit'
   > & {
     genderId: SelectOption;
     maritalStatusId: SelectOption;
@@ -80,6 +87,10 @@ export function SettingsLoanProductForm() {
     natureOfBusinessInstitution: SelectOption;
     loanProvisiontable: LoanProvisionType;
     productName: string;
+    land: CollateralValues;
+    landAndBuilding: CollateralValues;
+    vehicle: CollateralValues;
+    deposit: CollateralValues;
   };
 
   const methods = useForm<LoanProductForm>({});
@@ -96,64 +107,76 @@ export function SettingsLoanProductForm() {
       staleTime: 0,
     }
   );
-  const editVals = editValues?.settings?.general?.loanProducts?.formState;
+  const editVals = editValues?.settings?.general?.loanProducts?.formState?.data;
 
   const submitForm = () => {
     const values = getValues();
 
     const genderList = values?.genderId?.map((data) => data?.value);
-    const maritalStatusList = values?.maritalStatusId?.map(
-      (data) => data?.value
-    );
-    const educationQualificationList = values?.educationQualification?.map(
-      (data) => data?.value
-    );
+    const maritalStatusList = values?.maritalStatusId?.map((data) => data?.value);
+
+    const educationQualificationList = values?.educationQualification?.map((data) => data?.value);
     const occupationList = values?.occupation?.map((data) => data?.value);
     const ethnicityList = values?.ethnicity?.map((data) => data?.value);
-    const natureOFBusinessCoopList = values?.natureOFBusinessCoop?.map(
+    const natureOFBusinessCoopList = values?.natureOFBusinessCoop?.map((data) => data?.value);
+    const natureOfBusinessInstitutionList = values?.natureOfBusinessInstitution?.map(
       (data) => data?.value
     );
-    const natureOfBusinessInstitutionList =
-      values?.natureOfBusinessInstitution?.map((data) => data?.value);
 
-    const serviceChargeList = values?.serviceCharge?.map((data) => {
-      return {
-        serviceName: data?.serviceName,
-        ledgerName: data?.ledgerName,
-        amount: data?.amount.toString(),
-      };
-    });
+    const loanProcessingChargeList = values?.loanProcessingCharge?.map((data) => ({
+      serviceName: data?.serviceName,
+      ledgerName: data?.ledgerName,
+      amount: data?.amount.toString(),
+    }));
 
-    const goodLoanProvision =
-      values?.loanProvisiontable !== undefined &&
-      values?.loanProvisiontable?.filter(
-        (item) => item?.loanProvision === 'good'
-      );
+    const landList = values?.collateralTypes?.includes(Collateral.Land)
+      ? {
+          type: Collateral.Land,
+          minFMV: values?.land?.minFMV,
+          maxFMV: values?.land?.maxFMV,
+          minDV: values?.land?.minDV,
+          maxDV: values?.land?.maxDV,
+        }
+      : null;
 
-    const doubtfulLoanProvision =
-      values?.loanProvisiontable !== undefined &&
-      values?.loanProvisiontable?.filter(
-        (item) => item?.loanProvision === 'doubtful'
-      );
-    const problematicLoanProvision =
-      values?.loanProvisiontable !== undefined &&
-      values?.loanProvisiontable?.filter(
-        (item) => item?.loanProvision === 'problematic'
-      );
-    const badLoanProvision =
-      values?.loanProvisiontable !== undefined &&
-      values?.loanProvisiontable?.filter(
-        (item) => item?.loanProvision === 'bad'
-      );
+    const landAndVehicleList = values?.collateralTypes?.includes(Collateral.LandAndBuilding)
+      ? {
+          type: Collateral.LandAndBuilding,
+          minFMV: values?.landAndBuilding?.minFMV,
+          maxFMV: values?.landAndBuilding?.maxFMV,
+          minDV: values?.landAndBuilding?.minDV,
+          maxDV: values?.landAndBuilding?.maxDV,
+        }
+      : null;
+
+    const vehicleList = values?.collateralTypes?.includes(Collateral.Vehicle)
+      ? {
+          type: Collateral.Vehicle,
+          minValue: values?.vehicle?.minValue,
+          maxValue: values?.vehicle?.maxValue,
+        }
+      : null;
+
+    const depositList = values?.collateralTypes?.includes(Collateral.DepositOrSaving)
+      ? {
+          type: Collateral.DepositOrSaving,
+          minValue: values?.deposit?.minValue,
+          maxValue: values?.deposit?.maxValue,
+        }
+      : null;
+
+    const collateralValueArray = [landList, landAndVehicleList, vehicleList, depositList];
+
+    const collateralValueList = collateralValueArray?.filter(
+      (item) =>
+        item?.type === Collateral.Land ||
+        item?.type === Collateral.LandAndBuilding ||
+        item?.type === Collateral.Vehicle ||
+        item?.type === Collateral.DepositOrSaving
+    );
 
     const updatedData = {
-      ...omit(values, [
-        'id',
-        'createdAt',
-        'modifiedAt',
-        'objState',
-        'loanProvisiontable',
-      ]),
+      ...omit(values, ['id', 'createdAt', 'modifiedAt', 'objState', 'land', 'landAndBuilding']),
       genderId: genderList,
       maritalStatusId: maritalStatusList,
       educationQualification: educationQualificationList,
@@ -161,62 +184,47 @@ export function SettingsLoanProductForm() {
       occupation: occupationList,
       natureOfBusinessInstitution: natureOfBusinessInstitutionList,
       natureOFBusinessCoop: natureOFBusinessCoopList,
-      serviceCharge: serviceChargeList,
+      loanProcessingCharge: loanProcessingChargeList,
       minTenureUnit: values?.minTenureUnit ? values?.minTenureUnit : null,
       maxTenureUnit: values?.maxTenureUnit ? values?.maxTenureUnit : null,
       minAge: values?.minAge ? values?.minAge : null,
       maxAge: values?.maxAge ? values?.maxAge : null,
-      maxTenureUnitNumber: values?.maxTenureUnitNumber
-        ? values?.maxTenureUnitNumber
-        : null,
-      minTenureUnitNumber: values?.minTenureUnitNumber
-        ? values?.minTenureUnitNumber
-        : null,
-      installmentType: values?.installmentType ? values?.installmentType : null,
-      modeOfPayment: values?.modeOfPayment ? values?.modeOfPayment : null,
-      minGraceDurationUnit: values?.minGraceDurationUnit
-        ? values?.minGraceDurationUnit
-        : null,
-      maxGraceDurationUnit: values?.maxGraceDurationUnit
-        ? values?.maxGraceDurationUnit
-        : null,
-      interest: {
-        ...values?.interest,
-        interestMethod: values?.interest?.interestMethod
-          ? values?.interest?.interestMethod
-          : null,
-      },
-      goodLoanProvision:
-        goodLoanProvision && goodLoanProvision?.length > 0
-          ? Number(goodLoanProvision[0].provision)
-          : editVals?.goodLoanProvision,
-      doubtfulLoanProvision:
-        doubtfulLoanProvision && doubtfulLoanProvision?.length > 0
-          ? Number(doubtfulLoanProvision[0].provision)
-          : editVals?.doubtfulLoanProvision,
-      problematicLoanProvision:
-        problematicLoanProvision && problematicLoanProvision?.length > 0
-          ? Number(problematicLoanProvision[0].provision)
-          : editVals?.problematicLoanProvision,
-      badLoanProvision:
-        badLoanProvision && badLoanProvision?.length > 0
-          ? Number(badLoanProvision[0].provision)
-          : editVals?.badLoanProvision,
+      interestMethod: values?.interestMethod ?? null,
+      postingFrequency: values?.postingFrequency ?? null,
+      maxTenureUnitNumber: values?.maxTenureUnitNumber ? values?.maxTenureUnitNumber : null,
+      minTenureUnitNumber: values?.minTenureUnitNumber ? values?.minTenureUnitNumber : null,
+      minGraceDurationUnit: values?.minGraceDurationUnit ? values?.minGraceDurationUnit : null,
+      maxGraceDurationUnit: values?.maxGraceDurationUnit ? values?.maxGraceDurationUnit : null,
       maxLoanAmount: values?.maxLoanAmount ?? null,
       minimumLoanAmount: values?.minimumLoanAmount ?? null,
       rebate: {
         ...values?.rebate,
         rebateAmount: values?.rebate?.rebateAmount ?? null,
       },
-      penalty: {
-        ...values?.penalty,
-        minimumAmount: values?.penalty?.minimumAmount ?? null,
-        penaltyAmount: values?.penalty?.penaltyAmount
-          ? values?.penalty?.penaltyAmount
-          : null,
-        rateType: values?.penalty?.rateType ? values?.penalty?.rateType : null,
+      penaltyOnPrincipal: {
+        ...values?.penaltyOnPrincipal,
+        penaltyRate: values?.penaltyOnPrincipal?.penaltyRate ?? null,
+        dayAfterInstallmentDate: values?.penaltyOnPrincipal?.dayAfterInstallmentDate ?? null,
+        penaltyAmount: values?.penaltyOnPrincipal?.penaltyAmount ?? null,
+        penaltyLedgerMapping: values?.penaltyOnPrincipal?.penaltyLedgerMapping ?? null,
       },
+      penaltyOnInterest: {
+        ...values?.penaltyOnInterest,
+        penaltyRate: values?.penaltyOnInterest?.penaltyRate ?? null,
+        dayAfterInstallmentDate: values?.penaltyOnInterest?.dayAfterInstallmentDate ?? null,
+        penaltyAmount: values?.penaltyOnInterest?.penaltyAmount ?? null,
+        penaltyLedgerMapping: values?.penaltyOnInterest?.penaltyLedgerMapping ?? null,
+      },
+      penaltyOnInstallment: {
+        ...values?.penaltyOnInstallment,
+        penaltyRate: values?.penaltyOnInstallment?.penaltyRate ?? null,
+        dayAfterInstallmentDate: values?.penaltyOnInstallment?.dayAfterInstallmentDate ?? null,
+        penaltyAmount: values?.penaltyOnInstallment?.penaltyAmount ?? null,
+        penaltyLedgerMapping: values?.penaltyOnInstallment?.penaltyLedgerMapping ?? null,
+      },
+      collateralValue: collateralValueList,
     };
+
     asyncToast({
       id: 'loan-id',
       msgs: {
@@ -230,8 +238,36 @@ export function SettingsLoanProductForm() {
 
   useEffect(() => {
     if (editVals) {
+      // const landEditData = editVals?.collateralValue?.filter(
+      //   (item) => item?.type === Collateral.Land
+      // );
+
+      // const landAndBuildingEditData = editVals?.collateralValue?.filter(
+      //   (item) => item?.type === Collateral.LandAndBuilding
+      // );
+
+      // const vehicleEditData = editVals?.collateralValue?.filter(
+      //   (item) => item?.type === Collateral.Vehicle
+      // );
+
+      // const depositEditData = editVals?.collateralValue?.filter(
+      //   (item) => item?.type === Collateral.DepositOrSaving
+      // );
       reset({
         ...(editVals as unknown as LoanProductForm),
+        // land: {
+        //   minFMV: landEditData?.minFMV,
+        //   maxFMV: landEditData?.maxFMV,
+        //   minDV: landEditData?.minDV,
+        //   maxDV: landEditData?.maxDV,
+        // },
+
+        // landAndBuilding: {
+        //   minFMV: landAndBuildingEditData?.minFMV,
+        //   maxFMV: landAndBuildingEditData?.maxFMV,
+        //   minDV: landAndBuildingEditData?.minDV,
+        //   maxDV: landAndBuildingEditData?.maxDV,
+        // },
       });
     }
   }, [editVals, reset]);
@@ -252,13 +288,7 @@ export function SettingsLoanProductForm() {
         </Container>
       </Box>
 
-      <Container
-        minW="container.lg"
-        height="fit-content"
-        bg="gray.0"
-        pb="55px"
-        paddingInline="0"
-      >
+      <Container minW="container.lg" height="fit-content" bg="gray.0" pb="55px" paddingInline="0">
         <FormProvider {...methods}>
           <form>
             <GeneralSetup />
@@ -280,23 +310,18 @@ export function SettingsLoanProductForm() {
             <LoanRepaymentSchemes />
             <PartialPayment />
             <Penalty />
-
-            {repaymentScheme &&
-              repaymentScheme?.includes(LoanRepaymentScheme.Epi) && <Rebate />}
+            <PrematurePenalty />
+            {repaymentScheme && repaymentScheme?.includes(LoanRepaymentScheme.Epi) && <Rebate />}
 
             <LoanRepayment />
             <NewQuestions />
             <Interest />
             <InsuranceApplicable />
-            <LedgerMapping />
+            {/* <LedgerMapping /> */}
             <LoanProcessing />
-            {/* <LoanLimit
-              data={editValues?.settings?.general?.loanProducts?.formState}
-            /> */}
-            <Collateral />
+            <CollateralForm />
             <AllowGaurantee />
             <RequiredDocumentSetup />
-            <PrematurePenalty />
           </form>
         </FormProvider>
       </Container>
@@ -307,12 +332,7 @@ export function SettingsLoanProductForm() {
             <FormFooter
               status={
                 <Box display="flex" gap="s8">
-                  <Text
-                    color="neutralColorLight.Gray-60"
-                    fontWeight="Regular"
-                    as="i"
-                    fontSize="r1"
-                  >
+                  <Text color="neutralColorLight.Gray-60" fontWeight="Regular" as="i" fontSize="r1">
                     Press Complete to save form
                   </Text>
                 </Box>
@@ -325,6 +345,4 @@ export function SettingsLoanProductForm() {
       </Box>
     </>
   );
-}
-
-export default SettingsLoanProductForm;
+};

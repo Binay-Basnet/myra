@@ -43,9 +43,7 @@ const ShareReturnInfo = () => {
   const chargeList = chargesData?.share?.charges;
 
   useEffect(() => {
-    setTotalAmount(
-      noOfShares * 100 - (Number(adminFees ?? 0) + Number(printingFees ?? 0))
-    );
+    setTotalAmount(noOfShares * 100 - (Number(adminFees ?? 0) + Number(printingFees ?? 0)));
   }, [noOfShares, adminFees, printingFees]);
 
   useEffect(() => {
@@ -78,21 +76,12 @@ const ShareReturnInfo = () => {
           />
         </GridItem>
         <GridItem colSpan={3}>
-          <FormCheckbox
-            name="selectAllShares"
-            label={t['shareReturnSelectAllShares']}
-          />
+          <FormCheckbox name="selectAllShares" label={t['shareReturnSelectAllShares']} />
         </GridItem>
 
         {noOfShares ? (
           <GridItem colSpan={3}>
-            <Box
-              display="flex"
-              borderRadius="br2"
-              gap="s60"
-              p="s16"
-              bg="background.500"
-            >
+            <Box display="flex" borderRadius="br2" gap="s60" p="s16" bg="background.500">
               <Box>
                 <Text fontWeight="400" fontSize="s2">
                   {t['shareReturnRemainingShare']}
@@ -125,25 +114,12 @@ const ShareReturnInfo = () => {
         {noOfShares ? (
           <GridItem colSpan={3}>
             <FieldCardComponents rows={'repeat(4,1fr)'}>
-              <GridItem
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Text
-                  color="neutralLightColor.Gray-60"
-                  fontWeight="Medium"
-                  fontSize="s3"
-                >
+              <GridItem display="flex" justifyContent="space-between" alignItems="center">
+                <Text color="neutralLightColor.Gray-60" fontWeight="Medium" fontSize="s3">
                   {t['shareReturnWithdrawAmount']}
                 </Text>
 
-                <Text
-                  p="s12"
-                  color="neutralLightColor.Gray-80"
-                  fontWeight="SemiBold"
-                  fontSize="r1"
-                >
+                <Text p="s12" color="neutralLightColor.Gray-80" fontWeight="SemiBold" fontSize="r1">
                   {amountConverter(noOfShares * 100)}
                 </Text>
               </GridItem>
@@ -184,16 +160,8 @@ const ShareReturnInfo = () => {
                 </Box>
               </GridItem>
 
-              <GridItem
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Text
-                  color="neutralLightColor.Gray-60"
-                  fontWeight="Medium"
-                  fontSize="s3"
-                >
+              <GridItem display="flex" justifyContent="space-between" alignItems="center">
+                <Text color="neutralLightColor.Gray-60" fontWeight="Medium" fontSize="s3">
                   {t['sharePurchasePrintingFees']}
                 </Text>
                 <Box width="300px">
@@ -201,25 +169,12 @@ const ShareReturnInfo = () => {
                 </Box>
               </GridItem>
 
-              <GridItem
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Text
-                  color="neutralLightColor.Gray-80"
-                  fontWeight="600"
-                  fontSize="s3"
-                >
+              <GridItem display="flex" justifyContent="space-between" alignItems="center">
+                <Text color="neutralLightColor.Gray-80" fontWeight="600" fontSize="s3">
                   {t['shareReturnTotalAmount']}
                 </Text>
 
-                <Text
-                  p="s12"
-                  color="neutralLightColor.Gray-80"
-                  fontWeight="SemiBold"
-                  fontSize="r1"
-                >
+                <Text p="s12" color="neutralLightColor.Gray-80" fontWeight="SemiBold" fontSize="r1">
                   {t['rs']} {amountConverter(totalAmount)}
                 </Text>
               </GridItem>

@@ -37,7 +37,7 @@ export interface SelectProps
   onChange?: ((newValue: Option) => void) | any;
 }
 
-export function Select({
+export const Select = ({
   errorText,
   helperText,
   isMulti,
@@ -45,7 +45,7 @@ export function Select({
   options,
   value,
   ...rest
-}: SelectProps) {
+}: SelectProps) => {
   return (
     <Flex direction="column" gap="s4">
       <TextFields variant="formLabel" color="gray.700">

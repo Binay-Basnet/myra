@@ -1,17 +1,20 @@
 // import debounce from 'lodash/debounce';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   DragDropContext,
   Draggable,
+  DraggableProvidedDragHandleProps,
   Droppable,
   DropResult,
 } from 'react-beautiful-dnd';
-import { AiOutlinePlus } from 'react-icons/ai';
-import { IoMdClose } from 'react-icons/io';
+import { FormProvider, useForm } from 'react-hook-form';
+import { IoClose } from 'react-icons/io5';
 import { RiArrowDownSLine, RiArrowUpSLine } from 'react-icons/ri';
+import { AddIcon } from '@chakra-ui/icons';
+import { uniqueId } from 'lodash';
 
-import { LoanGeneralSettings } from '@coop/cbs/data-access';
-import { Box, Collapse, Icon, Switch, Text } from '@coop/shared/ui';
+import { FormInput, FormSwitch } from '@coop/shared/form';
+import { Box, Button, Collapse, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -35,38 +38,34 @@ const GRID2X3 = () => {
 };
 
 interface ICollateralProps {
-  loanGeneralData?: LoanGeneralSettings | null;
+  list: { name: string; enabled: boolean; id: string }[];
+  setList: React.Dispatch<
+    React.SetStateAction<{ name: string; enabled: boolean; id: string }[]>
+  >;
 }
+
 export const AcceptedCollateral = (props: ICollateralProps) => {
-  const { loanGeneralData } = props;
+  const [hasNewField, setHasNewField] = useState(false);
+
+  const { list, setList } = props;
   const { t } = useTranslation();
-  const [data, setData] = useState(loanGeneralData?.collateralList);
   const [isOpen, setIsOpen] = React.useState(true);
 
-  React.useEffect(() => {
-    setData(loanGeneralData?.collateralList);
-  }, [loanGeneralData?.collateralList]);
+  const methods = useForm();
 
   const handleOnDragEnd = async (result: DropResult) => {
-    const items = Array.from(data ?? []);
+    const items = Array.from(list ?? []);
     const [reorderedItem] = items.splice(result.source.index, 1);
 
     if (result.destination) {
       items.splice(result.destination.index, 0, reorderedItem);
-      setData(items);
-      // if (reorderedItem.id) {
-      //   await moveOption({
-      //     fieldId: reorderedItem.id,
-      //     to: result.destination.index,
-      //   });
-      // }
+      setList(items);
     }
   };
   return (
     <Box
       display="flex"
       flexDirection={'column'}
-      gap="s16"
       margin="s4"
       border="1px"
       borderColor="gray.200"
@@ -78,7 +77,7 @@ export const AcceptedCollateral = (props: ICollateralProps) => {
         alignItems="center"
         justifyContent="space-between"
         gap="s4"
-        py="s20"
+        py="s16"
         px="s12"
         borderBottom="1px"
         borderColor="gray.200"
@@ -107,59 +106,238 @@ export const AcceptedCollateral = (props: ICollateralProps) => {
               <Box
                 display="flex"
                 flexDir="column"
-                gap="s36"
-                py="s20"
+                py="s12"
                 px="s12"
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {data?.map(
-                  (
-                    item: {
-                      name?: string | null;
-                      enabled?: boolean | null;
-                    } | null,
-                    index: number
-                  ) => (
-                    <Draggable
-                      key={item?.name}
-                      draggableId={item?.name || ''}
-                      index={index}
-                    >
-                      {(provided) => (
-                        <Box
-                          display="flex"
-                          gap="s20"
-                          alignItems="center"
-                          justifyContent="space-between"
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                        >
-                          <Box display="flex" gap="s20" alignItems="center">
-                            <Icon as={GRID2X3} />
-                            <Switch size="sm" name={item?.name || ''} />
-                            <Text fontSize="r1">{item?.name}</Text>
-                          </Box>
-                          <Icon size="sm" color="gray.600" as={IoMdClose} />
-                        </Box>
-                      )}
-                    </Draggable>
-                  )
-                )}
+                {list?.map((item, index) => (
+                  <Draggable
+                    key={item?.id}
+                    draggableId={item?.id || ''}
+                    index={index}
+                  >
+                    {(provided) => (
+                      <Box
+                        display="flex"
+                        gap="s20"
+                        alignItems="center"
+                        justifyContent="space-between"
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                      >
+                        <AcceptedCollateralOption
+                          setList={setList}
+                          dragHandleProps={provided.dragHandleProps}
+                          option={item}
+                        />
+                      </Box>
+                    )}
+                  </Draggable>
+                ))}
 
                 {provided.placeholder}
               </Box>
             )}
           </Droppable>
         </DragDropContext>
-        <Box borderTop="1px" borderColor="gray.200" p="s16">
-          <Box display="flex" gap={2} alignItems="center">
-            <Icon size="sm" color="gray.600" as={AiOutlinePlus} />
-            <Text fontSize="r1">Add New Option</Text>
-          </Box>
+
+        {hasNewField && (
+          <FormProvider {...methods}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setList((prev) => [
+                  ...prev,
+                  {
+                    enabled: true,
+                    name: methods.getValues()['name'],
+                    id: uniqueId('row'),
+                  },
+                ]);
+                setHasNewField(false);
+                methods.reset();
+              }}
+            >
+              <Box display="flex" alignItems="center" gap="s16" p="s16">
+                <Box
+                  width="100%"
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  gap="s8"
+                >
+                  <Box w="100%">
+                    <FormInput type="text" name="name" />
+                  </Box>
+                  <Button
+                    onClick={() => {
+                      setList((prev) => [
+                        ...prev,
+                        {
+                          enabled: true,
+                          name: methods.getValues()['name'],
+                          id: uniqueId('row'),
+                        },
+                      ]);
+                      setHasNewField(false);
+                      methods.reset();
+                    }}
+                  >
+                    Add New
+                  </Button>
+                </Box>
+                <Icon
+                  onClick={() => {
+                    setHasNewField(false);
+                    methods.reset();
+                  }}
+                  as={IoClose}
+                  size="md"
+                  color="gray.500"
+                  cursor="pointer"
+                  _hover={{ color: 'gray.800' }}
+                />
+              </Box>
+            </form>
+          </FormProvider>
+        )}
+        <Box borderTop="1px" borderColor="gray.200" p="s8">
+          <Button
+            variant="ghost"
+            size={'md'}
+            isDisabled={hasNewField}
+            shade="primary"
+            leftIcon={<AddIcon />}
+            onClick={() => {
+              setHasNewField(true);
+            }}
+            _hover={{ bg: 'transparent' }}
+          >
+            Add New Option
+          </Button>
         </Box>
       </Collapse>
+    </Box>
+  );
+};
+
+interface IAcceptedCollateralOptionProps {
+  setList: React.Dispatch<
+    React.SetStateAction<{ name: string; enabled: boolean; id: string }[]>
+  >;
+  dragHandleProps: DraggableProvidedDragHandleProps | undefined;
+  option: { name: string; enabled: boolean; id: string };
+}
+
+export const AcceptedCollateralOption = ({
+  setList,
+  dragHandleProps,
+  option,
+}: IAcceptedCollateralOptionProps) => {
+  const methods = useForm<{ name: string; enabled: boolean; id: string }>({
+    defaultValues: {
+      enabled: option.enabled,
+      name: option.name,
+    },
+  });
+
+  const { watch } = methods;
+
+  const [isEditable, setIsEditable] = useState(!option.name);
+
+  useEffect(() => {
+    const subscription = watch(() => {
+      setList((prev) =>
+        prev.map((d) =>
+          d.name === option.name
+            ? {
+                name: methods.getValues()['name'],
+                enabled: methods.getValues()['enabled'],
+                id: d.id,
+              }
+            : d
+        )
+      );
+    });
+
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
+  return (
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      gap="s8"
+      w="100%"
+    >
+      <FormProvider {...methods}>
+        <Box
+          as="form"
+          width="100%"
+          display="flex"
+          justifyContent="flex-start"
+          alignItems="center"
+          gap="s20"
+          onSubmit={(e) => {
+            setIsEditable(false);
+            setList((prev) =>
+              prev.map((d) =>
+                d.name === option.name
+                  ? {
+                      name: methods.getValues()['name'],
+                      enabled: methods.getValues()['enabled'],
+                      id: d.id,
+                    }
+                  : d
+              )
+            );
+
+            e.preventDefault();
+          }}
+        >
+          {}
+          <Box {...dragHandleProps}>
+            <Icon size="md" as={GRID2X3} />
+          </Box>
+          <FormSwitch name="enabled" size="md" />
+          <Box
+            width="100%"
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            gap="s8"
+          >
+            {isEditable ? (
+              <FormInput type="text" name="name" />
+            ) : (
+              <Text
+                onClick={() => setIsEditable(true)}
+                fontSize="r1"
+                fontWeight="400"
+                color={'gray.800'}
+                my="7.5px"
+              >
+                {methods.getValues().name}
+              </Text>
+            )}
+          </Box>
+        </Box>
+      </FormProvider>
+
+      <Button variant="ghost">
+        <Icon
+          onClick={() => {
+            setList((prev) => prev.filter((d) => d.id !== option.id));
+          }}
+          as={IoClose}
+          size="md"
+          color="gray.500"
+          cursor="pointer"
+          _hover={{ color: 'gray.800' }}
+        />
+      </Button>
     </Box>
   );
 };

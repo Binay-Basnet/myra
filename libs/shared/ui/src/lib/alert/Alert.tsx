@@ -44,7 +44,7 @@ const COLOR_DICT = {
   info: 'info.900',
 };
 
-export function Alert({
+export const Alert = ({
   status,
   title,
   subtitle,
@@ -56,7 +56,7 @@ export function Alert({
   bottomButtonlabel,
   bottomButtonHandler,
   hideCloseIcon,
-}: AlertProps) {
+}: AlertProps) => {
   const [isAlertShown, setIsAlertShown] = useState(showAlert);
 
   return (

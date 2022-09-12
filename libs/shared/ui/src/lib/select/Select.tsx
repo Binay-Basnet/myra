@@ -29,7 +29,7 @@ export interface SelectProps
   __placeholder?: string;
 }
 
-export function Select({
+export const Select = ({
   // size,
   errorText,
   helperText,
@@ -41,7 +41,7 @@ export function Select({
   placeholder,
   name,
   ...rest
-}: SelectProps) {
+}: SelectProps) => {
   const { t } = useTranslation();
   const [sortedOptions, setSortedOptions] = useState(options ?? []);
 

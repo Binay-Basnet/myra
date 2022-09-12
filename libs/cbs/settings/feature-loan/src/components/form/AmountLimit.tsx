@@ -6,16 +6,8 @@ export const AmountLimit = () => {
   const { t } = useTranslation();
   return (
     <FormSection header="loanProductLoanAmountLimit">
-      <FormInput
-        textAlign={'right'}
-        name="minimumLoanAmount"
-        label={t['loanProductMinimumAmount']}
-      />
-      <FormInput
-        textAlign={'right'}
-        name="maxLoanAmount"
-        label={t['loanProductMaximumAmount']}
-      />
+      <FormInput textAlign="right" name="minimumLoanAmount" label={t['loanProductMinimumAmount']} />
+      <FormInput textAlign="right" name="maxLoanAmount" label={t['loanProductMaximumAmount']} />
     </FormSection>
   );
 };

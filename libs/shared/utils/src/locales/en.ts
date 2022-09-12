@@ -71,8 +71,7 @@ const en: Record<string, string> = {
   hrTrainingAndCapacityManagement: 'HR Training and Capacity Management',
   mobileApp: 'Mobile App',
   documentManagement: 'Document Management',
-  alternativeChannelsAndCrossConnectivity:
-    'Alternative Channels and Cross Connectivity',
+  alternativeChannelsAndCrossConnectivity: 'Alternative Channels and Cross Connectivity',
   reconciliationSoftware: 'Reconciliation Software',
   crm: 'CRM',
   complainceManagement: 'Complaince Management',
@@ -264,17 +263,13 @@ const en: Record<string, string> = {
   memberLayoutMemberSettings: 'Member Settings',
   memberLayoutSelectMemberType: 'Select Member Type',
   memberLayoutIndividual: 'Individual',
-  memberLayoutCreateKYMFormForIndividualMembers:
-    'Create KYM form for Individual Members',
+  memberLayoutCreateKYMFormForIndividualMembers: 'Create KYM form for Individual Members',
   memberLayoutInstitution: 'Institution',
-  memberLayoutCreateKYMFormForInstituteMembers:
-    'Create KYM form for Institution Members',
+  memberLayoutCreateKYMFormForInstituteMembers: 'Create KYM form for Institution Members',
   memberLayoutCooperative: 'Cooperative',
-  memberLayoutCreateKYMFormForCoOperativeMembers:
-    'Create KYM form for Cooperative Members',
+  memberLayoutCreateKYMFormForCoOperativeMembers: 'Create KYM form for Cooperative Members',
   memberLayoutCooperativeUnion: 'Cooperative Union',
-  memberLayoutCreateKYMFormForCooperativeUnion:
-    'Create KYM form for Corporatives Union Members',
+  memberLayoutCreateKYMFormForCooperativeUnion: 'Create KYM form for Corporatives Union Members',
 
   // share layout
   shareLayout: 'Share',
@@ -443,8 +438,7 @@ const en: Record<string, string> = {
   settingsCoaYouCan:
     'You can perform transaction in this account. However, you cannot create any more accounts under this heading',
   settingsCoaApplicable: 'Applicable to all the branch',
-  settingsCoaApplicableHelper:
-    'If No, this account is only applicable to current branch',
+  settingsCoaApplicableHelper: 'If No, this account is only applicable to current branch',
   settingsCoaBSAccount: 'B/S Account',
   settingsCoaSummationAccount: 'Summation Account',
   settingsCoaIBTAC: 'IBT A/C',
@@ -468,8 +462,7 @@ const en: Record<string, string> = {
   settingsMediumRisk: 'Medium Risk',
   settingsHighRisk: 'High Risk',
   settingsGeneral: 'General',
-  settingsTheseSettings:
-    'These settings will be applied across all member related pages',
+  settingsTheseSettings: 'These settings will be applied across all member related pages',
   settingsTypesOfNewMember: 'Types of New Member',
   settingsChooseMember: 'Choose which type of member is allowed',
   settingsMemberRisk: 'Member Risk Level',
@@ -493,8 +486,7 @@ const en: Record<string, string> = {
   settingsMemberFamilyRelationship: 'Family Relationship',
   settingsMemberFamilyInformation: 'Family Information',
 
-  settingsMemberSection2ProfessionalInformation:
-    'Section 2: Professional Information',
+  settingsMemberSection2ProfessionalInformation: 'Section 2: Professional Information',
   settingsMemberOccupation: 'Occupation',
   settingsMemberOccupationDetails: 'Occupation Details',
   settingsMemberFamilyIncome: 'Family Income',
@@ -513,8 +505,7 @@ const en: Record<string, string> = {
 
   settingsKymIndMembers: 'Members',
   settingsKymIndFormIndividual: 'KYM Form - Individual',
-  settingsKymIndSettingsChange:
-    'Settings to change options and fields in KYM form for individuals',
+  settingsKymIndSettingsChange: 'Settings to change options and fields in KYM form for individuals',
 
   // MEMBER SETTINGS INSTITUTION
   settingsKymInsForm: 'KYM Form - Institutional',
@@ -528,8 +519,7 @@ const en: Record<string, string> = {
 
   // MEMBER SETTINGS COOPERATIVE
   settingsKymCoopForm: 'KYM Form - Cooperative',
-  settingsKymCoopSettingsChange:
-    'Settings to change options and fields in KYM form for Cooperativ',
+  settingsKymCoopSettingsChange: 'Settings to change options and fields in KYM form for Cooperativ',
 
   settingsKymInstMembers: 'Members',
   settingsKymCoopMembers: 'Members',
@@ -675,8 +665,7 @@ const en: Record<string, string> = {
   kymCoopPanOrVatNo: 'PAN No',
   kymCoopEnterPanOrVat: 'Enter Pan No',
   kymCoopPhotograph: 'Photograph',
-  kymCoopPhotographOfIdentityProofDocument:
-    'Photograph of identity proof document',
+  kymCoopPhotographOfIdentityProofDocument: 'Photograph of identity proof document',
 
   kymCoopAssets: 'Assets',
   kymCoopAmount: 'Amount',
@@ -759,8 +748,7 @@ const en: Record<string, string> = {
 
   kymCoopRepresentativeEnterHouseNo: 'Enter House No',
   kymCoopRepresentativeTemporaryAddress: 'Temporary Address',
-  kymCoopRepresentativeTemporaryAddressPermanent:
-    'Temporary Address same as permanent',
+  kymCoopRepresentativeTemporaryAddressPermanent: 'Temporary Address same as permanent',
   kymCoopRepresentativeLandlordName: "Landlord's Name",
   kymCoopRepresentativeContactNo: 'Contact No',
 
@@ -863,8 +851,7 @@ const en: Record<string, string> = {
   kymCoopUnionTrainingOrganization: 'Training Organization',
   kymCoopUnionEnterTrainingOrganization: 'Enter Training Organization',
   kymCoopUnionPhotograph: 'Photograph',
-  kymCoopUnionPhotographOfIdentityProofDocument:
-    'Photograph of identity proof document',
+  kymCoopUnionPhotographOfIdentityProofDocument: 'Photograph of identity proof document',
 
   kymCoopUnion3DetailsofAccountOperators: '3. Details of Account Operators',
   kymCoopUnionDetailsOfAccountOperators: 'Details of Account Operators',
@@ -885,8 +872,7 @@ const en: Record<string, string> = {
   kymCoopUnionOpLocality: 'Locality',
   kymCoopUnionOpEnterLocality: 'Enter Locality',
   kymCoopUnionOpTemporaryAddress: 'Temporary Address',
-  kymCoopUnionOpTemporaryAddressPermanent:
-    'Temporary Address same as permanent',
+  kymCoopUnionOpTemporaryAddressPermanent: 'Temporary Address same as permanent',
   kymCoopUnionOpDateOfMembership: 'Date of membership',
   kymCoopUnionOpHighestQualification: 'Highest Qualification',
   kymCoopUnionOpEnterHighestQualification: 'Enter Highest Qualification',
@@ -904,12 +890,10 @@ const en: Record<string, string> = {
   kymCoopUnionOpTrainingOrganization: 'Training Organization',
   kymCoopUnionOpEnterTrainingOrganization: 'Enter Training Organization',
   kymCoopUnionOpPhotograph: 'Photograph',
-  kymCoopUnionOpPhotographOfIdentityProofDocument:
-    'Photograph of identity proof document',
+  kymCoopUnionOpPhotographOfIdentityProofDocument: 'Photograph of identity proof document',
   kymCoopUnionOpSpecimenSignature: 'Specimen Signature',
 
-  kymCoopUnionOp4DetailsofCentralRepresentative:
-    '4. Details of Central Representative',
+  kymCoopUnionOp4DetailsofCentralRepresentative: '4. Details of Central Representative',
   kymCoopUnionOpCentralRepresentativeisnotamongDirectors:
     'Central Representative is not among Directors',
   kymCoopUnionDirFullName: 'Full Name',
@@ -928,8 +912,7 @@ const en: Record<string, string> = {
   kymCoopUnionDirLocality: 'Locality',
   kymCoopUnionDirEnterLocality: 'Enter Locality',
   kymCoopUnionDirTemporaryAddress: 'Temporary Address',
-  kymCoopUnionDirTemporaryAddressPermanent:
-    'Temporary Address same as permanent',
+  kymCoopUnionDirTemporaryAddressPermanent: 'Temporary Address same as permanent',
   kymCoopUnionDirDateofMembership: 'Date of Membership',
   kymCoopUnionDirHighestQualification: 'Highest Qualification',
   kymCoopUnionDirEnterHigestQualification: 'Enter higest qualification',
@@ -947,8 +930,7 @@ const en: Record<string, string> = {
   kymCoopUnionDirTrainingOrganization: 'Training Organization',
   kymCoopUnionDirEnterTrainingOrganization: 'Enter Training Organization',
   kymCoopUnionDirPhotograph: 'Photograph',
-  kymCoopUnionDirPhotographOfIdentityProofDocument:
-    'Photograph of identity proof document',
+  kymCoopUnionDirPhotographOfIdentityProofDocument: 'Photograph of identity proof document',
   kymCoopUnionDirSpecimenSignature: 'Specimen Signature',
 
   kymCoopUnionRep5DetailsofMember: '5. Details of member',
@@ -960,8 +942,7 @@ const en: Record<string, string> = {
   kymCoopUnionRepNoofFemaleMembers: 'No. of Female Members',
   kymCoopUnionRepEnterNoofFemaleMembers: 'Enter No. of Female Members',
   kymCoopUnionRepNoofInstitutionalMembers: 'No. of Institutional Members',
-  kymCoopUnionRepEnterNoOfInstitutionalMembers:
-    'Enter No. of Institutional Members',
+  kymCoopUnionRepEnterNoOfInstitutionalMembers: 'Enter No. of Institutional Members',
   kymCoopUnionRepTotalCurrentMembers: 'Total Current Members',
   kymCoopUnionRepTotalAssets: 'Total assets',
   kymCoopUnionRepTotal: 'Total',
@@ -992,10 +973,8 @@ const en: Record<string, string> = {
 
   kymCoopUnionIncIncomeDetails: 'Income Details',
   kymCoopUnionIncAmount: 'Amount',
-  kymCoopUnionIncIncomeFromFinancialInvestment:
-    'Income from financial investment',
-  kymCoopUnionIncIncomeFromNonFinancialInvestment:
-    'Income from non financial investment',
+  kymCoopUnionIncIncomeFromFinancialInvestment: 'Income from financial investment',
+  kymCoopUnionIncIncomeFromNonFinancialInvestment: 'Income from non financial investment',
   kymCoopUnionIncIncomeFromInvestment: 'Income from investment',
   kymCoopUnionIncIncomeFromServiceOperations: 'Income from service operations',
   kymCoopUnionIncIncomeFromSales: 'Income from sales',
@@ -1012,8 +991,7 @@ const en: Record<string, string> = {
   kymCoopUnionEqtSavingDeposit: 'Saving/Deposit',
   kymCoopUnionEqtLoanAccount: 'Loan Account (External Loan)',
   kymCoopUnionEqtCapitalGrant: 'Capital Grant',
-  kymCoopUnionEqtCurrentLiabilitiesandpayable:
-    'Current Liabilities and payable',
+  kymCoopUnionEqtCurrentLiabilitiesandpayable: 'Current Liabilities and payable',
   kymCoopUnionEqtNoncurrentliabilities: 'Non-current liabilities',
   kymCoopUnionEqtTotal: 'Total',
   kymCoopUnionEqtTotalassets: 'Total assets',
@@ -1119,8 +1097,7 @@ const en: Record<string, string> = {
   kymIndEnterIncomeSource: 'Enter Income Source',
   kymIndAmount: 'Amount',
   kynIndAnnualFamilyIncome: 'Annual Family Income',
-  kynIndIncomegreater:
-    'Income greater than 4 lakhs in the previous fiscal year',
+  kynIndIncomegreater: 'Income greater than 4 lakhs in the previous fiscal year',
   kynIndNewEntry: 'New Entry',
 
   kynIndEstimatednoofAnnualTransaction: 'Estimated no. of Annual Transaction',
@@ -1154,16 +1131,13 @@ const en: Record<string, string> = {
 
   kynIndNominee: 'Nominee',
   kynIndDoyouhavebeneficialowner: 'Do you have a beneficial owner?',
-  kynIndIyespleasewritenameandrelationship:
-    'If yes, please write name and relationship',
+  kynIndIyespleasewritenameandrelationship: 'If yes, please write name and relationship',
   kynIndFullName: 'Full Name',
-  kynIndPoliticallyexposedperson:
-    'Are you or any of your family politically exposed person',
+  kynIndPoliticallyexposedperson: 'Are you or any of your family politically exposed person',
   kynIndPleasespecify: 'Please specify',
   kynIndRelationship: 'Relationship',
   kynIndEnterDetails: 'Enter Details',
-  kynIndDeclarationofconvicted:
-    'Declaration of convicted/Non-convicted for any crimes in Past',
+  kynIndDeclarationofconvicted: 'Declaration of convicted/Non-convicted for any crimes in Past',
   kynIndForeignCountry: 'Do you hold residential permit of foreign country?',
   kynIndSpecifyfollowingdetails: 'Specify following details',
 
@@ -1172,8 +1146,7 @@ const en: Record<string, string> = {
   // kym coop union
   kymCoopUnionAccRegisteredDetails: 'Registered Details',
   kymCoopUnionAccBankAccountDetails: 'Bank Account Details',
-  kymCoopUnionAccDetailsofProprietor:
-    'Details of Proprietor, Partners, Directors',
+  kymCoopUnionAccDetailsofProprietor: 'Details of Proprietor, Partners, Directors',
   kymCoopUnionAccDetailsofAccountOperators: 'Details of Account Operators',
   kymCoopUnionAccDetailsofdirectorsaffiliatedwithotherFirms:
     'Details of directors affiliated with other Firms',
@@ -1190,8 +1163,7 @@ const en: Record<string, string> = {
   kymCoopUnionAcc2Detailsofdirectorsboardmemberspartners:
     '2. Details of directors/boardmembers/partners',
   kymCoopUnionAcc3AccountOperators: '3. Account Operators',
-  kymCoopUnionAcc4DetailsofCentralRepresentative:
-    '4. Details of Central Representative',
+  kymCoopUnionAcc4DetailsofCentralRepresentative: '4. Details of Central Representative',
   kymCoopUnionAcc5Detailsofmember: '5. Details of member',
   kymCoopUnionAcc6EconomicDetails: '5. Economic Details',
   kymCoopUnionAcc7Declaration: '6. Declaration',
@@ -1202,8 +1174,7 @@ const en: Record<string, string> = {
   kymCoopUnionNoofFemalemembers: 'No. of Female members',
   kymCoopUnionEnternoofFemaleMembers: 'Enter no of Female Members',
   kymCoopUnionNoofInstitutionalmembers: 'No. of Institutional members',
-  kymCoopUnionEnternoofInstitutuionalMembers:
-    'Enter no of Institutuional Members',
+  kymCoopUnionEnternoofInstitutuionalMembers: 'Enter no of Institutuional Members',
   kymCoopUnionTotalcurrentmembers: 'Total current members',
   kymCoopUnionEntertotalcurrentmembers: 'Enter total current members',
   kymCoopUnionCRDecisionDocument: 'CR Decision Document',
@@ -1216,8 +1187,7 @@ const en: Record<string, string> = {
   kymInsTransactionProfile: 'Transaction Profile',
   kymInsExpectedMonthlyTurnover: 'Expected Monthly Turnover',
   kymInsExpectedMonthlyTransaction: 'Expected Monthly Transaction',
-  kymInsDetailsofProprietorPartnersDirectors:
-    'Details of Proprietor, Partners, Directors.',
+  kymInsDetailsofProprietorPartnersDirectors: 'Details of Proprietor, Partners, Directors.',
   kymInsDetailsofdirectorsaffiliatedwithotherFirms:
     'Details of directors affiliated with other Firms',
   kymInsDocumentsDeclaration: 'Documents Declaration',
@@ -1226,8 +1196,7 @@ const en: Record<string, string> = {
   kymInsAccountOperationInstruction: 'Account Operation Instruction',
   kymIns1InformationofInstitution: '1. COOP - Institution',
   kymIns2TransactionProfile: '2. Transaction Profile',
-  kymIns3DetailsofProprietorpartnersDirectors:
-    '3. Details of Proprietor, partners, Directors',
+  kymIns3DetailsofProprietorpartnersDirectors: '3. Details of Proprietor, partners, Directors',
   kymIns4AccountOperations: '4. Account Operators',
   kymIns5Declaration: '5. Declaration',
   kymInsAddNewMember: 'Add New Member',
@@ -1319,8 +1288,7 @@ const en: Record<string, string> = {
   kymInsPanEnterNo: 'Enter PAN No',
   kymInsEnterNo: 'Enter Number',
   kymInsPhotograph: 'Photograph',
-  kymInsPhotographOfIdentityProofDocument:
-    'Photograph of identity proof document',
+  kymInsPhotographOfIdentityProofDocument: 'Photograph of identity proof document',
   kymInsReset: 'Reset',
   kymInsDelete: 'Delete',
   kymInsContactNo: 'Contact No',
@@ -1354,12 +1322,10 @@ const en: Record<string, string> = {
   kymInsUnionMobileNo: 'Mobile No',
   kymInsUnionEnterMobileNo: 'Enter Mobile No',
   kymInsUnionEnterEmail: 'Enter Email',
-  kymInsUnionCitizenshipPassportDrivingLicenseNo:
-    'Citizenship/Passport/Driving License No',
+  kymInsUnionCitizenshipPassportDrivingLicenseNo: 'Citizenship/Passport/Driving License No',
   kymInsUnionEnterNo: 'Enter No',
   kymInsUnionPhotograph: 'Photograph',
-  kymInsUnionPhotographOfIdentityProofDocument:
-    'Photograph of identity proof document',
+  kymInsUnionPhotographOfIdentityProofDocument: 'Photograph of identity proof document',
   kymInsAddDirector: 'Add Director',
 
   // kym individual
@@ -1378,8 +1344,7 @@ const en: Record<string, string> = {
   kymAccIndFamilymembersinpolitics: 'Family members in politics',
   kymAccIndBeneficialOwner: 'Beneficial Owner',
   kymAccIndConvictedNonconvictedStatus: 'Convicted/Non-convicted Status',
-  kymAccIndResidentialpermitofforeigncountry:
-    'Residential permit of foreign country',
+  kymAccIndResidentialpermitofforeigncountry: 'Residential permit of foreign country',
   kymAccInd1PersonalDetails: '1. Personal Details',
   kymAccInd2ProfessionalDetails: '2. Professional Details',
   kymAccInd3COOPMembership: '3. COOP Membership',
@@ -1422,8 +1387,7 @@ const en: Record<string, string> = {
   shareMultiplicityFactor: 'Share Multiplicity Factor',
   shareTransactableMinimumQuantityOfShareThatCanBeIssued:
     'Minimum Quantity of Share that can be issued',
-  shareMaximumQuantityOfShareThatCanBeIssued:
-    'Maximum Quantity of Share that can be issued',
+  shareMaximumQuantityOfShareThatCanBeIssued: 'Maximum Quantity of Share that can be issued',
   shareRate: 'Share Rate',
   shareTransactableShare: 'Transactable Share',
   shareNonTransactableShare: 'Non-Transactable Share',
@@ -1496,8 +1460,7 @@ const en: Record<string, string> = {
   eleventhMonth: 'November',
   twelfthMonth: 'December',
   shareAndAccount: 'Share And Account',
-  shareAndAccountSubtitle:
-    'Share dividend converted to shares and fractional dividend to account',
+  shareAndAccountSubtitle: 'Share dividend converted to shares and fractional dividend to account',
 
   shareAllocation: 'Share Allocation',
   shareAccountAllocation: 'Account Allocation',
@@ -1505,12 +1468,10 @@ const en: Record<string, string> = {
   shareSelectAccount: 'Select Account',
 
   shareAccountTransfer: 'Account Transfer',
-  shareAccountTransferSubtitle:
-    'Choose the account of member to allocate share dividends',
+  shareAccountTransferSubtitle: 'Choose the account of member to allocate share dividends',
 
   shareBookPayables: 'Book Payables',
-  shareBookPayablesSubtitle:
-    'Choose the organization’s fund account to allocate share dividends',
+  shareBookPayablesSubtitle: 'Choose the organization’s fund account to allocate share dividends',
   shareNameOfTheFund: 'Name of the Fund (Charts of Accounts)',
 
   // Settings Share Fee And Charges
@@ -1567,8 +1528,7 @@ const en: Record<string, string> = {
   accPenalty: 'Penalty',
   accRebate: 'Rebate',
   accMonthly: 'Monthly',
-  accAddfrequencydayorweek:
-    'Either Pick a day or manually add frequency day or day of the week.',
+  accAddfrequencydayorweek: 'Either Pick a day or manually add frequency day or day of the week.',
   accDay: 'Day',
   accDayOfWeek: 'Day of the week',
   accEnterDay: 'Enter Day',
@@ -1951,8 +1911,7 @@ const en: Record<string, string> = {
   neoSettingsGlobalAppSettingsTDSTaxVAT: 'TDS / Tax / VAT',
   neoSettingsGlobalAppSettingsChargeSetup: 'Charge Setup',
   neoSettingsGlobalAppSettingsCalendarSetup: 'Calendar Setup',
-  neoSettingsGlobalAppSettingsChequeCertificateSetup:
-    'Cheque & Certificate Setup',
+  neoSettingsGlobalAppSettingsChequeCertificateSetup: 'Cheque & Certificate Setup',
   neoSettingsGlobalAppSettingsBulkMessaging: 'Bulk Messaging',
 
   // shortcuts modal
@@ -2378,14 +2337,12 @@ const en: Record<string, string> = {
   accountingSupplierPaymentFormTableThisAllocation: 'This Allocation',
 
   // accounting journal vouchers form table
-  accountingJournalVouchersFormTableTransferredTo:
-    'Transferred To (Select Ledger)',
+  accountingJournalVouchersFormTableTransferredTo: 'Transferred To (Select Ledger)',
   accountingJournalVouchersFormTableDRAmount: 'DR Amount',
   accountingJournalVouchersFormTableCRAmount: 'CR Amount',
 
   // accounting cash transfer form table
-  accountingCashTransferFormTableTransferredTo:
-    'Transferred To (Select Ledger)',
+  accountingCashTransferFormTableTransferredTo: 'Transferred To (Select Ledger)',
   accountingCashTransferFormTableAmount: 'Amount',
 
   // accounting quick payment form table
@@ -2474,12 +2431,9 @@ const en: Record<string, string> = {
   settingsGeneralValuatorFormID: 'ID',
   settingsGeneralValuatorFormAcademicQualification: 'Academic Qualification',
   settingsGeneralValuatorFormValuationLicenseNo: 'Valuation License No',
-  settingsGeneralValuatorFormValuatorLatestRenewalDate:
-    'Valuator Latest Renewal Date',
-  settingsGeneralValuatorFormValuatorSaccosContractDate:
-    'Valuator - SACCOS Contract Date',
-  settingsGeneralValuatorFormInsurancePremiumPercent:
-    'Insurance Premium Percent',
+  settingsGeneralValuatorFormValuatorLatestRenewalDate: 'Valuator Latest Renewal Date',
+  settingsGeneralValuatorFormValuatorSaccosContractDate: 'Valuator - SACCOS Contract Date',
+  settingsGeneralValuatorFormInsurancePremiumPercent: 'Insurance Premium Percent',
   settingsGeneralValuatorFormContactDetails: 'Contact Details',
   settingsGeneralValuatorFormMobileNo: 'Mobile No',
   settingsGeneralValuatorFormPhoneNo: 'Phone No',
@@ -2511,8 +2465,7 @@ const en: Record<string, string> = {
   depositProductProductName: 'Product Name ',
   depositProductEnterProductName: 'Enter Product Name',
   depositProductNatureofDepositProduct: 'Nature of Deposit Product',
-  depositProductSelectNatureofDepositProduct:
-    'Select Nature of Deposit Product',
+  depositProductSelectNatureofDepositProduct: 'Select Nature of Deposit Product',
   depositProductProductCode: 'Product Code',
   depositProductAddprefixintial: 'Add prefix & intial number. Eg. ASM506',
   depositProductPrefix: 'Prefix',
@@ -2539,7 +2492,6 @@ const en: Record<string, string> = {
   depositProductForeignEmploymentDetails: 'Foreign Employment Details',
   depositProductNatureofBusinessIns: 'Nature of Business (Institutions)',
   depositProductSelectNatureofBusiness: 'Select Nature of Business',
-  depositProductNatureofBusinessCoopUnion: 'Nature of Business (COOP Union)',
   depositProductCoorperativeType: 'Coorperative Type',
   depositProductSavingLoan: 'Saving & Loan',
   depositProductAgricultural: 'Agricultural',
@@ -2612,8 +2564,7 @@ const en: Record<string, string> = {
   depositProductPenaltyLedgerMapping: 'Penalty Ledger Mapping',
   depositProductAverage: 'Average',
   depositProductNewServiceCharge: 'New Service Charge',
-  depositProductDefaultAmountDepositAccountName:
-    'Default Amount Deposit Account Name',
+  depositProductDefaultAmountDepositAccountName: 'Default Amount Deposit Account Name',
   depositProductIf:
     'If the member does not specify particular account for deposit, this mapped account will be set globally. Normally this is a compulsory account type.',
   depositProductAccountType: 'Account Type',
@@ -2654,7 +2605,6 @@ const en: Record<string, string> = {
   loanProductEducationQualification: 'Education Qualification',
   loanProductEthinicity: 'Ethinicity',
   loanProductForeignEmployment: 'Foreign Employment',
-  loanProductNatureBusinessIns: 'Nature of Business (Institutions)',
   loanProductNatureBusinessCoopUnion: 'Nature of Business (COOP Union)',
   loanProductEnterMinimumAge: 'Enter Minimum Age',
   loanProductEnterMaxinumAge: 'Enter Maxinum Age',
@@ -2694,8 +2644,7 @@ const en: Record<string, string> = {
   loanProductInstallmentType: 'Installment Type',
   loanProductSelectInstallmentType: 'Select Installment Type',
   loanProductIsMonthlyInterestCompulsory: 'Is Monthly Interest Compulsory',
-  loanProductLoanRepaymentStartGraceDuration:
-    'Loan Repayment Start Grace Duration',
+  loanProductLoanRepaymentStartGraceDuration: 'Loan Repayment Start Grace Duration',
   loanProductMinimumDuration: 'Minimum Duration',
   loanProductMaximumDuration: 'Maximum Duration',
   loanProductInterest: 'Interest',
@@ -2730,8 +2679,7 @@ const en: Record<string, string> = {
   loanProductForm: 'Form',
   loanProductCitizenship: 'Citizenship',
 
-  depositProductMaximumPostingFrequencyDifference:
-    'Maximum Posting Frequency Difference',
+  depositProductMaximumPostingFrequencyDifference: 'Maximum Posting Frequency Difference',
 
   shareSettingsFeesName: 'Name',
   shareSettingsFeesType: 'Type',
@@ -2869,8 +2817,7 @@ const en: Record<string, string> = {
   /* KYM Institution */
   settingsMemberInstitutionSection1: 'Section 1: Information of Organization',
   settingsMemberInstitutionSection2: 'Section 2: Transaction Profile',
-  settingsMemberInstitutionSection3:
-    'Section 3: Details of Proprietor, partners, Directors ',
+  settingsMemberInstitutionSection3: 'Section 3: Details of Proprietor, partners, Directors ',
   settingsMemberInstitutionSection4: 'Section 4: Account Operations',
   settingsMemberInstitutionSection5: 'Section 5: Declaration',
   settingsMemberInstitutionSection6: 'Section 6: Custom Fields',
@@ -2895,8 +2842,7 @@ const en: Record<string, string> = {
 
   settingsMemberCooperativeSection2: 'Section 2: Economic Details',
 
-  settingsMemberCooperativeSection3:
-    'Section 3: Details of Proprietary, Partners, Directors',
+  settingsMemberCooperativeSection3: 'Section 3: Details of Proprietary, Partners, Directors',
   settingsCooperativeDirectors: 'Directors',
   settingsCooperativeDirectorDetails: 'Director Details',
 
@@ -2906,10 +2852,8 @@ const en: Record<string, string> = {
 
   settingsMemberCooperativeSection5: 'Section 5: Declaration',
   settingsCooperativeAccountHolderDeclaration: 'Account Holder Declaration',
-  settingsCooperativeAccountHolderDeclarationDetails:
-    'Account Holder Declaration Details',
-  settingsCooperativeAccountHolderDeclarationDocuments:
-    'Account Holder Declaration Documents',
+  settingsCooperativeAccountHolderDeclarationDetails: 'Account Holder Declaration Details',
+  settingsCooperativeAccountHolderDeclarationDocuments: 'Account Holder Declaration Documents',
   settingsCooperativeFileUploads: 'File Uploads',
   settingsCooperativeDeclaration: 'Declaration',
 
@@ -2923,8 +2867,7 @@ const en: Record<string, string> = {
   settingsCoopUnionApplicant: 'Applicant',
   settingsCoopUnionApplicantDetails: 'Applicant Details',
 
-  settingsCoopUnionSection2:
-    'Section 2: Details of Proprietary, Partners, Directors',
+  settingsCoopUnionSection2: 'Section 2: Details of Proprietary, Partners, Directors',
   settingsCoopDirectors: 'Directors',
   settingsCoopDirectorDetails: 'Director Details',
   settingsCoopTrainingRelatedToCoop: 'Training Related to Co-operatives',
@@ -2944,16 +2887,14 @@ const en: Record<string, string> = {
 
   settingsDirector: 'Directors',
   settingsDirectorDetails: 'Director Details',
-  settingsDeclarationOfDirectionAffiliated:
-    'Details of directors affiliated with other firms',
+  settingsDeclarationOfDirectionAffiliated: 'Details of directors affiliated with other firms',
 
   settingsAccountOperator: 'Account Operator',
   settingsAccountDetailsOfAccountOperator: 'Details of Account Operators',
 
   settingsAccountHolderDeclaration: 'Account Holder Declaration',
   settingsAccountHolderDetails: 'Account Holder Details',
-  settingsAccountHolderDeclarationDocuments:
-    'Account Holder Declaration Documents',
+  settingsAccountHolderDeclarationDocuments: 'Account Holder Declaration Documents',
 
   loanProductpenalty: 'Penalty',
   loanProductEnterPenaltydetails: 'Enter Penalty details.',
@@ -2968,8 +2909,7 @@ const en: Record<string, string> = {
   loanProductEnterNumberInstallments: 'Enter Number of Installments',
   loanProductAgriculture: 'Agriculture Loan',
   loanProductAlternativeEnergy: 'Alternative Energy Loan',
-  loanProductAssetsPurchasesAndMaintenance:
-    'Assets Purchases And Maintenance Loan',
+  loanProductAssetsPurchasesAndMaintenance: 'Assets Purchases And Maintenance Loan',
   loanProductTypeBusiness: 'Business Loan',
   loanProductCreditUnion: 'Credit Union Loan',
   loanProductEducational: 'Educational Loan',
@@ -2979,8 +2919,6 @@ const en: Record<string, string> = {
   loanProductMicroEntrepreneur: 'Micro Entrepreneur Loan',
   loanProductSocialSector: 'Social Sector Loan',
   loanProductStaff: 'Staff Loan',
-  loanProductProductive: 'Productive',
-  loanProductUnproductive: 'Unproductive',
   loanProductSelectNatureofDepositProduct: 'Select Nature of Deposit Product',
   loanProductIndividual: 'Individual',
   loanProductInstitiutional: 'Institiutional',
@@ -2990,8 +2928,7 @@ const en: Record<string, string> = {
   loanProductSelectNatureofBusiness: 'Select Nature of Business',
   loanProductNatureofBusinessCoopUnion: 'Nature of Business (COOP Union)',
   loanProductPenaltyType: 'Penalty Type',
-  loanProductDifferentLoanProvisionTreatment:
-    ' Different Loan Provision Treatment',
+  loanProductDifferentLoanProvisionTreatment: ' Different Loan Provision Treatment',
   loanProductInstallment: 'Installment',
 
   depositProductMinAge: 'Minimum Age',
@@ -3047,8 +2984,7 @@ const en: Record<string, string> = {
 
   // login
   loginTitle: 'Digitizing and Connecting SACCOS',
-  loginSubTitle:
-    'A simple, secure and shared digital platform that connects SACCOS to technology.',
+  loginSubTitle: 'A simple, secure and shared digital platform that connects SACCOS to technology.',
   loginHeader: 'Welcome to Myra!',
   loginEmail: 'Email',
   loginPassword: 'Password',
@@ -3060,8 +2996,7 @@ const en: Record<string, string> = {
   orReloadthepage: 'or Reload the page',
   here: 'here',
   workinProgress: 'Work in progress',
-  ThisPageIsUnderConstruction:
-    'This page is currently under construction. Come back later or',
+  ThisPageIsUnderConstruction: 'This page is currently under construction. Come back later or',
   follow: 'Follow',
   usForUpdates: 'us for updates',
   member: 'Member',
@@ -3149,8 +3084,7 @@ const en: Record<string, string> = {
   serviceCenterNoOfServiceCenter: 'No of Service Center',
   serviceCenterEnterNoOfServiceCenter: 'Enter No of Service Center',
 
-  kynIndEstimatedannualaccounttransaction:
-    'Estimated annual account transaction',
+  kynIndEstimatedannualaccounttransaction: 'Estimated annual account transaction',
   kymIndCooperativeServiceCenter: 'Service Center',
   kymIndCooperativeEnterServiceCenter: 'Enter Service Center',
   moreThan: 'More Than',
@@ -3182,8 +3116,7 @@ const en: Record<string, string> = {
   kymIndPROFESSION: 'Profession',
   kymIndMAINOCCUPATION: 'Main Occupation',
   kymIndINCASERESIDINGINRENTEDHOUSE: 'Incase Residing In Rented House',
-  kymCoopRepresentativeINCASERESIDINGINRENTEDHOUSE:
-    'Incase Residing In Rented House',
+  kymCoopRepresentativeINCASERESIDINGINRENTEDHOUSE: 'Incase Residing In Rented House',
   kymAccIndIdentificationDetails: 'Identification Details',
   kymIndIDENTIFICATIONDETAILS: 'Identification Details',
   kymCoopAccContactDetails: 'Contact Details',
@@ -3210,8 +3143,7 @@ const en: Record<string, string> = {
   depositProductAccountOpenServiceCharge: 'Account Open Service Charge',
   depositProductAccountCloseServiceCharge: 'Account Close Service Charge',
   depositProductIsThisForMinor: 'Is this a product for Minors ?',
-  depositProductAlternativeChannels:
-    'Does this product allow Alternative Channels?',
+  depositProductAlternativeChannels: 'Does this product allow Alternative Channels?',
   depositProductPercentageDeposit: 'Maximum percentage of Deposit',
   depositProductAutoOpenwhenmemberjoins: 'Auto Open when member joins?',
   depositProductAllowLoan: 'Allow Loan from this product ?',
@@ -3271,16 +3203,14 @@ const en: Record<string, string> = {
   sharePurchaseOthers: 'Others',
   // ///////share return
   shareLayoutShareReturnAdd: 'Share Return',
-  loanProductSupportMultipleAccount:
-    'Does this product support Multiple Account ?',
+  loanProductSupportMultipleAccount: 'Does this product support Multiple Account ?',
   shareLayoutSharePurchase: 'Share Issue',
   depositProductPostingFrequency: 'Interest Posting Frequency',
   depositProductAlternativeChannelseBanking:
     'Alternative Channels include Mobile banking and eBanking',
   depositProductATMFacility: 'Does this product provide ATM Facility?',
   depositProductChequeIssue: 'Allow Cheque Issue?',
-  depositProductSupportMultipleAccount:
-    'Does this product support Multiple Account ?',
+  depositProductSupportMultipleAccount: 'Does this product support Multiple Account ?',
   loanProductAllowPartialInstallment: 'Partial payment on Principal Amount',
   loanProductPenaltyedgerMapping: 'Penalty Ledger Mapping',
   loanProductPenaltyonPrincipal: 'Penalty on Principal',
@@ -3289,8 +3219,7 @@ const en: Record<string, string> = {
   loanProductRebateLedgerMapping: 'Rebate Ledger Mapping',
   loanProductPrincipal: 'Principal',
   loanProductUpdateInterest: 'Update Interest ',
-  loanProductUpdateInterestForIndividual:
-    'Update interest for individual account or bulk account',
+  loanProductUpdateInterestForIndividual: 'Update interest for individual account or bulk account',
   loanProductWaiveInterest: 'Waive Interest ',
   loanProductWaiveInterestforindividual:
     'Waive interest for individual account/ bulk account for past interest',
@@ -3317,13 +3246,16 @@ const en: Record<string, string> = {
   loanProductMaximumFMV: 'Maximum FMV',
   loanProductMinimumDV: 'Minimum DV',
   loanProductMaximumDV: 'Maximum DV',
-  loanProductMinimumPercentageofDepriciatedValue:
-    'Minimum Percentage of Depriciated Value',
-  loanProductMaximumPercentageofDepriciatedValue:
-    'Maximum Percentage of Depriciated Value',
+  loanProductMinimumPercentageofDepriciatedValue: 'Minimum Percentage of Depriciated Value',
+  loanProductMaximumPercentageofDepriciatedValue: 'Maximum Percentage of Depriciated Value',
   loanProductMinimumValue: 'Minimum Value',
   loanProductMaximumValue: 'Maximum Value',
-
+  loanProductProgressive: 'Progressive',
+  loanProductUnprogressive: 'Unprogressive',
+  loanProductDescription: 'Description about the product',
+  loanProductloanLedgerMapping: 'Rebate Ledger Mapping',
+  loanProductNatureBusinessIns: 'Institutions Type',
+  depositProductNatureofBusinessCoopUnion: 'Cooperatives Union Type',
   // share settings
 
   shareSettingsFeesLedgerMapping: 'Ledger Mapping',

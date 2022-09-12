@@ -10,7 +10,7 @@ export const AllowGaurantee = () => {
   const { watch } = useFormContext();
   const { t } = useTranslation();
 
-  const allowGuarantee = watch('allowGuarantee');
+  const allowGurantee = watch('allowGurantee');
 
   const yesNo = [
     { label: t['yes'], value: true },
@@ -20,21 +20,13 @@ export const AllowGaurantee = () => {
   return (
     <FormSection>
       <GridItem mt="s16" colSpan={3}>
-        <Box
-          display="flex"
-          flexDirection={'row'}
-          justifyContent="space-between"
-        >
+        <Box display="flex" flexDirection="row" justifyContent="space-between">
           <SubHeadingText>{t['loanProductAllowGuarantee']}</SubHeadingText>
-          <FormSwitchTab name="allowGuarantee" options={yesNo} />
+          <FormSwitchTab name="allowGurantee" options={yesNo} />
         </Box>
-        {allowGuarantee && (
+        {allowGurantee && (
           <Box w="35%">
-            <FormInput
-              name="max"
-              type="text"
-              label={t['loanProductMaxPercent']}
-            />
+            <FormInput name="maxPercentOfGurantee" type="text" label={t['loanProductMaxPercent']} />
           </Box>
         )}
       </GridItem>

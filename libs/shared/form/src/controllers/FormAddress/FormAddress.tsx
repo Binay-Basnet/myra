@@ -14,11 +14,11 @@ export interface IFormAddressProps {
   name: string;
 }
 
-export function FormAddress({
+export const FormAddress = ({
   sectionId,
   sectionHeader,
   name,
-}: IFormAddressProps) {
+}: IFormAddressProps) => {
   if (sectionId && sectionHeader) {
     return (
       <FormSection id={sectionId} header={sectionHeader}>

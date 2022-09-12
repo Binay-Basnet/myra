@@ -86,10 +86,10 @@ query getDepositProductSettingsEditData($id: ID!) {
             }
             rebate
             rebateData {
-              daysBeforeInstallmentDate
+              dayBeforeInstallmentDate
               noOfInstallment
               rebateAmount
-              percentage
+              rebateRate
             }
             minTenure
             minTenureUnit

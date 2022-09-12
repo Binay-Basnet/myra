@@ -52,7 +52,7 @@ export const Rebate = () => {
               <Grid templateColumns="repeat(3,1fr)" gap="s16">
                 <GridItem>
                   <FormInput
-                    name="rebateData.daysBeforeInstallmentDate"
+                    name="rebateData.dayBeforeInstallmentDate"
                     type="number"
                     label={t['depositProductDayaftertheinstallmentdate']}
                   />
@@ -62,7 +62,6 @@ export const Rebate = () => {
                     name="rebateData.noOfInstallment"
                     type="number"
                     label={t['depositProductNoInstallment']}
-                    __placeholder="0"
                     helperText={t['depositProductEnterNumberInstallments']}
                     textAlign={'right'}
                   />
@@ -79,11 +78,10 @@ export const Rebate = () => {
                 </GridItem>
                 <GridItem>
                   <FormInput
-                    name="rebateData.percentage"
+                    name="rebateData.rebateRate"
                     type="number"
                     label={t['depositProductPercentageDepositedAmount']}
                     textAlign={'right'}
-                    __placeholder="0.00"
                     rightElement={
                       <Text
                         fontWeight="Medium"

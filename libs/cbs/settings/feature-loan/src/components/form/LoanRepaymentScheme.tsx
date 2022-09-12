@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import { InterestMethod, LoanRepaymentScheme } from '@coop/cbs/data-access';
+import { LoanInterestMethod, LoanRepaymentScheme } from '@coop/cbs/data-access';
 import { FormCheckboxGroup, FormSelect } from '@coop/shared/form';
 import { FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -11,7 +11,7 @@ export const LoanRepaymentSchemes = () => {
   const { t } = useTranslation();
 
   const loanschemeOptionsI = [
-    { label: t['loanProductEPI'], value: LoanRepaymentScheme.Epi },
+    { label: t['loanProductEMI'], value: LoanRepaymentScheme.Emi },
   ];
 
   const loanschemeOptionsII = [
@@ -21,8 +21,11 @@ export const LoanRepaymentSchemes = () => {
   ];
 
   const interestMethodtList = [
-    { label: t['loanProductDiminishing'], value: InterestMethod.Diminishing },
-    { label: t['loanProductStraight'], value: InterestMethod.Flat },
+    {
+      label: t['loanProductDiminishing'],
+      value: LoanInterestMethod.Diminishing,
+    },
+    { label: t['loanProductStraight'], value: LoanInterestMethod.Straight },
   ];
 
   return (
@@ -35,8 +38,8 @@ export const LoanRepaymentSchemes = () => {
         />
       </GridItem>
 
-      {(interestMethod === InterestMethod.Flat ||
-        interestMethod === InterestMethod.Diminishing) && (
+      {(interestMethod === LoanInterestMethod.Straight ||
+        interestMethod === LoanInterestMethod.Diminishing) && (
         <GridItem colSpan={3}>
           <Text
             mb="s16"
@@ -47,7 +50,7 @@ export const LoanRepaymentSchemes = () => {
             {t['loanProductLoanRepaymentScheme']}
           </Text>
 
-          {interestMethod === InterestMethod.Flat && (
+          {interestMethod === LoanInterestMethod.Straight && (
             <FormCheckboxGroup
               orientation="column"
               name="repaymentScheme"
@@ -55,7 +58,7 @@ export const LoanRepaymentSchemes = () => {
             />
           )}
 
-          {interestMethod === InterestMethod.Diminishing && (
+          {interestMethod === LoanInterestMethod.Diminishing && (
             <FormCheckboxGroup
               orientation="column"
               name="repaymentScheme"

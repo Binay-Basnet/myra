@@ -14,14 +14,14 @@ export interface FormFooterProps {
   mainButtonHandler?: () => void;
 }
 
-export function FormFooter({
+export const FormFooter = ({
   status,
   draftButton,
   dangerButton,
   mainButtonLabel,
   mainButtonHandler,
   isMainButtonDisabled,
-}: FormFooterProps) {
+}: FormFooterProps) => {
   const { t } = useTranslation();
   return (
     <Box

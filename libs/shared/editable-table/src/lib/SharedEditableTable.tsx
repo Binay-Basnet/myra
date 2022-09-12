@@ -195,7 +195,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
   defaultData = [],
   canDeleteRow = true,
   onChange,
-  debug = true,
+  debug = false,
   canAddRow = true,
   searchPlaceholder,
 }: EditableTableProps<T>) => {
@@ -572,131 +572,129 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number>>(
   column,
   dispatch,
   data,
-}: EditableCellProps<T>) => {
-  return (
-    <Editable
-      _after={
-        column.fieldType === 'percentage'
-          ? {
-              content: "'%'",
-              color: 'primary.500',
-              position: 'absolute',
-              fontWeight: '500',
-              px: 's8',
-            }
-          : {}
-      }
-      isDisabled={column.fieldType === 'search' || !!column?.accessorFn}
-      isPreviewFocusable
-      selectAllOnFocus={false}
-      w="100%"
-      minH="inherit"
-      display="flex"
-      alignItems="center"
-      justifyContent={column.isNumeric ? 'flex-end' : 'flex-start'}
-      fontSize="r1"
-      borderLeft="1px"
-      borderLeftColor="border.layout"
-      flexGrow={column.cellWidth === 'auto' ? 1 : 0}
-      flexBasis={
-        column.cellWidth === 'auto'
-          ? '100%'
-          : column.cellWidth
-          ? cellWidthObject[column.cellWidth]
-          : '30%'
-      }
-      value={
-        column.fieldType === 'search'
-          ? column.searchOptions?.find((search) => search.value === data[column.accessor])?.label
-          : column.accessorFn
-          ? column.accessorFn(data)
-            ? String(column.accessorFn(data))
-            : ''
-          : String(data[column.accessor] ? data[column.accessor] : '')
-      }
-    >
-      {column.cell ? (
-        <Box px="s8" width="100%" cursor="not-allowed">
-          {column.cell(data)}
-        </Box>
-      ) : column.fieldType === 'select' ? null : (
-        <EditablePreview
-          width="100%"
-          mr={column.fieldType === 'percentage' ? 's24' : '0'}
-          cursor={column.fieldType === 'search' || !!column?.accessorFn ? 'not-allowed' : 'text'}
-          height="100%"
-          px="s8"
-          display="flex"
-          alignItems="center"
-          justifyContent={column.isNumeric ? 'flex-end' : 'flex-start'}
-        />
-      )}
+}: EditableCellProps<T>) => (
+  <Editable
+    _after={
+      column.fieldType === 'percentage'
+        ? {
+            content: "'%'",
+            color: 'primary.500',
+            position: 'absolute',
+            fontWeight: '500',
+            px: 's8',
+          }
+        : {}
+    }
+    isDisabled={column.fieldType === 'search' || !!column?.accessorFn}
+    isPreviewFocusable
+    selectAllOnFocus={false}
+    w="100%"
+    minH="inherit"
+    display="flex"
+    alignItems="center"
+    justifyContent={column.isNumeric ? 'flex-end' : 'flex-start'}
+    fontSize="r1"
+    borderLeft="1px"
+    borderLeftColor="border.layout"
+    flexGrow={column.cellWidth === 'auto' ? 1 : 0}
+    flexBasis={
+      column.cellWidth === 'auto'
+        ? '100%'
+        : column.cellWidth
+        ? cellWidthObject[column.cellWidth]
+        : '30%'
+    }
+    value={
+      column.fieldType === 'search'
+        ? column.searchOptions?.find((search) => search.value === data[column.accessor])?.label
+        : column.accessorFn
+        ? column.accessorFn(data)
+          ? String(column.accessorFn(data))
+          : ''
+        : String(data[column.accessor] ? data[column.accessor] : '')
+    }
+  >
+    {column.cell ? (
+      <Box px="s8" width="100%" cursor="not-allowed">
+        {column.cell(data)}
+      </Box>
+    ) : column.fieldType === 'select' ? null : (
+      <EditablePreview
+        width="100%"
+        mr={column.fieldType === 'percentage' ? 's24' : '0'}
+        cursor={column.fieldType === 'search' || !!column?.accessorFn ? 'not-allowed' : 'text'}
+        height="100%"
+        px="s8"
+        display="flex"
+        alignItems="center"
+        justifyContent={column.isNumeric ? 'flex-end' : 'flex-start'}
+      />
+    )}
 
-      {column.fieldType === 'select' ? (
-        <Box w="100%">
-          {column.loadOptions ? (
-            <AsyncSelect
-              onChange={(newValue: { label: string; value: string }) => {
-                dispatch({
-                  type: EditableTableActionKind.EDIT,
-                  payload: {
-                    data,
-                    newValue: newValue.value,
-                    column,
-                  },
-                });
-              }}
-              chakraStyles={chakraDefaultStyles}
-              loadOptions={() => column.loadOptions && column.loadOptions(data)}
-            />
-          ) : (
-            <Select
-              value={column.selectOptions?.find((option) => option.value === data[column.accessor])}
-              onChange={(newValue: { label: string; value: string }) => {
-                dispatch({
-                  type: EditableTableActionKind.EDIT,
-                  payload: {
-                    data,
-                    newValue: newValue.value,
-                    column,
-                  },
-                });
-              }}
-              chakraStyles={chakraDefaultStyles}
-              options={column.selectOptions}
-            />
-          )}
-        </Box>
-      ) : (
-        <Input
-          //  mt="-1px"
-          py="0"
-          h="100%"
-          type={column.isNumeric ? 'number' : 'text'}
-          w="100%"
-          px="s8"
-          minH="inherit"
-          bg="primary.100"
-          textAlign={column.isNumeric ? 'right' : 'left'}
-          justifyContent={column.isNumeric ? 'flex-end' : 'flex-start'}
-          _focus={{ boxShadow: 'none' }}
-          _focusWithin={{ boxShadow: 'none' }}
-          border="none"
-          borderRadius="0"
-          value={String(data[column.accessor] ?? '')}
-          onChange={(e) => {
-            dispatch({
-              type: EditableTableActionKind.EDIT,
-              payload: {
-                data,
-                newValue: e.target.value,
-                column,
-              },
-            });
-          }}
-          as={EditableInput}
-        />
-      )}
-    </Editable>
-  );
-};
+    {column.fieldType === 'select' ? (
+      <Box w="100%">
+        {column.loadOptions ? (
+          <AsyncSelect
+            onChange={(newValue: { label: string; value: string }) => {
+              dispatch({
+                type: EditableTableActionKind.EDIT,
+                payload: {
+                  data,
+                  newValue: newValue.value,
+                  column,
+                },
+              });
+            }}
+            chakraStyles={chakraDefaultStyles}
+            loadOptions={() => column.loadOptions && column.loadOptions(data)}
+          />
+        ) : (
+          <Select
+            value={column.selectOptions?.find((option) => option.value === data[column.accessor])}
+            onChange={(newValue: { label: string; value: string }) => {
+              dispatch({
+                type: EditableTableActionKind.EDIT,
+                payload: {
+                  data,
+                  newValue: newValue.value,
+                  column,
+                },
+              });
+            }}
+            chakraStyles={chakraDefaultStyles}
+            options={column.selectOptions}
+          />
+        )}
+      </Box>
+    ) : (
+      <Input
+        //  mt="-1px"
+        py="0"
+        h="100%"
+        type={column.isNumeric ? 'number' : 'text'}
+        w="100%"
+        px="s8"
+        minH="inherit"
+        bg="primary.100"
+        textAlign={column.isNumeric ? 'right' : 'left'}
+        justifyContent={column.isNumeric ? 'flex-end' : 'flex-start'}
+        _focus={{ boxShadow: 'none' }}
+        _focusWithin={{ boxShadow: 'none' }}
+        border="none"
+        borderRadius="0"
+        value={String(data[column.accessor] ?? '')}
+        onChange={(e) => {
+          dispatch({
+            type: EditableTableActionKind.EDIT,
+            payload: {
+              data,
+              newValue: e.target.value,
+              column,
+            },
+          });
+        }}
+        as={EditableInput}
+      />
+    )}
+  </Editable>
+);
