@@ -84,19 +84,17 @@ query getAccountOpenProductDetails($id: ID!) {
             penalty
             penaltyData {
               dayAfterInstallmentDate
-              minimumAmount
-              rateType
-              flatRatePenalty
               penaltyRate
-
               penaltyAmount
+              penaltyLedgerMapping
             }
             rebate
             rebateData {
-              daysBeforeInstallmentDate
+              dayBeforeInstallmentDate
               noOfInstallment
               rebateAmount
-              percentage
+              rebateRate
+              rebateLedgerMapping
             }
             minTenure
             minTenureUnit
@@ -189,10 +187,7 @@ query getAccountOpenEditData($id: ID!) {
   }
 }
 
-query getAccountTableList(
-  $paginate: Pagination
-  $filter: DepositLoanAccountSearchFilter
-) {
+query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSearchFilter) {
   account {
     list(paginate: $paginate, filter: $filter) {
       totalCount
@@ -303,17 +298,16 @@ query getAccountOpenProductPenalty($productId: ID!) {
           data {
             penalty {
               dayAfterInstallmentDate
-              minimumAmount
-              rateType
-              flatRatePenalty
               penaltyRate
               penaltyAmount
+              penaltyLedgerMapping
             }
             rebate {
-              daysBeforeInstallmentDate
-              noOfInstallment
+              dayBeforeInstallmentDate
+              rebateRate
               rebateAmount
-              percentage
+              rebateLedgerMapping
+              noOfInstallment
             }
             prematurePenalty {
               penaltyDateType

@@ -1,38 +1,35 @@
-/* eslint-disable-next-line */
-import {
-  Box,
-  Container,
-  FormHeader,
-  FormMemberSelect,
-  DEFAULT_PAGE_SIZE,
-  MemberCard,
-  FormFooter,
-  Divider,
-  Text,
-  Grid,
-  asyncToast,
-  Button,
-  FormAccountSelect,
-} from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { useMemo, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
-import { FormInput, FormRadioGroup, FormTextArea } from '@coop/shared/form';
-
-import { useState } from 'react';
 import {
+  AccountClosePaymentMode,
+  AccountCloseReason,
+  CashValue,
+  DepositAccountClose,
   NatureOfDepositProduct,
   useGetAccountTableListQuery,
   useSetAccountCloseDataMutation,
-  DepositAccountClose,
-  AccountCloseReason,
-  AccountClosePaymentMode,
-  CashValue,
 } from '@coop/cbs/data-access';
-import { useForm, FormProvider } from 'react-hook-form';
-import { useGetIndividualMemberDetails } from '@coop/shared/utils';
-import { useMemo } from 'react';
-import { useRouter } from 'next/router';
+import { FormInput, FormRadioGroup, FormTextArea } from '@coop/shared/form';
+import {
+  asyncToast,
+  Box,
+  Button,
+  Container,
+  DEFAULT_PAGE_SIZE,
+  Divider,
+  FormAccountSelect,
+  FormFooter,
+  FormHeader,
+  FormMemberSelect,
+  Grid,
+  MemberCard,
+  Text,
+} from '@coop/shared/ui';
+import { useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+
 import { Payment } from '../component/AccountCloseForm/payment';
 
 export type AccountCloseInput = Omit<DepositAccountClose, 'cash'> & {
@@ -98,7 +95,7 @@ const interestData = [
     amount: '200',
   },
 ];
-const OtherChargesData = [
+const otherChargesData = [
   {
     label: 'Administration Fees',
     amount: '200',
@@ -125,7 +122,7 @@ const OtherChargesData = [
 //   { label: 'Cash', value: AccountClosePaymentMode?.Cash },
 // ];
 
-export function CbsAccountClose() {
+export const CbsAccountClose = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const methods = useForm<AccountCloseInput>();
@@ -168,7 +165,7 @@ export function CbsAccountClose() {
   };
   const accountId = watch('accountID');
   const radioOther = watch('reason');
-  const disableDenomination = watch('cash.disableDenomination');
+  const isDisableDenomination = watch('cash.disableDenomination');
 
   const cashPaid = watch('cash.cashPaid');
 
@@ -177,21 +174,20 @@ export function CbsAccountClose() {
   const denominationTotal = useMemo(
     () =>
       denominations?.reduce(
-        (accumulator, curr) => accumulator + Number(curr.amount),
+        (accumulator, current) => accumulator + Number(current.amount),
         0 as number
       ) ?? 0,
     [denominations]
   );
 
-  const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
+  const totalCashPaid = isDisableDenomination ? cashPaid : denominationTotal;
   const totalDeposit = 650;
 
   const returnAmount = Number(totalCashPaid) - totalDeposit;
   const selectedAccount = useMemo(
     () =>
-      accountListData?.account?.list?.edges?.find(
-        (account) => account.node?.id === accountId
-      )?.node,
+      accountListData?.account?.list?.edges?.find((account) => account.node?.id === accountId)
+        ?.node,
     [accountId]
   );
 
@@ -210,13 +206,10 @@ export function CbsAccountClose() {
     let filteredValues = {
       ...values,
     };
-    if (values['paymentMode'] === AccountClosePaymentMode.Cash) {
-      filteredValues = omit({ ...filteredValues }, [
-        'accountTransfer',
-        'bankCheque',
-      ]);
-      filteredValues['cash'] = {
-        ...values['cash'],
+    if (values.paymentMode === AccountClosePaymentMode.Cash) {
+      filteredValues = omit({ ...filteredValues }, ['accountTransfer', 'bankCheque']);
+      filteredValues.cash = {
+        ...values.cash,
         cashPaid: values.cash?.cashPaid as string,
         disableDenomination: Boolean(values.cash?.disableDenomination),
         total: String(totalCashPaid),
@@ -229,11 +222,11 @@ export function CbsAccountClose() {
       };
     }
 
-    if (values['paymentMode'] === AccountClosePaymentMode?.BankCheque) {
+    if (values.paymentMode === AccountClosePaymentMode?.BankCheque) {
       filteredValues = omit({ ...filteredValues }, ['accountTransfer', 'cash']);
     }
 
-    if (values['paymentMode'] === AccountClosePaymentMode?.AccountTransfer) {
+    if (values.paymentMode === AccountClosePaymentMode?.AccountTransfer) {
       filteredValues = omit({ ...filteredValues }, ['bankCheque', 'cash']);
     }
     asyncToast({
@@ -255,25 +248,19 @@ export function CbsAccountClose() {
       <FormProvider {...methods}>
         <form>
           {' '}
-          <Box
-            position="sticky"
-            top="110px"
-            bg="gray.100"
-            width="100%"
-            zIndex="10"
-          >
+          <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
             <FormHeader title={t['accountClose']} />
           </Box>
-          <Box display={'flex'} flexDirection="row" minH="calc(100vh - 230px)">
-            <Box display={'flex'} flexDirection="column" w="100%">
+          <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
+            <Box display="flex" flexDirection="column" w="100%">
               <Box
                 display={mode === '0' ? 'flex' : 'none'}
-                flexDirection={'column'}
+                flexDirection="column"
                 gap="s16"
                 p="s20"
                 w="100%"
-                minH={'100%'}
-                borderRight={'1px solid'}
+                minH="100%"
+                borderRight="1px solid"
                 borderColor="border.layout"
               >
                 <FormMemberSelect name="memberID" label="Member" />
@@ -289,107 +276,85 @@ export function CbsAccountClose() {
                   <Box>
                     {' '}
                     <Divider />
-                    <Box
-                      display={'flex'}
-                      flexDirection="column"
-                      gap="s4"
-                      pt="s16"
-                    >
+                    <Box display="flex" flexDirection="column" gap="s4" pt="s16">
                       <Text fontSize="s3" fontWeight="600">
                         Reason for closing
                       </Text>
-                      <Box display={'flex'} flexDirection="column" gap="s16">
+                      <Box display="flex" flexDirection="column" gap="s16">
                         <FormRadioGroup
                           name="reason"
                           options={radioList}
-                          direction={'row'}
+                          direction="row"
                           pb="s16"
                         />
                         {radioOther === AccountCloseReason?.Other && (
-                          <Grid templateColumns={'repeat(3,1fr)'}>
-                            <FormInput
-                              name="otherReason"
-                              label="Specify Reason"
-                            />
+                          <Grid templateColumns="repeat(3,1fr)">
+                            <FormInput name="otherReason" label="Specify Reason" />
                           </Grid>
                         )}
                       </Box>
                     </Box>
                     <Divider />
-                    <Box display={'flex'} flexDirection="column" gap="s16">
-                      <Box
-                        display="flex"
-                        flexDirection={'column'}
-                        gap="s4"
-                        pt="s16"
-                      >
-                        <Text fontSize={'r1'} fontWeight="600">
+                    <Box display="flex" flexDirection="column" gap="s16">
+                      <Box display="flex" flexDirection="column" gap="s4" pt="s16">
+                        <Text fontSize="r1" fontWeight="600">
                           Fees & Charges Summary
                         </Text>
-                        <Text fontSize={'s2'} fontWeight="400">
+                        <Text fontSize="s2" fontWeight="400">
                           All charges and fees must be paid to get approved.
                         </Text>
                       </Box>
                     </Box>
                     <Box bg="background.500" borderRadius="br2" mt="s16">
-                      <Box
-                        display="flex"
-                        flexDirection={'column'}
-                        gap="s16"
-                        p="s16"
-                      >
-                        <Box display="flex" flexDirection={'column'} gap="s8">
-                          <Text fontWeight={'600'} fontSize="s3">
+                      <Box display="flex" flexDirection="column" gap="s16" p="s16">
+                        <Box display="flex" flexDirection="column" gap="s8">
+                          <Text fontWeight="600" fontSize="s3">
                             Loan
                           </Text>
-                          {loanData?.map(({ label, amount }) => {
-                            return (
-                              <Box
-                                h="36px"
-                                display={'flex'}
-                                justifyContent="space-between"
-                                alignItems={'center'}
-                                key={`${label}${amount}`}
-                              >
-                                <Text fontWeight={'500'} fontSize="s3">
-                                  {label}
-                                </Text>
-                                <Text fontWeight={'600'} fontSize="r1">
-                                  {amount}
-                                </Text>
-                              </Box>
-                            );
-                          })}
+                          {loanData?.map(({ label, amount }) => (
+                            <Box
+                              h="36px"
+                              display="flex"
+                              justifyContent="space-between"
+                              alignItems="center"
+                              key={`${label}${amount}`}
+                            >
+                              <Text fontWeight="500" fontSize="s3">
+                                {label}
+                              </Text>
+                              <Text fontWeight="600" fontSize="r1">
+                                {amount}
+                              </Text>
+                            </Box>
+                          ))}
                         </Box>
-                        <Box display="flex" flexDirection={'column'} gap="s8">
-                          <Text fontWeight={'600'} fontSize="s3">
+                        <Box display="flex" flexDirection="column" gap="s8">
+                          <Text fontWeight="600" fontSize="s3">
                             Interest
                           </Text>
-                          {interestData?.map(({ label, amount }) => {
-                            return (
-                              <Box
-                                h="36px"
-                                display={'flex'}
-                                justifyContent="space-between"
-                                alignItems={'center'}
-                                key={`${label}${amount}`}
-                              >
-                                <Text fontWeight={'500'} fontSize="s3">
-                                  {label}
-                                </Text>
-                                <Text fontWeight={'600'} fontSize="r1">
-                                  {amount}
-                                </Text>
-                              </Box>
-                            );
-                          })}
+                          {interestData?.map(({ label, amount }) => (
+                            <Box
+                              h="36px"
+                              display="flex"
+                              justifyContent="space-between"
+                              alignItems="center"
+                              key={`${label}${amount}`}
+                            >
+                              <Text fontWeight="500" fontSize="s3">
+                                {label}
+                              </Text>
+                              <Text fontWeight="600" fontSize="r1">
+                                {amount}
+                              </Text>
+                            </Box>
+                          ))}
                           <Box
                             h="36px"
-                            display={'flex'}
+                            display="flex"
                             justifyContent="space-between"
-                            alignItems={'center'}
+                            alignItems="center"
                           >
-                            <Text fontWeight={'500'} fontSize="s3">
+                            <Text fontWeight="500" fontSize="s3">
                               Adjusted Interest
                             </Text>
                             <Box>
@@ -404,79 +369,72 @@ export function CbsAccountClose() {
                           </Box>
                           <Box
                             h="36px"
-                            display={'flex'}
+                            display="flex"
                             justifyContent="space-between"
-                            alignItems={'center'}
+                            alignItems="center"
                           >
-                            <Text fontWeight={'500'} fontSize="s3">
+                            <Text fontWeight="500" fontSize="s3">
                               Net Interest Payable{' '}
                             </Text>
-                            <Text fontWeight={'600'} fontSize="r1">
+                            <Text fontWeight="600" fontSize="r1">
                               250.00
                             </Text>
                           </Box>
                         </Box>
-                        <Box display="flex" flexDirection={'column'} gap="s8">
-                          <Text fontWeight={'600'} fontSize="s3">
+                        <Box display="flex" flexDirection="column" gap="s8">
+                          <Text fontWeight="600" fontSize="s3">
                             Other Charges
                           </Text>
-                          {OtherChargesData?.map(({ label, amount }) => {
-                            return (
-                              <Box
-                                h="36px"
-                                display={'flex'}
-                                justifyContent="space-between"
-                                alignItems={'center'}
-                                key={`${label}${amount}`}
-                              >
-                                <Text fontWeight={'500'} fontSize="s3">
-                                  {label}
-                                </Text>
-                                <Text fontWeight={'600'} fontSize="r1">
-                                  {amount}
-                                </Text>
-                              </Box>
-                            );
-                          })}
+                          {otherChargesData?.map(({ label, amount }) => (
+                            <Box
+                              h="36px"
+                              display="flex"
+                              justifyContent="space-between"
+                              alignItems="center"
+                              key={`${label}${amount}`}
+                            >
+                              <Text fontWeight="500" fontSize="s3">
+                                {label}
+                              </Text>
+                              <Text fontWeight="600" fontSize="r1">
+                                {amount}
+                              </Text>
+                            </Box>
+                          ))}
                         </Box>
                         <Divider />
                         <Box
                           h="36px"
-                          display={'flex'}
+                          display="flex"
                           justifyContent="space-between"
-                          alignItems={'center'}
+                          alignItems="center"
                         >
-                          <Text fontWeight={'600'} fontSize="s3">
+                          <Text fontWeight="600" fontSize="s3">
                             Total Charges
                           </Text>
-                          <Text fontWeight={'600'} fontSize="r1">
+                          <Text fontWeight="600" fontSize="r1">
                             650.00
                           </Text>
                         </Box>
                       </Box>
                     </Box>
                     <Divider />
-                    <Box
-                      display={'flex'}
-                      flexDirection="column"
-                      gap="s4"
-                      pt="s16"
-                    >
-                      <Text fontWeight={'600'} fontSize="s3">
+                    <Box display="flex" flexDirection="column" gap="s4" pt="s16">
+                      <Text fontWeight="600" fontSize="s3">
                         Notes{' '}
                       </Text>
-                      <FormTextArea name="notes" minH={'180px'} />
+                      <FormTextArea name="notes" minH="180px" />
                     </Box>
                   </Box>
                 )}
               </Box>
               <Box
                 display={mode === '1' ? 'flex' : 'none'}
-                flexDirection={'column'}
-                minH={'100%'}
+                flexDirection="column"
+                minH="100%"
                 gap="s16"
                 w="100%"
-                borderRight={'1px solid'}
+                borderRight="1px solid"
                 borderColor="border.layout"
               >
                 <Payment totalDeposit={650} />
@@ -556,7 +514,7 @@ export function CbsAccountClose() {
               </Box>
             </Box>
             {memberId && (
-              <Box position={'sticky'} top="170px" right={'0'} maxH="500px">
+              <Box position="sticky" top="170px" right="0" maxH="500px">
                 <MemberCard
                   memberDetails={{
                     name: memberDetailData?.name,
@@ -584,18 +542,14 @@ export function CbsAccountClose() {
                             : '',
                           ID: selectedAccount?.product?.id,
                           currentBalance: selectedAccount?.balance ?? '0',
-                          minimumBalance:
-                            selectedAccount?.product?.minimumBalance ?? '0',
+                          minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
                           guaranteeBalance: '1000',
-                          overdrawnBalance:
-                            selectedAccount?.overDrawnBalance ?? '0',
+                          overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                           fine: FINE,
                           // branch: 'Kumaripati',
                           openDate: selectedAccount?.accountOpenedDate ?? 'N/A',
-                          expiryDate:
-                            selectedAccount?.accountExpiryDate ?? 'N/A',
-                          lastTransactionDate:
-                            selectedAccount?.lastTransactionDate ?? 'N/A',
+                          expiryDate: selectedAccount?.accountExpiryDate ?? 'N/A',
+                          lastTransactionDate: selectedAccount?.lastTransactionDate ?? 'N/A',
                         }
                       : null
                   }
@@ -605,19 +559,17 @@ export function CbsAccountClose() {
               </Box>
             )}
           </Box>
-          <Box position={'sticky'} bottom={0}>
+          <Box position="sticky" bottom={0}>
             {mode === '0' && (
               <FormFooter
                 mainButtonLabel="Close Account"
-                dangerButton={true}
+                dangerButton
                 mainButtonHandler={mainButtonHandlermode0}
               />
             )}
             {mode === '1' && (
               <FormFooter
-                status={
-                  <Button onClick={previousButtonHandler}> Previous</Button>
-                }
+                status={<Button onClick={previousButtonHandler}> Previous</Button>}
                 mainButtonLabel="Confirm Payment"
                 mainButtonHandler={handleSubmit}
               />
@@ -627,4 +579,4 @@ export function CbsAccountClose() {
       </FormProvider>
     </Container>
   );
-}
+};
