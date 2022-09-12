@@ -31,7 +31,7 @@ import { PopoverContent, PopoverTrigger } from '../popover/Popover';
  *  @description Add a sortType function to override the default function in sorting.
  *  @see React table useSortBy docs for more options.
  */
-export function Table<T extends Record<string, unknown>>({
+export const Table = <T extends Record<string, unknown>>({
   data,
   columns,
   hasRowSelection = true,
@@ -43,7 +43,7 @@ export function Table<T extends Record<string, unknown>>({
   pagination,
   searchPlaceholder,
   ...props
-}: TableProps<T>) {
+}: TableProps<T>) => {
   const [tableSize, setTableSize] = useState(size);
 
   const tableInstance = useTable({

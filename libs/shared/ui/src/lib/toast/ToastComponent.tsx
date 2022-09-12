@@ -14,7 +14,7 @@ export interface ToastProps {
   actionTextHandler?: () => void;
 }
 
-export function Toast({ message, type, state, actionTextHandler, actionText }: ToastProps) {
+export const Toast = ({ message, type, state, actionTextHandler, actionText }: ToastProps) => {
   return (
     <Box
       width="360px"

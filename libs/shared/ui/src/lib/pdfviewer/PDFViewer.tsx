@@ -11,7 +11,7 @@ export interface PDFViewerProps {
   file: string;
 }
 
-export function PDFViewer({ file }: PDFViewerProps) {
+export const PDFViewer = ({ file }: PDFViewerProps) => {
   const [numPages, setNumPages] = useState<number>(1);
 
   function onDocumentLoadSuccess({

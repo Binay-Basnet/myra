@@ -6,7 +6,7 @@ import { KYMCoopUnionFooter } from '../components/KYMCoopUnionFooter';
 import { KymCoopUnionFormBody } from '../components/KYMCoopUnionFormBody';
 import { KYMCoopUnionHeader } from '../components/KYMCoopUnionHeader';
 
-export function KYMCooperativeUnionPage() {
+export const KYMCooperativeUnionPage = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {

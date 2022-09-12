@@ -22,7 +22,21 @@ export type Scalars = {
   Email: any;
   HTML: any;
   InvalidData: Record<string, Array<string>>;
+<<<<<<< HEAD
   Localized: Record<"local"|"en"|"np",string>;
+=======
+  /**
+   * # For Localization of every data from backend
+   * ```javascript
+   * {
+   *    local: "localized data based on user lang setting",
+   *    en: "data in english",
+   *    np: "data in nepali"
+   * }
+   * ```
+   */
+  Localized: Record<'local' | 'en' | 'np', string>;
+>>>>>>> 89f72b4982f0a89f2c70dba0fb6308403cead559
   Map: Record<string, string>;
   Time: string;
 };

@@ -17,7 +17,7 @@ const memberTypeSlug = {
   COOPERATIVE_UNION: 'coop_union',
 };
 
-export function MemberListPage() {
+export const MemberListPage = () => {
   const { t } = useTranslation();
 
   const router = useRouter();
