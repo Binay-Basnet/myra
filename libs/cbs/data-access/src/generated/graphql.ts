@@ -830,7 +830,7 @@ export type ChartsOfAccountSettingsQueryAccountsArgs = {
 };
 
 export type ChartsOfAccountSettingsQueryAccountsUnderArgs = {
-  accountCode: Scalars['String'];
+  accountCode?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 export type ChequePastRequest = {
@@ -869,7 +869,7 @@ export type CollateralFormState = {
   minDV?: Maybe<Scalars['Float']>;
   minFMV?: Maybe<Scalars['Float']>;
   minValue?: Maybe<Scalars['Float']>;
-  type?: Maybe<Collateral>;
+  type?: Maybe<Scalars['String']>;
 };
 
 export type CollateralInput = {
@@ -879,11 +879,12 @@ export type CollateralInput = {
   minDV?: InputMaybe<Scalars['Float']>;
   minFMV?: InputMaybe<Scalars['Float']>;
   minValue?: InputMaybe<Scalars['Float']>;
-  type?: InputMaybe<Collateral>;
+  type?: InputMaybe<Scalars['String']>;
 };
 
 export type CollateralListData = {
   enabled?: Maybe<Scalars['Boolean']>;
+  id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
 };
 
@@ -6218,8 +6219,8 @@ export type LoanProduct = Base & {
   productCodeString?: Maybe<Scalars['String']>;
   productName: Scalars['String'];
   productNature: NatureOfLoanProduct;
-  productSubType: LoanProductSubType;
-  productType: LoanProductType;
+  productSubType: Scalars['String'];
+  productType: Scalars['String'];
   rebate?: Maybe<Rebate>;
   repaymentScheme?: Maybe<Array<Maybe<LoanRepaymentScheme>>>;
   requiredDocuments?: Maybe<Array<Maybe<LoanRequiredDocuments>>>;
@@ -6297,8 +6298,8 @@ export type LoanProductInput = {
   productCode?: InputMaybe<ProductCode>;
   productName: Scalars['String'];
   productNature: NatureOfLoanProduct;
-  productSubType: LoanProductSubType;
-  productType: LoanProductType;
+  productSubType: Scalars['String'];
+  productType: Scalars['String'];
   rebate?: InputMaybe<RebateTypeInput>;
   repaymentScheme?: InputMaybe<Array<InputMaybe<LoanRepaymentScheme>>>;
   requiredDocuments?: InputMaybe<Array<InputMaybe<LoanRequiredDocuments>>>;
@@ -9290,7 +9291,7 @@ export type SetLoanProductMutation = {
             id: string;
             objState: ObjState;
             productName: string;
-            productType: LoanProductType;
+            productType: string;
           } | null;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -12500,8 +12501,8 @@ export type GetLoanProductListQuery = {
               createdDate: string;
               productName: string;
               productCodeString?: string | null;
-              productType: LoanProductType;
-              productSubType: LoanProductSubType;
+              productType: string;
+              productSubType: string;
               createdBy: {
                 id: string;
                 name: string;
@@ -12545,8 +12546,8 @@ export type GetLoanProductEditDataQuery = {
             createdAt: string;
             modifiedAt: string;
             productName: string;
-            productType: LoanProductType;
-            productSubType: LoanProductSubType;
+            productType: string;
+            productSubType: string;
             productNature: NatureOfLoanProduct;
             description?: string | null;
             typeOfMember: Array<KymMemberTypesEnum | null>;
@@ -12640,7 +12641,7 @@ export type GetLoanProductEditDataQuery = {
               interestIncome?: string | null;
             } | null;
             collateralValue?: Array<{
-              type?: Collateral | null;
+              type?: string | null;
               minFMV?: number | null;
               maxFMV?: number | null;
               minDV?: number | null;
@@ -12675,6 +12676,7 @@ export type GetLoanGeneralSettingsQuery = {
           epi?: boolean | null;
           flat?: boolean | null;
           collateralList?: Array<{
+            id?: string | null;
             name?: string | null;
             enabled?: boolean | null;
           } | null> | null;
@@ -20113,6 +20115,7 @@ export const GetLoanGeneralSettingsDocument = `
           epi
           flat
           collateralList {
+            id
             name
             enabled
           }
