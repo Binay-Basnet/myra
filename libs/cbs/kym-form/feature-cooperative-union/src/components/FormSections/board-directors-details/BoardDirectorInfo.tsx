@@ -4,18 +4,12 @@ import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
-import debounce from 'lodash/debounce';
-import isEqual from 'lodash/isEqual';
-import omit from 'lodash/omit';
 
 import {
-  CooperativeUnionPersonnelSection,
-  CoopUnionPersonnelDetails,
   CoopUnionPersonnelInput,
   useDeletePersonnelDetailsMutation,
   useGetBoardOfDirectorsDetailsListQuery,
   useGetNewIdMutation,
-  useSetPersonnelDetailsMutation,
 } from '@coop/cbs/data-access';
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import {
@@ -42,19 +36,17 @@ import {
 } from '@coop/shared/ui';
 import {
   getKymSectionCoOperativeUnion,
-  isDeepEmpty,
   useTranslation,
 } from '@coop/shared/utils';
 
 import { BoardOfDirectorRelatedTraining } from './TrainingRelatedToCooperatives';
+import { useCoopUnionBod } from '../../../hooks/useCoopUnionBod';
 
 interface IAddDirectorProps {
   removeDirector: (directorId: string) => void;
   index: number;
   directorId: string;
   setSection: (section?: { section: string; subSection: string }) => void;
-  directorDetail: CoopUnionPersonnelDetails | null | undefined;
-  refetch: () => void;
 }
 
 const AddDirector = ({
@@ -62,72 +54,18 @@ const AddDirector = ({
   index,
   directorId,
   setSection,
-  directorDetail,
-  refetch,
 }: IAddDirectorProps) => {
   const { t } = useTranslation();
 
-  const router = useRouter();
-
-  const id = String(router?.query?.['id']);
-
+  const [isOpen, setIsOpen] = React.useState(true);
   const methods = useForm<CoopUnionPersonnelInput>();
+  const { watch, control } = methods;
 
-  const { reset, watch, control } = methods;
-
-  const { mutateAsync } = useSetPersonnelDetailsMutation({
-    onSuccess: () => refetch(),
-  });
-
-  useEffect(() => {
-    if (directorDetail) {
-      reset({
-        ...omit(directorDetail, ['id', 'cooperativeUnionId']),
-        permanentAddress: {
-          ...directorDetail?.permanentAddress,
-          locality: directorDetail?.permanentAddress?.locality?.local,
-        },
-        temporaryAddress: {
-          ...directorDetail?.temporaryAddress,
-          locality: directorDetail?.temporaryAddress?.locality?.local,
-        },
-      });
-    }
-  }, [directorDetail]);
-
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        const editData = {
-          ...omit(directorDetail, ['id', 'cooperativeUnionId']),
-          permanentAddress: {
-            ...directorDetail?.permanentAddress,
-            locality: directorDetail?.permanentAddress?.locality?.local,
-          },
-          temporaryAddress: {
-            ...directorDetail?.temporaryAddress,
-            locality: directorDetail?.temporaryAddress?.locality?.local,
-          },
-        };
-        if (id && data && !isDeepEmpty(data) && !isEqual(editData, data)) {
-          mutateAsync({
-            id,
-            personnelId: directorId,
-            sectionType: CooperativeUnionPersonnelSection.Directors,
-            data,
-          }).then(() => refetch());
-        }
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady, directorDetail]);
+  useCoopUnionBod({ methods, directorId });
 
   const isPermanentAndTemporaryAddressSame = watch(
     `isPermanentAndTemporaryAddressSame`
   );
-
-  const [isOpen, setIsOpen] = React.useState(true);
 
   return (
     <>
@@ -199,14 +137,12 @@ const AddDirector = ({
                         name={`fullName`}
                         id="boardOfDirectors.fullName"
                         label={t['kymCoopUnionFullName']}
-                        __placeholder={t['kymCoopUnionEnterFullName']}
                       />
                       <FormInput
                         type="text"
                         name={`designationEn`}
                         id="boardOfDirectors.designationEn"
                         label={t['kymCoopUnionDesignation']}
-                        __placeholder={t['kymCoopUnionEnterDesignation']}
                       />
                     </InputGroupContainer>
 
@@ -251,30 +187,24 @@ const AddDirector = ({
                         name={`dateOfMembership`}
                         id="boardOfDirectors.dateOfMembership"
                         label={t['kymCoopUnionDateOfMembership']}
-                        __placeholder="DD-MM-YYYY"
                       />
                       <FormInput
                         type="text"
                         name={`highestQualification`}
                         id="boardOfDirectors.highestQualification"
                         label={t['kymCoopUnionHighestQualification']}
-                        __placeholder={
-                          t['kymCoopUnionEnterHigestQualification']
-                        }
                       />
                       <FormInput
                         type="number"
                         name={`mobileNumber`}
                         id="boardOfDirectors.mobileNumber"
                         label={t['kymCoopUnionMobileNo']}
-                        __placeholder={t['kymCoopUnionEnterMobileNo']}
                       />
                       <FormEmailInput
                         type="text"
                         name={`email`}
                         id="boardOfDirectors.email"
                         label={t['kymCoopUnionEmail']}
-                        __placeholder={t['kymCoopUnionEnterEmail']}
                       />
                       <FormInput
                         type="string"
@@ -283,14 +213,12 @@ const AddDirector = ({
                         label={
                           t['kymCoopUnionCitizenshipPassportDrivingLicenseNo']
                         }
-                        __placeholder={t['kymCoopUnionEnterNo']}
                       />
                       <FormInput
                         type="string"
                         name={`panNo`}
                         id="boardOfDirectors.panNo"
                         label={t['kymCoopUnionPANNo']}
-                        __placeholder={t['kymCoopUnionPANNo__placeholder']}
                       />
                     </InputGroupContainer>
                   </Box>
@@ -359,13 +287,14 @@ export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {
 
   const [directorIds, setDirectorIds] = useState<string[]>([]);
 
-  const { data: bodEditValues, refetch } =
-    useGetBoardOfDirectorsDetailsListQuery(
-      {
-        id: String(id),
-      },
-      { enabled: !!id }
-    );
+  const { data: bodEditValues } = useGetBoardOfDirectorsDetailsListQuery(
+    {
+      id: String(id),
+    },
+    {
+      enabled: !!id,
+    }
+  );
 
   useEffect(() => {
     if (bodEditValues) {
@@ -431,10 +360,6 @@ export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {
                   directorId={directorId}
                   removeDirector={removeDirector}
                   setSection={setSection}
-                  directorDetail={bodEditValues?.members?.cooperativeUnion?.formState?.formData?.boardOfDirectorsDetails?.data?.personnelDetails?.find(
-                    (bod) => bod?.id === directorId
-                  )}
-                  refetch={refetch}
                 />
               </Box>
             );

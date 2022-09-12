@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
@@ -9,7 +9,6 @@ import pickBy from 'lodash/pickBy';
 import {
   CooperativeUnionPersonnelSection,
   CoopUnionPersonnelInput,
-  useAllAdministrationQuery,
   useGetBoardOfDirectorsDetailsListQuery,
   useGetCentralRepresentativeDetailsQuery,
   useGetNewIdMutation,
@@ -23,10 +22,9 @@ import {
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import {
+  FormAddress,
   FormInput,
-  FormMap,
   FormRadioGroup,
-  FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
 import { Box, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
@@ -37,17 +35,16 @@ import {
 } from '@coop/shared/utils';
 
 import { CentralRepresentativeTraining } from './CentralRepresentativeTraining';
+import { useCoopUnionCentralRep } from '../../../hooks/useCoopUnionCentralRep';
 
 interface ICRDirectorsSelectionProps {
   setSection: (section?: { section: string; subSection: string }) => void;
-  refetch: () => void;
   crId: string;
   setCRId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const CRDirectorsSelection = ({
   setSection,
-  refetch,
   crId,
   setCRId,
 }: ICRDirectorsSelectionProps) => {
@@ -107,6 +104,7 @@ const CRDirectorsSelection = ({
   } = useGetCentralRepresentativeDetailsQuery(
     {
       id: String(id),
+      includeRequiredErrors: false,
     },
     { enabled: !!id }
   );
@@ -137,7 +135,7 @@ const CRDirectorsSelection = ({
   }, [id]);
 
   const { mutate } = useSetPersonnelDetailsMutation({
-    onSuccess: () => refetch(),
+    onSuccess: () => refetchCentralRepresentativeDetail(),
   });
 
   useEffect(() => {
@@ -221,168 +219,23 @@ interface IAddRepresentativeProps {
 export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
   const { t } = useTranslation();
 
-  const [notAmongDirectors, setNotAmongDirectors] = useState<boolean>(false);
-
-  const router = useRouter();
-
-  const id = String(router?.query?.['id']);
-
-  const [crId, setCRId] = useState<string>('');
-
-  const { data } = useAllAdministrationQuery();
-
   const methods = useForm<CoopUnionPersonnelInput>();
+  const { watch } = methods;
 
-  const { reset, watch } = methods;
-
-  // useEffect(() => {
-  //   if (!crId) {
-  //     newIdMutate({});
-  //   }
-
-  //   return () => setCRId('');
-  // }, []);
-
-  const { mutate } = useSetPersonnelDetailsMutation({
-    onSuccess: () => refetch(),
+  const { crId, notAmongDirectors, setCRId } = useCoopUnionCentralRep({
+    methods,
   });
-
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        if (id && data && !isDeepEmpty(data)) {
-          if (!data?.notAmongDirectors) {
-            mutate({
-              id,
-              personnelId: null,
-              sectionType:
-                CooperativeUnionPersonnelSection.CentralRepresentative,
-              data,
-            });
-          }
-
-          if (data?.notAmongDirectors && crId) {
-            mutate({
-              id,
-              personnelId: crId,
-              sectionType:
-                CooperativeUnionPersonnelSection.CentralRepresentative,
-              data: omit(data, ['centralRepID']),
-            });
-          }
-          // refetch();
-        }
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady, crId]);
-
-  const { data: crDetailsEditData, refetch } =
-    useGetCentralRepresentativeDetailsQuery(
-      {
-        id: String(id),
-      },
-      { enabled: !!id }
-    );
-
-  useEffect(() => {
-    if (crDetailsEditData) {
-      const crDetail =
-        crDetailsEditData?.members?.cooperativeUnion?.formState?.formData
-          ?.centralRepresentativeDetails?.data;
-
-      if (crDetail) {
-        reset({
-          ...omit(
-            pickBy(crDetail, (v) => v !== null),
-            ['id']
-          ),
-        });
-
-        if (crDetail?.id) {
-          setCRId(crDetail?.id);
-        }
-
-        setNotAmongDirectors(crDetail.notAmongDirectors ?? false);
-      }
-    }
-  }, [crDetailsEditData]);
 
   const isPermanentAndTemporaryAddressSame = watch(
     'isPermanentAndTemporaryAddressSame'
   );
 
-  const province = useMemo(() => {
-    return (
-      data?.administration?.all?.map((d) => ({
-        label: d.name,
-        value: d.id,
-      })) ?? []
-    );
-  }, [data?.administration?.all]);
-
-  // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch('permanentAddress.provinceId');
-  const currentDistrictId = watch('permanentAddress.districtId');
-  const currentLocalGovernmentId = watch('permanentAddress.localGovernmentId');
-
-  const districtList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
-        ?.districts ?? [],
-    [currentProvinceId]
-  );
-
-  const localityList = useMemo(
-    () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
-    [currentDistrictId]
-  );
-
-  const wardList = useMemo(
-    () =>
-      localityList.find((d) => d.id === currentLocalGovernmentId)?.wards ?? [],
-    [currentLocalGovernmentId]
-  );
-
-  // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch(`temporaryAddress.provinceId`);
-  const currentTemptDistrictId = watch('temporaryAddress.districtId');
-  const currentTempLocalGovernmentId = watch(
-    'temporaryAddress.localGovernmentId'
-  );
-
-  const districtTempList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentTempProvinceId)
-        ?.districts ?? [],
-    [currentTempProvinceId]
-  );
-
-  const localityTempList = useMemo(
-    () =>
-      districtTempList.find((d) => d.id === currentTemptDistrictId)
-        ?.municipalities ?? [],
-    [currentTemptDistrictId]
-  );
-
-  const wardTempList = useMemo(
-    () =>
-      localityTempList.find((d) => d.id === currentTempLocalGovernmentId)
-        ?.wards ?? [],
-    [currentTempLocalGovernmentId]
-  );
-
   return (
     <FormSection id="kymCoopUnionAccDetailsofdirectorsaffiliatedwithotherFirms">
-      {/* <GroupContainer> */}
       <GridItem colSpan={3}>
         <CRDirectorsSelection
           crId={crId}
           setSection={setSection}
-          refetch={refetch}
           setCRId={setCRId}
         />
       </GridItem>
@@ -390,8 +243,6 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
       <GridItem colSpan={3}>
         {notAmongDirectors && (
           <Box display="flex" alignItems="center">
-            {/* <DynamicBoxGroupContainer> */}
-
             <DynamicBoxGroupContainer p="s20">
               <SectionContainer>
                 <FormProvider {...methods}>
@@ -411,14 +262,12 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                           name={`fullName`}
                           id="centralRepresentative.fullName"
                           label={t['kymCoopUnionDirFullName']}
-                          __placeholder={t['kymCoopUnionDirEnterFullName']}
                         />
                         <FormInput
                           type="text"
                           name={`designationEn`}
                           id="centralRepresentative.designationEn"
                           label={t['kymCoopUnionDirDesignation']}
-                          __placeholder={t['kymCoopUnionDirEnterDesignation']}
                         />
                       </InputGroupContainer>
 
@@ -426,67 +275,8 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                         {t['kymCoopUnionDirPermanentAddress']}
                       </Text>
                       <InputGroupContainer>
-                        <FormSelect
-                          name={`permanentAddress.provinceId`}
-                          id="centralRepresentative.permanentAddress.provinceId"
-                          label={t['kymCoopUnionDirState']}
-                          __placeholder={t['kymCoopUnionDirSelectState']}
-                          options={province}
-                        />
-                        <FormSelect
-                          name={`permanentAddress.districtId`}
-                          id="centralRepresentative.permanentAddress.districtId"
-                          label={t['kymCoopUnionDirDistrict']}
-                          __placeholder={t['kymCoopUnionDirSelectDistrict']}
-                          options={districtList.map((d) => ({
-                            label: d.name,
-                            value: d.id,
-                          }))}
-                        />
-                        <FormSelect
-                          name={`permanentAddress.localGovernmentId`}
-                          id="centralRepresentative.permanentAddress.localGovernmentId"
-                          label={t['kymCoopUnionDirVDCMunicipality']}
-                          __placeholder={
-                            t['kymCoopUnionDirSelectVDCMunicipality']
-                          }
-                          options={localityList.map((d) => ({
-                            label: d.name,
-                            value: d.id,
-                          }))}
-                        />
-                        <FormSelect
-                          name={`permanentAddress.wardNo`}
-                          id="centralRepresentative.permanentAddress.wardNo"
-                          label={t['kymCoopUnionDirWardNo']}
-                          __placeholder={t['kymCoopUnionDirEnterWardNo']}
-                          options={wardList.map((d) => ({
-                            label: d,
-                            value: d,
-                          }))}
-                        />
-                        <FormInput
-                          type="text"
-                          name={`permanentAddress.locality`}
-                          id="centralRepresentative.permanentAddress.locality"
-                          label={t['kymCoopUnionDirLocality']}
-                          __placeholder={t['kymCoopUnionDirEnterLocality']}
-                        />
-                        <FormInput
-                          type="text"
-                          name="permanentAddress.houseNo"
-                          id="centralRepresentative.permanentAddress.houseNo"
-                          label={t['kymIndHouseNo']}
-                          __placeholder={t['kymIndEnterHouseNo']}
-                        />
+                        <FormAddress name="permanentAddress" />
                       </InputGroupContainer>
-
-                      <Box>
-                        <FormMap
-                          name={`permanentAddress.coordinates`}
-                          id="centralRepresentative.permanentAddress.coordinates"
-                        />
-                      </Box>
 
                       <Box
                         id="Temporary Address"
@@ -506,74 +296,9 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                         />
 
                         {!isPermanentAndTemporaryAddressSame && (
-                          <>
-                            <InputGroupContainer>
-                              <FormSelect
-                                name={`temporaryAddress.provinceId`}
-                                id="centralRepresentative.temporaryAddress.provinceId"
-                                label={t['kymCoopUnionDirState']}
-                                __placeholder={t['kymCoopUnionDirSelectState']}
-                                options={province}
-                              />
-                              <FormSelect
-                                name={`temporaryAddress.districtId`}
-                                id="centralRepresentative.temporaryAddress.districtId"
-                                label={t['kymCoopUnionDirDistrict']}
-                                __placeholder={
-                                  t['kymCoopUnionDirSelectDistrict']
-                                }
-                                options={districtTempList.map((d) => ({
-                                  label: d.name,
-                                  value: d.id,
-                                }))}
-                              />
-                              <FormSelect
-                                name={`temporaryAddress.localGovernmentId`}
-                                id="centralRepresentative.temporaryAddress.localGovernmentId"
-                                label={t['kymCoopUnionDirVDCMunicipality']}
-                                __placeholder={
-                                  t['kymCoopUnionDirSelectVDCMunicipality']
-                                }
-                                options={localityTempList.map((d) => ({
-                                  label: d.name,
-                                  value: d.id,
-                                }))}
-                              />
-                              <FormSelect
-                                name={`temporaryAddress.wardNo`}
-                                id="centralRepresentative.temporaryAddress.wardNo"
-                                label={t['kymCoopUnionDirWardNo']}
-                                __placeholder={t['kymCoopUnionDirEnterWardNo']}
-                                options={wardTempList.map((d) => ({
-                                  label: d,
-                                  value: d,
-                                }))}
-                              />
-                              <FormInput
-                                type="text"
-                                name={`temporaryAddress.locality`}
-                                id="centralRepresentative.temporaryAddress.locality"
-                                label={t['kymCoopUnionDirLocality']}
-                                __placeholder={
-                                  t['kymCoopUnionDirEnterLocality']
-                                }
-                              />
-                              <FormInput
-                                type="text"
-                                name="temporaryAddress.houseNo"
-                                id="centralRepresentative.temporaryAddress.houseNo"
-                                label={t['kymIndHouseNo']}
-                                __placeholder={t['kymIndEnterHouseNo']}
-                              />
-                            </InputGroupContainer>
-
-                            <Box>
-                              <FormMap
-                                name={`temporaryAddress.coordinates`}
-                                id="centralRepresentative.temporaryAddress.coordinates"
-                              />
-                            </Box>
-                          </>
+                          <InputGroupContainer>
+                            <FormAddress name="temporaryAddress" />
+                          </InputGroupContainer>
                         )}
                       </Box>
                       <InputGroupContainer>
@@ -582,30 +307,24 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                           name={`dateOfMembership`}
                           id="centralRepresentative.dateOfMembership"
                           label={t['kymCoopUnionDirDateofMembership']}
-                          __placeholder="DD-MM-YYYY"
                         />
                         <FormInput
                           type="text"
                           name={`highestQualification`}
                           id="centralRepresentative.highestQualification"
                           label={t['kymCoopUnionDirHighestQualification']}
-                          __placeholder={
-                            t['kymCoopUnionDirEnterHigestQualification']
-                          }
                         />
                         <FormInput
                           type="number"
                           name={`mobileNumber`}
                           id="centralRepresentative.mobileNumber"
                           label={t['kymCoopUnionDirMobileNo']}
-                          __placeholder={t['kymCoopUnionDirEnterMobileNo']}
                         />
                         <FormInput
                           type="text"
                           name={`email`}
                           id="centralRepresentative.email"
                           label={t['kymCoopUnionDirEmail']}
-                          __placeholder={t['kymCoopUnionDirEnterEmail']}
                         />
                         <FormInput
                           type="string"
@@ -616,7 +335,6 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                               'kymCoopUnionDirCitizenshipPassportDrivingLicenseNo'
                             ]
                           }
-                          __placeholder={t['keyCoopUnionDirEnterNo']}
                         />
 
                         <FormInput
@@ -624,32 +342,9 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                           name={`panNo`}
                           id="centralRepresentative.panNo"
                           label={t['kymCoopUnionPANNo']}
-                          __placeholder={t['kymCoopUnionPANNo__placeholder']}
                         />
                       </InputGroupContainer>
-                      {/* <Text fontSize="r1" fontWeight="SemiBold">
-                {t['kymCoopUnionDirTrainingRelatedtoCoop']}
-              </Text> */}
-                      {/* <InputGroupContainer>
-                <FormInput
-                  type="text"
-                  name={`subjectOfTraining`}
-                  label={t['kymCoopUnionDirSubjectOfTraining']}
-                  __placeholder={t['kymCoopUnionDirEnterSubjectOfTraining']}
-                />
-                <FormInput
-                  type="date"
-                  name={`dateOfTraining`}
-                  label={t['kymCoopUnionDirDateOfTraining']}
-                  __placeholder={t['kymCoopUnionDirEnterDateOfTraining']}
-                />
-                <FormInput
-                  type="number"
-                  name={`trainingOrganization`}
-                  label={t['kymCoopUnionDirTrainingOrganization']}
-                  __placeholder={t['kymCoopUnionDirEnterTrainingOrganization']}
-                />
-              </InputGroupContainer> */}
+
                       <CentralRepresentativeTraining />
                     </SectionContainer>
                   </form>
@@ -711,20 +406,11 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                     </Box>
                   </Box>
                 </Grid>
-                {/* <InputGroupContainer>
-                <Box w="124px">
-                  <FormFileInput
-                    name={`signature`}
-                    label={t['kymCoopUnionDirSpecimenSignature']}
-                  />
-                </Box>
-              </InputGroupContainer> */}
               </SectionContainer>
             </DynamicBoxGroupContainer>
           </Box>
         )}
       </GridItem>
-      {/* </GroupContainer> */}
     </FormSection>
   );
 };

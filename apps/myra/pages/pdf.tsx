@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react';
 import { BsPrinter } from 'react-icons/bs';
 import { FiEdit } from 'react-icons/fi';
 import { useRouter } from 'next/router';
-import { Spinner } from '@chakra-ui/react';
 
 import { useGetMemberPdfQuery } from '@coop/cbs/data-access';
 import {
@@ -11,6 +10,7 @@ import {
   Container,
   FormFooter,
   Icon,
+  Loader,
   MainLayout,
   PDFViewer,
 } from '@coop/shared/ui';
@@ -38,7 +38,7 @@ export const Pdf = () => {
         minH="calc(100vh - 170px)"
       >
         {isLoading ? (
-          <Spinner />
+          <Loader />
         ) : (
           <PDFViewer
             file={data?.members?.memberPDF?.replace(/http/g, 'https') ?? 'pdf'}

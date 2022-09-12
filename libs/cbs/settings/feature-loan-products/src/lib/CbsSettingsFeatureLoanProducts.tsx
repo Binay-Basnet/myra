@@ -11,7 +11,7 @@ import { useTranslation } from '@coop/shared/utils';
 
 import { AcceptedCollateral } from '../components';
 
-export function CbsSettingsFeatureLoanProducts() {
+export const CbsSettingsFeatureLoanProducts = () => {
   const { t } = useTranslation();
   const methods = useForm();
   const { watch, reset } = methods;
@@ -39,32 +39,23 @@ export function CbsSettingsFeatureLoanProducts() {
   };
 
   return (
-    <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
+    <Box pb="s20" width="full" display="flex" flexDirection="column">
       <FormProvider {...methods}>
         <form>
           <Box display="flex" flexDirection="column" rowGap="s32" padding="s12">
-            <Box display={'flex'} flexDirection="column" gap="s16">
+            <Box display="flex" flexDirection="column" gap="s16">
               <Text fontSize="r1" fontWeight="500">
                 {t['settingsLoanRepaymentScheme']}{' '}
               </Text>
             </Box>
             <Box display="flex" flexDir="column" gap={2}>
-              <FormCheckbox
-                name="emi"
-                key={JSON.stringify(loanGeneralData?.emi)}
-              >
+              <FormCheckbox name="emi" key={JSON.stringify(loanGeneralData?.emi)}>
                 <Text fontSize="s3">{t['settingsLoanInsuranceEmi']}</Text>
               </FormCheckbox>
-              <FormCheckbox
-                name="epi"
-                key={JSON.stringify(loanGeneralData?.epi)}
-              >
+              <FormCheckbox name="epi" key={JSON.stringify(loanGeneralData?.epi)}>
                 <Text fontSize="s3">{t['settingsLoanInsuranceEpi']}</Text>
               </FormCheckbox>
-              <FormCheckbox
-                name="flat"
-                key={JSON.stringify(loanGeneralData?.flat)}
-              >
+              <FormCheckbox name="flat" key={JSON.stringify(loanGeneralData?.flat)}>
                 <Text fontSize="s3">{t['settingsLoanInsuranceFlat']}</Text>
               </FormCheckbox>
             </Box>
@@ -76,6 +67,4 @@ export function CbsSettingsFeatureLoanProducts() {
       </FormProvider>
     </Box>
   );
-}
-
-export default CbsSettingsFeatureLoanProducts;
+};

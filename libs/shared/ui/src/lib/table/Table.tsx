@@ -7,7 +7,6 @@ import {
   Flex,
   Icon,
   Popover,
-  Spinner,
   Table as ChakraTable,
   TableContainer,
   Tbody,
@@ -19,7 +18,7 @@ import {
   Tr,
 } from '@chakra-ui/react';
 
-import { Pagination, TableSearch } from '@coop/shared/ui';
+import { Loader, Pagination, TableSearch } from '@coop/shared/ui';
 
 import ListFilterPopover from './components/ListFilterPopover';
 import { AmountFilterPopover } from './components/ListFilterPopover/ListFilterPopver';
@@ -32,7 +31,7 @@ import { PopoverContent, PopoverTrigger } from '../popover/Popover';
  *  @description Add a sortType function to override the default function in sorting.
  *  @see React table useSortBy docs for more options.
  */
-export function Table<T extends Record<string, unknown>>({
+export const Table = <T extends Record<string, unknown>>({
   data,
   columns,
   hasRowSelection = true,
@@ -44,7 +43,7 @@ export function Table<T extends Record<string, unknown>>({
   pagination,
   searchPlaceholder,
   ...props
-}: TableProps<T>) {
+}: TableProps<T>) => {
   const [tableSize, setTableSize] = useState(size);
 
   const tableInstance = useTable({
@@ -96,13 +95,7 @@ export function Table<T extends Record<string, unknown>>({
           justifyContent="center"
           pt="100px"
         >
-          <Spinner
-            thickness="4px"
-            speed="0.65s"
-            emptyColor="gray.200"
-            color="primary.500"
-            size="xl"
-          />
+          <Loader />
         </Box>
       )}
 
