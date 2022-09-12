@@ -1,9 +1,6 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "**/*",
-    "**/graphql.ts"
-  ],
+  "ignorePatterns": ["**/*", "**/graphql.ts"],
   "plugins": [
     "unused-imports",
     "@nrwl/nx",
@@ -11,11 +8,7 @@
     "simple-import-sort",
     "prettier"
   ],
-  "extends": [
-    "eslint:recommended",
-    "google",
-    "prettier"
-  ],
+  "extends": ["eslint:recommended", "google", "prettier"],
   "rules": {
     "require-jsdoc": "off",
     "valid-jsdoc": "off",
@@ -40,14 +33,8 @@
       {
         "groups": [
           // Packages 'react' related packages come first.
-          [
-            "^react",
-            "^next",
-            "^@?\\w"
-          ],
-          [
-            "^@coop"
-          ],
+          ["^react", "^next", "^@?\\w"],
+          ["^@coop"],
           [
             "^\\./?$",
             "^\\.(?!/?$)",
@@ -65,12 +52,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "*.ts",
-        "*.tsx",
-        "*.js",
-        "*.jsx"
-      ],
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
         "@nrwl/nx/enforce-module-boundaries": [
           "error",
@@ -81,9 +63,7 @@
             "depConstraints": [
               {
                 "sourceTag": "*",
-                "onlyDependOnLibsWithTags": [
-                  "*"
-                ]
+                "onlyDependOnLibsWithTags": ["*"]
               }
             ]
           }
@@ -91,23 +71,13 @@
       }
     },
     {
-      "files": [
-        "*.ts",
-        "*.tsx"
-      ],
-      "extends": [
-        "plugin:@nrwl/nx/typescript"
-      ],
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nrwl/nx/typescript"],
       "rules": {}
     },
     {
-      "files": [
-        "*.js",
-        "*.jsx"
-      ],
-      "extends": [
-        "plugin:@nrwl/nx/javascript"
-      ],
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nrwl/nx/javascript"],
       "rules": {}
     }
   ]
