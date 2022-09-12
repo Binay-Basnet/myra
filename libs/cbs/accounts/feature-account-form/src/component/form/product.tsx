@@ -83,8 +83,7 @@ export const Product = () => {
     }
   }, [memberId]);
 
-  const productData =
-    poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
+  const productData = poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
 
   const genderOptions = genderFields?.form?.options?.predefined?.data;
   const institutionOptions = institutionFields?.form?.options?.predefined?.data;
@@ -96,52 +95,36 @@ export const Product = () => {
   const ethnicityOptions = ethnicityFields?.form?.options?.predefined?.data;
 
   const tempGender = genderOptions?.map(
-    (item) =>
-      productData?.genderId?.includes(String(item?.id)) && item?.name?.local
+    (item) => productData?.genderId?.includes(String(item?.id)) && item?.name?.local
   );
 
   const tempIns = institutionOptions?.map(
     (item) =>
-      productData?.natureOfBusinessInstitution?.includes(String(item?.id)) &&
-      item?.name?.local
+      productData?.natureOfBusinessInstitution?.includes(String(item?.id)) && item?.name?.local
   );
   const tempMarriage = maritialOptions?.map(
-    (item) =>
-      productData?.maritalStatusId?.includes(String(item?.id)) &&
-      item?.name?.local
+    (item) => productData?.maritalStatusId?.includes(String(item?.id)) && item?.name?.local
   );
   const tempOccupationOptions = occupationalOptions?.map(
-    (item) =>
-      productData?.occupation?.includes(String(item?.id)) && item?.name?.local
+    (item) => productData?.occupation?.includes(String(item?.id)) && item?.name?.local
   );
   const tempCoopUnionOptions = coopUnionOptions?.map(
-    (item) =>
-      productData?.natureOFBusinessCoop?.includes(String(item?.id)) &&
-      item?.name?.local
+    (item) => productData?.natureOFBusinessCoop?.includes(String(item?.id)) && item?.name?.local
   );
   const tempCoopOptions = coopTypeOptions?.map(
-    (item) =>
-      productData?.cooperativeType?.includes(String(item?.id)) &&
-      item?.name?.local
+    (item) => productData?.cooperativeType?.includes(String(item?.id)) && item?.name?.local
   );
   const tempEducationOptions = educationOptions?.map(
-    (item) =>
-      productData?.educationQualification?.includes(String(item?.id)) &&
-      item?.name?.local
+    (item) => productData?.educationQualification?.includes(String(item?.id)) && item?.name?.local
   );
   const tempEthnicityOptions = ethnicityOptions?.map(
-    (item) =>
-      productData?.educationQualification?.includes(String(item?.id)) &&
-      item?.name?.local
+    (item) => productData?.educationQualification?.includes(String(item?.id)) && item?.name?.local
   );
 
   const productOptions = [
     ...(data?.settings?.general?.depositProduct?.getProductList?.allowed?.reduce(
       (prevVal, curVal) => {
-        return [
-          ...prevVal,
-          { label: curVal?.productName as string, value: curVal?.id as string },
-        ];
+        return [...prevVal, { label: curVal?.productName as string, value: curVal?.id as string }];
       },
       [] as OptionType[]
     ) ?? []),
@@ -161,12 +144,7 @@ export const Product = () => {
   ];
 
   return (
-    <GroupContainer
-      scrollMarginTop={'200px'}
-      display="flex"
-      flexDirection={'column'}
-      gap="s16"
-    >
+    <GroupContainer scrollMarginTop={'200px'} display="flex" flexDirection={'column'} gap="s16">
       <Box
         display="flex"
         flexDirection="column"
@@ -205,13 +183,13 @@ export const Product = () => {
               <Box display="flex" flexDirection="column" gap="s4">
                 <Text fontWeight="Medium" color="primary.400" fontSize="s2">
                   {
-                    poductDetails?.data?.settings?.general?.depositProduct
-                      ?.formState?.data?.productCode?.prefix
+                    poductDetails?.data?.settings?.general?.depositProduct?.formState?.data
+                      ?.productCode?.prefix
                   }
                   -
                   {
-                    poductDetails?.data?.settings?.general?.depositProduct
-                      ?.formState?.data?.productCode?.initialNo
+                    poductDetails?.data?.settings?.general?.depositProduct?.formState?.data
+                      ?.productCode?.initialNo
                   }
                 </Text>
                 <Text fontWeight="Medium" color="primary.500" fontSize="r2">
@@ -230,15 +208,10 @@ export const Product = () => {
             </Box>
 
             <Grid templateColumns="repeat(3,1fr)" gap="s32">
-              {productData?.nature !==
-                NatureOfDepositProduct?.VoluntaryOrOptional && (
+              {productData?.nature !== NatureOfDepositProduct?.VoluntaryOrOptional && (
                 <GridItem display="flex" flexDirection="column">
                   <Box display="flex" flexDirection="column" gap="s4">
-                    <TextFields
-                      color="primary.800"
-                      fontSize="s3"
-                      fontWeight="Medium"
-                    >
+                    <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
                       {/* {t['accInterestRate']} */}
                       Tenure
                     </TextFields>
@@ -250,8 +223,7 @@ export const Product = () => {
                             fontSize="s2"
                             fontWeight="Regular"
                           >
-                            Minimum: {productData?.minTenureUnitNumber}{' '}
-                            {productData?.minTenureUnit}
+                            Minimum: {productData?.minTenureUnitNumber} {productData?.minTenureUnit}
                           </TextFields>
                         </li>
                         <li>
@@ -272,11 +244,7 @@ export const Product = () => {
 
               <GridItem display="flex" flexDirection="column">
                 <Box display="flex" flexDirection="column" gap="s4">
-                  <TextFields
-                    color="primary.800"
-                    fontSize="s3"
-                    fontWeight="Medium"
-                  >
+                  <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
                     {/* {t['accInterestRate']} */}
                     Deposit Amount Limit
                   </TextFields>
@@ -289,8 +257,7 @@ export const Product = () => {
                           fontWeight="Regular"
                         >
                           Minimum:
-                          {productData?.nature !==
-                          NatureOfDepositProduct?.VoluntaryOrOptional
+                          {productData?.nature !== NatureOfDepositProduct?.VoluntaryOrOptional
                             ? productData?.depositAmount?.minAmount
                             : productData?.balanceLimit?.minAmount}
                         </TextFields>
@@ -303,8 +270,7 @@ export const Product = () => {
                           fontWeight="Regular"
                         >
                           Maximum:{' '}
-                          {productData?.nature !==
-                          NatureOfDepositProduct?.VoluntaryOrOptional
+                          {productData?.nature !== NatureOfDepositProduct?.VoluntaryOrOptional
                             ? productData?.depositAmount?.minAmount
                             : productData?.balanceLimit?.maxAmount}
                         </TextFields>
@@ -316,11 +282,7 @@ export const Product = () => {
 
               <GridItem display="flex" flexDirection="column">
                 <Box display="flex" flexDirection="column" gap="s4">
-                  <TextFields
-                    color="primary.800"
-                    fontSize="s3"
-                    fontWeight="Medium"
-                  >
+                  <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
                     {/* {t['accInterestRate']} */}
                     Transaction Limit
                   </TextFields>
@@ -350,30 +312,18 @@ export const Product = () => {
                 </Box>
               </GridItem>
 
-              {(productData?.nature ===
-                NatureOfDepositProduct?.RecurringSaving ||
-                productData?.nature ===
-                  NatureOfDepositProduct?.TermSavingOrFd ||
-                productData?.nature ===
-                  NatureOfDepositProduct?.VoluntaryOrOptional) &&
+              {(productData?.nature === NatureOfDepositProduct?.RecurringSaving ||
+                productData?.nature === NatureOfDepositProduct?.TermSavingOrFd ||
+                productData?.nature === NatureOfDepositProduct?.VoluntaryOrOptional) &&
                 productData?.criteria && (
                   <>
                     <GridItem display="flex" flexDirection="column">
-                      <TextFields
-                        color="primary.800"
-                        fontSize="s3"
-                        fontWeight="Medium"
-                      >
+                      <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
                         {/* {t['accInterestRate']} */}
                         Criteria
                       </TextFields>
                       <Box display="flex" flexDirection="column" gap="s4">
-                        <Box
-                          display="flex"
-                          flexDirection="column"
-                          gap="s16"
-                          pl="s24"
-                        >
+                        <Box display="flex" flexDirection="column" gap="s16" pl="s24">
                           <ul>
                             <li>
                               <TextFields
@@ -384,8 +334,7 @@ export const Product = () => {
                                 Age:{' '}
                                 <b>
                                   {' '}
-                                  Mininum: {productData?.minAge} : Maximum{' '}
-                                  {productData?.maxAge}
+                                  Mininum: {productData?.minAge} : Maximum {productData?.maxAge}
                                 </b>
                               </TextFields>
                             </li>
@@ -402,11 +351,7 @@ export const Product = () => {
                                   Gender:{' '}
                                   {tempGender?.map((item) => {
                                     return (
-                                      <Text
-                                        fontSize={'s2'}
-                                        fontWeight="bold"
-                                        pl="s4"
-                                      >
+                                      <Text fontSize={'s2'} fontWeight="bold" pl="s4">
                                         {item}
                                       </Text>
                                     );
@@ -428,11 +373,7 @@ export const Product = () => {
                                   gap="s4"
                                 >
                                   Foreign Employment:{' '}
-                                  <b>
-                                    {productData?.foreignEmployment
-                                      ? 'true'
-                                      : 'false'}
-                                  </b>
+                                  <b>{productData?.foreignEmployment ? 'true' : 'false'}</b>
                                 </TextFields>
                               </li>
                             )}
@@ -449,11 +390,7 @@ export const Product = () => {
                                   Business (Institutions):{' '}
                                   {tempIns?.map((item) => {
                                     return (
-                                      <Text
-                                        fontSize={'s2'}
-                                        fontWeight="bold"
-                                        p="s4"
-                                      >
+                                      <Text fontSize={'s2'} fontWeight="bold" p="s4">
                                         {item}
                                       </Text>
                                     );
@@ -467,20 +404,11 @@ export const Product = () => {
                     </GridItem>
                     {productData?.maritalStatusId ||
                       productData?.occupation ||
-                      productData?.typeOfMember?.includes(
-                        KymMemberTypesEnum?.CooperativeUnion
-                      ) ||
-                      productData?.typeOfMember?.includes(
-                        KymMemberTypesEnum?.Cooperative
-                      )}
+                      productData?.typeOfMember?.includes(KymMemberTypesEnum?.CooperativeUnion) ||
+                      productData?.typeOfMember?.includes(KymMemberTypesEnum?.Cooperative)}
                     <GridItem display="flex" flexDirection="column">
                       <Box display="flex" flexDirection="column" gap="s4">
-                        <Box
-                          display="flex"
-                          flexDirection="column"
-                          gap="s16"
-                          pl="s24"
-                        >
+                        <Box display="flex" flexDirection="column" gap="s16" pl="s24">
                           <ul>
                             {productData?.maritalStatusId && (
                               <li>
@@ -496,11 +424,7 @@ export const Product = () => {
                                   Marital Status:
                                   {tempMarriage?.map((item) => {
                                     return (
-                                      <Text
-                                        fontSize={'s2'}
-                                        fontWeight="bold"
-                                        pl="s4"
-                                      >
+                                      <Text fontSize={'s2'} fontWeight="bold" pl="s4">
                                         {item}
                                       </Text>
                                     );
@@ -521,11 +445,7 @@ export const Product = () => {
                                   Occupation Detail
                                   {tempOccupationOptions?.map((item) => {
                                     return (
-                                      <Text
-                                        fontSize={'s2'}
-                                        fontWeight="bold"
-                                        p="s4"
-                                      >
+                                      <Text fontSize={'s2'} fontWeight="bold" p="s4">
                                         {item}
                                       </Text>
                                     );
@@ -548,11 +468,7 @@ export const Product = () => {
                                   Nature of Business ( COOP Union):
                                   {tempCoopUnionOptions?.map((item) => {
                                     return (
-                                      <Text
-                                        fontSize={'s2'}
-                                        fontWeight="bold"
-                                        p="s4"
-                                      >
+                                      <Text fontSize={'s2'} fontWeight="bold" p="s4">
                                         {item}
                                       </Text>
                                     );
@@ -575,11 +491,7 @@ export const Product = () => {
                                   Cooperative Type:{' '}
                                   {tempCoopOptions?.map((item) => {
                                     return (
-                                      <Text
-                                        fontSize={'s2'}
-                                        fontWeight="bold"
-                                        p="s4"
-                                      >
+                                      <Text fontSize={'s2'} fontWeight="bold" p="s4">
                                         {item}
                                       </Text>
                                     );
@@ -593,12 +505,7 @@ export const Product = () => {
                     </GridItem>
                     <GridItem display="flex" flexDirection="column">
                       <Box display="flex" flexDirection="column" gap="s4">
-                        <Box
-                          display="flex"
-                          flexDirection="column"
-                          gap="s16"
-                          pl="s24"
-                        >
+                        <Box display="flex" flexDirection="column" gap="s16" pl="s24">
                           <ul>
                             <li>
                               <TextFields
@@ -609,11 +516,7 @@ export const Product = () => {
                                 Education Qualification:{' '}
                                 {tempEducationOptions?.map((item) => {
                                   return (
-                                    <Text
-                                      fontSize={'s2'}
-                                      fontWeight="bold"
-                                      p="s4"
-                                    >
+                                    <Text fontSize={'s2'} fontWeight="bold" p="s4">
                                       {item}
                                     </Text>
                                   );
@@ -630,11 +533,7 @@ export const Product = () => {
                                 Ethinicity:{' '}
                                 {tempEthnicityOptions?.map((item) => {
                                   return (
-                                    <Text
-                                      fontSize={'s2'}
-                                      fontWeight="bold"
-                                      p="s4"
-                                    >
+                                    <Text fontSize={'s2'} fontWeight="bold" p="s4">
                                       {item}
                                     </Text>
                                   );
@@ -649,11 +548,7 @@ export const Product = () => {
                 )}
 
               <GridItem display="flex" flexDirection="column">
-                <TextFields
-                  color="primary.800"
-                  fontSize="s3"
-                  fontWeight="Medium"
-                >
+                <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
                   {t['accRequiredDocument']}
                 </TextFields>
                 <Box pl="s24" display="grid">
@@ -670,8 +565,7 @@ export const Product = () => {
                               ? 'FingerPrint'
                               : item === IndividualRequiredDocument?.Form
                               ? 'Form'
-                              : item ===
-                                IndividualRequiredDocument?.NomineeDocument
+                              : item === IndividualRequiredDocument?.NomineeDocument
                               ? 'Nominee Document'
                               : item === IndividualRequiredDocument?.Photo
                               ? 'Photo'
@@ -684,16 +578,11 @@ export const Product = () => {
                 </Box>
               </GridItem>
 
-              {productData?.nature !==
-                NatureOfDepositProduct?.VoluntaryOrOptional && (
+              {productData?.nature !== NatureOfDepositProduct?.VoluntaryOrOptional && (
                 <>
                   {' '}
                   <GridItem display="flex" flexDirection="column">
-                    <TextFields
-                      color="primary.800"
-                      fontSize="s3"
-                      fontWeight="Medium"
-                    >
+                    <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
                       {t['accPenalty']}
                     </TextFields>
                     <Box pl="s24">
@@ -731,11 +620,7 @@ export const Product = () => {
                     </Box>
                   </GridItem>
                   <GridItem display="flex" flexDirection="column" gap="s4">
-                    <TextFields
-                      color="primary.800"
-                      fontSize="s3"
-                      fontWeight="Medium"
-                    >
+                    <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
                       {t['accRebate']}
                     </TextFields>
                     <Box pl="s24">
@@ -746,7 +631,7 @@ export const Product = () => {
                             fontSize="s2"
                             fontWeight="Regular"
                           >
-                            Rebate {productData?.rebateData?.percentage} %
+                            Rebate {productData?.rebateData?.rebateAmount} %
                           </TextFields>
                         </li>
                         {/*

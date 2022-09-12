@@ -9,8 +9,6 @@ const LoanProducts = () => {
   return <CbsSettingsFeatureLoanProducts />;
 };
 
-export default LoanProducts;
-
 LoanProducts.getLayout = function getLayout(page) {
   return (
     <SettingsLayout>
@@ -20,3 +18,5 @@ LoanProducts.getLayout = function getLayout(page) {
     </SettingsLayout>
   );
 };
+
+export default LoanProducts;
