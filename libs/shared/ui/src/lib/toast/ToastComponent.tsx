@@ -13,13 +13,7 @@ export interface ToastProps {
   actionTextHandler?: () => void;
 }
 
-export const Toast = ({
-  message,
-  type,
-  state,
-  actionTextHandler,
-  actionText,
-}: ToastProps) => (
+export const Toast = ({ message, type, state, actionTextHandler, actionText }: ToastProps) => (
   <Box
     width="360px"
     display="flex"
@@ -35,11 +29,7 @@ export const Toast = ({
       {state === 'loading' ? (
         <Spinner />
       ) : state === 'blank' ? null : (
-        <Icon
-          as={state ? TOAST_ICONS[state] : TOAST_ICONS[type]}
-          size="lg"
-          color="white"
-        />
+        <Icon as={state ? TOAST_ICONS[state] : TOAST_ICONS[type]} size="lg" color="white" />
       )}
       <Text fontSize="r2" color="white" fontWeight="400" noOfLines={1}>
         {message}

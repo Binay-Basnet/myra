@@ -58,6 +58,9 @@ const FormControl = <T,>({
 }: FormControlProps<T>) => {
   const foundValue = options?.find((option) => option.value === value);
 
+  const methods = useFormContext();
+  const { clearErrors } = methods;
+
   const filteredValue = rest.isMulti
     ? options?.filter(
         (option) =>
@@ -80,6 +83,9 @@ const FormControl = <T,>({
       inputId={name}
       {...rest}
       onChange={(newValue: Option | Option[]) => {
+        if (errors[name as string]?.type === 'required') {
+          clearErrors(name);
+        }
         if (Array.isArray(newValue)) {
           onChange(newValue);
         } else {

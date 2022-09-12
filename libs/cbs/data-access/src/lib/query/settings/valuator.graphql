@@ -1,0 +1,37 @@
+query getValuator($id: ID!) {
+  settings {
+    general {
+      valuator {
+        formState(id: $id) {
+          data {
+            valuatorName
+            valuatorType
+            valuatorId
+            academicQualification
+            valuationLisenceNo
+            renewalDate
+            contractDate
+            insurancePremium
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            location {
+              longitude
+              latitude
+            }
+            mobileNo
+            phoneNo
+            email
+            documents
+          }
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

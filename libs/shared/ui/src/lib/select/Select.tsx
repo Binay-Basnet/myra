@@ -5,7 +5,7 @@ import { GroupBase, Props, Select as ChakraSelect } from 'chakra-react-select';
 import { useTranslation } from '@coop/shared/utils';
 
 import { getComponents, Option } from './SelectComponents';
-import { chakraDefaultStyles } from './SelectStyles';
+import { getChakraDefaultStyles } from './SelectStyles';
 import TextFields from '../text-fields/TextFields';
 
 interface SelectOption {
@@ -29,7 +29,7 @@ export interface SelectProps
   __placeholder?: string;
 }
 
-export function Select({
+export const Select = ({
   // size,
   errorText,
   helperText,
@@ -41,7 +41,7 @@ export function Select({
   placeholder,
   name,
   ...rest
-}: SelectProps) {
+}: SelectProps) => {
   const { t } = useTranslation();
   const [sortedOptions, setSortedOptions] = useState(options ?? []);
 
@@ -91,10 +91,11 @@ export function Select({
         hideSelectedOptions={false}
         isOptionDisabled={(option) => !!option.disabled}
         isClearable={false}
-        chakraStyles={chakraDefaultStyles}
+        chakraStyles={getChakraDefaultStyles(!!errorText)}
         components={getComponents(hasRadioOption)}
         {...rest}
       />
+
       {errorText ? (
         <TextFields variant="formHelper" color="danger.500">
           {errorText}

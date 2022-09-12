@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import CbsSettingsFeatureLoan from './CbsSettingsFeatureLoan';
+import { SettingsLoanProduct } from './CbsSettingsLoanProduct';
 
 describe('CbsSettingsFeatureLoan', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<CbsSettingsFeatureLoan />);
+    const { baseElement } = render(<SettingsLoanProduct />);
     expect(baseElement).toBeTruthy();
   });
 });
