@@ -4,7 +4,7 @@ import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import { FormAddress } from '@coop/shared/form';
 import { getKymSectionCoOperativeUnion } from '@coop/shared/utils';
 
-import { useCooperativeUnionInstitution } from '../../../hooks';
+import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
 
 interface IOperatingOfficeAddressProps {
   setSection: (section?: { section: string; subSection: string }) => void;
@@ -14,8 +14,7 @@ export const OperatingOfficeAddress = ({
   setSection,
 }: IOperatingOfficeAddressProps) => {
   const methods = useForm<CoopUnionInstitutionInformationInput>();
-
-  useCooperativeUnionInstitution({ methods });
+  useCoopUnionInstitution({ methods });
 
   return (
     <FormProvider {...methods}>

@@ -4,11 +4,10 @@ import {
   SettingsLayout,
   SettingsLoanLayout,
 } from '@coop/cbs/settings/ui-layout';
+
 const LoanProducts = () => {
   return <CbsSettingsFeatureLoanProducts />;
 };
-
-export default LoanProducts;
 
 LoanProducts.getLayout = function getLayout(page) {
   return (
@@ -19,3 +18,5 @@ LoanProducts.getLayout = function getLayout(page) {
     </SettingsLayout>
   );
 };
+
+export default LoanProducts;

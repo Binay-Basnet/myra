@@ -20,14 +20,10 @@ import _, { uniqueId } from 'lodash';
 
 import { Grid, GridItem } from '@coop/shared/ui';
 
-import {
-  chakraDefaultStyles,
-  searchBarStyle,
-} from '../utils/ChakraSelectTheme';
+import { chakraDefaultStyles, searchBarStyle } from '../utils/ChakraSelectTheme';
 import { components } from '../utils/SelectComponents';
 
-export const isArrayEqual = <T,>(x: T[], y: T[]) =>
-  _(x).xorWith(y, _.isEqual).isEmpty();
+export const isArrayEqual = <T,>(x: T[], y: T[]) => _(x).xorWith(y, _.isEqual).isEmpty();
 
 interface RecordWithId {
   id?: number;
@@ -39,14 +35,7 @@ export type Column<T extends RecordWithId & Record<string, string | number>> = {
   accessor: keyof T;
   accessorFn?: (row: T) => string | number;
   hidden?: boolean;
-  fieldType?:
-    | 'text'
-    | 'number'
-    | 'percentage'
-    | 'textarea'
-    | 'search'
-    | 'date'
-    | 'select';
+  fieldType?: 'text' | 'number' | 'percentage' | 'textarea' | 'search' | 'date' | 'select';
   selectOptions?: { label: string; value: string }[];
   searchOptions?: { label: string; value: string }[];
 
@@ -60,9 +49,7 @@ export type Column<T extends RecordWithId & Record<string, string | number>> = {
   colSpan?: number;
 };
 
-export interface EditableTableProps<
-  T extends RecordWithId & Record<string, string | number>
-> {
+export interface EditableTableProps<T extends RecordWithId & Record<string, string | number>> {
   defaultData?: T[];
 
   columns: Column<T>[];
@@ -89,9 +76,7 @@ enum EditableTableActionKind {
   ACCESSOR_FN_EDIT = 'Accessor',
 }
 
-type EditableTableAction<
-  TData extends RecordWithId & Record<string, string | number>
-> =
+type EditableTableAction<TData extends RecordWithId & Record<string, string | number>> =
   | {
       type: EditableTableActionKind.ADD;
       payload: TData;
@@ -124,16 +109,15 @@ type EditableTableAction<
       };
     };
 
-interface EditableState<
-  T extends RecordWithId & Record<string, string | number>
-> {
+interface EditableState<T extends RecordWithId & Record<string, string | number>> {
   data: T[];
   columns: Column<T>[];
 }
 
-function editableReducer<
-  T extends RecordWithId & Record<string, string | number>
->(state: EditableState<T>, action: EditableTableAction<T>): EditableState<T> {
+function editableReducer<T extends RecordWithId & Record<string, string | number>>(
+  state: EditableState<T>,
+  action: EditableTableAction<T>
+): EditableState<T> {
   const { type, payload } = action;
 
   switch (type) {
@@ -206,9 +190,7 @@ function editableReducer<
   }
 }
 
-export const EditableTable = <
-  T extends RecordWithId & Record<string, string | number>
->({
+export const EditableTable = <T extends RecordWithId & Record<string, string | number>>({
   columns,
   defaultData = [],
   canDeleteRow = true,
@@ -217,12 +199,13 @@ export const EditableTable = <
   canAddRow = true,
   searchPlaceholder,
 }: EditableTableProps<T>) => {
-  const [state, dispatch] = useReducer<
-    Reducer<EditableState<T>, EditableTableAction<T>>
-  >(editableReducer, {
-    data: defaultData ?? [],
-    columns,
-  });
+  const [state, dispatch] = useReducer<Reducer<EditableState<T>, EditableTableAction<T>>>(
+    editableReducer,
+    {
+      data: defaultData ?? [],
+      columns,
+    }
+  );
 
   useDeepCompareEffect(() => {
     if (onChange) {
@@ -307,9 +290,7 @@ export const EditableTable = <
           ))}
         </Box>
 
-        {!canAddRow ? null : columns.some(
-            (column) => column.fieldType === 'search'
-          ) ? (
+        {!canAddRow ? null : columns.some((column) => column.fieldType === 'search') ? (
           <Box
             borderBottom="1px"
             borderX="1px"
@@ -319,9 +300,7 @@ export const EditableTable = <
             <Select
               components={components}
               placeholder={searchPlaceholder ?? 'Search for items'}
-              options={
-                columns.find((column) => column.searchOptions)?.searchOptions
-              }
+              options={columns.find((column) => column.searchOptions)?.searchOptions}
               chakraStyles={searchBarStyle}
               value=""
               onChange={(newValue) => {
@@ -378,17 +357,8 @@ export const EditableTable = <
       </Flex>
 
       {debug && (
-        <Box
-          bg="gray.700"
-          color="white"
-          fontSize="r1"
-          mt="s20"
-          p="s8"
-          borderRadius="br2"
-        >
-          <pre>
-            {JSON.stringify({ ...state, hook_form: defaultData }, null, 2)}
-          </pre>
+        <Box bg="gray.700" color="white" fontSize="r1" mt="s20" p="s8" borderRadius="br2">
+          <pre>{JSON.stringify({ ...state, hook_form: defaultData }, null, 2)}</pre>
         </Box>
       )}
     </>
@@ -397,9 +367,7 @@ export const EditableTable = <
 
 export default EditableTable;
 
-interface IEditableTableRowProps<
-  T extends RecordWithId & Record<string, string | number>
-> {
+interface IEditableTableRowProps<T extends RecordWithId & Record<string, string | number>> {
   columns: Column<T>[];
   data: T;
   canDeleteRow?: boolean;
@@ -408,9 +376,7 @@ interface IEditableTableRowProps<
   dispatch: React.Dispatch<EditableTableAction<T>>;
 }
 
-const EditableTableRow = <
-  T extends RecordWithId & Record<string, string | number>
->({
+const EditableTableRow = <T extends RecordWithId & Record<string, string | number>>({
   columns,
   data,
   index,
@@ -537,12 +503,7 @@ const EditableTableRow = <
             .map((column) => (
               <GridItem colSpan={column.colSpan ?? 1} key={column.id}>
                 <Flex flexDir="column" gap="s4">
-                  <Text
-                    fontSize="s3"
-                    fontWeight="medium"
-                    lineHeight="1.5"
-                    color="gray.700"
-                  >
+                  <Text fontSize="s3" fontWeight="medium" lineHeight="1.5" color="gray.700">
                     {column.header}
                   </Text>
 
@@ -601,17 +562,13 @@ const MemoEditableTableRow = React.memo(
     JSON.stringify(previousProps.columns) === JSON.stringify(nextProps.columns)
 ) as typeof EditableTableRow;
 
-interface EditableCellProps<
-  T extends RecordWithId & Record<string, string | number>
-> {
+interface EditableCellProps<T extends RecordWithId & Record<string, string | number>> {
   column: Column<T>;
   data: T;
   dispatch: React.Dispatch<EditableTableAction<T>>;
 }
 
-const EditableCell = <
-  T extends RecordWithId & Record<string, string | number>
->({
+const EditableCell = <T extends RecordWithId & Record<string, string | number>>({
   column,
   dispatch,
   data,
@@ -649,9 +606,7 @@ const EditableCell = <
     }
     value={
       column.fieldType === 'search'
-        ? column.searchOptions?.find(
-            (search) => search.value === data[column.accessor]
-          )?.label
+        ? column.searchOptions?.find((search) => search.value === data[column.accessor])?.label
         : column.accessorFn
         ? column.accessorFn(data)
           ? String(column.accessorFn(data))
@@ -667,11 +622,7 @@ const EditableCell = <
       <EditablePreview
         width="100%"
         mr={column.fieldType === 'percentage' ? 's24' : '0'}
-        cursor={
-          column.fieldType === 'search' || !!column?.accessorFn
-            ? 'not-allowed'
-            : 'text'
-        }
+        cursor={column.fieldType === 'search' || !!column?.accessorFn ? 'not-allowed' : 'text'}
         height="100%"
         px="s8"
         display="flex"
@@ -699,9 +650,7 @@ const EditableCell = <
           />
         ) : (
           <Select
-            value={column.selectOptions?.find(
-              (option) => option.value === data[column.accessor]
-            )}
+            value={column.selectOptions?.find((option) => option.value === data[column.accessor])}
             onChange={(newValue: { label: string; value: string }) => {
               dispatch({
                 type: EditableTableActionKind.EDIT,

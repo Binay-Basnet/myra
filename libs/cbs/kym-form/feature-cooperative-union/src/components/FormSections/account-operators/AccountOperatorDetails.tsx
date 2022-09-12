@@ -2,26 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
-import {
-  QueryObserverResult,
-  RefetchOptions,
-  RefetchQueryFilters,
-} from 'react-query';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
-import debounce from 'lodash/debounce';
-import isEqual from 'lodash/isEqual';
-import omit from 'lodash/omit';
 
 import {
-  CooperativeUnionPersonnelSection,
-  CoopUnionPersonnelDetails,
   CoopUnionPersonnelInput,
-  GetAccountOperatorDetailsListQuery,
   useDeletePersonnelDetailsMutation,
   useGetAccountOperatorDetailsListQuery,
   useGetNewIdMutation,
-  useSetPersonnelDetailsMutation,
 } from '@coop/cbs/data-access';
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import {
@@ -43,23 +31,17 @@ import {
 } from '@coop/shared/ui';
 import {
   getKymSectionCoOperativeUnion,
-  isDeepEmpty,
   useTranslation,
 } from '@coop/shared/utils';
 
 import { AccountOperatorTraining } from './accountOperatorTraining';
+import { useCoopUnionAccountOperator } from '../../../hooks/useCoopUnionAccountOperator';
 
 interface IAddDirectorProps {
   setSection: (section?: { section: string; subSection: string }) => void;
   removeAccount: (accountOperatorId: string) => void;
   index: number;
   accountOperatorId: string;
-  accountOperatorDetail: CoopUnionPersonnelDetails | null | undefined;
-  refetch: <TPageData>(
-    options?: RefetchOptions & RefetchQueryFilters<TPageData>
-  ) => Promise<
-    QueryObserverResult<GetAccountOperatorDetailsListQuery, unknown>
-  >;
 }
 
 const AddDirector = ({
@@ -67,73 +49,19 @@ const AddDirector = ({
   setSection,
   index,
   accountOperatorId,
-  accountOperatorDetail,
-  refetch,
 }: IAddDirectorProps) => {
   const { t } = useTranslation();
 
-  const router = useRouter();
-
-  const id = String(router?.query?.['id']);
-
   const methods = useForm<CoopUnionPersonnelInput>();
 
-  const { reset, watch } = methods;
+  const { watch } = methods;
+  useCoopUnionAccountOperator({ methods, accountOpId: accountOperatorId });
 
   const [isOpen, setIsOpen] = React.useState(true);
 
   const isPermanentAndTemporaryAddressSame = watch(
     `isPermanentAndTemporaryAddressSame`
   );
-
-  const { mutateAsync } = useSetPersonnelDetailsMutation();
-
-  useEffect(() => {
-    if (accountOperatorDetail) {
-      if (accountOperatorDetail) {
-        reset({
-          ...omit(accountOperatorDetail, ['id', 'cooperativeUnionId']),
-          permanentAddress: {
-            ...accountOperatorDetail?.permanentAddress,
-            locality: accountOperatorDetail?.permanentAddress?.locality?.local,
-          },
-          temporaryAddress: {
-            ...accountOperatorDetail?.temporaryAddress,
-            locality: accountOperatorDetail?.temporaryAddress?.locality?.local,
-          },
-        });
-      }
-    }
-  }, [accountOperatorDetail]);
-
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        const operatorData = {
-          ...omit(accountOperatorDetail, ['id', 'cooperativeUnionId']),
-          permanentAddress: {
-            ...accountOperatorDetail?.permanentAddress,
-            locality: accountOperatorDetail?.permanentAddress?.locality?.local,
-          },
-          temporaryAddress: {
-            ...accountOperatorDetail?.temporaryAddress,
-            locality: accountOperatorDetail?.temporaryAddress?.locality?.local,
-          },
-        };
-
-        if (id && data && !isDeepEmpty(data) && !isEqual(operatorData, data)) {
-          mutateAsync({
-            id,
-            personnelId: accountOperatorId,
-            sectionType: CooperativeUnionPersonnelSection.AccountOperators,
-            data,
-          }).then(() => refetch());
-        }
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
 
   return (
     <>
@@ -487,10 +415,6 @@ export const AccountOperatorInfo = ({
                   setSection={setSection}
                   accountOperatorId={accountOperatorId}
                   removeAccount={() => removeAccountOperator(accountOperatorId)}
-                  accountOperatorDetail={accountOperatorEditValues?.members?.cooperativeUnion?.formState?.formData?.accountOperatorsDetails?.data?.personnelDetails?.find(
-                    (accOperator) => accOperator?.id === accountOperatorId
-                  )}
-                  refetch={refetch}
                 />
               </Box>
             );

@@ -10,7 +10,7 @@ import {
   useTranslation,
 } from '@coop/shared/utils';
 
-import { useCooperativeUnionInstitution } from '../../../hooks';
+import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
 
 interface IDocumentDeclarationInstitutionCOOPUnionProps {
   setSection: (section?: { section: string; subSection: string }) => void;
@@ -27,7 +27,7 @@ export const DocumentDeclarationInstitutionCOOPUnion = ({
 
   const methods = useForm<CoopUnionInstitutionInformationInput>();
 
-  useCooperativeUnionInstitution({ methods });
+  useCoopUnionInstitution({ methods });
 
   return (
     <FormSection

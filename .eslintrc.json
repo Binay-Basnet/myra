@@ -1,13 +1,7 @@
 {
   "root": true,
   "ignorePatterns": ["**/*", "**/graphql.ts"],
-  "plugins": [
-    "unused-imports",
-    "@nrwl/nx",
-    "@typescript-eslint",
-    "simple-import-sort",
-    "prettier"
-  ],
+  "plugins": ["unused-imports", "@nrwl/nx", "@typescript-eslint", "simple-import-sort", "prettier"],
   "extends": ["eslint:recommended", "google", "prettier"],
   "rules": {
     "require-jsdoc": "off",

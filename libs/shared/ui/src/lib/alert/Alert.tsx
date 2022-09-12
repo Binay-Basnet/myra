@@ -20,7 +20,7 @@ export interface AlertProps {
   status: 'error' | 'warning' | 'success' | 'info';
   title?: string;
   subtitle?: string;
-
+  hideCloseIcon?: boolean;
   showUndo?: boolean;
   undoText?: string;
   undoHandler?: () => void;
@@ -44,7 +44,7 @@ const COLOR_DICT = {
   info: 'info.900',
 };
 
-export function Alert({
+export const Alert = ({
   status,
   title,
   subtitle,
@@ -55,7 +55,8 @@ export function Alert({
   children,
   bottomButtonlabel,
   bottomButtonHandler,
-}: AlertProps) {
+  hideCloseIcon,
+}: AlertProps) => {
   const [isAlertShown, setIsAlertShown] = useState(showAlert);
 
   return (
@@ -67,29 +68,35 @@ export function Alert({
           justifyContent="space-between"
           width="100%"
         >
-          <Box display="flex">
-            <AlertIcon as={ICON_DICT[status]} />
+          <Box display={'flex'} flexDirection="column" gap="s8">
+            <Box display="flex">
+              <AlertIcon as={ICON_DICT[status]} />
 
-            <Box display="flex" flexDir="column" gap="s8">
-              {title && <AlertTitle>{title}</AlertTitle>}
-              {(subtitle || children) && (
-                <AlertDescription>
-                  {subtitle}
-                  {children}
-                  {bottomButtonlabel && (
-                    <Box
-                      display={'flex'}
-                      flexDirection="row"
-                      justifyContent={'flex-start'}
-                    >
-                      <Button variant="link" onClick={bottomButtonHandler}>
-                        {bottomButtonlabel}
-                      </Button>
-                    </Box>
-                  )}
-                </AlertDescription>
-              )}
+              <Box display="flex" flexDir="column" gap="s8">
+                {title && <AlertTitle>{title}</AlertTitle>}
+                {(subtitle || children) && (
+                  <AlertDescription>
+                    {subtitle}
+                    {children}
+                  </AlertDescription>
+                )}
+              </Box>
             </Box>
+            {bottomButtonlabel && (
+              <Box
+                display={'flex'}
+                flexDirection="row"
+                justifyContent={'flex-start'}
+              >
+                <Button
+                  variant="link"
+                  shade={status === 'error' ? 'danger' : 'primary'}
+                  onClick={bottomButtonHandler}
+                >
+                  {bottomButtonlabel}
+                </Button>
+              </Box>
+            )}
           </Box>
           {showUndo ? (
             <Button onClick={undoHandler} variant="ghost" size="xs">
@@ -97,7 +104,7 @@ export function Alert({
                 {undoText ?? 'Undo'}
               </Text>
             </Button>
-          ) : (
+          ) : hideCloseIcon ? null : (
             <IconButton
               aria-label="close"
               icon={<Icon as={IoClose} color={COLOR_DICT[status]} />}

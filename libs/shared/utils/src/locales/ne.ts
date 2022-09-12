@@ -731,8 +731,7 @@ const ne: Record<string, string> = {
   kymCoopUnionOpPhotograph: 'फोटो',
   kymCoopUnionOpPhotographOfIdentityProofDocument: '',
   kymCoopUnionOpSpecimenSignature: 'दस्तखत नमूना',
-  kymCoopUnionOp4DetailsofCentralRepresentative:
-    '4. विवरणs of केन्द्रिय प्रतिनिधि',
+  kymCoopUnionOp4DetailsofCentralRepresentative: '4. विवरणs of केन्द्रिय प्रतिनिधि',
   kymCoopUnionOpCentralRepresentativeisnotamongDirectors: '',
   kymCoopUnionDirFullName: 'पुरा नाम',
   kymCoopUnionDirEnterFullName: 'Enter पुरा नाम',
@@ -2035,14 +2034,12 @@ const ne: Record<string, string> = {
   accountingSupplierPaymentFormTableThisAllocation: 'This Allocation',
 
   // accounting journal vouchers form table
-  accountingJournalVouchersFormTableTransferredTo:
-    'Transferred To (Select Ledger)',
+  accountingJournalVouchersFormTableTransferredTo: 'Transferred To (Select Ledger)',
   accountingJournalVouchersFormTableDRAmount: 'DR Amount',
   accountingJournalVouchersFormTableCRAmount: 'CR Amount',
 
   // accounting cash transfer form table
-  accountingCashTransferFormTableTransferredTo:
-    'Transferred To (Select Ledger)',
+  accountingCashTransferFormTableTransferredTo: 'Transferred To (Select Ledger)',
   accountingCashTransferFormTableAmount: 'Amount',
 
   // accounting quick payment form table
@@ -2131,12 +2128,9 @@ const ne: Record<string, string> = {
   settingsGeneralValuatorFormID: 'ID',
   settingsGeneralValuatorFormAcademicQualification: 'Academic Qualification',
   settingsGeneralValuatorFormValuationLicenseNo: 'Valuation License No',
-  settingsGeneralValuatorFormValuatorLatestRenewalDate:
-    'Valuator Latest Renewal Date',
-  settingsGeneralValuatorFormValuatorSaccosContractDate:
-    'Valuator - SACCOS Contract Date',
-  settingsGeneralValuatorFormInsurancePremiumPercent:
-    'Insurance Premium Percent',
+  settingsGeneralValuatorFormValuatorLatestRenewalDate: 'Valuator Latest Renewal Date',
+  settingsGeneralValuatorFormValuatorSaccosContractDate: 'Valuator - SACCOS Contract Date',
+  settingsGeneralValuatorFormInsurancePremiumPercent: 'Insurance Premium Percent',
   settingsGeneralValuatorFormContactDetails: 'Contact Details',
   settingsGeneralValuatorFormMobileNo: 'Mobile No',
   settingsGeneralValuatorFormPhoneNo: 'Phone No',
@@ -2168,8 +2162,7 @@ const ne: Record<string, string> = {
   depositProductProductName: 'Product Name ',
   depositProductEnterProductName: 'Enter Product Name',
   depositProductNatureofDepositProduct: 'Nature of Deposit Product',
-  depositProductSelectNatureofDepositProduct:
-    'Select Nature of Deposit Product',
+  depositProductSelectNatureofDepositProduct: 'Select Nature of Deposit Product',
   depositProductProductCode: 'Product Code',
   depositProductAddprefixintial: 'Add prefix & intial number. Eg. ASM506',
   depositProductPrefix: 'Prefix',
@@ -2267,8 +2260,7 @@ const ne: Record<string, string> = {
   depositProductPenaltyLedgerMapping: 'Penalty Ledger Mapping',
   depositProductAverage: 'Average',
   depositProductNewServiceCharge: 'New Service Charge',
-  depositProductDefaultAmountDepositAccountName:
-    'Default Amount Deposit Account Name',
+  depositProductDefaultAmountDepositAccountName: 'Default Amount Deposit Account Name',
   depositProductIf:
     'If the member does not specify particular account for deposit, this mapped account will be set globally. Normally this is a compulsory account type.',
   depositProductAccountType: 'Account Type',
@@ -2347,8 +2339,7 @@ const ne: Record<string, string> = {
   loanProductInstallmentType: 'Installment Type',
   loanProductSelectInstallmentType: 'Select Installment Type',
   loanProductIsMonthlyInterestCompulsory: 'Is Monthly Interest Compulsory',
-  loanProductLoanRepaymentStartGraceDuration:
-    'Loan Repayment Start Grace Duration',
+  loanProductLoanRepaymentStartGraceDuration: 'Loan Repayment Start Grace Duration',
   loanProductMinimumDuration: 'Minimum Duration',
   loanProductMaximumDuration: 'Maximum Duration',
   loanProductInterest: 'Interest',
@@ -2383,8 +2374,7 @@ const ne: Record<string, string> = {
   loanProductForm: 'Form',
   loanProductCitizenship: 'Citizenship',
 
-  depositProductMaximumPostingFrequencyDifference:
-    'Maximum Posting Frequency Difference',
+  depositProductMaximumPostingFrequencyDifference: 'Maximum Posting Frequency Difference',
 
   shareSettingsFeesName: 'Name',
   shareSettingsFeesType: 'Type',
@@ -2522,8 +2512,7 @@ const ne: Record<string, string> = {
   /* KYM Institution */
   settingsMemberInstitutionSection1: 'Section 1: Information of Organization',
   settingsMemberInstitutionSection2: 'Section 2: Transaction Profile',
-  settingsMemberInstitutionSection3:
-    'Section 3: Details of Proprietor, partners, Directors ',
+  settingsMemberInstitutionSection3: 'Section 3: Details of Proprietor, partners, Directors ',
   settingsMemberInstitutionSection4: 'Section 4: Account Operations',
   settingsMemberInstitutionSection5: 'Section 5: Declaration',
   settingsMemberInstitutionSection6: 'Section 6: Custom Fields',
@@ -2548,8 +2537,7 @@ const ne: Record<string, string> = {
 
   settingsMemberCooperativeSection2: 'Section 2: Economic Details',
 
-  settingsMemberCooperativeSection3:
-    'Section 3: Details of Proprietary, Partners, Directors',
+  settingsMemberCooperativeSection3: 'Section 3: Details of Proprietary, Partners, Directors',
   settingsCooperativeDirectors: 'Directors',
   settingsCooperativeDirectorDetails: 'Director Details',
   settingsCooperativeDocumentDeclaration: 'Document Declaration',
@@ -2560,10 +2548,8 @@ const ne: Record<string, string> = {
 
   settingsMemberCooperativeSection5: 'Section 5: Declaration',
   settingsCooperativeAccountHolderDeclaration: 'Account Holder Declaration',
-  settingsCooperativeAccountHolderDeclarationDetails:
-    'Account Holder Declaration Details',
-  settingsCooperativeAccountHolderDeclarationDocuments:
-    'Account Holder Declaration Documents',
+  settingsCooperativeAccountHolderDeclarationDetails: 'Account Holder Declaration Details',
+  settingsCooperativeAccountHolderDeclarationDocuments: 'Account Holder Declaration Documents',
   settingsCooperativeFileUploads: 'File Uploads',
   settingsCooperativeDeclaration: 'Declaration',
 
@@ -2578,8 +2564,7 @@ const ne: Record<string, string> = {
   settingsCoopUnionApplicantDetails: 'Applicant Details',
   settingsCoopUnionApplicantDocumentDeclaration: 'Document Declaration',
 
-  settingsCoopUnionSection2:
-    'Section 2: Details of Proprietary, Partners, Directors',
+  settingsCoopUnionSection2: 'Section 2: Details of Proprietary, Partners, Directors',
   settingsCoopDirectors: 'Directors',
   settingsCoopDirectorDetails: 'Director Details',
   settingsCoopTrainingRelatedToCoop: 'Training Related to Co-operatives',
@@ -2601,16 +2586,14 @@ const ne: Record<string, string> = {
   settingsDirector: 'Directors',
   settingsDirectorDetails: 'Director Details',
   settingsDocumentDeclaration: 'Document Declaration',
-  settingsDeclarationOfDirectionAffiliated:
-    'Details of directors affiliated with other firms',
+  settingsDeclarationOfDirectionAffiliated: 'Details of directors affiliated with other firms',
 
   settingsAccountOperator: 'Account Operator',
   settingsAccountDetailsOfAccountOperator: 'Details of Account Operators',
 
   settingsAccountHolderDeclaration: 'Account Holder Declaration',
   settingsAccountHolderDetails: 'Account Holder Details',
-  settingsAccountHolderDeclarationDocuments:
-    'Account Holder Declaration Documents',
+  settingsAccountHolderDeclarationDocuments: 'Account Holder Declaration Documents',
 
   loanProductpenalty: 'Penalty',
   loanProductEnterPenaltydetails: 'Enter Penalty details.',
@@ -2625,8 +2608,7 @@ const ne: Record<string, string> = {
   loanProductEnterNumberInstallments: 'Enter Number of Installments',
   loanProductAgriculture: 'Agriculture Loan',
   loanProductAlternativeEnergy: 'Alternative Energy Loan',
-  loanProductAssetsPurchasesAndMaintenance:
-    'Assets Purchases And Maintenance Loan',
+  loanProductAssetsPurchasesAndMaintenance: 'Assets Purchases And Maintenance Loan',
   loanProductTypeBusiness: 'Business Loan',
   loanProductCreditUnion: 'Credit Union Loan',
   loanProductEducational: 'Educational Loan',
@@ -2645,8 +2627,7 @@ const ne: Record<string, string> = {
   loanProductSelectNatureofBusiness: 'Select Nature of Business',
   loanProductNatureofBusinessCoopUnion: 'Nature of Business (COOP Union)',
   loanProductPenaltyType: 'Penalty Type',
-  loanProductDifferentLoanProvisionTreatment:
-    ' Different Loan Provision Treatment',
+  loanProductDifferentLoanProvisionTreatment: ' Different Loan Provision Treatment',
   loanProductInstallment: 'Installment',
 
   depositProductMinAge: 'Minimum Age',
@@ -2697,8 +2678,7 @@ const ne: Record<string, string> = {
 
   // login
   loginTitle: 'SACCOS लाई डिजिटाइज गरेर जोड्दै ।',
-  loginSubTitle:
-    'सहकारीलाई सुविधासँग जोड्ने एक सरल, सुरक्षित र साझा डिजिटल प्ल्याट्फर्म ।',
+  loginSubTitle: 'सहकारीलाई सुविधासँग जोड्ने एक सरल, सुरक्षित र साझा डिजिटल प्ल्याट्फर्म ।',
   loginHeader: 'मिरामा स्वागत छ।',
   loginEmail: 'इमेल',
   loginPassword: 'पासवर्ड',
@@ -2710,8 +2690,7 @@ const ne: Record<string, string> = {
   orReloadthepage: 'or Reload the page',
   here: 'here',
   workinProgress: 'Work in progress',
-  ThisPageIsUnderConstruction:
-    'This page is currently under construction. Come back later or',
+  ThisPageIsUnderConstruction: 'This page is currently under construction. Come back later or',
   follow: 'Follow',
   usForUpdates: 'us for updates',
   member: 'Member',
@@ -2807,8 +2786,7 @@ const ne: Record<string, string> = {
   depositProductAccountOpenServiceCharge: 'Account Open Service Charge',
   depositProductAccountCloseServiceCharge: 'Account Close Service Charge',
   depositProductIsThisForMinor: 'Is this a product for Minors ?',
-  depositProductAlternativeChannels:
-    'Does this product allow Alternative Channels?',
+  depositProductAlternativeChannels: 'Does this product allow Alternative Channels?',
   depositProductPercentageDeposit: 'Maximum percentage of Deposit',
   depositProductAutoOpenwhenmemberjoins: 'Auto Open when member joins?',
   depositProductAllowLoan: 'Allow Loan from this product ?',
@@ -2854,15 +2832,13 @@ const ne: Record<string, string> = {
   sharePurchaseOthers: 'Others',
   // ///////share return
   shareLayoutShareReturnAdd: 'Share Return',
-  loanProductSupportMultipleAccount:
-    'Does this product support Multiple Account ?',
+  loanProductSupportMultipleAccount: 'Does this product support Multiple Account ?',
   depositProductPostingFrequency: 'Interest Posting Frequency',
   depositProductAlternativeChannelseBanking:
     'Alternative Channels include Mobile banking and eBanking',
   depositProductATMFacility: 'Does this product provide ATM Facility?',
   depositProductChequeIssue: 'Allow Cheque Issue?',
-  depositProductSupportMultipleAccount:
-    'Does this product support Multiple Account ?',
+  depositProductSupportMultipleAccount: 'Does this product support Multiple Account ?',
   loanProductAllowPartialInstallment: 'Partial payment on Principal Amount',
   loanProductPenaltyedgerMapping: 'Penalty Ledger Mapping',
   loanProductPenaltyonPrincipal: 'Penalty on Principal',
@@ -2871,8 +2847,7 @@ const ne: Record<string, string> = {
   loanProductRebateLedgerMapping: 'Rebate Ledger Mapping',
   loanProductPrincipal: 'Principal',
   loanProductUpdateInterest: 'Update Interest ',
-  loanProductUpdateInterestForIndividual:
-    'Update interest for individual account or bulk account',
+  loanProductUpdateInterestForIndividual: 'Update interest for individual account or bulk account',
   loanProductWaiveInterest: 'Waive Interest ',
   loanProductWaiveInterestforindividual:
     'Waive interest for individual account/ bulk account for past interest',
@@ -2899,10 +2874,8 @@ const ne: Record<string, string> = {
   loanProductMaximumFMV: 'Maximum FMV',
   loanProductMinimumDV: 'Minimum DV',
   loanProductMaximumDV: 'Maximum DV',
-  loanProductMinimumPercentageofDepriciatedValue:
-    'Minimum Percentage of Depriciated Value',
-  loanProductMaximumPercentageofDepriciatedValue:
-    'Maximum Percentage of Depriciated Value',
+  loanProductMinimumPercentageofDepriciatedValue: 'Minimum Percentage of Depriciated Value',
+  loanProductMaximumPercentageofDepriciatedValue: 'Maximum Percentage of Depriciated Value',
   loanProductMinimumValue: 'Minimum Value',
   loanProductMaximumValue: 'Maximum Value',
   loanProductProgressive: 'Progressive',
@@ -2911,7 +2884,9 @@ const ne: Record<string, string> = {
   loanProductloanLedgerMapping: 'Rebate Ledger Mapping',
   loanProductNatureBusinessIns: 'Institutions Type',
   depositProductNatureofBusinessCoopUnion: 'Cooperatives Union Type',
+
   // share settings
+
   shareSettingsFeesLedgerMapping: 'Ledger Mapping',
 };
 

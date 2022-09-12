@@ -1,4 +1,7 @@
-import { useGetAccountTableListQuery } from '@coop/cbs/data-access';
+import {
+  NatureOfDepositProduct,
+  useGetAccountTableListQuery,
+} from '@coop/cbs/data-access';
 import { getRouterQuery } from '@coop/shared/utils';
 
 import { Option } from './CustomSelect';
@@ -11,6 +14,13 @@ interface IAccountSelectProps {
   __placeholder?: string;
   placeholder?: string;
 }
+
+const accountTypes = {
+  [NatureOfDepositProduct.Mandatory]: 'Mandatory Saving Account',
+  [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
+  [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
+  [NatureOfDepositProduct.VoluntaryOrOptional]: 'Voluntary Saving Account',
+};
 
 export const FormAccountSelect = ({
   name,
@@ -40,7 +50,9 @@ export const FormAccountSelect = ({
           accountInfo: {
             accountName: curVal?.node?.product?.productName,
             accountId: curVal?.node?.id,
-            accountType: curVal?.node?.product?.nature,
+            accountType: curVal?.node?.product?.nature
+              ? accountTypes[curVal?.node?.product?.nature]
+              : '',
             balance: curVal?.node?.balance as string,
             fine: curVal?.node?.fine as string,
           },

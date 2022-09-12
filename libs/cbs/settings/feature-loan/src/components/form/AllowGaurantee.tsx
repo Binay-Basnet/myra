@@ -20,21 +20,13 @@ export const AllowGaurantee = () => {
   return (
     <FormSection>
       <GridItem mt="s16" colSpan={3}>
-        <Box
-          display="flex"
-          flexDirection={'row'}
-          justifyContent="space-between"
-        >
+        <Box display="flex" flexDirection="row" justifyContent="space-between">
           <SubHeadingText>{t['loanProductAllowGuarantee']}</SubHeadingText>
           <FormSwitchTab name="allowGurantee" options={yesNo} />
         </Box>
         {allowGurantee && (
           <Box w="35%">
-            <FormInput
-              name="maxPercentOfGurantee"
-              type="text"
-              label={t['loanProductMaxPercent']}
-            />
+            <FormInput name="maxPercentOfGurantee" type="text" label={t['loanProductMaxPercent']} />
           </Box>
         )}
       </GridItem>
