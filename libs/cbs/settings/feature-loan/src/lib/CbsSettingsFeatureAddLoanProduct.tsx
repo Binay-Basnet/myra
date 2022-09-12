@@ -10,14 +10,7 @@ import {
   useGetLoanProductEditDataQuery,
   useSetLoanProductMutation,
 } from '@coop/cbs/data-access';
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormFooter,
-  FormHeader,
-  Text,
-} from '@coop/shared/ui';
+import { asyncToast, Box, Container, FormFooter, FormHeader, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
@@ -44,7 +37,7 @@ import {
   TypesOfMember,
 } from '../components/form';
 
-export function SettingsLoanProductForm() {
+const SettingsLoanProductForm = () => {
   const router = useRouter();
   const { t } = useTranslation();
   const id = String(router?.query?.['id']);
@@ -120,30 +113,21 @@ export function SettingsLoanProductForm() {
     const values = getValues();
 
     const genderList = values?.genderId?.map((data) => data?.value);
-    const maritalStatusList = values?.maritalStatusId?.map(
-      (data) => data?.value
-    );
+    const maritalStatusList = values?.maritalStatusId?.map((data) => data?.value);
 
-    const educationQualificationList = values?.educationQualification?.map(
-      (data) => data?.value
-    );
+    const educationQualificationList = values?.educationQualification?.map((data) => data?.value);
     const occupationList = values?.occupation?.map((data) => data?.value);
     const ethnicityList = values?.ethnicity?.map((data) => data?.value);
-    const natureOFBusinessCoopList = values?.natureOFBusinessCoop?.map(
+    const natureOFBusinessCoopList = values?.natureOFBusinessCoop?.map((data) => data?.value);
+    const natureOfBusinessInstitutionList = values?.natureOfBusinessInstitution?.map(
       (data) => data?.value
     );
-    const natureOfBusinessInstitutionList =
-      values?.natureOfBusinessInstitution?.map((data) => data?.value);
 
-    const loanProcessingChargeList = values?.loanProcessingCharge?.map(
-      (data) => {
-        return {
-          serviceName: data?.serviceName,
-          ledgerName: data?.ledgerName,
-          amount: data?.amount.toString(),
-        };
-      }
-    );
+    const loanProcessingChargeList = values?.loanProcessingCharge?.map((data) => ({
+      serviceName: data?.serviceName,
+      ledgerName: data?.ledgerName,
+      amount: data?.amount.toString(),
+    }));
 
     const landList = values?.collateralTypes?.includes(Collateral.Land)
       ? {
@@ -155,9 +139,7 @@ export function SettingsLoanProductForm() {
         }
       : null;
 
-    const landAndVehicleList = values?.collateralTypes?.includes(
-      Collateral.LandAndBuilding
-    )
+    const landAndVehicleList = values?.collateralTypes?.includes(Collateral.LandAndBuilding)
       ? {
           type: Collateral.LandAndBuilding,
           minFMV: values?.landAndBuilding?.minFMV,
@@ -175,9 +157,7 @@ export function SettingsLoanProductForm() {
         }
       : null;
 
-    const depositList = values?.collateralTypes?.includes(
-      Collateral.DepositOrSaving
-    )
+    const depositList = values?.collateralTypes?.includes(Collateral.DepositOrSaving)
       ? {
           type: Collateral.DepositOrSaving,
           minValue: values?.deposit?.minValue,
@@ -185,12 +165,7 @@ export function SettingsLoanProductForm() {
         }
       : null;
 
-    const collateralValueArray = [
-      landList,
-      landAndVehicleList,
-      vehicleList,
-      depositList,
-    ];
+    const collateralValueArray = [landList, landAndVehicleList, vehicleList, depositList];
 
     const collateralValueList = collateralValueArray?.filter(
       (item) =>
@@ -201,14 +176,7 @@ export function SettingsLoanProductForm() {
     );
 
     const updatedData = {
-      ...omit(values, [
-        'id',
-        'createdAt',
-        'modifiedAt',
-        'objState',
-        'land',
-        'landAndBuilding',
-      ]),
+      ...omit(values, ['id', 'createdAt', 'modifiedAt', 'objState', 'land', 'landAndBuilding']),
       genderId: genderList,
       maritalStatusId: maritalStatusList,
       educationQualification: educationQualificationList,
@@ -223,18 +191,10 @@ export function SettingsLoanProductForm() {
       maxAge: values?.maxAge ? values?.maxAge : null,
       interestMethod: values?.interestMethod ?? null,
       postingFrequency: values?.postingFrequency ?? null,
-      maxTenureUnitNumber: values?.maxTenureUnitNumber
-        ? values?.maxTenureUnitNumber
-        : null,
-      minTenureUnitNumber: values?.minTenureUnitNumber
-        ? values?.minTenureUnitNumber
-        : null,
-      minGraceDurationUnit: values?.minGraceDurationUnit
-        ? values?.minGraceDurationUnit
-        : null,
-      maxGraceDurationUnit: values?.maxGraceDurationUnit
-        ? values?.maxGraceDurationUnit
-        : null,
+      maxTenureUnitNumber: values?.maxTenureUnitNumber ? values?.maxTenureUnitNumber : null,
+      minTenureUnitNumber: values?.minTenureUnitNumber ? values?.minTenureUnitNumber : null,
+      minGraceDurationUnit: values?.minGraceDurationUnit ? values?.minGraceDurationUnit : null,
+      maxGraceDurationUnit: values?.maxGraceDurationUnit ? values?.maxGraceDurationUnit : null,
       maxLoanAmount: values?.maxLoanAmount ?? null,
       minimumLoanAmount: values?.minimumLoanAmount ?? null,
       rebate: {
@@ -244,29 +204,23 @@ export function SettingsLoanProductForm() {
       penaltyOnPrincipal: {
         ...values?.penaltyOnPrincipal,
         penaltyRate: values?.penaltyOnPrincipal?.penaltyRate ?? null,
-        dayAfterInstallmentDate:
-          values?.penaltyOnPrincipal?.dayAfterInstallmentDate ?? null,
+        dayAfterInstallmentDate: values?.penaltyOnPrincipal?.dayAfterInstallmentDate ?? null,
         penaltyAmount: values?.penaltyOnPrincipal?.penaltyAmount ?? null,
-        penaltyLedgerMapping:
-          values?.penaltyOnPrincipal?.penaltyLedgerMapping ?? null,
+        penaltyLedgerMapping: values?.penaltyOnPrincipal?.penaltyLedgerMapping ?? null,
       },
       penaltyOnInterest: {
         ...values?.penaltyOnInterest,
         penaltyRate: values?.penaltyOnInterest?.penaltyRate ?? null,
-        dayAfterInstallmentDate:
-          values?.penaltyOnInterest?.dayAfterInstallmentDate ?? null,
+        dayAfterInstallmentDate: values?.penaltyOnInterest?.dayAfterInstallmentDate ?? null,
         penaltyAmount: values?.penaltyOnInterest?.penaltyAmount ?? null,
-        penaltyLedgerMapping:
-          values?.penaltyOnInterest?.penaltyLedgerMapping ?? null,
+        penaltyLedgerMapping: values?.penaltyOnInterest?.penaltyLedgerMapping ?? null,
       },
       penaltyOnInstallment: {
         ...values?.penaltyOnInstallment,
         penaltyRate: values?.penaltyOnInstallment?.penaltyRate ?? null,
-        dayAfterInstallmentDate:
-          values?.penaltyOnInstallment?.dayAfterInstallmentDate ?? null,
+        dayAfterInstallmentDate: values?.penaltyOnInstallment?.dayAfterInstallmentDate ?? null,
         penaltyAmount: values?.penaltyOnInstallment?.penaltyAmount ?? null,
-        penaltyLedgerMapping:
-          values?.penaltyOnInstallment?.penaltyLedgerMapping ?? null,
+        penaltyLedgerMapping: values?.penaltyOnInstallment?.penaltyLedgerMapping ?? null,
       },
       collateralValue: collateralValueList,
     };
@@ -334,13 +288,7 @@ export function SettingsLoanProductForm() {
         </Container>
       </Box>
 
-      <Container
-        minW="container.lg"
-        height="fit-content"
-        bg="gray.0"
-        pb="55px"
-        paddingInline="0"
-      >
+      <Container minW="container.lg" height="fit-content" bg="gray.0" pb="55px" paddingInline="0">
         <FormProvider {...methods}>
           <form>
             <GeneralSetup />
@@ -363,8 +311,7 @@ export function SettingsLoanProductForm() {
             <PartialPayment />
             <Penalty />
             <PrematurePenalty />
-            {repaymentScheme &&
-              repaymentScheme?.includes(LoanRepaymentScheme.Epi) && <Rebate />}
+            {repaymentScheme && repaymentScheme?.includes(LoanRepaymentScheme.Epi) && <Rebate />}
 
             <LoanRepayment />
             <NewQuestions />
@@ -385,12 +332,7 @@ export function SettingsLoanProductForm() {
             <FormFooter
               status={
                 <Box display="flex" gap="s8">
-                  <Text
-                    color="neutralColorLight.Gray-60"
-                    fontWeight="Regular"
-                    as="i"
-                    fontSize="r1"
-                  >
+                  <Text color="neutralColorLight.Gray-60" fontWeight="Regular" as="i" fontSize="r1">
                     Press Complete to save form
                   </Text>
                 </Box>
@@ -403,6 +345,6 @@ export function SettingsLoanProductForm() {
       </Box>
     </>
   );
-}
+};
 
 export default SettingsLoanProductForm;

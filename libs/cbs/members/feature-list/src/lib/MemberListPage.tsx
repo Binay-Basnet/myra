@@ -44,9 +44,9 @@ export function MemberListPage() {
           return (
             <Box display="flex" alignItems="center" gap="s12">
               <Avatar
-                name="Dan Abrahmov"
+                name={props.getValue() as string}
                 size="sm"
-                src="https://bit.ly/dan-abramov"
+                src={props?.row?.original?.node?.profilePicUrl ?? ''}
               />
               <Text
                 fontSize="s3"

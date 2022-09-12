@@ -43,5 +43,10 @@ export const useAddress = ({ name }: IUseAddressProps) => {
     [localGovernmentId]
   );
 
-  return { provinceList, districtList, localityList, wardList };
+  return {
+    provinceList: [...provinceList, { label: 'Planet 9', value: '9' }],
+    districtList,
+    localityList,
+    wardList,
+  };
 };

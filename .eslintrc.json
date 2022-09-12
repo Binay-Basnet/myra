@@ -1,45 +1,13 @@
 {
   "root": true,
-<<<<<<< HEAD
-  "ignorePatterns": ["**/*", "**/graphql.ts"],
-=======
-  "ignorePatterns": [
-    "**/*",
-    "next.config.js",
-    "**/graphql.ts"
-  ],
->>>>>>> fc28522d486b693e21666fe45ec548cb543615e2
-  "plugins": [
-    "unused-imports",
-    "@nrwl/nx",
-    "@typescript-eslint",
-    "simple-import-sort",
-    "prettier"
-  ],
+  "ignorePatterns": ["**/*", "next.config.js", "**/graphql.ts"],
+  "plugins": ["unused-imports", "@nrwl/nx", "@typescript-eslint", "simple-import-sort", "prettier"],
   "extends": ["eslint:recommended", "google", "prettier"],
   "rules": {
-<<<<<<< HEAD
-=======
     // UNICORN RELATED RULES & FILE NAMING CONVENTIONS
     "unicorn/no-array-for-each": "off",
     "unicorn/no-null": "off",
-    "unicorn/prevent-abbreviations": [
-      "error",
-      {
-        "replacements": {
-          "props": false
-        }
-      }
-    ],
-    "unicorn/filename-case": [
-      "error",
-      {
-        "cases": {
-          "camelCase": true,
-          "pascalCase": true
-        }
-      }
-    ],
+    "unicorn/prevent-abbreviations": "off",
     // REACT RELATED RULES
     "react/require-default-props": "off",
     "react/jsx-props-no-spreading": "off",
@@ -53,18 +21,12 @@
     ],
     "react-hooks/exhaustive-deps": "warn",
     // MISC RULES
->>>>>>> fc28522d486b693e21666fe45ec548cb543615e2
     "require-jsdoc": "off",
     "valid-jsdoc": "off",
     "camelcase": "off",
     "no-console": "error",
-<<<<<<< HEAD
-    "react-hooks/exhaustive-deps": "off",
-    "@typescript-eslint/no-unused-vars": "error",
-=======
     "prefer-default-export": "off",
     // IMPORTS RELATED RULES
->>>>>>> fc28522d486b693e21666fe45ec548cb543615e2
     "unused-imports/no-unused-imports-ts": "error",
     "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": [
@@ -82,14 +44,8 @@
       {
         "groups": [
           // Packages 'react' related packages come first.
-          [
-            "^react",
-            "^next",
-            "^@?\\w"
-          ],
-          [
-            "^@coop"
-          ],
+          ["^react", "^next", "^@?\\w"],
+          ["^@coop"],
           [
             "^\\./?$",
             "^\\.(?!/?$)",
@@ -103,8 +59,6 @@
           // relative paths up until 3 levels
         ]
       }
-<<<<<<< HEAD
-=======
     ],
     // TYPESCRIPT RULES & VARIABLE NAMING CONVENTIONS
     "@typescript-eslint/no-misused-promises": "off",
@@ -115,77 +69,38 @@
       "error",
       {
         "selector": "variable",
-        "format": [
-          "camelCase",
-          "UPPER_CASE"
-        ]
+        "format": ["camelCase", "UPPER_CASE"]
       },
       {
         "selector": "variable",
-        "types": [
-          "function"
-        ],
-        "format": [
-          "PascalCase",
-          "camelCase"
-        ]
+        "types": ["function"],
+        "format": ["PascalCase", "camelCase"]
       },
       {
         "selector": "function",
-        "format": [
-          "PascalCase",
-          "camelCase"
-        ]
+        "format": ["PascalCase", "camelCase"]
       },
       {
         "selector": "variable",
-        "modifiers": [
-          "const"
-        ],
-        "format": [
-          "camelCase",
-          "UPPER_CASE"
-        ]
+        "modifiers": ["const"],
+        "format": ["camelCase", "UPPER_CASE"]
       },
       {
         "selector": "variable",
-        "types": [
-          "boolean"
-        ],
-        "format": [
-          "PascalCase"
-        ],
-        "prefix": [
-          "is",
-          "should",
-          "has",
-          "can",
-          "did",
-          "will"
-        ]
+        "types": ["boolean"],
+        "format": ["PascalCase"],
+        "prefix": ["is", "should", "has", "can", "did", "will"]
       }
->>>>>>> fc28522d486b693e21666fe45ec548cb543615e2
     ]
   },
   "overrides": [
     {
-<<<<<<< HEAD
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-=======
-      "files": [
-        "*.ts",
-        "*.tsx",
-        "*.js",
-        "*.jsx"
-      ],
       "parser": "@typescript-eslint/parser",
       // We set parserOptions.project for the project to allow TypeScript to create the type-checker behind the scenes when we run linting
       "parserOptions": {
-        "project": [
-          "./tsconfig(.*)?.json"
-        ]
+        "project": ["./tsconfig(.*)?.json"]
       },
->>>>>>> fc28522d486b693e21666fe45ec548cb543615e2
       "rules": {
         "@nrwl/nx/enforce-module-boundaries": [
           "error",
@@ -196,9 +111,7 @@
             "depConstraints": [
               {
                 "sourceTag": "*",
-                "onlyDependOnLibsWithTags": [
-                  "*"
-                ]
+                "onlyDependOnLibsWithTags": ["*"]
               }
             ]
           }
@@ -206,31 +119,14 @@
       }
     },
     {
-      "files": [
-        "*.ts",
-        "*.tsx"
-      ],
-      "extends": [
-        "plugin:@nrwl/nx/typescript"
-      ],
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nrwl/nx/typescript"],
       "rules": {}
     },
     {
-      "files": [
-        "*.js",
-        "*.jsx"
-      ],
-      "extends": [
-        "plugin:@nrwl/nx/javascript"
-      ],
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nrwl/nx/javascript"],
       "rules": {}
     }
   ]
 }
-
-
-
-
-
-
-

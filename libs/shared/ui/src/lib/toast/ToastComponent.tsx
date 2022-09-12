@@ -14,13 +14,7 @@ export interface ToastProps {
   actionTextHandler?: () => void;
 }
 
-export function Toast({
-  message,
-  type,
-  state,
-  actionTextHandler,
-  actionText,
-}: ToastProps) {
+export function Toast({ message, type, state, actionTextHandler, actionText }: ToastProps) {
   return (
     <Box
       width="360px"
@@ -35,19 +29,9 @@ export function Toast({
     >
       <Box display="flex" alignItems="center" gap="s16">
         {state === 'loading' ? (
-          <Spinner
-            thickness="2px"
-            speed="0.65s"
-            emptyColor="gray.200"
-            color="primary.400"
-            size="md"
-          />
+          <Spinner />
         ) : state === 'blank' ? null : (
-          <Icon
-            as={state ? TOAST_ICONS[state] : TOAST_ICONS[type]}
-            size="lg"
-            color="white"
-          />
+          <Icon as={state ? TOAST_ICONS[state] : TOAST_ICONS[type]} size="lg" color="white" />
         )}
         <Text fontSize="r2" color="white" fontWeight="400" noOfLines={1}>
           {message}

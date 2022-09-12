@@ -1,24 +1,50 @@
 {
   "extends": [
-    "plugin:@nrwl/nx/react-typescript",
-    "../../.eslintrc.json",
     "next",
-    "next/core-web-vitals"
+    "next/core-web-vitals",
+    "plugin:@nrwl/nx/react-typescript",
+    "../../.eslintrc.json"
   ],
-  "ignorePatterns": ["!**/*"],
+  "ignorePatterns": [
+    "!**/*",
+    "/dist",
+    "jest.config.ts",
+    "next.config.js"
+  ],
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "files": [
+        "*.ts",
+        "*.tsx",
+        "*.js",
+        "*.jsx"
+      ],
       "rules": {
-        "@next/next/no-html-link-for-pages": ["error", "apps/ebanking/pages"]
+        "@next/next/no-html-link-for-pages": [
+          "error",
+          "apps/ebanking/pages"
+        ],
+        "unicorn/filename-case": [
+          "error",
+          {
+            "cases": {
+              "kebabCase": true
+            }
+          }
+        ]
       }
     },
     {
-      "files": ["*.ts", "*.tsx"],
-      "rules": {}
+      "files": [
+        "*.ts",
+        "*.tsx"
+      ]
     },
     {
-      "files": ["*.js", "*.jsx"],
+      "files": [
+        "*.js",
+        "*.jsx"
+      ],
       "rules": {}
     }
   ],

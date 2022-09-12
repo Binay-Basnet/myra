@@ -11,9 +11,7 @@ export const Critera = () => {
   const { t } = useTranslation();
 
   const age = [{ label: t['depositProductAge'], value: CriteriaSection.Age }];
-  const gender = [
-    { label: t['depositProductGender'], value: CriteriaSection.Gender },
-  ];
+  const gender = [{ label: t['depositProductGender'], value: CriteriaSection.Gender }];
   const maritalStatus = [
     {
       label: t['depositProductMaritalStatus'],
@@ -32,9 +30,7 @@ export const Critera = () => {
       value: CriteriaSection.EducationQualification,
     },
   ];
-  const ethnicity = [
-    { label: t['depositProductEthinicity'], value: CriteriaSection.Ethnicity },
-  ];
+  const ethnicity = [{ label: t['depositProductEthinicity'], value: CriteriaSection.Ethnicity }];
   const foreignEmployment = [
     {
       label: t['depositProductForeignEmployment'],
@@ -42,20 +38,20 @@ export const Critera = () => {
     },
   ];
 
-  const NOBInstitution = [
+  const nOBInstitution = [
     {
       label: t['depositProductNatureofBusinessIns'],
       value: CriteriaSection.NatureOfBusinessInstitutions,
     },
   ];
-  const NOBCoopUnion = [
+  const nOBCoopUnion = [
     {
       label: t['depositProductNatureofBusinessCoopUnion'],
       value: CriteriaSection.NatureOfBusinessCoopunion,
     },
   ];
 
-  const CoperativeType = [
+  const coperativeType = [
     {
       label: t['depositProductCoorperativeType'],
       value: CriteriaSection.CooperativeType,
@@ -64,36 +60,26 @@ export const Critera = () => {
 
   return (
     <FormSection header="depositProductCriteria">
-      {' '}
       {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
-        <FormCheckboxGroup name="criteria" list={age} />
+        <>
+          <FormCheckboxGroup name="criteria" list={age} />
+          <FormCheckboxGroup name="criteria" list={gender} />
+          <FormCheckboxGroup name="criteria" list={maritalStatus} />
+          <FormCheckboxGroup name="criteria" list={educationalQuality} />
+          <FormCheckboxGroup name="criteria" list={ethnicity} />
+          <FormCheckboxGroup name="criteria" list={occupationDetails} />
+          <FormCheckboxGroup name="criteria" list={foreignEmployment} />
+        </>
       )}
-      {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
-        <FormCheckboxGroup name="criteria" list={gender} />
-      )}
-      {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
-        <FormCheckboxGroup name="criteria" list={maritalStatus} />
-      )}
-      {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
-        <FormCheckboxGroup name="criteria" list={educationalQuality} />
-      )}
-      {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
-        <FormCheckboxGroup name="criteria" list={ethnicity} />
-      )}
-      {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
-        <FormCheckboxGroup name="criteria" list={occupationDetails} />
-      )}
-      {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
-        <FormCheckboxGroup name="criteria" list={foreignEmployment} />
-      )}
+
       {memberType && memberType?.indexOf('INSTITUTION') !== -1 && (
-        <FormCheckboxGroup name="criteria" list={NOBInstitution} />
+        <FormCheckboxGroup name="criteria" list={nOBInstitution} />
       )}
       {memberType && memberType?.indexOf('COOPERATIVE') !== -1 && (
-        <FormCheckboxGroup name="criteria" list={CoperativeType} />
+        <FormCheckboxGroup name="criteria" list={coperativeType} />
       )}
       {memberType && memberType?.indexOf('COOPERATIVE_UNION') !== -1 && (
-        <FormCheckboxGroup name="criteria" list={NOBCoopUnion} />
+        <FormCheckboxGroup name="criteria" list={nOBCoopUnion} />
       )}
     </FormSection>
   );
