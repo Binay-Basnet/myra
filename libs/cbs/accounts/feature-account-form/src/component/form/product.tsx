@@ -746,7 +746,7 @@ export const Product = () => {
                             fontSize="s2"
                             fontWeight="Regular"
                           >
-                            Rebate {productData?.rebateData?.percentage} %
+                            Rebate {productData?.rebateData?.rebateAmount} %
                           </TextFields>
                         </li>
                         {/*
