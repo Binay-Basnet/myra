@@ -88,7 +88,10 @@ const ShareReturnForm = () => {
 
   const returnAmount = totalAmount - totalCashPaid;
 
-  const { data } = useGetMemberIndividualDataQuery({ id: memberId });
+  const { data } = useGetMemberIndividualDataQuery(
+    { id: memberId },
+    { enabled: !!memberId }
+  );
 
   const memberDetail = data && data?.members?.details?.data;
 
@@ -98,6 +101,7 @@ const ShareReturnForm = () => {
     },
     {
       staleTime: 0,
+      enabled: !!memberId,
     }
   );
 

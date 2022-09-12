@@ -9919,7 +9919,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymIndAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -12365,7 +12365,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymIndAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -12927,7 +12927,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymIndAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -17467,6 +17467,22 @@
             "deprecationReason": null
           },
           {
+            "name": "alternativeChannelCharge",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ServiceTypeFormState",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "alternativeChannels",
             "description": null,
             "args": [],
@@ -17483,8 +17499,8 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "Amount",
+              "kind": "OBJECT",
+              "name": "ServiceTypeFormState",
               "ofType": null
             },
             "isDeprecated": false,
@@ -17531,8 +17547,8 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "Amount",
+              "kind": "OBJECT",
+              "name": "ServiceTypeFormState",
               "ofType": null
             },
             "isDeprecated": false,
@@ -17630,18 +17646,6 @@
                 "name": "DormantSetupFormState",
                 "ofType": null
               }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "eBankingCharge",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Amount",
-              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -17921,18 +17925,6 @@
             "type": {
               "kind": "SCALAR",
               "name": "Int",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "mobileBankingCharge",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Amount",
               "ofType": null
             },
             "isDeprecated": false,
@@ -18338,6 +18330,22 @@
             "deprecationReason": null
           },
           {
+            "name": "alternativeChannelCharge",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "ServiceType",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "alternativeChannels",
             "description": null,
             "type": {
@@ -18353,8 +18361,8 @@
             "name": "atmCharge",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "Amount",
+              "kind": "INPUT_OBJECT",
+              "name": "ServiceType",
               "ofType": null
             },
             "defaultValue": null,
@@ -18401,8 +18409,8 @@
             "name": "chequeCharge",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "Amount",
+              "kind": "INPUT_OBJECT",
+              "name": "ServiceType",
               "ofType": null
             },
             "defaultValue": null,
@@ -18500,18 +18508,6 @@
                 "name": "DormantSetup",
                 "ofType": null
               }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "eBankingCharge",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Amount",
-              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -18795,18 +18791,6 @@
             "type": {
               "kind": "SCALAR",
               "name": "Int",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "mobileBankingCharge",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Amount",
               "ofType": null
             },
             "defaultValue": null,
@@ -41001,7 +40985,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "KymIndAddSectionStatus",
+                "name": "KymFormStatus",
                 "ofType": null
               }
             },
@@ -41017,7 +41001,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "KymIndAddSectionStatus",
+                "name": "KymFormStatus",
                 "ofType": null
               }
             },
@@ -41030,7 +41014,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymIndAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -41042,7 +41026,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymIndAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -41054,7 +41038,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymIndAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -41066,7 +41050,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymIndAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -42178,6 +42162,18 @@
                     "name": "ID",
                     "ofType": null
                   }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "includeRequiredErrors",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -45516,7 +45512,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "KymIndAddSectionStatus",
+                "name": "KymFormStatus",
                 "ofType": null
               }
             },
@@ -45905,6 +45901,104 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "KymFormSectionStatus",
+        "description": null,
+        "fields": [
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "incomplete",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "KymFormStatus",
+        "description": null,
+        "fields": [
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "InvalidData",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "sectionStatus",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "KymFormSectionStatus",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "INPUT_OBJECT",
         "name": "KymIdentification",
         "description": null,
@@ -46201,7 +46295,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymIndAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -46381,61 +46475,6 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "ID",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "KymIndAddSectionStatus",
-        "description": null,
-        "fields": [
-          {
-            "name": "errors",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "SectionWiseError",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "ID",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "incomplete",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "IncompleteSection",
                 "ofType": null
               }
             },
@@ -47097,7 +47136,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymIndAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -74394,6 +74433,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "required",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
               "ofType": null
             },
             "defaultValue": null,
