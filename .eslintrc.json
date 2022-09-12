@@ -1,6 +1,10 @@
 {
   "root": true,
-  "ignorePatterns": ["**/*", "next.config.js", "**/graphql.ts"],
+  "ignorePatterns": [
+    "**/*",
+    "next.config.js",
+    "**/graphql.ts"
+  ],
   "plugins": [
     "unused-imports",
     "@nrwl/nx",
@@ -40,7 +44,6 @@
         }
       }
     ],
-
     // REACT RELATED RULES
     "react/require-default-props": [
       "error",
@@ -59,12 +62,11 @@
       }
     ],
     "react-hooks/exhaustive-deps": "warn",
-
     // MISC RULES
     "require-jsdoc": "off",
     "valid-jsdoc": "off",
     "no-console": "error",
-
+    "prefer-default-export": "off",
     // IMPORTS RELATED RULES
     "unused-imports/no-unused-imports-ts": "error",
     "unused-imports/no-unused-imports": "error",
@@ -83,8 +85,14 @@
       {
         "groups": [
           // Packages 'react' related packages come first.
-          ["^react", "^next", "^@?\\w"],
-          ["^@coop"],
+          [
+            "^react",
+            "^next",
+            "^@?\\w"
+          ],
+          [
+            "^@coop"
+          ],
           [
             "^\\./?$",
             "^\\.(?!/?$)",
@@ -99,47 +107,80 @@
         ]
       }
     ],
-
     // TYPESCRIPT RULES & VARIABLE NAMING CONVENTIONS
     "@typescript-eslint/no-misused-promises": "off",
     "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/dot-notation": "off",
     "@typescript-eslint/naming-convention": [
       "error",
       {
         "selector": "variable",
-        "format": ["camelCase", "UPPER_CASE"]
+        "format": [
+          "camelCase",
+          "UPPER_CASE"
+        ]
       },
       {
         "selector": "variable",
-        "types": ["function"],
-        "format": ["PascalCase", "camelCase"]
+        "types": [
+          "function"
+        ],
+        "format": [
+          "PascalCase",
+          "camelCase"
+        ]
       },
       {
         "selector": "function",
-        "format": ["PascalCase", "camelCase"]
+        "format": [
+          "PascalCase",
+          "camelCase"
+        ]
       },
       {
         "selector": "variable",
-        "modifiers": ["const"],
-        "format": ["camelCase", "UPPER_CASE"]
+        "modifiers": [
+          "const"
+        ],
+        "format": [
+          "camelCase",
+          "UPPER_CASE"
+        ]
       },
       {
         "selector": "variable",
-        "types": ["boolean"],
-        "format": ["PascalCase"],
-        "prefix": ["is", "should", "has", "can", "did", "will"]
+        "types": [
+          "boolean"
+        ],
+        "format": [
+          "PascalCase"
+        ],
+        "prefix": [
+          "is",
+          "should",
+          "has",
+          "can",
+          "did",
+          "will"
+        ]
       }
     ]
   },
-
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "files": [
+        "*.ts",
+        "*.tsx",
+        "*.js",
+        "*.jsx"
+      ],
       "parser": "@typescript-eslint/parser",
       // We set parserOptions.project for the project to allow TypeScript to create the type-checker behind the scenes when we run linting
       "parserOptions": {
-        "project": ["./tsconfig(.*)?.json"]
+        "project": [
+          "./tsconfig(.*)?.json"
+        ]
       },
       "rules": {
         "@nrwl/nx/enforce-module-boundaries": [
@@ -151,7 +192,9 @@
             "depConstraints": [
               {
                 "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
+                "onlyDependOnLibsWithTags": [
+                  "*"
+                ]
               }
             ]
           }
@@ -159,14 +202,31 @@
       }
     },
     {
-      "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nrwl/nx/typescript"],
+      "files": [
+        "*.ts",
+        "*.tsx"
+      ],
+      "extends": [
+        "plugin:@nrwl/nx/typescript"
+      ],
       "rules": {}
     },
     {
-      "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nrwl/nx/javascript"],
+      "files": [
+        "*.js",
+        "*.jsx"
+      ],
+      "extends": [
+        "plugin:@nrwl/nx/javascript"
+      ],
       "rules": {}
     }
   ]
 }
+
+
+
+
+
+
+
