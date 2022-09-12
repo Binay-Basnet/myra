@@ -1,13 +1,15 @@
 {
   "extends": [
-    "plugin:@nrwl/nx/react-typescript",
-    "../../.eslintrc.json",
     "next",
-    "next/core-web-vitals"
+    "next/core-web-vitals",
+    "plugin:@nrwl/nx/react-typescript",
+    "../../.eslintrc.json"
   ],
   "ignorePatterns": [
     "!**/*",
-    "/dist"
+    "/dist",
+    "jest.config.ts",
+    "next.config.js"
   ],
   "overrides": [
     {
@@ -21,6 +23,14 @@
         "@next/next/no-html-link-for-pages": [
           "error",
           "apps/myra/pages"
+        ],
+        "unicorn/filename-case": [
+          "error",
+          {
+            "cases": {
+              "kebabCase": true
+            }
+          }
         ]
       }
     },
@@ -28,8 +38,7 @@
       "files": [
         "*.ts",
         "*.tsx"
-      ],
-      "rules": {}
+      ]
     },
     {
       "files": [
