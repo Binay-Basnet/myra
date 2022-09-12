@@ -45,13 +45,7 @@
       }
     ],
     // REACT RELATED RULES
-    "react/require-default-props": [
-      "error",
-      {
-        "classes": "ignore",
-        "functions": "defaultArguments"
-      }
-    ],
+    "react/require-default-props": "off",
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",
     "react/function-component-definition": [
