@@ -45,10 +45,11 @@ export const FeesAndCharge = () => {
   }, [products]);
 
   useEffect(() => {
-    setProductData(
-      data?.settings.general?.depositProduct?.formState?.data
-        ?.serviceCharge as ServiceTypeFormState[]
-    );
+    const firstArray =
+      (data?.settings.general?.depositProduct?.formState?.data
+        ?.serviceCharge as ServiceTypeFormState[]) ?? [];
+
+    setProductData([...firstArray]);
   }, [isLoading]);
 
   useEffect(() => {
