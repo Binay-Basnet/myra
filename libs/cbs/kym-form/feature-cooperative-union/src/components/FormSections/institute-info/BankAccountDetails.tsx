@@ -11,7 +11,7 @@ import {
   useTranslation,
 } from '@coop/shared/utils';
 
-import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
+import { useCooperativeUnionInstitution } from '../../../hooks';
 
 interface IBankAccountDetailsProps {
   setSection: (section?: { section: string; subSection: string }) => void;
@@ -25,7 +25,7 @@ export const BankAccountDetails = ({
 
   const methods = useForm<CoopUnionInstitutionInformationInput>();
 
-  useCoopUnionInstitution({ methods });
+  useCooperativeUnionInstitution({ methods });
 
   return (
     <FormProvider {...methods}>

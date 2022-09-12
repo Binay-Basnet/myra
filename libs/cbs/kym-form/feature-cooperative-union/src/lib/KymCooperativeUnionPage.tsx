@@ -1,18 +1,10 @@
-import React, { useEffect } from 'react';
-
-import { reset, useAppDispatch } from '@coop/shared/utils';
+import React from 'react';
 
 import { KYMCoopUnionFooter } from '../components/KYMCoopUnionFooter';
 import { KymCoopUnionFormBody } from '../components/KYMCoopUnionFormBody';
 import { KYMCoopUnionHeader } from '../components/KYMCoopUnionHeader';
 
 export function KYMCooperativeUnionPage() {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(reset());
-  });
-
   return (
     <>
       <KYMCoopUnionHeader />

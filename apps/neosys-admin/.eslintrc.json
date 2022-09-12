@@ -1,28 +1,24 @@
 {
   "extends": [
-    "next",
-    "next/core-web-vitals",
     "plugin:@nrwl/nx/react-typescript",
-    "../../.eslintrc.json"
+    "../../.eslintrc.json",
+    "next",
+    "next/core-web-vitals"
   ],
-  "ignorePatterns": ["!**/*", "/dist", "jest.config.ts", "next.config.js"],
+  "ignorePatterns": ["!**/*"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
-        "@next/next/no-html-link-for-pages": ["error", "apps/neosys-admin/pages"],
-        "unicorn/filename-case": [
+        "@next/next/no-html-link-for-pages": [
           "error",
-          {
-            "cases": {
-              "kebabCase": true
-            }
-          }
+          "apps/neosys-admin/pages"
         ]
       }
     },
     {
-      "files": ["*.ts", "*.tsx"]
+      "files": ["*.ts", "*.tsx"],
+      "rules": {}
     },
     {
       "files": ["*.js", "*.jsx"],

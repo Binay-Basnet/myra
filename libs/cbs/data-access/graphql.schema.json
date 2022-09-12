@@ -7476,6 +7476,243 @@
         "possibleTypes": null
       },
       {
+        "kind": "ENUM",
+        "name": "Collateral",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "DEPOSIT_OR_SAVING",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DOCUMENTS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "LAND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "LAND_AND_BUILDING",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "OTHERS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "VEHICLE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CollateralFormState",
+        "description": null,
+        "fields": [
+          {
+            "name": "maxDV",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "maxFMV",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "maxValue",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "minDV",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "minFMV",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "minValue",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "type",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "Collateral",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "CollateralInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "maxDV",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "maxFMV",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "maxValue",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "minDV",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "minFMV",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "minValue",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "type",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "Collateral",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "CollateralListData",
         "description": null,
@@ -17230,12 +17467,40 @@
             "deprecationReason": null
           },
           {
+            "name": "alternativeChannelCharge",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ServiceTypeFormState",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "alternativeChannels",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "atmCharge",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ServiceTypeFormState",
               "ofType": null
             },
             "isDeprecated": false,
@@ -17272,6 +17537,18 @@
             "type": {
               "kind": "OBJECT",
               "name": "AmountLimitFormState",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "chequeCharge",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ServiceTypeFormState",
               "ofType": null
             },
             "isDeprecated": false,
@@ -17743,7 +18020,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "PenaltyFormState",
+              "name": "Penalty",
               "ofType": null
             },
             "isDeprecated": false,
@@ -17831,7 +18108,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "RebateFormState",
+              "name": "Rebate",
               "ofType": null
             },
             "isDeprecated": false,
@@ -18053,11 +18330,39 @@
             "deprecationReason": null
           },
           {
+            "name": "alternativeChannelCharge",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "ServiceType",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "alternativeChannels",
             "description": null,
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "atmCharge",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "ServiceType",
               "ofType": null
             },
             "defaultValue": null,
@@ -18094,6 +18399,18 @@
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "AmountLimit",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "chequeCharge",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "ServiceType",
               "ofType": null
             },
             "defaultValue": null,
@@ -18573,7 +18890,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "PenaltyInput",
+              "name": "PenaltyTypeInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -18665,7 +18982,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "RebateInput",
+              "name": "RebateTypeInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -32637,6 +32954,100 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "Insurance",
+        "description": null,
+        "fields": [
+          {
+            "name": "amount",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Amount",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "rate",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "type",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "InsuranceType",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "amount",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Amount",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "rate",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "type",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "SCALAR",
         "name": "Int",
         "description": "The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
@@ -32869,18 +33280,6 @@
         "description": null,
         "fields": [
           {
-            "name": "additionalRate",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "boardAuthority",
             "description": null,
             "args": [],
@@ -32921,18 +33320,6 @@
             "deprecationReason": null
           },
           {
-            "name": "interestMethod",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "ENUM",
-              "name": "InterestMethod",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "maxRate",
             "description": null,
             "args": [],
@@ -32951,18 +33338,6 @@
             "type": {
               "kind": "SCALAR",
               "name": "Float",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "postingFrequency",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "ENUM",
-              "name": "Frequency",
               "ofType": null
             },
             "isDeprecated": false,
@@ -52404,6 +52779,29 @@
         "possibleTypes": null
       },
       {
+        "kind": "ENUM",
+        "name": "LoanInterestMethod",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "DIMINISHING",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "STRAIGHT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
         "kind": "INPUT_OBJECT",
         "name": "LoanNatureOfProductInput",
         "description": null,
@@ -52496,6 +52894,18 @@
         "description": null,
         "fields": [
           {
+            "name": "allowGurantee",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "allowPartialInstallment",
             "description": null,
             "args": [],
@@ -52508,13 +52918,33 @@
             "deprecationReason": null
           },
           {
-            "name": "badLoanProvision",
+            "name": "collateralTypes",
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "Collateral",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "collateralValue",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CollateralFormState",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -52600,36 +53030,12 @@
             "deprecationReason": null
           },
           {
-            "name": "disburementOfDMV",
+            "name": "description",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "disburementOfFMV",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "doubtfulLoanProvision",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Float",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -52696,18 +53102,6 @@
             "deprecationReason": null
           },
           {
-            "name": "goodLoanProvision",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "id",
             "description": null,
             "args": [],
@@ -52724,12 +53118,24 @@
             "deprecationReason": null
           },
           {
-            "name": "installmentType",
+            "name": "installmentFrequency",
             "description": null,
             "args": [],
             "type": {
               "kind": "ENUM",
-              "name": "LoanPaymentInstallmentType",
+              "name": "LoanProductInstallment",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "insuranceType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Insurance",
               "ofType": null
             },
             "isDeprecated": false,
@@ -52742,6 +53148,18 @@
             "type": {
               "kind": "OBJECT",
               "name": "InterestRateType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "interestMethod",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "LoanInterestMethod",
               "ofType": null
             },
             "isDeprecated": false,
@@ -52820,6 +53238,34 @@
             "deprecationReason": null
           },
           {
+            "name": "ledgerMapping",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "LedgerMappingFormState",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "loanProcessingCharge",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ServiceTypeFormState",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "loanScheduleChangeOverride",
             "description": null,
             "args": [],
@@ -52865,7 +53311,7 @@
             "args": [],
             "type": {
               "kind": "ENUM",
-              "name": "Frequency",
+              "name": "FrequencyTenure",
               "ofType": null
             },
             "isDeprecated": false,
@@ -52896,6 +53342,18 @@
             "deprecationReason": null
           },
           {
+            "name": "maxPercentOfGurantee",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "maxTenure",
             "description": null,
             "args": [],
@@ -52913,7 +53371,7 @@
             "args": [],
             "type": {
               "kind": "ENUM",
-              "name": "Frequency",
+              "name": "FrequencyTenure",
               "ofType": null
             },
             "isDeprecated": false,
@@ -52949,7 +53407,7 @@
             "args": [],
             "type": {
               "kind": "ENUM",
-              "name": "Frequency",
+              "name": "FrequencyTenure",
               "ofType": null
             },
             "isDeprecated": false,
@@ -52985,7 +53443,7 @@
             "args": [],
             "type": {
               "kind": "ENUM",
-              "name": "Frequency",
+              "name": "FrequencyTenure",
               "ofType": null
             },
             "isDeprecated": false,
@@ -53010,18 +53468,6 @@
             "type": {
               "kind": "SCALAR",
               "name": "Amount",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "modeOfPayment",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "ENUM",
-              "name": "LoanPaymentMode",
               "ofType": null
             },
             "isDeprecated": false,
@@ -53124,19 +53570,7 @@
             "deprecationReason": null
           },
           {
-            "name": "overrideInterest",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "penalty",
+            "name": "penaltyOnInstallment",
             "description": null,
             "args": [],
             "type": {
@@ -53148,12 +53582,48 @@
             "deprecationReason": null
           },
           {
-            "name": "problematicLoanProvision",
+            "name": "penaltyOnInterest",
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "Float",
+              "kind": "OBJECT",
+              "name": "Penalty",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "penaltyOnPrincipal",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Penalty",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "postingFrequency",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "LoanProductInstallment",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "prematurePenaltySetup",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "PrematurePenaltyFormState",
               "ofType": null
             },
             "isDeprecated": false,
@@ -53264,7 +53734,7 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
+              "kind": "LIST",
               "name": null,
               "ofType": {
                 "kind": "ENUM",
@@ -53285,22 +53755,6 @@
               "ofType": {
                 "kind": "ENUM",
                 "name": "LoanRequiredDocuments",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "serviceCharge",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "ServiceTypeFormState",
                 "ofType": null
               }
             },
@@ -53335,6 +53789,30 @@
                   "ofType": null
                 }
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updateInterest",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "waiveInterest",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -53420,6 +53898,41 @@
       },
       {
         "kind": "OBJECT",
+        "name": "LoanProductData",
+        "description": null,
+        "fields": [
+          {
+            "name": "data",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "LoanProduct",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "error",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "QueryError",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "LoanProductEdge",
         "description": null,
         "fields": [
@@ -53468,6 +53981,18 @@
         "fields": null,
         "inputFields": [
           {
+            "name": "allowGurantee",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "allowPartialInstallment",
             "description": null,
             "type": {
@@ -53480,12 +54005,32 @@
             "deprecationReason": null
           },
           {
-            "name": "badLoanProvision",
+            "name": "collateralTypes",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "Collateral",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "collateralValue",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "CollateralInput",
+                "ofType": null
+              }
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -53524,35 +54069,11 @@
             "deprecationReason": null
           },
           {
-            "name": "disburementOfDMV",
+            "name": "description",
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "disburementOfFMV",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "doubtfulLoanProvision",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Float",
+              "name": "String",
               "ofType": null
             },
             "defaultValue": null,
@@ -53620,11 +54141,11 @@
             "deprecationReason": null
           },
           {
-            "name": "goodLoanProvision",
+            "name": "installmentFrequency",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "Float",
+              "kind": "ENUM",
+              "name": "LoanProductInstallment",
               "ofType": null
             },
             "defaultValue": null,
@@ -53632,11 +54153,11 @@
             "deprecationReason": null
           },
           {
-            "name": "installmentType",
+            "name": "insuranceType",
             "description": null,
             "type": {
-              "kind": "ENUM",
-              "name": "LoanPaymentInstallmentType",
+              "kind": "INPUT_OBJECT",
+              "name": "InsuranceType",
               "ofType": null
             },
             "defaultValue": null,
@@ -53649,6 +54170,18 @@
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "InterestRate",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "interestMethod",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "LoanInterestMethod",
               "ofType": null
             },
             "defaultValue": null,
@@ -53728,6 +54261,34 @@
             "deprecationReason": null
           },
           {
+            "name": "ledgerMapping",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "LedgerMapping",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "loanProcessingCharge",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "ServiceType",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "loanScheduleChangeOverride",
             "description": null,
             "type": {
@@ -53772,7 +54333,7 @@
             "description": null,
             "type": {
               "kind": "ENUM",
-              "name": "Frequency",
+              "name": "FrequencyTenure",
               "ofType": null
             },
             "defaultValue": null,
@@ -53804,6 +54365,18 @@
             "deprecationReason": null
           },
           {
+            "name": "maxPercentOfGurantee",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "maxTenure",
             "description": null,
             "type": {
@@ -53820,7 +54393,7 @@
             "description": null,
             "type": {
               "kind": "ENUM",
-              "name": "Frequency",
+              "name": "FrequencyTenure",
               "ofType": null
             },
             "defaultValue": null,
@@ -53856,7 +54429,7 @@
             "description": null,
             "type": {
               "kind": "ENUM",
-              "name": "Frequency",
+              "name": "FrequencyTenure",
               "ofType": null
             },
             "defaultValue": null,
@@ -53892,7 +54465,7 @@
             "description": null,
             "type": {
               "kind": "ENUM",
-              "name": "Frequency",
+              "name": "FrequencyTenure",
               "ofType": null
             },
             "defaultValue": null,
@@ -53917,18 +54490,6 @@
             "type": {
               "kind": "SCALAR",
               "name": "Amount",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "modeOfPayment",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "LoanPaymentMode",
               "ofType": null
             },
             "defaultValue": null,
@@ -53984,23 +54545,11 @@
             "deprecationReason": null
           },
           {
-            "name": "overrideInterest",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "penalty",
+            "name": "penaltyOnInstallment",
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "PenaltyInput",
+              "name": "PenaltyTypeInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -54008,11 +54557,47 @@
             "deprecationReason": null
           },
           {
-            "name": "problematicLoanProvision",
+            "name": "penaltyOnInterest",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "Float",
+              "kind": "INPUT_OBJECT",
+              "name": "PenaltyTypeInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "penaltyOnPrincipal",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "PenaltyTypeInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "postingFrequency",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "LoanProductInstallment",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "prematurePenaltySetup",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "PrematurePenalty",
               "ofType": null
             },
             "defaultValue": null,
@@ -54100,7 +54685,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "RebateInput",
+              "name": "RebateTypeInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -54111,7 +54696,7 @@
             "name": "repaymentScheme",
             "description": null,
             "type": {
-              "kind": "NON_NULL",
+              "kind": "LIST",
               "name": null,
               "ofType": {
                 "kind": "ENUM",
@@ -54132,22 +54717,6 @@
               "ofType": {
                 "kind": "ENUM",
                 "name": "LoanRequiredDocuments",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "serviceCharge",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "INPUT_OBJECT",
-                "name": "ServiceType",
                 "ofType": null
               }
             },
@@ -54186,10 +54755,81 @@
             "defaultValue": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "updateInterest",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "waiveInterest",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "interfaces": null,
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "LoanProductInstallment",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "DAILY",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "HALF_YEARLY",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "MONTHLY",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "QUARTERLY",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "WEEKLY",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "YEARLY",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {
@@ -54779,7 +55419,7 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "LoanProduct",
+              "name": "LoanProductData",
               "ofType": null
             },
             "isDeprecated": false,
@@ -54850,8 +55490,8 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "Any",
+              "kind": "OBJECT",
+              "name": "LoanProductsQuery",
               "ofType": null
             },
             "isDeprecated": false,
@@ -58786,13 +59426,13 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "PRODUCTIVE",
+            "name": "PROGRESSIVE",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "UNPRODUCTIVE",
+            "name": "UNPROGRESSIVE",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -60687,30 +61327,6 @@
             "deprecationReason": null
           },
           {
-            "name": "flatRatePenalty",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "minimumAmount",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Amount",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "penaltyAmount",
             "description": null,
             "args": [],
@@ -60723,24 +61339,24 @@
             "deprecationReason": null
           },
           {
-            "name": "penaltyRate",
+            "name": "penaltyLedgerMapping",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "rateType",
+            "name": "penaltyRate",
             "description": null,
             "args": [],
             "type": {
-              "kind": "ENUM",
-              "name": "PenaltyRateType",
+              "kind": "SCALAR",
+              "name": "Float",
               "ofType": null
             },
             "isDeprecated": false,
@@ -60770,30 +61386,6 @@
             "deprecationReason": null
           },
           {
-            "name": "flatRatePenalty",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "minimumAmount",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "penaltyAmount",
             "description": null,
             "args": [],
@@ -60806,24 +61398,24 @@
             "deprecationReason": null
           },
           {
-            "name": "penaltyRate",
+            "name": "penaltyLedgerMapping",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "rateType",
+            "name": "penaltyRate",
             "description": null,
             "args": [],
             "type": {
-              "kind": "ENUM",
-              "name": "PenaltyRateType",
+              "kind": "SCALAR",
+              "name": "Float",
               "ofType": null
             },
             "isDeprecated": false,
@@ -61032,6 +61624,65 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "PenaltyTypeInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "dayAfterInstallmentDate",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "penaltyAmount",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Amount",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "penaltyLedgerMapping",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "penaltyRate",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -62324,7 +62975,7 @@
         "description": null,
         "fields": [
           {
-            "name": "daysBeforeInstallmentDate",
+            "name": "dayBeforeInstallmentDate",
             "description": null,
             "args": [],
             "type": {
@@ -62348,24 +62999,36 @@
             "deprecationReason": null
           },
           {
-            "name": "percentage",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "rebateAmount",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
               "name": "Amount",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "rebateLedgerMapping",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "rebateRate",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
               "ofType": null
             },
             "isDeprecated": false,
@@ -62383,7 +63046,7 @@
         "description": null,
         "fields": [
           {
-            "name": "daysBeforeInstallmentDate",
+            "name": "dayBeforeInstallmentDate",
             "description": null,
             "args": [],
             "type": {
@@ -62407,24 +63070,36 @@
             "deprecationReason": null
           },
           {
-            "name": "percentage",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "rebateAmount",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
               "name": "Amount",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "rebateLedgerMapping",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "rebateRate",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
               "ofType": null
             },
             "isDeprecated": false,
@@ -62484,6 +63159,77 @@
             "type": {
               "kind": "SCALAR",
               "name": "Amount",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "RebateTypeInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "dayBeforeInstallmentDate",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "noOfInstallment",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "rebateAmount",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Amount",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "rebateLedgerMapping",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "rebateRate",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Float",
               "ofType": null
             },
             "defaultValue": null,

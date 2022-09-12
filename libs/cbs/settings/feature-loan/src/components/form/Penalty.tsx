@@ -64,13 +64,13 @@ export const Penalty = () => {
                 </SubHeadingText>
                 <InputGroupContainer>
                   <FormInput
-                    name="penalty.dayAfterInstallmentDate"
+                    name="penaltyOnPrincipal.dayAfterInstallmentDate"
                     type="number"
                     label={t['loanProductDaysafterinstallmentdate']}
                   />
 
                   <FormInput
-                    name="penalty.penaltyRate"
+                    name="penaltyOnPrincipal.penaltyRate"
                     type="number"
                     label={t['loanProductpenalty']}
                     textAlign={'right'}
@@ -85,12 +85,12 @@ export const Penalty = () => {
                     }
                   />
                   <FormInput
-                    name="penalty.penaltyAmount"
+                    name="penaltyOnPrincipal.penaltyAmount"
                     type="number"
                     label={t['loanProductPenaltyAmount']}
                   />
                   <FormSelect
-                    name="penalty.penaltyLedgerMapping"
+                    name="penaltyOnPrincipal.penaltyLedgerMapping"
                     label={t['loanProductPenaltyedgerMapping']}
                     options={coaList}
                   />
@@ -107,13 +107,13 @@ export const Penalty = () => {
                 </SubHeadingText>
                 <InputGroupContainer>
                   <FormInput
-                    name="penalty.dayAfterInstallmentDate"
+                    name="penaltyOnInterest.dayAfterInstallmentDate"
                     type="number"
                     label={t['loanProductDaysafterinstallmentdate']}
                   />
 
                   <FormInput
-                    name="penalty.penaltyRate"
+                    name="penaltyOnInterest.penaltyRate"
                     type="number"
                     label={t['loanProductpenalty']}
                     textAlign={'right'}
@@ -128,12 +128,12 @@ export const Penalty = () => {
                     }
                   />
                   <FormInput
-                    name="penalty.penaltyAmount"
+                    name="penaltyOnInterest.penaltyAmount"
                     type="number"
                     label={t['loanProductPenaltyAmount']}
                   />
                   <FormSelect
-                    name="penalty.penaltyLedgerMapping"
+                    name="penaltyOnInterest.penaltyLedgerMapping"
                     label={t['loanProductPenaltyedgerMapping']}
                     options={coaList}
                   />
@@ -150,13 +150,13 @@ export const Penalty = () => {
                 </SubHeadingText>
                 <InputGroupContainer>
                   <FormInput
-                    name="penalty.dayAfterInstallmentDate"
+                    name="penaltyOnInstallment.dayAfterInstallmentDate"
                     type="number"
                     label={t['loanProductDaysafterinstallmentdate']}
                   />
 
                   <FormInput
-                    name="penalty.penaltyRate"
+                    name="penaltyOnInstallment.penaltyRate"
                     type="number"
                     label={t['loanProductpenalty']}
                     textAlign={'right'}
@@ -171,12 +171,12 @@ export const Penalty = () => {
                     }
                   />
                   <FormInput
-                    name="penalty.penaltyAmount"
+                    name="penaltyOnInstallment.penaltyAmount"
                     type="number"
                     label={t['loanProductPenaltyAmount']}
                   />
                   <FormSelect
-                    name="penalty.penaltyLedgerMapping"
+                    name="penaltyOnInstallment.penaltyLedgerMapping"
                     label={t['loanProductPenaltyedgerMapping']}
                     options={coaList}
                   />

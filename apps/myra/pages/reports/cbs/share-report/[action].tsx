@@ -1,6 +1,7 @@
 import { ReactElement, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { Spinner } from '@chakra-ui/react';
 
 import {
   ReportPeriodType,
@@ -16,7 +17,7 @@ import {
   ReportOrganization,
   ShareReportTable,
 } from '@coop/cbs/reports/components';
-import { Box, Divider, Loader, MainLayout, NoDataState } from '@coop/shared/ui';
+import { Box, Divider, MainLayout, NoDataState } from '@coop/shared/ui';
 
 interface ReportFilterType {
   memberId: string;
@@ -132,7 +133,7 @@ const NewShareStatementReport = () => {
                 justifyContent="center"
               >
                 {' '}
-                <Loader />{' '}
+                <Spinner />{' '}
               </Box>
             ) : !shareStatement ||
               !shareStatementData ||

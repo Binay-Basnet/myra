@@ -1,19 +1,17 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
-import addUserReducer from './addUserSlice';
-import authReducer from './authSlice';
-import coopUnionReducer from './coopUnionSlice';
-import counterReducer from './counterSlice';
-import loanSettingReducer from './loanSettingsSlice';
+import addUserSlice from './addUserSlice';
+import authSlice from './authSlice';
+import counterSlice from './counterSlice';
+import loanSettingSlice from './loanSettingsSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
-    auth: authReducer,
-    loanSettings: loanSettingReducer,
-    addUser: addUserReducer,
-    coopUnion: coopUnionReducer,
+    counter: counterSlice,
+    auth: authSlice,
+    loanSettings: loanSettingSlice,
+    addUser: addUserSlice,
   },
 });
 

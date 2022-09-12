@@ -13,7 +13,7 @@ import {
   useTranslation,
 } from '@coop/shared/utils';
 
-import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
+import { useCooperativeUnionInstitution } from '../../../hooks';
 import { getFieldOption } from '../../../utils/getFieldOption';
 
 interface IInstituteBasicInfoProps {
@@ -27,7 +27,7 @@ export const InstituteBasicInfo = ({
 
   const methods = useForm<CoopUnionInstitutionInformationInput>();
 
-  useCoopUnionInstitution({ methods });
+  useCooperativeUnionInstitution({ methods });
 
   const { data: organizationTypeFields } = useGetCoopUnionKymOptionsQuery({
     searchTerm: FormFieldSearchTerm.OrganizationType,

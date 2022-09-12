@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 
 import workerSrc from './pdf-worker';
-import Loader from '../loader/Loader';
+import { Spinner } from '@chakra-ui/react';
 
 pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
 
@@ -27,7 +27,7 @@ export function PDFViewer({ file }: PDFViewerProps) {
       file={file}
       onLoadSuccess={onDocumentLoadSuccess}
       renderMode="svg"
-      loading={<Loader />}
+      loading={<Spinner />}
     >
       {Array.from({ length: numPages }, (_, index) => (
         <Page

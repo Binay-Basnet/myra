@@ -23,7 +23,6 @@ export interface Option {
     age?: number | null | undefined;
     maritialStatus?: string;
     address?: string;
-    profilePicUrl?: string | null | undefined;
   };
 }
 

@@ -38,27 +38,27 @@ export const PrematurePenalty = () => {
   return (
     <FormSection header="depositProductPrematuredPenaltySetup">
       <FormSelect
-        name="prematurePenalty.penaltyDateType"
+        name="prematurePenaltySetup.penaltyDateType"
         label={t['depositProductPenaltyDateType']}
         options={penaltyDataType}
       />
       <FormInput
-        name="prematurePenalty.noOfDays"
+        name="prematurePenaltySetup.noOfDays"
         label={t['depositProductNumberofDays']}
       />
       <FormSelect
-        name="prematurePenalty.penaltyLedgerMapping"
+        name="prematurePenaltySetup.penaltyLedgerMapping"
         label={t['depositProductPenaltyLedgerMapping']}
         options={coaList}
       />
       <FormInput
-        name="prematurePenalty.penaltyAmount"
+        name="prematurePenaltySetup.penaltyAmount"
         type={'number'}
         label={t['depositProductPenaltyAmount']}
         textAlign={'right'}
       />
       <FormInput
-        name="prematurePenalty.penaltyRate"
+        name="prematurePenaltySetup.penaltyRate"
         label={t['depositProductPenaltyRate']}
         rightElement={
           <Text fontWeight="Medium" fontSize="r1" color="primary.500">

@@ -14,7 +14,7 @@ export const Vehicle = () => {
     >
       <Grid templateColumns="repeat(2,1fr)" gap="s16">
         <FormInput
-          name="disburementOfFMV"
+          name="vehicle.minValue"
           label={t['loanProductMinimumPercentageofDepriciatedValue']}
           textAlign={'right'}
           rightElement={
@@ -25,7 +25,7 @@ export const Vehicle = () => {
           type={'number'}
         />
         <FormInput
-          name="disburementOfDMV"
+          name="vehicle.maxValue"
           label={t['loanProductMaximumPercentageofDepriciatedValue']}
           textAlign={'right'}
           rightElement={

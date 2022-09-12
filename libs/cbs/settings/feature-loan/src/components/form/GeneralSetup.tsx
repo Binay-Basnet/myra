@@ -264,12 +264,12 @@ export function GeneralSetup() {
 
   const productNature = [
     {
-      label: t['loanProductProductive'],
-      value: NatureOfLoanProduct.Productive,
+      label: t['loanProductProgressive'],
+      value: NatureOfLoanProduct.Progressive,
     },
     {
-      label: t['loanProductUnproductive'],
-      value: NatureOfLoanProduct.Unproductive,
+      label: t['loanProductUnprogressive'],
+      value: NatureOfLoanProduct.Unprogressive,
     },
   ];
 
@@ -297,6 +297,9 @@ export function GeneralSetup() {
         options={productNature}
         label={t['loanProductNatureLoanProduct']}
       />
+      <GridItem colSpan={3}>
+        <FormInput name="description" label={t['loanProductDescription']} />
+      </GridItem>
     </FormSection>
   );
 }

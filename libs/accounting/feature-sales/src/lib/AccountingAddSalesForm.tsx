@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { GrClose } from 'react-icons/gr';
@@ -7,10 +6,20 @@ import { Icon } from '@chakra-ui/react';
 
 import { DividerContainer } from '@coop/accounting/ui-components';
 import { FormEditableTable } from '@coop/shared/form';
-import { Box, Button, Container, FormFooter, IconButton, Text } from '@coop/shared/ui';
+import {
+  Box,
+  Button,
+  Container,
+  FormFooter,
+  IconButton,
+  Text,
+} from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { SalesBox, SalesDetails } from '../components/form-components/salesEntry';
+import {
+  SalesBox,
+  SalesDetails,
+} from '../components/form-components/salesEntry';
 
 /* eslint-disable-next-line */
 export interface CbsAccountOpenFormProps {}
@@ -40,47 +49,9 @@ const search_options = [
   { label: 'MI 0010 - Lenovo Laptop', value: 'mi0010' },
 ];
 
-export const NewSalesForm = () => {
+export function NewSalesForm() {
   const { t } = useTranslation();
-  const data = [
-    {
-      product_id: 'mi001',
-      quantity: 1999,
-      rate: 300,
-      tax: 300,
-      total_amount: 2_398_800,
-      product_description: '',
-      sales_ledger: '',
-    },
-    {
-      product_id: 'mi002',
-      quantity: 39,
-      rate: 30,
-      tax: 300,
-      total_amount: 4680,
-      product_description: '',
-      sales_ledger: '',
-    },
-    {
-      product_id: 'mi005',
-      quantity: 3000,
-      rate: 400,
-      tax: 100,
-      total_amount: 2_400_000,
-      product_description: '',
-      sales_ledger: '',
-    },
-  ];
-  const [trigger, setTrigger] = useState(false);
   const methods = useForm();
-
-  useEffect(() => {
-    if (trigger) {
-      methods.reset({ data });
-    }
-  }, [trigger]);
-
-  console.log(methods.watch());
 
   return (
     <>
@@ -91,7 +62,6 @@ export const NewSalesForm = () => {
         bg="gray.0"
         minH="calc(100vh - 170px)"
       >
-        <Button onClick={() => setTrigger((previous) => !previous)}>Set Data</Button>
         <Box
           height="60px"
           display="flex"
@@ -100,17 +70,17 @@ export const NewSalesForm = () => {
           px="5"
           borderBottom="1px solid "
           borderColor="border.layout"
-          bg="gray.0"
+          bg={'gray.0'}
           borderTopRadius={5}
           position="sticky"
           top="110px"
           zIndex={8}
         >
           <Text fontSize="r2" fontWeight="600">
-            {t.accountingSalesFormNewSalesEntry}
+            {t['accountingSalesFormNewSalesEntry']}
           </Text>
           <IconButton
-            variant="ghost"
+            variant={'ghost'}
             aria-label="close"
             icon={<GrClose />}
             onClick={() => router.back()}
@@ -127,7 +97,7 @@ export const NewSalesForm = () => {
                   columns={[
                     {
                       accessor: 'product_id',
-                      header: t.Salesproduct_id,
+                      header: t['Salesproduct_id'],
                       cellWidth: 'auto',
                       fieldType: 'search',
                       searchOptions: search_options,
@@ -135,31 +105,32 @@ export const NewSalesForm = () => {
 
                     {
                       accessor: 'quantity',
-                      header: t.SalesQuantity,
+                      header: t['SalesQuantity'],
                       isNumeric: true,
                     },
                     {
                       accessor: 'rate',
-                      header: t.SaleRate,
+                      header: t['SaleRate'],
                       isNumeric: true,
                     },
                     {
                       accessor: 'tax',
-                      header: t.SaleTax,
+                      header: t['SaleTax'],
                       isNumeric: true,
                       fieldType: 'percentage',
                     },
                     {
                       accessor: 'total_amount',
-                      header: t.SaleTotalAmount,
+                      header: t['SaleTotalAmount'],
                       isNumeric: true,
 
                       accessorFn: (row) =>
-                        row.quantity * row.rate + (row.quantity * row.rate * row.tax) / 100,
+                        row.quantity * row.rate +
+                        (row.quantity * row.rate * row.tax) / 100,
                     },
                     {
                       accessor: 'product_description',
-                      header: t.SaleProductDescription,
+                      header: t['SaleProductDescription'],
                       hidden: true,
 
                       fieldType: 'textarea',
@@ -168,12 +139,12 @@ export const NewSalesForm = () => {
                     {
                       accessor: 'warehouse_partition',
                       hidden: true,
-                      header: t.SaleWarehousePartition,
+                      header: t['SaleWarehousePartition'],
                     },
                     {
                       accessor: 'sales_ledger',
                       hidden: true,
-                      header: t.SaleSelectWareLedger,
+                      header: t['SaleSelectWareLedger'],
                     },
                   ]}
                 />
@@ -190,16 +161,21 @@ export const NewSalesForm = () => {
             draftButton={
               <Button type="submit" variant="ghost" shade="neutral">
                 <Icon as={BiSave} />
-                <Text alignSelf="center" fontWeight="Medium" fontSize="s2" ml="5px">
-                  {t.saveDraft}
+                <Text
+                  alignSelf="center"
+                  fontWeight="Medium"
+                  fontSize="s2"
+                  ml="5px"
+                >
+                  {t['saveDraft']}
                 </Text>
               </Button>
             }
-            mainButtonLabel={t.submit}
+            mainButtonLabel={t['submit']}
             mainButtonHandler={() => alert('Submitted')}
           />
         </Container>
       </Box>
     </>
   );
-};
+}

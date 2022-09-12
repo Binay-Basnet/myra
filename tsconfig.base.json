@@ -17,8 +17,6 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
     "paths": {
       "@coop/accounting/accounting": ["libs/accounting/feature-accounting/src/index.ts"],
       "@coop/accounting/purchase": ["libs/accounting/feature-purchase/src/index.ts"],

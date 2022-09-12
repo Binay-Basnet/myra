@@ -13,7 +13,6 @@ mutation setLoanProduct($id: ID!, $data: LoanProductInput) {
           error {
             ...MutationError
           }
-          query
         }
       }
     }

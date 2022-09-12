@@ -44,7 +44,6 @@ query getLoanProductList(
                 defaultRate
                 ceoAuthority
                 boardAuthority
-                interestMethod
               }
             }
           }
@@ -60,90 +59,126 @@ query getLoanProductEditData($id: ID!) {
     general {
       loanProducts {
         formState(id: $id) {
-          id
-          objState
-          createdAt
-          modifiedAt
-          productName
-          productType
-          productSubType
-          productNature
-          productCode {
-            prefix
-            initialNo
-          }
-          typeOfMember
-          criteria
-          minAge
-          maxAge
-          genderId
-          maritalStatusId
-          educationQualification
-          ethnicity
-          occupation
-          foreignEmployment
-          natureOfBusinessInstitution
-          natureOFBusinessCoop
-          cooperativeType
-          minTenure
-          minTenureUnit
-          minTenureUnitNumber
-          maxTenure
-          maxTenureUnit
-          maxTenureUnitNumber
-          minimumLoanAmount
-          maxLoanAmount
-          repaymentScheme
-          modeOfPayment
-          installmentType
-          allowPartialInstallment
-          isMonthlyInstallmentCompulsory
-          isPenaltyApplicable
-          penalty {
-            dayAfterInstallmentDate
-            minimumAmount
-            rateType
-            flatRatePenalty
-            penaltyRate
-            penaltyAmount
-          }
-          isRebateApplicable
-          rebate {
-            daysBeforeInstallmentDate
-            noOfInstallment
-            rebateAmount
-            percentage
-          }
-          minGraceDurationUnit
-          minGraceDurationUnitNumber
-          maxGraceDurationUnit
-          maxGraceDurationUnitNumber
-          interest {
-            minRate
-            maxRate
-            defaultRate
-            ceoAuthority
-            boardAuthority
+          data {
+            id
+            objState
+            createdAt
+            modifiedAt
+            productName
+            productType
+            productSubType
+            productNature
+            productCode {
+              prefix
+              initialNo
+            }
+            description
+            typeOfMember
+            criteria
+            minAge
+            maxAge
+            genderId
+            maritalStatusId
+            educationQualification
+            ethnicity
+            occupation
+            foreignEmployment
+            natureOfBusinessInstitution
+            natureOFBusinessCoop
+            cooperativeType
+            minTenure
+            minTenureUnit
+            minTenureUnitNumber
+            maxTenure
+            maxTenureUnit
+            maxTenureUnitNumber
+            minimumLoanAmount
+            maxLoanAmount
+            repaymentScheme
+            allowPartialInstallment
+            isMonthlyInstallmentCompulsory
             interestMethod
+            isPenaltyApplicable
+            penaltyOnPrincipal {
+              dayAfterInstallmentDate
+              penaltyRate
+              penaltyAmount
+              penaltyLedgerMapping
+            }
+            penaltyOnInterest {
+              dayAfterInstallmentDate
+              penaltyRate
+              penaltyAmount
+              penaltyLedgerMapping
+            }
+            penaltyOnInstallment {
+              dayAfterInstallmentDate
+              penaltyRate
+              penaltyAmount
+              penaltyLedgerMapping
+            }
+            isRebateApplicable
+            rebate {
+              dayBeforeInstallmentDate
+              rebateRate
+              rebateAmount
+              rebateLedgerMapping
+            }
+            minGraceDurationUnit
+            minGraceDurationUnitNumber
+            maxGraceDurationUnit
+            maxGraceDurationUnitNumber
+            interest {
+              minRate
+              maxRate
+              defaultRate
+              ceoAuthority
+              boardAuthority
+            }
+            updateInterest
+            waiveInterest
+            postingFrequency
+            loanProcessingCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            isInsuranceApplicable
+            insuranceType {
+              type
+              amount
+              rate
+            }
+            ledgerMapping {
+              principal
+              interestAccuredDaily
+              interestIncome
+            }
+            isStaffProduct
+            supportMultipleAccounts
+            loanScheduleChangeOverride
+            requiredDocuments
+            isCollateralRequired
+            allowGurantee
+            maxPercentOfGurantee
+            collateralTypes
+            collateralValue {
+              type
+              minFMV
+              maxFMV
+              minDV
+              maxDV
+              minValue
+              maxValue
+            }
+            prematurePenaltySetup {
+              penaltyDateType
+              noOfDays
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
           }
-          overrideInterest
-          serviceCharge {
-            serviceName
-            ledgerName
-            amount
-          }
-          goodLoanProvision
-          doubtfulLoanProvision
-          problematicLoanProvision
-          badLoanProvision
-          isInsuranceApplicable
-          isCollateralRequired
-          disburementOfFMV
-          disburementOfDMV
-          isStaffProduct
-          supportMultipleAccounts
-          loanScheduleChangeOverride
-          requiredDocuments
         }
       }
     }

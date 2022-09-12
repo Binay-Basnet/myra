@@ -1,6 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
-import { FormCheckbox, FormSwitchTab } from '@coop/shared/form';
+import { Collateral } from '@coop/cbs/data-access';
+import { FormCheckboxGroup, FormSwitchTab } from '@coop/shared/form';
 import { Box, FormSection, GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -10,19 +11,36 @@ import { LandAndBuilding } from './LandAndBuilding';
 import { Vehicle } from './Vehicle';
 import { SubHeadingText } from '../formui';
 
-export const Collateral = () => {
+export const CollateralForm = () => {
   const { watch } = useFormContext();
   const { t } = useTranslation();
 
   const collateral = watch('isCollateralRequired');
-  const land = watch('land');
-  const landAndBuilding = watch('landAndBuilding');
-  const vehicle = watch('vehicle');
-  const depositSaving = watch('depositSaving');
+  const collateralTypes = watch('collateralTypes');
 
   const yesNo = [
     { label: t['yes'], value: true },
     { label: t['no'], value: false },
+  ];
+
+  const landOption = [{ label: t['loanProductLand'], value: Collateral.Land }];
+  const landAndBuildingOption = [
+    {
+      label: t['loanProductLandandBuilding'],
+      value: Collateral.LandAndBuilding,
+    },
+  ];
+  const vehicleOption = [
+    { label: t['loanProductVehicle'], value: Collateral.Vehicle },
+  ];
+  const depositSavingOption = [
+    { label: t['loanProductDepositSaving'], value: Collateral.DepositOrSaving },
+  ];
+  const docOption = [
+    { label: t['loanProductDocuments'], value: Collateral.Documents },
+  ];
+  const otherOption = [
+    { label: t['loanProductOthers'], value: Collateral.Others },
   ];
 
   return (
@@ -39,22 +57,34 @@ export const Collateral = () => {
           </Box>
           {collateral && (
             <>
-              <FormCheckbox name="land" label={t['loanProductLand']} />
-              {land && <Land />}
-              <FormCheckbox
-                name="landAndBuilding"
-                label={t['loanProductLandandBuilding']}
+              <FormCheckboxGroup name="collateralTypes" list={landOption} />
+
+              {collateralTypes?.includes(Collateral.Land) && <Land />}
+
+              <FormCheckboxGroup
+                name="collateralTypes"
+                list={landAndBuildingOption}
               />
-              {landAndBuilding && <LandAndBuilding />}
-              <FormCheckbox name="vehicle" label={t['loanProductVehicle']} />
-              {vehicle && <Vehicle />}
-              <FormCheckbox
-                name="depositSaving"
-                label={t['loanProductDepositSaving']}
+
+              {collateralTypes?.includes(Collateral.LandAndBuilding) && (
+                <LandAndBuilding />
+              )}
+
+              <FormCheckboxGroup name="collateralTypes" list={vehicleOption} />
+
+              {collateralTypes?.includes(Collateral.Vehicle) && <Vehicle />}
+
+              <FormCheckboxGroup
+                name="collateralTypes"
+                list={depositSavingOption}
               />
-              {depositSaving && <DepositSaving />}
-              <FormCheckbox name="document" label={t['loanProductDocuments']} />
-              <FormCheckbox name="others" label={t['loanProductOthers']} />
+
+              {collateralTypes?.includes(Collateral.DepositOrSaving) && (
+                <DepositSaving />
+              )}
+
+              <FormCheckboxGroup name="collateralTypes" list={docOption} />
+              <FormCheckboxGroup name="collateralTypes" list={otherOption} />
             </>
           )}
         </Box>
