@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Frequency } from '@coop/cbs/data-access';
+import { FrequencyTenure } from '@coop/cbs/data-access';
 import { SubHeadingText } from '@coop/shared/components';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
@@ -32,19 +32,19 @@ export const LoanRepayment = () => {
   const unitOptions = [
     {
       label: t['day'],
-      value: Frequency.Daily,
+      value: FrequencyTenure.Day,
     },
     {
       label: t['week'],
-      value: Frequency.Weekly,
+      value: FrequencyTenure.Week,
     },
     {
       label: t['month'],
-      value: Frequency.Monthly,
+      value: FrequencyTenure.Month,
     },
     {
       label: t['year'],
-      value: Frequency.Yearly,
+      value: FrequencyTenure.Year,
     },
   ];
 
@@ -81,13 +81,13 @@ export const LoanRepayment = () => {
                   textAlign={'right'}
                   label={t['loanProductNumber']}
                   rightAddonText={
-                    rightElementMin && rightElementMin === Frequency.Daily
+                    rightElementMin && rightElementMin === FrequencyTenure.Day
                       ? t['days']
-                      : rightElementMin === Frequency.Weekly
+                      : rightElementMin === FrequencyTenure.Week
                       ? t['weeks']
-                      : rightElementMin === Frequency.Monthly
+                      : rightElementMin === FrequencyTenure.Month
                       ? t['months']
-                      : rightElementMin === Frequency.Yearly
+                      : rightElementMin === FrequencyTenure.Year
                       ? t['years']
                       : ''
                   }
@@ -125,13 +125,13 @@ export const LoanRepayment = () => {
                   textAlign={'right'}
                   label={t['loanProductNumber']}
                   rightAddonText={
-                    rightElementMax && rightElementMax === Frequency.Daily
+                    rightElementMax && rightElementMax === FrequencyTenure.Day
                       ? t['days']
-                      : rightElementMax === Frequency.Weekly
+                      : rightElementMax === FrequencyTenure.Week
                       ? t['weeks']
-                      : rightElementMax === Frequency.Monthly
+                      : rightElementMax === FrequencyTenure.Month
                       ? t['months']
-                      : rightElementMax === Frequency.Yearly
+                      : rightElementMax === FrequencyTenure.Year
                       ? t['years']
                       : ''
                   }

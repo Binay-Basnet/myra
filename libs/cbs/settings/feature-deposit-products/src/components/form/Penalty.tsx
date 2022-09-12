@@ -1,6 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
-import { FormInput, FormSwitchTab } from '@coop/shared/form';
+import { useGetCoaListQuery } from '@coop/cbs/data-access';
+import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { Box, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -26,6 +27,21 @@ export const Penalty = () => {
       value: false,
     },
   ];
+
+  const { data: coa } = useGetCoaListQuery({
+    filter: {
+      active: true,
+    },
+  });
+
+  const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
+
+  const coaList = coaData?.map((item) => {
+    return {
+      label: item?.name?.en as string,
+      value: item?.id as string,
+    };
+  });
 
   return (
     <FormSection>
@@ -72,6 +88,11 @@ export const Penalty = () => {
                   name="penaltyData.penaltyAmount"
                   type="number"
                   label={t['depositProductPenaltyAmount']}
+                />
+                <FormSelect
+                  name="penaltyOnPrincipal.penaltyLedgerMapping"
+                  label={t['depositProductPenaltyedgerMapping']}
+                  options={coaList}
                 />
               </Grid>
             </BoxContainer>

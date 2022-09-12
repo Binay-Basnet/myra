@@ -1,5 +1,5 @@
-import { FormInput, FormSwitch } from '@coop/shared/form';
-import { FormSection, GridItem } from '@coop/shared/ui';
+import { FormInput } from '@coop/shared/form';
+import { FormSection } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export function ProductCode() {
@@ -15,9 +15,6 @@ export function ProductCode() {
         label={t['loanProductIntitialNumber']}
         name="productCode.initialNo"
       />
-      <GridItem colSpan={3}>
-        <FormSwitch name="reset" label={t['loanProductReseteveryfiscalyear']} />
-      </GridItem>
     </FormSection>
   );
 }

@@ -67,7 +67,6 @@ export const Critera = () => {
       header="loanProductCriteria"
       subHeader="loanProductSelectedChecklist"
     >
-      {' '}
       {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && (
         <FormCheckboxGroup name="criteria" list={age} />
       )}

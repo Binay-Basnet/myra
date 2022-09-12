@@ -17,6 +17,11 @@ export const InsuranceApplicable = () => {
     { label: t['no'], value: false },
   ];
 
+  const insuranceTypeList = [
+    { label: 'Type!', value: 'type1' },
+    { label: 'Type2', value: 'type12' },
+  ];
+
   return (
     <FormSection>
       <GridItem colSpan={3}>
@@ -35,14 +40,15 @@ export const InsuranceApplicable = () => {
             <Grid templateColumns="repeat(3,1fr)" gap="s16">
               <GridItem colSpan={3}>
                 <FormSelect
-                  name="insuranceType"
+                  name="insuranceType.type"
                   label={t['loanProductInsuranceType']}
+                  options={insuranceTypeList}
                 />
               </GridItem>
 
               <GridItem colSpan={1}>
                 <FormInput
-                  name="insuranceRate"
+                  name="insuranceType.rate"
                   label={t['loanProductInsuranceRate']}
                   textAlign={'right'}
                   rightElement={
@@ -57,7 +63,7 @@ export const InsuranceApplicable = () => {
               <GridItem colSpan={1}>
                 <FormInput
                   type="text"
-                  name="insuranceAmount"
+                  name="insuranceType.amount"
                   label={t['loanProductInsuranceAmount']}
                 />
               </GridItem>

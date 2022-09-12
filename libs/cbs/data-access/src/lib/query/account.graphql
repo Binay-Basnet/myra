@@ -84,19 +84,14 @@ query getAccountOpenProductDetails($id: ID!) {
             penalty
             penaltyData {
               dayAfterInstallmentDate
-              minimumAmount
-              rateType
-              flatRatePenalty
               penaltyRate
-
               penaltyAmount
             }
             rebate
             rebateData {
-              daysBeforeInstallmentDate
+              dayBeforeInstallmentDate
               noOfInstallment
               rebateAmount
-              percentage
             }
             minTenure
             minTenureUnit
@@ -303,17 +298,13 @@ query getAccountOpenProductPenalty($productId: ID!) {
           data {
             penalty {
               dayAfterInstallmentDate
-              minimumAmount
-              rateType
-              flatRatePenalty
               penaltyRate
               penaltyAmount
             }
             rebate {
-              daysBeforeInstallmentDate
+              dayBeforeInstallmentDate
               noOfInstallment
               rebateAmount
-              percentage
             }
             prematurePenalty {
               penaltyDateType

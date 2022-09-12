@@ -8,18 +8,18 @@ export const LedgerMapping = () => {
   return (
     <FormSection header="loanProductLedgerMapping">
       <FormInput
-        type="text"
-        name="principal"
+        type="ledgerMapping.principal"
+        name="ledgerMapping.principal"
         label={t['loanProductPrincipal']}
       />
       <FormInput
         type="text"
-        name="interestAccuredDaily"
+        name="ledgerMapping.interestAccuredDaily"
         label={t['loanProductInterestAccuredDaily']}
       />
       <FormInput
         type="text"
-        name="interestIncome"
+        name="ledgerMapping.interestIncome"
         label={t['loanProductInterestIncome']}
       />
     </FormSection>
