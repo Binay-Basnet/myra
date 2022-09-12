@@ -25,6 +25,7 @@
   ],
   "rules": {
     // UNICORN RELATED RULES & FILE NAMING CONVENTIONS
+    "import/no-named-as-default": "off",
     "unicorn/no-array-for-each": "off",
     "unicorn/no-null": "off",
     "unicorn/prevent-abbreviations": [
