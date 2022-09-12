@@ -8,6 +8,7 @@ query getSettingsShareIssueChargesData {
             maxShare
             type
             charge
+            ledgerMapping
           }
           other {
             name
@@ -15,6 +16,23 @@ query getSettingsShareIssueChargesData {
             maxShare
             type
             charge
+            ledgerMapping
+          }
+        }
+      }
+    }
+  }
+}
+
+query getLedgerMapingShare {
+  settings {
+    general {
+      chartsOfAccount {
+        accountsUnder(accountCode: "160.8") {
+          data {
+            id
+            accountCode
+            name
           }
         }
       }
@@ -32,6 +50,7 @@ query getSettingsShareReturnChargesData {
             maxShare
             type
             charge
+            ledgerMapping
           }
         }
       }

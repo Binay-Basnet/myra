@@ -1,7 +1,7 @@
-query getCooperativeUnionKymEditData($id: ID!) {
+query getCooperativeUnionKymEditData($id: ID!, $includeRequiredErrors: Boolean) {
   members {
     cooperativeUnion {
-      formState(id: $id) {
+      formState(id: $id, includeRequiredErrors: $includeRequiredErrors) {
         formData {
           institutionInformation {
             data {
@@ -104,15 +104,11 @@ query getCooperativeUnionKymEditData($id: ID!) {
             }
             sectionStatus {
               id
-              #              errors {
-              #                sectionName
-              #                errors
-              #              }
-              #              incomplete {
-              #                sectionName
-              #                incomplete
-              #              }
-              #            }
+              errors
+              sectionStatus {
+                errors
+                incomplete
+              }
             }
           }
         }
@@ -120,10 +116,10 @@ query getCooperativeUnionKymEditData($id: ID!) {
     }
   }
 }
-query getEconimicDetailsEditData($id: ID!) {
+query getEconimicDetailsEditData($id: ID!, $includeRequiredErrors: Boolean) {
   members {
     cooperativeUnion {
-      formState(id: $id) {
+      formState(id: $id,includeRequiredErrors: $includeRequiredErrors) {
         formData {
           economicDetails {
             data {
@@ -184,10 +180,10 @@ query getEconimicDetailsEditData($id: ID!) {
     }
   }
 }
-query getBoardOfDirectorsDetailsList($id: ID!) {
+query getBoardOfDirectorsDetailsList($id: ID!, $includeRequiredErrors: Boolean) {
   members {
     cooperativeUnion {
-      formState(id: $id) {
+      formState(id: $id,includeRequiredErrors: $includeRequiredErrors) {
         formData {
           boardOfDirectorsDetails {
             data {
@@ -238,14 +234,11 @@ query getBoardOfDirectorsDetailsList($id: ID!) {
             }
             sectionStatus {
               id
-              #              errors {
-              #                sectionName
-              #                errors
-              #              }
-              #              incomplete {
-              #                sectionName
-              #                incomplete
-              #              }
+              errors
+              sectionStatus {
+                errors
+                incomplete
+              }
             }
           }
         }
@@ -253,10 +246,10 @@ query getBoardOfDirectorsDetailsList($id: ID!) {
     }
   }
 }
-query getAccountOperatorDetailsList($id: ID!) {
+query getAccountOperatorDetailsList($id: ID!, $includeRequiredErrors: Boolean) {
   members {
     cooperativeUnion {
-      formState(id: $id) {
+      formState(id: $id, includeRequiredErrors: $includeRequiredErrors) {
         formData {
           accountOperatorsDetails {
             data {
@@ -307,14 +300,11 @@ query getAccountOperatorDetailsList($id: ID!) {
             }
             sectionStatus {
               id
-              #              errors {
-              #                sectionName
-              #                errors
-              #              }
-              #              incomplete {
-              #                sectionName
-              #                incomplete
-              #              }
+              errors
+              sectionStatus {
+                errors
+                incomplete
+              }
             }
           }
         }
@@ -322,10 +312,10 @@ query getAccountOperatorDetailsList($id: ID!) {
     }
   }
 }
-query getCentralRepresentativeDetails($id: ID!) {
+query getCentralRepresentativeDetails($id: ID!, $includeRequiredErrors: Boolean) {
   members {
     cooperativeUnion {
-      formState(id: $id) {
+      formState(id: $id, includeRequiredErrors: $includeRequiredErrors) {
         formData {
           centralRepresentativeDetails {
             data {
@@ -376,14 +366,11 @@ query getCentralRepresentativeDetails($id: ID!) {
             }
             sectionStatus {
               id
-              #              errors {
-              #                sectionName
-              #                errors
-              #              }
-              #              incomplete {
-              #                sectionName
-              #                incomplete
-              #              }
+              errors
+              sectionStatus {
+                errors
+                incomplete
+              }
             }
           }
         }
@@ -397,7 +384,54 @@ query getCoopUnionSectionStatus($id: ID!) {
     cooperativeUnion {
       formState(id: $id) {
         sectionStatus {
-          __typename
+          institutionInformation {
+            id
+            sectionStatus {
+              errors
+              incomplete
+            }
+            errors
+          }
+          bodDetails {
+            id
+            sectionStatus {
+              errors
+              incomplete
+            }
+            errors
+          }
+          accountOperatorDetails {
+            id
+            errors
+            sectionStatus {
+              errors
+              incomplete
+            }
+          }
+          centralRepresentativeDetails {
+            id
+            errors
+            sectionStatus {
+              errors
+              incomplete
+            }
+          }
+          economicDetails {
+            id
+            errors
+            sectionStatus {
+              errors
+              incomplete
+            }
+          }
+          declaration {
+            id
+            errors
+            sectionStatus {
+              errors
+              incomplete
+            }
+          }
         }
       }
     }
