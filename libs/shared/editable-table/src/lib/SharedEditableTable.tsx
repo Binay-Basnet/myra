@@ -315,7 +315,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
 
         <Box w="100%" bg="white" borderX="1px" borderColor="border.layout">
           {state?.data.map((data, index) => (
-            <Fragment key={`${data._id}${index}`}>
+            <Fragment key={`${data._id}`}>
               <MemoEditableTableRow
                 canDeleteRow={canDeleteRow}
                 columns={columns}

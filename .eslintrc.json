@@ -19,7 +19,11 @@
     "prettier"
   ],
   "rules": {
+    "no-nested-ternary": "warn",
     "require-jsdoc": "off",
+    "react/require-default-props": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "no-underscore-dangle": "off",
     "valid-jsdoc": "off",
     "camelcase": "off",
     "no-console": "error",

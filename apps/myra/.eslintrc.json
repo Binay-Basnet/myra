@@ -23,14 +23,6 @@
         "@next/next/no-html-link-for-pages": [
           "error",
           "apps/myra/pages"
-        ],
-        "unicorn/filename-case": [
-          "error",
-          {
-            "cases": {
-              "kebabCase": true
-            }
-          }
         ]
       }
     },
