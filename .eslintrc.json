@@ -2,7 +2,14 @@
   "root": true,
   "ignorePatterns": ["**/*", "**/graphql.ts"],
   "plugins": ["unused-imports", "@nrwl/nx", "@typescript-eslint", "simple-import-sort", "prettier"],
-  "extends": ["eslint:recommended", "airbnb", "airbnb-typescript", "airbnb/hooks", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "airbnb",
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "prettier",
+    "plugin:react/jsx-runtime"
+  ],
   "rules": {
     "no-nested-ternary": "warn",
     "require-jsdoc": "off",
