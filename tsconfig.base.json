@@ -38,6 +38,7 @@
       "@coop/cbs/kym-form/formElements": ["libs/cbs/kym-form/ui-form-elements/src/index.ts"],
       "@coop/cbs/kym-form/institution": ["libs/cbs/kym-form/feature-institution/src/index.ts"],
       "@coop/cbs/kym-form/ui-containers": ["libs/cbs/kym-form/ui-containers/src/index.ts"],
+      "@coop/cbs/loan": ["libs/cbs/loan/feature-newloan-application/src/index.ts"],
       "@coop/cbs/members/list": ["libs/cbs/members/feature-list/src/index.ts"],
       "@coop/cbs/members/profile": ["libs/cbs/members/feature-profile/src/index.ts"],
       "@coop/cbs/reports/components": ["libs/cbs/reports/ui-components/src/index.ts"],

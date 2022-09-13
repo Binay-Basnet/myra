@@ -22,14 +22,9 @@ interface IAccountPageLayoutProps {
 
 const loanColumns = [
   {
-    title: 'accountList',
+    title: 'NewLoanApplication',
     link: '/loan',
     addLink: '/loan/add',
-  },
-  {
-    title: 'accountClose',
-    link: '/accounts/account-close',
-    addLinkId: '/accounts/account-close',
   },
 ];
 
@@ -80,9 +75,7 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
                   onClick={() =>
                     newId
                       .mutateAsync({})
-                      .then((res) =>
-                        router.push(`${item.link}/add/${res?.newId}`)
-                      )
+                      .then((res) => router.push(`${item.link}/add/${res?.newId}`))
                   }
                 />
               </Box>
@@ -99,19 +92,12 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
           height="s48"
           width="full"
           justifyContent="start"
-          leftIcon={
-            <Icon as={AiOutlineSetting} size="md" color="primary.500" />
-          }
+          leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
         >
           {t['accountLayoutAccountSettings']}
         </Button>
       </Box>
-      <Box
-        width="calc(100% - 275px)"
-        overflowX="hidden"
-        position="relative"
-        left="275px"
-      >
+      <Box width="calc(100% - 275px)" overflowX="hidden" position="relative" left="275px">
         <Box bg="white" minHeight="100vh">
           {children}
         </Box>
