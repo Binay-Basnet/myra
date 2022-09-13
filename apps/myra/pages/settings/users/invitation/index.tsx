@@ -4,15 +4,15 @@ import {
 } from '@coop/cbs/settings/ui-layout';
 import { Box, WIPState } from '@coop/shared/ui';
 
-const InvitationList = () => {
+const InvitationList = () =>
   //   return <InvitationListList />;
 
-  return (
+   (
     <Box display="flex" justifyContent="center" alignItems="center">
       <WIPState />
     </Box>
-  );
-};
+  )
+;
 
 export default InvitationList;
 InvitationList.getLayout = function getLayout(page) {

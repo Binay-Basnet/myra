@@ -4,9 +4,7 @@ import { AccountingFeaturePurchaseList } from '@coop/accounting/purchase';
 import { AccountingLayout, PurchaseLayout } from '@coop/accounting/ui-layouts';
 
 // TODO ( Update this page when design arrives )
-const AccountingPurchaseList = () => {
-  return <AccountingFeaturePurchaseList />;
-};
+const AccountingPurchaseList = () => <AccountingFeaturePurchaseList />;
 
 AccountingPurchaseList.getLayout = function getLayout(page: ReactElement) {
   return (

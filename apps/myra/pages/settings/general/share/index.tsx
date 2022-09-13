@@ -7,9 +7,7 @@ import {
   SettingsShareLayout,
 } from '@coop/cbs/settings/ui-layout';
 
-const ShareGeneral = () => {
-  return <ShareSettingsGeneralPage />;
-};
+const ShareGeneral = () => <ShareSettingsGeneralPage />;
 
 export default ShareGeneral;
 

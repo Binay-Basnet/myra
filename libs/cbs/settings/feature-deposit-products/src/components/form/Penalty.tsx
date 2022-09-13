@@ -5,12 +5,7 @@ import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { Box, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import {
-  BoxContainer,
-  SubHeadingText,
-  SubText,
-  TextBoxContainer,
-} from '../formui';
+import { BoxContainer, SubHeadingText, SubText, TextBoxContainer } from '../formui';
 
 export const Penalty = () => {
   const { t } = useTranslation();
@@ -52,11 +47,7 @@ export const Penalty = () => {
               <SubHeadingText>{t['depositProductpenalty']} </SubHeadingText>
               <SubText>{t['depositProductEnterPenaltydetails']} </SubText>
             </TextBoxContainer>
-            <FormSwitchTab
-              name="penalty"
-              defaultValue={'false'}
-              options={enableSwitch}
-            />
+            <FormSwitchTab name="penalty" defaultValue={'false'} options={enableSwitch} />
           </Box>
           {penalty && (
             <BoxContainer
@@ -90,7 +81,7 @@ export const Penalty = () => {
                   label={t['depositProductPenaltyAmount']}
                 />
                 <FormSelect
-                  name="penaltyOnPrincipal.penaltyLedgerMapping"
+                  name="penaltyData.penaltyLedgerMapping"
                   label={t['depositProductPenaltyedgerMapping']}
                   options={coaList}
                 />

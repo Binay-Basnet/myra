@@ -7,9 +7,7 @@ import {
   SettingsLayout,
 } from '@coop/cbs/settings/ui-layout';
 
-const LoanProductDetailPage = () => {
-  return <LoanProductOverviewDetailPage />;
-};
+const LoanProductDetailPage = () => <LoanProductOverviewDetailPage />;
 
 LoanProductDetailPage.getLayout = function getLayout(page: ReactElement) {
   return (

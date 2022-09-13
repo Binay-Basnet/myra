@@ -7,9 +7,7 @@ import {
 } from '@coop/neosys-admin/layout';
 import { NeosysFeatureGlobalAppSettings } from '@coop/neosys-admin/settings';
 
-const Settings = () => {
-  return <NeosysFeatureGlobalAppSettings />;
-};
+const Settings = () => <NeosysFeatureGlobalAppSettings />;
 
 Settings.getLayout = function getLayout(page: ReactElement) {
   return (

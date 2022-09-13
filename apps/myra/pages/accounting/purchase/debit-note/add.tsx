@@ -4,9 +4,7 @@ import { AccountingFeaturePurchaseAddDebitNote } from '@coop/accounting/purchase
 import { AccountingLayout } from '@coop/accounting/ui-layouts';
 
 // TODO ( Update this page when design arrives )
-const AccountingPurchaseDebitNoteAdd = () => {
-  return <AccountingFeaturePurchaseAddDebitNote />;
-};
+const AccountingPurchaseDebitNoteAdd = () => <AccountingFeaturePurchaseAddDebitNote />;
 
 AccountingPurchaseDebitNoteAdd.getLayout = function getLayout(
   page: ReactElement

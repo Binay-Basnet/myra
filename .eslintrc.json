@@ -2,14 +2,35 @@
   "root": true,
   "ignorePatterns": ["**/*", "**/graphql.ts"],
   "plugins": ["unused-imports", "@nrwl/nx", "@typescript-eslint", "simple-import-sort", "prettier"],
-  "extends": ["eslint:recommended", "google", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "airbnb",
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "prettier",
+    "plugin:react/jsx-runtime"
+  ],
   "rules": {
+    "no-nested-ternary": "warn",
     "require-jsdoc": "off",
+    "react/require-default-props": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "no-underscore-dangle": "off",
     "valid-jsdoc": "off",
     "camelcase": "off",
     "no-console": "error",
     "react-hooks/exhaustive-deps": "warn",
+    "@typescript-eslint/dot-notation": "off",
+    "react/jsx-props-no-spreading": "off",
     "@typescript-eslint/no-unused-vars": "error",
+    "import/prefer-default-export": "off",
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ],
     "unused-imports/no-unused-imports-ts": "error",
     "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": [
@@ -47,6 +68,11 @@
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "parser": "@typescript-eslint/parser",
+      // We set parserOptions.project for the project to allow TypeScript to create the type-checker behind the scenes when we run linting
+      "parserOptions": {
+        "project": ["./tsconfig(.*)?.json"]
+      },
       "rules": {
         "@nrwl/nx/enforce-module-boundaries": [
           "error",

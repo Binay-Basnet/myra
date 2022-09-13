@@ -7,9 +7,7 @@ import {
   MainLayout,
 } from '@coop/neosys-admin/layout';
 
-const ClientDetailDocument = () => {
-  return <NeosysFeatureClientsDetailsDocuments />;
-};
+const ClientDetailDocument = () => <NeosysFeatureClientsDetailsDocuments />;
 
 ClientDetailDocument.getLayout = function getLayout(page: ReactElement) {
   return (

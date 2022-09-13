@@ -5,10 +5,7 @@ import { useRefreshToken } from './hooks/useRefreshToken';
 
 export const useAxios = <TData, TVariables>(
   query: string
-): ((
-  variables?: TVariables,
-  config?: AxiosRequestConfig<TData>
-) => Promise<TData>) => {
+): ((variables?: TVariables, config?: AxiosRequestConfig<TData>) => Promise<TData>) => {
   // it is safe to call React Hooks here.
   // const { url, headers } = React.useContext(FetchParamsContext)
 
@@ -53,7 +50,7 @@ export const useAxios = <TData, TVariables>(
             errors?: { message: string }[];
           }>
         ) => {
-          if (!res.data.data) {
+          if (!res.data.data || res.data.errors) {
             return { error: res.data.errors };
           } else {
             return res.data.data;
@@ -80,22 +77,20 @@ export const useAxios = <TData, TVariables>(
             }
           }
 
-          return axios
-            .post<{ data: TData }>(url, { query, variables }, config)
-            .then(
-              (
-                res: AxiosResponse<{
-                  data: TData;
-                  errors?: { message: string }[];
-                }>
-              ) => {
-                if (!res.data.data) {
-                  return res.data.errors;
-                } else {
-                  return res.data.data;
-                }
+          return axios.post<{ data: TData }>(url, { query, variables }, config).then(
+            (
+              res: AxiosResponse<{
+                data: TData;
+                errors?: { message: string }[];
+              }>
+            ) => {
+              if (!res.data.data || res.data.errors) {
+                return res.data.errors;
+              } else {
+                return res.data.data;
               }
-            );
+            }
+          );
         });
 
         return err;

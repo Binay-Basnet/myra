@@ -18,7 +18,7 @@ import {
 import { AsyncSelect, Select } from 'chakra-react-select';
 import _, { uniqueId } from 'lodash';
 
-import { Grid, GridItem } from '@coop/shared/ui';
+import { Checkbox, Grid, GridItem } from '@coop/shared/ui';
 
 import { chakraDefaultStyles, searchBarStyle } from '../utils/ChakraSelectTheme';
 import { components } from '../utils/SelectComponents';
@@ -26,16 +26,24 @@ import { components } from '../utils/SelectComponents';
 export const isArrayEqual = <T,>(x: T[], y: T[]) => _(x).xorWith(y, _.isEqual).isEmpty();
 
 interface RecordWithId {
-  id?: number;
+  _id?: number;
 }
 
-export type Column<T extends RecordWithId & Record<string, string | number>> = {
+export type Column<T extends RecordWithId & Record<string, string | number | boolean>> = {
   id?: string;
   header?: string;
   accessor: keyof T;
-  accessorFn?: (row: T) => string | number;
+  accessorFn?: (row: T) => string | number | boolean;
   hidden?: boolean;
-  fieldType?: 'text' | 'number' | 'percentage' | 'textarea' | 'search' | 'date' | 'select';
+  fieldType?:
+    | 'text'
+    | 'number'
+    | 'percentage'
+    | 'textarea'
+    | 'search'
+    | 'date'
+    | 'select'
+    | 'checkbox';
   selectOptions?: { label: string; value: string }[];
   searchOptions?: { label: string; value: string }[];
 
@@ -49,17 +57,21 @@ export type Column<T extends RecordWithId & Record<string, string | number>> = {
   colSpan?: number;
 };
 
-export interface EditableTableProps<T extends RecordWithId & Record<string, string | number>> {
+export interface EditableTableProps<
+  T extends RecordWithId & Record<string, string | number | boolean>
+> {
   defaultData?: T[];
 
   columns: Column<T>[];
 
   canDeleteRow?: boolean;
-  onChange?: (updatedData: Omit<T, 'id'>[]) => void;
+  onChange?: (updatedData: Omit<T, '_id'>[]) => void;
 
   debug?: boolean;
   canAddRow?: boolean;
   searchPlaceholder?: string;
+
+  getRowId?: () => Promise<{ newId: string }>;
 }
 
 const cellWidthObject = {
@@ -73,20 +85,28 @@ enum EditableTableActionKind {
   EDIT = 'Edit',
   DELETE = 'Delete',
   REPLACE = 'Replace',
+  ADD_WITH_ID = 'AddWithId',
   ACCESSOR_FN_EDIT = 'Accessor',
 }
 
-type EditableTableAction<TData extends RecordWithId & Record<string, string | number>> =
+type EditableTableAction<TData extends RecordWithId & Record<string, string | number | boolean>> =
   | {
       type: EditableTableActionKind.ADD;
       payload: TData;
+    }
+  | {
+      type: EditableTableActionKind.ADD_WITH_ID;
+      payload: {
+        data: TData;
+        newId: string;
+      };
     }
   | {
       type: EditableTableActionKind.EDIT;
       payload: {
         data: TData;
         column: Column<TData>;
-        newValue: string;
+        newValue: string | boolean;
       };
     }
   | {
@@ -109,12 +129,12 @@ type EditableTableAction<TData extends RecordWithId & Record<string, string | nu
       };
     };
 
-interface EditableState<T extends RecordWithId & Record<string, string | number>> {
+interface EditableState<T extends RecordWithId & Record<string, string | number | boolean>> {
   data: T[];
   columns: Column<T>[];
 }
 
-function editableReducer<T extends RecordWithId & Record<string, string | number>>(
+function editableReducer<T extends RecordWithId & Record<string, string | number | boolean>>(
   state: EditableState<T>,
   action: EditableTableAction<T>
 ): EditableState<T> {
@@ -128,7 +148,20 @@ function editableReducer<T extends RecordWithId & Record<string, string | number
           ...state.data,
           {
             ...payload,
-            id: uniqueId('row_'),
+            _id: uniqueId('row_'),
+          },
+        ],
+      };
+
+    case EditableTableActionKind.ADD_WITH_ID:
+      return {
+        ...state,
+        data: [
+          ...state.data,
+          {
+            ...payload.data,
+            id: payload.newId,
+            _id: uniqueId('row_'),
           },
         ],
       };
@@ -137,7 +170,7 @@ function editableReducer<T extends RecordWithId & Record<string, string | number
       return {
         ...state,
         data: state.data.map((item) =>
-          item.id === payload?.data?.id
+          item._id === payload?.data?._id
             ? {
                 ...item,
                 [payload.column.accessor]: payload.column.isNumeric
@@ -151,7 +184,7 @@ function editableReducer<T extends RecordWithId & Record<string, string | number
       return {
         ...state,
         data: state.data.map((item) =>
-          item.id === payload?.data?.id
+          item._id === payload?.data?._id
             ? {
                 ...item,
                 [payload.column.accessor]: payload?.column?.accessorFn
@@ -165,21 +198,23 @@ function editableReducer<T extends RecordWithId & Record<string, string | number
     case EditableTableActionKind.DELETE:
       return {
         ...state,
-        data: state.data.filter((data) => data.id !== payload.data.id),
+        data: state.data.filter((data) => data._id !== payload.data._id),
       };
 
     case EditableTableActionKind.REPLACE:
       if (
         !isArrayEqual(
-          payload.newData.map(({ id, ...rest }) => rest),
-          state.data.map(({ id, ...rest }) => rest)
+          // eslint-disable-next-line unused-imports/no-unused-vars
+          payload.newData.map(({ _id, ...rest }) => rest),
+          // eslint-disable-next-line unused-imports/no-unused-vars
+          state.data.map(({ _id, ...rest }) => rest)
         )
       ) {
         return {
           ...state,
           data: payload.newData.map((data) => ({
             ...data,
-            id: uniqueId('row_'),
+            _id: uniqueId('row_'),
           })),
         };
       }
@@ -190,7 +225,7 @@ function editableReducer<T extends RecordWithId & Record<string, string | number
   }
 }
 
-export const EditableTable = <T extends RecordWithId & Record<string, string | number>>({
+export const EditableTable = <T extends RecordWithId & Record<string, string | number | boolean>>({
   columns,
   defaultData = [],
   canDeleteRow = true,
@@ -198,6 +233,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
   debug = false,
   canAddRow = true,
   searchPlaceholder,
+  getRowId,
 }: EditableTableProps<T>) => {
   const [state, dispatch] = useReducer<Reducer<EditableState<T>, EditableTableAction<T>>>(
     editableReducer,
@@ -209,7 +245,8 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
 
   useDeepCompareEffect(() => {
     if (onChange) {
-      onChange(state.data.map(({ id, ...rest }) => rest));
+      // eslint-disable-next-line unused-imports/no-unused-vars
+      onChange(state.data.map(({ _id, ...rest }) => rest));
     }
   }, [state.data]);
 
@@ -246,7 +283,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
               justifyContent="center"
               fontWeight="600"
               fontSize="r1"
-              px="s16"
+              pl="8px"
             >
               S.N.
             </Box>
@@ -254,8 +291,8 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
 
           {columns
             .filter((column) => !column.hidden)
-            .map((column, index) => (
-              <Fragment key={index}>
+            .map((column) => (
+              <Fragment key={String(column.accessor)}>
                 <Box
                   fontWeight="600"
                   fontSize="r1"
@@ -278,7 +315,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
 
         <Box w="100%" bg="white" borderX="1px" borderColor="border.layout">
           {state?.data.map((data, index) => (
-            <Fragment key={`${data.id}${index}`}>
+            <Fragment key={`${data._id}`}>
               <MemoEditableTableRow
                 canDeleteRow={canDeleteRow}
                 columns={columns}
@@ -339,13 +376,29 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
             _hover={{ bg: 'gray.100' }}
             cursor="pointer"
             gap="s4"
-            onClick={() => {
-              dispatch({
-                type: EditableTableActionKind.ADD,
-                payload: Object.fromEntries(
-                  columns.map((key) => [key.accessor, key.isNumeric ? 0 : ''])
-                ) as T,
-              });
+            onClick={async () => {
+              if (getRowId) {
+                const response = await getRowId();
+
+                if (response.newId) {
+                  dispatch({
+                    type: EditableTableActionKind.ADD_WITH_ID,
+                    payload: {
+                      data: Object.fromEntries(
+                        columns.map((key) => [key.accessor, key.isNumeric ? 0 : ''])
+                      ) as T,
+                      newId: response.newId,
+                    },
+                  });
+                }
+              } else {
+                dispatch({
+                  type: EditableTableActionKind.ADD,
+                  payload: Object.fromEntries(
+                    columns.map((key) => [key.accessor, key.isNumeric ? 0 : ''])
+                  ) as T,
+                });
+              }
             }}
           >
             <Icon as={IoAdd} fontSize="xl" />
@@ -367,7 +420,9 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
 
 export default EditableTable;
 
-interface IEditableTableRowProps<T extends RecordWithId & Record<string, string | number>> {
+interface IEditableTableRowProps<
+  T extends RecordWithId & Record<string, string | number | boolean>
+> {
   columns: Column<T>[];
   data: T;
   canDeleteRow?: boolean;
@@ -376,7 +431,7 @@ interface IEditableTableRowProps<T extends RecordWithId & Record<string, string 
   dispatch: React.Dispatch<EditableTableAction<T>>;
 }
 
-const EditableTableRow = <T extends RecordWithId & Record<string, string | number>>({
+const EditableTableRow = <T extends RecordWithId & Record<string, string | number | boolean>>({
   columns,
   data,
   index,
@@ -562,13 +617,13 @@ const MemoEditableTableRow = React.memo(
     JSON.stringify(previousProps.columns) === JSON.stringify(nextProps.columns)
 ) as typeof EditableTableRow;
 
-interface EditableCellProps<T extends RecordWithId & Record<string, string | number>> {
+interface EditableCellProps<T extends RecordWithId & Record<string, string | number | boolean>> {
   column: Column<T>;
   data: T;
   dispatch: React.Dispatch<EditableTableAction<T>>;
 }
 
-const EditableCell = <T extends RecordWithId & Record<string, string | number>>({
+const EditableCell = <T extends RecordWithId & Record<string, string | number | boolean>>({
   column,
   dispatch,
   data,
@@ -592,7 +647,9 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number>>(
     minH="inherit"
     display="flex"
     alignItems="center"
-    justifyContent={column.isNumeric ? 'flex-end' : 'flex-start'}
+    justifyContent={
+      column.isNumeric ? 'flex-end' : column.fieldType === 'checkbox' ? 'center' : 'flex-start'
+    }
     fontSize="r1"
     borderLeft="1px"
     borderLeftColor="border.layout"
@@ -614,7 +671,7 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number>>(
         : String(data[column.accessor] ? data[column.accessor] : '')
     }
   >
-    {column.cell ? (
+    {column.fieldType === 'checkbox' ? null : column.cell ? (
       <Box px="s8" width="100%" cursor="not-allowed">
         {column.cell(data)}
       </Box>
@@ -666,6 +723,20 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number>>(
           />
         )}
       </Box>
+    ) : column?.fieldType === 'checkbox' ? (
+      <Checkbox
+        isChecked={Boolean(data[column.accessor])}
+        onChange={(e) => {
+          dispatch({
+            type: EditableTableActionKind.EDIT,
+            payload: {
+              data,
+              newValue: e.target.checked,
+              column,
+            },
+          });
+        }}
+      />
     ) : (
       <Input
         //  mt="-1px"

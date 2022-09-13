@@ -4,9 +4,7 @@ import { AccountingFeatureAddChartsOfAccount } from '@coop/accounting/accounting
 import { AccountingLayout } from '@coop/accounting/ui-layouts';
 
 // TODO ( Update this page when design arrives )
-const AccountingChartsOfAccountAdd = () => {
-  return <AccountingFeatureAddChartsOfAccount />;
-};
+const AccountingChartsOfAccountAdd = () => <AccountingFeatureAddChartsOfAccount />;
 
 AccountingChartsOfAccountAdd.getLayout = function getLayout(
   page: ReactElement

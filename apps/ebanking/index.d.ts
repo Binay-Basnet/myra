@@ -1,10 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-declare module '*.svg' {
-  const content: any;
-  export const ReactComponent: any;
-  export default content;
-}
-
 // REMOVE THIS WHEN REMOVE REACT TABLE
 
 import {
@@ -54,6 +48,12 @@ import {
   UseSortByOptions,
   UseSortByState,
 } from 'react-table';
+
+declare module '*.svg' {
+  const content: any;
+  export const ReactComponent: any;
+  export default content;
+}
 
 // REACT TABLE MODULE DECLARATION - types needed for different hooks of react table.
 declare module 'react-table' {

@@ -6,9 +6,7 @@ import {
   SettingsShareLayout,
 } from '@coop/cbs/settings/ui-layout';
 
-const ShareMigration = () => {
-  return <div>Share Migration</div>;
-};
+const ShareMigration = () => <div>Share Migration</div>;
 
 export default ShareMigration;
 

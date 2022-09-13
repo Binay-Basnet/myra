@@ -5,9 +5,7 @@ import {
   SettingsLoanLayout,
 } from '@coop/cbs/settings/ui-layout';
 
-const LoanProductType = () => {
-  return <CbsSettingsFeatureProductType />;
-};
+const LoanProductType = () => <CbsSettingsFeatureProductType />;
 
 export default LoanProductType;
 

@@ -4,10 +4,10 @@ import { SalesObject } from '@coop/accounting/sales';
 import { AccountingLayout, SalesLayout } from '@coop/accounting/ui-layouts';
 
 // TODO ( Update this page when design arrives )
-const AccountingSalesListPage = () => {
-  return <SalesObject />;
+const AccountingSalesListPage = () =>
+   <SalesObject />
   //   <AccountingSalesList />;
-};
+;
 
 AccountingSalesListPage.getLayout = function getLayout(page: ReactElement) {
   return (

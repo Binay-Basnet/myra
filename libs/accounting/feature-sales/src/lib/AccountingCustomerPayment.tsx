@@ -11,7 +11,7 @@ import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 /* eslint-disable-next-line */
 export interface AccountingCustomerPaymentProps {}
 
-export function AccountingCustomerPayment() {
+export const AccountingCustomerPayment = () => {
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -46,8 +46,7 @@ export function AccountingCustomerPayment() {
       {
         accessorFn: (row) => row?.node?.name?.local,
         header: t['accountingCustomerPaymentListCustomer'],
-        cell: (props) => {
-          return (
+        cell: (props) => (
             <Box display="flex" alignItems="center" gap="s12">
               <Avatar
                 name="Dan Abrahmov"
@@ -63,8 +62,7 @@ export function AccountingCustomerPayment() {
                 {props.getValue() as string}
               </Text>
             </Box>
-          );
-        },
+          ),
 
         meta: {
           width: '40%',

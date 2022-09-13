@@ -11,7 +11,7 @@ export const KYMCooperativeUnionPage = () => {
 
   useEffect(() => {
     dispatch(reset());
-  });
+  }, []);
 
   return (
     <>
@@ -20,6 +20,6 @@ export const KYMCooperativeUnionPage = () => {
       <KYMCoopUnionFooter />
     </>
   );
-}
+};
 
 export default KYMCooperativeUnionPage;

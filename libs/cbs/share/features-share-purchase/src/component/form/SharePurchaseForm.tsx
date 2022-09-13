@@ -73,14 +73,11 @@ const SharePurchaseForm = () => {
 
   const denominationTotal =
     denominations?.reduce(
-      (accumulator: number, curr: { amount: string }) =>
-        accumulator + Number(curr.amount),
+      (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
       0 as number
     ) ?? 0;
 
-  const totalCashPaid: number = disableDenomination
-    ? Number(cashPaid)
-    : Number(denominationTotal);
+  const totalCashPaid: number = disableDenomination ? Number(cashPaid) : Number(denominationTotal);
 
   const returnAmount = totalAmount - totalCashPaid;
 
@@ -98,9 +95,7 @@ const SharePurchaseForm = () => {
   const memberDetail = data && data?.members?.details?.data;
 
   useEffect(() => {
-    setTotalAmount(
-      noOfShares * 100 + Number(adminFee ?? 0) + Number(printingFee ?? 0)
-    );
+    setTotalAmount(noOfShares * 100 + Number(adminFee ?? 0) + Number(printingFee ?? 0));
   }, [noOfShares, adminFee, printingFee]);
 
   const paymentButtonHandler = () => memberId && setMode('sharePayment');
@@ -111,13 +106,7 @@ const SharePurchaseForm = () => {
     const values = getValues();
 
     let updatedValues: SharePurchaseInput = {
-      ...omit(values, [
-        'printingFee',
-        'adminFee',
-        'amount',
-        'accountAmount',
-        'accountId',
-      ]),
+      ...omit(values, ['printingFee', 'adminFee', 'amount', 'accountAmount', 'accountId']),
       extraFee: [
         {
           name: 'adminFee',
@@ -141,10 +130,7 @@ const SharePurchaseForm = () => {
         disableDenomination: Boolean(values['cash']?.disableDenomination),
         total: String(totalCashPaid),
         returned_amount: String(returnAmount),
-        fileUpload:
-          values['cash']?.fileUpload?.length > 0
-            ? values['cash']?.fileUpload[0]
-            : null,
+        fileUpload: values['cash']?.fileUpload?.length > 0 ? values['cash']?.fileUpload[0] : null,
         denominations:
           values['cash']?.denominations?.map(
             ({ value, quantity }: { value: string; quantity: number }) => ({
@@ -159,6 +145,7 @@ const SharePurchaseForm = () => {
       updatedValues = omit({ ...updatedValues }, ['account', 'cash']);
       updatedValues['bankVoucher'] = {
         ...values['bankVoucher'],
+        citizenshipDocument: values['bankVoucher']?.citizenshipDocument[0] ?? null,
         fileUpload:
           values['bankVoucher']?.fileUpload?.length > 0
             ? values['bankVoucher']?.fileUpload[0]
@@ -195,13 +182,7 @@ const SharePurchaseForm = () => {
             <Header />
           </Box>
           <Container minW="container.xl" p="0" mb="60px">
-            <Box
-              position="sticky"
-              top="110px"
-              bg="gray.100"
-              width="100%"
-              zIndex="10"
-            >
+            <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
               <FormHeader title={t['sharePurchaseNewShareIssue']} />
             </Box>
             <Grid templateColumns="repeat(6,1fr)">

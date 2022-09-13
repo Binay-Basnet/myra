@@ -22,6 +22,7 @@
     "cbs-kym-form-feature-institution": "libs/cbs/kym-form/feature-institution",
     "cbs-kym-form-ui-containers": "libs/cbs/kym-form/ui-containers",
     "cbs-kym-form-ui-form-elements": "libs/cbs/kym-form/ui-form-elements",
+    "cbs-loan-feature-newloan-application": "libs/cbs/loan/feature-newloan-application",
     "cbs-members-feature-list": "libs/cbs/members/feature-list",
     "cbs-members-feature-profile": "libs/cbs/members/feature-profile",
     "cbs-reports-feature-lists": "libs/cbs/reports/feature-lists",

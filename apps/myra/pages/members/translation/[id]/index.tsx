@@ -165,8 +165,7 @@ const Translation = () => {
                           </Box>
                           <Box display="flex" flexDirection="column">
                             {translationDataArray?.map((item) => (
-                              <>
-                                <Box display="flex" key={item?.id}>
+                              <Box display="flex" key={item?.id}>
                                   <Text fontSize="r1" w={200}>
                                     {item?.data}
                                   </Text>
@@ -177,7 +176,6 @@ const Translation = () => {
                                     w={400}
                                   />
                                 </Box>
-                              </>
                             ))}
                           </Box>
                         </Flex>

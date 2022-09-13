@@ -3,9 +3,7 @@ import React, { ReactElement } from 'react';
 import { InventoryFeatureAdjustment } from '@coop/inventory/inventory';
 import { MainLayoutInventory } from '@coop/shared/ui';
 
-const AddInventoryAdjustments = () => {
-  return <InventoryFeatureAdjustment />;
-};
+const AddInventoryAdjustments = () => <InventoryFeatureAdjustment />;
 
 export default AddInventoryAdjustments;
 

@@ -7,9 +7,7 @@ import {
 } from '@coop/accounting/ui-layouts';
 
 // TODO ( Update this page when design arrives )
-const AccountingQuickTransferList = () => {
-  return <AccountingFeatureQuickReceiptList />;
-};
+const AccountingQuickTransferList = () => <AccountingFeatureQuickReceiptList />;
 
 AccountingQuickTransferList.getLayout = function getLayout(page: ReactElement) {
   return (

@@ -56,6 +56,10 @@ export const chakraDefaultStyles: ChakraStylesConfig<any> | undefined = {
     _focus: {
       bg: 'primary.100',
     },
+    _focusVisible: {
+      border: 'none',
+      boxShadow: 'none',
+    },
   }),
   valueContainer: (provided, state) => ({
     ...provided,
@@ -65,9 +69,7 @@ export const chakraDefaultStyles: ChakraStylesConfig<any> | undefined = {
     display: 'flex',
     alignItems: 'center',
     height: 's36',
-    color: state.hasValue
-      ? 'neutralColorLight.Gray-80'
-      : 'neutralColorLight.Gray-50',
+    color: state.hasValue ? 'neutralColorLight.Gray-80' : 'neutralColorLight.Gray-50',
     fontSize: 'r1',
   }),
   placeholder: (provided) => ({
@@ -75,12 +77,16 @@ export const chakraDefaultStyles: ChakraStylesConfig<any> | undefined = {
     color: 'neutralColorLight.Gray-50',
     fontSize: 'r1',
     noOfLines: 1,
+    px: 's8',
   }),
 
   input: (provided) => ({
     ...provided,
     p: '0',
+    mx: 's8',
+
     h: 's36',
+    top: '58%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -88,6 +94,11 @@ export const chakraDefaultStyles: ChakraStylesConfig<any> | undefined = {
 
   singleValue: (provided) => ({
     ...provided,
+    position: 'relative',
+    transform: 'none',
+    top: '0%',
+    px: 's8',
+    mt: '3px',
   }),
 
   indicatorsContainer: (provided) => ({
@@ -182,9 +193,7 @@ export const searchBarStyle: ChakraStylesConfig<any> | undefined = {
     display: 'flex',
     alignItems: 'center',
     height: 's36',
-    color: state.hasValue
-      ? 'neutralColorLight.Gray-80'
-      : 'neutralColorLight.Gray-50',
+    color: state.hasValue ? 'neutralColorLight.Gray-80' : 'neutralColorLight.Gray-50',
     fontSize: 'r1',
   }),
   placeholder: (provided) => ({
@@ -221,9 +230,7 @@ export const searchBarStyle: ChakraStylesConfig<any> | undefined = {
     alignItems: 'center',
     justifyContent: 'center',
     px: 's8',
-    color: state.isFocused
-      ? 'neutralColorLight.Gray-80'
-      : 'neutralColorLight.Gray-40',
+    color: state.isFocused ? 'neutralColorLight.Gray-80' : 'neutralColorLight.Gray-40',
   }),
   loadingIndicator: () => ({
     display: 'none',

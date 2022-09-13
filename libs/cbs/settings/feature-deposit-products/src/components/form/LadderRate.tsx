@@ -12,7 +12,7 @@ type SalesTable = {
 };
 
 export const LadderRate = () => {
-  const { watch, setValue } = useFormContext<{
+  const { watch } = useFormContext<{
     ladderRateData: SalesTable[];
     nature: NatureOfDepositProduct;
     ladderRate: boolean;
@@ -20,15 +20,6 @@ export const LadderRate = () => {
     withdrawRestricted: boolean;
   }>();
   const { t } = useTranslation();
-
-  // const ladderRateEditData = watch('ladderRateData');
-
-  // useEffect(() => {
-  //   setValue(
-  //     'ladderRateData',
-  //     ladderRateEditData?.map((data) => ({ ...data, type: 'More Than' }))
-  //   );
-  // }, [ladderRateEditData?.length]);
 
   const ladderRate = watch('ladderRate');
 

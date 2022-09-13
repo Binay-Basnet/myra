@@ -3,9 +3,7 @@ import {
   SettingsLayout,
 } from '@coop/cbs/settings/ui-layout';
 
-const Subscription = () => {
-  return <> Subscription</>;
-};
+const Subscription = () => <> Subscription</>;
 
 export default Subscription;
 Subscription.getLayout = function getLayout(page) {

@@ -8,8 +8,7 @@ import {
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { GridItem } from '@coop/shared/ui';
 
-export const SalesDetails = () => {
-  return (
+export const SalesDetails = () => (
     <BoxContainer>
       <InputGroupContainer>
         <GridItem colSpan={2}>
@@ -45,4 +44,3 @@ export const SalesDetails = () => {
       </InputGroupContainer>
     </BoxContainer>
   );
-};

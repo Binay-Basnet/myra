@@ -7,9 +7,7 @@ import {
 } from '@coop/cbs/transactions/ui-layouts';
 import { MainLayout } from '@coop/shared/ui';
 
-const TransactionAgentDetail = () => {
-  return <AgentAssignedMembers />;
-};
+const TransactionAgentDetail = () => <AgentAssignedMembers />;
 
 TransactionAgentDetail.getLayout = function getLayout(page: ReactElement) {
   return (

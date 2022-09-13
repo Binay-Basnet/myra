@@ -4,13 +4,13 @@ import { EbankingMainLayout } from '@coop/ebanking/ui-layout';
 
 import styles from './index.module.css';
 
-export function Temp() {
+export const Temp = () =>
   /*
    * Replace the elements below with your own.
    *
    * Note: The corresponding styles are in the ./index.css file.
    */
-  return (
+   (
     <div className={styles.page}>
       <div className="wrapper">
         <div className="container">
@@ -57,8 +57,8 @@ export function Temp() {
         </div>
       </div>
     </div>
-  );
-}
+  )
+
 
 Temp.getLayout = function getLayout(page: ReactElement) {
   return <EbankingMainLayout>{page}</EbankingMainLayout>;

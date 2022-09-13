@@ -38,7 +38,7 @@ const queryClient = new QueryClient({
   },
 });
 
-function MainApp({ Component, pageProps }: AppPropsWithLayout) {
+const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   useInit();
   useSnap();
 
@@ -53,10 +53,10 @@ function MainApp({ Component, pageProps }: AppPropsWithLayout) {
       <main className="app">{getLayout(<Component {...pageProps} />)}</main>
       <Box
         position="fixed"
-        bottom={'40px'}
-        right={'32px'}
+        bottom="40px"
+        right="32px"
         display="flex"
-        flexDirection={'row-reverse'}
+        flexDirection="row-reverse"
         zIndex="99"
       >
         <FloatingShortcutButton />
@@ -65,8 +65,7 @@ function MainApp({ Component, pageProps }: AppPropsWithLayout) {
   );
 }
 
-function CustomApp(props: AppPropsWithLayout) {
-  return (
+const CustomApp = (props: AppPropsWithLayout) => (
     <Provider store={store}>
       {/* <AuthProvider> */}
       <QueryClientProvider client={queryClient}>
@@ -77,7 +76,6 @@ function CustomApp(props: AppPropsWithLayout) {
       </QueryClientProvider>
       {/* </AuthProvider> */}
     </Provider>
-  );
-}
+  )
 
 export default CustomApp;

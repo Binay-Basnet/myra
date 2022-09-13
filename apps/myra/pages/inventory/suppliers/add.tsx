@@ -3,9 +3,7 @@ import React, { ReactElement } from 'react';
 import { InventoryFeatureSuppliers } from '@coop/myra/inventory/suppliers';
 import { MainLayoutInventory } from '@coop/shared/ui';
 
-const AddNewSuppliersPage = () => {
-  return <InventoryFeatureSuppliers />;
-};
+const AddNewSuppliersPage = () => <InventoryFeatureSuppliers />;
 
 export default AddNewSuppliersPage;
 

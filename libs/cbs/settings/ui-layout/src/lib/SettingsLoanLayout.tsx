@@ -9,7 +9,7 @@ import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMe
 const tabList = [
   {
     title: 'settingsLoanGeneral',
-    to: '/settings/general/loan/loan-general',
+    to: '/settings/general/loan',
   },
   {
     title: 'settingsInsuranceGeneral',

@@ -8,7 +8,7 @@ import { Column, Table } from '@coop/shared/table';
 import { Box, Text, TextFields } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-export function OverviewDetailPage() {
+export const OverviewDetailPage = () => {
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -176,7 +176,7 @@ export function OverviewDetailPage() {
 
         <Table
           data={rowData}
-          isStatic={true}
+          isStatic
           getRowId={(row) => String(row?.node?.id)}
           isLoading={isFetching}
           columns={columns}

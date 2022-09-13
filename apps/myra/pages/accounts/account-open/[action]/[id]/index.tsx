@@ -3,9 +3,7 @@ import React, { ReactElement } from 'react';
 import { AccountOpenNew } from '@coop/cbs/accounts/account-form';
 import { MainLayout } from '@coop/shared/ui';
 
-const AccountOpen = () => {
-  return <AccountOpenNew />;
-};
+const AccountOpen = () => <AccountOpenNew />;
 
 export default AccountOpen;
 

@@ -3,9 +3,7 @@ import React, { ReactElement } from 'react';
 import { AccountTransferPage } from '@coop/ebanking/funds';
 import { EbankingAccountLayout } from '@coop/ebanking/ui-layout';
 
-const AccountTransfer = () => {
-  return <AccountTransferPage />;
-};
+const AccountTransfer = () => <AccountTransferPage />;
 
 AccountTransfer.getLayout = function (page: ReactElement) {
   return <EbankingAccountLayout>{page}</EbankingAccountLayout>;

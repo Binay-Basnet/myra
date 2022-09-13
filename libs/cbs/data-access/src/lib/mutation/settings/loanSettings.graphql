@@ -41,18 +41,16 @@ mutation setLoanInsuranceScheme($data: [LoanInsuranceSchemeInput]) {
 }
 
 mutation setProductType(
-  $productTypes: [LoanProductTypeInput]
-  $productSubTypes: [LoanProductSubTypeInput]
-  $natureOfProduct: [LoanNatureOfProductInput]
+  $productType: [LoanProductTypeInput]
+  $productSubType: [LoanProductSubTypeInput]
 ) {
   settings {
     general {
       loan {
         productType(
           data: {
-            productTypes: $productTypes
-            productSubTypes: $productSubTypes
-            natureOfProduct: $natureOfProduct
+            productTypes: $productType
+            productSubTypes: $productSubType
           }
         ) {
           recordId

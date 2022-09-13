@@ -45,7 +45,7 @@ const getNewAccountCode = (coaFullViewData: FullViewData[], under: string) => {
   const foundAccount = coaFullViewData?.find((d) => d.under === under);
 
   if (!foundAccount) {
-    return under + '.1';
+    return `${under  }.1`;
   }
 
   const childAccount =
@@ -64,7 +64,7 @@ const getNewAccountCode = (coaFullViewData: FullViewData[], under: string) => {
   const accountCodeArray = accountCode.split('.');
   const lastCode = accountCodeArray.pop();
 
-  return accountCodeArray.join('.') + '.' + (Number(lastCode[0]) + 1);
+  return `${accountCodeArray.join('.')  }.${  Number(lastCode[0]) + 1}`;
 };
 
 const AddNewAccount = () => {
@@ -153,7 +153,7 @@ const AddNewAccount = () => {
                 height="60px"
                 display="flex"
                 justifyContent="space-between"
-                alignItems={'center'}
+                alignItems="center"
                 px="5"
                 borderBottom="1px solid"
                 borderColor="border.layout"
@@ -469,7 +469,7 @@ const AddNewAccount = () => {
                   gridTemplateColumns="repeat(2, 2fr)"
                   gap={5}
                 >
-                  <Box display={'flex'} flexDirection="column" gap="0">
+                  <Box display="flex" flexDirection="column" gap="0">
                     <Text color="Gray.700" fontWeight="medium" fontSize="s3">
                       {t['settingsCoaAllowFreeEntry']}
                     </Text>
@@ -527,7 +527,7 @@ const AddNewAccount = () => {
                 await asyncToast({
                   id: 'add-new-account',
                   promise: addNewAccount({
-                    data: data,
+                    data,
                   }),
                   msgs: {
                     loading: 'Adding New Account',

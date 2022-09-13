@@ -2,10 +2,7 @@ import React, { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { useAllAdministrationQuery } from '@coop/cbs/data-access';
-import {
-  ContainerWithDivider,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
+import { ContainerWithDivider, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
   FormEmailInput,
   FormFileInput,
@@ -59,72 +56,56 @@ export function CbsSettingsFeatureValuatorAdd() {
   const currentLocalGovernmentId = watch('localGovernmentId');
 
   const districtList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
-        ?.districts ?? [],
+    () => data?.administration.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
     [currentProvinceId, data]
   );
 
   const localityList = useMemo(
-    () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+    () => districtList.find((d) => d.id === currentDistrictId)?.municipalities ?? [],
     [currentDistrictId, districtList]
   );
 
   const wardList = useMemo(
-    () =>
-      localityList.find((d) => d.id === currentLocalGovernmentId)?.wards ?? [],
+    () => localityList.find((d) => d.id === currentLocalGovernmentId)?.wards ?? [],
     [currentLocalGovernmentId, localityList]
   );
 
   return (
     <>
       <Container height="fit-content" minW="container.xl">
-        <Box
-          position="sticky"
-          top="110px"
-          bg="gray.100"
-          width="100%"
-          zIndex="10"
-        >
-          <FormHeader title={t['settingsGeneralValuatorFormNewValuator']} />
-        </Box>
+        <FormProvider {...methods}>
+          <form
+          //    onChange={debounce(() => {
+          //     mutate({
+          //          id: branchId,
+          //          data: getValues(),
+          //        });
+          //      }, 500)}
+          >
+            <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+              <FormHeader title={t['settingsGeneralValuatorFormNewValuator']} />
+            </Box>
 
-        <Box bg="white" pb="100px">
-          <FormProvider {...methods}>
-            <form
-            //   onChange={debounce(() => {
-            //     mutate({
-            //       id: branchId,
-            //       data: getValues(),
-            //     });
-            //   }, 500)}
-            >
+            <Box bg="white" pb="100px">
               <Box px="s20" py="s24">
                 <ContainerWithDivider>
                   <Box display={'flex'} flexDirection="column" gap="s16">
                     <TextFields variant="tableHeader" color="gray.700">
                       {t['settingsGeneralValuatorFormValuatorSetup']}
                     </TextFields>
-
                     <InputGroupContainer>
                       <GridItem colSpan={2}>
                         <FormInput
                           name="valuatorName"
                           label={t['settingsGeneralValuatorFormValuatorName']}
-                          __placeholder={
-                            t['settingsGeneralValuatorFormValuatorName']
-                          }
+                          __placeholder={t['settingsGeneralValuatorFormValuatorName']}
                         />
                       </GridItem>
 
                       <FormSelect
                         name="valuatorType"
                         label={t['settingsGeneralValuatorFormValuatorType']}
-                        __placeholder={
-                          t['settingsGeneralValuatorFormSelectValuatorType']
-                        }
+                        __placeholder={t['settingsGeneralValuatorFormSelectValuatorType']}
                       />
 
                       <FormInput
@@ -136,61 +117,37 @@ export function CbsSettingsFeatureValuatorAdd() {
 
                       <FormSelect
                         name="academicQualification"
-                        label={
-                          t['settingsGeneralValuatorFormAcademicQualification']
-                        }
-                        __placeholder={
-                          t['settingsGeneralValuatorFormAcademicQualification']
-                        }
+                        label={t['settingsGeneralValuatorFormAcademicQualification']}
+                        __placeholder={t['settingsGeneralValuatorFormAcademicQualification']}
                       />
 
                       <FormInput
                         type="text"
                         name="valuationLicenseNo"
-                        label={
-                          t['settingsGeneralValuatorFormValuationLicenseNo']
-                        }
-                        __placeholder={
-                          t['settingsGeneralValuatorFormValuationLicenseNo']
-                        }
+                        label={t['settingsGeneralValuatorFormValuationLicenseNo']}
+                        __placeholder={t['settingsGeneralValuatorFormValuationLicenseNo']}
                       />
 
                       <FormInput
                         type="date"
-                        name="valuatorLatestRenewalDate"
-                        label={
-                          t[
-                            'settingsGeneralValuatorFormValuatorLatestRenewalDate'
-                          ]
-                        }
+                        name="renewalDate"
+                        label={t['settingsGeneralValuatorFormValuatorLatestRenewalDate']}
                       />
 
                       <FormInput
                         type="date"
-                        name="valuatorSaccosContractDate"
-                        label={
-                          t[
-                            'settingsGeneralValuatorFormValuatorSaccosContractDate'
-                          ]
-                        }
+                        name="contractDate"
+                        label={t['settingsGeneralValuatorFormValuatorSaccosContractDate']}
                       />
 
                       <FormInput
-                        name="insurancePremiumPercent"
+                        name="insurancePremium"
                         type="number"
-                        label={
-                          t[
-                            'settingsGeneralValuatorFormInsurancePremiumPercent'
-                          ]
-                        }
+                        label={t['settingsGeneralValuatorFormInsurancePremiumPercent']}
                         textAlign={'right'}
                         __placeholder="0.00"
                         rightElement={
-                          <Text
-                            fontWeight="Medium"
-                            fontSize="r1"
-                            color="primary.500"
-                          >
+                          <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                             %
                           </Text>
                         }
@@ -233,17 +190,13 @@ export function CbsSettingsFeatureValuatorAdd() {
                         <FormSelect
                           name="provinceId"
                           label={t['settingsGeneralValuatorFormProvince']}
-                          __placeholder={
-                            t['settingsGeneralValuatorFormSelectProvince']
-                          }
+                          __placeholder={t['settingsGeneralValuatorFormSelectProvince']}
                           options={province}
                         />
                         <FormSelect
                           name="districtId"
                           label={t['settingsGeneralValuatorFormDistrict']}
-                          __placeholder={
-                            t['settingsGeneralValuatorFormSelectDistrict']
-                          }
+                          __placeholder={t['settingsGeneralValuatorFormSelectDistrict']}
                           options={districtList.map((d) => ({
                             label: d.name,
                             value: d.id,
@@ -252,9 +205,7 @@ export function CbsSettingsFeatureValuatorAdd() {
                         <FormSelect
                           name="localGovernmentId"
                           label={t['settingsGeneralValuatorFormLocalGoverment']}
-                          __placeholder={
-                            t['settingsGeneralValuatorFormSelectLocalGoverment']
-                          }
+                          __placeholder={t['settingsGeneralValuatorFormSelectLocalGoverment']}
                           options={localityList.map((d) => ({
                             label: d.name,
                             value: d.id,
@@ -264,9 +215,7 @@ export function CbsSettingsFeatureValuatorAdd() {
                         <FormSelect
                           name="wardNo"
                           label={t['settingsGeneralValuatorFormWardNo']}
-                          __placeholder={
-                            t['settingsGeneralValuatorFormEnterWardNo']
-                          }
+                          __placeholder={t['settingsGeneralValuatorFormEnterWardNo']}
                           options={wardList.map((d) => ({
                             label: d,
                             value: d,
@@ -276,17 +225,13 @@ export function CbsSettingsFeatureValuatorAdd() {
                           type="text"
                           name="locality"
                           label={t['settingsGeneralValuatorFormLocality']}
-                          __placeholder={
-                            t['settingsGeneralValuatorFormEnterLocality']
-                          }
+                          __placeholder={t['settingsGeneralValuatorFormEnterLocality']}
                         />
                         <FormInput
                           type="text"
                           name="houseNo"
                           label={t['settingsGeneralValuatorFormHouseNo']}
-                          __placeholder={
-                            t['settingsGeneralValuatorFormEnterHouseNo']
-                          }
+                          __placeholder={t['settingsGeneralValuatorFormEnterHouseNo']}
                         />
                       </InputGroupContainer>
 
@@ -305,27 +250,19 @@ export function CbsSettingsFeatureValuatorAdd() {
                       {t['settingsGeneralValuatorFormDocumentsDeclaration']}
                     </TextFields>
 
-                    <Grid
-                      templateColumns="repeat(2, 1fr)"
-                      rowGap="s32"
-                      columnGap="s20"
-                    >
+                    <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
                       <FormFileInput
                         size="lg"
-                        label={
-                          t[
-                            'settingsGeneralValuatorFormDocumentDeclarationLabel'
-                          ]
-                        }
+                        label={t['settingsGeneralValuatorFormDocumentDeclarationLabel']}
                         name="documents"
                       />
                     </Grid>
                   </Box>
                 </ContainerWithDivider>
               </Box>
-            </form>
-          </FormProvider>
-        </Box>
+            </Box>
+          </form>
+        </FormProvider>
       </Container>
 
       <Box position="relative" margin="0px auto">

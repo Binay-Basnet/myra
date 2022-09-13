@@ -7,6 +7,9 @@ import { FormInput, FormSwitchTab, FormTextArea } from '@coop/shared/form';
 import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
+import { AllowChequeIssue } from './AllowChequeIssue';
+import { AlternativeChannels } from './AlternativeChannels';
+import { AtmFacility } from './AtmFacility';
 import { SubHeadingText } from '../formui';
 
 type SalesTable = {
@@ -22,13 +25,19 @@ export const Questions = () => {
     ladderRate: boolean;
     allowLoan: boolean;
     withdrawRestricted: boolean;
+    alternativeChannels: SalesTable[];
+    chequeIssue: SalesTable[];
+    atmFacility: SalesTable[];
   }>();
+  const { t } = useTranslation();
+
   const depositNature = watch('nature');
   const allowLoan = watch('allowLoan');
   const withdrawRestricted = watch('withdrawRestricted');
-  const { t } = useTranslation();
-
   const ladderRateEditData = watch('ladderRateData');
+  const alternativeChannels = watch('alternativeChannels');
+  const chequeIssue = watch('chequeIssue');
+  const atmFacility = watch('atmFacility');
 
   useEffect(() => {
     setValue(
@@ -46,14 +55,8 @@ export const Questions = () => {
     <>
       <FormSection>
         <GridItem colSpan={3}>
-          <Box
-            display="flex"
-            flexDirection={'row'}
-            justifyContent="space-between"
-          >
-            <SubHeadingText>
-              {t['depositProductAutoOpenwhenmemberjoins']}
-            </SubHeadingText>
+          <Box display="flex" flexDirection={'row'} justifyContent="space-between">
+            <SubHeadingText>{t['depositProductAutoOpenwhenmemberjoins']}</SubHeadingText>
             <FormSwitchTab name="autoOpen" options={yesNo} />
           </Box>
         </GridItem>
@@ -61,35 +64,26 @@ export const Questions = () => {
 
       <FormSection>
         <GridItem colSpan={3}>
-          <Box
-            display="flex"
-            flexDirection={'row'}
-            justifyContent="space-between"
-          >
+          <Box display="flex" flexDirection={'row'} justifyContent="space-between">
             <Box>
-              <SubHeadingText>
-                {t['depositProductAlternativeChannels']}
-              </SubHeadingText>
-              <SubText>
-                {t['depositProductAlternativeChannelseBanking']}
-              </SubText>
+              <SubHeadingText>{t['depositProductAlternativeChannels']}</SubHeadingText>
+              <SubText>{t['depositProductAlternativeChannelseBanking']}</SubText>
             </Box>
             <FormSwitchTab name={'alternativeChannels'} options={yesNo} />
           </Box>
+
+          {alternativeChannels && <AlternativeChannels />}
         </GridItem>
       </FormSection>
 
       {depositNature === NatureOfDepositProduct.VoluntaryOrOptional && (
         <FormSection>
           <GridItem colSpan={3}>
-            <Box
-              display="flex"
-              flexDirection={'row'}
-              justifyContent="space-between"
-            >
+            <Box display="flex" flexDirection={'row'} justifyContent="space-between">
               <SubHeadingText>{t['depositProductATMFacility']} </SubHeadingText>
               <FormSwitchTab name={'atmFacility'} options={yesNo} />
             </Box>
+            {atmFacility && <AtmFacility />}
           </GridItem>
         </FormSection>
       )}
@@ -97,14 +91,12 @@ export const Questions = () => {
       {depositNature === NatureOfDepositProduct.VoluntaryOrOptional && (
         <FormSection>
           <GridItem colSpan={3}>
-            <Box
-              display="flex"
-              flexDirection={'row'}
-              justifyContent="space-between"
-            >
+            <Box display="flex" flexDirection={'row'} justifyContent="space-between">
               <SubHeadingText>{t['depositProductChequeIssue']}</SubHeadingText>
               <FormSwitchTab name={'chequeIssue'} options={yesNo} />
             </Box>
+
+            {chequeIssue && <AllowChequeIssue />}
           </GridItem>
         </FormSection>
       )}
@@ -112,11 +104,7 @@ export const Questions = () => {
       <FormSection>
         <GridItem colSpan={3}>
           <Box display={'flex'} flexDirection="column" gap="s16">
-            <Box
-              display="flex"
-              flexDirection={'row'}
-              justifyContent="space-between"
-            >
+            <Box display="flex" flexDirection={'row'} justifyContent="space-between">
               <SubHeadingText>{t['depositProductAllowLoan']} </SubHeadingText>
               <FormSwitchTab name={'allowLoan'} options={yesNo} />
             </Box>
@@ -137,11 +125,7 @@ export const Questions = () => {
                     name="percentageOfDeposit"
                     label={t['depositProductPercentageDeposit']}
                     rightElement={
-                      <Text
-                        fontWeight="Medium"
-                        fontSize="r1"
-                        color="primary.500"
-                      >
+                      <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                         %
                       </Text>
                     }
@@ -156,14 +140,8 @@ export const Questions = () => {
       {depositNature !== NatureOfDepositProduct.Mandatory && (
         <FormSection>
           <GridItem colSpan={3}>
-            <Box
-              display="flex"
-              flexDirection={'row'}
-              justifyContent="space-between"
-            >
-              <SubHeadingText>
-                {t['depositProductSupportMultipleAccount']}
-              </SubHeadingText>
+            <Box display="flex" flexDirection={'row'} justifyContent="space-between">
+              <SubHeadingText>{t['depositProductSupportMultipleAccount']}</SubHeadingText>
               <FormSwitchTab name={'supportMultiple'} options={yesNo} />
             </Box>
           </GridItem>
@@ -172,11 +150,7 @@ export const Questions = () => {
 
       <FormSection>
         <GridItem colSpan={3}>
-          <Box
-            display="flex"
-            flexDirection={'row'}
-            justifyContent="space-between"
-          >
+          <Box display="flex" flexDirection={'row'} justifyContent="space-between">
             <SubHeadingText>{t['depositProductStaffProduct']} </SubHeadingText>
             <FormSwitchTab name={'staffProduct'} options={yesNo} />
           </Box>
@@ -185,14 +159,8 @@ export const Questions = () => {
 
       <FormSection>
         <GridItem colSpan={3}>
-          <Box
-            display="flex"
-            flexDirection={'row'}
-            justifyContent="space-between"
-          >
-            <SubHeadingText>
-              {t['depositProductIsThisForMinor']}{' '}
-            </SubHeadingText>
+          <Box display="flex" flexDirection={'row'} justifyContent="space-between">
+            <SubHeadingText>{t['depositProductIsThisForMinor']} </SubHeadingText>
             <FormSwitchTab name={'isForMinors'} options={yesNo} />
           </Box>
         </GridItem>
@@ -202,14 +170,8 @@ export const Questions = () => {
         <FormSection>
           <GridItem colSpan={3}>
             <Box display={'flex'} flexDirection="column" gap="s16">
-              <Box
-                display="flex"
-                flexDirection={'row'}
-                justifyContent="space-between"
-              >
-                <SubHeadingText>
-                  {t['depositProductWidthdrawRestricted']}
-                </SubHeadingText>
+              <Box display="flex" flexDirection={'row'} justifyContent="space-between">
+                <SubHeadingText>{t['depositProductWidthdrawRestricted']}</SubHeadingText>
                 <FormSwitchTab name={'withdrawRestricted'} options={yesNo} />
               </Box>
               {withdrawRestricted && (
@@ -237,14 +199,8 @@ export const Questions = () => {
       {depositNature === NatureOfDepositProduct.RecurringSaving && (
         <FormSection>
           <GridItem colSpan={3}>
-            <Box
-              display="flex"
-              flexDirection={'row'}
-              justifyContent="space-between"
-            >
-              <SubHeadingText>
-                {t['depositProductWealthBuildingProduct']}
-              </SubHeadingText>
+            <Box display="flex" flexDirection={'row'} justifyContent="space-between">
+              <SubHeadingText>{t['depositProductWealthBuildingProduct']}</SubHeadingText>
               <FormSwitchTab name={'wealthBuildingProduct'} options={yesNo} />
             </Box>
           </GridItem>

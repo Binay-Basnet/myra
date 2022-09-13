@@ -4,9 +4,7 @@ import { AgentList } from '@coop/cbs/transactions/agent';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
 import { MainLayout } from '@coop/shared/ui';
 
-const TransactionsAgentList = () => {
-  return <AgentList />;
-};
+const TransactionsAgentList = () => <AgentList />;
 
 TransactionsAgentList.getLayout = function getLayout(page: ReactElement) {
   return (

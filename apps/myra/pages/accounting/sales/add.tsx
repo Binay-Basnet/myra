@@ -4,9 +4,7 @@ import { NewSalesForm } from '@coop/accounting/sales';
 import { AccountingLayout } from '@coop/accounting/ui-layouts';
 
 // TODO ( Update this page when design arrives )
-const AccountingPurchaseList = () => {
-  return <NewSalesForm />;
-};
+const AccountingPurchaseList = () => <NewSalesForm />;
 
 AccountingPurchaseList.getLayout = function getLayout(page: ReactElement) {
   return <AccountingLayout>{page}</AccountingLayout>;

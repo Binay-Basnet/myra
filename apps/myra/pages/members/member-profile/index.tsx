@@ -4,9 +4,7 @@ import { MemberPagesLayout } from '@coop/cbs/members/list';
 import { ProfileFeature } from '@coop/cbs/members/profile';
 import { MainLayout } from '@coop/shared/ui';
 
-const MemberProfile = () => {
-  return <ProfileFeature />;
-};
+const MemberProfile = () => <ProfileFeature />;
 
 MemberProfile.getLayout = function getLayout(page: ReactElement) {
   return (

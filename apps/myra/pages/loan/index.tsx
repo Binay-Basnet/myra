@@ -1,19 +1,13 @@
 import { ReactElement } from 'react';
 
-import { MemberListPage } from '@coop/cbs/members/list';
-import { AccountPagesLayout } from '@coop/myra/components';
+import { NewLoanApplication } from '@coop/cbs/loan';
 import { MainLayout } from '@coop/shared/ui';
 
-// TODO ( Update this page when design arrives )
 const LoanPage = () => {
-  return <MemberListPage />;
+  return <NewLoanApplication />;
 };
 
 LoanPage.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <MainLayout>
-      <AccountPagesLayout>{page}</AccountPagesLayout>
-    </MainLayout>
-  );
+  return <MainLayout>{page}</MainLayout>;
 };
 export default LoanPage;

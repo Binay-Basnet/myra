@@ -15,7 +15,7 @@ import { useLoginMutation } from '@coop/cbs/data-access';
 import { Box, Button } from '@coop/shared/ui';
 import { login, useAppDispatch } from '@coop/shared/utils';
 
-import logo from '../../neosys-admin/public/logo.svg';
+import logo from "../public/logo.svg";
 
 export default function Login() {
   const { mutateAsync, isLoading } = useLoginMutation();
@@ -34,7 +34,7 @@ export default function Login() {
       const accessToken = res?.auth?.login?.record?.token?.access;
       const refreshToken = res?.auth?.login?.record?.token?.refresh;
       const user = res?.auth?.login?.record?.user;
-      dispatch(login({ user: user, token: accessToken }));
+      dispatch(login({ user, token: accessToken }));
       localStorage.setItem('refreshToken', refreshToken);
       router.replace('/');
     });
@@ -68,12 +68,12 @@ export default function Login() {
           </InputLeftElement>
           <Input
             pr="58px"
-            variant={'outline'}
+            variant="outline"
             type={show ? 'text' : 'password'}
             placeholder="Enter password"
             {...register('password')}
           />
-          <InputRightElement width="fit-content" pr="s16" cursor={'pointer'}>
+          <InputRightElement width="fit-content" pr="s16" cursor="pointer">
             {show ? (
               <IoEyeOffOutline onClick={() => setShow(false)} />
             ) : (

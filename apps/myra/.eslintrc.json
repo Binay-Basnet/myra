@@ -5,46 +5,19 @@
     "plugin:@nrwl/nx/react-typescript",
     "../../.eslintrc.json"
   ],
-  "ignorePatterns": [
-    "!**/*",
-    "/dist",
-    "jest.config.ts",
-    "next.config.js"
-  ],
+  "ignorePatterns": ["!**/*", "/dist", "jest.config.ts", "next.config.js"],
   "overrides": [
     {
-      "files": [
-        "*.ts",
-        "*.tsx",
-        "*.js",
-        "*.jsx"
-      ],
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
-        "@next/next/no-html-link-for-pages": [
-          "error",
-          "apps/myra/pages"
-        ],
-        "unicorn/filename-case": [
-          "error",
-          {
-            "cases": {
-              "kebabCase": true
-            }
-          }
-        ]
+        "@next/next/no-html-link-for-pages": ["error", "apps/myra/pages"]
       }
     },
     {
-      "files": [
-        "*.ts",
-        "*.tsx"
-      ]
+      "files": ["*.ts", "*.tsx"]
     },
     {
-      "files": [
-        "*.js",
-        "*.jsx"
-      ],
+      "files": ["*.js", "*.jsx"],
       "rules": {}
     }
   ],

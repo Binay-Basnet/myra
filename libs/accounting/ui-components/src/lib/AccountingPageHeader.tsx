@@ -12,8 +12,7 @@ export const AccountingPageHeader = ({
   heading,
   buttonLabel,
   buttonHandler,
-}: IAccountingPageHeader) => {
-  return (
+}: IAccountingPageHeader) => (
     <Box
       bg="white"
       zIndex="10"
@@ -42,4 +41,3 @@ export const AccountingPageHeader = ({
       )}
     </Box>
   );
-};

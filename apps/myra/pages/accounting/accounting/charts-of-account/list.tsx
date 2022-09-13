@@ -8,15 +8,15 @@ import {
 import { Box, WIPState } from '@coop/shared/ui';
 
 // TODO ( Update this page when design arrives )
-const AccountingChartsOfAccountList = () => {
-  return (
+const AccountingChartsOfAccountList = () =>
+   (
     <Box display="flex" justifyContent="center" alignItems="center">
       <WIPState />
     </Box>
-  );
+  )
 
   // <AccountingFeatureChartsOfAccountList />;
-};
+;
 
 AccountingChartsOfAccountList.getLayout = function getLayout(
   page: ReactElement

@@ -3,9 +3,7 @@ import React, { ReactElement } from 'react';
 import { InventoryFeatureItem } from '@coop/myra/inventory/item';
 import { MainLayoutInventory } from '@coop/shared/ui';
 
-const AddNewItemPage = () => {
-  return <InventoryFeatureItem />;
-};
+const AddNewItemPage = () => <InventoryFeatureItem />;
 
 export default AddNewItemPage;
 

@@ -50,7 +50,7 @@ export const TDS = () => {
             name="tdsAmount"
             type="number"
             label={t['accountingPurchaseAddTDSAmount']}
-            textAlign={'right'}
+            textAlign="right"
             __placeholder="0.00"
           />
         </InputGroupContainer>

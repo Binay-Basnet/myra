@@ -4,9 +4,7 @@ import {
 } from '@coop/cbs/settings/ui-layout';
 import { CbsSettingsFeatureValuatorList } from '@coop/cbs/settings/valuator';
 
-const ValuatorList = () => {
-  return <CbsSettingsFeatureValuatorList />;
-};
+const ValuatorList = () => <CbsSettingsFeatureValuatorList />;
 
 export default ValuatorList;
 

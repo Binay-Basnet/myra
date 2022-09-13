@@ -7,9 +7,7 @@ import {
   SettingsShareLayout,
 } from '@coop/cbs/settings/ui-layout';
 
-const ShareDividend = () => {
-  return <ShareSettingsDividendPage />;
-};
+const ShareDividend = () => <ShareSettingsDividendPage />;
 
 export default ShareDividend;
 

@@ -6,19 +6,22 @@ interface RecordWithId {
   _id?: number;
 }
 
-interface IFormEditableTableProps<T extends RecordWithId & Record<string, string | number>>
-  extends EditableTableProps<T> {
+interface IFormEditableTableProps<
+  T extends RecordWithId & Record<string, string | number | boolean>
+> extends EditableTableProps<T> {
   name: Path<T> | string;
 }
 
-export const FormEditableTable = <T extends RecordWithId & Record<string, string | number>>({
+export const FormEditableTable = <
+  T extends RecordWithId & Record<string, string | number | boolean>
+>({
   name,
   ...rest
 }: IFormEditableTableProps<T>) => {
   const methods = useFormContext();
 
   const {
-    formState: { errors },
+    // formState: { errors },
     control,
   } = methods;
 

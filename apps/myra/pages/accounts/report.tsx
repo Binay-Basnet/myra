@@ -5,9 +5,7 @@ import { AccountPagesLayout } from '@coop/myra/components';
 import { MainLayout } from '@coop/shared/ui';
 
 // TODO ( Update this page when design arrives )
-const AccountReportPage = () => {
-  return <MemberListPage />;
-};
+const AccountReportPage = () => <MemberListPage />;
 
 AccountReportPage.getLayout = function getLayout(page: ReactElement) {
   return (

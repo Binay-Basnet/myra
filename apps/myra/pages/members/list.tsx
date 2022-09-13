@@ -6,9 +6,7 @@ import {
 } from '@coop/cbs/members/list';
 import { MainLayout } from '@coop/shared/ui';
 
-const MemberListPage = () => {
-  return <MemberList />;
-};
+const MemberListPage = () => <MemberList />;
 
 MemberListPage.getLayout = function getLayout(page: ReactElement) {
   return (

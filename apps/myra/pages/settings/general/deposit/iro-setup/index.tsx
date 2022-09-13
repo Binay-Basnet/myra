@@ -5,9 +5,7 @@ import {
   SettingsLayout,
 } from '@coop/cbs/settings/ui-layout';
 
-const IROSetup = () => {
-  return <CbsSettingsFeatureDepositIROSetup />;
-};
+const IROSetup = () => <CbsSettingsFeatureDepositIROSetup />;
 
 export default IROSetup;
 
