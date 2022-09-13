@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
+import { ObjState, useGetMemberListQuery, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
@@ -14,6 +14,7 @@ export interface CbsSettingsFeatureValuatorListProps {}
 export const CbsSettingsFeatureValuatorList = () => {
   const { t } = useTranslation();
   const router = useRouter();
+  const { mutateAsync } = useGetNewIdMutation();
 
   const { data, isFetching } = useGetMemberListQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
@@ -101,7 +102,11 @@ export const CbsSettingsFeatureValuatorList = () => {
       <SettingsPageHeader
         heading={t['settingsGeneralValuatorValuator']}
         buttonLabel={t['settingsGeneralValuatorNewValuator']}
-        buttonHandler={() => router.push('/settings/general/valuator/add')}
+        buttonHandler={() => {
+          mutateAsync({}).then((res) => {
+            router.push(`/settings/general/valuator/add/${res?.newId}`);
+          });
+        }}
       />
 
       <Table
