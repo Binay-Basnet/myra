@@ -26,7 +26,7 @@ export function toast({ options, id, ...props }: ToastProps) {
 interface AsyncToastProps<T extends Record<string, unknown>> {
   id: string;
   promise: Promise<T>;
-  onSuccess: (response: T) => void;
+  onSuccess?: (response: T) => void;
   msgs: {
     loading: Renderable;
     success: Renderable;
@@ -58,8 +58,7 @@ export const asyncToast = async <T extends Record<string, unknown>>({
           id,
           type: 'error',
           message:
-            (response as unknown as { error: { message: string }[] }).error[0]
-              .message ?? errMsg,
+            (response as unknown as { error: { message: string }[] }).error[0].message ?? errMsg,
         });
       } else {
         onSuccess && onSuccess(response);

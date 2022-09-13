@@ -16,3 +16,46 @@ query getLoanGeneralSettings {
     }
   }
 }
+
+
+query getLoanInsuranceScheme {
+  settings {
+    general {
+      loan {
+        insuranceSchemes {
+          id
+          insuranceCompany
+          insurancePremiumPercent
+          maxAmount
+          maxPercent
+          minAmount
+          paymentFrequency
+          minPercent
+          paymentType
+          schemeName
+        }
+      }
+    }
+  }
+}
+
+query getLoanProductType {
+  settings {
+    general {
+      loan {
+        productType {
+          productTypes {
+            id
+            productType
+            description
+          }
+          productSubTypes {
+            id
+            productSubType
+            productTypeID
+          }
+        }
+      }
+    }
+  }
+}

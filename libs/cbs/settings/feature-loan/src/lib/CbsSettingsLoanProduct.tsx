@@ -276,7 +276,7 @@ export const SettingsLoanProduct = () => {
         columns={columns}
         pagination={{
           total: data?.settings?.general?.loanProducts?.list?.totalCount ?? 'Many',
-          pageInfo: data?.settings.general?.loanProducts?.list?.pageInfo,
+          pageInfo: data?.settings?.general?.loanProducts?.list?.pageInfo,
         }}
       />
     </>

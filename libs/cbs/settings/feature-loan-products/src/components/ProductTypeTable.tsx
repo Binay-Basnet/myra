@@ -1,51 +1,48 @@
+import { useGetNewIdMutation } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { TextBoxContainer, TopText } from '@coop/shared/components';
 import { FormEditableTable } from '@coop/shared/form';
 import { Box } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-type AccountServiceTable = {
-  serviceName: string;
-  ledgerName: string;
-  amount: number;
+type ProductTypeTable = {
+  productType: string;
+  description: string;
 };
 
 export function ProductTypeTable() {
   const { t } = useTranslation();
+  const { mutateAsync } = useGetNewIdMutation();
+
+  const getId = (): Promise<{ newId: string }> => {
+    return new Promise((resolve) => {
+      const response = mutateAsync({});
+      if (response) {
+        resolve(response);
+      }
+    });
+  };
 
   return (
-    <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
-      <GroupContainer
-        scrollMarginTop={'200px'}
-        display="flex"
-        flexDirection={'column'}
-        gap="s16"
-      >
+    <Box width="full" display={'flex'} flexDirection={'column'}>
+      <GroupContainer scrollMarginTop={'200px'} display="flex" flexDirection={'column'} gap="s16">
         <TextBoxContainer>
-          <TopText>{t['loanProductAccountServiceCharge']} </TopText>
+          <TopText>{t['loanProductTypeProductType']}</TopText>
         </TextBoxContainer>
         <Box>
-          <FormEditableTable<AccountServiceTable>
-            name="serviceCharge"
-            debug={false}
+          <FormEditableTable<ProductTypeTable>
+            name="productType"
+            getRowId={getId}
             columns={[
               {
-                accessor: 'serviceName',
-                header: t['loanAccServiceTableServiceName'],
-                fieldType: 'select',
-                cellWidth: 'auto',
+                accessor: 'productType',
+                header: t['loanProductTypeProductType'],
+                cellWidth: 'lg',
               },
               {
-                accessor: 'ledgerName',
-                header: t['loanAccServiceTableLedgerName'],
-                fieldType: 'select',
+                accessor: 'description',
+                header: t['loanProductTypeDescription'],
                 cellWidth: 'auto',
-              },
-              {
-                accessor: 'amount',
-                header: t['loanAccServiceTableAmount'],
-                cellWidth: 'auto',
-                isNumeric: true,
               },
             ]}
           />

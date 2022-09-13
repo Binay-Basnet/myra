@@ -1,9 +1,4 @@
-import {
-  FormProvider,
-  useFieldArray,
-  useForm,
-  useFormContext,
-} from 'react-hook-form';
+import { FormProvider, useFieldArray, useForm, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
 
@@ -19,7 +14,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, Button, Icon, SettingsFooter, Text } from '@coop/shared/ui';
+import { asyncToast, Box, Button, Icon, SettingsFooter, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IAddAccountServices {
@@ -27,10 +22,7 @@ interface IAddAccountServices {
   removeAccountServices: () => void;
 }
 
-const AddServiceCharge = ({
-  index,
-  removeAccountServices,
-}: IAddAccountServices) => {
+const AddServiceCharge = ({ index, removeAccountServices }: IAddAccountServices) => {
   const { t } = useTranslation();
 
   const amountOpt = [
@@ -94,27 +86,15 @@ const AddServiceCharge = ({
           ]}
         />
         <Box display="flex" flexDirection="column" gap="s8">
-          <Text
-            fontWeight="Medium"
-            color="neutralColorLight.Gray-70"
-            fontSize="s3"
-          >
+          <Text fontWeight="Medium" color="neutralColorLight.Gray-70" fontSize="s3">
             {t['loanPaymentType']}
           </Text>
-          <FormSwitchTab
-            name={`insuranceScheme.${index}.paymentType`}
-            options={amountOpt}
-          />
+          <FormSwitchTab name={`insuranceScheme.${index}.paymentType`} options={amountOpt} />
         </Box>
       </InputGroupContainer>
       <Box pt="s16">
         {AmountPer && AmountPer === LoanInsurancePaymentType?.Amount && (
-          <Box
-            border="1px solid"
-            borderColor={'border.layout'}
-            p="s16"
-            borderRadius={'4px'}
-          >
+          <Box border="1px solid" borderColor={'border.layout'} p="s16" borderRadius={'4px'}>
             <InputGroupContainer>
               <FormInput
                 type="number"
@@ -122,7 +102,6 @@ const AddServiceCharge = ({
                 bg="white"
                 name={`insuranceScheme.${index}.minAmount`}
                 label={t['settingsLoanMinimumAmount']}
-                __placeholder={t['settingsLoanPlceholderNumber']}
               />
               <FormInput
                 type="number"
@@ -130,7 +109,6 @@ const AddServiceCharge = ({
                 bg="white"
                 name={`insuranceScheme.${index}.maxAmount`}
                 label={t['settingsLoanMaximumAmount']}
-                __placeholder={t['settingsLoanPlceholderNumber']}
               />
               <FormInput
                 type="number"
@@ -138,7 +116,6 @@ const AddServiceCharge = ({
                 bg="white"
                 name={`insuranceScheme.${index}.insurancePremiumPercent`}
                 label={t['settingsLoanInsurancePremium']}
-                __placeholder={t['settingsLoanPlceholderNumber']}
                 rightElement={
                   <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                     %
@@ -149,28 +126,21 @@ const AddServiceCharge = ({
           </Box>
         )}
         {AmountPer && AmountPer === LoanInsurancePaymentType?.Percentage && (
-          <Box
-            border="1px solid"
-            borderColor={'border.layout'}
-            p="s16"
-            borderRadius={'4px'}
-          >
+          <Box border="1px solid" borderColor={'border.layout'} p="s16" borderRadius={'4px'}>
             <InputGroupContainer>
               <FormInput
                 type="number"
                 textAlign={'right'}
                 bg="white"
-                name={`insuranceScheme.${index}.minPercentage`}
+                name={`insuranceScheme.${index}.minPercent`}
                 label={t['settingsLoanMinimumPer']}
-                __placeholder={t['settingsLoanPlceholderNumber']}
               />
               <FormInput
                 type="number"
                 textAlign={'right'}
                 bg="white"
-                name={`insuranceScheme.${index}.maxPercentage`}
+                name={`insuranceScheme.${index}.maxPercent`}
                 label={t['settingsLoanMaximumPer']}
-                __placeholder={t['settingsLoanPlceholderNumber']}
               />
               <FormInput
                 type="number"
@@ -178,7 +148,6 @@ const AddServiceCharge = ({
                 bg="white"
                 name={`insuranceScheme.${index}.insurancePremiumPercent`}
                 label={t['settingsLoanInsurancePremium']}
-                __placeholder={t['settingsLoanPlceholderNumber']}
                 rightElement={
                   <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                     %
@@ -197,7 +166,7 @@ export const AccountServicesCharge = () => {
   const methods = useForm();
   const { watch } = methods;
   const insuranceScheme = watch('insuranceScheme');
-  const { mutate } = useSetLoanInsuranceSchemeMutation();
+  const { mutateAsync } = useSetLoanInsuranceSchemeMutation();
 
   const {
     fields: insuranceSchemeFields,
@@ -205,17 +174,19 @@ export const AccountServicesCharge = () => {
     remove: insuranceSchemeRemove,
   } = useFieldArray({ name: 'insuranceScheme' });
 
-  const handleSave = () => {
-    mutate({ data: insuranceScheme });
+  const handleSave = async () => {
+    await asyncToast({
+      id: 'loan-settings',
+      msgs: {
+        loading: 'Updating Loan Settings',
+        success: 'Loan Settings Updated',
+      },
+      promise: mutateAsync({ data: insuranceScheme }),
+    });
   };
 
   return (
-    <GroupContainer
-      scrollMarginTop={'200px'}
-      display="flex"
-      flexDirection={'column'}
-      gap="s16"
-    >
+    <GroupContainer scrollMarginTop={'200px'} display="flex" flexDirection={'column'} gap="s16">
       <FormProvider {...methods}>
         <form>
           <DynamicBoxGroupContainer>
@@ -240,7 +211,9 @@ export const AccountServicesCharge = () => {
               {t['settingsLoanNewScheme']}{' '}
             </Button>
           </DynamicBoxGroupContainer>
-          <SettingsFooter handleSave={handleSave} />
+          <Box mx="-s12">
+            <SettingsFooter handleSave={handleSave} />
+          </Box>
         </form>
       </FormProvider>
     </GroupContainer>

@@ -15,7 +15,8 @@ export interface ToastProps {
 
 export const Toast = ({ message, type, state, actionTextHandler, actionText }: ToastProps) => (
   <Box
-    width="360px"
+    minWidth="360px"
+    maxWidth="720px"
     display="flex"
     alignItems="center"
     justifyContent="space-between"
@@ -23,7 +24,8 @@ export const Toast = ({ message, type, state, actionTextHandler, actionText }: T
     px="s16"
     bg={TOAST_COLORS[type]}
     borderRadius="br2"
-    h="56px"
+    minH="56px"
+    py="s16"
   >
     <Box display="flex" alignItems="center" gap="s16">
       {state === 'loading' ? (
@@ -31,7 +33,7 @@ export const Toast = ({ message, type, state, actionTextHandler, actionText }: T
       ) : state === 'blank' ? null : (
         <Icon as={state ? TOAST_ICONS[state] : TOAST_ICONS[type]} size="lg" color="white" />
       )}
-      <Text fontSize="r2" color="white" fontWeight="400" noOfLines={1}>
+      <Text fontSize="r2" color="white" fontWeight="400" noOfLines={3}>
         {message}
       </Text>
     </Box>

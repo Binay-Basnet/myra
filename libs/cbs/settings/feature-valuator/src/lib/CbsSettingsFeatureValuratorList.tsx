@@ -48,11 +48,7 @@ export const CbsSettingsFeatureValuatorList = () => {
         cell: (props) => {
           return (
             <Box display="flex" alignItems="center" gap="s12">
-              <Avatar
-                name="Dan Abrahmov"
-                size="sm"
-                src="https://bit.ly/dan-abramov"
-              />
+              <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
               <Text
                 fontSize="s3"
                 textTransform="capitalize"
@@ -90,10 +86,7 @@ export const CbsSettingsFeatureValuatorList = () => {
         header: '',
         accessorKey: 'actions',
         cell: (cell) => (
-          <PopoverComponent
-            items={popoverTitle}
-            member={cell?.row?.original?.node}
-          />
+          <PopoverComponent items={popoverTitle} member={cell?.row?.original?.node} />
         ),
         meta: {
           width: '60px',
@@ -118,7 +111,7 @@ export const CbsSettingsFeatureValuatorList = () => {
         columns={columns}
         pagination={{
           total: data?.members?.list?.totalCount ?? 'Many',
-          pageInfo: data?.members.list.pageInfo,
+          pageInfo: data?.members?.list?.pageInfo,
         }}
       />
     </>

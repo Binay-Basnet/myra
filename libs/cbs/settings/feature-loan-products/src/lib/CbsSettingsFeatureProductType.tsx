@@ -1,17 +1,55 @@
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { Box, Divider, SettingsFooter } from '@coop/shared/ui';
+import { useGetLoanProductTypeQuery, useSetProductTypeMutation } from '@coop/cbs/data-access';
+import { asyncToast, Box, Divider, SettingsFooter } from '@coop/shared/ui';
 
-// import { getRouterQuery, useTranslation } from '@coop/shared/utils';
-import {
-  NatureOfProductTable,
-  ProductSubTypeTable,
-  ProductTypeTable,
-} from '../components';
+import { ProductSubTypeTable, ProductTypeTable } from '../components';
+
+type ProductTypeTableType = {
+  id?: string;
+  productType: string;
+  description: string;
+};
+
+type ProductSubTypeTable = {
+  productSubType: string;
+  productTypeID: string;
+  id?: string;
+};
+
+type ProductTypeForm = {
+  productType: ProductTypeTableType[];
+  productSubType: ProductSubTypeTable[];
+};
 
 export function CbsSettingsFeatureProductType() {
-  // const { t } = useTranslation();
-  const methods = useForm();
+  const methods = useForm<ProductTypeForm>();
+
+  const { mutateAsync: setProductType } = useSetProductTypeMutation();
+  const { data, isLoading } = useGetLoanProductTypeQuery();
+
+  const productData = data?.settings?.general?.loan?.productType;
+
+  const handleSave = async () => {
+    await asyncToast({
+      id: 'loan-product',
+      promise: setProductType(methods.getValues()),
+      msgs: {
+        success: 'Loan Settings Updated Successfully',
+        loading: 'Updating Loan Settings',
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (productData) {
+      methods.reset({
+        productType: productData.productTypes as ProductTypeTableType[],
+        productSubType: productData.productSubTypes as ProductSubTypeTable[],
+      });
+    }
+  }, [isLoading]);
 
   return (
     <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
@@ -21,10 +59,8 @@ export function CbsSettingsFeatureProductType() {
             <ProductTypeTable />
             <Divider />
             <ProductSubTypeTable />
-            <Divider />
-            <NatureOfProductTable />
           </Box>
-          <SettingsFooter />
+          <SettingsFooter handleSave={handleSave} />
         </form>
       </FormProvider>
     </Box>
