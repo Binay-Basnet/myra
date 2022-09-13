@@ -4,9 +4,9 @@ import { AddIcon } from '@chakra-ui/icons';
 
 import {
   Id_Type,
-  LoanProductSubType,
-  LoanProductType,
+  // LoanProductSubType,
   useGetLoanProductListQuery,
+  // useGetLoanProductSettingsQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
@@ -49,142 +49,153 @@ export const SettingsLoanProduct = () => {
     },
   ];
 
-  const productTypes = (data: LoanProductType) => {
-    switch (data) {
-      case LoanProductType.Agriculture:
-        return t['loanProductAgriculture'];
-      case LoanProductType.AlternativeEnergy:
-        return t['loanProductAlternativeEnergy'];
-      case LoanProductType.AssetsPurchasesAndMaintenance:
-        return t['loanProductAssetsPurchasesAndMaintenance'];
-      case LoanProductType.Business:
-        return t['loanProductTypeBusiness'];
-      case LoanProductType.CreditUnion:
-        return t['loanProductCreditUnion'];
-      case LoanProductType.Educational:
-        return t['loanProductEducational'];
-      case LoanProductType.ForeignEmployee:
-        return t['loanProductForeignEmployee'];
-      case LoanProductType.HirePurchase:
-        return t['loanProductHirePurchase'];
-      case LoanProductType.Industrial:
-        return t['loanProductTypeIndustrial'];
-      case LoanProductType.MicroEntrepreneur:
-        return t['loanProductMicroEntrepreneur'];
-      case LoanProductType.SocialSector:
-        return t['loanProductSocialSector'];
-      case LoanProductType.Staff:
-        return t['loanProductStaff'];
-      default:
-        return '-';
-    }
-  };
+  // const { data: productDataList } = useGetLoanProductSettingsQuery();
 
-  const productSubTypes = (data: LoanProductSubType) => {
-    switch (data) {
-      case LoanProductSubType.AgricultureBusiness:
-        return t['agricultureBusiness'];
-      case LoanProductSubType.BigIndustrial:
-        return t['bigIndustrial'];
-      case LoanProductSubType.BioGas:
-        return t['bioGas'];
-      case LoanProductSubType.BusinessLineOfCredit:
-        return t['businessLineOfCredit'];
-      case LoanProductSubType.HandicraftPromotional:
-        return t['handicraftPromotional'];
-      case LoanProductSubType.SmallIndustrial:
-        return t['smallIndustrial'];
-      case LoanProductSubType.SmallAndMediumEnterprises:
-        return t['smallAndMediumEnterprises'];
-      case LoanProductSubType.LivestockBusiness:
-        return t['livestockBusiness'];
-      case LoanProductSubType.ConsumerGoodsBusiness:
-        return t['consumerGoodsBusiness'];
-      case LoanProductSubType.MicroEntrepreneur:
-        return t['microEntrepreneur'];
-      case LoanProductSubType.ConstructionEquipmentBusiness:
-        return t['constructionEquipmentBusiness'];
-      case LoanProductSubType.LandAndBuildingBusiness:
-        return t['landAndBuildingBusiness'];
+  // const productTypesList = productDataList?.settings?.general?.loan?.productType?.productTypes;
 
-      case LoanProductSubType.StationaryBusiness:
-        return t['stationaryBusiness'];
-      case LoanProductSubType.ServiceBusiness:
-        return t['serviceBusiness'];
-      case LoanProductSubType.FruitsAndHorticulture:
-        return t['fruitsAndHorticulture'];
-      case LoanProductSubType.VegetableAndSeasonalFarming:
-        return t['vegetableAndSeasonalFarming'];
-      case LoanProductSubType.SpiceProduction:
-        return t['spiceProduction'];
-      case LoanProductSubType.CashCropsFraming:
-        return t['cashCropsFraming'];
-      case LoanProductSubType.Livestock:
-        return t['livestock'];
-      case LoanProductSubType.PoultryFarming:
-        return t['poultryFarming'];
-      case LoanProductSubType.HoneyBeeFarming:
-        return t['honeyBeeFarming'];
-      case LoanProductSubType.HigherEducation:
-        return t['higherEducation'];
-      case LoanProductSubType.TechnicalEducation:
-        return t['technicalEducation'];
-      case LoanProductSubType.ForeignEducation:
-        return t['foreignEducation'];
+  // const productTypes = productTypesList?.map((item) => {
+  //   return {
+  //     label: item?.productType as string,
+  //     value: item?.id as string,
+  //   };
+  // });
 
-      case LoanProductSubType.HomeConstructionAndMaintenance:
-        return t['homeConstructionAndMaintenance'];
-      case LoanProductSubType.HousePurchase:
-        return t['housePurchase'];
-      case LoanProductSubType.LandPurchase:
-        return t['landPurchase'];
-      case LoanProductSubType.HomeAppliance:
-        return t['homeAppliance'];
-      case LoanProductSubType.SocialWork:
-        return t['socialWork'];
-      case LoanProductSubType.ReligiousWork:
-        return t['religiousWork'];
-      case LoanProductSubType.HomeExpenses:
-        return t['homeExpenses'];
-      case LoanProductSubType.Emergency:
-        return t['emergency'];
-      case LoanProductSubType.ForeignEmployeeWorkingVisa:
-        return t['foreignEmployeeWorkingVisa'];
-      case LoanProductSubType.ForeignEmployeeDependentVisa:
-        return t['foreignEmployeeDependentVisa'];
-      case LoanProductSubType.SolarEnergy:
-        return t['solarEnergy'];
-      case LoanProductSubType.YouthSelfEmployment:
-        return t['youthSelfEmployment'];
+  // const productTypes = (data: LoanProductType) => {
+  //   switch (data) {
+  //     case LoanProductType.Agriculture:
+  //       return t['loanProductAgriculture'];
+  //     case LoanProductType.AlternativeEnergy:
+  //       return t['loanProductAlternativeEnergy'];
+  //     case LoanProductType.AssetsPurchasesAndMaintenance:
+  //       return t['loanProductAssetsPurchasesAndMaintenance'];
+  //     case LoanProductType.Business:
+  //       return t['loanProductTypeBusiness'];
+  //     case LoanProductType.CreditUnion:
+  //       return t['loanProductCreditUnion'];
+  //     case LoanProductType.Educational:
+  //       return t['loanProductEducational'];
+  //     case LoanProductType.ForeignEmployee:
+  //       return t['loanProductForeignEmployee'];
+  //     case LoanProductType.HirePurchase:
+  //       return t['loanProductHirePurchase'];
+  //     case LoanProductType.Industrial:
+  //       return t['loanProductTypeIndustrial'];
+  //     case LoanProductType.MicroEntrepreneur:
+  //       return t['loanProductMicroEntrepreneur'];
+  //     case LoanProductType.SocialSector:
+  //       return t['loanProductSocialSector'];
+  //     case LoanProductType.Staff:
+  //       return t['loanProductStaff'];
+  //     default:
+  //       return '-';
+  //   }
+  // };
 
-      case LoanProductSubType.MicroEntrepreneurGroup:
-        return t['microEntrepreneurGroup'];
-      case LoanProductSubType.HirePurchaseLoan_2Wheeler:
-        return t['hirePurchaseLoan_2Wheeler'];
-      case LoanProductSubType.HirePurchaseLoan_4Wheeler:
-        return t['hirePurchaseLoan_4Wheeler'];
-      case LoanProductSubType.HirePurchaseLoanHeavyEquipment:
-        return t['hirePurchaseLoanHeavyEquipment'];
-      case LoanProductSubType.StaffLandAndBuilding:
-        return t['staffLandAndBuilding'];
-      case LoanProductSubType.StaffHirepurchase:
-        return t['staffHirepurchase'];
-      case LoanProductSubType.StaffPersonal:
-        return t['staffPersonal'];
-      case LoanProductSubType.LiquidityManagement:
-        return t['liquidityManagement'];
-      case LoanProductSubType.ShortTerm:
-        return t['shortTerm'];
-      case LoanProductSubType.CooperativePromotion:
-        return t['cooperativePromotion'];
-      case LoanProductSubType.MicroEnterprisePromotion:
-        return t['microEnterprisePromotion'];
-      case LoanProductSubType.LineOfCredit:
-        return t['lineOfCredit'];
-      default:
-        return '-';
-    }
-  };
+  // const productSubTypes = (data: LoanProductSubType) => {
+  //   switch (data) {
+  //     case LoanProductSubType.AgricultureBusiness:
+  //       return t['agricultureBusiness'];
+  //     case LoanProductSubType.BigIndustrial:
+  //       return t['bigIndustrial'];
+  //     case LoanProductSubType.BioGas:
+  //       return t['bioGas'];
+  //     case LoanProductSubType.BusinessLineOfCredit:
+  //       return t['businessLineOfCredit'];
+  //     case LoanProductSubType.HandicraftPromotional:
+  //       return t['handicraftPromotional'];
+  //     case LoanProductSubType.SmallIndustrial:
+  //       return t['smallIndustrial'];
+  //     case LoanProductSubType.SmallAndMediumEnterprises:
+  //       return t['smallAndMediumEnterprises'];
+  //     case LoanProductSubType.LivestockBusiness:
+  //       return t['livestockBusiness'];
+  //     case LoanProductSubType.ConsumerGoodsBusiness:
+  //       return t['consumerGoodsBusiness'];
+  //     case LoanProductSubType.MicroEntrepreneur:
+  //       return t['microEntrepreneur'];
+  //     case LoanProductSubType.ConstructionEquipmentBusiness:
+  //       return t['constructionEquipmentBusiness'];
+  //     case LoanProductSubType.LandAndBuildingBusiness:
+  //       return t['landAndBuildingBusiness'];
+
+  //     case LoanProductSubType.StationaryBusiness:
+  //       return t['stationaryBusiness'];
+  //     case LoanProductSubType.ServiceBusiness:
+  //       return t['serviceBusiness'];
+  //     case LoanProductSubType.FruitsAndHorticulture:
+  //       return t['fruitsAndHorticulture'];
+  //     case LoanProductSubType.VegetableAndSeasonalFarming:
+  //       return t['vegetableAndSeasonalFarming'];
+  //     case LoanProductSubType.SpiceProduction:
+  //       return t['spiceProduction'];
+  //     case LoanProductSubType.CashCropsFraming:
+  //       return t['cashCropsFraming'];
+  //     case LoanProductSubType.Livestock:
+  //       return t['livestock'];
+  //     case LoanProductSubType.PoultryFarming:
+  //       return t['poultryFarming'];
+  //     case LoanProductSubType.HoneyBeeFarming:
+  //       return t['honeyBeeFarming'];
+  //     case LoanProductSubType.HigherEducation:
+  //       return t['higherEducation'];
+  //     case LoanProductSubType.TechnicalEducation:
+  //       return t['technicalEducation'];
+  //     case LoanProductSubType.ForeignEducation:
+  //       return t['foreignEducation'];
+
+  //     case LoanProductSubType.HomeConstructionAndMaintenance:
+  //       return t['homeConstructionAndMaintenance'];
+  //     case LoanProductSubType.HousePurchase:
+  //       return t['housePurchase'];
+  //     case LoanProductSubType.LandPurchase:
+  //       return t['landPurchase'];
+  //     case LoanProductSubType.HomeAppliance:
+  //       return t['homeAppliance'];
+  //     case LoanProductSubType.SocialWork:
+  //       return t['socialWork'];
+  //     case LoanProductSubType.ReligiousWork:
+  //       return t['religiousWork'];
+  //     case LoanProductSubType.HomeExpenses:
+  //       return t['homeExpenses'];
+  //     case LoanProductSubType.Emergency:
+  //       return t['emergency'];
+  //     case LoanProductSubType.ForeignEmployeeWorkingVisa:
+  //       return t['foreignEmployeeWorkingVisa'];
+  //     case LoanProductSubType.ForeignEmployeeDependentVisa:
+  //       return t['foreignEmployeeDependentVisa'];
+  //     case LoanProductSubType.SolarEnergy:
+  //       return t['solarEnergy'];
+  //     case LoanProductSubType.YouthSelfEmployment:
+  //       return t['youthSelfEmployment'];
+
+  //     case LoanProductSubType.MicroEntrepreneurGroup:
+  //       return t['microEntrepreneurGroup'];
+  //     case LoanProductSubType.HirePurchaseLoan_2Wheeler:
+  //       return t['hirePurchaseLoan_2Wheeler'];
+  //     case LoanProductSubType.HirePurchaseLoan_4Wheeler:
+  //       return t['hirePurchaseLoan_4Wheeler'];
+  //     case LoanProductSubType.HirePurchaseLoanHeavyEquipment:
+  //       return t['hirePurchaseLoanHeavyEquipment'];
+  //     case LoanProductSubType.StaffLandAndBuilding:
+  //       return t['staffLandAndBuilding'];
+  //     case LoanProductSubType.StaffHirepurchase:
+  //       return t['staffHirepurchase'];
+  //     case LoanProductSubType.StaffPersonal:
+  //       return t['staffPersonal'];
+  //     case LoanProductSubType.LiquidityManagement:
+  //       return t['liquidityManagement'];
+  //     case LoanProductSubType.ShortTerm:
+  //       return t['shortTerm'];
+  //     case LoanProductSubType.CooperativePromotion:
+  //       return t['cooperativePromotion'];
+  //     case LoanProductSubType.MicroEnterprisePromotion:
+  //       return t['microEnterprisePromotion'];
+  //     case LoanProductSubType.LineOfCredit:
+  //       return t['lineOfCredit'];
+  //     default:
+  //       return '-';
+  //   }
+  // };
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -220,12 +231,12 @@ export const SettingsLoanProduct = () => {
       {
         header: t['loanProductsProductType'],
         accessorFn: (row) => row?.node.productType,
-        cell: (props) => productTypes(props?.row?.original?.node?.productType),
+        // cell: (props) => productTypes(props?.row?.original?.node?.productType),
       },
       {
         header: t['loanProductsProductSubType'],
         accessorFn: (row) => row?.node.productSubType,
-        cell: (props) => productSubTypes(props?.row?.original?.node?.productSubType),
+        // cell: (props) => productSubTypes(props?.row?.original?.node?.productSubType),
       },
       {
         header: t['loanProductsInterest'],

@@ -17,6 +17,27 @@ query getLoanGeneralSettings {
   }
 }
 
+query getLoanProductSettings {
+  settings {
+    general {
+      loan {
+        productType {
+          productTypes {
+            id
+            productType
+            description
+          }
+          productSubTypes {
+            id
+            productSubType
+            productTypeID
+          }
+        }
+      }
+    }
+  }
+}
+
 
 query getLoanInsuranceScheme {
   settings {

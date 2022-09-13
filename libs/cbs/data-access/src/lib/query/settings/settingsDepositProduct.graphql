@@ -1,7 +1,4 @@
-query getDepositProductSettingsList(
-  $paginate: Pagination
-  $filter: DepositProductSearchFilter
-) {
+query getDepositProductSettingsList($paginate: Pagination, $filter: DepositProductSearchFilter) {
   settings {
     general {
       depositProduct {
@@ -83,6 +80,7 @@ query getDepositProductSettingsEditData($id: ID!) {
               dayAfterInstallmentDate
               penaltyRate
               penaltyAmount
+              penaltyLedgerMapping
             }
             rebate
             rebateData {
@@ -90,6 +88,7 @@ query getDepositProductSettingsEditData($id: ID!) {
               noOfInstallment
               rebateAmount
               rebateRate
+              rebateLedgerMapping
             }
             minTenure
             minTenureUnit
@@ -128,6 +127,23 @@ query getDepositProductSettingsEditData($id: ID!) {
               ledgerName
               amount
             }
+
+            chequeCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            atmCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            alternativeChannelCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+
             dormantSetup {
               duration
               condition
