@@ -8,20 +8,10 @@ query getValuator($id: ID!) {
             valuatorType
             valuatorId
             academicQualification
-            valuationLisenceNo
+            valuationLicenseNo
             renewalDate
             contractDate
             insurancePremium
-            provinceId
-            districtId
-            localGovernmentId
-            wardNo
-            locality
-            houseNo
-            location {
-              longitude
-              latitude
-            }
             mobileNo
             phoneNo
             email
