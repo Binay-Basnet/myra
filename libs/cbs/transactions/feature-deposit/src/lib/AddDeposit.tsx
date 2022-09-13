@@ -14,10 +14,7 @@ import {
   useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
-import {
-  FormCustomSelect,
-  MemberSelect,
-} from '@coop/cbs/transactions/ui-components';
+import { FormCustomSelect, MemberSelect } from '@coop/cbs/transactions/ui-components';
 import { FormInput } from '@coop/shared/form';
 import {
   asyncToast,
@@ -75,7 +72,7 @@ const cashOptions: Record<string, string> = {
 const FINE = '0';
 const REBATE = '0';
 
-export function AddDeposit() {
+export const AddDeposit = () => {
   const router = useRouter();
 
   const methods = useForm<DepositFormInput>({
@@ -121,9 +118,8 @@ export function AddDeposit() {
 
   const selectedAccount = useMemo(
     () =>
-      accountListData?.account?.list?.edges?.find(
-        (account) => account.node?.id === accountId
-      )?.node,
+      accountListData?.account?.list?.edges?.find((account) => account.node?.id === accountId)
+        ?.node,
     [accountId]
   );
 
@@ -160,17 +156,15 @@ export function AddDeposit() {
 
   const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
 
-  const { data: installmentsListQueryData, refetch } =
-    useGetInstallmentsListDataQuery(
-      { id: accountId as string },
-      {
-        enabled:
-          (!!accountId &&
-            selectedAccount?.product?.nature ===
-              NatureOfDepositProduct.RecurringSaving) ||
-          selectedAccount?.product?.nature === NatureOfDepositProduct.Mandatory,
-      }
-    );
+  const { data: installmentsListQueryData, refetch } = useGetInstallmentsListDataQuery(
+    { id: accountId as string },
+    {
+      enabled:
+        (!!accountId &&
+          selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving) ||
+        selectedAccount?.product?.nature === NatureOfDepositProduct.Mandatory,
+    }
+  );
 
   useEffect(() => {
     if (accountId) {
@@ -179,8 +173,7 @@ export function AddDeposit() {
   }, [accountId]);
 
   const { firstMonth, lastMonth, fine, rebate } = useMemo(() => {
-    const installmentData =
-      installmentsListQueryData?.account?.getInstallments?.data;
+    const installmentData = installmentsListQueryData?.account?.getInstallments?.data;
 
     if (!installmentData?.length || !noOfInstallments) {
       return { firstMonth: '', lastMonth: '' };
@@ -214,17 +207,17 @@ export function AddDeposit() {
     };
   }, [noOfInstallments, installmentsListQueryData]);
 
-  amountToBeDeposited = useMemo(
-    () => Number(noOfInstallments) * Number(selectedAccount?.installmentAmount),
-    [noOfInstallments, selectedAccount]
-  );
+  amountToBeDeposited = useMemo(() => {
+    if (noOfInstallments && selectedAccount?.installmentAmount) {
+      return Number(noOfInstallments) * Number(selectedAccount?.installmentAmount);
+    }
+    return amountToBeDeposited;
+  }, [noOfInstallments, selectedAccount, amountToBeDeposited]);
 
   const totalDeposit = useMemo(
     () =>
       amountToBeDeposited
-        ? Number(amountToBeDeposited) +
-          Number(fine ?? FINE) +
-          Number(rebate ?? REBATE)
+        ? Number(amountToBeDeposited) + Number(fine ?? FINE) + Number(rebate ?? REBATE)
         : 0,
     [amountToBeDeposited]
   );
@@ -240,8 +233,7 @@ export function AddDeposit() {
     };
 
     if (
-      selectedAccount?.product?.nature ===
-        NatureOfDepositProduct.RecurringSaving ||
+      selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving ||
       selectedAccount?.product?.nature === NatureOfDepositProduct.Mandatory
     ) {
       filteredValues['amount'] = String(amountToBeDeposited);
@@ -285,30 +277,19 @@ export function AddDeposit() {
   return (
     <>
       <Container minW="container.xl" height="fit-content">
-        <Box
-          position="sticky"
-          top="110px"
-          bg="gray.100"
-          width="100%"
-          zIndex="10"
-        >
+        <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
-            title={'New Deposit'}
+            title="New Deposit"
             closeLink="/transactions/deposit/list"
             buttonLabel="Add Bulk Deposit"
-            buttonHandler={() =>
-              router.push('/transactions/deposit/add-bulk-deposit')
-            }
+            buttonHandler={() => router.push('/transactions/deposit/add-bulk-deposit')}
           />
         </Box>
 
         <Box bg="white">
           <FormProvider {...methods}>
             <form>
-              <Box
-                display={mode === 0 ? 'flex' : 'none'}
-                minH="calc(100vh - 170px)"
-              >
+              <Box display={mode === 0 ? 'flex' : 'none'} minH="calc(100vh - 170px)">
                 <Box
                   p="s16"
                   pb="100px"
@@ -319,59 +300,43 @@ export function AddDeposit() {
                   borderRight="1px"
                   borderColor="border.layout"
                 >
-                  <MemberSelect
-                    name="memberId"
-                    label="Member"
-                    __placeholder="Select Member"
-                  />
+                  <MemberSelect name="memberId" label="Member" __placeholder="Select Member" />
 
                   {memberId && (
                     <FormCustomSelect
                       name="accountId"
                       label="Select Deposit Account"
                       __placeholder="Select Account"
-                      options={accountListData?.account?.list?.edges?.map(
-                        (account) => ({
-                          accountInfo: {
-                            accountName: account.node?.product.productName,
-                            accountId: account.node?.id,
-                            accountType: account?.node?.product?.nature
-                              ? accountTypes[account?.node?.product?.nature]
+                      options={accountListData?.account?.list?.edges?.map((account) => ({
+                        accountInfo: {
+                          accountName: account.node?.product.productName,
+                          accountId: account.node?.id,
+                          accountType: account?.node?.product?.nature
+                            ? accountTypes[account?.node?.product?.nature]
+                            : '',
+                          balance: account?.node?.balance ?? '0',
+                          fine:
+                            account?.node?.product?.nature ===
+                              NatureOfDepositProduct.RecurringSaving ||
+                            account?.node?.product?.nature === NatureOfDepositProduct.Mandatory
+                              ? FINE
                               : '',
-                            balance: account?.node?.balance ?? '0',
-                            fine:
-                              account?.node?.product?.nature ===
-                                NatureOfDepositProduct.RecurringSaving ||
-                              account?.node?.product?.nature ===
-                                NatureOfDepositProduct.Mandatory
-                                ? FINE
-                                : '',
-                          },
-                          value: account.node?.id as string,
-                        })
-                      )}
+                        },
+                        value: account.node?.id as string,
+                      }))}
                     />
                   )}
 
                   {accountId &&
-                    (selectedAccount?.product?.nature ===
-                      NatureOfDepositProduct.RecurringSaving ||
-                      selectedAccount?.product?.nature ===
-                        NatureOfDepositProduct.Mandatory) && (
+                    (selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving ||
+                      selectedAccount?.product?.nature === NatureOfDepositProduct.Mandatory) && (
                       <>
-                        <Grid
-                          templateColumns="repeat(2, 1fr)"
-                          gap="s24"
-                          alignItems="flex-end"
-                        >
+                        <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
                           <FormInput name="voucherId" label="Voucher ID" />
 
-                          <Box></Box>
+                          <Box />
 
-                          <FormInput
-                            name="noOfInstallments"
-                            label="No of Installments"
-                          />
+                          <FormInput name="noOfInstallments" label="No of Installments" />
 
                           <Box>
                             <Button variant="outline" onClick={handleModalOpen}>
@@ -381,18 +346,10 @@ export function AddDeposit() {
                         </Grid>
 
                         <Box display="flex" flexDirection="column" gap="s4">
-                          <Text
-                            fontSize="s3"
-                            fontWeight={500}
-                            color="neutralColorLight.Gray-70"
-                          >
+                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
                             Payment Range
                           </Text>
-                          <Text
-                            fontSize="s3"
-                            fontWeight={400}
-                            color="neutralColorLight.Gray-70"
-                          >
+                          <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
                             {`Payment made from ${firstMonth} to ${lastMonth}`}
                           </Text>
                         </Box>
@@ -400,14 +357,9 @@ export function AddDeposit() {
                     )}
 
                   {accountId &&
-                    selectedAccount?.product?.nature ===
-                      NatureOfDepositProduct.TermSavingOrFd && (
+                    selectedAccount?.product?.nature === NatureOfDepositProduct.TermSavingOrFd && (
                       <>
-                        <Grid
-                          templateColumns="repeat(2, 1fr)"
-                          gap="s24"
-                          alignItems="flex-end"
-                        >
+                        <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
                           <FormInput name="voucherId" label="Voucher ID" />
 
                           <FormInput
@@ -420,22 +372,11 @@ export function AddDeposit() {
                         </Grid>
 
                         <Box display="flex" flexDirection="column" gap="s4">
-                          <Text
-                            fontSize="s3"
-                            fontWeight={500}
-                            color="neutralColorLight.Gray-70"
-                          >
+                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
                             Total amount in the account after deposit
                           </Text>
-                          <Text
-                            fontSize="s3"
-                            fontWeight={400}
-                            color="neutralColorLight.Gray-70"
-                          >
-                            {`Rs. ${
-                              Number(selectedAccount?.balance ?? 0) +
-                              Number(totalDeposit)
-                            }`}
+                          <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
+                            {`Rs. ${Number(selectedAccount?.balance ?? 0) + Number(totalDeposit)}`}
                           </Text>
                         </Box>
                       </>
@@ -445,36 +386,18 @@ export function AddDeposit() {
                     selectedAccount?.product?.nature ===
                       NatureOfDepositProduct.VoluntaryOrOptional && (
                       <>
-                        <Grid
-                          templateColumns="repeat(2, 1fr)"
-                          gap="s24"
-                          alignItems="flex-end"
-                        >
+                        <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
                           <FormInput name="voucherId" label="Voucher ID" />
 
-                          <FormInput
-                            name="amount"
-                            label="Amount to be Deposited"
-                          />
+                          <FormInput name="amount" label="Amount to be Deposited" />
                         </Grid>
 
                         <Box display="flex" flexDirection="column" gap="s4">
-                          <Text
-                            fontSize="s3"
-                            fontWeight={500}
-                            color="neutralColorLight.Gray-70"
-                          >
+                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
                             Total amount in the account after deposit
                           </Text>
-                          <Text
-                            fontSize="s3"
-                            fontWeight={400}
-                            color="neutralColorLight.Gray-70"
-                          >
-                            {`Rs. ${
-                              Number(selectedAccount?.balance ?? 0) +
-                              Number(totalDeposit)
-                            }`}
+                          <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
+                            {`Rs. ${Number(selectedAccount?.balance ?? 0) + Number(totalDeposit)}`}
                           </Text>
                         </Box>
                       </>
@@ -482,11 +405,7 @@ export function AddDeposit() {
 
                   {memberId && accountId && (
                     <>
-                      <Divider
-                        my="s8"
-                        border="1px solid"
-                        borderColor="background.500"
-                      />
+                      <Divider my="s8" border="1px solid" borderColor="background.500" />
 
                       <Box
                         bg="background.500"
@@ -502,11 +421,7 @@ export function AddDeposit() {
                             Deposit Amount
                           </Text>
 
-                          <Text
-                            fontSize="s3"
-                            fontWeight={500}
-                            color="neutralColorLight.Gray-80"
-                          >
+                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
                             {amountToBeDeposited}
                           </Text>
                         </Box>
@@ -516,19 +431,11 @@ export function AddDeposit() {
                           selectedAccount?.product?.nature ===
                             NatureOfDepositProduct.Mandatory) && (
                           <Box display="flex" justifyContent="space-between">
-                            <Text
-                              fontSize="s3"
-                              fontWeight={500}
-                              color="gray.600"
-                            >
+                            <Text fontSize="s3" fontWeight={500} color="gray.600">
                               Fine
                             </Text>
 
-                            <Text
-                              fontSize="s3"
-                              fontWeight={500}
-                              color="danger.500"
-                            >
+                            <Text fontSize="s3" fontWeight={500} color="danger.500">
                               {`+ ${fine ?? FINE}`}
                             </Text>
                           </Box>
@@ -539,11 +446,7 @@ export function AddDeposit() {
                             Rebate
                           </Text>
 
-                          <Text
-                            fontSize="s3"
-                            fontWeight={500}
-                            color="success.500"
-                          >
+                          <Text fontSize="s3" fontWeight={500} color="success.500">
                             {`- ${rebate ?? REBATE}`}
                           </Text>
                         </Box>
@@ -553,11 +456,7 @@ export function AddDeposit() {
                             Total Deposit
                           </Text>
 
-                          <Text
-                            fontSize="s3"
-                            fontWeight={500}
-                            color="neutralColorLight.Gray-80"
-                          >
+                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
                             {totalDeposit}
                           </Text>
                         </Box>
@@ -595,19 +494,14 @@ export function AddDeposit() {
                                 : '',
                               ID: selectedAccount?.product?.id,
                               currentBalance: selectedAccount?.balance ?? '0',
-                              minimumBalance:
-                                selectedAccount?.product?.minimumBalance ?? '0',
+                              minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
                               guaranteeBalance: '1000',
-                              overdrawnBalance:
-                                selectedAccount?.overDrawnBalance ?? '0',
+                              overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                               fine: FINE,
                               // branch: 'Kumaripati',
-                              openDate:
-                                selectedAccount?.accountOpenedDate ?? 'N/A',
-                              expiryDate:
-                                selectedAccount?.accountExpiryDate ?? 'N/A',
-                              lastTransactionDate:
-                                selectedAccount?.lastTransactionDate ?? 'N/A',
+                              openDate: selectedAccount?.accountOpenedDate ?? 'N/A',
+                              expiryDate: selectedAccount?.accountExpiryDate ?? 'N/A',
+                              lastTransactionDate: selectedAccount?.lastTransactionDate ?? 'N/A',
                             }
                           : null
                       }
@@ -631,18 +525,10 @@ export function AddDeposit() {
               status={
                 mode === 0 ? (
                   <Box display="flex" gap="s32">
-                    <Text
-                      fontSize="r1"
-                      fontWeight={600}
-                      color="neutralColorLight.Gray-50"
-                    >
-                      {'Total Deposit Amount'}
+                    <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
+                      Total Deposit Amount
                     </Text>
-                    <Text
-                      fontSize="r1"
-                      fontWeight={600}
-                      color="neutralColorLight.Gray-70"
-                    >
+                    <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
                       {totalDeposit ?? '---'}
                     </Text>
                   </Box>
@@ -667,6 +553,6 @@ export function AddDeposit() {
       />
     </>
   );
-}
+};
 
 export default AddDeposit;
