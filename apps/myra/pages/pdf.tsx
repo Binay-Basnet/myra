@@ -53,7 +53,7 @@ export const Pdf = () => {
                 variant="ghost"
                 gap="s8"
                 onClick={() =>
-                  router.push('/members/translation/' + router.query['id'])
+                  router.push(`/members/translation/${  router.query['id']}`)
                 }
               >
                 <Icon as={FiEdit} />

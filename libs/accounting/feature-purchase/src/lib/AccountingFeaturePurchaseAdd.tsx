@@ -28,7 +28,7 @@ import {
 /* eslint-disable-next-line */
 export interface AccountingFeaturePurchaseAddProps {}
 
-export function AccountingFeaturePurchaseAdd() {
+export const AccountingFeaturePurchaseAdd = () => {
   const { t } = useTranslation();
 
   const methods = useForm({
@@ -78,7 +78,7 @@ export function AccountingFeaturePurchaseAdd() {
             {t['accountingPurchaseAddPurchaseNew']}
           </Text>
           <IconButton
-            variant={'ghost'}
+            variant="ghost"
             aria-label="close"
             icon={<GrClose />}
             onClick={() => router.back()}
@@ -105,7 +105,7 @@ export function AccountingFeaturePurchaseAdd() {
                     __placeholder={t['accountingPurchaseAddNote']}
                     rows={5}
                   />
-                  <FieldCardComponents rows={'repeat(5,1fr)'}>
+                  <FieldCardComponents rows="repeat(5,1fr)">
                     <GridItem display="flex" justifyContent="space-between">
                       <Text
                         color="neutralColorLight.Gray-60"

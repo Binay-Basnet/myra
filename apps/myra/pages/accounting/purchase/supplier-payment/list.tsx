@@ -4,9 +4,7 @@ import { AccountingFeaturePurchaseSupplierPayment } from '@coop/accounting/purch
 import { AccountingLayout, PurchaseLayout } from '@coop/accounting/ui-layouts';
 
 // TODO ( Update this page when design arrives )
-const AccountingPurchaseSupplierNote = () => {
-  return <AccountingFeaturePurchaseSupplierPayment />;
-};
+const AccountingPurchaseSupplierNote = () => <AccountingFeaturePurchaseSupplierPayment />;
 
 AccountingPurchaseSupplierNote.getLayout = function getLayout(
   page: ReactElement

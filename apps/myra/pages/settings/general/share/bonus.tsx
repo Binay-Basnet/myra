@@ -7,9 +7,7 @@ import {
   SettingsShareLayout,
 } from '@coop/cbs/settings/ui-layout';
 
-const ShareBonus = () => {
-  return <ShareSettingsBonusPage />;
-};
+const ShareBonus = () => <ShareSettingsBonusPage />;
 
 export default ShareBonus;
 

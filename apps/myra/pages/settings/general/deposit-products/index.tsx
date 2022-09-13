@@ -4,9 +4,7 @@ import {
   SettingsLayout,
 } from '@coop/cbs/settings/ui-layout';
 
-const DepositProducts = () => {
-  return <SettingsDepositProducts />;
-};
+const DepositProducts = () => <SettingsDepositProducts />;
 
 export default DepositProducts;
 

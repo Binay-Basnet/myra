@@ -8,7 +8,7 @@ export interface AccountingLayoutProps {
   children: React.ReactNode;
 }
 
-export function AccountingLayout(props: AccountingLayoutProps) {
+export const AccountingLayout = (props: AccountingLayoutProps) => {
   const { children } = props;
   return (
     <div>

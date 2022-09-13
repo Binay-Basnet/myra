@@ -7,7 +7,7 @@ import { Column, Table } from '@coop/shared/table';
 import { Box, Text } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-export function BookStatDetailPage() {
+export const BookStatDetailPage = () => {
   const { t } = useTranslation();
 
   const router = useRouter();

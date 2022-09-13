@@ -4,9 +4,7 @@ import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
 import { WithdrawList } from '@coop/cbs/transactions/withdraw';
 import { MainLayout } from '@coop/shared/ui';
 
-const TransactionsWithdrawList = () => {
-  return <WithdrawList />;
-};
+const TransactionsWithdrawList = () => <WithdrawList />;
 
 TransactionsWithdrawList.getLayout = function getLayout(page: ReactElement) {
   return (

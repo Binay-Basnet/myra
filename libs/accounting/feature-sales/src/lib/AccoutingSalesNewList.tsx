@@ -11,7 +11,7 @@ import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 /* eslint-disable-next-line */
 export interface AccountingSalesListProps {}
 
-export function AccountingSalesList() {
+export const AccountingSalesList = () => {
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -46,12 +46,11 @@ export function AccountingSalesList() {
       {
         accessorFn: (row) => row?.node?.name?.local,
         header: t['accountingSalesListCustomer'],
-        cell: (props) => {
-          return (
+        cell: (props) => (
             <Box
               display="flex"
               alignItems="center"
-              cursor={'pointer'}
+              cursor="pointer"
               gap="s12"
               onClick={() => {
                 router.push('/accounting/sales/object');
@@ -71,8 +70,7 @@ export function AccountingSalesList() {
                 {props.getValue() as string}
               </Text>
             </Box>
-          );
-        },
+          ),
 
         meta: {
           width: '60%',

@@ -3,13 +3,11 @@ import React, { ReactElement } from 'react';
 import { AccountPagesLayout } from '@coop/myra/components';
 import { Box, MainLayout, WIPState } from '@coop/shared/ui';
 
-const AccountClose = () => {
-  return (
+const AccountClose = () => (
     <Box display="flex" justifyContent="center" alignItems="center">
       <WIPState />
     </Box>
   );
-};
 
 AccountClose.getLayout = function getLayout(page: ReactElement) {
   return (

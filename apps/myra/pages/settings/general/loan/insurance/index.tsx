@@ -4,9 +4,8 @@ import {
   SettingsLayout,
   SettingsLoanLayout,
 } from '@coop/cbs/settings/ui-layout';
-const LoanProductsInsurancePage = () => {
-  return <LoanProductsInsurance />;
-};
+
+const LoanProductsInsurancePage = () => <LoanProductsInsurance />;
 
 export default LoanProductsInsurancePage;
 

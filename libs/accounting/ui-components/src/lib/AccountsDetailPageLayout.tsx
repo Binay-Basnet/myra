@@ -73,7 +73,7 @@ export const AccountsDetailPageLayout = ({
       <Box
         w="300px"
         position="fixed"
-        borderRight={'1px'}
+        borderRight="1px"
         borderRightColor="border.layout"
         minHeight="100vh"
       >

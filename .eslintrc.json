@@ -1,23 +1,8 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "**/*",
-    "**/graphql.ts"
-  ],
-  "plugins": [
-    "unused-imports",
-    "@nrwl/nx",
-    "@typescript-eslint",
-    "simple-import-sort",
-    "prettier"
-  ],
-  "extends": [
-    "eslint:recommended",
-    "airbnb",
-    "airbnb-typescript",
-    "airbnb/hooks",
-    "prettier"
-  ],
+  "ignorePatterns": ["**/*", "**/graphql.ts"],
+  "plugins": ["unused-imports", "@nrwl/nx", "@typescript-eslint", "simple-import-sort", "prettier"],
+  "extends": ["eslint:recommended", "airbnb", "airbnb-typescript", "airbnb/hooks", "prettier"],
   "rules": {
     "no-nested-ternary": "warn",
     "require-jsdoc": "off",
@@ -56,14 +41,8 @@
       {
         "groups": [
           // Packages 'react' related packages come first.
-          [
-            "^react",
-            "^next",
-            "^@?\\w"
-          ],
-          [
-            "^@coop"
-          ],
+          ["^react", "^next", "^@?\\w"],
+          ["^@coop"],
           [
             "^\\./?$",
             "^\\.(?!/?$)",
@@ -81,18 +60,11 @@
   },
   "overrides": [
     {
-      "files": [
-        "*.ts",
-        "*.tsx",
-        "*.js",
-        "*.jsx"
-      ],
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "parser": "@typescript-eslint/parser",
       // We set parserOptions.project for the project to allow TypeScript to create the type-checker behind the scenes when we run linting
       "parserOptions": {
-        "project": [
-          "./tsconfig(.*)?.json"
-        ]
+        "project": ["./tsconfig(.*)?.json"]
       },
       "rules": {
         "@nrwl/nx/enforce-module-boundaries": [
@@ -104,9 +76,7 @@
             "depConstraints": [
               {
                 "sourceTag": "*",
-                "onlyDependOnLibsWithTags": [
-                  "*"
-                ]
+                "onlyDependOnLibsWithTags": ["*"]
               }
             ]
           }
@@ -114,23 +84,13 @@
       }
     },
     {
-      "files": [
-        "*.ts",
-        "*.tsx"
-      ],
-      "extends": [
-        "plugin:@nrwl/nx/typescript"
-      ],
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nrwl/nx/typescript"],
       "rules": {}
     },
     {
-      "files": [
-        "*.js",
-        "*.jsx"
-      ],
-      "extends": [
-        "plugin:@nrwl/nx/javascript"
-      ],
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nrwl/nx/javascript"],
       "rules": {}
     }
   ]

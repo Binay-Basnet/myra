@@ -4,9 +4,7 @@ import { CBSAccountList } from '@coop/cbs/accounts/account-form';
 import { AccountPagesLayout } from '@coop/myra/components';
 import { MainLayout } from '@coop/shared/ui';
 
-const AccountListPage = () => {
-  return <CBSAccountList />;
-};
+const AccountListPage = () => <CBSAccountList />;
 
 AccountListPage.getLayout = function getLayout(page: ReactElement) {
   return (

@@ -3,9 +3,7 @@ import React, { ReactElement } from 'react';
 import { ReportMainLayout, ReportsCbsLayout } from '@coop/cbs/reports/layout';
 import { MainLayout } from '@coop/shared/ui';
 
-const EmployeeReports = () => {
-  return <>Employee Reports</>;
-};
+const EmployeeReports = () => <>Employee Reports</>;
 
 EmployeeReports.getLayout = function getLayout(page: ReactElement) {
   return (

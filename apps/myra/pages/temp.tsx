@@ -1,7 +1,5 @@
 import { Loader } from '@coop/shared/ui';
 
-const Temp = () => {
-  return <Loader />;
-};
+const Temp = () => <Loader />;
 
 export default Temp;

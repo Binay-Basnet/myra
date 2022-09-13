@@ -8,7 +8,7 @@ import { Column, Table } from '@coop/shared/table';
 import { Box, Button, Text } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-export function BankStatDetailPage() {
+export const BankStatDetailPage = () => {
   const { t } = useTranslation();
 
   const router = useRouter();

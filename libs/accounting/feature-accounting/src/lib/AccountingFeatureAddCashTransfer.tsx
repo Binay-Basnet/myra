@@ -25,7 +25,7 @@ import { CashTransferTable } from '../components';
 /* eslint-disable-next-line */
 export interface AccountingFeatureAddCashTransferProps {}
 
-export function AccountingFeatureAddCashTransfer() {
+export const AccountingFeatureAddCashTransfer = () => {
   const { t } = useTranslation();
   const methods = useForm({
     defaultValues: { data: [{ transferred_to: '', amount: 45 }] },
@@ -56,7 +56,7 @@ export function AccountingFeatureAddCashTransfer() {
             {t['accountingCashTransferAddNewCashTransfer']}
           </Text>
           <IconButton
-            variant={'ghost'}
+            variant="ghost"
             aria-label="close"
             icon={<GrClose />}
             onClick={() => router.back()}

@@ -11,7 +11,7 @@ import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 /* eslint-disable-next-line */
 export interface AccountingFeatureJournalVouchersListProps {}
 
-export function AccountingFeatureJournalVouchersList() {
+export const AccountingFeatureJournalVouchersList = () => {
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -34,8 +34,7 @@ export function AccountingFeatureJournalVouchersList() {
       {
         accessorFn: (row) => row?.node?.name?.local,
         header: t['accountingJournalVouchersListName'],
-        cell: (props) => {
-          return (
+        cell: (props) => (
             <Box display="flex" alignItems="center" gap="s12">
               <Avatar
                 name="Dan Abrahmov"
@@ -51,8 +50,7 @@ export function AccountingFeatureJournalVouchersList() {
                 {props.getValue() as string}
               </Text>
             </Box>
-          );
-        },
+          ),
 
         meta: {
           width: '60%',

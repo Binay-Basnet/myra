@@ -5,9 +5,7 @@ import {
   SettingsLayout,
 } from '@coop/cbs/settings/ui-layout';
 
-const TDS = () => {
-  return <CbsSettingsFeatureDepositTDS />;
-};
+const TDS = () => <CbsSettingsFeatureDepositTDS />;
 
 export default TDS;
 

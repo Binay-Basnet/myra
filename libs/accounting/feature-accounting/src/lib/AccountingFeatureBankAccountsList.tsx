@@ -8,7 +8,7 @@ import { Column, Table } from '@coop/shared/table';
 import { Box, Text } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-export function AccountingFeatureBankAccountsList() {
+export const AccountingFeatureBankAccountsList = () => {
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -31,12 +31,11 @@ export function AccountingFeatureBankAccountsList() {
       {
         accessorFn: (row) => row?.node?.name?.local,
         header: t['bankAccountsBankName'],
-        cell: (props) => {
-          return (
+        cell: (props) => (
             <Box
               display="flex"
               alignItems="center"
-              cursor={'pointer'}
+              cursor="pointer"
               gap="s12"
               onClick={() => {
                 router.push(
@@ -53,8 +52,7 @@ export function AccountingFeatureBankAccountsList() {
                 {props.getValue() as string}
               </Text>
             </Box>
-          );
-        },
+          ),
 
         meta: {
           width: '60%',

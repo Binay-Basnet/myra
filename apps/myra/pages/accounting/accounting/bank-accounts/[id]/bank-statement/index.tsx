@@ -8,9 +8,7 @@ import {
 } from '@coop/accounting/ui-layouts';
 
 // TODO ( Update this page when design arrives )
-const AccountingBankAccountsDetail = () => {
-  return <BankStatDetailPage />;
-};
+const AccountingBankAccountsDetail = () => <BankStatDetailPage />;
 
 AccountingBankAccountsDetail.getLayout = function getLayout(
   page: ReactElement

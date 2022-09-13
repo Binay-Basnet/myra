@@ -4,9 +4,7 @@ import { EbankingAccountLayout } from '@coop/ebanking/ui-layout';
 
 import Temp from '../temp';
 
-const UtilityPayments = () => {
-  return <Temp />;
-};
+const UtilityPayments = () => <Temp />;
 
 UtilityPayments.getLayout = function (page: ReactElement) {
   return <EbankingAccountLayout>{page}</EbankingAccountLayout>;

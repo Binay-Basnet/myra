@@ -19,7 +19,7 @@ import { Column, Table } from '@coop/shared/table';
 import { Alert, Box, Button, Divider, Text } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-export function ChequeDetailPage() {
+export const ChequeDetailPage = () => {
   const { t } = useTranslation();
   const methods = useForm({});
 
@@ -113,12 +113,11 @@ export function ChequeDetailPage() {
     [t]
   );
 
-  const ChequeBookModal = () => {
-    return (
+  const ChequeBookModal = () => (
       <Modal
         isOpen={openModal}
         onClose={onCloseModal}
-        isCentered={true}
+        isCentered
         trapFocus={false}
       >
         <ModalOverlay />
@@ -198,7 +197,6 @@ export function ChequeDetailPage() {
         </ModalContent>
       </Modal>
     );
-  };
 
   return (
     <Box display="flex" flexDirection="column" p="s16" gap="s16">
@@ -318,7 +316,7 @@ export function ChequeDetailPage() {
 
       <Table
         data={rowData}
-        isStatic={true}
+        isStatic
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
         columns={columns}

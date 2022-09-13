@@ -27,7 +27,7 @@ export default function Login() {
       const accessToken = res?.auth?.login?.record?.token?.access;
       const refreshToken = res?.auth?.login?.record?.token?.refresh;
       const user = res?.auth?.login?.record?.user;
-      dispatch(login({ user: user, token: accessToken }));
+      dispatch(login({ user, token: accessToken }));
       localStorage.setItem('refreshToken', refreshToken);
       replace('/');
     });
@@ -104,14 +104,14 @@ export default function Login() {
                 <InputGroup h="44px" mt="s4">
                   <Input
                     pr="58px"
-                    variant={'outline'}
+                    variant="outline"
                     type={show ? 'text' : 'password'}
                     {...register('password')}
                   />
                   <InputRightElement
                     width="fit-content"
                     pr="s16"
-                    cursor={'pointer'}
+                    cursor="pointer"
                   >
                     {show ? (
                       <IoEyeOffOutline onClick={() => setShow(false)} />

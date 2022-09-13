@@ -4,9 +4,7 @@ import { AccountingCustomerPayment } from '@coop/accounting/sales';
 import { AccountingLayout, SalesLayout } from '@coop/accounting/ui-layouts';
 
 // TODO ( Update this page when design arrives )
-const CustomerPayment = () => {
-  return <AccountingCustomerPayment />;
-};
+const CustomerPayment = () => <AccountingCustomerPayment />;
 
 CustomerPayment.getLayout = function getLayout(page: ReactElement) {
   return (

@@ -3,13 +3,11 @@ import { ReactElement } from 'react';
 import { SuppliersLayout } from '@coop/myra/components';
 import { Box, MainLayoutInventory, WIPState } from '@coop/shared/ui';
 
-const SuppliersSettings = () => {
-  return (
+const SuppliersSettings = () => (
     <Box display="flex" justifyContent="center" alignItems="center">
       <WIPState />
     </Box>
   );
-};
 
 SuppliersSettings.getLayout = function getLayout(page: ReactElement) {
   return (

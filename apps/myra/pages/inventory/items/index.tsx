@@ -6,9 +6,7 @@ import {
 } from '@coop/myra/components';
 import { MainLayoutInventory } from '@coop/shared/ui';
 
-const InventoryProduct = () => {
-  return <InventoryItemTable />;
-};
+const InventoryProduct = () => <InventoryItemTable />;
 
 InventoryProduct.getLayout = function getLayout(page: ReactElement) {
   return (

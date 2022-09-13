@@ -6,13 +6,11 @@ import {
 } from '@coop/cbs/transactions/ui-layouts';
 import { Box, MainLayout, WIPState } from '@coop/shared/ui';
 
-const TransactionAgentTasks = () => {
-  return (
+const TransactionAgentTasks = () => (
     <Box display="flex" justifyContent="center" alignItems="center">
       <WIPState />
     </Box>
   );
-};
 
 TransactionAgentTasks.getLayout = function getLayout(page: ReactElement) {
   return (

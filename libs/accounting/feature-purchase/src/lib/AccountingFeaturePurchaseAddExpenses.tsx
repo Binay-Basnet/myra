@@ -33,7 +33,7 @@ import { ExpensesTable } from '../components';
 /* eslint-disable-next-line */
 export interface AccountingFeaturePurchaseAddExpensesProps {}
 
-export function AccountingFeaturePurchaseAddExpenses() {
+export const AccountingFeaturePurchaseAddExpenses = () => {
   const { t } = useTranslation();
 
   const methods = useForm({
@@ -83,7 +83,7 @@ export function AccountingFeaturePurchaseAddExpenses() {
             {t['accountingExpensesAddNewExpense']}
           </Text>
           <IconButton
-            variant={'ghost'}
+            variant="ghost"
             aria-label="close"
             icon={<GrClose />}
             onClick={() => router.back()}
@@ -139,7 +139,7 @@ export function AccountingFeaturePurchaseAddExpenses() {
                     __placeholder={t['accountingExpensesAddNote']}
                     rows={5}
                   />
-                  <FieldCardComponents rows={'repeat(5,1fr)'}>
+                  <FieldCardComponents rows="repeat(5,1fr)">
                     <GridItem display="flex" justifyContent="space-between">
                       <Text
                         color="neutralColorLight.Gray-60"
@@ -263,7 +263,7 @@ export function AccountingFeaturePurchaseAddExpenses() {
                         name="tdsAmount"
                         type="number"
                         label={t['accountingExpensesAddTDSAmount']}
-                        textAlign={'right'}
+                        textAlign="right"
                         __placeholder="0.00"
                       />
                     </InputGroupContainer>

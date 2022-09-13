@@ -3,9 +3,7 @@ import {
   SettingsLayout,
 } from '@coop/cbs/settings/ui-layout';
 
-const Settings = () => {
-  return <></>;
-};
+const Settings = () => <></>;
 
 export default Settings;
 Settings.getLayout = function getLayout(page) {

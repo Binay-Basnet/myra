@@ -4,9 +4,7 @@ import {
   SettingsLayout,
 } from '@coop/cbs/settings/ui-layout';
 
-const Loan = () => {
-  return <SettingsLoanProduct />;
-};
+const Loan = () => <SettingsLoanProduct />;
 
 export default Loan;
 Loan.getLayout = function getLayout(page) {

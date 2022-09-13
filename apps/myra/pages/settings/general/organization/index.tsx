@@ -6,9 +6,7 @@ import {
   SettingsLayout,
 } from '@coop/cbs/settings/ui-layout';
 
-const Organization = () => {
-  return <CbsSettingsFeatureOrganization />;
-};
+const Organization = () => <CbsSettingsFeatureOrganization />;
 
 export default Organization;
 

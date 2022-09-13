@@ -17,8 +17,7 @@ export const DetailPageHeader = ({
   heading,
   buttonLabel,
   buttonHandler,
-}: IDetailPageHeader) => {
-  return (
+}: IDetailPageHeader) => (
     <Box
       bg="white"
       zIndex="10"
@@ -49,4 +48,3 @@ export const DetailPageHeader = ({
       )}
     </Box>
   );
-};

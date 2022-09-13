@@ -7,9 +7,7 @@ import {
   SettingsShareLayout,
 } from '@coop/cbs/settings/ui-layout';
 
-const ShareTransfer = () => {
-  return <ShareSettingsTransfer />;
-};
+const ShareTransfer = () => <ShareSettingsTransfer />;
 
 export default ShareTransfer;
 

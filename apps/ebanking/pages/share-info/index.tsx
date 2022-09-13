@@ -4,9 +4,7 @@ import { EbankingMainLayout } from '@coop/ebanking/ui-layout';
 
 import Temp from '../temp';
 
-const ShareInfoPage = () => {
-  return <Temp />;
-};
+const ShareInfoPage = () => <Temp />;
 
 ShareInfoPage.getLayout = function (page: ReactElement) {
   return <EbankingMainLayout>{page}</EbankingMainLayout>;

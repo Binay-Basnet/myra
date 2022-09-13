@@ -125,10 +125,10 @@ const Dashboard = () => {
       <Box display="flex" flexDir="column" gap="s8">
         <Box display="flex" justifyContent="space-between">
           <Text
-            fontSize={'s3'}
+            fontSize="s3"
             color="gray.600"
-            fontWeight={'SemiBold'}
-            textTransform={'uppercase'}
+            fontWeight="SemiBold"
+            textTransform="uppercase"
           >
             {t.quickLinks}
           </Text>
@@ -161,7 +161,7 @@ const Dashboard = () => {
       <ChakraModal
         open={openModal}
         onClose={onCloseModal}
-        isCentered={true}
+        isCentered
         title="editQuickLink"
         primaryButtonLabel="save"
         secondaryButtonLabel="cancel"
@@ -192,7 +192,7 @@ const Dashboard = () => {
                       >
                         <QuickLinks
                           // key={index}
-                          editable={true}
+                          editable
                           icon={item.icon}
                           text={item.text}
                           subText={item.subText}
@@ -215,10 +215,10 @@ const Dashboard = () => {
           <Flex>
             <Box>
               <Text
-                fontSize={'s3'}
+                fontSize="s3"
                 color="gray.600"
-                fontWeight={'600'}
-                textTransform={'uppercase'}
+                fontWeight="600"
+                textTransform="uppercase"
               >
                 {t.today}
               </Text>
@@ -461,21 +461,21 @@ const Dashboard = () => {
         </Box>
       </Box>
 
-      <Box display="flex" flexDirection={'column'} gap="s16" pt="s32">
-        <Text fontSize={'r2'} fontWeight="600">
+      <Box display="flex" flexDirection="column" gap="s16" pt="s32">
+        <Text fontSize="r2" fontWeight="600">
           {' '}
           Member Insights
         </Text>
-        <Grid templateColumns={'repeat(2,1fr)'} gap="s16">
+        <Grid templateColumns="repeat(2,1fr)" gap="s16">
           <Box
             bg="white"
             p="s16"
-            display={'flex'}
+            display="flex"
             flexDirection="column"
             gap="s16"
-            borderRadius={'6px'}
+            borderRadius="6px"
           >
-            <Text fontSize={'r1'} fontWeight="500">
+            <Text fontSize="r1" fontWeight="500">
               Age
             </Text>
             <Charts
@@ -511,7 +511,7 @@ const Dashboard = () => {
                 },
               ]}
               type="bar"
-              height={'400px'}
+              height="400px"
               w="100%"
               options={{
                 chart: {
@@ -554,18 +554,18 @@ const Dashboard = () => {
           <Box
             bg="white"
             p="s16"
-            display={'flex'}
+            display="flex"
             flexDirection="column"
             gap="s16"
-            borderRadius={'6px'}
+            borderRadius="6px"
           >
-            <Text fontSize={'r1'} fontWeight="500">
+            <Text fontSize="r1" fontWeight="500">
               Type
             </Text>
             <Charts
               series={[750, 630, 250, 33]}
               type="donut"
-              height={'400px'}
+              height="400px"
               w="100%"
               options={{
                 labels: ['Male', 'Female', 'Institutions', 'Other'],

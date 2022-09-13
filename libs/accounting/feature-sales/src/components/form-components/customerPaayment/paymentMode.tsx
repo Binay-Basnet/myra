@@ -29,7 +29,7 @@ export const PaymentMode = () => {
 
   return (
     <BoxContainer>
-      <Text fontWeight={'500'} fontSize="s3">
+      <Text fontWeight="500" fontSize="s3">
         {t['accountingCustomerPaymentAddPaymentMode']}
       </Text>
       <FormSwitchTab name="paymentMode" options={paymentModeOptions} />

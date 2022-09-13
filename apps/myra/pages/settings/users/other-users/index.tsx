@@ -4,15 +4,15 @@ import {
 } from '@coop/cbs/settings/ui-layout';
 import { Box, WIPState } from '@coop/shared/ui';
 
-const OtherUsers = () => {
+const OtherUsers = () =>
   //   return <OtherUsersList />;
 
-  return (
+   (
     <Box display="flex" justifyContent="center" alignItems="center">
       <WIPState />
     </Box>
-  );
-};
+  )
+;
 
 export default OtherUsers;
 OtherUsers.getLayout = function getLayout(page) {

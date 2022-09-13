@@ -4,9 +4,7 @@ import {
   SettingsUserLayout,
 } from '@coop/cbs/settings/ui-layout';
 
-const Users = () => {
-  return <UsersList />;
-};
+const Users = () => <UsersList />;
 
 export default Users;
 Users.getLayout = function getLayout(page) {

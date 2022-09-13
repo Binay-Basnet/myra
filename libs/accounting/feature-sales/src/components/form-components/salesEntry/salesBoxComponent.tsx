@@ -17,7 +17,7 @@ export const SalesBox = () => {
         __placeholder={t['invFormNote']}
         rows={5}
       />
-      <FieldCardComponents rows={'repeat(5,1fr)'}>
+      <FieldCardComponents rows="repeat(5,1fr)">
         <GridItem display="flex" justifyContent="space-between">
           <Text
             color="neutralColorLight.Gray-60"

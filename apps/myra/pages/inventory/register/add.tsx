@@ -3,9 +3,7 @@ import React, { ReactElement } from 'react';
 import { AddInventory } from '@coop/inventory/inventory';
 import { MainLayoutInventory } from '@coop/shared/ui';
 
-const AddNewInventoryRegisterPage = () => {
-  return <AddInventory />;
-};
+const AddNewInventoryRegisterPage = () => <AddInventory />;
 
 export default AddNewInventoryRegisterPage;
 

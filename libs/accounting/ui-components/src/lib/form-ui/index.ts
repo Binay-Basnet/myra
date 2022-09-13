@@ -1,3 +1,3 @@
 export * from './BoxContainer';
-export * from './InputGroupContainer';
 export * from './dividerContainer';
+export * from './InputGroupContainer';

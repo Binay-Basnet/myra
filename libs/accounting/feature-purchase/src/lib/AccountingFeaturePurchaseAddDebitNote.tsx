@@ -27,7 +27,7 @@ import { DebitNoteTable } from '../components';
 /* eslint-disable-next-line */
 export interface AccountingFeaturePurchaseAddDebitNoteProps {}
 
-export function AccountingFeaturePurchaseAddDebitNote() {
+export const AccountingFeaturePurchaseAddDebitNote = () => {
   const { t } = useTranslation();
 
   const methods = useForm({
@@ -76,7 +76,7 @@ export function AccountingFeaturePurchaseAddDebitNote() {
             {t['accountingDebitNoteAddNewDebitNote']}
           </Text>
           <IconButton
-            variant={'ghost'}
+            variant="ghost"
             aria-label="close"
             icon={<GrClose />}
             onClick={() => router.back()}
@@ -126,7 +126,7 @@ export function AccountingFeaturePurchaseAddDebitNote() {
                     __placeholder={t['accountingDebitNoteAddNote']}
                     rows={5}
                   />
-                  <FieldCardComponents rows={'repeat(5,1fr)'}>
+                  <FieldCardComponents rows="repeat(5,1fr)">
                     <GridItem display="flex" justifyContent="space-between">
                       <Text
                         color="neutralColorLight.Gray-60"

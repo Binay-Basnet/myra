@@ -7,9 +7,7 @@ import {
 } from '@coop/accounting/ui-layouts';
 
 // TODO ( Update this page when design arrives )
-const AccountingJournalVouchersList = () => {
-  return <AccountingFeatureJournalVouchersList />;
-};
+const AccountingJournalVouchersList = () => <AccountingFeatureJournalVouchersList />;
 
 AccountingJournalVouchersList.getLayout = function getLayout(
   page: ReactElement

@@ -4,9 +4,7 @@ import {
   SettingsLayout,
 } from '@coop/cbs/settings/ui-layout';
 
-const ServiceCenter = () => {
-  return <CbsSettingsServiceCenter />;
-};
+const ServiceCenter = () => <CbsSettingsServiceCenter />;
 
 export default ServiceCenter;
 ServiceCenter.getLayout = function getLayout(page) {

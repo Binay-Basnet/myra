@@ -7,9 +7,7 @@ import {
   SettingsShareLayout,
 } from '@coop/cbs/settings/ui-layout';
 
-const ShareFeeAndCharges = () => {
-  return <ShareSettingsReturn />;
-};
+const ShareFeeAndCharges = () => <ShareSettingsReturn />;
 
 export default ShareFeeAndCharges;
 

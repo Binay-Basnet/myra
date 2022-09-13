@@ -24,7 +24,7 @@ import { useTranslation } from '@coop/shared/utils';
 /* eslint-disable-next-line */
 export interface AccountingFeatureAddBankAccountProps {}
 
-export function AccountingFeatureAddBankAccount() {
+export const AccountingFeatureAddBankAccount = () => {
   const { t } = useTranslation();
   const methods = useForm();
   return (
@@ -52,7 +52,7 @@ export function AccountingFeatureAddBankAccount() {
             {t['accountingBankAccountAddNewBankAccount']}
           </Text>
           <IconButton
-            variant={'ghost'}
+            variant="ghost"
             aria-label="close"
             icon={<GrClose />}
             onClick={() => router.back()}

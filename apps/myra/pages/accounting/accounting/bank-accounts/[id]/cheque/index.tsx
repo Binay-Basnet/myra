@@ -43,9 +43,7 @@ import {
 // ];
 
 // TODO ( Update this page when design arrives )
-const AccountingBankAccountsDetail = () => {
-  return <ChequeDetailPage />;
-};
+const AccountingBankAccountsDetail = () => <ChequeDetailPage />;
 
 AccountingBankAccountsDetail.getLayout = function getLayout(
   page: ReactElement
