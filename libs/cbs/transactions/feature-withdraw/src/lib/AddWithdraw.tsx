@@ -13,10 +13,7 @@ import {
   WithdrawPaymentType,
   WithdrawWith,
 } from '@coop/cbs/data-access';
-import {
-  FormCustomSelect,
-  MemberSelect,
-} from '@coop/cbs/transactions/ui-components';
+import { FormCustomSelect, MemberSelect } from '@coop/cbs/transactions/ui-components';
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import {
@@ -30,7 +27,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { useGetIndividualMemberDetails } from '@coop/shared/utils';
+import { featureCode, useGetIndividualMemberDetails } from '@coop/shared/utils';
 
 import { Payment } from '../components';
 
@@ -78,7 +75,7 @@ const cashOptions: Record<string, string> = {
 
 const FINE = '0';
 
-export function AddWithdraw() {
+export const AddWithdraw = () => {
   // const { t } = useTranslation();
 
   const router = useRouter();
@@ -123,9 +120,8 @@ export function AddWithdraw() {
 
   const selectedAccount = useMemo(
     () =>
-      accountListData?.account?.list?.edges?.find(
-        (account) => account.node?.id === accountId
-      )?.node,
+      accountListData?.account?.list?.edges?.find((account) => account.node?.id === accountId)
+        ?.node,
     [accountId]
   );
 
@@ -136,18 +132,15 @@ export function AddWithdraw() {
   const amountToBeWithdrawn = watch('amount') ?? 0;
 
   const totalWithdraw = useMemo(
-    () =>
-      amountToBeWithdrawn ? Number(amountToBeWithdrawn) - Number(FINE) : 0,
+    () => (amountToBeWithdrawn ? Number(amountToBeWithdrawn) - Number(FINE) : 0),
     [amountToBeWithdrawn]
   );
 
   const denominations = watch('cash.denominations');
 
   const denominationTotal =
-    denominations?.reduce(
-      (accumulator, curr) => accumulator + Number(curr.amount),
-      0 as number
-    ) ?? 0;
+    denominations?.reduce((accumulator, curr) => accumulator + Number(curr.amount), 0 as number) ??
+    0;
 
   const disableDenomination = watch('cash.disableDenomination');
 
@@ -163,11 +156,7 @@ export function AddWithdraw() {
     let filteredValues;
 
     if (values.payment_type === WithdrawPaymentType.Cash) {
-      filteredValues = omit({ ...values }, [
-        'bankCheque',
-        'file',
-        'withdrawBy',
-      ]);
+      filteredValues = omit({ ...values }, ['bankCheque', 'file', 'withdrawBy']);
 
       filteredValues['cash'] = {
         ...values['cash'],
@@ -176,12 +165,10 @@ export function AddWithdraw() {
         total: String(totalCashPaid),
         returned_amount: String(returnAmount),
         denominations:
-          filteredValues['cash']?.['denominations']?.map(
-            ({ value, quantity }) => ({
-              value: cashOptions[value as string],
-              quantity,
-            })
-          ) ?? [],
+          filteredValues['cash']?.['denominations']?.map(({ value, quantity }) => ({
+            value: cashOptions[value as string],
+            quantity,
+          })) ?? [],
       };
 
       asyncToast({
@@ -196,11 +183,7 @@ export function AddWithdraw() {
     }
 
     if (values.payment_type === WithdrawPaymentType.BankCheque) {
-      filteredValues = omit({ ...filteredValues }, [
-        'cash',
-        'file',
-        'withdrawBy',
-      ]);
+      filteredValues = omit({ ...filteredValues }, ['cash', 'file', 'withdrawBy']);
 
       asyncToast({
         id: 'add-new-withdraw',
@@ -217,15 +200,9 @@ export function AddWithdraw() {
   return (
     <>
       <Container minW="container.xl" height="fit-content">
-        <Box
-          position="sticky"
-          top="110px"
-          bg="gray.100"
-          width="100%"
-          zIndex="10"
-        >
+        <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
-            title={'New Withdraw'}
+            title={`New Withdraw - ${featureCode?.newWithdraw}`}
             closeLink="/transactions/withdraw/list"
           />
         </Box>
@@ -233,10 +210,7 @@ export function AddWithdraw() {
         <Box bg="white">
           <FormProvider {...methods}>
             <form>
-              <Box
-                minH="calc(100vh - 170px)"
-                display={mode === 0 ? 'flex' : 'none'}
-              >
+              <Box minH="calc(100vh - 170px)" display={mode === 0 ? 'flex' : 'none'}>
                 <Box
                   p="s16"
                   pb="100px"
@@ -247,37 +221,30 @@ export function AddWithdraw() {
                   borderRight="1px"
                   borderColor="border.layout"
                 >
-                  <MemberSelect
-                    name="memberId"
-                    label="Member"
-                    __placeholder="Select Member"
-                  />
+                  <MemberSelect name="memberId" label="Member" __placeholder="Select Member" />
 
                   {memberId && (
                     <FormCustomSelect
                       name="accountId"
                       label="Select Withdraw Account"
                       __placeholder="Select Account"
-                      options={accountListData?.account?.list?.edges?.map(
-                        (account) => ({
-                          accountInfo: {
-                            accountName: account.node?.product.productName,
-                            accountId: account.node?.product?.id,
-                            accountType: account?.node?.product?.nature
-                              ? accountTypes[account?.node?.product?.nature]
+                      options={accountListData?.account?.list?.edges?.map((account) => ({
+                        accountInfo: {
+                          accountName: account.node?.product.productName,
+                          accountId: account.node?.product?.id,
+                          accountType: account?.node?.product?.nature
+                            ? accountTypes[account?.node?.product?.nature]
+                            : '',
+                          balance: account?.node?.balance ?? '0',
+                          fine:
+                            account?.node?.product?.nature ===
+                              NatureOfDepositProduct.RecurringSaving ||
+                            account?.node?.product?.nature === NatureOfDepositProduct.Mandatory
+                              ? FINE
                               : '',
-                            balance: account?.node?.balance ?? '0',
-                            fine:
-                              account?.node?.product?.nature ===
-                                NatureOfDepositProduct.RecurringSaving ||
-                              account?.node?.product?.nature ===
-                                NatureOfDepositProduct.Mandatory
-                                ? FINE
-                                : '',
-                          },
-                          value: account.node?.id as string,
-                        })
-                      )}
+                        },
+                        value: account.node?.id as string,
+                      }))}
                     />
                   )}
 
@@ -291,25 +258,19 @@ export function AddWithdraw() {
 
                   {memberId && accountId && withdrawn === WithdrawWith.Cheque && (
                     <InputGroupContainer>
-                      <FormInput
-                        name="chequeNo"
-                        label="Cheque No"
-                        __placeholder="Cheque No"
-                      />
+                      <FormInput name="chequeNo" label="Cheque No" __placeholder="Cheque No" />
                     </InputGroupContainer>
                   )}
 
-                  {memberId &&
-                    accountId &&
-                    withdrawn === WithdrawWith.WithdrawSlip && (
-                      <InputGroupContainer>
-                        <FormInput
-                          name="withdrawSlipNo"
-                          label="Withdraw Slip No"
-                          __placeholder="Withdraw Slip No"
-                        />
-                      </InputGroupContainer>
-                    )}
+                  {memberId && accountId && withdrawn === WithdrawWith.WithdrawSlip && (
+                    <InputGroupContainer>
+                      <FormInput
+                        name="withdrawSlipNo"
+                        label="Withdraw Slip No"
+                        __placeholder="Withdraw Slip No"
+                      />
+                    </InputGroupContainer>
+                  )}
 
                   {memberId && accountId && (
                     <FormInput
@@ -337,41 +298,27 @@ export function AddWithdraw() {
                           Withdraw Amount
                         </Text>
 
-                        <Text
-                          fontSize="s3"
-                          fontWeight={500}
-                          color="neutralColorLight.Gray-80"
-                        >
+                        <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
                           {amountToBeWithdrawn}
                         </Text>
                       </Box>
 
-                      {
-                        <Box display="flex" justifyContent="space-between">
-                          <Text fontSize="s3" fontWeight={500} color="gray.600">
-                            Fine
-                          </Text>
+                      <Box display="flex" justifyContent="space-between">
+                        <Text fontSize="s3" fontWeight={500} color="gray.600">
+                          Fine
+                        </Text>
 
-                          <Text
-                            fontSize="s3"
-                            fontWeight={500}
-                            color="danger.500"
-                          >
-                            {`- ${FINE}`}
-                          </Text>
-                        </Box>
-                      }
+                        <Text fontSize="s3" fontWeight={500} color="danger.500">
+                          {`- ${FINE}`}
+                        </Text>
+                      </Box>
 
                       <Box display="flex" justifyContent="space-between">
                         <Text fontSize="s3" fontWeight={500} color="gray.600">
                           Total Withdraw
                         </Text>
 
-                        <Text
-                          fontSize="s3"
-                          fontWeight={500}
-                          color="neutralColorLight.Gray-80"
-                        >
+                        <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
                           {totalWithdraw}
                         </Text>
                       </Box>
@@ -408,19 +355,14 @@ export function AddWithdraw() {
                                 : '',
                               ID: selectedAccount?.product?.id,
                               currentBalance: selectedAccount?.balance ?? '0',
-                              minimumBalance:
-                                selectedAccount?.product?.minimumBalance ?? '0',
+                              minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
                               guaranteeBalance: '1000',
-                              overdrawnBalance:
-                                selectedAccount?.overDrawnBalance ?? '0',
+                              overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                               fine: '0',
                               // branch: 'Kumaripati',
-                              openDate:
-                                selectedAccount?.accountOpenedDate ?? 'N/A',
-                              expiryDate:
-                                selectedAccount?.accountExpiryDate ?? 'N/A',
-                              lastTransactionDate:
-                                selectedAccount?.lastTransactionDate ?? 'N/A',
+                              openDate: selectedAccount?.accountOpenedDate ?? 'N/A',
+                              expiryDate: selectedAccount?.accountExpiryDate ?? 'N/A',
+                              lastTransactionDate: selectedAccount?.lastTransactionDate ?? 'N/A',
                             }
                           : null
                       }
@@ -444,18 +386,10 @@ export function AddWithdraw() {
               status={
                 mode === 0 ? (
                   <Box display="flex" gap="s32">
-                    <Text
-                      fontSize="r1"
-                      fontWeight={600}
-                      color="neutralColorLight.Gray-50"
-                    >
-                      {'Total Deposit Amount'}
+                    <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
+                      Total Deposit Amount
                     </Text>
-                    <Text
-                      fontSize="r1"
-                      fontWeight={600}
-                      color="neutralColorLight.Gray-70"
-                    >
+                    <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
                       {totalWithdraw ?? '---'}
                     </Text>
                   </Box>
@@ -473,6 +407,6 @@ export function AddWithdraw() {
       </Box>
     </>
   );
-}
+};
 
 export default AddWithdraw;
