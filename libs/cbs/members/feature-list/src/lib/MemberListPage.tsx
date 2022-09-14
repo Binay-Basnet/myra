@@ -6,7 +6,7 @@ import { formatAddress } from '@coop/cbs/utils';
 import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, PageHeader, Text } from '@coop/shared/ui';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 import { MEMBER_TAB_ITEMS } from '../constants/MEMBER_TAB_ITEMS';
 
@@ -40,25 +40,23 @@ export const MemberListPage = () => {
       {
         accessorFn: (row) => row?.node?.name?.local,
         header: t['memberListTableName'],
-        cell: (props) => {
-          return (
-            <Box display="flex" alignItems="center" gap="s12">
-              <Avatar
-                name={props.getValue() as string}
-                size="sm"
-                src={props?.row?.original?.node?.profilePicUrl ?? ''}
-              />
-              <Text
-                fontSize="s3"
-                textTransform="capitalize"
-                textOverflow="ellipsis"
-                overflow="hidden"
-              >
-                {props.getValue() as string}
-              </Text>
-            </Box>
-          );
-        },
+        cell: (props) => (
+          <Box display="flex" alignItems="center" gap="s12">
+            <Avatar
+              name={props.getValue() as string}
+              size="sm"
+              src={props?.row?.original?.node?.profilePicUrl ?? ''}
+            />
+            <Text
+              fontSize="s3"
+              textTransform="capitalize"
+              textOverflow="ellipsis"
+              overflow="hidden"
+            >
+              {props.getValue() as string}
+            </Text>
+          </Box>
+        ),
 
         meta: {
           width: '60%',
@@ -96,9 +94,7 @@ export const MemberListPage = () => {
                   title: 'memberListTableEditMember',
                   onClick: (member) => {
                     router.push(
-                      `/members/${
-                        memberTypeSlug[member?.type || 'INDIVIDUAL']
-                      }/edit/${member?.id}`
+                      `/members/${memberTypeSlug[member?.type || 'INDIVIDUAL']}/edit/${member?.id}`
                     );
                   },
                 },
@@ -121,7 +117,7 @@ export const MemberListPage = () => {
   return (
     <>
       <PageHeader
-        heading={t['memberLayoutMembers']}
+        heading={`${t['memberLayoutMembers']} - ${featureCode?.memberList}`}
         tabItems={MEMBER_TAB_ITEMS}
       />
 
@@ -138,6 +134,6 @@ export const MemberListPage = () => {
       />
     </>
   );
-}
+};
 
 export default MemberListPage;

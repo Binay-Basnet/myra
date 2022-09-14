@@ -11,9 +11,9 @@ import {
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Box, Button, Text } from '@coop/shared/ui';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-export function SettingsDepositProducts() {
+export const SettingsDepositProducts = () => {
   const router = useRouter();
 
   const { t } = useTranslation();
@@ -31,16 +31,12 @@ export function SettingsDepositProducts() {
       staleTime: 0,
     }
   );
-  const rowData = useMemo(
-    () => data?.settings?.general?.depositProduct?.list?.edges ?? [],
-    [data]
-  );
+  const rowData = useMemo(() => data?.settings?.general?.depositProduct?.list?.edges ?? [], [data]);
 
   const popoverTitle = [
     {
       title: 'depositProductEdit',
-      onClick: (id: string) =>
-        router.push(`/settings/general/deposit-products/edit/${id}`),
+      onClick: (id: string) => router.push(`/settings/general/deposit-products/edit/${id}`),
     },
   ];
 
@@ -58,32 +54,24 @@ export function SettingsDepositProducts() {
       {
         header: t['depositNature'],
         accessorFn: (row) => row?.node?.nature,
-        cell: (props) => {
-          return (
-            <span>
-              {props?.row?.original?.node?.nature ===
-              NatureOfDepositProduct.Mandatory
-                ? t['depositProductMandatory']
-                : props?.row?.original?.node?.nature ===
-                  NatureOfDepositProduct.RecurringSaving
-                ? t['depositProductRecurringSaving']
-                : props?.row?.original?.node?.nature ===
-                  NatureOfDepositProduct.TermSavingOrFd
-                ? t['depositProductTermSaving']
-                : props?.row?.original?.node?.nature ===
-                  NatureOfDepositProduct.VoluntaryOrOptional
-                ? t['depositProductVoluntaryOptional']
-                : ' '}
-            </span>
-          );
-        },
+        cell: (props) => (
+          <span>
+            {props?.row?.original?.node?.nature === NatureOfDepositProduct.Mandatory
+              ? t['depositProductMandatory']
+              : props?.row?.original?.node?.nature === NatureOfDepositProduct.RecurringSaving
+              ? t['depositProductRecurringSaving']
+              : props?.row?.original?.node?.nature === NatureOfDepositProduct.TermSavingOrFd
+              ? t['depositProductTermSaving']
+              : props?.row?.original?.node?.nature === NatureOfDepositProduct.VoluntaryOrOptional
+              ? t['depositProductVoluntaryOptional']
+              : ' '}
+          </span>
+        ),
       },
       {
         header: t['depositInterest'],
         accessorFn: (row) => row?.node?.interest,
-        cell: (props) => {
-          return <span>{props?.row?.original?.node?.interest} %</span>;
-        },
+        cell: (props) => <span>{props?.row?.original?.node?.interest} %</span>,
       },
       {
         header: t['depositCreatedDate'],
@@ -93,10 +81,7 @@ export function SettingsDepositProducts() {
         id: '_actions',
         header: '',
         cell: (props) => (
-          <ActionPopoverComponent
-            items={popoverTitle}
-            id={props?.row?.original?.node?.id}
-          />
+          <ActionPopoverComponent items={popoverTitle} id={props?.row?.original?.node?.id} />
         ),
         meta: {
           width: '50px',
@@ -109,25 +94,16 @@ export function SettingsDepositProducts() {
   return (
     <>
       <Box borderBottom="1px solid " borderColor="border.layout" p="8px 16px">
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          h="100%"
-        >
+        <Box display="flex" justifyContent="space-between" alignItems="center" h="100%">
           <Text fontSize="r2" fontWeight="600" color="gray.800">
-            {t['settingsDepositProducts']}
+            {`${t['settingsDepositProducts']} - ${featureCode?.depositProductList}`}
           </Text>
           <Button
             leftIcon={<AddIcon h="11px" />}
             onClick={() =>
               newId
                 .mutateAsync({ idType: Id_Type.Depositproduct })
-                .then((res) =>
-                  router.push(
-                    `/settings/general/deposit-products/add/${res?.newId}`
-                  )
-                )
+                .then((res) => router.push(`/settings/general/deposit-products/add/${res?.newId}`))
             }
           >
             {t['settingsDepositProductNew']}
@@ -140,13 +116,12 @@ export function SettingsDepositProducts() {
         data={rowData}
         columns={columns}
         pagination={{
-          total:
-            data?.settings?.general?.depositProduct?.list?.totalCount ?? 'Many',
+          total: data?.settings?.general?.depositProduct?.list?.totalCount ?? 'Many',
           pageInfo: data?.settings?.general?.depositProduct?.list?.pageInfo,
         }}
       />
     </>
   );
-}
+};
 
 export default SettingsDepositProducts;

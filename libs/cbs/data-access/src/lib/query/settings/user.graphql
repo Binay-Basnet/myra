@@ -1,7 +1,4 @@
-query getSettingsUserListData(
-  $paginate: Pagination
-  $filter: MyraUserSearchFilter
-) {
+query getSettingsUserListData($paginate: Pagination, $filter: MyraUserSearchFilter) {
   settings {
     myraUser {
       list(paginate: $paginate, filter: $filter) {
@@ -81,7 +78,10 @@ query getSettingsUserEditData($id: ID!) {
           }
           landlordName
           landlordContact
-          profilePicture
+          profilePicture {
+            identifier
+            url
+          }
         }
       }
     }
