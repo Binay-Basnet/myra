@@ -6,12 +6,7 @@ import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import {
-  BoxContainer,
-  SubHeadingText,
-  SubText,
-  TextBoxContainer,
-} from '../formui';
+import { BoxContainer, SubHeadingText, SubText, TextBoxContainer } from '../formui';
 
 export const MaximumTenure = () => {
   const [rightElement, setRightElement] = useState('days');
@@ -61,11 +56,9 @@ export const MaximumTenure = () => {
     <FormSection>
       <GridItem colSpan={3}>
         <BoxContainer>
-          <Box display={'flex'} justifyContent="space-between">
+          <Box display="flex" justifyContent="space-between">
             <TextBoxContainer>
-              <SubHeadingText>
-                {t['depositProductMaxinumTenure']}{' '}
-              </SubHeadingText>
+              <SubHeadingText>{t['depositProductMaxinumTenure']} </SubHeadingText>
               <SubText>{t['depositProductNoteWeek']}</SubText>
             </TextBoxContainer>
             <FormSwitchTab name="maxTenure" options={applicableSwitch} />
@@ -73,15 +66,15 @@ export const MaximumTenure = () => {
           {maximumTenure && (
             <BoxContainer
               p="s16"
-              border={'1px solid'}
+              border="1px solid"
               borderColor="border.layout"
-              display={'flex'}
+              display="flex"
               flexDirection="row"
               justifyContent="space-between"
-              borderRadius={'4px'}
+              borderRadius="4px"
             >
-              <Box display={'flex'} flexDirection="column" gap="s4">
-                <Text fontSize={'s3'} fontWeight="500">
+              <Box display="flex" flexDirection="column" gap="s4">
+                <Text fontSize="s3" fontWeight="500">
                   {t['depositProductUnit']}
                 </Text>
                 <FormSwitchTab name="maxTenureUnit" options={unitOptions} />
@@ -89,7 +82,7 @@ export const MaximumTenure = () => {
               <Box w="290px">
                 <FormInput
                   name="maxTenureUnitNumber"
-                  textAlign={'right'}
+                  textAlign="right"
                   label={t['depositProductNumber']}
                   __placeholder="0"
                   rightAddonText={

@@ -74,6 +74,14 @@ query getDepositProductSettingsEditData($id: ID!) {
               minAmount
               maxAmount
             }
+            withdrawAmountLimit {
+              minAmount
+              maxAmount
+            }
+            fixedDepositAmountLimit {
+              minAmount
+              maxAmount
+            }
             depositFrequency
             penalty
             penaltyData {

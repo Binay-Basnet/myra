@@ -6,6 +6,7 @@ query getShareBalanceList {
           member {
             id
             name
+            profilePic
           }
           count
           amount
@@ -15,10 +16,7 @@ query getShareBalanceList {
   }
 }
 
-query getShareRegisterList(
-  $pagination: Pagination
-  $filter: ShareRegisterFilter
-) {
+query getShareRegisterList($pagination: Pagination, $filter: ShareRegisterFilter) {
   share {
     register(pagination: $pagination, filter: $filter) {
       edges {
@@ -28,6 +26,7 @@ query getShareRegisterList(
           member {
             id
             name
+            profilePic
           }
           balance
           startNumber
@@ -89,12 +88,10 @@ query getShareHistory($memberId: ID!) {
   }
 }
 
-query getShareCharges(
-  $transactionType: SHARE_TRANSACTION_DIRECTION!
-  $shareCount: Int!
-) {
+query getShareCharges($transactionType: SHARE_TRANSACTION_DIRECTION!, $shareCount: Int!) {
   share {
     charges(transactionType: $transactionType, shareCount: $shareCount) {
+      id
       name
       charge
     }

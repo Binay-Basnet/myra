@@ -76,8 +76,8 @@ export const ReportsInnerSidebar = () => {
       </Tabs>
       <Divider my="s4" />
       <Tabs variant="unstyled" index={currentIndex}>
-        {REPORTS_INNER_TAB_LINKS.map((tabs, index) => (
-          <Fragment key={index}>
+        {REPORTS_INNER_TAB_LINKS.map((tabs) => (
+          <Fragment key={tabs?.title}>
             <SidebarTabs {...tabs} />
           </Fragment>
         ))}

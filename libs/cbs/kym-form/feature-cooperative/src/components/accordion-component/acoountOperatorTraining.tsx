@@ -1,4 +1,3 @@
-import React from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
@@ -36,19 +35,16 @@ const AddSister = ({ index, removeTraining }: IAddTraining) => {
           type="text"
           name={`coopRelatedTraining.${index}.subjectOfTraining`}
           label={t['kymCoopSubjectOfTraining']}
-          __placeholder={t['kymCoopEnterSubjectOfTraining']}
         />
         <FormInput
           type="date"
           name={`coopRelatedTraining.${index}.dateOfTraining`}
           label={t['kymCoopDateOfTraining']}
-          __placeholder={t['kymCoopEnterDateOfTraining']}
         />
         <FormInput
           type="text"
           name={`coopRelatedTraining.${index}.trainingOrganization`}
           label={t['kymCoopTrainingOrganization']}
-          __placeholder={t['kymCoopEnterTrainingOrganization']}
         />
       </InputGroupContainer>
     </DynamicBoxContainer>
@@ -65,22 +61,17 @@ export const DynamicAddtraining = () => {
 
   return (
     <FormSection
-      gridLayout={true}
+      gridLayout
       header="kymCoopTrainingRelatedToCoop"
       subHeader="kymCoopTrainingRelatedToCoopsubText"
     >
       <GridItem colSpan={3}>
         <DynamicBoxGroupContainer>
-          {trainingFields.map((item, index) => {
-            return (
-              <Box key={item.id}>
-                <AddSister
-                  index={index}
-                  removeTraining={() => trainingRemove(index)}
-                />
-              </Box>
-            );
-          })}
+          {trainingFields.map((item, index) => (
+            <Box key={item.id}>
+              <AddSister index={index} removeTraining={() => trainingRemove(index)} />
+            </Box>
+          ))}
           <Button
             id="accountOperatorButton"
             alignSelf="start"

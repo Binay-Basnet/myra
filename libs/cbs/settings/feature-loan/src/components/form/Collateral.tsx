@@ -3,21 +3,18 @@ import { useFormContext } from 'react-hook-form';
 import {
   Collateral,
   LoanProductInput,
-  // useGetLoanGeneralSettingsQuery,
+  useGetLoanGeneralSettingsQuery,
 } from '@coop/cbs/data-access';
 import { FormCheckboxGroup, FormSwitchTab } from '@coop/shared/form';
 import { Box, FormSection, GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { DepositSaving } from './DepositSaving';
-import { Land } from './Land';
-import { LandAndBuilding } from './LandAndBuilding';
 import { Vehicle } from './Vehicle';
 import { SubHeadingText } from '../formui';
 
 export const CollateralForm = () => {
-  const { watch } = useFormContext<LoanProductInput>();
   const { t } = useTranslation();
+  const { watch } = useFormContext<LoanProductInput>();
 
   const isCollateral = watch('isCollateralRequired');
   const collateralTypes = watch('collateralTypes');
@@ -27,21 +24,41 @@ export const CollateralForm = () => {
     { label: t['no'], value: false },
   ];
 
-  // const { data } = useGetLoanGeneralSettingsQuery();
+  const { data } = useGetLoanGeneralSettingsQuery();
 
-  const landOption = [{ label: t['loanProductLand'], value: Collateral.Land }];
-  const landAndBuildingOption = [
-    {
-      label: t['loanProductLandandBuilding'],
-      value: Collateral.LandAndBuilding,
-    },
-  ];
-  const vehicleOption = [{ label: t['loanProductVehicle'], value: Collateral.Vehicle }];
-  const depositSavingOption = [
-    { label: t['loanProductDepositSaving'], value: Collateral.DepositOrSaving },
-  ];
-  const documentOption = [{ label: t['loanProductDocuments'], value: Collateral.Documents }];
-  const otherOption = [{ label: t['loanProductOthers'], value: Collateral.Others }];
+  const collateralList = data?.settings?.general?.loan?.general?.collateralList;
+
+  const landFilterValue = collateralList && collateralList?.filter((item) => item?.name === 'Land');
+
+  const landOption = landFilterValue?.map((item) => ({
+    label: item?.name as string,
+    value: item?.id as string,
+  }));
+
+  const landandBuildFilterValue =
+    collateralList && collateralList?.filter((item) => item?.name === 'Land And Buildings');
+
+  const landAndBuildingOption = landandBuildFilterValue?.map((item) => ({
+    label: item?.name as string,
+    value: item?.id as string,
+  }));
+
+  const vehicleFilterValue =
+    collateralList && collateralList?.filter((item) => item?.name === 'Vehicle');
+
+  const vehicleOption = vehicleFilterValue?.map((item) => ({
+    label: item?.name as string,
+    value: item?.id as string,
+  }));
+
+  // const landOp = collateralList && collateralList?.filter((item) => item?.name === 'Land');
+
+  // const landOption = landOp?.map((item) => ({
+  //   label: item?.name,
+  //   value: item?.id,
+  // }));
+
+  // console.log('data', collateralList);
 
   return (
     <FormSection>
@@ -55,22 +72,24 @@ export const CollateralForm = () => {
             <>
               <FormCheckboxGroup name="collateralTypes" list={landOption} />
 
-              {collateralTypes?.includes(Collateral.Land) && <Land />}
+              {/* {collateralTypes?.includes(landOption[0]?.value) && <Land landOption={landOption} />} */}
 
               <FormCheckboxGroup name="collateralTypes" list={landAndBuildingOption} />
 
-              {collateralTypes?.includes(Collateral.LandAndBuilding) && <LandAndBuilding />}
+              {/* {collateralTypes?.includes(landAndBuildingOption[0]?.value) && (
+                <LandAndBuilding landAndBuildingOption={landAndBuildingOption} />
+              )} */}
 
               <FormCheckboxGroup name="collateralTypes" list={vehicleOption} />
 
               {collateralTypes?.includes(Collateral.Vehicle) && <Vehicle />}
 
-              <FormCheckboxGroup name="collateralTypes" list={depositSavingOption} />
+              {/* <FormCheckboxGroup name="collateralTypes" list={depositSavingOption} /> */}
 
-              {collateralTypes?.includes(Collateral.DepositOrSaving) && <DepositSaving />}
+              {/* {collateralTypes?.includes(Collateral.DepositOrSaving) && <DepositSaving />} */}
 
-              <FormCheckboxGroup name="collateralTypes" list={documentOption} />
-              <FormCheckboxGroup name="collateralTypes" list={otherOption} />
+              {/* <FormCheckboxGroup name="collateralTypes" list={documentOption} />
+              <FormCheckboxGroup name="collateralTypes" list={otherOption} /> */}
             </>
           )}
         </Box>

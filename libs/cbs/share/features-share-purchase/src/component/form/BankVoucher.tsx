@@ -1,7 +1,7 @@
-import { useGetBankListQuery } from '@coop/cbs/data-access';
+import { useGetCoaBankListQuery } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { FormSection, GridItem } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 type PurchaseProps = {
   totalAmount: number;
@@ -10,16 +10,16 @@ type PurchaseProps = {
 const BankVoucher = ({ totalAmount }: PurchaseProps) => {
   const { t } = useTranslation();
 
-  const { data: bankData } = useGetBankListQuery();
-
-  const bankListArr = bankData?.bank?.bank?.list;
-
-  const bankList = bankListArr?.map((item) => {
-    return {
-      label: item?.name as string,
-      value: item?.id as string,
-    };
+  const { data: bank } = useGetCoaBankListQuery({
+    accountCode: featureCode.accountCode as string[],
   });
+
+  const bankListArr = bank?.settings?.chartsOfAccount?.accountsUnder?.data;
+
+  const bankList = bankListArr?.map((item) => ({
+    label: item?.name?.local as string,
+    value: item?.id as string,
+  }));
 
   return (
     <FormSection templateColumns={2}>
@@ -32,18 +32,14 @@ const BankVoucher = ({ totalAmount }: PurchaseProps) => {
       </GridItem>
 
       <GridItem colSpan={1}>
-        <FormInput
-          type="text"
-          name="bankVoucher.voucherId"
-          label={t['sharePurchaseVoucherId']}
-        />
+        <FormInput type="text" name="bankVoucher.voucherId" label={t['sharePurchaseVoucherId']} />
       </GridItem>
 
       <GridItem colSpan={1}>
         <FormInput
           type="text"
           name="amount"
-          isDisabled={true}
+          isDisabled
           label={t['sharePurchaseAmount']}
           defaultValue={totalAmount}
         />

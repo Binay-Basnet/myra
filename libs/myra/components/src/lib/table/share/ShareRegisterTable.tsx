@@ -56,7 +56,11 @@ export const ShareRegisterTable = () => {
 
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="2">
-            <Avatar name={props.getValue() as string} size="sm" src="https://bit.ly/dan-abramov" />
+            <Avatar
+              name={props.getValue() as string}
+              size="sm"
+              src={props?.row?.original?.node?.member?.profilePic ?? ' '}
+            />
             <span>{props.getValue() as string}</span>
           </Box>
         ),

@@ -55,7 +55,7 @@ export const Questions = () => {
     <>
       <FormSection>
         <GridItem colSpan={3}>
-          <Box display="flex" flexDirection={'row'} justifyContent="space-between">
+          <Box display="flex" flexDirection="row" justifyContent="space-between">
             <SubHeadingText>{t['depositProductAutoOpenwhenmemberjoins']}</SubHeadingText>
             <FormSwitchTab name="autoOpen" options={yesNo} />
           </Box>
@@ -64,12 +64,30 @@ export const Questions = () => {
 
       <FormSection>
         <GridItem colSpan={3}>
-          <Box display="flex" flexDirection={'row'} justifyContent="space-between">
+          <Box display="flex" flexDirection="row" justifyContent="space-between">
+            <SubHeadingText>{t['depositProductStaffProduct']} </SubHeadingText>
+            <FormSwitchTab name="staffProduct" options={yesNo} />
+          </Box>
+        </GridItem>
+      </FormSection>
+
+      <FormSection>
+        <GridItem colSpan={3}>
+          <Box display="flex" flexDirection="row" justifyContent="space-between">
+            <SubHeadingText>{t['depositProductIsThisForMinor']} </SubHeadingText>
+            <FormSwitchTab name="isForMinors" options={yesNo} />
+          </Box>
+        </GridItem>
+      </FormSection>
+
+      <FormSection>
+        <GridItem colSpan={3}>
+          <Box display="flex" flexDirection="row" justifyContent="space-between">
             <Box>
               <SubHeadingText>{t['depositProductAlternativeChannels']}</SubHeadingText>
               <SubText>{t['depositProductAlternativeChannelseBanking']}</SubText>
             </Box>
-            <FormSwitchTab name={'alternativeChannels'} options={yesNo} />
+            <FormSwitchTab name="alternativeChannels" options={yesNo} />
           </Box>
 
           {alternativeChannels && <AlternativeChannels />}
@@ -79,9 +97,9 @@ export const Questions = () => {
       {depositNature === NatureOfDepositProduct.VoluntaryOrOptional && (
         <FormSection>
           <GridItem colSpan={3}>
-            <Box display="flex" flexDirection={'row'} justifyContent="space-between">
+            <Box display="flex" flexDirection="row" justifyContent="space-between">
               <SubHeadingText>{t['depositProductATMFacility']} </SubHeadingText>
-              <FormSwitchTab name={'atmFacility'} options={yesNo} />
+              <FormSwitchTab name="atmFacility" options={yesNo} />
             </Box>
             {atmFacility && <AtmFacility />}
           </GridItem>
@@ -91,9 +109,9 @@ export const Questions = () => {
       {depositNature === NatureOfDepositProduct.VoluntaryOrOptional && (
         <FormSection>
           <GridItem colSpan={3}>
-            <Box display="flex" flexDirection={'row'} justifyContent="space-between">
+            <Box display="flex" flexDirection="row" justifyContent="space-between">
               <SubHeadingText>{t['depositProductChequeIssue']}</SubHeadingText>
-              <FormSwitchTab name={'chequeIssue'} options={yesNo} />
+              <FormSwitchTab name="chequeIssue" options={yesNo} />
             </Box>
 
             {chequeIssue && <AllowChequeIssue />}
@@ -101,78 +119,64 @@ export const Questions = () => {
         </FormSection>
       )}
 
-      <FormSection>
-        <GridItem colSpan={3}>
-          <Box display={'flex'} flexDirection="column" gap="s16">
-            <Box display="flex" flexDirection={'row'} justifyContent="space-between">
-              <SubHeadingText>{t['depositProductAllowLoan']} </SubHeadingText>
-              <FormSwitchTab name={'allowLoan'} options={yesNo} />
-            </Box>
-
-            {allowLoan && (
-              <Box
-                display={'flex'}
-                justifyContent="space-between"
-                p="s16"
-                border="1px solid"
-                borderColor={'border.layout'}
-                borderRadius="6px"
-              >
-                <Box w="25%">
-                  <FormInput
-                    type="number"
-                    textAlign="right"
-                    name="percentageOfDeposit"
-                    label={t['depositProductPercentageDeposit']}
-                    rightElement={
-                      <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-                        %
-                      </Text>
-                    }
-                  />
-                </Box>
-              </Box>
-            )}
-          </Box>
-        </GridItem>
-      </FormSection>
-
-      {depositNature !== NatureOfDepositProduct.Mandatory && (
+      {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+        depositNature === NatureOfDepositProduct.TermSavingOrFd) && (
         <FormSection>
           <GridItem colSpan={3}>
-            <Box display="flex" flexDirection={'row'} justifyContent="space-between">
-              <SubHeadingText>{t['depositProductSupportMultipleAccount']}</SubHeadingText>
-              <FormSwitchTab name={'supportMultiple'} options={yesNo} />
+            <Box display="flex" flexDirection="column" gap="s16">
+              <Box display="flex" flexDirection="row" justifyContent="space-between">
+                <SubHeadingText>{t['depositProductAllowLoan']} </SubHeadingText>
+                <FormSwitchTab name="allowLoan" options={yesNo} />
+              </Box>
+
+              {allowLoan && (
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  p="s16"
+                  border="1px solid"
+                  borderColor="border.layout"
+                  borderRadius="6px"
+                >
+                  <Box w="25%">
+                    <FormInput
+                      type="number"
+                      textAlign="right"
+                      name="percentageOfDeposit"
+                      label={t['depositProductPercentageDeposit']}
+                      rightElement={
+                        <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+                          %
+                        </Text>
+                      }
+                    />
+                  </Box>
+                </Box>
+              )}
             </Box>
           </GridItem>
         </FormSection>
       )}
 
-      <FormSection>
-        <GridItem colSpan={3}>
-          <Box display="flex" flexDirection={'row'} justifyContent="space-between">
-            <SubHeadingText>{t['depositProductStaffProduct']} </SubHeadingText>
-            <FormSwitchTab name={'staffProduct'} options={yesNo} />
-          </Box>
-        </GridItem>
-      </FormSection>
-
-      <FormSection>
-        <GridItem colSpan={3}>
-          <Box display="flex" flexDirection={'row'} justifyContent="space-between">
-            <SubHeadingText>{t['depositProductIsThisForMinor']} </SubHeadingText>
-            <FormSwitchTab name={'isForMinors'} options={yesNo} />
-          </Box>
-        </GridItem>
-      </FormSection>
-
-      {depositNature === NatureOfDepositProduct.RecurringSaving && (
+      {depositNature !== NatureOfDepositProduct.Mandatory && (
         <FormSection>
           <GridItem colSpan={3}>
-            <Box display={'flex'} flexDirection="column" gap="s16">
-              <Box display="flex" flexDirection={'row'} justifyContent="space-between">
+            <Box display="flex" flexDirection="row" justifyContent="space-between">
+              <SubHeadingText>{t['depositProductSupportMultipleAccount']}</SubHeadingText>
+              <FormSwitchTab name="supportMultiple" options={yesNo} />
+            </Box>
+          </GridItem>
+        </FormSection>
+      )}
+
+      {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+        depositNature === NatureOfDepositProduct.Mandatory) && (
+        <FormSection>
+          <GridItem colSpan={3}>
+            <Box display="flex" flexDirection="column" gap="s16">
+              <Box display="flex" flexDirection="row" justifyContent="space-between">
                 <SubHeadingText>{t['depositProductWidthdrawRestricted']}</SubHeadingText>
-                <FormSwitchTab name={'withdrawRestricted'} options={yesNo} />
+                <FormSwitchTab name="withdrawRestricted" options={yesNo} />
               </Box>
               {withdrawRestricted && (
                 <Box
@@ -199,9 +203,9 @@ export const Questions = () => {
       {depositNature === NatureOfDepositProduct.RecurringSaving && (
         <FormSection>
           <GridItem colSpan={3}>
-            <Box display="flex" flexDirection={'row'} justifyContent="space-between">
+            <Box display="flex" flexDirection="row" justifyContent="space-between">
               <SubHeadingText>{t['depositProductWealthBuildingProduct']}</SubHeadingText>
-              <FormSwitchTab name={'wealthBuildingProduct'} options={yesNo} />
+              <FormSwitchTab name="wealthBuildingProduct" options={yesNo} />
             </Box>
           </GridItem>
         </FormSection>

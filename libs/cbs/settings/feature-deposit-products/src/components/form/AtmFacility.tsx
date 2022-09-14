@@ -20,12 +20,10 @@ export const AtmFacility = () => {
 
   const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
 
-  const coaList = coaData?.map((item) => {
-    return {
-      label: item?.name?.en as string,
-      value: item?.id as string,
-    };
-  });
+  const coaList = coaData?.map((item) => ({
+    label: item?.name?.en as string,
+    value: item?.id as string,
+  }));
 
   return (
     <GridItem mt="s32" colSpan={3}>

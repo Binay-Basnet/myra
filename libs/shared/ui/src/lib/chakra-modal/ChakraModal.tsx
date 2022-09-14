@@ -27,7 +27,7 @@ export interface ModalChakraProps extends Omit<ChakraModalProps, 'isOpen' | 'onC
   linkButtonLabel?: string;
   linkButtonHandler?: () => void;
   isDanger?: boolean;
-  width: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | string;
+  width?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | string;
 }
 
 export const ChakraModal = (props: ModalChakraProps) => {
@@ -43,7 +43,7 @@ export const ChakraModal = (props: ModalChakraProps) => {
     linkButtonLabel,
     linkButtonHandler,
     isDanger,
-    width,
+    width = 'xl',
     ...rest
   } = props;
 

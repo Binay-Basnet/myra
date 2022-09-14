@@ -16,17 +16,16 @@ import { useTranslation } from '@coop/shared/utils';
 import {
   AccountCloseServices,
   AccountOpenServices,
+  AllowedTransaction,
   BalanceLimit,
   Critera,
   DefaultAccountName,
-  DepositAmount,
   DepositFrequency,
   DormantSetup,
+  FixedDepositAmount,
   GridItems,
   Interest,
   LadderRate,
-  MaximumTenure,
-  MinimunTenure,
   Penalty,
   PostingFrequency,
   PrematuredPenalty,
@@ -35,6 +34,8 @@ import {
   Questions,
   Rebate,
   RequiredDocumentSetup,
+  Tenure,
+  TransactionLimit,
   TypesOfMember,
   WithdrawPenalty,
 } from '../components/form';
@@ -65,7 +66,7 @@ type DepositForm = Omit<
   atmCharge: ServiceType[];
 };
 
-export function SettingsDepositProductsAdd() {
+export const SettingsDepositProductsAdd = () => {
   const router = useRouter();
   const { t } = useTranslation();
   const id = String(router?.query?.['id']);
@@ -91,37 +92,41 @@ export function SettingsDepositProductsAdd() {
       (data) => data?.value
     );
 
-    const ladderRateDataList = values?.ladderRateData?.map((data) => {
-      return {
-        type: data?.type,
-        rate: data?.rate,
-        amount: data?.amount.toString(),
-      };
-    });
+    const ladderRateDataList = values?.ladderRateData?.map((data) => ({
+      type: data?.type,
+      rate: data?.rate,
+      amount: data?.amount.toString(),
+    }));
 
-    const serviceChargeList = values?.serviceCharge?.map((data) => {
-      return {
-        serviceName: data?.serviceName,
-        ledgerName: data?.ledgerName,
-        amount: data?.amount.toString(),
-      };
-    });
+    const serviceChargeList = values?.serviceCharge?.map((data) => ({
+      serviceName: data?.serviceName,
+      ledgerName: data?.ledgerName,
+      amount: data?.amount.toString(),
+    }));
 
-    const accountCloseChargeList = values?.accountCloseCharge?.map((data) => {
-      return {
-        serviceName: data?.serviceName,
-        ledgerName: data?.ledgerName,
-        amount: data?.amount.toString(),
-      };
-    });
+    const accountCloseChargeList = values?.accountCloseCharge?.map((data) => ({
+      serviceName: data?.serviceName,
+      ledgerName: data?.ledgerName,
+      amount: data?.amount.toString(),
+    }));
 
-    const alternativeChannelList = values?.alternativeChannelCharge?.map((data) => {
-      return {
-        serviceName: data?.serviceName,
-        ledgerName: data?.ledgerName,
-        amount: data?.amount.toString(),
-      };
-    });
+    const alternativeChannelList = values?.alternativeChannelCharge?.map((data) => ({
+      serviceName: data?.serviceName,
+      ledgerName: data?.ledgerName,
+      amount: data?.amount.toString(),
+    }));
+
+    const chequeChargeList = values?.chequeCharge?.map((data) => ({
+      serviceName: data?.serviceName,
+      ledgerName: data?.ledgerName,
+      amount: data?.amount.toString(),
+    }));
+
+    const atmChargeList = values?.atmCharge?.map((data) => ({
+      serviceName: data?.serviceName,
+      ledgerName: data?.ledgerName,
+      amount: data?.amount.toString(),
+    }));
 
     const updatedData = {
       ...values,
@@ -135,9 +140,9 @@ export function SettingsDepositProductsAdd() {
       ladderRateData: ladderRateDataList,
       serviceCharge: serviceChargeList,
       accountCloseCharge: accountCloseChargeList,
-      chequeCharge: values?.chequeCharge && values?.chequeCharge[0],
+      chequeCharge: chequeChargeList,
       alternativeChannelCharge: alternativeChannelList,
-      atmCharge: values?.atmCharge && values?.atmCharge[0],
+      atmCharge: atmChargeList,
       minTenureUnit: values?.minTenureUnit ? values?.minTenureUnit : null,
       maxTenureUnit: values?.maxTenureUnit ? values?.maxTenureUnit : null,
       maxTenureUnitNumber: values?.maxTenureUnitNumber ? values?.maxTenureUnitNumber : null,
@@ -166,10 +171,24 @@ export function SettingsDepositProductsAdd() {
         maxAmount: values?.depositAmount?.maxAmount ?? null,
         minAmount: values?.depositAmount?.minAmount ?? null,
       },
+      withdrawAmountLimit: {
+        maxAmount: values?.withdrawAmountLimit?.maxAmount ?? null,
+        minAmount: values?.withdrawAmountLimit?.minAmount ?? null,
+      },
+      fixedDepositAmountLimit: {
+        maxAmount: values?.fixedDepositAmountLimit?.maxAmount ?? null,
+        minAmount: values?.fixedDepositAmountLimit?.minAmount ?? null,
+      },
       balanceLimit: {
         avgAmount: values?.balanceLimit?.avgAmount ?? null,
         maxAmount: values?.balanceLimit?.maxAmount ?? null,
         minAmount: values?.balanceLimit?.minAmount ?? null,
+      },
+      prematurePenalty: {
+        ...values?.prematurePenalty,
+        penaltyDateType: values?.prematurePenalty?.penaltyDateType
+          ? values?.prematurePenalty?.penaltyDateType
+          : null,
       },
     };
 
@@ -242,38 +261,43 @@ export function SettingsDepositProductsAdd() {
               <ProductCode />
               <TypesOfMember />
 
-              <Box display="flex" flexDirection={'column'} gap="s16">
+              <Box display="flex" flexDirection="column" gap="s16">
                 {typesOfMember && <Critera />}
                 <GridItems />
               </Box>
 
+              {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <AllowedTransaction />}
+
+              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                depositNature === NatureOfDepositProduct.Mandatory) && <BalanceLimit />}
+
+              {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <TransactionLimit />}
+
               {(depositNature === NatureOfDepositProduct.RecurringSaving ||
                 depositNature === NatureOfDepositProduct.Mandatory) && (
                 <>
-                  <DepositAmount />
+                  {/* <DepositAmount /> */}
                   <DepositFrequency />
                   <Penalty />
                   <Rebate />
                 </>
               )}
-              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <MinimunTenure />}
+
+              {depositNature === NatureOfDepositProduct.TermSavingOrFd && <FixedDepositAmount />}
 
               {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <MaximumTenure />}
+                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <DefaultAccountName />}
 
-              {depositNature !== NatureOfDepositProduct.RecurringSaving && <BalanceLimit />}
+              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <Tenure />}
+
+              {/* {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <MaximumTenure />} */}
 
               <Interest />
               <PostingFrequency />
-              {depositNature !== NatureOfDepositProduct.TermSavingOrFd && (
-                <>
-                  <AccountOpenServices />
-                  <AccountCloseServices />
-                </>
-              )}
-
-              {depositNature === NatureOfDepositProduct.TermSavingOrFd && <DefaultAccountName />}
+              <AccountOpenServices />
+              <AccountCloseServices />
 
               <Questions />
 
@@ -281,8 +305,9 @@ export function SettingsDepositProductsAdd() {
 
               {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <DormantSetup />}
 
-              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <PrematuredPenalty />}
+              {depositNature !== NatureOfDepositProduct.VoluntaryOrOptional && (
+                <PrematuredPenalty />
+              )}
 
               {(depositNature === NatureOfDepositProduct.RecurringSaving ||
                 depositNature === NatureOfDepositProduct.TermSavingOrFd) && <WithdrawPenalty />}
@@ -316,6 +341,6 @@ export function SettingsDepositProductsAdd() {
       </Box>
     </>
   );
-}
+};
 
 export default SettingsDepositProductsAdd;

@@ -1,10 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import {
-  SharePaymentMode,
-  ShareVoucherDepositedBy,
-  useGetBankListQuery,
-} from '@coop/cbs/data-access';
+import { SharePaymentMode, ShareVoucherDepositedBy } from '@coop/cbs/data-access';
 import { ShareAccount, ShareCash } from '@coop/cbs/share/shared-ui';
 import {
   FormFileInput,
@@ -25,6 +21,15 @@ type PurchaseProps = {
   returnAmount: number;
 };
 
+const sourceOfFundsList = [
+  'Personal Savings',
+  'Share Sales',
+  'Dividends',
+  'Property Sales',
+  'Inheritances',
+  'Compensation',
+];
+
 const SharePurchasePayment = ({
   totalAmount,
   denominationTotal,
@@ -37,17 +42,6 @@ const SharePurchasePayment = ({
 
   const depositedBy = watch('bankVoucher.depositedBy');
   const paymentModes = watch('paymentMode');
-
-  const { data: bankData } = useGetBankListQuery();
-
-  const bankListArr = bankData?.bank?.bank?.list;
-
-  const bankList = bankListArr?.map((item) => {
-    return {
-      label: item?.name as string,
-      value: item?.id as string,
-    };
-  });
 
   const accountList = [
     {
@@ -67,14 +61,9 @@ const SharePurchasePayment = ({
   ];
 
   return (
-    <Box background="gray.0" border="1px solid" borderColor={'border.layout'}>
+    <Box background="gray.0" border="1px solid" borderColor="border.layout">
       <Box p="s20">
-        <Text
-          color="neutralColorLight.Gray-80"
-          fontSize="s3"
-          fontWeight="Medium"
-          mb="s16"
-        >
+        <Text color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="Medium" mb="s16">
           {t['sharePurchasePaymentMode']}
         </Text>
 
@@ -138,14 +127,14 @@ const SharePurchasePayment = ({
                 <FormSelect
                   name="bankVoucher.sourceOfFund"
                   label={t['sharePurchaseSourceofFund']}
-                  options={bankList}
+                  options={sourceOfFundsList.map((source) => ({
+                    label: source,
+                    value: source,
+                  }))}
                 />
               </GridItem>
               <GridItem colSpan={1}>
-                <FormFileInput
-                  name="bankVoucher.fileUpload"
-                  label={t['sharePurchaseFileUpload']}
-                />
+                <FormFileInput name="bankVoucher.fileUpload" label={t['sharePurchaseFileUpload']} />
               </GridItem>
             </Grid>
           </GridItem>
@@ -160,14 +149,14 @@ const SharePurchasePayment = ({
                 <FormSelect
                   name="cash.sourceOfFund"
                   label={t['sharePurchaseSourceofFund']}
-                  options={bankList}
+                  options={sourceOfFundsList.map((source) => ({
+                    label: source,
+                    value: source,
+                  }))}
                 />
               </GridItem>
               <GridItem colSpan={1}>
-                <FormFileInput
-                  name="cash.fileUpload"
-                  label={t['sharePurchaseFileUpload']}
-                />
+                <FormFileInput name="cash.fileUpload" label={t['sharePurchaseFileUpload']} />
               </GridItem>
             </Grid>
           </GridItem>
@@ -177,12 +166,7 @@ const SharePurchasePayment = ({
       {paymentModes === SharePaymentMode.BankVoucherOrCheque && (
         <FormSection>
           <GridItem colSpan={3}>
-            <Text
-              color="neutralColorLight.Gray-70"
-              fontSize="s3"
-              fontWeight="Medium"
-              mb="s8"
-            >
+            <Text color="neutralColorLight.Gray-70" fontSize="s3" fontWeight="Medium" mb="s8">
               {t['sharePurchaseNote']}
             </Text>
             <FormTextArea name="bankVoucher.note" />
@@ -193,12 +177,7 @@ const SharePurchasePayment = ({
       {paymentModes === SharePaymentMode.Account && (
         <FormSection>
           <GridItem colSpan={3}>
-            <Text
-              color="neutralColorLight.Gray-70"
-              fontSize="s3"
-              fontWeight="Medium"
-              mb="s8"
-            >
+            <Text color="neutralColorLight.Gray-70" fontSize="s3" fontWeight="Medium" mb="s8">
               {t['sharePurchaseNote']}
             </Text>
             <FormTextArea name="account.note" />
@@ -209,12 +188,7 @@ const SharePurchasePayment = ({
       {paymentModes === SharePaymentMode.Cash && (
         <FormSection>
           <GridItem colSpan={3}>
-            <Text
-              color="neutralColorLight.Gray-70"
-              fontSize="s3"
-              fontWeight="Medium"
-              mb="s8"
-            >
+            <Text color="neutralColorLight.Gray-70" fontSize="s3" fontWeight="Medium" mb="s8">
               {t['sharePurchaseNote']}
             </Text>
             <FormTextArea name="cash.note" />

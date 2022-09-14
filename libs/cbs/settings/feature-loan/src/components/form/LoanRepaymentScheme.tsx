@@ -10,9 +10,7 @@ export const LoanRepaymentSchemes = () => {
   const interestMethod = watch('interestMethod');
   const { t } = useTranslation();
 
-  const loanschemeOptionsI = [
-    { label: t['loanProductEMI'], value: LoanRepaymentScheme.Emi },
-  ];
+  const loanschemeOptionsI = [{ label: t['loanProductEMI'], value: LoanRepaymentScheme.Emi }];
 
   const loanschemeOptionsII = [
     { label: t['loanProductEPI'], value: LoanRepaymentScheme.Epi },
@@ -41,12 +39,7 @@ export const LoanRepaymentSchemes = () => {
       {(interestMethod === LoanInterestMethod.Straight ||
         interestMethod === LoanInterestMethod.Diminishing) && (
         <GridItem colSpan={3}>
-          <Text
-            mb="s16"
-            fontSize="r1"
-            fontWeight="SemiBold"
-            color="neutralColorLight.Gray-80"
-          >
+          <Text mb="s16" fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
             {t['loanProductLoanRepaymentScheme']}
           </Text>
 

@@ -17,34 +17,24 @@ export const PartialPayment = () => {
       <GridItem colSpan={3}>
         <BoxContainer>
           <Box
-            display={'flex'}
+            display="flex"
             flexDirection="row"
-            justifyContent={'space-between'}
+            justifyContent="space-between"
             alignItems="center"
             pt="s16"
           >
-            <SubHeadingText>
-              {t['loanProductAllowPartialInstallment']}
-            </SubHeadingText>
-            <FormSwitchTab
-              name="allowPartialInstallment"
-              options={YesNoOptions}
-            />
+            <SubHeadingText>{t['loanProductAllowPartialInstallment']}</SubHeadingText>
+            <FormSwitchTab name="allowPartialInstallment" options={YesNoOptions} />
           </Box>
           <Box
-            display={'flex'}
+            display="flex"
             flexDirection="row"
-            justifyContent={'space-between'}
+            justifyContent="space-between"
             alignItems="center"
             pt="s16"
           >
-            <SubHeadingText>
-              {t['loanProductIsMonthlyInterestCompulsory']}
-            </SubHeadingText>
-            <FormSwitchTab
-              name="isMonthlyInstallmentCompulsory"
-              options={YesNoOptions}
-            />
+            <SubHeadingText>{t['loanProductIsMonthlyInterestCompulsory']}</SubHeadingText>
+            <FormSwitchTab name="isMonthlyInstallmentCompulsory" options={YesNoOptions} />
           </Box>
         </BoxContainer>
       </GridItem>

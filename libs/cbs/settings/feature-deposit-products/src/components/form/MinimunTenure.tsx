@@ -6,12 +6,7 @@ import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import {
-  BoxContainer,
-  SubHeadingText,
-  SubText,
-  TextBoxContainer,
-} from '../formui';
+import { BoxContainer, SubHeadingText, SubText, TextBoxContainer } from '../formui';
 
 export const MinimunTenure = () => {
   const [rightElement, setRightElement] = useState('days');
@@ -60,11 +55,9 @@ export const MinimunTenure = () => {
     <FormSection>
       <GridItem colSpan={3}>
         <BoxContainer>
-          <Box display={'flex'} justifyContent="space-between">
+          <Box display="flex" justifyContent="space-between">
             <TextBoxContainer>
-              <SubHeadingText>
-                {t['depositProductMinimumTenure']}{' '}
-              </SubHeadingText>
+              <SubHeadingText>{t['depositProductMinimumTenure']} </SubHeadingText>
               <SubText>{t['depositProductNoteWeek']}</SubText>
             </TextBoxContainer>
             <FormSwitchTab name="minTenure" options={applicableSwitch} />
@@ -72,15 +65,15 @@ export const MinimunTenure = () => {
           {minimumTenure && (
             <BoxContainer
               p="s16"
-              border={'1px solid'}
+              border="1px solid"
               borderColor="border.layout"
-              display={'flex'}
+              display="flex"
               flexDirection="row"
               justifyContent="space-between"
-              borderRadius={'4px'}
+              borderRadius="4px"
             >
-              <Box display={'flex'} flexDirection="column" gap="s4">
-                <Text fontSize={'s3'} fontWeight="500">
+              <Box display="flex" flexDirection="column" gap="s4">
+                <Text fontSize="s3" fontWeight="500">
                   {t['depositProductUnit']}
                 </Text>
                 <FormSwitchTab name="minTenureUnit" options={unitOptions} />
@@ -88,9 +81,8 @@ export const MinimunTenure = () => {
               <Box w="290px">
                 <FormInput
                   name="minTenureUnitNumber"
-                  textAlign={'right'}
+                  textAlign="right"
                   label={t['depositProductNumber']}
-                  __placeholder="0"
                   rightAddonText={
                     rightElement && rightElement === Frequency.Daily
                       ? t['days']
