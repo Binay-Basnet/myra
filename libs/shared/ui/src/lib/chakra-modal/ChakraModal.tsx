@@ -11,13 +11,11 @@ import {
   ModalProps as ChakraModalProps,
 } from '@chakra-ui/react';
 
-import { Button } from '@coop/shared/ui';
-import { Icon, IconButton, TextFields } from '@coop/shared/ui';
+import { Button, Icon, IconButton, TextFields } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
-export interface ModalChakraProps
-  extends Omit<ChakraModalProps, 'isOpen' | 'onClose'> {
+export interface ModalChakraProps extends Omit<ChakraModalProps, 'isOpen' | 'onClose'> {
   open: boolean;
   onClose: () => void;
   children: React.ReactNode;
@@ -29,9 +27,10 @@ export interface ModalChakraProps
   linkButtonLabel?: string;
   linkButtonHandler?: () => null;
   isDanger?: boolean;
+  width: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | string;
 }
 
-export function ChakraModal(props: ModalChakraProps) {
+export const ChakraModal = (props: ModalChakraProps) => {
   const {
     open,
     onClose,
@@ -44,6 +43,7 @@ export function ChakraModal(props: ModalChakraProps) {
     linkButtonLabel,
     linkButtonHandler,
     isDanger,
+    width,
     ...rest
   } = props;
 
@@ -52,39 +52,37 @@ export function ChakraModal(props: ModalChakraProps) {
   return (
     <Modal {...rest} isOpen={open} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent maxW={width}>
         {title && (
           <Box
             p="s16"
-            borderBottom={'1px solid'}
+            borderBottom="1px solid"
             borderColor="border.layout"
             minH="50px"
-            display={'flex'}
+            display="flex"
             alignItems="center"
           >
-            <TextFields variant="pageHeader">{t[title]}</TextFields>
+            <TextFields variant="pageHeader">{t[title] ?? title}</TextFields>
           </Box>
         )}
         <ModalCloseButton _focus={{}} p={0}>
           <IconButton
-            variant={'ghost'}
+            variant="ghost"
             aria-label="close"
-            icon={<Icon as={IoCloseOutline} size="lg" color={'gray.500'} />}
+            icon={<Icon as={IoCloseOutline} size="lg" color="gray.500" />}
           />
         </ModalCloseButton>
         <ModalBody
           p="s16"
           borderBottom={
-            primaryButtonLabel || secondaryButtonLabel || linkButtonLabel
-              ? '1px solid'
-              : 'none'
+            primaryButtonLabel || secondaryButtonLabel || linkButtonLabel ? '1px solid' : 'none'
           }
           borderColor="border.layout"
         >
           {children}
         </ModalBody>{' '}
         {(primaryButtonLabel || secondaryButtonLabel || linkButtonLabel) && (
-          <ModalFooter p="s16" display={'flex'} justifyContent="space-between">
+          <ModalFooter p="s16" display="flex" justifyContent="space-between">
             <Box>
               {linkButtonLabel && (
                 <Button variant="link" onClick={linkButtonHandler}>
@@ -92,15 +90,10 @@ export function ChakraModal(props: ModalChakraProps) {
                 </Button>
               )}
             </Box>
-            <Box
-              display={'flex'}
-              flexDirection="row"
-              gap="s8"
-              justifyContent={'flex-end'}
-            >
+            <Box display="flex" flexDirection="row" gap="s8" justifyContent="flex-end">
               {secondaryButtonLabel && (
                 <Button
-                  width={'100px'}
+                  width="100px"
                   variant="outline"
                   shade="neutral"
                   onClick={secondaryButtonHandler}
@@ -112,7 +105,7 @@ export function ChakraModal(props: ModalChakraProps) {
                 <Button
                   variant="solid"
                   onClick={primaryButtonHandler}
-                  width={'100px'}
+                  width="100px"
                   shade={isDanger ? 'danger' : 'primary'}
                 >
                   {t[primaryButtonLabel]}
@@ -124,6 +117,6 @@ export function ChakraModal(props: ModalChakraProps) {
       </ModalContent>
     </Modal>
   );
-}
+};
 
 export default ChakraModal;
