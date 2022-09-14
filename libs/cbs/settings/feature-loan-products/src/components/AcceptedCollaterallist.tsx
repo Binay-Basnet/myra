@@ -20,8 +20,7 @@ import { useTranslation } from '@coop/shared/utils';
 /* eslint-disable-next-line */
 export interface CbsSettingsFeatureLoanProductsProps {}
 
-const GRID2X3 = () => {
-  return (
+const GRID2X3 = () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="10"
@@ -35,7 +34,6 @@ const GRID2X3 = () => {
       />
     </svg>
   );
-};
 
 interface ICollateralProps {
   list: { name: string; enabled: boolean; id: string }[];
@@ -65,7 +63,7 @@ export const AcceptedCollateral = (props: ICollateralProps) => {
   return (
     <Box
       display="flex"
-      flexDirection={'column'}
+      flexDirection="column"
       margin="s4"
       border="1px"
       borderColor="gray.200"
@@ -205,7 +203,7 @@ export const AcceptedCollateral = (props: ICollateralProps) => {
         <Box borderTop="1px" borderColor="gray.200" p="s8">
           <Button
             variant="ghost"
-            size={'md'}
+            size="md"
             isDisabled={hasNewField}
             shade="primary"
             leftIcon={<AddIcon />}
@@ -316,7 +314,7 @@ export const AcceptedCollateralOption = ({
                 onClick={() => setIsEditable(true)}
                 fontSize="r1"
                 fontWeight="400"
-                color={'gray.800'}
+                color="gray.800"
                 my="7.5px"
               >
                 {methods.getValues().name}

@@ -12,6 +12,8 @@ import { Box, FloatingShortcutButton, Toaster } from '@coop/shared/ui';
 import { store, theme, useInit, useSnap } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
+import 'react-patro/src/styles.css';
+import './app.css';
 
 const { ToastContainer } = createStandaloneToast();
 

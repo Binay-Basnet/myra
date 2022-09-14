@@ -1,0 +1,11 @@
+.rl-nepali-datepicker-wrapper .input-wrapper {
+  height: 44px;
+}
+
+.rl-nepali-datepicker-wrapper .input-wrapper .rl-nepali-datepicker-input {
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 0 12px;
+}

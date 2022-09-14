@@ -42,7 +42,7 @@ export const isArrayEqual = <T,>(x: T[], y: T[]) => isEmpty(xorWith(x, y, isEqua
 export interface FileInputProps extends Omit<DropzoneOptions, 'maxFiles'> {
   size?: 'sm' | 'md' | 'lg';
   dropText?: string;
-  value?: { url?: string; fileName: string }[];
+  value?: { url?: string; identifier: string }[];
   onChange?: (file: string[] | null) => void;
   maxFiles?: 'one' | 'many';
 }
@@ -58,7 +58,7 @@ export const FileInput = ({
   const [files, setFiles] = useState<File[]>([]);
   const [fileNames, setFileNames] = useState<string[]>([]);
   const [alreadyAddedFiles, setAlreadyAddedFiles] = useState<
-    { url?: string; fileName: string }[] | null
+    { url?: string; identifier: string }[] | null
   >(null);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -94,7 +94,7 @@ export const FileInput = ({
   useEffect(() => {
     if (
       (!alreadyAddedFiles || alreadyAddedFiles?.length === 0) &&
-      !files.some((file) => value?.some((valueFile) => valueFile.fileName === file.name)) &&
+      !files.some((file) => value?.some((valueFile) => valueFile.identifier === file.name)) &&
       files.length === 0
     ) {
       if (value) {
@@ -159,12 +159,12 @@ export const FileInput = ({
         <Fragment key={fileUrl?.url}>
           <FileUrlPreview
             setFileNames={setFileNames}
-            fileName={fileUrl?.fileName}
+            identifier={fileUrl?.identifier}
             fileUrl={String(fileUrl?.url)}
             size={size}
             remove={() => {
               setAlreadyAddedFiles((prev) =>
-                prev ? prev.filter((f) => f.fileName !== fileUrl.fileName) : null
+                prev ? prev.filter((f) => f.identifier !== fileUrl.identifier) : null
               );
             }}
           />
@@ -187,7 +187,7 @@ export const FilePreview = ({ file, size, remove, setFileNames }: FilePreviewPro
   const [error, setError] = useState<boolean>(false);
   const [fileUploadProgress, setFileUploadProgress] = useState(0);
   const [fileUrl, setFileUrl] = useState<string | undefined>(undefined);
-  const [fileName, setFileName] = useState<string | undefined>('4i9r4');
+  const [identifier, setFileName] = useState<string | undefined>('4i9r4');
 
   const { mutateAsync: getPreSignedUrl } = useGetPreSignedUrlMutation({
     onMutate: () => {
@@ -308,7 +308,7 @@ export const FilePreview = ({ file, size, remove, setFileNames }: FilePreviewPro
               remove();
             }
             if (setFileNames) {
-              setFileNames((prev) => prev.filter((name) => name !== fileName));
+              setFileNames((prev) => prev.filter((name) => name !== identifier));
             }
           }}
         />
@@ -334,7 +334,7 @@ export const FilePreview = ({ file, size, remove, setFileNames }: FilePreviewPro
 
 interface FileUrlPreviewProps {
   fileUrl: string;
-  fileName: string;
+  identifier: string;
   size: 'sm' | 'md' | 'lg';
   remove?: () => void;
   setFileNames: React.Dispatch<React.SetStateAction<string[]>>;
@@ -342,7 +342,7 @@ interface FileUrlPreviewProps {
 
 export const FileUrlPreview = ({
   fileUrl,
-  fileName,
+  identifier,
   size,
   remove,
   setFileNames,
@@ -357,7 +357,7 @@ export const FileUrlPreview = ({
       const response = await fetch(fileUrl);
 
       const blob = await response.blob();
-      const newFile = new File([blob], fileName, {
+      const newFile = new File([blob], identifier, {
         // Todo use switch case for this type using extension of filename
         type: 'image/jpeg',
       });
@@ -369,7 +369,7 @@ export const FileUrlPreview = ({
   }, [fileUrl]);
 
   useEffect(() => {
-    setFileNames((prev) => [...prev, fileName]);
+    setFileNames((prev) => [...prev, identifier]);
   }, []);
 
   return (
@@ -433,7 +433,7 @@ export const FileUrlPreview = ({
               remove();
             }
 
-            setFileNames((prev) => prev.filter((name) => name !== fileName));
+            setFileNames((prev) => prev.filter((name) => name !== identifier));
           }}
         />
         <Modal isOpen={isOpen} onClose={onClose} size="xl">

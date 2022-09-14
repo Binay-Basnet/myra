@@ -29,7 +29,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { useGetIndividualMemberDetails } from '@coop/shared/utils';
+import { featureCode, useGetIndividualMemberDetails } from '@coop/shared/utils';
 
 import { InstallmentModel, Payment } from '../components';
 
@@ -279,7 +279,7 @@ export const AddDeposit = () => {
       <Container minW="container.xl" height="fit-content">
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
-            title="New Deposit"
+            title={`New Deposit - ${featureCode?.newDeposit}`}
             closeLink="/transactions/deposit/list"
             buttonLabel="Add Bulk Deposit"
             buttonHandler={() => router.push('/transactions/deposit/add-bulk-deposit')}

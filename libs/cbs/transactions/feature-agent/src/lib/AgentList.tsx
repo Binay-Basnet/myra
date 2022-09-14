@@ -5,7 +5,7 @@ import { useGetAgentListDataQuery } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, PageHeader, Text } from '@coop/shared/ui';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const MEMBER_TAB_ITEMS = [
   {
@@ -22,7 +22,7 @@ const MEMBER_TAB_ITEMS = [
   },
 ];
 
-export function AgentList() {
+export const AgentList = () => {
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -44,10 +44,7 @@ export function AgentList() {
     { staleTime: 0 }
   );
 
-  const rowData = useMemo(
-    () => data?.transaction?.listAgent?.edges ?? [],
-    [data]
-  );
+  const rowData = useMemo(() => data?.transaction?.listAgent?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -65,25 +62,27 @@ export function AgentList() {
       {
         accessorFn: (row) => row?.node?.agentName,
         header: 'Agent Name',
-        cell: (props) => {
-          return (
-            <Box display="flex" alignItems="center" gap="s12">
-              <Avatar
-                name="Dan Abrahmov"
-                size="sm"
-                src="https://bit.ly/dan-abramov"
-              />
-              <Text
-                fontSize="s3"
-                textTransform="capitalize"
-                textOverflow="ellipsis"
-                overflow="hidden"
-              >
-                {props.getValue() as string}
-              </Text>
-            </Box>
-          );
-        },
+        cell: (props) => (
+          <Box display="flex" alignItems="center" gap="s12">
+<<<<<<< HEAD
+            <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
+=======
+            <Avatar
+              name={props?.getValue() as string}
+              size="sm"
+              src={props?.row?.original?.node?.profilePicUrl ?? ''}
+            />
+>>>>>>> eb9ddbc1a6145d2afcf32614990d87c3dba9113f
+            <Text
+              fontSize="s3"
+              textTransform="capitalize"
+              textOverflow="ellipsis"
+              overflow="hidden"
+            >
+              {props.getValue() as string}
+            </Text>
+          </Box>
+        ),
 
         meta: {
           width: '60%',
@@ -97,23 +96,19 @@ export function AgentList() {
         id: '_actions',
         header: '',
         accessorKey: 'actions',
-        cell: (cell) => {
-          return (
-            <ActionPopoverComponent
-              items={[
-                {
-                  title: 'transactionsAgentListViewDetail',
-                  onClick: () => {
-                    router.push(
-                      `/transactions/agent/${cell?.row?.original?.node?.id}/overview`
-                    );
-                  },
+        cell: (cell) => (
+          <ActionPopoverComponent
+            items={[
+              {
+                title: 'transactionsAgentListViewDetail',
+                onClick: () => {
+                  router.push(`/transactions/agent/${cell?.row?.original?.node?.id}/overview`);
                 },
-              ]}
-              id={cell?.row?.original?.node?.id as string}
-            />
-          );
-        },
+              },
+            ]}
+            id={cell?.row?.original?.node?.id as string}
+          />
+        ),
         meta: {
           width: '60px',
         },
@@ -124,14 +119,14 @@ export function AgentList() {
 
   return (
     <>
-      <PageHeader heading={'Agent List'} tabItems={MEMBER_TAB_ITEMS} />
+      <PageHeader heading={`Agent List - ${featureCode?.agentList}`} tabItems={MEMBER_TAB_ITEMS} />
 
       <Table
         data={rowData}
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
         columns={columns}
-        noDataTitle={'Agent'}
+        noDataTitle="Agent"
         pagination={{
           total: data?.transaction?.listAgent?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listAgent?.pageInfo,
@@ -139,6 +134,6 @@ export function AgentList() {
       />
     </>
   );
-}
+};
 
 export default AgentList;

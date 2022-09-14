@@ -17,7 +17,7 @@ import { NewUserModal } from '../components';
 //   COOPERATIVE_UNION: 'coop_union',
 // };
 
-export function UsersList() {
+export const UsersList = () => {
   const { t } = useTranslation();
 
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState<boolean>(false);
@@ -49,25 +49,23 @@ export function UsersList() {
       {
         accessorFn: (row) => row?.node?.name,
         header: 'Name',
-        cell: (props) => {
-          return (
-            <Box display="flex" alignItems="center" gap="s12">
-              <Avatar
-                name="Dan Abrahmov"
-                size="sm"
-                src="https://bit.ly/dan-abramov"
-              />
-              <Text
-                fontSize="s3"
-                textTransform="capitalize"
-                textOverflow="ellipsis"
-                overflow="hidden"
-              >
-                {props.getValue() as string}
-              </Text>
-            </Box>
-          );
-        },
+        cell: (props) => (
+          <Box display="flex" alignItems="center" gap="s12">
+            <Avatar
+              name={props.getValue()}
+              size="sm"
+              src={props.row.original.node?.profilePicUrl ?? ''}
+            />
+            <Text
+              fontSize="s3"
+              textTransform="capitalize"
+              textOverflow="ellipsis"
+              overflow="hidden"
+            >
+              {props.getValue() as string}
+            </Text>
+          </Box>
+        ),
 
         meta: {
           width: '60%',
@@ -104,9 +102,7 @@ export function UsersList() {
               {
                 title: 'settingsUserUserListEdit',
                 onClick: () => {
-                  router.push(
-                    `/settings/users/super-admin/edit/${props?.row?.original?.node?.id}`
-                  );
+                  router.push(`/settings/users/super-admin/edit/${props?.row?.original?.node?.id}`);
                 },
               },
             ]}
@@ -132,8 +128,8 @@ export function UsersList() {
   return (
     <>
       <SettingsPageHeader
-        heading={'Super Admin'}
-        buttonLabel={'New User'}
+        heading="Super Admin"
+        buttonLabel="New User"
         buttonHandler={handleAddUserModalOpen}
         // buttonHandler={() =>
         //   newId
@@ -149,10 +145,9 @@ export function UsersList() {
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
         columns={columns}
-        noDataTitle={'User'}
+        noDataTitle="User"
         pagination={{
-          total:
-            userListQueryData?.settings?.myraUser?.list?.totalCount ?? 'Many',
+          total: userListQueryData?.settings?.myraUser?.list?.totalCount ?? 'Many',
           pageInfo: userListQueryData?.settings?.myraUser?.list?.pageInfo,
         }}
         searchPlaceholder="Search Users"
@@ -165,6 +160,6 @@ export function UsersList() {
       />
     </>
   );
-}
+};
 
 export default UsersList;

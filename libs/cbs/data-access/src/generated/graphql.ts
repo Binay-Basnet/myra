@@ -9398,14 +9398,14 @@ export type GetAgentListDataQueryVariables = Exact<{
 }>;
 
 
-export type GetAgentListDataQuery = { transaction: { listAgent: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, agentName?: string | null, phoneNo?: string | null, assignedMember?: number | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetAgentListDataQuery = { transaction: { listAgent: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, agentName?: string | null, phoneNo?: string | null, assignedMember?: number | null, profilePicUrl?: string | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type GetAgentDetailDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetAgentDetailDataQuery = { transaction: { agentDetail?: { data?: { id?: string | null, name?: string | null, branch?: string | null, totalMembers?: number | null } | null } | null } };
+export type GetAgentDetailDataQuery = { transaction: { agentDetail?: { data?: { id?: string | null, name?: string | null, branch?: string | null, totalMembers?: number | null, profilePicUrl?: string | null } | null } | null } };
 
 export type GetAgentAssignedMemberListDataQueryVariables = Exact<{
   filter?: InputMaybe<AssignedMemberListFiler>;
@@ -9938,7 +9938,7 @@ export type GetSettingsUserListDataQueryVariables = Exact<{
 }>;
 
 
-export type GetSettingsUserListDataQuery = { settings: { myraUser?: { list?: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, name?: string | null, email?: string | null, contactNo?: string | null, gender?: UserGender | null, dob?: string | null, role?: Roles | null, branch?: { id: string } | null } | null }> | null, pageInfo: PaginationFragment } | null } | null } };
+export type GetSettingsUserListDataQuery = { settings: { myraUser?: { list?: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, name?: string | null, email?: string | null, contactNo?: string | null, gender?: UserGender | null, dob?: string | null, role?: Roles | null, profilePicUrl?: string | null, branch?: { id: string } | null } | null }> | null, pageInfo: PaginationFragment } | null } | null } };
 
 export type GetSettingsUserEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -12459,6 +12459,7 @@ export const GetAgentListDataDocument = `
           agentName
           phoneNo
           assignedMember
+          profilePicUrl
         }
         cursor
       }
@@ -12493,6 +12494,7 @@ export const GetAgentDetailDataDocument = `
         name
         branch
         totalMembers
+        profilePicUrl
       }
     }
   }
@@ -16338,6 +16340,7 @@ export const GetSettingsUserListDataDocument = `
             branch {
               id
             }
+            profilePicUrl
           }
           cursor
         }

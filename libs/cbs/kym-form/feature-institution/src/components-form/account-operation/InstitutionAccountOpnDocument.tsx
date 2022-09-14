@@ -18,12 +18,16 @@ interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
 
+type KYMInstitutionInput = Omit<KymInsInput, 'companyStamp'> & {
+  companyStamp: { url?: string | undefined; identifier: string | undefined }[];
+};
+
 export const InstitutionAccountOpnDocument = (props: IProps) => {
   const router = useRouter();
   const { t } = useTranslation();
   const id = String(router?.query?.['id']);
 
-  const methods = useForm<KymInsInput>({
+  const methods = useForm<KYMInstitutionInput>({
     defaultValues: {},
   });
 
@@ -44,9 +48,7 @@ export const InstitutionAccountOpnDocument = (props: IProps) => {
     if (editValues) {
       const kymDocumentsList = editValues?.document?.listKYMDocuments?.data;
 
-      const documentData = kymDocumentsList?.find(
-        (doc) => doc?.fieldId === 'companyStamp'
-      );
+      const documentData = kymDocumentsList?.find((doc) => doc?.fieldId === 'companyStamp');
 
       //
 
@@ -54,7 +56,7 @@ export const InstitutionAccountOpnDocument = (props: IProps) => {
         reset({
           companyStamp: documentData.docData.map((file) => ({
             url: file?.url,
-            fileName: file?.identifier,
+            identifier: file?.identifier,
           })),
         });
       }
@@ -91,11 +93,7 @@ export const InstitutionAccountOpnDocument = (props: IProps) => {
           }}
         >
           <Box w="13%">
-            <FormFileInput
-              size="md"
-              label={t['kymInsCompanyStamp']}
-              name="companyStamp"
-            />
+            <FormFileInput size="md" label={t['kymInsCompanyStamp']} name="companyStamp" />
           </Box>
         </form>
       </FormProvider>

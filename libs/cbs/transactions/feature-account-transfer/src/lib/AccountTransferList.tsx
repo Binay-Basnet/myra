@@ -5,7 +5,7 @@ import { useGetAccountTransferListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [
 //   {
@@ -21,7 +21,7 @@ import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 /* eslint-disable-next-line */
 export interface AccountTransferListProps {}
 
-export function AccountTransferList() {
+export const AccountTransferList = () => {
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -34,10 +34,7 @@ export function AccountTransferList() {
     }
   );
 
-  const rowData = useMemo(
-    () => data?.transaction?.listTransfer?.edges ?? [],
-    [data]
-  );
+  const rowData = useMemo(() => data?.transaction?.listTransfer?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -116,9 +113,9 @@ export function AccountTransferList() {
   return (
     <>
       <TransactionPageHeader
-        heading={'Account Transfer List'}
+        heading={`Account Transfer List - ${featureCode?.accountTransferList}`}
         // tabItems={tabList}
-        buttonLabel={'New Account Transfer'}
+        buttonLabel="New Account Transfer"
         buttonHandler={() => router.push('/transactions/account-transfer/add')}
       />
 
@@ -135,6 +132,6 @@ export function AccountTransferList() {
       />
     </>
   );
-}
+};
 
 export default AccountTransferList;

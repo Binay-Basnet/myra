@@ -1,9 +1,10 @@
-import React, { Fragment, useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import { IoStar } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { Tabs } from '@chakra-ui/react';
 
 import { Box, Divider, Icon, SidebarTabs } from '@coop/shared/ui';
+import { featureCode } from '@coop/shared/utils';
 
 const REPORTS_INNER_TAB_LINKS = [
   {
@@ -56,27 +57,21 @@ export const ReportsInnerSidebar = () => {
   const router = useRouter();
 
   const currentIndex = useMemo(
-    () =>
-      REPORTS_INNER_TAB_LINKS.findIndex((link) =>
-        router.pathname.includes(link.to)
-      ),
+    () => REPORTS_INNER_TAB_LINKS.findIndex((link) => router.pathname.includes(link.to)),
     [router.pathname]
   );
   return (
     <Box>
-      <Tabs
-        variant="unstyled"
-        index={router.pathname.includes('/favorites') ? 0 : 1}
-      >
+      <Tabs variant="unstyled" index={router.pathname.includes('/favorites') ? 0 : 1}>
         <SidebarTabs
           title={
             <Box display="flex" alignItems="center" gap="s8">
               <Icon as={IoStar} size="md" color="primary.500" />
-              Favorite Reports
+              Favorite Reports - {featureCode?.favoriteReports}
             </Box>
           }
           // to={'/reports/cbs/favorites'}
-          to={'/reports/cbs/share-report'}
+          to="/reports/cbs/share-report"
         />
       </Tabs>
       <Divider my="s4" />

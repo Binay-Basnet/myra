@@ -11,10 +11,7 @@ import {
   useSetAccountTransferDataMutation,
   WithdrawWith,
 } from '@coop/cbs/data-access';
-import {
-  FormCustomSelect,
-  MemberSelect,
-} from '@coop/cbs/transactions/ui-components';
+import { FormCustomSelect, MemberSelect } from '@coop/cbs/transactions/ui-components';
 import {
   BoxContainer,
   ContainerWithDivider,
@@ -30,7 +27,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { useGetIndividualMemberDetails } from '@coop/shared/utils';
+import { featureCode, useGetIndividualMemberDetails } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface NewAccountTransferProps {}
@@ -57,7 +54,7 @@ const withdrawTypes = [
 
 type AccountTransferForm = TransferInput & { destMemberId: string };
 
-export function NewAccountTransfer() {
+export const NewAccountTransfer = () => {
   const router = useRouter();
 
   const methods = useForm<AccountTransferForm>({
@@ -128,19 +125,15 @@ export function NewAccountTransfer() {
 
   const sourceAccount = useMemo(
     () =>
-      accountListData?.account?.list?.edges?.find(
-        (account) => account.node?.id === srcAccountId
-      )?.node,
+      accountListData?.account?.list?.edges?.find((account) => account.node?.id === srcAccountId)
+        ?.node,
     [srcAccountId]
   );
 
   const amountToBeDeposited = watch('amount') ?? 0;
 
   const totalDeposit = useMemo(
-    () =>
-      amountToBeDeposited
-        ? Number(amountToBeDeposited) + Number(FINE) - Number(REBATE)
-        : 0,
+    () => (amountToBeDeposited ? Number(amountToBeDeposited) + Number(FINE) - Number(REBATE) : 0),
     [amountToBeDeposited]
   );
 
@@ -159,15 +152,9 @@ export function NewAccountTransfer() {
   return (
     <>
       <Container minW="container.xl" height="fit-content">
-        <Box
-          position="sticky"
-          top="110px"
-          bg="gray.100"
-          width="100%"
-          zIndex="10"
-        >
+        <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
-            title={'New Account Transfer'}
+            title={`New Account Transfer - ${featureCode?.newAccountTransfer}`}
             closeLink="/transactions/account-transfer/list"
           />
         </Box>
@@ -188,37 +175,30 @@ export function NewAccountTransfer() {
                 >
                   <ContainerWithDivider>
                     <BoxContainer>
-                      <MemberSelect
-                        name="memberId"
-                        label="Member"
-                        __placeholder="Select Member"
-                      />
+                      <MemberSelect name="memberId" label="Member" __placeholder="Select Member" />
 
                       {memberId && (
                         <FormCustomSelect
                           name="srcAccountId"
                           label="Source Account"
                           __placeholder="Select Account"
-                          options={accountListData?.account?.list?.edges?.map(
-                            (account) => ({
-                              accountInfo: {
-                                accountName: account.node?.product.productName,
-                                accountId: account.node?.product?.id,
-                                accountType: account?.node?.product?.nature
-                                  ? accountTypes[account?.node?.product?.nature]
+                          options={accountListData?.account?.list?.edges?.map((account) => ({
+                            accountInfo: {
+                              accountName: account.node?.product.productName,
+                              accountId: account.node?.product?.id,
+                              accountType: account?.node?.product?.nature
+                                ? accountTypes[account?.node?.product?.nature]
+                                : '',
+                              balance: account?.node?.balance ?? '0',
+                              fine:
+                                account?.node?.product?.nature ===
+                                  NatureOfDepositProduct.RecurringSaving ||
+                                account?.node?.product?.nature === NatureOfDepositProduct.Mandatory
+                                  ? FINE
                                   : '',
-                                balance: account?.node?.balance ?? '0',
-                                fine:
-                                  account?.node?.product?.nature ===
-                                    NatureOfDepositProduct.RecurringSaving ||
-                                  account?.node?.product?.nature ===
-                                    NatureOfDepositProduct.Mandatory
-                                    ? FINE
-                                    : '',
-                              },
-                              value: account.node?.id as string,
-                            })
-                          )}
+                            },
+                            value: account.node?.id as string,
+                          }))}
                         />
                       )}
                     </BoxContainer>
@@ -236,29 +216,24 @@ export function NewAccountTransfer() {
                             name="destAccountId"
                             label="Receipent Account"
                             __placeholder="Select Receipent Account"
-                            options={accountListData?.account?.list?.edges?.map(
-                              (account) => ({
-                                accountInfo: {
-                                  accountName:
-                                    account.node?.product.productName,
-                                  accountId: account.node?.product?.id,
-                                  accountType: account?.node?.product?.nature
-                                    ? accountTypes[
-                                        account?.node?.product?.nature
-                                      ]
+                            options={accountListData?.account?.list?.edges?.map((account) => ({
+                              accountInfo: {
+                                accountName: account.node?.product.productName,
+                                accountId: account.node?.product?.id,
+                                accountType: account?.node?.product?.nature
+                                  ? accountTypes[account?.node?.product?.nature]
+                                  : '',
+                                balance: account?.node?.balance ?? '0',
+                                fine:
+                                  account?.node?.product?.nature ===
+                                    NatureOfDepositProduct.RecurringSaving ||
+                                  account?.node?.product?.nature ===
+                                    NatureOfDepositProduct.Mandatory
+                                    ? FINE
                                     : '',
-                                  balance: account?.node?.balance ?? '0',
-                                  fine:
-                                    account?.node?.product?.nature ===
-                                      NatureOfDepositProduct.RecurringSaving ||
-                                    account?.node?.product?.nature ===
-                                      NatureOfDepositProduct.Mandatory
-                                      ? FINE
-                                      : '',
-                                },
-                                value: account.node?.id as string,
-                              })
-                            )}
+                              },
+                              value: account.node?.id as string,
+                            }))}
                           />
                         )}
 
@@ -277,13 +252,10 @@ export function NewAccountTransfer() {
                               options={destAccountListData?.account?.list?.edges?.map(
                                 (account) => ({
                                   accountInfo: {
-                                    accountName:
-                                      account.node?.product.productName,
+                                    accountName: account.node?.product.productName,
                                     accountId: account.node?.product?.id,
                                     accountType: account?.node?.product?.nature
-                                      ? accountTypes[
-                                          account?.node?.product?.nature
-                                        ]
+                                      ? accountTypes[account?.node?.product?.nature]
                                       : '',
                                     balance: account?.node?.balance ?? '0',
                                     fine:
@@ -346,12 +318,7 @@ export function NewAccountTransfer() {
                           />
                         </InputGroupContainer>
 
-                        <FormTextArea
-                          name="notes"
-                          label="Note"
-                          __placeholder="Note"
-                          rows={5}
-                        />
+                        <FormTextArea name="notes" label="Note" __placeholder="Note" rows={5} />
                       </BoxContainer>
                     )}
                   </ContainerWithDivider>
@@ -385,19 +352,14 @@ export function NewAccountTransfer() {
                                 : '',
                               ID: sourceAccount?.product?.id,
                               currentBalance: sourceAccount?.balance ?? '0',
-                              minimumBalance:
-                                sourceAccount?.product?.minimumBalance ?? '0',
+                              minimumBalance: sourceAccount?.product?.minimumBalance ?? '0',
                               guaranteeBalance: '1000',
-                              overdrawnBalance:
-                                sourceAccount?.overDrawnBalance ?? '0',
+                              overdrawnBalance: sourceAccount?.overDrawnBalance ?? '0',
                               fine: FINE,
                               // branch: 'Kumaripati',
-                              openDate:
-                                sourceAccount?.accountOpenedDate ?? 'N/A',
-                              expiryDate:
-                                sourceAccount?.accountExpiryDate ?? 'N/A',
-                              lastTransactionDate:
-                                sourceAccount?.lastTransactionDate ?? 'N/A',
+                              openDate: sourceAccount?.accountOpenedDate ?? 'N/A',
+                              expiryDate: sourceAccount?.accountExpiryDate ?? 'N/A',
+                              lastTransactionDate: sourceAccount?.lastTransactionDate ?? 'N/A',
                             }
                           : null
                       }
@@ -445,23 +407,15 @@ export function NewAccountTransfer() {
             <FormFooter
               status={
                 <Box display="flex" gap="s32">
-                  <Text
-                    fontSize="r1"
-                    fontWeight={600}
-                    color="neutralColorLight.Gray-50"
-                  >
-                    {'Total Deposit Amount'}
+                  <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
+                    Total Deposit Amount
                   </Text>
-                  <Text
-                    fontSize="r1"
-                    fontWeight={600}
-                    color="neutralColorLight.Gray-70"
-                  >
+                  <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
                     {totalDeposit ?? '---'}
                   </Text>
                 </Box>
               }
-              mainButtonLabel={'Submit'}
+              mainButtonLabel="Submit"
               mainButtonHandler={handleSubmit}
             />
           </Container>
@@ -469,6 +423,6 @@ export function NewAccountTransfer() {
       </Box>
     </>
   );
-}
+};
 
 export default NewAccountTransfer;

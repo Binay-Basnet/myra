@@ -63,6 +63,7 @@
     "react-hotkeys": "^2.0.0",
     "react-icons": "^4.4.0",
     "react-leaflet": "^4.0.0",
+    "react-patro": "^0.0.4-beta",
     "react-pdf": "^5.7.2",
     "react-query": "^3.38.1",
     "react-redux": "8.0.2",

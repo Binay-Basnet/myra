@@ -3874,7 +3874,7 @@
     schema-utils "^3.0.0"
     source-map "^0.7.3"
 
-"@popperjs/core@^2.9.3":
+"@popperjs/core@^2.9.2", "@popperjs/core@^2.9.3":
   version "2.11.6"
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.6.tgz#cee20bd55e68a1720bdab363ecf0c821ded4cd45"
   integrity sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==
@@ -9109,7 +9109,7 @@ date-fns@^1.27.2:
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.30.1.tgz#2e71bf0b119153dbb4cc4e88d9ea5acfb50dc05c"
   integrity sha512-hBSVCvSmWC+QypYObzwGOd9wqdDpOt+0wl0KbU+R+uuZBS1jN8VsD1ss3irQDknRj5NvxiTF6oj/nDRnN/UQNw==
 
-date-fns@^2.28.0, date-fns@^2.29.1:
+date-fns@^2.22.1, date-fns@^2.28.0, date-fns@^2.29.1:
   version "2.29.2"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.29.2.tgz#0d4b3d0f3dff0f920820a070920f0d9662c51931"
   integrity sha512-0VNbwmWJDS/G3ySwFSJA3ayhbURMTJLtwM2DTxf9CWondCnh6DTNlO9JgRSq6ibf4eD0lfMJNBxUdEAHHix+bA==
@@ -16632,6 +16632,14 @@ react-leaflet@^4.0.0:
   integrity sha512-pDyIf50Ek/LZ0p4Qxw2D9LMOx+LytQs2R+MY3mhTUPGzubrpP4QAgbCv2qc0L9y0qVRgx7dHavWuPFkc/WCJCw==
   dependencies:
     "@react-leaflet/core" "^2.0.1"
+
+react-patro@^0.0.4-beta:
+  version "0.0.4-beta"
+  resolved "https://registry.yarnpkg.com/react-patro/-/react-patro-0.0.4-beta.tgz#12145b692d9f692c5f9f11746c06dd142a9631ab"
+  integrity sha512-rbnEoKa0j4OOVQZ73cpp33oI34lQRiiIacBtDo3OcqBvsnCebgR95GfKo+451pS4qcp8P5h8QjiL8ZWDI70E4Q==
+  dependencies:
+    "@popperjs/core" "^2.9.2"
+    date-fns "^2.22.1"
 
 react-pdf@^5.7.2:
   version "5.7.2"

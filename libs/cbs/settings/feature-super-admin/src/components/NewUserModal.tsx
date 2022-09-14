@@ -19,12 +19,7 @@ import {
   UserGender,
   useSetSettingsUserDataMutation,
 } from '@coop/cbs/data-access';
-import {
-  FormEmailInput,
-  FormInput,
-  FormPhoneNumber,
-  FormSelect,
-} from '@coop/shared/form';
+import { FormEmailInput, FormInput, FormPhoneNumber, FormSelect } from '@coop/shared/form';
 import { asyncToast, Box, Button, Divider, Grid, Text } from '@coop/shared/ui';
 import { setAddUserData, useAppDispatch } from '@coop/shared/utils';
 
@@ -50,11 +45,7 @@ const roleOptions = [
   { label: 'Super Admin', value: Roles.Superadmin },
 ];
 
-export const NewUserModal = ({
-  isOpen,
-  onClose,
-  refetchUserList,
-}: INewUserModalProps) => {
+export const NewUserModal = ({ isOpen, onClose, refetchUserList }: INewUserModalProps) => {
   const methods = useForm<MyraUserInput>();
 
   const { getValues, watch, reset } = methods;
@@ -107,15 +98,11 @@ export const NewUserModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={handleModalClose} isCentered={true}>
+    <Modal isOpen={isOpen} onClose={handleModalClose} isCentered>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
-          <Text
-            fontSize="r2"
-            color="neutralColorLight.Gray-80"
-            fontWeight="SemiBold"
-          >
+          <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
             Add User
           </Text>
         </ModalHeader>
@@ -125,25 +112,10 @@ export const NewUserModal = ({
         <ModalBody p="s16" width="40wh" height="60vh">
           <FormProvider {...methods}>
             <form>
-              <Box
-                px="s12"
-                py="s8"
-                display="flex"
-                flexDirection="column"
-                gap="s24"
-              >
-                <FormInput
-                  type="text"
-                  name="name"
-                  label="Name"
-                  __placeholder="Enter Name"
-                />
+              <Box px="s12" py="s8" display="flex" flexDirection="column" gap="s24">
+                <FormInput type="text" name="name" label="Name" __placeholder="Enter Name" />
 
-                <Grid
-                  templateColumns="repeat(2, 1fr)"
-                  rowGap="s24"
-                  columnGap="s20"
-                >
+                <Grid templateColumns="repeat(2, 1fr)" rowGap="s24" columnGap="s20">
                   <FormSelect
                     name="gender"
                     label="Gender"
@@ -151,23 +123,13 @@ export const NewUserModal = ({
                     options={genderOptions}
                   />
 
-                  <FormInput
-                    type="date"
-                    name="dob"
-                    label="Date of Birth (BS)"
-                  />
+                  <FormInput type="date" name="dob" label="Date of Birth (BS)" />
 
-                  <FormPhoneNumber
-                    name="contactNo"
-                    label="Mobile No"
-                    __placeholder="Mobile No"
-                  />
+                  {/* <FormDatePicker name="dob" label="Date of Birth" /> */}
 
-                  <FormEmailInput
-                    name="email"
-                    label="Email"
-                    __placeholder="Email"
-                  />
+                  <FormPhoneNumber name="contactNo" label="Mobile No" __placeholder="Mobile No" />
+
+                  <FormEmailInput name="email" label="Email" __placeholder="Email" />
                 </Grid>
 
                 <FormSelect
@@ -190,11 +152,7 @@ export const NewUserModal = ({
 
         <Divider />
         <ModalFooter justifyContent="space-between">
-          <Button
-            leftIcon={<AddIcon />}
-            variant="ghost"
-            onClick={handleAddMoreDetails}
-          >
+          <Button leftIcon={<AddIcon />} variant="ghost" onClick={handleAddMoreDetails}>
             Add more details
           </Button>
           <Button variant="solid" onClick={handleSendInvitation}>
