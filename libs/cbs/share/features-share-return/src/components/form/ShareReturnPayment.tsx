@@ -38,14 +38,9 @@ const ShareReturnPayment = ({
 
   return (
     <GridItem flex={1}>
-      <Box background="gray.0" border="1px solid" borderColor={'border.layout'}>
+      <Box background="gray.0" border="1px solid" borderColor="border.layout">
         <Box p="s20">
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontSize="s3"
-            fontWeight="Medium"
-            mb="s16"
-          >
+          <Text color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="Medium" mb="s16">
             {t['shareReturnPaymentMode']}
           </Text>
 
@@ -71,12 +66,7 @@ const ShareReturnPayment = ({
         {paymentModes === SharePaymentMode.BankVoucherOrCheque && (
           <FormSection>
             <GridItem colSpan={3}>
-              <Text
-                color="neutralColorLight.Gray-70"
-                fontSize="s3"
-                fontWeight="Medium"
-                mb="s8"
-              >
+              <Text color="neutralColorLight.Gray-70" fontSize="s3" fontWeight="Medium" mb="s8">
                 {t['sharePurchaseNote']}
               </Text>
               <FormTextArea name="bankCheque.note" />
@@ -87,12 +77,7 @@ const ShareReturnPayment = ({
         {paymentModes === SharePaymentMode.Account && (
           <FormSection>
             <GridItem colSpan={3}>
-              <Text
-                color="neutralColorLight.Gray-70"
-                fontSize="s3"
-                fontWeight="Medium"
-                mb="s8"
-              >
+              <Text color="neutralColorLight.Gray-70" fontSize="s3" fontWeight="Medium" mb="s8">
                 {t['sharePurchaseNote']}
               </Text>
               <FormTextArea name="account.note" />
@@ -103,12 +88,7 @@ const ShareReturnPayment = ({
         {paymentModes === SharePaymentMode.Cash && (
           <FormSection>
             <GridItem colSpan={3}>
-              <Text
-                color="neutralColorLight.Gray-70"
-                fontSize="s3"
-                fontWeight="Medium"
-                mb="s8"
-              >
+              <Text color="neutralColorLight.Gray-70" fontSize="s3" fontWeight="Medium" mb="s8">
                 {t['sharePurchaseNote']}
               </Text>
               <FormTextArea name="cash.note" />

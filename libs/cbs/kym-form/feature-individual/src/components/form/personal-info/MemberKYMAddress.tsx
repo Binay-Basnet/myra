@@ -15,15 +15,10 @@ import { FormSection, GridItem } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 interface IMemberKYMAddressProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
-export const MemberKYMAddress = ({
-  setKymCurrentSection,
-}: IMemberKYMAddressProps) => {
+export const MemberKYMAddress = ({ setKymCurrentSection }: IMemberKYMAddressProps) => {
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -34,19 +29,17 @@ export const MemberKYMAddress = ({
 
   const { watch, control, reset } = methods;
 
-  const isPermanentAndTemporaryAddressSame = watch(
-    'sameTempAsPermanentAddress'
-  );
+  const isPermanentAndTemporaryAddressSame = watch('sameTempAsPermanentAddress');
   const { data } = useAllAdministrationQuery();
 
-  const province = useMemo(() => {
-    return (
+  const province = useMemo(
+    () =>
       data?.administration?.all?.map((d) => ({
         label: d.name,
         value: d.id,
-      })) ?? []
-    );
-  }, [data?.administration?.all]);
+      })) ?? [],
+    [data?.administration?.all]
+  );
 
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch('permanentAddress.provinceId');
@@ -54,16 +47,12 @@ export const MemberKYMAddress = ({
   const currentLocalityId = watch('permanentAddress.localGovernmentId');
 
   const districtList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
-        ?.districts ?? [],
+    () => data?.administration.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
     [currentProvinceId]
   );
 
   const localityList = useMemo(
-    () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+    () => districtList.find((d) => d.id === currentDistrictId)?.municipalities ?? [],
     [currentDistrictId]
   );
 
@@ -77,22 +66,17 @@ export const MemberKYMAddress = ({
   const currentTempLocalityId = watch('temporaryAddress.localGovernmentId');
 
   const districtTempList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentTempProvinceId)
-        ?.districts ?? [],
+    () => data?.administration.all.find((d) => d.id === currentTempProvinceId)?.districts ?? [],
     [currentTempProvinceId]
   );
 
   const localityTempList = useMemo(
-    () =>
-      districtTempList.find((d) => d.id === currentTemptDistrictId)
-        ?.municipalities ?? [],
+    () => districtTempList.find((d) => d.id === currentTemptDistrictId)?.municipalities ?? [],
     [currentTemptDistrictId]
   );
 
   const wardTempList = useMemo(
-    () =>
-      localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
+    () => localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
     [currentTempLocalityId]
   );
 
@@ -105,8 +89,7 @@ export const MemberKYMAddress = ({
 
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.individual?.formState?.data?.formData;
+      const editValueData = editValues?.members?.individual?.formState?.data?.formData;
 
       reset({
         permanentAddress: {
@@ -117,8 +100,7 @@ export const MemberKYMAddress = ({
           ...editValueData?.temporaryAddress?.address,
           locality: editValueData?.temporaryAddress?.address?.locality?.local,
         },
-        sameTempAsPermanentAddress:
-          editValueData?.temporaryAddress?.sameTempAsPermanentAddress,
+        sameTempAsPermanentAddress: editValueData?.temporaryAddress?.sameTempAsPermanentAddress,
         ...editValueData?.rentedHouse,
         landlordName: editValueData?.rentedHouse?.landlordName?.local,
       });
@@ -129,17 +111,17 @@ export const MemberKYMAddress = ({
 
   useEffect(() => {
     const subscription = watch(
-      debounce((data) => {
+      debounce((val) => {
         if (id) {
           mutate({
             id: String(id),
             data: {
-              ...data,
+              ...val,
               permanentAddress: {
-                ...pickBy(data?.permanentAddress ?? {}, (v) => v !== 0),
+                ...pickBy(val?.permanentAddress ?? {}, (v) => v !== 0),
               },
               temporaryAddress: {
-                ...pickBy(data?.temporaryAddress ?? {}, (v) => v !== 0),
+                ...pickBy(val?.temporaryAddress ?? {}, (v) => v !== 0),
               },
             },
           });
@@ -158,11 +140,7 @@ export const MemberKYMAddress = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <FormSection
-          gridLayout={true}
-          id="kymAccIndPermanentAddress"
-          header="kymIndPermanentAddress"
-        >
+        <FormSection gridLayout id="kymAccIndPermanentAddress" header="kymIndPermanentAddress">
           <FormSelect
             name="permanentAddress.provinceId"
             label={t['kymIndProvince']}
@@ -213,11 +191,7 @@ export const MemberKYMAddress = ({
           </GridItem>
         </FormSection>
 
-        <FormSection
-          gridLayout={true}
-          id="kymAccIndTemporaryAddress"
-          header="kymIndTemporaryAddress"
-        >
+        <FormSection gridLayout id="kymAccIndTemporaryAddress" header="kymIndTemporaryAddress">
           <GridItem colSpan={3}>
             <FormSwitch
               name="sameTempAsPermanentAddress"
@@ -310,20 +284,20 @@ export const MemberKYMAddress = ({
         {/* </FormSection> */}
 
         <FormSection
-          gridLayout={true}
+          gridLayout
           header="kymIndINCASERESIDINGINRENTEDHOUSE"
           id="kymAccIndIncaseofresidinginRentedHouse"
         >
           <FormInput
             type="text"
-            name={'landlordName'}
+            name="landlordName"
             label={t['kymIndLandlordName']}
             __placeholder={t['kymIndLandlordName']}
           />
           <FormInput
             control={control}
             type="number"
-            name={'landlordContact'}
+            name="landlordContact"
             label={t['kymIndContactNo']}
             __placeholder={t['kymIndContactNo']}
           />

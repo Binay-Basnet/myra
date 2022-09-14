@@ -1,0 +1,49 @@
+import { DepositFrequency, Frequency } from '@coop/cbs/data-access';
+import { FormInput, FormSwitchTab } from '@coop/shared/form';
+import { FormSection, GridItem } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
+
+export const AllowedTransaction = () => {
+  const { t } = useTranslation();
+
+  const DepositFrequencyOptions = [
+    {
+      label: t['monthly'],
+      value: DepositFrequency?.Monthly,
+    },
+    {
+      label: t['quaterly'],
+      value: DepositFrequency.Quarterly,
+    },
+    {
+      label: t['halfYearly'],
+      value: DepositFrequency.HalfYearly,
+    },
+    {
+      label: t['yearly'],
+      value: DepositFrequency.Yearly,
+    },
+  ];
+
+  return (
+    <FormSection
+      header="depositProductAllowedNumberofTransactions"
+      subHeader="depositProductSelectnumberoftransactionsallowed"
+    >
+      <GridItem colSpan={3}>
+        <FormSwitchTab
+          defaultValue={Frequency.Daily}
+          name="transactionAllowed"
+          options={DepositFrequencyOptions}
+        />
+      </GridItem>
+
+      <FormInput
+        type="number"
+        textAlign="right"
+        name="noOftransactionAllowed"
+        label={t['depositProductAllowedNoofTransactions']}
+      />
+    </FormSection>
+  );
+};

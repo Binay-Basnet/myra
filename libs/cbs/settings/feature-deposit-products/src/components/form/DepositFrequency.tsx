@@ -32,7 +32,7 @@ export const DepositFrequency = () => {
     >
       <FormSwitchTab
         defaultValue={Frequency.Daily}
-        name={'depositFrequency'}
+        name="depositFrequency"
         options={DepositFrequencyOptions}
       />
     </FormSection>

@@ -8,15 +8,10 @@ import {
   useGetIndividualKymOptionsQuery,
   useGetKymFormStatusQuery,
 } from '@coop/cbs/data-access';
-import {
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  FormHeader,
-  Icon,
-  Text,
-} from '@coop/shared/ui';
+import { Box, Button, Container, FormFooter, FormHeader, Icon, Text } from '@coop/shared/ui';
+import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
+import { BiSave } from 'react-icons/bi';
+import { AccorrdianAddMember } from '@coop/myra/components';
 import {
   KYMBasiccoopDetails,
   KYMDeclaration,
@@ -34,11 +29,8 @@ import {
   MemberKYMMainOccupation,
   MemberKYMProfession,
 } from '../components/form';
-import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
-import { BiSave } from 'react-icons/bi';
-import { AccorrdianAddMember } from '@coop/myra/components';
 
-export function KYMIndividualPage() {
+export const KYMIndividualPage = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const id = String(router?.query?.['id']);
@@ -50,13 +42,9 @@ export function KYMIndividualPage() {
     subSection: string;
   }>();
 
-  const kymFormStatusQuery = useGetKymFormStatusQuery(
-    { id },
-    { enabled: id !== 'undefined' }
-  );
+  const kymFormStatusQuery = useGetKymFormStatusQuery({ id }, { enabled: id !== 'undefined' });
   const kymFormStatus =
-    kymFormStatusQuery?.data?.members?.individual?.formState?.data
-      ?.sectionStatus;
+    kymFormStatusQuery?.data?.members?.individual?.formState?.data?.sectionStatus;
 
   const { data: editValues } = useGetIndividualKymEditDataQuery(
     {
@@ -70,8 +58,7 @@ export function KYMIndividualPage() {
   });
 
   const maritialStatus = maritalStatusData?.form?.options?.predefined?.data;
-  const marriedData =
-    editValues?.members?.individual?.formState?.data?.formData?.maritalStatusId;
+  const marriedData = editValues?.members?.individual?.formState?.data?.formData?.maritalStatusId;
 
   useEffect(() => {
     refetch();
@@ -90,10 +77,7 @@ export function KYMIndividualPage() {
 
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.xl" height="fit-content">
-          <FormHeader
-            title={t['membersFormAddNewMembers']}
-            closeLink="/members/list"
-          />
+          <FormHeader title={t['membersFormAddNewMembers']} closeLink="/members/list" />
         </Container>
       </Box>
 
@@ -110,10 +94,7 @@ export function KYMIndividualPage() {
             bg="gray.0"
             zIndex={2}
           >
-            <AccorrdianAddMember
-              formStatus={kymFormStatus}
-              kymCurrentSection={kymCurrentSection}
-            />
+            <AccorrdianAddMember formStatus={kymFormStatus} kymCurrentSection={kymCurrentSection} />
           </Box>
 
           <Box zIndex={1} background="gray.0" ml="320" pb="120px">
@@ -122,49 +103,31 @@ export function KYMIndividualPage() {
                 {t['kymInd1PersonalInformation']}
               </Text>
               <MemberKYMBasicInfo setKymCurrentSection={setKymCurrentSection} />
-              <MemberKYMContactDetails
-                setKymCurrentSection={setKymCurrentSection}
-              />
-              <MemberKYMIdentificationDetails
-                setKymCurrentSection={setKymCurrentSection}
-              />
+              <MemberKYMContactDetails setKymCurrentSection={setKymCurrentSection} />
+              <MemberKYMIdentificationDetails setKymCurrentSection={setKymCurrentSection} />
               <MemberKYMAddress setKymCurrentSection={setKymCurrentSection} />
-              <MemberKYMFamilyDetails
-                setKymCurrentSection={setKymCurrentSection}
-              />
+              <MemberKYMFamilyDetails setKymCurrentSection={setKymCurrentSection} />
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymInd2ProfessionalInformation']}
               </Text>
-              <MemberKYMProfession
-                setKymCurrentSection={setKymCurrentSection}
-              />
-              <MemberKYMMainOccupation
-                setKymCurrentSection={setKymCurrentSection}
-              />
+              <MemberKYMProfession setKymCurrentSection={setKymCurrentSection} />
+              <MemberKYMMainOccupation setKymCurrentSection={setKymCurrentSection} />
               {isMarried && (
-                <MemberKYMHusbandWifeOccupation
-                  setKymCurrentSection={setKymCurrentSection}
-                />
+                <MemberKYMHusbandWifeOccupation setKymCurrentSection={setKymCurrentSection} />
               )}
 
-              <MemberKYMIncomeSourceDetails
-                setKymCurrentSection={setKymCurrentSection}
-              />
+              <MemberKYMIncomeSourceDetails setKymCurrentSection={setKymCurrentSection} />
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymInd3COOPmembership']}
               </Text>
-              <KYMBasiccoopDetails
-                setKymCurrentSection={setKymCurrentSection}
-              />
-              <KYMFinancialTransactionDetails
-                setKymCurrentSection={setKymCurrentSection}
-              />
+              <KYMBasiccoopDetails setKymCurrentSection={setKymCurrentSection} />
+              <KYMFinancialTransactionDetails setKymCurrentSection={setKymCurrentSection} />
               <KYMEstimatedAmount setKymCurrentSection={setKymCurrentSection} />
             </SectionContainer>
 
@@ -173,9 +136,7 @@ export function KYMIndividualPage() {
                 {t['kymInd4Declaration']}
               </Text>
               <KYMDeclaration setKymCurrentSection={setKymCurrentSection} />
-              <KYMDocumentDeclaration
-                setKymCurrentSection={setKymCurrentSection}
-              />
+              <KYMDocumentDeclaration setKymCurrentSection={setKymCurrentSection} />
             </SectionContainer>
 
             <KYMDeclarationAgree />
@@ -217,6 +178,6 @@ export function KYMIndividualPage() {
       </Box>
     </>
   );
-}
+};
 
 export default KYMIndividualPage;

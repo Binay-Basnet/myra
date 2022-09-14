@@ -9808,6 +9808,13 @@ export type GetCoaFullViewQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCoaFullViewQuery = { settings: { chartsOfAccount?: { fullView: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, under?: string | null, accountType: CoaTypesOfAccount, accountClass: string, accountCode: string } | null> | null } } | null } };
 
+export type GetCoaBankListQueryVariables = Exact<{
+  accountCode?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
+}>;
+
+
+export type GetCoaBankListQuery = { settings: { chartsOfAccount?: { accountsUnder?: { data?: Array<{ id: string, accountCode: string, name: Record<"local"|"en"|"np",string> } | null> | null } | null } | null } };
+
 export type GetLoanProductListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<LoanProductSearchFilter>;
@@ -9887,7 +9894,7 @@ export type GetDepositProductSettingsEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, description?: string | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, maxTenure?: boolean | null, maxTenureUnit?: Frequency | null, maxTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: DepositFrequency | null, maxPostingFreqDifference?: number | null, accountType?: string | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: any | null, maxAmount?: any | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, rebateData?: { dayBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, rebateRate?: number | null, rebateLedgerMapping?: string | null } | null, balanceLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type?: string | null, amount?: any | null, rate?: number | null } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, accountCloseCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, chequeCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, atmCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, alternativeChannelCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, withdrawPenalty?: { penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
+export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, description?: string | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, maxTenure?: boolean | null, maxTenureUnit?: Frequency | null, maxTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: DepositFrequency | null, maxPostingFreqDifference?: number | null, accountType?: string | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: any | null, maxAmount?: any | null } | null, withdrawAmountLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, fixedDepositAmountLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, rebateData?: { dayBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, rebateRate?: number | null, rebateLedgerMapping?: string | null } | null, balanceLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type?: string | null, amount?: any | null, rate?: number | null } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, accountCloseCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, chequeCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, atmCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, alternativeChannelCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, withdrawPenalty?: { penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
 
 export type GetSettingsOptionsFieldsQueryVariables = Exact<{
   searchTerm: FormFieldSearchTerm;
@@ -9969,7 +9976,7 @@ export type GetChartOfAccountsQuery = { settings: { general?: { chartsOfAccount?
 export type GetShareBalanceListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetShareBalanceListQuery = { share: { balance?: { edges: Array<{ node: { count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null } } }> } | null } };
+export type GetShareBalanceListQuery = { share: { balance?: { edges: Array<{ node: { count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null } } }> } | null } };
 
 export type GetShareRegisterListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
@@ -9977,7 +9984,7 @@ export type GetShareRegisterListQueryVariables = Exact<{
 }>;
 
 
-export type GetShareRegisterListQuery = { share: { register?: { totalCount: number, edges: Array<{ cursor: string, node: { transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, balance?: number | null, startNumber: number, shareAmount?: number | null, endNumber: number, credit?: number | null, debit?: number | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null } | null } }>, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } } | null } };
+export type GetShareRegisterListQuery = { share: { register?: { totalCount: number, edges: Array<{ cursor: string, node: { transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, balance?: number | null, startNumber: number, shareAmount?: number | null, endNumber: number, credit?: number | null, debit?: number | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null } | null } }>, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } } | null } };
 
 export type GetShareHistoryQueryVariables = Exact<{
   memberId: Scalars['ID'];
@@ -9992,7 +9999,7 @@ export type GetShareChargesQueryVariables = Exact<{
 }>;
 
 
-export type GetShareChargesQuery = { share: { charges?: Array<{ name?: string | null, charge?: string | null } | null> | null } };
+export type GetShareChargesQuery = { share: { charges?: Array<{ id?: string | null, name?: string | null, charge?: string | null } | null> | null } };
 
 export type GetDepositListDataQueryVariables = Exact<{
   filter?: InputMaybe<AccountTransactionFilter>;
@@ -15281,6 +15288,33 @@ export const useGetCoaFullViewQuery = <
       useAxios<GetCoaFullViewQuery, GetCoaFullViewQueryVariables>(GetCoaFullViewDocument).bind(null, variables),
       options
     );
+export const GetCoaBankListDocument = `
+    query getCOABankList($accountCode: [String]) {
+  settings {
+    chartsOfAccount {
+      accountsUnder(accountCode: $accountCode) {
+        data {
+          id
+          accountCode
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoaBankListQuery = <
+      TData = GetCoaBankListQuery,
+      TError = unknown
+    >(
+      variables?: GetCoaBankListQueryVariables,
+      options?: UseQueryOptions<GetCoaBankListQuery, TError, TData>
+    ) =>
+    useQuery<GetCoaBankListQuery, TError, TData>(
+      variables === undefined ? ['getCOABankList'] : ['getCOABankList', variables],
+      useAxios<GetCoaBankListQuery, GetCoaBankListQueryVariables>(GetCoaBankListDocument).bind(null, variables),
+      options
+    );
 export const GetLoanProductListDocument = `
     query getLoanProductList($paginate: Pagination, $filter: LoanProductSearchFilter) {
   settings {
@@ -15935,6 +15969,14 @@ export const GetDepositProductSettingsEditDataDocument = `
               minAmount
               maxAmount
             }
+            withdrawAmountLimit {
+              minAmount
+              maxAmount
+            }
+            fixedDepositAmountLimit {
+              minAmount
+              maxAmount
+            }
             depositFrequency
             penalty
             penaltyData {
@@ -16573,6 +16615,7 @@ export const GetShareBalanceListDocument = `
           member {
             id
             name
+            profilePic
           }
           count
           amount
@@ -16605,6 +16648,7 @@ export const GetShareRegisterListDocument = `
           member {
             id
             name
+            profilePic
           }
           balance
           startNumber
@@ -16695,6 +16739,7 @@ export const GetShareChargesDocument = `
     query getShareCharges($transactionType: SHARE_TRANSACTION_DIRECTION!, $shareCount: Int!) {
   share {
     charges(transactionType: $transactionType, shareCount: $shareCount) {
+      id
       name
       charge
     }

@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-// import {
-//   Share_Transaction_Direction,
-//   useGetShareChargesQuery,
-//   useGetShareHistoryQuery,
-// } from '@coop/cbs/data-access';
+import { Share_Transaction_Direction, useGetShareChargesQuery } from '@coop/cbs/data-access';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormNumberInput } from '@coop/shared/form';
 import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
@@ -19,32 +15,30 @@ const SharePurchaseInfo = () => {
   const noOfShares = watch('shareCount');
   const printingFee = watch('printingFee');
   const adminFee = watch('adminFee');
-  const memberId = watch('memberId');
 
   const [totalAmount, setTotalAmount] = useState(0);
 
-  // const { data: shareHistoryTableData } = useGetShareHistoryQuery(
-  //   {
-  //     memberId,
-  //   },
-  //   {
-  //     staleTime: 0,
-  //   }
-  // );
+  const { data: chargesData, refetch } = useGetShareChargesQuery({
+    transactionType: Share_Transaction_Direction?.Purchase,
+    shareCount: noOfShares,
+  });
 
-  // const balanceData = shareHistoryTableData?.share?.history?.balance;
-
-  // const { data: chargesData, refetch } = useGetShareChargesQuery({
-  //   transactionType: Share_Transaction_Direction?.Purchase,
-  //   shareCount: balanceData?.count as number,
-  // });
-
-  // const chargeList = chargesData?.share?.charges;
+  const chargeList = chargesData?.share?.charges;
 
   useEffect(() => {
-    // refetch();
+    refetch();
     setTotalAmount(noOfShares * 100 + Number(adminFee ?? 0) + Number(printingFee ?? 0));
   }, [noOfShares, adminFee, printingFee]);
+
+  // useEffect(() => {
+  //   chargeList?.map((item) =>
+  //     reset({
+  //       extraFee: {
+  //         id: item.charge,
+  //       },
+  //     })
+  //   );
+  // }, [noOfShares]);
 
   return (
     <Box display="flex" flexDirection="column" pb="s24" background="white" borderTopRadius={5}>
@@ -55,7 +49,7 @@ const SharePurchaseInfo = () => {
 
         <GridItem colSpan={3}>
           {noOfShares ? (
-            <FieldCardComponents rows={'repeat(4,1fr)'}>
+            <FieldCardComponents rows="repeat(4,1fr)">
               <GridItem display="flex" justifyContent="space-between" alignItems="center">
                 <Text color="neutralLightColor.Gray-60" fontWeight="Medium" fontSize="s3">
                   {t['sharePurchaseShareAmount']}
@@ -65,7 +59,7 @@ const SharePurchaseInfo = () => {
                   {amountConverter(noOfShares * 100)}
                 </Text>
               </GridItem>
-              {/* {chargeList?.map((item) => (
+              {chargeList?.map((item) => (
                 <GridItem display="flex" justifyContent="space-between">
                   <Text
                     color="neutralLightColor.Gray-60"
@@ -77,15 +71,12 @@ const SharePurchaseInfo = () => {
                     {item?.name}
                   </Text>
                   <Box width="300px">
-                    <FormNumberInput
-                      name="adminFee"
-                      defaultValue={item?.charge}
-                    />
+                    <FormNumberInput name="extraFee.id" defaultValue={item?.charge} />
                   </Box>
                 </GridItem>
-              ))} */}
+              ))}
 
-              <GridItem display="flex" justifyContent="space-between">
+              {/* <GridItem display="flex" justifyContent="space-between">
                 <Text
                   color="neutralLightColor.Gray-60"
                   fontWeight="Medium"
@@ -107,7 +98,8 @@ const SharePurchaseInfo = () => {
                 <Box width="300px">
                   <FormNumberInput bg="gray.0" name="printingFee" />
                 </Box>
-              </GridItem>
+              </GridItem> */}
+
               <GridItem display="flex" justifyContent="space-between" alignItems="center">
                 <Text color="neutralLightColor.Gray-80" fontWeight="SemiBold" fontSize="s3">
                   {t['sharePurchaseTotalAmount']}

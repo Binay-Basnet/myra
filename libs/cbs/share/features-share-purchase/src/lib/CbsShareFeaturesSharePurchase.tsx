@@ -1,7 +1,5 @@
 import SharePurchaseForm from '../component/form/SharePurchaseForm';
 
-export function CbsShareFeaturesSharePurchase() {
-  return <SharePurchaseForm />;
-}
+export const CbsShareFeaturesSharePurchase = () => <SharePurchaseForm />;
 
 export default CbsShareFeaturesSharePurchase;

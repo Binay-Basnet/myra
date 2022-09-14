@@ -2895,6 +2895,16 @@ const ne: Record<string, string> = {
 
   settingsValuatorViewProfile: 'View Valuator Profile',
   settingsValuatorEdit: 'Edit Valuator',
+  depositProductAllowedNumberofTransactions: 'Allowed Number of Transactions',
+  depositProductSelectnumberoftransactionsallowed: 'Select number of transactions allowed.',
+  depositProductAllowedNoofTransactions: 'Allowed No. of Transactions',
+  depositProductTransactionLimit: 'Transaction Limit',
+  depositProductWithdrawAmountLimit: 'Withdraw Amount Limit',
+  depositProductFixedDepositAmountLimit: 'Fixed Deposit Amount Limit',
+  depositProductTenure: 'Tenure',
+  depositProductDefaultDepositSubHeader:
+    'If the member does not specify particular account for deposit, this mapped account will be set globally. Normally this is a compulsory account type.',
+  shareConfirmPayment: 'Confirm Payment',
 };
 
 export default ne;

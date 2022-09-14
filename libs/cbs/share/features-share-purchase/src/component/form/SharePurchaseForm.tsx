@@ -102,7 +102,7 @@ const SharePurchaseForm = () => {
 
   const handleSubmit = () => {
     const values = getValues();
-
+    // console.log('values', values);
     let updatedValues: SharePurchaseInput = {
       ...omit(values, ['printingFee', 'adminFee', 'amount', 'accountAmount', 'accountId']),
       extraFee: [
@@ -143,7 +143,10 @@ const SharePurchaseForm = () => {
       updatedValues = omit({ ...updatedValues }, ['account', 'cash']);
       updatedValues['bankVoucher'] = {
         ...values['bankVoucher'],
-        citizenshipDocument: values['bankVoucher']?.citizenshipDocument[0] ?? null,
+        citizenshipDocument:
+          values['cash']?.citizenshipDocument?.length > 0
+            ? values['bankVoucher']?.citizenshipDocument[0]
+            : null,
         fileUpload:
           values['bankVoucher']?.fileUpload?.length > 0
             ? values['bankVoucher']?.fileUpload[0]

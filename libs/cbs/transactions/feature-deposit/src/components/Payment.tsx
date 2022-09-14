@@ -1,10 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import {
-  DepositedBy,
-  DepositPaymentType,
-  useGetBankListQuery,
-} from '@coop/cbs/data-access';
+import { DepositedBy, DepositPaymentType, useGetBankListQuery } from '@coop/cbs/data-access';
 import { AgentSelect } from '@coop/cbs/transactions/ui-components';
 import {
   BoxContainer,
@@ -99,7 +95,7 @@ type PaymentTableType = {
   amount: string;
 };
 
-export function Payment({ mode, totalDeposit }: PaymentProps) {
+export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
   const { watch } = useFormContext();
 
   const selectedPaymentMode = watch('payment_type');
@@ -112,8 +108,7 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
 
   const denominationTotal =
     denominations?.reduce(
-      (accumulator: number, curr: { amount: string }) =>
-        accumulator + Number(curr.amount),
+      (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
       0 as number
     ) ?? 0;
 
@@ -134,19 +129,14 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
       pb="100px"
     >
       <BoxContainer>
-        <FormSwitchTab
-          label={'Payment Mode'}
-          options={paymentModes}
-          name="payment_type"
-        />
+        <FormSwitchTab label="Payment Mode" options={paymentModes} name="payment_type" />
 
         {selectedPaymentMode === DepositPaymentType.BankVoucher && (
           <InputGroupContainer>
             <GridItem colSpan={2}>
               <FormSelect
                 name="bankVoucher.bankId"
-                label={'Bank Name'}
-                __placeholder={'Bank Name'}
+                label="Bank Name"
                 options={
                   bankList?.bank?.bank?.list?.map((bank) => ({
                     label: bank?.name as string,
@@ -156,32 +146,13 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
               />
             </GridItem>
 
-            <FormInput
-              name="bankVoucher.voucherId"
-              label="Voucher ID"
-              __placeholder="Voucher ID"
-            />
+            <FormInput name="bankVoucher.voucherId" label="Voucher ID" __placeholder="Voucher ID" />
 
-            <FormInput
-              name="bankVoucher.amount"
-              type="number"
-              label={'Amount'}
-              textAlign={'right'}
-              __placeholder="0.00"
-            />
+            <FormInput name="bankVoucher.amount" type="number" label="Amount" textAlign="right" />
 
-            <FormInput
-              type="date"
-              name="bankVoucher.depositedAt"
-              label="Deposited Date"
-            />
+            <FormInput type="date" name="bankVoucher.depositedAt" label="Deposited Date" />
 
-            <FormInput
-              type="text"
-              name="bankVoucher.depositedBy"
-              __placeholder="Deposited By"
-              label="Deposited By"
-            />
+            <FormInput type="text" name="bankVoucher.depositedBy" label="Deposited By" />
           </InputGroupContainer>
         )}
 
@@ -190,8 +161,7 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
             <GridItem colSpan={2}>
               <FormSelect
                 name="cheque.bankId"
-                label={'Bank Name'}
-                __placeholder={'Bank Name'}
+                label="Bank Name"
                 options={
                   bankList?.bank?.bank?.list?.map((bank) => ({
                     label: bank?.name as string,
@@ -201,49 +171,25 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
               />
             </GridItem>
 
-            <FormInput
-              name="cheque.chequeNo"
-              label="Cheque No"
-              __placeholder="Cheque No"
-            />
+            <FormInput name="cheque.chequeNo" label="Cheque No" __placeholder="Cheque No" />
 
-            <FormInput
-              name="cheque.amount"
-              type="number"
-              label={'Amount'}
-              textAlign={'right'}
-              __placeholder="0.00"
-            />
+            <FormInput name="cheque.amount" type="number" label="Amount" textAlign="right" />
 
-            <FormInput
-              type="date"
-              name="cheque.depositedAt"
-              label="Deposited Date"
-            />
+            <FormInput type="date" name="cheque.depositedAt" label="Deposited Date" />
 
-            <FormInput
-              type="text"
-              name="cheque.depositedBy"
-              label="Deposited By"
-            />
+            <FormInput type="text" name="cheque.depositedBy" label="Deposited By" />
           </InputGroupContainer>
         )}
 
         {selectedPaymentMode === DepositPaymentType.Cash && (
           <>
             <InputGroupContainer>
-              <FormInput
-                name="cash.cashPaid"
-                type="number"
-                label={'Cash'}
-                textAlign={'right'}
-                __placeholder="0.00"
-              />
+              <FormInput name="cash.cashPaid" type="number" label="Cash" textAlign="right" />
             </InputGroupContainer>
 
             <FormSwitch
               name="cash.disableDenomination"
-              label={'Disable Denomination'}
+              label="Disable Denomination"
               defaultChecked={false}
             />
 
@@ -268,9 +214,7 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
                     header: 'Amount',
                     isNumeric: true,
                     accessorFn: (row) =>
-                      row.quantity
-                        ? Number(row.value) * Number(row.quantity)
-                        : '0',
+                      row.quantity ? Number(row.value) * Number(row.quantity) : '0',
                   },
                 ]}
                 defaultData={[
@@ -301,52 +245,28 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
               borderRadius="br2"
             >
               <Box display="flex" justifyContent="space-between">
-                <Text
-                  fontSize="r1"
-                  fontWeight={400}
-                  color="neutralColorLight.Gray-60"
-                >
+                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   Total
                 </Text>
-                <Text
-                  fontSize="r1"
-                  fontWeight={400}
-                  color="neutralColorLight.Gray-60"
-                >
+                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   {totalCashPaid}
                 </Text>
               </Box>
 
               <Box display="flex" justifyContent="space-between">
-                <Text
-                  fontSize="r1"
-                  fontWeight={400}
-                  color="neutralColorLight.Gray-60"
-                >
+                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   Return
                 </Text>
-                <Text
-                  fontSize="r1"
-                  fontWeight={400}
-                  color="neutralColorLight.Gray-60"
-                >
+                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   {returnAmount}
                 </Text>
               </Box>
 
               <Box display="flex" justifyContent="space-between">
-                <Text
-                  fontSize="r1"
-                  fontWeight={400}
-                  color="neutralColorLight.Gray-60"
-                >
+                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   Grand Total
                 </Text>
-                <Text
-                  fontSize="r1"
-                  fontWeight={400}
-                  color="neutralColorLight.Gray-60"
-                >
+                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   {totalCashPaid - returnAmount}
                 </Text>
               </Box>
@@ -360,54 +280,33 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
           <FormSelect
             name="sourceOfFund"
             label="Source of Fund"
-            __placeholder="Select Source of Fund"
             options={sourceOfFundsList.map((source) => ({
               label: source,
               value: source,
             }))}
           />
 
-          <FormFileInput
-            size={'md'}
-            label={'File Upload (Optional)'}
-            name={'doc_identifiers'}
-          />
+          <FormFileInput size="md" label="File Upload (Optional)" name="doc_identifiers" />
         </Grid>
       </BoxContainer>
 
       <BoxContainer>
-        <FormSwitchTab
-          label={'Deposited By'}
-          options={depositors}
-          name="depositedBy"
-        />
+        <FormSwitchTab label="Deposited By" options={depositors} name="depositedBy" />
 
         {depositedBy === DepositedBy.Agent && (
           <InputGroupContainer>
-            <AgentSelect
-              name="agentId"
-              label="Agent"
-              __placeholder="Select Agent"
-            />
+            <AgentSelect name="agentId" label="Agent" __placeholder="Select Agent" />
           </InputGroupContainer>
         )}
 
         {depositedBy === DepositedBy.Other && (
           <>
             <InputGroupContainer>
-              <FormInput
-                name="other_name"
-                label="Name"
-                __placeholder="Enter Name"
-              />
+              <FormInput name="other_name" label="Name" __placeholder="Enter Name" />
             </InputGroupContainer>
 
             <Box width="50%">
-              <FormFileInput
-                name="other_doc_identifiers"
-                label="Citizenship Document"
-                size="md"
-              />
+              <FormFileInput name="other_doc_identifiers" label="Citizenship Document" size="md" />
             </Box>
           </>
         )}
@@ -418,6 +317,6 @@ export function Payment({ mode, totalDeposit }: PaymentProps) {
       </BoxContainer>
     </ContainerWithDivider>
   );
-}
+};
 
 export default Payment;

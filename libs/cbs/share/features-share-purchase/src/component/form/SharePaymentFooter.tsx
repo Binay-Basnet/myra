@@ -8,10 +8,7 @@ type FooterProps = {
   handleSubmit: () => void;
 };
 
-const SharePaymentFooter = ({
-  previousButtonHandler,
-  handleSubmit,
-}: FooterProps) => {
+const SharePaymentFooter = ({ previousButtonHandler, handleSubmit }: FooterProps) => {
   const { t } = useTranslation();
 
   return (
@@ -25,7 +22,7 @@ const SharePaymentFooter = ({
           {t['previous']}
         </Button>
       }
-      mainButtonLabel={t['proceedToPayment']}
+      mainButtonLabel={t['shareConfirmPayment']}
       mainButtonHandler={handleSubmit}
     />
   );

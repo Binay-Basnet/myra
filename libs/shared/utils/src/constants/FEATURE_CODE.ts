@@ -34,4 +34,6 @@ export const featureCode = {
   favoriteReports: '10602',
   shareRegister: '10603',
   shareTransactionReport: '10604',
+
+  accountCode: ['90.1', '90.2'],
 };

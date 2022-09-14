@@ -19,9 +19,7 @@ query getCOAList($filter: ChartsOfAccountFilter!) {
   }
 }
 
-
-
-query getCoaFullView{
+query getCoaFullView {
   settings {
     chartsOfAccount {
       fullView {
@@ -32,6 +30,20 @@ query getCoaFullView{
           accountType
           accountClass
           accountCode
+        }
+      }
+    }
+  }
+}
+
+query getCOABankList($accountCode: [String]) {
+  settings {
+    chartsOfAccount {
+      accountsUnder(accountCode: $accountCode) {
+        data {
+          id
+          accountCode
+          name
         }
       }
     }

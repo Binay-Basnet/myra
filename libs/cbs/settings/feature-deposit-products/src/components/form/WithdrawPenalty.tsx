@@ -14,29 +14,28 @@ export const WithdrawPenalty = () => {
 
   const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
 
-  const coaList = coaData?.map((item) => {
-    return {
-      label: item?.name?.en as string,
-      value: item?.id as string,
-    };
-  });
+  const coaList = coaData?.map((item) => ({
+    label: item?.name?.en as string,
+    value: item?.id as string,
+  }));
 
   return (
     <FormSection header="depositProductWithdrawPenaltySetup">
       <FormInput
+        type="number"
         name="withdrawPenalty.penaltyAmount"
         label={t['depositProductPenaltyAmount']}
       />
       <FormInput
         name="withdrawPenalty.penaltyRate"
         label={t['depositProductPenaltyRate']}
-        textAlign={'right'}
+        textAlign="right"
         rightElement={
           <Text fontWeight="Medium" fontSize="r1" color="primary.500">
             %
           </Text>
         }
-        type={'number'}
+        type="number"
       />
       <FormSelect
         name="withdrawPenalty.penaltyLedgerMapping"

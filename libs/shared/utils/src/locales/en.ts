@@ -2504,8 +2504,6 @@ const en: Record<string, string> = {
   depositProductDairy: 'Dairy',
   depositProductOthers: 'Others',
   depositProductDepositAmountLimit: 'Deposit Amount Limit',
-  depositProductEnterMinimumAmount: 'Enter Minimum Amount',
-  depositProductEnterMaximumAmount: 'Enter Maximum Amount',
   depositProductDepositFrequency: 'Deposit Frequency',
   depositProductSelectdepositfrequency:
     'Select deposit frequency. Further details have to be added during account opening. ',
@@ -3262,5 +3260,15 @@ const en: Record<string, string> = {
   // share settings
 
   shareSettingsFeesLedgerMapping: 'Ledger Mapping',
+  depositProductAllowedNumberofTransactions: 'Allowed Number of Transactions',
+  depositProductSelectnumberoftransactionsallowed: 'Select number of transactions allowed.',
+  depositProductAllowedNoofTransactions: 'Allowed No. of Transactions',
+  depositProductTransactionLimit: 'Transaction Limit',
+  depositProductWithdrawAmountLimit: 'Withdraw Amount Limit',
+  depositProductFixedDepositAmountLimit: 'Fixed Deposit Amount Limit',
+  depositProductTenure: 'Tenure',
+  depositProductDefaultDepositSubHeader:
+    'If the member does not specify particular account for deposit, this mapped account will be set globally. Normally this is a compulsory account type.',
+  shareConfirmPayment: 'Confirm Payment',
 };
 export default en;
