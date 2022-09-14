@@ -1,10 +1,5 @@
 import { ReactElement, useState } from 'react';
-import {
-  DragDropContext,
-  Draggable,
-  Droppable,
-  DropResult,
-} from 'react-beautiful-dnd';
+import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import {
   AiFillInfoCircle,
   AiOutlineBarcode,
@@ -23,15 +18,7 @@ import { Flex, HStack, Img, Spacer } from '@chakra-ui/react';
 
 import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { HomePageLayout } from '@coop/myra/components';
-import {
-  Box,
-  Button,
-  ChakraModal,
-  Grid,
-  GridItem,
-  QuickLinks,
-  Text,
-} from '@coop/shared/ui';
+import { Box, Button, ChakraModal, Grid, GridItem, QuickLinks, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });
@@ -124,12 +111,7 @@ const Dashboard = () => {
     <Box height="fit-content" p="0" pb="55px">
       <Box display="flex" flexDir="column" gap="s8">
         <Box display="flex" justifyContent="space-between">
-          <Text
-            fontSize="s3"
-            color="gray.600"
-            fontWeight="SemiBold"
-            textTransform="uppercase"
-          >
+          <Text fontSize="s3" color="gray.600" fontWeight="SemiBold" textTransform="uppercase">
             {t.quickLinks}
           </Text>
           <Button
@@ -145,8 +127,8 @@ const Dashboard = () => {
         </Box>
 
         <Grid templateColumns="repeat(3,1fr)" columnGap="s16" rowGap="s8">
-          {quickLinksList?.map((item, index) => (
-            <GridItem key={index}>
+          {quickLinksList?.map((item) => (
+            <GridItem key={item?.text}>
               <QuickLinks
                 icon={item.icon}
                 text={item.text}
@@ -165,7 +147,7 @@ const Dashboard = () => {
         title="editQuickLink"
         primaryButtonLabel="save"
         secondaryButtonLabel="cancel"
-        size="5xl"
+        width="container.lg"
       >
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="characters">
@@ -179,16 +161,12 @@ const Dashboard = () => {
                 ref={provided.innerRef}
               >
                 {characters?.map((item, index) => (
-                  <Draggable
-                    key={item?.id}
-                    draggableId={item?.id}
-                    index={index}
-                  >
-                    {(provided) => (
+                  <Draggable key={item?.id} draggableId={item?.id} index={index}>
+                    {(provide) => (
                       <Box
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
+                        ref={provide.innerRef}
+                        {...provide.draggableProps}
+                        {...provide.dragHandleProps}
                       >
                         <QuickLinks
                           // key={index}
@@ -214,12 +192,7 @@ const Dashboard = () => {
         <Box>
           <Flex>
             <Box>
-              <Text
-                fontSize="s3"
-                color="gray.600"
-                fontWeight="600"
-                textTransform="uppercase"
-              >
+              <Text fontSize="s3" color="gray.600" fontWeight="600" textTransform="uppercase">
                 {t.today}
               </Text>
             </Box>
@@ -242,10 +215,7 @@ const Dashboard = () => {
                       </Text>
                     </Box>
                     <Box>
-                      <Img
-                        src="/dashboardmain/1.greenuparrow.svg"
-                        alt="up arrow"
-                      />
+                      <Img src="/dashboardmain/1.greenuparrow.svg" alt="up arrow" />
                     </Box>
                   </HStack>
                 </Box>
@@ -285,10 +255,7 @@ const Dashboard = () => {
                       </Text>
                     </Box>
                     <Box>
-                      <Img
-                        src="/dashboardmain/3.reduparrow.svg"
-                        alt="down arrow"
-                      />
+                      <Img src="/dashboardmain/3.reduparrow.svg" alt="down arrow" />
                     </Box>
                   </HStack>
                 </Box>
@@ -331,10 +298,7 @@ const Dashboard = () => {
                       </Text>
                     </Box>
                     <Box>
-                      <Img
-                        src="/dashboardmain/1.greenuparrow.svg"
-                        alt="up arrow"
-                      />
+                      <Img src="/dashboardmain/1.greenuparrow.svg" alt="up arrow" />
                     </Box>
                   </HStack>
                 </Box>
@@ -377,10 +341,7 @@ const Dashboard = () => {
                       </Text>
                     </Box>
                     <Box>
-                      <Img
-                        src="/dashboardmain/1.greenuparrow.svg"
-                        alt="up arrow"
-                      />
+                      <Img src="/dashboardmain/1.greenuparrow.svg" alt="up arrow" />
                     </Box>
                   </HStack>
                 </Box>
@@ -437,21 +398,11 @@ const Dashboard = () => {
           </Flex>
         </Box>
         <Box mt="85px" mb="104px" ml="33.78px" maxW="418.22px">
-          <Text
-            fontFamily="Mukta"
-            fontSize="36px"
-            fontWeight="500"
-            color="#FD7A3D"
-          >
+          <Text fontFamily="Mukta" fontSize="36px" fontWeight="500" color="#FD7A3D">
             आफ्नो सदस्यहरु सहज रूपले व्यवस्थापन गर्नुहोस्
           </Text>
           <Box mt="6px">
-            <Text
-              fontFamily="Mukta"
-              fontSize="20px"
-              fontWeight="500"
-              color="#FFFFFF"
-            >
+            <Text fontFamily="Mukta" fontSize="20px" fontWeight="500" color="#FFFFFF">
               Customer Relationship Management Software
             </Text>
           </Box>
