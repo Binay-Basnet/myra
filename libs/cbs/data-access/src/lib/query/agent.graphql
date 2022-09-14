@@ -1,7 +1,4 @@
-query getAgentListData(
-  $filter: AccountTransactionFilter
-  $pagination: Pagination
-) {
+query getAgentListData($filter: AccountTransactionFilter, $pagination: Pagination) {
   transaction {
     listAgent(filter: $filter, pagination: $pagination) {
       totalCount
@@ -11,6 +8,7 @@ query getAgentListData(
           agentName
           phoneNo
           assignedMember
+          profilePicUrl
         }
         cursor
       }
@@ -32,15 +30,13 @@ query getAgentDetailData($id: ID!) {
         name
         branch
         totalMembers
+        profilePicUrl
       }
     }
   }
 }
 
-query getAgentAssignedMemberListData(
-  $filter: AssignedMemberListFiler
-  $pagination: Pagination
-) {
+query getAgentAssignedMemberListData($filter: AssignedMemberListFiler, $pagination: Pagination) {
   transaction {
     assignedMemberList(filter: $filter, pagination: $pagination) {
       totalCount

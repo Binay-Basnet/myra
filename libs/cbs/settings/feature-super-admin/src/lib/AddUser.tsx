@@ -12,10 +12,7 @@ import {
   UserGender,
   useSetSettingsUserDataMutation,
 } from '@coop/cbs/data-access';
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/settings/ui-containers';
+import { GroupContainer, InputGroupContainer } from '@coop/cbs/settings/ui-containers';
 import {
   FormCheckboxGroup,
   FormEmailInput,
@@ -74,7 +71,7 @@ type UserFormInput = MyraUserInput & {
   nationalId?: MyraUserIdentificationInput;
 };
 
-export function AddUser() {
+export const AddUser = () => {
   const router = useRouter();
 
   const id = router?.query?.['id'];
@@ -89,19 +86,17 @@ export function AddUser() {
 
   const identificationValues = watch('identificationSelection');
 
-  const isPermanentAndTemporaryAddressSame = watch(
-    'isTempAsPermanentAddressSame'
-  );
+  const isPermanentAndTemporaryAddressSame = watch('isTempAsPermanentAddressSame');
   const { data } = useAllAdministrationQuery();
 
-  const province = useMemo(() => {
-    return (
+  const province = useMemo(
+    () =>
       data?.administration?.all?.map((d) => ({
         label: d.name,
         value: d.id,
-      })) ?? []
-    );
-  }, [data?.administration?.all]);
+      })) ?? [],
+    [data?.administration?.all]
+  );
 
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch('permanentAddress.provinceId');
@@ -109,16 +104,12 @@ export function AddUser() {
   const currentLocalityId = watch('permanentAddress.localGovernmentId');
 
   const districtList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
-        ?.districts ?? [],
+    () => data?.administration.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
     [currentProvinceId]
   );
 
   const localityList = useMemo(
-    () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+    () => districtList.find((d) => d.id === currentDistrictId)?.municipalities ?? [],
     [currentDistrictId]
   );
 
@@ -132,22 +123,17 @@ export function AddUser() {
   const currentTempLocalityId = watch('temporaryAddress.localGovernmentId');
 
   const districtTempList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentTempProvinceId)
-        ?.districts ?? [],
+    () => data?.administration.all.find((d) => d.id === currentTempProvinceId)?.districts ?? [],
     [currentTempProvinceId]
   );
 
   const localityTempList = useMemo(
-    () =>
-      districtTempList.find((d) => d.id === currentTemptDistrictId)
-        ?.municipalities ?? [],
+    () => districtTempList.find((d) => d.id === currentTemptDistrictId)?.municipalities ?? [],
     [currentTemptDistrictId]
   );
 
   const wardTempList = useMemo(
-    () =>
-      localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
+    () => localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
     [currentTempLocalityId]
   );
 
@@ -218,15 +204,14 @@ export function AddUser() {
     });
   };
 
-  const { data: userQueryData, refetch: refetchUserData } =
-    useGetSettingsUserEditDataQuery(
-      {
-        id: id as string,
-      },
-      {
-        enabled: !!id,
-      }
-    );
+  const { data: userQueryData, refetch: refetchUserData } = useGetSettingsUserEditDataQuery(
+    {
+      id: id as string,
+    },
+    {
+      enabled: !!id,
+    }
+  );
 
   useEffect(() => {
     const userData = userQueryData?.settings?.myraUser?.formState?.data;
@@ -236,16 +221,11 @@ export function AddUser() {
         'permanentAddress',
         'temporaryAddress',
         'identificationDetails',
-        'profilePicture',
       ]) as MyraUserInput;
 
       userData?.identificationDetails?.forEach((identification) => {
         if (identification?.idType) {
-          formData[identification?.idType] = omit(
-            identification,
-            'idType',
-            'id'
-          );
+          formData[identification?.idType] = omit(identification, 'idType', 'id');
         }
       });
 
@@ -272,29 +252,15 @@ export function AddUser() {
   return (
     <>
       <Container minW="container.xl" height="fit-content">
-        <Box
-          position="sticky"
-          top="110px"
-          bg="gray.100"
-          width="100%"
-          zIndex="10"
-        >
-          <FormHeader
-            title={'Add User'}
-            closeLink="/settings/users/super-admin"
-          />
+        <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+          <FormHeader title="Add User" closeLink="/settings/users/super-admin" />
         </Box>
 
         <Box bg="white" pb="120px">
           <FormProvider {...methods}>
             <form>
-              <FormSection header={'settingsUserAddUserBasicInformation'}>
-                <FormInput
-                  type="text"
-                  name="name"
-                  label="Name"
-                  __placeholder="Enter Name"
-                />
+              <FormSection header="settingsUserAddUserBasicInformation">
+                <FormInput type="text" name="name" label="Name" __placeholder="Enter Name" />
 
                 <FormSelect
                   name="gender"
@@ -305,17 +271,11 @@ export function AddUser() {
 
                 <FormInput type="date" name="dob" label="Date of Birth (BS)" />
 
-                <FormPhoneNumber
-                  name="contactNo"
-                  label="Mobile No"
-                  __placeholder="Mobile No"
-                />
+                {/* <FormDatePicker name="dob" label="Date of Birth" /> */}
 
-                <FormEmailInput
-                  name="email"
-                  label="Email"
-                  __placeholder="Email"
-                />
+                <FormPhoneNumber name="contactNo" label="Mobile No" __placeholder="Mobile No" />
+
+                <FormEmailInput name="email" label="Email" __placeholder="Email" />
 
                 <FormSelect
                   name="role"
@@ -332,20 +292,16 @@ export function AddUser() {
                 />
               </FormSection>
 
-              <Box borderBottom={'1px solid'} borderBottomColor="border.layout">
+              <Box borderBottom="1px solid" borderBottomColor="border.layout">
                 <GroupContainer>
-                  <Text
-                    fontSize="r1"
-                    fontWeight="semibold"
-                    color="neutralColorLight.Gray-80"
-                  >
+                  <Text fontSize="r1" fontWeight="semibold" color="neutralColorLight.Gray-80">
                     {t['kymIndIDENTIFICATIONDETAILS']}
                   </Text>
                   <Text fontSize="r1" fontWeight="medium">
                     {t['kymIndChooseidentificationdetails']}
                   </Text>
                   <FormCheckboxGroup
-                    name={'identificationSelection'}
+                    name="identificationSelection"
                     showOther={false}
                     list={identificationOptions}
                   />
@@ -354,11 +310,7 @@ export function AddUser() {
                 <GroupContainer>
                   {identificationValues?.includes('citizenship') && (
                     <Box display="flex" flexDirection="column" gap="s16">
-                      <Text
-                        fontSize="r1"
-                        fontWeight="medium"
-                        color="neutralColorLight.Gray-70"
-                      >
+                      <Text fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
                         {t['kynIndCitizenship']}
                       </Text>
 
@@ -389,11 +341,7 @@ export function AddUser() {
 
                   {identificationValues?.includes('drivingLicense') && (
                     <Box display="flex" flexDirection="column" gap="s16">
-                      <Text
-                        fontSize="r1"
-                        fontWeight="medium"
-                        color="neutralColorLight.Gray-70"
-                      >
+                      <Text fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
                         {t['kymIndDrivingLicense']}
                       </Text>
 
@@ -424,11 +372,7 @@ export function AddUser() {
 
                   {identificationValues?.includes('passport') && (
                     <Box display="flex" flexDirection="column" gap="s16">
-                      <Text
-                        fontSize="r1"
-                        fontWeight="medium"
-                        color="neutralColorLight.Gray-70"
-                      >
+                      <Text fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
                         {t['kymIndPassport']}
                       </Text>
 
@@ -459,11 +403,7 @@ export function AddUser() {
 
                   {identificationValues?.includes('voterCard') && (
                     <Box display="flex" flexDirection="column" gap="s16">
-                      <Text
-                        fontSize="r1"
-                        fontWeight="medium"
-                        color="neutralColorLight.Gray-70"
-                      >
+                      <Text fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
                         {t['kymIndVoterCard']}
                       </Text>
 
@@ -487,11 +427,7 @@ export function AddUser() {
 
                   {identificationValues?.includes('nationalId') && (
                     <Box display="flex" flexDirection="column" gap="s16">
-                      <Text
-                        fontSize="r1"
-                        fontWeight="medium"
-                        color="neutralColorLight.Gray-70"
-                      >
+                      <Text fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
                         {t['kymIndNationalID']}
                       </Text>
 
@@ -508,10 +444,7 @@ export function AddUser() {
                 </GroupContainer>
               </Box>
 
-              <FormSection
-                id="kymAccIndPermanentAddress"
-                header="kymIndPermanentAddress"
-              >
+              <FormSection id="kymAccIndPermanentAddress" header="kymIndPermanentAddress">
                 <FormSelect
                   name="permanentAddress.provinceId"
                   label={t['kymIndProvince']}
@@ -566,22 +499,12 @@ export function AddUser() {
               <Box
                 id="kymAccIndTemporaryAddress"
                 gap="s16"
-                display={'flex'}
+                display="flex"
                 flexDirection="column"
-                scrollMarginTop={'200px'}
+                scrollMarginTop="200px"
               >
-                <Box
-                  p="s20"
-                  pb="0"
-                  display="flex"
-                  flexDirection="column"
-                  gap="s16"
-                >
-                  <Text
-                    fontSize="r1"
-                    fontWeight="semibold"
-                    color="neutralColorLight.Gray-80"
-                  >
+                <Box p="s20" pb="0" display="flex" flexDirection="column" gap="s16">
+                  <Text fontSize="r1" fontWeight="semibold" color="neutralColorLight.Gray-80">
                     {t['kymIndTemporaryAddress']}
                   </Text>
                   <FormSwitch
@@ -591,17 +514,8 @@ export function AddUser() {
                 </Box>
 
                 {!isPermanentAndTemporaryAddressSame && (
-                  <Box
-                    borderBottom={'1px solid'}
-                    borderBottomColor="border.layout"
-                    p="s20"
-                    pt="0"
-                  >
-                    <Grid
-                      templateColumns={'repeat(3,1fr)'}
-                      gap="s20"
-                      rowGap={'s16'}
-                    >
+                  <Box borderBottom="1px solid" borderBottomColor="border.layout" p="s20" pt="0">
+                    <Grid templateColumns="repeat(3,1fr)" gap="s20" rowGap="s16">
                       <FormSelect
                         name="temporaryAddress.provinceId"
                         label={t['kymIndProvince']}
@@ -662,24 +576,20 @@ export function AddUser() {
               >
                 <FormInput
                   type="text"
-                  name={'landlordName'}
+                  name="landlordName"
                   label={t['kymIndLandlordName']}
                   __placeholder={t['kymIndLandlordName']}
                 />
                 <FormInput
                   type="number"
-                  name={'landlordContact'}
+                  name="landlordContact"
                   label={t['kymIndContactNo']}
                   __placeholder={t['kymIndContactNo']}
                 />
               </FormSection>
 
               <GroupContainer>
-                <FormFileInput
-                  size={'lg'}
-                  label={'Profile Picture'}
-                  name={'profilePicture'}
-                />
+                <FormFileInput size="lg" label="Profile Picture" name="profilePicture" />
               </GroupContainer>
             </form>
           </FormProvider>
@@ -689,7 +599,7 @@ export function AddUser() {
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.xl" height="fit-content">
             <FormFooter
-              mainButtonLabel={'Send Invitation'}
+              mainButtonLabel="Send Invitation"
               mainButtonHandler={handleSendInvitation}
             />
           </Container>
@@ -697,6 +607,6 @@ export function AddUser() {
       </Box>
     </>
   );
-}
+};
 
 export default AddUser;

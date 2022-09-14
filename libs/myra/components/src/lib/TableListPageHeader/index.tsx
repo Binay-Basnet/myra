@@ -12,7 +12,6 @@ interface ITableListPageHeader {
 }
 
 export const TableListPageHeader = ({ tabItems, heading }: ITableListPageHeader) => {
-  const { t } = useTranslation();
   return (
     <Box
       h="50px"

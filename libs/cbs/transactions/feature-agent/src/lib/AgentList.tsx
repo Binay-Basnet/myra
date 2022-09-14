@@ -64,7 +64,15 @@ export const AgentList = () => {
         header: 'Agent Name',
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
+<<<<<<< HEAD
             <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
+=======
+            <Avatar
+              name={props?.getValue() as string}
+              size="sm"
+              src={props?.row?.original?.node?.profilePicUrl ?? ''}
+            />
+>>>>>>> eb9ddbc1a6145d2afcf32614990d87c3dba9113f
             <Text
               fontSize="s3"
               textTransform="capitalize"

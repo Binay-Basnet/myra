@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { Box, chakra, Tab, Tabs, Text } from '@chakra-ui/react';
 
 import { useGetAgentDetailDataQuery } from '@coop/cbs/data-access';
-import { Divider, Icon, toast } from '@coop/shared/ui';
+import { Avatar, Divider, Icon, toast } from '@coop/shared/ui';
 
 const TabCol = chakra(Tab, {
   baseStyle: {
@@ -44,9 +44,7 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
       tablinks.findIndex((link) => {
         const linkArray = link.to.split('/');
 
-        return (
-          pathArray[pathArray.length - 1] === linkArray[linkArray.length - 1]
-        );
+        return pathArray[pathArray.length - 1] === linkArray[linkArray.length - 1];
       }),
     [router.pathname]
   );
@@ -76,18 +74,11 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
     <Box display="flex" flexDirection="column" gap="s16">
       <Box display="flex" flexDirection="column" p="s16" gap="s16">
         <Box display="flex" gap="s16">
-          {/* <Avatar
-            name={'Rani Dhakal'}
+          <Avatar
+            name={agentDetailQueryData?.transaction?.agentDetail?.data?.name ?? 'Agent'}
             size="lg"
-            src={'memberDetails.avatar'}
-            // onClick={() =>
-            //   handleModalOpen(
-            //     memberDetails.avatar,
-            //     memberDetails.name ?? 'Member'
-            //   )
-            // }
-            cursor="pointer"
-          /> */}
+            src={agentDetailQueryData?.transaction?.agentDetail?.data?.profilePicUrl ?? ''}
+          />
 
           <Box display="flex" flexDirection="column" gap="s4">
             <Text fontSize="r1" fontWeight="500" color="primary.500">
@@ -97,7 +88,7 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
               {agentDetailQueryData?.transaction?.agentDetail?.data?.branch}
             </Text>
             <Box display="flex" alignItems="center" gap="s10">
-              <Text fontSize="s3" fontWeight="400" color="gray.800">
+              <Text fontSize="s3" fontWeight="400" color="gray.800" wordBreak="break-all">
                 {agentDetailQueryData?.transaction?.agentDetail?.data?.id}
               </Text>
               {agentDetailQueryData?.transaction?.agentDetail?.data?.id && (
@@ -106,9 +97,7 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
                   size="sm"
                   as={IoCopyOutline}
                   onClick={() =>
-                    handleCopyAgentId(
-                      agentDetailQueryData?.transaction?.agentDetail?.data?.id
-                    )
+                    handleCopyAgentId(agentDetailQueryData?.transaction?.agentDetail?.data?.id)
                   }
                 />
               )}
@@ -120,15 +109,13 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
       <Divider />
 
       <Tabs p="s16" variant="unstyled" index={currentIndex}>
-        {tablinks.map(({ title, to }, index) => {
-          return (
-            <Link href={to} key={`${title}${index}`}>
-              <TabCol>
-                <Text>{title}</Text>
-              </TabCol>
-            </Link>
-          );
-        })}
+        {tablinks.map(({ title, to }) => (
+          <Link href={to} key={`${title}${to}`}>
+            <TabCol>
+              <Text>{title}</Text>
+            </TabCol>
+          </Link>
+        ))}
       </Tabs>
     </Box>
   );

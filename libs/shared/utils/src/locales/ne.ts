@@ -2892,6 +2892,9 @@ const ne: Record<string, string> = {
   // share settings
 
   shareSettingsFeesLedgerMapping: 'Ledger Mapping',
+
+  settingsValuatorViewProfile: 'View Valuator Profile',
+  settingsValuatorEdit: 'Edit Valuator',
 };
 
 export default ne;
