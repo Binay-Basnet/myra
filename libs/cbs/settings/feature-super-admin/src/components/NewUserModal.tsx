@@ -1,15 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { AddIcon } from '@chakra-ui/icons';
-import {
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-} from '@chakra-ui/react';
 
 import {
   Id_Type,
@@ -20,7 +10,7 @@ import {
   useSetSettingsUserDataMutation,
 } from '@coop/cbs/data-access';
 import { FormEmailInput, FormInput, FormPhoneNumber, FormSelect } from '@coop/shared/form';
-import { asyncToast, Box, Button, Divider, Grid, Text } from '@coop/shared/ui';
+import { asyncToast, Box, ChakraModal, Grid } from '@coop/shared/ui';
 import { setAddUserData, useAppDispatch } from '@coop/shared/utils';
 
 import { BranchSelect } from './BranchSelect';
@@ -98,68 +88,55 @@ export const NewUserModal = ({ isOpen, onClose, refetchUserList }: INewUserModal
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={handleModalClose} isCentered>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>
-          <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
-            Add User
-          </Text>
-        </ModalHeader>
-        <Divider />
+    <ChakraModal
+      open={isOpen}
+      onClose={handleModalClose}
+      isCentered
+      width="xl"
+      title="Add User"
+      linkButtonLabel="Add more details"
+      linkButtonHandler={handleAddMoreDetails}
+      primaryButtonLabel="Send Invitation"
+      primaryButtonHandler={handleSendInvitation}
+    >
+      <FormProvider {...methods}>
+        <form>
+          <Box px="s12" py="s8" display="flex" flexDirection="column" gap="s24">
+            <FormInput type="text" name="name" label="Name" __placeholder="Enter Name" />
 
-        <ModalCloseButton />
-        <ModalBody p="s16" width="40wh" height="60vh">
-          <FormProvider {...methods}>
-            <form>
-              <Box px="s12" py="s8" display="flex" flexDirection="column" gap="s24">
-                <FormInput type="text" name="name" label="Name" __placeholder="Enter Name" />
+            <Grid templateColumns="repeat(2, 1fr)" rowGap="s24" columnGap="s20">
+              <FormSelect
+                name="gender"
+                label="Gender"
+                __placeholder="Select Gender"
+                options={genderOptions}
+              />
 
-                <Grid templateColumns="repeat(2, 1fr)" rowGap="s24" columnGap="s20">
-                  <FormSelect
-                    name="gender"
-                    label="Gender"
-                    __placeholder="Select Gender"
-                    options={genderOptions}
-                  />
+              <FormInput type="date" name="dob" label="Date of Birth (BS)" />
 
-                  <FormInput type="date" name="dob" label="Date of Birth (BS)" />
+              {/* <FormDatePicker name="dob" label="Date of Birth" /> */}
 
-                  {/* <FormDatePicker name="dob" label="Date of Birth" /> */}
+              <FormPhoneNumber name="contactNo" label="Mobile No" __placeholder="Mobile No" />
 
-                  <FormPhoneNumber name="contactNo" label="Mobile No" __placeholder="Mobile No" />
+              <FormEmailInput name="email" label="Email" __placeholder="Email" />
+            </Grid>
 
-                  <FormEmailInput name="email" label="Email" __placeholder="Email" />
-                </Grid>
+            <FormSelect
+              name="role"
+              label="Role"
+              __placeholder="Select Role"
+              options={roleOptions}
+            />
 
-                <FormSelect
-                  name="role"
-                  label="Role"
-                  __placeholder="Select Role"
-                  options={roleOptions}
-                />
-
-                <BranchSelect
-                  name="branch"
-                  label="Service Center"
-                  __placeholder="Select Service Center"
-                  isDisabled={role === Roles.Superadmin}
-                />
-              </Box>
-            </form>
-          </FormProvider>
-        </ModalBody>
-
-        <Divider />
-        <ModalFooter justifyContent="space-between">
-          <Button leftIcon={<AddIcon />} variant="ghost" onClick={handleAddMoreDetails}>
-            Add more details
-          </Button>
-          <Button variant="solid" onClick={handleSendInvitation}>
-            Send Invitation
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+            <BranchSelect
+              name="branch"
+              label="Service Center"
+              __placeholder="Select Service Center"
+              isDisabled={role === Roles.Superadmin}
+            />
+          </Box>
+        </form>
+      </FormProvider>
+    </ChakraModal>
   );
 };
