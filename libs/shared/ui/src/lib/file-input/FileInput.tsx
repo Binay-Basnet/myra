@@ -24,29 +24,20 @@ import Button from '../button/Button';
 import Icon from '../icon/Icon';
 import TextFields from '../text-fields/TextFields';
 
-const DefaultFileIcon = () => {
-  return (
-    <svg
-      width="32"
-      height="32"
-      viewBox="0 0 32 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M26.75 14H18C17.2044 14 16.4413 13.6839 15.8787 13.1213C15.3161 12.5587 15 11.7956 15 11V2.25C15 2.1837 14.9737 2.12011 14.9268 2.07322C14.8799 2.02634 14.8163 2 14.75 2H9C7.93913 2 6.92172 2.42143 6.17157 3.17157C5.42143 3.92172 5 4.93913 5 6V26C5 27.0609 5.42143 28.0783 6.17157 28.8284C6.92172 29.5786 7.93913 30 9 30H23C24.0609 30 25.0783 29.5786 25.8284 28.8284C26.5786 28.0783 27 27.0609 27 26V14.25C27 14.1837 26.9737 14.1201 26.9268 14.0732C26.8799 14.0263 26.8163 14 26.75 14Z"
-        fill="#006837"
-      />
-      <path
-        d="M26.2013 11.7872L17.2131 2.79905C17.1956 2.78167 17.1734 2.76985 17.1492 2.76507C17.1251 2.76029 17.1 2.76276 17.0772 2.77218C17.0545 2.7816 17.035 2.79754 17.0212 2.818C17.0075 2.83846 17.0001 2.86252 17 2.88717V11.0003C17 11.2655 17.1054 11.5199 17.2929 11.7074C17.4804 11.8949 17.7348 12.0003 18 12.0003H26.1131C26.1378 12.0002 26.1618 11.9928 26.1823 11.9791C26.2028 11.9653 26.2187 11.9458 26.2281 11.9231C26.2375 11.9003 26.24 11.8752 26.2352 11.8511C26.2304 11.8269 26.2186 11.8046 26.2013 11.7872Z"
-        fill="#006837"
-      />
-    </svg>
-  );
-};
+const DefaultFileIcon = () => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M26.75 14H18C17.2044 14 16.4413 13.6839 15.8787 13.1213C15.3161 12.5587 15 11.7956 15 11V2.25C15 2.1837 14.9737 2.12011 14.9268 2.07322C14.8799 2.02634 14.8163 2 14.75 2H9C7.93913 2 6.92172 2.42143 6.17157 3.17157C5.42143 3.92172 5 4.93913 5 6V26C5 27.0609 5.42143 28.0783 6.17157 28.8284C6.92172 29.5786 7.93913 30 9 30H23C24.0609 30 25.0783 29.5786 25.8284 28.8284C26.5786 28.0783 27 27.0609 27 26V14.25C27 14.1837 26.9737 14.1201 26.9268 14.0732C26.8799 14.0263 26.8163 14 26.75 14Z"
+      fill="#006837"
+    />
+    <path
+      d="M26.2013 11.7872L17.2131 2.79905C17.1956 2.78167 17.1734 2.76985 17.1492 2.76507C17.1251 2.76029 17.1 2.76276 17.0772 2.77218C17.0545 2.7816 17.035 2.79754 17.0212 2.818C17.0075 2.83846 17.0001 2.86252 17 2.88717V11.0003C17 11.2655 17.1054 11.5199 17.2929 11.7074C17.4804 11.8949 17.7348 12.0003 18 12.0003H26.1131C26.1378 12.0002 26.1618 11.9928 26.1823 11.9791C26.2028 11.9653 26.2187 11.9458 26.2281 11.9231C26.2375 11.9003 26.24 11.8752 26.2352 11.8511C26.2304 11.8269 26.2186 11.8046 26.2013 11.7872Z"
+      fill="#006837"
+    />
+  </svg>
+);
 
-export const isArrayEqual = <T,>(x: T[], y: T[]) =>
-  isEmpty(xorWith(x, y, isEqual));
+export const isArrayEqual = <T,>(x: T[], y: T[]) => isEmpty(xorWith(x, y, isEqual));
 
 export interface FileInputProps extends Omit<DropzoneOptions, 'maxFiles'> {
   size?: 'sm' | 'md' | 'lg';
@@ -56,14 +47,14 @@ export interface FileInputProps extends Omit<DropzoneOptions, 'maxFiles'> {
   maxFiles?: 'one' | 'many';
 }
 
-export function FileInput({
+export const FileInput = ({
   size = 'md',
   onChange,
   dropText = 'or drop files to upload',
   value = [],
   maxFiles = 'many',
   ...rest
-}: FileInputProps) {
+}: FileInputProps) => {
   const [files, setFiles] = useState<File[]>([]);
   const [fileNames, setFileNames] = useState<string[]>([]);
   const [alreadyAddedFiles, setAlreadyAddedFiles] = useState<
@@ -74,15 +65,14 @@ export function FileInput({
     setFiles((prev) => [...prev, ...acceptedFiles]);
   }, []);
 
-  const { getInputProps, getRootProps, isFocused, isDragAccept, isDragReject } =
-    useDropzone({
-      onDrop,
+  const { getInputProps, getRootProps, isFocused, isDragAccept, isDragReject } = useDropzone({
+    onDrop,
 
-      maxFiles: maxFiles === 'one' ? 1 : Infinity,
-      multiple: maxFiles !== 'one',
+    maxFiles: maxFiles === 'one' ? 1 : Infinity,
+    multiple: maxFiles !== 'one',
 
-      ...rest,
-    });
+    ...rest,
+  });
 
   const style = useMemo(
     () => ({
@@ -104,9 +94,7 @@ export function FileInput({
   useEffect(() => {
     if (
       (!alreadyAddedFiles || alreadyAddedFiles?.length === 0) &&
-      !files.some((file) =>
-        value?.some((valueFile) => valueFile.fileName === file.name)
-      ) &&
+      !files.some((file) => value?.some((valueFile) => valueFile.fileName === file.name)) &&
       files.length === 0
     ) {
       if (value) {
@@ -130,11 +118,9 @@ export function FileInput({
           direction="column"
           gap={size === 'md' ? 's8' : 's16'}
           alignItems="center"
-          justifyContent={'center'}
+          justifyContent="center"
         >
-          {size === 'lg' || size === 'sm' ? (
-            <Icon as={BsCloudUpload} size="xl" />
-          ) : null}
+          {size === 'lg' || size === 'sm' ? <Icon as={BsCloudUpload} size="xl" /> : null}
 
           {size === 'lg' ? (
             <Button shade="neutral" variant="outline">
@@ -148,7 +134,7 @@ export function FileInput({
 
           {size === 'sm' ? null : (
             <TextFields
-              align={'center'}
+              align="center"
               variant={size === 'md' ? 'bodySmall' : 'bodyRegular'}
               color="neutralColorLight.Gray-60"
             >
@@ -164,9 +150,7 @@ export function FileInput({
             file={file}
             size={size}
             setFileNames={setFileNames}
-            remove={() =>
-              setFiles((prev) => prev.filter((f) => f.name !== file.name))
-            }
+            remove={() => setFiles((prev) => prev.filter((f) => f.name !== file.name))}
           />
         </Fragment>
       ))}
@@ -180,9 +164,7 @@ export function FileInput({
             size={size}
             remove={() => {
               setAlreadyAddedFiles((prev) =>
-                prev
-                  ? prev.filter((f) => f.fileName !== fileUrl.fileName)
-                  : null
+                prev ? prev.filter((f) => f.fileName !== fileUrl.fileName) : null
               );
             }}
           />
@@ -190,7 +172,7 @@ export function FileInput({
       ))}
     </Box>
   );
-}
+};
 
 interface FilePreviewProps {
   file: File;
@@ -199,12 +181,7 @@ interface FilePreviewProps {
   setFileNames?: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-export const FilePreview = ({
-  file,
-  size,
-  remove,
-  setFileNames,
-}: FilePreviewProps) => {
+export const FilePreview = ({ file, size, remove, setFileNames }: FilePreviewProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [error, setError] = useState<boolean>(false);
@@ -241,8 +218,7 @@ export const FilePreview = ({
         }
         const putResponse = await axios.put(putUrl, file, {
           onUploadProgress: (progressEvent) => {
-            const percentCompleted =
-              (progressEvent.loaded * 98) / progressEvent.total + 2;
+            const percentCompleted = (progressEvent.loaded * 98) / progressEvent.total + 2;
             setFileUploadProgress(percentCompleted);
           },
         });
@@ -313,7 +289,7 @@ export const FilePreview = ({
               </TextFields>
               {!error ? (
                 <TextFields variant="formLabel" color="gray.600">
-                  {file?.size && (file?.size / 1000 / 1000).toPrecision(2)} MB
+                  {file?.size && (Number(file?.size) / 1000 / 1000).toPrecision(2)} MB
                 </TextFields>
               ) : (
                 <TextFields variant="formLabel" color="danger.500">
@@ -328,9 +304,12 @@ export const FilePreview = ({
           size="lg"
           cursor="pointer"
           onClick={() => {
-            remove && remove();
-            setFileNames &&
+            if (remove) {
+              remove();
+            }
+            if (setFileNames) {
               setFileNames((prev) => prev.filter((name) => name !== fileName));
+            }
           }}
         />
 
@@ -344,13 +323,11 @@ export const FilePreview = ({
             minHeight="300px"
           >
             <ModalCloseButton _focus={{ boxShadow: 'none' }} />
-            <img src={fileUrl} />
+            <img src={fileUrl} alt="file" />
           </ModalContent>
         </Modal>
       </Box>
-      {!error ? (
-        <Progress size="xs" colorScheme="primary" value={fileUploadProgress} />
-      ) : null}
+      {!error ? <Progress size="xs" colorScheme="primary" value={fileUploadProgress} /> : null}
     </Box>
   );
 };
@@ -380,12 +357,12 @@ export const FileUrlPreview = ({
       const response = await fetch(fileUrl);
 
       const blob = await response.blob();
-      const file = new File([blob], fileName, {
+      const newFile = new File([blob], fileName, {
         // Todo use switch case for this type using extension of filename
         type: 'image/jpeg',
       });
 
-      setFile(file);
+      setFile(newFile);
     };
 
     getFile();
@@ -424,7 +401,7 @@ export const FileUrlPreview = ({
             position="relative"
             cursor="pointer"
           >
-            {fileUrl && file?.type.includes('image') ? (
+            {fileUrl && fileUrl.includes('http') && file?.type.includes('image') ? (
               <Image src={fileUrl} layout="fill" objectFit="contain" />
             ) : (
               <Icon as={DefaultFileIcon} size="lg" />
@@ -441,11 +418,9 @@ export const FileUrlPreview = ({
               >
                 {file?.name}
               </TextFields>
-              {
-                <TextFields variant="formLabel" color="gray.600">
-                  {file?.size && (file?.size / 1000 / 1000).toPrecision(2)} MB
-                </TextFields>
-              }
+              <TextFields variant="formLabel" color="gray.600">
+                {file?.size && (Number(file?.size) / 1000 / 1000).toPrecision(2)} MB
+              </TextFields>
             </Box>
           )}
         </Box>
@@ -454,7 +429,9 @@ export const FileUrlPreview = ({
           size="lg"
           cursor="pointer"
           onClick={() => {
-            remove && remove();
+            if (remove) {
+              remove();
+            }
 
             setFileNames((prev) => prev.filter((name) => name !== fileName));
           }}
@@ -469,7 +446,7 @@ export const FileUrlPreview = ({
             minHeight="300px"
           >
             <ModalCloseButton _focus={{ boxShadow: 'none' }} />
-            <img src={fileUrl} />
+            <img src={fileUrl} alt="fileUrl" />
           </ModalContent>
         </Modal>
       </Box>

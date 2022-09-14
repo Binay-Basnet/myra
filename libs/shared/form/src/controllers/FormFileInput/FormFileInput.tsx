@@ -30,9 +30,9 @@ export const FormFileInput = ({ name, label, ...rest }: FormFileInputProps) => {
       <Controller
         control={control}
         name={name}
-        render={({ field: { onChange, value } }) => {
-          return <FileInput value={value} onChange={onChange} {...rest} />;
-        }}
+        render={({ field: { onChange, value } }) => (
+          <FileInput value={value} onChange={onChange} {...rest} />
+        )}
       />
     </Box>
   );

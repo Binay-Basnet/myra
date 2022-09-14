@@ -92,9 +92,9 @@ export const MemberListPage = () => {
                 },
                 {
                   title: 'memberListTableEditMember',
-                  onClick: (member) => {
+                  onClick: (memberRow) => {
                     router.push(
-                      `/members/${memberTypeSlug[member?.type || 'INDIVIDUAL']}/edit/${member?.id}`
+                      `/members/${memberTypeSlug[memberRow?.type || 'INDIVIDUAL']}/edit/${memberRow?.id}`
                     );
                   },
                 },

@@ -16,9 +16,57 @@ query getValuator($id: ID!) {
             phoneNo
             email
             documents
+            address {
+              localGovernmentId
+              districtId
+              provinceId
+              houseNo
+              locality
+              wardNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
           }
           error {
             ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+query getValuatorList($paginate: Pagination) {
+  settings {
+    general {
+      valuator {
+        list(paginate: $paginate) {
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+          totalCount
+          edges {
+            node {
+              id
+              valuatorName
+              valuatorType
+              address {
+                localGovernment
+                district
+                houseNo
+                locality
+                state
+                wardNo
+              }
+              phoneNo
+              contractDate
+            }
+            cursor
           }
         }
       }

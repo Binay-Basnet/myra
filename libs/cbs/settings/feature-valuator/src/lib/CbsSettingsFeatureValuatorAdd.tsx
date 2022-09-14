@@ -1,17 +1,20 @@
-import React, { useMemo } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useQueryClient } from 'react-query';
+import { useRouter } from 'next/router';
 
-import { useAllAdministrationQuery } from '@coop/cbs/data-access';
+import { useGetValuatorQuery, useSetValuatorMutation, ValuatorType } from '@coop/cbs/data-access';
 import { ContainerWithDivider, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
+  FormAddress,
   FormEmailInput,
   FormFileInput,
   FormInput,
-  FormMap,
   FormPhoneNumber,
   FormSelect,
 } from '@coop/shared/form';
 import {
+  asyncToast,
   Box,
   Container,
   FormFooter,
@@ -23,65 +26,53 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-export function CbsSettingsFeatureValuatorAdd() {
+export const CbsSettingsFeatureValuatorAdd = () => {
   const { t } = useTranslation();
+  const router = useRouter();
 
-  const methods = useForm({});
+  const methods = useForm();
 
-  const { watch } = methods;
+  const { reset } = methods;
 
-  const { data } = useAllAdministrationQuery();
-
-  //   const { mutate } = useSetBranchDataMutation({
-  //     onSuccess: (res) => {
-  //       if (res?.settings?.general?.branch?.add?.record?.id) {
-  //         setBranchId(res?.settings?.general?.branch?.add?.record?.id);
-  //       }
-  //     },
-  //     // onError: () => {},
-  //   });
-
-  const province = useMemo(() => {
-    return (
-      data?.administration?.all?.map((d) => ({
-        label: d.name,
-        value: d.id,
-      })) ?? []
-    );
-  }, [data?.administration?.all]);
-
-  // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch('provinceId');
-  const currentDistrictId = watch('districtId');
-  const currentLocalGovernmentId = watch('localGovernmentId');
-
-  const districtList = useMemo(
-    () => data?.administration.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
-    [currentProvinceId, data]
+  const { data: editValues } = useGetValuatorQuery(
+    { id: router.query['id'] as string },
+    { enabled: !!router.query['id'] && router.query['action'] === 'edit' }
   );
 
-  const localityList = useMemo(
-    () => districtList.find((d) => d.id === currentDistrictId)?.municipalities ?? [],
-    [currentDistrictId, districtList]
-  );
+  const editData = editValues?.settings?.general?.valuator?.formState?.data;
 
-  const wardList = useMemo(
-    () => localityList.find((d) => d.id === currentLocalGovernmentId)?.wards ?? [],
-    [currentLocalGovernmentId, localityList]
-  );
+  const { mutateAsync } = useSetValuatorMutation();
+  const queryClient = useQueryClient();
+
+  const handleSave = async () => {
+    await asyncToast({
+      promise: mutateAsync({
+        id: router.query['id'] as string,
+        data: methods.getValues(),
+      }),
+      id: 'valutaor-add',
+      msgs: {
+        success: 'New Valuator Added',
+        loading: 'Adding New Valuator',
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries('getValuatorList');
+        router.push('/settings/general/valuator/list');
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (editData) {
+      reset(editData);
+    }
+  }, [reset, editData]);
 
   return (
     <>
-      <Container height="fit-content" minW="container.xl">
+      <Container height="fit-content" p="0" minW="container.lg">
         <FormProvider {...methods}>
-          <form
-          //    onChange={debounce(() => {
-          //     mutate({
-          //          id: branchId,
-          //          data: getValues(),
-          //        });
-          //      }, 500)}
-          >
+          <form>
             <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
               <FormHeader title={t['settingsGeneralValuatorFormNewValuator']} />
             </Box>
@@ -89,7 +80,7 @@ export function CbsSettingsFeatureValuatorAdd() {
             <Box bg="white" pb="100px">
               <Box px="s20" py="s24">
                 <ContainerWithDivider>
-                  <Box display={'flex'} flexDirection="column" gap="s16">
+                  <Box display="flex" flexDirection="column" gap="s16">
                     <TextFields variant="tableHeader" color="gray.700">
                       {t['settingsGeneralValuatorFormValuatorSetup']}
                     </TextFields>
@@ -98,34 +89,61 @@ export function CbsSettingsFeatureValuatorAdd() {
                         <FormInput
                           name="valuatorName"
                           label={t['settingsGeneralValuatorFormValuatorName']}
-                          __placeholder={t['settingsGeneralValuatorFormValuatorName']}
                         />
                       </GridItem>
 
                       <FormSelect
                         name="valuatorType"
                         label={t['settingsGeneralValuatorFormValuatorType']}
-                        __placeholder={t['settingsGeneralValuatorFormSelectValuatorType']}
+                        options={[
+                          {
+                            label: t['memberLayoutIndividual'],
+                            value: ValuatorType.Individual,
+                          },
+                          {
+                            label: t['settingsOrganization'],
+                            value: ValuatorType.Organization,
+                          },
+                        ]}
                       />
 
                       <FormInput
                         type="text"
                         name="valuatorId"
                         label={t['settingsGeneralValuatorFormValuatorID']}
-                        __placeholder={t['settingsGeneralValuatorFormID']}
                       />
 
                       <FormSelect
                         name="academicQualification"
                         label={t['settingsGeneralValuatorFormAcademicQualification']}
-                        __placeholder={t['settingsGeneralValuatorFormAcademicQualification']}
+                        options={[
+                          {
+                            label: 'SEE',
+                            value: 'SEE',
+                          },
+                          {
+                            label: 'High School Graduate',
+                            value: 'High School Graduate',
+                          },
+                          {
+                            label: 'Bachelors',
+                            value: 'Bachelors',
+                          },
+                          {
+                            label: 'Masters',
+                            value: 'Masters',
+                          },
+                          {
+                            label: 'PHD',
+                            value: 'PHD',
+                          },
+                        ]}
                       />
 
                       <FormInput
                         type="text"
                         name="valuationLicenseNo"
                         label={t['settingsGeneralValuatorFormValuationLicenseNo']}
-                        __placeholder={t['settingsGeneralValuatorFormValuationLicenseNo']}
                       />
 
                       <FormInput
@@ -144,8 +162,7 @@ export function CbsSettingsFeatureValuatorAdd() {
                         name="insurancePremium"
                         type="number"
                         label={t['settingsGeneralValuatorFormInsurancePremiumPercent']}
-                        textAlign={'right'}
-                        __placeholder="0.00"
+                        textAlign="right"
                         rightElement={
                           <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                             %
@@ -155,7 +172,7 @@ export function CbsSettingsFeatureValuatorAdd() {
                     </InputGroupContainer>
                   </Box>
 
-                  <Box display={'flex'} flexDirection="column" gap="s16">
+                  <Box display="flex" flexDirection="column" gap="s16">
                     <TextFields variant="tableHeader" color="gray.700">
                       {t['settingsGeneralValuatorFormContactDetails']}
                     </TextFields>
@@ -164,88 +181,27 @@ export function CbsSettingsFeatureValuatorAdd() {
                       <FormPhoneNumber
                         name="mobileNo"
                         label={t['settingsGeneralValuatorFormMobileNo']}
-                        __placeholder={t['settingsGeneralValuatorFormMobileNo']}
                       />
 
                       <FormPhoneNumber
                         name="phoneNo"
                         label={t['settingsGeneralValuatorFormPhoneNo']}
-                        __placeholder={t['settingsGeneralValuatorFormPhoneNo']}
                       />
 
-                      <FormEmailInput
-                        name="email"
-                        label={t['settingsGeneralValuatorFormEmail']}
-                        __placeholder={t['settingsGeneralValuatorFormEmail']}
-                      />
+                      <FormEmailInput name="email" label={t['settingsGeneralValuatorFormEmail']} />
                     </InputGroupContainer>
                   </Box>
 
-                  <Box display={'flex'} flexDirection="column" gap="s16">
+                  <Box display="flex" flexDirection="column" gap="s16">
                     <TextFields variant="tableHeader" color="gray.700">
                       {t['settingsGeneralValuatorFormAddress']}
                     </TextFields>
-                    <Box gap="s16" display={'flex'} flexDirection="column">
-                      <InputGroupContainer>
-                        <FormSelect
-                          name="provinceId"
-                          label={t['settingsGeneralValuatorFormProvince']}
-                          __placeholder={t['settingsGeneralValuatorFormSelectProvince']}
-                          options={province}
-                        />
-                        <FormSelect
-                          name="districtId"
-                          label={t['settingsGeneralValuatorFormDistrict']}
-                          __placeholder={t['settingsGeneralValuatorFormSelectDistrict']}
-                          options={districtList.map((d) => ({
-                            label: d.name,
-                            value: d.id,
-                          }))}
-                        />
-                        <FormSelect
-                          name="localGovernmentId"
-                          label={t['settingsGeneralValuatorFormLocalGoverment']}
-                          __placeholder={t['settingsGeneralValuatorFormSelectLocalGoverment']}
-                          options={localityList.map((d) => ({
-                            label: d.name,
-                            value: d.id,
-                          }))}
-                        />
-
-                        <FormSelect
-                          name="wardNo"
-                          label={t['settingsGeneralValuatorFormWardNo']}
-                          __placeholder={t['settingsGeneralValuatorFormEnterWardNo']}
-                          options={wardList.map((d) => ({
-                            label: d,
-                            value: d,
-                          }))}
-                        />
-                        <FormInput
-                          type="text"
-                          name="locality"
-                          label={t['settingsGeneralValuatorFormLocality']}
-                          __placeholder={t['settingsGeneralValuatorFormEnterLocality']}
-                        />
-                        <FormInput
-                          type="text"
-                          name="houseNo"
-                          label={t['settingsGeneralValuatorFormHouseNo']}
-                          __placeholder={t['settingsGeneralValuatorFormEnterHouseNo']}
-                        />
-                      </InputGroupContainer>
-
-                      <Box>
-                        <FormMap name="location" />
-                      </Box>
-                    </Box>
+                    <InputGroupContainer>
+                      <FormAddress name="address" />
+                    </InputGroupContainer>
                   </Box>
 
                   <Box display="flex" flexDirection="column" gap="s16">
-                    {/* <Text fontSize="r1" fontWeight="SemiBold">
-                        {t['kynIndDOCUMENTDECLARATION']}
-                      </Text> */}
-
                     <TextFields variant="tableHeader" color="gray.700">
                       {t['settingsGeneralValuatorFormDocumentsDeclaration']}
                     </TextFields>
@@ -267,7 +223,7 @@ export function CbsSettingsFeatureValuatorAdd() {
 
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
-          <Container minW="container.xl" height="fit-content">
+          <Container minW="container.lg" p="0" height="fit-content">
             <FormFooter
               status={
                 <Box display="flex" gap="s8">
@@ -280,14 +236,14 @@ export function CbsSettingsFeatureValuatorAdd() {
                 </Box>
               }
               draftButton={null}
-              mainButtonLabel={'Save'}
+              mainButtonHandler={handleSave}
+              mainButtonLabel="Save"
             />
           </Container>
         </Box>
       </Box>
-      {/* </Box> */}
     </>
   );
-}
+};
 
 export default CbsSettingsFeatureValuatorAdd;

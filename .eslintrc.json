@@ -11,6 +11,10 @@
     "plugin:react/jsx-runtime"
   ],
   "rules": {
+    "@typescript-eslint/no-unused-expressions": "off",
+    "react/prop-types": "off",
+    "react/no-unstable-nested-components": "off",
+    "import/no-named-as-default": "off",
     "no-nested-ternary": "warn",
     "require-jsdoc": "off",
     "react/require-default-props": "off",

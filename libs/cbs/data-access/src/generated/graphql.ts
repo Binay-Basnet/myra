@@ -807,11 +807,17 @@ export type ChartsOfAccountFilter = {
 
 export type ChartsOfAccountMutation = {
   add: AddChartsOfAccountResult;
+  delete: AddChartsOfAccountResult;
 };
 
 
 export type ChartsOfAccountMutationAddArgs = {
   data: AddCoaAccountInput;
+};
+
+
+export type ChartsOfAccountMutationDeleteArgs = {
+  id: Scalars['ID'];
 };
 
 export type ChartsOfAccountResult = {
@@ -9946,7 +9952,14 @@ export type GetValuatorQueryVariables = Exact<{
 }>;
 
 
-export type GetValuatorQuery = { settings: { general?: { valuator?: { formState?: { data?: { valuatorName?: string | null, valuatorType?: ValuatorType | null, valuatorId?: string | null, academicQualification?: string | null, valuationLicenseNo?: string | null, renewalDate?: string | null, contractDate?: string | null, insurancePremium?: number | null, mobileNo?: string | null, phoneNo?: string | null, email?: string | null, documents?: Array<string | null> | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } | null } | null } | null } };
+export type GetValuatorQuery = { settings: { general?: { valuator?: { formState?: { data?: { valuatorName?: string | null, valuatorType?: ValuatorType | null, valuatorId?: string | null, academicQualification?: string | null, valuationLicenseNo?: string | null, renewalDate?: string | null, contractDate?: string | null, insurancePremium?: number | null, mobileNo?: string | null, phoneNo?: string | null, email?: string | null, documents?: Array<string | null> | null, address?: { localGovernmentId?: number | null, districtId?: number | null, provinceId?: number | null, houseNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, wardNo?: number | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } | null } | null } | null } };
+
+export type GetValuatorListQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+}>;
+
+
+export type GetValuatorListQuery = { settings: { general?: { valuator?: { list?: { totalCount: number, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null, edges?: Array<{ cursor: string, node?: { id: string, valuatorName?: string | null, valuatorType?: ValuatorType | null, phoneNo?: string | null, contractDate?: string | null, address?: { localGovernment?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, state?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null } | null } | null }> | null } | null } | null } | null } };
 
 export type GetChartOfAccountsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -16437,6 +16450,18 @@ export const GetValuatorDocument = `
             phoneNo
             email
             documents
+            address {
+              localGovernmentId
+              districtId
+              provinceId
+              houseNo
+              locality
+              wardNo
+              coordinates {
+                longitude
+                latitude
+              }
+            }
           }
           error {
             ...MutationError
@@ -16457,6 +16482,55 @@ export const useGetValuatorQuery = <
     useQuery<GetValuatorQuery, TError, TData>(
       ['getValuator', variables],
       useAxios<GetValuatorQuery, GetValuatorQueryVariables>(GetValuatorDocument).bind(null, variables),
+      options
+    );
+export const GetValuatorListDocument = `
+    query getValuatorList($paginate: Pagination) {
+  settings {
+    general {
+      valuator {
+        list(paginate: $paginate) {
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+          totalCount
+          edges {
+            node {
+              id
+              valuatorName
+              valuatorType
+              address {
+                localGovernment
+                district
+                houseNo
+                locality
+                state
+                wardNo
+              }
+              phoneNo
+              contractDate
+            }
+            cursor
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetValuatorListQuery = <
+      TData = GetValuatorListQuery,
+      TError = unknown
+    >(
+      variables?: GetValuatorListQueryVariables,
+      options?: UseQueryOptions<GetValuatorListQuery, TError, TData>
+    ) =>
+    useQuery<GetValuatorListQuery, TError, TData>(
+      variables === undefined ? ['getValuatorList'] : ['getValuatorList', variables],
+      useAxios<GetValuatorListQuery, GetValuatorListQueryVariables>(GetValuatorListDocument).bind(null, variables),
       options
     );
 export const GetChartOfAccountsDocument = `
