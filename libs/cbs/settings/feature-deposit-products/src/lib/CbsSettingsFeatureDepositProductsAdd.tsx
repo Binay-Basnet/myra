@@ -65,7 +65,7 @@ type DepositForm = Omit<
   atmCharge: ServiceType[];
 };
 
-export function SettingsDepositProductsAdd() {
+export const SettingsDepositProductsAdd = () => {
   const router = useRouter();
   const { t } = useTranslation();
   const id = String(router?.query?.['id']);
@@ -91,37 +91,29 @@ export function SettingsDepositProductsAdd() {
       (data) => data?.value
     );
 
-    const ladderRateDataList = values?.ladderRateData?.map((data) => {
-      return {
-        type: data?.type,
-        rate: data?.rate,
-        amount: data?.amount.toString(),
-      };
-    });
+    const ladderRateDataList = values?.ladderRateData?.map((data) => ({
+      type: data?.type,
+      rate: data?.rate,
+      amount: data?.amount.toString(),
+    }));
 
-    const serviceChargeList = values?.serviceCharge?.map((data) => {
-      return {
-        serviceName: data?.serviceName,
-        ledgerName: data?.ledgerName,
-        amount: data?.amount.toString(),
-      };
-    });
+    const serviceChargeList = values?.serviceCharge?.map((data) => ({
+      serviceName: data?.serviceName,
+      ledgerName: data?.ledgerName,
+      amount: data?.amount.toString(),
+    }));
 
-    const accountCloseChargeList = values?.accountCloseCharge?.map((data) => {
-      return {
-        serviceName: data?.serviceName,
-        ledgerName: data?.ledgerName,
-        amount: data?.amount.toString(),
-      };
-    });
+    const accountCloseChargeList = values?.accountCloseCharge?.map((data) => ({
+      serviceName: data?.serviceName,
+      ledgerName: data?.ledgerName,
+      amount: data?.amount.toString(),
+    }));
 
-    const alternativeChannelList = values?.alternativeChannelCharge?.map((data) => {
-      return {
-        serviceName: data?.serviceName,
-        ledgerName: data?.ledgerName,
-        amount: data?.amount.toString(),
-      };
-    });
+    const alternativeChannelList = values?.alternativeChannelCharge?.map((data) => ({
+      serviceName: data?.serviceName,
+      ledgerName: data?.ledgerName,
+      amount: data?.amount.toString(),
+    }));
 
     const updatedData = {
       ...values,
@@ -242,7 +234,7 @@ export function SettingsDepositProductsAdd() {
               <ProductCode />
               <TypesOfMember />
 
-              <Box display="flex" flexDirection={'column'} gap="s16">
+              <Box display="flex" flexDirection="column" gap="s16">
                 {typesOfMember && <Critera />}
                 <GridItems />
               </Box>
@@ -316,6 +308,6 @@ export function SettingsDepositProductsAdd() {
       </Box>
     </>
   );
-}
+};
 
 export default SettingsDepositProductsAdd;
