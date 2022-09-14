@@ -22,10 +22,10 @@ export interface ModalChakraProps extends Omit<ChakraModalProps, 'isOpen' | 'onC
   title?: string;
   primaryButtonLabel?: string;
   secondaryButtonLabel?: string;
-  primaryButtonHandler?: () => null;
-  secondaryButtonHandler?: () => null;
+  primaryButtonHandler?: () => void;
+  secondaryButtonHandler?: () => void;
   linkButtonLabel?: string;
-  linkButtonHandler?: () => null;
+  linkButtonHandler?: () => void;
   isDanger?: boolean;
   width: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | string;
 }
@@ -86,29 +86,29 @@ export const ChakraModal = (props: ModalChakraProps) => {
             <Box>
               {linkButtonLabel && (
                 <Button variant="link" onClick={linkButtonHandler}>
-                  {t[linkButtonLabel]}
+                  {t[linkButtonLabel] ?? linkButtonLabel}
                 </Button>
               )}
             </Box>
             <Box display="flex" flexDirection="row" gap="s8" justifyContent="flex-end">
               {secondaryButtonLabel && (
                 <Button
-                  width="100px"
+                  width="150px"
                   variant="outline"
                   shade="neutral"
                   onClick={secondaryButtonHandler}
                 >
-                  {t[secondaryButtonLabel]}
+                  {t[secondaryButtonLabel] ?? secondaryButtonLabel}
                 </Button>
               )}
               {primaryButtonLabel && (
                 <Button
                   variant="solid"
                   onClick={primaryButtonHandler}
-                  width="100px"
+                  width="150px"
                   shade={isDanger ? 'danger' : 'primary'}
                 >
-                  {t[primaryButtonLabel]}
+                  {t[primaryButtonLabel] ?? primaryButtonLabel}
                 </Button>
               )}
             </Box>
