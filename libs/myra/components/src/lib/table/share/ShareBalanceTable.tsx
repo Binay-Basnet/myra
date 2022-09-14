@@ -5,7 +5,7 @@ import { useGetShareBalanceListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 export const ShareBalanceTable = () => {
   const { data, isFetching, refetch } = useGetShareBalanceListQuery();
@@ -30,18 +30,12 @@ export const ShareBalanceTable = () => {
       {
         header: t['shareTableName'],
         accessorFn: (row) => row?.node.member.name?.local,
-        cell: (props) => {
-          return (
-            <Box display="flex" alignItems="center" gap="2">
-              <Avatar
-                name={props.getValue() as string}
-                size="sm"
-                src="https://bit.ly/dan-abramov"
-              />
-              <span>{props.getValue() as string}</span>
-            </Box>
-          );
-        },
+        cell: (props) => (
+          <Box display="flex" alignItems="center" gap="2">
+            <Avatar name={props.getValue() as string} size="sm" src="https://bit.ly/dan-abramov" />
+            <span>{props.getValue() as string}</span>
+          </Box>
+        ),
         meta: {
           width: '50%',
         },
@@ -55,11 +49,7 @@ export const ShareBalanceTable = () => {
       {
         header: t['shareTableShareAmount'],
         accessorFn: (row) => row?.node.amount,
-        cell: (props) => {
-          return (
-            <span>{Number(props.getValue()).toLocaleString('en-IN')}</span>
-          );
-        },
+        cell: (props) => <span>{Number(props.getValue()).toLocaleString('en-IN')}</span>,
         isNumeric: true,
       },
 
@@ -74,7 +64,7 @@ export const ShareBalanceTable = () => {
 
   return (
     <>
-      <TableListPageHeader heading={'shareBalanceTable'} />
+      <TableListPageHeader heading={`${t['shareBalanceTable']} - ${featureCode?.shareBalance}`} />
 
       <Table isLoading={isFetching} data={rowData ?? []} columns={columns} />
     </>

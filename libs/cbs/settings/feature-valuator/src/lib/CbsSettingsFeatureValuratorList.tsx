@@ -1,66 +1,60 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
+import { CellContext } from '@tanstack/react-table';
 
-import { ObjState, useGetMemberListQuery, useGetNewIdMutation } from '@coop/cbs/data-access';
+import { useGetNewIdMutation, useGetValuatorListQuery, ValuatorEdge } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
-import { PopoverComponent } from '@coop/myra/components';
+import { formatAddress } from '@coop/cbs/utils';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, Text } from '@coop/shared/ui';
+import { TablePopover } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-/* eslint-disable-next-line */
-export interface CbsSettingsFeatureValuatorListProps {}
+const CBSSettingsValuatorPopover = ({ cell }: CellContext<ValuatorEdge, unknown>) => {
+  const router = useRouter();
+  return (
+    <TablePopover
+      node={cell?.row?.original}
+      items={[
+        {
+          title: 'settingsValuatorViewProfile',
+          onClick: (row) => {
+            router.push(`/settings/general/valuator/edit/${row.node?.id}`);
+          },
+        },
+        {
+          title: 'settingsValuatorEdit',
+          onClick: (row) => {
+            router.push(`/settings/general/valuator/edit/${row.node?.id}`);
+          },
+        },
+      ]}
+    />
+  );
+};
 
 export const CbsSettingsFeatureValuatorList = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const { mutateAsync } = useGetNewIdMutation();
 
-  const { data, isFetching } = useGetMemberListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    filter: {
-      objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    },
+  const { data, isFetching } = useGetValuatorListQuery({
+    paginate: getRouterQuery({ type: ['PAGINATION'] }),
   });
 
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
+  const rowData = useMemo<ValuatorEdge[]>(
+    () => (data?.settings?.general?.valuator?.list?.edges as ValuatorEdge[]) ?? [],
+    [data]
+  );
 
-  const popoverTitle = [
-    {
-      title: 'memberListTableViewMemberProfile',
-    },
-    {
-      title: 'memberListTableEditMember',
-    },
-    {
-      title: 'memberListTableMakeInactive',
-    },
-  ];
-
-  const columns = useMemo<Column<typeof rowData[0]>[]>(
+  const columns = useMemo<Column<ValuatorEdge>[]>(
     () => [
       {
         header: t['settingsGeneralValuatorId'],
         accessorFn: (row) => row?.node?.id,
       },
       {
-        accessorFn: (row) => row?.node?.name?.local,
+        accessorFn: (row) => row?.node?.valuatorName,
         header: t['settingsGeneralValuatorValuatorName'],
-        cell: (props) => {
-          return (
-            <Box display="flex" alignItems="center" gap="s12">
-              <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
-              <Text
-                fontSize="s3"
-                textTransform="capitalize"
-                textOverflow="ellipsis"
-                overflow="hidden"
-              >
-                {props.getValue() as string}
-              </Text>
-            </Box>
-          );
-        },
 
         meta: {
           width: '60%',
@@ -68,27 +62,24 @@ export const CbsSettingsFeatureValuatorList = () => {
       },
       {
         header: t['settingsGeneralValuatorValuatorType'],
-        accessorFn: (row) => row?.node?.contact,
-        meta: {
-          width: '30%',
-        },
+        accessorFn: (row) => row?.node?.valuatorType,
       },
       {
         header: t['settingsGeneralValuatorAddress'],
-        accessorFn: (row) =>
-          `${row?.node?.address?.locality?.local}, ${row?.node?.address?.district?.local}, ${row?.node?.address?.state?.local}`,
+        accessorFn: (row) => formatAddress(row?.node?.address),
+        meta: {
+          width: '50%',
+        },
       },
       {
         header: t['settingsGeneralValuatorContractDate'],
-        accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
+        accessorFn: (row) => row?.node?.contractDate,
       },
       {
         id: '_actions',
         header: '',
         accessorKey: 'actions',
-        cell: (cell) => (
-          <PopoverComponent items={popoverTitle} member={cell?.row?.original?.node} />
-        ),
+        cell: CBSSettingsValuatorPopover,
         meta: {
           width: '60px',
         },
@@ -115,8 +106,8 @@ export const CbsSettingsFeatureValuatorList = () => {
         isLoading={isFetching}
         columns={columns}
         pagination={{
-          total: data?.members?.list?.totalCount ?? 'Many',
-          pageInfo: data?.members?.list?.pageInfo,
+          total: data?.settings?.general?.valuator?.list?.totalCount ?? 'Many',
+          pageInfo: data?.settings?.general?.valuator?.list?.pageInfo,
         }}
       />
     </>

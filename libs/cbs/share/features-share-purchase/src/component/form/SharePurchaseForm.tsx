@@ -24,21 +24,19 @@ import {
   ShareMemberCard,
   TabMenu,
 } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import ShareInfoFooter from './ShareInfoFooter';
 import SharePaymentFooter from './SharePaymentFooter';
 import SharePurchaseInfo from './SharePurchaseInfo';
 import SharePurchasePayment from './SharePurchasePayment';
 
-const Header = () => {
-  return (
-    <>
-      <Navbar />
-      <TabMenu />
-    </>
-  );
-};
+const Header = () => (
+  <>
+    <Navbar />
+    <TabMenu />
+  </>
+);
 
 const cashOptions: Record<string, string> = {
   '1000': CashValue.Cash_1000,
@@ -183,7 +181,9 @@ const SharePurchaseForm = () => {
           </Box>
           <Container minW="container.xl" p="0" mb="60px">
             <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
-              <FormHeader title={t['sharePurchaseNewShareIssue']} />
+              <FormHeader
+                title={`${t['sharePurchaseNewShareIssue']} - ${featureCode?.newShareIssue}`}
+              />
             </Box>
             <Grid templateColumns="repeat(6,1fr)">
               {mode === 'shareInfo' && (

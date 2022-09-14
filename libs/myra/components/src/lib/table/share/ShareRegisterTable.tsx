@@ -1,14 +1,11 @@
 import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import {
-  Share_Transaction_Direction,
-  useGetShareRegisterListQuery,
-} from '@coop/cbs/data-access';
+import { Share_Transaction_Direction, useGetShareRegisterListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box } from '@coop/shared/ui';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const ShareRegisterTable = () => {
   const { t } = useTranslation();
@@ -29,10 +26,7 @@ export const ShareRegisterTable = () => {
 
   const rowData = useMemo(() => data?.share?.register?.edges ?? [], [data]);
 
-  const popoverTitle = [
-    'shareRegisterTableViewDetail',
-    'shareRegisterTableViewMemberProfile',
-  ];
+  const popoverTitle = ['shareRegisterTableViewDetail', 'shareRegisterTableViewMemberProfile'];
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -44,16 +38,12 @@ export const ShareRegisterTable = () => {
       {
         header: t['shareRegisterType'],
         accessorFn: (row) => row?.node.transactionDirection,
-        cell: (props) => {
-          return (
-            <span>
-              {(props.getValue() === Share_Transaction_Direction.Purchase &&
-                'Purchase') ||
-                (props.getValue() === Share_Transaction_Direction.Return &&
-                  'Return')}
-            </span>
-          );
-        },
+        cell: (props) => (
+          <span>
+            {(props.getValue() === Share_Transaction_Direction.Purchase && 'Purchase') ||
+              (props.getValue() === Share_Transaction_Direction.Return && 'Return')}
+          </span>
+        ),
       },
       {
         header: t['shareRegisterTableMemberID'],
@@ -64,32 +54,23 @@ export const ShareRegisterTable = () => {
         header: t['shareRegisterTableName'],
         accessorFn: (row) => row?.node?.member?.name?.local,
 
-        cell: (props) => {
-          return (
-            <Box display="flex" alignItems="center" gap="2">
-              <Avatar
-                name={props.getValue() as string}
-                size="sm"
-                src="https://bit.ly/dan-abramov"
-              />
-              <span>{props.getValue() as string}</span>
-            </Box>
-          );
-        },
+        cell: (props) => (
+          <Box display="flex" alignItems="center" gap="2">
+            <Avatar name={props.getValue() as string} size="sm" src="https://bit.ly/dan-abramov" />
+            <span>{props.getValue() as string}</span>
+          </Box>
+        ),
       },
 
       {
         header: t['shareRegisterTableNameToFrom'],
         accessorFn: (row) => row?.node.startNumber,
 
-        cell: (props) => {
-          return (
-            <span>
-              {props.getValue() as string} -{' '}
-              {props?.row?.original?.node?.endNumber}
-            </span>
-          );
-        },
+        cell: (props) => (
+          <span>
+            {props.getValue() as string} - {props?.row?.original?.node?.endNumber}
+          </span>
+        ),
       },
 
       {
@@ -97,39 +78,27 @@ export const ShareRegisterTable = () => {
         header: t['shareRegisterTableNameShareDr'],
         accessorFn: (row) => row?.node.debit,
 
-        cell: (props) => {
-          return (
-            <span>
-              {props.getValue()
-                ? `${Number(props?.getValue())?.toLocaleString('en-IN')}`
-                : '-'}
-            </span>
-          );
-        },
+        cell: (props) => (
+          <span>
+            {props.getValue() ? `${Number(props?.getValue())?.toLocaleString('en-IN')}` : '-'}
+          </span>
+        ),
       },
       {
         id: 'share-cr',
         header: t['shareRegisterTableNameShareCr'],
         accessorFn: (row) => row?.node.credit,
 
-        cell: (props) => {
-          return (
-            <span>
-              {props.getValue()
-                ? `${Number(props.getValue()).toLocaleString('en-IN')}`
-                : '-'}
-            </span>
-          );
-        },
+        cell: (props) => (
+          <span>
+            {props.getValue() ? `${Number(props.getValue()).toLocaleString('en-IN')}` : '-'}
+          </span>
+        ),
       },
       {
         header: t['shareRegisterTableNameBalance'],
         accessorFn: (row) => row?.node.balance,
-        cell: (props) => {
-          return (
-            <span>{Number(props.getValue()).toLocaleString('en-IN')}</span>
-          );
-        },
+        cell: (props) => <span>{Number(props.getValue()).toLocaleString('en-IN')}</span>,
       },
       {
         id: '_actions',
@@ -164,7 +133,7 @@ export const ShareRegisterTable = () => {
   return (
     <>
       <TableListPageHeader
-        heading={'shareRegisterTable'}
+        heading={`${t['shareRegisterTable']} - ${featureCode?.shareRegister}`}
         tabItems={shareRows}
       />
 

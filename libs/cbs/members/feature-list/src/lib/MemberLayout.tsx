@@ -10,16 +10,8 @@ import { Grid } from '@chakra-ui/react';
 
 import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { TabColumn } from '@coop/myra/components';
-import {
-  Box,
-  Button,
-  Divider,
-  GridItem,
-  Icon,
-  Modal,
-  Text,
-} from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { Box, Button, Divider, GridItem, Icon, Modal, Text } from '@coop/shared/ui';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 interface IMemberPageLayout {
   children: React.ReactNode;
@@ -32,15 +24,16 @@ const memberColumns = [
   },
 ];
 
-interface memberTypeButtonProps {
+interface MemberTypeButtonProps {
   icon: IconType;
   title: string;
   subtitle: string;
+  featCode: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
-const MemberTypeButton = (props: memberTypeButtonProps) => {
-  const { icon, title, subtitle, onClick } = props;
+const MemberTypeButton = (props: MemberTypeButtonProps) => {
+  const { icon, title, featCode, subtitle, onClick } = props;
   const { t } = useTranslation();
   return (
     <Box
@@ -52,7 +45,7 @@ const MemberTypeButton = (props: memberTypeButtonProps) => {
       px="8px"
       borderRadius="6px"
       onClick={onClick}
-      boxShadow={'none'}
+      boxShadow="none"
       color="neutralColorLight.Gray-60"
       _hover={{
         color: 'primary.500',
@@ -66,7 +59,7 @@ const MemberTypeButton = (props: memberTypeButtonProps) => {
       <Icon size="xl" as={icon} />
       <br />
       <Text fontSize="r2" fontWeight="medium" color="neutralColorLight.Gray-80">
-        {t[title]}
+        {t[title]} - {featCode}
       </Text>
       <br />
       <Text
@@ -85,22 +78,26 @@ const MemberTypeButton = (props: memberTypeButtonProps) => {
 const memberTypesArray = {
   INDIVIDUAL: {
     icon: IoMdPerson,
+    featureCode: featureCode?.newMemberIndividual,
     title: 'memberLayoutIndividual',
     subtitle: 'memberLayoutCreateKYMFormForIndividualMembers',
   },
   INSTITUTION: {
     icon: AiFillBank,
+    featureCode: featureCode?.newMemberInstitution,
     title: 'memberLayoutInstitution',
     subtitle: 'memberLayoutCreateKYMFormForInstituteMembers',
   },
 
   COOPERATIVE: {
     icon: MdCorporateFare,
+    featureCode: featureCode?.newMemberCooperative,
     title: 'memberLayoutCooperative',
     subtitle: 'memberLayoutCreateKYMFormForCoOperativeMembers',
   },
   COOPERATIVE_UNION: {
     icon: TbLayersUnion,
+    featureCode: featureCode?.newMemberCooperativeUnion,
     title: 'memberLayoutCooperativeUnion',
     subtitle: 'memberLayoutCreateKYMFormForCooperativeUnion',
   },
@@ -116,12 +113,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
 
   // const memberTypes =i memberTypesQuery?.data?.members?.memberTypes?.data;
   // memberTypes?.[0]?.type?
-  const memberTypes = [
-    'INDIVIDUAL',
-    'INSTITUTION',
-    'COOPERATIVE',
-    'COOPERATIVE_UNION',
-  ];
+  const memberTypes = ['INDIVIDUAL', 'INSTITUTION', 'COOPERATIVE', 'COOPERATIVE_UNION'];
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -156,13 +148,9 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
         <Modal
           open={openModal}
           onClose={onCloseModal}
-          isCentered={true}
+          isCentered
           title={
-            <Text
-              fontSize="r2"
-              color="neutralColorLight.Gray-80"
-              fontWeight="SemiBold"
-            >
+            <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
               {t['memberLayoutSelectMemberType']}
             </Text>
           }
@@ -170,52 +158,39 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
           <Box py="s16">
             <Grid templateColumns="repeat(2, 1fr)" gap="s16">
               {/* {memberTypes?.[0]?.type?.map((item, index) => { */}
-              {memberTypes?.map((item, index) => {
+              {memberTypes?.map((item) => {
                 if (!item) {
                   return null;
                 }
 
                 return (
-                  <GridItem key={index}>
+                  <GridItem key={item}>
                     <MemberTypeButton
                       icon={memberTypesArray[item]?.icon}
                       title={memberTypesArray[item]?.title}
+                      featCode={memberTypesArray[item]?.featureCode}
                       subtitle={memberTypesArray[item]?.subtitle}
                       onClick={() => {
                         item === 'INDIVIDUAL' &&
                           newId
                             .mutateAsync({ idType: Id_Type.Kymindividual })
-                            .then((res) =>
-                              router.push(
-                                `/members/individual/add/${res?.newId}`
-                              )
-                            );
+                            .then((res) => router.push(`/members/individual/add/${res?.newId}`));
 
                         item === 'INSTITUTION' &&
                           newId
                             .mutateAsync({ idType: Id_Type.Kyminstitutions })
-                            .then((res) =>
-                              router.push(
-                                `/members/institution/add/${res?.newId}`
-                              )
-                            );
+                            .then((res) => router.push(`/members/institution/add/${res?.newId}`));
 
                         item === 'COOPERATIVE' &&
                           newId
                             .mutateAsync({ idType: Id_Type.Kymcooperative })
-                            .then((res) =>
-                              router.push(`/members/coop/add/${res?.newId}`)
-                            );
+                            .then((res) => router.push(`/members/coop/add/${res?.newId}`));
                         item === 'COOPERATIVE_UNION' &&
                           newId
                             .mutateAsync({
                               idType: Id_Type.Kymcooperativeunion,
                             })
-                            .then((res) =>
-                              router.push(
-                                `/members/coop_union/add/${res?.newId}`
-                              )
-                            );
+                            .then((res) => router.push(`/members/coop_union/add/${res?.newId}`));
                       }}
                     />
                   </GridItem>
@@ -234,20 +209,13 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
           height="s48"
           width="full"
           justifyContent="start"
-          leftIcon={
-            <Icon as={AiOutlineSetting} size="md" color="primary.500" />
-          }
+          leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
         >
           {t['memberLayoutMemberSettings']}
         </Button>
       </Box>
 
-      <Box
-        width="calc(100% - 275px)"
-        overflowX="hidden"
-        position="relative"
-        left="275px"
-      >
+      <Box width="calc(100% - 275px)" overflowX="hidden" position="relative" left="275px">
         <Box bg="white" minHeight="calc(100vh - 110px)" width="100%">
           {children}
         </Box>

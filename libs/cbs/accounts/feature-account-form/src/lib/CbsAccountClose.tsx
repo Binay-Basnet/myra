@@ -28,7 +28,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
 
 import { Payment } from '../component/AccountCloseForm/payment';
 
@@ -249,7 +249,7 @@ export const CbsAccountClose = () => {
         <form>
           {' '}
           <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
-            <FormHeader title={t['accountClose']} />
+            <FormHeader title={`${t['accountClose']} - ${featureCode?.newAccountClose}`} />
           </Box>
           <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
             <Box display="flex" flexDirection="column" w="100%">

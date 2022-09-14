@@ -11,10 +11,7 @@ import {
 import { FormFileInput } from '@coop/shared/form';
 
 interface IKYMDocumentFieldProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
   mutationId: string;
   name: string;
   label?: string;
@@ -56,9 +53,7 @@ export const KYMDocumentField = ({
     if (editValues) {
       const kymDocumentsList = editValues?.document?.listKYMDocuments?.data;
 
-      const documentData = kymDocumentsList?.find(
-        (doc) => doc?.fieldId === name
-      );
+      const documentData = kymDocumentsList?.find((doc) => doc?.fieldId === name);
 
       //
 
@@ -66,7 +61,7 @@ export const KYMDocumentField = ({
         reset({
           [name]: documentData.docData.map((file) => ({
             url: file?.url,
-            fileName: file?.identifier,
+            identifier: file?.identifier,
           })),
         });
       }

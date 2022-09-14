@@ -5,11 +5,11 @@ import { useGetAccountTableListQuery } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, PageHeader, Text } from '@coop/shared/ui';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 import { MEMBER_TAB_ITEMS } from '../component/form/utils/memberTabItems';
 
-export function CBSAccountList() {
+export const CBSAccountList = () => {
   const router = useRouter();
 
   const { t } = useTranslation();
@@ -42,25 +42,20 @@ export function CBSAccountList() {
       {
         header: 'Member Name',
         accessorFn: (row) => row?.node?.member?.name?.local,
-        cell: (props) => {
-          return (
-            <Box
-              display="flex"
-              flexDirection="row"
-              gap="s8"
-              justifyContent="flex-start"
-              alignItems={'center'}
-            >
-              <Avatar
-                name={props.row?.original?.node?.member?.name?.local}
-                size="sm"
-              />
-              <Text fontWeight="400" fontSize="r1">
-                {props.row?.original?.node?.member?.name?.local}
-              </Text>
-            </Box>
-          );
-        },
+        cell: (props) => (
+          <Box
+            display="flex"
+            flexDirection="row"
+            gap="s8"
+            justifyContent="flex-start"
+            alignItems="center"
+          >
+            <Avatar name={props.row?.original?.node?.member?.name?.local} size="sm" />
+            <Text fontWeight="400" fontSize="r1">
+              {props.row?.original?.node?.member?.name?.local}
+            </Text>
+          </Box>
+        ),
       },
 
       {
@@ -70,11 +65,7 @@ export function CBSAccountList() {
       {
         header: 'Account Open Date',
         accessorFn: (row) => row?.node?.createdAt,
-        cell: (props) => {
-          return (
-            <span>{props?.row?.original?.node?.createdAt.split('T')[0]} </span>
-          );
-        },
+        cell: (props) => <span>{props?.row?.original?.node?.createdAt.split('T')[0]} </span>,
       },
       {
         id: '_actions',
@@ -95,7 +86,10 @@ export function CBSAccountList() {
 
   return (
     <>
-      <PageHeader heading="Account List" tabItems={MEMBER_TAB_ITEMS} />
+      <PageHeader
+        heading={`Account List - ${featureCode?.accountList}`}
+        tabItems={MEMBER_TAB_ITEMS}
+      />
 
       <Table
         isLoading={isLoading}
@@ -108,6 +102,6 @@ export function CBSAccountList() {
       />
     </>
   );
-}
+};
 
 export default CBSAccountList;

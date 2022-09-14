@@ -21,11 +21,7 @@ export const DocumentDeclarationInstitution = (props: IProps) => {
   const { setSection } = props;
 
   return (
-    <FormSection
-      templateColumns={2}
-      id="Documents Declaration"
-      header="kymInsDocumentsDeclaration"
-    >
+    <FormSection templateColumns={2} id="Documents Declaration" header="kymInsDocumentsDeclaration">
       <KYMDocumentDeclarationField
         name="institutionAgmDocument"
         label={t['kymInsAGMDecisionDocument']}
@@ -36,11 +32,7 @@ export const DocumentDeclarationInstitution = (props: IProps) => {
         label={t['kymInsRegisteredCertificate']}
         setSection={setSection}
       />
-      <KYMDocumentDeclarationField
-        name="InsMOA/AOA"
-        label="MOA/AOA"
-        setSection={setSection}
-      />
+      <KYMDocumentDeclarationField name="InsMOA/AOA" label="MOA/AOA" setSection={setSection} />
       <KYMDocumentDeclarationField
         name="InsPanCertificate"
         label={t['kymInsPANCertificate']}
@@ -89,9 +81,7 @@ const KYMDocumentDeclarationField = ({
     if (editValues) {
       const kymDocumentsList = editValues?.document?.listKYMDocuments?.data;
 
-      const documentData = kymDocumentsList?.find(
-        (doc) => doc?.fieldId === name
-      );
+      const documentData = kymDocumentsList?.find((doc) => doc?.fieldId === name);
 
       //
 
@@ -99,7 +89,7 @@ const KYMDocumentDeclarationField = ({
         reset({
           [name]: documentData.docData.map((file) => ({
             url: file?.url,
-            fileName: file?.identifier,
+            identifier: file?.identifier,
           })),
         });
       }

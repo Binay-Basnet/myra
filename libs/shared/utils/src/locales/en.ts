@@ -2412,6 +2412,9 @@ const en: Record<string, string> = {
   // settings general sidebar
   settingsSideBarValuator: 'Valuator',
 
+  settingsValuatorViewProfile: 'View Valuator Profile',
+  settingsValuatorEdit: 'Edit Valuator',
+
   // settings general valuator
   settingsGeneralValuatorValuator: 'Valuator',
   settingsGeneralValuatorNewValuator: 'New Valuator',

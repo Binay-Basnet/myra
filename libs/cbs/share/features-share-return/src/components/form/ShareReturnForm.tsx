@@ -25,21 +25,19 @@ import {
   ShareMemberCard,
   TabMenu,
 } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import ShareInfoFooter from './ShareInfoFooter';
 import SharePaymentFooter from './SharePaymentFooter';
 import ShareReturnInfo from './ShareReturnInfo';
 import ShareReturnPayment from './ShareReturnPayment';
 
-const Header = () => {
-  return (
-    <>
-      <Navbar />
-      <TabMenu />
-    </>
-  );
-};
+const Header = () => (
+  <>
+    <Navbar />
+    <TabMenu />
+  </>
+);
 
 const cashOptions: Record<string, string> = {
   '1000': CashValue.Cash_1000,
@@ -77,21 +75,15 @@ const ShareReturnForm = () => {
 
   const denominationTotal =
     denominations?.reduce(
-      (accumulator: number, curr: { amount: string }) =>
-        accumulator + Number(curr.amount),
+      (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
       0 as number
     ) ?? 0;
 
-  const totalCashPaid: number = disableDenomination
-    ? Number(cashPaid)
-    : Number(denominationTotal);
+  const totalCashPaid: number = disableDenomination ? Number(cashPaid) : Number(denominationTotal);
 
   const returnAmount = totalAmount - totalCashPaid;
 
-  const { data } = useGetMemberIndividualDataQuery(
-    { id: memberId },
-    { enabled: !!memberId }
-  );
+  const { data } = useGetMemberIndividualDataQuery({ id: memberId }, { enabled: !!memberId });
 
   const memberDetail = data && data?.members?.details?.data;
 
@@ -114,12 +106,7 @@ const ShareReturnForm = () => {
   const handleSubmit = () => {
     const values = getValues();
     let updatedValues: ShareReturnInput = {
-      ...omit(values, [
-        'printingFee',
-        'adminFee',
-        'selectAllShares',
-        'accountAmount',
-      ]),
+      ...omit(values, ['printingFee', 'adminFee', 'selectAllShares', 'accountAmount']),
       extraFee: [
         {
           name: 'adminFee',
@@ -143,10 +130,7 @@ const ShareReturnForm = () => {
         disableDenomination: Boolean(values['cash']?.disableDenomination),
         total: String(totalCashPaid),
         returned_amount: String(returnAmount),
-        fileUpload:
-          values['cash']?.fileUpload?.length > 0
-            ? values['cash']?.fileUpload[0]
-            : null,
+        fileUpload: values['cash']?.fileUpload?.length > 0 ? values['cash']?.fileUpload[0] : null,
         denominations:
           values['cash']?.denominations?.map(
             ({ value, quantity }: { value: string; quantity: number }) => ({
@@ -177,9 +161,7 @@ const ShareReturnForm = () => {
   };
 
   useEffect(() => {
-    setTotalAmount(
-      noOfShares * 100 - (Number(adminFees ?? 0) + Number(printingFees ?? 0))
-    );
+    setTotalAmount(noOfShares * 100 - (Number(adminFees ?? 0) + Number(printingFees ?? 0)));
   }, [noOfShares, adminFees, printingFees]);
 
   useEffect(() => {
@@ -212,14 +194,10 @@ const ShareReturnForm = () => {
             <Header />
           </Box>
           <Container minW="container.xl" p="0" mb="60px">
-            <Box
-              position="sticky"
-              top="110px"
-              bg="gray.100"
-              width="100%"
-              zIndex="10"
-            >
-              <FormHeader title={t['shareLayoutShareReturnAdd']} />
+            <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+              <FormHeader
+                title={`${t['shareLayoutShareReturnAdd']} - ${featureCode?.newShareReturn}`}
+              />
             </Box>
 
             <Grid templateColumns="repeat(6,1fr)">

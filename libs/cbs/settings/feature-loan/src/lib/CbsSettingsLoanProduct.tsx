@@ -12,7 +12,7 @@ import {
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Box, Button, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 export const SettingsLoanProduct = () => {
   const router = useRouter();
@@ -266,7 +266,7 @@ export const SettingsLoanProduct = () => {
       <Box borderBottom="1px solid " borderColor="border.layout" p="8px 16px">
         <Box display="flex" justifyContent="space-between" alignItems="center" h="100%">
           <Text fontSize="r2" fontWeight="600" color="gray.800">
-            {t['loanProductsLoanProducts']}
+            {`${t['loanProductsLoanProducts']} - ${featureCode?.loanProductsList}`}
           </Text>
           <Button
             leftIcon={<AddIcon h="11px" />}
