@@ -52,7 +52,7 @@ export const UsersList = () => {
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
             <Avatar
-              name={props.getValue()}
+              name={props.getValue() as string}
               size="sm"
               src={props.row.original.node?.profilePicUrl ?? ''}
             />
