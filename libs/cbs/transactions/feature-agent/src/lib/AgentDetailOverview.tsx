@@ -3,22 +3,13 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import {
-  useGetAccountTableListQuery,
   useGetAgentAssignedMemberListDataQuery,
   useGetAgentTodayListDataQuery,
   useSetAgentTodayListDataMutation,
 } from '@coop/cbs/data-access';
 import { AssignedMembersCard } from '@coop/cbs/transactions/ui-components';
 import { FormEditableTable } from '@coop/shared/form';
-import {
-  Alert,
-  asyncToast,
-  Box,
-  Button,
-  DEFAULT_PAGE_SIZE,
-  DetailPageContentCard,
-} from '@coop/shared/ui';
-import { getRouterQuery } from '@coop/shared/utils';
+import { Alert, asyncToast, Box, Button, DetailPageContentCard, Text } from '@coop/shared/ui';
 
 /* eslint-disable-next-line */
 export interface AgentDetailOverviewProps {}
@@ -30,9 +21,7 @@ type DepositAccountTable = {
   memberName: string;
 };
 
-// const URL = process.env['NX_SCHEMA_PATH'] ?? '';
-
-export function AgentDetailOverview() {
+export const AgentDetailOverview = () => {
   const router = useRouter();
 
   const id = router?.query?.['id'];
@@ -42,21 +31,6 @@ export function AgentDetailOverview() {
   const { getValues, reset } = methods;
 
   const [showMemberTable, setShowMemberTable] = useState<boolean>(false);
-
-  const [memberId, setMemberId] = useState<string>('');
-
-  const { refetch } = useGetAccountTableListQuery(
-    {
-      paginate: {
-        first: DEFAULT_PAGE_SIZE,
-        after: '',
-      },
-      filter: { memberId },
-    },
-    {
-      enabled: !!memberId,
-    }
-  );
 
   const { data: agentTodayListQueryData } = useGetAgentTodayListDataQuery(
     {
@@ -70,36 +44,37 @@ export function AgentDetailOverview() {
       setShowMemberTable(true);
 
       reset({
-        accounts:
-          agentTodayListQueryData?.transaction?.listAgentTask?.record?.map(
-            (record) => ({
-              member: record?.member?.id,
-              account: record?.account?.id,
-              amount: record?.amount,
-            })
-          ),
+        accounts: agentTodayListQueryData?.transaction?.listAgentTask?.record?.map((record) => ({
+          member: record?.member?.id,
+          account: record?.account?.id,
+          amount: record?.amount,
+        })),
       });
     }
   }, [agentTodayListQueryData]);
 
-  const getMemberAccounts = async (memberId: string) => {
-    setMemberId(memberId);
+  const getMemberAccounts = async (mId: string) =>
+    new Promise<{ label: string; value: string }[]>((resolve) => {
+      const tempAccountList: { label: string; value: string }[] = [];
 
-    const response = await refetch();
+      assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.forEach((member) => {
+        if (member?.node?.member?.id === mId) {
+          tempAccountList.push({
+            label: member?.node?.product?.productName as string,
+            value: member?.node?.account?.id as string,
+          });
+        }
+      });
 
-    return new Promise<{ label: string; value: string }[]>((resolve) => {
-      resolve(
-        response?.data?.account?.list?.edges?.map((account) => ({
-          label: account?.node?.product?.productName,
-          value: account?.node?.id,
-        })) as { label: string; value: string }[]
-      );
+      resolve(tempAccountList);
     });
-  };
 
-  const { data: memberListQueryData } = useGetAgentAssignedMemberListDataQuery(
+  const { data: assignedMemberListQueryData } = useGetAgentAssignedMemberListDataQuery(
     {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: {
+        first: -1,
+        after: '',
+      },
       filter: {
         agentId: id as string,
       },
@@ -107,16 +82,22 @@ export function AgentDetailOverview() {
     { enabled: !!id }
   );
 
-  const memberListSearchOptions = useMemo(
-    () =>
-      memberListQueryData?.transaction?.assignedMemberList?.edges?.map(
-        (member) => ({
+  const memberListSearchOptions = useMemo(() => {
+    const tempMembers: { label: string; value: string }[] = [];
+    const tempIds: string[] = [];
+
+    assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.forEach((member) => {
+      if (!tempIds.includes(member?.node?.member?.id as string)) {
+        tempIds.push(member?.node?.member?.id as string);
+        tempMembers.push({
           label: member?.node?.member?.name?.local as string,
           value: member?.node?.member?.id as string,
-        })
-      ) ?? [],
-    [memberListQueryData]
-  );
+        });
+      }
+    });
+
+    return tempMembers;
+  }, [assignedMemberListQueryData]);
 
   const { mutateAsync: setAgentTodayList } = useSetAgentTodayListDataMutation();
 
@@ -144,14 +125,11 @@ export function AgentDetailOverview() {
   const handleDiscardChanges = () => {
     if (agentTodayListQueryData?.transaction?.listAgentTask?.record?.length) {
       reset({
-        accounts:
-          agentTodayListQueryData?.transaction?.listAgentTask?.record?.map(
-            (record) => ({
-              member: record?.member?.id,
-              account: record?.account?.id,
-              amount: record?.amount,
-            })
-          ),
+        accounts: agentTodayListQueryData?.transaction?.listAgentTask?.record?.map((record) => ({
+          member: record?.member?.id,
+          account: record?.account?.id,
+          amount: record?.amount,
+        })),
       });
     } else {
       setShowMemberTable(false);
@@ -166,7 +144,7 @@ export function AgentDetailOverview() {
         <Alert
           status="info"
           title="Create Today's List"
-          showUndo={true}
+          showUndo
           undoText="Create Today's List"
           undoHandler={() => setShowMemberTable(true)}
         />
@@ -175,7 +153,7 @@ export function AgentDetailOverview() {
       {showMemberTable && (
         <DetailPageContentCard
           header="Today's List"
-          showFooter={true}
+          showFooter
           footerButtons={
             <>
               <Button variant="ghost" onClick={handleDiscardChanges}>
@@ -197,24 +175,22 @@ export function AgentDetailOverview() {
                     cellWidth: 'auto',
                     fieldType: 'search',
                     searchOptions: memberListSearchOptions,
-                    // cell: (row) => (
-                    //   <Box display="flex" flexDirection="column" gap="s4">
-                    //     <Text
-                    //       fontSize="r1"
-                    //       fontWeight={500}
-                    //       color="neutralColorLight.Gray-80"
-                    //     >
-                    //       {row?.memberName}
-                    //     </Text>
-                    //     <Text
-                    //       fontSize="s3"
-                    //       fontWeight={500}
-                    //       color="neutralColorLight.Gray-60"
-                    //     >
-                    //       {row?.memberId}
-                    //     </Text>
-                    //   </Box>
-                    // ),
+                    cell: (row) => {
+                      const memberName = memberListSearchOptions?.find(
+                        (member) => member.value === row.member
+                      )?.label;
+
+                      return (
+                        <Box display="flex" flexDirection="column" py="s4">
+                          <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
+                            {memberName}
+                          </Text>
+                          <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-60">
+                            {row?.member}
+                          </Text>
+                        </Box>
+                      );
+                    },
                   },
                   {
                     accessor: 'account',
@@ -236,7 +212,7 @@ export function AgentDetailOverview() {
                 ]}
                 // defaultData={accountListDefaultData}
                 searchPlaceholder="Search or add member"
-                canDeleteRow={true}
+                canDeleteRow
                 // canAddRow={false}
               />
             </FormProvider>
@@ -245,6 +221,6 @@ export function AgentDetailOverview() {
       )}
     </Box>
   );
-}
+};
 
 export default AgentDetailOverview;

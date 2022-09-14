@@ -50,6 +50,9 @@ query getAgentAssignedMemberListData($filter: AssignedMemberListFiler, $paginati
           account {
             id
           }
+          product {
+            productName
+          }
           assignedDate
         }
         cursor

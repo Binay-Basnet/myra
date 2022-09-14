@@ -352,6 +352,7 @@ export type AssignedMemberList = {
   assignedDate?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   member?: Maybe<Member>;
+  product?: Maybe<DepositProduct>;
 };
 
 export type AssignedMemberListEdges = {
@@ -6781,7 +6782,7 @@ export type MyraUserFormStateData = {
   landlordName?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   permanentAddress?: Maybe<KymAddress>;
-  profilePicture?: Maybe<PictureData>;
+  profilePicture?: Maybe<Array<Maybe<PictureData>>>;
   role?: Maybe<Roles>;
   temporaryAddress?: Maybe<KymAddress>;
 };
@@ -10311,6 +10312,7 @@ export type GetAgentAssignedMemberListDataQuery = {
           assignedDate?: string | null;
           member?: { id: string; name?: Record<'local' | 'en' | 'np', string> | null } | null;
           account?: { id: string } | null;
+          product?: { productName: string } | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -13220,7 +13222,7 @@ export type GetSettingsUserEditDataQuery = {
             houseNo?: string | null;
             coordinates?: { longitude?: number | null; latitude?: number | null } | null;
           } | null;
-          profilePicture?: { identifier?: string | null; url?: string | null } | null;
+          profilePicture?: Array<{ identifier?: string | null; url?: string | null } | null> | null;
         } | null;
       } | null;
     } | null;
@@ -16615,6 +16617,9 @@ export const GetAgentAssignedMemberListDataDocument = `
           }
           account {
             id
+          }
+          product {
+            productName
           }
           assignedDate
         }
