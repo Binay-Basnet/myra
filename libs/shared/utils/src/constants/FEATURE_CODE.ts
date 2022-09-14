@@ -22,7 +22,7 @@ export const featureCode = {
   newAgentTransaction: '10305',
   depositList: '10306',
   withdrawList: '10308',
-  accountTransfer: '10310',
+  accountTransferList: '10310',
   agentList: '10314',
 
   newLoan: '10401',

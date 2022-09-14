@@ -5,7 +5,7 @@ import { useGetAgentListDataQuery } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, PageHeader, Text } from '@coop/shared/ui';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const MEMBER_TAB_ITEMS = [
   {
@@ -64,11 +64,15 @@ export const AgentList = () => {
         header: 'Agent Name',
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
+<<<<<<< HEAD
+            <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
+=======
             <Avatar
               name={props?.getValue() as string}
               size="sm"
               src={props?.row?.original?.node?.profilePicUrl ?? ''}
             />
+>>>>>>> eb9ddbc1a6145d2afcf32614990d87c3dba9113f
             <Text
               fontSize="s3"
               textTransform="capitalize"
@@ -115,7 +119,7 @@ export const AgentList = () => {
 
   return (
     <>
-      <PageHeader heading="Agent List" tabItems={MEMBER_TAB_ITEMS} />
+      <PageHeader heading={`Agent List - ${featureCode?.agentList}`} tabItems={MEMBER_TAB_ITEMS} />
 
       <Table
         data={rowData}
