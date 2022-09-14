@@ -807,17 +807,11 @@ export type ChartsOfAccountFilter = {
 
 export type ChartsOfAccountMutation = {
   add: AddChartsOfAccountResult;
-  delete: AddChartsOfAccountResult;
 };
 
 
 export type ChartsOfAccountMutationAddArgs = {
   data: AddCoaAccountInput;
-};
-
-
-export type ChartsOfAccountMutationDeleteArgs = {
-  id: Scalars['ID'];
 };
 
 export type ChartsOfAccountResult = {
@@ -6914,7 +6908,7 @@ export type MyraUserFormStateData = {
   landlordName?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   permanentAddress?: Maybe<KymAddress>;
-  profilePicture?: Maybe<PictureData>;
+  profilePicture?: Maybe<Array<Maybe<PictureData>>>;
   role?: Maybe<Roles>;
   temporaryAddress?: Maybe<KymAddress>;
 };
@@ -9398,14 +9392,14 @@ export type GetAgentListDataQueryVariables = Exact<{
 }>;
 
 
-export type GetAgentListDataQuery = { transaction: { listAgent: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, agentName?: string | null, phoneNo?: string | null, assignedMember?: number | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetAgentListDataQuery = { transaction: { listAgent: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, agentName?: string | null, phoneNo?: string | null, assignedMember?: number | null, profilePicUrl?: string | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type GetAgentDetailDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetAgentDetailDataQuery = { transaction: { agentDetail?: { data?: { id?: string | null, name?: string | null, branch?: string | null, totalMembers?: number | null } | null } | null } };
+export type GetAgentDetailDataQuery = { transaction: { agentDetail?: { data?: { id?: string | null, name?: string | null, branch?: string | null, totalMembers?: number | null, profilePicUrl?: string | null } | null } | null } };
 
 export type GetAgentAssignedMemberListDataQueryVariables = Exact<{
   filter?: InputMaybe<AssignedMemberListFiler>;
@@ -9938,14 +9932,14 @@ export type GetSettingsUserListDataQueryVariables = Exact<{
 }>;
 
 
-export type GetSettingsUserListDataQuery = { settings: { myraUser?: { list?: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, name?: string | null, email?: string | null, contactNo?: string | null, gender?: UserGender | null, dob?: string | null, role?: Roles | null, branch?: { id: string } | null } | null }> | null, pageInfo: PaginationFragment } | null } | null } };
+export type GetSettingsUserListDataQuery = { settings: { myraUser?: { list?: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, name?: string | null, email?: string | null, contactNo?: string | null, gender?: UserGender | null, dob?: string | null, role?: Roles | null, profilePicUrl?: string | null, branch?: { id: string } | null } | null }> | null, pageInfo: PaginationFragment } | null } | null } };
 
 export type GetSettingsUserEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetSettingsUserEditDataQuery = { settings: { myraUser?: { formState?: { data?: { name?: string | null, email?: string | null, contactNo?: string | null, gender?: UserGender | null, dob?: string | null, role?: Roles | null, branch?: string | null, identificationSelection?: Array<string | null> | null, isTempAsPermanentAddressSame?: boolean | null, landlordName?: string | null, landlordContact?: string | null, identificationDetails?: Array<{ id?: string | null, idNo?: string | null, idType?: string | null, place?: string | null, date?: string | null } | null> | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, profilePicture?: { identifier?: string | null, url?: string | null } | null } | null } | null } | null } };
+export type GetSettingsUserEditDataQuery = { settings: { myraUser?: { formState?: { data?: { name?: string | null, email?: string | null, contactNo?: string | null, gender?: UserGender | null, dob?: string | null, role?: Roles | null, branch?: string | null, identificationSelection?: Array<string | null> | null, isTempAsPermanentAddressSame?: boolean | null, landlordName?: string | null, landlordContact?: string | null, identificationDetails?: Array<{ id?: string | null, idNo?: string | null, idType?: string | null, place?: string | null, date?: string | null } | null> | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, profilePicture?: Array<{ identifier?: string | null, url?: string | null } | null> | null } | null } | null } | null } };
 
 export type GetValuatorQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -12459,6 +12453,7 @@ export const GetAgentListDataDocument = `
           agentName
           phoneNo
           assignedMember
+          profilePicUrl
         }
         cursor
       }
@@ -12493,6 +12488,7 @@ export const GetAgentDetailDataDocument = `
         name
         branch
         totalMembers
+        profilePicUrl
       }
     }
   }
@@ -16338,6 +16334,7 @@ export const GetSettingsUserListDataDocument = `
             branch {
               id
             }
+            profilePicUrl
           }
           cursor
         }

@@ -2,6 +2,7 @@ export * from './controllers/FormAccountInput/FormAccountInput';
 export * from './controllers/FormAddress/FormAddress';
 export * from './controllers/FormCheckbox/FormCheckbox';
 export * from './controllers/FormCheckboxGroup/FormCheckboxGroup';
+export * from './controllers/FormDatePicker/FormDatePicker';
 export * from './controllers/FormEditableTable/FormEditableTable';
 export * from './controllers/FormEmailInput/FormEmailInput';
 export * from './controllers/FormFileInput/FormFileInput';
