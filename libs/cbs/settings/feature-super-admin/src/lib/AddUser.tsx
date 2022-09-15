@@ -386,14 +386,14 @@ export const AddUser = () => {
 
                         <FormInput
                           type="text"
-                          name="passportIssue.place"
+                          name="passport.place"
                           label={t['kymIndPassportIssuePlace']}
                           __placeholder={t['kymIndPassportIssuePlace']}
                         />
 
                         <FormInput
                           type="date"
-                          name="passportIssue.date"
+                          name="passport.date"
                           label={t['kymIndPassportIssueDate']}
                           __placeholder={t['kymIndPassportIssueDate']}
                         />
