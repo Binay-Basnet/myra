@@ -5,32 +5,31 @@ import { FormEditableTable } from '@coop/shared/form';
 import { Box } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-type ProductTypeTable = {
+type ProductTableType = {
   productType: string;
   description: string;
 };
 
-export function ProductTypeTable() {
+export const ProductTypeTable = () => {
   const { t } = useTranslation();
   const { mutateAsync } = useGetNewIdMutation();
 
-  const getId = (): Promise<{ newId: string }> => {
-    return new Promise((resolve) => {
+  const getId = (): Promise<{ newId: string }> =>
+    new Promise((resolve) => {
       const response = mutateAsync({});
       if (response) {
         resolve(response);
       }
     });
-  };
 
   return (
-    <Box width="full" display={'flex'} flexDirection={'column'}>
-      <GroupContainer scrollMarginTop={'200px'} display="flex" flexDirection={'column'} gap="s16">
+    <Box width="full" display="flex" flexDirection="column">
+      <GroupContainer scrollMarginTop="200px" display="flex" flexDirection="column" gap="s16">
         <TextBoxContainer>
           <TopText>{t['loanProductTypeProductType']}</TopText>
         </TextBoxContainer>
         <Box>
-          <FormEditableTable<ProductTypeTable>
+          <FormEditableTable<ProductTableType>
             name="productType"
             getRowId={getId}
             columns={[
@@ -45,11 +44,13 @@ export function ProductTypeTable() {
                 cellWidth: 'auto',
               },
             ]}
+            canAddRow={false}
+            canDeleteRow={false}
           />
         </Box>
       </GroupContainer>
     </Box>
   );
-}
+};
 
 export default ProductTypeTable;

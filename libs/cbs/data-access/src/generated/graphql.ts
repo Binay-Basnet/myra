@@ -685,6 +685,13 @@ export type BranchSearchFilter = {
   query?: InputMaybe<Scalars['String']>;
 };
 
+export enum BuildingType {
+  Commercial = 'COMMERCIAL',
+  Industrial = 'INDUSTRIAL',
+  Institutional = 'INSTITUTIONAL',
+  Residential = 'RESIDENTIAL',
+}
+
 export type CoaFullView = {
   data?: Maybe<Array<Maybe<CoaView>>>;
   error?: Maybe<QueryError>;
@@ -915,6 +922,15 @@ export type ConfigQueryBankArgs = {
 export type ConfigQueryCountryArgs = {
   code: Scalars['String'];
 };
+
+export enum ConstructionType {
+  ConcreteFrame = 'CONCRETE_FRAME',
+  JoistedOrLoadBearingMasonry = 'JOISTED_OR_LOAD_BEARING_MASONRY',
+  LightGaugeSteelFrame = 'LIGHT_GAUGE_STEEL_FRAME',
+  PreEngineered = 'PRE_ENGINEERED',
+  SteelFrame = 'STEEL_FRAME',
+  WoodFrame = 'WOOD_FRAME',
+}
 
 export type Contact = {
   mobile?: Maybe<Scalars['String']>;
@@ -3612,6 +3628,11 @@ export type GeneralSettingsQuery = {
   valuator?: Maybe<ValuatorSettingsQuery>;
 };
 
+export enum GracePeriod {
+  Interest = 'INTEREST',
+  Principal = 'PRINCIPAL',
+}
+
 export enum Id_Type {
   Address = 'ADDRESS',
   Bank = 'BANK',
@@ -6075,6 +6096,247 @@ export type Level2HelloArgs = {
   data: ExampleInput;
 };
 
+export type LoanAccount = Base & {
+  LoanAccountName?: Maybe<Scalars['String']>;
+  appliedLoanAmount: Scalars['String'];
+  approvedDate?: Maybe<Scalars['String']>;
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  id: Scalars['ID'];
+  intrestRate?: Maybe<Scalars['Float']>;
+  justifySanction?: Maybe<Scalars['String']>;
+  loanProcessingCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
+  member: Member;
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  note?: Maybe<Scalars['String']>;
+  objState: ObjState;
+  product: LoanProduct;
+  productSubType: LoanSettingsProductSubTypeData;
+  productType: LoanProductType;
+  repaymentScheme?: Maybe<LoanRepaymentScheme>;
+  tenure?: Maybe<Scalars['Int']>;
+  totalSanctionedAmount?: Maybe<Scalars['String']>;
+  totalValuation?: Maybe<Scalars['String']>;
+};
+
+export type LoanAccountCollateral = {
+  area?: Maybe<Scalars['Float']>;
+  buildingType?: Maybe<BuildingType>;
+  collateralDescription?: Maybe<Scalars['String']>;
+  collateralFiles?: Maybe<Array<Maybe<Scalars['String']>>>;
+  collateralType?: Maybe<Scalars['String']>;
+  collaterallValuation?: Maybe<Scalars['Amount']>;
+  constructionType?: Maybe<ConstructionType>;
+  description?: Maybe<Scalars['String']>;
+  documentName?: Maybe<Scalars['String']>;
+  dvMinAmount?: Maybe<Scalars['String']>;
+  fmvMaxAmount?: Maybe<Scalars['Amount']>;
+  kittaNo?: Maybe<Scalars['Int']>;
+  noOfStorey?: Maybe<Scalars['Int']>;
+  ownerName?: Maybe<Scalars['String']>;
+  plotNo?: Maybe<Scalars['Int']>;
+  relation?: Maybe<Scalars['String']>;
+  sheetNo?: Maybe<Scalars['Int']>;
+  valuationAmount?: Maybe<Scalars['String']>;
+  valuationFiles?: Maybe<Array<Maybe<Scalars['String']>>>;
+  valuationMethod?: Maybe<ValuationMethod>;
+  valuationPercent?: Maybe<Scalars['Float']>;
+  valuatorId?: Maybe<Scalars['String']>;
+  vehicleCapacity?: Maybe<Scalars['String']>;
+  vehicleFuelType?: Maybe<Scalars['String']>;
+  vehicleModelNo?: Maybe<Scalars['String']>;
+  vehicleName?: Maybe<Scalars['String']>;
+  vehicleNo?: Maybe<Scalars['String']>;
+  vehicleRegistrationNo?: Maybe<Scalars['String']>;
+  vehicleSeatCapacity?: Maybe<Scalars['Int']>;
+  vehicleType?: Maybe<Scalars['String']>;
+};
+
+export type LoanAccountCollateralData = {
+  area?: InputMaybe<Scalars['Float']>;
+  buildingType?: InputMaybe<BuildingType>;
+  collateralDescription?: InputMaybe<Scalars['String']>;
+  collateralFiles?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  collateralType?: InputMaybe<Scalars['String']>;
+  collaterallValuation?: InputMaybe<Scalars['Amount']>;
+  constructionType?: InputMaybe<ConstructionType>;
+  description?: InputMaybe<Scalars['String']>;
+  documentName?: InputMaybe<Scalars['String']>;
+  dvMinAmount?: InputMaybe<Scalars['String']>;
+  fmvMaxAmount?: InputMaybe<Scalars['Amount']>;
+  kittaNo?: InputMaybe<Scalars['Int']>;
+  noOfStorey?: InputMaybe<Scalars['Int']>;
+  ownerName?: InputMaybe<Scalars['String']>;
+  plotNo?: InputMaybe<Scalars['Int']>;
+  relation?: InputMaybe<Scalars['String']>;
+  sheetNo?: InputMaybe<Scalars['Int']>;
+  valuationAmount?: InputMaybe<Scalars['String']>;
+  valuationFiles?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  valuationMethod?: InputMaybe<ValuationMethod>;
+  valuationPercent?: InputMaybe<Scalars['Float']>;
+  valuatorId?: InputMaybe<Scalars['String']>;
+  vehicleCapacity?: InputMaybe<Scalars['String']>;
+  vehicleFuelType?: InputMaybe<Scalars['String']>;
+  vehicleModelNo?: InputMaybe<Scalars['String']>;
+  vehicleName?: InputMaybe<Scalars['String']>;
+  vehicleNo?: InputMaybe<Scalars['String']>;
+  vehicleRegistrationNo?: InputMaybe<Scalars['String']>;
+  vehicleSeatCapacity?: InputMaybe<Scalars['Int']>;
+  vehicleType?: InputMaybe<Scalars['String']>;
+};
+
+export type LoanAccountCollateralResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<LoanAccountQuery>;
+  record?: Maybe<LoanAccount>;
+  recordId: Scalars['ID'];
+};
+
+export type LoanAccountConnection = {
+  edges?: Maybe<Array<LoanAccountEdge>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type LoanAccountEdge = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<LoanAccount>;
+};
+
+export type LoanAccountFormState = {
+  LoanAccountName?: Maybe<Scalars['String']>;
+  appliedLoanAmount?: Maybe<Scalars['String']>;
+  collateralData?: Maybe<Array<Maybe<LoanAccountCollateral>>>;
+  gracePeriod?: Maybe<LoanAccountGrace>;
+  gurantee_details?: Maybe<Array<Maybe<LoanAccountGurantee>>>;
+  intrestRate?: Maybe<Scalars['Float']>;
+  justifySanction?: Maybe<Scalars['String']>;
+  loanProcessingCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
+  memberId?: Maybe<Scalars['ID']>;
+  note?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['ID']>;
+  productSubType?: Maybe<Scalars['ID']>;
+  productType: LoanProductType;
+  repaymentScheme?: Maybe<LoanRepaymentScheme>;
+  tenure?: Maybe<Scalars['Int']>;
+  totalSanctionedAmount?: Maybe<Scalars['String']>;
+  totalValuation?: Maybe<Scalars['String']>;
+};
+
+export type LoanAccountFormStateResult = {
+  data?: Maybe<LoanAccountFormState>;
+  error?: Maybe<QueryError>;
+};
+
+export type LoanAccountGrace = {
+  gracePeriod?: Maybe<GracePeriod>;
+  installmentNo?: Maybe<Scalars['Int']>;
+};
+
+export type LoanAccountGraceInput = {
+  gracePeriod?: InputMaybe<GracePeriod>;
+  installmentNo?: InputMaybe<Scalars['Int']>;
+};
+
+export type LoanAccountGracePeriodResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<LoanAccountQuery>;
+  record?: Maybe<LoanAccountGrace>;
+  recordId: Scalars['ID'];
+};
+
+export type LoanAccountGurantee = {
+  accountId?: Maybe<Scalars['String']>;
+  guranteeAmount?: Maybe<Scalars['Amount']>;
+  maxGuranteeAmountLimit?: Maybe<Scalars['Amount']>;
+  memberId?: Maybe<Scalars['String']>;
+  totalAmount?: Maybe<Scalars['Amount']>;
+};
+
+export type LoanAccountGuranteeInput = {
+  accountId?: InputMaybe<Scalars['String']>;
+  guranteeAmount?: InputMaybe<Scalars['Amount']>;
+  maxGuranteeAmountLimit?: InputMaybe<Scalars['Amount']>;
+  memberId?: InputMaybe<Scalars['String']>;
+  totalAmount?: InputMaybe<Scalars['Amount']>;
+};
+
+export type LoanAccountGuranteeResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<LoanAccountQuery>;
+  record?: Maybe<LoanAccountGurantee>;
+  recordId: Scalars['ID'];
+};
+
+export type LoanAccountInput = {
+  LoanAccountName?: InputMaybe<Scalars['String']>;
+  appliedLoanAmount: Scalars['String'];
+  collateralData?: InputMaybe<Array<InputMaybe<LoanAccountCollateralData>>>;
+  gracePeriod?: InputMaybe<LoanAccountGraceInput>;
+  gurantee_details?: InputMaybe<Array<InputMaybe<LoanAccountGuranteeInput>>>;
+  intrestRate?: InputMaybe<Scalars['Float']>;
+  justifySanction?: InputMaybe<Scalars['String']>;
+  loanProcessingCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
+  memberId: Scalars['ID'];
+  note?: InputMaybe<Scalars['String']>;
+  productId: Scalars['ID'];
+  productSubType: Scalars['ID'];
+  productType: LoanProductType;
+  repaymentScheme?: InputMaybe<LoanRepaymentScheme>;
+  tenure?: InputMaybe<Scalars['Int']>;
+  totalSanctionedAmount?: InputMaybe<Scalars['String']>;
+  totalValuation?: InputMaybe<Scalars['String']>;
+};
+
+export type LoanAccountMutation = {
+  add?: Maybe<LoanAccountResult>;
+};
+
+export type LoanAccountMutationAddArgs = {
+  data?: InputMaybe<LoanAccountInput>;
+  id: Scalars['ID'];
+};
+
+export type LoanAccountQuery = {
+  formState?: Maybe<LoanAccountFormStateResult>;
+  getProductCriteria?: Maybe<LoanProductCriteriaResult>;
+  getProductList?: Maybe<LoanProductList>;
+  list?: Maybe<LoanAccountConnection>;
+};
+
+export type LoanAccountQueryFormStateArgs = {
+  id: Scalars['ID'];
+};
+
+export type LoanAccountQueryGetProductCriteriaArgs = {
+  productId: Scalars['ID'];
+};
+
+export type LoanAccountQueryGetProductListArgs = {
+  memberId: Scalars['ID'];
+  productSubTypeId: Scalars['ID'];
+  productType: LoanProductType;
+};
+
+export type LoanAccountQueryListArgs = {
+  filter?: InputMaybe<LoanAccountSearchFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type LoanAccountResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<LoanAccountQuery>;
+  record?: Maybe<LoanAccount>;
+  recordId: Scalars['ID'];
+};
+
+export type LoanAccountSearchFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  objectState?: InputMaybe<ObjState>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
 export type LoanGeneralSettings = {
   /** accepted collateral list */
   collateralList?: Maybe<Array<Maybe<CollateralListData>>>;
@@ -6205,7 +6467,7 @@ export type LoanProduct = Base & {
   productName: Scalars['String'];
   productNature: NatureOfLoanProduct;
   productSubType: Scalars['String'];
-  productType: Scalars['String'];
+  productType: LoanProductType;
   rebate?: Maybe<Rebate>;
   repaymentScheme?: Maybe<Array<Maybe<LoanRepaymentScheme>>>;
   requiredDocuments?: Maybe<Array<Maybe<LoanRequiredDocuments>>>;
@@ -6219,6 +6481,25 @@ export type LoanProductConnection = {
   edges: Array<LoanProductEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
+};
+
+export type LoanProductCriteria = {
+  cooperativeType?: Maybe<Array<Maybe<Scalars['String']>>>;
+  cooperativeUnion?: Maybe<Array<Maybe<Scalars['String']>>>;
+  educationQualification?: Maybe<Array<Maybe<Scalars['String']>>>;
+  ethnicity?: Maybe<Array<Maybe<Scalars['String']>>>;
+  foreignEmployment?: Maybe<Scalars['Boolean']>;
+  gender?: Maybe<Array<Maybe<Scalars['String']>>>;
+  institutionType?: Maybe<Array<Maybe<Scalars['String']>>>;
+  maritalStatus?: Maybe<Array<Maybe<Scalars['String']>>>;
+  maxAge?: Maybe<Scalars['Int']>;
+  minAge?: Maybe<Scalars['Int']>;
+  occupation?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type LoanProductCriteriaResult = {
+  data?: Maybe<LoanProductCriteria>;
+  error?: Maybe<QueryError>;
 };
 
 export type LoanProductData = {
@@ -6284,7 +6565,7 @@ export type LoanProductInput = {
   productName: Scalars['String'];
   productNature: NatureOfLoanProduct;
   productSubType: Scalars['String'];
-  productType: Scalars['String'];
+  productType: LoanProductType;
   rebate?: InputMaybe<RebateTypeInput>;
   repaymentScheme?: InputMaybe<Array<InputMaybe<LoanRepaymentScheme>>>;
   requiredDocuments?: InputMaybe<Array<InputMaybe<LoanRequiredDocuments>>>;
@@ -6302,6 +6583,17 @@ export enum LoanProductInstallment {
   Weekly = 'WEEKLY',
   Yearly = 'YEARLY',
 }
+
+export type LoanProductList = {
+  allowed?: Maybe<Array<Maybe<LoanProduct>>>;
+  error?: Maybe<QueryError>;
+  notAllowed?: Maybe<Array<Maybe<LoanProductListData>>>;
+};
+
+export type LoanProductListData = {
+  data?: Maybe<LoanProduct>;
+  error?: Maybe<Array<Maybe<Scalars['String']>>>;
+};
 
 export type LoanProductSearchFilter = {
   id?: InputMaybe<Scalars['ID']>;
@@ -6366,18 +6658,9 @@ export type LoanProductSubTypeInput = {
 };
 
 export enum LoanProductType {
-  Agriculture = 'AGRICULTURE',
-  AlternativeEnergy = 'ALTERNATIVE_ENERGY',
-  AssetsPurchasesAndMaintenance = 'ASSETS_PURCHASES_AND_MAINTENANCE',
-  Business = 'BUSINESS',
-  CreditUnion = 'CREDIT_UNION',
-  Educational = 'EDUCATIONAL',
-  ForeignEmployee = 'FOREIGN_EMPLOYEE',
-  HirePurchase = 'HIRE_PURCHASE',
-  Industrial = 'INDUSTRIAL',
-  MicroEntrepreneur = 'MICRO_ENTREPRENEUR',
-  SocialSector = 'SOCIAL_SECTOR',
-  Staff = 'STAFF',
+  InvestmentInAgriculturalSector = 'INVESTMENT_IN_AGRICULTURAL_SECTOR',
+  InvestmentInIndustrialSector = 'INVESTMENT_IN_INDUSTRIAL_SECTOR',
+  InvestmentInOtherSector = 'INVESTMENT_IN_OTHER_SECTOR',
 }
 
 export type LoanProductTypeInput = {
@@ -6718,6 +7001,7 @@ export type Mutation = {
   eBanking: EBankingMutation;
   example: ExampleMutation;
   inventory: InventoryMutation;
+  loanAccount: LoanAccountMutation;
   members: MemberMutation;
   newId: Scalars['String'];
   presignedUrl: PresignedUrlMutation;
@@ -7277,6 +7561,7 @@ export type Query = {
   example: ExampleQuery;
   form: FormQuery;
   inventory: InventoryQuery;
+  loanAccount: LoanAccountQuery;
   members: MemberQuery;
   report: ReportQuery;
   routesAndCodes: RoutesAndCodesQuery;
@@ -8360,6 +8645,11 @@ export type ValidationError = {
   message: Scalars['InvalidData'];
 };
 
+export enum ValuationMethod {
+  Dv = 'DV',
+  Fmv = 'FMV',
+}
+
 export type Valuator = Base & {
   academicQualification?: Maybe<Scalars['String']>;
   address?: Maybe<Address>;
@@ -9204,7 +9494,7 @@ export type SetLoanProductMutation = {
             id: string;
             objState: ObjState;
             productName: string;
-            productType: string;
+            productType: LoanProductType;
           } | null;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -11579,7 +11869,7 @@ export type GetLoanProductDetailsDataQuery = {
             createdAt: string;
             modifiedAt: string;
             productName: string;
-            productType: string;
+            productType: LoanProductType;
             productSubType: string;
             productNature: NatureOfLoanProduct;
             description?: string | null;
@@ -12382,7 +12672,7 @@ export type GetLoanProductListQuery = {
               createdDate: string;
               productName: string;
               productCodeString?: string | null;
-              productType: string;
+              productType: LoanProductType;
               productSubType: string;
               createdBy: { id: string; name: string; username: string; userType: UserType };
               modifiedBy: { id: string; name: string; username: string; userType: UserType };
@@ -12417,7 +12707,7 @@ export type GetLoanProductEditDataQuery = {
             createdAt: string;
             modifiedAt: string;
             productName: string;
-            productType: string;
+            productType: LoanProductType;
             productSubType: string;
             productNature: NatureOfLoanProduct;
             description?: string | null;
