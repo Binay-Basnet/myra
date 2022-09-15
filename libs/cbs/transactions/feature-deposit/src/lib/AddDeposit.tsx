@@ -190,11 +190,11 @@ export const AddDeposit = () => {
       filteredInstallments.length + Number(noOfInstallments)
     );
 
-    const fine = pendingInstallments.reduce(
+    const tempFine = pendingInstallments.reduce(
       (accumulator, curr) => accumulator + Number(curr?.fine),
       0
     );
-    const rebate = pendingInstallments.reduce(
+    const tempRebate = pendingInstallments.reduce(
       (accumulator, curr) => accumulator + Number(curr?.rebate),
       0
     );
@@ -202,8 +202,8 @@ export const AddDeposit = () => {
     return {
       firstMonth: pendingInstallments[0]?.monthName,
       lastMonth: pendingInstallments[pendingInstallments.length - 1]?.monthName,
-      fine: String(fine),
-      rebate: String(rebate),
+      fine: String(tempFine),
+      rebate: String(tempRebate),
     };
   }, [noOfInstallments, installmentsListQueryData]);
 

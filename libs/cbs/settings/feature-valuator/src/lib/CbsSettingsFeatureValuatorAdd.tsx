@@ -57,6 +57,7 @@ export const CbsSettingsFeatureValuatorAdd = () => {
       },
       onSuccess: () => {
         queryClient.invalidateQueries('getValuatorList');
+        queryClient.invalidateQueries('getValuator');
         router.push('/settings/general/valuator/list');
       },
     });
@@ -64,7 +65,10 @@ export const CbsSettingsFeatureValuatorAdd = () => {
 
   useEffect(() => {
     if (editData) {
-      reset(editData);
+      reset({
+        ...editData,
+        address: { ...editData?.address, locality: editData?.address?.locality?.local },
+      });
     }
   }, [reset, editData]);
 
