@@ -11,7 +11,7 @@ export const AssignedMembersCard = () => {
 
   const { data: agentDetailQueryData } = useGetAgentDetailDataQuery(
     { id: id as string },
-    { enabled: !!id }
+    { enabled: !!id, staleTime: 0 }
   );
 
   const { data: agentTodayListQueryData } = useGetAgentTodayListDataQuery(
