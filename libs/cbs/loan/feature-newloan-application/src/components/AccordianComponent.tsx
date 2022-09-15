@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { AccordionPanel } from '@chakra-ui/react';
 
-import { useGetAccountOpenProductPenaltyQuery } from '@coop/cbs/data-access';
+import { useGetLoanProductDetailsDataQuery } from '@coop/cbs/data-access';
 import { Accordion, AccordionButton, AccordionItem, Box, Icon, Text } from '@coop/shared/ui';
 
 import { CriteriaCard } from './CriteriaCard';
@@ -13,22 +13,19 @@ interface IcomponentProps {
 
 export const AccordianComponent = ({ productId }: IcomponentProps) => {
   const [triggerQuery, setTriggerQuery] = useState(false);
-  const poductDetails = useGetAccountOpenProductPenaltyQuery(
-    { productId },
+  const poductDetails = useGetLoanProductDetailsDataQuery(
+    { id: productId },
     {
       enabled: triggerQuery,
     }
   );
-  const penaltyData =
-    poductDetails?.data?.settings?.general?.depositProduct?.getPenaltyRebateInfo?.data?.penalty;
-  const rebateData =
-    poductDetails?.data?.settings?.general?.depositProduct?.getPenaltyRebateInfo?.data?.rebate;
-  const prematurePenaltyData =
-    poductDetails?.data?.settings?.general?.depositProduct?.getPenaltyRebateInfo?.data
-      ?.prematurePenalty;
-  const withdrawData =
-    poductDetails?.data?.settings?.general?.depositProduct?.getPenaltyRebateInfo?.data
-      ?.withdrawPenalty;
+  const penaltyOnInstallmentData =
+    poductDetails?.data?.settings?.general?.loanProducts?.formState?.data?.penaltyOnInstallment;
+  const rebateData = poductDetails?.data?.settings?.general?.loanProducts?.formState?.data?.rebate;
+  const penaltyOnInterestData =
+    poductDetails?.data?.settings?.general?.loanProducts?.formState?.data?.penaltyOnInterest;
+  const penaltyOnPrincipalData =
+    poductDetails?.data?.settings?.general?.loanProducts?.formState?.data?.penaltyOnPrincipal;
 
   useEffect(() => {
     if (productId) {
@@ -81,7 +78,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                 h="40px"
               >
                 <Text color="gray.800" fontWeight="500" fontSize="r1">
-                  Penalty
+                  Penalty on Principal{' '}
                 </Text>
                 <Icon
                   as={isExpanded ? ChevronDownIcon : ChevronRightIcon}
@@ -99,7 +96,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                         </Text>
 
                         <Text fontWeight="600" fontSize="s3">
-                          {penaltyData?.dayAfterInstallmentDate}
+                          {penaltyOnPrincipalData?.dayAfterInstallmentDate}
                         </Text>
                       </Box>
                     </li>
@@ -110,7 +107,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                         </Text>
 
                         <Text fontWeight="600" fontSize="s3">
-                          {penaltyData?.penaltyRate} %
+                          {penaltyOnPrincipalData?.penaltyRate} %
                         </Text>
                       </Box>
                     </li>
@@ -121,7 +118,133 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                         </Text>
 
                         <Text fontWeight="600" fontSize="s3">
-                          {penaltyData?.penaltyAmount}
+                          {penaltyOnPrincipalData?.penaltyAmount}
+                        </Text>
+                      </Box>
+                    </li>
+                  </ul>
+                </Box>
+              </AccordionPanel>
+            </>
+          )}
+        </AccordionItem>
+        <AccordionItem>
+          {({ isExpanded }) => (
+            <>
+              <AccordionButton
+                border="none"
+                p="s16"
+                bg="white"
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+                h="40px"
+              >
+                <Text color="gray.800" fontWeight="500" fontSize="r1">
+                  Penalty on Interest
+                </Text>
+                <Icon
+                  as={isExpanded ? ChevronDownIcon : ChevronRightIcon}
+                  color="gray.800"
+                  flexShrink={0}
+                />
+              </AccordionButton>
+              <AccordionPanel p="s16">
+                <Box px="s20">
+                  <ul>
+                    <li>
+                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
+                        <Text fontWeight="400" fontSize="s3">
+                          Days from end date
+                        </Text>
+
+                        <Text fontWeight="600" fontSize="s3">
+                          {penaltyOnInterestData?.dayAfterInstallmentDate}
+                        </Text>
+                      </Box>
+                    </li>
+                    <li>
+                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
+                        <Text fontWeight="400" fontSize="s3">
+                          Penalty Rate
+                        </Text>
+
+                        <Text fontWeight="600" fontSize="s3">
+                          {penaltyOnInterestData?.penaltyRate} %
+                        </Text>
+                      </Box>
+                    </li>
+                    <li>
+                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
+                        <Text fontWeight="400" fontSize="s3">
+                          Penalty Amount
+                        </Text>
+
+                        <Text fontWeight="600" fontSize="s3">
+                          {penaltyOnInterestData?.penaltyAmount}
+                        </Text>
+                      </Box>
+                    </li>
+                  </ul>
+                </Box>
+              </AccordionPanel>
+            </>
+          )}
+        </AccordionItem>
+        <AccordionItem>
+          {({ isExpanded }) => (
+            <>
+              <AccordionButton
+                border="none"
+                p="s16"
+                bg="white"
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+                h="40px"
+              >
+                <Text color="gray.800" fontWeight="500" fontSize="r1">
+                  Penalty on Installment
+                </Text>
+                <Icon
+                  as={isExpanded ? ChevronDownIcon : ChevronRightIcon}
+                  color="gray.800"
+                  flexShrink={0}
+                />
+              </AccordionButton>
+              <AccordionPanel p="s16">
+                <Box px="s20">
+                  <ul>
+                    <li>
+                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
+                        <Text fontWeight="400" fontSize="s3">
+                          Days from end date
+                        </Text>
+
+                        <Text fontWeight="600" fontSize="s3">
+                          {penaltyOnInstallmentData?.dayAfterInstallmentDate}
+                        </Text>
+                      </Box>
+                    </li>
+                    <li>
+                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
+                        <Text fontWeight="400" fontSize="s3">
+                          Penalty Rate
+                        </Text>
+
+                        <Text fontWeight="600" fontSize="s3">
+                          {penaltyOnInstallmentData?.penaltyRate} %
+                        </Text>
+                      </Box>
+                    </li>
+                    <li>
+                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
+                        <Text fontWeight="400" fontSize="s3">
+                          Penalty Amount
+                        </Text>
+
+                        <Text fontWeight="600" fontSize="s3">
+                          {penaltyOnInstallmentData?.penaltyAmount}
                         </Text>
                       </Box>
                     </li>
@@ -168,17 +291,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                         </Text>
                       </Box>
                     </li>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          No. of installments
-                        </Text>
 
-                        <Text fontWeight="600" fontSize="s3">
-                          {rebateData?.noOfInstallment} %
-                        </Text>
-                      </Box>
-                    </li>
                     <li>
                       <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
                         <Text fontWeight="400" fontSize="s3">
@@ -198,158 +311,6 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
 
                         <Text fontWeight="600" fontSize="s3">
                           {rebateData?.rebateAmount} %
-                        </Text>
-                      </Box>
-                    </li>
-                  </ul>
-                </Box>
-              </AccordionPanel>
-            </>
-          )}
-        </AccordionItem>
-        <AccordionItem>
-          {({ isExpanded }) => (
-            <>
-              <AccordionButton
-                border="none"
-                p="s16"
-                bg="white"
-                display="flex"
-                alignItems="center"
-                h="40px"
-                justifyContent="space-between"
-                _hover={{}}
-                _expanded={{}}
-              >
-                <Text color="gray.800" fontWeight="500" fontSize="r1">
-                  Premature Penalty Setup
-                </Text>
-                <Icon
-                  as={isExpanded ? ChevronDownIcon : ChevronRightIcon}
-                  color="gray.800"
-                  flexShrink={0}
-                />
-              </AccordionButton>
-              <AccordionPanel p="s16">
-                <Box px="s20">
-                  <ul>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Penalty Date Type
-                        </Text>
-
-                        <Text fontWeight="600" fontSize="s3">
-                          {prematurePenaltyData?.penaltyDateType}
-                        </Text>
-                      </Box>
-                    </li>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          No. of Days
-                        </Text>
-
-                        <Text fontWeight="600" fontSize="s3">
-                          {prematurePenaltyData?.noOfDays} %
-                        </Text>
-                      </Box>
-                    </li>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Penalty Ledger Mapping
-                        </Text>
-
-                        <Text fontWeight="600" fontSize="s3">
-                          {prematurePenaltyData?.penaltyLedgerMapping}
-                        </Text>
-                      </Box>
-                    </li>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Penalty Amount
-                        </Text>
-
-                        <Text fontWeight="600" fontSize="s3">
-                          {prematurePenaltyData?.penaltyAmount}
-                        </Text>
-                      </Box>
-                    </li>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Penalty Rate
-                        </Text>
-
-                        <Text fontWeight="600" fontSize="s3">
-                          {prematurePenaltyData?.penaltyRate}%
-                        </Text>
-                      </Box>
-                    </li>
-                  </ul>
-                </Box>
-              </AccordionPanel>
-            </>
-          )}
-        </AccordionItem>
-        <AccordionItem>
-          {({ isExpanded }) => (
-            <>
-              <AccordionButton
-                border="none"
-                p="s16"
-                bg="white"
-                display="flex"
-                alignItems="center"
-                h="40px"
-                justifyContent="space-between"
-                _hover={{}}
-                _expanded={{}}
-              >
-                <Text color="gray.800" fontWeight="500" fontSize="r1">
-                  Withdraw Penalty Setup
-                </Text>
-                <Icon
-                  as={isExpanded ? ChevronDownIcon : ChevronRightIcon}
-                  color="gray.800"
-                  flexShrink={0}
-                />
-              </AccordionButton>
-              <AccordionPanel p="s16">
-                <Box px="s20">
-                  <ul>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Penalty Amount
-                        </Text>
-
-                        <Text fontWeight="600" fontSize="s3">
-                          {withdrawData?.penaltyAmount}
-                        </Text>
-                      </Box>
-                    </li>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Penalty Rate
-                        </Text>
-
-                        <Text fontWeight="600" fontSize="s3">
-                          {withdrawData?.penaltyRate} %
-                        </Text>
-                      </Box>
-                    </li>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Penalty Ledger Mapping
-                        </Text>
-
-                        <Text fontWeight="600" fontSize="s3">
-                          {withdrawData?.penaltyLedgerMapping}
                         </Text>
                       </Box>
                     </li>

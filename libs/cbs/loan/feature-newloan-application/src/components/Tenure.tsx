@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { FrequencyTenure, useGetAccountOpenProductDetailsQuery } from '@coop/cbs/data-access';
+import { FrequencyTenure, useGetLoanProductDetailsDataQuery } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { SubHeadingText } from '@coop/shared/components';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
@@ -36,14 +36,14 @@ export const Tenure = () => {
 
   const products = watch('productId');
 
-  const poductDetails = useGetAccountOpenProductDetailsQuery(
+  const poductDetails = useGetLoanProductDetailsDataQuery(
     { id: products },
     {
       enabled: triggerQuery,
     }
   );
 
-  const productData = poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
+  const productData = poductDetails?.data?.settings?.general?.loanProducts?.formState?.data;
 
   useEffect(() => {
     if (products) {
@@ -81,8 +81,7 @@ export const Tenure = () => {
                 type="number"
                 name="tenureNumber"
                 textAlign="right"
-                label={t['accountOpenNumber']}
-                __placeholder="0"
+                label="Tenure"
                 rightAddonText={
                   rightElement && rightElement === FrequencyTenure.Day
                     ? t['days']
@@ -97,15 +96,10 @@ export const Tenure = () => {
               />
             </Box>
           </Box>
-          <Box p="s16">
-            <Alert status="info" title="Tenure">
-              <ul>
-                <li>
-                  {' '}
-                  {productData?.minTenureUnitNumber} {productData?.minTenureUnit} -{' '}
-                  {productData?.maxTenureUnitNumber} {productData?.maxTenureUnit}
-                </li>
-              </ul>
+          <Box pt="s16">
+            <Alert status="info" title="Tenure" hideCloseIcon>
+              {productData?.minTenureUnitNumber} {productData?.minTenureUnit} -{' '}
+              {productData?.maxTenureUnitNumber} {productData?.maxTenureUnit}
             </Alert>
           </Box>
         </Box>

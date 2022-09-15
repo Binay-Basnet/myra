@@ -54,65 +54,57 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
       variant="unstyled"
       index={list.findIndex((value) => router.asPath.includes(value.link)) ?? 0}
     >
-      {list.map((item, index) => {
-        return (
-          <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
-            key={`${item}${index}`}
-          >
-            <Link href={item.link}>
-              <TabCol>
-                <Text
-                  noOfLines={1}
-                  align="left"
-                  title={t[item.title as keyof typeof en]}
-                >
-                  {t[item.title as keyof typeof en]}
-                </Text>
-              </TabCol>
-            </Link>
-            {item.addLinkId && (
-              // <Link href={item.addLink}>
-              <IconButton
-                aria-label="add-Button"
-                size="lg"
-                variant={'ghost'}
-                icon={<Icon as={IoAdd} />}
-                onClick={() =>
-                  newId
-                    .mutateAsync({})
-                    .then((res) =>
-                      router.push(`${item.addLinkId}/add/${res?.newId}`)
-                    )
-                }
-              />
-              // </Link>
-            )}
-            {item.addLink && (
-              // <Link href={item.addLink}>
-              <IconButton
-                aria-label="add-Button"
-                size="lg"
-                variant={'ghost'}
-                icon={<Icon as={IoAdd} />}
-                onClick={() => router.push(`${item.addLink}`)}
-              />
-            )}
-            {item.modalOpen && (
-              // <Link href={item.addLink}>
-              <IconButton
-                aria-label="add-Button"
-                size="lg"
-                variant={'ghost'}
-                icon={<Icon as={IoAdd} />}
-                onClick={item.modalOpen}
-              />
-            )}
-          </Box>
-        );
-      })}
+      {list.map((item, index) => (
+        <Box
+          display="flex"
+          flexDirection="row"
+          justifyContent="space-between"
+          key={`${item}${index}`}
+        >
+          <Link href={item.link}>
+            <TabCol>
+              <Text noOfLines={1} align="left" title={t[item.title as keyof typeof en]}>
+                {t[item.title as keyof typeof en] ?? item.title}
+              </Text>
+            </TabCol>
+          </Link>
+          {item.addLinkId && (
+            // <Link href={item.addLink}>
+            <IconButton
+              aria-label="add-Button"
+              size="lg"
+              variant="ghost"
+              icon={<Icon as={IoAdd} />}
+              onClick={() =>
+                newId
+                  .mutateAsync({})
+                  .then((res) => router.push(`${item.addLinkId}/add/${res?.newId}`))
+              }
+            />
+            // </Link>
+          )}
+          {item.addLink && (
+            // <Link href={item.addLink}>
+            <IconButton
+              aria-label="add-Button"
+              size="lg"
+              variant="ghost"
+              icon={<Icon as={IoAdd} />}
+              onClick={() => router.push(`${item.addLink}`)}
+            />
+          )}
+          {item.modalOpen && (
+            // <Link href={item.addLink}>
+            <IconButton
+              aria-label="add-Button"
+              size="lg"
+              variant="ghost"
+              icon={<Icon as={IoAdd} />}
+              onClick={item.modalOpen}
+            />
+          )}
+        </Box>
+      ))}
     </Tabs>
   );
 };

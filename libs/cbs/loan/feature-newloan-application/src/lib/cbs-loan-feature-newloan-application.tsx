@@ -1,64 +1,131 @@
 import { useEffect, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useFieldArray, useForm, useFormContext } from 'react-hook-form';
+import { AiOutlinePlus } from 'react-icons/ai';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 
 import {
-  DepositLoanAccountInput,
-  NatureOfDepositProduct,
-  useGetAccountOpenEditDataQuery,
-  useGetAccountOpenMinorListQuery,
-  useGetAccountOpenProductDetailsQuery,
-  useGetProductListQuery,
-  useSetAccountOpenDataMutation,
+  BuildingType,
+  ConstructionType,
+  LoanAccountInput,
+  useGetCollateralListQuery,
+  useGetLoanProductDetailsDataQuery,
+  useGetLoanProductsListQuery,
+  useGetLoanProductSubTypeQuery,
+  useGetLoanProductTypesQuery,
+  useGetNewIdMutation,
+  useGetValuatorListQuery,
+  useSendLoanApplicationForApprovalMutation,
 } from '@coop/cbs/data-access';
-import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
+import {
+  FormFileInput,
+  FormInput,
+  FormNumberInput,
+  FormSelect,
+  FormSwitchTab,
+  FormTextArea,
+} from '@coop/shared/form';
 import {
   Alert,
   asyncToast,
   Box,
   Button,
+  ChakraModal,
   Container,
   Divider,
+  FormAccountSelect,
   FormFooter,
   FormHeader,
   FormMemberSelect,
   Grid,
+  GridItem,
+  Icon,
   MemberCard,
   Text,
+  TextFields,
+  VStack,
 } from '@coop/shared/ui';
-import { useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+import { useGetIndividualMemberDetails } from '@coop/shared/utils';
+
+import {
+  AccordianComponent,
+  CriteriaCard,
+  Interest,
+  LoanProcessingCharge,
+  LoanProductCard,
+  LoanRepaymentSchemeComponent,
+  Tenure,
+} from '../components';
 
 type OptionType = { label: string; value: string };
 
 export const NewLoanApplication = () => {
-  const { t } = useTranslation();
-  const [triggerQuery, setTriggerQuery] = useState(false);
-  const [showCriteria, setShowCriteria] = useState(false);
-  const [triggerProductQuery, setTriggerProductQuery] = useState(false);
-  const [mode, setMode] = useState('0');
-
-  const methods = useForm<DepositLoanAccountInput>();
-  const { getValues, watch, reset } = methods;
-  const memberId = watch('memberId');
   const router = useRouter();
-  const id = String(router?.query?.['id']);
-  const { mutateAsync } = useSetAccountOpenDataMutation();
+  const [showCriteria, setShowCriteria] = useState(false);
+
+  const methods = useForm<LoanAccountInput>();
+  const { watch } = methods;
+  const memberId = watch('memberId');
 
   const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
     useGetIndividualMemberDetails({ memberId });
-  const { data, isFetching } = useGetProductListQuery(
+
+  const loanType = watch('productType');
+  const loanSubType = watch('productSubType');
+  const productId = watch('productId');
+
+  const { data: loanTypeData } = useGetLoanProductTypesQuery();
+  const { data: loanSubTypeData } = useGetLoanProductSubTypeQuery(
+    { productTypeId: loanType },
+    { enabled: !!loanType }
+  );
+  const { data: loanProductData, isFetching } = useGetLoanProductsListQuery(
     {
       memberId,
+      productTypeId: loanType,
+      productSubTypeId: loanSubType,
     },
-    { enabled: triggerQuery }
+    { enabled: !!loanSubType }
   );
+
+  const queryClient = useQueryClient();
+  const { mutateAsync: getId } = useGetNewIdMutation();
+  const { mutateAsync: applyLoan } = useSendLoanApplicationForApprovalMutation();
+
+  const sendForApprovalHandler = async () => {
+    const promise = async () => {
+      const responseId = await getId({});
+
+      if (responseId?.newId) {
+        const response = await applyLoan({
+          id: responseId.newId,
+          data: methods.getValues(),
+        });
+        return response;
+      }
+      return {};
+    };
+
+    await asyncToast({
+      id: 'loan-approval',
+      msgs: {
+        loading: 'Applying for Loan',
+        success: 'Loan Applied Successfully',
+      },
+      promise: promise(),
+      onSuccess: () => {
+        queryClient.invalidateQueries('getLoanList');
+        router.push('/loan');
+      },
+    });
+  };
+
   useEffect(() => {
-    if (memberId) {
-      setTriggerQuery(true);
-    }
-  }, [memberId]);
-  const productOptions = [
-    ...(data?.settings?.general?.depositProduct?.getProductList?.allowed?.reduce(
+    methods.resetField('productSubType');
+  }, [loanType]);
+
+  const loanProductOptions = [
+    ...(loanProductData?.loanAccount?.getProductList?.allowed?.reduce(
       (previousValue, currentValue) => [
         ...previousValue,
         {
@@ -68,7 +135,7 @@ export const NewLoanApplication = () => {
       ],
       [] as OptionType[]
     ) ?? []),
-    ...(data?.settings?.general?.depositProduct?.getProductList?.notAllowed?.reduce(
+    ...(loanProductData?.loanAccount?.getProductList?.notAllowed?.reduce(
       (previousValue, currentValue) => [
         ...previousValue,
         {
@@ -79,104 +146,16 @@ export const NewLoanApplication = () => {
       [] as OptionType[]
     ) ?? []),
   ];
-  const newLog = data?.settings?.general?.depositProduct?.getProductList?.notAllowed;
 
-  const productID = watch('productId');
+  const arrayForErrors = loanProductData?.loanAccount?.getProductList?.notAllowed;
 
-  const errors = newLog?.find((d) => d?.data?.id === productID);
-
-  const poductDetails = useGetAccountOpenProductDetailsQuery(
-    { id: productID },
-    {
-      enabled: triggerProductQuery,
-    }
-  );
-
-  const ProductData = poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
-  const productType = ProductData?.nature;
-
-  useEffect(() => {
-    if (productID) {
-      setTriggerProductQuery(true);
-    }
-  }, [productID]);
-
-  const previousButtonHandler = () => {
-    setMode('0');
-  };
-  const { data: minorData } = useGetAccountOpenMinorListQuery(
-    {
-      memberId,
-    },
-    { enabled: triggerQuery }
-  );
-
-  const minorDetails = minorData?.account?.listMinors?.data;
-  const minorOptions = minorDetails?.map((data) => ({
-    label: data?.fullName?.local as string,
-    value: data?.familyMemberId as string,
-  }));
-  const submitForm = () => {
-    const values = getValues();
-    const updatedData = {
-      ...values,
-      tenure: values?.tenure ? values?.tenure : null,
-      depositFrequencyMonthly: values?.depositFrequencyMonthly
-        ? values?.depositFrequencyMonthly
-        : null,
-      depositFrequencyFrequencyDay: values?.depositFrequencyFrequencyDay
-        ? values?.depositFrequencyFrequencyDay
-        : null,
-      depositFrequencyDayOfWeek: values?.depositFrequencyDayOfWeek
-        ? values?.depositFrequencyDayOfWeek
-        : null,
-      depositFrequencyYearlyMonth: values?.depositFrequencyYearlyMonth
-        ? values?.depositFrequencyYearlyMonth
-        : null,
-      depositFrequencyYearlyDay: values?.depositFrequencyYearlyDay
-        ? values?.depositFrequencyYearlyDay
-        : null,
-      depositFrequencyWeekly: values?.depositFrequencyWeekly
-        ? values?.depositFrequencyWeekly
-        : null,
-    };
-
-    asyncToast({
-      id: 'loan-account-open-id',
-      msgs: {
-        success: 'New Loan Account Opened',
-        loading: 'Opening new Account',
-      },
-      onSuccess: () => router.push('/accounts/list'),
-      promise: mutateAsync({ id, data: updatedData }),
-    });
-  };
-  const { data: editValues, refetch } = useGetAccountOpenEditDataQuery({
-    id,
-  });
-  useEffect(() => {
-    if (editValues) {
-      const editValueData = editValues?.account?.formState?.data;
-      if (editValueData) {
-        reset({
-          ...editValueData,
-        });
-      }
-    }
-  }, [editValues, id]);
-
-  useEffect(() => {
-    if (id) {
-      refetch();
-    }
-  }, [refetch]);
+  const errors = arrayForErrors?.find((d) => d?.data?.id === productId);
   return (
     <Container minW="container.xl" p="0" bg="white">
-      {' '}
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
         <FormHeader title="New Loan Application" />
       </Box>
-      <Box display={mode === '0' ? 'flex' : 'none'} flexDirection="row" minH="calc(100vh - 230px)">
+      <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
         <Box
           display="flex"
           flexDirection="column"
@@ -184,108 +163,94 @@ export const NewLoanApplication = () => {
           borderRight="1px solid"
           borderColor="border.layout"
         >
-          {' '}
           <FormProvider {...methods}>
-            {' '}
             <form>
               <Box display="flex" flexDirection="column" gap="s32" p="s20" w="100%">
-                <FormMemberSelect name="memberId" label="Member" />
-                <FormSelect
-                  name="productId"
-                  label={t['accProductName']}
-                  __placeholder={t['accSelectProduct']}
-                  isLoading={isFetching}
-                  options={productOptions}
-                />
-                {errors && (
-                  <Alert
-                    status="error"
-                    title="Error"
-                    bottomButtonlabel={
-                      productType === NatureOfDepositProduct?.Mandatory ? '' : 'View All Criteria'
-                    }
-                    bottomButtonHandler={() => setShowCriteria((prev) => !prev)}
-                    hideCloseIcon={true}
-                  >
-                    <Box pt="s8">
-                      <ul>
-                        {errors?.error?.map((item, index) => {
-                          return (
-                            <li key={index}>
-                              {' '}
-                              <Text fontWeight={'400'} fontSize="s2">
+                <Box display="flex" flexDir="column" gap="s16">
+                  <FormMemberSelect name="memberId" label="Member Id" />
+                  {memberId && (
+                    <FormSelect
+                      name="productType"
+                      label="Loan Type"
+                      options={loanTypeData?.settings.general?.loan?.productType?.productTypes?.map(
+                        (product) => ({
+                          label: product?.productType as string,
+                          value: product?.id as string,
+                        })
+                      )}
+                    />
+                  )}
+                  {loanType && (
+                    <FormSelect
+                      name="productSubType"
+                      label="Loan Sub Type"
+                      options={loanSubTypeData?.settings?.general?.loan?.productType?.productSubTypes?.map(
+                        (product) => ({
+                          label: product?.productSubType as string,
+                          value: product?.id as string,
+                        })
+                      )}
+                    />
+                  )}
+                  {loanSubType && (
+                    <FormSelect
+                      name="productId"
+                      label="Loan Product"
+                      isLoading={isFetching}
+                      options={loanProductOptions}
+                    />
+                  )}
+
+                  {errors && productId && (
+                    <Alert
+                      status="error"
+                      title="Error"
+                      bottomButtonlabel="View All Criteria"
+                      bottomButtonHandler={() => setShowCriteria((prev) => !prev)}
+                      hideCloseIcon
+                    >
+                      <Box pt="s8">
+                        <ul>
+                          {errors?.error?.map((item) => (
+                            <li key={item}>
+                              <Text fontWeight="400" fontSize="s2">
                                 {item}
                               </Text>
                             </li>
-                          );
-                        })}
-                      </ul>
+                          ))}
+                        </ul>
+                      </Box>
+                    </Alert>
+                  )}
+                  {showCriteria && (
+                    <Box border="1px solid" borderColor="border.layout" borderRadius="br2" p="s16">
+                      <CriteriaCard productId={productId} />
                     </Box>
-                  </Alert>
-                )}
-                {productType !== NatureOfDepositProduct?.Mandatory && showCriteria && (
-                  <Box
-                    border="1px solid"
-                    borderColor="border.layout"
-                    borderRadius="br2"
-                    p="s16"
-                  ></Box>
-                )}
-                {memberId && productID && !errors && (
-                  <Box display="flex" flexDirection="column" gap="s32" w="100%">
-                    <FormInput name="accountName" label="Account Name" />
-                    {ProductData?.isForMinors && (
-                      <FormSelect name="minor" label="Minor" options={minorOptions} />
-                    )}
-
-                    <Divider />
-
-                    {(productType === NatureOfDepositProduct?.TermSavingOrFd ||
-                      productType === NatureOfDepositProduct?.RecurringSaving) && (
-                      <Box display="flex" flexDirection="column" gap="s16">
-                        <Box display="flex" flexDirection="column" gap="s4">
-                          <Text fontWeight="500" fontSize="r1">
-                            {' '}
-                            Default Amount Deposit Account Name
-                          </Text>
-                          <Text fontWeight="400" fontSize="s2">
-                            {' '}
-                            If the member does not specify particular account for deposit, this
-                            mapped account will be set globally. Normally this is a compulsory
-                            account type.
-                          </Text>
-                        </Box>
-
-                        <FormSelect name="defaultAmountDepositAccountName" label="Account Type" />
+                  )}
+                  {productId && !errors && (
+                    <>
+                      <FormInput name="LoanAccountName" label="Loan Account Name" />
+                      <Box w="50%">
+                        <FormNumberInput
+                          name="appliedLoanAmount"
+                          label="Applied Loan Amount"
+                          placeholder="0.00"
+                        />
                       </Box>
-                    )}
-
-                    {(ProductData?.alternativeChannels || ProductData?.atmFacility) && (
-                      <Box display="flex" flexDirection="column" gap="s16">
-                        <Text fontWeight="600" fontSize="r1">
-                          Other Services
-                        </Text>
-                        <Box display="flex" flexDirection="column" gap="s8">
-                          {ProductData?.alternativeChannels && (
-                            <Box display="flex" flexDirection="column" gap="s8">
-                              <FormCheckbox name="mobileBanking" label="Mobile Banking" />
-                              <FormCheckbox name="eBanking" label="eBanking" />
-                            </Box>
-                          )}
-                          {ProductData?.atmFacility && (
-                            <FormCheckbox name="atmFacility" label="ATM Facility" />
-                          )}
-                        </Box>
-                      </Box>
-                    )}
-                    <Grid templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
-                      <FormInput
-                        name="initialDepositAmount"
-                        label="Initial Deposit Amount"
-                        type="number"
-                      />
-                    </Grid>
-                  </Box>
+                    </>
+                  )}
+                </Box>
+                {productId && !errors && (
+                  <>
+                    <CollateralDetails />
+                    <GuaranteeDetails />
+                    <LoanAmountDetails />
+                    <Interest />
+                    <Tenure />
+                    <LoanRepaymentSchemeComponent />
+                    <LoanProcessingCharge />
+                    {/* <RequiredDocuments /> */}
+                  </>
                 )}
               </Box>
             </form>
@@ -315,25 +280,725 @@ export const NewLoanApplication = () => {
                 viewAccountTransactionsHandler={() => null}
               />
             </Box>
-            <Box p="s16"></Box>
-            {productID && <Box p="s16"></Box>}
+
+            {productId && (
+              <Box p="s16" display="flex" flexDirection="column" gap="s16">
+                <LoanProductCard productId={productId} />
+                <AccordianComponent productId={productId} />
+              </Box>
+            )}
           </Box>
         )}
       </Box>
       <Box position="sticky" bottom={0}>
-        <Box>
-          {mode === '0' && (
-            <FormFooter mainButtonLabel="Submit Form" mainButtonHandler={submitForm} />
-          )}{' '}
-          {mode === '1' && (
-            <FormFooter
-              status={<Button onClick={previousButtonHandler}> Previous</Button>}
-              mainButtonLabel="Confirm Payment"
-              mainButtonHandler={submitForm}
-            />
-          )}
-        </Box>
+        <FormFooter
+          mainButtonLabel="Send For Approval"
+          mainButtonHandler={sendForApprovalHandler}
+        />
       </Box>
     </Container>
   );
 };
+
+export const LoanAmountDetails = () => (
+  <Box display="flex" flexDir="column" gap="s16">
+    <Box display="flex" flexDir="column" gap="s4">
+      <Text fontSize="r1" fontWeight="600" color="gray.800">
+        Loan Amount Details
+      </Text>
+      <Text fontSize="s3" fontWeight="500" color="gray.600">
+        Details of collateral valuation and disbursement amount
+      </Text>
+    </Box>
+    <Box p="s16" border="1px" borderColor="border.layout" borderRadius="br2">
+      <Box display="flex" flexDir="column" p="s16" gap="s16" borderRadius="br2" bg="background.500">
+        <Box display="flex" alignItems="center" justifyContent="space-between">
+          <TextFields variant="formLabel">Total Loan Applied</TextFields>
+          <Text fontSize="r1" color="gray.800" fontWeight="600">
+            1,00,000
+          </Text>
+        </Box>
+        <Box display="flex" alignItems="center" justifyContent="space-between">
+          <TextFields variant="formLabel">Total Valuation</TextFields>
+          <Button variant="link" px={0}>
+            80,000
+          </Button>
+        </Box>
+        <Box display="flex" alignItems="center" justifyContent="space-between">
+          <TextFields variant="formLabel">Total Sanctioned Loan Applied</TextFields>
+          <Box>
+            <FormNumberInput name="totalSanctionedAmount" size="sm" />
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+    <Divider />
+    <Box>
+      <FormTextArea
+        name="justifySanction"
+        h="200px"
+        label="If the sanctioned amount is greater than or equal to valuation amount. Please provide
+        justification for it"
+      />
+    </Box>
+  </Box>
+);
+
+// const defaultValues = {
+//   ownerName: '',
+//   relation: '',
+//   sheetNo: '',
+//   plotNo: '',
+//   kittaNo: '',
+//   area: '',
+//   valuatorId: '',
+//   fmvMaxAmount: '',
+//   dvMinAmount: '',
+//   valuationMethod: '',
+//   validationPercent: '',
+//   collateralDescription: '',
+// };
+
+type GuaranteeDetailForm = {
+  index?: number;
+  memberId: string;
+  accountId: string;
+  maxGuaranteeAmount: number;
+  guaranteeAmount: number;
+};
+
+export const GuaranteeDetails = () => {
+  const methods = useForm<GuaranteeDetailForm>();
+
+  const { control } = useFormContext<{
+    memberId: string;
+    gurantee_details: GuaranteeDetailForm[];
+  }>();
+
+  const [isModal, setIsModal] = useState(false);
+
+  const { append, fields, update } = useFieldArray({
+    control,
+    name: 'gurantee_details',
+  });
+
+  const memberId = methods.watch('memberId');
+
+  return (
+    <>
+      <Box display="flex" flexDir="column" gap="s16">
+        <TextFields variant="formLabel" color="gray.700">
+          Guarantee Details
+        </TextFields>
+        <Box>
+          <Button
+            variant="outline"
+            gap="s4"
+            onClick={() => {
+              methods.reset({});
+              setIsModal(true);
+            }}
+          >
+            <Icon as={AiOutlinePlus} />
+            Add New
+          </Button>
+        </Box>
+      </Box>
+
+      <ChakraModal
+        width="3xl"
+        open={isModal}
+        onClose={() => setIsModal(false)}
+        primaryButtonHandler={() => {
+          const index = methods.getValues()?.index;
+          if (index !== undefined) {
+            update(index, methods.getValues());
+          } else {
+            append(methods.getValues());
+          }
+          setIsModal(false);
+        }}
+        isCentered
+        title="Add Guarantee"
+        primaryButtonLabel="save"
+        preserveScrollBarGap
+      >
+        <FormProvider {...methods}>
+          <Box display="flex" flexDir="column" gap="s16">
+            <FormMemberSelect name="memberId" label="Select Member" />
+            {/** TODO! SHOW BALANCE INSIDE THE COMPONENT * */}
+            <FormAccountSelect memberId={memberId} name="accountId" label="Select Account" />
+            <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" gap="s16">
+              <FormNumberInput
+                name="maxGuranteeAmountLimit"
+                label="Maximum Guarantee Amount Available"
+              />
+              <FormNumberInput name="guranteeAmount" label="Maximum Guarantee Amount Available" />
+            </Box>
+            <GridItem
+              colSpan={4}
+              h="s40"
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              px="s10"
+              bg="background.500"
+              borderRadius="br2"
+            >
+              <TextFields variant="formLabel" color="gray.600">
+                Total Guaranteed Amount
+              </TextFields>
+
+              <Text color="gray.700" fontSize="r1" fontWeight="600">
+                1500
+              </Text>
+            </GridItem>
+          </Box>
+        </FormProvider>
+      </ChakraModal>
+
+      {fields.length !== 0 && (
+        <Box mt="-s16" border="1px" borderColor="border.layout" borderRadius="br2">
+          <Box
+            h="s60"
+            borderBottom="1px"
+            borderBottomColor="border.layout"
+            display="flex"
+            flexDir="column"
+            justifyContent="center"
+            px="s12"
+          >
+            <Text fontSize="r1" fontWeight="600" color="gray.800">
+              Guarantee Details
+            </Text>
+            <Text fontSize="s3" fontWeight="500" color="gray.600">
+              Details about the guarantee for loan amount
+            </Text>
+          </Box>
+          <Box
+            borderBottom="1px"
+            borderBottomColor="border.layout"
+            h="50px"
+            display="flex"
+            alignItems="center"
+            px="s12"
+          >
+            <Text fontSize="r1" fontWeight="600" color="gray.900" w="20%">
+              S.N.
+            </Text>
+            <Text fontSize="r1" fontWeight="600" color="gray.900" w="40%">
+              Name
+            </Text>
+            <Text fontSize="r1" fontWeight="600" color="gray.900" w="40%">
+              Guarantee
+            </Text>
+          </Box>
+
+          <VStack spacing={0} divider={<Divider />}>
+            {fields.map((field, index) => (
+              <Box key={field.id} px="s16" display="flex" alignItems="center" w="100%" h="60px">
+                <Text fontSize="r1" color="gray.900" w="20%">
+                  {index + 1}
+                </Text>
+                <Text fontSize="r1" color="gray.900" w="40%" textTransform="capitalize">
+                  {field.memberId}
+                </Text>
+
+                <Text fontSize="r1" color="gray.900" w="20%">
+                  {Number(field.guaranteeAmount) * Number(field.maxGuaranteeAmount)}
+                </Text>
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    setIsModal(true);
+                    methods.reset({ ...field, index });
+                  }}
+                >
+                  Edit
+                </Button>
+              </Box>
+            ))}
+          </VStack>
+        </Box>
+      )}
+    </>
+  );
+};
+
+type CollateralDetailsType = {
+  index?: number;
+  collateralType: 'Land' | 'Land and Building' | 'Vehicle' | 'Documents' | 'Others' | '';
+  ownerName: string;
+  relation: string;
+  sheetNo: string;
+  plotNo: string;
+  kittaNo: string;
+  area: string;
+  valuatorId: string;
+  fmvMaxAmount: string;
+  dvMinAmount: string;
+  valuationMethod: string;
+  validationPercent: string;
+  collateralDescription: string;
+  collateralFiles: string[];
+  valuationFiles: string[];
+};
+
+export const CollateralDetails = () => {
+  const methods = useForm<CollateralDetailsType>();
+
+  const { control, watch } = useFormContext<{
+    productId?: string;
+    collateralData: CollateralDetailsType[];
+  }>();
+
+  const [isModal, setIsModal] = useState(false);
+
+  const { append, fields, update } = useFieldArray({
+    control,
+    name: 'collateralData',
+  });
+
+  const productId = watch('productId');
+
+  const { data: loanProductData } = useGetLoanProductDetailsDataQuery(
+    { id: String(productId) },
+    {
+      enabled: !!productId,
+    }
+  );
+
+  const { data: collateralListData } = useGetCollateralListQuery();
+
+  const loanProduct = loanProductData?.settings?.general?.loanProducts?.formState?.data;
+  const collateralList = collateralListData?.settings?.general?.loan?.general?.collateralList;
+
+  const collateralTypeWatch = methods.watch('collateralType');
+
+  return (
+    <>
+      <Box display="flex" flexDir="column" gap="s16">
+        <TextFields variant="formLabel" color="gray.700">
+          Collateral Details
+        </TextFields>
+        <Box>
+          <Button
+            variant="outline"
+            gap="s4"
+            onClick={() => {
+              methods.reset({ collateralType: '' });
+              setIsModal(true);
+            }}
+          >
+            <Icon as={AiOutlinePlus} />
+            Add New
+          </Button>
+        </Box>
+      </Box>
+
+      <ChakraModal
+        width="3xl"
+        open={isModal}
+        onClose={() => setIsModal(false)}
+        primaryButtonHandler={() => {
+          const index = methods.getValues()?.index;
+          if (index !== undefined) {
+            update(index, methods.getValues());
+          } else {
+            append(methods.getValues());
+          }
+          setIsModal(false);
+        }}
+        title="Add Collateral"
+        primaryButtonLabel="save"
+        scrollBehavior={collateralTypeWatch ? 'inside' : 'outside'}
+        preserveScrollBarGap
+      >
+        <FormProvider {...methods}>
+          <Box display="flex" flexDir="column" gap="s32">
+            <Box width="50%" pr="s10">
+              <FormSelect
+                name="collateralType"
+                isDisabled={!!collateralTypeWatch}
+                label="Collateral Type"
+                options={loanProduct?.collateralValue?.map((collateralData) => ({
+                  label: collateralList?.find(
+                    (collateral) => collateral?.id === collateralData?.type
+                  )?.name as string,
+                  value: collateralData?.type as string,
+                }))}
+              />
+            </Box>
+            {collateralTypeWatch && (
+              <Box>
+                {
+                  COLLATERAL_COMPS(collateralTypeWatch)[
+                    collateralList?.find((collateral) => collateral?.id === collateralTypeWatch)
+                      ?.name as
+                      | 'Land'
+                      | 'Land and Building'
+                      | 'Vehicle'
+                      | 'Documents'
+                      | 'Others'
+                      | ''
+                  ]
+                }
+              </Box>
+            )}
+          </Box>
+        </FormProvider>
+      </ChakraModal>
+
+      {fields.length !== 0 && (
+        <Box mt="-s16" border="1px" borderColor="border.layout" borderRadius="br2">
+          <Box
+            h="s60"
+            borderBottom="1px"
+            borderBottomColor="border.layout"
+            display="flex"
+            flexDir="column"
+            justifyContent="center"
+            px="s12"
+          >
+            <Text fontSize="r1" fontWeight="600" color="gray.800">
+              Collateral Details
+            </Text>
+            <Text fontSize="s3" fontWeight="500" color="gray.600">
+              Details about the valuation for loan amount
+            </Text>
+          </Box>
+          <Box
+            borderBottom="1px"
+            borderBottomColor="border.layout"
+            h="50px"
+            display="flex"
+            alignItems="center"
+            px="s12"
+          >
+            <Text fontSize="r1" fontWeight="600" color="gray.900" w="20%">
+              S.N.
+            </Text>
+            <Text fontSize="r1" fontWeight="600" color="gray.900" w="40%">
+              Name
+            </Text>
+            <Text fontSize="r1" fontWeight="600" color="gray.900" w="40%">
+              Valuation
+            </Text>
+          </Box>
+
+          <VStack spacing={0} divider={<Divider />}>
+            {fields.map((field, index) => (
+              <Box key={field.id} px="s16" display="flex" alignItems="center" w="100%" h="60px">
+                <Text fontSize="r1" color="gray.900" w="20%">
+                  {index + 1}
+                </Text>
+                <Text fontSize="r1" color="gray.900" w="40%" textTransform="capitalize">
+                  {field.collateralType}
+                </Text>
+
+                <Text fontSize="r1" color="gray.900" w="20%">
+                  {Number(field.validationPercent) * Number(field.fmvMaxAmount)}
+                </Text>
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    setIsModal(true);
+                    methods.reset({ ...field, index });
+                  }}
+                >
+                  Edit
+                </Button>
+              </Box>
+            ))}
+          </VStack>
+        </Box>
+      )}
+    </>
+  );
+};
+
+// TODO! MOVE THEM TO INDIVIDUAL FILES
+export const LandCollateral = () => (
+  <Grid templateColumns="repeat(4, 1fr)" gap="s20">
+    <LandDetails />
+    <ValuatorSelect />
+    <GridItem />
+    <ValuationInputs />
+    <ValuationDocuments />
+  </Grid>
+);
+
+export const ValuationDocuments = () => (
+  <>
+    <GridItem colSpan={4}>
+      <FormTextArea h="100px" name="collateralDescription" label="Collateral Description" />
+    </GridItem>
+    <GridItem colSpan={4}>
+      <Text color="gray.800" fontSize="r1" fontWeight="600">
+        Required Documents
+      </Text>
+    </GridItem>
+    <GridItem colSpan={2}>
+      <FormFileInput name="collateralFiles" label="Collateral Files" size="lg" />
+    </GridItem>
+    <GridItem colSpan={2}>
+      <FormFileInput name="valuationFiles" label="Valuation Files" size="lg" />
+    </GridItem>
+  </>
+);
+
+export const ValuationAmount = () => (
+  <>
+    <GridItem colSpan={2}>
+      <FormNumberInput name="fmvMaxAmount" label="FMV (Maximum Amount)" />
+    </GridItem>
+    <GridItem colSpan={2}>
+      <FormNumberInput name="dvMinAmount" label="DV (Minimum Amount)" />
+    </GridItem>
+  </>
+);
+
+export const ValuationRange = () => (
+  <GridItem colSpan={4}>
+    <Alert status="info" title="Range" hideCloseIcon>
+      <Box pt="s8" as="ul">
+        <li>
+          <Text fontWeight="400" fontSize="r1">
+            FMV: <b>7-12%</b> and DV <b>7 - 12%</b>
+          </Text>
+        </li>
+      </Box>
+    </Alert>
+  </GridItem>
+);
+
+export const ValuationMethods = () => (
+  <GridItem
+    colSpan={4}
+    p="s16"
+    display="flex"
+    alignItems="center"
+    justifyContent="space-between"
+    border="1px"
+    borderColor="border.layout"
+    borderRadius="br2"
+  >
+    <FormSwitchTab
+      name="valuationMethod"
+      label="Valuation Method"
+      options={[
+        { label: 'FMV', value: 'FMV' },
+        { label: 'DV', value: 'DV' },
+      ]}
+    />
+    <Box>
+      <FormInput
+        name="validationPercent"
+        label="Validation Percentage"
+        rightElement={
+          <Text fontWeight="Medium" noOfLines={1} fontSize="r1" color="primary.500">
+            %
+          </Text>
+        }
+      />
+    </Box>
+  </GridItem>
+);
+
+export const ValuationStats = () => (
+  <GridItem
+    colSpan={4}
+    h="s40"
+    display="flex"
+    alignItems="center"
+    justifyContent="space-between"
+    px="s10"
+    bg="background.500"
+    borderRadius="br2"
+  >
+    <TextFields variant="formLabel" color="gray.600">
+      Collateral Valuation
+    </TextFields>
+
+    <Text color="gray.700" fontSize="r1" fontWeight="600">
+      1500
+    </Text>
+  </GridItem>
+);
+
+export const ValuationInputs = () => (
+  <>
+    <ValuationAmount />
+    <ValuationRange />
+    <ValuationMethods />
+    <ValuationStats />
+  </>
+);
+
+export const ValuatorSelect = () => {
+  const { data: valuatorData } = useGetValuatorListQuery({
+    paginate: {
+      after: '',
+      first: 10,
+    },
+  });
+
+  return (
+    <GridItem colSpan={2}>
+      <FormSelect
+        name="valuatorId"
+        label="Valuator"
+        options={valuatorData?.settings.general?.valuator?.list?.edges?.map((valuator) => ({
+          label: valuator.node?.valuatorName as string,
+          value: valuator.node?.id as string,
+        }))}
+      />
+    </GridItem>
+  );
+};
+
+export const LandDetails = () => (
+  <>
+    <GridItem colSpan={2}>
+      <FormInput name="ownerName" label="Owner Name" />
+    </GridItem>
+    <GridItem colSpan={2}>
+      <FormInput name="relation" label="Relation With Owner" />
+    </GridItem>
+    <FormInput name="sheetNo" label="Sheet No" />
+    <FormInput name="plotNo" label="Plot No" />
+    <FormInput name="kittaNo" label="Kitta No" />
+    <FormInput
+      name="area"
+      label="Area"
+      rightElement={
+        <Text fontWeight="Medium" noOfLines={1} fontSize="r1" color="primary.500">
+          sq. km
+        </Text>
+      }
+    />
+  </>
+);
+
+export const LandBuildingCollateral = () => (
+  <Grid templateColumns="repeat(4, 1fr)" gap="s20">
+    <LandDetails />
+
+    <GridItem colSpan={2}>
+      <FormSelect
+        name="buildingType"
+        label="Building Type"
+        options={[
+          { label: 'Industrial', value: BuildingType.Industrial },
+          { label: 'Institutional', value: BuildingType.Institutional },
+          { label: 'Commercial', value: BuildingType.Commercial },
+          { label: 'Residential', value: BuildingType.Residential },
+        ]}
+      />
+    </GridItem>
+
+    <GridItem colSpan={2}>
+      <FormSelect
+        name="constructionType"
+        label="Construction Type"
+        options={[
+          { label: 'Wood Frame', value: ConstructionType.WoodFrame },
+          { label: 'Light Gauge Steel Frame', value: ConstructionType.LightGaugeSteelFrame },
+          {
+            label: 'Joisted or Load Bearing Masonry',
+            value: ConstructionType.JoistedOrLoadBearingMasonry,
+          },
+          { label: 'Steel Frame', value: ConstructionType.SteelFrame },
+          { label: 'Concrete Frame', value: ConstructionType.SteelFrame },
+          { label: 'Pre Enginnered', value: ConstructionType.PreEngineered },
+        ]}
+      />
+    </GridItem>
+
+    <GridItem colSpan={2}>
+      <FormInput name="noOfStorey" label="No. of Storey" />
+    </GridItem>
+
+    <ValuatorSelect />
+    <ValuationInputs />
+    <ValuationDocuments />
+  </Grid>
+);
+
+export const VehicleCollateral = () => (
+  <Grid templateColumns="repeat(4, 1fr)" gap="s20">
+    <GridItem colSpan={2}>
+      <FormInput name="ownerName" label="Owner Name" />
+    </GridItem>
+    <GridItem colSpan={2}>
+      <FormInput name="relation" label="Relation With Owner" />
+    </GridItem>
+
+    <GridItem colSpan={2}>
+      <FormInput name="vehicleName" label="Vehicle Name" />
+    </GridItem>
+    <GridItem colSpan={2}>
+      <FormInput name="vehicleModelNo" label="Model No." />
+    </GridItem>
+    <GridItem colSpan={2}>
+      <FormInput name="vehicleRegistrationNo" label="Registration No." />
+    </GridItem>
+    <GridItem colSpan={2}>
+      <FormInput name="vehicleNo" label="Model No." />
+    </GridItem>
+    <FormInput name="vehicleSeatCapacity" label="Seat Capacity" />
+    <FormInput name="vehicleCapacity" label="Engine Capacity" />
+    <FormInput name="vehicleType" label="Vehicle Type" />
+    <FormInput name="vehicleFuelType" label="Fuel Type" />
+
+    <ValuatorSelect />
+    <GridItem />
+    <GridItem colSpan={2}>
+      <FormInput name="valuationAmount" label="Valuation Amount" />
+    </GridItem>
+    <GridItem colSpan={2}>
+      <FormInput
+        name="validationPercent"
+        label="Validation Percentage"
+        rightElement={
+          <Text fontWeight="Medium" noOfLines={1} fontSize="r1" color="primary.500">
+            %
+          </Text>
+        }
+      />
+    </GridItem>
+    <ValuationStats />
+    <ValuationDocuments />
+  </Grid>
+);
+
+export const DocumentCollateral = () => (
+  <Grid templateColumns="repeat(4, 1fr)" gap="s20">
+    <GridItem colSpan={2}>
+      <FormInput name="documentName" label="Document Name" />
+    </GridItem>
+    <GridItem colSpan={2}>
+      <FormInput name="valuationAmount" label="Valuation Amount" />
+    </GridItem>
+    <ValuationDocuments />
+  </Grid>
+);
+
+export const OtherCollateral = () => (
+  <Grid templateColumns="repeat(4, 1fr)" gap="s20">
+    <GridItem colSpan={2}>
+      <FormInput name="documentName" label="Valuation Amount" />
+    </GridItem>
+    <GridItem />
+    <ValuationDocuments />
+  </Grid>
+);
+
+const COLLATERAL_COMPS = (key: string) => ({
+  Land: <LandCollateral key={key} />,
+  'Land and Building': <LandBuildingCollateral key={key} />,
+  Vehicle: <VehicleCollateral key={key} />,
+  Documents: <DocumentCollateral key={key} />,
+  Others: <OtherCollateral key={key} />,
+  '': null,
+});

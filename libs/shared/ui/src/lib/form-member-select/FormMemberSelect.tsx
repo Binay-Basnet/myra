@@ -15,17 +15,11 @@ import FormCustomSelect from './FormCustomSelect';
 interface IMemberSelectProps {
   name: string;
   label?: string;
-  __placeholder?: string;
   placeholder?: string;
 }
 
-export const FormMemberSelect = ({
-  name,
-  label,
-  placeholder,
-}: IMemberSelectProps) => {
+export const FormMemberSelect = ({ name, label, placeholder }: IMemberSelectProps) => {
   const [IDMember, setIDMember] = useState('');
-  const [trigger, setTrigger] = useState(false);
 
   const { data: memberList, isFetching } = useGetMemberListQuery(
     {
@@ -39,13 +33,8 @@ export const FormMemberSelect = ({
     },
     {
       staleTime: 0,
-      enabled: trigger,
     }
   );
-
-  // useEffect(() => {
-  //   setIDMember(watch(name));
-  // }, [watch(name)]);
 
   const memberListData = memberList?.members?.list?.edges;
 
@@ -62,8 +51,7 @@ export const FormMemberSelect = ({
             memberId: curVal?.node?.id,
             memberName: curVal?.node?.name?.local,
             age: profileData?.data?.formData?.basicInformation?.age,
-            gender:
-              profileData?.data?.formData?.basicInformation?.gender?.local,
+            gender: profileData?.data?.formData?.basicInformation?.gender?.local,
             maritialStatus: profileData?.data?.formData?.maritalStatus?.local,
             profilePicUrl: curVal?.node?.profilePicUrl,
           },
@@ -80,7 +68,6 @@ export const FormMemberSelect = ({
       onInputChange={debounce((id) => {
         if (id) {
           setIDMember(id);
-          setTrigger(true);
         }
       }, 800)}
       options={memberOptions}

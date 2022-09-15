@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { useGetAccountOpenProductCriteriaQuery } from '@coop/cbs/data-access';
+import { useGetProductCriteriaQuery } from '@coop/cbs/data-access';
 import { Box, Text } from '@coop/shared/ui';
 
 interface CriteriaProps {
@@ -9,14 +9,13 @@ interface CriteriaProps {
 
 export const CriteriaCard = ({ productId }: CriteriaProps) => {
   const [triggerQuery, setTriggerQuery] = useState(false);
-  const poductDetails = useGetAccountOpenProductCriteriaQuery(
+  const poductDetails = useGetProductCriteriaQuery(
     { productId },
     {
       enabled: triggerQuery,
     }
   );
-  const criteriaData =
-    poductDetails?.data?.settings?.general?.depositProduct?.getProductCriteria?.data;
+  const criteriaData = poductDetails?.data?.loanAccount?.getProductCriteria?.data;
   useEffect(() => {
     if (productId) {
       setTriggerQuery(true);
@@ -121,7 +120,7 @@ export const CriteriaCard = ({ productId }: CriteriaProps) => {
             </Text>
 
             {criteriaData?.institutionType?.map((item) => (
-              <Text fontWeight="600" fontSize="s3" key="$item">
+              <Text fontWeight="600" fontSize="s3" key={`${item}`}>
                 {item},
               </Text>
             ))}

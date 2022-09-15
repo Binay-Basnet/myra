@@ -26,6 +26,29 @@ fragment MutationError on MutationError {
   }
 }
 
+fragment QueryError on QueryError {
+  ... on BadRequestError {
+    __typename
+    badRequestErrorMessage: message
+    code
+  }
+  ... on ServerError {
+    __typename
+    serverErrorMessage: message
+    code
+  }
+  ... on AuthorizationError {
+    __typename
+    authorizationErrorMsg: message
+    code
+  }
+  ... on NotFoundError {
+    __typename
+    notFoundErrorMsg: message
+    code
+  }
+}
+
 fragment KYMFieldData on KYMFieldData {
   id
   options {

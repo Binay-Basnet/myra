@@ -1,0 +1,10 @@
+mutation sendLoanApplicationForApproval($id: ID!, $data: LoanAccountInput!) {
+  loanAccount {
+    add(id: $id, data: $data) {
+      error {
+        ...MutationError
+      }
+      recordId
+    }
+  }
+}
