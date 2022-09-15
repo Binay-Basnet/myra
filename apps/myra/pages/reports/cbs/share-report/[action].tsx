@@ -100,7 +100,7 @@ const NewShareStatementReport = () => {
         />
 
         <ReportInputs
-          filter={filter}
+          // filter={filter}
           setFilter={setFilter}
           hasShownFilter={hasShownFilter}
           setHasShownFilter={setHasShownFilter}
