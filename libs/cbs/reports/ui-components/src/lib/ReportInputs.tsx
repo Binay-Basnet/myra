@@ -23,7 +23,7 @@ type ReportFilter = {
 };
 
 interface ReportInputsProps {
-  filter: ReportFilter;
+  // filter: ReportFilter;
   hasShownFilter: boolean;
   setFilter: React.Dispatch<React.SetStateAction<ReportFilter>>;
   setHasShownFilter: React.Dispatch<React.SetStateAction<boolean>>;
@@ -49,12 +49,10 @@ export const ReportInputs = ({
 
   const memberOptions =
     memberListData &&
-    memberListData.map((member) => {
-      return {
-        label: `${member?.node?.id} - ${member?.node?.name?.local}`,
-        value: String(member?.node?.id),
-      };
-    });
+    memberListData.map((member) => ({
+      label: `${member?.node?.id} - ${member?.node?.name?.local}`,
+      value: String(member?.node?.id),
+    }));
 
   return (
     <Box
@@ -66,16 +64,10 @@ export const ReportInputs = ({
       px="s32"
       py="s16"
     >
-      <Box
-        as="form"
-        display="grid"
-        width="100%"
-        gridTemplateColumns="repeat(4, 1fr)"
-        gap="s20"
-      >
+      <Box as="form" display="grid" width="100%" gridTemplateColumns="repeat(4, 1fr)" gap="s20">
         <GridItem colSpan={3}>
           <FormSelect
-            name={'memberId'}
+            name="memberId"
             options={memberOptions ?? []}
             label="Member Search"
             __placeholder="Search Member"
@@ -84,7 +76,7 @@ export const ReportInputs = ({
         </GridItem>
         <GridItem colSpan={1}>
           <FormSelect
-            name={'period'}
+            name="period"
             hasRadioOption
             options={[
               { label: 'Today', value: ReportPeriodType.Today },
@@ -124,9 +116,7 @@ export const ReportInputs = ({
 
       <Box display="flex" gap="s16">
         <Button
-          isDisabled={
-            !methods.watch()['memberId'] || !methods.watch()['period']
-          }
+          isDisabled={!methods.watch()['memberId'] || !methods.watch()['period']}
           onClick={methods.handleSubmit((data) => {
             if (!data['memberId'] || !data['period']) return;
 

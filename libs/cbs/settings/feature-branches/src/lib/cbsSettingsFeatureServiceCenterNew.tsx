@@ -9,16 +9,8 @@ import {
   useGetCoaListQuery,
   useSetBranchDataMutation,
 } from '@coop/cbs/data-access';
-import {
-  ContainerWithDivider,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import {
-  FormInput,
-  FormMap,
-  FormSelect,
-  FormSwitchTab,
-} from '@coop/shared/form';
+import { ContainerWithDivider, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { FormInput, FormMap, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
   Box,
   Container,
@@ -30,7 +22,7 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-export function CbsSettingsFeatureServiceCenterNew() {
+export const CbsSettingsFeatureServiceCenterNew = () => {
   const router = useRouter();
 
   const { t } = useTranslation();
@@ -47,14 +39,14 @@ export function CbsSettingsFeatureServiceCenterNew() {
 
   const { mutate } = useSetBranchDataMutation();
 
-  const province = useMemo(() => {
-    return (
+  const province = useMemo(
+    () =>
       data?.administration?.all?.map((d) => ({
         label: d.name,
         value: d.id,
-      })) ?? []
-    );
-  }, [data?.administration?.all]);
+      })) ?? [],
+    [data?.administration?.all]
+  );
 
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch('provinceId');
@@ -62,16 +54,12 @@ export function CbsSettingsFeatureServiceCenterNew() {
   const currentLocalityId = watch('localGovernmentId');
 
   const districtList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
-        ?.districts ?? [],
+    () => data?.administration.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
     [currentProvinceId]
   );
 
   const localityList = useMemo(
-    () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+    () => districtList.find((d) => d.id === currentDistrictId)?.municipalities ?? [],
     [currentDistrictId]
   );
 
@@ -93,12 +81,10 @@ export function CbsSettingsFeatureServiceCenterNew() {
 
   const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
 
-  const coaList = coaData?.map((item) => {
-    return {
-      label: item?.name?.en as string,
-      value: item?.id as string,
-    };
-  });
+  const coaList = coaData?.map((item) => ({
+    label: item?.name?.en as string,
+    value: item?.id as string,
+  }));
 
   const branchCategories = [
     {
@@ -144,8 +130,7 @@ export function CbsSettingsFeatureServiceCenterNew() {
 
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.settings?.general?.branch?.formState?.data;
+      const editValueData = editValues?.settings?.general?.branch?.formState?.data;
       if (editValueData) {
         reset({
           ...editValueData,
@@ -163,13 +148,7 @@ export function CbsSettingsFeatureServiceCenterNew() {
   return (
     <>
       <Container height="fit-content" minW="container.xl">
-        <Box
-          position="sticky"
-          top="110px"
-          bg="gray.100"
-          width="100%"
-          zIndex="10"
-        >
+        <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader title={t['serviceCenterAdd']} />
         </Box>
 
@@ -189,7 +168,7 @@ export function CbsSettingsFeatureServiceCenterNew() {
                           />
                         </GridItem>
                         <FormInput
-                          name={'branchCode'}
+                          name="branchCode"
                           label={t['serviceCenterCode']}
                           __placeholder={t['serviceCenterCodeEnter']}
                         />
@@ -218,14 +197,10 @@ export function CbsSettingsFeatureServiceCenterNew() {
                     </Box>
 
                     <Box>
-                      <TextFields
-                        variant="tableHeader"
-                        color="gray.700"
-                        mb="s16"
-                      >
+                      <TextFields variant="tableHeader" color="gray.700" mb="s16">
                         {t['serviceCenterAddress']}
                       </TextFields>
-                      <Box gap="s16" display={'flex'} flexDirection="column">
+                      <Box gap="s16" display="flex" flexDirection="column">
                         <InputGroupContainer>
                           <FormSelect
                             name="provinceId"
@@ -279,9 +254,7 @@ export function CbsSettingsFeatureServiceCenterNew() {
                         <FormInput
                           name="phoneNumber"
                           label={t['settingsBranchPhoneNumber']}
-                          __placeholder={
-                            t['settingsBranchPhoneNumber__placeholder']
-                          }
+                          __placeholder={t['settingsBranchPhoneNumber__placeholder']}
                         />
                         <FormInput
                           name="email"
@@ -303,27 +276,17 @@ export function CbsSettingsFeatureServiceCenterNew() {
                       />
 
                       {abbsStatus && (
-                        <Box
-                          p="s16"
-                          border="1px solid"
-                          borderColor="border.layout"
-                        >
+                        <Box p="s16" border="1px solid" borderColor="border.layout">
                           <InputGroupContainer>
                             <FormSelect
                               label={t['settingsBranchRecievableAccount']}
-                              __placeholder={
-                                t[
-                                  'settingsBranchRecievableAccount__placeholder'
-                                ]
-                              }
+                              __placeholder={t['settingsBranchRecievableAccount__placeholder']}
                               name="receivableAccountId"
                               options={coaList}
                             />
                             <FormSelect
                               label={t['settingsBranchPayableAccount']}
-                              __placeholder={
-                                t['settingsBranchPayableAccount__placeholder']
-                              }
+                              __placeholder={t['settingsBranchPayableAccount__placeholder']}
                               name="payableAccountId"
                               options={coaList}
                             />
@@ -358,10 +321,7 @@ export function CbsSettingsFeatureServiceCenterNew() {
                           {t['settingsBranchStatusReversible']}
                         </Text>
                       </Box>
-                      <FormSwitchTab
-                        options={booleanList}
-                        name="branchStatus"
-                      />
+                      <FormSwitchTab options={booleanList} name="branchStatus" />
                     </Box>
                   </ContainerWithDivider>
                 </Box>
@@ -377,12 +337,7 @@ export function CbsSettingsFeatureServiceCenterNew() {
             <FormFooter
               status={
                 <Box display="flex" gap="s8">
-                  <Text
-                    color="neutralColorLight.Gray-60"
-                    fontWeight="Regular"
-                    as="i"
-                    fontSize="r1"
-                  >
+                  <Text color="neutralColorLight.Gray-60" fontWeight="Regular" as="i" fontSize="r1">
                     Press Save Account to save form
                   </Text>
                 </Box>
@@ -397,6 +352,6 @@ export function CbsSettingsFeatureServiceCenterNew() {
       {/* </Box> */}
     </>
   );
-}
+};
 
 export default CbsSettingsFeatureServiceCenterNew;

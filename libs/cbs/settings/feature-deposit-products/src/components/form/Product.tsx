@@ -1,11 +1,9 @@
-import React from 'react';
-
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { FormSection, GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-export function Product() {
+export const Product = () => {
   const { t } = useTranslation();
 
   const optionsSaving = [
@@ -42,6 +40,6 @@ export function Product() {
       </GridItem>
     </FormSection>
   );
-}
+};
 
 export default Product;

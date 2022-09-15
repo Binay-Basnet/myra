@@ -1,7 +1,4 @@
-import {
-  PrematurePenaltyDateType,
-  useGetCoaListQuery,
-} from '@coop/cbs/data-access';
+import { PrematurePenaltyDateType, useGetCoaListQuery } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { FormSection, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -28,12 +25,10 @@ export const PrematuredPenalty = () => {
 
   const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
 
-  const coaList = coaData?.map((item) => {
-    return {
-      label: item?.name?.en as string,
-      value: item?.id as string,
-    };
-  });
+  const coaList = coaData?.map((item) => ({
+    label: item?.name?.en as string,
+    value: item?.id as string,
+  }));
 
   return (
     <FormSection header="depositProductPrematuredPenaltySetup">
@@ -42,10 +37,7 @@ export const PrematuredPenalty = () => {
         label={t['depositProductPenaltyDateType']}
         options={penaltyDataType}
       />
-      <FormInput
-        name="prematurePenalty.noOfDays"
-        label={t['depositProductNumberofDays']}
-      />
+      <FormInput name="prematurePenalty.noOfDays" label={t['depositProductNumberofDays']} />
       <FormSelect
         name="prematurePenalty.penaltyLedgerMapping"
         label={t['depositProductPenaltyLedgerMapping']}
@@ -53,9 +45,9 @@ export const PrematuredPenalty = () => {
       />
       <FormInput
         name="prematurePenalty.penaltyAmount"
-        type={'number'}
+        type="number"
         label={t['depositProductPenaltyAmount']}
-        textAlign={'right'}
+        textAlign="right"
       />
       <FormInput
         name="prematurePenalty.penaltyRate"
@@ -65,7 +57,7 @@ export const PrematuredPenalty = () => {
             %
           </Text>
         }
-        textAlign={'right'}
+        textAlign="right"
       />
     </FormSection>
   );

@@ -54,19 +54,19 @@ export const SettingsDepositProducts = () => {
       {
         header: t['depositNature'],
         accessorFn: (row) => row?.node?.nature,
-        cell: (props) => (
-          <span>
-            {props?.row?.original?.node?.nature === NatureOfDepositProduct.Mandatory
-              ? t['depositProductMandatory']
-              : props?.row?.original?.node?.nature === NatureOfDepositProduct.RecurringSaving
-              ? t['depositProductRecurringSaving']
-              : props?.row?.original?.node?.nature === NatureOfDepositProduct.TermSavingOrFd
-              ? t['depositProductTermSaving']
-              : props?.row?.original?.node?.nature === NatureOfDepositProduct.VoluntaryOrOptional
-              ? t['depositProductVoluntaryOptional']
-              : ' '}
-          </span>
-        ),
+        cell: (props) => {
+          const nature = props?.row?.original?.node?.nature;
+          return (
+            <span>
+              {nature === NatureOfDepositProduct.Mandatory && t['depositProductMandatory']}
+              {nature === NatureOfDepositProduct.RecurringSaving &&
+                t['depositProductRecurringSaving']}
+              {nature === NatureOfDepositProduct.TermSavingOrFd && t['depositProductTermSaving']}
+              {nature === NatureOfDepositProduct.VoluntaryOrOptional &&
+                t['depositProductVoluntaryOptional']}
+            </span>
+          );
+        },
       },
       {
         header: t['depositInterest'],

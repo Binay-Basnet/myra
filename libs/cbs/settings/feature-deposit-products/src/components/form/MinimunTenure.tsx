@@ -6,6 +6,7 @@ import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
+import { inputRightElementText } from './MaximumTenure';
 import { BoxContainer, SubHeadingText, SubText, TextBoxContainer } from '../formui';
 
 export const MinimunTenure = () => {
@@ -83,17 +84,10 @@ export const MinimunTenure = () => {
                   name="minTenureUnitNumber"
                   textAlign="right"
                   label={t['depositProductNumber']}
-                  rightAddonText={
-                    rightElement && rightElement === Frequency.Daily
-                      ? t['days']
-                      : rightElement === Frequency.Weekly
-                      ? t['weeks']
-                      : rightElement === Frequency.Monthly
-                      ? t['months']
-                      : rightElement === Frequency.Yearly
-                      ? t['years']
-                      : ''
-                  }
+                  rightAddonText={inputRightElementText({
+                    rightElement: rightElement as Frequency,
+                    t,
+                  })}
                 />
               </Box>
             </BoxContainer>

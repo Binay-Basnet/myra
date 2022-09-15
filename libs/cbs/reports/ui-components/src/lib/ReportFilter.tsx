@@ -15,7 +15,7 @@ import {
   Text,
 } from '@coop/shared/ui';
 
-type ReportFilter = {
+type IReportFilter = {
   memberId: string;
   period: {
     from: string;
@@ -26,13 +26,10 @@ type ReportFilter = {
 
 interface ReportFilterProps {
   hasShownFilter: boolean;
-  setFilter: React.Dispatch<React.SetStateAction<ReportFilter>>;
+  setFilter: React.Dispatch<React.SetStateAction<IReportFilter>>;
 }
 
-export const ReportFilter = ({
-  hasShownFilter,
-  setFilter,
-}: ReportFilterProps) => {
+export const ReportFilter = ({ hasShownFilter, setFilter }: ReportFilterProps) => {
   const methods = useFormContext();
 
   return hasShownFilter ? (
@@ -91,7 +88,7 @@ export const ReportFilter = ({
                 </AccordionButton>
                 <AccordionPanel p="0">
                   <FormRadioGroup
-                    name={'transaction_type'}
+                    name="transaction_type"
                     options={[
                       { label: 'All', value: ShareTransactionType.All },
                       { label: 'Issue', value: ShareTransactionType.Issue },

@@ -37,9 +37,9 @@ export const LadderRate = () => {
   return (
     <FormSection>
       <GridItem colSpan={3}>
-        <Box display={'flex'} flexDirection="column" gap="s20">
-          <Box alignItems="center" display={'flex'} justifyContent="space-between">
-            <Text color="neutralColorLight.Gray-70" fontSize={'s3'} fontWeight="Medium">
+        <Box display="flex" flexDirection="column" gap="s20">
+          <Box alignItems="center" display="flex" justifyContent="space-between">
+            <Text color="neutralColorLight.Gray-70" fontSize="s3" fontWeight="Medium">
               {t['depositProductLadderRate']}
             </Text>
             <FormSwitchTab name="ladderRate" options={ladderSwitch} />

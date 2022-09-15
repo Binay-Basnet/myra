@@ -4,12 +4,7 @@ import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import {
-  BoxContainer,
-  SubHeadingText,
-  SubText,
-  TextBoxContainer,
-} from '../formui';
+import { BoxContainer, SubHeadingText, SubText, TextBoxContainer } from '../formui';
 
 export const Rebate = () => {
   const { t } = useTranslation();
@@ -31,24 +26,15 @@ export const Rebate = () => {
     <FormSection>
       <GridItem colSpan={3}>
         <BoxContainer>
-          <Box display={'flex'} justifyContent="space-between">
+          <Box display="flex" justifyContent="space-between">
             <TextBoxContainer>
               <SubHeadingText>{t['depositProductRebate']} </SubHeadingText>
               <SubText>{t['depositProductEnterRebatedetails']} </SubText>
             </TextBoxContainer>
-            <FormSwitchTab
-              name={'rebate'}
-              options={enableSwitch}
-              defaultValue={'false'}
-            />
+            <FormSwitchTab name="rebate" options={enableSwitch} defaultValue="false" />
           </Box>
           {rebate && (
-            <BoxContainer
-              p="s16"
-              border={'1px solid'}
-              borderColor="border.layout"
-              borderRadius={'4px'}
-            >
+            <BoxContainer p="s16" border="1px solid" borderColor="border.layout" borderRadius="4px">
               <Grid templateColumns="repeat(3,1fr)" gap="s16">
                 <GridItem>
                   <FormInput
@@ -63,7 +49,7 @@ export const Rebate = () => {
                     type="number"
                     label={t['depositProductNoInstallment']}
                     helperText={t['depositProductEnterNumberInstallments']}
-                    textAlign={'right'}
+                    textAlign="right"
                   />
                 </GridItem>
               </Grid>
@@ -81,13 +67,9 @@ export const Rebate = () => {
                     name="rebateData.rebateRate"
                     type="number"
                     label={t['depositProductPercentageDepositedAmount']}
-                    textAlign={'right'}
+                    textAlign="right"
                     rightElement={
-                      <Text
-                        fontWeight="Medium"
-                        fontSize="r1"
-                        color="primary.500"
-                      >
+                      <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                         %
                       </Text>
                     }

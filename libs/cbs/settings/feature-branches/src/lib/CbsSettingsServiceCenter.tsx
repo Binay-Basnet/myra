@@ -1,7 +1,5 @@
 import { SettingsServiceCenterTable } from '@coop/myra/components';
 
-export function CbsSettingsServiceCenter() {
-  return <SettingsServiceCenterTable />;
-}
+export const CbsSettingsServiceCenter = () => <SettingsServiceCenterTable />;
 
 export default CbsSettingsServiceCenter;

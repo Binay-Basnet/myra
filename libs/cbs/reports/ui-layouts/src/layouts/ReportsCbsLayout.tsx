@@ -15,7 +15,7 @@ export const ReportsCbsLayout = ({ children }: ReportsCbsLayoutProps) => {
   return (
     <>
       <PageHeaderWithTabs
-        heading={'Core Banking System Reports'}
+        heading="Core Banking System Reports"
         tabItems={[
           {
             title: 'reportsListView',
@@ -34,7 +34,7 @@ export const ReportsCbsLayout = ({ children }: ReportsCbsLayoutProps) => {
           px="s8"
           position="fixed"
           py="s16"
-          borderRight={'1px'}
+          borderRight="1px"
           borderRightColor="border.layout"
           minHeight="100vh"
           bg="white"

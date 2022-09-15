@@ -30,14 +30,14 @@ export const PostingFrequency = () => {
   return (
     <FormSection header="depositProductPostingFrequency">
       <GridItem colSpan={3}>
-        <FormSwitchTab name={'postingFrequency'} options={postingFrequency} />
+        <FormSwitchTab name="postingFrequency" options={postingFrequency} />
       </GridItem>
       <Box w="290px">
         <FormInput
           name="maxPostingFreqDifference"
-          textAlign={'right'}
+          textAlign="right"
           label={t['depositProductMaximumPostingFrequencyDifference']}
-          rightAddonText={'days'}
+          rightAddonText="days"
         />
       </Box>
     </FormSection>

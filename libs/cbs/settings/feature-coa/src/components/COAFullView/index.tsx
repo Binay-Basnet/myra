@@ -1,11 +1,7 @@
 import { useMemo } from 'react';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 
-import {
-  CoaView,
-  useGetChartOfAccountsQuery,
-  useGetCoaFullViewQuery,
-} from '@coop/cbs/data-access';
+import { CoaView, useGetChartOfAccountsQuery, useGetCoaFullViewQuery } from '@coop/cbs/data-access';
 import {
   Accordion,
   AccordionButton,
@@ -27,9 +23,7 @@ export const COAFullView = () => {
   const coaLiabilitiesFullView = useMemo(
     () =>
       fullView?.settings?.chartsOfAccount?.fullView.data
-        ?.filter(
-          (account) => account?.accountClass === 'EQUITY_AND_LIABILITIES'
-        )
+        ?.filter((account) => account?.accountClass === 'EQUITY_AND_LIABILITIES')
         .sort((a, b) =>
           Number(
             a?.accountCode?.localeCompare(b?.accountCode as string, undefined, {
@@ -71,9 +65,7 @@ export const COAFullView = () => {
     () =>
       fullView?.settings?.chartsOfAccount?.fullView.data
         ?.filter((account) => account?.accountClass === 'EXPENDITURE')
-        .sort((a, b) =>
-          String(a?.accountCode) > String(b?.accountCode) ? 1 : -1
-        ) ?? [],
+        .sort((a, b) => (String(a?.accountCode) > String(b?.accountCode) ? 1 : -1)) ?? [],
 
     [isFetching]
   );
@@ -87,9 +79,7 @@ export const COAFullView = () => {
     () =>
       fullView?.settings?.chartsOfAccount?.fullView.data
         ?.filter((account) => account?.accountClass === 'INCOME')
-        .sort((a, b) =>
-          String(a?.accountCode) > String(b?.accountCode) ? 1 : -1
-        ) ?? [],
+        .sort((a, b) => (String(a?.accountCode) > String(b?.accountCode) ? 1 : -1)) ?? [],
 
     [isFetching]
   );
@@ -100,22 +90,13 @@ export const COAFullView = () => {
   );
 
   return (
-    <Box
-      p="10px"
-      display="flex"
-      flexDirection="column"
-      justifyContent="space-between"
-    >
+    <Box p="10px" display="flex" flexDirection="column" justifyContent="space-between">
       <Accordion allowMultiple allowToggle mb="0" border="none">
         {memberTypes?.map((memberType) => (
           <AccordionItem key={memberType?.id} mt="s8">
             {({ isExpanded }) => (
               <>
-                <AccordionButton
-                  p="s12"
-                  bg={isExpanded ? '#E0E5EB' : ''}
-                  h="60px"
-                >
+                <AccordionButton p="s12" bg={isExpanded ? '#E0E5EB' : ''} h="60px">
                   <Box flex="1" textAlign="left">
                     <Text fontSize="r1" fontWeight="SemiBold">
                       {memberType?.name}
@@ -128,21 +109,22 @@ export const COAFullView = () => {
                   )}
                 </AccordionButton>
                 <AccordionPanel display="flex" flexDir="column" gap="s16">
-                  {memberType.name.toLowerCase() === 'equity and liabilities'
-                    ? coaLiabilitiesTree.map((account) => (
-                        <Tree current={account} data={account.children} />
-                      ))
-                    : memberType.name.toLowerCase() === 'assets'
-                    ? coaAssetsTree.map((account) => (
-                        <Tree current={account} data={account.children} />
-                      ))
-                    : memberType.name.toLowerCase() === 'expenditure'
-                    ? coaExpenditureTree.map((account) => (
-                        <Tree current={account} data={account.children} />
-                      ))
-                    : coaIncomeTree.map((account) => (
-                        <Tree current={account} data={account.children} />
-                      ))}
+                  {memberType.name.toLowerCase() === 'equity and liabilities' &&
+                    coaLiabilitiesTree.map((account) => (
+                      <Tree current={account} data={account.children} />
+                    ))}
+                  {memberType.name.toLowerCase() === 'assets' &&
+                    coaAssetsTree.map((account) => (
+                      <Tree current={account} data={account.children} />
+                    ))}
+                  {memberType.name.toLowerCase() === 'expenditure' &&
+                    coaExpenditureTree.map((account) => (
+                      <Tree current={account} data={account.children} />
+                    ))}
+                  {memberType.name.toLowerCase() === 'income' &&
+                    coaIncomeTree.map((account) => (
+                      <Tree current={account} data={account.children} />
+                    ))}
                 </AccordionPanel>
               </>
             )}

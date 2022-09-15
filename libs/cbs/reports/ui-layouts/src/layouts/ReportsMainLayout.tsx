@@ -41,9 +41,7 @@ export const ReportMainLayout = ({ children }: IMemberPageLayout) => {
           height="s48"
           width="full"
           justifyContent="start"
-          leftIcon={
-            <Icon as={AiOutlineSetting} size="md" color="primary.500" />
-          }
+          leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
         >
           {t['reportsSettings']}
         </Button>

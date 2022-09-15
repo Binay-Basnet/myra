@@ -8,6 +8,29 @@ import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, SubHeadingText, SubText, TextBoxContainer } from '../formui';
 
+interface IRightElementProps {
+  rightElement: Frequency;
+  t: Record<string, string>;
+}
+
+export const inputRightElementText = (props: IRightElementProps) => {
+  const { rightElement, t } = props;
+  if (rightElement === Frequency.Daily) {
+    return t['days'];
+  }
+  if (rightElement === Frequency.Weekly) {
+    return t['weeks'];
+  }
+  if (rightElement === Frequency.Monthly) {
+    return t['months'];
+  }
+  if (rightElement === Frequency.Yearly) {
+    return t['years'];
+  }
+
+  return '';
+};
+
 export const MaximumTenure = () => {
   const [rightElement, setRightElement] = useState('days');
   const { resetField, watch } = useFormContext();
@@ -85,17 +108,10 @@ export const MaximumTenure = () => {
                   textAlign="right"
                   label={t['depositProductNumber']}
                   __placeholder="0"
-                  rightAddonText={
-                    rightElement && rightElement === Frequency.Daily
-                      ? t['days']
-                      : rightElement === Frequency.Weekly
-                      ? t['weeks']
-                      : rightElement === Frequency.Monthly
-                      ? t['months']
-                      : rightElement === Frequency.Yearly
-                      ? t['years']
-                      : ''
-                  }
+                  rightAddonText={inputRightElementText({
+                    rightElement: rightElement as Frequency,
+                    t,
+                  })}
                 />
               </Box>
             </BoxContainer>

@@ -56,10 +56,7 @@ export const RequiredDocumentSetup = () => {
   ];
 
   return (
-    <FormSection
-      header="depositProductRequiredDocumentSetup"
-      templateColumns={2}
-    >
+    <FormSection header="depositProductRequiredDocumentSetup" templateColumns={2}>
       {typesOfMember?.includes(KymMemberTypesEnum.Individual) && (
         <Box display="flex" flexDirection="column" gap="s16" w="40%">
           <TopText>{t['depositProductIndividual']} </TopText>

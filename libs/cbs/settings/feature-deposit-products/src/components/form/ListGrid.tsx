@@ -7,12 +7,7 @@ import {
   FormFieldSearchTerm,
   useGetSettingsOptionsFieldsQuery,
 } from '@coop/cbs/data-access';
-import {
-  FormCheckboxGroup,
-  FormInput,
-  FormSelect,
-  FormSwitchTab,
-} from '@coop/shared/form';
+import { FormCheckboxGroup, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { Box, FormSection, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -119,87 +114,65 @@ export const GridItems = () => {
   const coopTypeOptions = coopTypeFields?.form?.options?.predefined?.data;
   const coopUnionOptions = coopUnionOrgFields?.form?.options?.predefined?.data;
 
-  const GenderList = genderOptions?.map((item) => {
-    return {
-      label: item?.name?.local as string,
-      value: item?.id as string,
-    };
-  });
+  const GenderList = genderOptions?.map((item) => ({
+    label: item?.name?.local as string,
+    value: item?.id as string,
+  }));
 
-  const MartialOptions = maritialOptions?.map((item) => {
-    return {
-      label: item?.name.local as string,
-      value: item?.id as string,
-    };
-  });
+  const MartialOptions = maritialOptions?.map((item) => ({
+    label: item?.name.local as string,
+    value: item?.id as string,
+  }));
 
-  const EducationalOptions = educationOptions?.map((item) => {
-    return {
-      label: item?.name.local as string,
-      value: item?.id as string,
-    };
-  });
+  const EducationalOptions = educationOptions?.map((item) => ({
+    label: item?.name.local as string,
+    value: item?.id as string,
+  }));
 
-  const InstituitionList = institutionOptions?.map((item) => {
-    return {
-      label: item?.name.local as string,
-      value: item?.id as string,
-    };
-  });
+  const InstituitionList = institutionOptions?.map((item) => ({
+    label: item?.name.local as string,
+    value: item?.id as string,
+  }));
 
-  const CoopTypeList = coopTypeOptions?.map((item) => {
-    return {
-      label: item?.name.local as string,
-      value: item?.id as string,
-    };
-  });
+  const CoopTypeList = coopTypeOptions?.map((item) => ({
+    label: item?.name.local as string,
+    value: item?.id as string,
+  }));
 
-  const CoopUnionList = coopUnionOptions?.map((item) => {
-    return {
-      label: item?.name.local as string,
-      value: item?.id as string,
-    };
-  });
+  const CoopUnionList = coopUnionOptions?.map((item) => ({
+    label: item?.name.local as string,
+    value: item?.id as string,
+  }));
 
-  const EthnicityList = ethnicityOptions?.map((item) => {
-    return {
-      label: item?.name.local as string,
-      value: item?.id as string,
-    };
-  });
+  const EthnicityList = ethnicityOptions?.map((item) => ({
+    label: item?.name.local as string,
+    value: item?.id as string,
+  }));
 
-  const OccupationOptions = occupationalOptions?.map((item) => {
-    return {
-      label: item?.name.local as string,
-      value: item?.id as string,
-    };
-  });
+  const OccupationOptions = occupationalOptions?.map((item) => ({
+    label: item?.name.local as string,
+    value: item?.id as string,
+  }));
   if (isEmpty(criteria)) {
     return null;
   }
   return (
     <FormSection>
       {' '}
-      {memberType &&
-        memberType?.indexOf('INDIVIDUAL') !== -1 &&
-        criteria?.includes('AGE') && (
-          <FormInput name="minAge" label={t['depositProductMinAge']} />
-        )}
-      {memberType &&
-        memberType?.indexOf('INDIVIDUAL') !== -1 &&
-        criteria?.includes('AGE') && (
-          <FormInput name="maxAge" label={t['depositProductMaxAge']} />
-        )}
-      {memberType &&
-        memberType?.indexOf('INDIVIDUAL') !== -1 &&
-        criteria?.includes('GENDER') && (
-          <FormSelect
-            name="genderId"
-            options={GenderList}
-            label={t['depositProductGender']}
-            isMulti
-          />
-        )}
+      {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && criteria?.includes('AGE') && (
+        <FormInput name="minAge" label={t['depositProductMinAge']} />
+      )}
+      {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && criteria?.includes('AGE') && (
+        <FormInput name="maxAge" label={t['depositProductMaxAge']} />
+      )}
+      {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && criteria?.includes('GENDER') && (
+        <FormSelect
+          name="genderId"
+          options={GenderList}
+          label={t['depositProductGender']}
+          isMulti
+        />
+      )}
       {memberType &&
         memberType?.indexOf('INDIVIDUAL') !== -1 &&
         criteria?.includes('MARITAL_STATUS') && (
@@ -244,7 +217,7 @@ export const GridItems = () => {
         memberType?.indexOf('INDIVIDUAL') !== -1 &&
         criteria?.includes('FOREIGN_EMPLOYMENT') && (
           <BoxContainer>
-            <Text fontSize={'s3'} fontWeight="500" color="gray.700">
+            <Text fontSize="s3" fontWeight="500" color="gray.700">
               {t['depositProductForeignEmploymentDetails']}
             </Text>
             <FormSwitchTab name="foreignEmployment" options={CheckboxYesNo} />
@@ -274,7 +247,7 @@ export const GridItems = () => {
         memberType?.indexOf('COOPERATIVE') !== -1 &&
         criteria?.includes('COOPERATIVE_TYPE') && (
           <BoxContainer>
-            <Text fontSize={'s3'} fontWeight="500" color="gray.700">
+            <Text fontSize="s3" fontWeight="500" color="gray.700">
               {t['depositProductCoorperativeType']}
             </Text>
             <Box w="40%">

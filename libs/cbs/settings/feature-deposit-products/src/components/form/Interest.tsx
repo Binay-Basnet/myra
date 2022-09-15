@@ -16,7 +16,7 @@ export const Interest = () => {
         name="interest.minRate"
         type="number"
         label={t['depositProductMinimumRate']}
-        textAlign={'right'}
+        textAlign="right"
         rightElement={
           <Text fontWeight="Medium" fontSize="r1" color="primary.500">
             %
@@ -27,7 +27,7 @@ export const Interest = () => {
         name="interest.maxRate"
         type="number"
         label={t['depositProductMaximumRate']}
-        textAlign={'right'}
+        textAlign="right"
         rightElement={
           <Text fontWeight="Medium" fontSize="r1" color="primary.500">
             %
@@ -38,7 +38,7 @@ export const Interest = () => {
         name="interest.defaultRate"
         type="number"
         label={t['depositProductDefaultRate']}
-        textAlign={'right'}
+        textAlign="right"
         __placeholder="0.00"
         rightElement={
           <Text fontWeight="Medium" fontSize="r1" color="primary.500">
@@ -51,7 +51,7 @@ export const Interest = () => {
           type="number"
           name="interest.additionalRate"
           label={t['depositProductAdditionalBaseRate']}
-          textAlign={'right'}
+          textAlign="right"
           rightElement={
             <Text fontWeight="Medium" fontSize="r1" color="primary.500">
               %
@@ -63,7 +63,7 @@ export const Interest = () => {
         name="interest.ceoAuthority"
         type="number"
         label={t['depositProductCEOAuthority']}
-        textAlign={'right'}
+        textAlign="right"
         rightElement={
           <Text fontWeight="Medium" fontSize="r1" color="primary.500">
             %
@@ -74,7 +74,7 @@ export const Interest = () => {
         name="interest.boardAuthority"
         type="number"
         label={t['depositProductBoardAuthority']}
-        textAlign={'right'}
+        textAlign="right"
         rightElement={
           <Text fontWeight="Medium" fontSize="r1" color="primary.500">
             %

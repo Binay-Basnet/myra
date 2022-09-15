@@ -23,92 +23,87 @@ interface ShareReportTableProps {
   shareTotal: ShareReportTotal;
 }
 
-export const ShareReportTable = ({
-  shareReport,
-  shareTotal,
-}: ShareReportTableProps) => {
-  return (
-    <Box p="s32">
-      <Table<ShareReport>
-        variant="report"
-        size="report"
-        isStatic
-        data={
-          shareReport?.map((share, index) => ({
-            ...share,
-            's.no.': index + 1,
-          })) ?? []
-        }
-        showFooter
-        columns={[
-          {
-            header: 'S.No.',
+export const ShareReportTable = ({ shareReport, shareTotal }: ShareReportTableProps) => (
+  <Box p="s32">
+    <Table<ShareReport>
+      variant="report"
+      size="report"
+      isStatic
+      data={
+        shareReport?.map((share, index) => ({
+          ...share,
+          's.no.': index + 1,
+        })) ?? []
+      }
+      showFooter
+      columns={[
+        {
+          header: 'S.No.',
 
-            footer: () => <Box textAlign="right">Total Balance</Box>,
-            accessorKey: 's.no.',
-            meta: {
-              width: '60px',
-              Footer: {
-                colspan: 3,
-              },
+          footer: () => <Box textAlign="right">Total Balance</Box>,
+          accessorKey: 's.no.',
+          meta: {
+            width: '60px',
+            Footer: {
+              colspan: 3,
             },
           },
-          {
-            header: 'Date',
-            accessorKey: 'date',
-            cell: ({ cell }) => cell.row.original.date.split(' ')[0],
-            meta: {
-              Footer: {
-                display: 'none',
-              },
+        },
+        {
+          header: 'Date',
+          accessorKey: 'date',
+          cell: ({ cell }) => cell.row.original.date.split(' ')[0],
+          meta: {
+            Footer: {
+              display: 'none',
             },
           },
-          {
-            header: 'Particular',
-            accessorKey: 'particular',
-            meta: {
-              width: '100%',
-              Footer: {
-                display: 'none',
-              },
+        },
+        {
+          header: 'Particular',
+          accessorKey: 'particular',
+          meta: {
+            width: '100%',
+            Footer: {
+              display: 'none',
             },
           },
-          {
-            header: 'No of Share',
-            footer: () => shareTotal.totalShares,
-            accessorKey: 'noOfShares',
-            meta: {
-              isNumeric: true,
-            },
+        },
+        {
+          header: 'No of Share',
+          footer: () => shareTotal.totalShares,
+          accessorKey: 'noOfShares',
+          meta: {
+            isNumeric: true,
           },
-          {
-            header: 'Return Amount (Dr.)',
-            accessorKey: 'returnAmountDr',
-            footer: () => shareTotal.totalDr,
-            meta: {
-              isNumeric: true,
-            },
+        },
+        {
+          header: 'Return Amount (Dr.)',
+          accessorKey: 'returnAmountDr',
+          footer: () => shareTotal.totalDr,
+          meta: {
+            isNumeric: true,
           },
-          {
-            header: 'Purchase Amount (Cr.)',
-            accessorKey: 'purchaseAmountCr',
-            footer: () => shareTotal.totalCr,
+        },
+        {
+          header: 'Purchase Amount (Cr.)',
+          accessorKey: 'purchaseAmountCr',
+          footer: () => shareTotal.totalCr,
 
-            meta: {
-              isNumeric: true,
-            },
+          meta: {
+            isNumeric: true,
           },
-          {
-            header: 'Balance Sheet',
-            accessorKey: 'balanceSheet',
-            footer: () => shareTotal.totalBalanceSheet,
+        },
+        {
+          header: 'Balance Sheet',
+          accessorKey: 'balanceSheet',
+          footer: () => shareTotal.totalBalanceSheet,
 
-            meta: {
-              isNumeric: true,
-            },
+          meta: {
+            isNumeric: true,
           },
-        ]}
-      />
-    </Box>
-  );
-};
+        },
+      ]}
+    />
+  </Box>
+);

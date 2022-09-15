@@ -7,6 +7,8 @@ import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
+import { inputRightElementText } from './MaximumTenure';
+
 export const Tenure = () => {
   const { t } = useTranslation();
   const { resetField, watch } = useFormContext();
@@ -80,17 +82,10 @@ export const Tenure = () => {
                 name="minTenureUnitNumber"
                 textAlign="right"
                 label={t['depositProductMinimumTenure']}
-                rightAddonText={
-                  rightElement && rightElement === Frequency.Daily
-                    ? t['days']
-                    : rightElement === Frequency.Weekly
-                    ? t['weeks']
-                    : rightElement === Frequency.Monthly
-                    ? t['months']
-                    : rightElement === Frequency.Yearly
-                    ? t['years']
-                    : ''
-                }
+                rightAddonText={inputRightElementText({
+                  rightElement: rightElement as Frequency,
+                  t,
+                })}
               />
             </GridItem>
 
@@ -99,17 +94,10 @@ export const Tenure = () => {
                 name="maxTenureUnitNumber"
                 textAlign="right"
                 label={t['depositProductMaxinumTenure']}
-                rightAddonText={
-                  rightElement && rightElement === Frequency.Daily
-                    ? t['days']
-                    : rightElement === Frequency.Weekly
-                    ? t['weeks']
-                    : rightElement === Frequency.Monthly
-                    ? t['months']
-                    : rightElement === Frequency.Yearly
-                    ? t['years']
-                    : ''
-                }
+                rightAddonText={inputRightElementText({
+                  rightElement: rightElement as Frequency,
+                  t,
+                })}
               />
             </GridItem>
           </Grid>
