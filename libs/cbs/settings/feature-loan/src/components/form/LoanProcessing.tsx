@@ -8,7 +8,7 @@ type LoanProcessingTable = {
   amount: number;
 };
 
-const ledger_name = [
+const ledgerName = [
   {
     label: 'Purchase Ledger',
     value: 'purchaseLedger',
@@ -43,7 +43,7 @@ export const LoanProcessing = () => {
                 header: t['loanAccServiceTableLedgerName'],
                 fieldType: 'select',
                 cellWidth: 'auto',
-                selectOptions: ledger_name,
+                selectOptions: ledgerName,
               },
               {
                 accessor: 'amount',

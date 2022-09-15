@@ -61,7 +61,7 @@ const SharePurchasePayment = ({
   ];
 
   return (
-    <Box background="gray.0" border="1px solid" borderColor="border.layout">
+    <Box minHeight="100vh" background="gray.0" border="1px solid" borderColor="border.layout">
       <Box p="s20">
         <Text color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="Medium" mb="s16">
           {t['sharePurchasePaymentMode']}

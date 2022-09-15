@@ -264,7 +264,7 @@ export const AccountOpenNew = () => {
                   >
                     <Box pt="s8">
                       <ul>
-                        {errors?.error?.map((item, index) => (
+                        {errors?.error?.map((item) => (
                           <li key={item}>
                             {' '}
                             <Text fontWeight="400" fontSize="s2">

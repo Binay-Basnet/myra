@@ -97,6 +97,8 @@ query getMemberIndividualData($id: ID!) {
       data {
         id
         name
+        profilePicUrl
+        profilePic
         address {
           state
           district

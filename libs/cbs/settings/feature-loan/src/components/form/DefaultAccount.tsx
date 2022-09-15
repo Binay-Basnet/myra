@@ -3,7 +3,7 @@ import { FormSelect } from '@coop/shared/form';
 
 import { BoxContainer, SubText, TextBoxContainer, TopText } from '../formui';
 
-const DefaultAccountName = () => (
+export const DefaultAccount = () => (
   <BoxContainer>
     <TextBoxContainer>
       <TopText>Default Amount Deposit Account Name</TopText>
@@ -17,5 +17,3 @@ const DefaultAccountName = () => (
     </InputGroupContainer>
   </BoxContainer>
 );
-
-export default DefaultAccountName;

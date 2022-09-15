@@ -12090,6 +12090,8 @@ export type GetMemberIndividualDataQuery = {
       data?: {
         id: string;
         name?: Record<'local' | 'en' | 'np', string> | null;
+        profilePicUrl?: string | null;
+        profilePic?: string | null;
         contact?: string | null;
         dateJoined?: string | null;
         address?: {
@@ -13626,6 +13628,7 @@ export type GetShareBalanceListQuery = {
             id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
             profilePic?: string | null;
+            profilePicUrl?: string | null;
           };
         };
       }>;
@@ -13657,6 +13660,7 @@ export type GetShareRegisterListQuery = {
             id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
             profilePic?: string | null;
+            profilePicUrl?: string | null;
           } | null;
         };
       }>;
@@ -18985,6 +18989,8 @@ export const GetMemberIndividualDataDocument = `
       data {
         id
         name
+        profilePicUrl
+        profilePic
         address {
           state
           district
@@ -21074,6 +21080,7 @@ export const GetShareBalanceListDocument = `
             id
             name
             profilePic
+            profilePicUrl
           }
           count
           amount
@@ -21106,6 +21113,7 @@ export const GetShareRegisterListDocument = `
             id
             name
             profilePic
+            profilePicUrl
           }
           balance
           startNumber

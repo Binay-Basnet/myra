@@ -36,7 +36,7 @@ const enableSwitch = [
   },
 ];
 
-const DepositFrequency = () => {
+export const DepositFrequency = () => {
   const { watch } = useFormContext();
   const penalty = watch('enablePenalty');
   const rebate = watch('enableRebate');
@@ -110,5 +110,3 @@ const DepositFrequency = () => {
     </BoxContainer>
   );
 };
-
-export default DepositFrequency;

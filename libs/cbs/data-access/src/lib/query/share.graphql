@@ -7,6 +7,7 @@ query getShareBalanceList {
             id
             name
             profilePic
+            profilePicUrl
           }
           count
           amount
@@ -27,6 +28,7 @@ query getShareRegisterList($pagination: Pagination, $filter: ShareRegisterFilter
             id
             name
             profilePic
+            profilePicUrl
           }
           balance
           startNumber

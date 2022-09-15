@@ -8,6 +8,7 @@ import {
   Member,
   SharePaymentMode,
   SharePurchaseInput,
+  ShareVoucherDepositedBy,
   useAddSharePurchaseMutation,
   useGetMemberIndividualDataQuery,
 } from '@coop/cbs/data-access';
@@ -51,27 +52,47 @@ const cashOptions: Record<string, string> = {
   '1': CashValue.Cash_1,
 };
 
+type ShareReturnFormType = Omit<SharePurchaseInput, 'selectAllShares'> & {
+  selectAllShares: boolean;
+  cash?:
+    | {
+        cashPaid: string;
+        disableDenomination: boolean;
+        total: string;
+        returned_amount: string;
+        denominations: { value?: string; quantity?: number; amount?: string }[];
+      }
+    | undefined
+    | null;
+};
+
 const SharePurchaseForm = () => {
   const { t } = useTranslation();
-  const methods = useForm();
+  const methods = useForm<ShareReturnFormType>({
+    defaultValues: {
+      paymentMode: SharePaymentMode.BankVoucherOrCheque,
+      bankVoucher: {
+        depositedBy: ShareVoucherDepositedBy.Self,
+      },
+    },
+  });
   const { watch, getValues } = methods;
 
   const router = useRouter();
 
   const memberId = watch('memberId');
   const noOfShares = watch('shareCount');
-  const printingFee = watch('printingFee');
-  const adminFee = watch('adminFee');
   const denominations = watch('cash.denominations');
   const cashPaid = watch('cash.cashPaid');
   const disableDenomination = watch('cash.disableDenomination');
+  const extraFee = watch('extraFee');
 
   const [totalAmount, setTotalAmount] = useState(0);
   const [mode, setMode] = useState('shareInfo');
 
   const denominationTotal =
     denominations?.reduce(
-      (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
+      (accumulator: number, curr: { value: string }) => accumulator + Number(curr.value),
       0 as number
     ) ?? 0;
 
@@ -92,29 +113,14 @@ const SharePurchaseForm = () => {
 
   const memberDetail = data && data?.members?.details?.data;
 
-  useEffect(() => {
-    setTotalAmount(noOfShares * 100 + Number(adminFee ?? 0) + Number(printingFee ?? 0));
-  }, [noOfShares, adminFee, printingFee]);
-
   const paymentButtonHandler = () => memberId && setMode('sharePayment');
 
   const previousButtonHandler = () => setMode('shareInfo');
 
   const handleSubmit = () => {
     const values = getValues();
-    // console.log('values', values);
     let updatedValues: SharePurchaseInput = {
-      ...omit(values, ['printingFee', 'adminFee', 'amount', 'accountAmount', 'accountId']),
-      extraFee: [
-        {
-          name: 'adminFee',
-          value: adminFee,
-        },
-        {
-          name: 'printFee',
-          value: printingFee,
-        },
-      ],
+      ...omit(values, ['amount', 'accountAmount', 'accountId']),
       totalAmount: totalAmount.toString(),
       shareCount: Number(values['shareCount']),
       memberId,
@@ -132,7 +138,7 @@ const SharePurchaseForm = () => {
         denominations:
           values['cash']?.denominations?.map(
             ({ value, quantity }: { value: string; quantity: number }) => ({
-              value: cashOptions[value as string],
+              value: cashOptions[value as string] as CashValue,
               quantity,
             })
           ) ?? [],
@@ -144,7 +150,7 @@ const SharePurchaseForm = () => {
       updatedValues['bankVoucher'] = {
         ...values['bankVoucher'],
         citizenshipDocument:
-          values['cash']?.citizenshipDocument?.length > 0
+          values['bankVoucher']?.citizenshipDocument?.length > 0
             ? values['bankVoucher']?.citizenshipDocument[0]
             : null,
         fileUpload:
@@ -168,6 +174,16 @@ const SharePurchaseForm = () => {
       promise: mutateAsync({ data: updatedValues }),
     });
   };
+
+  useEffect(() => {
+    let temp = 0;
+
+    extraFee?.forEach((fee) => {
+      temp += Number(fee.value);
+    });
+
+    setTotalAmount(temp + noOfShares * 100);
+  }, [noOfShares, JSON.stringify(extraFee)]);
 
   return (
     <>
@@ -211,7 +227,7 @@ const SharePurchaseForm = () => {
                         </GridItem>
                       </FormSection>
 
-                      {data && <SharePurchaseInfo />}
+                      {data && <SharePurchaseInfo totalAmount={totalAmount} />}
                     </Box>
                   </Box>
                 </GridItem>
@@ -247,7 +263,10 @@ const SharePurchaseForm = () => {
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.xl" height="fit-content" p="0">
             {mode === 'shareInfo' && (
-              <ShareInfoFooter paymentButtonHandler={paymentButtonHandler} />
+              <ShareInfoFooter
+                totalAmount={totalAmount}
+                paymentButtonHandler={paymentButtonHandler}
+              />
             )}
             {mode === 'sharePayment' && (
               <SharePaymentFooter

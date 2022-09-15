@@ -2,15 +2,15 @@ import { FormInput } from '@coop/shared/form';
 import { Box, Grid, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-export const Land = () => {
+export const Document = () => {
   const { t } = useTranslation();
 
   return (
     <Box p="s16" border="1px solid" borderColor="border.layout" borderRadius="br2">
       <Grid templateColumns="repeat(2,1fr)" gap="s16">
         <FormInput
-          name="land.minFMV"
-          label={t['loanProductMinimumFMV']}
+          name="document.minValue"
+          label={t['loanProductMinimumValue']}
           textAlign="right"
           rightElement={
             <Text fontWeight="Medium" fontSize="r1" color="primary.500">
@@ -20,30 +20,8 @@ export const Land = () => {
           type="number"
         />
         <FormInput
-          name="land.maxFMV"
-          label={t['loanProductMaximumFMV']}
-          textAlign="right"
-          rightElement={
-            <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-              %
-            </Text>
-          }
-          type="number"
-        />
-        <FormInput
-          name="land.minDV"
-          label={t['loanProductMinimumDV']}
-          textAlign="right"
-          rightElement={
-            <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-              %
-            </Text>
-          }
-          type="number"
-        />
-        <FormInput
-          name="land.maxDV"
-          label={t['loanProductMaximumDV']}
+          name="document.maxValue"
+          label={t['loanProductMaximumValue']}
           textAlign="right"
           rightElement={
             <Text fontWeight="Medium" fontSize="r1" color="primary.500">

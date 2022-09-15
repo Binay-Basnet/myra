@@ -7,18 +7,12 @@ export interface ShareCashProps {
   returnAmount: number;
 }
 
-export function ShareCash({
-  denominationTotal,
-  totalCashPaid,
-  returnAmount,
-}: ShareCashProps) {
-  return (
-    <Cash
-      denominationTotal={denominationTotal}
-      totalCashPaid={totalCashPaid}
-      returnAmount={returnAmount}
-    />
-  );
-}
+export const ShareCash = ({ denominationTotal, totalCashPaid, returnAmount }: ShareCashProps) => (
+  <Cash
+    denominationTotal={denominationTotal}
+    totalCashPaid={totalCashPaid}
+    returnAmount={returnAmount}
+  />
+);
 
 export default ShareCash;

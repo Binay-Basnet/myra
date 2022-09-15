@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import {
-  ServiceTypeFormState,
-  useGetAccountOpenProductDetailsQuery,
-} from '@coop/cbs/data-access';
+import { ServiceTypeFormState, useGetAccountOpenProductDetailsQuery } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
@@ -61,9 +58,7 @@ export const FeesAndCharge = () => {
             : [{ amount: 0, serviceName: 'E-Banking' }]
         );
       } else {
-        const index = productData.findIndex(
-          (product) => product.serviceName === 'E-Banking'
-        );
+        const index = productData.findIndex((product) => product.serviceName === 'E-Banking');
 
         unregister(`serviceCharge.${index}.name`);
         unregister(`serviceCharge.${index}.amount`);
@@ -84,9 +79,7 @@ export const FeesAndCharge = () => {
             : [{ amount: 0, serviceName: 'Mobile-Banking' }]
         );
       } else {
-        const index = productData.findIndex(
-          (product) => product.serviceName === 'Mobile-Banking'
-        );
+        const index = productData.findIndex((product) => product.serviceName === 'Mobile-Banking');
 
         unregister(`serviceCharge.${index}.name`);
         unregister(`serviceCharge.${index}.amount`);
@@ -99,26 +92,13 @@ export const FeesAndCharge = () => {
   }, [isMobileBanking]);
 
   return (
-    <GroupContainer
-      scrollMarginTop="200px"
-      display="flex"
-      flexDirection="column"
-      gap="s16"
-    >
+    <GroupContainer scrollMarginTop="200px" display="flex" flexDirection="column" gap="s16">
       <Box p="s20" background="neutralColorLight.Gray-0">
         <Box mb="s16">
-          <Text
-            fontSize="r1"
-            color="neutralColorLight.Gray-80"
-            fontWeight="SemiBold"
-          >
+          <Text fontSize="r1" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
             {t['accFeesChargesSummary']}
           </Text>
-          <Text
-            fontSize="s2"
-            color="neutralColorLight.Gray-80"
-            fontWeight="Regular"
-          >
+          <Text fontSize="s2" color="neutralColorLight.Gray-80" fontWeight="Regular">
             {t['accAllchargesandfees']}
           </Text>
         </Box>
@@ -129,13 +109,13 @@ export const FeesAndCharge = () => {
           borderRadius="br2"
           p="s16"
         >
-          {productData?.map((data, index) => {
+          {productData?.map((val, index) => {
             register(`serviceCharge.${index}.name`, {
-              value: data?.serviceName,
+              value: val?.serviceName,
             });
 
             register(`serviceCharge.${index}.amount`, {
-              value: data?.amount,
+              value: val?.amount,
             });
 
             // register(`serviceCharge.${index}.ledgerCode`, {
@@ -144,7 +124,7 @@ export const FeesAndCharge = () => {
 
             return (
               <Box
-                key={`${data?.ledgerName}${data?.serviceName}`}
+                key={`${val?.ledgerName}${val?.serviceName}`}
                 display="flex"
                 flexDirection="row"
                 justifyContent="space-between"
@@ -152,25 +132,20 @@ export const FeesAndCharge = () => {
               >
                 <Box>
                   <Text fontSize="s3" fontWeight="500">
-                    {data?.serviceName}
+                    {val?.serviceName}
                   </Text>
                 </Box>
                 <Box w="300px">
                   <FormInput
                     textAlign="right"
                     name={`serviceCharge.${index}.amount`}
-                    defaultValue={data?.amount}
+                    defaultValue={val?.amount}
                   />
                 </Box>
               </Box>
             );
           })}
-          <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
-            py="s16"
-          >
+          <Box display="flex" flexDirection="row" justifyContent="space-between" py="s16">
             <Text fontSize="s3" fontWeight="600">
               Total Amount
             </Text>

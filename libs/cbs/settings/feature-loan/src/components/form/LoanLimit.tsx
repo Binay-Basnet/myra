@@ -8,7 +8,7 @@ type AccountServiceTable = {
   provision: number;
 };
 
-const search_options = [
+const searchList = [
   { label: 'Good Loan', value: 'good' },
   { label: 'Doubtful Loan (after 1-30 Days)', value: 'doubtful' },
   {
@@ -38,15 +38,11 @@ export const LoanLimit = ({ data }: any) => {
           },
           {
             loanProvision: 'doubtful',
-            provision: data?.doubtfulLoanProvision
-              ? data?.doubtfulLoanProvision
-              : 0,
+            provision: data?.doubtfulLoanProvision ? data?.doubtfulLoanProvision : 0,
           },
           {
             loanProvision: 'problematic',
-            provision: data?.problematicLoanProvision
-              ? data?.problematicLoanProvision
-              : 0,
+            provision: data?.problematicLoanProvision ? data?.problematicLoanProvision : 0,
           },
           {
             loanProvision: 'bad',
@@ -60,7 +56,7 @@ export const LoanLimit = ({ data }: any) => {
             header: 'Loan Provision',
             fieldType: 'search',
             cellWidth: 'auto',
-            searchOptions: search_options,
+            searchOptions: searchList,
           },
           {
             accessor: 'provision',

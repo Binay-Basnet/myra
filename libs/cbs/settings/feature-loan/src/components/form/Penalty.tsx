@@ -33,18 +33,16 @@ export const Penalty = () => {
 
   const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
 
-  const coaList = coaData?.map((item) => {
-    return {
-      label: item?.name?.en as string,
-      value: item?.id as string,
-    };
-  });
+  const coaList = coaData?.map((item) => ({
+    label: item?.name?.en as string,
+    value: item?.id as string,
+  }));
 
   return (
     <FormSection>
       <GridItem colSpan={3}>
         <BoxContainer>
-          <Box display={'flex'} justifyContent="space-between">
+          <Box display="flex" justifyContent="space-between">
             <TextBoxContainer>
               <SubHeadingText>{t['loanProductpenalty']} </SubHeadingText>
               <SubText>{t['loanProductEnterPenaltydetails']} </SubText>
@@ -55,13 +53,11 @@ export const Penalty = () => {
             <Box display="flex" flexDirection="column" gap="s16">
               <BoxContainer
                 p="s16"
-                border={'1px solid'}
+                border="1px solid"
                 borderColor="border.layout"
                 borderRadius="br2"
               >
-                <SubHeadingText>
-                  {t['loanProductPenaltyonPrincipal']}
-                </SubHeadingText>
+                <SubHeadingText>{t['loanProductPenaltyonPrincipal']}</SubHeadingText>
                 <InputGroupContainer>
                   <FormInput
                     name="penaltyOnPrincipal.dayAfterInstallmentDate"
@@ -73,13 +69,9 @@ export const Penalty = () => {
                     name="penaltyOnPrincipal.penaltyRate"
                     type="number"
                     label={t['loanProductpenalty']}
-                    textAlign={'right'}
+                    textAlign="right"
                     rightElement={
-                      <Text
-                        fontWeight="Medium"
-                        fontSize="r1"
-                        color="primary.500"
-                      >
+                      <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                         %
                       </Text>
                     }
@@ -98,13 +90,11 @@ export const Penalty = () => {
               </BoxContainer>
               <BoxContainer
                 p="s16"
-                border={'1px solid'}
+                border="1px solid"
                 borderColor="border.layout"
                 borderRadius="br2"
               >
-                <SubHeadingText>
-                  {t['loanProductPenaltyonInterest']}
-                </SubHeadingText>
+                <SubHeadingText>{t['loanProductPenaltyonInterest']}</SubHeadingText>
                 <InputGroupContainer>
                   <FormInput
                     name="penaltyOnInterest.dayAfterInstallmentDate"
@@ -116,13 +106,9 @@ export const Penalty = () => {
                     name="penaltyOnInterest.penaltyRate"
                     type="number"
                     label={t['loanProductpenalty']}
-                    textAlign={'right'}
+                    textAlign="right"
                     rightElement={
-                      <Text
-                        fontWeight="Medium"
-                        fontSize="r1"
-                        color="primary.500"
-                      >
+                      <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                         %
                       </Text>
                     }
@@ -141,13 +127,11 @@ export const Penalty = () => {
               </BoxContainer>
               <BoxContainer
                 p="s16"
-                border={'1px solid'}
+                border="1px solid"
                 borderColor="border.layout"
                 borderRadius="br2"
               >
-                <SubHeadingText>
-                  {t['loanProductPenaltyonInstallment']}
-                </SubHeadingText>
+                <SubHeadingText>{t['loanProductPenaltyonInstallment']}</SubHeadingText>
                 <InputGroupContainer>
                   <FormInput
                     name="penaltyOnInstallment.dayAfterInstallmentDate"
@@ -159,13 +143,9 @@ export const Penalty = () => {
                     name="penaltyOnInstallment.penaltyRate"
                     type="number"
                     label={t['loanProductpenalty']}
-                    textAlign={'right'}
+                    textAlign="right"
                     rightElement={
-                      <Text
-                        fontWeight="Medium"
-                        fontSize="r1"
-                        color="primary.500"
-                      >
+                      <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                         %
                       </Text>
                     }

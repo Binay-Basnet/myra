@@ -6,34 +6,29 @@ export const DepositSaving = () => {
   const { t } = useTranslation();
 
   return (
-    <Box
-      p="s16"
-      border={'1px solid'}
-      borderColor="border.layout"
-      borderRadius="br2"
-    >
+    <Box p="s16" border="1px solid" borderColor="border.layout" borderRadius="br2">
       <Grid templateColumns="repeat(2,1fr)" gap="s16">
         <FormInput
           name="deposit.minValue"
           label={t['loanProductMinimumValue']}
-          textAlign={'right'}
+          textAlign="right"
           rightElement={
             <Text fontWeight="Medium" fontSize="r1" color="primary.500">
               %
             </Text>
           }
-          type={'number'}
+          type="number"
         />
         <FormInput
           name="deposit.maxValue"
           label={t['loanProductMaximumValue']}
-          textAlign={'right'}
+          textAlign="right"
           rightElement={
             <Text fontWeight="Medium" fontSize="r1" color="primary.500">
               %
             </Text>
           }
-          type={'number'}
+          type="number"
         />
       </Grid>
     </Box>

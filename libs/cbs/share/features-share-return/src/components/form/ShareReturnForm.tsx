@@ -52,9 +52,27 @@ const cashOptions: Record<string, string> = {
   '1': CashValue.Cash_1,
 };
 
+type ShareReturnFormType = Omit<ShareReturnInput, 'selectAllShares' | 'fileUpload'> & {
+  selectAllShares: boolean;
+  cash?:
+    | {
+        cashPaid: string;
+        disableDenomination: boolean;
+        total: string;
+        returned_amount: string;
+        denominations: { value?: string; quantity?: number; amount?: string }[];
+      }
+    | undefined
+    | null;
+};
+
 const ShareReturnForm = () => {
   const { t } = useTranslation();
-  const methods = useForm();
+  const methods = useForm<ShareReturnFormType>({
+    defaultValues: {
+      paymentMode: SharePaymentMode.BankVoucherOrCheque,
+    },
+  });
   const { watch, getValues, reset } = methods;
 
   const router = useRouter();
@@ -64,18 +82,17 @@ const ShareReturnForm = () => {
   const memberId = watch('memberId');
   const noOfShares = watch('noOfReturnedShares');
   const allShares = watch('selectAllShares');
-  const printingFees = watch('printingFee');
-  const adminFees = watch('adminFee');
   const denominations = watch('cash.denominations');
   const cashPaid = watch('cash.cashPaid');
   const disableDenomination = watch('cash.disableDenomination');
+  const extraFee = watch('extraFee');
 
   const [totalAmount, setTotalAmount] = useState(0);
   const [mode, setMode] = useState('shareInfo');
 
   const denominationTotal =
     denominations?.reduce(
-      (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
+      (accumulator: number, curr: { value: string }) => accumulator + Number(curr.value),
       0 as number
     ) ?? 0;
 
@@ -106,17 +123,7 @@ const ShareReturnForm = () => {
   const handleSubmit = () => {
     const values = getValues();
     let updatedValues: ShareReturnInput = {
-      ...omit(values, ['printingFee', 'adminFee', 'selectAllShares', 'accountAmount']),
-      extraFee: [
-        {
-          name: 'adminFee',
-          value: adminFees,
-        },
-        {
-          name: 'printFee',
-          value: printingFees,
-        },
-      ],
+      ...omit(values, ['selectAllShares', 'accountAmount']),
       totalAmount: totalAmount.toString(),
       noOfReturnedShares: Number(values['noOfReturnedShares']),
       memberId,
@@ -130,11 +137,10 @@ const ShareReturnForm = () => {
         disableDenomination: Boolean(values['cash']?.disableDenomination),
         total: String(totalCashPaid),
         returned_amount: String(returnAmount),
-        fileUpload: values['cash']?.fileUpload?.length > 0 ? values['cash']?.fileUpload[0] : null,
         denominations:
           values['cash']?.denominations?.map(
             ({ value, quantity }: { value: string; quantity: number }) => ({
-              value: cashOptions[value as string],
+              value: cashOptions[value as string] as CashValue,
               quantity,
             })
           ) ?? [],
@@ -161,10 +167,6 @@ const ShareReturnForm = () => {
   };
 
   useEffect(() => {
-    setTotalAmount(noOfShares * 100 - (Number(adminFees ?? 0) + Number(printingFees ?? 0)));
-  }, [noOfShares, adminFees, printingFees]);
-
-  useEffect(() => {
     if (balanceData) {
       if (allShares) {
         reset({
@@ -179,6 +181,15 @@ const ShareReturnForm = () => {
       }
     }
   }, [allShares, balanceData, getValues, reset]);
+
+  useEffect(() => {
+    let temp = 0;
+    extraFee?.forEach((fee) => {
+      temp += Number(fee?.value);
+    });
+
+    setTotalAmount(noOfShares * 100 - temp);
+  }, [noOfShares, JSON.stringify(extraFee)]);
 
   return (
     <>
@@ -222,7 +233,7 @@ const ShareReturnForm = () => {
                         </GridItem>
                       </FormSection>
 
-                      {memberDetail && <ShareReturnInfo />}
+                      {memberDetail && <ShareReturnInfo totalAmount={totalAmount} />}
                     </Box>
                   </Box>
                 </GridItem>
@@ -258,7 +269,10 @@ const ShareReturnForm = () => {
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.xl" height="fit-content" p="0">
             {mode === 'shareInfo' && (
-              <ShareInfoFooter paymentButtonHandler={paymentButtonHandler} />
+              <ShareInfoFooter
+                totalAmount={totalAmount}
+                paymentButtonHandler={paymentButtonHandler}
+              />
             )}
             {mode === 'sharePayment' && (
               <SharePaymentFooter

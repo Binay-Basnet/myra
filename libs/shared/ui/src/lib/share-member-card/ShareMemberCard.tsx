@@ -14,12 +14,12 @@ export interface ShareMemberCardProps {
   mode: string;
 }
 
-export function ShareMemberCard({
+export const ShareMemberCard = ({
   memberDetails,
   totalAmount,
   memberId,
   mode,
-}: ShareMemberCardProps) {
+}: ShareMemberCardProps) => {
   const { t } = useTranslation();
 
   const { data } = useGetShareHistoryQuery(
@@ -36,11 +36,7 @@ export function ShareMemberCard({
   return (
     <Box bg="gray.0" h="100%">
       <Box px="s12" py="s8">
-        <Text
-          fontWeight="Medium"
-          fontSize="s3"
-          color="neutralColorLight.Gray-60"
-        >
+        <Text fontWeight="Medium" fontSize="s3" color="neutralColorLight.Gray-60">
           {t['memberInfo']}
         </Text>
       </Box>
@@ -49,25 +45,17 @@ export function ShareMemberCard({
         <Avatar
           name={memberDetails?.name?.local ?? 'Member'}
           size="lg"
-          src={memberDetails?.name?.local}
+          src={memberDetails?.profilePicUrl ?? ''}
           cursor="pointer"
         />
         <Box display="flex" flexDirection="column">
           <Text fontWeight="Medium" fontSize="r1" color="primary.500">
             {memberDetails?.name?.local}
           </Text>
-          <Text
-            fontWeight="Regular"
-            fontSize="r1"
-            color="neutralColorLight.Gray-80"
-          >
+          <Text fontWeight="Regular" fontSize="r1" color="neutralColorLight.Gray-80">
             {memberDetails?.id}
           </Text>
-          <Text
-            fontWeight="Regular"
-            fontSize="r1"
-            color="neutralColorLight.Gray-80"
-          >
+          <Text fontWeight="Regular" fontSize="r1" color="neutralColorLight.Gray-80">
             {/* {memberProfile?.basicInformation?.gender?.local} |{' '}
             {memberProfile?.basicInformation?.age} */}
             Male | 19
@@ -87,41 +75,21 @@ export function ShareMemberCard({
           borderRadius="br2"
         >
           <Box display="flex" justifyContent="space-between">
-            <Text
-              fontWeight="Medium"
-              fontSize="s3"
-              color="neutralColorLight.Gray-60"
-            >
+            <Text fontWeight="Medium" fontSize="s3" color="neutralColorLight.Gray-60">
               {t['memberShareCardTotalShareCount']}
             </Text>
-            <Text
-              as="span"
-              fontWeight="Medium"
-              fontSize="s3"
-              color="neutralColorLight.Gray-60"
-            >
+            <Text as="span" fontWeight="Medium" fontSize="s3" color="neutralColorLight.Gray-60">
               {shareHistoryTableData && shareHistoryTableData?.balance?.count}
             </Text>
           </Box>
 
           <Box display="flex" justifyContent="space-between">
-            <Text
-              fontWeight="Medium"
-              fontSize="s3"
-              color="neutralColorLight.Gray-60"
-            >
+            <Text fontWeight="Medium" fontSize="s3" color="neutralColorLight.Gray-60">
               {t['memberShareCardTotalShareBalance']}
             </Text>
-            <Text
-              as="span"
-              fontWeight="Medium"
-              fontSize="s3"
-              color="neutralColorLight.Gray-60"
-            >
+            <Text as="span" fontWeight="Medium" fontSize="s3" color="neutralColorLight.Gray-60">
               {shareHistoryTableData &&
-                amountConverter(
-                  shareHistoryTableData?.balance?.amount as number
-                )}
+                amountConverter(shareHistoryTableData?.balance?.amount as number)}
             </Text>
           </Box>
         </Box>
@@ -140,29 +108,14 @@ export function ShareMemberCard({
                 alignItems="center"
               >
                 <Box>
-                  <Text
-                    fontWeight="Medium"
-                    fontSize="s3"
-                    color="neutralColorLight.Gray-80"
-                  >
-                    {item?.debit
-                      ? t['sharePurchaseTableShareDr']
-                      : t['sharePurchaseTableShareCr']}
+                  <Text fontWeight="Medium" fontSize="s3" color="neutralColorLight.Gray-80">
+                    {item?.debit ? t['sharePurchaseTableShareDr'] : t['sharePurchaseTableShareCr']}
                   </Text>
-                  <Text
-                    fontWeight="Medium"
-                    fontSize="s3"
-                    color="neutralColorLight.Gray-60"
-                  >
+                  <Text fontWeight="Medium" fontSize="s3" color="neutralColorLight.Gray-60">
                     {item?.transactionDate}
                   </Text>
                 </Box>
-                <Text
-                  as="span"
-                  fontWeight="Medium"
-                  fontSize="s3"
-                  color="neutralColorLight.Gray-80"
-                >
+                <Text as="span" fontWeight="Medium" fontSize="s3" color="neutralColorLight.Gray-80">
                   {item?.debit ?? item?.credit}
                 </Text>
               </Box>
@@ -185,26 +138,17 @@ export function ShareMemberCard({
             borderRadius="br2"
             justifyContent="space-between"
           >
-            <Text
-              fontWeight="Medium"
-              fontSize="s3"
-              color="neutralColorLight.Gray-60"
-            >
+            <Text fontWeight="Medium" fontSize="s3" color="neutralColorLight.Gray-60">
               {t['payableAmount']}
             </Text>
-            <Text
-              as="span"
-              fontWeight="SemiBold"
-              fontSize="s3"
-              color="neutralColorLight.Gray-80"
-            >
-              {totalAmount ? totalAmount : 0}
+            <Text as="span" fontWeight="SemiBold" fontSize="s3" color="neutralColorLight.Gray-80">
+              {totalAmount || 0}
             </Text>
           </Box>
         )}
       </Box>
     </Box>
   );
-}
+};
 
 export default ShareMemberCard;

@@ -13,20 +13,16 @@ export interface CheckboxProps extends ChakraCheckboxProps {
   label?: string;
 }
 
-export function Checkbox(props: CheckboxProps) {
+export const Checkbox = (props: CheckboxProps) => {
   const { children, label, name, ...rest } = props;
 
   return (
     <Box display="flex" alignItems="center" gap="s8">
       <ChakraCheckbox data-testid={name} {...rest}>
-        {label ? (
-          <TextFields variant="formInput">{label}</TextFields>
-        ) : (
-          children
-        )}
+        {label ? <TextFields variant="formInput">{label}</TextFields> : children}
       </ChakraCheckbox>
     </Box>
   );
-}
+};
 
 export default Checkbox;

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Controller, Path, useFormContext } from 'react-hook-form';
 
 import { Checkbox, CheckboxProps } from '@coop/shared/ui';

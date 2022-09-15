@@ -7,6 +7,7 @@ import {
   Collateral,
   LoanProductInput,
   LoanRepaymentScheme,
+  useGetLoanGeneralSettingsQuery,
   useGetLoanProductEditDataQuery,
   useSetLoanProductMutation,
 } from '@coop/cbs/data-access';
@@ -76,6 +77,8 @@ export const SettingsLoanProductForm = () => {
     | 'land'
     | 'landAndBuilding'
     | 'vehicle'
+    | 'document'
+    | 'others'
     | 'deposit'
   > & {
     genderId: SelectOption;
@@ -91,6 +94,8 @@ export const SettingsLoanProductForm = () => {
     landAndBuilding: CollateralValues;
     vehicle: CollateralValues;
     deposit: CollateralValues;
+    document: CollateralValues;
+    others: CollateralValues;
   };
 
   const methods = useForm<LoanProductForm>({});
@@ -98,6 +103,7 @@ export const SettingsLoanProductForm = () => {
   const { getValues, reset, watch } = methods;
 
   const repaymentScheme = watch('repaymentScheme');
+  const collateralTypes = watch('collateralTypes');
 
   const { data: editValues, refetch } = useGetLoanProductEditDataQuery(
     {
@@ -108,6 +114,24 @@ export const SettingsLoanProductForm = () => {
     }
   );
   const editVals = editValues?.settings?.general?.loanProducts?.formState?.data;
+
+  const { data: coaData } = useGetLoanGeneralSettingsQuery();
+
+  const colValue = coaData?.settings?.general?.loan?.general?.collateralList;
+
+  const collateralList = colValue?.map((item) => ({
+    label: item?.name as string,
+    value: item?.id as string,
+  }));
+
+  const landData = collateralList?.filter((item) => item?.label === 'Land');
+  const landaAndBuildingData = collateralList?.filter(
+    (item) => item?.label === 'Land and Building'
+  );
+  const vehicleData = collateralList?.filter((item) => item?.label === 'Vehicle');
+  const depositData = collateralList?.filter((item) => item?.label === 'Deposit / Saving');
+  const documentData = collateralList?.filter((item) => item?.label === 'Documents');
+  const othersData = collateralList?.filter((item) => item?.label === 'Others');
 
   const submitForm = () => {
     const values = getValues();
@@ -129,9 +153,9 @@ export const SettingsLoanProductForm = () => {
       amount: data?.amount.toString(),
     }));
 
-    const landList = values?.collateralTypes?.includes(Collateral.Land)
+    const landList = collateralTypes?.includes(landData[0]?.value)
       ? {
-          type: Collateral.Land,
+          type: landData[0]?.value,
           minFMV: values?.land?.minFMV,
           maxFMV: values?.land?.maxFMV,
           minDV: values?.land?.minDV,
@@ -139,9 +163,9 @@ export const SettingsLoanProductForm = () => {
         }
       : null;
 
-    const landAndVehicleList = values?.collateralTypes?.includes(Collateral.LandAndBuilding)
+    const landAndVehicleList = collateralTypes?.includes(landaAndBuildingData[0]?.value)
       ? {
-          type: Collateral.LandAndBuilding,
+          type: landaAndBuildingData[0]?.value,
           minFMV: values?.landAndBuilding?.minFMV,
           maxFMV: values?.landAndBuilding?.maxFMV,
           minDV: values?.landAndBuilding?.minDV,
@@ -149,34 +173,70 @@ export const SettingsLoanProductForm = () => {
         }
       : null;
 
-    const vehicleList = values?.collateralTypes?.includes(Collateral.Vehicle)
+    const vehicleList = collateralTypes?.includes(vehicleData[0]?.value)
       ? {
-          type: Collateral.Vehicle,
+          type: vehicleData[0]?.value,
           minValue: values?.vehicle?.minValue,
           maxValue: values?.vehicle?.maxValue,
         }
       : null;
 
-    const depositList = values?.collateralTypes?.includes(Collateral.DepositOrSaving)
+    const depositList = collateralTypes?.includes(depositData[0]?.value)
       ? {
-          type: Collateral.DepositOrSaving,
+          type: depositData[0]?.value,
           minValue: values?.deposit?.minValue,
           maxValue: values?.deposit?.maxValue,
         }
       : null;
 
-    const collateralValueArray = [landList, landAndVehicleList, vehicleList, depositList];
+    const documentList = collateralTypes?.includes(documentData[0]?.value)
+      ? {
+          type: depositData[0]?.value,
+          minValue: values?.deposit?.minValue,
+          maxValue: values?.deposit?.maxValue,
+        }
+      : null;
+
+    const otherList = collateralTypes?.includes(othersData[0]?.value)
+      ? {
+          type: depositData[0]?.value,
+          minValue: values?.deposit?.minValue,
+          maxValue: values?.deposit?.maxValue,
+        }
+      : null;
+
+    const collateralValueArray = [
+      landList,
+      landAndVehicleList,
+      vehicleList,
+      depositList,
+      documentList,
+      otherList,
+    ];
 
     const collateralValueList = collateralValueArray?.filter(
       (item) =>
-        item?.type === Collateral.Land ||
-        item?.type === Collateral.LandAndBuilding ||
-        item?.type === Collateral.Vehicle ||
-        item?.type === Collateral.DepositOrSaving
+        item?.type === depositData[0]?.value ||
+        item?.type === vehicleData[0]?.value ||
+        item?.type === landaAndBuildingData[0]?.value ||
+        item?.type === landData[0]?.value ||
+        item?.type === documentData[0]?.value ||
+        item?.type === othersData[0]?.value
     );
 
     const updatedData = {
-      ...omit(values, ['id', 'createdAt', 'modifiedAt', 'objState', 'land', 'landAndBuilding']),
+      ...omit(values, [
+        'id',
+        'createdAt',
+        'modifiedAt',
+        'objState',
+        'land',
+        'landAndBuilding',
+        'vehicle',
+        'document',
+        'others',
+        'deposit',
+      ]),
       genderId: genderList,
       maritalStatusId: maritalStatusList,
       educationQualification: educationQualificationList,
@@ -238,36 +298,65 @@ export const SettingsLoanProductForm = () => {
 
   useEffect(() => {
     if (editVals) {
-      // const landEditData = editVals?.collateralValue?.filter(
-      //   (item) => item?.type === Collateral.Land
-      // );
+      const landEditData = editVals?.collateralValue?.filter(
+        (item) => item?.type === landData[0]?.value
+      );
 
-      // const landAndBuildingEditData = editVals?.collateralValue?.filter(
-      //   (item) => item?.type === Collateral.LandAndBuilding
-      // );
+      const landAndBuildingEditData = editVals?.collateralValue?.filter(
+        (item) => item?.type === landaAndBuildingData[0]?.value
+      );
 
-      // const vehicleEditData = editVals?.collateralValue?.filter(
-      //   (item) => item?.type === Collateral.Vehicle
-      // );
+      const vehicleEditData = editVals?.collateralValue?.filter(
+        (item) => item?.type === vehicleData[0]?.value
+      );
 
-      // const depositEditData = editVals?.collateralValue?.filter(
-      //   (item) => item?.type === Collateral.DepositOrSaving
-      // );
+      const depositEditData = editVals?.collateralValue?.filter(
+        (item) => item?.type === depositData[0]?.value
+      );
+
+      const documentEditData = editVals?.collateralValue?.filter(
+        (item) => item?.type === documentData[0]?.value
+      );
+
+      const othersEditData = editVals?.collateralValue?.filter(
+        (item) => item?.type === othersData[0]?.value
+      );
+
       reset({
         ...(editVals as unknown as LoanProductForm),
-        // land: {
-        //   minFMV: landEditData?.minFMV,
-        //   maxFMV: landEditData?.maxFMV,
-        //   minDV: landEditData?.minDV,
-        //   maxDV: landEditData?.maxDV,
-        // },
+        land: {
+          minFMV: landEditData && landEditData[0]?.minFMV,
+          maxFMV: landEditData && landEditData[0]?.maxFMV,
+          minDV: landEditData && landEditData[0]?.minDV,
+          maxDV: landEditData && landEditData[0]?.maxDV,
+        },
 
-        // landAndBuilding: {
-        //   minFMV: landAndBuildingEditData?.minFMV,
-        //   maxFMV: landAndBuildingEditData?.maxFMV,
-        //   minDV: landAndBuildingEditData?.minDV,
-        //   maxDV: landAndBuildingEditData?.maxDV,
-        // },
+        landAndBuilding: {
+          minFMV: landAndBuildingEditData && landAndBuildingEditData[0]?.minFMV,
+          maxFMV: landAndBuildingEditData && landAndBuildingEditData[0]?.maxFMV,
+          minDV: landAndBuildingEditData && landAndBuildingEditData[0]?.minDV,
+          maxDV: landAndBuildingEditData && landAndBuildingEditData[0]?.maxDV,
+        },
+
+        vehicle: {
+          minValue: vehicleEditData && vehicleEditData[0]?.minValue,
+          maxValue: vehicleEditData && vehicleEditData[0]?.maxValue,
+        },
+
+        deposit: {
+          minValue: depositEditData && depositEditData[0]?.minValue,
+          maxValue: depositEditData && depositEditData[0]?.maxValue,
+        },
+
+        document: {
+          minValue: documentEditData && documentEditData[0]?.minValue,
+          maxValue: documentEditData && documentEditData[0]?.maxValue,
+        },
+
+        others: {
+          minValue: othersEditData && othersEditData[0]?.minValue,
+          maxValue: othersEditData && othersEditData[0]?.maxValue,
+        },
       });
     }
   }, [editVals, reset]);
@@ -317,7 +406,6 @@ export const SettingsLoanProductForm = () => {
             <NewQuestions />
             <Interest />
             <InsuranceApplicable />
-            {/* <LedgerMapping /> */}
             <LoanProcessing />
             <CollateralForm />
             <AllowGaurantee />
