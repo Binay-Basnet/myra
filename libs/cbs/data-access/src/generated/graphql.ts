@@ -6113,7 +6113,7 @@ export type LoanAccount = Base & {
   objState: ObjState;
   product: LoanProduct;
   productSubType: LoanSettingsProductSubTypeData;
-  productType: LoanProductType;
+  productType: Scalars['ID'];
   repaymentScheme?: Maybe<LoanRepaymentScheme>;
   tenure?: Maybe<Scalars['Int']>;
   totalSanctionedAmount?: Maybe<Scalars['String']>;
@@ -6217,7 +6217,7 @@ export type LoanAccountFormState = {
   note?: Maybe<Scalars['String']>;
   productId?: Maybe<Scalars['ID']>;
   productSubType?: Maybe<Scalars['ID']>;
-  productType: LoanProductType;
+  productType: Scalars['ID'];
   repaymentScheme?: Maybe<LoanRepaymentScheme>;
   tenure?: Maybe<Scalars['Int']>;
   totalSanctionedAmount?: Maybe<Scalars['String']>;
@@ -6282,7 +6282,7 @@ export type LoanAccountInput = {
   note?: InputMaybe<Scalars['String']>;
   productId: Scalars['ID'];
   productSubType: Scalars['ID'];
-  productType: LoanProductType;
+  productType: Scalars['ID'];
   repaymentScheme?: InputMaybe<LoanRepaymentScheme>;
   tenure?: InputMaybe<Scalars['Int']>;
   totalSanctionedAmount?: InputMaybe<Scalars['String']>;
@@ -6316,7 +6316,7 @@ export type LoanAccountQueryGetProductCriteriaArgs = {
 export type LoanAccountQueryGetProductListArgs = {
   memberId: Scalars['ID'];
   productSubTypeId: Scalars['ID'];
-  productType: LoanProductType;
+  productType: Scalars['ID'];
 };
 
 export type LoanAccountQueryListArgs = {
@@ -6467,7 +6467,7 @@ export type LoanProduct = Base & {
   productName: Scalars['String'];
   productNature: NatureOfLoanProduct;
   productSubType: Scalars['String'];
-  productType: LoanProductType;
+  productType: Scalars['ID'];
   rebate?: Maybe<Rebate>;
   repaymentScheme?: Maybe<Array<Maybe<LoanRepaymentScheme>>>;
   requiredDocuments?: Maybe<Array<Maybe<LoanRequiredDocuments>>>;
@@ -6565,7 +6565,7 @@ export type LoanProductInput = {
   productName: Scalars['String'];
   productNature: NatureOfLoanProduct;
   productSubType: Scalars['String'];
-  productType: LoanProductType;
+  productType: Scalars['ID'];
   rebate?: InputMaybe<RebateTypeInput>;
   repaymentScheme?: InputMaybe<Array<InputMaybe<LoanRepaymentScheme>>>;
   requiredDocuments?: InputMaybe<Array<InputMaybe<LoanRequiredDocuments>>>;
@@ -9494,7 +9494,7 @@ export type SetLoanProductMutation = {
             id: string;
             objState: ObjState;
             productName: string;
-            productType: LoanProductType;
+            productType: string;
           } | null;
           error?:
             | MutationError_AuthorizationError_Fragment
@@ -11869,7 +11869,7 @@ export type GetLoanProductDetailsDataQuery = {
             createdAt: string;
             modifiedAt: string;
             productName: string;
-            productType: LoanProductType;
+            productType: string;
             productSubType: string;
             productNature: NatureOfLoanProduct;
             description?: string | null;
@@ -12672,7 +12672,7 @@ export type GetLoanProductListQuery = {
               createdDate: string;
               productName: string;
               productCodeString?: string | null;
-              productType: LoanProductType;
+              productType: string;
               productSubType: string;
               createdBy: { id: string; name: string; username: string; userType: UserType };
               modifiedBy: { id: string; name: string; username: string; userType: UserType };
@@ -12707,7 +12707,7 @@ export type GetLoanProductEditDataQuery = {
             createdAt: string;
             modifiedAt: string;
             productName: string;
-            productType: LoanProductType;
+            productType: string;
             productSubType: string;
             productNature: NatureOfLoanProduct;
             description?: string | null;

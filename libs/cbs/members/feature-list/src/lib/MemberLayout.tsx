@@ -32,6 +32,8 @@ interface MemberTypeButtonProps {
   onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
+type MemberType = 'INDIVIDUAL' | 'INSTITUTION' | 'COOPERATIVE' | 'COOPERATIVE_UNION';
+
 const MemberTypeButton = (props: MemberTypeButtonProps) => {
   const { icon, title, featCode, subtitle, onClick } = props;
   const { t } = useTranslation();
@@ -125,6 +127,28 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
     setOpenModal(false);
   };
 
+  const memberTypeRedirect = (item: MemberType) => {
+    if (item === 'INDIVIDUAL') {
+      newId
+        .mutateAsync({ idType: Id_Type.Kymindividual })
+        .then((res) => router.push(`/members/individual/add/${res?.newId}`));
+    } else if (item === 'INSTITUTION') {
+      newId
+        .mutateAsync({ idType: Id_Type.Kyminstitutions })
+        .then((res) => router.push(`/members/institution/add/${res?.newId}`));
+    } else if (item === 'COOPERATIVE') {
+      newId
+        .mutateAsync({ idType: Id_Type.Kymcooperative })
+        .then((res) => router.push(`/members/coop/add/${res?.newId}`));
+    } else {
+      newId
+        .mutateAsync({
+          idType: Id_Type.Kymcooperativeunion,
+        })
+        .then((res) => router.push(`/members/coop_union/add/${res?.newId}`));
+    }
+  };
+
   return (
     <Box display="flex">
       <Box width="275px" p="s24" position="fixed" flexShrink={0}>
@@ -171,28 +195,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
                       title={memberTypesArray[dataItem]?.title}
                       featCode={memberTypesArray[dataItem]?.featureCode}
                       subtitle={memberTypesArray[dataItem]?.subtitle}
-                      onClick={() => {
-                        item === 'INDIVIDUAL' &&
-                          newId
-                            .mutateAsync({ idType: Id_Type.Kymindividual })
-                            .then((res) => router.push(`/members/individual/add/${res?.newId}`));
-
-                        item === 'INSTITUTION' &&
-                          newId
-                            .mutateAsync({ idType: Id_Type.Kyminstitutions })
-                            .then((res) => router.push(`/members/institution/add/${res?.newId}`));
-
-                        item === 'COOPERATIVE' &&
-                          newId
-                            .mutateAsync({ idType: Id_Type.Kymcooperative })
-                            .then((res) => router.push(`/members/coop/add/${res?.newId}`));
-                        item === 'COOPERATIVE_UNION' &&
-                          newId
-                            .mutateAsync({
-                              idType: Id_Type.Kymcooperativeunion,
-                            })
-                            .then((res) => router.push(`/members/coop_union/add/${res?.newId}`));
-                      }}
+                      onClick={() => memberTypeRedirect(item as MemberType)}
                     />
                   </GridItem>
                 );
