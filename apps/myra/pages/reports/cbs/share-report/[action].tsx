@@ -51,17 +51,16 @@ const NewShareStatementReport = () => {
   const [filter, setFilter] = useState<ReportFilterType | null>(null);
   const [hasShownFilter, setHasShownFilter] = useState(false);
 
-  const { data: shareStatementData, isFetching: reportLoading } =
-    useGetShareStatementQuery(
-      {
-        data: {
-          memberId: filter?.memberId,
-          periodType: filter?.predefinedPeriod,
-          filter: filter?.type,
-        },
+  const { data: shareStatementData, isFetching: reportLoading } = useGetShareStatementQuery(
+    {
+      data: {
+        memberId: filter?.memberId,
+        periodType: filter?.predefinedPeriod,
+        filter: filter?.type,
       },
-      { enabled: !!filter }
-    );
+    },
+    { enabled: !!filter }
+  );
 
   useEffect(() => {
     if (savedData) {
@@ -82,18 +81,11 @@ const NewShareStatementReport = () => {
     }
   }, [savedLoading]);
 
-  const shareStatement =
-    shareStatementData?.report?.shareStatementReport?.statement;
+  const shareStatement = shareStatementData?.report?.shareStatementReport?.statement;
 
   return (
     <FormProvider {...methods}>
-      <Box
-        bg="white"
-        minH="calc(100vh - 110px)"
-        w="100%"
-        display="flex"
-        flexDir="column"
-      >
+      <Box bg="white" minH="calc(100vh - 110px)" w="100%" display="flex" flexDir="column">
         <ReportHeader
           filters={filter}
           paths={[
@@ -101,9 +93,7 @@ const NewShareStatementReport = () => {
             { label: 'Share Statement', link: '/reports/cbs/share-report' },
             {
               label:
-                router.query['action'] !== 'new'
-                  ? savedData?.report.getReport?.name
-                  : 'New Report',
+                router.query['action'] !== 'new' ? savedData?.report.getReport?.name : 'New Report',
               link: '/reports/cbs/share-report/new',
             },
           ]}
@@ -116,30 +106,16 @@ const NewShareStatementReport = () => {
           setHasShownFilter={setHasShownFilter}
         />
 
-        <Box
-          display="flex"
-          minH="calc(100vh - 260.5px)"
-          w="100%"
-          overflowX="auto"
-        >
+        <Box display="flex" minH="calc(100vh - 260.5px)" w="100%" overflowX="auto">
           <Box w="100%">
             {reportLoading ? (
-              <Box
-                h="200px"
-                w="100%"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-              >
+              <Box h="200px" w="100%" display="flex" alignItems="center" justifyContent="center">
                 {' '}
                 <Loader />{' '}
               </Box>
             ) : !shareStatement ||
               !shareStatementData ||
-              !(
-                'shareStatement' in shareStatement &&
-                shareStatement.shareStatement
-              ) ? (
+              !('shareStatement' in shareStatement && shareStatement.shareStatement) ? (
               filter ? (
                 <NoDataState
                   custom={{
@@ -165,9 +141,7 @@ const NewShareStatementReport = () => {
                   <Divider />
                 </Box>
 
-                <ReportMember
-                  member={shareStatementData.report.shareStatementReport.member}
-                />
+                <ReportMember member={shareStatementData.report.shareStatementReport.member} />
 
                 <ShareReportTable
                   shareTotal={shareStatement.totals}

@@ -23,7 +23,7 @@ type ReportFilter = {
 };
 
 interface ReportInputsProps {
-  // filter: ReportFilter;
+  filter: ReportFilter;
   hasShownFilter: boolean;
   setFilter: React.Dispatch<React.SetStateAction<ReportFilter>>;
   setHasShownFilter: React.Dispatch<React.SetStateAction<boolean>>;
