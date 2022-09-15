@@ -238,7 +238,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
   const [state, dispatch] = useReducer<Reducer<EditableState<T>, EditableTableAction<T>>>(
     editableReducer,
     {
-      data: defaultData ?? [],
+      data: defaultData.map((d) => ({ ...d, _id: uniqueId('row_') })) ?? [],
       columns,
     }
   );
@@ -511,7 +511,7 @@ const EditableTableRow = <T extends RecordWithId & Record<string, string | numbe
               });
             }
             return (
-              <Fragment key={column.id}>
+              <Fragment key={column.accessor as string}>
                 <EditableCell column={column} data={data} dispatch={dispatch} />
               </Fragment>
             );

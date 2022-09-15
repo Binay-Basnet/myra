@@ -6409,7 +6409,7 @@ export enum LoanPaymentMode {
 export type LoanProduct = Base & {
   allowGurantee?: Maybe<Scalars['Boolean']>;
   allowPartialInstallment?: Maybe<Scalars['Boolean']>;
-  collateralTypes?: Maybe<Array<Maybe<Collateral>>>;
+  collateralTypes?: Maybe<Array<Maybe<Scalars['String']>>>;
   collateralValue?: Maybe<Array<Maybe<CollateralFormState>>>;
   cooperativeType?: Maybe<Array<Maybe<Scalars['ID']>>>;
   createdAt: Scalars['Time'];
@@ -6515,7 +6515,7 @@ export type LoanProductEdge = {
 export type LoanProductInput = {
   allowGurantee?: InputMaybe<Scalars['Boolean']>;
   allowPartialInstallment?: InputMaybe<Scalars['Boolean']>;
-  collateralTypes?: InputMaybe<Array<InputMaybe<Collateral>>>;
+  collateralTypes?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   collateralValue?: InputMaybe<Array<InputMaybe<CollateralInput>>>;
   cooperativeType?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   criteria?: InputMaybe<Array<InputMaybe<CriteriaSection>>>;
@@ -11915,7 +11915,7 @@ export type GetLoanProductDetailsDataQuery = {
             isCollateralRequired?: boolean | null;
             allowGurantee?: boolean | null;
             maxPercentOfGurantee?: number | null;
-            collateralTypes?: Array<Collateral | null> | null;
+            collateralTypes?: Array<string | null> | null;
             productCode?: { prefix: string; initialNo: string } | null;
             penaltyOnPrincipal?: {
               dayAfterInstallmentDate?: number | null;
@@ -12753,7 +12753,7 @@ export type GetLoanProductEditDataQuery = {
             isCollateralRequired?: boolean | null;
             allowGurantee?: boolean | null;
             maxPercentOfGurantee?: number | null;
-            collateralTypes?: Array<Collateral | null> | null;
+            collateralTypes?: Array<string | null> | null;
             productCode?: { prefix: string; initialNo: string } | null;
             penaltyOnPrincipal?: {
               dayAfterInstallmentDate?: number | null;
