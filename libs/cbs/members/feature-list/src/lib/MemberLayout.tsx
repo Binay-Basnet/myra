@@ -162,14 +162,15 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
                 if (!item) {
                   return null;
                 }
+                const dataItem = item as keyof typeof memberTypesArray;
 
                 return (
                   <GridItem key={item}>
                     <MemberTypeButton
-                      icon={memberTypesArray[item]?.icon}
-                      title={memberTypesArray[item]?.title}
-                      featCode={memberTypesArray[item]?.featureCode}
-                      subtitle={memberTypesArray[item]?.subtitle}
+                      icon={memberTypesArray[dataItem]?.icon}
+                      title={memberTypesArray[dataItem]?.title}
+                      featCode={memberTypesArray[dataItem]?.featureCode}
+                      subtitle={memberTypesArray[dataItem]?.subtitle}
                       onClick={() => {
                         item === 'INDIVIDUAL' &&
                           newId
