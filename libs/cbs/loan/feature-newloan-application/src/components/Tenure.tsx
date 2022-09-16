@@ -4,32 +4,13 @@ import { useFormContext } from 'react-hook-form';
 import { FrequencyTenure, useGetLoanProductDetailsDataQuery } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { SubHeadingText } from '@coop/shared/components';
-import { FormInput, FormSwitchTab } from '@coop/shared/form';
+import { FormInput } from '@coop/shared/form';
 import { Alert, Box } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-const unitOptions = [
-  {
-    label: 'Day',
-    value: FrequencyTenure.Day,
-  },
-  {
-    label: 'Week',
-    value: FrequencyTenure.Week,
-  },
-  {
-    label: 'Month',
-    value: FrequencyTenure.Month,
-  },
-  {
-    label: 'Year',
-    value: FrequencyTenure.Year,
-  },
-];
-
 export const Tenure = () => {
   const { t } = useTranslation();
-  const [rightElement, setRightElement] = useState('day');
+  const [rightElement, setRightElement] = useState('');
   const [triggerQuery, setTriggerQuery] = useState(false);
 
   const { resetField, watch } = useFormContext();
@@ -51,7 +32,7 @@ export const Tenure = () => {
     }
   }, [products]);
 
-  const tenureUnit = watch('tenure');
+  const tenureUnit = productData?.tenureUnit ? productData?.tenureUnit : 'days';
 
   useEffect(() => {
     resetField('tenureUnitFrequency');
@@ -72,14 +53,14 @@ export const Tenure = () => {
           background="neutralColorLight.Gray-0"
         >
           <Box display="flex" flexDirection="row" justifyContent="space-between" borderRadius="4px">
-            <Box display="flex" flexDirection="column" gap="s4">
+            {/* <Box display="flex" flexDirection="column" gap="s4">
               <SubHeadingText>{t['accountOpenUnit']} </SubHeadingText>
               <FormSwitchTab name="tenure" options={unitOptions} />
-            </Box>
+            </Box> */}
             <Box w="290px">
               <FormInput
                 type="number"
-                name="tenureNumber"
+                name="tenure"
                 textAlign="right"
                 label="Tenure"
                 rightAddonText={
@@ -98,8 +79,8 @@ export const Tenure = () => {
           </Box>
           <Box pt="s16">
             <Alert status="info" title="Tenure" hideCloseIcon>
-              {productData?.minTenureUnitNumber} {productData?.minTenureUnit} -{' '}
-              {productData?.maxTenureUnitNumber} {productData?.maxTenureUnit}
+              {productData?.minTenureUnitNumber} {productData?.tenureUnit} -{' '}
+              {productData?.maxTenureUnitNumber} {productData?.tenureUnit}
             </Alert>
           </Box>
         </Box>
