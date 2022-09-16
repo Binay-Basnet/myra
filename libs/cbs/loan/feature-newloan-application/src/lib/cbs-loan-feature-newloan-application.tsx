@@ -290,49 +290,61 @@ export const NewLoanApplication = () => {
   );
 };
 
-export const LoanAmountDetails = () => (
-  <Box display="flex" flexDir="column" gap="s16">
-    <Box display="flex" flexDir="column" gap="s4">
-      <Text fontSize="r1" fontWeight="600" color="gray.800">
-        Loan Amount Details
-      </Text>
-      <Text fontSize="s3" fontWeight="500" color="gray.600">
-        Details of collateral valuation and disbursement amount
-      </Text>
-    </Box>
-    <Box p="s16" border="1px" borderColor="border.layout" borderRadius="br2">
-      <Box display="flex" flexDir="column" p="s16" gap="s16" borderRadius="br2" bg="background.500">
-        <Box display="flex" alignItems="center" justifyContent="space-between">
-          <TextFields variant="formLabel">Total Loan Applied</TextFields>
-          <Text fontSize="r1" color="gray.800" fontWeight="600">
-            1,00,000
-          </Text>
-        </Box>
-        <Box display="flex" alignItems="center" justifyContent="space-between">
-          <TextFields variant="formLabel">Total Valuation</TextFields>
-          <Button variant="link" px={0}>
-            80,000
-          </Button>
-        </Box>
-        <Box display="flex" alignItems="center" justifyContent="space-between">
-          <TextFields variant="formLabel">Total Sanctioned Loan Applied</TextFields>
-          <Box>
-            <FormNumberInput name="totalSanctionedAmount" size="sm" />
+export const LoanAmountDetails = () => {
+  const { watch } = useFormContext();
+  const totalLoanApplied = watch('appliedLoanAmount');
+
+  return (
+    <Box display="flex" flexDir="column" gap="s16">
+      <Box display="flex" flexDir="column" gap="s4">
+        <Text fontSize="r1" fontWeight="600" color="gray.800">
+          Loan Amount Details
+        </Text>
+        <Text fontSize="s3" fontWeight="500" color="gray.600">
+          Details of collateral valuation and disbursement amount
+        </Text>
+      </Box>
+      <Box p="s16" border="1px" borderColor="border.layout" borderRadius="br2">
+        <Box
+          display="flex"
+          flexDir="column"
+          p="s16"
+          gap="s16"
+          borderRadius="br2"
+          bg="background.500"
+        >
+          <Box display="flex" alignItems="center" justifyContent="space-between">
+            <TextFields variant="formLabel">Total Loan Applied</TextFields>
+            <Text fontSize="r1" color="gray.800" fontWeight="600">
+              {totalLoanApplied ?? '0'}
+            </Text>
+          </Box>
+          <Box display="flex" alignItems="center" justifyContent="space-between">
+            <TextFields variant="formLabel">Total Valuation</TextFields>
+            <Button variant="link" px={0}>
+              80,000
+            </Button>
+          </Box>
+          <Box display="flex" alignItems="center" justifyContent="space-between">
+            <TextFields variant="formLabel">Total Sanctioned Loan Applied</TextFields>
+            <Box>
+              <FormNumberInput name="totalSanctionedAmount" size="sm" />
+            </Box>
           </Box>
         </Box>
       </Box>
-    </Box>
-    <Divider />
-    <Box>
-      <FormTextArea
-        name="justifySanction"
-        h="200px"
-        label="If the sanctioned amount is greater than or equal to valuation amount. Please provide
+      <Divider />
+      <Box>
+        <FormTextArea
+          name="justifySanction"
+          h="200px"
+          label="If the sanctioned amount is greater than or equal to valuation amount. Please provide
         justification for it"
-      />
+        />
+      </Box>
     </Box>
-  </Box>
-);
+  );
+};
 
 type GuaranteeDetailForm = {
   index?: number;

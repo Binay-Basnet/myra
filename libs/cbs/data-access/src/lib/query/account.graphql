@@ -96,11 +96,10 @@ query getAccountOpenProductDetails($id: ID!) {
               rebateRate
               rebateLedgerMapping
             }
-            minTenure
-            minTenureUnit
+
+            tenureUnit
+            isTenureApplicable
             minTenureUnitNumber
-            maxTenure
-            maxTenureUnit
             maxTenureUnitNumber
             balanceLimit {
               minAmount
@@ -187,10 +186,7 @@ query getAccountOpenEditData($id: ID!) {
   }
 }
 
-query getAccountTableList(
-  $paginate: Pagination
-  $filter: DepositLoanAccountSearchFilter
-) {
+query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSearchFilter) {
   account {
     list(paginate: $paginate, filter: $filter) {
       totalCount
