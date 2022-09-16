@@ -6,18 +6,14 @@ interface IContainerWithDividerProps {
   children: React.ReactNode;
 }
 
-export const DividerContainer = ({ children }: IContainerWithDividerProps) => {
-  return (
-    <VStack
-      alignItems="stretch"
-      justifyContent="center"
-      width="100%"
-      gap="s16"
-      divider={
-        <Divider my="s16" border="1px solid" borderColor="background.500" />
-      }
-    >
-      {children}
-    </VStack>
-  );
-};
+export const DividerContainer = ({ children }: IContainerWithDividerProps) => (
+  <VStack
+    alignItems="stretch"
+    justifyContent="center"
+    width="100%"
+    gap="s16"
+    divider={<Divider my="s16" border="1px solid" borderColor="background.500" />}
+  >
+    {children}
+  </VStack>
+);

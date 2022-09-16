@@ -16,11 +16,7 @@ export const NewQuestions = () => {
     <>
       <FormSection>
         <GridItem colSpan={3}>
-          <Box
-            display="flex"
-            flexDirection={'row'}
-            justifyContent="space-between"
-          >
+          <Box display="flex" flexDirection="row" justifyContent="space-between">
             <SubHeadingText>{t['loanProductStaffProduct']} </SubHeadingText>
             <FormSwitchTab name="isStaffProduct" options={yesNo} />
           </Box>
@@ -29,14 +25,8 @@ export const NewQuestions = () => {
 
       <FormSection>
         <GridItem mt="s16" colSpan={3}>
-          <Box
-            display="flex"
-            flexDirection={'row'}
-            justifyContent="space-between"
-          >
-            <SubHeadingText>
-              {t['loanProductSupportMultipleAccount']}
-            </SubHeadingText>
+          <Box display="flex" flexDirection="row" justifyContent="space-between">
+            <SubHeadingText>{t['loanProductSupportMultipleAccount']}</SubHeadingText>
             <FormSwitchTab name="supportMultipleAccounts" options={yesNo} />
           </Box>
         </GridItem>
@@ -44,19 +34,10 @@ export const NewQuestions = () => {
 
       <FormSection>
         <GridItem mt="s16" colSpan={3}>
-          <Box display={'flex'} flexDirection="column" gap="s16">
-            <Box
-              display="flex"
-              flexDirection={'row'}
-              justifyContent="space-between"
-            >
-              <SubHeadingText>
-                {t['loanProductLoanScheduleChangeOverride']}
-              </SubHeadingText>
-              <FormSwitchTab
-                name="loanScheduleChangeOverride"
-                options={yesNo}
-              />
+          <Box display="flex" flexDirection="column" gap="s16">
+            <Box display="flex" flexDirection="row" justifyContent="space-between">
+              <SubHeadingText>{t['loanProductLoanScheduleChangeOverride']}</SubHeadingText>
+              <FormSwitchTab name="loanScheduleChangeOverride" options={yesNo} />
             </Box>
           </Box>
         </GridItem>

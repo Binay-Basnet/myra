@@ -123,28 +123,27 @@ export const Product = () => {
 
   const productOptions = [
     ...(data?.settings?.general?.depositProduct?.getProductList?.allowed?.reduce(
-      (prevVal, curVal) => {
-        return [...prevVal, { label: curVal?.productName as string, value: curVal?.id as string }];
-      },
+      (prevVal, curVal) => [
+        ...prevVal,
+        { label: curVal?.productName as string, value: curVal?.id as string },
+      ],
       [] as OptionType[]
     ) ?? []),
     ...(data?.settings?.general?.depositProduct?.getProductList?.notAllowed?.reduce(
-      (prevVal, curVal) => {
-        return [
-          ...prevVal,
-          {
-            label: curVal?.data?.productName as string,
-            value: curVal?.data?.id as string,
-            disabled: true,
-          },
-        ];
-      },
+      (prevVal, curVal) => [
+        ...prevVal,
+        {
+          label: curVal?.data?.productName as string,
+          value: curVal?.data?.id as string,
+          disabled: true,
+        },
+      ],
       [] as OptionType[]
     ) ?? []),
   ];
 
   return (
-    <GroupContainer scrollMarginTop={'200px'} display="flex" flexDirection={'column'} gap="s16">
+    <GroupContainer scrollMarginTop="200px" display="flex" flexDirection="column" gap="s16">
       <Box
         display="flex"
         flexDirection="column"
@@ -223,7 +222,7 @@ export const Product = () => {
                             fontSize="s2"
                             fontWeight="Regular"
                           >
-                            Minimum: {productData?.minTenureUnitNumber} {productData?.minTenureUnit}
+                            Minimum: {productData?.minTenureUnitNumber} {productData?.tenureUnit}
                           </TextFields>
                         </li>
                         <li>
@@ -232,8 +231,7 @@ export const Product = () => {
                             fontSize="s2"
                             fontWeight="Regular"
                           >
-                            Maximum: : {productData?.maxTenureUnitNumber}{' '}
-                            {productData?.maxTenureUnit}
+                            Maximum: : {productData?.maxTenureUnitNumber} {productData?.tenureUnit}
                           </TextFields>
                         </li>
                       </ul>
@@ -343,19 +341,17 @@ export const Product = () => {
                                 <TextFields
                                   color="neutralColorLight.Gray-70"
                                   fontSize="s2"
-                                  display={'flex'}
+                                  display="flex"
                                   flexDirection="row"
                                   gap="s4"
                                   fontWeight="Regular"
                                 >
                                   Gender:{' '}
-                                  {tempGender?.map((item) => {
-                                    return (
-                                      <Text fontSize={'s2'} fontWeight="bold" pl="s4">
-                                        {item}
-                                      </Text>
-                                    );
-                                  })}
+                                  {tempGender?.map((item) => (
+                                    <Text fontSize="s2" fontWeight="bold" pl="s4">
+                                      {item}
+                                    </Text>
+                                  ))}
                                 </TextFields>
                               </li>
                             )}
@@ -368,7 +364,7 @@ export const Product = () => {
                                   color="neutralColorLight.Gray-70"
                                   fontSize="s2"
                                   fontWeight="Regular"
-                                  display={'flex'}
+                                  display="flex"
                                   flexDirection="row"
                                   gap="s4"
                                 >
@@ -388,13 +384,11 @@ export const Product = () => {
                                   fontWeight="Regular"
                                 >
                                   Business (Institutions):{' '}
-                                  {tempIns?.map((item) => {
-                                    return (
-                                      <Text fontSize={'s2'} fontWeight="bold" p="s4">
-                                        {item}
-                                      </Text>
-                                    );
-                                  })}
+                                  {tempIns?.map((item) => (
+                                    <Text fontSize="s2" fontWeight="bold" p="s4">
+                                      {item}
+                                    </Text>
+                                  ))}
                                 </TextFields>
                               </li>
                             )}
@@ -416,19 +410,17 @@ export const Product = () => {
                                   color="neutralColorLight.Gray-70"
                                   fontSize="s2"
                                   fontWeight="Regular"
-                                  display={'flex'}
+                                  display="flex"
                                   flexDirection="row"
                                   gap="s4"
                                 >
                                   {' '}
                                   Marital Status:
-                                  {tempMarriage?.map((item) => {
-                                    return (
-                                      <Text fontSize={'s2'} fontWeight="bold" pl="s4">
-                                        {item}
-                                      </Text>
-                                    );
-                                  })}
+                                  {tempMarriage?.map((item) => (
+                                    <Text fontSize="s2" fontWeight="bold" pl="s4">
+                                      {item}
+                                    </Text>
+                                  ))}
                                 </TextFields>
                               </li>
                             )}
@@ -438,18 +430,16 @@ export const Product = () => {
                                   color="neutralColorLight.Gray-70"
                                   fontSize="s2"
                                   fontWeight="Regular"
-                                  display={'flex'}
+                                  display="flex"
                                   flexDirection="row"
                                   gap="s4"
                                 >
                                   Occupation Detail
-                                  {tempOccupationOptions?.map((item) => {
-                                    return (
-                                      <Text fontSize={'s2'} fontWeight="bold" p="s4">
-                                        {item}
-                                      </Text>
-                                    );
-                                  })}
+                                  {tempOccupationOptions?.map((item) => (
+                                    <Text fontSize="s2" fontWeight="bold" p="s4">
+                                      {item}
+                                    </Text>
+                                  ))}
                                 </TextFields>
                               </li>
                             )}
@@ -466,13 +456,11 @@ export const Product = () => {
                                   fontWeight="Regular"
                                 >
                                   Nature of Business ( COOP Union):
-                                  {tempCoopUnionOptions?.map((item) => {
-                                    return (
-                                      <Text fontSize={'s2'} fontWeight="bold" p="s4">
-                                        {item}
-                                      </Text>
-                                    );
-                                  })}
+                                  {tempCoopUnionOptions?.map((item) => (
+                                    <Text fontSize="s2" fontWeight="bold" p="s4">
+                                      {item}
+                                    </Text>
+                                  ))}
                                 </TextFields>
                               </li>
                             )}
@@ -484,18 +472,16 @@ export const Product = () => {
                                   color="neutralColorLight.Gray-70"
                                   fontSize="s2"
                                   fontWeight="Regular"
-                                  display={'flex'}
+                                  display="flex"
                                   flexDirection="row"
                                   gap="s4"
                                 >
                                   Cooperative Type:{' '}
-                                  {tempCoopOptions?.map((item) => {
-                                    return (
-                                      <Text fontSize={'s2'} fontWeight="bold" p="s4">
-                                        {item}
-                                      </Text>
-                                    );
-                                  })}
+                                  {tempCoopOptions?.map((item) => (
+                                    <Text fontSize="s2" fontWeight="bold" p="s4">
+                                      {item}
+                                    </Text>
+                                  ))}
                                 </TextFields>
                               </li>
                             )}
@@ -514,13 +500,11 @@ export const Product = () => {
                                 fontWeight="Regular"
                               >
                                 Education Qualification:{' '}
-                                {tempEducationOptions?.map((item) => {
-                                  return (
-                                    <Text fontSize={'s2'} fontWeight="bold" p="s4">
-                                      {item}
-                                    </Text>
-                                  );
-                                })}
+                                {tempEducationOptions?.map((item) => (
+                                  <Text fontSize="s2" fontWeight="bold" p="s4">
+                                    {item}
+                                  </Text>
+                                ))}
                               </TextFields>
                             </li>
 
@@ -531,13 +515,11 @@ export const Product = () => {
                                 fontWeight="Regular"
                               >
                                 Ethinicity:{' '}
-                                {tempEthnicityOptions?.map((item) => {
-                                  return (
-                                    <Text fontSize={'s2'} fontWeight="bold" p="s4">
-                                      {item}
-                                    </Text>
-                                  );
-                                })}
+                                {tempEthnicityOptions?.map((item) => (
+                                  <Text fontSize="s2" fontWeight="bold" p="s4">
+                                    {item}
+                                  </Text>
+                                ))}
                               </TextFields>
                             </li>
                           </ul>
@@ -553,27 +535,25 @@ export const Product = () => {
                 </TextFields>
                 <Box pl="s24" display="grid">
                   <ul>
-                    {productData?.individualDocuments?.map((item, index) => {
-                      return (
-                        <li key={`${item}${index}`}>
-                          <TextFields
-                            color="neutralColorLight.Gray-70"
-                            fontSize="s2"
-                            fontWeight="Regular"
-                          >
-                            {item === IndividualRequiredDocument?.Fingerprint
-                              ? 'FingerPrint'
-                              : item === IndividualRequiredDocument?.Form
-                              ? 'Form'
-                              : item === IndividualRequiredDocument?.NomineeDocument
-                              ? 'Nominee Document'
-                              : item === IndividualRequiredDocument?.Photo
-                              ? 'Photo'
-                              : 'Signature'}
-                          </TextFields>
-                        </li>
-                      );
-                    })}
+                    {productData?.individualDocuments?.map((item, index) => (
+                      <li key={`${item}${index}`}>
+                        <TextFields
+                          color="neutralColorLight.Gray-70"
+                          fontSize="s2"
+                          fontWeight="Regular"
+                        >
+                          {item === IndividualRequiredDocument?.Fingerprint
+                            ? 'FingerPrint'
+                            : item === IndividualRequiredDocument?.Form
+                            ? 'Form'
+                            : item === IndividualRequiredDocument?.NomineeDocument
+                            ? 'Nominee Document'
+                            : item === IndividualRequiredDocument?.Photo
+                            ? 'Photo'
+                            : 'Signature'}
+                        </TextFields>
+                      </li>
+                    ))}
                   </ul>
                 </Box>
               </GridItem>

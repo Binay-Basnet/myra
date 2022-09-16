@@ -6,7 +6,7 @@ import { FormEditableTable } from '@coop/shared/form';
 import { Box } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-type ProductSubTypeTable = {
+type IProductSubTypeTable = {
   productSubType: string;
   productTypeID: string;
   amount: number;
@@ -22,20 +22,20 @@ type ProductTypeForm = {
   productType: ProductTypeTable[];
 };
 
-export function ProductSubTypeTable() {
+export const ProductSubTypeTable = () => {
   const { t } = useTranslation();
   const { watch } = useFormContext<ProductTypeForm>();
 
   const productType = watch('productType');
 
   return (
-    <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
-      <GroupContainer scrollMarginTop={'200px'} display="flex" flexDirection={'column'} gap="s16">
+    <Box pb="s20" width="full" display="flex" flexDirection="column">
+      <GroupContainer scrollMarginTop="200px" display="flex" flexDirection="column" gap="s16">
         <TextBoxContainer>
           <TopText>{t['loanProductTypeProductSubtype']} </TopText>
         </TextBoxContainer>
         <Box>
-          <FormEditableTable<ProductSubTypeTable>
+          <FormEditableTable<IProductSubTypeTable>
             name="productSubType"
             columns={[
               {
@@ -61,6 +61,6 @@ export function ProductSubTypeTable() {
       </GroupContainer>
     </Box>
   );
-}
+};
 
 export default ProductSubTypeTable;

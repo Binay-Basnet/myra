@@ -23,11 +23,7 @@ export const RequiredDocumentSetup = () => {
   ];
   return (
     <FormSection header="loanProductRequiredDocumentSetup">
-      <FormCheckboxGroup
-        name="requiredDocuments"
-        list={individualList}
-        orientation="column"
-      />
+      <FormCheckboxGroup name="requiredDocuments" list={individualList} orientation="column" />
     </FormSection>
   );
 };

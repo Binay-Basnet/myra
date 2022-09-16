@@ -10,17 +10,12 @@ type AccountServiceTable = {
   amount: number;
 };
 
-export function NatureOfProductTable() {
+export const NatureOfProductTable = () => {
   const { t } = useTranslation();
 
   return (
-    <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
-      <GroupContainer
-        scrollMarginTop={'200px'}
-        display="flex"
-        flexDirection={'column'}
-        gap="s16"
-      >
+    <Box pb="s20" width="full" display="flex" flexDirection="column">
+      <GroupContainer scrollMarginTop="200px" display="flex" flexDirection="column" gap="s16">
         <TextBoxContainer>
           <TopText>{t['loanProductTypeNatureofProduct']} </TopText>
         </TextBoxContainer>
@@ -53,6 +48,6 @@ export function NatureOfProductTable() {
       </GroupContainer>
     </Box>
   );
-}
+};
 
 export default NatureOfProductTable;

@@ -1,12 +1,8 @@
-import React, { Fragment, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { IoIosCheckmark } from 'react-icons/io';
-import {
-  IoChevronDownOutline,
-  IoChevronUpOutline,
-  IoClose,
-} from 'react-icons/io5';
+import { IoChevronDownOutline, IoChevronUpOutline, IoClose } from 'react-icons/io5';
 import { useQueryClient } from 'react-query';
 import { debounce } from 'lodash';
 
@@ -50,75 +46,60 @@ interface KYMSettingsProps {
   kymType: KYMCategory;
 }
 
-export const KYMSettings = ({ fields, kymType }: KYMSettingsProps) => {
-  return (
-    <Accordion
-      allowMultiple
-      allowToggle
-      display="flex"
-      flexDirection="column"
-      gap="s16"
-    >
-      <AccordionItem>
-        {({ isExpanded }) => {
-          return (
-            <>
-              {(fields.type === 'group' || fields.type === 'custom') && (
-                <KYMSettingsAccordionBtn
-                  isExpanded={isExpanded}
-                  title={fields.label}
-                />
-              )}
+export const KYMSettings = ({ fields, kymType }: KYMSettingsProps) => (
+  <Accordion allowMultiple allowToggle display="flex" flexDirection="column" gap="s16">
+    <AccordionItem>
+      {({ isExpanded }) => (
+        <>
+          {(fields.type === 'group' || fields.type === 'custom') && (
+            <KYMSettingsAccordionBtn isExpanded={isExpanded} title={fields.label} />
+          )}
 
-              <AccordionPanel p="0">
-                <Accordion
-                  allowMultiple
-                  allowToggle
-                  display="flex"
-                  flexDirection="column"
-                  gap="s12"
-                  p="s16"
-                >
-                  {fields.type === 'custom' ? (
-                    <KYMSettingsCustomSection kymType={kymType} />
+          <AccordionPanel p="0">
+            <Accordion
+              allowMultiple
+              allowToggle
+              display="flex"
+              flexDirection="column"
+              gap="s12"
+              p="s16"
+            >
+              {fields.type === 'custom' ? (
+                <KYMSettingsCustomSection kymType={kymType} />
+              ) : (
+                fields.children?.map((field) =>
+                  field.type !== 'custom' && field.children ? (
+                    <Fragment key={field?.label}>
+                      <KYMSettings fields={field} kymType={kymType} />
+                    </Fragment>
                   ) : (
-                    fields.children?.map((field, index) =>
-                      field.type !== 'custom' && field.children ? (
-                        <Fragment key={index}>
-                          <KYMSettings fields={field} kymType={kymType} />
-                        </Fragment>
-                      ) : (
-                        <Fragment key={index}>
-                          <AccordionItem>
-                            {({ isExpanded }) => (
-                              <KYMSettingsField
-                                isExpanded={isExpanded}
-                                fields={field}
-                                kymType={kymType}
-                              />
-                            )}
-                          </AccordionItem>
-                        </Fragment>
-                      )
-                    )
-                  )}
-                </Accordion>
-              </AccordionPanel>
-            </>
-          );
-        }}
-      </AccordionItem>
-    </Accordion>
-  );
-};
+                    <Fragment key={field?.label}>
+                      <AccordionItem>
+                        {({ isExpanded }) => (
+                          <KYMSettingsField
+                            isExpanded={isExpanded}
+                            fields={field}
+                            kymType={kymType}
+                          />
+                        )}
+                      </AccordionItem>
+                    </Fragment>
+                  )
+                )
+              )}
+            </Accordion>
+          </AccordionPanel>
+        </>
+      )}
+    </AccordionItem>
+  </Accordion>
+);
 
 interface KYMSettingsCustomSectionProps {
   kymType: KYMCategory;
 }
 
-export const KYMSettingsCustomSection = ({
-  kymType,
-}: KYMSettingsCustomSectionProps) => {
+export const KYMSettingsCustomSection = ({ kymType }: KYMSettingsCustomSectionProps) => {
   const { data: customFieldsData } = useGetCustomFieldsQuery({ kymType });
   const customFields = customFieldsData?.settings?.form?.custom?.list?.data;
 
@@ -139,18 +120,8 @@ export const KYMSettingsCustomSection = ({
                 {({ isExpanded }) => (
                   <>
                     <AccordionButton bg={isExpanded ? '#E0E5EB' : ''} h="60px">
-                      <Box
-                        display="flex"
-                        gap="s12"
-                        alignItems="center"
-                        flex="1"
-                        textAlign="left"
-                      >
-                        <Text
-                          fontSize="r1"
-                          fontWeight="500"
-                          textTransform="capitalize"
-                        >
+                      <Box display="flex" gap="s12" alignItems="center" flex="1" textAlign="left">
+                        <Text fontSize="r1" fontWeight="500" textTransform="capitalize">
                           {`Custom #${index + 1}`}
                         </Text>
                       </Box>
@@ -160,9 +131,7 @@ export const KYMSettingsCustomSection = ({
                         <IoChevronDownOutline fontSize="18px" />
                       )}
                     </AccordionButton>
-                    {section && (
-                      <KYMCustomField kymType={kymType} section={section} />
-                    )}
+                    {section && <KYMCustomField kymType={kymType} section={section} />}
                   </>
                 )}
               </AccordionItem>
@@ -186,15 +155,13 @@ interface KYMCustomFieldProps {
 export const KYMCustomField = ({ kymType, section }: KYMCustomFieldProps) => {
   const queryClient = useQueryClient();
   const { mutateAsync: updateCustomSection } = useUpdateCustomSectionMutation();
-  const { mutateAsync: updateCustomField } =
-    useUpdateCustomSectionFieldMutation();
+  const { mutateAsync: updateCustomField } = useUpdateCustomSectionFieldMutation();
   const { mutateAsync: deleteCustomSection } = useDeleteCustomSectionMutation({
     onSuccess: () => queryClient.invalidateQueries('getCustomFields'),
   });
-  const { mutateAsync: deleteCustomField } =
-    useDeleteCustomSectionFieldMutation({
-      onSuccess: () => queryClient.invalidateQueries('getCustomFields'),
-    });
+  const { mutateAsync: deleteCustomField } = useDeleteCustomSectionFieldMutation({
+    onSuccess: () => queryClient.invalidateQueries('getCustomFields'),
+  });
 
   const methods = useForm({
     defaultValues: {
@@ -210,7 +177,7 @@ export const KYMCustomField = ({ kymType, section }: KYMCustomFieldProps) => {
             <Box
               as="form"
               onChange={debounce(async () => {
-                const name = methods.getValues().name;
+                const { name } = methods.getValues();
                 if (name && section.id) {
                   if (section.__typename === 'FormSection') {
                     await updateCustomSection({
@@ -239,8 +206,7 @@ export const KYMCustomField = ({ kymType, section }: KYMCustomFieldProps) => {
                 value={
                   section.__typename === 'FormSection'
                     ? { label: 'Group Fields', value: 'Group' }
-                    : (section as unknown as FormField).fieldType ===
-                      'SINGLE_SELECT'
+                    : (section as unknown as FormField).fieldType === 'SINGLE_SELECT'
                     ? {
                         label: 'Single Select',
                         value: 'SINGLE_SELECT',
@@ -265,10 +231,7 @@ export const KYMCustomField = ({ kymType, section }: KYMCustomFieldProps) => {
       {section?.__typename === 'FormField' ? (
         <KYMSettingsFormField fields={section as unknown as FormField} />
       ) : (
-        <KYMSettingsFormSection
-          kymType={kymType}
-          section={section as unknown as FormSection}
-        />
+        <KYMSettingsFormSection kymType={kymType} section={section as unknown as FormSection} />
       )}
 
       <AccordionPanel
@@ -309,13 +272,9 @@ export const KYMCustomFieldAdd = ({ kymType }: { kymType: KYMCategory }) => {
   const [hasNewField, setHasNewField] = useState(false);
   const methods = useForm<{
     name: string;
-    fieldType:
-      | FormFieldType.SingleSelect
-      | FormFieldType.MultipleSelect
-      | 'FormSection';
+    fieldType: FormFieldType.SingleSelect | FormFieldType.MultipleSelect | 'FormSection';
   }>({});
-  const { mutateAsync: addNewCustomSection, isLoading } =
-    useUpsertCustomSectionMutation();
+  const { mutateAsync: addNewCustomSection, isLoading } = useUpsertCustomSectionMutation();
   const { mutateAsync: addNewCustomField, isLoading: fieldLoading } =
     useUpsertCustomFieldMutation();
 
@@ -327,7 +286,7 @@ export const KYMCustomFieldAdd = ({ kymType }: { kymType: KYMCategory }) => {
         flexDir="column"
         gap="s16"
         onSubmit={methods.handleSubmit(async () => {
-          const fieldType = methods.getValues().fieldType;
+          const { fieldType } = methods.getValues();
 
           if (fieldType === 'FormSection') {
             const response = await addNewCustomSection({

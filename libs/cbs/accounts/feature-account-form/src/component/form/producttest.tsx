@@ -11,10 +11,7 @@ import {
   useGetProductListQuery,
   useGetSettingsOptionsFieldsQuery,
 } from '@coop/cbs/data-access';
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
+import { GroupContainer, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormSelect } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -86,8 +83,7 @@ export const ProductTest = () => {
     }
   }, [memberId]);
 
-  const productData =
-    poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
+  const productData = poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
 
   const genderOptions = genderFields?.form?.options?.predefined?.data;
   const institutionOptions = institutionFields?.form?.options?.predefined?.data;
@@ -99,77 +95,55 @@ export const ProductTest = () => {
   const ethnicityOptions = ethnicityFields?.form?.options?.predefined?.data;
 
   const tempGender = genderOptions?.map(
-    (item) =>
-      productData?.genderId?.includes(String(item?.id)) && item?.name?.local
+    (item) => productData?.genderId?.includes(String(item?.id)) && item?.name?.local
   );
 
   const tempIns = institutionOptions?.map(
     (item) =>
-      productData?.natureOfBusinessInstitution?.includes(String(item?.id)) &&
-      item?.name?.local
+      productData?.natureOfBusinessInstitution?.includes(String(item?.id)) && item?.name?.local
   );
   const tempMarriage = maritialOptions?.map(
-    (item) =>
-      productData?.maritalStatusId?.includes(String(item?.id)) &&
-      item?.name?.local
+    (item) => productData?.maritalStatusId?.includes(String(item?.id)) && item?.name?.local
   );
   const tempOccupationOptions = occupationalOptions?.map(
-    (item) =>
-      productData?.occupation?.includes(String(item?.id)) && item?.name?.local
+    (item) => productData?.occupation?.includes(String(item?.id)) && item?.name?.local
   );
   const tempCoopUnionOptions = coopUnionOptions?.map(
-    (item) =>
-      productData?.natureOFBusinessCoop?.includes(String(item?.id)) &&
-      item?.name?.local
+    (item) => productData?.natureOFBusinessCoop?.includes(String(item?.id)) && item?.name?.local
   );
   const tempCoopOptions = coopTypeOptions?.map(
-    (item) =>
-      productData?.cooperativeType?.includes(String(item?.id)) &&
-      item?.name?.local
+    (item) => productData?.cooperativeType?.includes(String(item?.id)) && item?.name?.local
   );
   const tempEducationOptions = educationOptions?.map(
-    (item) =>
-      productData?.educationQualification?.includes(String(item?.id)) &&
-      item?.name?.local
+    (item) => productData?.educationQualification?.includes(String(item?.id)) && item?.name?.local
   );
   const tempEthnicityOptions = ethnicityOptions?.map(
-    (item) =>
-      productData?.educationQualification?.includes(String(item?.id)) &&
-      item?.name?.local
+    (item) => productData?.educationQualification?.includes(String(item?.id)) && item?.name?.local
   );
 
   const productOptions = [
     ...(data?.settings?.general?.depositProduct?.getProductList?.allowed?.reduce(
-      (prevVal, curVal) => {
-        return [
-          ...prevVal,
-          { label: curVal?.productName as string, value: curVal?.id as string },
-        ];
-      },
+      (prevVal, curVal) => [
+        ...prevVal,
+        { label: curVal?.productName as string, value: curVal?.id as string },
+      ],
       [] as OptionType[]
     ) ?? []),
     ...(data?.settings?.general?.depositProduct?.getProductList?.notAllowed?.reduce(
-      (prevVal, curVal) => {
-        return [
-          ...prevVal,
-          {
-            label: curVal?.data?.productName as string,
-            value: curVal?.data?.id as string,
-            disabled: true,
-          },
-        ];
-      },
+      (prevVal, curVal) => [
+        ...prevVal,
+        {
+          label: curVal?.data?.productName as string,
+          value: curVal?.data?.id as string,
+          disabled: true,
+        },
+      ],
       [] as OptionType[]
     ) ?? []),
   ];
 
   return (
-    <GroupContainer
-      scrollMarginTop={'200px'}
-      display="flex"
-      flexDirection={'column'}
-      gap="s16"
-    >
+    <GroupContainer scrollMarginTop="200px" display="flex" flexDirection="column" gap="s16">
       <Box
         display="flex"
         flexDirection="column"
@@ -208,13 +182,13 @@ export const ProductTest = () => {
               <Box display="flex" flexDirection="column" gap="s4">
                 <Text fontWeight="Medium" fontSize="s3">
                   {
-                    poductDetails?.data?.settings?.general?.depositProduct
-                      ?.formState?.data?.productCode?.prefix
+                    poductDetails?.data?.settings?.general?.depositProduct?.formState?.data
+                      ?.productCode?.prefix
                   }
                   -
                   {
-                    poductDetails?.data?.settings?.general?.depositProduct
-                      ?.formState?.data?.productCode?.initialNo
+                    poductDetails?.data?.settings?.general?.depositProduct?.formState?.data
+                      ?.productCode?.initialNo
                   }
                 </Text>
                 <Text fontWeight="Medium" fontSize="r2">
@@ -232,212 +206,189 @@ export const ProductTest = () => {
               </Box>
             </Box>
             <InputGroupContainer>
-              {(productData?.maxTenure || productData?.minTenure) && (
-                <Box display={'flex'} flexDirection="column" gap="s4">
-                  <Text fontSize={'s3'} fontWeight="600">
+              {(productData?.tenureUnit || productData?.tenureUnit) && (
+                <Box display="flex" flexDirection="column" gap="s4">
+                  <Text fontSize="s3" fontWeight="600">
                     Tenure
                   </Text>
-                  {productData?.minTenure && (
-                    <Text fontSize={'s3'} fontWeight="600">
-                      Minimum:{productData?.minTenureUnitNumber}{' '}
-                      {productData?.minTenureUnit}
+                  {productData?.tenureUnit && (
+                    <Text fontSize="s3" fontWeight="600">
+                      Minimum:{productData?.minTenureUnitNumber} {productData?.tenureUnit}
                     </Text>
                   )}
-                  {productData?.maxTenure && (
-                    <Text fontSize={'s3'} fontWeight="400">
-                      Maximum: {productData?.minTenureUnitNumber}{' '}
-                      {productData?.minTenureUnit}
+                  {productData?.tenureUnit && (
+                    <Text fontSize="s3" fontWeight="400">
+                      Maximum: {productData?.minTenureUnitNumber} {productData?.tenureUnit}
                     </Text>
                   )}
                 </Box>
               )}
               {NatureOfDepositProduct?.VoluntaryOrOptional && (
-                <Box display={'flex'} flexDirection="column" gap="s4">
-                  <Text fontSize={'s3'} fontWeight="600">
+                <Box display="flex" flexDirection="column" gap="s4">
+                  <Text fontSize="s3" fontWeight="600">
                     Balance Limit
                   </Text>
                   {productData?.balanceLimit?.minAmount && (
-                    <Text fontSize={'s3'} fontWeight="400">
+                    <Text fontSize="s3" fontWeight="400">
                       Minimum:{productData?.balanceLimit?.minAmount}
                     </Text>
                   )}
                   {productData?.balanceLimit?.maxAmount && (
-                    <Text fontSize={'s3'} fontWeight="400">
+                    <Text fontSize="s3" fontWeight="400">
                       Maximum: {productData?.balanceLimit?.maxAmount}
                     </Text>
                   )}
                 </Box>
               )}
-              {(productData?.depositAmount?.minAmount ||
-                productData?.depositAmount?.maxAmount) && (
-                <Box display={'flex'} flexDirection="column" gap="s4">
-                  <Text fontSize={'s3'} fontWeight="600">
+              {(productData?.depositAmount?.minAmount || productData?.depositAmount?.maxAmount) && (
+                <Box display="flex" flexDirection="column" gap="s4">
+                  <Text fontSize="s3" fontWeight="600">
                     Deposit Amount Limit
                   </Text>
                   {productData?.depositAmount?.minAmount && (
-                    <Text fontSize={'s3'} fontWeight="400">
+                    <Text fontSize="s3" fontWeight="400">
                       Minimum: {productData?.depositAmount?.minAmount}
                     </Text>
                   )}
                   {productData?.depositAmount?.maxAmount && (
-                    <Text fontSize={'s3'} fontWeight="400">
+                    <Text fontSize="s3" fontWeight="400">
                       Maximum: {productData?.depositAmount?.maxAmount}
                     </Text>
                   )}
                 </Box>
               )}{' '}
             </InputGroupContainer>
-            <Box display={'flex'} flexDirection="column" gap="s4">
-              <Text fontSize={'s3'} fontWeight="600">
+            <Box display="flex" flexDirection="column" gap="s4">
+              <Text fontSize="s3" fontWeight="600">
                 Criteria
               </Text>
               <InputGroupContainer>
                 {(productData?.maxAge || productData?.minAge) && (
-                  <Box display={'flex'} flexDirection="row" gap="s4">
-                    <Text fontSize={'s3'} fontWeight="400">
+                  <Box display="flex" flexDirection="row" gap="s4">
+                    <Text fontSize="s3" fontWeight="400">
                       Age:
                     </Text>
                     {productData?.minAge && (
-                      <Text fontSize={'s3'} fontWeight="400">
+                      <Text fontSize="s3" fontWeight="400">
                         Minimum: {productData?.minAge}
                       </Text>
                     )}
                     {productData?.maxAge && (
-                      <Text fontSize={'s3'} fontWeight="400">
+                      <Text fontSize="s3" fontWeight="400">
                         Maximum:{productData?.maxAge}
                       </Text>
                     )}
                   </Box>
                 )}
                 {productData?.maritalStatusId && (
-                  <Box display={'flex'} flexDirection="row" gap="s4">
-                    <Text fontSize={'s3'} fontWeight="400">
+                  <Box display="flex" flexDirection="row" gap="s4">
+                    <Text fontSize="s3" fontWeight="400">
                       Marital status{' '}
                     </Text>
-                    {tempMarriage?.map((item) => {
-                      return (
-                        <Text fontSize={'s3'} fontWeight="bold" pl="s4">
-                          {item}
-                        </Text>
-                      );
-                    })}
+                    {tempMarriage?.map((item) => (
+                      <Text fontSize="s3" fontWeight="bold" pl="s4">
+                        {item}
+                      </Text>
+                    ))}
                   </Box>
                 )}
                 {productData?.educationQualification && (
-                  <Box display={'flex'} flexDirection="row" gap="s4">
-                    <Text fontSize={'s3'} fontWeight="400">
+                  <Box display="flex" flexDirection="row" gap="s4">
+                    <Text fontSize="s3" fontWeight="400">
                       Educational Qalification:{' '}
                     </Text>
-                    {tempEducationOptions?.map((item) => {
-                      return (
-                        <Text fontSize={'s3'} fontWeight="bold">
-                          {item}
-                        </Text>
-                      );
-                    })}
+                    {tempEducationOptions?.map((item) => (
+                      <Text fontSize="s3" fontWeight="bold">
+                        {item}
+                      </Text>
+                    ))}
                   </Box>
                 )}
                 {productData?.genderId && (
-                  <Box display={'flex'} flexDirection="row" gap="s4">
-                    <Text fontSize={'s3'} fontWeight="400">
+                  <Box display="flex" flexDirection="row" gap="s4">
+                    <Text fontSize="s3" fontWeight="400">
                       Gender
                     </Text>
-                    {tempGender?.map((item) => {
-                      return (
-                        <Text fontSize={'s3'} fontWeight="bold" pl="s4">
-                          {item}
-                        </Text>
-                      );
-                    })}
+                    {tempGender?.map((item) => (
+                      <Text fontSize="s3" fontWeight="bold" pl="s4">
+                        {item}
+                      </Text>
+                    ))}
                   </Box>
                 )}
                 {productData?.occupation && (
-                  <Box display={'flex'} flexDirection="row" gap="s4">
-                    <Text fontSize={'s3'} fontWeight="400">
+                  <Box display="flex" flexDirection="row" gap="s4">
+                    <Text fontSize="s3" fontWeight="400">
                       Occupational Details
                     </Text>
-                    {tempOccupationOptions?.map((item) => {
-                      return (
-                        <Text fontSize={'s3'} fontWeight="bold" p="s4">
-                          {item}
-                        </Text>
-                      );
-                    })}
+                    {tempOccupationOptions?.map((item) => (
+                      <Text fontSize="s3" fontWeight="bold" p="s4">
+                        {item}
+                      </Text>
+                    ))}
                   </Box>
                 )}
                 {productData?.ethnicity && (
-                  <Box display={'flex'} flexDirection="row" gap="s4">
-                    <Text fontSize={'s3'} fontWeight="400">
+                  <Box display="flex" flexDirection="row" gap="s4">
+                    <Text fontSize="s3" fontWeight="400">
                       Ethnicity
                     </Text>
                     <Box>
-                      {tempEthnicityOptions?.map((item) => {
-                        return (
-                          <Text fontSize={'s3'} fontWeight="bold" p="s4">
-                            {item}
-                          </Text>
-                        );
-                      })}
+                      {tempEthnicityOptions?.map((item) => (
+                        <Text fontSize="s3" fontWeight="bold" p="s4">
+                          {item}
+                        </Text>
+                      ))}
                     </Box>
                   </Box>
                 )}
 
                 {productData?.foreignEmployment && (
-                  <Box display={'flex'} flexDirection="row" gap="s4">
-                    <Text fontSize={'s3'} fontWeight="400">
+                  <Box display="flex" flexDirection="row" gap="s4">
+                    <Text fontSize="s3" fontWeight="400">
                       Foreign Employment{' '}
                     </Text>
-                    <Text fontSize="s3" fontWeight={'500'}>
+                    <Text fontSize="s3" fontWeight="500">
                       {productData?.foreignEmployment ? 'Yes' : 'No'}
                     </Text>
                   </Box>
                 )}
-                {productData?.typeOfMember?.includes(
-                  KymMemberTypesEnum?.CooperativeUnion
-                ) &&
+                {productData?.typeOfMember?.includes(KymMemberTypesEnum?.CooperativeUnion) &&
                   productData?.natureOFBusinessCoop && (
-                    <Box display={'flex'} flexDirection="row" gap="s4">
-                      <Text fontSize={'s3'} fontWeight="400">
+                    <Box display="flex" flexDirection="row" gap="s4">
+                      <Text fontSize="s3" fontWeight="400">
                         Nature of Business (Coop Union)
                       </Text>
-                      {tempCoopUnionOptions?.map((item) => {
-                        return (
-                          <Text fontSize={'s3'} fontWeight="bold" p="s4">
-                            {item}
-                          </Text>
-                        );
-                      })}
+                      {tempCoopUnionOptions?.map((item) => (
+                        <Text fontSize="s3" fontWeight="bold" p="s4">
+                          {item}
+                        </Text>
+                      ))}
                     </Box>
                   )}
-                {productData?.typeOfMember?.includes(
-                  KymMemberTypesEnum.Institution
-                ) &&
+                {productData?.typeOfMember?.includes(KymMemberTypesEnum.Institution) &&
                   productData?.natureOfBusinessInstitution && (
-                    <Box display={'flex'} flexDirection="row" gap="s4">
-                      <Text fontSize={'s3'} fontWeight="400">
+                    <Box display="flex" flexDirection="row" gap="s4">
+                      <Text fontSize="s3" fontWeight="400">
                         Business (Institutions):{' '}
                       </Text>
-                      {tempIns?.map((item) => {
-                        return (
-                          <Text fontSize={'s3'} fontWeight="bold" p="s4">
-                            {item}
-                          </Text>
-                        );
-                      })}
+                      {tempIns?.map((item) => (
+                        <Text fontSize="s3" fontWeight="bold" p="s4">
+                          {item}
+                        </Text>
+                      ))}
                     </Box>
                   )}
-                {productData?.typeOfMember?.includes(
-                  KymMemberTypesEnum?.Cooperative
-                ) &&
+                {productData?.typeOfMember?.includes(KymMemberTypesEnum?.Cooperative) &&
                   productData?.cooperativeType && (
-                    <Box display={'flex'} flexDirection="row" gap="s4">
-                      <Text fontSize={'s3'} fontWeight="400">
+                    <Box display="flex" flexDirection="row" gap="s4">
+                      <Text fontSize="s3" fontWeight="400">
                         Cooperative Type:{' '}
                       </Text>
                       <Box>
-                        {tempCoopOptions?.map((item) => {
-                          return <Text fontSize={'s3'}>{item}</Text>;
-                        })}
+                        {tempCoopOptions?.map((item) => (
+                          <Text fontSize="s3">{item}</Text>
+                        ))}
                       </Box>
                     </Box>
                   )}
@@ -445,32 +396,25 @@ export const ProductTest = () => {
             </Box>
             <InputGroupContainer>
               {productData?.individualDocuments && (
-                <Box display={'flex'} flexDirection="column" gap="s4">
-                  <Text fontSize={'r1'} fontWeight="600">
+                <Box display="flex" flexDirection="column" gap="s4">
+                  <Text fontSize="r1" fontWeight="600">
                     Required Document
                   </Text>
-                  {productData?.individualDocuments?.map((item, index) => {
-                    return (
-                      <Box key={`${item}${index}`}>
-                        <Text
-                          color="neutralColorLight.Gray-70"
-                          fontSize="s3"
-                          fontWeight="Regular"
-                        >
-                          {item === IndividualRequiredDocument?.Fingerprint
-                            ? 'FingerPrint'
-                            : item === IndividualRequiredDocument?.Form
-                            ? 'Form'
-                            : item ===
-                              IndividualRequiredDocument?.NomineeDocument
-                            ? 'Nominee Document'
-                            : item === IndividualRequiredDocument?.Photo
-                            ? 'Photo'
-                            : 'Signature'}
-                        </Text>
-                      </Box>
-                    );
-                  })}
+                  {productData?.individualDocuments?.map((item, index) => (
+                    <Box key={`${item}${index}`}>
+                      <Text color="neutralColorLight.Gray-70" fontSize="s3" fontWeight="Regular">
+                        {item === IndividualRequiredDocument?.Fingerprint
+                          ? 'FingerPrint'
+                          : item === IndividualRequiredDocument?.Form
+                          ? 'Form'
+                          : item === IndividualRequiredDocument?.NomineeDocument
+                          ? 'Nominee Document'
+                          : item === IndividualRequiredDocument?.Photo
+                          ? 'Photo'
+                          : 'Signature'}
+                      </Text>
+                    </Box>
+                  ))}
                 </Box>
               )}
             </InputGroupContainer>
