@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 import { AccountOpenNew } from '@coop/cbs/accounts/account-form';
 import { MainLayout } from '@coop/shared/ui';

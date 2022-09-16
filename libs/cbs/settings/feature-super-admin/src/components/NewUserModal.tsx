@@ -28,7 +28,7 @@ const genderOptions = [
 ];
 
 const roleOptions = [
-  { label: 'Agent', value: Roles.Agent },
+  { label: 'Market Representative', value: Roles.Agent },
   { label: 'Service Center Manager', value: Roles.BranchManager },
   { label: 'Head Teller', value: Roles.HeadTeller },
   { label: 'Teller', value: Roles.Teller },
@@ -91,7 +91,6 @@ export const NewUserModal = ({ isOpen, onClose, refetchUserList }: INewUserModal
     <ChakraModal
       open={isOpen}
       onClose={handleModalClose}
-      isCentered
       width="xl"
       title="Add User"
       linkButtonLabel="Add more details"

@@ -50,7 +50,7 @@ export const ChakraModal = (props: ModalChakraProps) => {
   const { t } = useTranslation();
 
   return (
-    <Modal {...rest} isOpen={open} onClose={onClose}>
+    <Modal {...rest} isOpen={open} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent maxW={width}>
         {title && (

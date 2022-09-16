@@ -1,29 +1,9 @@
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import {
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-} from '@chakra-ui/react';
 
-import {
-  AssignMembersInput,
-  useSetAddMemberToAgentDataMutation,
-} from '@coop/cbs/data-access';
-import {
-  asyncToast,
-  Box,
-  Button,
-  Divider,
-  FormAccountSelect,
-  FormMemberSelect,
-  Text,
-} from '@coop/shared/ui';
+import { AssignMembersInput, useSetAddMemberToAgentDataMutation } from '@coop/cbs/data-access';
+import { asyncToast, Box, ChakraModal, FormAccountSelect, FormMemberSelect } from '@coop/shared/ui';
 
 import { OverrideAlertModal } from './index';
 
@@ -42,8 +22,7 @@ export const AddMemberModal = ({
 
   const id = router?.query?.['id'];
 
-  const [isOverrideMemberAlertOpen, setIsOverrideMemberAlertOpen] =
-    useState<boolean>(false);
+  const [isOverrideMemberAlertOpen, setIsOverrideMemberAlertOpen] = useState<boolean>(false);
 
   const methods = useForm<AssignMembersInput>();
 
@@ -51,8 +30,7 @@ export const AddMemberModal = ({
 
   const memberId = watch('memberId');
 
-  const { mutateAsync: assignMemberToAgent } =
-    useSetAddMemberToAgentDataMutation();
+  const { mutateAsync: assignMemberToAgent } = useSetAddMemberToAgentDataMutation();
 
   const handleAssignMember = () => {
     asyncToast({
@@ -105,43 +83,21 @@ export const AddMemberModal = ({
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <Text
-              fontSize="r2"
-              color="neutralColorLight.Gray-80"
-              fontWeight="SemiBold"
-            >
-              Add Member
-            </Text>
-          </ModalHeader>
-          <Divider />
+      <ChakraModal
+        open={isOpen}
+        onClose={onClose}
+        title="Add Member"
+        primaryButtonLabel="Save"
+        primaryButtonHandler={handleAssignMember}
+      >
+        <FormProvider {...methods}>
+          <Box display="flex" flexDirection="column" gap="s20" pb="200px">
+            <FormMemberSelect name="memberId" label="Member" />
 
-          <ModalCloseButton />
-          <ModalBody p="s16" maxHeight="60vh" overflowY="scroll">
-            <FormProvider {...methods}>
-              <Box display="flex" flexDirection="column" gap="s20" pb="200px">
-                <FormMemberSelect name="memberId" label="Member" />
-
-                <FormAccountSelect
-                  name="accountId"
-                  label="Account"
-                  memberId={memberId}
-                />
-              </Box>
-            </FormProvider>
-          </ModalBody>
-
-          <Divider />
-          <ModalFooter>
-            <Button variant="solid" onClick={handleAssignMember}>
-              Save
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+            <FormAccountSelect name="accountId" label="Account" memberId={memberId} />
+          </Box>
+        </FormProvider>
+      </ChakraModal>
       <OverrideAlertModal
         isOpen={isOverrideMemberAlertOpen}
         onCancel={handleCancelOverrideMemberAlert}

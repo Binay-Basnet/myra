@@ -56,12 +56,12 @@ export const AgentList = () => {
         // },
       },
       {
-        header: 'Agent ID',
+        header: 'Market Representative ID',
         accessorFn: (row) => row?.node?.id,
       },
       {
         accessorFn: (row) => row?.node?.agentName,
-        header: 'Agent Name',
+        header: 'Market Representative Name',
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
             <Avatar
@@ -115,14 +115,17 @@ export const AgentList = () => {
 
   return (
     <>
-      <PageHeader heading={`Agent List - ${featureCode?.agentList}`} tabItems={MEMBER_TAB_ITEMS} />
+      <PageHeader
+        heading={`Market Representative List - ${featureCode?.agentList}`}
+        tabItems={MEMBER_TAB_ITEMS}
+      />
 
       <Table
         data={rowData}
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
         columns={columns}
-        noDataTitle="Agent"
+        noDataTitle="Market Representative"
         pagination={{
           total: data?.transaction?.listAgent?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listAgent?.pageInfo,

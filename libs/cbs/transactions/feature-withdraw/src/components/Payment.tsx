@@ -1,10 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import {
-  useGetBankListQuery,
-  WithdrawBy,
-  WithdrawPaymentType,
-} from '@coop/cbs/data-access';
+import { useGetBankListQuery, WithdrawBy, WithdrawPaymentType } from '@coop/cbs/data-access';
 import { AgentSelect } from '@coop/cbs/transactions/ui-components';
 import {
   BoxContainer,
@@ -39,7 +35,7 @@ const withdrawnByOptions = [
     value: WithdrawBy.Self,
   },
   {
-    label: 'Agent',
+    label: 'Market Representative',
     value: WithdrawBy.Agent,
   },
 ];
@@ -78,7 +74,7 @@ type PaymentTableType = {
   amount: number;
 };
 
-export function Payment({ mode, totalWithdraw }: PaymentProps) {
+export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
   const { watch } = useFormContext();
 
   const { data: bankList } = useGetBankListQuery();
@@ -91,8 +87,7 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
 
   const denominationTotal =
     denominations?.reduce(
-      (accumulator: number, curr: PaymentTableType) =>
-        accumulator + Number(curr.amount),
+      (accumulator: number, curr: PaymentTableType) => accumulator + Number(curr.amount),
       0 as number
     ) ?? 0;
 
@@ -113,19 +108,15 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
       display={mode === 1 ? 'flex' : 'none'}
     >
       <BoxContainer>
-        <FormSwitchTab
-          label={'Payment Mode'}
-          options={paymentModes}
-          name="payment_type"
-        />
+        <FormSwitchTab label="Payment Mode" options={paymentModes} name="payment_type" />
 
         {selectedPaymentMode === WithdrawPaymentType.BankCheque && (
           <InputGroupContainer>
             <GridItem colSpan={2}>
               <FormSelect
                 name="bankCheque.bankId"
-                label={'Bank Name'}
-                __placeholder={'Bank Name'}
+                label="Bank Name"
+                __placeholder="Bank Name"
                 options={
                   bankList?.bank?.bank?.list?.map((bank) => ({
                     label: bank?.name as string,
@@ -135,25 +126,17 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
               />
             </GridItem>
 
-            <FormInput
-              name="bankCheque.chequeNo"
-              label="Cheque No"
-              __placeholder="Cheque No"
-            />
+            <FormInput name="bankCheque.chequeNo" label="Cheque No" __placeholder="Cheque No" />
 
             <FormInput
               name="bankCheque.amount"
               type="number"
-              label={'Amount'}
-              textAlign={'right'}
+              label="Amount"
+              textAlign="right"
               __placeholder="0.00"
             />
 
-            <FormInput
-              type="date"
-              name="bankCheque.depositedAt"
-              label="Deposited Date"
-            />
+            <FormInput type="date" name="bankCheque.depositedAt" label="Deposited Date" />
 
             <FormInput
               type="text"
@@ -170,16 +153,13 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
               <FormInput
                 name="cash.cashPaid"
                 type="number"
-                label={'Cash'}
-                textAlign={'right'}
+                label="Cash"
+                textAlign="right"
                 __placeholder="0.00"
               />
             </InputGroupContainer>
 
-            <FormSwitch
-              name="cash.disableDenomination"
-              label={'Disable Denomination'}
-            />
+            <FormSwitch name="cash.disableDenomination" label="Disable Denomination" />
 
             {!disableDenomination && (
               <FormEditableTable<PaymentTableType>
@@ -201,8 +181,7 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
                     accessor: 'amount',
                     header: 'Amount',
                     isNumeric: true,
-                    accessorFn: (row) =>
-                      Number(row.value) * Number(row.quantity),
+                    accessorFn: (row) => Number(row.value) * Number(row.quantity),
                   },
                 ]}
                 defaultData={[
@@ -233,52 +212,28 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
               borderRadius="br2"
             >
               <Box display="flex" justifyContent="space-between">
-                <Text
-                  fontSize="r1"
-                  fontWeight={400}
-                  color="neutralColorLight.Gray-60"
-                >
+                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   Total
                 </Text>
-                <Text
-                  fontSize="r1"
-                  fontWeight={400}
-                  color="neutralColorLight.Gray-60"
-                >
+                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   {totalCashPaid}
                 </Text>
               </Box>
 
               <Box display="flex" justifyContent="space-between">
-                <Text
-                  fontSize="r1"
-                  fontWeight={400}
-                  color="neutralColorLight.Gray-60"
-                >
+                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   Return
                 </Text>
-                <Text
-                  fontSize="r1"
-                  fontWeight={400}
-                  color="neutralColorLight.Gray-60"
-                >
+                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   {returnAmount}
                 </Text>
               </Box>
 
               <Box display="flex" justifyContent="space-between">
-                <Text
-                  fontSize="r1"
-                  fontWeight={400}
-                  color="neutralColorLight.Gray-60"
-                >
+                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   Grand Total
                 </Text>
-                <Text
-                  fontSize="r1"
-                  fontWeight={400}
-                  color="neutralColorLight.Gray-60"
-                >
+                <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   {totalCashPaid - returnAmount}
                 </Text>
               </Box>
@@ -299,26 +254,18 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
             }))}
           /> */}
 
-          <FormFileInput
-            size={'md'}
-            label={'File Upload (Optional)'}
-            name={'doc_identifiers'}
-          />
+          <FormFileInput size="md" label="File Upload (Optional)" name="doc_identifiers" />
         </Grid>
       </BoxContainer>
 
       <BoxContainer>
-        <FormSwitchTab
-          label={'Withdrawn By'}
-          options={withdrawnByOptions}
-          name="withdrawnBy"
-        />
+        <FormSwitchTab label="Withdrawn By" options={withdrawnByOptions} name="withdrawnBy" />
 
         {withdrawnBy === WithdrawBy.Agent && (
           <InputGroupContainer>
             <AgentSelect
               name="agentId"
-              label="Agent"
+              label="Market Representative"
               __placeholder="Select Agent"
             />
           </InputGroupContainer>
@@ -330,6 +277,6 @@ export function Payment({ mode, totalWithdraw }: PaymentProps) {
       </BoxContainer>
     </ContainerWithDivider>
   );
-}
+};
 
 export default Payment;
