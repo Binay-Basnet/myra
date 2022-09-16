@@ -54,13 +54,8 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
       variant="unstyled"
       index={list.findIndex((value) => router.asPath.includes(value.link)) ?? 0}
     >
-      {list.map((item, index) => (
-        <Box
-          display="flex"
-          flexDirection="row"
-          justifyContent="space-between"
-          key={`${item}${index}`}
-        >
+      {list.map((item) => (
+        <Box display="flex" flexDirection="row" justifyContent="space-between" key={item.link}>
           <Link href={item.link}>
             <TabCol>
               <Text noOfLines={1} align="left" title={t[item.title as keyof typeof en]}>
