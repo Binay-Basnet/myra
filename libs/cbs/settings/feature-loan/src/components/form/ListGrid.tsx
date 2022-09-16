@@ -6,12 +6,7 @@ import {
   FormFieldSearchTerm,
   useGetSettingsOptionsFieldsQuery,
 } from '@coop/cbs/data-access';
-import {
-  FormCheckboxGroup,
-  FormInput,
-  FormSelect,
-  FormSwitchTab,
-} from '@coop/shared/form';
+import { FormCheckboxGroup, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { Box, FormSection, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -111,61 +106,45 @@ export const GridItems = () => {
   const coopTypeOptions = coopTypeFields?.form?.options?.predefined?.data;
   const coopUnionOptions = coopUnionOrgFields?.form?.options?.predefined?.data;
 
-  const GenderList = genderOptions?.map((item) => {
-    return {
-      label: item?.name?.local as string,
-      value: item?.id as string,
-    };
-  });
+  const GenderList = genderOptions?.map((item) => ({
+    label: item?.name?.local as string,
+    value: item?.id as string,
+  }));
 
-  const MartialOptions = maritialOptions?.map((item) => {
-    return {
-      label: item?.name.local as string,
-      value: item?.id as string,
-    };
-  });
+  const MartialOptions = maritialOptions?.map((item) => ({
+    label: item?.name.local as string,
+    value: item?.id as string,
+  }));
 
-  const EducationalOptions = educationOptions?.map((item) => {
-    return {
-      label: item?.name.local as string,
-      value: item?.id as string,
-    };
-  });
+  const EducationalOptions = educationOptions?.map((item) => ({
+    label: item?.name.local as string,
+    value: item?.id as string,
+  }));
 
-  const EthnicityList = ethnicityOptions?.map((item) => {
-    return {
-      label: item?.name.local as string,
-      value: item?.id as string,
-    };
-  });
+  const EthnicityList = ethnicityOptions?.map((item) => ({
+    label: item?.name.local as string,
+    value: item?.id as string,
+  }));
 
-  const OccupationOptions = occupationalOptions?.map((item) => {
-    return {
-      label: item?.name.local as string,
-      value: item?.id as string,
-    };
-  });
+  const OccupationOptions = occupationalOptions?.map((item) => ({
+    label: item?.name.local as string,
+    value: item?.id as string,
+  }));
 
-  const InstituitionList = institutionOptions?.map((item) => {
-    return {
-      label: item?.name.local as string,
-      value: item?.id as string,
-    };
-  });
+  const InstituitionList = institutionOptions?.map((item) => ({
+    label: item?.name.local as string,
+    value: item?.id as string,
+  }));
 
-  const CoopTypeList = coopTypeOptions?.map((item) => {
-    return {
-      label: item?.name.local as string,
-      value: item?.id as string,
-    };
-  });
+  const CoopTypeList = coopTypeOptions?.map((item) => ({
+    label: item?.name.local as string,
+    value: item?.id as string,
+  }));
 
-  const CoopUnionList = coopUnionOptions?.map((item) => {
-    return {
-      label: item?.name.local as string,
-      value: item?.id as string,
-    };
-  });
+  const CoopUnionList = coopUnionOptions?.map((item) => ({
+    label: item?.name.local as string,
+    value: item?.id as string,
+  }));
 
   if (criteria) {
     return (
@@ -267,7 +246,7 @@ export const GridItems = () => {
           criteria &&
           criteria.indexOf('FOREIGN_EMPLOYMENT') !== -1 && (
             <Box display="flex" flexDirection="column" gap="s4">
-              <Text fontSize={'s3'} fontWeight="500" color="gray.700">
+              <Text fontSize="s3" fontWeight="500" color="gray.700">
                 {t['loanProductForeignEmployment']}
               </Text>
               <FormSwitchTab name="foreignEmployment" options={CheckboxYesNo} />
@@ -278,7 +257,7 @@ export const GridItems = () => {
           criteria &&
           criteria.indexOf('COOPERATIVE_TYPE') !== -1 && (
             <BoxContainer>
-              <Text fontSize={'s3'} fontWeight="500" color="gray.700">
+              <Text fontSize="s3" fontWeight="500" color="gray.700">
                 {t['loanProductCoorperativeType']}
               </Text>
               <Box w="40%">
@@ -305,7 +284,6 @@ export const GridItems = () => {
           )}
       </FormSection>
     );
-  } else {
-    return null;
   }
+  return null;
 };

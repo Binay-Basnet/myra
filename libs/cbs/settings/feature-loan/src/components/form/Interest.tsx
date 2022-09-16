@@ -39,7 +39,7 @@ export const Interest = () => {
         name="interest.minRate"
         type="number"
         label={t['loanProductMinimumRate']}
-        textAlign={'right'}
+        textAlign="right"
         rightElement={
           <Text fontWeight="Medium" fontSize="r1" color="primary.500">
             %
@@ -50,7 +50,7 @@ export const Interest = () => {
         name="interest.maxRate"
         type="number"
         label={t['loanProductMaximumRate']}
-        textAlign={'right'}
+        textAlign="right"
         rightElement={
           <Text fontWeight="Medium" fontSize="r1" color="primary.500">
             %
@@ -61,7 +61,7 @@ export const Interest = () => {
         name="interest.defaultRate"
         type="number"
         label={t['loanProductDefaultRate']}
-        textAlign={'right'}
+        textAlign="right"
         rightElement={
           <Text fontWeight="Medium" fontSize="r1" color="primary.500">
             %
@@ -72,7 +72,7 @@ export const Interest = () => {
         name="interest.ceoAuthority"
         type="number"
         label={t['loanProductCEOAuthority']}
-        textAlign={'right'}
+        textAlign="right"
         rightElement={
           <Text fontWeight="Medium" fontSize="r1" color="primary.500">
             %
@@ -83,7 +83,7 @@ export const Interest = () => {
         name="interest.boardAuthority"
         type="number"
         label={t['loanProductBoardAuthority']}
-        textAlign={'right'}
+        textAlign="right"
         rightElement={
           <Text fontWeight="Medium" fontSize="r1" color="primary.500">
             %
@@ -93,10 +93,10 @@ export const Interest = () => {
       <GridItem colSpan={3}>
         <Box display="flex" flexDirection="column" gap="s48">
           <Box
-            display={'flex'}
+            display="flex"
             flexDirection="row"
             justifyContent="space-between"
-            alignItems={'center'}
+            alignItems="center"
             mt="s16"
           >
             <Box>
@@ -106,10 +106,10 @@ export const Interest = () => {
             <FormSwitchTab name="updateInterest" options={yesNo} />
           </Box>
           <Box
-            display={'flex'}
+            display="flex"
             flexDirection="row"
             justifyContent="space-between"
-            alignItems={'center'}
+            alignItems="center"
             mt="s16"
           >
             <Box>

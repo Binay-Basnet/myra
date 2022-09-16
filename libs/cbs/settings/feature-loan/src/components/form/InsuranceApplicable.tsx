@@ -25,15 +25,9 @@ export const InsuranceApplicable = () => {
   return (
     <FormSection>
       <GridItem colSpan={3}>
-        <Box display={'flex'} flexDirection="column" gap="s16">
-          <Box
-            display="flex"
-            flexDirection={'row'}
-            justifyContent="space-between"
-          >
-            <SubHeadingText>
-              {t['loanProductIsInsuranceApplicable']}{' '}
-            </SubHeadingText>
+        <Box display="flex" flexDirection="column" gap="s16">
+          <Box display="flex" flexDirection="row" justifyContent="space-between">
+            <SubHeadingText>{t['loanProductIsInsuranceApplicable']} </SubHeadingText>
             <FormSwitchTab name="isInsuranceApplicable" options={yesNo} />
           </Box>
           {isInsuranceApplicable && (
@@ -50,13 +44,13 @@ export const InsuranceApplicable = () => {
                 <FormInput
                   name="insuranceType.rate"
                   label={t['loanProductInsuranceRate']}
-                  textAlign={'right'}
+                  textAlign="right"
                   rightElement={
                     <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                       %
                     </Text>
                   }
-                  type={'number'}
+                  type="number"
                 />
               </GridItem>
 
