@@ -7,7 +7,7 @@ export const ValuationStats = () => {
   const maxAmount = watch('fmvMaxAmount');
   const minAmount = watch('dvMinAmount');
   const valuationMethod = watch('valuationMethod');
-  const validationPer = watch('validationPercent');
+  const validationPer = watch('valuationPercent');
   const amount = watch('valuationAmount');
 
   const FMVCalculations = (Number(maxAmount) * Number(validationPer)) / 100;

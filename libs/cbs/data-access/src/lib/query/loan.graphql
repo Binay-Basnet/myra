@@ -274,3 +274,39 @@ query getLoanList($paginate: Pagination) {
     }
   }
 }
+
+query getLoanInstallments(
+  $productId: ID!
+  $gracePeriod: LoanAccountGraceInput
+  $sanctionAmount: Int!
+  $tenure: Int!
+  $interest: Float!
+  $repaymentScheme: LoanRepaymentScheme!
+) {
+  loanAccount {
+    getLoanInstallments(
+      interest: $interest
+      gracePeriod: $gracePeriod
+      productId: $productId
+      repaymentScheme: $repaymentScheme
+      sanctionAmount: $sanctionAmount
+      tenure: $tenure
+    ) {
+      data {
+        total
+        installments {
+          interest
+          installmentDate
+          installmentNo
+          payment
+          principal
+          remainingPrincipal
+          interest
+        }
+      }
+      error {
+        ...QueryError
+      }
+    }
+  }
+}

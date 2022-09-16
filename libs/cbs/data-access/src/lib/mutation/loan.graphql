@@ -8,3 +8,4 @@ mutation sendLoanApplicationForApproval($id: ID!, $data: LoanAccountInput!) {
     }
   }
 }
+

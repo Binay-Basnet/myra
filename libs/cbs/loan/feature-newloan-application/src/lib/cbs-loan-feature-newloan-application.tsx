@@ -47,6 +47,7 @@ import {
   Tenure,
 } from '../components';
 import { COLLATERAL_COMPS } from '../components/collateral';
+import { LoanPaymentSchedule } from '../components/LoanPaymentSchedule';
 
 type OptionType = { label: string; value: string };
 
@@ -90,7 +91,14 @@ export const NewLoanApplication = () => {
       if (responseId?.newId) {
         const response = await applyLoan({
           id: responseId.newId,
-          data: methods.getValues(),
+          data: {
+            ...methods.getValues(),
+            collateralData: methods.getValues()?.collateralData?.map((col) => ({
+              ...col,
+              collateralFiles: col?.collateralFiles?.map((c) => (c as any).identifier),
+              valuationFiles: col?.valuationFiles?.map((c) => (c as any).identifier),
+            })),
+          },
         });
         return response;
       }
@@ -239,6 +247,7 @@ export const NewLoanApplication = () => {
                     <Interest />
                     <Tenure />
                     <LoanRepaymentSchemeComponent />
+                    <LoanPaymentSchedule />
                     <LoanProcessingCharge />
                     {/* <RequiredDocuments /> */}
                   </>
@@ -526,7 +535,7 @@ type CollateralDetailsType = {
   fmvMaxAmount: string;
   dvMinAmount: string;
   valuationMethod: string;
-  validationPercent: string;
+  valuationPercent: string;
   collateralDescription: string;
   collateralFiles: string[];
   valuationFiles: string[];
@@ -684,7 +693,7 @@ export const CollateralDetails = () => {
                 </Text>
 
                 <Text fontSize="r1" color="gray.900" w="20%">
-                  {Number(field.validationPercent) * Number(field.fmvMaxAmount)}
+                  {Number(field.valuationPercent) * Number(field.fmvMaxAmount)}
                 </Text>
                 <Box display="flex" gap="s8">
                   <Button

@@ -38,7 +38,7 @@ export const VehicleCollateral = () => (
     </GridItem>
     <GridItem colSpan={2}>
       <FormInput
-        name="validationPercent"
+        name="valuationPercent"
         label="Validation Percentage"
         rightElement={
           <Text fontWeight="Medium" noOfLines={1} fontSize="r1" color="primary.500">

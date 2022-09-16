@@ -14,13 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { flexRender } from '@tanstack/react-table';
 
-import {
-  Loader,
-  NoDataState,
-  Pagination,
-  TableSearch,
-  Text,
-} from '@coop/shared/ui';
+import { Loader, NoDataState, Pagination, TableSearch, Text } from '@coop/shared/ui';
 
 import { TableSelectionBar } from '../components';
 import { useTable } from '../hooks/useTable';
@@ -58,10 +52,7 @@ export const Table = <T extends Record<string, unknown>>({
   return (
     <>
       <Collapse in={Object.keys(rowSelection).length !== 0} animateOpacity>
-        <TableSelectionBar
-          tableInstance={table}
-          columns={columns as Column<T>[]}
-        />
+        <TableSelectionBar tableInstance={table} columns={columns as Column<T>[]} />
       </Collapse>
       {!isStatic && (
         <TableSearch
@@ -72,9 +63,7 @@ export const Table = <T extends Record<string, unknown>>({
         />
       )}
 
-      <TableContainer
-        minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}
-      >
+      <TableContainer minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}>
         <ChakraTable size={tableSize} variant={variant}>
           <Thead>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -90,20 +79,13 @@ export const Table = <T extends Record<string, unknown>>({
                   >
                     {header.isPlaceholder
                       ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                      : flexRender(header.column.columnDef.header, header.getContext())}
                   </Th>
                 ))}
               </Tr>
             ))}
           </Thead>
-          <Tbody
-            position={
-              isLoading || !data || data?.length === 0 ? 'relative' : 'static'
-            }
-          >
+          <Tbody position={isLoading || !data || data?.length === 0 ? 'relative' : 'static'}>
             {isLoading ? (
               <Box as="tr">
                 <Box
@@ -131,53 +113,41 @@ export const Table = <T extends Record<string, unknown>>({
                   display="flex"
                   justifyContent="center"
                 >
-                  <Flex
-                    as="td"
-                    justifyContent="center"
-                    height="300px"
-                    alignItems="center"
-                  >
+                  <Flex as="td" justifyContent="center" height="300px" alignItems="center">
                     <NoDataState title={noDataTitle} />
                   </Flex>
                 </Box>
               ))
             )}
-            {table.getRowModel().rows.map((row) => {
-              return (
-                <Tr
-                  key={row.id}
-                  _hover={isStatic ? {} : { bg: 'background.500' }}
-                  bg={row.getIsSelected() ? 'primary.0' : 'white'}
-                  cursor={rowOnClick ? 'pointer' : 'default'}
-                  onClick={() => (rowOnClick ? rowOnClick(row.original) : null)}
-                >
-                  {row.getVisibleCells().map((cell) => {
-                    return (
-                      <Td
-                        key={cell.id}
-                        isNumeric={cell.column.columnDef.meta?.isNumeric}
-                        width={cell.column.columnDef.meta?.width}
-                        px="s12"
-                        py="0"
-                      >
-                        <Text
-                          as="div"
-                          textOverflow="ellipsis"
-                          overflow="hidden"
-                          width={cell.column.columnDef.meta?.width}
-                          whiteSpace="nowrap"
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </Text>
-                      </Td>
-                    );
-                  })}
-                </Tr>
-              );
-            })}
+            {table.getRowModel().rows.map((row) => (
+              <Tr
+                key={row.id}
+                _hover={isStatic ? {} : { bg: 'background.500' }}
+                bg={row.getIsSelected() ? 'primary.0' : 'white'}
+                cursor={rowOnClick ? 'pointer' : 'default'}
+                onClick={() => (rowOnClick ? rowOnClick(row.original) : null)}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <Td
+                    key={cell.id}
+                    isNumeric={cell.column.columnDef.meta?.isNumeric}
+                    width={cell.column.columnDef.meta?.width}
+                    px="s12"
+                    py="0"
+                  >
+                    <Text
+                      as="div"
+                      textOverflow="ellipsis"
+                      overflow="hidden"
+                      width={cell.column.columnDef.meta?.width}
+                      whiteSpace="nowrap"
+                    >
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </Text>
+                  </Td>
+                ))}
+              </Tr>
+            ))}
           </Tbody>
 
           {showFooter && (
@@ -185,8 +155,7 @@ export const Table = <T extends Record<string, unknown>>({
               {table.getFooterGroups().map((footerGroup) => (
                 <Tr key={footerGroup.id}>
                   {footerGroup.headers.map((footer) =>
-                    footer.column.columnDef.meta?.Footer?.display ===
-                    'none' ? null : (
+                    footer.column.columnDef.meta?.Footer?.display === 'none' ? null : (
                       <Th
                         key={footer.id}
                         isNumeric={footer.column.columnDef.meta?.isNumeric}
@@ -195,10 +164,7 @@ export const Table = <T extends Record<string, unknown>>({
                       >
                         {footer.isPlaceholder
                           ? null
-                          : flexRender(
-                              footer.column.columnDef.footer,
-                              footer.getContext()
-                            )}
+                          : flexRender(footer.column.columnDef.footer, footer.getContext())}
                       </Th>
                     )
                   )}
