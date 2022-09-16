@@ -14,8 +14,6 @@ export * from './FixedDepositAmount';
 export * from './Interest';
 export * from './LadderRate';
 export * from './ListGrid';
-export * from './MaximumTenure';
-export * from './MinimunTenure';
 export * from './Penalty';
 export * from './PostingFrequency';
 export * from './PrematuruedPenaltySetup';

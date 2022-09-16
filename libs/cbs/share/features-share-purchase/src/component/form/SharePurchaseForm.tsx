@@ -177,11 +177,9 @@ const SharePurchaseForm = () => {
 
   useEffect(() => {
     let temp = 0;
-
     extraFee?.forEach((fee) => {
       temp += Number(fee.value);
     });
-
     setTotalAmount(temp + noOfShares * 100);
   }, [noOfShares, JSON.stringify(extraFee)]);
 

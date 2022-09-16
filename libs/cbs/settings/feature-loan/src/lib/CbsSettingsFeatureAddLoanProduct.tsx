@@ -26,8 +26,6 @@ import {
   LoanProcessing,
   LoanRepayment,
   LoanRepaymentSchemes,
-  MaximumTenure,
-  MinimunTenure,
   NewQuestions,
   PartialPayment,
   Penalty,
@@ -35,6 +33,7 @@ import {
   ProductCode,
   Rebate,
   RequiredDocumentSetup,
+  Tenure,
   TypesOfMember,
 } from '../components/form';
 
@@ -391,10 +390,7 @@ export const SettingsLoanProductForm = () => {
               </>
             )}
 
-            <MinimunTenure />
-
-            <MaximumTenure />
-
+            <Tenure />
             <AmountLimit />
             <LoanRepaymentSchemes />
             <PartialPayment />
