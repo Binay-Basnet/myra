@@ -62,7 +62,7 @@ export const useAxios = <TData, TVariables>(
             errors?: { message: string }[];
           }>
         ) => {
-          if (!res.data.data) {
+          if (!res.data.data || res.data.errors) {
             return { error: res.data.errors };
           }
           const errArr = fn(res.data.data as Record<string, unknown>, 'error');
@@ -100,10 +100,19 @@ export const useAxios = <TData, TVariables>(
                 errors?: { message: string }[];
               }>
             ) => {
+              // if (!res.data.data || res.data.errors) {
+              //   return res.data.errors;
+              // }
+              // return res.data.data;
               if (!res.data.data || res.data.errors) {
-                return res.data.errors;
+                return { error: res.data.errors };
               }
-              return res.data.data;
+              const errArr = fn(res.data.data as Record<string, unknown>, 'error');
+
+              if (errArr.length === 0) {
+                return res.data.data;
+              }
+              return { error: errArr };
             }
           );
         });
