@@ -19,9 +19,10 @@ export const IncomeSourceDetailsComponent = (props: {
   kymType: KYMCategory;
   section: FormSection;
 }) => {
+  const { kymType, section } = props;
   const { data: field, isLoading } = useGetPreDefinedFields({
     searchTerm: FormSearchTerm.FamilyIncomeSource,
-    category: props.kymType,
+    category: kymType,
   });
   const { mutateAsync: addConditionOption } = useAddConditionOptionMutation();
 
@@ -39,15 +40,8 @@ export const IncomeSourceDetailsComponent = (props: {
 
   return (
     <>
-      <KYMSettingsFormSection
-        kymType={FormCategory.KymIndividual}
-        section={props.section}
-      />
-      <AccordionPanel
-        p="s16"
-        borderTop={'1px'}
-        borderTopColor={'border.layout'}
-      >
+      <KYMSettingsFormSection kymType={FormCategory.KymIndividual} section={section} />
+      <AccordionPanel p="s16" borderTop="1px" borderTopColor="border.layout">
         <Text fontSize="r1" fontWeight="500" pb="s16">
           Show this option for:
         </Text>

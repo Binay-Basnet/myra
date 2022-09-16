@@ -9,6 +9,29 @@ import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer } from '../formui';
 
+interface IRightElementProps {
+  rightElement: Frequency;
+  t: Record<string, string>;
+}
+
+export const inputRightElementText = (props: IRightElementProps) => {
+  const { rightElement, t } = props;
+  if (rightElement === FrequencyTenure.Day) {
+    return t['days'];
+  }
+  if (rightElement === FrequencyTenure.Week) {
+    return t['weeks'];
+  }
+  if (rightElement === FrequencyTenure.Month) {
+    return t['months'];
+  }
+  if (rightElement === FrequencyTenure.Year) {
+    return t['years'];
+  }
+
+  return '';
+};
+
 export const LoanRepayment = () => {
   const [rightElementMax, setRightElementMax] = useState('days');
   const [rightElementMin, setRightElementMin] = useState('days');
@@ -52,88 +75,58 @@ export const LoanRepayment = () => {
     <FormSection header="loanProductLoanRepaymentStartGraceDuration">
       <GridItem colSpan={3}>
         <Box display="flex" flexDirection="column" gap="s16">
-          <BoxContainer
-            p="s16"
-            border={'1px solid'}
-            borderColor="border.layout"
-            borderRadius="br2"
-          >
+          <BoxContainer p="s16" border="1px solid" borderColor="border.layout" borderRadius="br2">
             <SubHeadingText>{t['loanProductPrincipal']}</SubHeadingText>
             <SubHeadingText>{t['loanProductMinimumDuration']}</SubHeadingText>
             <Box
-              display={'flex'}
+              display="flex"
               flexDirection="row"
               justifyContent="space-between"
               borderRadius="br2"
             >
-              <Box display={'flex'} flexDirection="column" gap="s4">
-                <Text fontSize={'s3'} fontWeight="500">
+              <Box display="flex" flexDirection="column" gap="s4">
+                <Text fontSize="s3" fontWeight="500">
                   {t['loanProductUnit']}
                 </Text>
-                <FormSwitchTab
-                  name="minGraceDurationUnit"
-                  options={unitOptions}
-                />
+                <FormSwitchTab name="minGraceDurationUnit" options={unitOptions} />
               </Box>
               <Box w="290px">
                 <FormInput
                   name="minGraceDurationUnitNumber"
-                  textAlign={'right'}
+                  textAlign="right"
                   label={t['loanProductNumber']}
                   rightAddonText={
-                    rightElementMin && rightElementMin === FrequencyTenure.Day
-                      ? t['days']
-                      : rightElementMin === FrequencyTenure.Week
-                      ? t['weeks']
-                      : rightElementMin === FrequencyTenure.Month
-                      ? t['months']
-                      : rightElementMin === FrequencyTenure.Year
-                      ? t['years']
-                      : ''
+                    rightElementMin &&
+                    inputRightElementText({ rightElement: rightElementMin as FrequencyTenure, t })
                   }
                 />
               </Box>
             </Box>
           </BoxContainer>
 
-          <BoxContainer
-            p="s16"
-            border={'1px solid'}
-            borderColor="border.layout"
-            borderRadius="br2"
-          >
+          <BoxContainer p="s16" border="1px solid" borderColor="border.layout" borderRadius="br2">
             <SubHeadingText>{t['loanProductInterest']}</SubHeadingText>
             <SubHeadingText>{t['loanProductMaximumDuration']}</SubHeadingText>
             <Box
-              display={'flex'}
+              display="flex"
               flexDirection="row"
               justifyContent="space-between"
               borderRadius="br2"
             >
-              <Box display={'flex'} flexDirection="column" gap="s4">
-                <Text fontSize={'s3'} fontWeight="500">
+              <Box display="flex" flexDirection="column" gap="s4">
+                <Text fontSize="s3" fontWeight="500">
                   {t['loanProductUnit']}
                 </Text>
-                <FormSwitchTab
-                  name="maxGraceDurationUnit"
-                  options={unitOptions}
-                />
+                <FormSwitchTab name="maxGraceDurationUnit" options={unitOptions} />
               </Box>
               <Box w="290px">
                 <FormInput
                   name="maxGraceDurationUnitNumber"
-                  textAlign={'right'}
+                  textAlign="right"
                   label={t['loanProductNumber']}
                   rightAddonText={
-                    rightElementMax && rightElementMax === FrequencyTenure.Day
-                      ? t['days']
-                      : rightElementMax === FrequencyTenure.Week
-                      ? t['weeks']
-                      : rightElementMax === FrequencyTenure.Month
-                      ? t['months']
-                      : rightElementMax === FrequencyTenure.Year
-                      ? t['years']
-                      : ''
+                    rightElementMax &&
+                    inputRightElementText({ rightElement: rightElementMax as FrequencyTenure, t })
                   }
                 />
               </Box>

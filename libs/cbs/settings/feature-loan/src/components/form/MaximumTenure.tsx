@@ -6,12 +6,8 @@ import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import {
-  BoxContainer,
-  SubHeadingText,
-  SubText,
-  TextBoxContainer,
-} from '../formui';
+import { inputRightElementText } from './LoanRepayment';
+import { BoxContainer, SubHeadingText, SubText, TextBoxContainer } from '../formui';
 
 export const MaximumTenure = () => {
   const [rightElement, setRightElement] = useState('days');
@@ -60,7 +56,7 @@ export const MaximumTenure = () => {
     <FormSection>
       <GridItem colSpan={3}>
         <BoxContainer>
-          <Box display={'flex'} justifyContent="space-between">
+          <Box display="flex" justifyContent="space-between">
             <TextBoxContainer>
               <SubHeadingText>{t['loanProductMaxinumTenure']} </SubHeadingText>
               <SubText>{t['loanProductNoteWeek']}</SubText>
@@ -70,15 +66,15 @@ export const MaximumTenure = () => {
           {maximumTenure && (
             <BoxContainer
               p="s16"
-              border={'1px solid'}
+              border="1px solid"
               borderColor="border.layout"
-              display={'flex'}
+              display="flex"
               flexDirection="row"
               justifyContent="space-between"
-              borderRadius={'4px'}
+              borderRadius="4px"
             >
-              <Box display={'flex'} flexDirection="column" gap="s4">
-                <Text fontSize={'s3'} fontWeight="500">
+              <Box display="flex" flexDirection="column" gap="s4">
+                <Text fontSize="s3" fontWeight="500">
                   {t['loanProductUnit']}
                 </Text>
                 <FormSwitchTab name="maxTenureUnit" options={unitOptions} />
@@ -86,18 +82,11 @@ export const MaximumTenure = () => {
               <Box w="290px">
                 <FormInput
                   name="maxTenureUnitNumber"
-                  textAlign={'right'}
+                  textAlign="right"
                   label={t['loanProductNumber']}
                   rightAddonText={
-                    rightElement && rightElement === FrequencyTenure.Day
-                      ? t['days']
-                      : rightElement === FrequencyTenure.Week
-                      ? t['weeks']
-                      : rightElement === FrequencyTenure.Month
-                      ? t['months']
-                      : rightElement === FrequencyTenure.Year
-                      ? t['years']
-                      : ''
+                    rightElement &&
+                    inputRightElementText({ rightElement: rightElement as FrequencyTenure, t })
                   }
                 />
               </Box>

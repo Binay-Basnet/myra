@@ -33,18 +33,16 @@ export const Rebate = () => {
 
   const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
 
-  const coaList = coaData?.map((item) => {
-    return {
-      label: item?.name?.en as string,
-      value: item?.id as string,
-    };
-  });
+  const coaList = coaData?.map((item) => ({
+    label: item?.name?.en as string,
+    value: item?.id as string,
+  }));
 
   return (
     <FormSection>
       <GridItem colSpan={3}>
         <BoxContainer>
-          <Box display={'flex'} justifyContent="space-between">
+          <Box display="flex" justifyContent="space-between">
             <TextBoxContainer>
               <SubHeadingText>{t['loanProductRebate']} </SubHeadingText>
               <SubText>{t['loanProductEnterRebatedetails']} </SubText>
@@ -52,12 +50,7 @@ export const Rebate = () => {
             <FormSwitchTab name="isRebateApplicable" options={enableSwitch} />
           </Box>
           {rebate && (
-            <BoxContainer
-              p="s16"
-              border={'1px solid'}
-              borderColor="border.layout"
-              borderRadius="br2"
-            >
+            <BoxContainer p="s16" border="1px solid" borderColor="border.layout" borderRadius="br2">
               <InputGroupContainer>
                 <FormInput
                   name="rebate.dayBeforeInstallmentDate"
@@ -68,7 +61,7 @@ export const Rebate = () => {
                   name="rebate.rebateRate"
                   type="number"
                   label={t['loanProductRebate']}
-                  textAlign={'right'}
+                  textAlign="right"
                   rightElement={
                     <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                       %

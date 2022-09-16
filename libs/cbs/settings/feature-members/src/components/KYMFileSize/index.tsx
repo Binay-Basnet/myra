@@ -1,4 +1,3 @@
-import React from 'react';
 import { debounce } from 'lodash';
 
 import {
@@ -20,13 +19,8 @@ export const KYMFileSize = ({ section }: FileSizeInputProps) => {
   }
 
   return (
-    <AccordionPanel p="0" borderTop={'1px'} borderTopColor={'border.layout'}>
-      <Box
-        display="flex"
-        alignItems={'center'}
-        justifyContent="space-between"
-        p="s16"
-      >
+    <AccordionPanel p="0" borderTop="1px" borderTopColor="border.layout">
+      <Box display="flex" alignItems="center" justifyContent="space-between" p="s16">
         <Box>
           <Text fontSize="r1" color="gray.800" mb="s4">
             Max File Upload Size (in KB)

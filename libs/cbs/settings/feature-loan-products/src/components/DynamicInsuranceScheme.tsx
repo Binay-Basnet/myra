@@ -94,25 +94,25 @@ const AddServiceCharge = ({ index, removeAccountServices }: IAddAccountServices)
       </InputGroupContainer>
       <Box pt="s16">
         {AmountPer && AmountPer === LoanInsurancePaymentType?.Amount && (
-          <Box border="1px solid" borderColor={'border.layout'} p="s16" borderRadius={'4px'}>
+          <Box border="1px solid" borderColor="border.layout" p="s16" borderRadius="4px">
             <InputGroupContainer>
               <FormInput
                 type="number"
-                textAlign={'right'}
+                textAlign="right"
                 bg="white"
                 name={`insuranceScheme.${index}.minAmount`}
                 label={t['settingsLoanMinimumAmount']}
               />
               <FormInput
                 type="number"
-                textAlign={'right'}
+                textAlign="right"
                 bg="white"
                 name={`insuranceScheme.${index}.maxAmount`}
                 label={t['settingsLoanMaximumAmount']}
               />
               <FormInput
                 type="number"
-                textAlign={'right'}
+                textAlign="right"
                 bg="white"
                 name={`insuranceScheme.${index}.insurancePremiumPercent`}
                 label={t['settingsLoanInsurancePremium']}
@@ -126,25 +126,25 @@ const AddServiceCharge = ({ index, removeAccountServices }: IAddAccountServices)
           </Box>
         )}
         {AmountPer && AmountPer === LoanInsurancePaymentType?.Percentage && (
-          <Box border="1px solid" borderColor={'border.layout'} p="s16" borderRadius={'4px'}>
+          <Box border="1px solid" borderColor="border.layout" p="s16" borderRadius="4px">
             <InputGroupContainer>
               <FormInput
                 type="number"
-                textAlign={'right'}
+                textAlign="right"
                 bg="white"
                 name={`insuranceScheme.${index}.minPercent`}
                 label={t['settingsLoanMinimumPer']}
               />
               <FormInput
                 type="number"
-                textAlign={'right'}
+                textAlign="right"
                 bg="white"
                 name={`insuranceScheme.${index}.maxPercent`}
                 label={t['settingsLoanMaximumPer']}
               />
               <FormInput
                 type="number"
-                textAlign={'right'}
+                textAlign="right"
                 bg="white"
                 name={`insuranceScheme.${index}.insurancePremiumPercent`}
                 label={t['settingsLoanInsurancePremium']}
@@ -186,20 +186,18 @@ export const AccountServicesCharge = () => {
   };
 
   return (
-    <GroupContainer scrollMarginTop={'200px'} display="flex" flexDirection={'column'} gap="s16">
+    <GroupContainer scrollMarginTop="200px" display="flex" flexDirection="column" gap="s16">
       <FormProvider {...methods}>
         <form>
           <DynamicBoxGroupContainer>
-            {insuranceSchemeFields.map((item, index) => {
-              return (
-                <Box key={item.id}>
-                  <AddServiceCharge
-                    index={index}
-                    removeAccountServices={() => insuranceSchemeRemove(index)}
-                  />
-                </Box>
-              );
-            })}
+            {insuranceSchemeFields.map((item, index) => (
+              <Box key={item.id}>
+                <AddServiceCharge
+                  index={index}
+                  removeAccountServices={() => insuranceSchemeRemove(index)}
+                />
+              </Box>
+            ))}
             <Button
               alignSelf="start"
               leftIcon={<Icon size="md" as={AiOutlinePlus} />}
