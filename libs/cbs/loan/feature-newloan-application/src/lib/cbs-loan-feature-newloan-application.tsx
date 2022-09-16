@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 
 import {
   LoanAccountInput,
+  LoanProduct,
   useGetCollateralListQuery,
   useGetLoanProductDetailsDataQuery,
   useGetLoanProductsListQuery,
@@ -555,7 +556,8 @@ export const CollateralDetails = () => {
   );
 
   const { data: collateralListData } = useGetCollateralListQuery();
-  const loanProduct = loanProductData?.settings?.general?.loanProducts?.formState?.data;
+  const loanProduct = loanProductData?.settings?.general?.loanProducts?.formState
+    ?.data as LoanProduct;
   const collateralList = collateralListData?.settings?.general?.loan?.general?.collateralList;
 
   return (
@@ -605,9 +607,7 @@ export const CollateralDetails = () => {
                 isDisabled={!!collateralTypeWatch}
                 label="Collateral Type"
                 options={loanProduct?.collateralValue?.map((collateralData) => ({
-                  label: collateralList?.find(
-                    (collateral) => collateral?.id === collateralData?.type
-                  )?.name as string,
+                  label: collateralData?.name as string,
                   value: collateralData?.type as string,
                 }))}
                 // options={[
@@ -619,7 +619,7 @@ export const CollateralDetails = () => {
             {collateralTypeWatch && (
               <Box>
                 {
-                  COLLATERAL_COMPS[
+                  COLLATERAL_COMPS(loanProduct)[
                     collateralList?.find((collateral) => collateral?.id === collateralTypeWatch)
                       ?.name as
                       | 'Land'
