@@ -13371,8 +13371,8 @@ export type GetDepositProductSettingsEditDataQuery = {
             depositFrequency?: Frequency | null;
             penalty?: boolean | null;
             rebate?: boolean | null;
-            tenureUnit?: FrequencyTenure | null;
             isTenureApplicable?: boolean | null;
+            tenureUnit?: FrequencyTenure | null;
             minTenureUnitNumber?: number | null;
             maxTenureUnitNumber?: number | null;
             ladderRate?: boolean | null;
@@ -20929,8 +20929,8 @@ export const GetDepositProductSettingsEditDataDocument = `
               rebateRate
               rebateLedgerMapping
             }
-            tenureUnit
             isTenureApplicable
+            tenureUnit
             minTenureUnitNumber
             maxTenureUnitNumber
             balanceLimit {

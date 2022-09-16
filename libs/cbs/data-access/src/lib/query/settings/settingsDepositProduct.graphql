@@ -98,8 +98,8 @@ query getDepositProductSettingsEditData($id: ID!) {
               rebateRate
               rebateLedgerMapping
             }
-            tenureUnit
             isTenureApplicable
+            tenureUnit
             minTenureUnitNumber
             maxTenureUnitNumber
             balanceLimit {
