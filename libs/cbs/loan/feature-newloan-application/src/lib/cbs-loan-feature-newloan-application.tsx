@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useFieldArray, useForm, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useQueryClient } from 'react-query';
@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import {
   LoanAccountInput,
   LoanProduct,
+  useGetAccountTableListQuery,
   useGetCollateralListQuery,
   useGetLoanProductDetailsDataQuery,
   useGetLoanProductsListQuery,
@@ -23,6 +24,7 @@ import {
   Button,
   ChakraModal,
   Container,
+  DEFAULT_PAGE_SIZE,
   Divider,
   FormAccountSelect,
   FormFooter,
@@ -357,9 +359,11 @@ type GuaranteeDetailForm = {
 
 export const GuaranteeDetails = () => {
   const methods = useForm<GuaranteeDetailForm>();
+  const [triggerQuery, setTriggerQuery] = useState(false);
 
-  const { control } = useFormContext<{
+  const { control, watch: watch1 } = useFormContext<{
     memberId: string;
+    productId: string;
     gurantee_details: GuaranteeDetailForm[];
   }>();
 
@@ -371,7 +375,48 @@ export const GuaranteeDetails = () => {
   });
 
   const memberId = methods.watch('memberId');
+  const productId = watch1('productId');
 
+  const poductDetails = useGetLoanProductDetailsDataQuery(
+    { id: productId },
+    {
+      enabled: triggerQuery,
+    }
+  );
+  const gurantePercent =
+    poductDetails?.data?.settings?.general?.loanProducts?.formState?.data?.maxPercentOfGurantee;
+  useEffect(() => {
+    if (productId) {
+      setTriggerQuery(true);
+    }
+  }, [productId]);
+  const { data: accountListData } = useGetAccountTableListQuery(
+    {
+      paginate: {
+        first: DEFAULT_PAGE_SIZE,
+        after: '',
+      },
+      filter: { memberId },
+    },
+    {
+      staleTime: 0,
+      enabled: !!memberId,
+    }
+  );
+  const accountId = methods.watch('accountId');
+  const totalGurantee = methods.watch('guaranteeAmount');
+  const selectedAccount = useMemo(
+    () =>
+      accountListData?.account?.list?.edges?.find((account) => account.node?.id === accountId)
+        ?.node,
+    [accountId]
+  );
+
+  const currentBalance = selectedAccount?.balance ?? '0';
+  const maxgurantee =
+    currentBalance && gurantePercent
+      ? (Number(currentBalance) * Number(gurantePercent)) / 100
+      : 1000;
   return (
     <>
       <Box display="flex" flexDir="column" gap="s16">
@@ -420,8 +465,10 @@ export const GuaranteeDetails = () => {
               <FormNumberInput
                 name="maxGuranteeAmountLimit"
                 label="Maximum Guarantee Amount Available"
+                value={maxgurantee}
+                isDisabled
               />
-              <FormNumberInput name="guranteeAmount" label="Maximum Guarantee Amount Available" />
+              <FormNumberInput name="guaranteeAmount" label="Guarantee Amount" />
             </Box>
             <GridItem
               colSpan={4}
@@ -438,7 +485,7 @@ export const GuaranteeDetails = () => {
               </TextFields>
 
               <Text color="gray.700" fontSize="r1" fontWeight="600">
-                1500
+                {totalGurantee}
               </Text>
             </GridItem>
           </Box>
