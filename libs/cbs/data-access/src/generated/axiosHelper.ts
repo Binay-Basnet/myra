@@ -62,15 +62,17 @@ export const useAxios = <TData, TVariables>(
             errors?: { message: string }[];
           }>
         ) => {
-          if (!res.data.data || res.data.errors) {
+          if (!res.data.data) {
             return { error: res.data.errors };
           }
-          const errArr = fn(res.data.data as Record<string, unknown>, 'error');
+          // const errArr = fn(res.data.data as Record<string, unknown>, 'error');
 
-          if (errArr.length === 0) {
-            return res.data.data;
-          }
-          return { error: errArr };
+          // console.log(errArr);
+          //
+          // if (errArr.length === 0 && errArr[0].__typename) {
+          return res.data.data;
+          // }
+          // return { error: errArr };
         }
       )
       .catch((err) => {
@@ -104,15 +106,16 @@ export const useAxios = <TData, TVariables>(
               //   return res.data.errors;
               // }
               // return res.data.data;
-              if (!res.data.data || res.data.errors) {
+              if (!res.data.data) {
                 return { error: res.data.errors };
               }
-              const errArr = fn(res.data.data as Record<string, unknown>, 'error');
 
-              if (errArr.length === 0) {
-                return res.data.data;
-              }
-              return { error: errArr };
+              // const errArr = fn(res.data.data as Record<string, unknown>, 'error');
+              //
+              // if (errArr.length === 0) {
+              return res.data.data;
+              // }
+              // return { error: errArr };
             }
           );
         });

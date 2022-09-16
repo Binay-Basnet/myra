@@ -104,6 +104,7 @@ fragment LoanProduct on LoanProduct {
   collateralTypes
   collateralValue {
     type
+    name
     minFMV
     maxFMV
     minDV
