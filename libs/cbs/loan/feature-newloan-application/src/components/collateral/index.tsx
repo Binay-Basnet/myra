@@ -8,7 +8,7 @@ import { VehicleCollateral } from './VehicleCollateral';
 
 export const COLLATERAL_COMPS = (product: LoanProduct) => ({
   Land: <LandCollateral product={product} />,
-  'Land and Building': <LandBuildingCollateral />,
+  'Land and Building': <LandBuildingCollateral product={product} />,
   Vehicle: <VehicleCollateral />,
   Documents: <DocumentCollateral />,
   Others: <OtherCollateral />,

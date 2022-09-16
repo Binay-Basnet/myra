@@ -4,7 +4,7 @@ import { LoanProduct } from '@coop/cbs/data-access';
 import { Alert, Box, GridItem, Text } from '@coop/shared/ui';
 
 interface LandCollateralProps {
-  product: LoanProduct;
+  product?: LoanProduct;
 }
 
 export const ValuationRange = ({ product }: LandCollateralProps) => {

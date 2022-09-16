@@ -6,7 +6,7 @@ import { ValuationRange } from './ValuationRange';
 import { ValuationStats } from './ValuationStats';
 
 interface LandCollateralProps {
-  product: LoanProduct;
+  product?: LoanProduct;
 }
 
 export const ValuationInputs = ({ product }: LandCollateralProps) => (
