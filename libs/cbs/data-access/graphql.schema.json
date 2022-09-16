@@ -17979,6 +17979,18 @@
             "deprecationReason": null
           },
           {
+            "name": "isTenureApplicable",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "ladderRate",
             "description": null,
             "args": [],
@@ -18059,30 +18071,6 @@
             "deprecationReason": null
           },
           {
-            "name": "maxTenure",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "maxTenureUnit",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "ENUM",
-              "name": "Frequency",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "maxTenureUnitNumber",
             "description": null,
             "args": [],
@@ -18101,30 +18089,6 @@
             "type": {
               "kind": "SCALAR",
               "name": "Int",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "minTenure",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "minTenureUnit",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "ENUM",
-              "name": "Frequency",
               "ofType": null
             },
             "isDeprecated": false,
@@ -18373,6 +18337,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "tenureUnit",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "FrequencyTenure",
               "ofType": null
             },
             "isDeprecated": false,
@@ -18866,6 +18842,18 @@
             "deprecationReason": null
           },
           {
+            "name": "isTenureApplicable",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "ladderRate",
             "description": null,
             "type": {
@@ -18946,30 +18934,6 @@
             "deprecationReason": null
           },
           {
-            "name": "maxTenure",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "maxTenureUnit",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "Frequency",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "maxTenureUnitNumber",
             "description": null,
             "type": {
@@ -18987,30 +18951,6 @@
             "type": {
               "kind": "SCALAR",
               "name": "Int",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "minTenure",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "minTenureUnit",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "Frequency",
               "ofType": null
             },
             "defaultValue": null,
@@ -19267,6 +19207,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "tenureUnit",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "FrequencyTenure",
               "ofType": null
             },
             "defaultValue": null,
@@ -52724,6 +52676,30 @@
             "deprecationReason": null
           },
           {
+            "name": "isBoardAuthority",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isCeoAuthority",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "justifySanction",
             "description": null,
             "args": [],
@@ -52894,6 +52870,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "tenureType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "FrequencyTenure",
               "ofType": null
             },
             "isDeprecated": false,
@@ -53940,6 +53928,30 @@
             "deprecationReason": null
           },
           {
+            "name": "isBoardAuthority",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isCeoAuthority",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "justifySanction",
             "description": null,
             "args": [],
@@ -54050,6 +54062,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "tenureType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "FrequencyTenure",
               "ofType": null
             },
             "isDeprecated": false,
@@ -54549,6 +54573,30 @@
             "deprecationReason": null
           },
           {
+            "name": "isBoardAuthority",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isCeoAuthority",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "justifySanction",
             "description": null,
             "type": {
@@ -54670,6 +54718,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "tenureType",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "FrequencyTenure",
               "ofType": null
             },
             "defaultValue": null,
@@ -55909,6 +55969,18 @@
             "deprecationReason": null
           },
           {
+            "name": "isTenureApplicable",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "ledgerMapping",
             "description": null,
             "args": [],
@@ -56025,30 +56097,6 @@
             "deprecationReason": null
           },
           {
-            "name": "maxTenure",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "maxTenureUnit",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "ENUM",
-              "name": "FrequencyTenure",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "maxTenureUnitNumber",
             "description": null,
             "args": [],
@@ -56091,30 +56139,6 @@
             "type": {
               "kind": "SCALAR",
               "name": "Int",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "minTenure",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "minTenureUnit",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "ENUM",
-              "name": "FrequencyTenure",
               "ofType": null
             },
             "isDeprecated": false,
@@ -56439,6 +56463,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "tenureUnit",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "FrequencyTenure",
               "ofType": null
             },
             "isDeprecated": false,
@@ -57142,6 +57178,18 @@
             "deprecationReason": null
           },
           {
+            "name": "isTenureApplicable",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "ledgerMapping",
             "description": null,
             "type": {
@@ -57258,30 +57306,6 @@
             "deprecationReason": null
           },
           {
-            "name": "maxTenure",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "maxTenureUnit",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "FrequencyTenure",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "maxTenureUnitNumber",
             "description": null,
             "type": {
@@ -57323,30 +57347,6 @@
             "type": {
               "kind": "SCALAR",
               "name": "Int",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "minTenure",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "minTenureUnit",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "FrequencyTenure",
               "ofType": null
             },
             "defaultValue": null,
@@ -57611,6 +57611,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "tenureUnit",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "FrequencyTenure",
               "ofType": null
             },
             "defaultValue": null,

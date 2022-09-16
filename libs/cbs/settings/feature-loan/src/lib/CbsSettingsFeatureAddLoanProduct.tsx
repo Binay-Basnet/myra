@@ -26,8 +26,6 @@ import {
   LoanProcessing,
   LoanRepayment,
   LoanRepaymentSchemes,
-  MaximumTenure,
-  MinimunTenure,
   NewQuestions,
   PartialPayment,
   Penalty,
@@ -35,6 +33,7 @@ import {
   ProductCode,
   Rebate,
   RequiredDocumentSetup,
+  Tenure,
   TypesOfMember,
 } from '../components/form';
 
@@ -245,8 +244,7 @@ export const SettingsLoanProductForm = () => {
       natureOfBusinessInstitution: natureOfBusinessInstitutionList,
       natureOFBusinessCoop: natureOFBusinessCoopList,
       loanProcessingCharge: loanProcessingChargeList,
-      minTenureUnit: values?.minTenureUnit ? values?.minTenureUnit : null,
-      maxTenureUnit: values?.maxTenureUnit ? values?.maxTenureUnit : null,
+      tenureUnit: values?.tenureUnit ? values?.tenureUnit : null,
       minAge: values?.minAge ? values?.minAge : null,
       maxAge: values?.maxAge ? values?.maxAge : null,
       interestMethod: values?.interestMethod ?? null,
@@ -391,10 +389,7 @@ export const SettingsLoanProductForm = () => {
               </>
             )}
 
-            <MinimunTenure />
-
-            <MaximumTenure />
-
+            <Tenure />
             <AmountLimit />
             <LoanRepaymentSchemes />
             <PartialPayment />

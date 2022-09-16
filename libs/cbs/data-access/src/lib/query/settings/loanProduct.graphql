@@ -1,7 +1,4 @@
-query getLoanProductList(
-  $paginate: Pagination
-  $filter: LoanProductSearchFilter
-) {
+query getLoanProductList($paginate: Pagination, $filter: LoanProductSearchFilter) {
   settings {
     general {
       loanProducts {
@@ -86,11 +83,9 @@ query getLoanProductEditData($id: ID!) {
             natureOfBusinessInstitution
             natureOFBusinessCoop
             cooperativeType
-            minTenure
-            minTenureUnit
+            isTenureApplicable
+            tenureUnit
             minTenureUnitNumber
-            maxTenure
-            maxTenureUnit
             maxTenureUnitNumber
             minimumLoanAmount
             maxLoanAmount

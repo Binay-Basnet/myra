@@ -25,8 +25,8 @@ export const Interest = () => {
     }
   }, [products]);
   const productData = productDetails?.data?.settings?.general?.loanProducts?.formState?.data;
-  const ceoInterest = watch('ceoAuthority');
-  const BoardInterest = watch('boardAuthority');
+  const ceoInterest = watch('isCeoAuthority');
+  const BoardInterest = watch('isBoardAuthority');
   const valueInput =
     Number(productData?.interest?.defaultRate) +
     (ceoInterest ? Number(productData?.interest?.ceoAuthority) : 0) +
@@ -55,8 +55,8 @@ export const Interest = () => {
           </InputGroupContainer>
           <InputGroupContainer>
             <Box display="flex" flexDirection="row" justifyContent="space-between">
-              <FormCheckbox name="ceoAuthority" label="CEO Authority" />
-              <FormCheckbox name="boardAuthority" label="Board Authority" />
+              <FormCheckbox name="isCeoAuthority" label="CEO Authority" />
+              <FormCheckbox name="isBoardAuthority" label="Board Authority" />
             </Box>
           </InputGroupContainer>
 

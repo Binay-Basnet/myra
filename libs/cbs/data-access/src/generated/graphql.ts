@@ -1971,18 +1971,15 @@ export type DepositProductFormStateData = {
   institutionDocuments?: Maybe<Array<Maybe<InstitutionRequiredDocument>>>;
   interest?: Maybe<InterestFormState>;
   isForMinors?: Maybe<Scalars['Boolean']>;
+  isTenureApplicable?: Maybe<Scalars['Boolean']>;
   ladderRate?: Maybe<Scalars['Boolean']>;
   ladderRateData?: Maybe<Array<Maybe<LadderRateFormState>>>;
   ledgerMapping?: Maybe<LedgerMappingFormState>;
   maritalStatusId?: Maybe<Array<Maybe<Scalars['ID']>>>;
   maxAge?: Maybe<Scalars['Int']>;
   maxPostingFreqDifference?: Maybe<Scalars['Int']>;
-  maxTenure?: Maybe<Scalars['Boolean']>;
-  maxTenureUnit?: Maybe<Frequency>;
   maxTenureUnitNumber?: Maybe<Scalars['Int']>;
   minAge?: Maybe<Scalars['Int']>;
-  minTenure?: Maybe<Scalars['Boolean']>;
-  minTenureUnit?: Maybe<Frequency>;
   minTenureUnitNumber?: Maybe<Scalars['Int']>;
   nature?: Maybe<NatureOfDepositProduct>;
   natureOFBusinessCoop?: Maybe<Array<Maybe<Scalars['ID']>>>;
@@ -2002,6 +1999,7 @@ export type DepositProductFormStateData = {
   specifyWithdrawRestriction?: Maybe<Scalars['String']>;
   staffProduct?: Maybe<Scalars['Boolean']>;
   supportMultiple?: Maybe<Scalars['Boolean']>;
+  tenureUnit?: Maybe<FrequencyTenure>;
   transactionAllowed?: Maybe<DepositFrequency>;
   typeOfMember?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
   wealthBuildingProduct?: Maybe<Scalars['Boolean']>;
@@ -2042,18 +2040,15 @@ export type DepositProductInput = {
   institutionDocuments?: InputMaybe<Array<InputMaybe<InstitutionRequiredDocument>>>;
   interest: InterestRate;
   isForMinors?: InputMaybe<Scalars['Boolean']>;
+  isTenureApplicable?: InputMaybe<Scalars['Boolean']>;
   ladderRate?: InputMaybe<Scalars['Boolean']>;
   ladderRateData?: InputMaybe<Array<InputMaybe<LadderRate>>>;
   ledgerMapping?: InputMaybe<LedgerMapping>;
   maritalStatusId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   maxAge?: InputMaybe<Scalars['Int']>;
   maxPostingFreqDifference?: InputMaybe<Scalars['Int']>;
-  maxTenure?: InputMaybe<Scalars['Boolean']>;
-  maxTenureUnit?: InputMaybe<Frequency>;
   maxTenureUnitNumber?: InputMaybe<Scalars['Int']>;
   minAge?: InputMaybe<Scalars['Int']>;
-  minTenure?: InputMaybe<Scalars['Boolean']>;
-  minTenureUnit?: InputMaybe<Frequency>;
   minTenureUnitNumber?: InputMaybe<Scalars['Int']>;
   nature: NatureOfDepositProduct;
   natureOFBusinessCoop?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
@@ -2073,6 +2068,7 @@ export type DepositProductInput = {
   specifyWithdrawRestriction?: InputMaybe<Scalars['String']>;
   staffProduct?: InputMaybe<Scalars['Boolean']>;
   supportMultiple?: InputMaybe<Scalars['Boolean']>;
+  tenureUnit?: InputMaybe<FrequencyTenure>;
   transactionAllowed?: InputMaybe<DepositFrequency>;
   typeOfMember?: InputMaybe<Array<InputMaybe<KymMemberTypesEnum>>>;
   wealthBuildingProduct?: InputMaybe<Scalars['Boolean']>;
@@ -6227,6 +6223,8 @@ export type LoanAccount = Base & {
   createdBy: Identity;
   id: Scalars['ID'];
   intrestRate?: Maybe<Scalars['Float']>;
+  isBoardAuthority?: Maybe<Scalars['Boolean']>;
+  isCeoAuthority?: Maybe<Scalars['Boolean']>;
   justifySanction?: Maybe<Scalars['String']>;
   loanProcessingCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
   member: Member;
@@ -6239,6 +6237,7 @@ export type LoanAccount = Base & {
   productType: Scalars['ID'];
   repaymentScheme?: Maybe<LoanRepaymentScheme>;
   tenure?: Maybe<Scalars['Int']>;
+  tenureType?: Maybe<FrequencyTenure>;
   totalSanctionedAmount?: Maybe<Scalars['String']>;
   totalValuation?: Maybe<Scalars['String']>;
 };
@@ -6334,6 +6333,8 @@ export type LoanAccountFormState = {
   gracePeriod?: Maybe<LoanAccountGrace>;
   gurantee_details?: Maybe<Array<Maybe<LoanAccountGurantee>>>;
   intrestRate?: Maybe<Scalars['Float']>;
+  isBoardAuthority?: Maybe<Scalars['Boolean']>;
+  isCeoAuthority?: Maybe<Scalars['Boolean']>;
   justifySanction?: Maybe<Scalars['String']>;
   loanProcessingCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
   memberId?: Maybe<Scalars['ID']>;
@@ -6343,6 +6344,7 @@ export type LoanAccountFormState = {
   productType: Scalars['ID'];
   repaymentScheme?: Maybe<LoanRepaymentScheme>;
   tenure?: Maybe<Scalars['Int']>;
+  tenureType?: Maybe<FrequencyTenure>;
   totalSanctionedAmount?: Maybe<Scalars['String']>;
   totalValuation?: Maybe<Scalars['String']>;
 };
@@ -6399,6 +6401,8 @@ export type LoanAccountInput = {
   gracePeriod?: InputMaybe<LoanAccountGraceInput>;
   gurantee_details?: InputMaybe<Array<InputMaybe<LoanAccountGuranteeInput>>>;
   intrestRate?: InputMaybe<Scalars['Float']>;
+  isBoardAuthority?: InputMaybe<Scalars['Boolean']>;
+  isCeoAuthority?: InputMaybe<Scalars['Boolean']>;
   justifySanction?: InputMaybe<Scalars['String']>;
   loanProcessingCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
   memberId: Scalars['ID'];
@@ -6408,6 +6412,7 @@ export type LoanAccountInput = {
   productType: Scalars['ID'];
   repaymentScheme?: InputMaybe<LoanRepaymentScheme>;
   tenure?: InputMaybe<Scalars['Int']>;
+  tenureType?: InputMaybe<FrequencyTenure>;
   totalSanctionedAmount?: InputMaybe<Scalars['String']>;
   totalValuation?: InputMaybe<Scalars['String']>;
 };
@@ -6560,6 +6565,7 @@ export type LoanProduct = Base & {
   isPenaltyApplicable?: Maybe<Scalars['Boolean']>;
   isRebateApplicable?: Maybe<Scalars['Boolean']>;
   isStaffProduct?: Maybe<Scalars['Boolean']>;
+  isTenureApplicable?: Maybe<Scalars['Boolean']>;
   ledgerMapping?: Maybe<LedgerMappingFormState>;
   loanProcessingCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
   loanScheduleChangeOverride?: Maybe<Scalars['Boolean']>;
@@ -6569,14 +6575,10 @@ export type LoanProduct = Base & {
   maxGraceDurationUnitNumber?: Maybe<Scalars['Int']>;
   maxLoanAmount?: Maybe<Scalars['Amount']>;
   maxPercentOfGurantee?: Maybe<Scalars['Float']>;
-  maxTenure?: Maybe<Scalars['Boolean']>;
-  maxTenureUnit?: Maybe<FrequencyTenure>;
   maxTenureUnitNumber?: Maybe<Scalars['Int']>;
   minAge?: Maybe<Scalars['Int']>;
   minGraceDurationUnit?: Maybe<FrequencyTenure>;
   minGraceDurationUnitNumber?: Maybe<Scalars['Int']>;
-  minTenure?: Maybe<Scalars['Boolean']>;
-  minTenureUnit?: Maybe<FrequencyTenure>;
   minTenureUnitNumber?: Maybe<Scalars['Int']>;
   minimumLoanAmount?: Maybe<Scalars['Amount']>;
   modifiedAt: Scalars['Time'];
@@ -6600,6 +6602,7 @@ export type LoanProduct = Base & {
   repaymentScheme?: Maybe<Array<Maybe<LoanRepaymentScheme>>>;
   requiredDocuments?: Maybe<Array<Maybe<LoanRequiredDocuments>>>;
   supportMultipleAccounts?: Maybe<Scalars['Boolean']>;
+  tenureUnit?: Maybe<FrequencyTenure>;
   typeOfMember: Array<Maybe<KymMemberTypesEnum>>;
   updateInterest?: Maybe<Scalars['Boolean']>;
   waiveInterest?: Maybe<Scalars['Boolean']>;
@@ -6662,6 +6665,7 @@ export type LoanProductInput = {
   isPenaltyApplicable?: InputMaybe<Scalars['Boolean']>;
   isRebateApplicable?: InputMaybe<Scalars['Boolean']>;
   isStaffProduct?: InputMaybe<Scalars['Boolean']>;
+  isTenureApplicable?: InputMaybe<Scalars['Boolean']>;
   ledgerMapping?: InputMaybe<LedgerMapping>;
   loanProcessingCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
   loanScheduleChangeOverride?: InputMaybe<Scalars['Boolean']>;
@@ -6671,14 +6675,10 @@ export type LoanProductInput = {
   maxGraceDurationUnitNumber?: InputMaybe<Scalars['Int']>;
   maxLoanAmount?: InputMaybe<Scalars['Amount']>;
   maxPercentOfGurantee?: InputMaybe<Scalars['Float']>;
-  maxTenure?: InputMaybe<Scalars['Boolean']>;
-  maxTenureUnit?: InputMaybe<FrequencyTenure>;
   maxTenureUnitNumber?: InputMaybe<Scalars['Int']>;
   minAge?: InputMaybe<Scalars['Int']>;
   minGraceDurationUnit?: InputMaybe<FrequencyTenure>;
   minGraceDurationUnitNumber?: InputMaybe<Scalars['Int']>;
-  minTenure?: InputMaybe<Scalars['Boolean']>;
-  minTenureUnit?: InputMaybe<FrequencyTenure>;
   minTenureUnitNumber?: InputMaybe<Scalars['Int']>;
   minimumLoanAmount?: InputMaybe<Scalars['Amount']>;
   natureOFBusinessCoop?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
@@ -6698,6 +6698,7 @@ export type LoanProductInput = {
   repaymentScheme?: InputMaybe<Array<InputMaybe<LoanRepaymentScheme>>>;
   requiredDocuments?: InputMaybe<Array<InputMaybe<LoanRequiredDocuments>>>;
   supportMultipleAccounts?: InputMaybe<Scalars['Boolean']>;
+  tenureUnit?: InputMaybe<FrequencyTenure>;
   typeOfMember: Array<InputMaybe<KymMemberTypesEnum>>;
   updateInterest?: InputMaybe<Scalars['Boolean']>;
   waiveInterest?: InputMaybe<Scalars['Boolean']>;
@@ -9647,7 +9648,7 @@ export type GetAccountOpenProductDetailsQueryVariables = Exact<{
 }>;
 
 
-export type GetAccountOpenProductDetailsQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, maxTenure?: boolean | null, maxTenureUnit?: Frequency | null, maxTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: DepositFrequency | null, maxPostingFreqDifference?: number | null, accountType?: string | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, isForMinors?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: any | null, maxAmount?: any | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, rebateData?: { dayBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, rebateRate?: number | null, rebateLedgerMapping?: string | null } | null, balanceLimit?: { minAmount?: any | null, maxAmount?: any | null, avgAmount?: any | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type?: string | null, amount?: any | null, rate?: number | null } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
+export type GetAccountOpenProductDetailsQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, tenureUnit?: FrequencyTenure | null, isTenureApplicable?: boolean | null, minTenureUnitNumber?: number | null, maxTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: DepositFrequency | null, maxPostingFreqDifference?: number | null, accountType?: string | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, isForMinors?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: any | null, maxAmount?: any | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, rebateData?: { dayBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, rebateRate?: number | null, rebateLedgerMapping?: string | null } | null, balanceLimit?: { minAmount?: any | null, maxAmount?: any | null, avgAmount?: any | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type?: string | null, amount?: any | null, rate?: number | null } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
 
 export type GetAccountOpenEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -9976,7 +9977,7 @@ export type GetCoopUnionKymOptionsQueryVariables = Exact<{
 
 export type GetCoopUnionKymOptionsQuery = { form: { options: { predefined?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string> } | null> | null } | null } } };
 
-export type LoanProductFragment = { id: string, objState: ObjState, createdAt: string, modifiedAt: string, createdDate: string, productName: string, productType: string, productSubType: string, productNature: NatureOfLoanProduct, description?: string | null, productCodeString?: string | null, typeOfMember: Array<KymMemberTypesEnum | null>, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, minTenure?: boolean | null, minTenureUnit?: FrequencyTenure | null, minTenureUnitNumber?: number | null, maxTenure?: boolean | null, maxTenureUnit?: FrequencyTenure | null, maxTenureUnitNumber?: number | null, minimumLoanAmount?: any | null, maxLoanAmount?: any | null, interestMethod?: LoanInterestMethod | null, repaymentScheme?: Array<LoanRepaymentScheme | null> | null, allowPartialInstallment?: boolean | null, isMonthlyInstallmentCompulsory?: boolean | null, isPenaltyApplicable?: boolean | null, isRebateApplicable?: boolean | null, minGraceDurationUnit?: FrequencyTenure | null, minGraceDurationUnitNumber?: number | null, maxGraceDurationUnit?: FrequencyTenure | null, maxGraceDurationUnitNumber?: number | null, updateInterest?: boolean | null, waiveInterest?: boolean | null, postingFrequency?: LoanProductInstallment | null, isInsuranceApplicable?: boolean | null, isStaffProduct?: boolean | null, supportMultipleAccounts?: boolean | null, loanScheduleChangeOverride?: boolean | null, allowGurantee?: boolean | null, maxPercentOfGurantee?: number | null, isCollateralRequired?: boolean | null, collateralTypes?: Array<string | null> | null, requiredDocuments?: Array<LoanRequiredDocuments | null> | null, productCode?: { prefix: string, initialNo: string } | null, penaltyOnPrincipal?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, penaltyOnInterest?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, penaltyOnInstallment?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, rebate?: { dayBeforeInstallmentDate?: number | null, rebateRate?: number | null, rebateAmount?: any | null, rebateLedgerMapping?: string | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate: number, ceoAuthority?: number | null, boardAuthority?: number | null } | null, loanProcessingCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, insuranceType?: { type?: string | null, amount?: any | null, rate?: number | null } | null, ledgerMapping?: { principal?: string | null, interestAccuredDaily?: string | null, interestIncome?: string | null } | null, collateralValue?: Array<{ type?: string | null, name?: string | null, minFMV?: number | null, maxFMV?: number | null, minDV?: number | null, maxDV?: number | null, minValue?: number | null, maxValue?: number | null } | null> | null, prematurePenaltySetup?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null };
+export type LoanProductFragment = { id: string, objState: ObjState, createdAt: string, modifiedAt: string, createdDate: string, productName: string, productType: string, productSubType: string, productNature: NatureOfLoanProduct, description?: string | null, productCodeString?: string | null, typeOfMember: Array<KymMemberTypesEnum | null>, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, tenureUnit?: FrequencyTenure | null, isTenureApplicable?: boolean | null, minTenureUnitNumber?: number | null, maxTenureUnitNumber?: number | null, minimumLoanAmount?: any | null, maxLoanAmount?: any | null, interestMethod?: LoanInterestMethod | null, repaymentScheme?: Array<LoanRepaymentScheme | null> | null, allowPartialInstallment?: boolean | null, isMonthlyInstallmentCompulsory?: boolean | null, isPenaltyApplicable?: boolean | null, isRebateApplicable?: boolean | null, minGraceDurationUnit?: FrequencyTenure | null, minGraceDurationUnitNumber?: number | null, maxGraceDurationUnit?: FrequencyTenure | null, maxGraceDurationUnitNumber?: number | null, updateInterest?: boolean | null, waiveInterest?: boolean | null, postingFrequency?: LoanProductInstallment | null, isInsuranceApplicable?: boolean | null, isStaffProduct?: boolean | null, supportMultipleAccounts?: boolean | null, loanScheduleChangeOverride?: boolean | null, allowGurantee?: boolean | null, maxPercentOfGurantee?: number | null, isCollateralRequired?: boolean | null, collateralTypes?: Array<string | null> | null, requiredDocuments?: Array<LoanRequiredDocuments | null> | null, productCode?: { prefix: string, initialNo: string } | null, penaltyOnPrincipal?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, penaltyOnInterest?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, penaltyOnInstallment?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, rebate?: { dayBeforeInstallmentDate?: number | null, rebateRate?: number | null, rebateAmount?: any | null, rebateLedgerMapping?: string | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate: number, ceoAuthority?: number | null, boardAuthority?: number | null } | null, loanProcessingCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, insuranceType?: { type?: string | null, amount?: any | null, rate?: number | null } | null, ledgerMapping?: { principal?: string | null, interestAccuredDaily?: string | null, interestIncome?: string | null } | null, collateralValue?: Array<{ type?: string | null, name?: string | null, minFMV?: number | null, maxFMV?: number | null, minDV?: number | null, maxDV?: number | null, minValue?: number | null, maxValue?: number | null } | null> | null, prematurePenaltySetup?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null };
 
 export type GetLoanProductDetailsDataQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -10192,7 +10193,7 @@ export type GetLoanProductEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetLoanProductEditDataQuery = { settings: { general?: { loanProducts?: { formState?: { data?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, productName: string, productType: string, productSubType: string, productNature: NatureOfLoanProduct, description?: string | null, typeOfMember: Array<KymMemberTypesEnum | null>, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, minTenure?: boolean | null, minTenureUnit?: FrequencyTenure | null, minTenureUnitNumber?: number | null, maxTenure?: boolean | null, maxTenureUnit?: FrequencyTenure | null, maxTenureUnitNumber?: number | null, minimumLoanAmount?: any | null, maxLoanAmount?: any | null, repaymentScheme?: Array<LoanRepaymentScheme | null> | null, allowPartialInstallment?: boolean | null, isMonthlyInstallmentCompulsory?: boolean | null, interestMethod?: LoanInterestMethod | null, isPenaltyApplicable?: boolean | null, isRebateApplicable?: boolean | null, minGraceDurationUnit?: FrequencyTenure | null, minGraceDurationUnitNumber?: number | null, maxGraceDurationUnit?: FrequencyTenure | null, maxGraceDurationUnitNumber?: number | null, updateInterest?: boolean | null, waiveInterest?: boolean | null, postingFrequency?: LoanProductInstallment | null, isInsuranceApplicable?: boolean | null, isStaffProduct?: boolean | null, supportMultipleAccounts?: boolean | null, loanScheduleChangeOverride?: boolean | null, requiredDocuments?: Array<LoanRequiredDocuments | null> | null, isCollateralRequired?: boolean | null, allowGurantee?: boolean | null, maxPercentOfGurantee?: number | null, collateralTypes?: Array<string | null> | null, productCode?: { prefix: string, initialNo: string } | null, penaltyOnPrincipal?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, penaltyOnInterest?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, penaltyOnInstallment?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, rebate?: { dayBeforeInstallmentDate?: number | null, rebateRate?: number | null, rebateAmount?: any | null, rebateLedgerMapping?: string | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate: number, ceoAuthority?: number | null, boardAuthority?: number | null } | null, loanProcessingCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, insuranceType?: { type?: string | null, amount?: any | null, rate?: number | null } | null, ledgerMapping?: { principal?: string | null, interestAccuredDaily?: string | null, interestIncome?: string | null } | null, collateralValue?: Array<{ type?: string | null, minFMV?: number | null, maxFMV?: number | null, minDV?: number | null, maxDV?: number | null, minValue?: number | null, maxValue?: number | null } | null> | null, prematurePenaltySetup?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
+export type GetLoanProductEditDataQuery = { settings: { general?: { loanProducts?: { formState?: { data?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, productName: string, productType: string, productSubType: string, productNature: NatureOfLoanProduct, description?: string | null, typeOfMember: Array<KymMemberTypesEnum | null>, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, isTenureApplicable?: boolean | null, tenureUnit?: FrequencyTenure | null, minTenureUnitNumber?: number | null, maxTenureUnitNumber?: number | null, minimumLoanAmount?: any | null, maxLoanAmount?: any | null, repaymentScheme?: Array<LoanRepaymentScheme | null> | null, allowPartialInstallment?: boolean | null, isMonthlyInstallmentCompulsory?: boolean | null, interestMethod?: LoanInterestMethod | null, isPenaltyApplicable?: boolean | null, isRebateApplicable?: boolean | null, minGraceDurationUnit?: FrequencyTenure | null, minGraceDurationUnitNumber?: number | null, maxGraceDurationUnit?: FrequencyTenure | null, maxGraceDurationUnitNumber?: number | null, updateInterest?: boolean | null, waiveInterest?: boolean | null, postingFrequency?: LoanProductInstallment | null, isInsuranceApplicable?: boolean | null, isStaffProduct?: boolean | null, supportMultipleAccounts?: boolean | null, loanScheduleChangeOverride?: boolean | null, requiredDocuments?: Array<LoanRequiredDocuments | null> | null, isCollateralRequired?: boolean | null, allowGurantee?: boolean | null, maxPercentOfGurantee?: number | null, collateralTypes?: Array<string | null> | null, productCode?: { prefix: string, initialNo: string } | null, penaltyOnPrincipal?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, penaltyOnInterest?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, penaltyOnInstallment?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, rebate?: { dayBeforeInstallmentDate?: number | null, rebateRate?: number | null, rebateAmount?: any | null, rebateLedgerMapping?: string | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate: number, ceoAuthority?: number | null, boardAuthority?: number | null } | null, loanProcessingCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, insuranceType?: { type?: string | null, amount?: any | null, rate?: number | null } | null, ledgerMapping?: { principal?: string | null, interestAccuredDaily?: string | null, interestIncome?: string | null } | null, collateralValue?: Array<{ type?: string | null, minFMV?: number | null, maxFMV?: number | null, minDV?: number | null, maxDV?: number | null, minValue?: number | null, maxValue?: number | null } | null> | null, prematurePenaltySetup?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
 
 export type GetLoanGeneralSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -10258,7 +10259,7 @@ export type GetDepositProductSettingsEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, description?: string | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, minTenure?: boolean | null, minTenureUnit?: Frequency | null, minTenureUnitNumber?: number | null, maxTenure?: boolean | null, maxTenureUnit?: Frequency | null, maxTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: DepositFrequency | null, maxPostingFreqDifference?: number | null, accountType?: string | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: any | null, maxAmount?: any | null } | null, withdrawAmountLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, fixedDepositAmountLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, rebateData?: { dayBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, rebateRate?: number | null, rebateLedgerMapping?: string | null } | null, balanceLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type?: string | null, amount?: any | null, rate?: number | null } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, accountCloseCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, chequeCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, atmCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, alternativeChannelCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, withdrawPenalty?: { penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
+export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, description?: string | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, isTenureApplicable?: boolean | null, tenureUnit?: FrequencyTenure | null, minTenureUnitNumber?: number | null, maxTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: DepositFrequency | null, maxPostingFreqDifference?: number | null, accountType?: string | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: any | null, maxAmount?: any | null } | null, withdrawAmountLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, fixedDepositAmountLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, rebateData?: { dayBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, rebateRate?: number | null, rebateLedgerMapping?: string | null } | null, balanceLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type?: string | null, amount?: any | null, rate?: number | null } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, accountCloseCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, chequeCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, atmCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, alternativeChannelCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, withdrawPenalty?: { penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
 
 export type GetSettingsOptionsFieldsQueryVariables = Exact<{
   searchTerm: FormFieldSearchTerm;
@@ -10496,11 +10497,9 @@ export const LoanProductFragmentDoc = `
   natureOfBusinessInstitution
   natureOFBusinessCoop
   cooperativeType
-  minTenure
-  minTenureUnit
+  tenureUnit
+  isTenureApplicable
   minTenureUnitNumber
-  maxTenure
-  maxTenureUnit
   maxTenureUnitNumber
   minimumLoanAmount
   maxLoanAmount
@@ -12635,11 +12634,9 @@ export const GetAccountOpenProductDetailsDocument = `
               rebateRate
               rebateLedgerMapping
             }
-            minTenure
-            minTenureUnit
+            tenureUnit
+            isTenureApplicable
             minTenureUnitNumber
-            maxTenure
-            maxTenureUnit
             maxTenureUnitNumber
             balanceLimit {
               minAmount
@@ -16072,11 +16069,9 @@ export const GetLoanProductEditDataDocument = `
             natureOfBusinessInstitution
             natureOFBusinessCoop
             cooperativeType
-            minTenure
-            minTenureUnit
+            isTenureApplicable
+            tenureUnit
             minTenureUnitNumber
-            maxTenure
-            maxTenureUnit
             maxTenureUnitNumber
             minimumLoanAmount
             maxLoanAmount
@@ -16651,11 +16646,9 @@ export const GetDepositProductSettingsEditDataDocument = `
               rebateRate
               rebateLedgerMapping
             }
-            minTenure
-            minTenureUnit
+            isTenureApplicable
+            tenureUnit
             minTenureUnitNumber
-            maxTenure
-            maxTenureUnit
             maxTenureUnitNumber
             balanceLimit {
               minAmount

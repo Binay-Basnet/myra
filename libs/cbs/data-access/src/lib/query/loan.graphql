@@ -27,11 +27,9 @@ fragment LoanProduct on LoanProduct {
   natureOfBusinessInstitution
   natureOFBusinessCoop
   cooperativeType
-  minTenure
-  minTenureUnit
+  tenureUnit
+  isTenureApplicable
   minTenureUnitNumber
-  maxTenure
-  maxTenureUnit
   maxTenureUnitNumber
   minimumLoanAmount
   maxLoanAmount
@@ -249,9 +247,9 @@ query getCollateralList {
   }
 }
 
-query getLoanList($paginate: Pagination){
+query getLoanList($paginate: Pagination) {
   loanAccount {
-    list(paginate: $paginate){
+    list(paginate: $paginate) {
       totalCount
       edges {
         cursor
@@ -265,7 +263,6 @@ query getLoanList($paginate: Pagination){
           LoanAccountName
           productType
           createdAt
-
         }
       }
       pageInfo {
