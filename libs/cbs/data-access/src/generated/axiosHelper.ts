@@ -1,7 +1,17 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import _ from 'lodash';
+
+import { MutationError, useRefreshToken } from '@coop/cbs/data-access';
 
 import { RootState, useAppSelector } from './hooks/store';
-import { useRefreshToken } from './hooks/useRefreshToken';
+
+function fn(obj: Record<string, unknown> | null, key: string): MutationError[] {
+  if (_.has(obj, key) && obj) return [obj[key]] as MutationError[];
+
+  return _.flatten(
+    _.map(obj, (v) => (typeof v === 'object' ? fn(v as Record<string, unknown>, key) : []))
+  );
+}
 
 export const useAxios = <TData, TVariables>(
   query: string
@@ -11,7 +21,11 @@ export const useAxios = <TData, TVariables>(
 
   let url = process.env['NX_SCHEMA_PATH'] || '';
 
-  if (typeof window !== 'undefined') {
+  if (
+    typeof window !== 'undefined' &&
+    window.localStorage.getItem('url') &&
+    process.env['NX_SCHEMA_PATH']
+  ) {
     url = window.localStorage.getItem('url') || process.env['NX_SCHEMA_PATH'];
   }
 
@@ -21,8 +35,6 @@ export const useAxios = <TData, TVariables>(
 
   const refreshToken = useRefreshToken(url);
   const accessToken = auth.token;
-
-  // alert('chalyo');
 
   return async (variables?: TVariables, config?: AxiosRequestConfig<TData>) => {
     if (accessToken) {
@@ -50,15 +62,19 @@ export const useAxios = <TData, TVariables>(
             errors?: { message: string }[];
           }>
         ) => {
-          if (!res.data.data || res.data.errors) {
+          if (!res.data.data) {
             return { error: res.data.errors };
-          } else {
+          }
+          const errArr = fn(res.data.data as Record<string, unknown>, 'error');
+
+          if (errArr.length === 0) {
             return res.data.data;
           }
+          return { error: errArr };
         }
       )
       .catch((err) => {
-        // assumin that whenever catch blocked is executed this means that the access token is invalid
+        // assuming that whenever catch blocked is executed this means that the access token is invalid
         return refreshToken().then((accessToken) => {
           if (accessToken) {
             const headers = {
@@ -86,9 +102,8 @@ export const useAxios = <TData, TVariables>(
             ) => {
               if (!res.data.data || res.data.errors) {
                 return res.data.errors;
-              } else {
-                return res.data.data;
               }
+              return res.data.data;
             }
           );
         });
@@ -98,6 +113,4 @@ export const useAxios = <TData, TVariables>(
   };
 };
 
-axios.interceptors.response.use(function (response) {
-  return response;
-});
+axios.interceptors.response.use((response) => response);

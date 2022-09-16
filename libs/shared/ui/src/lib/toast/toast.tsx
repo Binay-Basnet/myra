@@ -1,7 +1,6 @@
-import React from 'react';
 import { Renderable, toast as rhToast, ToastOptions } from 'react-hot-toast';
 
-import Toast from '../toast/ToastComponent';
+import Toast from './ToastComponent';
 
 interface ToastProps {
   id: string;
@@ -14,6 +13,50 @@ interface ToastProps {
   actionText?: string;
   actionTextHandler?: () => void;
 }
+
+type AuthorizationError = {
+  __typename: 'AuthorizationError';
+  code: number;
+  authorizationErrorMsg: string;
+};
+
+type BadRequestError = {
+  __typename: 'BadRequestError';
+  code: number;
+  badRequestErrorMessage: string;
+};
+
+type NotFoundError = { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string };
+
+type ServerError = { __typename: 'ServerError'; code: number; serverErrorMessage: string };
+
+type ValidationError = {
+  __typename: 'ValidationError';
+  code: number;
+  validationErrorMsg: Record<string, Array<string>>;
+};
+
+type MutationError =
+  | AuthorizationError
+  | BadRequestError
+  | NotFoundError
+  | ServerError
+  | ValidationError;
+
+const getError = (error: MutationError) => {
+  switch (error.__typename) {
+    case 'BadRequestError':
+      return error.badRequestErrorMessage;
+    case 'AuthorizationError':
+      return error.authorizationErrorMsg;
+    case 'NotFoundError':
+      return error.notFoundErrorMsg;
+    case 'ServerError':
+      return error.serverErrorMessage;
+    default:
+      return 'Something Went Wrong';
+  }
+};
 
 export function toast({ options, id, ...props }: ToastProps) {
   return rhToast.custom(<Toast {...props} />, {
@@ -54,12 +97,21 @@ export const asyncToast = async <T extends Record<string, unknown>>({
 
     if (response) {
       if ('error' in response) {
-        toast({
-          id,
-          type: 'error',
-          message:
-            (response as unknown as { error: { message: string }[] }).error[0].message ?? errMsg,
-        });
+        const error = (response as unknown as { error: MutationError[] }).error[0];
+
+        if ('message' in error) {
+          toast({
+            id,
+            type: 'error',
+            message: (error as { message: string }).message,
+          });
+        } else {
+          toast({
+            id,
+            type: 'error',
+            message: getError(error),
+          });
+        }
       } else {
         onSuccess && onSuccess(response);
         toast({

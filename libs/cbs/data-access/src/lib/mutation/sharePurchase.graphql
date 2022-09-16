@@ -2,6 +2,9 @@ mutation addSharePurchase($data: SharePurchaseInput!) {
   share {
     purchase(data: $data) {
       recordId
+      error {
+        ...MutationError
+      }
     }
   }
 }

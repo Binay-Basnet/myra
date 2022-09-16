@@ -1,7 +1,9 @@
-import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
+/* eslint-disable */
+import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import { DropzoneOptions, useDropzone } from 'react-dropzone';
 import { BsCloudUpload } from 'react-icons/bs';
 import { IoClose } from 'react-icons/io5';
+import { useDeepCompareEffect } from 'react-use';
 import Image from 'next/image';
 import {
   Flex,
@@ -39,12 +41,15 @@ const DefaultFileIcon = () => (
 
 export const isArrayEqual = <T,>(x: T[], y: T[]) => isEmpty(xorWith(x, y, isEqual));
 
+type FileWithUrl = { url?: string; identifier: string };
+
 export interface FileInputProps extends Omit<DropzoneOptions, 'maxFiles'> {
   size?: 'sm' | 'md' | 'lg';
   dropText?: string;
   value?: { url?: string; identifier: string }[];
-  onChange?: (file: string[] | null) => void;
+  onChange?: (file: string[] | FileWithUrl[] | null) => void;
   maxFiles?: 'one' | 'many';
+  generateUrls?: true | never;
 }
 
 export const FileInput = ({
@@ -53,10 +58,11 @@ export const FileInput = ({
   dropText = 'or drop files to upload',
   value = [],
   maxFiles = 'many',
+  generateUrls,
   ...rest
 }: FileInputProps) => {
   const [files, setFiles] = useState<File[]>([]);
-  const [fileNames, setFileNames] = useState<string[]>([]);
+  const [fileNames, setFileNames] = useState<string[] | FileWithUrl[]>([]);
   const [alreadyAddedFiles, setAlreadyAddedFiles] = useState<
     { url?: string; identifier: string }[] | null
   >(null);
@@ -91,7 +97,7 @@ export const FileInput = ({
     }
   }, [fileNames.length]);
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     if (
       (!alreadyAddedFiles || alreadyAddedFiles?.length === 0) &&
       !files.some((file) => value?.some((valueFile) => valueFile.identifier === file.name)) &&
@@ -101,7 +107,7 @@ export const FileInput = ({
         setAlreadyAddedFiles(value);
       }
     }
-  }, [JSON.stringify(value)]);
+  }, [value]);
 
   return (
     <Box display="flex" flexDirection="column" gap="s12">
@@ -149,7 +155,8 @@ export const FileInput = ({
           <FilePreview
             file={file}
             size={size}
-            setFileNames={setFileNames}
+            generateFileUrls={generateUrls}
+            setFileNames={setFileNames as any}
             remove={() => setFiles((prev) => prev.filter((f) => f.name !== file.name))}
           />
         </Fragment>
@@ -158,7 +165,8 @@ export const FileInput = ({
       {alreadyAddedFiles?.map((fileUrl) => (
         <Fragment key={fileUrl?.url}>
           <FileUrlPreview
-            setFileNames={setFileNames}
+            setFileNames={setFileNames as any}
+            generateFileUrls={generateUrls}
             identifier={fileUrl?.identifier}
             fileUrl={String(fileUrl?.url)}
             size={size}
@@ -174,14 +182,29 @@ export const FileInput = ({
   );
 };
 
-interface FilePreviewProps {
-  file: File;
-  size: 'sm' | 'md' | 'lg';
-  remove?: () => void;
-  setFileNames?: React.Dispatch<React.SetStateAction<string[]>>;
-}
+type FilePreviewProps =
+  | {
+      file: File;
+      size: 'sm' | 'md' | 'lg';
+      remove?: () => void;
+      setFileNames?: React.Dispatch<React.SetStateAction<FileWithUrl[]>>;
+      generateFileUrls?: true;
+    }
+  | {
+      file: File;
+      size: 'sm' | 'md' | 'lg';
+      remove?: () => void;
+      setFileNames?: React.Dispatch<React.SetStateAction<string[]>>;
+      generateFileUrls?: false;
+    };
 
-export const FilePreview = ({ file, size, remove, setFileNames }: FilePreviewProps) => {
+export const FilePreview = ({
+  file,
+  size,
+  remove,
+  setFileNames,
+  generateFileUrls,
+}: FilePreviewProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [error, setError] = useState<boolean>(false);
@@ -226,7 +249,11 @@ export const FilePreview = ({ file, size, remove, setFileNames }: FilePreviewPro
         if (putResponse.status === 200) {
           if (setFileNames) {
             setFileName(filename);
-            setFileNames((prev) => [...prev, filename]);
+            if (generateFileUrls) {
+              setFileNames((prev) => [...prev, { identifier: filename, url: publicUrl }]);
+            } else {
+              setFileNames((prev: any) => [...prev, filename]);
+            }
           }
 
           setFileUrl(publicUrl);
@@ -308,7 +335,11 @@ export const FilePreview = ({ file, size, remove, setFileNames }: FilePreviewPro
               remove();
             }
             if (setFileNames) {
-              setFileNames((prev) => prev.filter((name) => name !== identifier));
+              if (generateFileUrls) {
+                setFileNames((prev) => prev.filter((name) => name.identifier !== identifier));
+              } else {
+                setFileNames((prev: any[]) => prev.filter((name) => name !== identifier));
+              }
             }
           }}
         />
@@ -332,13 +363,23 @@ export const FilePreview = ({ file, size, remove, setFileNames }: FilePreviewPro
   );
 };
 
-interface FileUrlPreviewProps {
-  fileUrl: string;
-  identifier: string;
-  size: 'sm' | 'md' | 'lg';
-  remove?: () => void;
-  setFileNames: React.Dispatch<React.SetStateAction<string[]>>;
-}
+type FileUrlPreviewProps =
+  | {
+      fileUrl: string;
+      identifier: string;
+      size: 'sm' | 'md' | 'lg';
+      remove?: () => void;
+      setFileNames: React.Dispatch<React.SetStateAction<FileWithUrl[]>>;
+      generateFileUrls?: true;
+    }
+  | {
+      fileUrl: string;
+      identifier: string;
+      size: 'sm' | 'md' | 'lg';
+      remove?: () => void;
+      setFileNames: React.Dispatch<React.SetStateAction<string[]>>;
+      generateFileUrls?: never;
+    };
 
 export const FileUrlPreview = ({
   fileUrl,
@@ -346,6 +387,7 @@ export const FileUrlPreview = ({
   size,
   remove,
   setFileNames,
+  generateFileUrls,
 }: FileUrlPreviewProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [file, setFile] = useState<File | null>(null);
@@ -369,7 +411,11 @@ export const FileUrlPreview = ({
   }, [fileUrl]);
 
   useEffect(() => {
-    setFileNames((prev) => [...prev, identifier]);
+    if (generateFileUrls) {
+      setFileNames((prev) => [...prev, { url: fileUrl, identifier }]);
+    } else {
+      setFileNames((prev: any) => [...prev, identifier]);
+    }
   }, []);
 
   return (
@@ -433,7 +479,11 @@ export const FileUrlPreview = ({
               remove();
             }
 
-            setFileNames((prev) => prev.filter((name) => name !== identifier));
+            if (generateFileUrls) {
+              setFileNames((prev) => prev.filter((name) => name.identifier !== identifier));
+            } else {
+              setFileNames((prev: any[]) => prev.filter((name) => name !== identifier));
+            }
           }}
         />
         <Modal isOpen={isOpen} onClose={onClose} size="xl">
