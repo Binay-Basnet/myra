@@ -1,15 +1,11 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import {
-  Id_Type,
-  useGetBranchListQuery,
-  useGetNewIdMutation,
-} from '@coop/cbs/data-access';
+import { Id_Type, useGetBranchListQuery, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const SettingsServiceCenterTable = () => {
   const { t } = useTranslation();
@@ -28,16 +24,12 @@ export const SettingsServiceCenterTable = () => {
     }
   );
 
-  const rowData = useMemo(
-    () => data?.settings?.general?.branch?.list?.edges ?? [],
-    [data]
-  );
+  const rowData = useMemo(() => data?.settings?.general?.branch?.list?.edges ?? [], [data]);
 
   const popoverTitle = [
     {
       title: 'depositProductEdit',
-      onClick: (id: string) =>
-        router.push(`/settings/general/branches/edit/${id}`),
+      onClick: (id: string) => router.push(`/settings/general/branches/edit/${id}`),
     },
   ];
 
@@ -98,14 +90,12 @@ export const SettingsServiceCenterTable = () => {
   return (
     <>
       <SettingsPageHeader
-        heading={t['serviceCenterSettings']}
+        heading={`${t['serviceCenterSettings']} - ${featureCode?.settingsServiceCenter}`}
         buttonLabel={t['serviceCenterNew']}
         buttonHandler={() =>
           newId
             .mutateAsync({ idType: Id_Type.Branch })
-            .then((res) =>
-              router.push(`/settings/general/service-center/add/${res?.newId}`)
-            )
+            .then((res) => router.push(`/settings/general/service-center/add/${res?.newId}`))
         }
       />
 

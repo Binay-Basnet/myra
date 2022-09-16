@@ -54,16 +54,11 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
         <Divider my="s16" />
 
         <PopOverComponentForButtonList buttonLabel="shareLayoutNewShare">
-          {addButtoncolumns.map((item, index) => {
-            return (
-              <Box key={`${item}${index}`}>
-                <AddButtonList
-                  label={t[item.title]}
-                  onClick={() => router.push(`${item.link}`)}
-                />
-              </Box>
-            );
-          })}
+          {addButtoncolumns.map((item) => (
+            <Box key={item?.title}>
+              <AddButtonList label={t[item.title]} onClick={() => router.push(`${item.link}`)} />
+            </Box>
+          ))}
         </PopOverComponentForButtonList>
 
         <Divider my="s16" />
@@ -76,19 +71,12 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
           height="s48"
           width="full"
           justifyContent="start"
-          leftIcon={
-            <Icon as={AiOutlineSetting} size="md" color="primary.500" />
-          }
+          leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
         >
           {t['shareLayoutShareSettings']}
         </Button>
       </Box>
-      <Box
-        width="calc(100% - 275px)"
-        overflowX="hidden"
-        position="relative"
-        left="275px"
-      >
+      <Box width="calc(100% - 275px)" overflowX="hidden" position="relative" left="275px">
         <Box bg="white" minHeight="100vh">
           {children}
         </Box>

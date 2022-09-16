@@ -8,7 +8,7 @@ import {
 } from '@coop/cbs/settings/ui-layout';
 import { AccountList } from '@coop/myra/components';
 import { Box } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 const ChartsOfAccounts = () => {
   const { t } = useTranslation();
@@ -28,16 +28,13 @@ const ChartsOfAccounts = () => {
   return (
     <Box width="full">
       <SettingsPageHeader
-        heading={t['settingsCoa']}
+        heading={`${t['settingsCoa']} - ${featureCode?.settingsChartsOfAccount}`}
         tabItems={tabList}
         buttonLabel={t['settingsCoaNewAccount']}
-        buttonHandler={() =>
-          router.push('/settings/general/charts-of-accounts/add-new-account')
-        }
+        buttonHandler={() => router.push('/settings/general/charts-of-accounts/add-new-account')}
       />
       <Box>
-        {(router.query['objState'] === 'full-view' ||
-          !router.query['objState']) && <COAFullView />}
+        {(router.query['objState'] === 'full-view' || !router.query['objState']) && <COAFullView />}
         {router.query['objState'] === 'account-list' && <AccountList />}
       </Box>
     </Box>

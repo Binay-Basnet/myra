@@ -36,4 +36,15 @@ export const featureCode = {
   shareTransactionReport: '10604',
 
   accountCode: ['90.1', '90.2'],
+
+  settingsOrganization: '90001',
+  settingsServiceCenter: '90002',
+  settingsChartsOfAccount: '90003',
+  settingsMembers: '90004',
+  settingsShare: '90005',
+  settingsDeposit: '90006',
+  settingsDepositProduct: '90007',
+  settingsLoan: '90008',
+  settingsLoanProduct: '90009',
+  settingsValuator: '90010',
 };

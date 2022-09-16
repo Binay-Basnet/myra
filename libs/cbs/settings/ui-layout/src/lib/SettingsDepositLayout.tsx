@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Box } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { SettingsPageHeader } from './SettingsPageHeader';
 import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMenu';
@@ -19,22 +19,22 @@ const tabList = [
   },
 ];
 
-interface SettingsDepositLayout {
+interface ISettingsDepositLayout {
   children: React.ReactNode;
 }
 
-export const SettingsDepositLayout = ({ children }: SettingsDepositLayout) => {
+export const SettingsDepositLayout = ({ children }: ISettingsDepositLayout) => {
   const { t } = useTranslation();
 
   return (
     <>
-      <SettingsPageHeader heading={t['settingsDeposit']} />
+      <SettingsPageHeader heading={`${t['settingsDeposit']} - ${featureCode?.settingsDeposit}`} />
       <Box
         w="300px"
         px="s8"
         position="fixed"
         py="s16"
-        borderRight={'1px'}
+        borderRight="1px"
         borderRightColor="border.layout"
         minHeight="100vh"
       >

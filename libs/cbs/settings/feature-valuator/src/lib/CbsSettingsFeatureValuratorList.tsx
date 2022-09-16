@@ -7,7 +7,7 @@ import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { formatAddress } from '@coop/cbs/utils';
 import { Column, Table } from '@coop/shared/table';
 import { TablePopover } from '@coop/shared/ui';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const CBSSettingsValuatorPopover = ({ cell }: CellContext<ValuatorEdge, unknown>) => {
   const router = useRouter();
@@ -91,7 +91,7 @@ export const CbsSettingsFeatureValuatorList = () => {
   return (
     <>
       <SettingsPageHeader
-        heading={t['settingsGeneralValuatorValuator']}
+        heading={`${t['settingsGeneralValuatorValuator']} - ${featureCode?.settingsValuator}`}
         buttonLabel={t['settingsGeneralValuatorNewValuator']}
         buttonHandler={() => {
           mutateAsync({}).then((res) => {

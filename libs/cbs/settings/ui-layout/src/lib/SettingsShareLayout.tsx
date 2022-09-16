@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Box } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { SettingsPageHeader } from './SettingsPageHeader';
 import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMenu';
@@ -46,13 +46,13 @@ export const SettingsShareLayout = ({ children }: SettingsShareLayoutProps) => {
 
   return (
     <>
-      <SettingsPageHeader heading={t['shareSettings']} />
+      <SettingsPageHeader heading={`${t['shareSettings']} - ${featureCode?.settingsShare}`} />
       <Box
         w="300px"
         px="s8"
         position="fixed"
         py="s16"
-        borderRight={'1px'}
+        borderRight="1px"
         borderRightColor="border.layout"
         minHeight="100vh"
       >

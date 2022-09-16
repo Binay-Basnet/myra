@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Box } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { SettingsPageHeader } from './SettingsPageHeader';
 import { SettingsInnerVerticalMenu } from '../components/SettingsInnerVerticalMenu';
@@ -48,14 +48,14 @@ export const SettingsLoanLayout = ({ children }: ISettingsLoanLayout) => {
       <SettingsPageHeader
         // buttonLabel={t['saveChanges']}
         // buttonHandler={saveButtonHandler}
-        heading={t['settingsLoan']}
+        heading={`${t['settingsLoan']} - ${featureCode?.settingsLoan}`}
       />
       <Box
         w="300px"
         px="s8"
         position="fixed"
         py="s16"
-        borderRight={'1px'}
+        borderRight="1px"
         borderRightColor="border.layout"
         minHeight="100vh"
       >

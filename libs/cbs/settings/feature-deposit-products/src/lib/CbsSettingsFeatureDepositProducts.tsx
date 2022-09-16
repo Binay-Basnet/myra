@@ -96,7 +96,7 @@ export const SettingsDepositProducts = () => {
       <Box borderBottom="1px solid " borderColor="border.layout" p="8px 16px">
         <Box display="flex" justifyContent="space-between" alignItems="center" h="100%">
           <Text fontSize="r2" fontWeight="600" color="gray.800">
-            {`${t['settingsDepositProducts']} - ${featureCode?.depositProductList}`}
+            {`${t['settingsDepositProducts']} - ${featureCode?.settingsDepositProduct}`}
           </Text>
           <Button
             leftIcon={<AddIcon h="11px" />}

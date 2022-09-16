@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -90,10 +90,7 @@ export const ShareSettingsGeneralPage = () => {
         <Box p="s16" pb="80px" display="flex" flexDir="column" gap="s16">
           {' '}
           <ShareSettingsHeader title={t['settingsShareGeneral']} />
-          <ShareSettingsCard
-            title={t['shareTypesOfShare']}
-            subtitle={t['shareChooseTypeOfShare']}
-          >
+          <ShareSettingsCard title={t['shareTypesOfShare']} subtitle={t['shareChooseTypeOfShare']}>
             <Box display="flex" flexDir="column" gap="s16">
               <FormCheckbox
                 name="typeOfShare"
@@ -104,74 +101,40 @@ export const ShareSettingsGeneralPage = () => {
           </ShareSettingsCard>
           <ShareSettingsCard title={t['shareIssueQuantity']}>
             <Box display="flex" flexDir="column" width="100%" gap="s16">
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-              >
+              <Box display="flex" alignItems="center" justifyContent="space-between">
                 <Text fontSize="r1" color="gray.800">
                   {t['shareMultiplicityFactor']}
                 </Text>
                 <Box>
-                  <FormInput
-                    name="multiplicityFactor"
-                    size="sm"
-                    __placeholder="50"
-                  />
+                  <FormInput name="multiplicityFactor" size="sm" __placeholder="50" />
                 </Box>
               </Box>
-              <Box
-                width="100%"
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-              >
+              <Box width="100%" display="flex" alignItems="center" justifyContent="space-between">
                 <Text fontSize="r1" color="gray.800">
                   {t['shareTransactableMinimumQuantityOfShareThatCanBeIssued']}
                 </Text>
                 <Box>
-                  <FormInput
-                    name="minimumQuantityOfShare"
-                    size="sm"
-                    __placeholder="100"
-                  />
+                  <FormInput name="minimumQuantityOfShare" size="sm" __placeholder="100" />
                 </Box>
               </Box>
-              <Box
-                width="100%"
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-              >
+              <Box width="100%" display="flex" alignItems="center" justifyContent="space-between">
                 <Text fontSize="r1" color="gray.800">
                   {t['shareMaximumQuantityOfShareThatCanBeIssued']}
                 </Text>
                 <Box>
-                  <FormInput
-                    name="maximumQuantityOfShare"
-                    size="sm"
-                    __placeholder="200"
-                  />
+                  <FormInput name="maximumQuantityOfShare" size="sm" __placeholder="200" />
                 </Box>
               </Box>
             </Box>
           </ShareSettingsCard>
           <ShareSettingsCard title={t['shareRate']}>
             <Box display="flex" flexDir="column" width="100%" gap="s16">
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-              >
+              <Box display="flex" alignItems="center" justifyContent="space-between">
                 <Text fontSize="r1" color="gray.800">
                   {t['sharePaidUpShare']}
                 </Text>
                 <Box>
-                  <FormInput
-                    name="paidUpShareRate"
-                    size="sm"
-                    __placeholder="100"
-                  />
+                  <FormInput name="paidUpShareRate" size="sm" __placeholder="100" />
                 </Box>
               </Box>
             </Box>
@@ -249,27 +212,15 @@ export const ShareSettingsGeneralPage = () => {
             subtitle={t['shareCertificateNumberSubtitle']}
           >
             <Box display="flex" flexDir="column" width="100%" gap="s16">
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-              >
+              <Box display="flex" alignItems="center" justifyContent="space-between">
                 <Text fontSize="r1" color="gray.800">
                   {t['shareStartNumber']}
                 </Text>
                 <Box>
-                  <FormInput
-                    name="startNumber"
-                    size="sm"
-                    __placeholder="00001"
-                  />
+                  <FormInput name="startNumber" size="sm" __placeholder="00001" />
                 </Box>
               </Box>
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-              >
+              <Box display="flex" alignItems="center" justifyContent="space-between">
                 <Text fontSize="r1" color="gray.800">
                   {t['shareEndNumber']}
                 </Text>
@@ -278,11 +229,7 @@ export const ShareSettingsGeneralPage = () => {
                 </Box>
               </Box>
 
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-              >
+              <Box display="flex" alignItems="center" justifyContent="space-between">
                 <Text fontSize="r1" color="gray.800">
                   {t['shareIncrementer']}
                 </Text>
@@ -290,11 +237,7 @@ export const ShareSettingsGeneralPage = () => {
                   <FormInput name="incrementor" size="sm" __placeholder="1" />
                 </Box>
               </Box>
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-              >
+              <Box display="flex" alignItems="center" justifyContent="space-between">
                 <Text fontSize="r1" color="gray.800">
                   {t['shareNumberOfDigits']}
                 </Text>
@@ -323,10 +266,7 @@ export const ShareSettingsGeneralPage = () => {
             </Box>
           </ShareSettingsCard>
         </Box>
-        <SettingsFooter
-          handleSave={handleSubmit}
-          handleDiscard={handleDiscard}
-        />
+        <SettingsFooter handleSave={handleSubmit} handleDiscard={handleDiscard} />
       </form>
     </FormProvider>
   );
