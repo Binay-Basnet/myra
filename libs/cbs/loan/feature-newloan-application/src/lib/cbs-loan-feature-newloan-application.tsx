@@ -5,8 +5,6 @@ import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 
 import {
-  BuildingType,
-  ConstructionType,
   LoanAccountInput,
   useGetCollateralListQuery,
   useGetLoanProductDetailsDataQuery,
@@ -14,17 +12,9 @@ import {
   useGetLoanProductSubTypeQuery,
   useGetLoanProductTypesQuery,
   useGetNewIdMutation,
-  useGetValuatorListQuery,
   useSendLoanApplicationForApprovalMutation,
 } from '@coop/cbs/data-access';
-import {
-  FormFileInput,
-  FormInput,
-  FormNumberInput,
-  FormSelect,
-  FormSwitchTab,
-  FormTextArea,
-} from '@coop/shared/form';
+import { FormInput, FormNumberInput, FormSelect, FormTextArea } from '@coop/shared/form';
 import {
   Alert,
   asyncToast,
@@ -37,7 +27,6 @@ import {
   FormFooter,
   FormHeader,
   FormMemberSelect,
-  Grid,
   GridItem,
   Icon,
   MemberCard,
@@ -56,6 +45,7 @@ import {
   LoanRepaymentSchemeComponent,
   Tenure,
 } from '../components';
+import { COLLATERAL_COMPS } from '../components/collateral';
 
 type OptionType = { label: string; value: string };
 
@@ -344,21 +334,6 @@ export const LoanAmountDetails = () => (
   </Box>
 );
 
-// const defaultValues = {
-//   ownerName: '',
-//   relation: '',
-//   sheetNo: '',
-//   plotNo: '',
-//   kittaNo: '',
-//   area: '',
-//   valuatorId: '',
-//   fmvMaxAmount: '',
-//   dvMinAmount: '',
-//   valuationMethod: '',
-//   validationPercent: '',
-//   collateralDescription: '',
-// };
-
 type GuaranteeDetailForm = {
   index?: number;
   memberId: string;
@@ -545,22 +520,21 @@ type CollateralDetailsType = {
 };
 
 export const CollateralDetails = () => {
+  const [isModal, setIsModal] = useState(false);
+
   const methods = useForm<CollateralDetailsType>();
+  const collateralTypeWatch = methods.watch('collateralType');
 
   const { control, watch } = useFormContext<{
     productId?: string;
     collateralData: CollateralDetailsType[];
   }>();
-
-  const [isModal, setIsModal] = useState(false);
-
-  const { append, fields, update } = useFieldArray({
+  const { append, fields, update, remove } = useFieldArray({
     control,
     name: 'collateralData',
   });
 
   const productId = watch('productId');
-
   const { data: loanProductData } = useGetLoanProductDetailsDataQuery(
     { id: String(productId) },
     {
@@ -569,11 +543,8 @@ export const CollateralDetails = () => {
   );
 
   const { data: collateralListData } = useGetCollateralListQuery();
-
   const loanProduct = loanProductData?.settings?.general?.loanProducts?.formState?.data;
   const collateralList = collateralListData?.settings?.general?.loan?.general?.collateralList;
-
-  const collateralTypeWatch = methods.watch('collateralType');
 
   return (
     <>
@@ -627,12 +598,16 @@ export const CollateralDetails = () => {
                   )?.name as string,
                   value: collateralData?.type as string,
                 }))}
+                // options={[
+                //   { label: 'Documents', value: 'Documents' },
+                //   { label: 'Others', value: 'Others' },
+                // ]}
               />
             </Box>
             {collateralTypeWatch && (
               <Box>
                 {
-                  COLLATERAL_COMPS(collateralTypeWatch)[
+                  COLLATERAL_COMPS[
                     collateralList?.find((collateral) => collateral?.id === collateralTypeWatch)
                       ?.name as
                       | 'Land'
@@ -699,15 +674,26 @@ export const CollateralDetails = () => {
                 <Text fontSize="r1" color="gray.900" w="20%">
                   {Number(field.validationPercent) * Number(field.fmvMaxAmount)}
                 </Text>
-                <Button
-                  variant="ghost"
-                  onClick={() => {
-                    setIsModal(true);
-                    methods.reset({ ...field, index });
-                  }}
-                >
-                  Edit
-                </Button>
+                <Box display="flex" gap="s8">
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      setIsModal(true);
+                      methods.reset({ ...field, index });
+                    }}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    shade="danger"
+                    variant="ghost"
+                    onClick={() => {
+                      remove(index);
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Box>
               </Box>
             ))}
           </VStack>
@@ -716,289 +702,3 @@ export const CollateralDetails = () => {
     </>
   );
 };
-
-// TODO! MOVE THEM TO INDIVIDUAL FILES
-export const LandCollateral = () => (
-  <Grid templateColumns="repeat(4, 1fr)" gap="s20">
-    <LandDetails />
-    <ValuatorSelect />
-    <GridItem />
-    <ValuationInputs />
-    <ValuationDocuments />
-  </Grid>
-);
-
-export const ValuationDocuments = () => (
-  <>
-    <GridItem colSpan={4}>
-      <FormTextArea h="100px" name="collateralDescription" label="Collateral Description" />
-    </GridItem>
-    <GridItem colSpan={4}>
-      <Text color="gray.800" fontSize="r1" fontWeight="600">
-        Required Documents
-      </Text>
-    </GridItem>
-    <GridItem colSpan={2}>
-      <FormFileInput name="collateralFiles" label="Collateral Files" size="lg" />
-    </GridItem>
-    <GridItem colSpan={2}>
-      <FormFileInput name="valuationFiles" label="Valuation Files" size="lg" />
-    </GridItem>
-  </>
-);
-
-export const ValuationAmount = () => (
-  <>
-    <GridItem colSpan={2}>
-      <FormNumberInput name="fmvMaxAmount" label="FMV (Maximum Amount)" />
-    </GridItem>
-    <GridItem colSpan={2}>
-      <FormNumberInput name="dvMinAmount" label="DV (Minimum Amount)" />
-    </GridItem>
-  </>
-);
-
-export const ValuationRange = () => (
-  <GridItem colSpan={4}>
-    <Alert status="info" title="Range" hideCloseIcon>
-      <Box pt="s8" as="ul">
-        <li>
-          <Text fontWeight="400" fontSize="r1">
-            FMV: <b>7-12%</b> and DV <b>7 - 12%</b>
-          </Text>
-        </li>
-      </Box>
-    </Alert>
-  </GridItem>
-);
-
-export const ValuationMethods = () => (
-  <GridItem
-    colSpan={4}
-    p="s16"
-    display="flex"
-    alignItems="center"
-    justifyContent="space-between"
-    border="1px"
-    borderColor="border.layout"
-    borderRadius="br2"
-  >
-    <FormSwitchTab
-      name="valuationMethod"
-      label="Valuation Method"
-      options={[
-        { label: 'FMV', value: 'FMV' },
-        { label: 'DV', value: 'DV' },
-      ]}
-    />
-    <Box>
-      <FormInput
-        name="validationPercent"
-        label="Validation Percentage"
-        rightElement={
-          <Text fontWeight="Medium" noOfLines={1} fontSize="r1" color="primary.500">
-            %
-          </Text>
-        }
-      />
-    </Box>
-  </GridItem>
-);
-
-export const ValuationStats = () => (
-  <GridItem
-    colSpan={4}
-    h="s40"
-    display="flex"
-    alignItems="center"
-    justifyContent="space-between"
-    px="s10"
-    bg="background.500"
-    borderRadius="br2"
-  >
-    <TextFields variant="formLabel" color="gray.600">
-      Collateral Valuation
-    </TextFields>
-
-    <Text color="gray.700" fontSize="r1" fontWeight="600">
-      1500
-    </Text>
-  </GridItem>
-);
-
-export const ValuationInputs = () => (
-  <>
-    <ValuationAmount />
-    <ValuationRange />
-    <ValuationMethods />
-    <ValuationStats />
-  </>
-);
-
-export const ValuatorSelect = () => {
-  const { data: valuatorData } = useGetValuatorListQuery({
-    paginate: {
-      after: '',
-      first: 10,
-    },
-  });
-
-  return (
-    <GridItem colSpan={2}>
-      <FormSelect
-        name="valuatorId"
-        label="Valuator"
-        options={valuatorData?.settings.general?.valuator?.list?.edges?.map((valuator) => ({
-          label: valuator.node?.valuatorName as string,
-          value: valuator.node?.id as string,
-        }))}
-      />
-    </GridItem>
-  );
-};
-
-export const LandDetails = () => (
-  <>
-    <GridItem colSpan={2}>
-      <FormInput name="ownerName" label="Owner Name" />
-    </GridItem>
-    <GridItem colSpan={2}>
-      <FormInput name="relation" label="Relation With Owner" />
-    </GridItem>
-    <FormInput name="sheetNo" label="Sheet No" />
-    <FormInput name="plotNo" label="Plot No" />
-    <FormInput name="kittaNo" label="Kitta No" />
-    <FormInput
-      name="area"
-      label="Area"
-      rightElement={
-        <Text fontWeight="Medium" noOfLines={1} fontSize="r1" color="primary.500">
-          sq. km
-        </Text>
-      }
-    />
-  </>
-);
-
-export const LandBuildingCollateral = () => (
-  <Grid templateColumns="repeat(4, 1fr)" gap="s20">
-    <LandDetails />
-
-    <GridItem colSpan={2}>
-      <FormSelect
-        name="buildingType"
-        label="Building Type"
-        options={[
-          { label: 'Industrial', value: BuildingType.Industrial },
-          { label: 'Institutional', value: BuildingType.Institutional },
-          { label: 'Commercial', value: BuildingType.Commercial },
-          { label: 'Residential', value: BuildingType.Residential },
-        ]}
-      />
-    </GridItem>
-
-    <GridItem colSpan={2}>
-      <FormSelect
-        name="constructionType"
-        label="Construction Type"
-        options={[
-          { label: 'Wood Frame', value: ConstructionType.WoodFrame },
-          { label: 'Light Gauge Steel Frame', value: ConstructionType.LightGaugeSteelFrame },
-          {
-            label: 'Joisted or Load Bearing Masonry',
-            value: ConstructionType.JoistedOrLoadBearingMasonry,
-          },
-          { label: 'Steel Frame', value: ConstructionType.SteelFrame },
-          { label: 'Concrete Frame', value: ConstructionType.SteelFrame },
-          { label: 'Pre Enginnered', value: ConstructionType.PreEngineered },
-        ]}
-      />
-    </GridItem>
-
-    <GridItem colSpan={2}>
-      <FormInput name="noOfStorey" label="No. of Storey" />
-    </GridItem>
-
-    <ValuatorSelect />
-    <ValuationInputs />
-    <ValuationDocuments />
-  </Grid>
-);
-
-export const VehicleCollateral = () => (
-  <Grid templateColumns="repeat(4, 1fr)" gap="s20">
-    <GridItem colSpan={2}>
-      <FormInput name="ownerName" label="Owner Name" />
-    </GridItem>
-    <GridItem colSpan={2}>
-      <FormInput name="relation" label="Relation With Owner" />
-    </GridItem>
-
-    <GridItem colSpan={2}>
-      <FormInput name="vehicleName" label="Vehicle Name" />
-    </GridItem>
-    <GridItem colSpan={2}>
-      <FormInput name="vehicleModelNo" label="Model No." />
-    </GridItem>
-    <GridItem colSpan={2}>
-      <FormInput name="vehicleRegistrationNo" label="Registration No." />
-    </GridItem>
-    <GridItem colSpan={2}>
-      <FormInput name="vehicleNo" label="Model No." />
-    </GridItem>
-    <FormInput name="vehicleSeatCapacity" label="Seat Capacity" />
-    <FormInput name="vehicleCapacity" label="Engine Capacity" />
-    <FormInput name="vehicleType" label="Vehicle Type" />
-    <FormInput name="vehicleFuelType" label="Fuel Type" />
-
-    <ValuatorSelect />
-    <GridItem />
-    <GridItem colSpan={2}>
-      <FormInput name="valuationAmount" label="Valuation Amount" />
-    </GridItem>
-    <GridItem colSpan={2}>
-      <FormInput
-        name="validationPercent"
-        label="Validation Percentage"
-        rightElement={
-          <Text fontWeight="Medium" noOfLines={1} fontSize="r1" color="primary.500">
-            %
-          </Text>
-        }
-      />
-    </GridItem>
-    <ValuationStats />
-    <ValuationDocuments />
-  </Grid>
-);
-
-export const DocumentCollateral = () => (
-  <Grid templateColumns="repeat(4, 1fr)" gap="s20">
-    <GridItem colSpan={2}>
-      <FormInput name="documentName" label="Document Name" />
-    </GridItem>
-    <GridItem colSpan={2}>
-      <FormInput name="valuationAmount" label="Valuation Amount" />
-    </GridItem>
-    <ValuationDocuments />
-  </Grid>
-);
-
-export const OtherCollateral = () => (
-  <Grid templateColumns="repeat(4, 1fr)" gap="s20">
-    <GridItem colSpan={2}>
-      <FormInput name="documentName" label="Valuation Amount" />
-    </GridItem>
-    <GridItem />
-    <ValuationDocuments />
-  </Grid>
-);
-
-const COLLATERAL_COMPS = (key: string) => ({
-  Land: <LandCollateral key={key} />,
-  'Land and Building': <LandBuildingCollateral key={key} />,
-  Vehicle: <VehicleCollateral key={key} />,
-  Documents: <DocumentCollateral key={key} />,
-  Others: <OtherCollateral key={key} />,
-  '': null,
-});
