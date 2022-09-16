@@ -42,7 +42,7 @@ const queryClient = new QueryClient({
 });
 
 const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
-  // useInit();
+  useInit();
   useSnap();
 
   const getLayout = Component.getLayout || ((page) => page);
