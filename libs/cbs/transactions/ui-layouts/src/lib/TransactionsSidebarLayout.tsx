@@ -81,14 +81,12 @@ const dropdownButtons = [
   //   link: '/transactions/agent/add',
   // },
   {
-    label: 'New Agent Transaction',
+    label: 'New Market Representative Transaction',
     link: '/transactions/agent-transaction/add',
   },
 ];
 
-export const TransactionsSidebarLayout = ({
-  children,
-}: ITransactionsSidebarLayoutProps) => {
+export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayoutProps) => {
   const router = useRouter();
 
   return (
@@ -101,12 +99,7 @@ export const TransactionsSidebarLayout = ({
 
         <Popover placement="bottom-start" gutter={3}>
           <PopoverTrigger>
-            <Button
-              width="full"
-              size="lg"
-              justifyContent="start"
-              leftIcon={<AddIcon />}
-            >
+            <Button width="full" size="lg" justifyContent="start" leftIcon={<AddIcon />}>
               New Transaction
             </Button>
           </PopoverTrigger>
@@ -134,10 +127,7 @@ export const TransactionsSidebarLayout = ({
                     key={addButton.link}
                   >
                     <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
-                    <Text
-                      variant="bodyRegular"
-                      color="neutralColorLight.Gray-80"
-                    >
+                    <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
                       {addButton.label}
                     </Text>
                   </Box>
@@ -156,9 +146,7 @@ export const TransactionsSidebarLayout = ({
           height="s48"
           width="full"
           justifyContent="start"
-          leftIcon={
-            <Icon as={AiOutlineSetting} size="md" color="primary.500" />
-          }
+          leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
         >
           Transaction Settings
         </Button>

@@ -9,9 +9,7 @@ interface AgentDetailPageLayoutProps {
   // tabList: { title: string; to: string }[];
 }
 
-export const AgentDetailPageLayout = ({
-  children,
-}: AgentDetailPageLayoutProps) => {
+export const AgentDetailPageLayout = ({ children }: AgentDetailPageLayoutProps) => {
   const router = useRouter();
 
   const id = router?.query?.['id'];
@@ -45,11 +43,11 @@ export const AgentDetailPageLayout = ({
         <PathBar
           paths={[
             {
-              label: 'Agent List',
+              label: 'Market Representative List',
               link: '/transactions/agent/list',
             },
             {
-              label: 'Agent Detail',
+              label: 'Market Representative Detail',
               link: router.asPath,
             },
           ]}
@@ -58,18 +56,13 @@ export const AgentDetailPageLayout = ({
       <Box
         w="300px"
         position="fixed"
-        borderRight={'1px'}
+        borderRight="1px"
         borderRightColor="border.layout"
         minHeight="100vh"
       >
         <DetailPageSideBar tablinks={tabList} />
       </Box>
-      <Box
-        bg="background.500"
-        ml="300px"
-        minHeight="calc(100vh - 160px)"
-        p="s16"
-      >
+      <Box bg="background.500" ml="300px" minHeight="calc(100vh - 160px)" p="s16">
         {children}
       </Box>
     </>

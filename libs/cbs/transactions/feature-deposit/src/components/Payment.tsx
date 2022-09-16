@@ -48,7 +48,7 @@ const depositors = [
     value: DepositedBy.Self,
   },
   {
-    label: 'Agent',
+    label: 'Market Representative',
     value: DepositedBy.Agent,
   },
   {
@@ -295,7 +295,11 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
 
         {depositedBy === DepositedBy.Agent && (
           <InputGroupContainer>
-            <AgentSelect name="agentId" label="Agent" __placeholder="Select Agent" />
+            <AgentSelect
+              name="agentId"
+              label="Market Representative"
+              __placeholder="Select Agent"
+            />
           </InputGroupContainer>
         )}
 

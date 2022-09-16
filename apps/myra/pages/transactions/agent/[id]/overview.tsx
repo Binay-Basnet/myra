@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 import { AgentDetailOverview } from '@coop/cbs/transactions/agent';
 import {
@@ -9,9 +9,7 @@ import { MainLayout } from '@coop/shared/ui';
 
 const TransactionAgentDetailOverview = () => <AgentDetailOverview />;
 
-TransactionAgentDetailOverview.getLayout = function getLayout(
-  page: ReactElement
-) {
+TransactionAgentDetailOverview.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
       <TransactionsSidebarLayout>

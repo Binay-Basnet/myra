@@ -48,7 +48,7 @@ const genderOptions = [
 ];
 
 const roleOptions = [
-  { label: 'Agent', value: Roles.Agent },
+  { label: 'Market Representative', value: Roles.Agent },
   { label: 'Service Center Manager', value: Roles.BranchManager },
   { label: 'Head Teller', value: Roles.HeadTeller },
   { label: 'Teller', value: Roles.Teller },

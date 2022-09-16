@@ -2964,8 +2964,8 @@ const en: Record<string, string> = {
   transactionsSidebarWithdraw: 'Withdraw',
   transactionsSidebarAccountTransfer: 'Account Transfer',
   transactionsSidebarLoanPayment: 'Loan Payment',
-  transactionsSidebarAgentList: 'Agent List',
-  transactionsSidebarAgentTransaction: 'Agent Transaction',
+  transactionsSidebarAgentList: 'Market Representative List',
+  transactionsSidebarAgentTransaction: 'Market Representative Transaction',
   depositProductMinimumRate: 'Minimum Rate',
   // Report page
   reportsHeading: 'Reports',
@@ -3092,7 +3092,7 @@ const en: Record<string, string> = {
 
   settingsUserSidebarSuperAdmin: 'Super Admin',
   settingsUserSidebarBranchManager: 'Service Center Manager',
-  settingsUserSidebarAgent: 'Agent',
+  settingsUserSidebarAgent: 'Market Representative',
   settingsUserSidebarOtherUsers: 'Other Users',
   settingsUserSidebarRoleReferences: 'Role References',
   settingsUserSidebarInvitation: 'Invitation',
