@@ -29,27 +29,24 @@ interface IVerticalSidebarProps {
   }[];
 }
 
-export const VerticalSideBarForSettings = ({
-  tablinks,
-}: IVerticalSidebarProps) => {
+export const VerticalSideBarForSettings = ({ tablinks }: IVerticalSidebarProps) => {
   const route = useRouter();
   const currentIndex = useMemo(
-    () => tablinks.findIndex((link) => route.pathname.includes(link.to)),
+    () => tablinks.findIndex((link) => link?.to === route.pathname),
     [route.pathname]
   );
+
   const { t } = useTranslation();
   return (
     <Box>
       <Tabs variant="unstyled" index={currentIndex}>
-        {tablinks.map(({ title, to }, index) => {
-          return (
-            <Link href={to} key={`${title}${index}`}>
-              <TabCol>
-                <Text>{t[title]}</Text>
-              </TabCol>
-            </Link>
-          );
-        })}
+        {tablinks.map(({ title, to }) => (
+          <Link href={to} key={title}>
+            <TabCol>
+              <Text>{t[title]}</Text>
+            </TabCol>
+          </Link>
+        ))}
       </Tabs>
     </Box>
   );

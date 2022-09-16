@@ -39,15 +39,13 @@ export const VerticalSideBar = ({ tablinks }: IVerticalSidebarProps) => {
   return (
     <Box>
       <Tabs variant="unstyled" index={currentIndex}>
-        {tablinks.map(({ title, to }, index) => {
-          return (
-            <Link href={to} key={`${title}${index}`}>
-              <TabCol>
-                <Text>{title}</Text>
-              </TabCol>
-            </Link>
-          );
-        })}
+        {tablinks.map(({ title, to }) => (
+          <Link href={to} key={title}>
+            <TabCol>
+              <Text>{title}</Text>
+            </TabCol>
+          </Link>
+        ))}
       </Tabs>
     </Box>
   );
