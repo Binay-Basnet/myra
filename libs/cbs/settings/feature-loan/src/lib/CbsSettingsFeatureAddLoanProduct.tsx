@@ -181,27 +181,27 @@ export const SettingsLoanProductForm = () => {
         }
       : null;
 
-    const depositList = collateralTypes?.includes(depositData[0]?.value)
-      ? {
-          type: depositData[0]?.value,
-          minValue: values?.deposit?.minValue,
-          maxValue: values?.deposit?.maxValue,
-        }
-      : null;
+    // const depositList = collateralTypes?.includes(depositData[0]?.value)
+    //   ? {
+    //       type: depositData[0]?.value,
+    //       minValue: values?.deposit?.minValue,
+    //       maxValue: values?.deposit?.maxValue,
+    //     }
+    //   : null;
 
     const documentList = collateralTypes?.includes(documentData[0]?.value)
       ? {
-          type: depositData[0]?.value,
-          minValue: values?.deposit?.minValue,
-          maxValue: values?.deposit?.maxValue,
+          type: documentData[0]?.value,
+          minValue: values?.document?.minValue,
+          maxValue: values?.document?.maxValue,
         }
       : null;
 
     const otherList = collateralTypes?.includes(othersData[0]?.value)
       ? {
-          type: depositData[0]?.value,
-          minValue: values?.deposit?.minValue,
-          maxValue: values?.deposit?.maxValue,
+          type: othersData[0]?.value,
+          minValue: values?.others?.minValue,
+          maxValue: values?.others?.maxValue,
         }
       : null;
 
@@ -209,14 +209,14 @@ export const SettingsLoanProductForm = () => {
       landList,
       landAndVehicleList,
       vehicleList,
-      depositList,
+      // depositList,
       documentList,
       otherList,
     ];
 
     const collateralValueList = collateralValueArray?.filter(
       (item) =>
-        item?.type === depositData[0]?.value ||
+        // item?.type === depositData[0]?.value ||
         item?.type === vehicleData[0]?.value ||
         item?.type === landaAndBuildingData[0]?.value ||
         item?.type === landData[0]?.value ||
