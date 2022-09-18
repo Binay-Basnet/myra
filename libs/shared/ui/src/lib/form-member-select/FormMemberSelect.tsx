@@ -23,7 +23,10 @@ export const FormMemberSelect = ({ name, label, placeholder }: IMemberSelectProp
 
   const { data: memberList, isFetching } = useGetMemberListQuery(
     {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      pagination: {
+        ...getRouterQuery({ type: ['PAGINATION'] }),
+        first: 5,
+      },
       filter: {
         query: IDMember,
         id: IDMember,

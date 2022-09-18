@@ -1,7 +1,4 @@
-import {
-  NatureOfDepositProduct,
-  useGetAccountTableListQuery,
-} from '@coop/cbs/data-access';
+import { NatureOfDepositProduct, useGetAccountTableListQuery } from '@coop/cbs/data-access';
 import { getRouterQuery } from '@coop/shared/utils';
 
 import { Option } from './CustomSelect';
@@ -11,7 +8,6 @@ interface IAccountSelectProps {
   name: string;
   label?: string;
   memberId: string;
-  __placeholder?: string;
   placeholder?: string;
 }
 
@@ -22,12 +18,7 @@ const accountTypes = {
   [NatureOfDepositProduct.VoluntaryOrOptional]: 'Voluntary Saving Account',
 };
 
-export const FormAccountSelect = ({
-  name,
-  label,
-  memberId,
-  placeholder,
-}: IAccountSelectProps) => {
+export const FormAccountSelect = ({ name, label, memberId, placeholder }: IAccountSelectProps) => {
   const { data: accountListData, isFetching } = useGetAccountTableListQuery(
     {
       paginate: getRouterQuery({ type: ['PAGINATION'] }),
@@ -35,14 +26,15 @@ export const FormAccountSelect = ({
     },
     {
       staleTime: 0,
+      enabled: !!memberId,
     }
   );
 
   const availableBalance = accountListData?.account?.list?.edges;
 
   const accountOptions: Option[] =
-    availableBalance?.reduce((prevVal, curVal) => {
-      return [
+    availableBalance?.reduce(
+      (prevVal, curVal) => [
         ...prevVal,
         {
           label: `${curVal?.node?.product?.productName} (ID:${curVal?.node?.id})`,
@@ -57,8 +49,9 @@ export const FormAccountSelect = ({
             fine: curVal?.node?.fine as string,
           },
         },
-      ];
-    }, [] as Option[]) ?? [];
+      ],
+      [] as Option[]
+    ) ?? [];
 
   return (
     <FormCustomSelect

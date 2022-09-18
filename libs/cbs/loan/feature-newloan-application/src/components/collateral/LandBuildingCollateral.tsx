@@ -1,4 +1,4 @@
-import { BuildingType, ConstructionType, LoanProduct } from '@coop/cbs/data-access';
+import { BuildingType, ConstructionType } from '@coop/cbs/data-access';
 import { ValuationDocuments } from '@coop/cbs/loan';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Grid, GridItem } from '@coop/shared/ui';
@@ -7,11 +7,7 @@ import { LandDetails } from './LandDetails';
 import { ValuationInputs } from './ValuationInputs';
 import { ValuatorSelect } from './ValuatorSelect';
 
-interface LandCollateralProps {
-  product: LoanProduct;
-}
-
-export const LandBuildingCollateral = ({ product }: LandCollateralProps) => (
+export const LandBuildingCollateral = () => (
   <Grid templateColumns="repeat(4, 1fr)" gap="s20">
     <LandDetails />
 
@@ -51,7 +47,7 @@ export const LandBuildingCollateral = ({ product }: LandCollateralProps) => (
     </GridItem>
 
     <ValuatorSelect />
-    <ValuationInputs product={product} />
+    <ValuationInputs />
     <ValuationDocuments />
   </Grid>
 );

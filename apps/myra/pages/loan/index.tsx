@@ -45,10 +45,13 @@ const LoanPage = () => {
       {
         header: 'Account Name',
         accessorFn: (row) => row?.node?.LoanAccountName,
+        meta: {
+          width: '40%',
+        },
       },
       {
         header: 'Product Name',
-        accessorFn: (row) => row?.node?.productType,
+        accessorFn: (row) => row?.node?.product.productName,
       },
       {
         header: 'Approved Date',

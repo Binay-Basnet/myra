@@ -1,9 +1,10 @@
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { GridItem, Text, TextFields } from '@coop/shared/ui';
 
 export const ValuationStats = () => {
-  const { watch } = useFormContext();
+  const { watch, setValue } = useFormContext();
   const maxAmount = watch('fmvMaxAmount');
   const minAmount = watch('dvMinAmount');
   const valuationMethod = watch('valuationMethod');
@@ -13,6 +14,24 @@ export const ValuationStats = () => {
   const FMVCalculations = (Number(maxAmount) * Number(validationPer)) / 100;
   const DVCalculations = (Number(minAmount) * Number(validationPer)) / 100;
   const normalCalculations = (Number(amount) * Number(validationPer)) / 100;
+
+  useEffect(() => {
+    if (valuationMethod && validationPer) {
+      setValue(
+        'collaterallValuation',
+        String(valuationMethod === 'FMV' ? FMVCalculations : DVCalculations)
+      );
+    } else if (!valuationMethod && validationPer) {
+      setValue('collaterallValuation', String(normalCalculations));
+    }
+  }, [
+    setValue,
+    FMVCalculations,
+    DVCalculations,
+    normalCalculations,
+    valuationMethod,
+    validationPer,
+  ]);
 
   return (
     <GridItem

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { LoanInstallment, useGetLoanInstallmentsQuery } from '@coop/cbs/data-access';
@@ -5,7 +6,12 @@ import { Table } from '@coop/shared/table';
 import { Box, Text } from '@coop/shared/ui';
 
 export const LoanPaymentSchedule = () => {
-  const { watch } = useFormContext();
+  const {
+    watch,
+    formState: { errors },
+  } = useFormContext();
+
+  const [trigger, setTrigger] = useState(false);
 
   const productId = watch('productId');
   const tenure = watch('tenure');
@@ -13,17 +19,25 @@ export const LoanPaymentSchedule = () => {
   const interest = watch('intrestRate');
   const repaymentScheme = watch('repaymentScheme');
 
-  const { data } = useGetLoanInstallmentsQuery({
-    interest: interest ?? 12,
-    productId,
-    tenure,
-    sanctionAmount,
-    repaymentScheme,
-  });
+  const { data } = useGetLoanInstallmentsQuery(
+    {
+      interest: interest ?? 12,
+      productId,
+      tenure: Number(tenure),
+      sanctionAmount: Number(sanctionAmount),
+      repaymentScheme,
+    },
+    {
+      enabled: trigger,
+      onSuccess: () => setTrigger(false),
+    }
+  );
 
-  // useEffect(() => {
-  //   debounce(() => refetch(), 800);
-  // }, [productId, tenure, sanctionAmount, interest, repaymentScheme]);
+  useEffect(() => {
+    if (!!productId && !!tenure && !!sanctionAmount && !!interest && !!repaymentScheme) {
+      setTrigger(true);
+    }
+  }, [productId, tenure, sanctionAmount, interest, repaymentScheme, errors]);
 
   return (
     <Box display="flex" flexDirection="column" gap="s16">

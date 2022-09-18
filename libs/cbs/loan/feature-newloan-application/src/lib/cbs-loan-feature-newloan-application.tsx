@@ -1,14 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
-import { FormProvider, useFieldArray, useForm, useFormContext } from 'react-hook-form';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
+import { omit } from 'lodash';
 
 import {
   LoanAccountInput,
   LoanProduct,
-  useGetAccountTableListQuery,
-  useGetCollateralListQuery,
   useGetLoanProductDetailsDataQuery,
   useGetLoanProductsListQuery,
   useGetLoanProductSubTypeQuery,
@@ -16,26 +14,17 @@ import {
   useGetNewIdMutation,
   useSendLoanApplicationForApprovalMutation,
 } from '@coop/cbs/data-access';
-import { FormInput, FormNumberInput, FormSelect, FormTextArea } from '@coop/shared/form';
+import { FormInput, FormNumberInput, FormSelect } from '@coop/shared/form';
 import {
   Alert,
   asyncToast,
   Box,
-  Button,
-  ChakraModal,
   Container,
-  DEFAULT_PAGE_SIZE,
-  Divider,
-  FormAccountSelect,
   FormFooter,
   FormHeader,
   FormMemberSelect,
-  GridItem,
-  Icon,
   MemberCard,
   Text,
-  TextFields,
-  VStack,
 } from '@coop/shared/ui';
 import { useGetIndividualMemberDetails } from '@coop/shared/utils';
 
@@ -48,26 +37,29 @@ import {
   LoanRepaymentSchemeComponent,
   Tenure,
 } from '../components';
-import { COLLATERAL_COMPS } from '../components/collateral';
+import { CollateralDetails } from '../components/CollateralDetails';
+import { GuaranteeDetails } from '../components/GuaranteeDetails';
+import { LoanAmountDetails } from '../components/LandAmountDetails';
 import { LoanPaymentSchedule } from '../components/LoanPaymentSchedule';
+import { LoanProductContext } from '../hooks/useLoanProduct';
 
 type OptionType = { label: string; value: string };
 
 export const NewLoanApplication = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [showCriteria, setShowCriteria] = useState(false);
 
-  const methods = useForm<LoanAccountInput>();
-  const { watch } = methods;
+  const methods = useForm<LoanAccountInput>({ mode: 'onChange' });
+  const { watch, resetField } = methods;
+
   const memberId = watch('memberId');
-
-  const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
-    useGetIndividualMemberDetails({ memberId });
-
   const loanType = watch('productType');
   const loanSubType = watch('productSubType');
   const productId = watch('productId');
 
+  const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
+    useGetIndividualMemberDetails({ memberId });
   const { data: loanTypeData } = useGetLoanProductTypesQuery();
   const { data: loanSubTypeData } = useGetLoanProductSubTypeQuery(
     { productTypeId: loanType },
@@ -81,12 +73,10 @@ export const NewLoanApplication = () => {
     },
     { enabled: !!loanSubType }
   );
-
-  const queryClient = useQueryClient();
   const { mutateAsync: getId } = useGetNewIdMutation();
   const { mutateAsync: applyLoan } = useSendLoanApplicationForApprovalMutation();
 
-  const sendForApprovalHandler = async () => {
+  const sendForApprovalHandler = useCallback(async () => {
     const promise = async () => {
       const responseId = await getId({});
 
@@ -95,11 +85,23 @@ export const NewLoanApplication = () => {
           id: responseId.newId,
           data: {
             ...methods.getValues(),
-            collateralData: methods.getValues()?.collateralData?.map((col) => ({
-              ...col,
-              collateralFiles: col?.collateralFiles?.map((c) => (c as any).identifier),
-              valuationFiles: col?.valuationFiles?.map((c) => (c as any).identifier),
-            })),
+            gurantee_details: methods
+              .getValues()
+              ?.gurantee_details?.map((col) => omit(col, ['index', 'accountName'])),
+            collateralData: methods.getValues()?.collateralData?.map((col) =>
+              omit(
+                {
+                  ...col,
+                  collateralFiles: col?.collateralFiles?.map(
+                    (c) => (c as unknown as { identifier: string }).identifier
+                  ),
+                  valuationFiles: col?.valuationFiles?.map(
+                    (c) => (c as unknown as { identifier: string }).identifier
+                  ),
+                },
+                'index'
+              )
+            ),
           },
         });
         return response;
@@ -119,12 +121,9 @@ export const NewLoanApplication = () => {
         router.push('/loan');
       },
     });
-  };
+  }, []);
 
-  useEffect(() => {
-    methods.resetField('productSubType');
-  }, [loanType]);
-
+  // Get Errors and Criteria for Selected Loan Product
   const loanProductOptions = [
     ...(loanProductData?.loanAccount?.getProductList?.allowed?.reduce(
       (previousValue, currentValue) => [
@@ -147,10 +146,27 @@ export const NewLoanApplication = () => {
       [] as OptionType[]
     ) ?? []),
   ];
-
   const arrayForErrors = loanProductData?.loanAccount?.getProductList?.notAllowed;
-
   const errors = arrayForErrors?.find((d) => d?.data?.id === productId);
+
+  // Get Currently Selected Loan Product
+  const { data: loanProductDetails } = useGetLoanProductDetailsDataQuery(
+    { id: String(productId) },
+    {
+      enabled: !!productId,
+    }
+  );
+  const loanProduct = useMemo(
+    () => ({
+      product: loanProductDetails?.settings.general?.loanProducts?.formState?.data as LoanProduct,
+    }),
+    [loanProductDetails?.settings.general?.loanProducts?.formState?.data]
+  );
+
+  useEffect(() => {
+    resetField('productSubType');
+  }, [loanType, resetField]);
+
   return (
     <Container minW="container.xl" p="0" bg="white">
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
@@ -223,7 +239,7 @@ export const NewLoanApplication = () => {
                       </Box>
                     </Alert>
                   )}
-                  {showCriteria && (
+                  {errors && showCriteria && (
                     <Box border="1px solid" borderColor="border.layout" borderRadius="br2" p="s16">
                       <CriteriaCard productId={productId} />
                     </Box>
@@ -242,7 +258,7 @@ export const NewLoanApplication = () => {
                   )}
                 </Box>
                 {productId && !errors && (
-                  <>
+                  <LoanProductContext.Provider value={loanProduct}>
                     <CollateralDetails />
                     <GuaranteeDetails />
                     <LoanAmountDetails />
@@ -252,7 +268,7 @@ export const NewLoanApplication = () => {
                     <LoanPaymentSchedule />
                     <LoanProcessingCharge />
                     {/* <RequiredDocuments /> */}
-                  </>
+                  </LoanProductContext.Provider>
                 )}
               </Box>
             </form>
@@ -294,479 +310,15 @@ export const NewLoanApplication = () => {
       </Box>
       <Box position="sticky" bottom={0}>
         <FormFooter
+          status={
+            <>
+              Total Sanctioned Amount: <b>{methods.watch('totalSanctionedAmount')}</b>
+            </>
+          }
           mainButtonLabel="Send For Approval"
           mainButtonHandler={sendForApprovalHandler}
         />
       </Box>
     </Container>
-  );
-};
-
-export const LoanAmountDetails = () => {
-  const { watch } = useFormContext();
-  const totalLoanApplied = watch('appliedLoanAmount');
-
-  return (
-    <Box display="flex" flexDir="column" gap="s16">
-      <Box display="flex" flexDir="column" gap="s4">
-        <Text fontSize="r1" fontWeight="600" color="gray.800">
-          Loan Amount Details
-        </Text>
-        <Text fontSize="s3" fontWeight="500" color="gray.600">
-          Details of collateral valuation and disbursement amount
-        </Text>
-      </Box>
-      <Box p="s16" border="1px" borderColor="border.layout" borderRadius="br2">
-        <Box
-          display="flex"
-          flexDir="column"
-          p="s16"
-          gap="s16"
-          borderRadius="br2"
-          bg="background.500"
-        >
-          <Box display="flex" alignItems="center" justifyContent="space-between">
-            <TextFields variant="formLabel">Total Loan Applied</TextFields>
-            <Text fontSize="r1" color="gray.800" fontWeight="600">
-              {totalLoanApplied ?? '0'}
-            </Text>
-          </Box>
-          <Box display="flex" alignItems="center" justifyContent="space-between">
-            <TextFields variant="formLabel">Total Valuation</TextFields>
-            <Button variant="link" px={0}>
-              80,000
-            </Button>
-          </Box>
-          <Box display="flex" alignItems="center" justifyContent="space-between">
-            <TextFields variant="formLabel">Total Sanctioned Loan Applied</TextFields>
-            <Box>
-              <FormNumberInput name="totalSanctionedAmount" size="sm" />
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-      <Divider />
-      <Box>
-        <FormTextArea
-          name="justifySanction"
-          h="200px"
-          label="If the sanctioned amount is greater than or equal to valuation amount. Please provide
-        justification for it"
-        />
-      </Box>
-    </Box>
-  );
-};
-
-type GuaranteeDetailForm = {
-  index?: number;
-  memberId: string;
-  accountId: string;
-  maxGuaranteeAmount: number;
-  guaranteeAmount: number;
-};
-
-export const GuaranteeDetails = () => {
-  const methods = useForm<GuaranteeDetailForm>();
-  const [triggerQuery, setTriggerQuery] = useState(false);
-
-  const { control, watch: watch1 } = useFormContext<{
-    memberId: string;
-    productId: string;
-    gurantee_details: GuaranteeDetailForm[];
-  }>();
-
-  const [isModal, setIsModal] = useState(false);
-
-  const { append, fields, update } = useFieldArray({
-    control,
-    name: 'gurantee_details',
-  });
-
-  const memberId = methods.watch('memberId');
-  const productId = watch1('productId');
-
-  const poductDetails = useGetLoanProductDetailsDataQuery(
-    { id: productId },
-    {
-      enabled: triggerQuery,
-    }
-  );
-  const gurantePercent =
-    poductDetails?.data?.settings?.general?.loanProducts?.formState?.data?.maxPercentOfGurantee;
-  useEffect(() => {
-    if (productId) {
-      setTriggerQuery(true);
-    }
-  }, [productId]);
-  const { data: accountListData } = useGetAccountTableListQuery(
-    {
-      paginate: {
-        first: DEFAULT_PAGE_SIZE,
-        after: '',
-      },
-      filter: { memberId },
-    },
-    {
-      staleTime: 0,
-      enabled: !!memberId,
-    }
-  );
-  const accountId = methods.watch('accountId');
-  const totalGurantee = methods.watch('guaranteeAmount');
-  const selectedAccount = useMemo(
-    () =>
-      accountListData?.account?.list?.edges?.find((account) => account.node?.id === accountId)
-        ?.node,
-    [accountId]
-  );
-
-  const currentBalance = selectedAccount?.balance ?? '0';
-  const maxgurantee =
-    currentBalance && gurantePercent
-      ? (Number(currentBalance) * Number(gurantePercent)) / 100
-      : 1000;
-  return (
-    <>
-      <Box display="flex" flexDir="column" gap="s16">
-        <TextFields variant="formLabel" color="gray.700">
-          Guarantee Details
-        </TextFields>
-        <Box>
-          <Button
-            variant="outline"
-            gap="s4"
-            onClick={() => {
-              methods.reset({});
-              setIsModal(true);
-            }}
-          >
-            <Icon as={AiOutlinePlus} />
-            Add New
-          </Button>
-        </Box>
-      </Box>
-
-      <ChakraModal
-        width="3xl"
-        open={isModal}
-        onClose={() => setIsModal(false)}
-        primaryButtonHandler={() => {
-          const index = methods.getValues()?.index;
-          if (index !== undefined) {
-            update(index, methods.getValues());
-          } else {
-            append(methods.getValues());
-          }
-          setIsModal(false);
-        }}
-        isCentered
-        title="Add Guarantee"
-        primaryButtonLabel="save"
-        preserveScrollBarGap
-      >
-        <FormProvider {...methods}>
-          <Box display="flex" flexDir="column" gap="s16">
-            <FormMemberSelect name="memberId" label="Select Member" />
-            {/** TODO! SHOW BALANCE INSIDE THE COMPONENT * */}
-            <FormAccountSelect memberId={memberId} name="accountId" label="Select Account" />
-            <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" gap="s16">
-              <FormNumberInput
-                name="maxGuranteeAmountLimit"
-                label="Maximum Guarantee Amount Available"
-                value={maxgurantee}
-                isDisabled
-              />
-              <FormNumberInput name="guaranteeAmount" label="Guarantee Amount" />
-            </Box>
-            <GridItem
-              colSpan={4}
-              h="s40"
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              px="s10"
-              bg="background.500"
-              borderRadius="br2"
-            >
-              <TextFields variant="formLabel" color="gray.600">
-                Total Guaranteed Amount
-              </TextFields>
-
-              <Text color="gray.700" fontSize="r1" fontWeight="600">
-                {totalGurantee}
-              </Text>
-            </GridItem>
-          </Box>
-        </FormProvider>
-      </ChakraModal>
-
-      {fields.length !== 0 && (
-        <Box mt="-s16" border="1px" borderColor="border.layout" borderRadius="br2">
-          <Box
-            h="s60"
-            borderBottom="1px"
-            borderBottomColor="border.layout"
-            display="flex"
-            flexDir="column"
-            justifyContent="center"
-            px="s12"
-          >
-            <Text fontSize="r1" fontWeight="600" color="gray.800">
-              Guarantee Details
-            </Text>
-            <Text fontSize="s3" fontWeight="500" color="gray.600">
-              Details about the guarantee for loan amount
-            </Text>
-          </Box>
-          <Box
-            borderBottom="1px"
-            borderBottomColor="border.layout"
-            h="50px"
-            display="flex"
-            alignItems="center"
-            px="s12"
-          >
-            <Text fontSize="r1" fontWeight="600" color="gray.900" w="20%">
-              S.N.
-            </Text>
-            <Text fontSize="r1" fontWeight="600" color="gray.900" w="40%">
-              Name
-            </Text>
-            <Text fontSize="r1" fontWeight="600" color="gray.900" w="40%">
-              Guarantee
-            </Text>
-          </Box>
-
-          <VStack spacing={0} divider={<Divider />}>
-            {fields.map((field, index) => (
-              <Box key={field.id} px="s16" display="flex" alignItems="center" w="100%" h="60px">
-                <Text fontSize="r1" color="gray.900" w="20%">
-                  {index + 1}
-                </Text>
-                <Text fontSize="r1" color="gray.900" w="40%" textTransform="capitalize">
-                  {field.memberId}
-                </Text>
-
-                <Text fontSize="r1" color="gray.900" w="20%">
-                  {Number(field.guaranteeAmount) * Number(field.maxGuaranteeAmount)}
-                </Text>
-                <Button
-                  variant="ghost"
-                  onClick={() => {
-                    setIsModal(true);
-                    methods.reset({ ...field, index });
-                  }}
-                >
-                  Edit
-                </Button>
-              </Box>
-            ))}
-          </VStack>
-        </Box>
-      )}
-    </>
-  );
-};
-
-type CollateralDetailsType = {
-  index?: number;
-  collateralType: 'Land' | 'Land and Building' | 'Vehicle' | 'Documents' | 'Others' | '';
-  ownerName: string;
-  relation: string;
-  sheetNo: string;
-  plotNo: string;
-  kittaNo: string;
-  area: string;
-  valuatorId: string;
-  fmvMaxAmount: string;
-  dvMinAmount: string;
-  valuationMethod: string;
-  valuationPercent: string;
-  collateralDescription: string;
-  collateralFiles: string[];
-  valuationFiles: string[];
-};
-
-export const CollateralDetails = () => {
-  const [isModal, setIsModal] = useState(false);
-
-  const methods = useForm<CollateralDetailsType>();
-  const collateralTypeWatch = methods.watch('collateralType');
-
-  const { control, watch } = useFormContext<{
-    productId?: string;
-    collateralData: CollateralDetailsType[];
-  }>();
-  const { append, fields, update, remove } = useFieldArray({
-    control,
-    name: 'collateralData',
-  });
-
-  const productId = watch('productId');
-  const { data: loanProductData } = useGetLoanProductDetailsDataQuery(
-    { id: String(productId) },
-    {
-      enabled: !!productId,
-    }
-  );
-
-  const { data: collateralListData } = useGetCollateralListQuery();
-  const loanProduct = loanProductData?.settings?.general?.loanProducts?.formState
-    ?.data as LoanProduct;
-  const collateralList = collateralListData?.settings?.general?.loan?.general?.collateralList;
-
-  return (
-    <>
-      <Box display="flex" flexDir="column" gap="s16">
-        <TextFields variant="formLabel" color="gray.700">
-          Collateral Details
-        </TextFields>
-        <Box>
-          <Button
-            variant="outline"
-            gap="s4"
-            onClick={() => {
-              methods.reset({ collateralType: '' });
-              setIsModal(true);
-            }}
-          >
-            <Icon as={AiOutlinePlus} />
-            Add New
-          </Button>
-        </Box>
-      </Box>
-
-      <ChakraModal
-        width="3xl"
-        open={isModal}
-        onClose={() => setIsModal(false)}
-        primaryButtonHandler={() => {
-          const index = methods.getValues()?.index;
-          if (index !== undefined) {
-            update(index, methods.getValues());
-          } else {
-            append(methods.getValues());
-          }
-          setIsModal(false);
-        }}
-        title="Add Collateral"
-        primaryButtonLabel="save"
-        scrollBehavior={collateralTypeWatch ? 'inside' : 'outside'}
-        preserveScrollBarGap
-      >
-        <FormProvider {...methods}>
-          <Box display="flex" flexDir="column" gap="s32">
-            <Box width="50%" pr="s10">
-              <FormSelect
-                name="collateralType"
-                isDisabled={!!collateralTypeWatch}
-                label="Collateral Type"
-                options={loanProduct?.collateralValue?.map((collateralData) => ({
-                  label: collateralData?.name as string,
-                  value: collateralData?.type as string,
-                }))}
-                // options={[
-                //   { label: 'Documents', value: 'Documents' },
-                //   { label: 'Others', value: 'Others' },
-                // ]}
-              />
-            </Box>
-            {collateralTypeWatch && (
-              <Box>
-                {
-                  COLLATERAL_COMPS(loanProduct)[
-                    collateralList?.find((collateral) => collateral?.id === collateralTypeWatch)
-                      ?.name as
-                      | 'Land'
-                      | 'Land and Building'
-                      | 'Vehicle'
-                      | 'Documents'
-                      | 'Others'
-                      | ''
-                  ]
-                }
-              </Box>
-            )}
-          </Box>
-        </FormProvider>
-      </ChakraModal>
-
-      {fields.length !== 0 && (
-        <Box mt="-s16" border="1px" borderColor="border.layout" borderRadius="br2">
-          <Box
-            h="s60"
-            borderBottom="1px"
-            borderBottomColor="border.layout"
-            display="flex"
-            flexDir="column"
-            justifyContent="center"
-            px="s12"
-          >
-            <Text fontSize="r1" fontWeight="600" color="gray.800">
-              Collateral Details
-            </Text>
-            <Text fontSize="s3" fontWeight="500" color="gray.600">
-              Details about the valuation for loan amount
-            </Text>
-          </Box>
-          <Box
-            borderBottom="1px"
-            borderBottomColor="border.layout"
-            h="50px"
-            display="flex"
-            alignItems="center"
-            px="s12"
-          >
-            <Text fontSize="r1" fontWeight="600" color="gray.900" w="20%">
-              S.N.
-            </Text>
-            <Text fontSize="r1" fontWeight="600" color="gray.900" w="40%">
-              Name
-            </Text>
-            <Text fontSize="r1" fontWeight="600" color="gray.900" w="40%">
-              Valuation
-            </Text>
-          </Box>
-
-          <VStack spacing={0} divider={<Divider />}>
-            {fields.map((field, index) => (
-              <Box key={field.id} px="s16" display="flex" alignItems="center" w="100%" h="60px">
-                <Text fontSize="r1" color="gray.900" w="20%">
-                  {index + 1}
-                </Text>
-                <Text fontSize="r1" color="gray.900" w="40%" textTransform="capitalize">
-                  {field.collateralType}
-                </Text>
-
-                <Text fontSize="r1" color="gray.900" w="20%">
-                  {Number(field.valuationPercent) * Number(field.fmvMaxAmount)}
-                </Text>
-                <Box display="flex" gap="s8">
-                  <Button
-                    variant="ghost"
-                    onClick={() => {
-                      setIsModal(true);
-                      methods.reset({ ...field, index });
-                    }}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    shade="danger"
-                    variant="ghost"
-                    onClick={() => {
-                      remove(index);
-                    }}
-                  >
-                    Delete
-                  </Button>
-                </Box>
-              </Box>
-            ))}
-          </VStack>
-        </Box>
-      )}
-    </>
   );
 };

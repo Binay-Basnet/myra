@@ -2,6 +2,7 @@ import { ValuationDocuments } from '@coop/cbs/loan';
 import { FormInput } from '@coop/shared/form';
 import { Grid, GridItem, Text } from '@coop/shared/ui';
 
+import { ValuationRange } from './ValuationRange';
 import { ValuationStats } from './ValuationStats';
 import { ValuatorSelect } from './ValuatorSelect';
 
@@ -47,6 +48,7 @@ export const VehicleCollateral = () => (
         }
       />
     </GridItem>
+    <ValuationRange />
     <ValuationStats />
     <ValuationDocuments />
   </Grid>

@@ -21,6 +21,7 @@ export const FormFooter = ({
   mainButtonLabel,
   mainButtonHandler,
   isMainButtonDisabled,
+  statusHandler,
 }: FormFooterProps) => {
   const { t } = useTranslation();
   return (
@@ -35,7 +36,7 @@ export const FormFooter = ({
       borderTop="1px solid"
       borderColor="border.layout"
     >
-      <Text fontStyle={'italic'} as="div">
+      <Text fontStyle="italic" as="div" onClick={statusHandler}>
         {status}
       </Text>
       <Box display="flex" gap="s16">
@@ -52,6 +53,6 @@ export const FormFooter = ({
       </Box>
     </Box>
   );
-}
+};
 
 export default FormFooter;

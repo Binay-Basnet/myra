@@ -26,7 +26,9 @@ export interface ModalChakraProps extends Omit<ChakraModalProps, 'isOpen' | 'onC
   secondaryButtonHandler?: () => void;
   linkButtonLabel?: string;
   linkButtonHandler?: () => void;
+  isSecondaryDanger?: boolean;
   isDanger?: boolean;
+  isDisabled?: boolean;
   width?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | string;
 }
 
@@ -42,6 +44,8 @@ export const ChakraModal = (props: ModalChakraProps) => {
     secondaryButtonHandler,
     linkButtonLabel,
     linkButtonHandler,
+    isSecondaryDanger,
+    isDisabled,
     isDanger,
     width = 'xl',
     ...rest
@@ -50,7 +54,14 @@ export const ChakraModal = (props: ModalChakraProps) => {
   const { t } = useTranslation();
 
   return (
-    <Modal {...rest} isOpen={open} onClose={onClose} isCentered>
+    <Modal
+      {...rest}
+      isOpen={open}
+      onClose={onClose}
+      isCentered
+      preserveScrollBarGap
+      blockScrollOnMount
+    >
       <ModalOverlay />
       <ModalContent maxW={width}>
         {title && (
@@ -95,7 +106,7 @@ export const ChakraModal = (props: ModalChakraProps) => {
                 <Button
                   width="150px"
                   variant="outline"
-                  shade="neutral"
+                  shade={isSecondaryDanger ? 'danger' : 'neutral'}
                   onClick={secondaryButtonHandler}
                 >
                   {t[secondaryButtonLabel] ?? secondaryButtonLabel}
@@ -106,6 +117,7 @@ export const ChakraModal = (props: ModalChakraProps) => {
                   variant="solid"
                   onClick={primaryButtonHandler}
                   width="150px"
+                  isDisabled={isDisabled}
                   shade={isDanger ? 'danger' : 'primary'}
                 >
                   {t[primaryButtonLabel] ?? primaryButtonLabel}

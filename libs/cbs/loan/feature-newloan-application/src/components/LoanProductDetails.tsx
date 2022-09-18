@@ -85,7 +85,7 @@ export const LoanProductCard = ({ productId }: IProductProps) => {
           </Text>
           <Text fontSize="s3" fontWeight="600">
             {productData?.minTenureUnitNumber} {productData?.tenureUnit}-
-            {productData?.minTenureUnitNumber} {productData?.tenureUnit}
+            {productData?.maxTenureUnitNumber} {productData?.tenureUnit}
           </Text>
         </Box>
       </Box>

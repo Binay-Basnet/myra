@@ -1,36 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useGetLoanProductDetailsDataQuery } from '@coop/cbs/data-access';
+import { LoanAccountInput } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormCheckbox, FormInput } from '@coop/shared/form';
 import { Alert, Box, Text } from '@coop/shared/ui';
 
+import { useLoanProductContext } from '../hooks/useLoanProduct';
+
 export const Interest = () => {
-  const [triggerQuery, setTriggerQuery] = useState(false);
+  const { watch, setValue } = useFormContext<LoanAccountInput>();
 
-  const { watch } = useFormContext();
-  const products = watch('productId');
+  const { product } = useLoanProductContext();
 
-  const productDetails = useGetLoanProductDetailsDataQuery(
-    { id: products },
-    {
-      enabled: triggerQuery,
-    }
-  );
-
-  useEffect(() => {
-    if (products) {
-      setTriggerQuery(true);
-    }
-  }, [products]);
-  const productData = productDetails?.data?.settings?.general?.loanProducts?.formState?.data;
   const ceoInterest = watch('isCeoAuthority');
   const BoardInterest = watch('isBoardAuthority');
   const valueInput =
-    Number(productData?.interest?.defaultRate) +
-    (ceoInterest ? Number(productData?.interest?.ceoAuthority) : 0) +
-    (BoardInterest ? Number(productData?.interest?.boardAuthority) : 0);
+    Number(product?.interest?.defaultRate) +
+    (ceoInterest ? Number(product?.interest?.ceoAuthority) : 0) +
+    (BoardInterest ? Number(product?.interest?.boardAuthority) : 0);
+
+  useEffect(() => {
+    setValue('intrestRate', valueInput);
+  }, [valueInput]);
+
   return (
     <Box display="flex" flexDirection="column" gap="s16">
       <Box display="flex" flexDirection="column" w="100%" background="neutralColorLight.Gray-0">
@@ -67,14 +60,14 @@ export const Interest = () => {
                   <Text fontWeight="400" fontSize="r1">
                     Interest Rate:{' '}
                     <b>
-                      {productData?.interest?.minRate} -{productData?.interest?.maxRate}%
+                      {product?.interest?.minRate} -{product?.interest?.maxRate}%
                     </b>
                   </Text>
                 </li>
                 <li>
                   <Text fontWeight="400" fontSize="r1">
-                    CEO: <b>{productData?.interest?.ceoAuthority}%</b> , BOD:{' '}
-                    <b>{productData?.interest?.boardAuthority}%</b>
+                    CEO: <b>{product?.interest?.ceoAuthority}%</b> , BOD:{' '}
+                    <b>{product?.interest?.boardAuthority}%</b>
                   </Text>
                 </li>
               </Box>

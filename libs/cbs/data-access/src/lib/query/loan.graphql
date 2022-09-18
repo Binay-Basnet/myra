@@ -260,8 +260,10 @@ query getLoanList($paginate: Pagination) {
             name
             profilePicUrl
           }
+          product {
+            productName
+          }
           LoanAccountName
-          productType
           createdAt
         }
       }
