@@ -32,7 +32,7 @@ export const ShareReportTable = ({ shareReport, shareTotal }: ShareReportTablePr
       data={
         shareReport?.map((share, index) => ({
           ...share,
-          's.no.': index + 1,
+          index: index + 1,
         })) ?? []
       }
       showFooter
@@ -41,7 +41,7 @@ export const ShareReportTable = ({ shareReport, shareTotal }: ShareReportTablePr
           header: 'S.No.',
 
           footer: () => <Box textAlign="right">Total Balance</Box>,
-          accessorKey: 's.no.',
+          accessorKey: 'index',
           meta: {
             width: '60px',
             Footer: {
