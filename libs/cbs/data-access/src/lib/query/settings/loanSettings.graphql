@@ -33,12 +33,12 @@ query getLoanProductSettings {
   }
 }
 
-query getLoanProductSubType($productTypeID: String) {
+query getLoanProductSubType($productTypeId: String) {
   settings {
     general {
       loan {
         productType {
-          productSubTypes(productTypeID: $productTypeID) {
+          productSubTypes(productTypeID: $productTypeId) {
             id
             productSubType
             productTypeID
