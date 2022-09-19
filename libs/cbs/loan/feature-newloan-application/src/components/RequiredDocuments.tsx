@@ -7,10 +7,10 @@ export const RequiredDocuments = () => (
       Required Documents
     </Text>
     <Grid templateColumns="repeat(2,1fr)" gap="s20">
-      <FormFileInput name="Photo" label="Photo" size="lg" />
-      <FormFileInput name="Signature" label="Signature" size="lg" />
-      <FormFileInput name="NomineeDocument" label="Nominee Document" size="lg" />
-      <FormFileInput name="FingerprintPhoto" label="FingerPrint Photo" size="lg" />
+      <FormFileInput name="photoDoc" label="Photo" size="lg" />
+      <FormFileInput name="signatureDoc" label="Signature" size="lg" />
+      <FormFileInput name="nomineeDoc" label="Nominee Document" size="lg" />
+      <FormFileInput name="fingerprintDoc" label="FingerPrint Photo" size="lg" />
     </Grid>
   </Box>
 );

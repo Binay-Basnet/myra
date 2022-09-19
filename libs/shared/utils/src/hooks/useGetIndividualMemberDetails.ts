@@ -26,26 +26,23 @@ export const useGetIndividualMemberDetails = ({
     { enabled: !!memberId }
   );
 
-  const { data: identificationListData } =
-    useGetIndividualKymIdentificationListQuery(
-      {
-        id: String(memberId),
-      },
-      { enabled: !!memberId }
-    );
+  const { data: identificationListData } = useGetIndividualKymIdentificationListQuery(
+    {
+      id: String(memberId),
+    },
+    { enabled: !!memberId }
+  );
 
   const memberDetailData = useMemo(() => {
     if (!memberDetailQueryData?.members?.details?.data) {
       return;
     }
 
-    const memberData = memberDetailQueryData?.members?.details
-      ?.data as MemberDetailData;
+    const memberData = memberDetailQueryData?.members?.details?.data as MemberDetailData;
 
     const citizenshipData = identificationListData
       ? identificationListData?.members?.individual?.listIdentification?.data?.find(
-          (identification: KymIndIdentification | null) =>
-            identification?.idType === 'citizenship'
+          (identification: KymIndIdentification | null) => identification?.idType === 'citizenship'
         )
       : null;
 
@@ -54,19 +51,19 @@ export const useGetIndividualMemberDetails = ({
       name: memberData.name?.local,
       contact: memberData.contact,
       email: memberData.profile?.data?.formData?.contactDetails?.email,
-      gender:
-        memberData.profile?.data?.formData?.basicInformation?.gender?.local,
+      gender: memberData.profile?.data?.formData?.basicInformation?.gender?.local,
       address: formatAddress(memberData.address),
       age: memberData.profile?.data?.formData?.basicInformation?.age,
       maritalStatus: memberData.profile?.data?.formData?.maritalStatus?.local,
       dateJoined: memberData.dateJoined,
       citizenship: citizenshipData,
+      profilePicUrl: memberData?.profilePicUrl,
     };
   }, [memberDetailQueryData, identificationListData]);
 
   const { data: documentListQueryData } = useGetKymDocumentsListQuery(
     {
-      memberId: memberId,
+      memberId,
     },
     { enabled: !!memberId }
   );
@@ -76,11 +73,9 @@ export const useGetIndividualMemberDetails = ({
       return;
     }
 
-    const kymDocumentsList =
-      documentListQueryData?.document?.listKYMDocuments?.data;
+    const kymDocumentsList = documentListQueryData?.document?.listKYMDocuments?.data;
 
-    return kymDocumentsList?.find((doc) => doc?.fieldId === 'signaturePhoto')
-      ?.docData[0]?.url;
+    return kymDocumentsList?.find((doc) => doc?.fieldId === 'signaturePhoto')?.docData[0]?.url;
   }, [documentListQueryData]);
 
   const memberCitizenshipUrl = useMemo(() => {
@@ -88,11 +83,9 @@ export const useGetIndividualMemberDetails = ({
       return;
     }
 
-    const kymDocumentsList =
-      documentListQueryData?.document?.listKYMDocuments?.data;
+    const kymDocumentsList = documentListQueryData?.document?.listKYMDocuments?.data;
 
-    return kymDocumentsList?.find((doc) => doc?.fieldId === 'citizenshipPhoto')
-      ?.docData[0]?.url;
+    return kymDocumentsList?.find((doc) => doc?.fieldId === 'citizenshipPhoto')?.docData[0]?.url;
   }, [documentListQueryData]);
 
   return { memberDetailData, memberSignatureUrl, memberCitizenshipUrl };

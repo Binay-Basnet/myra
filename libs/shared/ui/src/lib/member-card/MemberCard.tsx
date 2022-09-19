@@ -25,7 +25,7 @@ export interface MemberCardProps {
   isInline?: boolean;
   memberDetails: {
     name?: string | undefined | null;
-    avatar: string;
+    avatar: string | undefined;
     memberID?: string | undefined | null;
     gender?: string | undefined | null;
     age?: string | number | undefined | null;
@@ -62,7 +62,7 @@ export interface MemberCardProps {
   cardBg?: string;
 }
 
-export function MemberCard({
+export const MemberCard = ({
   isInline = false,
   cardTitle,
   memberDetails,
@@ -74,7 +74,7 @@ export function MemberCard({
   viewProfileHandler,
   viewAccountTransactionsHandler,
   cardBg = 'white',
-}: MemberCardProps) {
+}: MemberCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const [modalImage, setModalImage] = useState<string>('');
@@ -109,11 +109,7 @@ export function MemberCard({
       <Box bg={cardBg} w={isInline ? '100%' : '320px'}>
         {!isInline && (
           <Box px="s16" py="s8">
-            <Text
-              fontSize="s3"
-              fontWeight="500"
-              color="neutralColorLight.Gray-60"
-            >
+            <Text fontSize="s3" fontWeight="500" color="neutralColorLight.Gray-60">
               {cardTitle ?? 'Member Info'}
             </Text>
           </Box>
@@ -134,12 +130,7 @@ export function MemberCard({
               name={memberDetails.name ?? 'Member'}
               size="lg"
               src={memberDetails.avatar}
-              onClick={() =>
-                handleModalOpen(
-                  memberDetails.avatar,
-                  memberDetails.name ?? 'Member'
-                )
-              }
+              onClick={() => handleModalOpen(memberDetails.avatar, memberDetails.name ?? 'Member')}
               cursor="pointer"
             />
             <Box>
@@ -164,20 +155,13 @@ export function MemberCard({
                           size="lg"
                           src={memberDetails.avatar}
                           onClick={() =>
-                            handleModalOpen(
-                              memberDetails.avatar,
-                              memberDetails.name ?? 'Member'
-                            )
+                            handleModalOpen(memberDetails.avatar, memberDetails.name ?? 'Member')
                           }
                           cursor="pointer"
                         />
 
                         <Box>
-                          <Text
-                            fontSize="r1"
-                            fontWeight="500"
-                            color="primary.500"
-                          >
+                          <Text fontSize="r1" fontWeight="500" color="primary.500">
                             {memberDetails.name ?? '-'}
                           </Text>
                           <Text fontSize="s3" fontWeight="400" color="gray.800">
@@ -190,18 +174,8 @@ export function MemberCard({
                       </Box>
 
                       {notice && (
-                        <Box
-                          border="1px"
-                          borderColor="warning.900"
-                          bg="warning.0"
-                          px="s8"
-                          py="s4"
-                        >
-                          <Text
-                            fontSize="s3"
-                            fontWeight={400}
-                            color="neutralColorLight.Gray-80"
-                          >
+                        <Box border="1px" borderColor="warning.900" bg="warning.0" px="s8" py="s4">
+                          <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-80">
                             {notice}
                           </Text>
                         </Box>
@@ -216,25 +190,13 @@ export function MemberCard({
                       flexDirection="column"
                       gap="s36"
                     >
-                      <Grid
-                        templateColumns="repeat(3, 1fr)"
-                        rowGap="s16"
-                        columnGap="s20"
-                      >
+                      <Grid templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
                         {memberDetails.dateJoined && (
                           <Box display="flex" flexDirection="column">
-                            <Text
-                              fontSize="r1"
-                              fontWeight={400}
-                              color="neutralColorLight.Gray-70"
-                            >
+                            <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-70">
                               Date Joined
                             </Text>
-                            <Text
-                              fontSize="r1"
-                              fontWeight={500}
-                              color="neutralColorLight.Gray-80"
-                            >
+                            <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
                               {memberDetails.dateJoined}
                             </Text>
                           </Box>
@@ -242,18 +204,10 @@ export function MemberCard({
 
                         {memberDetails.branch && (
                           <Box display="flex" flexDirection="column">
-                            <Text
-                              fontSize="r1"
-                              fontWeight={400}
-                              color="neutralColorLight.Gray-70"
-                            >
+                            <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-70">
                               Service Center
                             </Text>
-                            <Text
-                              fontSize="r1"
-                              fontWeight={500}
-                              color="neutralColorLight.Gray-80"
-                            >
+                            <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
                               {memberDetails.branch}
                             </Text>
                           </Box>
@@ -261,18 +215,10 @@ export function MemberCard({
 
                         {memberDetails.phoneNo && (
                           <Box display="flex" flexDirection="column">
-                            <Text
-                              fontSize="r1"
-                              fontWeight={400}
-                              color="neutralColorLight.Gray-70"
-                            >
+                            <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-70">
                               Phone No.
                             </Text>
-                            <Text
-                              fontSize="r1"
-                              fontWeight={500}
-                              color="neutralColorLight.Gray-80"
-                            >
+                            <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
                               {memberDetails.phoneNo}
                             </Text>
                           </Box>
@@ -280,18 +226,10 @@ export function MemberCard({
 
                         {memberDetails.email && (
                           <Box display="flex" flexDirection="column">
-                            <Text
-                              fontSize="r1"
-                              fontWeight={400}
-                              color="neutralColorLight.Gray-70"
-                            >
+                            <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-70">
                               Email
                             </Text>
-                            <Text
-                              fontSize="r1"
-                              fontWeight={500}
-                              color="neutralColorLight.Gray-80"
-                            >
+                            <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
                               {memberDetails.email}
                             </Text>
                           </Box>
@@ -299,18 +237,10 @@ export function MemberCard({
 
                         {memberDetails.address && (
                           <Box display="flex" flexDirection="column">
-                            <Text
-                              fontSize="r1"
-                              fontWeight={400}
-                              color="neutralColorLight.Gray-70"
-                            >
+                            <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-70">
                               Address
                             </Text>
-                            <Text
-                              fontSize="r1"
-                              fontWeight={500}
-                              color="neutralColorLight.Gray-80"
-                            >
+                            <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">
                               {memberDetails.address}
                             </Text>
                           </Box>
@@ -318,18 +248,13 @@ export function MemberCard({
                       </Grid>
 
                       <Box display="flex" gap="s8">
-                        <Button onClick={viewProfileHandler}>
-                          View Profile
-                        </Button>
+                        <Button onClick={viewProfileHandler}>View Profile</Button>
 
                         {signaturePath && (
                           <Button
                             variant="outline"
                             onClick={() =>
-                              handleModalOpen(
-                                signaturePath,
-                                `${memberDetails.name} - Signature`
-                              )
+                              handleModalOpen(signaturePath, `${memberDetails.name} - Signature`)
                             }
                           >
                             View Signature
@@ -365,18 +290,8 @@ export function MemberCard({
           </Box>
 
           {notice && (
-            <Box
-              border="1px"
-              borderColor="warning.900"
-              bg="warning.0"
-              px="s8"
-              py="s4"
-            >
-              <Text
-                fontSize="s3"
-                fontWeight={400}
-                color="neutralColorLight.Gray-80"
-              >
+            <Box border="1px" borderColor="warning.900" bg="warning.0" px="s8" py="s4">
+              <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-80">
                 {notice}
               </Text>
             </Box>
@@ -395,24 +310,14 @@ export function MemberCard({
                 width="auto"
                 height="147px"
                 src={signaturePath}
-                onClick={() =>
-                  handleModalOpen(
-                    signaturePath,
-                    `${memberDetails.name} - Signature`
-                  )
-                }
+                onClick={() => handleModalOpen(signaturePath, `${memberDetails.name} - Signature`)}
                 cursor="pointer"
               />
             </Box>
           )}
 
           {!isInline && accountInfo && (
-            <Box
-              border="1px"
-              borderColor="border.layout"
-              display="flex"
-              flexDirection="column"
-            >
+            <Box border="1px" borderColor="border.layout" display="flex" flexDirection="column">
               <Box
                 bg="neutralColorLight.Gray-10"
                 p="s16"
@@ -555,10 +460,7 @@ export function MemberCard({
               )}
 
               <Box px="s16" py="s8">
-                <Button
-                  variant="ghost"
-                  onClick={viewAccountTransactionsHandler}
-                >
+                <Button variant="ghost" onClick={viewAccountTransactionsHandler}>
                   View Account Transactions
                 </Button>
               </Box>
@@ -571,27 +473,18 @@ export function MemberCard({
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <Text
-              fontSize="r2"
-              color="neutralColorLight.Gray-80"
-              fontWeight="SemiBold"
-            >
+            <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
               {modalTitle}
             </Text>
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody display="flex" justifyContent="center" alignItems="center">
-            <Image
-              height="100%"
-              width="auto"
-              src={modalImage}
-              alt={modalTitle}
-            />
+            <Image height="100%" width="auto" src={modalImage} alt={modalTitle} />
           </ModalBody>
         </ModalContent>
       </Modal>
     </>
   );
-}
+};
 
 export default MemberCard;
