@@ -8,24 +8,28 @@ import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Alert, Box } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-const unitOptions = [
-  {
-    label: 'Day',
-    value: FrequencyTenure.Day,
-  },
-  {
-    label: 'Week',
-    value: FrequencyTenure.Week,
-  },
-  {
-    label: 'Month',
-    value: FrequencyTenure.Month,
-  },
-  {
-    label: 'Year',
-    value: FrequencyTenure.Year,
-  },
-];
+interface IRightElementProps {
+  rightElement: FrequencyTenure;
+  t: Record<string, string>;
+}
+
+export const inputRightElementText = (props: IRightElementProps) => {
+  const { rightElement, t } = props;
+  if (rightElement === FrequencyTenure.Day) {
+    return t['days'];
+  }
+  if (rightElement === FrequencyTenure.Week) {
+    return t['weeks'];
+  }
+  if (rightElement === FrequencyTenure.Month) {
+    return t['months'];
+  }
+  if (rightElement === FrequencyTenure.Year) {
+    return t['years'];
+  }
+
+  return '';
+};
 
 export const Tenure = () => {
   const { t } = useTranslation();
@@ -35,6 +39,25 @@ export const Tenure = () => {
   const { resetField, watch } = useFormContext();
 
   const products = watch('productId');
+
+  const unitOptions = [
+    {
+      label: t['day'],
+      value: FrequencyTenure.Day,
+    },
+    {
+      label: t['week'],
+      value: FrequencyTenure.Week,
+    },
+    {
+      label: t['month'],
+      value: FrequencyTenure.Month,
+    },
+    {
+      label: t['year'],
+      value: FrequencyTenure.Year,
+    },
+  ];
 
   const poductDetails = useGetAccountOpenProductDetailsQuery(
     { id: products },
@@ -82,18 +105,10 @@ export const Tenure = () => {
                 name="tenureNumber"
                 textAlign="right"
                 label={t['accountOpenNumber']}
-                __placeholder="0"
-                rightAddonText={
-                  rightElement && rightElement === FrequencyTenure.Day
-                    ? t['days']
-                    : rightElement === FrequencyTenure.Week
-                    ? t['weeks']
-                    : rightElement === FrequencyTenure.Month
-                    ? t['months']
-                    : rightElement === FrequencyTenure.Year
-                    ? t['years']
-                    : ''
-                }
+                rightAddonText={inputRightElementText({
+                  rightElement: rightElement as FrequencyTenure,
+                  t,
+                })}
               />
             </Box>
           </Box>
