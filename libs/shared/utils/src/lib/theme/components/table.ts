@@ -102,6 +102,35 @@ const variants = {
 };
 
 const sizes: Record<string, PartsStyleObject<typeof parts>> = {
+  small: {
+    th: {
+      px: '6',
+      py: '17px',
+      lineHeight: '4',
+      fontSize: 'r1',
+      height: '40px',
+    },
+    td: {
+      px: '6',
+      py: '2',
+      lineHeight: '5',
+      fontSize: 'r1',
+      height: '35px',
+    },
+    tfoot: {
+      th: {
+        px: '3',
+        pt: '0',
+        pb: '0',
+        height: '40px',
+      },
+    },
+    caption: {
+      px: '4',
+      py: '2',
+      fontSize: 'xs',
+    },
+  },
   compact: {
     th: {
       px: '6',
