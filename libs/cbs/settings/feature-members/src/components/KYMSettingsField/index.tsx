@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { FormField, FormSearchTerm, FormSection } from '@coop/cbs/data-access';
 
 import { KYMLoadingState } from '../KYMLoadingState';
@@ -16,15 +14,27 @@ interface KYMSettingsFieldProps {
   isExpanded: boolean;
 }
 
-export const KYMSettingsField = ({
-  fields,
-  kymType,
-  isExpanded,
-}: KYMSettingsFieldProps) => {
+const renderComponent = ({ fields, data, isExpanded, kymType }: any) => {
+  if (fields?.type === 'CustomComponent') {
+    return fields?.component({
+      isExpanded,
+      kymType,
+      section: data as unknown as FormSection,
+    });
+  }
+  if (!data) {
+    return <KYMLoadingState />;
+  }
+  if (data.__typename === 'FormField') {
+    return <KYMSettingsFormField fields={data as unknown as FormField} />;
+  }
+  return <KYMSettingsFormSection kymType={kymType} section={data as unknown as FormSection} />;
+};
+
+export const KYMSettingsField = ({ fields, kymType, isExpanded }: KYMSettingsFieldProps) => {
   const { data } = useGetPreDefinedFields(
     {
-      searchTerm:
-        fields.type !== 'group' ? fields.search_term : FormSearchTerm.Gender,
+      searchTerm: fields.type !== 'group' ? fields.search_term : FormSearchTerm.Gender,
       category: kymType,
     },
     { enabled: isExpanded }
@@ -35,24 +45,7 @@ export const KYMSettingsField = ({
   return (
     <>
       <KYMSettingsAccordionBtn isExpanded={isExpanded} title={fields.label} />
-
-      {fields.type === 'CustomComponent' ? (
-        fields.component &&
-        fields?.component({
-          isExpanded,
-          kymType,
-          section: data as unknown as FormSection,
-        })
-      ) : !data ? (
-        <KYMLoadingState />
-      ) : data.__typename === 'FormField' ? (
-        <KYMSettingsFormField fields={data as unknown as FormField} />
-      ) : (
-        <KYMSettingsFormSection
-          kymType={kymType}
-          section={data as unknown as FormSection}
-        />
-      )}
+      {renderComponent({ fields, data, isExpanded, kymType })}
     </>
   );
 };

@@ -75,9 +75,9 @@ export const KYMSettings = ({ fields, kymType }: KYMSettingsProps) => (
                   ) : (
                     <Fragment key={field?.label}>
                       <AccordionItem>
-                        {({ isExpanded }) => (
+                        {({ isExpanded: isExpand }) => (
                           <KYMSettingsField
-                            isExpanded={isExpanded}
+                            isExpanded={isExpand}
                             fields={field}
                             kymType={kymType}
                           />
@@ -152,6 +152,19 @@ interface KYMCustomFieldProps {
   };
 }
 
+const formSectionOptions = (section: any) => {
+  if (section._typename === 'FormSection') {
+    return { label: 'Group Fields', value: 'Group' };
+  }
+  if ((section as unknown as FormField).fieldType === 'SINGLE_SELECT') {
+    return {
+      label: 'Single Select',
+      value: 'SINGLE_SELECT',
+    };
+  }
+  return { label: 'Multi Select', value: 'MULTI_SELECT' };
+};
+
 export const KYMCustomField = ({ kymType, section }: KYMCustomFieldProps) => {
   const queryClient = useQueryClient();
   const { mutateAsync: updateCustomSection } = useUpdateCustomSectionMutation();
@@ -203,16 +216,7 @@ export const KYMCustomField = ({ kymType, section }: KYMCustomFieldProps) => {
             </Box>
             <Box w="50%">
               <Select
-                value={
-                  section.__typename === 'FormSection'
-                    ? { label: 'Group Fields', value: 'Group' }
-                    : (section as unknown as FormField).fieldType === 'SINGLE_SELECT'
-                    ? {
-                        label: 'Single Select',
-                        value: 'SINGLE_SELECT',
-                      }
-                    : { label: 'Multi Select', value: 'MULTI_SELECT' }
-                }
+                value={formSectionOptions(section)}
                 options={[
                   { label: 'Single Select', value: 'SINGLE_SELECT' },
                   { label: 'Multi Select', value: 'MULTI_SELECT' },
@@ -227,13 +231,11 @@ export const KYMCustomField = ({ kymType, section }: KYMCustomFieldProps) => {
           </Box>
         </FormProvider>
       </AccordionPanel>
-
       {section?.__typename === 'FormField' ? (
         <KYMSettingsFormField fields={section as unknown as FormField} />
       ) : (
         <KYMSettingsFormSection kymType={kymType} section={section as unknown as FormSection} />
       )}
-
       <AccordionPanel
         py="s12"
         borderTop="1px"
