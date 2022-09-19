@@ -15,6 +15,7 @@ import {
   PopoverTrigger,
   Text,
 } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 interface ITransactionsSidebarLayoutProps {
   children: React.ReactNode;
@@ -61,19 +62,19 @@ const transactionSidebarColumns = [
 
 const dropdownButtons = [
   {
-    label: 'New Deposit',
+    label: 'transactionSidebarNewDeposit',
     link: '/transactions/deposit/add',
   },
   {
-    label: 'New Withdraw',
+    label: 'transactionSidebarNewWithdraw',
     link: '/transactions/withdraw/add',
   },
   {
-    label: 'New Account Transfer',
+    label: 'transactionSidebarNewAccountTransfer',
     link: '/transactions/account-transfer/add',
   },
   {
-    label: 'New Loan Payment',
+    label: 'transactionSidebarNewLoanPayment',
     link: '/transactions/loan-payment/add',
   },
   // {
@@ -81,7 +82,7 @@ const dropdownButtons = [
   //   link: '/transactions/agent/add',
   // },
   {
-    label: 'New Market Representative Transaction',
+    label: 'transactionSidebarNewMarketRepresentativeTransaction',
     link: '/transactions/agent-transaction/add',
   },
 ];
@@ -89,18 +90,20 @@ const dropdownButtons = [
 export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayoutProps) => {
   const router = useRouter();
 
+  const { t } = useTranslation();
+
   return (
     <Box>
       <Box width="275px" p="s24" position="fixed">
         <Text fontSize="l1" fontWeight="600" color="gray.800">
-          Transactions
+          {t['transactionSidebarTransaction']}
         </Text>
         <Divider my="s16" />
 
         <Popover placement="bottom-start" gutter={3}>
           <PopoverTrigger>
             <Button width="full" size="lg" justifyContent="start" leftIcon={<AddIcon />}>
-              New Transaction
+              {t['transactionSidebarNewTransaction']}
             </Button>
           </PopoverTrigger>
 
@@ -128,7 +131,7 @@ export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayo
                   >
                     <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
                     <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                      {addButton.label}
+                      {t[addButton.label]}
                     </Text>
                   </Box>
                 ))}
@@ -148,7 +151,7 @@ export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayo
           justifyContent="start"
           leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
         >
-          Transaction Settings
+          {t['transactionSidebarTransactionSettings']}
         </Button>
       </Box>
       <Box

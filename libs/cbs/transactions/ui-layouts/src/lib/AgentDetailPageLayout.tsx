@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import { DetailPageSideBar } from '@coop/cbs/transactions/ui-components';
 import { Box, PathBar } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 interface AgentDetailPageLayoutProps {
   children: React.ReactNode;
@@ -10,29 +11,31 @@ interface AgentDetailPageLayoutProps {
 }
 
 export const AgentDetailPageLayout = ({ children }: AgentDetailPageLayoutProps) => {
+  const { t } = useTranslation();
+
   const router = useRouter();
 
   const id = router?.query?.['id'];
 
   const tabList = [
     {
-      title: 'Overview',
+      title: t['agentDetailPageLayoutOverview'],
       to: `/transactions/agent/${id}/overview`,
     },
     {
-      title: 'Assigned Members',
+      title: t['agentDetailPageLayoutAssigendMembers'],
       to: `/transactions/agent/${id}/assigned-members`,
     },
     {
-      title: 'Tasks',
+      title: t['agentDetailPageLayoutTasks'],
       to: `/transactions/agent/${id}/tasks`,
     },
     {
-      title: 'Documents',
+      title: t['agentDetailPageLayoutDocuments'],
       to: `/transactions/agent/${id}/documents`,
     },
     {
-      title: 'Activity',
+      title: t['agentDetailPageLayoutActivity'],
       to: `/transactions/agent/${id}/activity`,
     },
   ];
@@ -43,11 +46,11 @@ export const AgentDetailPageLayout = ({ children }: AgentDetailPageLayoutProps) 
         <PathBar
           paths={[
             {
-              label: 'Market Representative List',
+              label: t['agentDetailPageLayoutMarketRepresentativeList'],
               link: '/transactions/agent/list',
             },
             {
-              label: 'Market Representative Detail',
+              label: t['agentDetailPageLayoutMarketRepresentativeDetail'],
               link: router.asPath,
             },
           ]}

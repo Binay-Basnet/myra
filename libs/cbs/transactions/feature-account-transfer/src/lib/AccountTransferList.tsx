@@ -39,11 +39,11 @@ export const AccountTransferList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Date',
+        header: t['accountTransferListDate'],
         accessorFn: (row) => row?.node?.date ?? 'N/A',
       },
       {
-        header: 'Transaction ID',
+        header: t['accountTransferListTransactionId'],
         accessorFn: (row) => row?.node?.ID,
       },
       // {
@@ -74,14 +74,14 @@ export const AccountTransferList = () => {
       //   },
       // },
       {
-        header: 'Transaction Type',
+        header: t['accountTransferListTransactionType'],
         accessorFn: (row) => row?.node?.transferType,
         meta: {
           width: '40%',
         },
       },
       {
-        header: 'Amount',
+        header: t['accountTransferListAmount'],
         accessorFn: (row) => row?.node?.amount,
       },
       // {
@@ -113,9 +113,9 @@ export const AccountTransferList = () => {
   return (
     <>
       <TransactionPageHeader
-        heading={`Account Transfer List - ${featureCode?.accountTransferList}`}
+        heading={`${t['accountTransferListAccountTransferList']} - ${featureCode?.accountTransferList}`}
         // tabItems={tabList}
-        buttonLabel="New Account Transfer"
+        buttonLabel={t['accountTransferListNewAccountTransfer']}
         buttonHandler={() => router.push('/transactions/account-transfer/add')}
       />
 
@@ -128,7 +128,7 @@ export const AccountTransferList = () => {
           total: data?.transaction?.listTransfer?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listTransfer?.pageInfo,
         }}
-        searchPlaceholder="Search"
+        searchPlaceholder={t['accountTransferListSearch']}
       />
     </>
   );

@@ -10,8 +10,7 @@ import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 import { AddMemberModal } from '../components';
 
 export const AgentAssignedMembers = () => {
-  const [isAddMemberModalOpen, setIsAddMemberModalOpen] =
-    useState<boolean>(false);
+  const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState<boolean>(false);
 
   // const [isOverrideMemberAlertOpen, setIsOverrideMemberAlertOpen] =
   //   useState<boolean>(false);
@@ -39,58 +38,48 @@ export const AgentAssignedMembers = () => {
     { enabled: !!id }
   );
 
-  const rowData = useMemo(
-    () => data?.transaction?.assignedMemberList?.edges ?? [],
-    [data]
-  );
+  const rowData = useMemo(() => data?.transaction?.assignedMemberList?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         accessorFn: (row) => row?.node?.member?.name?.local,
-        header: t['memberListTableName'],
-        cell: (props) => {
-          return (
-            <Box display="flex" alignItems="center" gap="s12">
-              <Text
-                fontSize="s3"
-                textTransform="capitalize"
-                textOverflow="ellipsis"
-                overflow="hidden"
-              >
-                {props.getValue() as string}
-              </Text>
-            </Box>
-          );
-        },
+        header: t['agentAssignedMembersName'],
+        cell: (props) => (
+          <Box display="flex" alignItems="center" gap="s12">
+            <Text
+              fontSize="s3"
+              textTransform="capitalize"
+              textOverflow="ellipsis"
+              overflow="hidden"
+            >
+              {props.getValue() as string}
+            </Text>
+          </Box>
+        ),
 
         meta: {
           width: '60%',
         },
       },
       {
-        header: 'Account',
+        header: t['agentAssignedMembersAccount'],
         accessorFn: (row) => row?.node?.account?.id,
         meta: {
           width: '30%',
         },
       },
       {
-        header: 'Assigned Date',
+        header: t['agentAssignedMembersAssignedDate'],
         accessorFn: (row) => row?.node?.assignedDate?.split(' ')[0] ?? 'N/A',
       },
       {
         id: '_actions',
         header: '',
         accessorKey: 'actions',
-        cell: (props) => {
-          return (
-            <ActionPopoverComponent
-              items={[]}
-              id={props?.row?.original?.node?.id as string}
-            />
-          );
-        },
+        cell: (props) => (
+          <ActionPopoverComponent items={[]} id={props?.row?.original?.node?.id as string} />
+        ),
         meta: {
           width: '60px',
         },
@@ -111,8 +100,8 @@ export const AgentAssignedMembers = () => {
   return (
     <>
       <DetailPageContentCard
-        header="Assigned Members"
-        headerButtonLabel="Add Members"
+        header={t['agentAssignedMembersAssignedMembers']}
+        headerButtonLabel={t['agentAssignedMembersAddMember']}
         headerButtonHandler={handleAddMemberModalOpen}
       >
         <Table
@@ -120,7 +109,7 @@ export const AgentAssignedMembers = () => {
           getRowId={(row) => String(row?.node?.id)}
           isLoading={isFetching}
           columns={columns}
-          noDataTitle={'Assigned Members'}
+          noDataTitle={t['agentAssignedMembersAssignedMembers']}
           pagination={{
             total: data?.transaction?.assignedMemberList?.totalCount ?? 'Many',
             pageInfo: data?.transaction?.assignedMemberList?.pageInfo,

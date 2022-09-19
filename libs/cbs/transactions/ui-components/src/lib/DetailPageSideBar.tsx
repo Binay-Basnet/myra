@@ -6,6 +6,7 @@ import { Box, chakra, Tab, Tabs, Text } from '@chakra-ui/react';
 
 import { useGetAgentDetailDataQuery } from '@coop/cbs/data-access';
 import { Avatar, Divider, Icon, toast } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 const TabCol = chakra(Tab, {
   baseStyle: {
@@ -35,7 +36,7 @@ interface IVerticalSidebarProps {
 }
 
 export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   const router = useRouter();
   const pathArray = router.pathname.split('/');
 
@@ -58,7 +59,7 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
       toast({
         id: 'copy-agent-id',
         type: 'success',
-        message: 'Agent ID Copied to Clipboard',
+        message: t['agentDetailPageLayoutAgentIdCopied'],
       });
     });
   };

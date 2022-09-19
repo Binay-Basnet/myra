@@ -17,21 +17,7 @@ import {
   FormTextArea,
 } from '@coop/shared/form';
 import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
-
-const paymentModes = [
-  {
-    label: 'Cash',
-    value: DepositPaymentType.Cash,
-  },
-  {
-    label: 'Cheque',
-    value: DepositPaymentType.Cheque,
-  },
-  {
-    label: 'Bank Voucher',
-    value: DepositPaymentType.BankVoucher,
-  },
-];
+import { useTranslation } from '@coop/shared/utils';
 
 const sourceOfFundsList = [
   'Personal Savings',
@@ -40,21 +26,6 @@ const sourceOfFundsList = [
   'Property Sales',
   'Inheritances',
   'Compensation',
-];
-
-const depositors = [
-  {
-    label: 'Self',
-    value: DepositedBy.Self,
-  },
-  {
-    label: 'Market Representative',
-    value: DepositedBy.Agent,
-  },
-  {
-    label: 'Other',
-    value: DepositedBy.Other,
-  },
 ];
 
 // const denominationsOptions = [
@@ -96,6 +67,38 @@ type PaymentTableType = {
 };
 
 export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
+  const { t } = useTranslation();
+
+  const paymentModes = [
+    {
+      label: t['depositPaymentCash'],
+      value: DepositPaymentType.Cash,
+    },
+    {
+      label: t['depositPaymentCheque'],
+      value: DepositPaymentType.Cheque,
+    },
+    {
+      label: t['depositPaymentBankVoucher'],
+      value: DepositPaymentType.BankVoucher,
+    },
+  ];
+
+  const depositors = [
+    {
+      label: t['depositPaymentSelf'],
+      value: DepositedBy.Self,
+    },
+    {
+      label: t['depositPaymentMarketRepresentative'],
+      value: DepositedBy.Agent,
+    },
+    {
+      label: t['depositPaymentOther'],
+      value: DepositedBy.Other,
+    },
+  ];
+
   const { watch } = useFormContext();
 
   const selectedPaymentMode = watch('payment_type');
@@ -129,14 +132,18 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
       pb="100px"
     >
       <BoxContainer>
-        <FormSwitchTab label="Payment Mode" options={paymentModes} name="payment_type" />
+        <FormSwitchTab
+          label={t['depositPaymentPaymentMode']}
+          options={paymentModes}
+          name="payment_type"
+        />
 
         {selectedPaymentMode === DepositPaymentType.BankVoucher && (
           <InputGroupContainer>
             <GridItem colSpan={2}>
               <FormSelect
                 name="bankVoucher.bankId"
-                label="Bank Name"
+                label={t['depositPaymentBankName']}
                 options={
                   bankList?.bank?.bank?.list?.map((bank) => ({
                     label: bank?.name as string,
@@ -146,13 +153,26 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
               />
             </GridItem>
 
-            <FormInput name="bankVoucher.voucherId" label="Voucher ID" __placeholder="Voucher ID" />
+            <FormInput name="bankVoucher.voucherId" label={t['addDepositVoucherId']} />
 
-            <FormInput name="bankVoucher.amount" type="number" label="Amount" textAlign="right" />
+            <FormInput
+              name="bankVoucher.amount"
+              type="number"
+              label={t['depositPaymentAmount']}
+              textAlign="right"
+            />
 
-            <FormInput type="date" name="bankVoucher.depositedAt" label="Deposited Date" />
+            <FormInput
+              type="date"
+              name="bankVoucher.depositedAt"
+              label={t['depositPaymentDepositedDate']}
+            />
 
-            <FormInput type="text" name="bankVoucher.depositedBy" label="Deposited By" />
+            <FormInput
+              type="text"
+              name="bankVoucher.depositedBy"
+              label={t['depositPaymentDepositedBy']}
+            />
           </InputGroupContainer>
         )}
 
@@ -161,7 +181,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
             <GridItem colSpan={2}>
               <FormSelect
                 name="cheque.bankId"
-                label="Bank Name"
+                label={t['depositPaymentBankName']}
                 options={
                   bankList?.bank?.bank?.list?.map((bank) => ({
                     label: bank?.name as string,
@@ -171,25 +191,43 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
               />
             </GridItem>
 
-            <FormInput name="cheque.chequeNo" label="Cheque No" __placeholder="Cheque No" />
+            <FormInput name="cheque.chequeNo" label={t['depositePaymentChequeNo']} />
 
-            <FormInput name="cheque.amount" type="number" label="Amount" textAlign="right" />
+            <FormInput
+              name="cheque.amount"
+              type="number"
+              label={t['depositPaymentAmount']}
+              textAlign="right"
+            />
 
-            <FormInput type="date" name="cheque.depositedAt" label="Deposited Date" />
+            <FormInput
+              type="date"
+              name="cheque.depositedAt"
+              label={t['depositPaymentDepositedDate']}
+            />
 
-            <FormInput type="text" name="cheque.depositedBy" label="Deposited By" />
+            <FormInput
+              type="text"
+              name="cheque.depositedBy"
+              label={t['depositPaymentDepositedBy']}
+            />
           </InputGroupContainer>
         )}
 
         {selectedPaymentMode === DepositPaymentType.Cash && (
           <>
             <InputGroupContainer>
-              <FormInput name="cash.cashPaid" type="number" label="Cash" textAlign="right" />
+              <FormInput
+                name="cash.cashPaid"
+                type="number"
+                label={t['depositPaymentCash']}
+                textAlign="right"
+              />
             </InputGroupContainer>
 
             <FormSwitch
               name="cash.disableDenomination"
-              label="Disable Denomination"
+              label={t['depositPaymentDisableDenomination']}
               defaultChecked={false}
             />
 
@@ -199,19 +237,19 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
                 columns={[
                   {
                     accessor: 'value',
-                    header: 'Denomination',
+                    header: t['depositPaymentDenomination'],
                     cellWidth: 'auto',
                     fieldType: 'search',
                     searchOptions: denominationsOptions,
                   },
                   {
                     accessor: 'quantity',
-                    header: 'Quantity',
+                    header: t['depositPaymentQuantity'],
                     isNumeric: true,
                   },
                   {
                     accessor: 'amount',
-                    header: 'Amount',
+                    header: t['depositPaymentAmount'],
                     isNumeric: true,
                     accessorFn: (row) =>
                       row.quantity ? Number(row.value) * Number(row.quantity) : '0',
@@ -246,7 +284,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
             >
               <Box display="flex" justifyContent="space-between">
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  Total
+                  {t['depositPaymentTotal']}
                 </Text>
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   {totalCashPaid}
@@ -255,7 +293,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
 
               <Box display="flex" justifyContent="space-between">
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  Return
+                  {t['depositPaymentReturn']}
                 </Text>
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   {returnAmount}
@@ -264,7 +302,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
 
               <Box display="flex" justifyContent="space-between">
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  Grand Total
+                  {t['depositPaymentGrandTotal']}
                 </Text>
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   {totalCashPaid - returnAmount}
@@ -279,45 +317,49 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
         <Grid templateColumns="repeat(2, 1fr)" columnGap="s20">
           <FormSelect
             name="sourceOfFund"
-            label="Source of Fund"
+            label={t['depositPaymentSourceOfFund']}
             options={sourceOfFundsList.map((source) => ({
               label: source,
               value: source,
             }))}
           />
 
-          <FormFileInput size="md" label="File Upload (Optional)" name="doc_identifiers" />
+          <FormFileInput size="md" label={t['depositPaymentFileUpload']} name="doc_identifiers" />
         </Grid>
       </BoxContainer>
 
       <BoxContainer>
-        <FormSwitchTab label="Deposited By" options={depositors} name="depositedBy" />
+        <FormSwitchTab
+          label={t['depositPaymentDepositedBy']}
+          options={depositors}
+          name="depositedBy"
+        />
 
         {depositedBy === DepositedBy.Agent && (
           <InputGroupContainer>
-            <AgentSelect
-              name="agentId"
-              label="Market Representative"
-              __placeholder="Select Agent"
-            />
+            <AgentSelect name="agentId" label={t['depositPaymentMarketRepresentative']} />
           </InputGroupContainer>
         )}
 
         {depositedBy === DepositedBy.Other && (
           <>
             <InputGroupContainer>
-              <FormInput name="other_name" label="Name" __placeholder="Enter Name" />
+              <FormInput name="other_name" label={t['depositPaymentName']} />
             </InputGroupContainer>
 
             <Box width="50%">
-              <FormFileInput name="other_doc_identifiers" label="Citizenship Document" size="md" />
+              <FormFileInput
+                name="other_doc_identifiers"
+                label={t['depositPaymentCitizenshipDocument']}
+                size="md"
+              />
             </Box>
           </>
         )}
       </BoxContainer>
 
       <BoxContainer>
-        <FormTextArea name="notes" label="Note" __placeholder="Note" rows={5} />
+        <FormTextArea name="notes" label={t['depositPaymentNote']} rows={5} />
       </BoxContainer>
     </ContainerWithDivider>
   );

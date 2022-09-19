@@ -17,28 +17,7 @@ import {
   FormTextArea,
 } from '@coop/shared/form';
 import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
-
-const paymentModes = [
-  {
-    label: 'Cash',
-    value: WithdrawPaymentType.Cash,
-  },
-  {
-    label: 'Bank Cheque',
-    value: WithdrawPaymentType.BankCheque,
-  },
-];
-
-const withdrawnByOptions = [
-  {
-    label: 'Self',
-    value: WithdrawBy.Self,
-  },
-  {
-    label: 'Market Representative',
-    value: WithdrawBy.Agent,
-  },
-];
+import { useTranslation } from '@coop/shared/utils';
 
 const denominationsOptions = [
   { label: '1000x', value: '1000' },
@@ -75,6 +54,30 @@ type PaymentTableType = {
 };
 
 export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
+  const { t } = useTranslation();
+
+  const paymentModes = [
+    {
+      label: t['withdrawPaymentCash'],
+      value: WithdrawPaymentType.Cash,
+    },
+    {
+      label: t['withdrawPaymentBankCheque'],
+      value: WithdrawPaymentType.BankCheque,
+    },
+  ];
+
+  const withdrawnByOptions = [
+    {
+      label: t['withdrawPaymentSelf'],
+      value: WithdrawBy.Self,
+    },
+    {
+      label: t['withdrawPaymentMarketRepresentative'],
+      value: WithdrawBy.Agent,
+    },
+  ];
+
   const { watch } = useFormContext();
 
   const { data: bankList } = useGetBankListQuery();
@@ -108,15 +111,18 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
       display={mode === 1 ? 'flex' : 'none'}
     >
       <BoxContainer>
-        <FormSwitchTab label="Payment Mode" options={paymentModes} name="payment_type" />
+        <FormSwitchTab
+          label={t['withdrawPaymentPaymentMode']}
+          options={paymentModes}
+          name="payment_type"
+        />
 
         {selectedPaymentMode === WithdrawPaymentType.BankCheque && (
           <InputGroupContainer>
             <GridItem colSpan={2}>
               <FormSelect
                 name="bankCheque.bankId"
-                label="Bank Name"
-                __placeholder="Bank Name"
+                label={t['withdrawPaymentBankName']}
                 options={
                   bankList?.bank?.bank?.list?.map((bank) => ({
                     label: bank?.name as string,
@@ -126,23 +132,26 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
               />
             </GridItem>
 
-            <FormInput name="bankCheque.chequeNo" label="Cheque No" __placeholder="Cheque No" />
+            <FormInput name="bankCheque.chequeNo" label={t['withdrawPaymentChequeNo']} />
 
             <FormInput
               name="bankCheque.amount"
               type="number"
-              label="Amount"
+              label={t['withdrawPaymentAmount']}
               textAlign="right"
               __placeholder="0.00"
             />
 
-            <FormInput type="date" name="bankCheque.depositedAt" label="Deposited Date" />
+            <FormInput
+              type="date"
+              name="bankCheque.depositedAt"
+              label={t['withdrawPaymentDepositedDate']}
+            />
 
             <FormInput
               type="text"
               name="bankCheque.depositedBy"
-              label="Deposited By"
-              __placeholder="Deposited By"
+              label={t['withdrawPaymentDepositedBy']}
             />
           </InputGroupContainer>
         )}
@@ -153,13 +162,15 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
               <FormInput
                 name="cash.cashPaid"
                 type="number"
-                label="Cash"
+                label={t['withdrawPaymentCash']}
                 textAlign="right"
-                __placeholder="0.00"
               />
             </InputGroupContainer>
 
-            <FormSwitch name="cash.disableDenomination" label="Disable Denomination" />
+            <FormSwitch
+              name="cash.disableDenomination"
+              label={t['withdrawPaymentDisableDenomination']}
+            />
 
             {!disableDenomination && (
               <FormEditableTable<PaymentTableType>
@@ -167,19 +178,19 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
                 columns={[
                   {
                     accessor: 'value',
-                    header: 'Denomination',
+                    header: t['withdrawPaymentDenomination'],
                     cellWidth: 'auto',
                     fieldType: 'search',
                     searchOptions: denominationsOptions,
                   },
                   {
                     accessor: 'quantity',
-                    header: 'Quantity',
+                    header: t['withdrawPaymentQuantity'],
                     isNumeric: true,
                   },
                   {
                     accessor: 'amount',
-                    header: 'Amount',
+                    header: t['withdrawPaymentAmount'],
                     isNumeric: true,
                     accessorFn: (row) => Number(row.value) * Number(row.quantity),
                   },
@@ -213,7 +224,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
             >
               <Box display="flex" justifyContent="space-between">
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  Total
+                  {t['withdrawPaymentTotal']}
                 </Text>
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   {totalCashPaid}
@@ -222,7 +233,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
 
               <Box display="flex" justifyContent="space-between">
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  Return
+                  {t['withdrawPaymentReturn']}
                 </Text>
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   {returnAmount}
@@ -231,7 +242,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
 
               <Box display="flex" justifyContent="space-between">
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  Grand Total
+                  {t['withdrawPaymentGrandTotal']}
                 </Text>
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
                   {totalCashPaid - returnAmount}
@@ -254,26 +265,26 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
             }))}
           /> */}
 
-          <FormFileInput size="md" label="File Upload (Optional)" name="doc_identifiers" />
+          <FormFileInput size="md" label={t['withdrawPaymentFileUploade']} name="doc_identifiers" />
         </Grid>
       </BoxContainer>
 
       <BoxContainer>
-        <FormSwitchTab label="Withdrawn By" options={withdrawnByOptions} name="withdrawnBy" />
+        <FormSwitchTab
+          label={t['withdrawPaymentWithdrawnBy']}
+          options={withdrawnByOptions}
+          name="withdrawnBy"
+        />
 
         {withdrawnBy === WithdrawBy.Agent && (
           <InputGroupContainer>
-            <AgentSelect
-              name="agentId"
-              label="Market Representative"
-              __placeholder="Select Agent"
-            />
+            <AgentSelect name="agentId" label={t['withdrawPaymentMarketRepresentative']} />
           </InputGroupContainer>
         )}
       </BoxContainer>
 
       <BoxContainer>
-        <FormTextArea name="notes" label="Note" __placeholder="Note" rows={5} />
+        <FormTextArea name="notes" label={t['withdrawPaymentNote']} rows={5} />
       </BoxContainer>
     </ContainerWithDivider>
   );

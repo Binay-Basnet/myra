@@ -27,7 +27,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails } from '@coop/shared/utils';
+import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
 
 import { Payment } from '../components';
 
@@ -48,18 +48,6 @@ type WithdrawFormInput = Omit<WithdrawInput, 'cash'> & {
 /* eslint-disable-next-line */
 export interface AddWithdrawProps {}
 
-const accountTypes = {
-  [NatureOfDepositProduct.Mandatory]: 'Mandatory Saving Account',
-  [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
-  [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
-  [NatureOfDepositProduct.VoluntaryOrOptional]: 'Voluntary Saving Account',
-};
-
-const withdrawTypes = [
-  { label: 'Cheque', value: WithdrawWith.Cheque },
-  { label: 'Withdraw Slip', value: WithdrawWith.WithdrawSlip },
-];
-
 const cashOptions: Record<string, string> = {
   '1000': CashValue.Cash_1000,
   '500': CashValue.Cash_500,
@@ -76,7 +64,19 @@ const cashOptions: Record<string, string> = {
 const FINE = '0';
 
 export const AddWithdraw = () => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
+
+  const accountTypes = {
+    [NatureOfDepositProduct.Mandatory]: t['addDepositMandatorySavingAccount'],
+    [NatureOfDepositProduct.RecurringSaving]: t['addDepositRecurringSavingAccount'],
+    [NatureOfDepositProduct.TermSavingOrFd]: t['addDepositTermSavingAccount'],
+    [NatureOfDepositProduct.VoluntaryOrOptional]: t['addDepositVoluntarySavingAccount'],
+  };
+
+  const withdrawTypes = [
+    { label: t['addWithdrawCheque'], value: WithdrawWith.Cheque },
+    { label: t['addWithdrawWithdrawSlip'], value: WithdrawWith.WithdrawSlip },
+  ];
 
   const router = useRouter();
 
@@ -174,8 +174,8 @@ export const AddWithdraw = () => {
       asyncToast({
         id: 'add-new-withdraw',
         msgs: {
-          success: 'New Withdraw Added',
-          loading: 'Adding New Withdraw',
+          success: t['addWithdrawNewWithdrawAdded'],
+          loading: t['addWithdrawAddingNewWithdraw'],
         },
         onSuccess: () => router.push('/transactions/withdraw/list'),
         promise: mutateAsync({ data: filteredValues as WithdrawInput }),
@@ -188,8 +188,8 @@ export const AddWithdraw = () => {
       asyncToast({
         id: 'add-new-withdraw',
         msgs: {
-          success: 'New Withdraw Added',
-          loading: 'Adding New Withdraw',
+          success: t['addWithdrawNewWithdrawAdded'],
+          loading: t['addWithdrawAddingNewWithdraw'],
         },
         onSuccess: () => router.push('/transactions/withdraw/list'),
         promise: mutateAsync({ data: filteredValues as WithdrawInput }),
@@ -202,7 +202,7 @@ export const AddWithdraw = () => {
       <Container minW="container.xl" height="fit-content">
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
-            title={`New Withdraw - ${featureCode?.newWithdraw}`}
+            title={`${t['addWithdrawNewWithdraw']} - ${featureCode?.newWithdraw}`}
             closeLink="/transactions/withdraw/list"
           />
         </Box>
@@ -221,13 +221,12 @@ export const AddWithdraw = () => {
                   borderRight="1px"
                   borderColor="border.layout"
                 >
-                  <MemberSelect name="memberId" label="Member" __placeholder="Select Member" />
+                  <MemberSelect name="memberId" label={t['addWithdrawMember']} />
 
                   {memberId && (
                     <FormCustomSelect
                       name="accountId"
-                      label="Select Withdraw Account"
-                      __placeholder="Select Account"
+                      label={t['addWithdrawSelectWithdrawAccount']}
                       options={accountListData?.account?.list?.edges?.map((account) => ({
                         accountInfo: {
                           accountName: account.node?.product.productName,
@@ -251,24 +250,20 @@ export const AddWithdraw = () => {
                   {memberId && accountId && (
                     <FormSwitchTab
                       name="withdrawWith"
-                      label="Withdraw By"
+                      label={t['addWithdrawWithdrawBy']}
                       options={withdrawTypes}
                     />
                   )}
 
                   {memberId && accountId && withdrawn === WithdrawWith.Cheque && (
                     <InputGroupContainer>
-                      <FormInput name="chequeNo" label="Cheque No" __placeholder="Cheque No" />
+                      <FormInput name="chequeNo" label={t['addWithdrawChequeNo']} />
                     </InputGroupContainer>
                   )}
 
                   {memberId && accountId && withdrawn === WithdrawWith.WithdrawSlip && (
                     <InputGroupContainer>
-                      <FormInput
-                        name="withdrawSlipNo"
-                        label="Withdraw Slip No"
-                        __placeholder="Withdraw Slip No"
-                      />
+                      <FormInput name="withdrawSlipNo" label={t['addWithdrawWithdrawSlipNo']} />
                     </InputGroupContainer>
                   )}
 
@@ -277,7 +272,7 @@ export const AddWithdraw = () => {
                       type="number"
                       min={0}
                       name="amount"
-                      label="Withdraw Amount"
+                      label={t['addWithdrawWithdrawAmount']}
                       textAlign="right"
                       __placeholder="0.0"
                     />
@@ -295,7 +290,7 @@ export const AddWithdraw = () => {
                     >
                       <Box display="flex" justifyContent="space-between">
                         <Text fontSize="s3" fontWeight={500} color="gray.600">
-                          Withdraw Amount
+                          {t['addWithdrawWithdrawAmount']}
                         </Text>
 
                         <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
@@ -305,7 +300,7 @@ export const AddWithdraw = () => {
 
                       <Box display="flex" justifyContent="space-between">
                         <Text fontSize="s3" fontWeight={500} color="gray.600">
-                          Fine
+                          {t['addWithdrawFine']}
                         </Text>
 
                         <Text fontSize="s3" fontWeight={500} color="danger.500">
@@ -315,7 +310,7 @@ export const AddWithdraw = () => {
 
                       <Box display="flex" justifyContent="space-between">
                         <Text fontSize="s3" fontWeight={500} color="gray.600">
-                          Total Withdraw
+                          {t['addWithdrawTotalWithdraw']}
                         </Text>
 
                         <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
@@ -387,7 +382,7 @@ export const AddWithdraw = () => {
                 mode === 0 ? (
                   <Box display="flex" gap="s32">
                     <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
-                      Total Deposit Amount
+                      {t['addWithdrawTotalWithdrawAmount']}
                     </Text>
                     <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
                       {totalWithdraw ?? '---'}
@@ -395,11 +390,13 @@ export const AddWithdraw = () => {
                   </Box>
                 ) : (
                   <Button variant="solid" onClick={() => setMode(0)}>
-                    Previous
+                    {t['addWithdrawPrevious']}
                   </Button>
                 )
               }
-              mainButtonLabel={mode === 0 ? 'Proceed to Payment' : 'Submit'}
+              mainButtonLabel={
+                mode === 0 ? t['addWithdrawProceedToPayment'] : t['addWithdrawSubmit']
+              }
               mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
             />
           </Container>
