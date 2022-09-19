@@ -33,6 +33,7 @@ export const FeesAndCharge = () => {
 
   const isEbankingEnabled = watch('eBanking');
   const isMobileBanking = watch('mobileBanking');
+  const isATMenabled = watch('atmFacility');
   const serviceCharge = watch('serviceCharge');
 
   useEffect(() => {
@@ -86,6 +87,27 @@ export const FeesAndCharge = () => {
 
         setProductData((previous) =>
           previous.filter((product) => product.serviceName !== 'Mobile-Banking')
+        );
+      }
+    }
+  }, [isMobileBanking]);
+
+  useEffect(() => {
+    if (productData && typeof isATMenabled === 'boolean') {
+      if (isMobileBanking) {
+        setProductData((previous) =>
+          previous
+            ? [...previous, { amount: 0, serviceName: 'ATM-Facility' }]
+            : [{ amount: 0, serviceName: 'ATM-Facility' }]
+        );
+      } else {
+        const index = productData.findIndex((product) => product.serviceName === 'ATM-Facility');
+
+        unregister(`serviceCharge.${index}.name`);
+        unregister(`serviceCharge.${index}.amount`);
+
+        setProductData((previous) =>
+          previous.filter((product) => product.serviceName !== 'ATM-Facility')
         );
       }
     }

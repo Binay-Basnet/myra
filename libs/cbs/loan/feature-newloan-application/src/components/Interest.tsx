@@ -16,8 +16,8 @@ export const Interest = () => {
   const ceoInterest = watch('isCeoAuthority');
   const BoardInterest = watch('isBoardAuthority');
   const valueInput =
-    Number(product?.interest?.defaultRate) +
-    (ceoInterest ? Number(product?.interest?.ceoAuthority) : 0) +
+    Number(product?.interest?.defaultRate) -
+    (ceoInterest ? Number(product?.interest?.ceoAuthority) : 0) -
     (BoardInterest ? Number(product?.interest?.boardAuthority) : 0);
 
   useEffect(() => {
