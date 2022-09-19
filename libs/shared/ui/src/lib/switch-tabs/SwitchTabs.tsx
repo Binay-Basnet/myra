@@ -1,23 +1,18 @@
 import React, { useEffect } from 'react';
-import {
-  Box,
-  Flex,
-  useRadio,
-  useRadioGroup,
-  UseRadioProps,
-} from '@chakra-ui/react';
+import { Box, Flex, useRadio, useRadioGroup, UseRadioProps } from '@chakra-ui/react';
 
 import TextFields from '../text-fields/TextFields';
 
 const SwitchTab = (props: UseRadioProps & { children: React.ReactNode }) => {
   const { getInputProps, getCheckboxProps } = useRadio(props);
+  const { name, children, isChecked } = props;
 
   const { id, ...input } = getInputProps();
   const checkbox = getCheckboxProps();
 
   return (
     <Box as="label">
-      <input {...input} id={id ?? props.name} />
+      <input {...input} id={id ?? name} />
       <Box
         {...checkbox}
         cursor="pointer"
@@ -43,13 +38,10 @@ const SwitchTab = (props: UseRadioProps & { children: React.ReactNode }) => {
         px="s16"
         gap="s8"
       >
-        <Box
-          w="6px"
-          h="6px"
-          rounded="full"
-          bg={props.isChecked ? 'primary.500' : 'gray.500'}
-        ></Box>
-        <TextFields variant="switch">{props.children}</TextFields>
+        <Box w="6px" h="6px" rounded="full" bg={isChecked ? 'primary.500' : 'gray.500'} />
+        <TextFields variant="switch" whiteSpace="nowrap">
+          {children}
+        </TextFields>
       </Box>
     </Box>
   );
@@ -70,7 +62,7 @@ export interface SwitchTabsProps {
   defaultValue?: string;
 }
 
-export function SwitchTabs({
+export const SwitchTabs = ({
   options,
   value,
   name,
@@ -80,11 +72,11 @@ export function SwitchTabs({
   errorText,
   helperText,
   defaultValue,
-}: SwitchTabsProps) {
+}: SwitchTabsProps) => {
   const { getRootProps, getRadioProps, setValue } = useRadioGroup({
-    name: name,
+    name,
     defaultValue: value?.toString(),
-    onChange: onChange,
+    onChange,
   });
 
   const group = getRootProps();
@@ -115,12 +107,12 @@ export function SwitchTabs({
         borderRadius="br2"
         width="fit-content"
       >
-        {options?.map((value, index) => {
-          const radio = getRadioProps({ value: value.value.toString() });
+        {options?.map((val) => {
+          const radio = getRadioProps({ value: val.value.toString() });
 
           return (
-            <SwitchTab name={name} key={`${value}${index}`} {...radio} id={id}>
-              {value.label}
+            <SwitchTab name={name} key={val.label} {...radio} id={id}>
+              {val.label}
             </SwitchTab>
           );
         })}
@@ -136,6 +128,6 @@ export function SwitchTabs({
       ) : null}
     </Box>
   );
-}
+};
 
 export default SwitchTabs;

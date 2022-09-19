@@ -91,6 +91,7 @@ query getLoanProductEditData($id: ID!) {
             maxLoanAmount
             repaymentScheme
             allowPartialInstallment
+            installmentFrequency
             isMonthlyInstallmentCompulsory
             interestMethod
             isPenaltyApplicable

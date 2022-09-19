@@ -6,6 +6,7 @@ export * from './DefaultAccount';
 export * from './DepositFrequency';
 export * from './Document';
 export * from './GeneralSetup';
+export * from './InstallmentFrequency';
 export * from './InsuranceApplicable';
 export * from './Interest';
 export * from './LedgerMapping';

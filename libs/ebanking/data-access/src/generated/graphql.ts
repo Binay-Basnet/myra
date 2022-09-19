@@ -6276,6 +6276,7 @@ export type LoanAccountInput = {
   LoanAccountName?: InputMaybe<Scalars['String']>;
   appliedLoanAmount: Scalars['String'];
   collateralData?: InputMaybe<Array<InputMaybe<LoanAccountCollateralData>>>;
+  documents?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   gracePeriod?: InputMaybe<LoanAccountGraceInput>;
   gurantee_details?: InputMaybe<Array<InputMaybe<LoanAccountGuranteeInput>>>;
   intrestRate?: InputMaybe<Scalars['Float']>;

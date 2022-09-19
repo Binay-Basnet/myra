@@ -3270,6 +3270,9 @@ const en: Record<string, string> = {
   depositProductDefaultDepositSubHeader:
     'If the member does not specify particular account for deposit, this mapped account will be set globally. Normally this is a compulsory account type.',
   shareConfirmPayment: 'Confirm Payment',
+  loanProductInstallmentFrequency: 'Installment Frequency',
+  loanProductSelectinstallmentfrequency:
+    'Select installment frequency. Further details have to be added during account opening. ',
 
   // transaction sidebar layout
   transactionSidebarTransaction: 'Transactions',
