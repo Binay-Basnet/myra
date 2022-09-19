@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import {
@@ -13,12 +14,18 @@ export const GeneralSetup = () => {
   const { t } = useTranslation();
   const { watch } = useFormContext();
   const productType = watch('productType');
+  const [triggerProductSubType, settTiggerProductSubType] = useState(false);
 
   const { data: productDataList } = useGetLoanProductSettingsQuery();
 
-  const { data: productSubTypeList } = useGetLoanProductSubTypeQuery({
-    productTypeId: productType,
-  });
+  const { data: productSubTypeList } = useGetLoanProductSubTypeQuery(
+    {
+      productTypeId: productType,
+    },
+    {
+      enabled: triggerProductSubType,
+    }
+  );
 
   const productTypesList = productDataList?.settings?.general?.loan?.productType?.productTypes;
   const productSubTypesList =
@@ -44,6 +51,10 @@ export const GeneralSetup = () => {
       value: NatureOfLoanProduct.Unprogressive,
     },
   ];
+
+  useEffect(() => {
+    settTiggerProductSubType(true);
+  }, [productType]);
 
   return (
     <FormSection header="loanProductGeneralSetup">

@@ -34,6 +34,7 @@ import {
   RequiredDocumentSetup,
   TypesOfMember,
 } from '../components/form';
+import { Tenure } from '../components/form/Tenure';
 
 export const SettingsLoanProductForm = () => {
   const router = useRouter();
@@ -387,7 +388,7 @@ export const SettingsLoanProductForm = () => {
               </>
             )}
 
-            {/* <Tenure /> */}
+            <Tenure />
             <AmountLimit />
             <LoanRepaymentSchemes />
             <PartialPayment />
