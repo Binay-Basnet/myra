@@ -12215,13 +12215,13 @@ export type GetLoanListQuery = {
         node?: {
           id: string;
           LoanAccountName?: string | null;
+          productType: string;
           createdAt: string;
           member: {
             id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
             profilePicUrl?: string | null;
           };
-          product: { productName: string };
         } | null;
       }> | null;
       pageInfo?: {

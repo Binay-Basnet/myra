@@ -1,29 +1,29 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { Frequency } from '@coop/cbs/data-access';
+import { FrequencyTenure } from '@coop/cbs/data-access';
 import { BoxContainer, SubHeadingText } from '@coop/shared/components';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Box, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IRightElementProps {
-  rightElement: Frequency;
+  rightElement: FrequencyTenure;
   t: Record<string, string>;
 }
 
 export const inputRightElementText = (props: IRightElementProps) => {
   const { rightElement, t } = props;
-  if (rightElement === Frequency.Daily) {
+  if (rightElement === FrequencyTenure.Day) {
     return t['days'];
   }
-  if (rightElement === Frequency.Weekly) {
+  if (rightElement === FrequencyTenure.Week) {
     return t['weeks'];
   }
-  if (rightElement === Frequency.Monthly) {
+  if (rightElement === FrequencyTenure.Month) {
     return t['months'];
   }
-  if (rightElement === Frequency.Yearly) {
+  if (rightElement === FrequencyTenure.Year) {
     return t['years'];
   }
 
@@ -50,19 +50,19 @@ export const Tenure = () => {
   const unitOptions = [
     {
       label: t['day'],
-      value: Frequency.Daily,
+      value: FrequencyTenure.Day,
     },
     {
       label: t['week'],
-      value: Frequency.Weekly,
+      value: FrequencyTenure.Week,
     },
     {
       label: t['month'],
-      value: Frequency.Monthly,
+      value: FrequencyTenure.Month,
     },
     {
       label: t['year'],
-      value: Frequency.Yearly,
+      value: FrequencyTenure.Year,
     },
   ];
 
@@ -104,7 +104,7 @@ export const Tenure = () => {
                 textAlign="right"
                 label={t['depositProductMinimumTenure']}
                 rightAddonText={inputRightElementText({
-                  rightElement: rightElement as Frequency,
+                  rightElement: rightElement as FrequencyTenure,
                   t,
                 })}
               />
@@ -116,7 +116,7 @@ export const Tenure = () => {
                 textAlign="right"
                 label={t['depositProductMaxinumTenure']}
                 rightAddonText={inputRightElementText({
-                  rightElement: rightElement as Frequency,
+                  rightElement: rightElement as FrequencyTenure,
                   t,
                 })}
               />

@@ -27,7 +27,18 @@ query getLoanProductSettings {
             productType
             description
           }
-          productSubTypes {
+        }
+      }
+    }
+  }
+}
+
+query getLoanProductSubType($productTypeID: String) {
+  settings {
+    general {
+      loan {
+        productType {
+          productSubTypes(productTypeID: $productTypeID) {
             id
             productSubType
             productTypeID
@@ -37,7 +48,6 @@ query getLoanProductSettings {
     }
   }
 }
-
 
 query getLoanInsuranceScheme {
   settings {

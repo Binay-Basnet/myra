@@ -10,7 +10,7 @@ import { useTranslation } from '@coop/shared/utils';
 import { BoxContainer } from '../formui';
 
 interface IRightElementProps {
-  rightElement: Frequency;
+  rightElement: FrequencyTenure;
   t: Record<string, string>;
 }
 
@@ -95,10 +95,10 @@ export const LoanRepayment = () => {
                   name="minGraceDurationUnitNumber"
                   textAlign="right"
                   label={t['loanProductNumber']}
-                  rightAddonText={
-                    rightElementMin &&
-                    inputRightElementText({ rightElement: rightElementMin as FrequencyTenure, t })
-                  }
+                  rightAddonText={inputRightElementText({
+                    rightElement: rightElementMin as FrequencyTenure,
+                    t,
+                  })}
                 />
               </Box>
             </Box>
@@ -124,10 +124,10 @@ export const LoanRepayment = () => {
                   name="maxGraceDurationUnitNumber"
                   textAlign="right"
                   label={t['loanProductNumber']}
-                  rightAddonText={
-                    rightElementMax &&
-                    inputRightElementText({ rightElement: rightElementMax as FrequencyTenure, t })
-                  }
+                  rightAddonText={inputRightElementText({
+                    rightElement: rightElementMax as FrequencyTenure,
+                    t,
+                  })}
                 />
               </Box>
             </Box>
