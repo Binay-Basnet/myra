@@ -1,4 +1,5 @@
 import { ChakraModal, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 interface IOverrideAlertModalProps {
   isOpen: boolean;
@@ -6,20 +7,23 @@ interface IOverrideAlertModalProps {
   onConfirm: () => void;
 }
 
-export const OverrideAlertModal = ({ isOpen, onCancel, onConfirm }: IOverrideAlertModalProps) => (
-  <ChakraModal
-    open={isOpen}
-    onClose={onCancel}
-    title="Override Alert"
-    primaryButtonLabel="Confirm"
-    primaryButtonHandler={onConfirm}
-    secondaryButtonLabel="Cancel"
-    secondaryButtonHandler={onCancel}
-    isDanger
-  >
-    <Text fontSize="r1" fontWeight={400} color="gray.600">
-      This member has already been assigned to an market representative. Do you want to override the
-      market representative?
-    </Text>
-  </ChakraModal>
-);
+export const OverrideAlertModal = ({ isOpen, onCancel, onConfirm }: IOverrideAlertModalProps) => {
+  const { t } = useTranslation();
+
+  return (
+    <ChakraModal
+      open={isOpen}
+      onClose={onCancel}
+      title={t['agentAssignedMembersOverrideAlert']}
+      primaryButtonLabel={t['agentAssignedMembersConfirm']}
+      primaryButtonHandler={onConfirm}
+      secondaryButtonLabel={t['agentAssignedMembersCancel']}
+      secondaryButtonHandler={onCancel}
+      isDanger
+    >
+      <Text fontSize="r1" fontWeight={400} color="gray.600">
+        {t['agentAssignedMembersHelperText']}
+      </Text>
+    </ChakraModal>
+  );
+};

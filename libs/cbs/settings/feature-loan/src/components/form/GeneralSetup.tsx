@@ -1,22 +1,40 @@
-import { NatureOfLoanProduct, useGetLoanProductSettingsQuery } from '@coop/cbs/data-access';
+import { useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
+
+import {
+  NatureOfLoanProduct,
+  useGetLoanProductSettingsQuery,
+  useGetLoanProductSubTypeQuery,
+} from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { FormSection, GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const GeneralSetup = () => {
   const { t } = useTranslation();
+  const { watch } = useFormContext();
+  const productType = watch('productType');
+  const [triggerProductSubType, settTiggerProductSubType] = useState(false);
 
   const { data: productDataList } = useGetLoanProductSettingsQuery();
 
+  const { data: productSubTypeList } = useGetLoanProductSubTypeQuery(
+    {
+      productTypeId: productType,
+    },
+    {
+      enabled: triggerProductSubType,
+    }
+  );
+
   const productTypesList = productDataList?.settings?.general?.loan?.productType?.productTypes;
+  const productSubTypesList =
+    productSubTypeList?.settings?.general?.loan?.productType?.productSubTypes;
 
   const productTypes = productTypesList?.map((item) => ({
     label: item?.productType as string,
     value: item?.id as string,
   }));
-
-  const productSubTypesList =
-    productDataList?.settings?.general?.loan?.productType?.productSubTypes;
 
   const productSubTypes = productSubTypesList?.map((item) => ({
     label: item?.productSubType as string,
@@ -33,6 +51,10 @@ export const GeneralSetup = () => {
       value: NatureOfLoanProduct.Unprogressive,
     },
   ];
+
+  useEffect(() => {
+    settTiggerProductSubType(true);
+  }, [productType]);
 
   return (
     <FormSection header="loanProductGeneralSetup">

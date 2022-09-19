@@ -3,8 +3,11 @@ import { useRouter } from 'next/router';
 
 import { useGetAgentDetailDataQuery, useGetAgentTodayListDataQuery } from '@coop/cbs/data-access';
 import { Box, Button, Grid, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const AssignedMembersCard = () => {
+  const { t } = useTranslation();
+
   const router = useRouter();
 
   const id = router?.query?.['id'];
@@ -30,7 +33,7 @@ export const AssignedMembersCard = () => {
     <Grid p="s16" bg="white" borderRadius="br2" templateColumns="repeat(3, 1fr)" columnGap="s20">
       <Box display="flex" flexDirection="column" gap="s4" alignItems="flex-start">
         <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
-          Total Assigned Members
+          {t['agentOverviewTotalAssignedMembers']}
         </Text>
         <Text fontSize="l1" fontWeight={500} color="neutralColorLight.Gray-60">
           {agentDetailQueryData?.transaction?.agentDetail?.data?.totalMembers ?? 0}
@@ -40,12 +43,12 @@ export const AssignedMembersCard = () => {
           variant="link"
           onClick={() => router.push(`/transactions/agent/${id}/assigned-members`)}
         >
-          View All Members
+          {t['agentOverviewViewAllMembers']}
         </Button>
       </Box>
       <Box display="flex" flexDirection="column" gap="s4" alignItems="flex-start">
         <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
-          Today&apos;s Member List
+          {t['agentOverviewTodaysMemberList']}
         </Text>
         <Text fontSize="l1" fontWeight={500} color="neutralColorLight.Gray-60">
           {todaysCount}

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 import { AddDeposit } from '@coop/cbs/transactions/deposit';
 import { MainLayout } from '@coop/shared/ui';

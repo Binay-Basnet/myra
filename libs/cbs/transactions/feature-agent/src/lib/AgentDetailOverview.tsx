@@ -10,6 +10,7 @@ import {
 import { AssignedMembersCard } from '@coop/cbs/transactions/ui-components';
 import { FormEditableTable } from '@coop/shared/form';
 import { Alert, asyncToast, Box, Button, DetailPageContentCard, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AgentDetailOverviewProps {}
@@ -22,6 +23,8 @@ type DepositAccountTable = {
 };
 
 export const AgentDetailOverview = () => {
+  const { t } = useTranslation();
+
   const router = useRouter();
 
   const id = router?.query?.['id'];
@@ -115,8 +118,8 @@ export const AgentDetailOverview = () => {
         ),
       }),
       msgs: {
-        loading: "Adding Today's List",
-        success: "Added Today's List",
+        loading: t['agentOverviewAddingTodaysList'],
+        success: t['agentOverviewAddedTodaysList'],
       },
       onSuccess: () => null,
     });
@@ -143,24 +146,24 @@ export const AgentDetailOverview = () => {
       {!showMemberTable && (
         <Alert
           status="info"
-          title="Create Today's List"
+          title={t['agentOverviewCreateTodaysList']}
           showUndo
-          undoText="Create Today's List"
+          undoText={t['agentOverviewCreateTodaysList']}
           undoHandler={() => setShowMemberTable(true)}
         />
       )}
 
       {showMemberTable && (
         <DetailPageContentCard
-          header="Today's List"
+          header={t['agentOverviewTodaysList']}
           showFooter
           footerButtons={
             <>
               <Button variant="ghost" onClick={handleDiscardChanges}>
-                Discard
+                {t['agentOverviewDiscard']}
               </Button>
 
-              <Button onClick={handleSaveTodayList}>Save Changes</Button>
+              <Button onClick={handleSaveTodayList}>{t['agentOverviewSaveChanges']}</Button>
             </>
           }
         >
@@ -171,7 +174,7 @@ export const AgentDetailOverview = () => {
                 columns={[
                   {
                     accessor: 'member',
-                    header: 'Member',
+                    header: t['agentOverviewMember'],
                     cellWidth: 'auto',
                     fieldType: 'search',
                     searchOptions: memberListSearchOptions,
@@ -194,7 +197,7 @@ export const AgentDetailOverview = () => {
                   },
                   {
                     accessor: 'account',
-                    header: 'Account',
+                    header: t['agentOverviewAccount'],
                     // isNumeric: true,
                     loadOptions: (row) => getMemberAccounts(row?.member),
                     fieldType: 'select',
@@ -202,7 +205,7 @@ export const AgentDetailOverview = () => {
                   },
                   {
                     accessor: 'amount',
-                    header: 'Amount',
+                    header: t['agentOverviewAmount'],
                     isNumeric: true,
                     // accessorFn: (row) =>
                     //   row.quantity
@@ -211,7 +214,7 @@ export const AgentDetailOverview = () => {
                   },
                 ]}
                 // defaultData={accountListDefaultData}
-                searchPlaceholder="Search or add member"
+                searchPlaceholder={t['agentOverviewSearchPlaceholder']}
                 canDeleteRow
                 // canAddRow={false}
               />

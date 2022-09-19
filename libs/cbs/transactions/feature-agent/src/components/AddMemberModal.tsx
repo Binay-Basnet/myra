@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import { AssignMembersInput, useSetAddMemberToAgentDataMutation } from '@coop/cbs/data-access';
 import { asyncToast, Box, ChakraModal, FormAccountSelect, FormMemberSelect } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { OverrideAlertModal } from './index';
 
@@ -18,6 +19,8 @@ export const AddMemberModal = ({
   onClose,
   refetchAssignedMembersList,
 }: IAddMemberModalProps) => {
+  const { t } = useTranslation();
+
   const router = useRouter();
 
   const id = router?.query?.['id'];
@@ -40,8 +43,8 @@ export const AddMemberModal = ({
         data: getValues(),
       }),
       msgs: {
-        loading: 'Assigning New Member',
-        success: 'Assigned New Member',
+        loading: t['agentAssignedMembersAssigningNewMember'],
+        success: t['agentAssignedMembersAssignedNewMember'],
       },
       onSuccess: (response) => {
         if (response?.transaction?.addMemberToAgent?.error) {
@@ -70,8 +73,8 @@ export const AddMemberModal = ({
         override: true,
       }),
       msgs: {
-        loading: 'Assigning New Member',
-        success: 'Assigned New Member',
+        loading: t['agentAssignedMembersAssigningNewMember'],
+        success: t['agentAssignedMembersAssignedNewMember'],
       },
       onSuccess: () => {
         setIsOverrideMemberAlertOpen(false);
@@ -86,15 +89,19 @@ export const AddMemberModal = ({
       <ChakraModal
         open={isOpen}
         onClose={onClose}
-        title="Add Member"
+        title={t['agentAssignedMembersAddMember']}
         primaryButtonLabel="Save"
         primaryButtonHandler={handleAssignMember}
       >
         <FormProvider {...methods}>
           <Box display="flex" flexDirection="column" gap="s20" pb="200px">
-            <FormMemberSelect name="memberId" label="Member" />
+            <FormMemberSelect name="memberId" label={t['agentAssignedMembersMember']} />
 
-            <FormAccountSelect name="accountId" label="Account" memberId={memberId} />
+            <FormAccountSelect
+              name="accountId"
+              label={t['agentAssignedMembersAccount']}
+              memberId={memberId}
+            />
           </Box>
         </FormProvider>
       </ChakraModal>

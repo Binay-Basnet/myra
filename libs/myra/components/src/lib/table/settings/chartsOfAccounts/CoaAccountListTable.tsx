@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 
 import { useGetCoaListQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
@@ -9,7 +8,6 @@ import { ActionPopoverComponent } from '../../../actionPopover/ActionPopover';
 
 export const CoaAccountListTable = () => {
   const { t } = useTranslation();
-  const router = useRouter();
 
   const { data, isFetching } = useGetCoaListQuery({
     filter: {
@@ -25,7 +23,7 @@ export const CoaAccountListTable = () => {
   const popoverTitle = [
     {
       title: 'depositProductEdit',
-      onClick: (id: string) => router.push(`/settings/general/test/edit/${id}`),
+      onClick: () => null,
     },
   ];
 
@@ -45,13 +43,7 @@ export const CoaAccountListTable = () => {
       {
         header: t['settingsCoaTableAccountClass'],
         accessorFn: (row) => row?.accountClass,
-        cell: (props) => {
-          return (
-            <span>
-              {props.getValue() ? `${props.getValue() as string}` : '-'}
-            </span>
-          );
-        },
+        cell: (props) => <span>{props.getValue() ? `${props.getValue() as string}` : '-'}</span>,
       },
 
       {
@@ -63,9 +55,7 @@ export const CoaAccountListTable = () => {
         id: '_actions',
         header: '',
         accessorKey: 'actions',
-        cell: (props) => (
-          <ActionPopoverComponent items={popoverTitle} id={props?.row?.id} />
-        ),
+        cell: (props) => <ActionPopoverComponent items={popoverTitle} id={props?.row?.id} />,
       },
     ],
     [t]

@@ -217,21 +217,6 @@ query getLoanProductTypes {
   }
 }
 
-query getLoanProductSubType($productTypeId: String) {
-  settings {
-    general {
-      loan {
-        productType {
-          productSubTypes(productTypeID: $productTypeId) {
-            id
-            productSubType
-          }
-        }
-      }
-    }
-  }
-}
-
 query getCollateralList {
   settings {
     general {

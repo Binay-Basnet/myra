@@ -19,6 +19,7 @@ import {
 } from '@coop/cbs/transactions/ui-containers';
 import { FormInput, FormSwitchTab, FormTextArea } from '@coop/shared/form';
 import {
+  asyncToast,
   Box,
   Container,
   DEFAULT_PAGE_SIZE,
@@ -27,34 +28,36 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails } from '@coop/shared/utils';
+import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface NewAccountTransferProps {}
 
-const accountTypes = {
-  [NatureOfDepositProduct.Mandatory]: 'Mandatory Saving Account',
-  [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
-  [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
-  [NatureOfDepositProduct.VoluntaryOrOptional]: 'Voluntary Saving Account',
-};
-
 const FINE = '0';
 const REBATE = '0';
-
-const transferTypes = [
-  { label: 'Self Transfer', value: TransferType.Self },
-  { label: 'Member to Member', value: TransferType.Member },
-];
-
-const withdrawTypes = [
-  { label: 'Cheque', value: WithdrawWith.Cheque },
-  { label: 'Withdraw Slip', value: WithdrawWith.WithdrawSlip },
-];
 
 type AccountTransferForm = TransferInput & { destMemberId: string };
 
 export const NewAccountTransfer = () => {
+  const { t } = useTranslation();
+
+  const accountTypes = {
+    [NatureOfDepositProduct.Mandatory]: t['addDepositMandatorySavingAccount'],
+    [NatureOfDepositProduct.RecurringSaving]: t['addDepositRecurringSavingAccount'],
+    [NatureOfDepositProduct.TermSavingOrFd]: t['addDepositTermSavingAccount'],
+    [NatureOfDepositProduct.VoluntaryOrOptional]: t['addDepositVoluntarySavingAccount'],
+  };
+
+  const withdrawTypes = [
+    { label: t['addWithdrawCheque'], value: WithdrawWith.Cheque },
+    { label: t['addWithdrawWithdrawSlip'], value: WithdrawWith.WithdrawSlip },
+  ];
+
+  const transferTypes = [
+    { label: t['newAccountTransferSelfTransfer'], value: TransferType.Self },
+    { label: t['newAccountTransferMemberToMember'], value: TransferType.Member },
+  ];
+
   const router = useRouter();
 
   const methods = useForm<AccountTransferForm>({
@@ -142,10 +145,14 @@ export const NewAccountTransfer = () => {
   const handleSubmit = () => {
     const values = getValues();
 
-    mutateAsync({ data: omit(values, ['destMemberId']) }).then((res) => {
-      if (res?.transaction?.transfer?.recordId) {
-        router.push('/transactions/account-transfer/list');
-      }
+    asyncToast({
+      id: 'add-new-account-transfer',
+      msgs: {
+        success: t['newAccountTransferAccountTransferAdded'],
+        loading: t['newAccountTransferAddingAccountTransfer'],
+      },
+      onSuccess: () => router.push('/transactions/account-transfer/list'),
+      promise: mutateAsync({ data: omit(values, ['destMemberId']) }),
     });
   };
 
@@ -154,7 +161,7 @@ export const NewAccountTransfer = () => {
       <Container minW="container.xl" height="fit-content">
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
-            title={`New Account Transfer - ${featureCode?.newAccountTransfer}`}
+            title={`${t['newAccountTransferNewAccountTransfer']} - ${featureCode?.newAccountTransfer}`}
             closeLink="/transactions/account-transfer/list"
           />
         </Box>
@@ -175,13 +182,12 @@ export const NewAccountTransfer = () => {
                 >
                   <ContainerWithDivider>
                     <BoxContainer>
-                      <MemberSelect name="memberId" label="Member" __placeholder="Select Member" />
+                      <MemberSelect name="memberId" label={t['newAccountTransferMember']} />
 
                       {memberId && (
                         <FormCustomSelect
                           name="srcAccountId"
-                          label="Source Account"
-                          __placeholder="Select Account"
+                          label={t['newAccountTransferSourceAccount']}
                           options={accountListData?.account?.list?.edges?.map((account) => ({
                             accountInfo: {
                               accountName: account.node?.product.productName,
@@ -207,15 +213,14 @@ export const NewAccountTransfer = () => {
                       <BoxContainer>
                         <FormSwitchTab
                           name="transferType"
-                          label="Transfer Type"
+                          label={t['newAccountTransferTransferType']}
                           options={transferTypes}
                         />
 
                         {transferType === TransferType.Self && (
                           <FormCustomSelect
                             name="destAccountId"
-                            label="Receipent Account"
-                            __placeholder="Select Receipent Account"
+                            label={t['newAccountTransferReceipentAccount']}
                             options={accountListData?.account?.list?.edges?.map((account) => ({
                               accountInfo: {
                                 accountName: account.node?.product.productName,
@@ -241,14 +246,12 @@ export const NewAccountTransfer = () => {
                           <>
                             <MemberSelect
                               name="destMemberId"
-                              label="Receipent Member"
-                              __placeholder="Select Receipent Member"
+                              label={t['newAccountTransferReceipentMember']}
                             />
 
                             <FormCustomSelect
                               name="destAccountId"
-                              label="Receipent Account"
-                              __placeholder="Select Receipent Account"
+                              label={t['newAccountTransferReceipentAccount']}
                               options={destAccountListData?.account?.list?.edges?.map(
                                 (account) => ({
                                   accountInfo: {
@@ -285,11 +288,7 @@ export const NewAccountTransfer = () => {
 
                         {withdrawn === WithdrawWith.Cheque && (
                           <InputGroupContainer>
-                            <FormInput
-                              name="chequeNo"
-                              label="Cheque No"
-                              __placeholder="Cheque No"
-                            />
+                            <FormInput name="chequeNo" label={t['newAccountTransferChequeNo']} />
                           </InputGroupContainer>
                         )}
 
@@ -297,8 +296,7 @@ export const NewAccountTransfer = () => {
                           <InputGroupContainer>
                             <FormInput
                               name="withdrawSlipNo"
-                              label="Withdraw Slip No"
-                              __placeholder="Withdraw Slip No"
+                              label={t['newAccountTransferWithdrawSlipNo']}
                             />
                           </InputGroupContainer>
                         )}
@@ -312,13 +310,12 @@ export const NewAccountTransfer = () => {
                             type="number"
                             min={0}
                             name="amount"
-                            label="Transfer Amount"
+                            label={t['newAccountTransferTransferAmount']}
                             textAlign="right"
-                            __placeholder="0.0"
                           />
                         </InputGroupContainer>
 
-                        <FormTextArea name="notes" label="Note" __placeholder="Note" rows={5} />
+                        <FormTextArea name="notes" label={t['newAccountTransferNote']} rows={5} />
                       </BoxContainer>
                     )}
                   </ContainerWithDivider>
@@ -370,7 +367,7 @@ export const NewAccountTransfer = () => {
                     {destMemberId && (
                       <Box borderTop="1px" borderColor="border.layout">
                         <MemberCard
-                          cardTitle="Receipent Member Info"
+                          cardTitle={t['newAccountTransferReceipentMemberInfo']}
                           memberDetails={{
                             name: destMemberDetailData?.name,
                             avatar: 'https://bit.ly/dan-abramov',
@@ -408,7 +405,7 @@ export const NewAccountTransfer = () => {
               status={
                 <Box display="flex" gap="s32">
                   <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
-                    Total Deposit Amount
+                    {t['newAccountTransferTotalTransferAmount']}
                   </Text>
                   <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
                     {totalDeposit ?? '---'}

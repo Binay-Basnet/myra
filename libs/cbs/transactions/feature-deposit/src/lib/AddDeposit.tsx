@@ -29,7 +29,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails } from '@coop/shared/utils';
+import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
 
 import { InstallmentModel, Payment } from '../components';
 
@@ -47,13 +47,6 @@ type DepositFormInput = Omit<DepositInput, 'cash'> & {
       }
     | undefined
     | null;
-};
-
-const accountTypes = {
-  [NatureOfDepositProduct.Mandatory]: 'Mandatory Saving Account',
-  [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
-  [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
-  [NatureOfDepositProduct.VoluntaryOrOptional]: 'Voluntary Saving Account',
 };
 
 const cashOptions: Record<string, string> = {
@@ -74,6 +67,15 @@ const REBATE = '0';
 
 export const AddDeposit = () => {
   const router = useRouter();
+
+  const { t } = useTranslation();
+
+  const accountTypes = {
+    [NatureOfDepositProduct.Mandatory]: t['addDepositMandatorySavingAccount'],
+    [NatureOfDepositProduct.RecurringSaving]: t['addDepositRecurringSavingAccount'],
+    [NatureOfDepositProduct.TermSavingOrFd]: t['addDepositTermSavingAccount'],
+    [NatureOfDepositProduct.VoluntaryOrOptional]: t['addDepositVoluntarySavingAccount'],
+  };
 
   const methods = useForm<DepositFormInput>({
     defaultValues: {
@@ -266,8 +268,8 @@ export const AddDeposit = () => {
     asyncToast({
       id: 'add-new-deposit',
       msgs: {
-        success: 'New Deposit Added',
-        loading: 'Adding New Deposit',
+        success: t['addDepositNewDepositAdded'],
+        loading: t['addDepositAddingNewDeposit'],
       },
       onSuccess: () => router.push('/transactions/deposit/list'),
       promise: mutateAsync({ data: filteredValues as DepositInput }),
@@ -279,9 +281,9 @@ export const AddDeposit = () => {
       <Container minW="container.xl" height="fit-content">
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
-            title={`New Deposit - ${featureCode?.newDeposit}`}
+            title={`${t['addDepositNewDeposit']} - ${featureCode?.newDeposit}`}
             closeLink="/transactions/deposit/list"
-            buttonLabel="Add Bulk Deposit"
+            buttonLabel={t['addDepositAddBulkDeposit']}
             buttonHandler={() => router.push('/transactions/deposit/add-bulk-deposit')}
           />
         </Box>
@@ -300,13 +302,12 @@ export const AddDeposit = () => {
                   borderRight="1px"
                   borderColor="border.layout"
                 >
-                  <MemberSelect name="memberId" label="Member" __placeholder="Select Member" />
+                  <MemberSelect name="memberId" label="Member" />
 
                   {memberId && (
                     <FormCustomSelect
                       name="accountId"
-                      label="Select Deposit Account"
-                      __placeholder="Select Account"
+                      label={t['addDepositSelectDepositAccount']}
                       options={accountListData?.account?.list?.edges?.map((account) => ({
                         accountInfo: {
                           accountName: account.node?.product.productName,
@@ -332,22 +333,25 @@ export const AddDeposit = () => {
                       selectedAccount?.product?.nature === NatureOfDepositProduct.Mandatory) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
-                          <FormInput name="voucherId" label="Voucher ID" />
+                          <FormInput name="voucherId" label={t['addDepositVoucherId']} />
 
                           <Box />
 
-                          <FormInput name="noOfInstallments" label="No of Installments" />
+                          <FormInput
+                            name="noOfInstallments"
+                            label={t['addDepositNoOfInstallments']}
+                          />
 
                           <Box>
                             <Button variant="outline" onClick={handleModalOpen}>
-                              View all installments
+                              {t['addDepositViewAllInstallments']}
                             </Button>
                           </Box>
                         </Grid>
 
                         <Box display="flex" flexDirection="column" gap="s4">
                           <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
-                            Payment Range
+                            {t['addDepositPaymentRange']}
                           </Text>
                           <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
                             {`Payment made from ${firstMonth} to ${lastMonth}`}
@@ -360,23 +364,25 @@ export const AddDeposit = () => {
                     selectedAccount?.product?.nature === NatureOfDepositProduct.TermSavingOrFd && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
-                          <FormInput name="voucherId" label="Voucher ID" />
+                          <FormInput name="voucherId" label={t['addDepositVoucherId']} />
 
                           <FormInput
                             name="amount"
                             textAlign="right"
                             type="number"
                             min={0}
-                            label="Amount to be Deposited"
+                            label={t['addDepositAmountToBeDeposited']}
                           />
                         </Grid>
 
                         <Box display="flex" flexDirection="column" gap="s4">
                           <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
-                            Total amount in the account after deposit
+                            {t['addDepositTotalAmountAfterDeposit']}
                           </Text>
                           <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
-                            {`Rs. ${Number(selectedAccount?.balance ?? 0) + Number(totalDeposit)}`}
+                            {`${t['rs']} ${
+                              Number(selectedAccount?.balance ?? 0) + Number(totalDeposit)
+                            }`}
                           </Text>
                         </Box>
                       </>
@@ -387,17 +393,19 @@ export const AddDeposit = () => {
                       NatureOfDepositProduct.VoluntaryOrOptional && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
-                          <FormInput name="voucherId" label="Voucher ID" />
+                          <FormInput name="voucherId" label={t['addDepositVoucherId']} />
 
-                          <FormInput name="amount" label="Amount to be Deposited" />
+                          <FormInput name="amount" label={t['addDepositAmountToBeDeposited']} />
                         </Grid>
 
                         <Box display="flex" flexDirection="column" gap="s4">
                           <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
-                            Total amount in the account after deposit
+                            {t['addDepositTotalAmountAfterDeposit']}
                           </Text>
                           <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
-                            {`Rs. ${Number(selectedAccount?.balance ?? 0) + Number(totalDeposit)}`}
+                            {`${t['rs']} ${
+                              Number(selectedAccount?.balance ?? 0) + Number(totalDeposit)
+                            }`}
                           </Text>
                         </Box>
                       </>
@@ -418,7 +426,7 @@ export const AddDeposit = () => {
                       >
                         <Box display="flex" justifyContent="space-between">
                           <Text fontSize="s3" fontWeight={500} color="gray.600">
-                            Deposit Amount
+                            {t['addDepositDepositAmount']}
                           </Text>
 
                           <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
@@ -432,7 +440,7 @@ export const AddDeposit = () => {
                             NatureOfDepositProduct.Mandatory) && (
                           <Box display="flex" justifyContent="space-between">
                             <Text fontSize="s3" fontWeight={500} color="gray.600">
-                              Fine
+                              {t['addDepositFine']}
                             </Text>
 
                             <Text fontSize="s3" fontWeight={500} color="danger.500">
@@ -443,7 +451,7 @@ export const AddDeposit = () => {
 
                         <Box display="flex" justifyContent="space-between">
                           <Text fontSize="s3" fontWeight={500} color="gray.600">
-                            Rebate
+                            {t['addDepositRebate']}
                           </Text>
 
                           <Text fontSize="s3" fontWeight={500} color="success.500">
@@ -453,7 +461,7 @@ export const AddDeposit = () => {
 
                         <Box display="flex" justifyContent="space-between">
                           <Text fontSize="s3" fontWeight={500} color="gray.600">
-                            Total Deposit
+                            {t['addDepositTotalDeposit']}
                           </Text>
 
                           <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
@@ -526,7 +534,7 @@ export const AddDeposit = () => {
                 mode === 0 ? (
                   <Box display="flex" gap="s32">
                     <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
-                      Total Deposit Amount
+                      {t['addDepositTotalDepositAmount']}
                     </Text>
                     <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
                       {totalDeposit ?? '---'}
@@ -534,11 +542,11 @@ export const AddDeposit = () => {
                   </Box>
                 ) : (
                   <Button variant="solid" onClick={() => setMode(0)}>
-                    Previous
+                    {t['addDepositPrevious']}
                   </Button>
                 )
               }
-              mainButtonLabel={mode === 0 ? 'Proceed to Payment' : 'Submit'}
+              mainButtonLabel={mode === 0 ? t['addDepositProceedPayment'] : t['addDepositSubmit']}
               mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
             />
           </Container>

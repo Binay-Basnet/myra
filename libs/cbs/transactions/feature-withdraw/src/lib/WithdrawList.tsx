@@ -42,12 +42,12 @@ export const WithdrawList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Transaction ID',
+        header: t['withdrawListTransactionId'],
         accessorFn: (row) => row?.node?.ID,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: 'Name',
+        header: t['withdrawListTransactionName'],
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
             <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
@@ -67,20 +67,20 @@ export const WithdrawList = () => {
         },
       },
       {
-        header: 'Amount',
+        header: t['withdrawListAmount'],
         accessorFn: (row) => row?.node?.amount,
       },
       {
-        header: 'Payment Mode',
+        header: t['withdrawListPaymentMode'],
         accessorFn: (row) => row?.node?.paymentMode,
       },
       {
-        header: 'Withdraw By',
+        header: t['withdrawListWithdrawBy'],
         accessorFn: (row) => row?.node?.name?.local,
       },
 
       {
-        header: 'Withdrawn Date',
+        header: t['withdrawListWithdrawnDate'],
         accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
       },
       {
@@ -103,7 +103,7 @@ export const WithdrawList = () => {
   return (
     <>
       <TransactionPageHeader
-        heading={`Withdraw - ${featureCode?.withdrawList}`}
+        heading={`${t['withdrawListWithdraw']} - ${featureCode?.withdrawList}`}
         tabItems={tabList}
       />
 
@@ -116,7 +116,7 @@ export const WithdrawList = () => {
           total: data?.transaction?.listWithdraw?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listWithdraw?.pageInfo,
         }}
-        searchPlaceholder="Search Withdraw"
+        searchPlaceholder={t['withdrawListSearchPlaceholder']}
       />
     </>
   );

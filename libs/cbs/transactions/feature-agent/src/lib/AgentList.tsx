@@ -49,19 +49,19 @@ export const AgentList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: t['memberListTablePhoneNo'],
+        header: t['agentListPhoneNo'],
         accessorFn: (row) => row?.node?.phoneNo,
         // meta: {
         //   width: '20%',
         // },
       },
       {
-        header: 'Market Representative ID',
+        header: t['agentListMarketRepresentativeId'],
         accessorFn: (row) => row?.node?.id,
       },
       {
         accessorFn: (row) => row?.node?.agentName,
-        header: 'Market Representative Name',
+        header: t['agentListMarketRepresentativeName'],
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
             <Avatar
@@ -85,7 +85,7 @@ export const AgentList = () => {
         },
       },
       {
-        header: 'Member Assigned',
+        header: t['agentListMemberAssigned'],
         accessorFn: (row) => row?.node?.assignedMember,
       },
       {
@@ -116,7 +116,7 @@ export const AgentList = () => {
   return (
     <>
       <PageHeader
-        heading={`Market Representative List - ${featureCode?.agentList}`}
+        heading={`${t['agentListMarketRepresentativeList']} - ${featureCode?.agentList}`}
         tabItems={MEMBER_TAB_ITEMS}
       />
 
@@ -125,7 +125,7 @@ export const AgentList = () => {
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
         columns={columns}
-        noDataTitle="Market Representative"
+        noDataTitle={t['agentListMarketRepresentative']}
         pagination={{
           total: data?.transaction?.listAgent?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listAgent?.pageInfo,

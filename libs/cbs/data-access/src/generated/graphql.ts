@@ -6235,11 +6235,17 @@ export type LoanAccount = Base & {
   product: LoanProduct;
   productSubType: LoanSettingsProductSubTypeData;
   productType: Scalars['ID'];
+  repayment?: Maybe<LoanRepaymentResult>;
   repaymentScheme?: Maybe<LoanRepaymentScheme>;
   tenure?: Maybe<Scalars['Int']>;
   tenureType?: Maybe<FrequencyTenure>;
   totalSanctionedAmount?: Maybe<Scalars['String']>;
   totalValuation?: Maybe<Scalars['String']>;
+};
+
+
+export type LoanAccountRepaymentArgs = {
+  data?: InputMaybe<LoanRepaymentInput>;
 };
 
 export type LoanAccountCollateral = {
@@ -6321,6 +6327,11 @@ export type LoanAccountConnection = {
   totalCount: Scalars['Int'];
 };
 
+export type LoanAccountDisbursement = {
+  destinationAccount: Scalars['ID'];
+  note?: InputMaybe<Scalars['String']>;
+};
+
 export type LoanAccountEdge = {
   cursor: Scalars['Cursor'];
   node?: Maybe<LoanAccount>;
@@ -6398,7 +6409,7 @@ export type LoanAccountInput = {
   LoanAccountName?: InputMaybe<Scalars['String']>;
   appliedLoanAmount: Scalars['String'];
   collateralData?: InputMaybe<Array<InputMaybe<LoanAccountCollateralData>>>;
-  documents?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  fingerprintDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   gracePeriod?: InputMaybe<LoanAccountGraceInput>;
   gurantee_details?: InputMaybe<Array<InputMaybe<LoanAccountGuranteeInput>>>;
   intrestRate?: InputMaybe<Scalars['Float']>;
@@ -6407,11 +6418,14 @@ export type LoanAccountInput = {
   justifySanction?: InputMaybe<Scalars['String']>;
   loanProcessingCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
   memberId: Scalars['ID'];
+  nomineeDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   note?: InputMaybe<Scalars['String']>;
+  photoDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   productId: Scalars['ID'];
   productSubType: Scalars['ID'];
   productType: Scalars['ID'];
   repaymentScheme?: InputMaybe<LoanRepaymentScheme>;
+  signatureDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   tenure?: InputMaybe<Scalars['Int']>;
   tenureType?: InputMaybe<FrequencyTenure>;
   totalSanctionedAmount?: InputMaybe<Scalars['String']>;
@@ -6420,12 +6434,19 @@ export type LoanAccountInput = {
 
 export type LoanAccountMutation = {
   add?: Maybe<LoanAccountResult>;
+  disburse?: Maybe<LoanDisbursementResult>;
 };
 
 
 export type LoanAccountMutationAddArgs = {
   data?: InputMaybe<LoanAccountInput>;
   id: Scalars['ID'];
+};
+
+
+export type LoanAccountMutationDisburseArgs = {
+  data: LoanDisbursementInput;
+  loanAccount: Scalars['ID'];
 };
 
 export type LoanAccountQuery = {
@@ -6480,6 +6501,31 @@ export type LoanAccountSearchFilter = {
   id?: InputMaybe<Scalars['ID']>;
   objectState?: InputMaybe<ObjState>;
   query?: InputMaybe<Scalars['String']>;
+};
+
+export type LoanBankDisbursement = {
+  bankAccountId: Scalars['ID'];
+  chequeNo: Scalars['String'];
+  note?: InputMaybe<Scalars['String']>;
+};
+
+export type LoanDisbursementInput = {
+  accountPayment?: InputMaybe<LoanAccountDisbursement>;
+  amount: Scalars['String'];
+  bankChequePayment?: InputMaybe<LoanBankDisbursement>;
+  method: LoanDisbursementMethod;
+};
+
+export enum LoanDisbursementMethod {
+  Account = 'ACCOUNT',
+  BankCheque = 'BANK_CHEQUE'
+}
+
+export type LoanDisbursementResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<LoanAccountQuery>;
+  record?: Maybe<LoanAccount>;
+  recordId?: Maybe<Scalars['ID']>;
 };
 
 export type LoanGeneralSettings = {
@@ -6859,6 +6905,40 @@ export type LoanProductsResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<LoanProductsQuery>;
   record?: Maybe<LoanProduct>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type LoanRepaymentAccountMode = {
+  destination_account: Scalars['ID'];
+  note?: InputMaybe<Scalars['String']>;
+};
+
+export type LoanRepaymentBankVoucher = {
+  bank: Scalars['ID'];
+  note?: InputMaybe<Scalars['String']>;
+  voucher_no: Scalars['String'];
+};
+
+export type LoanRepaymentInput = {
+  account?: InputMaybe<LoanRepaymentAccountMode>;
+  amountPaid: Scalars['String'];
+  bankVoucher?: InputMaybe<LoanRepaymentBankVoucher>;
+  cash?: InputMaybe<DepositCash>;
+  loanAccountId: Scalars['ID'];
+  memberId: Scalars['ID'];
+  paymentMethod: LoanRepaymentMethod;
+};
+
+export enum LoanRepaymentMethod {
+  Account = 'ACCOUNT',
+  BankVoucher = 'BANK_VOUCHER',
+  Cash = 'CASH'
+}
+
+export type LoanRepaymentResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<LoanAccountQuery>;
+  record?: Maybe<LoanAccount>;
   recordId?: Maybe<Scalars['ID']>;
 };
 
@@ -10045,13 +10125,6 @@ export type GetLoanProductTypesQueryVariables = Exact<{ [key: string]: never; }>
 
 export type GetLoanProductTypesQuery = { settings: { general?: { loan?: { productType?: { productTypes?: Array<{ id?: string | null, productType?: string | null, description?: string | null } | null> | null } | null } | null } | null } };
 
-export type GetLoanProductSubTypeQueryVariables = Exact<{
-  productTypeId?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type GetLoanProductSubTypeQuery = { settings: { general?: { loan?: { productType?: { productSubTypes?: Array<{ id?: string | null, productSubType?: string | null } | null> | null } | null } | null } | null } };
-
 export type GetCollateralListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -10246,7 +10319,14 @@ export type GetLoanGeneralSettingsQuery = { settings: { general?: { loan?: { gen
 export type GetLoanProductSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetLoanProductSettingsQuery = { settings: { general?: { loan?: { productType?: { productTypes?: Array<{ id?: string | null, productType?: string | null, description?: string | null } | null> | null, productSubTypes?: Array<{ id?: string | null, productSubType?: string | null, productTypeID?: string | null } | null> | null } | null } | null } | null } };
+export type GetLoanProductSettingsQuery = { settings: { general?: { loan?: { productType?: { productTypes?: Array<{ id?: string | null, productType?: string | null, description?: string | null } | null> | null } | null } | null } | null } };
+
+export type GetLoanProductSubTypeQueryVariables = Exact<{
+  productTypeId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetLoanProductSubTypeQuery = { settings: { general?: { loan?: { productType?: { productSubTypes?: Array<{ id?: string | null, productSubType?: string | null, productTypeID?: string | null } | null> | null } | null } | null } | null } };
 
 export type GetLoanInsuranceSchemeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -15025,34 +15105,6 @@ export const useGetLoanProductTypesQuery = <
       useAxios<GetLoanProductTypesQuery, GetLoanProductTypesQueryVariables>(GetLoanProductTypesDocument).bind(null, variables),
       options
     );
-export const GetLoanProductSubTypeDocument = `
-    query getLoanProductSubType($productTypeId: String) {
-  settings {
-    general {
-      loan {
-        productType {
-          productSubTypes(productTypeID: $productTypeId) {
-            id
-            productSubType
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetLoanProductSubTypeQuery = <
-      TData = GetLoanProductSubTypeQuery,
-      TError = unknown
-    >(
-      variables?: GetLoanProductSubTypeQueryVariables,
-      options?: UseQueryOptions<GetLoanProductSubTypeQuery, TError, TData>
-    ) =>
-    useQuery<GetLoanProductSubTypeQuery, TError, TData>(
-      variables === undefined ? ['getLoanProductSubType'] : ['getLoanProductSubType', variables],
-      useAxios<GetLoanProductSubTypeQuery, GetLoanProductSubTypeQueryVariables>(GetLoanProductSubTypeDocument).bind(null, variables),
-      options
-    );
 export const GetCollateralListDocument = `
     query getCollateralList {
   settings {
@@ -16308,11 +16360,6 @@ export const GetLoanProductSettingsDocument = `
             productType
             description
           }
-          productSubTypes {
-            id
-            productSubType
-            productTypeID
-          }
         }
       }
     }
@@ -16329,6 +16376,35 @@ export const useGetLoanProductSettingsQuery = <
     useQuery<GetLoanProductSettingsQuery, TError, TData>(
       variables === undefined ? ['getLoanProductSettings'] : ['getLoanProductSettings', variables],
       useAxios<GetLoanProductSettingsQuery, GetLoanProductSettingsQueryVariables>(GetLoanProductSettingsDocument).bind(null, variables),
+      options
+    );
+export const GetLoanProductSubTypeDocument = `
+    query getLoanProductSubType($productTypeId: String) {
+  settings {
+    general {
+      loan {
+        productType {
+          productSubTypes(productTypeID: $productTypeId) {
+            id
+            productSubType
+            productTypeID
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProductSubTypeQuery = <
+      TData = GetLoanProductSubTypeQuery,
+      TError = unknown
+    >(
+      variables?: GetLoanProductSubTypeQueryVariables,
+      options?: UseQueryOptions<GetLoanProductSubTypeQuery, TError, TData>
+    ) =>
+    useQuery<GetLoanProductSubTypeQuery, TError, TData>(
+      variables === undefined ? ['getLoanProductSubType'] : ['getLoanProductSubType', variables],
+      useAxios<GetLoanProductSubTypeQuery, GetLoanProductSubTypeQueryVariables>(GetLoanProductSubTypeDocument).bind(null, variables),
       options
     );
 export const GetLoanInsuranceSchemeDocument = `

@@ -38,15 +38,15 @@ export const DepositList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Transaction ID',
+        header: t['depositListTransactionId'],
         accessorFn: (row) => row?.node?.ID,
       },
       {
         accessorFn: (row) => row?.node?.name?.local,
-        header: 'Name',
+        header: t['depositListName'],
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
-            <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
+            <Avatar name={props.getValue() as string} size="sm" src="https://bit.ly/dan-abramov" />
             <Text
               fontSize="s3"
               textTransform="capitalize"
@@ -64,20 +64,20 @@ export const DepositList = () => {
       },
 
       {
-        header: 'Payment Mode',
+        header: t['depositListPaymentMode'],
         accessorFn: (row) => row?.node?.paymentMode,
       },
       {
-        header: 'Deposited By',
+        header: t['depositListDepositedBy'],
         accessorFn: (row) => row?.node?.processedBy,
       },
 
       {
-        header: 'Deposit Date',
+        header: t['depositListDepositDate'],
         accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
       },
       {
-        header: 'Amount',
+        header: t['depositListAmount'],
 
         accessorFn: (row) => row?.node?.amount,
         meta: {
@@ -103,7 +103,10 @@ export const DepositList = () => {
 
   return (
     <>
-      <TransactionPageHeader heading={`Deposit - ${featureCode?.depositList}`} tabItems={tabList} />
+      <TransactionPageHeader
+        heading={`${t['depositListDeposit']} - ${featureCode?.depositList}`}
+        tabItems={tabList}
+      />
 
       <Table
         data={rowData}
@@ -114,7 +117,7 @@ export const DepositList = () => {
           total: data?.transaction?.listDeposit?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listDeposit?.pageInfo,
         }}
-        searchPlaceholder="Search Deposit"
+        searchPlaceholder={t['depositListSearchDeposit']}
       />
     </>
   );

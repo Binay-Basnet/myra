@@ -1,4 +1,3 @@
-import React from 'react';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 
 import { AccordionButton, Box, Text } from '@coop/shared/ui';
@@ -9,10 +8,7 @@ interface KYMSettingsAccordionBtnProps {
   title: string;
 }
 
-export const KYMSettingsAccordionBtn = ({
-  isExpanded,
-  title,
-}: KYMSettingsAccordionBtnProps) => {
+export const KYMSettingsAccordionBtn = ({ isExpanded, title }: KYMSettingsAccordionBtnProps) => {
   const { t } = useTranslation();
   return (
     <AccordionButton h="60px" bg={isExpanded ? '#E0E5EB' : ''}>
