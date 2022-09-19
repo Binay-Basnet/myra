@@ -14,7 +14,7 @@ import {
   useGetNewIdMutation,
   useSendLoanApplicationForApprovalMutation,
 } from '@coop/cbs/data-access';
-import { FormInput, FormNumberInput, FormSelect } from '@coop/shared/form';
+import { FormInput, FormNumberInput, FormSelect, FormTextArea } from '@coop/shared/form';
 import {
   Alert,
   asyncToast,
@@ -35,6 +35,7 @@ import {
   LoanProcessingCharge,
   LoanProductCard,
   LoanRepaymentSchemeComponent,
+  RequiredDocuments,
   Tenure,
 } from '../components';
 import { CollateralDetails } from '../components/CollateralDetails';
@@ -267,7 +268,8 @@ export const NewLoanApplication = () => {
                     <LoanRepaymentSchemeComponent />
                     <LoanPaymentSchedule />
                     <LoanProcessingCharge />
-                    {/* <RequiredDocuments /> */}
+                    <RequiredDocuments />
+                    <FormTextArea name="note" label="Notes" />
                   </LoanProductContext.Provider>
                 )}
               </Box>
@@ -281,7 +283,7 @@ export const NewLoanApplication = () => {
               <MemberCard
                 memberDetails={{
                   name: memberDetailData?.name,
-                  avatar: 'https://bit.ly/dan-abramov',
+                  avatar: memberDetailData?.profilePicUrl ?? '',
                   memberID: memberDetailData?.id,
                   gender: memberDetailData?.gender,
                   age: memberDetailData?.age,
@@ -308,7 +310,7 @@ export const NewLoanApplication = () => {
           </Box>
         )}
       </Box>
-      <Box position="sticky" bottom={0}>
+      <Box position="sticky" bottom={0} zIndex="11">
         <FormFooter
           status={
             <>

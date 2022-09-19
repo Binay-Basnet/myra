@@ -13,7 +13,7 @@ import {
   WithdrawPaymentType,
   WithdrawWith,
 } from '@coop/cbs/data-access';
-import { FormCustomSelect, MemberSelect } from '@coop/cbs/transactions/ui-components';
+import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import {
@@ -24,6 +24,7 @@ import {
   DEFAULT_PAGE_SIZE,
   FormFooter,
   FormHeader,
+  FormMemberSelect,
   MemberCard,
   Text,
 } from '@coop/shared/ui';
@@ -221,7 +222,7 @@ export const AddWithdraw = () => {
                   borderRight="1px"
                   borderColor="border.layout"
                 >
-                  <MemberSelect name="memberId" label={t['addWithdrawMember']} />
+                  <FormMemberSelect name="memberId" label={t['addWithdrawMember']} />
 
                   {memberId && (
                     <FormCustomSelect
@@ -326,7 +327,7 @@ export const AddWithdraw = () => {
                     <MemberCard
                       memberDetails={{
                         name: memberDetailData?.name,
-                        avatar: 'https://bit.ly/dan-abramov',
+                        avatar: memberDetailData?.profilePicUrl ?? '',
                         memberID: memberDetailData?.id,
                         gender: memberDetailData?.gender,
                         age: memberDetailData?.age,

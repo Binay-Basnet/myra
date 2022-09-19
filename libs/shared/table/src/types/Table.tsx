@@ -15,8 +15,7 @@ declare module '@tanstack/table-core' {
 
 export type Maybe<T> = T | null;
 
-export type Column<TData extends Maybe<Record<string, unknown>>> =
-  ColumnDef<TData>;
+export type Column<TData extends Maybe<Record<string, unknown>>> = ColumnDef<TData>;
 
 export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
   data: Maybe<Array<Maybe<TData>>> | TData;
@@ -32,7 +31,7 @@ export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
     } | null;
   };
 
-  size?: 'default' | 'compact' | 'report';
+  size?: 'default' | 'compact' | 'report' | 'small';
   isLoading?: boolean;
   isStatic?: boolean;
 
