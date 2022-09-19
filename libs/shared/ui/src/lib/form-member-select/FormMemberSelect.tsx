@@ -25,7 +25,7 @@ export const FormMemberSelect = ({ name, label, placeholder }: IMemberSelectProp
     {
       pagination: {
         ...getRouterQuery({ type: ['PAGINATION'] }),
-        first: 5,
+        first: 20,
       },
       filter: {
         query: IDMember,

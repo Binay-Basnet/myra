@@ -14,7 +14,7 @@ import {
   useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
-import { FormCustomSelect, MemberSelect } from '@coop/cbs/transactions/ui-components';
+import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
 import { FormInput } from '@coop/shared/form';
 import {
   asyncToast,
@@ -25,6 +25,7 @@ import {
   Divider,
   FormFooter,
   FormHeader,
+  FormMemberSelect,
   Grid,
   MemberCard,
   Text,
@@ -302,7 +303,7 @@ export const AddDeposit = () => {
                   borderRight="1px"
                   borderColor="border.layout"
                 >
-                  <MemberSelect name="memberId" label="Member" />
+                  <FormMemberSelect name="memberId" label="Member" />
 
                   {memberId && (
                     <FormCustomSelect
@@ -478,7 +479,7 @@ export const AddDeposit = () => {
                     <MemberCard
                       memberDetails={{
                         name: memberDetailData?.name,
-                        avatar: 'https://bit.ly/dan-abramov',
+                        avatar: memberDetailData?.profilePicUrl ?? '',
                         memberID: memberDetailData?.id,
                         gender: memberDetailData?.gender,
                         age: memberDetailData?.age,

@@ -11,7 +11,7 @@ import {
   useSetAccountTransferDataMutation,
   WithdrawWith,
 } from '@coop/cbs/data-access';
-import { FormCustomSelect, MemberSelect } from '@coop/cbs/transactions/ui-components';
+import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
 import {
   BoxContainer,
   ContainerWithDivider,
@@ -25,6 +25,7 @@ import {
   DEFAULT_PAGE_SIZE,
   FormFooter,
   FormHeader,
+  FormMemberSelect,
   MemberCard,
   Text,
 } from '@coop/shared/ui';
@@ -182,7 +183,7 @@ export const NewAccountTransfer = () => {
                 >
                   <ContainerWithDivider>
                     <BoxContainer>
-                      <MemberSelect name="memberId" label={t['newAccountTransferMember']} />
+                      <FormMemberSelect name="memberId" label={t['newAccountTransferMember']} />
 
                       {memberId && (
                         <FormCustomSelect
@@ -244,7 +245,7 @@ export const NewAccountTransfer = () => {
 
                         {transferType === TransferType.Member && (
                           <>
-                            <MemberSelect
+                            <FormMemberSelect
                               name="destMemberId"
                               label={t['newAccountTransferReceipentMember']}
                             />
@@ -326,7 +327,7 @@ export const NewAccountTransfer = () => {
                     <MemberCard
                       memberDetails={{
                         name: memberDetailData?.name,
-                        avatar: 'https://bit.ly/dan-abramov',
+                        avatar: memberDetailData?.profilePicUrl ?? '',
                         memberID: memberDetailData?.id,
                         gender: memberDetailData?.gender,
                         age: memberDetailData?.age,
@@ -370,7 +371,7 @@ export const NewAccountTransfer = () => {
                           cardTitle={t['newAccountTransferReceipentMemberInfo']}
                           memberDetails={{
                             name: destMemberDetailData?.name,
-                            avatar: 'https://bit.ly/dan-abramov',
+                            avatar: destMemberDetailData?.profilePicUrl ?? '',
                             memberID: destMemberDetailData?.id,
                             gender: destMemberDetailData?.gender,
                             age: destMemberDetailData?.age,
