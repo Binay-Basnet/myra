@@ -1,4 +1,5 @@
 import { Renderable, toast as rhToast, ToastOptions } from 'react-hot-toast';
+import _ from 'lodash';
 
 import Toast from './ToastComponent';
 
@@ -58,6 +59,14 @@ const getError = (error: MutationError) => {
   }
 };
 
+function findError(obj: Record<string, unknown> | null, key: string): MutationError[] {
+  if (_.has(obj, key) && obj) return obj[key] as MutationError[];
+
+  return _.flatten(
+    _.map(obj, (v) => (typeof v === 'object' ? findError(v as Record<string, unknown>, key) : []))
+  );
+}
+
 export function toast({ options, id, ...props }: ToastProps) {
   return rhToast.custom(<Toast {...props} />, {
     id,
@@ -97,28 +106,30 @@ export const asyncToast = async <T extends Record<string, unknown>>({
 
     if (response) {
       if ('error' in response) {
-        const error = (response as unknown as { error: MutationError[] }).error[0];
-
-        if ('message' in error) {
-          toast({
-            id,
-            type: 'error',
-            message: (error as { message: string }).message,
-          });
-        } else {
-          toast({
-            id,
-            type: 'error',
-            message: getError(error),
-          });
-        }
-      } else {
-        onSuccess && onSuccess(response);
         toast({
           id,
-          type: 'success',
-          message: msgs.success ?? 'Successful',
+          type: 'error',
+          message:
+            (response as unknown as { error: { message: string }[] }).error[0].message ?? errMsg,
         });
+      } else {
+        const errorKeys = findError(response, 'error');
+
+        if (errorKeys[0]) {
+          const error = getError(errorKeys[0]);
+          toast({
+            id,
+            type: 'error',
+            message: error,
+          });
+        } else {
+          onSuccess && onSuccess(response);
+          toast({
+            id,
+            type: 'success',
+            message: msgs.success ?? 'Successful',
+          });
+        }
       }
     }
 
