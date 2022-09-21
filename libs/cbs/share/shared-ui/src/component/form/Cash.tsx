@@ -29,11 +29,7 @@ type PurchaseProps = {
   returnAmount: number;
 };
 
-const Cash = ({
-  denominationTotal,
-  totalCashPaid,
-  returnAmount,
-}: PurchaseProps) => {
+const Cash = ({ denominationTotal, totalCashPaid, returnAmount }: PurchaseProps) => {
   const { t } = useTranslation();
   const methods = useFormContext();
   const { watch } = methods;
@@ -43,18 +39,11 @@ const Cash = ({
   return (
     <FormSection templateColumns={2}>
       <GridItem colSpan={1}>
-        <FormInput
-          type="text"
-          name="cash.cashPaid"
-          label={t['sharePurchaseCash']}
-        />
+        <FormInput type="text" name="cash.cashPaid" label={t['sharePurchaseCash']} />
       </GridItem>
 
       <GridItem colSpan={2}>
-        <FormSwitch
-          name="cash.disableDenomination"
-          label={t['sharePurchaseDisableDenomination']}
-        />
+        <FormSwitch name="cash.disableDenomination" label={t['sharePurchaseDisableDenomination']} />
       </GridItem>
 
       {!disableDenomination && (
@@ -131,9 +120,7 @@ const Cash = ({
               <Text>{denominationTotal}</Text>
               <Text>{totalCashPaid ? returnAmount : 0}</Text>
               <Text>
-                {denominationTotal && returnAmount
-                  ? denominationTotal + returnAmount
-                  : 0}
+                {denominationTotal && returnAmount ? denominationTotal + returnAmount : 0}
               </Text>
             </Box>
           </Box>

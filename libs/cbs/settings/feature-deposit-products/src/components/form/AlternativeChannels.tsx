@@ -29,7 +29,25 @@ export const AlternativeChannels = () => {
     <GridItem mt="s32" colSpan={3}>
       <FormEditableTable<AlternativeChannelTable>
         name="alternativeChannelCharge"
+        canAddRow={false}
         debug={false}
+        defaultData={[
+          {
+            serviceName: 'Mobile Banking',
+            amount: 0,
+            ledgerName: ' ',
+          },
+          {
+            serviceName: 'Ebanking',
+            amount: 0,
+            ledgerName: ' ',
+          },
+          {
+            serviceName: 'Sms banking',
+            amount: 0,
+            ledgerName: ' ',
+          },
+        ]}
         columns={[
           {
             accessor: 'serviceName',

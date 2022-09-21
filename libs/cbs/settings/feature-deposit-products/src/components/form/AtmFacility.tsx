@@ -30,6 +30,14 @@ export const AtmFacility = () => {
       <FormEditableTable<AtmFacilityTable>
         name="atmCharge"
         debug={false}
+        canAddRow={false}
+        defaultData={[
+          {
+            serviceName: 'Atm charge',
+            amount: 0,
+            ledgerName: ' ',
+          },
+        ]}
         columns={[
           {
             accessor: 'serviceName',

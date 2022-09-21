@@ -30,6 +30,14 @@ export const AllowChequeIssue = () => {
       <FormEditableTable<AllowChequeTable>
         name="chequeCharge"
         debug={false}
+        canAddRow={false}
+        defaultData={[
+          {
+            serviceName: 'Cheque issue charge',
+            amount: 0,
+            ledgerName: ' ',
+          },
+        ]}
         columns={[
           {
             accessor: 'serviceName',
