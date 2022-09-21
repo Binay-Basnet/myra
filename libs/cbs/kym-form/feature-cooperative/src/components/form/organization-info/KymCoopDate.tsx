@@ -27,18 +27,10 @@ export const KymCoopDate = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <FormSection gridLayout={true} id="kymCoopAccCooperativeDate">
-          <FormInput
-            type="date"
-            name="lastAuditDate"
-            label={t['kymCoopLastAuditDate']}
-          />
+        <FormSection gridLayout id="kymCoopAccCooperativeDate">
+          <FormInput type="date" name="lastAuditDate" label={t['kymCoopLastAuditDate']} />
 
-          <FormInput
-            type="date"
-            name="lastAgmDate"
-            label={t['kymCoopLastAGMDate']}
-          />
+          <FormInput type="date" name="lastAgmDate" label={t['kymCoopLastAGMDate']} />
         </FormSection>
       </form>
     </FormProvider>

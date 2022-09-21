@@ -40,7 +40,7 @@ export const SettingsMemberLayout = ({ children }: SettingsMemberLayoutProps) =>
     <>
       <SettingsPageHeader heading={`${t['settingsMember']} - ${featureCode?.settingsMembers}`} />
       <Box
-        w="300px"
+        w="250px"
         px="s8"
         position="fixed"
         py="s16"

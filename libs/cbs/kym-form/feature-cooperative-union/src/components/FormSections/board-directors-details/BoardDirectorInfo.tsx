@@ -17,12 +17,7 @@ import {
   InputGroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import {
-  FormAddress,
-  FormEmailInput,
-  FormInput,
-  FormSwitch,
-} from '@coop/shared/form';
+import { FormAddress, FormEmailInput, FormInput, FormSwitch } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -34,10 +29,7 @@ import {
   IconButton,
   Text,
 } from '@coop/shared/ui';
-import {
-  getKymSectionCoOperativeUnion,
-  useTranslation,
-} from '@coop/shared/utils';
+import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
 
 import { BoardOfDirectorRelatedTraining } from './TrainingRelatedToCooperatives';
 import { useCoopUnionBod } from '../../../hooks/useCoopUnionBod';
@@ -49,12 +41,7 @@ interface IAddDirectorProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
 
-const AddDirector = ({
-  removeDirector,
-  index,
-  directorId,
-  setSection,
-}: IAddDirectorProps) => {
+const AddDirector = ({ removeDirector, index, directorId, setSection }: IAddDirectorProps) => {
   const { t } = useTranslation();
 
   const [isOpen, setIsOpen] = React.useState(true);
@@ -63,22 +50,20 @@ const AddDirector = ({
 
   useCoopUnionBod({ methods, directorId });
 
-  const isPermanentAndTemporaryAddressSame = watch(
-    `isPermanentAndTemporaryAddressSame`
-  );
+  const isPermanentAndTemporaryAddressSame = watch(`isPermanentAndTemporaryAddressSame`);
 
   return (
     <>
       <Box display="flex" alignItems="center">
         <Box
           flex={1}
-          px={'s12'}
+          px="s12"
           py={3}
           bg="gray.200"
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          cursor={'pointer'}
+          cursor="pointer"
           onClick={() => setIsOpen(!isOpen)}
           h="60px"
         >
@@ -87,14 +72,14 @@ const AddDirector = ({
             {isOpen ? (
               <IconButton
                 size="xs"
-                variant={'ghost'}
+                variant="ghost"
                 aria-label="close"
                 icon={<Icon as={IoChevronUpOutline} />}
               />
             ) : (
               <IconButton
                 size="xs"
-                variant={'ghost'}
+                variant="ghost"
                 aria-label="close"
                 icon={<Icon as={IoChevronDownOutline} />}
               />
@@ -104,7 +89,7 @@ const AddDirector = ({
         {!isOpen && (
           <IconButton
             size="sm"
-            variant={'ghost'}
+            variant="ghost"
             aria-label="close"
             icon={<CloseIcon />}
             ml="s16"
@@ -114,12 +99,11 @@ const AddDirector = ({
       </Box>
 
       {/* <DynamicBoxGroupContainer> */}
-      <Collapse in={isOpen} style={{ marginTop: '0px' }}>
-        <DynamicBoxGroupContainer
-          border="1px solid"
-          p="s20"
-          borderColor="border.layout"
-        >
+      <Collapse
+        in={isOpen}
+        style={{ marginTop: '0px', border: '1px solid', borderColor: 'border.layout' }}
+      >
+        <DynamicBoxGroupContainer>
           <SectionContainer>
             <FormProvider {...methods}>
               <form
@@ -131,92 +115,75 @@ const AddDirector = ({
               >
                 <Box display="flex" flexDirection="column" gap="s32">
                   <Box display="flex" flexDirection="column" gap="s16">
-                    <InputGroupContainer>
+                    <FormSection>
                       <FormInput
                         type="text"
-                        name={`fullName`}
+                        name="fullName"
                         id="boardOfDirectors.fullName"
                         label={t['kymCoopUnionFullName']}
                       />
                       <FormInput
                         type="text"
-                        name={`designationEn`}
+                        name="designationEn"
                         id="boardOfDirectors.designationEn"
                         label={t['kymCoopUnionDesignation']}
                       />
-                    </InputGroupContainer>
-
-                    <Text fontSize="r1" fontWeight="SemiBold">
-                      {t['kymCoopUnionPermanentAddress']}
-                    </Text>
-
-                    <InputGroupContainer>
+                    </FormSection>
+                    <FormSection header="kymCoopUnionPermanentAddress">
                       <FormAddress name="permanentAddress" />
-                    </InputGroupContainer>
+                    </FormSection>
                   </Box>
 
                   <Box display="flex" flexDirection="column" gap="s16">
-                    <Box
-                      id="Temporary Address"
-                      gap="s16"
-                      display={'flex'}
-                      flexDirection="column"
-                      scrollMarginTop={'200px'}
-                    >
-                      <Text fontSize="r1" fontWeight="SemiBold">
-                        {t['kymCoopUnionTemporaryAddress']}
-                      </Text>
-
-                      <FormSwitch
-                        control={control}
-                        id="boardOfDirectors.isPermanentAndTemporaryAddressSame"
-                        name={`isPermanentAndTemporaryAddressSame`}
-                        label={t['kymCoopUnionTemporaryAddressPermanent']}
-                      />
+                    <FormSection header="kymCoopUnionTemporaryAddress" id="Temporary Address">
+                      <GridItem colSpan={3}>
+                        {' '}
+                        <FormSwitch
+                          control={control}
+                          id="boardOfDirectors.isPermanentAndTemporaryAddressSame"
+                          name="isPermanentAndTemporaryAddressSame"
+                          label={t['kymCoopUnionTemporaryAddressPermanent']}
+                        />
+                      </GridItem>
                       {!isPermanentAndTemporaryAddressSame && (
-                        <InputGroupContainer>
-                          <FormAddress name="temporaryAddress" />
-                        </InputGroupContainer>
+                        <FormAddress name="temporaryAddress" />
                       )}
+                    </FormSection>
 
-                      <Box />
-                    </Box>
                     <InputGroupContainer>
                       <FormInput
                         type="date"
-                        name={`dateOfMembership`}
+                        name="dateOfMembership"
                         id="boardOfDirectors.dateOfMembership"
                         label={t['kymCoopUnionDateOfMembership']}
                       />
                       <FormInput
                         type="text"
-                        name={`highestQualification`}
+                        name="highestQualification"
                         id="boardOfDirectors.highestQualification"
                         label={t['kymCoopUnionHighestQualification']}
                       />
                       <FormInput
                         type="number"
-                        name={`mobileNumber`}
+                        name="mobileNumber"
                         id="boardOfDirectors.mobileNumber"
                         label={t['kymCoopUnionMobileNo']}
                       />
                       <FormEmailInput
                         type="text"
-                        name={`email`}
+                        name="email"
                         id="boardOfDirectors.email"
                         label={t['kymCoopUnionEmail']}
                       />
                       <FormInput
                         type="string"
-                        name={`citizenshipNo`}
+                        name="citizenshipNo"
                         id="boardOfDirectors.citizenshipNo"
-                        label={
-                          t['kymCoopUnionCitizenshipPassportDrivingLicenseNo']
-                        }
+                        label={t['kymCoopUnionCitizenshipPassportDrivingLicenseNo']}
                       />
                       <FormInput
                         type="string"
-                        name={`panNo`}
+                        name="panNo"
                         id="boardOfDirectors.panNo"
                         label={t['kymCoopUnionPANNo']}
                       />
@@ -227,23 +194,18 @@ const AddDirector = ({
               </form>
             </FormProvider>
 
-            <Grid
-              templateColumns="repeat(2, 1fr)"
-              mt="s32"
-              rowGap="s32"
-              columnGap="s20"
-            >
+            <Grid templateColumns="repeat(2, 1fr)" mt="s32" rowGap="s32" columnGap="s20">
               <KYMDocumentField
                 mutationId={directorId}
                 label={t['kymCoopUnionPhotograph']}
-                name={`photograph`}
+                name="photograph"
                 setKymCurrentSection={setSection}
                 getKymSection={getKymSectionCoOperativeUnion}
               />
               <KYMDocumentField
                 mutationId={directorId}
                 label={t['kymCoopUnionPhotographOfIdentityProofDocument']}
-                name={`identityDocumentPhoto`}
+                name="identityDocumentPhoto"
                 setKymCurrentSection={setSection}
                 getKymSection={getKymSectionCoOperativeUnion}
               />
@@ -251,15 +213,7 @@ const AddDirector = ({
           </SectionContainer>
         </DynamicBoxGroupContainer>
 
-        <Box
-          display="flex"
-          justifyContent="flex-end"
-          border="1px solid"
-          borderColor="border.layout"
-          alignItems={'center'}
-          h="60px"
-          px="s20"
-        >
+        <Box display="flex" justifyContent="flex-end" alignItems="center" h="60px" px="s20">
           <Button
             variant="outline"
             shade="danger"
@@ -299,8 +253,8 @@ export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {
   useEffect(() => {
     if (bodEditValues) {
       const editValueData =
-        bodEditValues?.members?.cooperativeUnion?.formState?.formData
-          ?.boardOfDirectorsDetails?.data?.personnelDetails;
+        bodEditValues?.members?.cooperativeUnion?.formState?.formData?.boardOfDirectorsDetails?.data
+          ?.personnelDetails;
 
       setDirectorIds(
         editValueData?.reduce(
@@ -319,9 +273,7 @@ export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {
 
   const { mutate: deleteMutation } = useDeletePersonnelDetailsMutation({
     onSuccess: (res) => {
-      const deletedId = String(
-        res?.members?.cooperativeUnion?.deletePersonnel?.recordId
-      );
+      const deletedId = String(res?.members?.cooperativeUnion?.deletePersonnel?.recordId);
 
       const tempDirectorIds = [...directorIds];
 
@@ -346,24 +298,22 @@ export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {
     >
       <GridItem colSpan={3}>
         <Grid gap="s16">
-          {directorIds.map((directorId, index) => {
-            return (
-              <Box
-                key={directorId}
-                display="flex"
-                flexDirection={'column'}
-                id="Details of Proprietor, Partners, Directors."
-                scrollMarginTop={'200px'}
-              >
-                <AddDirector
-                  index={index}
-                  directorId={directorId}
-                  removeDirector={removeDirector}
-                  setSection={setSection}
-                />
-              </Box>
-            );
-          })}
+          {directorIds.map((directorId, index) => (
+            <Box
+              key={directorId}
+              display="flex"
+              flexDirection="column"
+              id="Details of Proprietor, Partners, Directors."
+              scrollMarginTop="200px"
+            >
+              <AddDirector
+                index={index}
+                directorId={directorId}
+                removeDirector={removeDirector}
+                setSection={setSection}
+              />
+            </Box>
+          ))}
           <GridItem colSpan={1}>
             <Button
               id="boardOfDirectors.directordetailsButton"

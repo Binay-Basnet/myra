@@ -50,7 +50,7 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
 
   return (
     <Box display="flex">
-      <Box width="275px" p="s24" flexShrink={0} position="fixed">
+      <Box width="240px" p="s12" flexShrink={0} position="fixed">
         <Text fontSize="l1" fontWeight="600" color="gray.800">
           {t['accountLayout']}
         </Text>
@@ -72,22 +72,16 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
         </Button> */}
 
         <PopOverComponentForButtonList buttonLabel="accountLayoutNewAccount">
-          {addButtoncolumns.map((item, index) => {
-            return (
-              <Box key={`${item}${index}`}>
-                <AddButtonList
-                  label={t[item.title]}
-                  onClick={() =>
-                    newId
-                      .mutateAsync({})
-                      .then((res) =>
-                        router.push(`${item.link}/add/${res?.newId}`)
-                      )
-                  }
-                />
-              </Box>
-            );
-          })}
+          {addButtoncolumns.map((item) => (
+            <Box key={item.link}>
+              <AddButtonList
+                label={t[item.title]}
+                onClick={() =>
+                  newId.mutateAsync({}).then((res) => router.push(`${item.link}/add/${res?.newId}`))
+                }
+              />
+            </Box>
+          ))}
         </PopOverComponentForButtonList>
         <Divider my="s16" />
         <TabColumn list={accountColumns} />
@@ -99,18 +93,17 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
           height="s48"
           width="full"
           justifyContent="start"
-          leftIcon={
-            <Icon as={AiOutlineSetting} size="md" color="primary.500" />
-          }
+          leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
         >
           {t['accountLayoutAccountSettings']}
         </Button>
       </Box>
       <Box
-        width="calc(100% - 275px)"
+        boxShadow="xl"
+        width="calc(100% - 240px)"
         overflowX="hidden"
         position="relative"
-        left="275px"
+        left="240px"
       >
         <Box bg="white" minHeight="100vh">
           {children}

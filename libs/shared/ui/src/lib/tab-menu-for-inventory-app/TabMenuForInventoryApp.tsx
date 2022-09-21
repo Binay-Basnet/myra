@@ -56,15 +56,14 @@ const demotabs: {
 ];
 
 // ! TODO create theme and tests
-export function TabMenuForInventoryApp() {
+export const TabMenuForInventoryApp = () => {
   const router = useRouter();
   const { t } = useTranslation();
 
   const currentIndex =
     NAVBAR_TAB_OBJECT[
-      Object.keys(NAVBAR_TAB_OBJECT).find((string) =>
-        router?.pathname.includes(string)
-      ) ?? '/inventory/register'
+      Object.keys(NAVBAR_TAB_OBJECT).find((string) => router?.pathname.includes(string)) ??
+        '/inventory/register'
     ];
 
   return (
@@ -75,17 +74,12 @@ export function TabMenuForInventoryApp() {
       pb="5px"
       background="secondary.700"
       alignItems="center"
-      justifyContent={'flex-start'}
+      justifyContent="flex-start"
       display="flex"
       gap="s8"
     >
-      <Box w="200px">
-        <Text
-          fontWeight={'600'}
-          fontSize="16px"
-          color={'gray.0'}
-          letterSpacing="wide"
-        >
+      <Box w="240px">
+        <Text fontWeight="600" fontSize="16px" color="gray.0" letterSpacing="wide">
           {t['inventory']}
         </Text>
       </Box>
@@ -94,7 +88,7 @@ export function TabMenuForInventoryApp() {
           {demotabs.map(({ title, icon, link }, index) => {
             const isActive = index === currentIndex;
             return (
-              <Link href={link} key={index}>
+              <Link href={link} key={link}>
                 <Tab
                   _focus={{}}
                   px="s16"
@@ -109,11 +103,7 @@ export function TabMenuForInventoryApp() {
                     borderRadius: 'br2',
                   }}
                 >
-                  <Icon
-                    as={icon}
-                    size={'md'}
-                    color={isActive ? 'primary.500' : 'primary.300'}
-                  />
+                  <Icon as={icon} size="md" color={isActive ? 'primary.500' : 'primary.300'} />
 
                   <Text
                     fontSize="r1"
@@ -131,6 +121,6 @@ export function TabMenuForInventoryApp() {
       </Tabs>
     </Box>
   );
-}
+};
 
 export default TabMenuForInventoryApp;

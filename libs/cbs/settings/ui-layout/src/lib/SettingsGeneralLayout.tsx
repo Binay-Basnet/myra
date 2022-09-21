@@ -10,7 +10,7 @@ interface ISettingsGeneralLayoutProps {
 export const SettingsGeneralLayout = ({ children }: ISettingsGeneralLayoutProps) => (
   <Box display="flex" flexDirection="row">
     <SettingSideBar />
-    <Box width="100%" ml="275px" bg="white" minHeight="calc(100vh - 110px)">
+    <Box width="100%" ml="240px" bg="white" minHeight="calc(100vh - 110px)" boxShadow="xl">
       {children}
     </Box>
   </Box>

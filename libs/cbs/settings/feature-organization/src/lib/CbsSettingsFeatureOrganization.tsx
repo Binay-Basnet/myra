@@ -28,7 +28,7 @@ export const CbsSettingsFeatureOrganization = () => {
       <SettingsPageHeader heading={`Organizations - ${featureCode?.settingsOrganization}`} />
       <Box display="flex" flexDirection="row" h="fit-content">
         <Box
-          w="300px"
+          w="250px"
           position="fixed"
           px="s8"
           py="s16"

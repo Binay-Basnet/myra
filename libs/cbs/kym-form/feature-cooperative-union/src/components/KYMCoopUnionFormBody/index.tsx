@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { AccorrdianAddCOOPUnion } from '@coop/myra/components';
 import { Box, Container } from '@coop/shared/ui';
@@ -13,10 +13,7 @@ type KYMSection = {
 export const KymCoopUnionFormBody = () => {
   const [kymCurrentSection, setKymCurrentSection] = useState<KYMSection>();
 
-  const setSection = useCallback(
-    (section: KYMSection) => setKymCurrentSection(section),
-    []
-  );
+  const setSection = useCallback((section: KYMSection) => setKymCurrentSection(section), []);
   return (
     <Container minW="container.xl" height="fit-content">
       <Box>

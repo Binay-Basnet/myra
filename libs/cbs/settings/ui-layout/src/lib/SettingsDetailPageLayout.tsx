@@ -53,15 +53,15 @@ export const SettingsDetailPageLayout = ({ children }: SettingsDetailPage) => {
         />
       </Box>
       <Box
-        w="300px"
+        w="240px"
         position="fixed"
-        borderRight={'1px'}
+        borderRight="1px"
         borderRightColor="border.layout"
         minHeight="100vh"
       >
         <DetailPageSideBar tablinks={tabList} />
       </Box>
-      <Box bg="background.500" ml="300px">
+      <Box bg="background.500" ml="240px">
         {children}
       </Box>
     </>

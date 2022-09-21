@@ -30,7 +30,7 @@ export const ReportsCbsLayout = ({ children }: ReportsCbsLayoutProps) => {
 
       {router.query['objState'] !== 'table-view' && (
         <Box
-          w="300px"
+          w="250px"
           px="s8"
           position="fixed"
           py="s16"

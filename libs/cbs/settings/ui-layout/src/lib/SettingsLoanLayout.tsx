@@ -51,7 +51,7 @@ export const SettingsLoanLayout = ({ children }: ISettingsLoanLayout) => {
         heading={`${t['settingsLoan']} - ${featureCode?.settingsLoan}`}
       />
       <Box
-        w="300px"
+        w="250px"
         px="s8"
         position="fixed"
         py="s16"

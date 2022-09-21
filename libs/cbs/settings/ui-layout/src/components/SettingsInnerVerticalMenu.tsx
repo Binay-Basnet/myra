@@ -8,7 +8,7 @@ import { useTranslation } from '@coop/shared/utils';
 const TabCol = chakra(Tab, {
   baseStyle: {
     color: 'gray.800',
-    height: '48px',
+    height: '40px',
     fontSize: 'r1',
     fontWeight: '400',
     width: '100%',
@@ -23,6 +23,9 @@ const TabCol = chakra(Tab, {
     _focus: {
       boxShadow: 'none',
     },
+    _hover: {
+      bg: 'gray.100',
+    },
   },
 });
 
@@ -33,9 +36,7 @@ interface IVerticalSidebarProps {
   }[];
 }
 
-export const SettingsInnerVerticalMenu = ({
-  tablinks,
-}: IVerticalSidebarProps) => {
+export const SettingsInnerVerticalMenu = ({ tablinks }: IVerticalSidebarProps) => {
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -47,15 +48,13 @@ export const SettingsInnerVerticalMenu = ({
   return (
     <Box>
       <Tabs variant="unstyled" index={currentIndex}>
-        {tablinks.map(({ title, to }, index) => {
-          return (
-            <Link href={to} key={`${title}${index}`}>
-              <TabCol>
-                <Text>{t[title]}</Text>
-              </TabCol>
-            </Link>
-          );
-        })}
+        {tablinks.map(({ title, to }) => (
+          <Link href={to} key={title}>
+            <TabCol>
+              <Text>{t[title]}</Text>
+            </TabCol>
+          </Link>
+        ))}
       </Tabs>
     </Box>
   );

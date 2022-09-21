@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { reset, useAppDispatch } from '@coop/shared/utils';
 

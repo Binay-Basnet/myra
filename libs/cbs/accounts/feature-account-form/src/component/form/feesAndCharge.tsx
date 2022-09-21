@@ -127,7 +127,7 @@ export const FeesAndCharge = () => {
         <Box
           display="flex"
           flexDirection="column"
-          background="background.500"
+          background="background.Medium"
           borderRadius="br2"
           p="s16"
         >
@@ -153,7 +153,7 @@ export const FeesAndCharge = () => {
                 py="s16"
               >
                 <Box>
-                  <Text fontSize="s3" fontWeight="500">
+                  <Text fontSize="s3" fontWeight="Medium">
                     {val?.serviceName}
                   </Text>
                 </Box>

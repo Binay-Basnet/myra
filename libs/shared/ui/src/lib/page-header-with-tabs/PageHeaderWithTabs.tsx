@@ -17,35 +17,33 @@ export const PageHeaderWithTabs = ({
   heading,
   buttonLabel,
   buttonHandler,
-}: PageHeaderWithTabsProps) => {
-  return (
-    <Box
-      bg="white"
-      zIndex="10"
-      w="100%"
-      top="110px"
-      position="sticky"
-      borderBottom="1px solid "
-      borderColor="border.layout"
-      display="flex"
-      alignItems="center"
-      px="s16"
-      py="s8"
-      height="50px"
-    >
-      <Text fontSize="r2" fontWeight="600" color="gray.800" w="300px">
-        {heading}
-      </Text>
+}: PageHeaderWithTabsProps) => (
+  <Box
+    bg="white"
+    zIndex="10"
+    w="100%"
+    top="110px"
+    position="sticky"
+    borderBottom="1px solid "
+    borderColor="border.layout"
+    display="flex"
+    alignItems="center"
+    px="s16"
+    py="s8"
+    height="50px"
+  >
+    <Text fontSize="r2" fontWeight="SemiBold" color="gray.800" w="250px">
+      {heading}
+    </Text>
 
-      <PageHeaderTab list={tabItems ?? []} />
+    <PageHeaderTab list={tabItems ?? []} />
 
-      {buttonLabel && buttonHandler && (
-        <Box display="flex" justifyContent="flex-end" flexGrow={100}>
-          <Button leftIcon={<AddIcon />} onClick={buttonHandler}>
-            {buttonLabel}
-          </Button>
-        </Box>
-      )}
-    </Box>
-  );
-};
+    {buttonLabel && buttonHandler && (
+      <Box display="flex" justifyContent="flex-end" flexGrow={100}>
+        <Button leftIcon={<AddIcon />} onClick={buttonHandler}>
+          {buttonLabel}
+        </Button>
+      </Box>
+    )}
+  </Box>
+);

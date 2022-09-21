@@ -155,7 +155,8 @@ export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayo
         </Button>
       </Box>
       <Box
-        width="calc(100% - 275px)"
+        boxShadow="xl"
+        width="calc(100% - 240px)"
         position="relative"
         left="275px"
         minH="calc(100vh - 110px)"

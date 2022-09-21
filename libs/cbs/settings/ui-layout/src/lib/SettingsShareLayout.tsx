@@ -45,7 +45,7 @@ export const SettingsShareLayout = ({ children }: SettingsShareLayoutProps) => {
     <>
       <SettingsPageHeader heading={`${t['shareSettings']} - ${featureCode?.settingsShare}`} />
       <Box
-        w="300px"
+        w="250px"
         px="s8"
         position="fixed"
         py="s16"

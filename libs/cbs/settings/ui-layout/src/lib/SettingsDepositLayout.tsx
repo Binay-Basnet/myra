@@ -30,17 +30,17 @@ export const SettingsDepositLayout = ({ children }: ISettingsDepositLayout) => {
     <>
       <SettingsPageHeader heading={`${t['settingsDeposit']} - ${featureCode?.settingsDeposit}`} />
       <Box
-        w="300px"
+        w="250px"
         px="s8"
         position="fixed"
-        py="s16"
+        py="s12"
         borderRight="1px"
         borderRightColor="border.layout"
         minHeight="100vh"
       >
         <SettingsInnerVerticalMenu tablinks={tabList} />
       </Box>
-      <Box ml="300px">{children}</Box>
+      <Box ml="250px">{children}</Box>
     </>
   );
 };

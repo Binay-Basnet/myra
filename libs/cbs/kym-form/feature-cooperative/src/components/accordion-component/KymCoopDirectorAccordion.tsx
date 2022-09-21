@@ -12,10 +12,7 @@ import {
   useGetCoOperativeDirectorEditDataQuery,
   useSetCooPdirectorDataMutation,
 } from '@coop/cbs/data-access';
-import {
-  DynamicBoxGroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
+import { DynamicBoxGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
 import {
   Box,
@@ -37,11 +34,7 @@ interface ICOOPDirector {
   directorId: string;
 }
 
-export const AddDirector = ({
-  directorId,
-  removeDirector,
-  setSection,
-}: ICOOPDirector) => {
+export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDirector) => {
   const { t } = useTranslation();
   const methods = useForm<KymCoopDirectorDetailsFormInput>();
 
@@ -54,17 +47,14 @@ export const AddDirector = ({
   const { mutate } = useSetCooPdirectorDataMutation();
 
   const { data: editValues } = useGetCoOperativeDirectorEditDataQuery({
-    id: id,
+    id,
   });
 
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.cooperative?.listDirectors?.data;
+      const editValueData = editValues?.members?.cooperative?.listDirectors?.data;
 
-      const directorDetails = editValueData?.find(
-        (data) => data?.id === directorId
-      );
+      const directorDetails = editValueData?.find((data) => data?.id === directorId);
 
       if (directorDetails) {
         reset({
@@ -75,8 +65,7 @@ export const AddDirector = ({
             ...directorDetails?.permanentAddress,
             locality: directorDetails?.permanentAddress?.locality?.local,
           },
-          isPermanentAndTemporaryAddressSame:
-            directorDetails?.isPermanentAndTemporaryAddressSame,
+          isPermanentAndTemporaryAddressSame: directorDetails?.isPermanentAndTemporaryAddressSame,
           temporaryAddress: {
             ...directorDetails?.temporaryAddress,
             locality: directorDetails?.temporaryAddress?.locality?.local,
@@ -109,18 +98,16 @@ export const AddDirector = ({
 
   const [isOpen, setIsOpen] = React.useState(true);
 
-  const isPermanentAndTemporaryAddressSame = watch(
-    `isPermanentAndTemporaryAddressSame`
-  );
+  const isPermanentAndTemporaryAddressSame = watch(`isPermanentAndTemporaryAddressSame`);
 
-  const province = useMemo(() => {
-    return (
+  const province = useMemo(
+    () =>
       data?.administration?.all?.map((d) => ({
         label: d.name,
         value: d.id,
-      })) ?? []
-    );
-  }, [data?.administration?.all]);
+      })) ?? [],
+    [data?.administration?.all]
+  );
 
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch(`permanentAddress.provinceId`);
@@ -128,16 +115,12 @@ export const AddDirector = ({
   const currentLocalityId = watch('permanentAddress.localGovernmentId');
 
   const districtList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
-        ?.districts ?? [],
+    () => data?.administration.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
     [currentProvinceId]
   );
 
   const localityList = useMemo(
-    () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+    () => districtList.find((d) => d.id === currentDistrictId)?.municipalities ?? [],
     [currentDistrictId]
   );
   const wardList = useMemo(
@@ -150,21 +133,16 @@ export const AddDirector = ({
   const currentTempLocalityId = watch('temporaryAddress.localGovernmentId');
 
   const districtTempList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentTempProvinceId)
-        ?.districts ?? [],
+    () => data?.administration.all.find((d) => d.id === currentTempProvinceId)?.districts ?? [],
     [currentTempProvinceId]
   );
 
   const localityTempList = useMemo(
-    () =>
-      districtTempList.find((d) => d.id === currentTemptDistrictId)
-        ?.municipalities ?? [],
+    () => districtTempList.find((d) => d.id === currentTemptDistrictId)?.municipalities ?? [],
     [currentTemptDistrictId]
   );
   const wardTempList = useMemo(
-    () =>
-      localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
+    () => localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
     [currentTempLocalityId]
   );
 
@@ -179,7 +157,7 @@ export const AddDirector = ({
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          cursor={'pointer'}
+          cursor="pointer"
           onClick={() => setIsOpen(!isOpen)}
           h="60px"
         >
@@ -188,14 +166,14 @@ export const AddDirector = ({
             {isOpen ? (
               <IconButton
                 size="xs"
-                variant={'ghost'}
+                variant="ghost"
                 aria-label="close"
                 icon={<Icon as={IoChevronUpOutline} />}
               />
             ) : (
               <IconButton
                 size="xs"
-                variant={'ghost'}
+                variant="ghost"
                 aria-label="close"
                 icon={<Icon as={IoChevronDownOutline} />}
               />
@@ -206,7 +184,7 @@ export const AddDirector = ({
           <IconButton
             size="sm"
             id="boardDirectorCloseIcon"
-            variant={'ghost'}
+            variant="ghost"
             aria-label="close"
             icon={<CloseIcon />}
             ml="s16"
@@ -218,12 +196,15 @@ export const AddDirector = ({
       </Box>
 
       {/* <DynamicBoxGroupContainer> */}
-      <Collapse in={isOpen} style={{ marginTop: '0px' }}>
-        <DynamicBoxGroupContainer
-          border={'1px solid'}
-          borderColor="border.layout"
-          p="s20"
-        >
+      <Collapse
+        in={isOpen}
+        style={{
+          marginTop: '0px',
+          border: '1px solid',
+          borderColor: 'border.layout',
+        }}
+      >
+        <DynamicBoxGroupContainer>
           <FormProvider {...methods}>
             <form
               onFocus={(e) => {
@@ -231,40 +212,33 @@ export const AddDirector = ({
                 setSection(kymSection);
               }}
             >
-              <Box display={'flex'} flexDirection="column" gap="s48">
-                {/* <FormSection gridLayout={true}> */}
-                <InputGroupContainer>
-                  {' '}
+              <Box display="flex" flexDirection="column" gap="s48">
+                <FormSection gridLayout>
                   <FormInput
                     id="boardDirectorCoop"
                     type="text"
-                    name={`nameEn`}
+                    name="nameEn"
                     label={t['kymCoopFullName']}
-                    __placeholder={t['kymCoopEnterFullName']}
                   />
                   <FormInput
                     id="boardDirectorCoop"
                     type="text"
-                    name={`designation`}
+                    name="designation"
                     label={t['kymCoopDesignation']}
-                    __placeholder={t['kymCoopEnterDesignation']}
                   />
-                </InputGroupContainer>
-                {/* </FormSection> */}
+                </FormSection>
 
-                <FormSection gridLayout={true} header="kymCoopPermanentAddress">
+                <FormSection gridLayout header="kymCoopPermanentAddress">
                   <FormSelect
                     id="boardDirectorCoop"
-                    name={`permanentAddress.provinceId`}
+                    name="permanentAddress.provinceId"
                     label={t['kymCoopState']}
-                    __placeholder={t['kymCoopSelectState']}
                     options={province}
                   />
                   <FormSelect
                     id="boardDirectorCoop"
-                    name={`permanentAddress.districtId`}
+                    name="permanentAddress.districtId"
                     label={t['kymCoopDistrict']}
-                    __placeholder={t['kymCoopSelectDistrict']}
                     options={districtList.map((d) => ({
                       label: d.name,
                       value: d.id,
@@ -272,9 +246,8 @@ export const AddDirector = ({
                   />
                   <FormSelect
                     id="boardDirectorCoop"
-                    name={`permanentAddress.localGovernmentId`}
+                    name="permanentAddress.localGovernmentId"
                     label={t['kymCoopLocalGovernment']}
-                    __placeholder={t['kymCoopSelectLocal']}
                     options={localityList.map((d) => ({
                       label: d.name,
                       value: d.id,
@@ -282,9 +255,8 @@ export const AddDirector = ({
                   />
                   <FormSelect
                     id="boardDirectorCoop"
-                    name={`permanentAddress.wardNo`}
+                    name="permanentAddress.wardNo"
                     label={t['kymCoopWardNo']}
-                    __placeholder={t['kymCoopEnterWardNo']}
                     options={wardList?.map((d) => ({
                       label: d,
                       value: d,
@@ -293,24 +265,20 @@ export const AddDirector = ({
                   <FormInput
                     id="boardDirectorCoop"
                     type="text"
-                    name={`permanentAddress.locality`}
+                    name="permanentAddress.locality"
                     label={t['kymCoopLocality']}
-                    __placeholder={t['kymCoopEnterLocality']}
                   />
 
                   <GridItem colSpan={2}>
-                    <FormMap
-                      name={`permanentAddress.coordinates`}
-                      id="boardDirectorCoop"
-                    />
+                    <FormMap name="permanentAddress.coordinates" id="boardDirectorCoop" />
                   </GridItem>
                 </FormSection>
 
-                <FormSection gridLayout={true} header="kymCoopTemporaryAddress">
+                <FormSection gridLayout header="kymCoopTemporaryAddress">
                   <GridItem colSpan={3}>
                     <FormSwitch
                       id="boardOfDirectorsDetails"
-                      name={`isPermanentAndTemporaryAddressSame`}
+                      name="isPermanentAndTemporaryAddressSame"
                       label={t['kymCoopTemporaryAddressPermanent']}
                     />
                   </GridItem>
@@ -318,16 +286,14 @@ export const AddDirector = ({
                     <>
                       <FormSelect
                         id="boardDirectorCoop"
-                        name={`temporaryAddress.provinceId`}
+                        name="temporaryAddress.provinceId"
                         label={t['kymCoopState']}
-                        __placeholder={t['kymCoopSelectState']}
                         options={province}
                       />
                       <FormSelect
                         id="boardDirectorCoop"
-                        name={`temporaryAddress.districtId`}
+                        name="temporaryAddress.districtId"
                         label={t['kymCoopDistrict']}
-                        __placeholder={t['kymCoopSelectDistrict']}
                         options={districtTempList.map((d) => ({
                           label: d.name,
                           value: d.id,
@@ -335,9 +301,8 @@ export const AddDirector = ({
                       />
                       <FormSelect
                         id="boardDirectorCoop"
-                        name={`temporaryAddress.localGovernmentId`}
+                        name="temporaryAddress.localGovernmentId"
                         label={t['kymCoopLocalGovernment']}
-                        __placeholder={t['kymCoopSelectLocal']}
                         options={localityTempList.map((d) => ({
                           label: d.name,
                           value: d.id,
@@ -345,9 +310,8 @@ export const AddDirector = ({
                       />
                       <FormSelect
                         id="boardDirectorCoop"
-                        name={`temporaryAddress.wardNo`}
+                        name="temporaryAddress.wardNo"
                         label={t['kymCoopWardNo']}
-                        __placeholder={t['kymCoopEnterWardNo']}
                         options={wardTempList.map((d) => ({
                           label: d,
                           value: d,
@@ -356,70 +320,60 @@ export const AddDirector = ({
                       <FormInput
                         id="boardDirectorCoop"
                         type="text"
-                        name={`temporaryAddress.locality`}
+                        name="temporaryAddress.locality"
                         label={t['kymCoopLocality']}
-                        __placeholder={t['kymCoopEnterLocality']}
                       />
 
                       <GridItem colSpan={2}>
-                        <FormMap name={`temporaryAddress.coordinates`} />
+                        <FormMap name="temporaryAddress.coordinates" />
                       </GridItem>
                     </>
                   )}
                 </FormSection>
 
-                <FormSection gridLayout={true}>
+                <FormSection gridLayout>
                   <FormInput
                     id="boardDirectorCoop"
                     type="date"
-                    name={`dateOfMembership`}
+                    name="dateOfMembership"
                     label={t['kymCoopDateOfMembership']}
-                    __placeholder="DD-MM-YYYY"
                   />
                   <FormInput
                     id="boardDirectorCoop"
                     type="text"
-                    name={`highestQualification`}
+                    name="highestQualification"
                     label={t['kymCoopHighestQualification']}
-                    __placeholder={t['kymCoopEnterHigestQualification']}
                   />
                   <FormInput
                     id="boardDirectorCoop"
                     type="number"
-                    name={`contactNumber`}
+                    name="contactNumber"
                     label={t['kymCoopMobileNo']}
-                    __placeholder={t['kymCoopEnterMobileNo']}
                   />
                   <FormInput
                     id="boardDirectorCoop"
                     type="text"
-                    name={`email`}
+                    name="email"
                     label={t['kymCoopEmail']}
-                    __placeholder={t['kymCoopEnterEmail']}
                   />
                   <FormInput
                     id="boardDirectorCoop"
                     type="string"
-                    name={`citizenshipNo`}
+                    name="citizenshipNo"
                     label={t['kymCoopCitizenshipPassportDrivingLicenseNo']}
-                    __placeholder={t['kymCoopEnterNo']}
                   />
                   <FormInput
                     id="boardDirectorCoop"
                     type="string"
-                    name={`panNo`}
+                    name="panNo"
                     label={t['kymCoopPanOrVatNo']}
-                    __placeholder={t['kymCoopEnterPanOrVat']}
                   />
                 </FormSection>
               </Box>
             </form>
           </FormProvider>
 
-          <Bottomdirectorcoop
-            directorId={directorId}
-            setKymCurrentSection={setSection}
-          />
+          <Bottomdirectorcoop directorId={directorId} setKymCurrentSection={setSection} />
 
           {/* <Grid
                   templateColumns="repeat(2, 1fr)"
@@ -449,14 +403,7 @@ export const AddDirector = ({
                   </Box>
                 </Grid> */}
         </DynamicBoxGroupContainer>
-        <Box
-          display="flex"
-          justifyContent="flex-end"
-          py="s10"
-          px="s20"
-          border="1px solid"
-          borderColor="border.layout"
-        >
+        <Box display="flex" justifyContent="flex-end" py="s10" px="s20">
           <Button
             id="kymCOOPdirectorRemoveButton"
             variant="outline"

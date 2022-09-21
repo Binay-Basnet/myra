@@ -45,9 +45,7 @@ const tabList = [
   },
 ];
 
-export const AccountsDetailPageLayout = ({
-  children,
-}: AccountsDetailLayout) => {
+export const AccountsDetailPageLayout = ({ children }: AccountsDetailLayout) => {
   const router = useRouter();
 
   return (
@@ -71,7 +69,7 @@ export const AccountsDetailPageLayout = ({
         />
       </Box>
       <Box
-        w="300px"
+        w="250px"
         position="fixed"
         borderRight="1px"
         borderRightColor="border.layout"

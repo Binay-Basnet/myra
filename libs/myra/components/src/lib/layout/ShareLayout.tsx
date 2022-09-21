@@ -47,7 +47,7 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
 
   return (
     <Box display="flex">
-      <Box width="275px" p="s24" flexShrink={0} position="fixed" zIndex={1}>
+      <Box width="240px" p="s12" flexShrink={0} position="fixed" zIndex={1}>
         <Text fontSize="l1" fontWeight="SemiBold" color="gray.800">
           {t['shareLayout']}
         </Text>
@@ -76,7 +76,13 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
           {t['shareLayoutShareSettings']}
         </Button>
       </Box>
-      <Box width="calc(100% - 275px)" overflowX="hidden" position="relative" left="275px">
+      <Box
+        boxShadow="xl"
+        width="calc(100% - 240px)"
+        overflowX="hidden"
+        position="relative"
+        left="240px"
+      >
         <Box bg="white" minHeight="100vh">
           {children}
         </Box>

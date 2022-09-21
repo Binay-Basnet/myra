@@ -57,7 +57,7 @@ export const AgentDetailPageLayout = ({ children }: AgentDetailPageLayoutProps) 
         />
       </Box>
       <Box
-        w="300px"
+        w="250px"
         position="fixed"
         borderRight="1px"
         borderRightColor="border.layout"

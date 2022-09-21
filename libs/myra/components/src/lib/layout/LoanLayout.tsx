@@ -23,7 +23,7 @@ export const LoanListLayout = ({ children }: IAccountPageLayoutProps) => {
 
   return (
     <Box display="flex">
-      <Box width="275px" p="s24" flexShrink={0} position="fixed">
+      <Box width="240px" p="s12" flexShrink={0} position="fixed">
         <Text fontSize="l1" fontWeight="600" color="gray.800">
           Loan
         </Text>
@@ -34,7 +34,7 @@ export const LoanListLayout = ({ children }: IAccountPageLayoutProps) => {
           justifyContent="start"
           onClick={() => router.push('/loan/add')}
           w="100%"
-          height="s48"
+          height="s40"
           leftIcon={<Icon as={AiOutlinePlus} size="md" color="white" />}
         >
           New Loan Application
@@ -55,7 +55,13 @@ export const LoanListLayout = ({ children }: IAccountPageLayoutProps) => {
           Loan Settings
         </Button>
       </Box>
-      <Box width="calc(100% - 275px)" overflowX="hidden" position="relative" left="275px">
+      <Box
+        boxShadow="xl"
+        width="calc(100% - 240px)"
+        overflowX="hidden"
+        position="relative"
+        left="240px"
+      >
         <Box bg="white" minHeight="100vh">
           {children}
         </Box>

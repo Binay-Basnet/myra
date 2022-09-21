@@ -28,20 +28,14 @@ import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { BottomOperatorCoop } from './accountOperatorDocuments';
 import { DynamicAddtraining } from './acoountOperatorTraining';
+
 interface IAddDirector {
   removeDirector: (directorId: string) => void;
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
   accountId: string;
 }
 
-export const AddOperator = ({
-  removeDirector,
-  setKymCurrentSection,
-  accountId,
-}: IAddDirector) => {
+export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }: IAddDirector) => {
   const { t } = useTranslation();
   const { data } = useAllAdministrationQuery();
 
@@ -52,17 +46,14 @@ export const AddOperator = ({
 
   const id = String(router?.query?.['id']);
   const { data: editValues } = useGetCoOperativeAccountOperatorEditDataQuery({
-    id: id,
+    id,
   });
   const { mutate } = useSetCoopAccOperatorDataMutation();
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.cooperative?.listAccountOperators?.data;
+      const editValueData = editValues?.members?.cooperative?.listAccountOperators?.data;
 
-      const familyMemberDetail = editValueData?.find(
-        (data) => data?.id === accountId
-      );
+      const familyMemberDetail = editValueData?.find((item) => item?.id === accountId);
 
       if (familyMemberDetail) {
         reset({
@@ -92,8 +83,8 @@ export const AddOperator = ({
 
   useEffect(() => {
     const subscription = watch(
-      debounce((data) => {
-        mutate({ id, accOperatorId: accountId, data: { ...data } });
+      debounce((item) => {
+        mutate({ id, accOperatorId: accountId, data: { ...item } });
       }, 800)
     );
 
@@ -101,18 +92,16 @@ export const AddOperator = ({
   }, [watch, router.isReady]);
   const [isOpen, setIsOpen] = React.useState(true);
 
-  const isPermanentAndTemporaryAddressSame = watch(
-    `isPermanentAndTemporaryAddressSame`
-  );
+  const isPermanentAndTemporaryAddressSame = watch(`isPermanentAndTemporaryAddressSame`);
 
-  const province = useMemo(() => {
-    return (
+  const province = useMemo(
+    () =>
       data?.administration?.all?.map((d) => ({
         label: d.name,
         value: d.id,
-      })) ?? []
-    );
-  }, [data?.administration?.all]);
+      })) ?? [],
+    [data?.administration?.all]
+  );
 
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch(`permanentAddress.provinceId`);
@@ -120,16 +109,12 @@ export const AddOperator = ({
   const currentLocalityId = watch(`permanentAddress.localGovernmentId`);
 
   const districtList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
-        ?.districts ?? [],
+    () => data?.administration.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
     [currentProvinceId]
   );
 
   const localityList = useMemo(
-    () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+    () => districtList.find((d) => d.id === currentDistrictId)?.municipalities ?? [],
     [currentDistrictId]
   );
 
@@ -143,22 +128,17 @@ export const AddOperator = ({
   const currentTempLocalityId = watch(`temporaryAddress.localGovernmentId`);
 
   const districtTempList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
-        ?.districts ?? [],
+    () => data?.administration.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
     [currentTempProvinceId]
   );
 
   const localityTempList = useMemo(
-    () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+    () => districtList.find((d) => d.id === currentDistrictId)?.municipalities ?? [],
     [currentTemptDistrictId]
   );
 
   const wardTempList = useMemo(
-    () =>
-      localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
+    () => localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
     [currentTempLocalityId]
   );
 
@@ -167,13 +147,13 @@ export const AddOperator = ({
       <Box display="flex" alignItems="center">
         <Box
           flex={1}
-          px={'s12'}
+          px="s12"
           bg="gray.200"
           display="flex"
           justifyContent="space-between"
           h="60px"
           alignItems="center"
-          cursor={'pointer'}
+          cursor="pointer"
           onClick={() => setIsOpen(!isOpen)}
         >
           <Text fontSize="r1">{`Account Operator `}</Text>
@@ -181,14 +161,14 @@ export const AddOperator = ({
             {isOpen ? (
               <IconButton
                 size="xs"
-                variant={'ghost'}
+                variant="ghost"
                 aria-label="close"
                 icon={<Icon as={IoChevronUpOutline} />}
               />
             ) : (
               <IconButton
                 size="xs"
-                variant={'ghost'}
+                variant="ghost"
                 aria-label="close"
                 icon={<Icon as={IoChevronDownOutline} />}
               />
@@ -199,7 +179,7 @@ export const AddOperator = ({
           <IconButton
             id="accountOperatorCloseIcon"
             size="sm"
-            variant={'ghost'}
+            variant="ghost"
             aria-label="close"
             icon={<CloseIcon />}
             ml="s16"
@@ -210,11 +190,11 @@ export const AddOperator = ({
         )}
       </Box>
 
-      <Collapse in={isOpen} style={{ marginTop: '0px' }}>
-        <DynamicBoxGroupContainer
-          border="1px solid"
-          borderColor={'border.layout'}
-        >
+      <Collapse
+        in={isOpen}
+        style={{ marginTop: '0px', border: '1px solid', borderColor: 'border.layout' }}
+      >
+        <DynamicBoxGroupContainer>
           <FormProvider {...methods}>
             <form
               onFocus={(e) => {
@@ -222,37 +202,33 @@ export const AddOperator = ({
                 setKymCurrentSection(kymSection);
               }}
             >
-              <Box display="flex" flexDirection={'column'} gap="s48">
-                <FormSection gridLayout={true}>
+              <Box display="flex" flexDirection="column" gap="s48">
+                <FormSection gridLayout>
                   <FormInput
                     id="accountOperatorCoop"
                     type="text"
-                    name={`nameEn`}
+                    name="nameEn"
                     label={t['kymCoopFullName']}
-                    __placeholder={t['kymCoopEnterFullName']}
                   />
                   <FormInput
                     id="accountOperatorCoop"
                     type="text"
-                    name={`designation`}
+                    name="designation"
                     label={t['kymCoopDesignation']}
-                    __placeholder={t['kymCoopEnterDesignation']}
                   />
                 </FormSection>
 
-                <FormSection gridLayout={true} header="kymCoopPermanentAddress">
+                <FormSection gridLayout header="kymCoopPermanentAddress">
                   <FormSelect
                     id="accountOperatorCoop"
-                    name={`permanentAddress.provinceId`}
+                    name="permanentAddress.provinceId"
                     label={t['kymCoopState']}
-                    __placeholder={t['kymCoopSelectState']}
                     options={province}
                   />
                   <FormSelect
                     id="accountOperatorCoop"
-                    name={`permanentAddress.districtId`}
+                    name="permanentAddress.districtId"
                     label={t['kymCoopDistrict']}
-                    __placeholder={t['kymCoopSelectDistrict']}
                     options={districtList.map((d) => ({
                       label: d.name,
                       value: d.id,
@@ -260,9 +236,8 @@ export const AddOperator = ({
                   />
                   <FormSelect
                     id="accountOperatorCoop"
-                    name={`permanentAddress.localGovernmentId`}
+                    name="permanentAddress.localGovernmentId"
                     label={t['kymCoopLocalGovernment']}
-                    __placeholder={t['kymCoopSelectLocal']}
                     options={localityList.map((d) => ({
                       label: d.name,
                       value: d.id,
@@ -270,9 +245,8 @@ export const AddOperator = ({
                   />
                   <FormSelect
                     id="accountOperatorCoop"
-                    name={`permanentAddress.wardNo`}
+                    name="permanentAddress.wardNo"
                     label={t['kymCoopWardNo']}
-                    __placeholder={t['kymCoopEnterWardNo']}
                     options={wardList?.map((d) => ({
                       label: d,
                       value: d,
@@ -281,27 +255,25 @@ export const AddOperator = ({
                   <FormInput
                     id="accountOperatorCoop"
                     type="text"
-                    name={`permanentAddress.locality`}
+                    name="permanentAddress.locality"
                     label={t['kymCoopLocality']}
-                    __placeholder={t['kymCoopEnterLocality']}
                   />
                   <FormInput
                     id="accountOperatorCoop"
                     type="text"
-                    name={`permanentAddress.houseNo`}
+                    name="permanentAddress.houseNo"
                     label={t['kymCoopRepresentativeHouseNo']}
-                    __placeholder={t['kymCoopRepresentativeEnterHouseNo']}
                   />
 
                   <GridItem colSpan={2}>
-                    <FormMap name={`permanentAddress.coordinates`} />
+                    <FormMap name="permanentAddress.coordinates" />
                   </GridItem>
                 </FormSection>
 
-                <FormSection gridLayout={true} header="kymCoopTemporaryAddress">
+                <FormSection gridLayout header="kymCoopTemporaryAddress">
                   <GridItem colSpan={3}>
                     <FormSwitch
-                      name={`isPermanentAndTemporaryAddressSame`}
+                      name="isPermanentAndTemporaryAddressSame"
                       label={t['kymCoopTemporaryAddressPermanent']}
                     />
                   </GridItem>
@@ -310,16 +282,14 @@ export const AddOperator = ({
                     <>
                       <FormSelect
                         id="accountOperatorCoop"
-                        name={`temporaryAddress.provinceId`}
+                        name="temporaryAddress.provinceId"
                         label={t['kymCoopState']}
-                        __placeholder={t['kymCoopSelectState']}
                         options={province}
                       />
                       <FormSelect
                         id="accountOperatorCoop"
-                        name={`temporaryAddress.districtId`}
+                        name="temporaryAddress.districtId"
                         label={t['kymCoopDistrict']}
-                        __placeholder={t['kymCoopSelectDistrict']}
                         options={districtTempList.map((d) => ({
                           label: d.name,
                           value: d.id,
@@ -327,9 +297,8 @@ export const AddOperator = ({
                       />
                       <FormSelect
                         id="accountOperatorCoop"
-                        name={`temporaryAddress.localGovernmentId`}
+                        name="temporaryAddress.localGovernmentId"
                         label={t['kymCoopLocalGovernment']}
-                        __placeholder={t['kymCoopSelectLocal']}
                         options={localityTempList.map((d) => ({
                           label: d.name,
                           value: d.id,
@@ -337,9 +306,8 @@ export const AddOperator = ({
                       />
                       <FormSelect
                         id="accountOperatorCoop"
-                        name={`temporaryAddress.wardNo`}
+                        name="temporaryAddress.wardNo"
                         label={t['kymCoopWardNo']}
-                        __placeholder={t['kymCoopEnterWardNo']}
                         options={wardTempList.map((d) => ({
                           label: d,
                           value: d,
@@ -348,70 +316,59 @@ export const AddOperator = ({
                       <FormInput
                         id="accountOperatorCoop"
                         type="text"
-                        name={`temporaryAddress.locality`}
+                        name="temporaryAddress.locality"
                         label={t['kymCoopLocality']}
-                        __placeholder={t['kymCoopEnterLocality']}
                       />
                       <FormInput
                         id="accountOperatorCoop"
                         type="text"
-                        name={`temporaryAddress.houseNo`}
+                        name="temporaryAddress.houseNo"
                         label={t['kymCoopRepresentativeHouseNo']}
-                        __placeholder={t['kymCoopRepresentativeEnterHouseNo']}
                       />
 
                       <GridItem colSpan={2}>
-                        <FormMap
-                          name={`temporaryAddress.coordinates`}
-                          id="accountOperatorCoop"
-                        />
+                        <FormMap name="temporaryAddress.coordinates" id="accountOperatorCoop" />
                       </GridItem>
                     </>
                   )}
                 </FormSection>
 
-                <FormSection gridLayout={true}>
+                <FormSection gridLayout>
                   <FormInput
                     id="accountOperatorCoop"
                     type="date"
-                    name={`dateOfMembership`}
+                    name="dateOfMembership"
                     label={t['kymCoopDateOfMembership']}
-                    __placeholder="DD-MM-YYYY"
                   />
                   <FormInput
                     type="text"
                     id="accountOperatorCoop"
-                    name={`highestQualification`}
+                    name="highestQualification"
                     label={t['kymCoopHighestQualification']}
-                    __placeholder={t['kymCoopEnterHigestQualification']}
                   />
                   <FormInput
                     id="accountOperatorCoop"
                     type="number"
-                    name={`contactNumber`}
+                    name="contactNumber"
                     label={t['kymCoopMobileNo']}
-                    __placeholder={t['kymCoopEnterMobileNo']}
                   />
                   <FormInput
                     id="accountOperatorCoop"
                     type="text"
-                    name={`email`}
+                    name="email"
                     label={t['kymCoopEmail']}
-                    __placeholder={t['kymCoopEnterEmail']}
                   />
                   <FormInput
                     id="accountOperatorCoop"
                     type="string"
-                    name={`citizenshipNo`}
+                    name="citizenshipNo"
                     label={t['kymCoopCitizenshipPassportDrivingLicenseNo']}
-                    __placeholder={t['kymCoopEnterNo']}
                   />
                   <FormInput
                     id="accountOperatorCoop"
                     type="string"
-                    name={`panNo`}
+                    name="panNo"
                     label={t['kymCoopPanOrVatNo']}
-                    __placeholder={t['kymCoopEnterPanOrVat']}
                   />
                 </FormSection>
                 <DynamicAddtraining />
@@ -437,20 +394,9 @@ export const AddOperator = ({
                 />
               </Box>
             </Grid> */}
-          <BottomOperatorCoop
-            accountId={accountId}
-            setKymCurrentSection={setKymCurrentSection}
-          />
+          <BottomOperatorCoop accountId={accountId} setKymCurrentSection={setKymCurrentSection} />
         </DynamicBoxGroupContainer>
-        <Box
-          display="flex"
-          justifyContent="flex-end"
-          px="s20"
-          py="s10"
-          alignItems={'center'}
-          border="1px solid"
-          borderColor="border.layout"
-        >
+        <Box display="flex" justifyContent="flex-end" px="s20" py="s10" alignItems="center">
           <Button
             id="accountOperatorCloseButton"
             variant="outline"

@@ -1,4 +1,3 @@
-import React from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { Box, Button, IconButton } from '@chakra-ui/react';
@@ -13,12 +12,7 @@ export interface FormHeaderProps {
   buttonHandler?: () => void;
 }
 
-export function FormHeader({
-  title,
-  closeLink,
-  buttonLabel,
-  buttonHandler,
-}: FormHeaderProps) {
+export const FormHeader = ({ title, closeLink, buttonLabel, buttonHandler }: FormHeaderProps) => {
   const router = useRouter();
 
   return (
@@ -43,9 +37,8 @@ export function FormHeader({
             {buttonLabel}
           </Button>
         )}
-
         <IconButton
-          variant={'ghost'}
+          variant="ghost"
           aria-label="close"
           color="gray.500"
           icon={<Icon as={IoClose} size="lg" />}
@@ -60,6 +53,6 @@ export function FormHeader({
       </Box>
     </Box>
   );
-}
+};
 
 export default FormHeader;

@@ -64,15 +64,14 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
 ];
 
 // ! TODO create theme and tests
-export function TabMenu() {
+export const TabMenu = () => {
   const router = useRouter();
   const { t } = useTranslation();
 
   const currentIndex =
     NAVBAR_TAB_OBJECT[
-      Object.keys(NAVBAR_TAB_OBJECT).find(
-        (string) => router.asPath.split('/')[1] === string
-      ) ?? '/dashboard'
+      Object.keys(NAVBAR_TAB_OBJECT).find((string) => router.asPath.split('/')[1] === string) ??
+        '/dashboard'
     ];
 
   return (
@@ -85,15 +84,18 @@ export function TabMenu() {
       alignItems="center"
       display="flex"
     >
+      {/* <Box w="240px">
+        <Text fontWeight="SemiBold" fontSize="s16" color="gray.0" letterSpacing="wide">
+          {t['corebankingSystems']}
+        </Text>
+      </Box> */}
       <Tabs index={currentIndex} size="md" height="100%" variant="enclosed">
         <TabList border="none" height="100%" display="flex" gap="s8">
-          {demotabs.map(({ title, icon, link }, index) => {
-            const isActive = router.asPath
-              .split('/')[1]
-              .includes(title.toLowerCase());
+          {demotabs.map(({ title, icon, link }) => {
+            const isActive = router.asPath.split('/')[1].includes(title.toLowerCase());
 
             return (
-              <Link href={link} key={index}>
+              <Link href={link} key={title}>
                 <Tab
                   _focus={{}}
                   px="s16"
@@ -117,17 +119,9 @@ export function TabMenu() {
                   }}
                   color="gray.0"
                 >
-                  <Icon
-                    as={icon}
-                    size={'md'}
-                    color={isActive ? 'primary.500' : 'primary.300'}
-                  />
+                  <Icon as={icon} size="md" color={isActive ? 'primary.500' : 'primary.300'} />
 
-                  <Text
-                    fontSize="r1"
-                    lineHeight="0"
-                    fontWeight={isActive ? '600' : '500'}
-                  >
+                  <Text fontSize="r1" lineHeight="0" fontWeight={isActive ? '600' : '500'}>
                     {t[title]}
                   </Text>
                 </Tab>
@@ -138,6 +132,6 @@ export function TabMenu() {
       </Tabs>
     </Box>
   );
-}
+};
 
 export default TabMenu;

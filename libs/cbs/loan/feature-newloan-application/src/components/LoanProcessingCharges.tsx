@@ -58,7 +58,7 @@ export const LoanProcessingCharge = () => {
                   {val?.serviceName}
                 </Text>
               </Box>
-              <Box w="300px">
+              <Box w="250px">
                 <FormInput
                   textAlign="right"
                   name={`loanProcessingCharge.${index}.amount`}

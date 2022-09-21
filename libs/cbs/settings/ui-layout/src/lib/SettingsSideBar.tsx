@@ -57,13 +57,13 @@ export const SettingSideBar = () => {
   return (
     <Box
       position="fixed"
-      w="275px"
+      w="240px"
       display="flex"
       flexDirection="column"
       gap="s16"
-      p="s24"
+      p="s12"
       flexShrink={0}
-      minWidth="250px"
+      minWidth="220px"
     >
       <Text fontSize="l1" fontWeight="600" color="gray.800">
         {t['settingsGeneral']}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
@@ -34,8 +34,7 @@ export const KymCoopBoardDirectorDetail = (props: IProps) => {
 
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.cooperative?.listDirectors?.data;
+      const editValueData = editValues?.members?.cooperative?.listDirectors?.data;
 
       setCoopDirectorIds(
         editValueData?.reduce(
@@ -58,9 +57,7 @@ export const KymCoopBoardDirectorDetail = (props: IProps) => {
   });
   const { mutate: deleteMutate } = useDeleteCooPdirectorDataMutation({
     onSuccess: (res) => {
-      const deletedId = String(
-        res?.members?.cooperative?.directorDetails?.Delete?.recordId
-      );
+      const deletedId = String(res?.members?.cooperative?.directorDetails?.Delete?.recordId);
 
       const tempDirectorIds = [...coopDirectorIds];
 
@@ -74,26 +71,20 @@ export const KymCoopBoardDirectorDetail = (props: IProps) => {
   };
 
   const removeDirector = (directorId: string) => {
-    deleteMutate({ id: id, dirId: directorId });
+    deleteMutate({ id, dirId: directorId });
   };
 
   return (
     <FormSection
-      gridLayout={true}
+      gridLayout
       id="kymCoopAccBoardOfDirectorDetails"
       header="kymCoopBoardofdirectordetails"
     >
-      {coopDirectorIds.map((id) => {
-        return (
-          <GridItem key={id} colSpan={3}>
-            <AddDirector
-              setSection={setSection}
-              directorId={id}
-              removeDirector={removeDirector}
-            />
-          </GridItem>
-        );
-      })}
+      {coopDirectorIds.map((item) => (
+        <GridItem key={item} colSpan={3}>
+          <AddDirector setSection={setSection} directorId={item} removeDirector={removeDirector} />
+        </GridItem>
+      ))}
 
       <GridItem colSpan={2}>
         <Button

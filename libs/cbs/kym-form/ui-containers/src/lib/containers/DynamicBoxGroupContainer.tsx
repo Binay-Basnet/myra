@@ -6,22 +6,8 @@ interface IGroupContainer extends BoxProps {
   children: React.ReactNode;
 }
 
-export const DynamicBoxGroupContainer = ({
-  children,
-  ...rest
-}: IGroupContainer) => {
-  return (
-    <Box
-      p="s10"
-      display="flex"
-      flexDirection="column"
-      gap="s16"
-      border="1px solid"
-      borderColor="border.layout"
-      borderRadius="br2"
-      {...rest}
-    >
-      {children}
-    </Box>
-  );
-};
+export const DynamicBoxGroupContainer = ({ children, ...rest }: IGroupContainer) => (
+  <Box display="flex" flexDirection="column" gap="s16" borderRadius="br2" {...rest}>
+    {children}
+  </Box>
+);

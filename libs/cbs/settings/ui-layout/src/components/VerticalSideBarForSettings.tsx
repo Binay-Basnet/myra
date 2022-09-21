@@ -8,8 +8,8 @@ import { useTranslation } from '@coop/shared/utils';
 const TabCol = chakra(Tab, {
   baseStyle: {
     color: 'gray.600',
-    height: '48px',
-    fontSize: '14px',
+    height: '40px',
+    fontSize: 's3',
     fontWeight: '500',
     width: '100%',
     display: 'flex',
@@ -17,6 +17,9 @@ const TabCol = chakra(Tab, {
     alignItems: 'center',
     _focus: {
       boxShadow: 'none',
+    },
+    _hover: {
+      bg: 'gray.200',
     },
     _selected: { color: '#37474F', bg: 'gray.200', borderRadius: 'br2' },
   },
