@@ -201,7 +201,7 @@ export const AgentDetailOverview = () => {
                     // isNumeric: true,
                     loadOptions: (row) => getMemberAccounts(row?.member),
                     fieldType: 'select',
-                    cellWidth: 'lg',
+                    cellWidth: 'auto',
                   },
                   {
                     accessor: 'amount',

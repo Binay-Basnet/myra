@@ -65,7 +65,7 @@ export const AgentDetailPageLayout = ({ children }: AgentDetailPageLayoutProps) 
       >
         <DetailPageSideBar tablinks={tabList} />
       </Box>
-      <Box bg="background.500" ml="300px" minHeight="calc(100vh - 160px)" p="s16">
+      <Box bg="background.500" ml="250px" minHeight="calc(100vh - 160px)" p="s16">
         {children}
       </Box>
     </>
