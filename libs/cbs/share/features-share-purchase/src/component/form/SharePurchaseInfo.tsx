@@ -17,10 +17,13 @@ const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
 
   const noOfShares = watch('shareCount');
 
-  const { data: chargesData } = useGetShareChargesQuery({
-    transactionType: Share_Transaction_Direction?.Purchase,
-    shareCount: noOfShares,
-  });
+  const { data: chargesData } = useGetShareChargesQuery(
+    {
+      transactionType: Share_Transaction_Direction?.Purchase,
+      shareCount: noOfShares,
+    },
+    { enabled: !!noOfShares }
+  );
 
   const chargeList = chargesData?.share?.charges;
 

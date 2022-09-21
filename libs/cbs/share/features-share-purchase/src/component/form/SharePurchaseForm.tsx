@@ -6,11 +6,13 @@ import { omit } from 'lodash';
 import {
   CashValue,
   Member,
+  Share_Transaction_Direction,
   SharePaymentMode,
   SharePurchaseInput,
   ShareVoucherDepositedBy,
   useAddSharePurchaseMutation,
   useGetMemberIndividualDataQuery,
+  useGetShareChargesQuery,
 } from '@coop/cbs/data-access';
 import {
   asyncToast,
@@ -85,20 +87,19 @@ const SharePurchaseForm = () => {
   const denominations = watch('cash.denominations');
   const cashPaid = watch('cash.cashPaid');
   const disableDenomination = watch('cash.disableDenomination');
-  const extraFee = watch('extraFee');
 
   const [totalAmount, setTotalAmount] = useState(0);
   const [mode, setMode] = useState('shareInfo');
 
   const denominationTotal =
     denominations?.reduce(
-      (accumulator: number, curr: { value: string }) => accumulator + Number(curr.value),
+      (accumulator: number, curr: { amount?: string }) => accumulator + Number(curr.amount),
       0 as number
     ) ?? 0;
 
   const totalCashPaid: number = disableDenomination ? Number(cashPaid) : Number(denominationTotal);
 
-  const returnAmount = totalAmount - totalCashPaid;
+  const returnAmount = totalCashPaid - totalAmount;
 
   const { data } = useGetMemberIndividualDataQuery(
     {
@@ -175,13 +176,23 @@ const SharePurchaseForm = () => {
     });
   };
 
+  const { data: chargesData } = useGetShareChargesQuery(
+    {
+      transactionType: Share_Transaction_Direction?.Purchase,
+      shareCount: noOfShares,
+    },
+    { enabled: !!noOfShares }
+  );
+
+  const chargeList = chargesData?.share?.charges;
+
   useEffect(() => {
     let temp = 0;
-    extraFee?.forEach((fee) => {
-      temp += Number(fee.value);
+    chargeList?.forEach((charge) => {
+      temp += Number(charge?.charge);
     });
     setTotalAmount(temp + noOfShares * 100);
-  }, [noOfShares, JSON.stringify(extraFee)]);
+  }, [noOfShares, chargeList]);
 
   return (
     <>
