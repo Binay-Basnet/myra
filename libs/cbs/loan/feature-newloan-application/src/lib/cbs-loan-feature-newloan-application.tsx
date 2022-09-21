@@ -127,6 +127,9 @@ export const NewLoanApplication = () => {
   useEffect(() => {
     resetField('productSubType');
   }, [loanType, resetField]);
+  useEffect(() => {
+    resetField('productId');
+  }, [loanSubType, resetField]);
 
   return (
     <Container minW="container.xl" p="0" bg="white">

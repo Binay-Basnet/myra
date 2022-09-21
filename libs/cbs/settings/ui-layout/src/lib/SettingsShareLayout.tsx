@@ -15,10 +15,7 @@ const tabList = [
     title: 'settingsShareBonus',
     to: '/settings/general/share/bonus',
   },
-  {
-    title: 'settingsShareMigration',
-    to: '/settings/general/share/migration',
-  },
+
   {
     title: 'settingsShareDivident',
     to: '/settings/general/share/dividend',
