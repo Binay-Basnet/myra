@@ -6,7 +6,7 @@ import { AssignMembersInput, useSetAddMemberToAgentDataMutation } from '@coop/cb
 import { asyncToast, Box, ChakraModal, FormAccountSelect, FormMemberSelect } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { OverrideAlertModal } from './index';
+import { OverrideAlertModal } from './OverrideAlertModal';
 
 interface IAddMemberModalProps {
   isOpen: boolean;

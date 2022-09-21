@@ -1,11 +1,5 @@
-import React from 'react';
 import { IconType } from 'react-icons';
-import {
-  IoApps,
-  IoArrowDownOutline,
-  IoGridOutline,
-  IoPerson,
-} from 'react-icons/io5';
+import { IoApps, IoArrowDownOutline, IoGridOutline, IoPerson } from 'react-icons/io5';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
@@ -48,9 +42,8 @@ export const SettingsTabMenu = () => {
   const { t } = useTranslation();
   const currentIndex =
     NAVBAR_TAB_OBJECT[
-      Object.keys(NAVBAR_TAB_OBJECT).find((string) =>
-        route.pathname.includes(string)
-      ) ?? '/settings'
+      Object.keys(NAVBAR_TAB_OBJECT).find((string) => route.pathname.includes(string)) ??
+        '/settings'
     ];
 
   return (
@@ -61,17 +54,12 @@ export const SettingsTabMenu = () => {
       pb="5px"
       background="secondary.700"
       alignItems="center"
-      justifyContent={'flex-start'}
+      justifyContent="flex-start"
       display="flex"
       gap="s8"
     >
       <Box w="200px">
-        <Text
-          fontWeight={'600'}
-          fontSize="16px"
-          color={'gray.0'}
-          letterSpacing="wide"
-        >
+        <Text fontWeight="600" fontSize="16px" color="gray.0" letterSpacing="wide">
           {t['settingsTabMenu']}
         </Text>
       </Box>
@@ -84,7 +72,7 @@ export const SettingsTabMenu = () => {
                 ? true
                 : route.asPath.includes(t[title].toLowerCase());
             return (
-              <Link href={link} key={index}>
+              <Link href={link} key={title}>
                 <Tab
                   _focus={{}}
                   px="s16"
@@ -99,11 +87,7 @@ export const SettingsTabMenu = () => {
                     borderRadius: 'br2',
                   }}
                 >
-                  <Icon
-                    as={icon}
-                    size={'md'}
-                    color={isActive ? 'primary.500' : 'primary.300'}
-                  />
+                  <Icon as={icon} size="md" color={isActive ? 'primary.500' : 'primary.300'} />
 
                   <Text
                     fontSize="r1"

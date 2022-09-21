@@ -6,7 +6,7 @@ type FooterProps = {
   paymentButtonHandler: () => void;
 };
 
-const ShareInfoFooter = ({ paymentButtonHandler, totalAmount }: FooterProps) => {
+export const ShareInfoFooter = ({ paymentButtonHandler, totalAmount }: FooterProps) => {
   const { t } = useTranslation();
 
   return (
@@ -32,5 +32,3 @@ const ShareInfoFooter = ({ paymentButtonHandler, totalAmount }: FooterProps) => 
     />
   );
 };
-
-export default ShareInfoFooter;

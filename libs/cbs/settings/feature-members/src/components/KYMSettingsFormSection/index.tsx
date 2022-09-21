@@ -1,10 +1,5 @@
-import React, { useState } from 'react';
-import {
-  DragDropContext,
-  Draggable,
-  Droppable,
-  DropResult,
-} from 'react-beautiful-dnd';
+import { useState } from 'react';
+import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import { IoClose } from 'react-icons/io5';
 import { AddIcon } from '@chakra-ui/icons';
 
@@ -26,14 +21,9 @@ interface KYMSettingsFormSectionProps {
   kymType: FormCategory;
 }
 
-export const KYMSettingsFormSection = ({
-  section,
-  kymType,
-}: KYMSettingsFormSectionProps) => {
+export const KYMSettingsFormSection = ({ section, kymType }: KYMSettingsFormSectionProps) => {
   const [hasNewField, setHasNewField] = useState(false);
-  const [fieldOptions, setFieldOptions] = useState<Partial<FormField>[]>(
-    section?.fields ?? []
-  );
+  const [fieldOptions, setFieldOptions] = useState<Partial<FormField>[]>(section?.fields ?? []);
 
   const { mutateAsync: deleteOption } = useDeleteFieldMutation();
   const { mutateAsync: moveOption } = useMoveFieldMutation();
@@ -56,10 +46,7 @@ export const KYMSettingsFormSection = ({
 
   return (
     <>
-      <AccordionPanel
-        p={fieldOptions.length === 0 && !hasNewField ? '0' : 'auto'}
-        pb="0"
-      >
+      <AccordionPanel p={fieldOptions.length === 0 && !hasNewField ? '0' : 'auto'} pb="0">
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId={section?.id ?? 'no-id'}>
             {(provided) => (
@@ -69,56 +56,48 @@ export const KYMSettingsFormSection = ({
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {fieldOptions.map((option, index) => {
-                  return (
-                    <Draggable
-                      key={option?.id}
-                      draggableId={option?.id ?? 'no-id'}
-                      index={index}
-                    >
-                      {(provided) => (
-                        <Box
-                          display={'flex'}
-                          justifyContent={'space-between'}
-                          alignItems="center"
-                          my="s8"
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                        >
-                          <KYMSettingsSectionOption
-                            kymType={kymType}
-                            section={section}
-                            dragHandleProps={provided.dragHandleProps}
-                            option={option}
-                          />
+                {fieldOptions.map((option, index) => (
+                  <Draggable key={option?.id} draggableId={option?.id ?? 'no-id'} index={index}>
+                    {(provide) => (
+                      <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        my="s8"
+                        ref={provide.innerRef}
+                        {...provide.draggableProps}
+                      >
+                        <KYMSettingsSectionOption
+                          kymType={kymType}
+                          section={section}
+                          dragHandleProps={provide.dragHandleProps}
+                          option={option}
+                        />
 
-                          {!option.isDefault && (
-                            <Icon
-                              onClick={async () => {
-                                setFieldOptions((prev) =>
-                                  prev.filter(
-                                    (fieldItem) => fieldItem.id !== option.id
-                                  )
-                                );
-                                if (option.id) {
-                                  await deleteOption({
-                                    fieldId: option.id,
-                                  });
-                                }
-                              }}
-                              ml="s16"
-                              as={IoClose}
-                              size="md"
-                              color="gray.500"
-                              cursor="pointer"
-                              _hover={{ color: 'gray.800' }}
-                            />
-                          )}
-                        </Box>
-                      )}
-                    </Draggable>
-                  );
-                })}
+                        {!option.isDefault && (
+                          <Icon
+                            onClick={async () => {
+                              setFieldOptions((prev) =>
+                                prev.filter((fieldItem) => fieldItem.id !== option.id)
+                              );
+                              if (option.id) {
+                                await deleteOption({
+                                  fieldId: option.id,
+                                });
+                              }
+                            }}
+                            ml="s16"
+                            as={IoClose}
+                            size="md"
+                            color="gray.500"
+                            cursor="pointer"
+                            _hover={{ color: 'gray.800' }}
+                          />
+                        )}
+                      </Box>
+                    )}
+                  </Draggable>
+                ))}
                 {provided.placeholder}
               </Box>
             )}
@@ -133,17 +112,11 @@ export const KYMSettingsFormSection = ({
           setHasNewField={setHasNewField}
         />
       </AccordionPanel>
-      <AccordionPanel p="0" borderTop={'1px'} borderTopColor={'border.layout'}>
-        <Box
-          display="flex"
-          alignItems={'center'}
-          justifyContent="space-between"
-          h="60px"
-          px="s16"
-        >
+      <AccordionPanel p="0" borderTop="1px" borderTopColor="border.layout">
+        <Box display="flex" alignItems="center" justifyContent="space-between" h="60px" px="s16">
           <Button
             variant="ghost"
-            size={'md'}
+            size="md"
             isDisabled={hasNewField}
             shade="primary"
             leftIcon={<AddIcon />}

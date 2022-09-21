@@ -62,9 +62,7 @@ export const chakraDefaultStyles:
     alignItems: 'center',
     height: '44px',
     marginTop: '-1px',
-    color: state.hasValue
-      ? 'neutralColorLight.Gray-80'
-      : 'neutralColorLight.Gray-50',
+    color: state.hasValue ? 'neutralColorLight.Gray-80' : 'neutralColorLight.Gray-50',
     fontSize: 'r1',
   }),
   placeholder: (provided) => ({
@@ -112,6 +110,16 @@ export const chakraDefaultStyles:
   }),
 };
 
+const optionColor = (state: any) => {
+  if (state.isSelected && !state.isMulti && state.options.length > 5) {
+    return 'primary.500';
+  }
+  if (state.isDisabled) {
+    return 'neutralColorLight.Gray-40';
+  }
+  return 'neutralColorLight.Gray-80';
+};
+
 export const chakraSmallStyles: ChakraStylesConfig = {
   inputContainer: () => ({
     alignItems: 'center',
@@ -135,12 +143,7 @@ export const chakraSmallStyles: ChakraStylesConfig = {
   }),
   option: (provided, state) => ({
     ...provided,
-    color:
-      state.isSelected && !state.isMulti && state.options.length > 5
-        ? 'primary.500'
-        : state.isDisabled
-        ? 'neutralColorLight.Gray-40'
-        : 'neutralColorLight.Gray-80',
+    color: optionColor(state),
     fontWeight: state.isSelected && !state.isMulti ? 600 : 400,
     bg: state.isFocused ? 'highlight.500' : 'none',
     p: 's12',
@@ -172,9 +175,7 @@ export const chakraSmallStyles: ChakraStylesConfig = {
     alignItems: 'center',
     height: '36px',
     marginTop: '-1px',
-    color: state.hasValue
-      ? 'neutralColorLight.Gray-80'
-      : 'neutralColorLight.Gray-50',
+    color: state.hasValue ? 'neutralColorLight.Gray-80' : 'neutralColorLight.Gray-50',
     fontSize: 'r1',
   }),
   placeholder: (provided) => ({

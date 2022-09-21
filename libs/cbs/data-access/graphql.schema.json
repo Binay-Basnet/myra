@@ -18030,6 +18030,18 @@
             "deprecationReason": null
           },
           {
+            "name": "isMandatorySaving",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "isTenureApplicable",
             "description": null,
             "args": [],
@@ -18882,6 +18894,18 @@
           },
           {
             "name": "isForMinors",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isMandatorySaving",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -63414,7 +63438,7 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "MANDATORY",
+            "name": "CURRENT",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -63426,13 +63450,13 @@
             "deprecationReason": null
           },
           {
-            "name": "TERM_SAVING_OR_FD",
+            "name": "SAVING",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "VOLUNTARY_OR_OPTIONAL",
+            "name": "TERM_SAVING_OR_FD",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null

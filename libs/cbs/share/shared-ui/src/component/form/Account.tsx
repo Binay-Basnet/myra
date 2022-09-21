@@ -12,7 +12,7 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-const Account = () => {
+export const Account = () => {
   const { t } = useTranslation();
   const methods = useFormContext();
   const { watch } = methods;
@@ -64,14 +64,10 @@ const Account = () => {
           type="text"
           name="accountAmount"
           label={t['sharePurchaseAccountAmount']}
-          defaultValue={
-            (availableBalance && availableBalance[0]?.node?.balance) ?? 0
-          }
-          isDisabled={true}
+          defaultValue={(availableBalance && availableBalance[0]?.node?.balance) ?? 0}
+          isDisabled
         />
       </GridItem>
     </FormSection>
   );
 };
-
-export default Account;

@@ -25,11 +25,10 @@ export const useGetPreDefinedFields = (
       isLoading,
       error,
     };
-  } else {
-    return {
-      data: null,
-      isLoading,
-      error,
-    };
   }
+  return {
+    data: null,
+    isLoading,
+    error,
+  };
 };

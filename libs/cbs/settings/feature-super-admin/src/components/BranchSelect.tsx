@@ -14,7 +14,7 @@ interface IBranchSelectProps extends SelectProps {
 }
 
 export const BranchSelect = (props: IBranchSelectProps) => {
-  const { name, label, __placeholder, ...rest } = props;
+  const { name, label, __placeholder: placeholder, ...rest } = props;
 
   const { watch } = useFormContext();
 
@@ -40,15 +40,12 @@ export const BranchSelect = (props: IBranchSelectProps) => {
     }
   );
 
-  const branchList =
-    branchListQueryData?.settings?.general?.branch?.list?.edges;
+  const branchList = branchListQueryData?.settings?.general?.branch?.list?.edges;
 
-  const branchOptions = branchList?.map((branch) => {
-    return {
-      label: `${branch?.node?.name} [${branch?.node?.branchCode}]` as string,
-      value: branch?.node?.id as string,
-    };
-  });
+  const branchOptions = branchList?.map((branch) => ({
+    label: `${branch?.node?.name} [${branch?.node?.branchCode}]` as string,
+    value: branch?.node?.id as string,
+  }));
 
   const branch = watch('branch');
 
@@ -64,7 +61,7 @@ export const BranchSelect = (props: IBranchSelectProps) => {
       name={name}
       label={label}
       isLoading={isFetching}
-      __placeholder={__placeholder}
+      __placeholder={placeholder}
       onInputChange={debounce((id) => {
         if (id) {
           setBranchId(id);

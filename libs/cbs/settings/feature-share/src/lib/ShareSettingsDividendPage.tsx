@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IoInformationCircle } from 'react-icons/io5';
 import { useRouter } from 'next/router';
@@ -10,20 +10,8 @@ import {
   useGetSettingsShareDividendDataQuery,
   useSetSettingsShareDividendMutation,
 } from '@coop/cbs/data-access';
-import {
-  FormInput,
-  FormRadioGroup,
-  FormSelect,
-  FormSwitchTab,
-} from '@coop/shared/form';
-import {
-  asyncToast,
-  Box,
-  Icon,
-  SettingsFooter,
-  Text,
-  toast,
-} from '@coop/shared/ui';
+import { FormInput, FormRadioGroup, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { asyncToast, Box, Icon, SettingsFooter, Text, toast } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';
@@ -142,9 +130,9 @@ export const ShareSettingsDividendPage = () => {
             title={t['shareDividentDistributionCondition']}
             subtitle={t['shareAddDifferentShareDividentRate']}
           >
-            <Box display="flex" flexDir="column" gap={'s16'}>
+            <Box display="flex" flexDir="column" gap="s16">
               <FormSwitchTab
-                name={'distributionCondition'}
+                name="distributionCondition"
                 options={[
                   {
                     label: t['shareDividentDaily'],
@@ -163,22 +151,21 @@ export const ShareSettingsDividendPage = () => {
               {distributionCond === DividendDistributionCondition?.Daily && (
                 <Box
                   bg="info.0"
-                  display={'flex'}
+                  display="flex"
                   flexDirection="row"
                   alignItems="center"
-                  justifyContent={'flex-start'}
+                  justifyContent="flex-start"
                   borderRadius="br2"
                   gap="s16"
                   p="s16"
                 >
                   <Icon as={IoInformationCircle} color="info.900" />
-                  <Text fontWeight={'500'} fontSize="r1" color={'info.900'}>
+                  <Text fontWeight="500" fontSize="r1" color="info.900">
                     {t['shareDividendSettingsDailyInput']}
                   </Text>
                 </Box>
               )}
-              {distributionCond ===
-                DividendDistributionCondition?.Quarterly && (
+              {distributionCond === DividendDistributionCondition?.Quarterly && (
                 <>
                   {' '}
                   <Box
@@ -252,31 +239,29 @@ export const ShareSettingsDividendPage = () => {
                 </>
               )}
               {distributionCond === DividendDistributionCondition?.Monthly && (
-                <Box display={'flex'} flexDirection="column" gap="s16">
-                  {months.map(({ label, name }) => {
-                    return (
-                      <Box
-                        display={'flex'}
-                        flexDir="row"
-                        alignItems={'center'}
-                        justifyContent={'space-between'}
-                        key={name}
-                        gap="s8"
-                      >
-                        <Text fontWeight={'400'} fontSize="r1">
-                          {t[label]}
-                        </Text>
-                        <Box w="20%">
-                          <FormInput
-                            name={`dividendRate.monthly.${name}`}
-                            size="sm"
-                            type="number"
-                            __placeholder="100%"
-                          />
-                        </Box>
+                <Box display="flex" flexDirection="column" gap="s16">
+                  {months.map(({ label, name }) => (
+                    <Box
+                      display="flex"
+                      flexDir="row"
+                      alignItems="center"
+                      justifyContent="space-between"
+                      key={name}
+                      gap="s8"
+                    >
+                      <Text fontWeight="400" fontSize="r1">
+                        {t[label]}
+                      </Text>
+                      <Box w="20%">
+                        <FormInput
+                          name={`dividendRate.monthly.${name}`}
+                          size="sm"
+                          type="number"
+                          __placeholder="100%"
+                        />
                       </Box>
-                    );
-                  })}
+                    </Box>
+                  ))}
                 </Box>
               )}
             </Box>
@@ -304,19 +289,11 @@ export const ShareSettingsDividendPage = () => {
             />
           </ShareSettingsCard>
 
-          {dividentTransferTreatment ===
-          DividendTransferTreatment?.ShareAndAccount ? (
-            <ShareSettingsCard
-              title={t['shareAndAccount']}
-              subtitle={t['shareAndAccountSubtitle']}
-            >
-              <Box display="flex" flexDir="column" gap={'s16'}>
+          {dividentTransferTreatment === DividendTransferTreatment?.ShareAndAccount ? (
+            <ShareSettingsCard title={t['shareAndAccount']} subtitle={t['shareAndAccountSubtitle']}>
+              <Box display="flex" flexDir="column" gap="s16">
                 <Box>
-                  <Text
-                    fontWeight="Regular"
-                    color="neutralColorLight.Gray-80"
-                    fontSize="r1"
-                  >
+                  <Text fontWeight="Regular" color="neutralColorLight.Gray-80" fontSize="r1">
                     {t['shareAndAccountNote']}
                   </Text>
                 </Box>
@@ -337,8 +314,7 @@ export const ShareSettingsDividendPage = () => {
                 </Box>
               </Box>
             </ShareSettingsCard>
-          ) : dividentTransferTreatment ===
-            DividendTransferTreatment?.AccountTransfer ? (
+          ) : dividentTransferTreatment === DividendTransferTreatment?.AccountTransfer ? (
             <ShareSettingsCard
               title={t['shareAccountTransfer']}
               subtitle={t['shareAccountTransferSubtitle']}
@@ -351,8 +327,7 @@ export const ShareSettingsDividendPage = () => {
                 />
               </Box>
             </ShareSettingsCard>
-          ) : dividentTransferTreatment ===
-            DividendTransferTreatment?.BookPayable ? (
+          ) : dividentTransferTreatment === DividendTransferTreatment?.BookPayable ? (
             <ShareSettingsCard
               title={t['shareBookPayables']}
               subtitle={t['shareBookPayablesSubtitle']}
@@ -367,10 +342,7 @@ export const ShareSettingsDividendPage = () => {
             </ShareSettingsCard>
           ) : null}
         </Box>
-        <SettingsFooter
-          handleSave={handleSubmit}
-          handleDiscard={handleDiscard}
-        />
+        <SettingsFooter handleSave={handleSubmit} handleDiscard={handleDiscard} />
       </form>
     </FormProvider>
   );

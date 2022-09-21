@@ -8,7 +8,7 @@ type FooterProps = {
   handleSubmit: () => void;
 };
 
-const SharePaymentFooter = ({ previousButtonHandler, handleSubmit }: FooterProps) => {
+export const SharePaymentFooter = ({ previousButtonHandler, handleSubmit }: FooterProps) => {
   const { t } = useTranslation();
 
   return (
@@ -27,5 +27,3 @@ const SharePaymentFooter = ({ previousButtonHandler, handleSubmit }: FooterProps
     />
   );
 };
-
-export default SharePaymentFooter;

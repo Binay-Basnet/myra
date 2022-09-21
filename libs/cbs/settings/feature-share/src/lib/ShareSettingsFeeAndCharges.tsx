@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
@@ -46,21 +46,17 @@ export const ShareSettingsFeeAndCharges = () => {
   const { t } = useTranslation();
   const methods = useForm({});
   const { data: ledgerQuery } = useGetLedgerMapingShareQuery();
-  const ledgerData =
-    ledgerQuery?.settings?.general?.chartsOfAccount?.accountsUnder?.data;
+  const ledgerData = ledgerQuery?.settings?.general?.chartsOfAccount?.accountsUnder?.data;
 
-  const ledgerOptions = ledgerData?.map((data) => {
-    return {
-      label: data?.name?.local as string,
-      value: data?.id as string,
-    };
-  });
+  const ledgerOptions = ledgerData?.map((data) => ({
+    label: data?.name?.local as string,
+    value: data?.id as string,
+  }));
   const { reset, getValues } = methods;
   const router = useRouter();
   const { mutateAsync } = useSetSettingsShareIssueChargesMutation();
   const { data, refetch } = useGetSettingsShareIssueChargesDataQuery();
-  const settingsFeesAndChargesData =
-    data?.settings?.general?.share?.shareIssueCharges;
+  const settingsFeesAndChargesData = data?.settings?.general?.share?.shareIssueCharges;
 
   useEffect(() => {
     if (settingsFeesAndChargesData) {
@@ -105,18 +101,10 @@ export const ShareSettingsFeeAndCharges = () => {
             <Box display="flex" flexDirection="column" gap="s48">
               <Box display="flex" flexDirection="column" gap="s10">
                 <Box display="flex" flexDirection="column" gap="s4">
-                  <Text
-                    fontSize="r1"
-                    fontWeight="SemiBold"
-                    color="neutralColorLight.Gray-80"
-                  >
+                  <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
                     {t['shareCertificateCharge']}
                   </Text>
-                  <Text
-                    fontSize="s3"
-                    fontWeight="Medium"
-                    color="neutralColorLight.Gray-60"
-                  >
+                  <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-60">
                     {t['shareCertificateChargeSubtitle']}
                   </Text>
                 </Box>
@@ -157,18 +145,10 @@ export const ShareSettingsFeeAndCharges = () => {
 
               <Box display="flex" flexDirection="column" gap="s10">
                 <Box display="flex" flexDirection="column" gap="s4">
-                  <Text
-                    fontSize="r1"
-                    fontWeight="SemiBold"
-                    color="neutralColorLight.Gray-80"
-                  >
+                  <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
                     {t['shareOtherCharge']}
                   </Text>
-                  <Text
-                    fontSize="s3"
-                    fontWeight="Medium"
-                    color="neutralColorLight.Gray-60"
-                  >
+                  <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-60">
                     {t['shareOtherBasicCharge']}
                   </Text>
                 </Box>
@@ -213,10 +193,7 @@ export const ShareSettingsFeeAndCharges = () => {
             </Box>
           </Box>
         </Box>
-        <SettingsFooter
-          handleSave={handleSubmit}
-          handleDiscard={handleDiscard}
-        />
+        <SettingsFooter handleSave={handleSubmit} handleDiscard={handleDiscard} />
       </form>
     </FormProvider>
   );

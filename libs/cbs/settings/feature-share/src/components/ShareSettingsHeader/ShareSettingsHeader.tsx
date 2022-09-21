@@ -1,12 +1,12 @@
 /* eslint-disable-next-line */
 import { Text, Box } from '@coop/shared/ui';
-import React from 'react';
 
 export interface ShareSettingsHeaderProps {
   title: string;
 }
 
-export function ShareSettingsHeader(props: ShareSettingsHeaderProps) {
+export const ShareSettingsHeader = (props: ShareSettingsHeaderProps) => {
+  const { title } = props;
   return (
     <Box
       width="100%"
@@ -17,10 +17,10 @@ export function ShareSettingsHeader(props: ShareSettingsHeaderProps) {
       borderBottomColor="border.layout"
     >
       <Text fontSize="r2" color="gray.800" fontWeight="600">
-        {props.title}
+        {title}
       </Text>
     </Box>
   );
-}
+};
 
 export default ShareSettingsHeader;

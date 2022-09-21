@@ -15,7 +15,7 @@ type IReturnInfo = {
   totalAmount: number;
 };
 
-const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
+export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
   const { t } = useTranslation();
   const methods = useFormContext();
   const { watch, getValues, reset, register } = methods;
@@ -58,6 +58,16 @@ const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
     }
   }, [allShares, balanceData, getValues, reset]);
 
+  const shareResult = () => {
+    if (balanceData) {
+      if (allShares) {
+        return 0;
+      }
+      return Number(balanceData?.count) - Number(noOfShares);
+    }
+    return 0;
+  };
+
   return (
     <Box display="flex" flexDirection="column" pb="28px" background="gray.0">
       <FormSection header="shareReturnShareInformation">
@@ -83,11 +93,7 @@ const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
                   {t['shareReturnRemainingShare']}
                 </Text>
                 <Text fontWeight="SemiBold" fontSize="r1">
-                  {balanceData
-                    ? allShares
-                      ? 0
-                      : Number(balanceData?.count) - Number(noOfShares)
-                    : 0}
+                  {shareResult()}
                 </Text>
               </Box>
 
@@ -96,11 +102,7 @@ const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
                   {t['shareReturnRemainingShareValue']}
                 </Text>
                 <Text fontWeight="SemiBold" fontSize="r1">
-                  {balanceData
-                    ? allShares
-                      ? 0
-                      : (Number(balanceData?.count) - Number(noOfShares)) * 100
-                    : 0}
+                  {shareResult()}
                 </Text>
               </Box>
             </Box>

@@ -25,10 +25,7 @@ interface SelectOption {
 }
 
 export interface SelectProps
-  extends Omit<
-    Props<SelectOption, boolean, GroupBase<SelectOption>>,
-    'size' | 'onChange'
-  > {
+  extends Omit<Props<SelectOption, boolean, GroupBase<SelectOption>>, 'size' | 'onChange'> {
   options?: SelectOption[] | undefined;
   helperText?: string;
   errorText?: string;
@@ -38,7 +35,7 @@ export interface SelectProps
   onChange?: ((newValue: SelectOption) => void) | any;
 }
 
-export function Select({
+export const Select = ({
   // size,
   errorText,
   helperText,
@@ -47,7 +44,7 @@ export function Select({
   options,
   value,
   ...rest
-}: SelectProps) {
+}: SelectProps) => (
   // const [sortedOptions, setSortedOptions] = useState(options ?? []);
 
   // useEffect(() => {
@@ -56,71 +53,58 @@ export function Select({
   //   }
   // }, [JSON.stringify(options)]);
 
-  return (
-    <Flex direction="column" gap="s4">
-      <TextFields variant="formLabel" color="gray.700">
-        {label}
+  <Flex direction="column" gap="s4">
+    <TextFields variant="formLabel" color="gray.700">
+      {label}
+    </TextFields>
+    <ChakraSelect<SelectOption, boolean, GroupBase<SelectOption>>
+      key={!isMulti ? `my_unique_select_key__${JSON.stringify(value)}` : 'isMulti'}
+      // onMenuClose={() => {
+      //   if (isMulti) {
+      //     setSortedOptions((prev) =>
+      //       (prev as Array<Option>)?.sort((optionA) => {
+      //         if (
+      //           (value as Array<Option>)?.find(
+      //             (v) => optionA.value === v.value
+      //           )
+      //         ) {
+      //           return -1;
+      //         } else {
+      //           return 1;
+      //         }
+      //       })
+      //     );
+      //   }
+      // }}
+      // options={isMulti ? sortedOptions : options}
+      options={options}
+      value={value}
+      controlShouldRenderValue={!isMulti}
+      closeMenuOnSelect={!isMulti}
+      isMulti={isMulti}
+      hideSelectedOptions={false}
+      isClearable={false}
+      chakraStyles={
+        chakraDefaultStyles as ChakraStylesConfig<SelectOption, boolean, GroupBase<SelectOption>>
+      }
+      components={
+        customComponents as Partial<
+          SelectComponentsConfig<SelectOption, boolean, GroupBase<SelectOption>>
+        >
+      }
+      {...rest}
+    />
+    {errorText && (
+      <TextFields variant="formHelper" color="danger.500">
+        {errorText}
       </TextFields>
-      <ChakraSelect<SelectOption, boolean, GroupBase<SelectOption>>
-        key={
-          !isMulti
-            ? `my_unique_select_key__${JSON.stringify(value)}`
-            : 'isMulti'
-        }
-        // onMenuClose={() => {
-        //   if (isMulti) {
-        //     setSortedOptions((prev) =>
-        //       (prev as Array<Option>)?.sort((optionA) => {
-        //         if (
-        //           (value as Array<Option>)?.find(
-        //             (v) => optionA.value === v.value
-        //           )
-        //         ) {
-        //           return -1;
-        //         } else {
-        //           return 1;
-        //         }
-        //       })
-        //     );
-        //   }
-        // }}
-        // options={isMulti ? sortedOptions : options}
-        options={options}
-        value={value}
-        controlShouldRenderValue={!isMulti}
-        closeMenuOnSelect={!isMulti}
-        isMulti={isMulti}
-        hideSelectedOptions={false}
-        isClearable={false}
-        chakraStyles={
-          chakraDefaultStyles as ChakraStylesConfig<
-            SelectOption,
-            boolean,
-            GroupBase<SelectOption>
-          >
-        }
-        components={
-          customComponents as Partial<
-            SelectComponentsConfig<
-              SelectOption,
-              boolean,
-              GroupBase<SelectOption>
-            >
-          >
-        }
-        {...rest}
-      />
-      {errorText ? (
-        <TextFields variant="formHelper" color="danger.500">
-          {errorText}
-        </TextFields>
-      ) : helperText ? (
-        <TextFields variant="formHelper" color="gray.700">
-          {helperText}
-        </TextFields>
-      ) : null}
-    </Flex>
-  );
-}
+    )}
+    {helperText && (
+      <TextFields variant="formHelper" color="gray.700">
+        {helperText}
+      </TextFields>
+    )}
+  </Flex>
+);
 
 export default Select;

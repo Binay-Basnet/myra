@@ -29,7 +29,7 @@ type PurchaseProps = {
   returnAmount: number;
 };
 
-const Cash = ({ denominationTotal, totalCashPaid, returnAmount }: PurchaseProps) => {
+export const Cash = ({ denominationTotal, totalCashPaid, returnAmount }: PurchaseProps) => {
   const { t } = useTranslation();
   const methods = useFormContext();
   const { watch } = methods;
@@ -129,5 +129,3 @@ const Cash = ({ denominationTotal, totalCashPaid, returnAmount }: PurchaseProps)
     </FormSection>
   );
 };
-
-export default Cash;

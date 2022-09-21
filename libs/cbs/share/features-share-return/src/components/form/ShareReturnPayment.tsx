@@ -6,7 +6,7 @@ import { FormSwitchTab, FormTextArea } from '@coop/shared/form';
 import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import BankCheque from './BankCheque';
+import { BankCheque } from './BankCheque';
 
 type ReturnProps = {
   totalAmount: number;
@@ -15,7 +15,7 @@ type ReturnProps = {
   returnAmount: number;
 };
 
-const ShareReturnPayment = ({
+export const ShareReturnPayment = ({
   totalAmount,
   denominationTotal,
   totalCashPaid,
@@ -97,5 +97,3 @@ const ShareReturnPayment = ({
     </Box>
   );
 };
-
-export default ShareReturnPayment;

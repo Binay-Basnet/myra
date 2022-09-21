@@ -1,5 +1,4 @@
-import { FormPhoneNumber } from '@coop/shared/form';
-import { FormInput } from '@coop/shared/form';
+import { FormInput, FormPhoneNumber } from '@coop/shared/form';
 import { Box, Grid, GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -12,13 +11,13 @@ export const MainContactPersonOrganization = () => {
           <FormInput
             label={t['settingsOrgMainName']}
             __placeholder={t['settingsOrgMainEnterName']}
-            name={'contactPersonName'}
+            name="contactPersonName"
           />
         </GridItem>
         <GridItem>
           <FormPhoneNumber
             label={t['settingsOrgMainContactNo']}
-            name={'contactPersonContactNumber'}
+            name="contactPersonContactNumber"
             __placeholder={t['settingsOrgMainContactPersonPhone']}
           />
         </GridItem>
@@ -26,7 +25,7 @@ export const MainContactPersonOrganization = () => {
           <FormInput
             label={t['settingsOrgMainDesignation']}
             __placeholder={t['settingsOrgMainDesignation']}
-            name={'title'}
+            name="title"
           />
         </GridItem>
       </Grid>

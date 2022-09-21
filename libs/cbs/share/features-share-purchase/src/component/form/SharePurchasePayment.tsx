@@ -12,7 +12,7 @@ import {
 import { Box, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import BankVoucher from './BankVoucher';
+import { BankVoucher } from './BankVoucher';
 
 type PurchaseProps = {
   totalAmount: number;
@@ -30,7 +30,7 @@ const sourceOfFundsList = [
   'Compensation',
 ];
 
-const SharePurchasePayment = ({
+export const SharePurchasePayment = ({
   totalAmount,
   denominationTotal,
   totalCashPaid,
@@ -198,5 +198,3 @@ const SharePurchasePayment = ({
     </Box>
   );
 };
-
-export default SharePurchasePayment;

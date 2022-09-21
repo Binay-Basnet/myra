@@ -84,7 +84,7 @@ const cashOptions: Record<string, string> = {
 const FINE = '0';
 const REBATE = '0';
 
-export function AddBulkDeposit() {
+export const AddBulkDeposit = () => {
   // const { t } = useTranslation();
 
   const router = useRouter();
@@ -163,9 +163,8 @@ export function AddBulkDeposit() {
 
   const selectedAccount = useMemo(
     () =>
-      accountListData?.account?.list?.edges?.find(
-        (account) => account.node?.id === accountId
-      )?.node,
+      accountListData?.account?.list?.edges?.find((account) => account.node?.id === accountId)
+        ?.node,
     [accountId]
   );
 
@@ -184,10 +183,7 @@ export function AddBulkDeposit() {
   const amountToBeDeposited = watch('amount') ?? 0;
 
   const totalDeposit = useMemo(
-    () =>
-      amountToBeDeposited
-        ? Number(amountToBeDeposited) + Number(FINE) - Number(REBATE)
-        : 0,
+    () => (amountToBeDeposited ? Number(amountToBeDeposited) + Number(FINE) - Number(REBATE) : 0),
     [amountToBeDeposited]
   );
 
@@ -255,14 +251,14 @@ export function AddBulkDeposit() {
 
   const accountInfoData = useMemo(
     () =>
-      accounts?.map(({ accountId, amount }) => {
+      accounts?.map(({ accountId: item, amount }) => {
         const filteredAccount = accountListData?.account?.list?.edges?.find(
-          (accountData) => accountData.node?.id === accountId
+          (accountData) => accountData.node?.id === item
         )?.node;
 
         return {
           accountName: filteredAccount?.product?.productName,
-          amount: amount,
+          amount,
           fine: filteredAccount?.fine,
           rebate: '0',
         };
@@ -272,9 +268,9 @@ export function AddBulkDeposit() {
 
   const totalDepositAmount = useMemo(() => {
     let total = 0;
-    accounts?.forEach(({ accountId, amount }) => {
+    accounts?.forEach(({ accountId: item, amount }) => {
       const filteredAccount = accountListData?.account?.list?.edges?.find(
-        (accountData) => accountData.node?.id === accountId
+        (accountData) => accountData.node?.id === item
       )?.node;
 
       total = Number(amount) - (Number(filteredAccount?.fine) || 0);
@@ -286,17 +282,11 @@ export function AddBulkDeposit() {
   return (
     <>
       <Container minW="container.xl" height="fit-content">
-        <Box
-          position="sticky"
-          top="110px"
-          bg="gray.100"
-          width="100%"
-          zIndex="10"
-        >
+        <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
-            title={'New Deposit'}
+            title="New Deposit"
             closeLink="/transactions/deposit/list"
-            buttonLabel={'Add Deposit'}
+            buttonLabel="Add Deposit"
             buttonHandler={() => router.push('/transactions/deposit/add')}
           />
         </Box>
@@ -304,10 +294,7 @@ export function AddBulkDeposit() {
         <Box bg="white">
           <FormProvider {...methods}>
             <form>
-              <Box
-                display={mode === 0 ? 'flex' : 'none'}
-                minH="calc(100vh - 170px)"
-              >
+              <Box display={mode === 0 ? 'flex' : 'none'} minH="calc(100vh - 170px)">
                 <Box
                   p="s16"
                   pb="100px"
@@ -316,15 +303,11 @@ export function AddBulkDeposit() {
                   flexDirection="column"
                   gap="s24"
                 >
-                  <MemberSelect
-                    name="memberId"
-                    label="Member"
-                    __placeholder="Select Member"
-                  />
+                  <MemberSelect name="memberId" label="Member" __placeholder="Select Member" />
 
                   {memberId && (
                     <MemberCard
-                      isInline={true}
+                      isInline
                       memberDetails={{
                         name: memberDetailData?.name,
                         avatar: 'https://bit.ly/dan-abramov',
@@ -351,19 +334,14 @@ export function AddBulkDeposit() {
                                 : '',
                               ID: selectedAccount?.product?.id,
                               currentBalance: selectedAccount?.balance ?? '0',
-                              minimumBalance:
-                                selectedAccount?.product?.minimumBalance ?? '0',
+                              minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
                               guaranteeBalance: '1000',
-                              overdrawnBalance:
-                                selectedAccount?.overDrawnBalance ?? '0',
+                              overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                               fine: FINE,
                               // branch: 'Kumaripati',
-                              openDate:
-                                selectedAccount?.accountOpenedDate ?? 'N/A',
-                              expiryDate:
-                                selectedAccount?.accountExpiryDate ?? 'N/A',
-                              lastTransactionDate:
-                                selectedAccount?.lastTransactionDate ?? 'N/A',
+                              openDate: selectedAccount?.accountOpenedDate ?? 'N/A',
+                              expiryDate: selectedAccount?.accountExpiryDate ?? 'N/A',
+                              lastTransactionDate: selectedAccount?.lastTransactionDate ?? 'N/A',
                             }
                           : null
                       }
@@ -384,17 +362,8 @@ export function AddBulkDeposit() {
                           fieldType: 'search',
                           searchOptions: accountListSearchOptions,
                           cell: (row) => (
-                            <Box
-                              display="flex"
-                              justifyContent="space-between"
-                              p="s12"
-                              width="100%"
-                            >
-                              <Box
-                                display="flex"
-                                flexDirection="column"
-                                gap="s4"
-                              >
+                            <Box display="flex" justifyContent="space-between" p="s12" width="100%">
+                              <Box display="flex" flexDirection="column" gap="s4">
                                 <Text
                                   fontSize="r1"
                                   fontWeight={500}
@@ -433,11 +402,7 @@ export function AddBulkDeposit() {
                                 </Text>
 
                                 {row?.accountFine && (
-                                  <Text
-                                    fontSize="s3"
-                                    fontWeight={500}
-                                    color="danger.500"
-                                  >
+                                  <Text fontSize="s3" fontWeight={500} color="danger.500">
                                     Fine: {row?.accountFine}
                                   </Text>
                                 )}
@@ -484,36 +449,20 @@ export function AddBulkDeposit() {
                       {accountInfoData?.map((accountInfo) => (
                         <Box display="flex" flexDirection="column" gap="s10">
                           <Box display="flex" justifyContent="space-between">
-                            <Text
-                              fontSize="s3"
-                              fontWeight={500}
-                              color="gray.600"
-                            >
+                            <Text fontSize="s3" fontWeight={500} color="gray.600">
                               {accountInfo?.accountName}
                             </Text>
-                            <Text
-                              fontSize="s3"
-                              fontWeight={500}
-                              color="gray.800"
-                            >
+                            <Text fontSize="s3" fontWeight={500} color="gray.800">
                               {accountInfo?.amount}
                             </Text>
                           </Box>
 
                           {accountInfo?.fine && (
                             <Box display="flex" justifyContent="space-between">
-                              <Text
-                                fontSize="s3"
-                                fontWeight={500}
-                                color="gray.600"
-                              >
-                                {'Fine'}
+                              <Text fontSize="s3" fontWeight={500} color="gray.600">
+                                Fine
                               </Text>
-                              <Text
-                                fontSize="s3"
-                                fontWeight={500}
-                                color="danger.500"
-                              >
+                              <Text fontSize="s3" fontWeight={500} color="danger.500">
                                 {`+ ${accountInfo?.fine}`}
                               </Text>
                             </Box>
@@ -521,18 +470,10 @@ export function AddBulkDeposit() {
 
                           {accountInfo?.rebate && (
                             <Box display="flex" justifyContent="space-between">
-                              <Text
-                                fontSize="s3"
-                                fontWeight={500}
-                                color="gray.600"
-                              >
-                                {'Rebate'}
+                              <Text fontSize="s3" fontWeight={500} color="gray.600">
+                                Rebate
                               </Text>
-                              <Text
-                                fontSize="s3"
-                                fontWeight={500}
-                                color="success.500"
-                              >
+                              <Text fontSize="s3" fontWeight={500} color="success.500">
                                 {`- ${accountInfo?.rebate}`}
                               </Text>
                             </Box>
@@ -566,18 +507,10 @@ export function AddBulkDeposit() {
               status={
                 mode === 0 ? (
                   <Box display="flex" gap="s32">
-                    <Text
-                      fontSize="r1"
-                      fontWeight={600}
-                      color="neutralColorLight.Gray-50"
-                    >
-                      {'Total Deposit Amount'}
+                    <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
+                      Total Deposit Amount
                     </Text>
-                    <Text
-                      fontSize="r1"
-                      fontWeight={600}
-                      color="neutralColorLight.Gray-70"
-                    >
+                    <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
                       {totalDepositAmount ?? '---'}
                     </Text>
                   </Box>
@@ -597,6 +530,6 @@ export function AddBulkDeposit() {
       {/* <InstallmentModel isOpen={isModalOpen} onClose={handleModalClose} /> */}
     </>
   );
-}
+};
 
 export default AddBulkDeposit;

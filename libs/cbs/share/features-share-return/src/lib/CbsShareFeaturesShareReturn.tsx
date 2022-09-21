@@ -1,7 +1,5 @@
-import ShareReturnForm from '../components/form/ShareReturnForm';
+import { ShareReturnForm } from '../components/form/ShareReturnForm';
 
-export function CbsShareFeaturesShareReturn() {
-  return <ShareReturnForm />;
-}
+export const CbsShareFeaturesShareReturn = () => <ShareReturnForm />;
 
 export default CbsShareFeaturesShareReturn;

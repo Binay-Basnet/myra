@@ -10,7 +10,7 @@ type IPurchaseInfo = {
   totalAmount: number;
 };
 
-const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
+export const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
   const { t } = useTranslation();
   const methods = useFormContext();
   const { watch, register } = methods;
@@ -92,5 +92,3 @@ const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
     </Box>
   );
 };
-
-export default SharePurchaseInfo;

@@ -1,4 +1,4 @@
-import Cash from '../component/form/Cash';
+import { Cash } from '../component/form/Cash';
 
 /* eslint-disable-next-line */
 export interface ShareCashProps {

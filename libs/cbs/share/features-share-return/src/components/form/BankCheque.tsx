@@ -7,7 +7,7 @@ type ReturnProps = {
   totalAmount: number;
 };
 
-const BankCheque = ({ totalAmount }: ReturnProps) => {
+export const BankCheque = ({ totalAmount }: ReturnProps) => {
   const { t } = useTranslation();
 
   const { data: bank } = useGetCoaBankListQuery({
@@ -43,5 +43,3 @@ const BankCheque = ({ totalAmount }: ReturnProps) => {
     </FormSection>
   );
 };
-
-export default BankCheque;

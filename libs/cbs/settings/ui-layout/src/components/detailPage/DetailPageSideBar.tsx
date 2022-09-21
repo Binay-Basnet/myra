@@ -43,9 +43,7 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
     () =>
       tablinks.findIndex((link) => {
         const linkArray = link.to.split('/');
-        return (
-          pathArray[pathArray.length - 1] === linkArray[linkArray.length - 1]
-        );
+        return pathArray[pathArray.length - 1] === linkArray[linkArray.length - 1];
       }),
     [router.pathname]
   );
@@ -55,63 +53,31 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
       <Box display="flex" flexDirection="column" p="s16" gap="s16">
         <Box display="flex" justifyContent="space-between">
           <Box>
-            <Text
-              color="neutralColorLight.Gray-80"
-              fontWeight="SemiBold"
-              fontSize="r2"
-            >
+            <Text color="neutralColorLight.Gray-80" fontWeight="SemiBold" fontSize="r2">
               House Loan
             </Text>
             <Box display="flex" gap="s10" alignItems="center">
-              <Text
-                color="neutralColorLight.Gray-70"
-                fontWeight="Medium"
-                fontSize="s3"
-              >
+              <Text color="neutralColorLight.Gray-70" fontWeight="Medium" fontSize="s3">
                 ASM0493
               </Text>
-              <Icon
-                _hover={{ cursor: 'pointer' }}
-                size="sm"
-                as={IoCopyOutline}
-              />
+              <Icon _hover={{ cursor: 'pointer' }} size="sm" as={IoCopyOutline} />
             </Box>
           </Box>
           <Box>
-            <Text
-              color="neutralColorLight.Gray-80"
-              fontWeight="Regular"
-              fontSize="s3"
-            >
+            <Text color="neutralColorLight.Gray-80" fontWeight="Regular" fontSize="s3">
               Interest
             </Text>
-            <Text
-              color="neutralColorLight.Gray-80"
-              fontWeight="Medium"
-              fontSize="s3"
-            >
+            <Text color="neutralColorLight.Gray-80" fontWeight="Medium" fontSize="s3">
               8.03%
             </Text>
           </Box>
         </Box>
 
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="space-between"
-        >
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontWeight="Regular"
-            fontSize="s3"
-          >
+        <Box display="flex" flexDirection="column" justifyContent="space-between">
+          <Text color="neutralColorLight.Gray-80" fontWeight="Regular" fontSize="s3">
             Product Type
           </Text>
-          <Text
-            color="neutralColorLight.Gray-80"
-            fontWeight="Medium"
-            fontSize="s3"
-          >
+          <Text color="neutralColorLight.Gray-80" fontWeight="Medium" fontSize="s3">
             Assets Purchases & Maintanance Loan
           </Text>
         </Box>
@@ -120,15 +86,13 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
       <Divider />
 
       <Tabs p="s16" variant="unstyled" index={currentIndex}>
-        {tablinks.map(({ title, to }, index) => {
-          return (
-            <Link href={to} key={`${title}${index}`}>
-              <TabCol>
-                <Text>{t[title]}</Text>
-              </TabCol>
-            </Link>
-          );
-        })}
+        {tablinks.map(({ title, to }) => (
+          <Link href={to} key={title}>
+            <TabCol>
+              <Text>{t[title]}</Text>
+            </TabCol>
+          </Link>
+        ))}
       </Tabs>
     </Box>
   );

@@ -7,7 +7,7 @@ type PurchaseProps = {
   totalAmount: number;
 };
 
-const BankVoucher = ({ totalAmount }: PurchaseProps) => {
+export const BankVoucher = ({ totalAmount }: PurchaseProps) => {
   const { t } = useTranslation();
 
   const { data: bank } = useGetCoaBankListQuery({
@@ -55,5 +55,3 @@ const BankVoucher = ({ totalAmount }: PurchaseProps) => {
     </FormSection>
   );
 };
-
-export default BankVoucher;

@@ -18,7 +18,7 @@ export const RegistrationDetailsOrganization = () => {
           <FormInput
             label={t['settingsOrgRegRegdNo']}
             __placeholder={t['settingsOrgRegEnterRegdNo']}
-            name={'regdNo'}
+            name="regdNo"
           />
         </GridItem>
       </Grid>
@@ -29,7 +29,7 @@ export const RegistrationDetailsOrganization = () => {
           name="regdAddress"
         />
       </Box>
-      <Grid templateColumns="repeat(3, 1fr)" gap="s16" mt={'s16'}>
+      <Grid templateColumns="repeat(3, 1fr)" gap="s16" mt="s16">
         <GridItem>
           <FormInput
             label={t['settingsOrgRegPANVATNo']}

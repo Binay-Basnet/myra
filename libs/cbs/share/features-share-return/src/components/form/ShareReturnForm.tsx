@@ -27,10 +27,10 @@ import {
 } from '@coop/shared/ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
-import ShareInfoFooter from './ShareInfoFooter';
-import SharePaymentFooter from './SharePaymentFooter';
-import ShareReturnInfo from './ShareReturnInfo';
-import ShareReturnPayment from './ShareReturnPayment';
+import { ShareInfoFooter } from './ShareInfoFooter';
+import { SharePaymentFooter } from './SharePaymentFooter';
+import { ShareReturnInfo } from './ShareReturnInfo';
+import { ShareReturnPayment } from './ShareReturnPayment';
 
 const Header = () => (
   <>
@@ -66,7 +66,7 @@ type ShareReturnFormType = Omit<ShareReturnInput, 'selectAllShares' | 'fileUploa
     | null;
 };
 
-const ShareReturnForm = () => {
+export const ShareReturnForm = () => {
   const { t } = useTranslation();
   const methods = useForm<ShareReturnFormType>({
     defaultValues: {
@@ -286,5 +286,3 @@ const ShareReturnForm = () => {
     </>
   );
 };
-
-export default ShareReturnForm;

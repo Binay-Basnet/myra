@@ -34,23 +34,21 @@ const tabList: TabList[] = [
   },
 ];
 
-export const SettingsUserSideBar = () => {
-  return (
-    <Box
-      position="fixed"
-      w="275px"
-      display="flex"
-      flexDirection="column"
-      gap="s16"
-      p="s24"
-      flexShrink={0}
-      minWidth="250px"
-    >
-      <Text fontSize="l1" fontWeight="600" color="gray.800">
-        Users
-      </Text>
-      <Divider borderColor="border.layout" />
-      <VerticalSideBarForSettings tablinks={tabList} />
-    </Box>
-  );
-};
+export const SettingsUserSideBar = () => (
+  <Box
+    position="fixed"
+    w="275px"
+    display="flex"
+    flexDirection="column"
+    gap="s16"
+    p="s24"
+    flexShrink={0}
+    minWidth="250px"
+  >
+    <Text fontSize="l1" fontWeight="600" color="gray.800">
+      Users
+    </Text>
+    <Divider borderColor="border.layout" />
+    <VerticalSideBarForSettings tablinks={tabList} />
+  </Box>
+);

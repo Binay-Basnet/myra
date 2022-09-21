@@ -8,48 +8,32 @@ export interface SettingsCardProps {
   children?: React.ReactNode;
 }
 
-export function ShareSettingsCard({
-  title,
-  subtitle,
-  children,
-}: SettingsCardProps) {
-  return (
-    <VStack
-      width="100%"
-      border="1px"
-      spacing="0"
-      alignItems="start"
-      divider={<Divider border="1px" borderColor="border.layout" />}
-      borderColor="border.layout"
-      borderRadius="br2"
-    >
-      <Box display="flex" alignItems="center" px="s12" height="s60">
-        <Box display="flex" flexDir="column" gap="s4">
-          <Text
-            fontSize="r1"
-            color="gray.800"
-            fontWeight="600"
-            lineHeight={'16.25px'}
-          >
-            {title}
+export const ShareSettingsCard = ({ title, subtitle, children }: SettingsCardProps) => (
+  <VStack
+    width="100%"
+    border="1px"
+    spacing="0"
+    alignItems="start"
+    divider={<Divider border="1px" borderColor="border.layout" />}
+    borderColor="border.layout"
+    borderRadius="br2"
+  >
+    <Box display="flex" alignItems="center" px="s12" height="s60">
+      <Box display="flex" flexDir="column" gap="s4">
+        <Text fontSize="r1" color="gray.800" fontWeight="600" lineHeight="16.25px">
+          {title}
+        </Text>
+        {subtitle && (
+          <Text fontSize="s3" color="gray.600" fontWeight="500" lineHeight="16.25px">
+            {subtitle}{' '}
           </Text>
-          {subtitle && (
-            <Text
-              fontSize="s3"
-              color="gray.600"
-              fontWeight="500"
-              lineHeight={'16.25px'}
-            >
-              {subtitle}{' '}
-            </Text>
-          )}
-        </Box>
+        )}
       </Box>
-      <Box p="s16" width="100%">
-        {children}
-      </Box>
-    </VStack>
-  );
-}
+    </Box>
+    <Box p="s16" width="100%">
+      {children}
+    </Box>
+  </VStack>
+);
 
 export default ShareSettingsCard;

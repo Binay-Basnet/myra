@@ -29,10 +29,10 @@ import {
 } from '@coop/shared/ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
-import ShareInfoFooter from './ShareInfoFooter';
-import SharePaymentFooter from './SharePaymentFooter';
-import SharePurchaseInfo from './SharePurchaseInfo';
-import SharePurchasePayment from './SharePurchasePayment';
+import { ShareInfoFooter } from './ShareInfoFooter';
+import { SharePaymentFooter } from './SharePaymentFooter';
+import { SharePurchaseInfo } from './SharePurchaseInfo';
+import { SharePurchasePayment } from './SharePurchasePayment';
 
 const Header = () => (
   <>
@@ -68,7 +68,7 @@ type ShareReturnFormType = Omit<SharePurchaseInput, 'selectAllShares'> & {
     | null;
 };
 
-const SharePurchaseForm = () => {
+export const SharePurchaseForm = () => {
   const { t } = useTranslation();
   const methods = useForm<ShareReturnFormType>({
     defaultValues: {
@@ -289,5 +289,3 @@ const SharePurchaseForm = () => {
     </>
   );
 };
-
-export default SharePurchaseForm;
