@@ -56,7 +56,9 @@ export const ProductCard = ({ productId }: ProductProps) => {
             Allowed Number of Transactions
           </Text>
 
-          <Text fontSize="s3" fontWeight="600" />
+          <Text fontSize="s3" fontWeight="600">
+            {productData?.noOftransactionAllowed}
+          </Text>
         </Box>
         <Box display="flex" flexDirection="column" gap="s4">
           <Text fontSize="s3" fontWeight="400">
@@ -81,7 +83,11 @@ export const ProductCard = ({ productId }: ProductProps) => {
             Withdraw Amount Limit
           </Text>
 
-          <Text fontSize="s3" fontWeight="600" />
+          <Text fontSize="s3" fontWeight="600">
+            {' '}
+            {productData?.withdrawAmountLimit?.minAmount}-
+            {productData?.withdrawAmountLimit?.maxAmount}
+          </Text>
         </Box>
         <Box display="flex" flexDirection="column" gap="s4">
           <Text fontSize="s3" fontWeight="400">

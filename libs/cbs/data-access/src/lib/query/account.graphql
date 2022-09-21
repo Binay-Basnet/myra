@@ -122,8 +122,24 @@ query getAccountOpenProductDetails($id: ID!) {
             }
             postingFrequency
             maxPostingFreqDifference
+            noOftransactionAllowed
             accountType
             serviceCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            accountCloseCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            alternativeChannelCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            atmCharge {
               serviceName
               ledgerName
               amount
@@ -131,6 +147,11 @@ query getAccountOpenProductDetails($id: ID!) {
             dormantSetup {
               duration
               condition
+            }
+            withdrawAmountLimit {
+              minAmount
+              maxAmount
+              avgAmount
             }
             autoOpen
             allowLoan
@@ -337,4 +358,3 @@ query getAccountOpenMinorList($memberId: ID!) {
     }
   }
 }
-

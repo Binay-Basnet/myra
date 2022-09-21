@@ -1884,7 +1884,7 @@ export type DepositProduct = Base & {
 };
 
 export type DepositProductCategoryList = {
-  data?: Maybe<DepositProductListResult>;
+  data?: Maybe<Array<Maybe<DepositProductFormStateData>>>;
   error?: Maybe<QueryError>;
 };
 
@@ -2061,13 +2061,6 @@ export type DepositProductList = {
 export type DepositProductListData = {
   data?: Maybe<DepositProduct>;
   error?: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-export type DepositProductListResult = {
-  mandatoryProductList?: Maybe<Array<Maybe<DepositProductFormStateData>>>;
-  recurringProductList?: Maybe<Array<Maybe<DepositProductFormStateData>>>;
-  termDepositProductList?: Maybe<Array<Maybe<DepositProductFormStateData>>>;
-  voluntaryProductList?: Maybe<Array<Maybe<DepositProductFormStateData>>>;
 };
 
 export type DepositProductResult = {
@@ -7665,6 +7658,10 @@ export type ProductsQuery = {
   loanProducts?: Maybe<LoanProductLists>;
 };
 
+export type ProductsQueryDepositProductArgs = {
+  filter: NatureOfDepositProduct;
+};
+
 export type ProductsQueryGetDepositProductCriteriaArgs = {
   productId: Scalars['ID'];
 };
@@ -10446,6 +10443,7 @@ export type GetAccountOpenProductDetailsQuery = {
             ladderRate?: boolean | null;
             postingFrequency?: DepositFrequency | null;
             maxPostingFreqDifference?: number | null;
+            noOftransactionAllowed?: number | null;
             accountType?: string | null;
             autoOpen?: boolean | null;
             allowLoan?: boolean | null;
@@ -10498,10 +10496,30 @@ export type GetAccountOpenProductDetailsQuery = {
               ledgerName?: string | null;
               amount?: any | null;
             } | null> | null;
+            accountCloseCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            alternativeChannelCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            atmCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
             dormantSetup?: Array<{
               duration?: string | null;
               condition?: string | null;
             } | null> | null;
+            withdrawAmountLimit?: {
+              minAmount?: any | null;
+              maxAmount?: any | null;
+              avgAmount?: any | null;
+            } | null;
             prematurePenalty?: {
               penaltyDateType?: PrematurePenaltyDateType | null;
               noOfDays?: number | null;
@@ -17067,8 +17085,24 @@ export const GetAccountOpenProductDetailsDocument = `
             }
             postingFrequency
             maxPostingFreqDifference
+            noOftransactionAllowed
             accountType
             serviceCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            accountCloseCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            alternativeChannelCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            atmCharge {
               serviceName
               ledgerName
               amount
@@ -17076,6 +17110,11 @@ export const GetAccountOpenProductDetailsDocument = `
             dormantSetup {
               duration
               condition
+            }
+            withdrawAmountLimit {
+              minAmount
+              maxAmount
+              avgAmount
             }
             autoOpen
             allowLoan
