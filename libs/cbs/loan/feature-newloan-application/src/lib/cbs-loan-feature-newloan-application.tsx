@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
@@ -6,9 +6,6 @@ import { omit } from 'lodash';
 
 import {
   LoanAccountInput,
-  LoanProduct,
-  useGetLoanProductDetailsDataQuery,
-  useGetLoanProductsListQuery,
   useGetLoanProductSubTypeQuery,
   useGetLoanProductTypesQuery,
   useGetNewIdMutation,
@@ -42,9 +39,8 @@ import { CollateralDetails } from '../components/CollateralDetails';
 import { GuaranteeDetails } from '../components/GuaranteeDetails';
 import { LoanAmountDetails } from '../components/LandAmountDetails';
 import { LoanPaymentSchedule } from '../components/LoanPaymentSchedule';
-import { LoanProductContext } from '../hooks/useLoanProduct';
-
-type OptionType = { label: string; value: string };
+import { LoanProductContext, useLoanProductDetails } from '../hooks/useLoanProduct';
+import { useLoanProductErrors } from '../hooks/useLoanProductListErrors';
 
 export const NewLoanApplication = () => {
   const router = useRouter();
@@ -65,14 +61,6 @@ export const NewLoanApplication = () => {
   const { data: loanSubTypeData } = useGetLoanProductSubTypeQuery(
     { productTypeId: loanType },
     { enabled: !!loanType }
-  );
-  const { data: loanProductData, isFetching } = useGetLoanProductsListQuery(
-    {
-      memberId,
-      productTypeId: loanType,
-      productSubTypeId: loanSubType,
-    },
-    { enabled: !!loanSubType }
   );
   const { mutateAsync: getId } = useGetNewIdMutation();
   const { mutateAsync: applyLoan } = useSendLoanApplicationForApprovalMutation();
@@ -124,46 +112,18 @@ export const NewLoanApplication = () => {
     });
   }, []);
 
-  // Get Errors and Criteria for Selected Loan Product
-  const loanProductOptions = [
-    ...(loanProductData?.loanAccount?.getProductList?.allowed?.reduce(
-      (previousValue, currentValue) => [
-        ...previousValue,
-        {
-          label: currentValue?.productName as string,
-          value: currentValue?.id as string,
-        },
-      ],
-      [] as OptionType[]
-    ) ?? []),
-    ...(loanProductData?.loanAccount?.getProductList?.notAllowed?.reduce(
-      (previousValue, currentValue) => [
-        ...previousValue,
-        {
-          label: currentValue?.data?.productName as string,
-          value: currentValue?.data?.id as string,
-        },
-      ],
-      [] as OptionType[]
-    ) ?? []),
-  ];
-  const arrayForErrors = loanProductData?.loanAccount?.getProductList?.notAllowed;
-  const errors = arrayForErrors?.find((d) => d?.data?.id === productId);
+  // Errors for products
+  const { errors, isFetching, loanProductOptions } = useLoanProductErrors({
+    memberId,
+    loanSubType,
+    loanType,
+    productId,
+  });
 
   // Get Currently Selected Loan Product
-  const { data: loanProductDetails } = useGetLoanProductDetailsDataQuery(
-    { id: String(productId) },
-    {
-      enabled: !!productId,
-    }
-  );
-  const loanProduct = useMemo(
-    () => ({
-      product: loanProductDetails?.settings.general?.loanProducts?.formState?.data as LoanProduct,
-    }),
-    [loanProductDetails?.settings.general?.loanProducts?.formState?.data]
-  );
+  const { loanProduct } = useLoanProductDetails({ productId });
 
+  // Reset Fields
   useEffect(() => {
     resetField('productSubType');
   }, [loanType, resetField]);
@@ -314,7 +274,7 @@ export const NewLoanApplication = () => {
         <FormFooter
           status={
             <>
-              Total Sanctioned Amount: <b>{methods.watch('totalSanctionedAmount')}</b>
+              Total Sanctioned Amount: <b>{watch('totalSanctionedAmount')}</b>
             </>
           }
           mainButtonLabel="Send For Approval"
