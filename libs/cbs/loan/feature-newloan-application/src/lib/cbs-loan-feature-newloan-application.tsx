@@ -45,7 +45,7 @@ import { useLoanProductErrors } from '../hooks/useLoanProductListErrors';
 
 export const NewLoanApplication = () => {
   const router = useRouter();
-  const { id, action } = router.query;
+  const { id } = router.query;
 
   const queryClient = useQueryClient();
   const [showCriteria, setShowCriteria] = useState(false);
@@ -79,7 +79,7 @@ export const NewLoanApplication = () => {
 
   const sendForApprovalHandler = useCallback(async () => {
     const promise = async () => {
-      if (!id && action === 'add') {
+      if (!id) {
         const responseId = await getId({});
 
         if (responseId?.newId) {

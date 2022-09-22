@@ -8,7 +8,7 @@ export interface MainLayoutProps {
   children: React.ReactNode;
 }
 
-export function MainLayout(props: MainLayoutProps) {
+export const MainLayout = (props: MainLayoutProps) => {
   const { children } = props;
   return (
     <div>
@@ -19,6 +19,6 @@ export function MainLayout(props: MainLayoutProps) {
       <Box mt="110px">{children}</Box>
     </div>
   );
-}
+};
 
 export default MainLayout;

@@ -49,7 +49,7 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   {
     title: 'loan',
     icon: BsArrowLeftRight,
-    link: '/loan',
+    link: '/loan/applications',
   },
   {
     title: 'reports',

@@ -1,7 +1,7 @@
 import { ReactElement, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { ObjState, useGetLoanListQuery } from '@coop/cbs/data-access';
+import { LoanObjState, ObjState, useGetLoanListQuery } from '@coop/cbs/data-access';
 import { LoanListLayout } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, MainLayout, PageHeader, TablePopover, Text } from '@coop/shared/ui';
@@ -9,12 +9,12 @@ import { getRouterQuery } from '@coop/shared/utils';
 
 export const LOAN_LIST_TAB_ITEMS = [
   {
-    title: 'memberNavActive',
+    title: 'memberNavApproved',
     key: 'APPROVED',
   },
   {
     title: 'memberNavInactive',
-    key: 'VALIDATED',
+    key: 'SUBMITTED',
   },
   {
     title: 'memberNavDraft',
@@ -22,13 +22,13 @@ export const LOAN_LIST_TAB_ITEMS = [
   },
 ];
 
-const LoanPage = () => {
+const LoanApplicationListPage = () => {
   const router = useRouter();
 
   const { data, isFetching } = useGetLoanListQuery({
     paginate: getRouterQuery({ type: ['PAGINATION'], query: router.query }),
     filter: {
-      objectState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+      objectState: (router.query['objState'] ?? ObjState.Approved) as LoanObjState,
     },
   });
 
@@ -95,15 +95,20 @@ const LoanPage = () => {
             items={[
               {
                 title: 'Edit',
-                onClick: (row) => router.push(`/loan/edit?id=${row.id}`),
+                onClick: (row) => router.push(`/loan/apply?id=${row.id}`),
               },
               {
                 title: 'View Loan Application',
                 onClick: (row) => router.push(`/loan/view?id=${row.id}`),
               },
               {
-                title: 'Approve Loan',
-                onClick: (row) => router.push(`/loan/edit?id=${row.id}&approve=true`),
+                title:
+                  router.query['objState'] === ObjState.Approved ? 'Disburse Loan' : 'Approve Loan',
+                onClick: (row) => {
+                  router.query['objState'] === ObjState.Approved
+                    ? router.push(`/loan/approve?id=${row.id}`)
+                    : router.push(`/loan/disburse?id=${row.id}`);
+                },
               },
             ]}
             node={props.row.original.node}
@@ -133,11 +138,11 @@ const LoanPage = () => {
   );
 };
 
-LoanPage.getLayout = function getLayout(page: ReactElement) {
+LoanApplicationListPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
       <LoanListLayout>{page}</LoanListLayout>
     </MainLayout>
   );
 };
-export default LoanPage;
+export default LoanApplicationListPage;

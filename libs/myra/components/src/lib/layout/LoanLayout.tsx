@@ -13,9 +13,22 @@ interface IAccountPageLayoutProps {
 const accountColumns = [
   {
     title: 'Loan Applications',
-    link: '/loan',
-    addLink: '/loan/add',
+    link: '/loan/applications',
+    addLink: '/loan/apply',
   },
+  {
+    title: 'Loan Accounts',
+    link: '/loan/accounts',
+  },
+  {
+    title: 'Loan Repayment',
+    link: '/loan/repayments',
+  },
+  {
+    title: 'Loan Products',
+    link: '/loan/products',
+  },
+  { title: 'Declined Loan', link: '/loan/declined' },
 ];
 
 export const LoanListLayout = ({ children }: IAccountPageLayoutProps) => {
@@ -32,7 +45,7 @@ export const LoanListLayout = ({ children }: IAccountPageLayoutProps) => {
         <Button
           display="flex"
           justifyContent="start"
-          onClick={() => router.push('/loan/add')}
+          onClick={() => router.push('/loan/apply')}
           w="100%"
           height="s40"
           leftIcon={<Icon as={AiOutlinePlus} size="md" color="white" />}
