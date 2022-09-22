@@ -25,6 +25,7 @@ const TabCol = chakra(Tab, {
     },
     _hover: {
       bg: 'gray.100',
+      borderRadius: 'br2',
     },
   },
 });

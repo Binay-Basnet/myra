@@ -1,4 +1,4 @@
-import { Box, Divider, Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 
 import { useTranslation } from '@coop/shared/utils';
 
@@ -64,19 +64,20 @@ export const SettingSideBar = () => {
   return (
     <Box
       position="fixed"
-      w="240px"
+      w="260px"
       display="flex"
       flexDirection="column"
-      gap="s16"
-      p="s12"
       flexShrink={0}
       minWidth="220px"
     >
-      <Text fontSize="l1" fontWeight="600" color="gray.800">
-        {t['settingsGeneral']}
-      </Text>
-      <Divider borderColor="border.layout" />
-      <VerticalSideBarForSettings tablinks={tabList} />
+      <Box height="60px" py="s12" px="s16">
+        <Text fontSize="l1" fontWeight="600" color="gray.800">
+          {t['settingsGeneral']}
+        </Text>
+      </Box>
+      <Box p="s16">
+        <VerticalSideBarForSettings tablinks={tabList} />
+      </Box>
     </Box>
   );
 };

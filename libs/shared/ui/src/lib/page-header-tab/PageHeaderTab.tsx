@@ -6,7 +6,7 @@ import { en, useTranslation } from '@coop/shared/utils';
 const TabElement = chakra(Tab, {
   baseStyle: {
     color: '#636972',
-    height: '50px',
+    height: '60px',
     fontSize: '14px',
     fontWeight: '600',
     // width: '100px',
@@ -34,29 +34,25 @@ export const PageHeaderTab = ({
   const router = useRouter();
   const { t } = useTranslation();
 
-  const currentIndex = list.findIndex(
-    (value) => router.query['objState'] === value.key
-  );
+  const currentIndex = list.findIndex((value) => router.query['objState'] === value.key);
 
   return (
     <Tabs variant="unstyled" index={currentIndex === -1 ? 0 : currentIndex}>
       <TabList>
-        {list.map((item, index) => {
-          return (
-            <TabElement
-              onClick={() =>
-                router.push({
-                  query: {
-                    objState: item.key,
-                  },
-                })
-              }
-              key={`${item}${index}`}
-            >
-              {t[item.title as keyof typeof en]}
-            </TabElement>
-          );
-        })}
+        {list.map((item) => (
+          <TabElement
+            onClick={() =>
+              router.push({
+                query: {
+                  objState: item.key,
+                },
+              })
+            }
+            key={`${item}`}
+          >
+            {t[item.title as keyof typeof en]}
+          </TabElement>
+        ))}
       </TabList>
     </Tabs>
   );

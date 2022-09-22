@@ -50,7 +50,7 @@ export const SettingsMemberLayout = ({ children }: SettingsMemberLayoutProps) =>
       >
         <SettingsInnerVerticalMenu tablinks={tabList} />
       </Box>
-      <Box ml="300px">{children}</Box>
+      <Box ml="250px">{children}</Box>
     </>
   );
 };

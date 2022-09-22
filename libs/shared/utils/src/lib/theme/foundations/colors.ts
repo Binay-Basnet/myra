@@ -115,7 +115,8 @@ const colors = {
   },
 
   background: {
-    500: '#f6f8fc',
+    // 500: '#f6f8fc',
+    500: '#EEF2F7',
   },
 
   highlight: {

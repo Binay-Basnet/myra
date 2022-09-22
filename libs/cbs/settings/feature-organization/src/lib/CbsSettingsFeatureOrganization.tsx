@@ -51,7 +51,7 @@ export const CbsSettingsFeatureOrganization = () => {
               });
             }, 500)}
           >
-            <Box ml="300px" px="s16" flex={1} display="flex" flexDirection="column">
+            <Box ml="250px" px="s16" flex={1} display="flex" flexDirection="column">
               <Box py="s24">
                 <Text fontWeight="SemiBold">{t['settingsOrganizationBasicDetails']}</Text>
                 <Box mt="s24" w="100%">

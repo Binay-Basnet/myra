@@ -18,7 +18,7 @@ export const PopOverComponentForButtonList = ({
   return (
     <Popover placement="bottom-start" gutter={3}>
       <PopoverTrigger>
-        <Button width="full" size="lg" justifyContent="start" leftIcon={<AddIcon h="11px" />}>
+        <Button width="full" size="md" justifyContent="start" leftIcon={<AddIcon h="11px" />}>
           {t[buttonLabel] ?? buttonLabel}
         </Button>
       </PopoverTrigger>

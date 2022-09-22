@@ -67,7 +67,8 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
             // <Link href={item.addLink}>
             <IconButton
               aria-label="add-Button"
-              size="lg"
+              size="md"
+              height="40px"
               variant="ghost"
               icon={<Icon as={IoAdd} />}
               onClick={() =>
@@ -82,7 +83,8 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
             // <Link href={item.addLink}>
             <IconButton
               aria-label="add-Button"
-              size="lg"
+              size="md"
+              height="40px"
               variant="ghost"
               icon={<Icon as={IoAdd} />}
               onClick={() => router.push(`${item.addLink}`)}
