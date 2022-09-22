@@ -1881,6 +1881,7 @@ export type DepositProduct = Base & {
   createdDate?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   interest?: Maybe<Scalars['Float']>;
+  isMandatorySaving?: Maybe<Scalars['Boolean']>;
   minimumBalance?: Maybe<Scalars['String']>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
@@ -6110,7 +6111,7 @@ export type Level2HelloArgs = {
   data: ExampleInput;
 };
 
-export type LoanAccount = Base & {
+export type LoanAccount = {
   LoanAccountName?: Maybe<Scalars['String']>;
   appliedLoanAmount: Scalars['String'];
   approvedDate?: Maybe<Scalars['String']>;
@@ -6126,7 +6127,7 @@ export type LoanAccount = Base & {
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   note?: Maybe<Scalars['String']>;
-  objState: ObjState;
+  objState: LoanObjState;
   product: LoanProduct;
   productSubType: LoanSettingsProductSubTypeData;
   productType: Scalars['ID'];
@@ -6330,12 +6331,19 @@ export type LoanAccountInput = {
 
 export type LoanAccountMutation = {
   add?: Maybe<LoanAccountResult>;
+  approveOrCancel?: Maybe<LoanAccountResult>;
   disburse?: Maybe<LoanDisbursementResult>;
 };
 
 export type LoanAccountMutationAddArgs = {
   data?: InputMaybe<LoanAccountInput>;
   id: Scalars['ID'];
+};
+
+export type LoanAccountMutationApproveOrCancelArgs = {
+  action: LoanApproveOrCancel;
+  loanAccountId: Scalars['String'];
+  remarks?: InputMaybe<Scalars['String']>;
 };
 
 export type LoanAccountMutationDisburseArgs = {
@@ -6391,6 +6399,11 @@ export type LoanAccountSearchFilter = {
   objectState?: InputMaybe<ObjState>;
   query?: InputMaybe<Scalars['String']>;
 };
+
+export enum LoanApproveOrCancel {
+  Approve = 'APPROVE',
+  Cancel = 'CANCEL',
+}
 
 export type LoanBankDisbursement = {
   bankAccountId: Scalars['ID'];
@@ -6495,6 +6508,14 @@ export type LoanNatureOfProductInput = {
   id?: InputMaybe<Scalars['ID']>;
   natureOfProduct?: InputMaybe<Scalars['String']>;
 };
+
+export enum LoanObjState {
+  Approved = 'APPROVED',
+  Cancelled = 'CANCELLED',
+  Completed = 'COMPLETED',
+  Disbursed = 'DISBURSED',
+  Submitted = 'SUBMITTED',
+}
 
 export enum LoanPaymentInstallmentType {
   Monthly = 'MONTHLY',
@@ -7293,10 +7314,10 @@ export type Name = {
 };
 
 export enum NatureOfDepositProduct {
-  Current = 'CURRENT',
+  Mandatory = 'MANDATORY',
   RecurringSaving = 'RECURRING_SAVING',
-  Saving = 'SAVING',
   TermSavingOrFd = 'TERM_SAVING_OR_FD',
+  VoluntaryOrOptional = 'VOLUNTARY_OR_OPTIONAL',
 }
 
 export enum NatureOfLoanProduct {
