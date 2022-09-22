@@ -158,10 +158,10 @@ export const CbsAccountClose = () => {
     }
   );
   const accountTypes = {
-    [NatureOfDepositProduct.Mandatory]: 'Mandatory Saving Account',
+    [NatureOfDepositProduct.Saving]: 'Saving Account',
     [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
     [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
-    [NatureOfDepositProduct.VoluntaryOrOptional]: 'Voluntary Saving Account',
+    [NatureOfDepositProduct.Current]: 'Current Account',
   };
   const accountId = watch('accountID');
   const radioOther = watch('reason');

@@ -12,12 +12,12 @@ export const Product = () => {
       value: NatureOfDepositProduct.RecurringSaving,
     },
     {
-      label: t['depositProductMandatory'],
-      value: NatureOfDepositProduct.Mandatory,
+      label: t['depositProductCurrent'],
+      value: NatureOfDepositProduct.Current,
     },
     {
-      label: t['depositProductVoluntaryOptional'],
-      value: NatureOfDepositProduct.VoluntaryOrOptional,
+      label: t['depositProductSaving'],
+      value: NatureOfDepositProduct.Saving,
     },
     {
       label: t['depositProductTermSaving'],

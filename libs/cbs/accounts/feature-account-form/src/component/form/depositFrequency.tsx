@@ -67,7 +67,7 @@ export const DepositFrequency = () => {
 
   return (
     <GroupContainer scrollMarginTop="200px" display="flex" flexDirection="column" gap="s16">
-      {productNature !== NatureOfDepositProduct?.VoluntaryOrOptional &&
+      {productNature !== NatureOfDepositProduct?.Saving &&
         productNature !== NatureOfDepositProduct?.TermSavingOrFd && (
           <Box display="flex" flexDirection="column" background="neutralColorLight.Gray-0">
             <Text fontWeight="SemiBold" fontSize="r1" color="neutralColorLight.Gray-60">

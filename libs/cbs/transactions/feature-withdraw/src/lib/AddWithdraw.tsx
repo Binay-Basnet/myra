@@ -68,10 +68,10 @@ export const AddWithdraw = () => {
   const { t } = useTranslation();
 
   const accountTypes = {
-    [NatureOfDepositProduct.Mandatory]: t['addDepositMandatorySavingAccount'],
+    [NatureOfDepositProduct.Saving]: t['addDepositSaving'],
     [NatureOfDepositProduct.RecurringSaving]: t['addDepositRecurringSavingAccount'],
     [NatureOfDepositProduct.TermSavingOrFd]: t['addDepositTermSavingAccount'],
-    [NatureOfDepositProduct.VoluntaryOrOptional]: t['addDepositVoluntarySavingAccount'],
+    [NatureOfDepositProduct.Current]: t['addDepositCurrent'],
   };
 
   const withdrawTypes = [
@@ -239,7 +239,8 @@ export const AddWithdraw = () => {
                           fine:
                             account?.node?.product?.nature ===
                               NatureOfDepositProduct.RecurringSaving ||
-                            account?.node?.product?.nature === NatureOfDepositProduct.Mandatory
+                            (account?.node?.product?.nature === NatureOfDepositProduct.Saving &&
+                              account?.node?.product?.isMandatorySaving === true)
                               ? FINE
                               : '',
                         },

@@ -53,7 +53,7 @@ type FileList =
   | 'InsSignature'
   | 'taxClearance';
 
-export type FileListType = {
+type FileListType = {
   signature: string[];
   nominee: string[];
   photo: string[];
@@ -157,9 +157,9 @@ export const AccountOpenNew = () => {
   );
 
   const minorDetails = minorData?.account?.listMinors?.data;
-  const minorOptions = minorDetails?.map((data) => ({
-    label: data?.fullName?.local as string,
-    value: data?.familyMemberId as string,
+  const minorOptions = minorDetails?.map((item) => ({
+    label: item?.fullName?.local as string,
+    value: item?.familyMemberId as string,
   }));
   const submitForm = () => {
     const values = getValues();
@@ -256,9 +256,7 @@ export const AccountOpenNew = () => {
                   <Alert
                     status="error"
                     title="Error"
-                    bottomButtonlabel={
-                      productType === NatureOfDepositProduct?.Mandatory ? '' : 'View All Criteria'
-                    }
+                    bottomButtonlabel="View All Criteria"
                     bottomButtonHandler={() => setShowCriteria((prev) => !prev)}
                     hideCloseIcon
                   >
@@ -276,7 +274,7 @@ export const AccountOpenNew = () => {
                     </Box>
                   </Alert>
                 )}
-                {productType !== NatureOfDepositProduct?.Mandatory && showCriteria && (
+                {showCriteria && (
                   <Box border="1px solid" borderColor="border.layout" borderRadius="br2" p="s16">
                     <CriteriaCard productId={productID} />
                   </Box>
@@ -287,8 +285,8 @@ export const AccountOpenNew = () => {
                     {ProductData?.isForMinors && (
                       <FormSelect name="minor" label="Minor" options={minorOptions} />
                     )}
-                    {productType !== NatureOfDepositProduct?.VoluntaryOrOptional &&
-                      productType !== NatureOfDepositProduct?.Mandatory && <Tenure />}
+                    {productType !== NatureOfDepositProduct?.Current &&
+                      productType !== NatureOfDepositProduct?.Saving && <Tenure />}
                     <Divider />
                     <Interest />
                     <DepositFrequency />

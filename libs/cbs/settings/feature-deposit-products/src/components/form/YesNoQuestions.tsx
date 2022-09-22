@@ -94,7 +94,8 @@ export const Questions = () => {
         </GridItem>
       </FormSection>
 
-      {depositNature === NatureOfDepositProduct.VoluntaryOrOptional && (
+      {(depositNature === NatureOfDepositProduct.Current ||
+        depositNature === NatureOfDepositProduct.Saving) && (
         <FormSection>
           <GridItem colSpan={3}>
             <Box display="flex" flexDirection="row" justifyContent="space-between">
@@ -106,7 +107,8 @@ export const Questions = () => {
         </FormSection>
       )}
 
-      {depositNature === NatureOfDepositProduct.VoluntaryOrOptional && (
+      {(depositNature === NatureOfDepositProduct.Current ||
+        depositNature === NatureOfDepositProduct.Saving) && (
         <FormSection>
           <GridItem colSpan={3}>
             <Box display="flex" flexDirection="row" justifyContent="space-between">
@@ -119,8 +121,7 @@ export const Questions = () => {
         </FormSection>
       )}
 
-      {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-        depositNature === NatureOfDepositProduct.TermSavingOrFd) && (
+      {depositNature !== NatureOfDepositProduct.Current && (
         <FormSection>
           <GridItem colSpan={3}>
             <Box display="flex" flexDirection="column" gap="s16">
@@ -158,7 +159,7 @@ export const Questions = () => {
         </FormSection>
       )}
 
-      {depositNature !== NatureOfDepositProduct.Mandatory && (
+      {depositNature !== NatureOfDepositProduct.Current && (
         <FormSection>
           <GridItem colSpan={3}>
             <Box display="flex" flexDirection="row" justifyContent="space-between">
@@ -170,7 +171,7 @@ export const Questions = () => {
       )}
 
       {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-        depositNature === NatureOfDepositProduct.Mandatory) && (
+        depositNature === NatureOfDepositProduct.Saving) && (
         <FormSection>
           <GridItem colSpan={3}>
             <Box display="flex" flexDirection="column" gap="s16">
@@ -200,7 +201,8 @@ export const Questions = () => {
         </FormSection>
       )}
 
-      {depositNature === NatureOfDepositProduct.RecurringSaving && (
+      {(depositNature === NatureOfDepositProduct.Saving ||
+        depositNature === NatureOfDepositProduct.RecurringSaving) && (
         <FormSection>
           <GridItem colSpan={3}>
             <Box display="flex" flexDirection="row" justifyContent="space-between">

@@ -9,7 +9,7 @@ import { useLoginMutation } from '@coop/cbs/data-access';
 import { Box, Button, Checkbox, Text } from '@coop/shared/ui';
 import { login, useAppDispatch, useTranslation } from '@coop/shared/utils';
 
-export default function Login() {
+export const Login = () => {
   const { t } = useTranslation();
   const { mutateAsync, isLoading } = useLoginMutation();
   const dispatch = useAppDispatch();
@@ -21,7 +21,7 @@ export default function Login() {
 
   const onSubmit = (data) => {
     mutateAsync({ data }).then((res) => {
-      if (res.auth.login.recordId === null) {
+      if (res?.auth?.login?.recordId === null) {
         return;
       }
       const accessToken = res?.auth?.login?.record?.token?.access;
@@ -44,19 +44,8 @@ export default function Login() {
       bg="primary.0"
     >
       <Box display="flex" width="100%" justifyContent="space-between">
-        <Box
-          display="flex"
-          flexDirection="column"
-          width={500}
-          justifyContent="center"
-          gap="s16"
-        >
-          <Text
-            fontSize="m2"
-            fontWeight="semibold"
-            lineHeight="shorter"
-            color="gray.700"
-          >
+        <Box display="flex" flexDirection="column" width={500} justifyContent="center" gap="s16">
+          <Text fontSize="m2" fontWeight="semibold" lineHeight="shorter" color="gray.700">
             {t['loginTitle']}
           </Text>
           <Text fontSize="r3" color="gray.700">
@@ -108,11 +97,7 @@ export default function Login() {
                     type={show ? 'text' : 'password'}
                     {...register('password')}
                   />
-                  <InputRightElement
-                    width="fit-content"
-                    pr="s16"
-                    cursor="pointer"
-                  >
+                  <InputRightElement width="fit-content" pr="s16" cursor="pointer">
                     {show ? (
                       <IoEyeOffOutline onClick={() => setShow(false)} />
                     ) : (
@@ -121,11 +106,7 @@ export default function Login() {
                   </InputRightElement>
                 </InputGroup>
               </Box>
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
+              <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Box display="flex" gap={1}>
                   <Checkbox />
                   <Text fontSize="r1">{t['loginKeepSignedIn']}</Text>
@@ -143,4 +124,6 @@ export default function Login() {
       </Box>
     </Box>
   );
-}
+};
+
+export default Login;

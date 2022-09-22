@@ -23,6 +23,7 @@ interface IInstallmentModelProps {
   onClose: () => void;
   accountId: string | undefined;
   productType: NatureOfDepositProduct | undefined;
+  isMandatory: boolean;
 }
 
 export const InstallmentModel = ({
@@ -30,6 +31,7 @@ export const InstallmentModel = ({
   onClose,
   accountId,
   productType,
+  isMandatory,
 }: IInstallmentModelProps) => {
   const { t } = useTranslation();
 
@@ -38,7 +40,7 @@ export const InstallmentModel = ({
     {
       enabled:
         (!!accountId && productType === NatureOfDepositProduct.RecurringSaving) ||
-        productType === NatureOfDepositProduct.Mandatory,
+        (productType === NatureOfDepositProduct.Saving && isMandatory),
     }
   );
 

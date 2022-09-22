@@ -43,10 +43,10 @@ export const NewAccountTransfer = () => {
   const { t } = useTranslation();
 
   const accountTypes = {
-    [NatureOfDepositProduct.Mandatory]: t['addDepositMandatorySavingAccount'],
+    [NatureOfDepositProduct.Current]: t['depositProductCurrent'],
     [NatureOfDepositProduct.RecurringSaving]: t['addDepositRecurringSavingAccount'],
     [NatureOfDepositProduct.TermSavingOrFd]: t['addDepositTermSavingAccount'],
-    [NatureOfDepositProduct.VoluntaryOrOptional]: t['addDepositVoluntarySavingAccount'],
+    [NatureOfDepositProduct.Saving]: t['depositProductSaving'],
   };
 
   const withdrawTypes = [
@@ -200,7 +200,8 @@ export const NewAccountTransfer = () => {
                               fine:
                                 account?.node?.product?.nature ===
                                   NatureOfDepositProduct.RecurringSaving ||
-                                account?.node?.product?.nature === NatureOfDepositProduct.Mandatory
+                                (account?.node?.product?.nature === NatureOfDepositProduct.Saving &&
+                                  account?.node?.product?.isMandatorySaving === true)
                                   ? FINE
                                   : '',
                             },
@@ -233,8 +234,9 @@ export const NewAccountTransfer = () => {
                                 fine:
                                   account?.node?.product?.nature ===
                                     NatureOfDepositProduct.RecurringSaving ||
-                                  account?.node?.product?.nature ===
-                                    NatureOfDepositProduct.Mandatory
+                                  (account?.node?.product?.nature ===
+                                    NatureOfDepositProduct.Saving &&
+                                    account?.node?.product?.isMandatorySaving === true)
                                     ? FINE
                                     : '',
                               },
@@ -265,8 +267,9 @@ export const NewAccountTransfer = () => {
                                     fine:
                                       account?.node?.product?.nature ===
                                         NatureOfDepositProduct.RecurringSaving ||
-                                      account?.node?.product?.nature ===
-                                        NatureOfDepositProduct.Mandatory
+                                      (account?.node?.product?.nature ===
+                                        NatureOfDepositProduct.Saving &&
+                                        account?.node?.product?.isMandatorySaving === true)
                                         ? FINE
                                         : '',
                                   },

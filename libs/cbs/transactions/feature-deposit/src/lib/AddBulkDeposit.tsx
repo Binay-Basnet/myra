@@ -24,7 +24,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { useGetIndividualMemberDetails } from '@coop/shared/utils';
+import { useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
 
 import { Payment } from '../components';
 
@@ -61,13 +61,6 @@ type DepositAccountTable = {
   accountFine: string;
 };
 
-const accountTypes = {
-  [NatureOfDepositProduct.Mandatory]: 'Mandatory Saving Account',
-  [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
-  [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
-  [NatureOfDepositProduct.VoluntaryOrOptional]: 'Voluntary Saving Account',
-};
-
 const cashOptions: Record<string, string> = {
   '1000': CashValue.Cash_1000,
   '500': CashValue.Cash_500,
@@ -85,9 +78,16 @@ const FINE = '0';
 const REBATE = '0';
 
 export const AddBulkDeposit = () => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
 
   const router = useRouter();
+
+  const accountTypes = {
+    [NatureOfDepositProduct.Saving]: t['addDepositSaving'],
+    [NatureOfDepositProduct.RecurringSaving]: t['addDepositRecurringSavingAccount'],
+    [NatureOfDepositProduct.TermSavingOrFd]: t['addDepositTermSavingAccount'],
+    [NatureOfDepositProduct.Current]: t['addDepositCurrent'],
+  };
 
   const methods = useForm<DepositFormInput>({
     defaultValues: {
