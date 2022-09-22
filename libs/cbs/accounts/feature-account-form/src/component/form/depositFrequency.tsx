@@ -4,12 +4,10 @@ import { useFormContext } from 'react-hook-form';
 import {
   Frequency,
   Months,
-  Week,
-  WeeklyFrequency,
-} from '@coop/cbs/data-access';
-import {
   NatureOfDepositProduct,
   useGetAccountOpenProductDetailsQuery,
+  Week,
+  WeeklyFrequency,
 } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
@@ -34,11 +32,9 @@ export const DepositFrequency = () => {
     }
   );
   const productDeposit =
-    productdata?.data?.settings?.general?.depositProduct?.formState?.data
-      ?.depositFrequency;
+    productdata?.data?.settings?.general?.depositProduct?.formState?.data?.depositFrequency;
   const productNature =
-    productdata?.data?.settings?.general?.depositProduct?.formState?.data
-      ?.nature;
+    productdata?.data?.settings?.general?.depositProduct?.formState?.data?.nature;
   const daysList = [
     { label: t['accSunday'], value: Week.Sunday },
     { label: t['accMonday'], value: Week.Monday },
@@ -70,24 +66,11 @@ export const DepositFrequency = () => {
   ];
 
   return (
-    <GroupContainer
-      scrollMarginTop={'200px'}
-      display="flex"
-      flexDirection={'column'}
-      gap="s16"
-    >
-      {productNature !== NatureOfDepositProduct?.VoluntaryOrOptional &&
+    <GroupContainer scrollMarginTop="200px" display="flex" flexDirection="column" gap="s16">
+      {productNature !== NatureOfDepositProduct?.Saving &&
         productNature !== NatureOfDepositProduct?.TermSavingOrFd && (
-          <Box
-            display="flex"
-            flexDirection="column"
-            background="neutralColorLight.Gray-0"
-          >
-            <Text
-              fontWeight="SemiBold"
-              fontSize="r1"
-              color="neutralColorLight.Gray-60"
-            >
+          <Box display="flex" flexDirection="column" background="neutralColorLight.Gray-0">
+            <Text fontWeight="SemiBold" fontSize="r1" color="neutralColorLight.Gray-60">
               {t['accDepositFrequency']}
             </Text>
             {productDeposit === Frequency?.Weekly && (
@@ -102,19 +85,11 @@ export const DepositFrequency = () => {
                 borderColor="border.layout"
                 borderRadius="br2"
               >
-                <Text
-                  fontSize="s3"
-                  color="neutralColorLight.Gray-80"
-                  fontWeight="Medium"
-                >
+                <Text fontSize="s3" color="neutralColorLight.Gray-80" fontWeight="Medium">
                   {t['accWeekly']}
                 </Text>
                 <Box display="flex" flexDirection="column" gap="s4">
-                  <Text
-                    fontSize="s3"
-                    color="neutralColorLight.Gray-80"
-                    fontWeight="Medium"
-                  >
+                  <Text fontSize="s3" color="neutralColorLight.Gray-80" fontWeight="Medium">
                     {t['accDayoftheWeek']}
                   </Text>
                   <FormSwitchTab
@@ -147,11 +122,7 @@ export const DepositFrequency = () => {
                   >
                     {t['accMonthly']}
                   </Text>
-                  <Text
-                    fontSize="s3"
-                    color="neutralColorLight.Gray-80"
-                    fontWeight="Medium"
-                  >
+                  <Text fontSize="s3" color="neutralColorLight.Gray-80" fontWeight="Medium">
                     {t['accAddfrequencydayorweek']}
                   </Text>
                 </Box>
@@ -163,12 +134,7 @@ export const DepositFrequency = () => {
                   }))}
                 />
                 {monthly === WeeklyFrequency.Day && (
-                  <Box
-                    display="grid"
-                    mt="s16"
-                    gridTemplateColumns="repeat(3, 1fr)"
-                    gap="s16"
-                  >
+                  <Box display="grid" mt="s16" gridTemplateColumns="repeat(3, 1fr)" gap="s16">
                     <FormInput
                       type="text"
                       name="depositFrequencyDay"
@@ -179,12 +145,7 @@ export const DepositFrequency = () => {
                 )}
 
                 {monthly === WeeklyFrequency.DayOfTheWeek && (
-                  <Box
-                    display="grid"
-                    mt="s16"
-                    gridTemplateColumns="repeat(3, 1fr)"
-                    gap="s16"
-                  >
+                  <Box display="grid" mt="s16" gridTemplateColumns="repeat(3, 1fr)" gap="s16">
                     <FormInput
                       name="depositFrequencyFrequencyDay"
                       label={t['accFrequencyDay']}
@@ -222,12 +183,7 @@ export const DepositFrequency = () => {
                     {t['accYearly']}
                   </Text>
                 </Box>
-                <Box
-                  display="grid"
-                  mt="s16"
-                  gridTemplateColumns="repeat(3, 1fr)"
-                  gap={6}
-                >
+                <Box display="grid" mt="s16" gridTemplateColumns="repeat(3, 1fr)" gap={6}>
                   <FormSelect
                     name="depositFrequencyYearlyMonth"
                     label={t['accSelectMonth']}
@@ -245,18 +201,13 @@ export const DepositFrequency = () => {
               </Box>
             )}
             {productNature === NatureOfDepositProduct?.RecurringSaving && (
-              <Box
-                display="grid"
-                mt="s16"
-                gridTemplateColumns="repeat(3, 1fr)"
-                gap="s16"
-              >
+              <Box display="grid" mt="s16" gridTemplateColumns="repeat(3, 1fr)" gap="s16">
                 <FormInput
                   name="installmentAmount"
                   label={t['accinstallmentAmount']}
-                  __placeholder={'0.00'}
+                  __placeholder="0.00"
                   type="text"
-                  textAlign={'right'}
+                  textAlign="right"
                 />
               </Box>
             )}

@@ -26,6 +26,7 @@ import {
   GridItems,
   Interest,
   LadderRate,
+  MandatoryProduct,
   Penalty,
   PostingFrequency,
   PrematuredPenalty,
@@ -265,18 +266,23 @@ export const SettingsDepositProductsAdd = () => {
                 <GridItems />
               </Box>
 
-              {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <AllowedTransaction />}
+              {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <BalanceLimit />}
 
               {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                depositNature === NatureOfDepositProduct.Mandatory) && <BalanceLimit />}
+                depositNature === NatureOfDepositProduct.Saving) && <AllowedTransaction />}
+
+              {depositNature === NatureOfDepositProduct.Current && <DepositFrequency />}
 
               {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <TransactionLimit />}
 
-              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                depositNature === NatureOfDepositProduct.Mandatory) && (
+              {depositNature === NatureOfDepositProduct.Saving && <MandatoryProduct />}
+
+              {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <DepositFrequency />}
+
+              {(depositNature === NatureOfDepositProduct.Current ||
+                depositNature === NatureOfDepositProduct.RecurringSaving) && (
                 <>
                   {/* <DepositAmount /> */}
-                  <DepositFrequency />
                   <Penalty />
                   <Rebate />
                 </>
@@ -284,29 +290,30 @@ export const SettingsDepositProductsAdd = () => {
 
               {depositNature === NatureOfDepositProduct.TermSavingOrFd && <FixedDepositAmount />}
 
-              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <DefaultAccountName />}
+              {depositNature !== NatureOfDepositProduct.Current && <DefaultAccountName />}
 
-              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <Tenure />}
+              {depositNature !== NatureOfDepositProduct.Current && <Tenure />}
 
               {/* {(depositNature === NatureOfDepositProduct.RecurringSaving ||
                 depositNature === NatureOfDepositProduct.TermSavingOrFd) && <MaximumTenure />} */}
 
-              <Interest />
-              <PostingFrequency />
+              {depositNature !== NatureOfDepositProduct.Current && (
+                <>
+                  <Interest />
+                  <PostingFrequency />
+                </>
+              )}
+
               <AccountOpenServices />
               <AccountCloseServices />
 
               <Questions />
 
-              {depositNature === NatureOfDepositProduct.VoluntaryOrOptional && <LadderRate />}
+              {depositNature === NatureOfDepositProduct.Saving && <LadderRate />}
 
               {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <DormantSetup />}
 
-              {depositNature !== NatureOfDepositProduct.VoluntaryOrOptional && (
-                <PrematuredPenalty />
-              )}
+              <PrematuredPenalty />
 
               {(depositNature === NatureOfDepositProduct.RecurringSaving ||
                 depositNature === NatureOfDepositProduct.TermSavingOrFd) && <WithdrawPenalty />}

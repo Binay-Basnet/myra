@@ -14,6 +14,7 @@ export * from './FixedDepositAmount';
 export * from './Interest';
 export * from './LadderRate';
 export * from './ListGrid';
+export * from './MandatoryProduct';
 export * from './Penalty';
 export * from './PostingFrequency';
 export * from './PrematuruedPenaltySetup';
