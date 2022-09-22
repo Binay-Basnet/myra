@@ -11,8 +11,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { IoClose } from 'react-icons/io5';
 import { RiArrowDownSLine, RiArrowUpSLine } from 'react-icons/ri';
 import { AddIcon } from '@chakra-ui/icons';
-import { uniqueId } from 'lodash';
 
+import { useGetNewIdMutation } from '@coop/cbs/data-access';
 import { FormInput, FormSwitch } from '@coop/shared/form';
 import { Box, Button, Collapse, Icon, Text } from '@coop/shared/ui';
 import { GRID2X3, useTranslation } from '@coop/shared/utils';
@@ -27,6 +27,8 @@ interface ICollateralProps {
 
 export const AcceptedCollateral = (props: ICollateralProps) => {
   const [hasNewField, setHasNewField] = useState(false);
+
+  const { mutateAsync: getNewId } = useGetNewIdMutation({});
 
   const { list, setList } = props;
   const { t } = useTranslation();
@@ -114,14 +116,16 @@ export const AcceptedCollateral = (props: ICollateralProps) => {
         {hasNewField && (
           <FormProvider {...methods}>
             <form
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
+
+                const response = await getNewId({});
                 setList((prev) => [
                   ...prev,
                   {
                     enabled: true,
                     name: methods.getValues()['name'],
-                    id: uniqueId('row'),
+                    id: response.newId,
                   },
                 ]);
                 setHasNewField(false);
@@ -140,13 +144,15 @@ export const AcceptedCollateral = (props: ICollateralProps) => {
                     <FormInput type="text" name="name" />
                   </Box>
                   <Button
-                    onClick={() => {
+                    onClick={async () => {
+                      const response = await getNewId({});
+
                       setList((prev) => [
                         ...prev,
                         {
                           enabled: true,
                           name: methods.getValues()['name'],
-                          id: uniqueId('row'),
+                          id: response.newId,
                         },
                       ]);
                       setHasNewField(false);
