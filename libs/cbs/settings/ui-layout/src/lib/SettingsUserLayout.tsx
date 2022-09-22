@@ -8,7 +8,7 @@ interface ISettingsUserLayoutProps {
 }
 
 export const SettingsUserLayout = ({ children }: ISettingsUserLayoutProps) => (
-  <Box display="flex" sflexDirection="row">
+  <Box display="flex" flexDirection="row">
     <SettingsUserSideBar />
     <Box width="100%" ml="240px" bg="white" minHeight="calc(100vh - 110px)">
       {children}
