@@ -1,6 +1,6 @@
 import { Box, Divider, Text } from '@chakra-ui/react';
 
-import { VerticalSideBar } from '../index';
+import { VerticalSideBar } from './verticleSidebar';
 // TODO! ( REMOVE THIS COMPONENT )
 
 type TabList = {
@@ -39,23 +39,21 @@ const tabList: TabList[] = [
   },
 ];
 
-export const SettingsGeneral = () => {
-  return (
-    <Box
-      w="13%"
-      display="flex"
-      flexDirection="column"
-      gap="s16"
-      flexShrink={0}
-      minWidth="250px"
-      pt="s8"
-      pl="s8"
-    >
-      <Text fontSize="r3" fontWeight="600">
-        General
-      </Text>
-      <Divider borderColor="border.layout" />
-      <VerticalSideBar tablinks={tabList} />
-    </Box>
-  );
-};
+export const SettingsGeneral = () => (
+  <Box
+    w="13%"
+    display="flex"
+    flexDirection="column"
+    gap="s16"
+    flexShrink={0}
+    minWidth="250px"
+    pt="s8"
+    pl="s8"
+  >
+    <Text fontSize="r3" fontWeight="600">
+      General
+    </Text>
+    <Divider borderColor="border.layout" />
+    <VerticalSideBar tablinks={tabList} />
+  </Box>
+);

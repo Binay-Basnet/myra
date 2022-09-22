@@ -3477,5 +3477,8 @@ const en: Record<string, string> = {
   agentAssignedMembersCancel: 'Cancel',
   agentAssignedMembersHelperText:
     'This member has already been assigned to an market representative. Do you want to override the market representative?',
+
+  // audit log
+  settingsAuditLog: 'Audit Log',
 };
 export default en;

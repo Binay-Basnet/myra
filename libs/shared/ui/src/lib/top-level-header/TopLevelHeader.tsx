@@ -437,7 +437,7 @@ export const TopLevelHeader = () => {
                             cursor="pointer"
                             borderRadius="br2"
                             _hover={{ bg: 'primary.0' }}
-                            onClick={() => router.push('/settings/general/organization')}
+                            onClick={() => router.push('/settings/general/audit-log')}
                           >
                             <Image width={48} height={48} src="/settings.svg" alt="Settings" />
                             <Text

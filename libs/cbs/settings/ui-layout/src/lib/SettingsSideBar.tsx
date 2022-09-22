@@ -11,24 +11,17 @@ type TabList = {
 
 const tabList: TabList[] = [
   {
-    title: 'settingsSideBarOrganization',
-    to: '/settings/general/organization',
+    title: 'settingsAuditLog',
+    to: '/settings/general/audit-log',
   },
   {
     title: 'serviceCenterSettings',
     to: '/settings/general/service-center',
   },
+
   {
     title: 'settingsSideBarChartsOfAccounts',
     to: '/settings/general/charts-of-accounts',
-  },
-  {
-    title: 'settingsSideBarMembers',
-    to: '/settings/general/members',
-  },
-  {
-    title: 'settingsSideBarShare',
-    to: '/settings/general/share',
   },
   {
     title: 'settingsSideBarDeposit',
@@ -46,6 +39,20 @@ const tabList: TabList[] = [
     title: 'settingsSideBarLoanProducts',
     to: '/settings/general/loan-products',
   },
+
+  {
+    title: 'settingsSideBarMembers',
+    to: '/settings/general/members',
+  },
+  {
+    title: 'settingsSideBarOrganization',
+    to: '/settings/general/organization',
+  },
+  {
+    title: 'settingsSideBarShare',
+    to: '/settings/general/share',
+  },
+
   {
     title: 'settingsSideBarValuator',
     to: '/settings/general/valuator/list',
