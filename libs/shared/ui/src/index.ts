@@ -1,3 +1,5 @@
+export * from './lib/detail-card-content/DetailCardContent';
+export * from './lib/details-card/DetailsCard';
 export * from './lib/accordion/Accordion';
 export * from './lib/add-button-list/AddButtonList';
 export * from './lib/alert/Alert';

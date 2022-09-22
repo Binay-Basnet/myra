@@ -1,5 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-
+import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { selectionHook } from './selectionHook';
 
 export default {
@@ -7,9 +6,7 @@ export default {
   title: 'selectionHook',
 } as ComponentMeta<typeof selectionHook>;
 
-const Template: ComponentStory<typeof selectionHook> = (args) => (
-  <selectionHook {...args} />
-);
+const Template: ComponentStory<typeof selectionHook> = (args) => <selectionHook {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {};

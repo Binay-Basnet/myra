@@ -6396,7 +6396,7 @@ export type LoanAccountResult = {
 
 export type LoanAccountSearchFilter = {
   id?: InputMaybe<Scalars['ID']>;
-  objectState?: InputMaybe<ObjState>;
+  objectState?: InputMaybe<LoanObjState>;
   query?: InputMaybe<Scalars['String']>;
 };
 
@@ -8230,7 +8230,7 @@ export type ShareRegister = {
 
 export type ShareRegisterConnection = {
   edges: Array<ShareRegisterEdge>;
-  pageInfo: PageInfo;
+  pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
 };
 
@@ -14208,12 +14208,12 @@ export type GetShareRegisterListQuery = {
           } | null;
         };
       }>;
-      pageInfo: {
+      pageInfo?: {
         hasNextPage: boolean;
         hasPreviousPage: boolean;
         startCursor?: string | null;
         endCursor?: string | null;
-      };
+      } | null;
     } | null;
   };
 };
