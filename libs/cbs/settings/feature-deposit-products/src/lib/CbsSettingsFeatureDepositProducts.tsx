@@ -58,12 +58,11 @@ export const SettingsDepositProducts = () => {
           const nature = props?.row?.original?.node?.nature;
           return (
             <span>
-              {nature === NatureOfDepositProduct.Mandatory && t['depositProductMandatory']}
+              {nature === NatureOfDepositProduct.Current && t['depositProductCurrent']}
               {nature === NatureOfDepositProduct.RecurringSaving &&
                 t['depositProductRecurringSaving']}
               {nature === NatureOfDepositProduct.TermSavingOrFd && t['depositProductTermSaving']}
-              {nature === NatureOfDepositProduct.VoluntaryOrOptional &&
-                t['depositProductVoluntaryOptional']}
+              {nature === NatureOfDepositProduct.Saving && t['depositProductSaving']}
             </span>
           );
         },

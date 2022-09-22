@@ -72,6 +72,7 @@ query getAccountOpenProductDetails($id: ID!) {
             educationQualification
             ethnicity
             occupation
+            isMandatorySaving
             foreignEmployment
             natureOfBusinessInstitution
             natureOFBusinessCoop
@@ -265,6 +266,7 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
             productName
             nature
             minimumBalance
+            isMandatorySaving
           }
           fine
         }

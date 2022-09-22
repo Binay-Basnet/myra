@@ -72,10 +72,10 @@ export const AddDeposit = () => {
   const { t } = useTranslation();
 
   const accountTypes = {
-    [NatureOfDepositProduct.Mandatory]: t['addDepositMandatorySavingAccount'],
+    [NatureOfDepositProduct.Saving]: t['addDepositSaving'],
     [NatureOfDepositProduct.RecurringSaving]: t['addDepositRecurringSavingAccount'],
     [NatureOfDepositProduct.TermSavingOrFd]: t['addDepositTermSavingAccount'],
-    [NatureOfDepositProduct.VoluntaryOrOptional]: t['addDepositVoluntarySavingAccount'],
+    [NatureOfDepositProduct.Current]: t['addDepositCurrent'],
   };
 
   const methods = useForm<DepositFormInput>({
@@ -165,7 +165,8 @@ export const AddDeposit = () => {
       enabled:
         (!!accountId &&
           selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving) ||
-        selectedAccount?.product?.nature === NatureOfDepositProduct.Mandatory,
+        (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+          selectedAccount?.product?.isMandatorySaving === true),
     }
   );
 
@@ -237,7 +238,8 @@ export const AddDeposit = () => {
 
     if (
       selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving ||
-      selectedAccount?.product?.nature === NatureOfDepositProduct.Mandatory
+      (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+        selectedAccount?.product?.isMandatorySaving === true)
     ) {
       filteredValues['amount'] = String(amountToBeDeposited);
     }
@@ -320,7 +322,8 @@ export const AddDeposit = () => {
                           fine:
                             account?.node?.product?.nature ===
                               NatureOfDepositProduct.RecurringSaving ||
-                            account?.node?.product?.nature === NatureOfDepositProduct.Mandatory
+                            (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+                              selectedAccount?.product?.isMandatorySaving === true)
                               ? FINE
                               : '',
                         },
@@ -331,7 +334,8 @@ export const AddDeposit = () => {
 
                   {accountId &&
                     (selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving ||
-                      selectedAccount?.product?.nature === NatureOfDepositProduct.Mandatory) && (
+                      (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+                        selectedAccount?.product?.isMandatorySaving === true)) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
                           <FormInput name="voucherId" label={t['addDepositVoucherId']} />
@@ -390,8 +394,8 @@ export const AddDeposit = () => {
                     )}
 
                   {accountId &&
-                    selectedAccount?.product?.nature ===
-                      NatureOfDepositProduct.VoluntaryOrOptional && (
+                    (selectedAccount?.product?.nature === NatureOfDepositProduct.Current ||
+                      selectedAccount?.product?.nature === NatureOfDepositProduct.Saving) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
                           <FormInput name="voucherId" label={t['addDepositVoucherId']} />
@@ -437,8 +441,8 @@ export const AddDeposit = () => {
 
                         {(selectedAccount?.product?.nature ===
                           NatureOfDepositProduct.RecurringSaving ||
-                          selectedAccount?.product?.nature ===
-                            NatureOfDepositProduct.Mandatory) && (
+                          (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+                            selectedAccount?.product?.isMandatorySaving === true)) && (
                           <Box display="flex" justifyContent="space-between">
                             <Text fontSize="s3" fontWeight={500} color="gray.600">
                               {t['addDepositFine']}
@@ -559,6 +563,7 @@ export const AddDeposit = () => {
         onClose={handleModalClose}
         accountId={selectedAccount?.id}
         productType={selectedAccount?.product?.nature}
+        isMandatory={selectedAccount?.product?.isMandatorySaving as boolean}
       />
     </>
   );

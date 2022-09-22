@@ -14,8 +14,6 @@ import { FormFileInput } from '@coop/shared/form';
 import { Grid } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-import { FileListType } from '../../lib/AccountOpenNew';
-
 interface Iprops {
   setFileList: React.Dispatch<React.SetStateAction<FileListType>>;
   id: string;
@@ -23,12 +21,18 @@ interface Iprops {
   memberId: string;
 }
 
-export const RequiredDocuments = ({
-  setFileList,
-  id,
-  productId,
-  memberId,
-}: Iprops) => {
+type FileListType = {
+  signature: string[];
+  nominee: string[];
+  photo: string[];
+  fingerPrintPhoto: string[];
+  decisionDocuments: string[];
+  registeredPhotos: string[];
+  InsSignature: string[];
+  taxClearance: string[];
+};
+
+export const RequiredDocuments = ({ setFileList, id, productId, memberId }: Iprops) => {
   const [triggerQuery, setTriggerQuery] = useState(false);
   const [triggerMember, setTriggerMember] = useState(false);
 
@@ -59,8 +63,7 @@ export const RequiredDocuments = ({
       enabled: triggerQuery,
     }
   );
-  const ProductData =
-    poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
+  const ProductData = poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
 
   const photoinc = IndividualRequiredDocument?.Photo;
   const signinc = IndividualRequiredDocument?.Signature;
@@ -149,18 +152,12 @@ export const RequiredDocuments = ({
 
   const memberListData = memberList?.members?.list?.edges;
   const memberData =
-    memberListData &&
-    memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
+    memberListData && memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
 
   return (
     <FormProvider {...methods}>
       <form>
-        <GroupContainer
-          scrollMarginTop={'200px'}
-          display="flex"
-          flexDirection={'column'}
-          gap="s16"
-        >
+        <GroupContainer scrollMarginTop="200px" display="flex" flexDirection="column" gap="s16">
           <Grid
             background="neutralColorLight.Gray-0"
             templateColumns="repeat(2, 1fr)"
@@ -174,66 +171,32 @@ export const RequiredDocuments = ({
               )}
             {memberData?.type === KymMemberTypesEnum?.Individual &&
               ProductData?.individualDocuments?.includes(signinc) && (
-                <FormFileInput
-                  size="lg"
-                  label={t['accSignature']}
-                  name="signature"
-                />
+                <FormFileInput size="lg" label={t['accSignature']} name="signature" />
               )}
             {memberData?.type === KymMemberTypesEnum?.Individual &&
               ProductData?.individualDocuments?.includes(nomineeinc) && (
-                <FormFileInput
-                  size="lg"
-                  label={t['accNomineeDocument']}
-                  name="nominee"
-                />
+                <FormFileInput size="lg" label={t['accNomineeDocument']} name="nominee" />
               )}
             {memberData?.type === KymMemberTypesEnum?.Individual &&
               ProductData?.individualDocuments?.includes(fingerPrintinc) && (
-                <FormFileInput
-                  size="lg"
-                  label={t['accFingerprintPhoto']}
-                  name="fingerprintPhoto"
-                />
+                <FormFileInput size="lg" label={t['accFingerprintPhoto']} name="fingerprintPhoto" />
               )}
             {memberData?.type !== KymMemberTypesEnum?.Individual &&
               ProductData?.institutionDocuments?.includes(decIns) && (
-                <FormFileInput
-                  size="lg"
-                  label="Decision Document"
-                  name="decisionDocumentIns"
-                />
+                <FormFileInput size="lg" label="Decision Document" name="decisionDocumentIns" />
               )}
             {memberData?.type !== KymMemberTypesEnum?.Individual &&
               ProductData?.institutionDocuments?.includes(
                 InstitutionRequiredDocument?.Registered
-              ) && (
-                <FormFileInput
-                  size="lg"
-                  label="Registered"
-                  name="registeredPhotoIns"
-                />
-              )}
+              ) && <FormFileInput size="lg" label="Registered" name="registeredPhotoIns" />}
             {memberData?.type !== KymMemberTypesEnum?.Individual &&
               ProductData?.institutionDocuments?.includes(
                 InstitutionRequiredDocument?.Signature
-              ) && (
-                <FormFileInput
-                  size="lg"
-                  label="Signature"
-                  name="signatureIns"
-                />
-              )}
+              ) && <FormFileInput size="lg" label="Signature" name="signatureIns" />}
             {memberData?.type !== KymMemberTypesEnum?.Individual &&
               ProductData?.institutionDocuments?.includes(
                 InstitutionRequiredDocument?.TaxClearance
-              ) && (
-                <FormFileInput
-                  size="lg"
-                  label="Tax Clearance"
-                  name="taxClearance"
-                />
-              )}
+              ) && <FormFileInput size="lg" label="Tax Clearance" name="taxClearance" />}
           </Grid>
         </GroupContainer>
       </form>

@@ -1,3 +1,4 @@
+import { DefaultAccountType } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { FormSection } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -5,10 +6,10 @@ import { useTranslation } from '@coop/shared/utils';
 export const DefaultAccountName = () => {
   const { t } = useTranslation();
 
-  // const accountTypeList = [
-  //   { label: t['depositProductSaving'], value: DefaultAccountType.SAVING },
-  //   { label: t['depositProductCurrent'], value: DefaultAccountType.CURRENT },
-  // ];
+  const accountTypeList = [
+    { label: t['depositProductSaving'], value: DefaultAccountType?.Saving },
+    { label: t['depositProductCurrent'], value: DefaultAccountType?.Current },
+  ];
   return (
     <FormSection
       header="depositProductDefaultAmountDepositAccountName"
@@ -16,7 +17,7 @@ export const DefaultAccountName = () => {
     >
       <FormSelect
         name="accountType"
-        // options={accountTypeList}
+        options={accountTypeList}
         label={t['depositProductAccountType']}
       />
     </FormSection>

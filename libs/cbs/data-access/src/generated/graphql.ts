@@ -638,6 +638,7 @@ export type BranchFormData = {
   districtId?: Maybe<Scalars['Int']>;
   email?: Maybe<Scalars['String']>;
   estDate?: Maybe<Scalars['Date']>;
+  id?: Maybe<Scalars['String']>;
   localGovernmentId?: Maybe<Scalars['Int']>;
   locality?: Maybe<Scalars['String']>;
   location?: Maybe<LocationCoordinate>;
@@ -650,6 +651,11 @@ export type BranchFormData = {
   receivableAccountId?: Maybe<Scalars['String']>;
   tdsTransaferId?: Maybe<Scalars['String']>;
   wardNo?: Maybe<Scalars['Int']>;
+};
+
+export type BranchGetData = {
+  data?: Maybe<Array<Maybe<BranchFormData>>>;
+  error?: Maybe<QueryError>;
 };
 
 export type BranchGetResult = {
@@ -837,12 +843,17 @@ export type ChartsOfAccountSettingsQueryAccountsUnderArgs = {
 };
 
 export type ChequePastRequest = {
-  account: Account;
-  branch: Branch;
+  branch?: Maybe<Branch>;
+  chequeBlockNumber?: Maybe<Scalars['String']>;
+  chequeBlockReason?: Maybe<Scalars['String']>;
+  chequeRequestType?: Maybe<EBankingChequeRequestType>;
+  collector?: Maybe<MyraUser>;
+  createdDate?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
-  requestNumber: Scalars['Int'];
-  requestType: Scalars['String'];
   status: EBankingServiceStatus;
+  typeOfRequest?: Maybe<EbankingServiceRequestType>;
+  withdrawAmount?: Maybe<Scalars['Amount']>;
+  withdrawDate?: Maybe<Scalars['String']>;
 };
 
 export type Citizenship = {
@@ -889,11 +900,14 @@ export type CollateralInput = {
 export type CollateralListData = {
   enabled?: Maybe<Scalars['Boolean']>;
   id?: Maybe<Scalars['ID']>;
+  isDeleted?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;
 };
 
 export type CollateralListInputData = {
   enabled?: InputMaybe<Scalars['Boolean']>;
+  id: Scalars['ID'];
+  isDeleted?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
 };
 
@@ -1582,6 +1596,11 @@ export type DeclarationUpdateResult = {
   record?: Maybe<Declaration>;
 };
 
+export enum DefaultAccountType {
+  Current = 'CURRENT',
+  Saving = 'SAVING',
+}
+
 export type Denomination = {
   quantity: Scalars['Int'];
   value: CashValue;
@@ -1873,6 +1892,7 @@ export type DepositProduct = Base & {
   createdDate?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   interest?: Maybe<Scalars['Float']>;
+  isMandatorySaving?: Maybe<Scalars['Boolean']>;
   minimumBalance?: Maybe<Scalars['String']>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
@@ -1920,7 +1940,7 @@ export type DepositProductEdge = {
 
 export type DepositProductFormStateData = {
   accountCloseCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
-  accountType?: Maybe<Scalars['ID']>;
+  accountType?: Maybe<DefaultAccountType>;
   allowLoan?: Maybe<Scalars['Boolean']>;
   alternativeChannelCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
   alternativeChannels?: Maybe<Scalars['Boolean']>;
@@ -1991,7 +2011,7 @@ export type DepositProductFormStateResult = {
 
 export type DepositProductInput = {
   accountCloseCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
-  accountType?: InputMaybe<Scalars['ID']>;
+  accountType?: InputMaybe<DefaultAccountType>;
   allowLoan?: InputMaybe<Scalars['Boolean']>;
   alternativeChannelCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
   alternativeChannels?: InputMaybe<Scalars['Boolean']>;
@@ -2404,16 +2424,19 @@ export type EBankingChequeMutationWithdrawViaCollectorArgs = {
 };
 
 export type EBankingChequeQuery = {
+  branchList?: Maybe<BranchGetData>;
+  collectors?: Maybe<MyraUserData>;
   options: Array<EBankingCooperativeServiceOption>;
-  pastRequests: Array<ChequePastRequest>;
+  pastRequests?: Maybe<Array<Maybe<ChequePastRequest>>>;
 };
 
 export type EBankingChequeQueryPastRequestsArgs = {
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
+  memberId: Scalars['ID'];
 };
 
 export type EBankingChequeRequestInput = {
-  branch?: InputMaybe<BranchInput>;
+  branch?: InputMaybe<Scalars['ID']>;
   collector?: InputMaybe<Scalars['ID']>;
   type: EBankingChequeRequestType;
 };
@@ -2424,16 +2447,17 @@ export enum EBankingChequeRequestType {
 }
 
 export type EBankingChequeResult = {
-  error?: Maybe<EBankingCooperativeServiceError>;
+  error?: Maybe<MutationError>;
   query?: Maybe<EBankingCooperativeServiceQuery>;
   record?: Maybe<ChequePastRequest>;
   recordID: Scalars['ID'];
 };
 
 export type EBankingChequeWithdrawViaCollectorInput = {
-  amount?: InputMaybe<Scalars['Float']>;
+  amount?: InputMaybe<Scalars['String']>;
   branch?: InputMaybe<Scalars['ID']>;
   collector?: InputMaybe<Scalars['ID']>;
+  date?: InputMaybe<Scalars['String']>;
 };
 
 export type EBankingCombined = {
@@ -2961,6 +2985,12 @@ export type EBankingTransactionQueryMonthlyArgs = {
 export type EBankingTransactionQueryRecentArgs = {
   filter?: InputMaybe<RecentTransactionFilter>;
 };
+
+export enum EbankingServiceRequestType {
+  ChequeBlockRequest = 'CHEQUE_BLOCK_REQUEST',
+  ChequeRequest = 'CHEQUE_REQUEST',
+  WithdrawViaCollector = 'WITHDRAW_VIA_COLLECTOR',
+}
 
 export type EbankingShare = {
   totalShare: Scalars['Int'];
@@ -6270,6 +6300,7 @@ export type LoanAccountGracePeriodResult = {
 
 export type LoanAccountGurantee = {
   accountId?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
   guranteeAmount?: Maybe<Scalars['Amount']>;
   maxGuranteeAmountLimit?: Maybe<Scalars['Amount']>;
   memberId?: Maybe<Scalars['String']>;
@@ -6278,6 +6309,7 @@ export type LoanAccountGurantee = {
 
 export type LoanAccountGuranteeInput = {
   accountId?: InputMaybe<Scalars['String']>;
+  accountName?: InputMaybe<Scalars['String']>;
   guranteeAmount?: InputMaybe<Scalars['Amount']>;
   maxGuranteeAmountLimit?: InputMaybe<Scalars['Amount']>;
   memberId?: InputMaybe<Scalars['String']>;
@@ -7172,6 +7204,11 @@ export type MyraUserConnection = {
   totalCount: Scalars['Int'];
 };
 
+export type MyraUserData = {
+  data?: Maybe<Array<Maybe<MyraUserFormStateData>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type MyraUserEdge = {
   cursor: Scalars['Cursor'];
   node?: Maybe<MyraUser>;
@@ -7183,6 +7220,7 @@ export type MyraUserFormStateData = {
   dob?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   gender?: Maybe<UserGender>;
+  id?: Maybe<Scalars['String']>;
   identificationDetails?: Maybe<Array<Maybe<MyraUserIdentification>>>;
   identificationSelection?: Maybe<Array<Maybe<Scalars['String']>>>;
   isTempAsPermanentAddressSame?: Maybe<Scalars['Boolean']>;
@@ -10431,6 +10469,7 @@ export type GetAccountOpenProductDetailsQuery = {
             educationQualification?: Array<string | null> | null;
             ethnicity?: Array<string | null> | null;
             occupation?: Array<string | null> | null;
+            isMandatorySaving?: boolean | null;
             foreignEmployment?: boolean | null;
             natureOfBusinessInstitution?: Array<string | null> | null;
             natureOFBusinessCoop?: Array<string | null> | null;
@@ -10446,7 +10485,7 @@ export type GetAccountOpenProductDetailsQuery = {
             postingFrequency?: DepositFrequency | null;
             maxPostingFreqDifference?: number | null;
             noOftransactionAllowed?: number | null;
-            accountType?: string | null;
+            accountType?: DefaultAccountType | null;
             autoOpen?: boolean | null;
             allowLoan?: boolean | null;
             percentageOfDeposit?: number | null;
@@ -10616,6 +10655,7 @@ export type GetAccountTableListQuery = {
             productName: string;
             nature: NatureOfDepositProduct;
             minimumBalance?: string | null;
+            isMandatorySaving?: boolean | null;
           };
         } | null;
       }> | null;
@@ -13575,7 +13615,7 @@ export type GetDepositProductSettingsEditDataQuery = {
             ladderRate?: boolean | null;
             postingFrequency?: DepositFrequency | null;
             maxPostingFreqDifference?: number | null;
-            accountType?: string | null;
+            accountType?: DefaultAccountType | null;
             autoOpen?: boolean | null;
             allowLoan?: boolean | null;
             percentageOfDeposit?: number | null;
@@ -17038,6 +17078,7 @@ export const GetAccountOpenProductDetailsDocument = `
             educationQualification
             ethnicity
             occupation
+            isMandatorySaving
             foreignEmployment
             natureOfBusinessInstitution
             natureOFBusinessCoop
@@ -17252,6 +17293,7 @@ export const GetAccountTableListDocument = `
             productName
             nature
             minimumBalance
+            isMandatorySaving
           }
           fine
         }

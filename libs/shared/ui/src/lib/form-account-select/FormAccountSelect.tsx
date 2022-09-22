@@ -1,5 +1,5 @@
 import { NatureOfDepositProduct, useGetAccountTableListQuery } from '@coop/cbs/data-access';
-import { getRouterQuery } from '@coop/shared/utils';
+import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 import { Option } from './CustomSelect';
 import FormCustomSelect from './FormCustomSelect';
@@ -11,14 +11,8 @@ interface IAccountSelectProps {
   placeholder?: string;
 }
 
-const accountTypes = {
-  [NatureOfDepositProduct.Mandatory]: 'Mandatory Saving Account',
-  [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
-  [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
-  [NatureOfDepositProduct.VoluntaryOrOptional]: 'Voluntary Saving Account',
-};
-
 export const FormAccountSelect = ({ name, label, memberId, placeholder }: IAccountSelectProps) => {
+  const { t } = useTranslation();
   const { data: accountListData, isFetching } = useGetAccountTableListQuery(
     {
       paginate: getRouterQuery({ type: ['PAGINATION'] }),
@@ -29,6 +23,13 @@ export const FormAccountSelect = ({ name, label, memberId, placeholder }: IAccou
       enabled: !!memberId,
     }
   );
+
+  const accountTypes = {
+    [NatureOfDepositProduct.Saving]: t['addDepositSaving'],
+    [NatureOfDepositProduct.RecurringSaving]: t['addDepositRecurringSavingAccount'],
+    [NatureOfDepositProduct.TermSavingOrFd]: t['addDepositTermSavingAccount'],
+    [NatureOfDepositProduct.Current]: t['addDepositCurrent'],
+  };
 
   const availableBalance = accountListData?.account?.list?.edges;
 

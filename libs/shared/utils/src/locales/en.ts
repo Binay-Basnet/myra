@@ -3480,5 +3480,7 @@ const en: Record<string, string> = {
   depositProductSaving: 'Saving',
   depositProductCurrent: 'Current',
   depositProductMandatoryProduct: 'Is this mandatory saving product?',
+  addDepositSaving: 'Saving Account',
+  addDepositCurrent: 'Current Account',
 };
 export default en;
