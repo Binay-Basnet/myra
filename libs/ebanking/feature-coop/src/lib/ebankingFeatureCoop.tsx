@@ -10,27 +10,14 @@ import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Skeleton } from '@chakra-ui/react';
 
 import { AccountPopover } from '@coop/ebanking/accounts';
-import {
-  CoopCard,
-  CoopDownloadCard,
-  COOPHeaderCard,
-  InfoCard,
-} from '@coop/ebanking/cards';
+import { CoopCard, CoopDownloadCard, COOPHeaderCard, InfoCard } from '@coop/ebanking/cards';
 import {
   useGetCoopChequeServicesQuery,
   useGetCoopComplaintServicesQuery,
   useGetCoopDownloadsQuery,
   useGetCoopLoanServicesQuery,
 } from '@coop/ebanking/data-access';
-import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  Icon,
-  Text,
-  VStack,
-} from '@coop/shared/ui';
+import { Box, Button, Divider, Grid, Icon, Text, VStack } from '@coop/shared/ui';
 
 /* eslint-disable-next-line */
 export interface EbankingFeatureCoopProps {}
@@ -61,10 +48,7 @@ const LOAN_SERVICE_DICT: Record<string, { icon: IconType; link: string }> = {
   },
 };
 
-const COMPLAINTS_SERVICE_DICT: Record<
-  string,
-  { icon: IconType; link: string }
-> = {
+const COMPLAINTS_SERVICE_DICT: Record<string, { icon: IconType; link: string }> = {
   'Register new grievance': {
     link: '/coop/complaints/new',
     icon: BsCash,
@@ -96,16 +80,12 @@ const DOWNLOADS_DICT: Record<
   },
 };
 
-export function EbankingFeatureCoop(props: EbankingFeatureCoopProps) {
-  const { data: chequeServices, isLoading: chequeLoading } =
-    useGetCoopChequeServicesQuery();
-  const { data: loanList, isLoading: loanLoading } =
-    useGetCoopLoanServicesQuery();
-  const { data: complaintList, isLoading: complaintLoading } =
-    useGetCoopComplaintServicesQuery();
+export const EbankingFeatureCoop = () => {
+  const { data: chequeServices, isLoading: chequeLoading } = useGetCoopChequeServicesQuery();
+  const { data: loanList, isLoading: loanLoading } = useGetCoopLoanServicesQuery();
+  const { data: complaintList, isLoading: complaintLoading } = useGetCoopComplaintServicesQuery();
 
-  const { data: downloadsList, isLoading: downloadLoading } =
-    useGetCoopDownloadsQuery();
+  const { data: downloadsList, isLoading: downloadLoading } = useGetCoopDownloadsQuery();
 
   return (
     <Box display="flex" flexDir="column" gap="s16">
@@ -139,13 +119,7 @@ export function EbankingFeatureCoop(props: EbankingFeatureCoopProps) {
             </Text>
             <Icon as={ChevronRightIcon} size="lg" color="gray.500" />
           </Box>
-          <Box
-            py="s8"
-            display="flex"
-            alignItems="center"
-            w="100%"
-            justifyContent="space-between"
-          >
+          <Box py="s8" display="flex" alignItems="center" w="100%" justifyContent="space-between">
             <Text fontSize="r1" fontWeight="600" color="gray.800">
               Default Account
             </Text>
@@ -271,6 +245,6 @@ export function EbankingFeatureCoop(props: EbankingFeatureCoopProps) {
       </InfoCard>
     </Box>
   );
-}
+};
 
 export default EbankingFeatureCoop;

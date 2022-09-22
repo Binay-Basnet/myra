@@ -5,12 +5,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { InfoCard } from '@coop/ebanking/cards';
 import { Box, Button, Grid, Icon, PasswordInput, Text } from '@coop/shared/ui';
 
-import {
-  CardBodyContainer,
-  CardContainer,
-  CardContent,
-  CardHeader,
-} from '../CardContainer';
+import { CardBodyContainer, CardContainer, CardContent, CardHeader } from '../CardContainer';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure';
 
@@ -36,19 +31,13 @@ export const SendMoneyReview = ({ setPaymentStatus }: SendMoneyReviewProps) => {
         <CardContainer>
           <CardBodyContainer>
             <CardHeader>Payee Details</CardHeader>
-            <CardContent
-              title="Source Account"
-              subtitle="Salary Saving Account - 10101432"
-            />
+            <CardContent title="Source Account" subtitle="Salary Saving Account - 10101432" />
             <Grid templateColumns="repeat(3, 1fr)" gap="s16">
               <CardContent title="Recipient Name" subtitle="Madan Bahadur KC" />
               <CardContent title="Mobile Number" subtitle="9847814919" />
               <CardContent title="Account Number" subtitle="10233903930" />
               <CardContent title="Purpose" subtitle="Personal Use" />
-              <CardContent
-                title="Remarks"
-                subtitle="Remaining Payment for monitor"
-              />
+              <CardContent title="Remarks" subtitle="Remaining Payment for monitor" />
             </Grid>
           </CardBodyContainer>
           <CardBodyContainer>
@@ -83,14 +72,7 @@ export const SendMoneyReview = ({ setPaymentStatus }: SendMoneyReviewProps) => {
       </InfoCard>
 
       {hasTransactionPassword ? (
-        <Box
-          as="form"
-          bg="white"
-          p="s16"
-          display="flex"
-          flexDir="column"
-          gap="s32"
-        >
+        <Box as="form" bg="white" p="s16" display="flex" flexDir="column" gap="s32">
           <Box display="flex" w="50%" flexDir="column" gap="s4">
             <PasswordInput {...register('password')} />
             <Text fontWeight="500" fontSize="s3" color="success.400">

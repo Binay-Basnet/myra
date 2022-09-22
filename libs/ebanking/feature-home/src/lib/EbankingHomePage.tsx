@@ -3,43 +3,24 @@ import { useRouter } from 'next/router';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { Skeleton, useDisclosure } from '@chakra-ui/react';
 
-import {
-  AccountCard,
-  InfoCard,
-  TransactionCard,
-  UtilityHomeCard,
-} from '@coop/ebanking/cards';
+import { AccountCard, InfoCard, TransactionCard, UtilityHomeCard } from '@coop/ebanking/cards';
 import {
   useGetAccountListQuery,
   useGetHomeServiceListQuery,
   useGetRecentTransactionsQuery,
   useGetUtilityListQuery,
 } from '@coop/ebanking/data-access';
-import {
-  Box,
-  Button,
-  Collapse,
-  Divider,
-  Grid,
-  GridItem,
-  Icon,
-  Text,
-} from '@coop/shared/ui';
+import { Box, Button, Collapse, Divider, Grid, GridItem, Icon, Text } from '@coop/shared/ui';
 
-import {
-  SERVICE_ICON_DICT,
-  SERVICE_LINK_DICT,
-  UTILITY_ICON_DICT,
-} from '../constants/SERVICE_ICON';
+import { SERVICE_ICON_DICT, SERVICE_LINK_DICT, UTILITY_ICON_DICT } from '../constants/SERVICE_ICON';
 
-export function EbankingHomePage() {
+export const EbankingHomePage = () => {
   const router = useRouter();
   const { isOpen, onToggle } = useDisclosure();
 
   const { data: servicesList, isLoading } = useGetHomeServiceListQuery();
   const { data: utilityList } = useGetUtilityListQuery();
-  const { data: accountList, isLoading: accountsLoading } =
-    useGetAccountListQuery();
+  const { data: accountList, isLoading: accountsLoading } = useGetAccountListQuery();
   const { data: transactionList } = useGetRecentTransactionsQuery();
 
   const utilityPayments = [
@@ -78,16 +59,11 @@ export function EbankingHomePage() {
               tabIndex={0}
               key={service?.id}
               onClick={() => {
-                service?.service_id &&
-                  router.push(SERVICE_LINK_DICT[service?.service_id]);
+                service?.service_id && router.push(SERVICE_LINK_DICT[service?.service_id]);
               }}
             >
               <Icon
-                as={
-                  service?.service_id
-                    ? SERVICE_ICON_DICT[service?.service_id]
-                    : undefined
-                }
+                as={service?.service_id ? SERVICE_ICON_DICT[service?.service_id] : undefined}
                 size="lg"
                 color="primary.500"
               />
@@ -105,14 +81,21 @@ export function EbankingHomePage() {
         </Text>
 
         <Box bg="white" borderRadius="br2" boxShadow="E0" overflow="hidden">
-          <Grid
-            templateColumns="repeat(5, 1fr)"
-            p="s16"
-            rowGap="s16"
-            columnGap="s16"
-          >
-            {utilityPayments.slice(0, 10).map((utilityPayment) => {
-              return (
+          <Grid templateColumns="repeat(5, 1fr)" p="s16" rowGap="s16" columnGap="s16">
+            {utilityPayments.slice(0, 10).map((utilityPayment) => (
+              <UtilityHomeCard
+                icon={
+                  utilityPayment?.service_id
+                    ? UTILITY_ICON_DICT[utilityPayment?.service_id]
+                    : undefined
+                }
+                label={utilityPayment?.name ?? 'N/A'}
+              />
+            ))}
+          </Grid>
+          <Collapse in={isOpen} animateOpacity>
+            <Grid templateColumns="repeat(5, 1fr)" p="s16" rowGap="s16" columnGap="s16">
+              {utilityPayments.slice(10, utilityPayments.length).map((utilityPayment) => (
                 <UtilityHomeCard
                   icon={
                     utilityPayment?.service_id
@@ -121,30 +104,7 @@ export function EbankingHomePage() {
                   }
                   label={utilityPayment?.name ?? 'N/A'}
                 />
-              );
-            })}
-          </Grid>
-          <Collapse in={isOpen} animateOpacity>
-            <Grid
-              templateColumns="repeat(5, 1fr)"
-              p="s16"
-              rowGap="s16"
-              columnGap="s16"
-            >
-              {utilityPayments
-                .slice(10, utilityPayments.length)
-                .map((utilityPayment) => {
-                  return (
-                    <UtilityHomeCard
-                      icon={
-                        utilityPayment?.service_id
-                          ? UTILITY_ICON_DICT[utilityPayment?.service_id]
-                          : undefined
-                      }
-                      label={utilityPayment?.name ?? 'N/A'}
-                    />
-                  );
-                })}
+              ))}
             </Grid>
           </Collapse>
           {utilityPayments.length > 10 && (
@@ -174,12 +134,7 @@ export function EbankingHomePage() {
       </Box>
       <Divider />
       <Box display="flex" flexDir="column" gap="s8">
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          gap="s8"
-        >
+        <Box display="flex" alignItems="center" justifyContent="space-between" gap="s8">
           <Text fontSize="r1" color="gray.700" fontWeight="600">
             Accounts
           </Text>
@@ -229,6 +184,6 @@ export function EbankingHomePage() {
       </InfoCard>
     </Box>
   );
-}
+};
 
 export default EbankingHomePage;

@@ -8,11 +8,6 @@ export const useAxios = <TData, TVariables>(
   const url = process.env['NX_SCHEMA_PATH'] ?? '';
   // return axios.post<TData>(url,data:{query,variables}).then((res) => res.data);
 
-  return async (variables?: TVariables) => {
-    return axios
-      .post<{ data: TData }>(url, { query, variables })
-      .then((res) => {
-        return res.data.data;
-      });
-  };
+  return async (variables?: TVariables) =>
+    axios.post<{ data: TData }>(url, { query, variables }).then((res) => res.data.data);
 };

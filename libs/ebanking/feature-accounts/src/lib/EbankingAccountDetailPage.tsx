@@ -4,11 +4,7 @@ import { useRouter } from 'next/router';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Skeleton } from '@chakra-ui/react';
 
-import {
-  AccountLargeCard,
-  InfoCard,
-  TransactionCard,
-} from '@coop/ebanking/cards';
+import { AccountLargeCard, InfoCard, TransactionCard } from '@coop/ebanking/cards';
 import { useGetAccountDetailsQuery } from '@coop/ebanking/data-access';
 import { Box, Button, Divider, Grid, Icon, PathBar } from '@coop/shared/ui';
 
@@ -50,7 +46,7 @@ export const EbankingAccountDetailPage = () => {
           }}
         />
       ) : (
-        <Skeleton isLoaded={!isLoading} h="172px"></Skeleton>
+        <Skeleton isLoaded={!isLoading} h="172px" />
       )}
 
       <Divider />
@@ -59,35 +55,20 @@ export const EbankingAccountDetailPage = () => {
         {account ? (
           <InfoCard title="Account Details">
             <Grid templateColumns="repeat(3, 1fr)" gap="s16" p="s16">
+              <AccountDetail title="Account Holder Name " value="Krishna Thapa" />
+              <AccountDetail title="Account Number " value={account.accountNumber} />
+              <AccountDetail title="Account Type " value={account.name} />
+              <AccountDetail title="Interest Rate" value={`${account.interestRate.toFixed(2)}%`} />
               <AccountDetail
-                title={'Account Holder Name '}
-                value={'Krishna Thapa'}
-              />
-              <AccountDetail
-                title={'Account Number '}
-                value={account.accountNumber}
-              />
-              <AccountDetail title={'Account Type '} value={account.name} />
-              <AccountDetail
-                title={'Interest Rate'}
-                value={account.interestRate.toFixed(2) + '%'}
-              />
-              <AccountDetail
-                title={'Interest Booked'}
+                title="Interest Booked"
                 value={account.interestRate.toLocaleString('en-IN')}
               />
               <AccountDetail
-                title={'Interest Earned'}
+                title="Interest Earned"
                 value={account.interestEarned.toLocaleString('en-IN')}
               />
-              <AccountDetail
-                title={'Total Balance'}
-                value={account.amount.toLocaleString('en-IN')}
-              />
-              <AccountDetail
-                title={'Subscribed Date'}
-                value={account.subscribedDate}
-              />
+              <AccountDetail title="Total Balance" value={account.amount.toLocaleString('en-IN')} />
+              <AccountDetail title="Subscribed Date" value={account.subscribedDate} />
             </Grid>
           </InfoCard>
         ) : (
@@ -96,11 +77,7 @@ export const EbankingAccountDetailPage = () => {
 
         <InfoCard title="Balance History">
           <Box position="relative" w="100%" h="300px" p="s8">
-            <Image
-              src={'/account-dummy-chart.svg'}
-              layout="fill"
-              objectFit="contain"
-            />
+            <Image src="/account-dummy-chart.svg" layout="fill" objectFit="contain" />
           </Box>
         </InfoCard>
         <InfoCard

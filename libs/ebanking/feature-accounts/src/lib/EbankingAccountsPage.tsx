@@ -5,7 +5,7 @@ import { AccountCard, AccountHeaderCard } from '@coop/ebanking/cards';
 import { useGetAccountListQuery } from '@coop/ebanking/data-access';
 import { Box, Divider, Grid } from '@coop/shared/ui';
 
-export function EbankingAccountsPage() {
+export const EbankingAccountsPage = () => {
   const { data: accountList, isLoading } = useGetAccountListQuery();
 
   return (
@@ -21,16 +21,14 @@ export function EbankingAccountsPage() {
             <Skeleton h="144px" />
           </>
         )}
-        {accountList?.eBanking?.account?.list?.edges.map(
-          ({ node: { isDefault, ...rest } }) => (
-            <Fragment key={rest.id}>
-              <AccountCard account={rest} isDefault={isDefault} />
-            </Fragment>
-          )
-        )}
+        {accountList?.eBanking?.account?.list?.edges.map(({ node: { isDefault, ...rest } }) => (
+          <Fragment key={rest.id}>
+            <AccountCard account={rest} isDefault={isDefault} />
+          </Fragment>
+        ))}
       </Grid>
     </Box>
   );
-}
+};
 
 export default EbankingAccountsPage;

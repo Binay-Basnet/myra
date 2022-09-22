@@ -24,104 +24,91 @@ interface IAccountCardProps {
   };
 }
 
-export const AccountLargeCard = ({ isDefault, account }: IAccountCardProps) => {
-  return (
-    <Box
-      p="s16"
-      display="flex"
-      flexDir="column"
-      gap="s16"
-      bg="white"
-      borderRadius="br2"
-    >
-      <Box display="flex" justifyContent="space-between" alignItems="flex-end">
-        {isDefault ? (
-          <Box
-            h="s24"
-            bg="primary.100"
-            borderRadius="br2"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            px="s4"
-          >
-            <TextFields variant="bodySmall" color="primary.500">
-              Default Account
-            </TextFields>
-          </Box>
-        ) : (
-          <Box h="s24"></Box>
-        )}
-        <Popover placement="bottom-end">
-          <PopoverTrigger>
-            <Button variant="unstyled" p="0" minW="0" h="auto">
-              <Icon
-                as={BsThreeDots}
-                size="md"
-                color="gray.400"
-                _hover={{ color: 'gray.800' }}
-                cursor="pointer"
-              />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent
-            _focus={{}}
-            borderRadius="br2"
-            border="none"
-            px="s16"
-            py="s12"
-            boxShadow="E0"
-          >
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <Text fontSize="r1" color="gray.900">
-                Set as Default Account
-              </Text>
-              <Switch defaultChecked={isDefault} />
-            </Box>
-          </PopoverContent>
-        </Popover>
-      </Box>
-
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Box>
-          <TextFields variant="tableHeader" color="gray.800">
-            {account.name}{' '}
+export const AccountLargeCard = ({ isDefault, account }: IAccountCardProps) => (
+  <Box p="s16" display="flex" flexDir="column" gap="s16" bg="white" borderRadius="br2">
+    <Box display="flex" justifyContent="space-between" alignItems="flex-end">
+      {isDefault ? (
+        <Box
+          h="s24"
+          bg="primary.100"
+          borderRadius="br2"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          px="s4"
+        >
+          <TextFields variant="bodySmall" color="primary.500">
+            Default Account
           </TextFields>
-          <Box display="flex" alignItems="center" gap="s4">
-            <TextFields variant="bodyRegular" color="gray.700">
-              {account.accountNumber}
-            </TextFields>
+        </Box>
+      ) : (
+        <Box h="s24" />
+      )}
+      <Popover placement="bottom-end">
+        <PopoverTrigger>
+          <Button variant="unstyled" p="0" minW="0" h="auto">
             <Icon
-              as={IoCopyOutline}
-              _hover={{ color: 'gray.800' }}
-              cursor="pointer"
+              as={BsThreeDots}
               size="md"
               color="gray.400"
+              _hover={{ color: 'gray.800' }}
+              cursor="pointer"
             />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          _focus={{}}
+          borderRadius="br2"
+          border="none"
+          px="s16"
+          py="s12"
+          boxShadow="E0"
+        >
+          <Box display="flex" alignItems="center" justifyContent="space-between">
+            <Text fontSize="r1" color="gray.900">
+              Set as Default Account
+            </Text>
+            <Switch defaultChecked={isDefault} />
           </Box>
-        </Box>
-        <Box display="flex" flexDir="column" alignItems="flex-end">
-          <TextFields variant="pageHeader" color="gray.800">
-            {account.amount.toLocaleString('en-IN')}
+        </PopoverContent>
+      </Popover>
+    </Box>
+
+    <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box>
+        <TextFields variant="tableHeader" color="gray.800">
+          {account.name}{' '}
+        </TextFields>
+        <Box display="flex" alignItems="center" gap="s4">
+          <TextFields variant="bodyRegular" color="gray.700">
+            {account.accountNumber}
           </TextFields>
-          <TextFields variant="bodyRegular" color="gray.600">
-            Interest Rate: {account.interestRate.toFixed(2)}%
-          </TextFields>
+          <Icon
+            as={IoCopyOutline}
+            _hover={{ color: 'gray.800' }}
+            cursor="pointer"
+            size="md"
+            color="gray.400"
+          />
         </Box>
       </Box>
-
-      <Divider />
-
-      <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Text fontSize="r1" color="gray.900">
-          Set as Default Account
-        </Text>
-        <Switch defaultChecked={isDefault} />
+      <Box display="flex" flexDir="column" alignItems="flex-end">
+        <TextFields variant="pageHeader" color="gray.800">
+          {account.amount.toLocaleString('en-IN')}
+        </TextFields>
+        <TextFields variant="bodyRegular" color="gray.600">
+          Interest Rate: {account.interestRate.toFixed(2)}%
+        </TextFields>
       </Box>
     </Box>
-  );
-};
+
+    <Divider />
+
+    <Box display="flex" alignItems="center" justifyContent="space-between">
+      <Text fontSize="r1" color="gray.900">
+        Set as Default Account
+      </Text>
+      <Switch defaultChecked={isDefault} />
+    </Box>
+  </Box>
+);

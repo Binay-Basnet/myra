@@ -29,9 +29,7 @@ interface AccountTransferFormProps {
   setPaymentStatus: React.Dispatch<React.SetStateAction<PaymentStatus>>;
 }
 
-export const AccountTransferForm = ({
-  setPaymentStatus,
-}: AccountTransferFormProps) => {
+export const AccountTransferForm = ({ setPaymentStatus }: AccountTransferFormProps) => {
   const methods = useForm<AccountTransferFormType>({
     defaultValues: {
       source_account: '1',
@@ -40,7 +38,7 @@ export const AccountTransferForm = ({
 
   return (
     <InfoCard
-      title={'Account Transfer'}
+      title="Account Transfer"
       btn={
         <Button variant="ghost" gap="s4">
           <Icon as={AiOutlinePlus} color="priamry.500" />

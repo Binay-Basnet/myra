@@ -1,10 +1,9 @@
-import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { Box, Text } from '@coop/shared/ui';
 
-import { EbankingSidebarNavItem } from '../../components/EbankingSidebarNavItem';
+import { EbankingSidebarNavItem } from '../EbankingSidebarNavItem';
 import { SIDEBAR_NAV_ITEMS } from '../../constants/SIDEBAR_NAV_ITEMS';
 
 export const EbankingSidebar = () => {

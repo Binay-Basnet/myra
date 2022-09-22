@@ -17,36 +17,34 @@ export const TransactionPageHeader = ({
   heading,
   buttonLabel,
   buttonHandler,
-}: ITransactionPageHeaderProps) => {
-  return (
-    <Box
-      bg="white"
-      zIndex="10"
-      w="100%"
-      top="110px"
-      position="sticky"
-      borderBottom="1px solid "
-      borderColor="border.layout"
-      display="flex"
-      alignItems="center"
-      px="s16"
-      py="s8"
-      height="50px"
-      gap="s48"
-    >
-      <Text fontSize="r2" fontWeight="600" color="gray.800">
-        {heading}
-      </Text>
+}: ITransactionPageHeaderProps) => (
+  <Box
+    bg="white"
+    zIndex="10"
+    w="100%"
+    top="110px"
+    position="sticky"
+    borderBottom="1px solid "
+    borderColor="border.layout"
+    display="flex"
+    alignItems="center"
+    px="s16"
+    py="s8"
+    height="50px"
+    gap="s48"
+  >
+    <Text fontSize="r2" fontWeight="600" color="gray.800">
+      {heading}
+    </Text>
 
-      <PageHeaderTab list={tabItems ?? []} />
+    <PageHeaderTab list={tabItems ?? []} />
 
-      {buttonLabel && buttonHandler && (
-        <Box display="flex" justifyContent="flex-end" flexGrow={100}>
-          <Button leftIcon={<AddIcon />} onClick={buttonHandler}>
-            {buttonLabel}
-          </Button>
-        </Box>
-      )}
-    </Box>
-  );
-};
+    {buttonLabel && buttonHandler && (
+      <Box display="flex" justifyContent="flex-end" flexGrow={100}>
+        <Button leftIcon={<AddIcon />} onClick={buttonHandler}>
+          {buttonLabel}
+        </Button>
+      </Box>
+    )}
+  </Box>
+);

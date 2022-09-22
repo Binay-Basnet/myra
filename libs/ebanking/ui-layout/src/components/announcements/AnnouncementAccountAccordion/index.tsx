@@ -8,19 +8,16 @@ export const AnnouncementAccountAccordion = () => {
   const { data: accountsList } = useGetAccountListQuery();
 
   return (
-    <Accordion allowMultiple={true} allowToggle={true} border="none">
+    <Accordion allowMultiple allowToggle border="none">
       <AccordionItem borderRadius={0} border="none" bg="transparent">
         {({ isExpanded }) => (
           <>
-            <AnnouncementsAccBtn
-              isExpanded={isExpanded}
-              label="Accounts Summary"
-            />
+            <AnnouncementsAccBtn isExpanded={isExpanded} label="Accounts Summary" />
             <AccordionPanel p="0">
               {accountsList?.eBanking?.account?.list?.edges?.map((account) => (
                 <AnnouncementAccountCard
                   name={account.node.name}
-                  balance={'NRs. ' + account.node.amount.toFixed(2)}
+                  balance={`NRs. ${account.node.amount.toFixed(2)}`}
                   isDefault={account.node.isDefault}
                 />
               ))}

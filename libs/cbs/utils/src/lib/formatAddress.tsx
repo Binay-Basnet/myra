@@ -1,11 +1,7 @@
 import { Address } from '@coop/cbs/data-access';
 
 export const formatAddress = (address: Address | undefined | null) => {
-  if (
-    !address?.locality?.local &&
-    !address?.district?.local &&
-    !address?.state?.local
-  ) {
+  if (!address?.locality?.local && !address?.district?.local && !address?.state?.local) {
     return '-';
   }
 

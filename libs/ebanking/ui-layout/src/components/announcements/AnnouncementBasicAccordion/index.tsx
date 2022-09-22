@@ -8,21 +8,15 @@ export const AnnouncementBasicAccordion = () => {
   const { data: announcementList } = useGetAnnouncementListQuery();
 
   return (
-    <Accordion allowMultiple={true} allowToggle={true} border="none">
+    <Accordion allowMultiple allowToggle border="none">
       <AccordionItem borderRadius={0} border="none" bg="transparent">
         {({ isExpanded }) => (
           <>
-            <AnnouncementsAccBtn
-              isExpanded={isExpanded}
-              label="Announcements"
-            />
+            <AnnouncementsAccBtn isExpanded={isExpanded} label="Announcements" />
             <AccordionPanel p="0">
               {announcementList?.eBanking?.notification?.announcements?.list?.map(
                 (announcement) => (
-                  <AnnouncementCard
-                    title={announcement?.title}
-                    subtitle={announcement?.date}
-                  />
+                  <AnnouncementCard title={announcement?.title} subtitle={announcement?.date} />
                 )
               )}
             </AccordionPanel>

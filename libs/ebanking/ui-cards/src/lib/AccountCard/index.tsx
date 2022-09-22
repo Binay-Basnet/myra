@@ -29,14 +29,7 @@ interface IAccountCardProps {
 export const AccountCard = ({ isDefault, account }: IAccountCardProps) => {
   const router = useRouter();
   return (
-    <Box
-      p="s16"
-      display="flex"
-      flexDir="column"
-      gap="s8"
-      bg="white"
-      borderRadius="br2"
-    >
+    <Box p="s16" display="flex" flexDir="column" gap="s8" bg="white" borderRadius="br2">
       <Box display="flex" justifyContent="space-between" alignItems="flex-end">
         {isDefault ? (
           <Box
@@ -53,7 +46,7 @@ export const AccountCard = ({ isDefault, account }: IAccountCardProps) => {
             </TextFields>
           </Box>
         ) : (
-          <Box h="s24"></Box>
+          <Box h="s24" />
         )}
         <Popover placement="bottom-end">
           <PopoverTrigger>
@@ -75,11 +68,7 @@ export const AccountCard = ({ isDefault, account }: IAccountCardProps) => {
             py="s12"
             boxShadow="E0"
           >
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-            >
+            <Box display="flex" alignItems="center" justifyContent="space-between">
               <Text fontSize="r1" color="gray.900">
                 Set as Default Account
               </Text>
@@ -88,15 +77,10 @@ export const AccountCard = ({ isDefault, account }: IAccountCardProps) => {
           </PopoverContent>
         </Popover>
       </Box>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="flex-end"
-        mb="s8"
-      >
+      <Box display="flex" justifyContent="space-between" alignItems="flex-end" mb="s8">
         <Box
           cursor="pointer"
-          onClick={(e) => {
+          onClick={() => {
             router.push(`/accounts/${account.id}?name=${account.name}`);
           }}
         >
@@ -117,12 +101,7 @@ export const AccountCard = ({ isDefault, account }: IAccountCardProps) => {
       </Box>
 
       <Divider />
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        mt="s8"
-      >
+      <Box display="flex" alignItems="center" justifyContent="space-between" mt="s8">
         <TextFields variant="pageHeader" color="gray.800">
           NRs. {account.amount.toLocaleString('en-IN')}
         </TextFields>

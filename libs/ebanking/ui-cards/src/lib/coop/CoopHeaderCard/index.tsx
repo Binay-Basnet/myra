@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaUsers } from 'react-icons/fa';
 import { IoCashOutline } from 'react-icons/io5';
 import Image from 'next/image';
@@ -46,10 +45,9 @@ export const COOPHeaderCard = () => {
               Members
             </TextFields>
             <TextFields variant="stickyCardHeader">
-              {accountSummary?.eBanking?.account?.summary?.totalSaving.toLocaleString(
-                'en-IN',
-                { maximumFractionDigits: 0 }
-              ) ?? 'N/A'}
+              {accountSummary?.eBanking?.account?.summary?.totalSaving.toLocaleString('en-IN', {
+                maximumFractionDigits: 0,
+              }) ?? 'N/A'}
             </TextFields>
           </Box>
         </Box>
@@ -70,10 +68,9 @@ export const COOPHeaderCard = () => {
               Total Capital
             </TextFields>
             <TextFields variant="stickyCardHeader">
-              {accountSummary?.eBanking?.account?.summary?.totalLoan.toLocaleString(
-                'en-IN',
-                { maximumFractionDigits: 0 }
-              ) ?? 'N/A'}
+              {accountSummary?.eBanking?.account?.summary?.totalLoan.toLocaleString('en-IN', {
+                maximumFractionDigits: 0,
+              }) ?? 'N/A'}
             </TextFields>
           </Box>
         </Box>

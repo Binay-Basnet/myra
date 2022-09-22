@@ -1,21 +1,10 @@
 import { IoCheckmark, IoRepeat } from 'react-icons/io5';
-import { useRouter } from 'next/router';
 
 import { useGetAccountListQuery } from '@coop/ebanking/data-access';
-import {
-  Box,
-  Button,
-  Icon,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Text,
-} from '@coop/shared/ui';
+import { Box, Button, Icon, Popover, PopoverContent, PopoverTrigger, Text } from '@coop/shared/ui';
 
 export const AccountPopover = () => {
-  const router = useRouter();
-  const { data: accountList, isLoading: accountsLoading } =
-    useGetAccountListQuery();
+  const { data: accountList } = useGetAccountListQuery();
 
   return (
     <Popover placement="bottom-end">
@@ -64,9 +53,7 @@ export const AccountPopover = () => {
                 </Text>
               </Box>
 
-              {account.node.isDefault && (
-                <Icon as={IoCheckmark} color="primary.500" gap="s4" />
-              )}
+              {account.node.isDefault && <Icon as={IoCheckmark} color="primary.500" gap="s4" />}
             </Box>
           ))}
         </Box>

@@ -10,7 +10,7 @@ interface IMemberSelectProps {
   label: string;
   __placeholder?: string;
 }
-type OptionType = { label: string; value: string };
+type IOptionType = { label: string; value: string };
 
 export const MemberSelect = ({ name, label, __placeholder }: IMemberSelectProps) => {
   const [IDMember, setIDMember] = useState('');
@@ -45,7 +45,7 @@ export const MemberSelect = ({ name, label, __placeholder }: IMemberSelectProps)
         value: curVal?.node?.id as string,
       },
     ],
-    [] as OptionType[]
+    [] as IOptionType[]
   );
 
   return (

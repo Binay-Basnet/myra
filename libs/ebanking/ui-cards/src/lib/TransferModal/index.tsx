@@ -1,12 +1,7 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { IoCheckmarkCircleOutline } from 'react-icons/io5';
 import { RiAlertLine } from 'react-icons/ri';
-import {
-  Modal,
-  ModalContent,
-  ModalOverlay,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Modal, ModalContent, ModalOverlay, useDisclosure } from '@chakra-ui/react';
 
 import { Box, Button, Icon, TextFields } from '@coop/shared/ui';
 
