@@ -1,24 +1,17 @@
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { omit } from 'lodash';
 
 import {
   useGetLoanGeneralSettingsQuery,
   useSetLoanGeneralSettingsMutation,
 } from '@coop/cbs/data-access';
 import { FormCheckbox } from '@coop/shared/form';
-import {
-  asyncToast,
-  Box,
-  Divider,
-  SettingsFooter,
-  Text,
-} from '@coop/shared/ui';
+import { asyncToast, Box, Divider, SettingsFooter, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { AcceptedCollateral } from '../components';
 
-export function CbsSettingsFeatureLoanProducts() {
+export const CbsSettingsFeatureLoanProducts = () => {
   const { t } = useTranslation();
   const methods = useForm();
   const { watch, reset } = methods;
@@ -32,9 +25,7 @@ export function CbsSettingsFeatureLoanProducts() {
     if (loanGeneralData) {
       reset(loanGeneralData);
       if (loanGeneralData?.collateralList) {
-        setCollateralList(
-          loanGeneralData?.collateralList as typeof collateralList
-        );
+        setCollateralList(loanGeneralData?.collateralList as typeof collateralList);
       }
     }
   }, [loanGeneralData]);
@@ -57,22 +48,16 @@ export function CbsSettingsFeatureLoanProducts() {
         emi: emi ?? loanGeneralData?.emi,
         epi: epi ?? loanGeneralData?.epi,
         flat: flat ?? loanGeneralData?.flat,
-        collateralList: collateralList.map((list) => omit(list, 'id')),
+        collateralList,
       }),
     });
   };
 
   return (
-    <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
+    <Box pb="s20" width="full" display="flex" flexDirection="column">
       <FormProvider {...methods}>
-        <Box
-          display="flex"
-          flexDirection="column"
-          rowGap="s32"
-          padding="s12"
-          pb="s20"
-        >
-          <Box display={'flex'} flexDirection="column" gap="s16">
+        <Box display="flex" flexDirection="column" rowGap="s32" padding="s12" pb="s20">
+          <Box display="flex" flexDirection="column" gap="s16">
             <Text fontSize="r1" fontWeight="500">
               {t['settingsLoanRepaymentScheme']}{' '}
             </Text>
@@ -83,15 +68,12 @@ export function CbsSettingsFeatureLoanProducts() {
             <FormCheckbox name="flat" label={t['settingsLoanInsuranceFlat']} />
           </Box>
           <Divider />
-          <AcceptedCollateral
-            list={collateralList}
-            setList={setCollateralList}
-          />
+          <AcceptedCollateral list={collateralList} setList={setCollateralList} />
         </Box>
         <SettingsFooter handleSave={handleSave} />
       </FormProvider>
     </Box>
   );
-}
+};
 
 export default CbsSettingsFeatureLoanProducts;
