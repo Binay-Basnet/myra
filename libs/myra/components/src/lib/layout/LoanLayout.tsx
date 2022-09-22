@@ -62,7 +62,7 @@ export const LoanListLayout = ({ children }: IAccountPageLayoutProps) => {
         position="relative"
         left="240px"
       >
-        <Box bg="white" minHeight="100vh">
+        <Box bg="white" minHeight="calc(100vh - 110px)">
           {children}
         </Box>
       </Box>

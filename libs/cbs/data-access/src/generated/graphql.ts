@@ -889,11 +889,14 @@ export type CollateralInput = {
 export type CollateralListData = {
   enabled?: Maybe<Scalars['Boolean']>;
   id?: Maybe<Scalars['ID']>;
+  isDeleted?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;
 };
 
 export type CollateralListInputData = {
   enabled?: InputMaybe<Scalars['Boolean']>;
+  id: Scalars['ID'];
+  isDeleted?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
 };
 
@@ -1582,6 +1585,11 @@ export type DeclarationUpdateResult = {
   record?: Maybe<Declaration>;
 };
 
+export enum DefaultAccountType {
+  Current = 'CURRENT',
+  Saving = 'SAVING',
+}
+
 export type Denomination = {
   quantity: Scalars['Int'];
   value: CashValue;
@@ -1920,7 +1928,7 @@ export type DepositProductEdge = {
 
 export type DepositProductFormStateData = {
   accountCloseCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
-  accountType?: Maybe<Scalars['ID']>;
+  accountType?: Maybe<DefaultAccountType>;
   allowLoan?: Maybe<Scalars['Boolean']>;
   alternativeChannelCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
   alternativeChannels?: Maybe<Scalars['Boolean']>;
@@ -1991,7 +1999,7 @@ export type DepositProductFormStateResult = {
 
 export type DepositProductInput = {
   accountCloseCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
-  accountType?: InputMaybe<Scalars['ID']>;
+  accountType?: InputMaybe<DefaultAccountType>;
   allowLoan?: InputMaybe<Scalars['Boolean']>;
   alternativeChannelCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
   alternativeChannels?: InputMaybe<Scalars['Boolean']>;
@@ -6270,6 +6278,7 @@ export type LoanAccountGracePeriodResult = {
 
 export type LoanAccountGurantee = {
   accountId?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
   guranteeAmount?: Maybe<Scalars['Amount']>;
   maxGuranteeAmountLimit?: Maybe<Scalars['Amount']>;
   memberId?: Maybe<Scalars['String']>;
@@ -6278,6 +6287,7 @@ export type LoanAccountGurantee = {
 
 export type LoanAccountGuranteeInput = {
   accountId?: InputMaybe<Scalars['String']>;
+  accountName?: InputMaybe<Scalars['String']>;
   guranteeAmount?: InputMaybe<Scalars['Amount']>;
   maxGuranteeAmountLimit?: InputMaybe<Scalars['Amount']>;
   memberId?: InputMaybe<Scalars['String']>;
@@ -10446,7 +10456,7 @@ export type GetAccountOpenProductDetailsQuery = {
             postingFrequency?: DepositFrequency | null;
             maxPostingFreqDifference?: number | null;
             noOftransactionAllowed?: number | null;
-            accountType?: string | null;
+            accountType?: DefaultAccountType | null;
             autoOpen?: boolean | null;
             allowLoan?: boolean | null;
             percentageOfDeposit?: number | null;
@@ -12323,6 +12333,7 @@ export type GetCollateralListQuery = {
 
 export type GetLoanListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<LoanAccountSearchFilter>;
 }>;
 
 export type GetLoanListQuery = {
@@ -12374,6 +12385,86 @@ export type GetLoanInstallmentsQuery = {
           payment: string;
           principal: string;
           remainingPrincipal: string;
+        } | null> | null;
+      } | null;
+      error?:
+        | QueryError_AuthorizationError_Fragment
+        | QueryError_BadRequestError_Fragment
+        | QueryError_NotFoundError_Fragment
+        | QueryError_ServerError_Fragment
+        | null;
+    } | null;
+  };
+};
+
+export type GetLoanApplicationDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetLoanApplicationDetailsQuery = {
+  loanAccount: {
+    formState?: {
+      data?: {
+        memberId?: string | null;
+        productType: string;
+        productSubType?: string | null;
+        productId?: string | null;
+        LoanAccountName?: string | null;
+        appliedLoanAmount?: string | null;
+        totalValuation?: string | null;
+        totalSanctionedAmount?: string | null;
+        justifySanction?: string | null;
+        isCeoAuthority?: boolean | null;
+        isBoardAuthority?: boolean | null;
+        intrestRate?: number | null;
+        tenure?: number | null;
+        tenureType?: FrequencyTenure | null;
+        repaymentScheme?: LoanRepaymentScheme | null;
+        note?: string | null;
+        collateralData?: Array<{
+          collateralType?: string | null;
+          ownerName?: string | null;
+          relation?: string | null;
+          sheetNo?: number | null;
+          plotNo?: number | null;
+          kittaNo?: number | null;
+          area?: number | null;
+          buildingType?: BuildingType | null;
+          constructionType?: ConstructionType | null;
+          valuatorId?: string | null;
+          noOfStorey?: number | null;
+          fmvMaxAmount?: any | null;
+          dvMinAmount?: string | null;
+          valuationMethod?: ValuationMethod | null;
+          valuationPercent?: number | null;
+          collaterallValuation?: any | null;
+          collateralDescription?: string | null;
+          collateralFiles?: Array<string | null> | null;
+          valuationFiles?: Array<string | null> | null;
+          vehicleName?: string | null;
+          vehicleModelNo?: string | null;
+          vehicleRegistrationNo?: string | null;
+          vehicleNo?: string | null;
+          vehicleSeatCapacity?: number | null;
+          vehicleCapacity?: string | null;
+          vehicleType?: string | null;
+          vehicleFuelType?: string | null;
+          documentName?: string | null;
+          valuationAmount?: string | null;
+          description?: string | null;
+        } | null> | null;
+        gurantee_details?: Array<{
+          accountId?: string | null;
+          guranteeAmount?: any | null;
+          maxGuranteeAmountLimit?: any | null;
+          memberId?: string | null;
+          totalAmount?: any | null;
+        } | null> | null;
+        gracePeriod?: { gracePeriod?: GracePeriod | null; installmentNo?: number | null } | null;
+        loanProcessingCharge?: Array<{
+          amount?: any | null;
+          ledgerName?: string | null;
+          serviceName?: string | null;
         } | null> | null;
       } | null;
       error?:
@@ -13575,7 +13666,7 @@ export type GetDepositProductSettingsEditDataQuery = {
             ladderRate?: boolean | null;
             postingFrequency?: DepositFrequency | null;
             maxPostingFreqDifference?: number | null;
-            accountType?: string | null;
+            accountType?: DefaultAccountType | null;
             autoOpen?: boolean | null;
             allowLoan?: boolean | null;
             percentageOfDeposit?: number | null;
@@ -19499,9 +19590,9 @@ export const useGetCollateralListQuery = <TData = GetCollateralListQuery, TError
     options
   );
 export const GetLoanListDocument = `
-    query getLoanList($paginate: Pagination) {
+    query getLoanList($paginate: Pagination, $filter: LoanAccountSearchFilter) {
   loanAccount {
-    list(paginate: $paginate) {
+    list(paginate: $paginate, filter: $filter) {
       totalCount
       edges {
         cursor
@@ -19579,6 +19670,97 @@ export const useGetLoanInstallmentsQuery = <TData = GetLoanInstallmentsQuery, TE
     ['getLoanInstallments', variables],
     useAxios<GetLoanInstallmentsQuery, GetLoanInstallmentsQueryVariables>(
       GetLoanInstallmentsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanApplicationDetailsDocument = `
+    query getLoanApplicationDetails($id: ID!) {
+  loanAccount {
+    formState(id: $id) {
+      data {
+        memberId
+        productType
+        productSubType
+        productId
+        LoanAccountName
+        appliedLoanAmount
+        collateralData {
+          collateralType
+          ownerName
+          relation
+          sheetNo
+          plotNo
+          kittaNo
+          area
+          buildingType
+          constructionType
+          valuatorId
+          noOfStorey
+          fmvMaxAmount
+          dvMinAmount
+          valuationMethod
+          valuationPercent
+          collaterallValuation
+          collateralDescription
+          collateralFiles
+          valuationFiles
+          vehicleName
+          vehicleModelNo
+          vehicleRegistrationNo
+          vehicleNo
+          vehicleSeatCapacity
+          vehicleCapacity
+          vehicleType
+          vehicleFuelType
+          documentName
+          valuationAmount
+          description
+        }
+        gurantee_details {
+          accountId
+          guranteeAmount
+          maxGuranteeAmountLimit
+          memberId
+          totalAmount
+        }
+        gracePeriod {
+          gracePeriod
+          installmentNo
+        }
+        totalValuation
+        totalSanctionedAmount
+        justifySanction
+        isCeoAuthority
+        isBoardAuthority
+        intrestRate
+        tenure
+        tenureType
+        repaymentScheme
+        loanProcessingCharge {
+          amount
+          ledgerName
+          serviceName
+        }
+        note
+      }
+      error {
+        ...QueryError
+      }
+    }
+  }
+}
+    ${QueryErrorFragmentDoc}`;
+export const useGetLoanApplicationDetailsQuery = <
+  TData = GetLoanApplicationDetailsQuery,
+  TError = unknown
+>(
+  variables: GetLoanApplicationDetailsQueryVariables,
+  options?: UseQueryOptions<GetLoanApplicationDetailsQuery, TError, TData>
+) =>
+  useQuery<GetLoanApplicationDetailsQuery, TError, TData>(
+    ['getLoanApplicationDetails', variables],
+    useAxios<GetLoanApplicationDetailsQuery, GetLoanApplicationDetailsQueryVariables>(
+      GetLoanApplicationDetailsDocument
     ).bind(null, variables),
     options
   );

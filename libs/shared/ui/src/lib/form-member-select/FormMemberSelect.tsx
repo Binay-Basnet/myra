@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { debounce } from 'lodash';
 
 import {
@@ -9,17 +10,18 @@ import {
 } from '@coop/cbs/data-access';
 import { getRouterQuery } from '@coop/shared/utils';
 
-import { Option } from './CustomSelect';
+import { Option, SelectProps } from './CustomSelect';
 import FormCustomSelect from './FormCustomSelect';
 
-interface IMemberSelectProps {
+interface IMemberSelectProps extends SelectProps {
   name: string;
   label?: string;
   placeholder?: string;
 }
 
-export const FormMemberSelect = ({ name, label, placeholder }: IMemberSelectProps) => {
+export const FormMemberSelect = ({ name, label, placeholder, ...rest }: IMemberSelectProps) => {
   const [IDMember, setIDMember] = useState('');
+  const { watch } = useFormContext();
 
   const { data: memberList, isFetching } = useGetMemberListQuery(
     {
@@ -62,6 +64,11 @@ export const FormMemberSelect = ({ name, label, placeholder }: IMemberSelectProp
       ];
     }, [] as Option[]) ?? [];
 
+  useEffect(() => {
+    const id = watch(name);
+    setIDMember(id);
+  }, []);
+
   return (
     <FormCustomSelect
       name={name}
@@ -74,6 +81,7 @@ export const FormMemberSelect = ({ name, label, placeholder }: IMemberSelectProp
         }
       }, 800)}
       options={memberOptions}
+      {...rest}
     />
   );
 };

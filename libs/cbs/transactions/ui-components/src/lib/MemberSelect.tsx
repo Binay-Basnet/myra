@@ -10,12 +10,9 @@ interface IMemberSelectProps {
   label: string;
   __placeholder?: string;
 }
+type OptionType = { label: string; value: string };
 
-export const MemberSelect = ({
-  name,
-  label,
-  __placeholder,
-}: IMemberSelectProps) => {
+export const MemberSelect = ({ name, label, __placeholder }: IMemberSelectProps) => {
   const [IDMember, setIDMember] = useState('');
   const [trigger, setTrigger] = useState(false);
 
@@ -40,17 +37,16 @@ export const MemberSelect = ({
 
   const memberListData = memberList?.members?.list?.edges;
 
-  type optionType = { label: string; value: string };
-
-  const memberOptions = memberListData?.reduce((prevVal, curVal) => {
-    return [
+  const memberOptions = memberListData?.reduce(
+    (prevVal, curVal) => [
       ...prevVal,
       {
         label: `${curVal?.node?.name?.local} (ID:${curVal?.node?.id})`,
         value: curVal?.node?.id as string,
       },
-    ];
-  }, [] as optionType[]);
+    ],
+    [] as OptionType[]
+  );
 
   return (
     <FormSelect

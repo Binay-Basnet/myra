@@ -40,7 +40,12 @@ export const LoanPaymentSchedule = () => {
       tenure: Number(tenure),
       sanctionAmount: Number(sanctionAmount),
       repaymentScheme: repaymentScheme ?? LoanRepaymentScheme.Emi,
-      gracePeriod,
+      gracePeriod: gracePeriod?.installmentNo
+        ? {
+            gracePeriod: gracePeriod?.gracePeriod ?? GracePeriod.Interest,
+            installmentNo: gracePeriod.installmentNo,
+          }
+        : null,
     },
     {
       enabled: trigger,

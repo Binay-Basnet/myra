@@ -232,9 +232,9 @@ query getCollateralList {
   }
 }
 
-query getLoanList($paginate: Pagination) {
+query getLoanList($paginate: Pagination, $filter: LoanAccountSearchFilter) {
   loanAccount {
-    list(paginate: $paginate) {
+    list(paginate: $paginate, filter:$filter) {
       totalCount
       edges {
         cursor
@@ -290,6 +290,82 @@ query getLoanInstallments(
           remainingPrincipal
           interest
         }
+      }
+      error {
+        ...QueryError
+      }
+    }
+  }
+}
+
+query getLoanApplicationDetails($id: ID!) {
+  loanAccount {
+    formState(id: $id){
+      data {
+        memberId
+        productType
+        productSubType
+        productId
+        LoanAccountName
+        appliedLoanAmount
+        collateralData {
+          collateralType
+          ownerName
+          relation
+          sheetNo
+          plotNo
+          kittaNo
+          area
+          buildingType
+          constructionType
+          valuatorId
+          noOfStorey
+          fmvMaxAmount
+          dvMinAmount
+          valuationMethod
+          valuationPercent
+          collaterallValuation
+          collateralDescription
+          collateralFiles
+          valuationFiles
+          vehicleName
+          vehicleModelNo
+          vehicleRegistrationNo
+          vehicleNo
+          vehicleSeatCapacity
+          vehicleCapacity
+          vehicleType
+          vehicleFuelType
+          documentName
+          valuationAmount
+          description
+        }
+        gurantee_details {
+          accountId
+          guranteeAmount
+          maxGuranteeAmountLimit
+          memberId
+          totalAmount
+        }
+        gracePeriod {
+          gracePeriod
+          installmentNo
+        }
+        totalValuation
+        totalSanctionedAmount
+        justifySanction
+        isCeoAuthority
+        isBoardAuthority
+        intrestRate
+        tenure
+        tenureType
+        repaymentScheme
+        loanProcessingCharge {
+          amount
+          ledgerName
+          serviceName
+        }
+        note
       }
       error {
         ...QueryError

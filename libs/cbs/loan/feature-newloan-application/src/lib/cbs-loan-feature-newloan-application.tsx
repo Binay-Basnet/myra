@@ -6,6 +6,7 @@ import { omit } from 'lodash';
 
 import {
   LoanAccountInput,
+  useGetLoanApplicationDetailsQuery,
   useGetLoanProductSubTypeQuery,
   useGetLoanProductTypesQuery,
   useGetNewIdMutation,
@@ -44,10 +45,12 @@ import { useLoanProductErrors } from '../hooks/useLoanProductListErrors';
 
 export const NewLoanApplication = () => {
   const router = useRouter();
+  const { id, action } = router.query;
+
   const queryClient = useQueryClient();
   const [showCriteria, setShowCriteria] = useState(false);
 
-  const methods = useForm<LoanAccountInput>({ mode: 'onChange' });
+  const methods = useForm<LoanAccountInput>();
   const { watch, resetField } = methods;
 
   const memberId = watch('memberId');
@@ -57,6 +60,7 @@ export const NewLoanApplication = () => {
 
   const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
     useGetIndividualMemberDetails({ memberId });
+
   const { data: loanTypeData } = useGetLoanProductTypesQuery();
   const { data: loanSubTypeData } = useGetLoanProductSubTypeQuery(
     { productTypeId: loanType },
@@ -65,18 +69,53 @@ export const NewLoanApplication = () => {
   const { mutateAsync: getId } = useGetNewIdMutation();
   const { mutateAsync: applyLoan } = useSendLoanApplicationForApprovalMutation();
 
+  const { data: loanData, isFetching: isLoanFetching } = useGetLoanApplicationDetailsQuery(
+    { id: id as string },
+    {
+      enabled: !!id,
+      staleTime: 0,
+    }
+  );
+
   const sendForApprovalHandler = useCallback(async () => {
     const promise = async () => {
-      const responseId = await getId({});
+      if (!id && action === 'add') {
+        const responseId = await getId({});
 
-      if (responseId?.newId) {
+        if (responseId?.newId) {
+          const response = await applyLoan({
+            id: responseId.newId,
+            data: {
+              ...methods.getValues(),
+              gurantee_details: methods
+                .getValues()
+                ?.gurantee_details?.map((col) => omit(col, 'index')),
+              collateralData: methods.getValues()?.collateralData?.map((col) =>
+                omit(
+                  {
+                    ...col,
+                    collateralFiles: col?.collateralFiles?.map(
+                      (c) => (c as unknown as { identifier: string }).identifier
+                    ),
+                    valuationFiles: col?.valuationFiles?.map(
+                      (c) => (c as unknown as { identifier: string }).identifier
+                    ),
+                  },
+                  'index'
+                )
+              ),
+            },
+          });
+          return response;
+        }
+      } else {
         const response = await applyLoan({
-          id: responseId.newId,
+          id: id as string,
           data: {
             ...methods.getValues(),
             gurantee_details: methods
               .getValues()
-              ?.gurantee_details?.map((col) => omit(col, ['index', 'accountName'])),
+              ?.gurantee_details?.map((col) => omit(col, 'index')),
             collateralData: methods.getValues()?.collateralData?.map((col) =>
               omit(
                 {
@@ -95,6 +134,7 @@ export const NewLoanApplication = () => {
         });
         return response;
       }
+
       return {};
     };
 
@@ -107,10 +147,10 @@ export const NewLoanApplication = () => {
       promise: promise(),
       onSuccess: () => {
         queryClient.invalidateQueries('getLoanList');
-        router.push('/loan');
+        router.push('/loan?objState=VALIDATED');
       },
     });
-  }, []);
+  }, [id]);
 
   // Errors for products
   const { errors, isFetching, loanProductOptions } = useLoanProductErrors({
@@ -126,10 +166,17 @@ export const NewLoanApplication = () => {
   // Reset Fields
   useEffect(() => {
     resetField('productSubType');
-  }, [loanType, resetField]);
-  useEffect(() => {
     resetField('productId');
-  }, [loanSubType, resetField]);
+  }, [loanType, resetField]);
+
+  const loanApplication = loanData?.loanAccount?.formState?.data as LoanAccountInput;
+
+  // for loan edit
+  useEffect(() => {
+    if (loanApplication) {
+      methods?.reset(loanApplication);
+    }
+  }, [id, isLoanFetching, loanApplication, methods]);
 
   return (
     <Container minW="container.xl" p="0" bg="white">
@@ -148,7 +195,7 @@ export const NewLoanApplication = () => {
             <form>
               <Box display="flex" flexDirection="column" gap="s32" p="s20" w="100%">
                 <Box display="flex" flexDir="column" gap="s16">
-                  <FormMemberSelect name="memberId" label="Member Id" />
+                  <FormMemberSelect name="memberId" label="Member Id" isDisabled={!!id} />
                   {memberId && (
                     <FormSelect
                       name="productType"

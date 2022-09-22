@@ -1,17 +1,35 @@
 import { ReactElement, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { useGetLoanListQuery } from '@coop/cbs/data-access';
+import { ObjState, useGetLoanListQuery } from '@coop/cbs/data-access';
 import { LoanListLayout } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, MainLayout, PageHeader, Text } from '@coop/shared/ui';
+import { Avatar, Box, MainLayout, PageHeader, TablePopover, Text } from '@coop/shared/ui';
 import { getRouterQuery } from '@coop/shared/utils';
+
+export const LOAN_LIST_TAB_ITEMS = [
+  {
+    title: 'memberNavActive',
+    key: 'APPROVED',
+  },
+  {
+    title: 'memberNavInactive',
+    key: 'VALIDATED',
+  },
+  {
+    title: 'memberNavDraft',
+    key: 'DRAFT',
+  },
+];
 
 const LoanPage = () => {
   const router = useRouter();
 
-  const { data, isLoading } = useGetLoanListQuery({
+  const { data, isFetching } = useGetLoanListQuery({
     paginate: getRouterQuery({ type: ['PAGINATION'], query: router.query }),
+    filter: {
+      objectState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+    },
   });
 
   const rowData = useMemo(() => data?.loanAccount?.list?.edges ?? [], [data]);
@@ -34,20 +52,31 @@ const LoanPage = () => {
             justifyContent="flex-start"
             alignItems="center"
           >
-            <Avatar name={props.row?.original?.node?.member?.name?.local} size="sm" />
-            <Text fontWeight="400" fontSize="r1">
+            <Avatar
+              name={props.row?.original?.node?.member?.name?.local}
+              src={props.row.original.node.member.profilePicUrl}
+              size="sm"
+            />
+            <Text
+              fontWeight="400"
+              fontSize="s3"
+              whiteSpace="nowrap"
+              overflow="hidden"
+              textTransform="capitalize"
+              textOverflow="ellipsis"
+            >
               {props.row?.original?.node?.member?.name?.local}
             </Text>
           </Box>
         ),
+        meta: {
+          width: '200px',
+        },
       },
 
       {
         header: 'Account Name',
         accessorFn: (row) => row?.node?.LoanAccountName,
-        meta: {
-          width: '40%',
-        },
       },
       {
         header: 'Product Name',
@@ -58,28 +87,41 @@ const LoanPage = () => {
         accessorFn: (row) => row?.node?.createdAt,
         cell: (props) => <span>{props?.row?.original?.node?.createdAt.split('T')[0]} </span>,
       },
-      // {
-      //   id: '_actions',
-      //   header: '',
-      //   cell: (props) => (
-      //     <ActionPopoverComponent
-      //       items={popoverTitle}
-      //       id={props?.row?.original?.node?.id as string}
-      //     />
-      //   ),
-      //   meta: {
-      //     width: '50px',
-      //   },
-      // },
+      {
+        id: '_actions',
+        header: '',
+        cell: (props) => (
+          <TablePopover
+            items={[
+              {
+                title: 'Edit',
+                onClick: (row) => router.push(`/loan/edit?id=${row.id}`),
+              },
+              {
+                title: 'View Loan Application',
+                onClick: (row) => router.push(`/loan/view?id=${row.id}`),
+              },
+              {
+                title: 'Approve Loan',
+                onClick: (row) => router.push(`/loan/edit?id=${row.id}&approve=true`),
+              },
+            ]}
+            node={props.row.original.node}
+          />
+        ),
+        meta: {
+          width: '50px',
+        },
+      },
     ],
     []
   );
 
   return (
     <>
-      <PageHeader heading="Loan Application List" />
+      <PageHeader heading="Loan Application List" tabItems={LOAN_LIST_TAB_ITEMS} />
       <Table
-        isLoading={isLoading}
+        isLoading={isFetching}
         data={rowData}
         columns={columns}
         pagination={{

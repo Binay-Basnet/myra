@@ -1,5 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
+import { LoanAccountInput } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 
@@ -7,7 +8,7 @@ import { useLoanProductContext } from '../hooks/useLoanProduct';
 
 export const LoanProcessingCharge = () => {
   const { product } = useLoanProductContext();
-  const { watch, register } = useFormContext();
+  const { watch, register } = useFormContext<LoanAccountInput>();
   const serviceCharge = watch('loanProcessingCharge');
 
   const loanProcessingCharges = product?.loanProcessingCharge;
