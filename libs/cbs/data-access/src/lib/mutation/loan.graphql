@@ -9,3 +9,13 @@ mutation sendLoanApplicationForApproval($id: ID!, $data: LoanAccountInput!) {
   }
 }
 
+mutation setDisburseLoan($loanAccountId: ID!, $data: LoanDisbursementInput!) {
+  loanAccount {
+    disburse(loanAccount: $loanAccountId, data: $data) {
+      error {
+        ...MutationError
+      }
+      recordId
+    }
+  }
+}

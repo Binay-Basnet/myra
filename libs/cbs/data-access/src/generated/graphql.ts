@@ -9297,6 +9297,26 @@ export type SendLoanApplicationForApprovalMutation = {
   };
 };
 
+export type SetDisburseLoanMutationVariables = Exact<{
+  loanAccountId: Scalars['ID'];
+  data: LoanDisbursementInput;
+}>;
+
+export type SetDisburseLoanMutation = {
+  loanAccount: {
+    disburse?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type GetNewIdMutationVariables = Exact<{
   idType?: InputMaybe<Id_Type>;
 }>;
@@ -15123,6 +15143,31 @@ export const useSendLoanApplicationForApprovalMutation = <TError = unknown, TCon
       SendLoanApplicationForApprovalMutation,
       SendLoanApplicationForApprovalMutationVariables
     >(SendLoanApplicationForApprovalDocument),
+    options
+  );
+export const SetDisburseLoanDocument = `
+    mutation setDisburseLoan($loanAccountId: ID!, $data: LoanDisbursementInput!) {
+  loanAccount {
+    disburse(loanAccount: $loanAccountId, data: $data) {
+      error {
+        ...MutationError
+      }
+      recordId
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetDisburseLoanMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDisburseLoanMutation,
+    TError,
+    SetDisburseLoanMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetDisburseLoanMutation, TError, SetDisburseLoanMutationVariables, TContext>(
+    ['setDisburseLoan'],
+    useAxios<SetDisburseLoanMutation, SetDisburseLoanMutationVariables>(SetDisburseLoanDocument),
     options
   );
 export const GetNewIdDocument = `

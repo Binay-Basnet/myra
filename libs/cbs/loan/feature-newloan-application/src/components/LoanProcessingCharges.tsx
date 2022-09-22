@@ -12,6 +12,9 @@ export const LoanProcessingCharge = () => {
   const serviceCharge = watch('loanProcessingCharge');
 
   const loanProcessingCharges = product?.loanProcessingCharge;
+  if (!product) {
+    return null;
+  }
   return (
     <Box display="flex" flexDirection="column" gap="s16">
       <Box display="flex" flexDirection="column" gap="s4">
