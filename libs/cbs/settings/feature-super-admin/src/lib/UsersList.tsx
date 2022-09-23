@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
+import { Roles, useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
@@ -16,6 +16,14 @@ import { NewUserModal } from '../components';
 //   COOPERATIVE: 'coop',
 //   COOPERATIVE_UNION: 'coop_union',
 // };
+
+const roles = {
+  [Roles.Agent]: 'Market Representative',
+  [Roles.BranchManager]: 'Service Center Manager',
+  [Roles.HeadTeller]: 'Head Teller',
+  [Roles.Teller]: 'Teller',
+  [Roles.Superadmin]: 'Super Admin',
+};
 
 export const UsersList = () => {
   const { t } = useTranslation();
@@ -80,7 +88,7 @@ export const UsersList = () => {
       },
       {
         header: 'Role',
-        accessorFn: (row) => row?.node?.role,
+        accessorFn: (row) => (row?.node?.role ? roles[row?.node?.role] : ''),
       },
       {
         header: 'Last Active Date',
