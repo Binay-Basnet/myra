@@ -147,7 +147,7 @@ export const NewLoanApplication = () => {
       promise: promise(),
       onSuccess: () => {
         queryClient.invalidateQueries('getLoanList');
-        router.push('/loan?objState=VALIDATED');
+        router.push('/loan/applications?objState=SUBMITTED');
       },
     });
   }, [id]);
