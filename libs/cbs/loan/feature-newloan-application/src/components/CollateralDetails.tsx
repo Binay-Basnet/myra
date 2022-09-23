@@ -142,7 +142,7 @@ export const CollateralDetails = () => {
         </FormProvider>
       </ChakraModal>
 
-      {fields.length !== 0 && (
+      {fields?.length !== 0 && (
         <Box mt="-s16" border="1px" borderColor="border.layout" borderRadius="br2">
           <Box
             h="s60"
@@ -180,7 +180,7 @@ export const CollateralDetails = () => {
           </Box>
 
           <VStack spacing={0} divider={<Divider />}>
-            {fields.map((field, index) => (
+            {fields?.map((field, index) => (
               <Box key={field.id} px="s16" display="flex" alignItems="center" w="100%" h="60px">
                 <Text fontSize="r1" color="gray.900" w="20%">
                   {index + 1}

@@ -125,7 +125,11 @@ export const Table = <T extends Record<string, unknown>>({
                 _hover={isStatic ? {} : { bg: 'background.500' }}
                 bg={row.getIsSelected() ? 'primary.0' : 'white'}
                 cursor={rowOnClick ? 'pointer' : 'default'}
-                onClick={() => (rowOnClick ? rowOnClick(row.original) : null)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  rowOnClick && rowOnClick(row.original);
+                }}
               >
                 {row.getVisibleCells().map((cell) => (
                   <Td

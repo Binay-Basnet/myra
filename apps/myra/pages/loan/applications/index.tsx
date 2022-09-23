@@ -83,7 +83,7 @@ const LoanApplicationListPage = () => {
         accessorFn: (row) => row?.node?.product.productName,
       },
       {
-        header: 'Approved Date',
+        header: 'Applied Date',
         accessorFn: (row) => row?.node?.createdAt,
         cell: (props) => <span>{props?.row?.original?.node?.createdAt.split('T')[0]} </span>,
       },
@@ -106,8 +106,8 @@ const LoanApplicationListPage = () => {
                   router.query['objState'] === ObjState.Approved ? 'Disburse Loan' : 'Approve Loan',
                 onClick: (row) => {
                   router.query['objState'] === ObjState.Approved
-                    ? router.push(`/loan/approve?id=${row.id}`)
-                    : router.push(`/loan/disburse?id=${row.id}`);
+                    ? router.push(`/loan/disburse?id=${row.id}`)
+                    : router.push(`/loan/approve?id=${row.id}`);
                 },
               },
             ]}
@@ -129,6 +129,7 @@ const LoanApplicationListPage = () => {
         isLoading={isFetching}
         data={rowData}
         columns={columns}
+        // rowOnClick={(row) => router.push(`/loan/view?id=${row?.node?.id}`)}
         pagination={{
           total: data?.loanAccount?.list?.totalCount ?? 'Many',
           pageInfo: data?.loanAccount.list?.pageInfo,
