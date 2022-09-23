@@ -18,7 +18,7 @@ const TabElement = chakra(Tab, {
     },
     _selected: {
       color: '#343C46',
-      boxShadow: 'inset 0px -2px 0px #006837',
+      boxShadow: 'inset 0px -3px 0px -1px #006837',
     },
   },
 });
@@ -37,7 +37,7 @@ export const PageHeaderTab = ({
   const currentIndex = list.findIndex((value) => router.query['objState'] === value.key);
 
   return (
-    <Tabs variant="unstyled" index={currentIndex}>
+    <Tabs variant="unstyled" index={currentIndex === -1 ? 0 : currentIndex}>
       <TabList>
         {list.map((item) => (
           <TabElement
