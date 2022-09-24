@@ -16,7 +16,9 @@ import { flexRender } from '@tanstack/react-table';
 
 import { Loader, NoDataState, Pagination, TableSearch, Text } from '@coop/shared/ui';
 
+// eslint-disable-next-line import/no-cycle
 import { TableSelectionBar } from '../components';
+// eslint-disable-next-line import/no-cycle
 import { useTable } from '../hooks/useTable';
 import { Column, TableProps } from '../types/Table';
 
@@ -126,9 +128,8 @@ export const Table = <T extends Record<string, unknown>>({
                 bg={row.getIsSelected() ? 'primary.0' : 'white'}
                 cursor={rowOnClick ? 'pointer' : 'default'}
                 onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
                   rowOnClick && rowOnClick(row.original);
+                  e.stopPropagation();
                 }}
               >
                 {row.getVisibleCells().map((cell) => (

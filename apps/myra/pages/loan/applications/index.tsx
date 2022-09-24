@@ -119,7 +119,7 @@ const LoanApplicationListPage = () => {
         },
       },
     ],
-    []
+    [router]
   );
 
   return (
@@ -129,7 +129,7 @@ const LoanApplicationListPage = () => {
         isLoading={isFetching}
         data={rowData}
         columns={columns}
-        // rowOnClick={(row) => router.push(`/loan/view?id=${row?.node?.id}`)}
+        rowOnClick={(row) => router.push(`/loan/view?id=${row?.node?.id}`)}
         pagination={{
           total: data?.loanAccount?.list?.totalCount ?? 'Many',
           pageInfo: data?.loanAccount.list?.pageInfo,
