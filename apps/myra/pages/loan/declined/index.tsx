@@ -1,9 +1,10 @@
 import { ReactElement } from 'react';
 
-import { LoanListLayout } from '@coop/myra/components';
-import { MainLayout, WIPState } from '@coop/shared/ui';
+import { LoanListLayout } from '@coop/cbs/loan/layouts';
+import { DeclinedLoanList } from '@coop/cbs/loan/lists';
+import { MainLayout } from '@coop/shared/ui';
 
-const LoanDeclinedList = () => <WIPState />;
+const LoanDeclinedList = () => <DeclinedLoanList />;
 
 export default LoanDeclinedList;
 

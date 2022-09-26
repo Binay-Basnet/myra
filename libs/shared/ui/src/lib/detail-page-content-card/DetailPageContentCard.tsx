@@ -1,6 +1,6 @@
 import { Box, Button, Text } from '@coop/shared/ui';
 
-interface IDetailPageContentCard {
+export interface IDetailPageContentCard {
   header: string;
   headerButtonLabel?: string;
   headerButtonHandler?: () => void;

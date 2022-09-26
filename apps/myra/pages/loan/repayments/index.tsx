@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { LoanListLayout } from '@coop/myra/components';
+import { LoanListLayout } from '@coop/cbs/loan/layouts';
 import { MainLayout, WIPState } from '@coop/shared/ui';
 
 const LoanRepayments = () => <WIPState />;

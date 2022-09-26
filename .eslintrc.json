@@ -11,6 +11,7 @@
     "plugin:react/jsx-runtime"
   ],
   "rules": {
+    "import/no-extraneous-dependencies": "off",
     "react/no-children-prop": "off",
     "@typescript-eslint/no-unused-expressions": "off",
     "react/prop-types": "off",

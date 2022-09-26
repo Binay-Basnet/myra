@@ -9344,6 +9344,27 @@ export type SetDisburseLoanMutation = {
   };
 };
 
+export type ApproveLoanAccountMutationVariables = Exact<{
+  id: Scalars['String'];
+  action: LoanApproveOrCancel;
+  remarks?: InputMaybe<Scalars['String']>;
+}>;
+
+export type ApproveLoanAccountMutation = {
+  loanAccount: {
+    approveOrCancel?: {
+      recordId: string;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type GetNewIdMutationVariables = Exact<{
   idType?: InputMaybe<Id_Type>;
 }>;
@@ -12529,6 +12550,7 @@ export type GetLoanApplicationDetailsQuery = {
           maxGuranteeAmountLimit?: any | null;
           memberId?: string | null;
           totalAmount?: any | null;
+          accountName?: string | null;
         } | null> | null;
         gracePeriod?: { gracePeriod?: GracePeriod | null; installmentNo?: number | null } | null;
         loanProcessingCharge?: Array<{
@@ -15197,6 +15219,33 @@ export const useSetDisburseLoanMutation = <TError = unknown, TContext = unknown>
   useMutation<SetDisburseLoanMutation, TError, SetDisburseLoanMutationVariables, TContext>(
     ['setDisburseLoan'],
     useAxios<SetDisburseLoanMutation, SetDisburseLoanMutationVariables>(SetDisburseLoanDocument),
+    options
+  );
+export const ApproveLoanAccountDocument = `
+    mutation approveLoanAccount($id: String!, $action: LoanApproveOrCancel!, $remarks: String) {
+  loanAccount {
+    approveOrCancel(loanAccountId: $id, action: $action, remarks: $remarks) {
+      error {
+        ...MutationError
+      }
+      recordId
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useApproveLoanAccountMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ApproveLoanAccountMutation,
+    TError,
+    ApproveLoanAccountMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ApproveLoanAccountMutation, TError, ApproveLoanAccountMutationVariables, TContext>(
+    ['approveLoanAccount'],
+    useAxios<ApproveLoanAccountMutation, ApproveLoanAccountMutationVariables>(
+      ApproveLoanAccountDocument
+    ),
     options
   );
 export const GetNewIdDocument = `
@@ -19819,6 +19868,7 @@ export const GetLoanApplicationDetailsDocument = `
           maxGuranteeAmountLimit
           memberId
           totalAmount
+          accountName
         }
         gracePeriod {
           gracePeriod

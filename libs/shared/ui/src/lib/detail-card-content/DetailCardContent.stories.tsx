@@ -1,9 +1,10 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { DetailCardContent } from './DetailCardContent';
 
 export default {
   component: DetailCardContent,
-  title: 'DetailCardContent',
+  title: 'Detail-Page / DetailCardContent',
 } as ComponentMeta<typeof DetailCardContent>;
 
 const Template: ComponentStory<typeof DetailCardContent> = (args) => (
@@ -11,4 +12,7 @@ const Template: ComponentStory<typeof DetailCardContent> = (args) => (
 );
 
 export const Primary = Template.bind({});
-Primary.args = {};
+Primary.args = {
+  title: 'Loan Type',
+  subtitle: 'Home Purchase Loan',
+};
