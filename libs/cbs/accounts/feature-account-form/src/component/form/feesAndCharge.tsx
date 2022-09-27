@@ -35,7 +35,15 @@ export const FeesAndCharge = () => {
   const isMobileBanking = watch('mobileBanking');
   const isATMenabled = watch('atmFacility');
   const serviceCharge = watch('serviceCharge');
+  const atmCharges =
+    data?.settings?.general?.depositProduct?.formState?.data?.alternativeChannelCharge;
 
+  const mobileBankingCharges = atmCharges?.find((d) => d?.serviceName === 'Mobile Banking');
+  const ebankingCharges = atmCharges?.find((d) => d?.serviceName === 'Ebanking');
+  const ebankingAmount = ebankingCharges?.amount;
+  // const ebankingLedger = ebankingCharges?.ledgerName;
+  const mobileBankingAmount = mobileBankingCharges?.amount;
+  // const mobileBankingLedger = mobileBankingCharges?.ledgerName;
   useEffect(() => {
     if (products) {
       setTriggerQuery(true);
@@ -55,17 +63,17 @@ export const FeesAndCharge = () => {
       if (isEbankingEnabled) {
         setProductData((previous) =>
           previous
-            ? [...previous, { amount: 0, serviceName: 'E-Banking' }]
-            : [{ amount: 0, serviceName: 'E-Banking' }]
+            ? [...previous, { amount: ebankingAmount, serviceName: 'Ebanking' }]
+            : [{ amount: ebankingAmount, serviceName: 'Ebanking' }]
         );
       } else {
-        const index = productData.findIndex((product) => product.serviceName === 'E-Banking');
+        const index = productData.findIndex((product) => product.serviceName === 'Ebanking');
 
         unregister(`serviceCharge.${index}.name`);
         unregister(`serviceCharge.${index}.amount`);
 
         setProductData((previous) =>
-          previous.filter((product) => product.serviceName !== 'E-Banking')
+          previous.filter((product) => product.serviceName !== 'Ebanking')
         );
       }
     }
@@ -76,17 +84,17 @@ export const FeesAndCharge = () => {
       if (isMobileBanking) {
         setProductData((previous) =>
           previous
-            ? [...previous, { amount: 0, serviceName: 'Mobile-Banking' }]
-            : [{ amount: 0, serviceName: 'Mobile-Banking' }]
+            ? [...previous, { amount: mobileBankingAmount, serviceName: 'Mobile Banking' }]
+            : [{ amount: mobileBankingAmount, serviceName: 'Mobile Banking' }]
         );
       } else {
-        const index = productData.findIndex((product) => product.serviceName === 'Mobile-Banking');
+        const index = productData.findIndex((product) => product.serviceName === 'Mobile Banking');
 
         unregister(`serviceCharge.${index}.name`);
         unregister(`serviceCharge.${index}.amount`);
 
         setProductData((previous) =>
-          previous.filter((product) => product.serviceName !== 'Mobile-Banking')
+          previous.filter((product) => product.serviceName !== 'Mobile Banking')
         );
       }
     }

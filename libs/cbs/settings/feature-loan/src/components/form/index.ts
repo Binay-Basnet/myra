@@ -13,6 +13,7 @@ export * from './LedgerMapping';
 export * from './ListGrid';
 export * from './LoanLimit';
 export * from './LoanProcessing';
+export * from './LoanRepayment';
 export * from './LoanRepaymentScheme';
 export * from './NewQuestions';
 export * from './Others';
