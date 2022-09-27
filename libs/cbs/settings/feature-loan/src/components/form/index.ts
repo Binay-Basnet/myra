@@ -23,4 +23,5 @@ export * from './PrematurePenalty';
 export * from './ProductCode';
 export * from './Rebate';
 export * from './RequiredDocumentSetup';
+export * from './Tenure';
 export * from './TypesofMembers';

@@ -25,6 +25,7 @@ import {
   InsuranceApplicable,
   Interest,
   LoanProcessing,
+  LoanRepayment,
   LoanRepaymentSchemes,
   NewQuestions,
   PartialPayment,
@@ -33,9 +34,9 @@ import {
   ProductCode,
   Rebate,
   RequiredDocumentSetup,
+  Tenure,
   TypesOfMember,
 } from '../components/form';
-import { Tenure } from '../components/form/Tenure';
 
 export const SettingsLoanProductForm = () => {
   const router = useRouter();
@@ -397,7 +398,7 @@ export const SettingsLoanProductForm = () => {
             <PrematurePenalty />
             {repaymentScheme && repaymentScheme?.includes(LoanRepaymentScheme.Epi) && <Rebate />}
 
-            {/* <LoanRepayment /> */}
+            <LoanRepayment />
             <NewQuestions />
             <InstallmentFrequency />
             <Interest />

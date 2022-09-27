@@ -1,14 +1,6 @@
 import { useEffect } from 'react';
-import {
-  Control,
-  Controller,
-  FieldValues,
-  useFormContext,
-} from 'react-hook-form';
-import {
-  ControllerRenderProps,
-  UseControllerProps,
-} from 'react-hook-form/dist/types/controller';
+import { Control, Controller, FieldValues, useFormContext } from 'react-hook-form';
+import { ControllerRenderProps, UseControllerProps } from 'react-hook-form/dist/types/controller';
 
 import { Select, SelectProps } from '@coop/shared/ui';
 
@@ -37,9 +29,7 @@ export const FormSelect = <T,>(props: IFormSelectProps<T>) => {
       control={formControl}
       rules={rest.rules}
       name={name ?? ''}
-      render={({ field }) => {
-        return <FormControl field={field} errors={errors} {...props} />;
-      }}
+      render={({ field }) => <FormControl field={field} errors={errors} {...props} />}
     />
   );
 };
@@ -64,8 +54,7 @@ const FormControl = <T,>({
   const filteredValue = rest.isMulti
     ? options?.filter(
         (option) =>
-          value?.some((v: Option) => v?.value === option.value) ||
-          value?.includes(option?.value)
+          value?.some((v: Option) => v?.value === option.value) || value?.includes(option?.value)
       )
     : [];
 
@@ -89,8 +78,8 @@ const FormControl = <T,>({
         if (Array.isArray(newValue)) {
           onChange(newValue);
         } else {
-          const { value } = newValue as Option;
-          onChange(value);
+          const { value: newVal } = newValue as Option;
+          onChange(newVal);
         }
       }}
     />

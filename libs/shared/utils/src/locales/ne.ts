@@ -2608,7 +2608,7 @@ const ne: Record<string, string> = {
   loanProductFlatratePenalty: 'Flat-rate Penalty',
   loanProductPenaltyAmount: 'Penalty Amount',
   loanProductEnterRebatedetails: 'Enter Rebate details.',
-  loanProductDaysafterinstallmentdate: 'Days after installment date',
+  loanProductDaysafterinstallmentdate: 'Days before installment date',
   loanProductRebateAmount: 'Rebate Amount',
   loanProductPercentageDepositedAmount: 'Percentage of Deposited Amount',
   loanProductNoInstallment: 'No. of Installment',
