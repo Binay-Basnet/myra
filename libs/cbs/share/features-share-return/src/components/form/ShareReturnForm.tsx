@@ -220,7 +220,7 @@ export const ShareReturnForm = () => {
                     h="100%"
                     background="gray.0"
                     minH="calc(100vh - 170px)"
-                    border="1px solid"
+                    borderRight="1px solid"
                     borderColor="border.layout"
                   >
                     <Box w="100%">
