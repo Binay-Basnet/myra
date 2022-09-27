@@ -15,10 +15,7 @@ interface SelectOption {
 }
 
 export interface SelectProps
-  extends Omit<
-    Props<SelectOption, boolean, GroupBase<SelectOption>>,
-    'size' | 'onChange'
-  > {
+  extends Omit<Props<SelectOption, boolean, GroupBase<SelectOption>>, 'size' | 'onChange'> {
   options?: SelectOption[] | undefined;
   helperText?: string;
   errorText?: string;
@@ -57,11 +54,7 @@ export const Select = ({
         {label}
       </TextFields>
       <ChakraSelect<SelectOption, boolean, GroupBase<SelectOption>>
-        key={
-          !isMulti
-            ? `my_unique_select_key__${JSON.stringify(value)}`
-            : 'isMulti'
-        }
+        key={!isMulti ? `my_unique_select_key__${JSON.stringify(value)}` : 'isMulti'}
         id="select"
         data-testid={name}
         instanceId="select"
@@ -69,15 +62,10 @@ export const Select = ({
           if (isMulti) {
             setSortedOptions((prev) =>
               (prev as Array<Option>)?.sort((optionA) => {
-                if (
-                  (value as Array<Option>)?.find(
-                    (v) => optionA.value === v.value
-                  )
-                ) {
+                if ((value as Array<Option>)?.find((v) => optionA.value === v.value)) {
                   return -1;
-                } else {
-                  return 1;
                 }
+                return 1;
               })
             );
           }
@@ -107,6 +95,6 @@ export const Select = ({
       ) : null}
     </Flex>
   );
-}
+};
 
 export default Select;

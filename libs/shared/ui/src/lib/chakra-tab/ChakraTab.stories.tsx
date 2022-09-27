@@ -11,9 +11,8 @@ export default {
   title: 'Atoms/ChakraTab',
   argTypes: getThemingArgTypes(theme as Theme, 'Tabs'),
 } as Meta;
-const Template: StoryFn<ChakraTabProps> = (props) => (
-  <ChakraTab {...props}> {props.children} </ChakraTab>
-);
+
+const Template: StoryFn<ChakraTabProps> = (props) => <ChakraTab {...props} />;
 
 export const Primary = Template.bind({});
 Primary.args = {

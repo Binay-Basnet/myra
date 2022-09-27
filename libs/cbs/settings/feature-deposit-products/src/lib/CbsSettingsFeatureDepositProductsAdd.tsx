@@ -79,6 +79,7 @@ export const SettingsDepositProductsAdd = () => {
   const { getValues, watch, reset, resetField } = methods;
   const depositNature = watch('nature');
   const typesOfMember = watch('typeOfMember');
+  const isMandatorySaving = watch('isMandatorySaving');
 
   const submitForm = () => {
     const values = getValues();
@@ -279,13 +280,15 @@ export const SettingsDepositProductsAdd = () => {
               {(depositNature === NatureOfDepositProduct.RecurringSaving ||
                 depositNature === NatureOfDepositProduct.Saving) && <AllowedTransaction />}
 
-              {depositNature === NatureOfDepositProduct.Current && <DepositFrequency />}
+              {depositNature === NatureOfDepositProduct.RecurringSaving && <DepositFrequency />}
 
               {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <TransactionLimit />}
 
               {depositNature === NatureOfDepositProduct.Saving && <MandatoryProduct />}
 
-              {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <DepositFrequency />}
+              {depositNature === NatureOfDepositProduct.Saving && isMandatorySaving && (
+                <DepositFrequency />
+              )}
 
               {(depositNature === NatureOfDepositProduct.Current ||
                 depositNature === NatureOfDepositProduct.RecurringSaving) && (
@@ -301,9 +304,6 @@ export const SettingsDepositProductsAdd = () => {
               {depositNature !== NatureOfDepositProduct.Current && <DefaultAccountName />}
 
               {depositNature !== NatureOfDepositProduct.Current && <Tenure />}
-
-              {/* {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <MaximumTenure />} */}
 
               {depositNature !== NatureOfDepositProduct.Current && (
                 <>

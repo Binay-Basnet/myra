@@ -61,7 +61,6 @@ export const OptionsIcon = () => (
 );
 
 export type TableSearchProps = {
-  __placeholder?: string;
   placeholder?: string;
   pagination?: {
     pageInfo?: {
@@ -95,6 +94,7 @@ export const TableSearch = ({ placeholder, pagination, size, setSize }: TableSea
           placeholder={placeholder ?? 'Search'}
           variant="outline"
           h="50px"
+          ml="2px"
           borderRadius={0}
           outline="none"
           border="none"

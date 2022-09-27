@@ -3,7 +3,6 @@ import { BsArrowLeftRight, BsFileText } from 'react-icons/bs';
 import { ImStack } from 'react-icons/im';
 import { IoIosList } from 'react-icons/io';
 import { IoCubeOutline, IoPerson } from 'react-icons/io5';
-import { MdOutlineWaterDrop } from 'react-icons/md';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
@@ -55,11 +54,6 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
     title: 'reports',
     icon: BsFileText,
     link: '/reports/cbs/share-report',
-  },
-  {
-    title: 'utilities',
-    icon: MdOutlineWaterDrop,
-    link: '/utilities',
   },
 ];
 

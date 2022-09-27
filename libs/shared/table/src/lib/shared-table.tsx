@@ -16,7 +16,9 @@ import { flexRender } from '@tanstack/react-table';
 
 import { Loader, NoDataState, Pagination, TableSearch, Text } from '@coop/shared/ui';
 
+// eslint-disable-next-line import/no-cycle
 import { TableSelectionBar } from '../components';
+// eslint-disable-next-line import/no-cycle
 import { useTable } from '../hooks/useTable';
 import { Column, TableProps } from '../types/Table';
 
@@ -56,15 +58,31 @@ export const Table = <T extends Record<string, unknown>>({
       </Collapse>
       {!isStatic && (
         <TableSearch
-          __placeholder={searchPlaceholder}
+          placeholder={searchPlaceholder}
           pagination={pagination}
           size={tableSize}
           setSize={setTableSize}
         />
       )}
 
-      <TableContainer minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}>
-        <ChakraTable size={tableSize} variant={variant}>
+      <TableContainer
+        minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}
+        {...(variant === 'report'
+          ? { borderRadius: 'br2', border: '1px', borderColor: 'border.element' }
+          : {})}
+      >
+        <ChakraTable
+          size={tableSize}
+          variant={variant}
+          {...(variant === 'report'
+            ? {
+                borderRadius: 'br2',
+                border: '1px',
+                borderColor: 'border.element',
+                overflow: 'hidden',
+              }
+            : {})}
+        >
           <Thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <Tr key={headerGroup.id}>
@@ -126,9 +144,8 @@ export const Table = <T extends Record<string, unknown>>({
                 bg={row.getIsSelected() ? 'primary.0' : 'white'}
                 cursor={rowOnClick ? 'pointer' : 'default'}
                 onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
                   rowOnClick && rowOnClick(row.original);
+                  e.stopPropagation();
                 }}
               >
                 {row.getVisibleCells().map((cell) => (
@@ -145,6 +162,7 @@ export const Table = <T extends Record<string, unknown>>({
                       overflow="hidden"
                       width={cell.column.columnDef.meta?.width}
                       whiteSpace="nowrap"
+                      textTransform="capitalize"
                     >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </Text>

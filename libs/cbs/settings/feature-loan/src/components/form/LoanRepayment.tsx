@@ -14,7 +14,7 @@ interface IRightElementProps {
   t: Record<string, string>;
 }
 
-export const inputRightElementText = (props: IRightElementProps) => {
+const inputRightElementText = (props: IRightElementProps) => {
   const { rightElement, t } = props;
   if (rightElement === FrequencyTenure.Day) {
     return t['days'];

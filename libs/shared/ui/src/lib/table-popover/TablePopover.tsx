@@ -32,9 +32,7 @@ export const TablePopover = <T extends Record<string, unknown>>({
     <Popover placement="bottom-start" initialFocusRef={initialFocusRef}>
       <PopoverTrigger>
         <IconButton
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
+          onClick={(e) => e.stopPropagation()}
           variant="ghost"
           aria-label="Search database"
           icon={<BsThreeDots />}
@@ -50,7 +48,10 @@ export const TablePopover = <T extends Record<string, unknown>>({
                 width="100%"
                 _hover={{ bg: 'gray.100' }}
                 cursor="pointer"
-                onClick={() => item?.onClick && item?.onClick(node)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  item?.onClick && item?.onClick(node);
+                }}
                 key={item.title}
               >
                 <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
