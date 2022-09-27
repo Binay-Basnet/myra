@@ -640,6 +640,28 @@ export const TopLevelHeader = () => {
                             display="flex"
                             alignItems="center"
                             cursor="pointer"
+                            onClick={() => router.push('/change-password')}
+                          >
+                            <Text
+                              textAlign="start"
+                              fontWeight="Regular"
+                              fontSize="r1"
+                              color="neutralColorLight.Gray-80"
+                            >
+                              Change Password
+                            </Text>
+                          </Box>
+
+                          <Box
+                            _hover={{
+                              bg: 'background.500',
+                              borderRadius: 'br2',
+                            }}
+                            h="40px"
+                            px="s16"
+                            display="flex"
+                            alignItems="center"
+                            cursor="pointer"
                             onClick={() => {
                               dispatch(logout());
                               router.push('/login');

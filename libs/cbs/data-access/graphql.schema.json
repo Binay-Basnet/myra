@@ -7547,6 +7547,22 @@
             "deprecationReason": null
           },
           {
+            "name": "serviceStatus",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "EBankingActiveLoanStatus",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "status",
             "description": null,
             "args": [],
@@ -21898,7 +21914,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "Amount",
               "ofType": null
             },
             "defaultValue": null,
@@ -21909,8 +21925,8 @@
             "name": "branch",
             "description": null,
             "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "BranchInput",
+              "kind": "SCALAR",
+              "name": "ID",
               "ofType": null
             },
             "defaultValue": null,
@@ -21945,7 +21961,7 @@
             "args": [],
             "type": {
               "kind": "UNION",
-              "name": "EBankingCooperativeServiceError",
+              "name": "MutationError",
               "ofType": null
             },
             "isDeprecated": false,
@@ -22595,6 +22611,22 @@
             "deprecationReason": null
           },
           {
+            "name": "complaintStatus",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "EBankingActiveLoanStatus",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "detailedAccount",
             "description": null,
             "args": [],
@@ -22698,6 +22730,45 @@
       },
       {
         "kind": "OBJECT",
+        "name": "EBankingComplaintHistoryData",
+        "description": null,
+        "fields": [
+          {
+            "name": "data",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "EBankingComplaintHistory",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "error",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "QueryError",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "EBankingComplaintMutation",
         "description": null,
         "fields": [
@@ -22768,24 +22839,28 @@
                 "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
+              },
+              {
+                "name": "memberID",
+                "description": null,
+                "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
-                    "kind": "OBJECT",
-                    "name": "EBankingComplaintHistory",
+                    "kind": "SCALAR",
+                    "name": "ID",
                     "ofType": null
                   }
-                }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
               }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "EBankingComplaintHistoryData",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -22831,7 +22906,7 @@
             "args": [],
             "type": {
               "kind": "UNION",
-              "name": "EBankingCooperativeServiceError",
+              "name": "MutationError",
               "ofType": null
             },
             "isDeprecated": false,
@@ -26277,13 +26352,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "Amount",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -26293,13 +26364,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Date",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "Date",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -26309,13 +26376,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "Branch",
-                "ofType": null
-              }
+              "kind": "OBJECT",
+              "name": "Branch",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -26330,6 +26393,22 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "loanStatus",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "EBankingActiveLoanStatus",
                 "ofType": null
               }
             },
@@ -26353,13 +26432,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "EBankingServiceStatus",
-                "ofType": null
-              }
+              "kind": "ENUM",
+              "name": "EBankingServiceStatus",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -26369,13 +26444,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -26458,24 +26529,28 @@
                 "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
+              },
+              {
+                "name": "memberId",
+                "description": null,
+                "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
-                    "kind": "OBJECT",
-                    "name": "EBankingLoanHistory",
+                    "kind": "SCALAR",
+                    "name": "ID",
                     "ofType": null
                   }
-                }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
               }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "EbankingLoanHistoryData",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -26970,6 +27045,45 @@
                 "name": "Transactions",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "EbankingLoanHistoryData",
+        "description": null,
+        "fields": [
+          {
+            "name": "data",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "EBankingLoanHistory",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "error",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "QueryError",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null

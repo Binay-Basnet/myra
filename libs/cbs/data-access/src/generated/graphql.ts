@@ -850,6 +850,7 @@ export type ChequePastRequest = {
   collector?: Maybe<MyraUser>;
   createdDate?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  serviceStatus: EBankingActiveLoanStatus;
   status: EBankingServiceStatus;
   typeOfRequest?: Maybe<EbankingServiceRequestType>;
   withdrawAmount?: Maybe<Scalars['Amount']>;
@@ -2385,13 +2386,13 @@ export type EBankingAppNotificationQueryListArgs = {
 };
 
 export type EBankingApplyLoanInput = {
-  amount?: InputMaybe<Scalars['Float']>;
-  branch?: InputMaybe<BranchInput>;
+  amount?: InputMaybe<Scalars['Amount']>;
+  branch?: InputMaybe<Scalars['ID']>;
   purpose?: InputMaybe<Scalars['String']>;
 };
 
 export type EBankingApplyLoanResult = {
-  error?: Maybe<EBankingCooperativeServiceError>;
+  error?: Maybe<MutationError>;
   query?: Maybe<EBankingCooperativeServiceQuery>;
   record?: Maybe<EBankingLoanHistory>;
   recordID: Scalars['ID'];
@@ -2470,6 +2471,7 @@ export type EBankingCombined = {
 
 export type EBankingComplaintHistory = {
   applicationNumber: Scalars['Int'];
+  complaintStatus: EBankingActiveLoanStatus;
   detailedAccount?: Maybe<Scalars['String']>;
   feedbackDate: Scalars['Date'];
   id: Scalars['ID'];
@@ -2477,6 +2479,11 @@ export type EBankingComplaintHistory = {
   proposedSolution?: Maybe<Scalars['String']>;
   status: EBankingServiceStatus;
   violatedPolicies?: Maybe<Scalars['String']>;
+};
+
+export type EBankingComplaintHistoryData = {
+  data?: Maybe<Array<Maybe<EBankingComplaintHistory>>>;
+  error?: Maybe<QueryError>;
 };
 
 export type EBankingComplaintMutation = {
@@ -2489,16 +2496,17 @@ export type EBankingComplaintMutationRegisterArgs = {
 };
 
 export type EBankingComplaintQuery = {
-  history: Array<EBankingComplaintHistory>;
+  history?: Maybe<EBankingComplaintHistoryData>;
   options: Array<EBankingCooperativeServiceOption>;
 };
 
 export type EBankingComplaintQueryHistoryArgs = {
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
+  memberID: Scalars['ID'];
 };
 
 export type EBankingComplaintRegisterResult = {
-  error?: Maybe<EBankingCooperativeServiceError>;
+  error?: Maybe<MutationError>;
   query?: Maybe<EBankingCooperativeServiceQuery>;
   record?: Maybe<EBankingComplaintHistory>;
   recordID: Scalars['ID'];
@@ -2898,13 +2906,14 @@ export type EBankingKymSectionMutationProfessionalInformationArgs = {
 
 export type EBankingLoanHistory = {
   activeLoanStatus?: Maybe<EBankingActiveLoanStatus>;
-  amount: Scalars['Float'];
-  appliedDate: Scalars['Date'];
-  branch: Branch;
+  amount?: Maybe<Scalars['Amount']>;
+  appliedDate?: Maybe<Scalars['Date']>;
+  branch?: Maybe<Branch>;
   id: Scalars['String'];
+  loanStatus: EBankingActiveLoanStatus;
   scheduledDate?: Maybe<Scalars['Date']>;
-  status: EBankingServiceStatus;
-  type: Scalars['String'];
+  status?: Maybe<EBankingServiceStatus>;
+  type?: Maybe<Scalars['String']>;
 };
 
 export type EBankingLoanMutation = {
@@ -2917,12 +2926,13 @@ export type EBankingLoanMutationApplyArgs = {
 };
 
 export type EBankingLoanQuery = {
-  history: Array<EBankingLoanHistory>;
+  history?: Maybe<EbankingLoanHistoryData>;
   options: Array<EBankingCooperativeServiceOption>;
 };
 
 export type EBankingLoanQueryHistoryArgs = {
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
+  memberId: Scalars['ID'];
 };
 
 export type EBankingMutation = {
@@ -2984,6 +2994,11 @@ export type EBankingTransactionQueryMonthlyArgs = {
 
 export type EBankingTransactionQueryRecentArgs = {
   filter?: InputMaybe<RecentTransactionFilter>;
+};
+
+export type EbankingLoanHistoryData = {
+  data?: Maybe<Array<Maybe<EBankingLoanHistory>>>;
+  error?: Maybe<QueryError>;
 };
 
 export enum EbankingServiceRequestType {
