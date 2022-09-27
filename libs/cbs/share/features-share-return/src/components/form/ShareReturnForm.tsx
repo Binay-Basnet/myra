@@ -227,6 +227,7 @@ export const ShareReturnForm = () => {
                       <FormSection>
                         <GridItem colSpan={2}>
                           <FormMemberSelect
+                            allMembers
                             name="memberId"
                             label={t['sharePurchaseSelectMember']}
                           />
