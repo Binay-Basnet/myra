@@ -72,7 +72,8 @@ export const ShareMemberCard = ({
           p="s16"
           border="1px solid"
           borderColor="border.layout"
-          borderRadius="br2"
+          borderTopLeftRadius="br2"
+          borderTopRightRadius="br2"
         >
           <Box display="flex" justifyContent="space-between">
             <Text fontWeight="Medium" fontSize="s3" color="neutralColorLight.Gray-60">
@@ -94,7 +95,7 @@ export const ShareMemberCard = ({
           </Box>
         </Box>
 
-        <Box border="1px solid" borderColor="border.layout">
+        <Box border="1px solid" borderTop="none" borderColor="border.layout">
           {shareHistoryTableData &&
             shareHistoryTableData?.history?.map((item) => (
               <Box

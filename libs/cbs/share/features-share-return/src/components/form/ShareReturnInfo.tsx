@@ -7,7 +7,7 @@ import {
   useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
 import { FieldCardComponents } from '@coop/shared/components';
-import { FormCheckbox, FormInput, FormNumberInput } from '@coop/shared/form';
+import { FormCheckbox, FormNumberInput } from '@coop/shared/form';
 import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
@@ -72,9 +72,7 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
     <Box display="flex" flexDirection="column" pb="28px" background="gray.0">
       <FormSection header="shareReturnShareInformation">
         <GridItem colSpan={3}>
-          <FormInput
-            type="text"
-            textAlign="right"
+          <FormNumberInput
             id="noOfShares"
             name="noOfReturnedShares"
             label={t['shareReturnNoOfShares']}
@@ -102,7 +100,7 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
                   {t['shareReturnRemainingShareValue']}
                 </Text>
                 <Text fontWeight="SemiBold" fontSize="r1">
-                  {shareResult()}
+                  {shareResult() * 100}
                 </Text>
               </Box>
             </Box>
