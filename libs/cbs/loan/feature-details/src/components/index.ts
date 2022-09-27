@@ -7,4 +7,5 @@ export * from './LoanDetailsSidebar';
 export * from './LoanGeneralInformation';
 export * from './LoanPaymentSchedule';
 export * from './LoanPaymentScheduleTable';
+export * from './LoanProdcutDetails';
 export * from './LoanProductSummary';
