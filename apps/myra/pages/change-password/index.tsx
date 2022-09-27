@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { useForm } from 'react-hook-form';
 import { BiArrowBack } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 
@@ -13,7 +14,7 @@ const Container = ({ children }) => {
       w={492}
       bg="white"
       mt="s20"
-      borderRadius="s8"
+      borderRadius={8}
       p="s16"
       gap="s32"
     >
@@ -26,8 +27,40 @@ const Container = ({ children }) => {
   );
 };
 
+const errorText = (type) => {
+  switch (type) {
+    case 'required':
+      return (
+        <Text fontSize="s2" color="red">
+          This field is required
+        </Text>
+      );
+    case 'minLength':
+      return (
+        <Text fontSize="s2" color="red">
+          Must have minimum of 8 characters
+        </Text>
+      );
+    default:
+      return (
+        <Text fontSize="s2" color="red">
+          Password must have 1 lowercase, 1 uppercase and 1 special character
+        </Text>
+      );
+  }
+};
+
 const ChangePassword = () => {
   const [success] = React.useState(false);
+  const { register, handleSubmit, formState } = useForm();
+  const onSubmit = (data) => {
+    if (data?.password === data?.cpassword) {
+      // alert('password matched');
+    }
+  };
+  const passwordError = formState?.errors?.password;
+  const cPasswordError = formState?.errors?.cpassword;
+
   if (!success) {
     return (
       <Container>
@@ -37,16 +70,22 @@ const ChangePassword = () => {
           </Text>
           <Text fontSize="r1">Please enter your new password.</Text>
         </Box>
-        <Box>
-          <PasswordInput label="New Password" />
-          <Text fontSize="s2">
-            Password must be 8 characters,1 lowercase, 1 uppercase and 1 special character
-          </Text>
-        </Box>
-        <Box>
-          <PasswordInput label="Confirm Password" />
-        </Box>
-        <Button>Update Password</Button>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Box display="flex" flexDir="column" gap="s32">
+            <Box>
+              <PasswordInput label="New Password" register={register} fieldName="password" />
+              {passwordError && errorText(passwordError?.type)}
+              {/* <Text fontSize="s2">
+                Password must be 8 characters,1 lowercase, 1 uppercase and 1 special character
+              </Text> */}
+            </Box>
+            <Box>
+              <PasswordInput label="Confirm Password" register={register} fieldName="cpassword" />
+              {cPasswordError && errorText(cPasswordError?.type)}
+            </Box>
+            <Button type="submit">Update Password</Button>
+          </Box>
+        </form>
       </Container>
     );
   }

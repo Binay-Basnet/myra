@@ -1,4 +1,5 @@
 import { forwardRef, useState } from 'react';
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { IoEyeOffOutline, IoEyeOutline, IoLockClosed } from 'react-icons/io5';
 import {
   Box,
@@ -15,10 +16,13 @@ import { TextFields } from '@coop/shared/ui';
 export interface PasswordInputProps extends InputProps {
   labelColor?: string;
   label?: string;
+  register?: UseFormRegister<FieldValues>;
+
+  fieldName?: string;
 }
 
 export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((props, ref) => {
-  const { labelColor, label, ...rest } = props;
+  const { labelColor, label, register, fieldName, ...rest } = props;
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
@@ -38,6 +42,13 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
           ref={ref}
           fontSize="s2"
           {...rest}
+          {...(register &&
+            fieldName &&
+            register(fieldName, {
+              required: true,
+              minLength: 8,
+              pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/i,
+            }))}
         />
         <InputRightElement width="fit-content" onClick={handleClick} pr="s16" cursor="pointer">
           <Box>{show ? <IoEyeOffOutline /> : <IoEyeOutline />}</Box>

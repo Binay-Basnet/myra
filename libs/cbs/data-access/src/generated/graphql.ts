@@ -6299,11 +6299,15 @@ export type LoanAccountFormStateResult = {
 export type LoanAccountGrace = {
   gracePeriod?: Maybe<GracePeriod>;
   installmentNo?: Maybe<Scalars['Int']>;
+  interestGracePeriod?: Maybe<Scalars['Int']>;
+  principalGracePeriod?: Maybe<Scalars['Int']>;
 };
 
 export type LoanAccountGraceInput = {
   gracePeriod?: InputMaybe<GracePeriod>;
   installmentNo?: InputMaybe<Scalars['Int']>;
+  interestGracePeriod?: InputMaybe<Scalars['Int']>;
+  principalGracePeriod?: InputMaybe<Scalars['Int']>;
 };
 
 export type LoanAccountGracePeriodResult = {
@@ -6387,12 +6391,29 @@ export type LoanAccountMutationDisburseArgs = {
   loanAccount: Scalars['ID'];
 };
 
+export type LoanAccountPreview = {
+  additionalFeatures?: Maybe<LoanPreviewAdditionalFeatures>;
+  collateralAndGuarantees?: Maybe<Array<Maybe<LoanCollateralAndGuarantees>>>;
+  generalInformation?: Maybe<LoanPreviewGeneralInformation>;
+  loanDetails?: Maybe<LoanPreviewLoanDetails>;
+  member?: Maybe<Member>;
+  memberId?: Maybe<Scalars['String']>;
+  paymentSchedule?: Maybe<LoanInstallments>;
+  statistics?: Maybe<LoanPreviewStatistics>;
+};
+
+export type LoanAccountPreviewResult = {
+  data?: Maybe<LoanAccountPreview>;
+  error?: Maybe<QueryError>;
+};
+
 export type LoanAccountQuery = {
   formState?: Maybe<LoanAccountFormStateResult>;
   getLoanInstallments?: Maybe<LoanInstallmentResult>;
   getProductCriteria?: Maybe<LoanProductCriteriaResult>;
   getProductList?: Maybe<LoanProductList>;
   list?: Maybe<LoanAccountConnection>;
+  loanPreview?: Maybe<LoanAccountPreviewResult>;
 };
 
 export type LoanAccountQueryFormStateArgs = {
@@ -6423,6 +6444,10 @@ export type LoanAccountQueryListArgs = {
   paginate?: InputMaybe<Pagination>;
 };
 
+export type LoanAccountQueryLoanPreviewArgs = {
+  loanAccountId: Scalars['String'];
+};
+
 export type LoanAccountResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<LoanAccountQuery>;
@@ -6445,6 +6470,11 @@ export type LoanBankDisbursement = {
   bankAccountId: Scalars['ID'];
   chequeNo: Scalars['String'];
   note?: InputMaybe<Scalars['String']>;
+};
+
+export type LoanCollateralAndGuarantees = {
+  name?: Maybe<Scalars['String']>;
+  valuation?: Maybe<Scalars['String']>;
 };
 
 export type LoanDisbursementInput = {
@@ -6561,6 +6591,43 @@ export enum LoanPaymentInstallmentType {
 export enum LoanPaymentMode {
   Installment = 'INSTALLMENT',
 }
+
+export type LoanPreviewAdditionalFeatures = {
+  allowPartialInstallment?: Maybe<Scalars['Boolean']>;
+  collateral?: Maybe<Scalars['Boolean']>;
+  insurance?: Maybe<Scalars['Boolean']>;
+  isMonthlyInterestCompulsory?: Maybe<Scalars['Boolean']>;
+  loanScheduleChangeOverride?: Maybe<Scalars['Boolean']>;
+  overrideInterest?: Maybe<Scalars['Boolean']>;
+  staffProduct?: Maybe<Scalars['Boolean']>;
+  supportMultipleAccount?: Maybe<Scalars['Boolean']>;
+};
+
+export type LoanPreviewGeneralInformation = {
+  loanProduct?: Maybe<Scalars['String']>;
+  loanSubType?: Maybe<Scalars['String']>;
+  loanType?: Maybe<Scalars['String']>;
+  natureOfLoanProduct?: Maybe<NatureOfLoanProduct>;
+};
+
+export type LoanPreviewLoanDetails = {
+  appliedLoanAmount?: Maybe<Scalars['String']>;
+  interestMethod?: Maybe<LoanInterestMethod>;
+  interestRate?: Maybe<Scalars['Float']>;
+  loanRepaymentScheme?: Maybe<LoanRepaymentScheme>;
+  tenure?: Maybe<Scalars['Int']>;
+  tenureUnit?: Maybe<FrequencyTenure>;
+  totalCollateralValuation?: Maybe<Scalars['String']>;
+  totalGuaranteeValuation?: Maybe<Scalars['String']>;
+  totalProcessingChargesValuation?: Maybe<Scalars['String']>;
+  totalSanctionedAmount?: Maybe<Scalars['String']>;
+};
+
+export type LoanPreviewStatistics = {
+  remainingPayableAmount?: Maybe<Scalars['String']>;
+  totalPaidAmount?: Maybe<Scalars['String']>;
+  totalPayableAmount?: Maybe<Scalars['String']>;
+};
 
 export type LoanProduct = Base & {
   allowGurantee?: Maybe<Scalars['Boolean']>;
@@ -7729,6 +7796,7 @@ export type ProductsQuery = {
   depositProduct?: Maybe<DepositProductCategoryList>;
   getDepositProductCriteria?: Maybe<DepositProductCriteriaResult>;
   getLoanProductCriteria?: Maybe<LoanProductCriteriaResult>;
+  getLoanProductType?: Maybe<LoanSettingsProductTypeData>;
   loanProductSubTypes?: Maybe<Array<Maybe<LoanSettingsProductSubTypeData>>>;
   loanProducts?: Maybe<LoanProductLists>;
 };
@@ -7743,6 +7811,10 @@ export type ProductsQueryGetDepositProductCriteriaArgs = {
 
 export type ProductsQueryGetLoanProductCriteriaArgs = {
   productId: Scalars['ID'];
+};
+
+export type ProductsQueryGetLoanProductTypeArgs = {
+  id: Scalars['ID'];
 };
 
 export type ProductsQueryLoanProductsArgs = {
@@ -7902,6 +7974,17 @@ export type ReportResult = {
   member?: Maybe<Member>;
   memberId?: Maybe<Scalars['ID']>;
   statement?: Maybe<StatementReport>;
+};
+
+export type ResetPasswordData = {
+  confirmPassword: Scalars['String'];
+  newPassword: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+export type ResetPasswordResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
 };
 
 export type Result = {
@@ -8773,6 +8856,11 @@ export enum UserGender {
 
 export type UserMutation = {
   preference?: Maybe<UserPreferenceMutation>;
+  resetPassword?: Maybe<ResetPasswordResult>;
+};
+
+export type UserMutationResetPasswordArgs = {
+  data: ResetPasswordData;
 };
 
 export type UserPreference = {
