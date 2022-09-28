@@ -9,7 +9,7 @@ import { useLoanDetails } from '../hooks/useLoanDetails';
 
 export const CBSLoanApprove = () => {
   const router = useRouter();
-  const { loan } = useLoanDetails();
+  const { loanPreview } = useLoanDetails();
 
   const { id } = router.query;
 
@@ -52,7 +52,10 @@ export const CBSLoanApprove = () => {
               Decline
             </Button>
           }
-          status={`Total Sanctioned Amount: ${loan?.totalSanctionedAmount}`}
+          status={`Total Disbursed Amount: ${
+            Number(loanPreview?.loanDetails?.totalSanctionedAmount ?? 0) -
+            Number(loanPreview?.loanDetails?.totalProcessingChargesValuation ?? 0)
+          }`}
         />
       </Box>
     </>

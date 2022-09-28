@@ -174,7 +174,11 @@ export const NewLoanApplication = () => {
   // for loan edit
   useEffect(() => {
     if (loanApplication) {
-      methods?.reset(loanApplication);
+      methods?.reset({
+        ...loanApplication,
+        collateralData: loanApplication.collateralData ?? [],
+        gurantee_details: loanApplication.gurantee_details ?? [],
+      });
     }
   }, [id, isLoanFetching, loanApplication, methods]);
 

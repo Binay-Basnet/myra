@@ -52,6 +52,7 @@ export const CollateralDetails = () => {
   });
   const productId = watch('productId');
 
+  
   // Query
   const { data: loanProductData } = useGetLoanProductDetailsDataQuery(
     { id: String(productId) },

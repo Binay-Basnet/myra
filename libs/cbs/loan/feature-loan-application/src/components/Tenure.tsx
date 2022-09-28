@@ -36,21 +36,6 @@ export const Tenure = () => {
     <GroupContainer scrollMarginTop="200px" display="flex" flexDirection="column" gap="s16">
       <Box display="flex" flexDirection="column" gap="s16" bg="neutralColorLight.Gray-0">
         <SubHeadingText>{t['accountOpenTenure']} </SubHeadingText>
-        {/* <Box */}
-        {/*   display="flex" */}
-        {/*   flexDirection="column" */}
-        {/*   border="1px solid" */}
-        {/*   borderColor="border.layout" */}
-        {/*   p="s16" */}
-        {/*   borderRadius="br2" */}
-        {/*   background="neutralColorLight.Gray-0" */}
-        {/* > */}
-        {/*   <Box display="flex" flexDirection="row" justifyContent="space-between" borderRadius="4px"> */}
-        {/* <Box display="flex" flexDirection="column" gap="s4">
-              <SubHeadingText>{t['accountOpenUnit']} </SubHeadingText>
-              <FormSwitchTab name="tenure" options={unitOptions} />
-            </Box> */}
-        {/* <Box w="290px"> */}
         <Box w="290px">
           <FormInput
             rules={{
@@ -70,8 +55,6 @@ export const Tenure = () => {
             rightAddonText={!rightElement ? '' : TenureDict[rightElement]}
           />
         </Box>
-        {/*   </Box> */}
-        {/* </Box> */}
         <Box>
           <Alert status="info" hideCloseIcon>
             Tenure:{' '}
@@ -80,7 +63,6 @@ export const Tenure = () => {
               {product?.tenureUnit}
             </b>
           </Alert>
-          {/* </Box> */}
         </Box>
       </Box>
     </GroupContainer>

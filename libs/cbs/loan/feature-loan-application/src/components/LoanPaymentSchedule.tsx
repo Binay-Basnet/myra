@@ -1,23 +1,19 @@
 import { useEffect, useState } from 'react';
-import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { IoClose } from 'react-icons/io5';
 
 import {
-  GracePeriod,
   LoanAccountInput,
   LoanInstallment,
   LoanRepaymentScheme,
   useGetLoanInstallmentsQuery,
 } from '@coop/cbs/data-access';
-import { FormSelect } from '@coop/shared/form';
+import { FormInput } from '@coop/shared/form';
 import { Table } from '@coop/shared/table';
-import { Alert, Box, Button, ChakraModal, Icon, Text } from '@coop/shared/ui';
+import { Alert, Box, Button, Icon, IconButton, Text } from '@coop/shared/ui';
 
 export const LoanPaymentSchedule = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const methods = useForm();
-
   const {
     watch,
     setValue,
@@ -33,6 +29,8 @@ export const LoanPaymentSchedule = () => {
   const repaymentScheme = watch('repaymentScheme');
   const gracePeriod = watch('gracePeriod');
 
+  const [isOpen, setIsOpen] = useState(false);
+
   const { data } = useGetLoanInstallmentsQuery(
     {
       interest: interest ?? 12,
@@ -40,12 +38,7 @@ export const LoanPaymentSchedule = () => {
       tenure: Number(tenure),
       sanctionAmount: Number(sanctionAmount),
       repaymentScheme: repaymentScheme ?? LoanRepaymentScheme.Emi,
-      gracePeriod: gracePeriod?.installmentNo
-        ? {
-            gracePeriod: gracePeriod?.gracePeriod ?? GracePeriod.Interest,
-            installmentNo: gracePeriod.installmentNo,
-          }
-        : null,
+      gracePeriod: gracePeriod ?? null,
     },
     {
       enabled: trigger,
@@ -64,8 +57,8 @@ export const LoanPaymentSchedule = () => {
     interest,
     repaymentScheme,
     errors,
-    gracePeriod?.gracePeriod,
-    gracePeriod?.installmentNo,
+    gracePeriod?.interestGracePeriod,
+    gracePeriod?.principalGracePeriod,
   ]);
 
   return (
@@ -88,51 +81,43 @@ export const LoanPaymentSchedule = () => {
         </Box>
       </Box>
 
-      <ChakraModal
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-        title="Add Grace Period"
-        primaryButtonLabel="Save"
-        primaryButtonHandler={() => {
-          setValue('gracePeriod', {
-            installmentNo: methods.getValues()['installmentNo'],
-            gracePeriod: methods.getValues()['gracePeriod'],
-          });
-          setIsOpen(false);
-        }}
-      >
-        <FormProvider {...methods}>
-          <Box display="flex" alignItems="center" gap="s16">
-            <FormSelect
-              name="gracePeriod"
-              options={[
-                { label: 'Principal', value: GracePeriod.Principal },
-                { label: 'Interest', value: GracePeriod.Interest },
-              ]}
-              label="Grace period on"
-            />
-            <FormSelect
-              name="installmentNo"
-              label="Installment No."
-              options={
-                data?.loanAccount?.getLoanInstallments
-                  ? data?.loanAccount.getLoanInstallments?.data?.installments?.map(
-                      (installment) => ({
-                        label: installment?.installmentNo as number,
-                        value: installment?.installmentNo as number,
-                      })
-                    )
-                  : [
-                      {
-                        label: 1,
-                        value: 1,
-                      },
-                    ]
-              }
-            />
+      {(isOpen || gracePeriod?.interestGracePeriod || gracePeriod?.principalGracePeriod) && (
+        <Box bg="background.500" p="s16" display="flex" flexDir="column" alignItems="end">
+          <Box alignContent="end">
+            <IconButton
+              aria-label="close"
+              variant="ghost"
+              onClick={() => {
+                setValue('gracePeriod', {
+                  principalGracePeriod: null,
+                  interestGracePeriod: null,
+                });
+
+                setIsOpen(false);
+              }}
+            >
+              <Icon as={IoClose} />
+            </IconButton>
           </Box>
-        </FormProvider>
-      </ChakraModal>
+          <Box w="100%" display="flex" alignItems="center" gap="s16">
+            <Box w="50%">
+              <FormInput
+                label="Grace Period On Principal"
+                name="gracePeriod.principalGracePeriod"
+                type="number"
+              />
+            </Box>
+
+            <Box w="50%">
+              <FormInput
+                label="Grace Period On Interest"
+                name="gracePeriod.interestGracePeriod"
+                type="number"
+              />
+            </Box>
+          </Box>
+        </Box>
+      )}
 
       {data && data?.loanAccount.getLoanInstallments?.data?.installments && (
         <Table<LoanInstallment>

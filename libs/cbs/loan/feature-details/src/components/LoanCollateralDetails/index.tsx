@@ -4,21 +4,7 @@ import { DetailsCard } from '@coop/shared/ui';
 import { useLoanDetails } from '../../hooks/useLoanDetails';
 
 export const LoanCollateralDetails = () => {
-  const { loan } = useLoanDetails();
-
-  const collaterals =
-    loan?.collateralData?.map((collateral) => ({
-      name: collateral?.ownerName,
-      valuation: collateral?.valuationAmount,
-    })) ?? [];
-
-  const guarentees =
-    loan?.gurantee_details?.map((guarantee) => ({
-      name: guarantee?.accountName,
-      valuation: guarantee?.guranteeAmount,
-    })) ?? [];
-
-  const finalData = [...collaterals, ...guarentees].map((d, index) => ({ id: index + 1, ...d }));
+  const { loanPreview } = useLoanDetails();
 
   return (
     <DetailsCard
@@ -26,9 +12,9 @@ export const LoanCollateralDetails = () => {
       title="Collateral and Guarantee Details"
       subTitle="Details about the valuation for loan amount"
     >
-      {finalData.length !== 0 && (
+      {loanPreview?.collateralAndGuarantees && loanPreview?.collateralAndGuarantees?.length !== 0 && (
         <Table
-          data={finalData}
+          data={loanPreview?.collateralAndGuarantees}
           variant="report"
           size="small"
           isStatic

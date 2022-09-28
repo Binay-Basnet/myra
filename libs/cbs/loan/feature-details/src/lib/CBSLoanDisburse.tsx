@@ -44,7 +44,7 @@ const paymentModes = [
 ];
 
 export const CBSLoanDisburse = () => {
-  const { loan } = useLoanDetails();
+  const { loanPreview } = useLoanDetails();
   const [mode, setMode] = useState<'details' | 'payment'>('details');
 
   const continueToPayment = () => {
@@ -61,7 +61,10 @@ export const CBSLoanDisburse = () => {
             <FormFooter
               mainButtonLabel="Disburse Loan"
               mainButtonHandler={continueToPayment}
-              status={`Total Sanctioned Amount: ${loan?.totalSanctionedAmount}`}
+              status={`Total Disbursed Amount: ${
+                Number(loanPreview?.loanDetails?.totalSanctionedAmount ?? 0) -
+                Number(loanPreview?.loanDetails?.totalProcessingChargesValuation ?? 0)
+              }`}
             />
           </Box>
         </LoanListLayout>
@@ -84,7 +87,6 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
   const id = String(router?.query?.['id']);
 
   const disburseLoan = () => {
-    // TODO! CALL API HEREi
 
     const values = getValues();
     let filteredValues = {
@@ -100,8 +102,8 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
     asyncToast({
       id: 'loan-account-disperse-id',
       msgs: {
-        success: 'Loan has been Dispersed',
-        loading: 'Dispercing Loan',
+        success: 'Loan has been Disbursed',
+        loading: 'Disbursing Loan',
       },
       onSuccess: () => router.push('/loan/accounts'),
       promise: mutateAsync({
@@ -119,12 +121,12 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
   };
   const { data: bankList } = useGetBankListQuery();
 
-  const { loan } = useLoanDetails();
-  const memberId = loan?.memberId as string;
+  const { loanPreview } = useLoanDetails();
+  const memberId = loanPreview?.memberId as string;
   const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
     useGetIndividualMemberDetails({ memberId });
 
-  const productId = loan?.productId as string;
+  const productId = loanPreview?.productId as string;
 
   return (
     <Container minW="container.xl" p="0" bg="white">
@@ -235,40 +237,32 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
                         Applied Loan Amount
                       </Text>
                       <Text fontSize="s2" fontWeight="600">
-                        {loan?.appliedLoanAmount}{' '}
+                        {loanPreview?.loanDetails?.totalSanctionedAmount}{' '}
                       </Text>
                     </Box>
-                    <Box display="flex" flexDirection="row" justifyContent="space-between">
-                      <Text fontSize="s3" fontWeight="400">
-                        Form Charge{' '}
-                      </Text>
-                      <Text fontSize="s2" fontWeight="600" color="danger.500">
-                        100{' '}
-                      </Text>
-                    </Box>
-                    <Box display="flex" flexDirection="row" justifyContent="space-between">
-                      <Text fontSize="s3" fontWeight="400">
-                        Application Processing Fees{' '}
-                      </Text>
-                      <Text fontSize="s2" fontWeight="600" color="danger.500">
-                        100{' '}
-                      </Text>
-                    </Box>
-                    <Box display="flex" flexDirection="row" justifyContent="space-between">
-                      <Text fontSize="s3" fontWeight="400">
-                        Supporting Fees{' '}
-                      </Text>
-                      <Text fontSize="s2" fontWeight="600" color="danger.500">
-                        100{' '}
-                      </Text>
-                    </Box>
+                    {loanPreview?.loanDetails?.processingCharges?.map((charge) => (
+                      <Box
+                        display="flex"
+                        flexDirection="row"
+                        justifyContent="space-between"
+                        key={charge?.name}
+                      >
+                        <Text fontSize="s3" fontWeight="400">
+                          {charge?.name}
+                        </Text>
+                        <Text fontSize="s2" fontWeight="600" color="danger.500">
+                          {charge?.amount}{' '}
+                        </Text>
+                      </Box>
+                    ))}
                   </Box>
                   <Box display="flex" justifyContent="space-between" p="s8" bg="border.layout">
                     <Text fontSize="s3" fontWeight="400">
                       Total Disbursed Amount{' '}
                     </Text>
                     <Text fontSize="s2" fontWeight="600">
-                      99700
+                      {Number(loanPreview?.loanDetails?.totalSanctionedAmount) -
+                        Number(loanPreview?.loanDetails?.totalProcessingChargesValuation)}
                     </Text>
                   </Box>
                 </Box>
@@ -287,7 +281,6 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
               variant="outline"
               leftIcon={<IoChevronBackOutline />}
             >
-              {' '}
               Previous
             </Button>
           }

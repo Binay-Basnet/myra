@@ -1,19 +1,68 @@
+import { Table } from '@coop/shared/table';
 import { DetailsCard } from '@coop/shared/ui';
 
-import { LoanPaymentScheduleTable } from '../LoanPaymentScheduleTable';
 import { useLoanDetails } from '../../hooks/useLoanDetails';
 
 export const LoanPaymentSchedule = () => {
-  const { loan } = useLoanDetails();
+  const { loanPreview } = useLoanDetails();
   return (
     <DetailsCard title="Payment Schedule" hasTable>
-      <LoanPaymentScheduleTable
-        tenure={loan?.tenure}
-        gracePeriod={loan?.gracePeriod}
-        interest={loan?.intrestRate}
-        productId={loan?.productId}
-        sanctionAmount={loan?.totalSanctionedAmount}
-        repaymentScheme={loan?.repaymentScheme}
+      <Table
+        variant="report"
+        size="small"
+        isStatic
+        showFooter
+        data={loanPreview?.paymentSchedule?.installments ?? []}
+        columns={[
+          {
+            header: 'Installment No.',
+            footer: 'Total Cost of Loan',
+            accessorKey: 'installmentNo',
+            meta: {
+              Footer: {
+                colspan: 4,
+              },
+            },
+          },
+          {
+            header: 'Principal',
+            accessorKey: 'principal',
+            meta: {
+              isNumeric: true,
+              Footer: {
+                display: 'none',
+              },
+            },
+          },
+          {
+            header: 'Interest',
+            accessorKey: 'interest',
+            meta: {
+              isNumeric: true,
+              Footer: {
+                display: 'none',
+              },
+            },
+          },
+          {
+            header: 'Payment',
+            accessorKey: 'payment',
+            meta: {
+              isNumeric: true,
+              Footer: {
+                display: 'none',
+              },
+            },
+          },
+          {
+            header: 'Remaining Principal',
+            footer: loanPreview?.paymentSchedule?.total,
+            accessorKey: 'remainingPrincipal',
+            meta: {
+              isNumeric: true,
+            },
+          },
+        ]}
       />
     </DetailsCard>
   );

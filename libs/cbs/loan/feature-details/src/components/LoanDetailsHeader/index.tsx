@@ -7,15 +7,15 @@ interface ILoanDetailsHeaderProps {
 }
 
 export const LoanDetailsHeader = ({ title }: ILoanDetailsHeaderProps) => {
-  const { member } = useLoanDetails();
+  const { loanPreview } = useLoanDetails();
 
   return (
     <Box position="sticky" top="110px">
       <DetailPageHeader
         title={title}
         member={{
-          name: member?.name?.local as string,
-          profilePicUrl: member?.profilePicUrl as string,
+          name: loanPreview?.member?.name?.local as string,
+          profilePicUrl: loanPreview?.member?.profilePicUrl as string,
         }}
       />
     </Box>
