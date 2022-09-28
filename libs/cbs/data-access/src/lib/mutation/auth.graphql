@@ -33,3 +33,14 @@ mutation refresh($refreshToken: String!) {
     }
   }
 }
+
+mutation resetPassword($userId: String!, $newPassword: String!) {
+  user {
+    resetPassword(data: { userId: $userId, newPassword: $newPassword }) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

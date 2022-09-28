@@ -1,9 +1,12 @@
 import React, { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { BiArrowBack } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 
+import { useResetPasswordMutation } from '@coop/cbs/data-access';
 import { Box, Button, ChangePasswordLayout, Icon, PasswordInput, Text } from '@coop/shared/ui';
+import { useAppSelector } from '@coop/shared/utils';
 
 const Container = ({ children }) => {
   const route = useRouter();
@@ -51,11 +54,17 @@ const errorText = (type) => {
 };
 
 const ChangePassword = () => {
-  const [success] = React.useState(false);
+  const route = useRouter();
+  const [success, setSuccess] = React.useState(false);
   const { register, handleSubmit, formState } = useForm();
+  const { mutateAsync } = useResetPasswordMutation();
+  const userId = useAppSelector((state) => state?.auth?.user?.id);
+
   const onSubmit = (data) => {
     if (data?.password === data?.cpassword) {
-      // alert('password matched');
+      mutateAsync({ userId, newPassword: data?.password }).then(() => setSuccess(true));
+    } else {
+      toast('Password did not match');
     }
   };
   const passwordError = formState?.errors?.password;
@@ -75,9 +84,6 @@ const ChangePassword = () => {
             <Box>
               <PasswordInput label="New Password" register={register} fieldName="password" />
               {passwordError && errorText(passwordError?.type)}
-              {/* <Text fontSize="s2">
-                Password must be 8 characters,1 lowercase, 1 uppercase and 1 special character
-              </Text> */}
             </Box>
             <Box>
               <PasswordInput label="Confirm Password" register={register} fieldName="cpassword" />
@@ -94,7 +100,14 @@ const ChangePassword = () => {
       <Text fontSize="l1" fontWeight="medium">
         Password Updated Successfully!
       </Text>
-      <Button>Proceed to login</Button>
+      <Button
+        onClick={() => {
+          localStorage.clear();
+          route.push('/login');
+        }}
+      >
+        Proceed to login
+      </Button>
     </Container>
   );
 };

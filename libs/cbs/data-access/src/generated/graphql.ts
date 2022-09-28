@@ -7977,7 +7977,6 @@ export type ReportResult = {
 };
 
 export type ResetPasswordData = {
-  confirmPassword: Scalars['String'];
   newPassword: Scalars['String'];
   userId: Scalars['String'];
 };
@@ -9256,6 +9255,26 @@ export type RefreshMutation = {
   auth: {
     token?: {
       token?: { access: string; refresh: string } | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
+export type ResetPasswordMutationVariables = Exact<{
+  userId: Scalars['String'];
+  newPassword: Scalars['String'];
+}>;
+
+export type ResetPasswordMutation = {
+  user: {
+    resetPassword?: {
+      recordId?: string | null;
       error?:
         | MutationError_AuthorizationError_Fragment
         | MutationError_BadRequestError_Fragment
@@ -14926,6 +14945,31 @@ export const useRefreshMutation = <TError = unknown, TContext = unknown>(
   useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
     ['refresh'],
     useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
+    options
+  );
+export const ResetPasswordDocument = `
+    mutation resetPassword($userId: String!, $newPassword: String!) {
+  user {
+    resetPassword(data: {userId: $userId, newPassword: $newPassword}) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useResetPasswordMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ResetPasswordMutation,
+    TError,
+    ResetPasswordMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ResetPasswordMutation, TError, ResetPasswordMutationVariables, TContext>(
+    ['resetPassword'],
+    useAxios<ResetPasswordMutation, ResetPasswordMutationVariables>(ResetPasswordDocument),
     options
   );
 export const AddNewAccountInCoaDocument = `
