@@ -1,13 +1,13 @@
 import { useFormContext } from 'react-hook-form';
 
 import { DepositedBy, DepositPaymentType, useGetBankListQuery } from '@coop/cbs/data-access';
-import { AgentSelect } from '@coop/cbs/transactions/ui-components';
 import {
   BoxContainer,
   ContainerWithDivider,
   InputGroupContainer,
 } from '@coop/cbs/transactions/ui-containers';
 import {
+  FormAgentSelect,
   FormEditableTable,
   FormFileInput,
   FormInput,
@@ -337,7 +337,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
 
         {depositedBy === DepositedBy.Agent && (
           <InputGroupContainer>
-            <AgentSelect name="agentId" label={t['depositPaymentMarketRepresentative']} />
+            <FormAgentSelect name="agentId" label={t['depositPaymentMarketRepresentative']} />
           </InputGroupContainer>
         )}
 

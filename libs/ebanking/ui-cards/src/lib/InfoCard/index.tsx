@@ -1,15 +1,24 @@
 import React from 'react';
 
-import { Box, Divider, Text, VStack } from '@coop/shared/ui';
+import { Box, Button, Divider, Text, VStack } from '@coop/shared/ui';
 
 export interface InfoCardProps {
   title: string;
   subtitle?: string;
   children?: React.ReactNode;
   btn?: React.ReactNode;
+  footerButtonLabel?: string;
+  footerButtonHandler?: () => void;
 }
 
-export const InfoCard = ({ title, subtitle, children, btn }: InfoCardProps) => (
+export const InfoCard = ({
+  title,
+  subtitle,
+  children,
+  btn,
+  footerButtonLabel,
+  footerButtonHandler,
+}: InfoCardProps) => (
   <VStack
     width="100%"
     bg="white"
@@ -39,6 +48,11 @@ export const InfoCard = ({ title, subtitle, children, btn }: InfoCardProps) => (
       {btn}
     </Box>
     <Box width="100%">{children}</Box>
+    {footerButtonLabel && footerButtonHandler && (
+      <Box p="s16">
+        <Button onClick={footerButtonHandler}>{footerButtonLabel}</Button>
+      </Box>
+    )}
   </VStack>
 );
 

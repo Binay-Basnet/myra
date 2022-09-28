@@ -1,6 +1,7 @@
 overwrite: true
 schema: ${NX_SCHEMA_PATH}
-documents: 'libs/ebanking/data-access/src/lib/**/*.graphql'
+documents:
+  ['libs/ebanking/data-access/src/lib/**/*.graphql', 'libs/cbs/data-access/src/lib/**/*.graphql']
 watch: true
 generates:
   libs/ebanking/data-access/src/generated/graphql.ts:

@@ -1,10 +1,9 @@
 import { ReactElement } from 'react';
 
+import { EBankingFeatureAllChequeRequests } from '@coop/ebanking/coop';
 import { EbankingMainLayout } from '@coop/ebanking/ui-layout';
 
-import Temp from '../../temp';
-
-const COOPAllChequePage = () => <Temp />;
+const COOPAllChequePage = () => <EBankingFeatureAllChequeRequests />;
 
 COOPAllChequePage.getLayout = function (page: ReactElement) {
   return <EbankingMainLayout>{page}</EbankingMainLayout>;

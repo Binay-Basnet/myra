@@ -14,6 +14,7 @@ import {
 } from '@coop/cbs/data-access';
 import { GroupContainer, InputGroupContainer } from '@coop/cbs/settings/ui-containers';
 import {
+  FormBranchSelect,
   FormCheckboxGroup,
   FormEmailInput,
   FormFileInput,
@@ -35,8 +36,6 @@ import {
   Text,
 } from '@coop/shared/ui';
 import { RootState, useAppSelector, useTranslation } from '@coop/shared/utils';
-
-import { BranchSelect } from '../components';
 
 /* eslint-disable-next-line */
 export interface AddUserProps {}
@@ -284,10 +283,9 @@ export const AddUser = () => {
                   options={roleOptions}
                 />
 
-                <BranchSelect
+                <FormBranchSelect
                   name="branch"
                   label="Service Center"
-                  __placeholder="Select Service Center"
                   isDisabled={role === Roles.Superadmin}
                 />
               </FormSection>

@@ -5,15 +5,14 @@ import { Roles, useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { getRouterQuery } from '@coop/shared/utils';
 
-interface IAgentSelectProps {
+interface IFormAgentSelectProps {
   name: string;
   label: string;
-  __placeholder?: string;
 }
 
 type OptionType = { label: string; value: string };
 
-export const AgentSelect = ({ name, label, __placeholder }: IAgentSelectProps) => {
+export const FormAgentSelect = ({ name, label }: IFormAgentSelectProps) => {
   const [agentId, setAgentId] = useState('');
   const [trigger, setTrigger] = useState(false);
 
@@ -30,10 +29,6 @@ export const AgentSelect = ({ name, label, __placeholder }: IAgentSelectProps) =
       enabled: trigger,
     }
   );
-
-  // useEffect(() => {
-  //   setAgentId(watch(name));
-  // }, [watch(name)]);
 
   const agentList = agentListQueryData?.settings?.myraUser?.list?.edges;
 
@@ -53,7 +48,6 @@ export const AgentSelect = ({ name, label, __placeholder }: IAgentSelectProps) =
       name={name}
       label={label}
       isLoading={isFetching}
-      __placeholder={__placeholder}
       onInputChange={debounce((id) => {
         if (id) {
           setAgentId(id);
@@ -64,3 +58,5 @@ export const AgentSelect = ({ name, label, __placeholder }: IAgentSelectProps) =
     />
   );
 };
+
+export default FormAgentSelect;

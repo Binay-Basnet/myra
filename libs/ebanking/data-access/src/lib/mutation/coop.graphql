@@ -1,0 +1,38 @@
+mutation setChequeRequestData($memberID: String!, $data: EBankingChequeRequestInput) {
+  eBanking {
+    cooperativeServices {
+      cheque {
+        request(memberID: $memberID, data: $data) {
+          recordID
+        }
+      }
+    }
+  }
+}
+
+mutation setWithdrawViaCollectorRequestData(
+  $memberID: String!
+  $data: EBankingChequeWithdrawViaCollectorInput
+) {
+  eBanking {
+    cooperativeServices {
+      cheque {
+        withdrawViaCollector(memberID: $memberID, data: $data) {
+          recordID
+        }
+      }
+    }
+  }
+}
+
+mutation setBlockChequeRequestData($memberID: String!, $data: EBankingChequeBlockInput) {
+  eBanking {
+    cooperativeServices {
+      cheque {
+        block(memberID: $memberID, data: $data) {
+          recordID
+        }
+      }
+    }
+  }
+}

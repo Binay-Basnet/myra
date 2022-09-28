@@ -9,11 +9,15 @@ import {
   UserGender,
   useSetSettingsUserDataMutation,
 } from '@coop/cbs/data-access';
-import { FormEmailInput, FormInput, FormPhoneNumber, FormSelect } from '@coop/shared/form';
+import {
+  FormBranchSelect,
+  FormEmailInput,
+  FormInput,
+  FormPhoneNumber,
+  FormSelect,
+} from '@coop/shared/form';
 import { asyncToast, Box, ChakraModal, Grid } from '@coop/shared/ui';
 import { setAddUserData, useAppDispatch } from '@coop/shared/utils';
-
-import { BranchSelect } from './BranchSelect';
 
 interface INewUserModalProps {
   isOpen: boolean;
@@ -120,17 +124,11 @@ export const NewUserModal = ({ isOpen, onClose, refetchUserList }: INewUserModal
               <FormEmailInput name="email" label="Email" __placeholder="Email" />
             </Grid>
 
-            <FormSelect
-              name="role"
-              label="Role"
-              __placeholder="Select Role"
-              options={roleOptions}
-            />
+            <FormSelect name="role" label="Role" options={roleOptions} />
 
-            <BranchSelect
+            <FormBranchSelect
               name="branch"
               label="Service Center"
-              __placeholder="Select Service Center"
               isDisabled={role === Roles.Superadmin}
             />
           </Box>

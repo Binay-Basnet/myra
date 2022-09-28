@@ -1,13 +1,13 @@
 import { useFormContext } from 'react-hook-form';
 
 import { useGetBankListQuery, WithdrawBy, WithdrawPaymentType } from '@coop/cbs/data-access';
-import { AgentSelect } from '@coop/cbs/transactions/ui-components';
 import {
   BoxContainer,
   ContainerWithDivider,
   InputGroupContainer,
 } from '@coop/cbs/transactions/ui-containers';
 import {
+  FormAgentSelect,
   FormEditableTable,
   FormFileInput,
   FormInput,
@@ -278,7 +278,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
 
         {withdrawnBy === WithdrawBy.Agent && (
           <InputGroupContainer>
-            <AgentSelect name="agentId" label={t['withdrawPaymentMarketRepresentative']} />
+            <FormAgentSelect name="agentId" label={t['withdrawPaymentMarketRepresentative']} />
           </InputGroupContainer>
         )}
       </BoxContainer>

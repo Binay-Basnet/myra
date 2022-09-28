@@ -1,12 +1,13 @@
-import React, { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { Provider } from 'react-redux';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ChakraProvider } from '@chakra-ui/react';
 
-import { theme } from '@coop/shared/utils';
+import { store, theme } from '@coop/shared/utils';
 
 import './styles.css';
 
@@ -44,14 +45,23 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       </Head>
       <QueryClientProvider client={queryClient}>
         <ChakraProvider theme={theme}>
-          <main suppressHydrationWarning>
-            {getLayout(<Component {...pageProps} />)}
-          </main>
+          <main suppressHydrationWarning>{getLayout(<Component {...pageProps} />)}</main>
         </ChakraProvider>
         <ReactQueryDevtools />
       </QueryClientProvider>
     </>
   );
-}
+};
 
-export default App;
+const CustomApp = (props: AppPropsWithLayout) => (
+  <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider theme={theme}>
+        <App {...props} />
+      </ChakraProvider>
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  </Provider>
+);
+
+export default CustomApp;

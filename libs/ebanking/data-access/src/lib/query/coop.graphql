@@ -52,3 +52,30 @@ query getCoopDownloads {
     }
   }
 }
+
+query getCoopPastChequeRequests($memberId: ID!, $filter: EBankingCooperativeServiceFilter) {
+  eBanking {
+    cooperativeServices {
+      cheque {
+        pastRequests(memberId: $memberId, filter: $filter) {
+          id
+          typeOfRequest
+          chequeRequestType
+          branch {
+            name
+          }
+          createdDate
+          serviceStatus
+          collector {
+            name
+          }
+          withdrawAmount
+          withdrawDate
+          chequeBlockReason
+          chequeBlockNumber
+          status
+        }
+      }
+    }
+  }
+}
