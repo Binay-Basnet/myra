@@ -15,11 +15,6 @@ const tabList: TabList[] = [
     to: '/settings/general/audit-log',
   },
   {
-    title: 'serviceCenterSettings',
-    to: '/settings/general/service-center',
-  },
-
-  {
     title: 'settingsSideBarChartsOfAccounts',
     to: '/settings/general/charts-of-accounts',
   },
@@ -49,10 +44,13 @@ const tabList: TabList[] = [
     to: '/settings/general/organization',
   },
   {
+    title: 'serviceCenterSettings',
+    to: '/settings/general/service-center',
+  },
+  {
     title: 'settingsSideBarShare',
     to: '/settings/general/share',
   },
-
   {
     title: 'settingsSideBarValuator',
     to: '/settings/general/valuator/list',

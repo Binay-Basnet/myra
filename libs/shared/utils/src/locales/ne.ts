@@ -3119,6 +3119,16 @@ const ne: Record<string, string> = {
 
   // audit log
   settingsAuditLog: 'Audit Log',
+
+  // change password
+  backText: 'Back',
+  passwordRecoveryText: 'Password Recovery',
+  enterNewPasswordText: 'Please enter your new password',
+  newPasswordText: 'New Password',
+  confirmPasswordText: 'Confirm Password',
+  updatePasswordText: 'Update Password',
+  passwordUpdatedText: 'Password Updated Successfully',
+  proceedToLoginText: 'Proceed to login',
 };
 
 export default ne;

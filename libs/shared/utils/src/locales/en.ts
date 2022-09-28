@@ -2769,7 +2769,7 @@ const en: Record<string, string> = {
   depositProductPenaltyType: 'Penalty Type',
   depositProductFlatRate: 'Flat Rate',
   depositProductRelativeRate: 'Relative Rate',
-  depositProductDayaftertheinstallmentdate: 'Day before the installment date',
+  depositProductDayaftertheinstallmentdate: 'Day after the installment date',
   depositProductEffectiveDaysFromStart: 'Effective Days From Start',
   depositProductRemainingDaystoGetMatured: 'Remaining Days to Get Matured',
   depositProductForeignEmployment: 'Foreign Employment',
@@ -3487,5 +3487,15 @@ const en: Record<string, string> = {
 
   // audit log
   settingsAuditLog: 'Audit Log',
+
+  // change password
+  backText: 'Back',
+  passwordRecoveryText: 'Password Recovery',
+  enterNewPasswordText: 'Please enter your new password',
+  newPasswordText: 'New Password',
+  confirmPasswordText: 'Confirm Password',
+  updatePasswordText: 'Update Password',
+  passwordUpdatedText: 'Password Updated Successfully',
+  proceedToLoginText: 'Proceed to login',
 };
 export default en;

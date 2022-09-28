@@ -6,9 +6,10 @@ import { useRouter } from 'next/router';
 
 import { useResetPasswordMutation } from '@coop/cbs/data-access';
 import { Box, Button, ChangePasswordLayout, Icon, PasswordInput, Text } from '@coop/shared/ui';
-import { useAppSelector } from '@coop/shared/utils';
+import { useAppSelector, useTranslation } from '@coop/shared/utils';
 
 const Container = ({ children }) => {
+  const { t } = useTranslation();
   const route = useRouter();
   return (
     <Box
@@ -23,7 +24,7 @@ const Container = ({ children }) => {
     >
       <Box display="flex" gap={2} alignItems="center" cursor="pointer" onClick={() => route.back()}>
         <Icon as={BiArrowBack} size="sm" />
-        <Text fontSize="r1">Back</Text>
+        <Text fontSize="r1">{t['backText']}</Text>
       </Box>
       {children}
     </Box>
@@ -55,6 +56,7 @@ const errorText = (type) => {
 
 const ChangePassword = () => {
   const route = useRouter();
+  const { t } = useTranslation();
   const [success, setSuccess] = React.useState(false);
   const { register, handleSubmit, formState } = useForm();
   const { mutateAsync } = useResetPasswordMutation();
@@ -75,21 +77,29 @@ const ChangePassword = () => {
       <Container>
         <Box>
           <Text fontSize="l1" fontWeight="medium">
-            Password Recovery
+            {t['passwordRecoveryText']}
           </Text>
-          <Text fontSize="r1">Please enter your new password.</Text>
+          <Text fontSize="r1">{t['enterNewPasswordText']}</Text>
         </Box>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box display="flex" flexDir="column" gap="s32">
             <Box>
-              <PasswordInput label="New Password" register={register} fieldName="password" />
+              <PasswordInput
+                label={t['newPasswordText']}
+                register={register}
+                fieldName="password"
+              />
               {passwordError && errorText(passwordError?.type)}
             </Box>
             <Box>
-              <PasswordInput label="Confirm Password" register={register} fieldName="cpassword" />
+              <PasswordInput
+                label={t['confirmPasswordText']}
+                register={register}
+                fieldName="cpassword"
+              />
               {cPasswordError && errorText(cPasswordError?.type)}
             </Box>
-            <Button type="submit">Update Password</Button>
+            <Button type="submit">{t['updatePasswordText']}</Button>
           </Box>
         </form>
       </Container>
@@ -98,7 +108,7 @@ const ChangePassword = () => {
   return (
     <Container>
       <Text fontSize="l1" fontWeight="medium">
-        Password Updated Successfully!
+        {t['passwordUpdatedText']}
       </Text>
       <Button
         onClick={() => {
@@ -106,7 +116,7 @@ const ChangePassword = () => {
           route.push('/login');
         }}
       >
-        Proceed to login
+        {t['proceedToLoginText']}
       </Button>
     </Container>
   );
