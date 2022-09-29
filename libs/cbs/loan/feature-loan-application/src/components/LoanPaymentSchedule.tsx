@@ -38,7 +38,12 @@ export const LoanPaymentSchedule = () => {
       tenure: Number(tenure),
       sanctionAmount: Number(sanctionAmount),
       repaymentScheme: repaymentScheme ?? LoanRepaymentScheme.Emi,
-      gracePeriod: gracePeriod ?? null,
+      gracePeriod: gracePeriod
+        ? {
+            interestGracePeriod: Number(gracePeriod?.interestGracePeriod) ?? null,
+            principalGracePeriod: Number(gracePeriod?.principalGracePeriod) ?? null,
+          }
+        : null,
     },
     {
       enabled: trigger,
@@ -119,7 +124,7 @@ export const LoanPaymentSchedule = () => {
         </Box>
       )}
 
-      {data && data?.loanAccount.getLoanInstallments?.data?.installments && (
+      {data && data?.loanAccount?.getLoanInstallments?.data?.installments && (
         <Table<LoanInstallment>
           variant="report"
           size="small"
