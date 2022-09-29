@@ -3497,5 +3497,8 @@ const en: Record<string, string> = {
   updatePasswordText: 'Update Password',
   passwordUpdatedText: 'Password Updated Successfully',
   proceedToLoginText: 'Proceed to login',
+  depositProductDaybeforetheinstallmentdate: 'Day before the installment date',
+  effectiveDaysFromStart: 'Effective Days From Start',
+  remainingDaysToGetMatured: 'Remaining Days To Get Matured',
 };
 export default en;
