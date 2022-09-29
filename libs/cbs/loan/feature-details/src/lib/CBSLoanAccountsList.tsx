@@ -24,10 +24,10 @@ export const LoanAccountList = () => {
 
   return (
     <>
-      <PageHeader heading="Loan Application List" />
+      <PageHeader heading="Loan Accounts List" />
       <LoanTable
         data={data}
-        viewLink="/loan/applications/view"
+        viewLink="/loan/accounts/view"
         isLoading={isFetching}
         type={(router.query['objState'] ?? ObjState.Approved) as LoanObjState}
       />

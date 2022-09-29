@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
-import { LoanAccountList } from '@coop/cbs/loan/details';
 import { LoanListLayout } from '@coop/cbs/loan/layouts';
+import { LoanAccountList } from '@coop/cbs/loan/lists';
 import { MainLayout } from '@coop/shared/ui';
 
 const LoanAccounts = () => <LoanAccountList />;

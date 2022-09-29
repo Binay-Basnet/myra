@@ -9,3 +9,4 @@ export * from './LoanPaymentSchedule';
 export * from './LoanPaymentScheduleTable';
 export * from './LoanProdcutDetails';
 export * from './LoanProductSummary';
+export * from './LoanStatistics';

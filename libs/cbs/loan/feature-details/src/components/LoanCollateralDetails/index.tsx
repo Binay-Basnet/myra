@@ -18,7 +18,7 @@ export const LoanCollateralDetails = () => {
     >
       {loanPreview?.collateralAndGuarantees && loanPreview?.collateralAndGuarantees?.length !== 0 && (
         <Table
-          data={loanPreview?.collateralAndGuarantees}
+          data={loanPreview?.collateralAndGuarantees.map((d, index) => ({ ...d, id: index + 1 }))}
           variant="report"
           size="small"
           isStatic

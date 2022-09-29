@@ -1246,6 +1246,11 @@ export type CooperativeBodDetails = {
   temporaryLongitude?: Maybe<Scalars['String']>;
 };
 
+export type CooperativeConnectInput = {
+  cooperativeId?: InputMaybe<Scalars['ID']>;
+  mobileNo?: InputMaybe<Scalars['String']>;
+};
+
 export type CooperativeDeclaration = {
   accountHolderdocuments?: Maybe<Array<Maybe<CooperativeDocuments>>>;
   accountHoldersName?: Maybe<Scalars['String']>;
@@ -1271,6 +1276,12 @@ export type CooperativeEconomicDetails = {
   reserveAndSurplus?: Maybe<Scalars['Float']>;
   savingDeposit?: Maybe<Scalars['Float']>;
   shareCapital?: Maybe<Scalars['Float']>;
+};
+
+export type CooperativeInformation = {
+  cooperativeId?: Maybe<Scalars['ID']>;
+  id: Scalars['ID'];
+  mobileNo?: Maybe<Scalars['String']>;
 };
 
 export type CooperativeMember = {
@@ -2422,6 +2433,46 @@ export type EBankingApplyLoanResult = {
   recordID: Scalars['ID'];
 };
 
+export type EBankingAuthMutation = {
+  connectCoop?: Maybe<EbankingCooperativeResult>;
+  getNewtoken?: Maybe<AuthTokenResult>;
+  login?: Maybe<EbankingLoginResult>;
+  resendOtp?: Maybe<EbankingOtpResult>;
+  setPassword?: Maybe<EbankingPasswordResult>;
+  signUp?: Maybe<EbankingSignUpResult>;
+  verifyOtp?: Maybe<EbankingOtpResult>;
+};
+
+export type EBankingAuthMutationConnectCoopArgs = {
+  data?: InputMaybe<CooperativeConnectInput>;
+  userID: Scalars['ID'];
+};
+
+export type EBankingAuthMutationGetNewtokenArgs = {
+  refreshToken: Scalars['String'];
+};
+
+export type EBankingAuthMutationLoginArgs = {
+  data: EbankingLoginInput;
+};
+
+export type EBankingAuthMutationResendOtpArgs = {
+  mobile: Scalars['String'];
+};
+
+export type EBankingAuthMutationSetPasswordArgs = {
+  data: EbankingPasswordInput;
+  userID: Scalars['ID'];
+};
+
+export type EBankingAuthMutationSignUpArgs = {
+  mobileNo: Scalars['String'];
+};
+
+export type EBankingAuthMutationVerifyOtpArgs = {
+  data: EbankingOtpInput;
+};
+
 export type EBankingChequeBlockInput = {
   chequeNumber?: InputMaybe<Scalars['String']>;
   reason?: InputMaybe<Scalars['String']>;
@@ -2960,6 +3011,7 @@ export type EBankingLoanQueryHistoryArgs = {
 };
 
 export type EBankingMutation = {
+  auth?: Maybe<EBankingAuthMutation>;
   cooperativeServices?: Maybe<EBankingCooperativeServiceMutation>;
   kym?: Maybe<EBankingKymMutation>;
   utilityPayment: UtilityPayemntMutation;
@@ -3020,9 +3072,60 @@ export type EBankingTransactionQueryRecentArgs = {
   filter?: InputMaybe<RecentTransactionFilter>;
 };
 
+export type EbankingCooperative = {
+  cooperativeId?: Maybe<Scalars['ID']>;
+  id: Scalars['ID'];
+  mobileNo?: Maybe<Scalars['String']>;
+};
+
+export type EbankingCooperativeResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<EbankingCooperative>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type EbankingLoanHistoryData = {
   data?: Maybe<Array<Maybe<EBankingLoanHistory>>>;
   error?: Maybe<QueryError>;
+};
+
+export type EbankingLoginInput = {
+  mobileNo: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type EbankingLoginRecord = {
+  data?: Maybe<EbankingUser>;
+  token: AuthToken;
+};
+
+export type EbankingLoginResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<EbankingLoginRecord>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type EbankingOtpInput = {
+  mobile?: InputMaybe<Scalars['String']>;
+  otp?: InputMaybe<Scalars['Int']>;
+};
+
+export type EbankingOtpResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<EbankingUser>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type EbankingPasswordInput = {
+  dob: Scalars['String'];
+  name: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type EbankingPasswordResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<EbankingUser>;
+  recordId?: Maybe<Scalars['ID']>;
 };
 
 export enum EbankingServiceRequestType {
@@ -3047,6 +3150,26 @@ export type EbankingShareHistory = {
   numberOfShares: Scalars['Int'];
   title: Scalars['String'];
   transactionDirection: Transaction_Direction;
+};
+
+export type EbankingSignUp = {
+  id: Scalars['ID'];
+  mobileNo: Scalars['String'];
+  otp: Scalars['Int'];
+};
+
+export type EbankingSignUpResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<EbankingSignUp>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type EbankingUser = {
+  cooperatives?: Maybe<Array<Maybe<CooperativeInformation>>>;
+  dob?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  mobile?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export type Example = {
@@ -12864,6 +12987,11 @@ export type GetLoanPreviewQuery = {
           totalGuaranteeValuation?: string | null;
           totalProcessingChargesValuation?: string | null;
           totalSanctionedAmount?: string | null;
+          principalGracePeriod?: number | null;
+          interestGracePeriod?: number | null;
+          disburseDate?: string | null;
+          expiryDate?: string | null;
+          paymentFrequency?: LoanProductInstallment | null;
           processingCharges?: Array<{ name?: string | null; amount?: any | null } | null> | null;
         } | null;
         member?: {
@@ -20374,6 +20502,11 @@ export const GetLoanPreviewDocument = `
           totalGuaranteeValuation
           totalProcessingChargesValuation
           totalSanctionedAmount
+          principalGracePeriod
+          interestGracePeriod
+          disburseDate
+          expiryDate
+          paymentFrequency
           processingCharges {
             name
             amount

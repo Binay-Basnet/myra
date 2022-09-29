@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { AiFillCheckCircle } from 'react-icons/ai';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { Box } from '@chakra-ui/react';
@@ -8,7 +9,7 @@ import { omit } from 'lodash';
 import {
   LoanDisbursementInput,
   LoanDisbursementMethod,
-  useGetBankListQuery,
+  useGetCoaBankListQuery,
   useSetDisburseLoanMutation,
 } from '@coop/cbs/data-access';
 import { LoanListLayout } from '@coop/cbs/loan/layouts';
@@ -23,13 +24,20 @@ import {
   FormHeader,
   Grid,
   GridItem,
+  Icon,
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { useGetIndividualMemberDetails } from '@coop/shared/utils';
+import { featureCode, useGetIndividualMemberDetails } from '@coop/shared/utils';
 
 import CBSLoanDetails from './CbsLoanFeatureDetails';
-import { LoanDetailsHeader, LoanProductCard } from '../components';
+import {
+  LoanDetails,
+  LoanDetailsHeader,
+  LoanGeneralInformation,
+  LoanPaymentSchedule,
+  LoanProductCard,
+} from '../components';
 import { useLoanDetails } from '../hooks/useLoanDetails';
 
 const paymentModes = [
@@ -45,37 +53,69 @@ const paymentModes = [
 
 export const CBSLoanDisburse = () => {
   const { loanPreview } = useLoanDetails();
-  const [mode, setMode] = useState<'details' | 'payment'>('details');
+  const [mode, setMode] = useState<'details' | 'payment' | 'success'>('details');
 
   const continueToPayment = () => {
     setMode('payment');
   };
 
+  if (mode === 'success') {
+    return <CBSLoanDisburseSuccess />;
+  }
+
+  if (mode === 'details') {
+    return (
+      <LoanListLayout>
+        <LoanDetailsHeader title="Loan Application List" />
+        <CBSLoanDetails />
+        <Box position="fixed" bottom="0" w="calc(100% - 260px)">
+          <FormFooter
+            mainButtonLabel="Disburse Loan"
+            mainButtonHandler={continueToPayment}
+            status={`Total Disbursed Amount: ${
+              Number(loanPreview?.loanDetails?.totalSanctionedAmount ?? 0) -
+              Number(loanPreview?.loanDetails?.totalProcessingChargesValuation ?? 0)
+            }`}
+          />
+        </Box>
+      </LoanListLayout>
+    );
+  }
+
+  if (mode === 'payment') {
+    return <CBSLoanDisbursePayment setMode={setMode} />;
+  }
+
+  return null;
+};
+
+export const CBSLoanDisburseSuccess = () => {
+  const router = useRouter();
   return (
-    <Box>
-      {mode === 'details' ? (
-        <LoanListLayout>
-          <LoanDetailsHeader title="Loan Application List" />
-          <CBSLoanDetails />
-          <Box position="fixed" bottom="0" w="calc(100% - 260px)">
-            <FormFooter
-              mainButtonLabel="Disburse Loan"
-              mainButtonHandler={continueToPayment}
-              status={`Total Disbursed Amount: ${
-                Number(loanPreview?.loanDetails?.totalSanctionedAmount ?? 0) -
-                Number(loanPreview?.loanDetails?.totalProcessingChargesValuation ?? 0)
-              }`}
-            />
-          </Box>
-        </LoanListLayout>
-      ) : (
-        <CBSLoanDisbursePayment setMode={setMode} />
-      )}
-    </Box>
+    <Container minW="container.lg" p="0" bg="white" pt="50px">
+      <Box display="flex" flexDirection="column" gap="s32" p="s16" minH="calc(100vh - 220px)">
+        <Box display="flex" flexDir="column" justifyContent="center" alignItems="center" gap="s16">
+          <Icon as={AiFillCheckCircle} size="xl" color="primary.500" />
+          <Text fontSize="r2" color="gray.800" fontWeight="600">
+            Loan Disbursed Successfully
+          </Text>
+          <Text fontSize="r1" color="gray.800">
+            Loan Account {router.query['id']} has been disbursed successfully.
+          </Text>
+        </Box>
+        <LoanGeneralInformation />
+        <LoanDetails />
+        <LoanPaymentSchedule />
+      </Box>
+      <Box position="sticky" bottom="0">
+        <FormFooter mainButtonLabel="Done" mainButtonHandler={() => router.push('/loan/account')} />
+      </Box>
+    </Container>
   );
 };
+
 interface IProps {
-  setMode: Dispatch<SetStateAction<'details' | 'payment'>>;
+  setMode: Dispatch<SetStateAction<'details' | 'payment' | 'success'>>;
 }
 export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
   const router = useRouter();
@@ -87,7 +127,6 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
   const id = String(router?.query?.['id']);
 
   const disburseLoan = () => {
-
     const values = getValues();
     let filteredValues = {
       ...values,
@@ -105,7 +144,9 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
         success: 'Loan has been Disbursed',
         loading: 'Disbursing Loan',
       },
-      onSuccess: () => router.push('/loan/accounts'),
+      onSuccess: () => {
+        setMode('success');
+      },
       promise: mutateAsync({
         loanAccountId: id,
         data: {
@@ -119,7 +160,17 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
   const previousButtonHandler = () => {
     setMode('details');
   };
-  const { data: bankList } = useGetBankListQuery();
+
+  const { data: bank } = useGetCoaBankListQuery({
+    accountCode: featureCode.accountCode as string[],
+  });
+
+  const bankListArr = bank?.settings?.chartsOfAccount?.accountsUnder?.data;
+
+  const bankList = bankListArr?.map((item) => ({
+    label: item?.name?.local as string,
+    value: item?.id as string,
+  }));
 
   const { loanPreview } = useLoanDetails();
   const memberId = loanPreview?.memberId as string;
@@ -177,12 +228,7 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
                     <FormSelect
                       name="bankChequePayment.bankAccountId"
                       label="Bank Name"
-                      options={
-                        bankList?.bank?.bank?.list?.map((bank) => ({
-                          label: bank?.name as string,
-                          value: bank?.id as string,
-                        })) ?? []
-                      }
+                      options={bankList}
                     />
                   </GridItem>
                   <FormInput

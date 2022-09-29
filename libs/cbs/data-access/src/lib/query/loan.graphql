@@ -434,6 +434,11 @@ query getLoanPreview($id: String!) {
           totalGuaranteeValuation
           totalProcessingChargesValuation
           totalSanctionedAmount
+          principalGracePeriod
+          interestGracePeriod
+          disburseDate
+          expiryDate
+          paymentFrequency
           processingCharges {
             name
             amount

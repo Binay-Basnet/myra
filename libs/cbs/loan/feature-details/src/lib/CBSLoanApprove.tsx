@@ -42,7 +42,7 @@ export const CBSLoanApprove = () => {
   return (
     <>
       <LoanDetailsHeader title="Loan Application List" />
-      <CBSLoanDetails />
+      <CBSLoanDetails showStats={false} />
       <Box position="fixed" bottom="0" w="calc(100% - 260px)">
         <FormFooter
           mainButtonLabel="Approve"
