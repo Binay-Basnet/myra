@@ -24,8 +24,8 @@ export const LoanProductCard = ({ productId }: IProductProps) => {
       setTriggerQuery(true);
     }
   }, [productId]);
-  const { loan } = useLoanDetails();
-  const loanInterest = loan?.intrestRate;
+  const { loanPreview } = useLoanDetails();
+  const loanInterest = loanPreview?.loanDetails?.interestRate;
 
   return (
     <Box border="1px solid" borderColor="border.layout" borderRadius="br2">
