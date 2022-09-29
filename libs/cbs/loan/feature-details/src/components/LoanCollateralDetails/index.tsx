@@ -6,6 +6,10 @@ import { useLoanDetails } from '../../hooks/useLoanDetails';
 export const LoanCollateralDetails = () => {
   const { loanPreview } = useLoanDetails();
 
+  if (!loanPreview?.collateralAndGuarantees || loanPreview?.collateralAndGuarantees?.length === 0) {
+    return null;
+  }
+
   return (
     <DetailsCard
       hasTable

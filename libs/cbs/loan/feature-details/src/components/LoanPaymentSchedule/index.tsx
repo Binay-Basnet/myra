@@ -5,6 +5,14 @@ import { useLoanDetails } from '../../hooks/useLoanDetails';
 
 export const LoanPaymentSchedule = () => {
   const { loanPreview } = useLoanDetails();
+
+  if (
+    !loanPreview?.paymentSchedule?.installments ||
+    loanPreview?.paymentSchedule?.installments?.length === 0
+  ) {
+    return null;
+  }
+
   return (
     <DetailsCard title="Payment Schedule" hasTable>
       <Table
