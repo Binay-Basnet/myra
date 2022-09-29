@@ -80,6 +80,7 @@ export const SettingsDepositProductsAdd = () => {
   const depositNature = watch('nature');
   const typesOfMember = watch('typeOfMember');
   const isMandatorySaving = watch('isMandatorySaving');
+  const isTenureApplicable = watch('isTenureApplicable');
 
   const submitForm = () => {
     const values = getValues();
@@ -290,8 +291,7 @@ export const SettingsDepositProductsAdd = () => {
                 <DepositFrequency />
               )}
 
-              {(depositNature === NatureOfDepositProduct.Current ||
-                depositNature === NatureOfDepositProduct.RecurringSaving) && (
+              {depositNature === NatureOfDepositProduct.RecurringSaving && (
                 <>
                   {/* <DepositAmount /> */}
                   <Penalty />
@@ -301,9 +301,11 @@ export const SettingsDepositProductsAdd = () => {
 
               {depositNature === NatureOfDepositProduct.TermSavingOrFd && <FixedDepositAmount />}
 
-              {depositNature !== NatureOfDepositProduct.Current && <DefaultAccountName />}
-
               {depositNature !== NatureOfDepositProduct.Current && <Tenure />}
+
+              {((depositNature === NatureOfDepositProduct.RecurringSaving && isTenureApplicable) ||
+                (depositNature === NatureOfDepositProduct.TermSavingOrFd &&
+                  isTenureApplicable)) && <DefaultAccountName />}
 
               {depositNature !== NatureOfDepositProduct.Current && (
                 <>
@@ -321,7 +323,8 @@ export const SettingsDepositProductsAdd = () => {
 
               {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <DormantSetup />}
 
-              <PrematuredPenalty />
+              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <PrematuredPenalty />}
 
               {(depositNature === NatureOfDepositProduct.RecurringSaving ||
                 depositNature === NatureOfDepositProduct.TermSavingOrFd) && <WithdrawPenalty />}

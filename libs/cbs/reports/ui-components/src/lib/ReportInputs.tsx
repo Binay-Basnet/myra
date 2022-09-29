@@ -2,14 +2,9 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { IoFilterOutline } from 'react-icons/io5';
 
-import {
-  ReportPeriodType,
-  ShareTransactionType,
-  useGetMemberListQuery,
-} from '@coop/cbs/data-access';
+import { ReportPeriodType, ShareTransactionType } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { Box, Button, GridItem, Icon } from '@coop/shared/ui';
-import { getRouterQuery } from '@coop/shared/utils';
+import { Box, Button, FormMemberSelect, GridItem, Icon } from '@coop/shared/ui';
 
 type ReportFilter = {
   memberId: string;
@@ -36,24 +31,6 @@ export const ReportInputs = ({
 }: ReportInputsProps) => {
   const methods = useFormContext();
 
-  const { data: memberList, isLoading } = useGetMemberListQuery(
-    {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    },
-    {
-      staleTime: 0,
-    }
-  );
-
-  const memberListData = memberList?.members?.list?.edges;
-
-  const memberOptions =
-    memberListData &&
-    memberListData.map((member) => ({
-      label: `${member?.node?.id} - ${member?.node?.name?.local}`,
-      value: String(member?.node?.id),
-    }));
-
   return (
     <Box
       display="flex"
@@ -66,13 +43,7 @@ export const ReportInputs = ({
     >
       <Box as="form" display="grid" width="100%" gridTemplateColumns="repeat(4, 1fr)" gap="s20">
         <GridItem colSpan={3}>
-          <FormSelect
-            name="memberId"
-            options={memberOptions ?? []}
-            label="Member Search"
-            __placeholder="Search Member"
-            isLoading={isLoading}
-          />
+          <FormMemberSelect name="memberId" label="Member Search" />
         </GridItem>
         <GridItem colSpan={1}>
           <FormSelect

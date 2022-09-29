@@ -2,8 +2,12 @@ import { useEffect, useState } from 'react';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { AccordionPanel } from '@chakra-ui/react';
 
-import { useGetAccountOpenProductPenaltyQuery } from '@coop/cbs/data-access';
+import {
+  PrematurePenaltyDateType,
+  useGetAccountOpenProductPenaltyQuery,
+} from '@coop/cbs/data-access';
 import { Accordion, AccordionButton, AccordionItem, Box, Icon, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { CriteriaCard } from './CriteriaCard';
 
@@ -12,6 +16,7 @@ interface IcomponentProps {
 }
 
 export const AccordianComponent = ({ productId }: IcomponentProps) => {
+  const { t } = useTranslation();
   const [triggerQuery, setTriggerQuery] = useState(false);
   const poductDetails = useGetAccountOpenProductPenaltyQuery(
     { productId },
@@ -240,7 +245,12 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                         </Text>
 
                         <Text fontWeight="600" fontSize="s3">
-                          {prematurePenaltyData?.penaltyDateType}
+                          {(prematurePenaltyData?.penaltyDateType ===
+                            PrematurePenaltyDateType.EffectiveDaysFromStart &&
+                            t['effectiveDaysFromStart']) ||
+                            (prematurePenaltyData?.penaltyDateType ===
+                              PrematurePenaltyDateType.RemainingDaysToGetMatured &&
+                              t['remainingDaysToGetMatured'])}
                         </Text>
                       </Box>
                     </li>

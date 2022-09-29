@@ -36,6 +36,7 @@ export const featureCode = {
   shareTransactionReport: '10604',
 
   accountCode: ['90.1', '90.2'],
+  ledgerAccountCode: ['160.6', '160.8'],
 
   settingsOrganization: '90001',
   settingsServiceCenter: '90002',

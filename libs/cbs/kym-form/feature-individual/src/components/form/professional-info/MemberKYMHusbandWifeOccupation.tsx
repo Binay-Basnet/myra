@@ -14,34 +14,20 @@ import {
   useSetMemberOccupationMutation,
 } from '@coop/cbs/data-access';
 import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
-import {
-  DynamicBoxGroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
+import { DynamicBoxGroupContainer, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
-import {
-  Box,
-  Button,
-  FormSection,
-  GridItem,
-  Icon,
-  IconButton,
-  TextFields,
-} from '@coop/shared/ui';
+import { Box, Button, FormSection, GridItem, Icon, IconButton, TextFields } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
 interface DynamicInputProps {
-  fieldIndex: number;
+  // fieldIndex: number;
   optionIndex: number;
   option: any;
 }
 
-export const SpouseOccupationInput = ({
-  option,
-  optionIndex,
-}: DynamicInputProps) => {
+export const SpouseOccupationInput = ({ option, optionIndex }: DynamicInputProps) => {
   const { register } = useFormContext();
 
   useEffect(() => {
@@ -66,10 +52,7 @@ export const SpouseOccupationInput = ({
 interface IHusbandWifeOccupationProps {
   removeHusbandWifeOccupation: (occupationId: string) => void;
   occupationId: string;
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
 const HusbandWifeOccupation = ({
@@ -104,20 +87,16 @@ const HusbandWifeOccupation = ({
   // const occupationFieldNames =
   //   occupationData?.members.individual?.options.list?.data?.[0]?.options ?? [];
 
-  const { data: familyOccupationListData, refetch } =
-    useGetIndividualKymFamilyOccupationListQuery({
-      id: id,
-      isSpouse: true,
-    });
+  const { data: familyOccupationListData, refetch } = useGetIndividualKymFamilyOccupationListQuery({
+    id,
+    isSpouse: true,
+  });
 
   useEffect(() => {
     if (familyOccupationListData) {
-      const editValueData =
-        familyOccupationListData?.members?.individual?.listOccupation?.data;
+      const editValueData = familyOccupationListData?.members?.individual?.listOccupation?.data;
 
-      const occupationDetail = editValueData?.find(
-        (data) => data?.id === occupationId
-      );
+      const occupationDetail = editValueData?.find((data) => data?.id === occupationId);
 
       if (occupationDetail) {
         reset({
@@ -186,7 +165,7 @@ const HusbandWifeOccupation = ({
             <InputGroupContainer>
               <GridItem colSpan={1}>
                 <FormSelect
-                  name={`occupationId`}
+                  name="occupationId"
                   id="spouseOccupationId"
                   label={t['kymIndOccupation']}
                   __placeholder={t['kymIndSelectOccupation']}
@@ -196,7 +175,7 @@ const HusbandWifeOccupation = ({
               <GridItem colSpan={2}>
                 <FormInput
                   type="text"
-                  name={`orgName`}
+                  name="orgName"
                   id="spouseOrgName"
                   label={t['kymIndOrgFirmName']}
                   __placeholder={t['kymIndOrgFirmName']}
@@ -205,7 +184,7 @@ const HusbandWifeOccupation = ({
               </GridItem>
               <FormInput
                 type="number"
-                name={`panVatNo`}
+                name="panVatNo"
                 id="spousePanVatNo"
                 label={t['kymIndPanVATNo']}
                 __placeholder={t['kymIndPanVATNumber']}
@@ -213,7 +192,7 @@ const HusbandWifeOccupation = ({
               />
               <FormInput
                 type="text"
-                name={`address`}
+                name="address"
                 id="spouseAddress"
                 label={t['kymIndAddress']}
                 __placeholder={t['kymIndEnterAddress']}
@@ -221,9 +200,9 @@ const HusbandWifeOccupation = ({
               />
               <FormInput
                 type="number"
-                textAlign={'right'}
+                textAlign="right"
                 id="spouseEstimatedAnnualIncome"
-                name={`estimatedAnnualIncome`}
+                name="estimatedAnnualIncome"
                 label={t['kymIndEstimatedAnnualIncome']}
                 bg="white"
                 __placeholder="0.00"
@@ -243,11 +222,9 @@ const HusbandWifeOccupation = ({
           </Box>
 
           <Box display="flex" gap="9px" alignItems="center">
-            {/* TODO! CHANGE THIS IS DISABLED AFTER BACKEND*/}
-            <FormCheckbox name={`isOwner`} id="spouseIsOwner" />
-            <TextFields variant="formLabel">
-              {t['kymIndAreyouowner']}
-            </TextFields>
+            {/* TODO! CHANGE THIS IS DISABLED AFTER BACKEND */}
+            <FormCheckbox name="isOwner" id="spouseIsOwner" />
+            <TextFields variant="formLabel">{t['kymIndAreyouowner']}</TextFields>
           </Box>
 
           {isOwner && (
@@ -256,7 +233,7 @@ const HusbandWifeOccupation = ({
                 bg="white"
                 type="date"
                 id="spouseEstablishedDate"
-                name={`establishedDate`}
+                name="establishedDate"
                 label={t['kymIndEstablishedDate']}
                 __placeholder={t['kymIndEstablishedDate']}
               />
@@ -264,7 +241,7 @@ const HusbandWifeOccupation = ({
                 bg="white"
                 type="number"
                 id="spouseRegistrationNo"
-                name={`registrationNo`}
+                name="registrationNo"
                 label={t['kymIndRegistrationNo']}
                 __placeholder={t['kymIndRegistrationNo']}
               />
@@ -272,7 +249,7 @@ const HusbandWifeOccupation = ({
                 bg="white"
                 type="number"
                 id="spouseContact"
-                name={`contact`}
+                name="contact"
                 label={t['kymIndContactNo']}
                 __placeholder={t['kymIndContactNo']}
               />
@@ -285,10 +262,7 @@ const HusbandWifeOccupation = ({
 };
 
 interface IMemberKYMHusbandWifeOccupationProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const MemberKYMHusbandWifeOccupation = ({
@@ -312,13 +286,11 @@ export const MemberKYMHusbandWifeOccupation = ({
 
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.individual?.listOccupation?.data;
+      const editValueData = editValues?.members?.individual?.listOccupation?.data;
 
       setOccupationIds(
         editValueData?.reduce(
-          (prevVal, curVal) =>
-            curVal ? [...prevVal, curVal.id] : [...prevVal],
+          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : [...prevVal]),
           [] as string[]
         ) ?? []
       );
@@ -333,9 +305,7 @@ export const MemberKYMHusbandWifeOccupation = ({
 
   const { mutate: deleteMutate } = useDeleteMemberOccupationMutation({
     onSuccess: (res) => {
-      const deletedId = String(
-        res?.members?.individual?.occupation?.delete?.recordId
-      );
+      const deletedId = String(res?.members?.individual?.occupation?.delete?.recordId);
 
       const tempOccupationIds = [...occupationIds];
 
@@ -355,23 +325,21 @@ export const MemberKYMHusbandWifeOccupation = ({
 
   return (
     <FormSection
-      gridLayout={true}
+      gridLayout
       templateColumns={1}
       id="kymAccIndMainOccupationofHusabandWife"
       header="kymIndEnterMAINOCCUPATIONOFHUSBANDWIFE"
     >
       <DynamicBoxGroupContainer>
-        {occupationIds.map((id) => {
-          return (
-            <Box key={id}>
-              <HusbandWifeOccupation
-                removeHusbandWifeOccupation={removeOccuapation}
-                setKymCurrentSection={setKymCurrentSection}
-                occupationId={id}
-              />
-            </Box>
-          );
-        })}
+        {occupationIds.map((item) => (
+          <Box key={item}>
+            <HusbandWifeOccupation
+              removeHusbandWifeOccupation={removeOccuapation}
+              setKymCurrentSection={setKymCurrentSection}
+              occupationId={item}
+            />
+          </Box>
+        ))}
 
         <Button
           id="spouseOccupationButton"

@@ -52,8 +52,7 @@ export const getComponents: (
       )}
     </chakraComponents.DropdownIndicator>
   ),
-  Option: ({ children, ...props }) => {
-    return hasRadio ? (
+  Option: ({ children, ...props }) => hasRadio ? (
       <chakraComponents.Option {...props}>
         <Box display="flex" alignItems="center" gap="s8">
           <Box
@@ -103,6 +102,5 @@ export const getComponents: (
           />
         ) : null}
       </chakraComponents.Option>
-    );
-  },
+    ),
 });

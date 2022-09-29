@@ -67,6 +67,7 @@ export const useAxios = <TData, TVariables>(
           }
           // const errArr = fn(res.data.data as Record<string, unknown>, 'error');
 
+          //
           // console.log(errArr);
           //
           // if (errArr.length === 0 && errArr[0].__typename) {
