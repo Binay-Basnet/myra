@@ -307,7 +307,7 @@ const en: Record<string, string> = {
   shareRegisterType: 'Type',
   shareRegisterTableMemberID: 'Member ID',
   shareRegisterTableName: 'Name',
-  shareRegisterTableNameToFrom: 'To - From',
+  shareRegisterTableNameToFrom: 'From - To',
   shareRegisterTableNameShareDr: 'Share Dr',
   shareRegisterTableNameShareCr: 'Share Cr',
   shareRegisterTableNameBalance: 'Balance',
