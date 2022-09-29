@@ -323,7 +323,8 @@ export const SettingsDepositProductsAdd = () => {
 
               {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <DormantSetup />}
 
-              {depositNature !== NatureOfDepositProduct.Current && <PrematuredPenalty />}
+              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <PrematuredPenalty />}
 
               {(depositNature === NatureOfDepositProduct.RecurringSaving ||
                 depositNature === NatureOfDepositProduct.TermSavingOrFd) && <WithdrawPenalty />}
