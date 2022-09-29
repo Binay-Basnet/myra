@@ -79,6 +79,7 @@ interface AsyncToastProps<T extends Record<string, unknown>> {
   id: string;
   promise: Promise<T>;
   onSuccess?: (response: T) => void;
+  onError?: (error: MutationError) => void;
   msgs: {
     loading: Renderable;
     success: Renderable;
@@ -90,6 +91,7 @@ export const asyncToast = async <T extends Record<string, unknown>>({
   id,
   msgs,
   onSuccess,
+  onError,
   promise,
 }: AsyncToastProps<T>) => {
   const errMsg = 'Something Went Wrong!!';
@@ -117,6 +119,8 @@ export const asyncToast = async <T extends Record<string, unknown>>({
 
         if (errorKeys[0]) {
           const error = getError(errorKeys[0]);
+
+          onError && onError(errorKeys[0]);
           toast({
             id,
             type: 'error',

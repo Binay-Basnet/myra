@@ -39,7 +39,7 @@ export const AgentDetailOverview = () => {
     {
       id: id as string,
     },
-    { staleTime: 0 }
+    { staleTime: 0, enabled: !!id }
   );
 
   useEffect(() => {

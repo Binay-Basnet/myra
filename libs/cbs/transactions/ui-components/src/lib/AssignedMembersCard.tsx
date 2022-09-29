@@ -21,7 +21,7 @@ export const AssignedMembersCard = () => {
     {
       id: id as string,
     },
-    { staleTime: 0 }
+    { staleTime: 0, enabled: !!id }
   );
 
   const todaysCount = useMemo(
