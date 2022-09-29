@@ -1,9 +1,10 @@
 import { ReactElement } from 'react';
 
+import { LoanAccountList } from '@coop/cbs/loan/details';
 import { LoanListLayout } from '@coop/cbs/loan/layouts';
-import { MainLayout, WIPState } from '@coop/shared/ui';
+import { MainLayout } from '@coop/shared/ui';
 
-const LoanAccounts = () => <WIPState />;
+const LoanAccounts = () => <LoanAccountList />;
 
 export default LoanAccounts;
 

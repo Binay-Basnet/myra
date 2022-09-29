@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 
-import { useGetLoanProductDetailsDataQuery } from '@coop/cbs/data-access';
+import {
+  useGetLoanApplicationDetailsQuery,
+  useGetLoanProductDetailsDataQuery,
+} from '@coop/cbs/data-access';
 import { Box, Text } from '@coop/shared/ui';
-
-import { useLoanDetails } from '../../hooks/useLoanDetails';
 
 interface IProductProps {
   productId: string;
+  loanAccountId?: string;
 }
 
-export const LoanProductCard = ({ productId }: IProductProps) => {
+export const LoanProductCard = ({ productId, loanAccountId }: IProductProps) => {
   const [triggerQuery, setTriggerQuery] = useState(false);
   const productDetails = useGetLoanProductDetailsDataQuery(
     { id: productId },
@@ -24,7 +26,9 @@ export const LoanProductCard = ({ productId }: IProductProps) => {
       setTriggerQuery(true);
     }
   }, [productId]);
-  const { loan } = useLoanDetails();
+  const loanApplicationDetails = useGetLoanApplicationDetailsQuery({ id: loanAccountId as string });
+  const loan = loanApplicationDetails?.data?.loanAccount?.formState?.data;
+
   const loanInterest = loan?.intrestRate;
 
   return (
@@ -55,6 +59,46 @@ export const LoanProductCard = ({ productId }: IProductProps) => {
       >
         <Box display="flex" flexDirection="column" gap="s4">
           <Text fontSize="s3" fontWeight="400">
+            Disbursed Principal Amount{' '}
+          </Text>
+          <Text fontSize="s3" fontWeight="600">
+            {productData?.interestMethod}
+          </Text>
+        </Box>
+        <Box display="flex" flexDirection="column" gap="s4">
+          <Text fontSize="s3" fontWeight="400">
+            Interest Amount{' '}
+          </Text>
+          <Text fontSize="s3" fontWeight="600">
+            {productData?.repaymentScheme}
+          </Text>
+        </Box>
+        <Box display="flex" flexDirection="column" gap="s4">
+          <Text fontSize="s3" fontWeight="400">
+            Disburse Date{' '}
+          </Text>
+          <Text fontSize="s3" fontWeight="600">
+            {productData?.minimumLoanAmount}- {productData?.maxLoanAmount}
+          </Text>
+        </Box>
+        <Box display="flex" flexDirection="column" gap="s4">
+          <Text fontSize="s3" fontWeight="400">
+            Expiry Date{' '}
+          </Text>
+          <Text fontSize="s3" fontWeight="600">
+            {productData?.minimumLoanAmount}- {productData?.maxLoanAmount}
+          </Text>
+        </Box>
+        <Box display="flex" flexDirection="column" gap="s4">
+          <Text fontSize="s3" fontWeight="400">
+            Last Payment Date{' '}
+          </Text>
+          <Text fontSize="s3" fontWeight="600">
+            {productData?.minimumLoanAmount}- {productData?.maxLoanAmount}
+          </Text>
+        </Box>
+        <Box display="flex" flexDirection="column" gap="s4">
+          <Text fontSize="s3" fontWeight="400">
             Interest Method
           </Text>
           <Text fontSize="s3" fontWeight="600">
@@ -71,11 +115,9 @@ export const LoanProductCard = ({ productId }: IProductProps) => {
         </Box>
         <Box display="flex" flexDirection="column" gap="s4">
           <Text fontSize="s3" fontWeight="400">
-            Loan Amount Limit
+            Payment Frequency{' '}
           </Text>
-          <Text fontSize="s3" fontWeight="600">
-            {productData?.minimumLoanAmount}- {productData?.maxLoanAmount}
-          </Text>
+          <Text fontSize="s3" fontWeight="600" />
         </Box>
       </Box>
     </Box>

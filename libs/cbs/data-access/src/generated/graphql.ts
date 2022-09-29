@@ -6427,6 +6427,7 @@ export type LoanAccountMutationRepaymentArgs = {
 };
 
 export type LoanAccountPreview = {
+  accountId?: Maybe<Scalars['String']>;
   additionalFeatures?: Maybe<LoanPreviewAdditionalFeatures>;
   collateralAndGuarantees?: Maybe<Array<Maybe<LoanCollateralAndGuarantees>>>;
   criteria?: Maybe<LoanProductCriteria>;
@@ -6436,6 +6437,7 @@ export type LoanAccountPreview = {
   memberId?: Maybe<Scalars['String']>;
   paymentSchedule?: Maybe<LoanInstallments>;
   productId?: Maybe<Scalars['String']>;
+  repaymentDetails?: Maybe<LoanPreviewRepaymentDetails>;
   statistics?: Maybe<LoanPreviewStatistics>;
 };
 
@@ -6656,10 +6658,15 @@ export type LoanPreviewGeneralInformation = {
 
 export type LoanPreviewLoanDetails = {
   appliedLoanAmount?: Maybe<Scalars['String']>;
+  disburseDate?: Maybe<Scalars['String']>;
+  expiryDate?: Maybe<Scalars['String']>;
+  /**  Extra fields for repayment page */
+  interestAmount?: Maybe<Scalars['String']>;
   interestGracePeriod?: Maybe<Scalars['Int']>;
   interestMethod?: Maybe<LoanInterestMethod>;
   interestRate?: Maybe<Scalars['Float']>;
   loanRepaymentScheme?: Maybe<LoanRepaymentScheme>;
+  paymentFrequency?: Maybe<LoanProductInstallment>;
   principalGracePeriod?: Maybe<Scalars['Int']>;
   processingCharges?: Maybe<Array<Maybe<ServiceCharge>>>;
   tenure?: Maybe<Scalars['Int']>;
@@ -6669,6 +6676,13 @@ export type LoanPreviewLoanDetails = {
   totalGuaranteeValuation?: Maybe<Scalars['String']>;
   totalProcessingChargesValuation?: Maybe<Scalars['String']>;
   totalSanctionedAmount?: Maybe<Scalars['String']>;
+};
+
+export type LoanPreviewRepaymentDetails = {
+  lastPaymentDate?: Maybe<Scalars['String']>;
+  remainingInterest?: Maybe<Scalars['String']>;
+  remainingPrincipal?: Maybe<Scalars['String']>;
+  remainingTotal?: Maybe<Scalars['String']>;
 };
 
 export type LoanPreviewStatistics = {
@@ -9337,26 +9351,6 @@ export type RefreshMutation = {
   };
 };
 
-export type ResetPasswordMutationVariables = Exact<{
-  userId: Scalars['String'];
-  newPassword: Scalars['String'];
-}>;
-
-export type ResetPasswordMutation = {
-  user: {
-    resetPassword?: {
-      recordId?: string | null;
-      error?:
-        | MutationError_AuthorizationError_Fragment
-        | MutationError_BadRequestError_Fragment
-        | MutationError_NotFoundError_Fragment
-        | MutationError_ServerError_Fragment
-        | MutationError_ValidationError_Fragment
-        | null;
-    } | null;
-  };
-};
-
 export type AddNewAccountInCoaMutationVariables = Exact<{
   data: AddCoaAccountInput;
 }>;
@@ -9547,6 +9541,25 @@ export type ApproveLoanAccountMutation = {
   loanAccount: {
     approveOrCancel?: {
       recordId: string;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
+export type SetLoanRepaymentMutationVariables = Exact<{
+  data?: InputMaybe<LoanRepaymentInput>;
+}>;
+
+export type SetLoanRepaymentMutation = {
+  loanAccount: {
+    repayment?: {
+      recordId?: string | null;
       error?:
         | MutationError_AuthorizationError_Fragment
         | MutationError_BadRequestError_Fragment
@@ -12745,10 +12758,7 @@ export type GetLoanApplicationDetailsQuery = {
           totalAmount?: any | null;
           accountName?: string | null;
         } | null> | null;
-        gracePeriod?: {
-          principalGracePeriod?: number | null;
-          interestGracePeriod?: number | null;
-        } | null;
+        gracePeriod?: { gracePeriod?: GracePeriod | null; installmentNo?: number | null } | null;
         loanProcessingCharge?: Array<{
           amount?: any | null;
           ledgerName?: string | null;
@@ -12765,87 +12775,13 @@ export type GetLoanApplicationDetailsQuery = {
   };
 };
 
-export type GetLoanPreviewQueryVariables = Exact<{
-  id: Scalars['String'];
+export type GetMemberLoanAccountsQueryVariables = Exact<{
+  memberId: Scalars['ID'];
 }>;
 
-export type GetLoanPreviewQuery = {
+export type GetMemberLoanAccountsQuery = {
   loanAccount: {
-    loanPreview?: {
-      data?: {
-        memberId?: string | null;
-        productId?: string | null;
-        additionalFeatures?: {
-          allowPartialInstallment?: boolean | null;
-          collateral?: boolean | null;
-          insurance?: boolean | null;
-          isMonthlyInterestCompulsory?: boolean | null;
-          loanScheduleChangeOverride?: boolean | null;
-          overrideInterest?: boolean | null;
-          staffProduct?: boolean | null;
-          supportMultipleAccount?: boolean | null;
-        } | null;
-        criteria?: {
-          gender?: Array<string | null> | null;
-          minAge?: number | null;
-          maxAge?: number | null;
-          ethnicity?: Array<string | null> | null;
-          educationQualification?: Array<string | null> | null;
-          maritalStatus?: Array<string | null> | null;
-          foreignEmployment?: boolean | null;
-          occupation?: Array<string | null> | null;
-          institutionType?: Array<string | null> | null;
-          cooperativeUnion?: Array<string | null> | null;
-          cooperativeType?: Array<string | null> | null;
-        } | null;
-        collateralAndGuarantees?: Array<{
-          name?: string | null;
-          valuation?: string | null;
-        } | null> | null;
-        generalInformation?: {
-          loanProduct?: string | null;
-          loanSubType?: string | null;
-          loanType?: string | null;
-          natureOfLoanProduct?: NatureOfLoanProduct | null;
-          loanName?: string | null;
-          productCode?: string | null;
-        } | null;
-        loanDetails?: {
-          appliedLoanAmount?: string | null;
-          interestMethod?: LoanInterestMethod | null;
-          interestRate?: number | null;
-          loanRepaymentScheme?: LoanRepaymentScheme | null;
-          tenure?: number | null;
-          tenureUnit?: FrequencyTenure | null;
-          totalCollateralValuation?: string | null;
-          totalGuaranteeValuation?: string | null;
-          totalProcessingChargesValuation?: string | null;
-          totalSanctionedAmount?: string | null;
-          processingCharges?: Array<{ name?: string | null; amount?: any | null } | null> | null;
-        } | null;
-        member?: {
-          name?: Record<'local' | 'en' | 'np', string> | null;
-          id: string;
-          profilePicUrl?: string | null;
-        } | null;
-        paymentSchedule?: {
-          total: string;
-          installments?: Array<{
-            installmentDate: string;
-            installmentNo: number;
-            interest: string;
-            payment: string;
-            principal: string;
-            remainingPrincipal: string;
-          } | null> | null;
-        } | null;
-        statistics?: {
-          remainingPayableAmount?: string | null;
-          totalPaidAmount?: string | null;
-          totalPayableAmount?: string | null;
-        } | null;
-      } | null;
-    } | null;
+    memberDisbursedLoanAccounts?: Array<{ id?: string | null; name?: string | null } | null> | null;
   };
 };
 
@@ -13354,24 +13290,6 @@ export type GetShareStatementQuery = {
         | {}
         | null;
     } | null;
-  };
-};
-
-export type GetAuditLogListQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetAuditLogListQuery = {
-  auditLog: {
-    humanize?:
-      | {
-          __typename: 'AuditLogHumanizeResult';
-          data?: Array<{
-            timestamp?: string | null;
-            narration?: string | null;
-            extraData?: Array<string | null> | null;
-          } | null> | null;
-        }
-      | { __typename: 'RawAuditLog' }
-      | null;
   };
 };
 
@@ -15123,31 +15041,6 @@ export const useRefreshMutation = <TError = unknown, TContext = unknown>(
     useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
     options
   );
-export const ResetPasswordDocument = `
-    mutation resetPassword($userId: String!, $newPassword: String!) {
-  user {
-    resetPassword(data: {userId: $userId, newPassword: $newPassword}) {
-      recordId
-      error {
-        ...MutationError
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useResetPasswordMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    ResetPasswordMutation,
-    TError,
-    ResetPasswordMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<ResetPasswordMutation, TError, ResetPasswordMutationVariables, TContext>(
-    ['resetPassword'],
-    useAxios<ResetPasswordMutation, ResetPasswordMutationVariables>(ResetPasswordDocument),
-    options
-  );
 export const AddNewAccountInCoaDocument = `
     mutation addNewAccountInCOA($data: AddCOAAccountInput!) {
   settings {
@@ -15569,6 +15462,31 @@ export const useApproveLoanAccountMutation = <TError = unknown, TContext = unkno
     useAxios<ApproveLoanAccountMutation, ApproveLoanAccountMutationVariables>(
       ApproveLoanAccountDocument
     ),
+    options
+  );
+export const SetLoanRepaymentDocument = `
+    mutation setLoanRepayment($data: LoanRepaymentInput) {
+  loanAccount {
+    repayment(data: $data) {
+      error {
+        ...MutationError
+      }
+      recordId
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetLoanRepaymentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetLoanRepaymentMutation,
+    TError,
+    SetLoanRepaymentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetLoanRepaymentMutation, TError, SetLoanRepaymentMutationVariables, TContext>(
+    ['setLoanRepayment'],
+    useAxios<SetLoanRepaymentMutation, SetLoanRepaymentMutationVariables>(SetLoanRepaymentDocument),
     options
   );
 export const GetNewIdDocument = `
@@ -20194,8 +20112,8 @@ export const GetLoanApplicationDetailsDocument = `
           accountName
         }
         gracePeriod {
-          principalGracePeriod
-          interestGracePeriod
+          gracePeriod
+          installmentNo
         }
         totalValuation
         totalSanctionedAmount
@@ -20234,100 +20152,25 @@ export const useGetLoanApplicationDetailsQuery = <
     ).bind(null, variables),
     options
   );
-export const GetLoanPreviewDocument = `
-    query getLoanPreview($id: String!) {
+export const GetMemberLoanAccountsDocument = `
+    query getMemberLoanAccounts($memberId: ID!) {
   loanAccount {
-    loanPreview(loanAccountId: $id) {
-      data {
-        additionalFeatures {
-          allowPartialInstallment
-          collateral
-          insurance
-          isMonthlyInterestCompulsory
-          loanScheduleChangeOverride
-          overrideInterest
-          staffProduct
-          supportMultipleAccount
-        }
-        criteria {
-          gender
-          minAge
-          maxAge
-          ethnicity
-          educationQualification
-          maritalStatus
-          foreignEmployment
-          occupation
-          institutionType
-          cooperativeUnion
-          cooperativeType
-        }
-        collateralAndGuarantees {
-          name
-          valuation
-        }
-        generalInformation {
-          loanProduct
-          loanSubType
-          loanType
-          natureOfLoanProduct
-          loanName
-          productCode
-        }
-        loanDetails {
-          appliedLoanAmount
-          interestMethod
-          interestRate
-          loanRepaymentScheme
-          tenure
-          tenureUnit
-          totalCollateralValuation
-          totalGuaranteeValuation
-          totalProcessingChargesValuation
-          totalSanctionedAmount
-          processingCharges {
-            name
-            amount
-          }
-        }
-        member {
-          name
-          id
-          profilePicUrl
-        }
-        memberId
-        productId
-        paymentSchedule {
-          total
-          installments {
-            installmentDate
-            installmentNo
-            interest
-            payment
-            principal
-            remainingPrincipal
-          }
-        }
-        statistics {
-          remainingPayableAmount
-          totalPaidAmount
-          totalPayableAmount
-        }
-      }
+    memberDisbursedLoanAccounts(memberId: $memberId) {
+      id
+      name
     }
   }
 }
     `;
-export const useGetLoanPreviewQuery = <TData = GetLoanPreviewQuery, TError = unknown>(
-  variables: GetLoanPreviewQueryVariables,
-  options?: UseQueryOptions<GetLoanPreviewQuery, TError, TData>
+export const useGetMemberLoanAccountsQuery = <TData = GetMemberLoanAccountsQuery, TError = unknown>(
+  variables: GetMemberLoanAccountsQueryVariables,
+  options?: UseQueryOptions<GetMemberLoanAccountsQuery, TError, TData>
 ) =>
-  useQuery<GetLoanPreviewQuery, TError, TData>(
-    ['getLoanPreview', variables],
-    useAxios<GetLoanPreviewQuery, GetLoanPreviewQueryVariables>(GetLoanPreviewDocument).bind(
-      null,
-      variables
-    ),
+  useQuery<GetMemberLoanAccountsQuery, TError, TData>(
+    ['getMemberLoanAccounts', variables],
+    useAxios<GetMemberLoanAccountsQuery, GetMemberLoanAccountsQueryVariables>(
+      GetMemberLoanAccountsDocument
+    ).bind(null, variables),
     options
   );
 export const GetMemberListDocument = `
@@ -21025,34 +20868,6 @@ export const useGetShareStatementQuery = <TData = GetShareStatementQuery, TError
     useAxios<GetShareStatementQuery, GetShareStatementQueryVariables>(
       GetShareStatementDocument
     ).bind(null, variables),
-    options
-  );
-export const GetAuditLogListDocument = `
-    query getAuditLogList {
-  auditLog {
-    humanize {
-      __typename
-      ... on AuditLogHumanizeResult {
-        data {
-          timestamp
-          narration
-          extraData
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetAuditLogListQuery = <TData = GetAuditLogListQuery, TError = unknown>(
-  variables?: GetAuditLogListQueryVariables,
-  options?: UseQueryOptions<GetAuditLogListQuery, TError, TData>
-) =>
-  useQuery<GetAuditLogListQuery, TError, TData>(
-    variables === undefined ? ['getAuditLogList'] : ['getAuditLogList', variables],
-    useAxios<GetAuditLogListQuery, GetAuditLogListQueryVariables>(GetAuditLogListDocument).bind(
-      null,
-      variables
-    ),
     options
   );
 export const GetBranchListDocument = `

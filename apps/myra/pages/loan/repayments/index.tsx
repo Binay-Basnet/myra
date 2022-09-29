@@ -1,16 +1,12 @@
 import { ReactElement } from 'react';
 
-import { LoanListLayout } from '@coop/cbs/loan/layouts';
-import { MainLayout, WIPState } from '@coop/shared/ui';
+import { LoanRepayment } from '@coop/cbs/loan/repayment';
+import { MainLayout } from '@coop/shared/ui';
 
-const LoanRepayments = () => <WIPState />;
+const LoanRepayments = () => <LoanRepayment />;
 
 export default LoanRepayments;
 
 LoanRepayments.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <MainLayout>
-      <LoanListLayout>{page}</LoanListLayout>
-    </MainLayout>
-  );
+  return <MainLayout>{page}</MainLayout>;
 };

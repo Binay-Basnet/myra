@@ -375,6 +375,15 @@ query getLoanApplicationDetails($id: ID!) {
   }
 }
 
+query getMemberLoanAccounts($memberId: ID!) {
+  loanAccount {
+    memberDisbursedLoanAccounts(memberId: $memberId) {
+      id
+      name
+    }
+  }
+}
+
 query getLoanPreview($id: String!) {
   loanAccount {
     loanPreview(loanAccountId: $id) {
