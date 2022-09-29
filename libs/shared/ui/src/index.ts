@@ -1,3 +1,4 @@
+export * from './lib/select-popout/SelectPopout';
 export * from './lib/accordion/Accordion';
 export * from './lib/add-button-list/AddButtonList';
 export * from './lib/alert/Alert';

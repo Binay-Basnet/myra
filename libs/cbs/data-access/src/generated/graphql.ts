@@ -6547,7 +6547,6 @@ export type LoanAccountMutationDisburseArgs = {
   loanAccount: Scalars['ID'];
 };
 
-
 export type LoanAccountMutationRepaymentArgs = {
   data?: InputMaybe<LoanRepaymentInput>;
 };
@@ -6613,11 +6612,9 @@ export type LoanAccountQueryListArgs = {
   paginate?: InputMaybe<Pagination>;
 };
 
-
 export type LoanAccountQueryLoanPreviewArgs = {
   loanAccountId: Scalars['String'];
 };
-
 
 export type LoanAccountQueryMemberDisbursedLoanAccountsArgs = {
   memberId: Scalars['ID'];
@@ -8015,11 +8012,9 @@ export type ProductsQueryGetLoanProductCriteriaArgs = {
   productId: Scalars['ID'];
 };
 
-
 export type ProductsQueryGetLoanProductTypeArgs = {
   id: Scalars['ID'];
 };
-
 
 export type ProductsQueryLoanProductsArgs = {
   productSubTypeId: Scalars['ID'];
@@ -8912,7 +8907,7 @@ export type TransactionFilter = {
 export enum TransactionMode {
   Ebanking = 'EBANKING',
   Mobile = 'MOBILE',
-  MyraErp = 'MYRA_ERP'
+  MyraErp = 'MYRA_ERP',
 }
 
 export type TransactionMutation = {
@@ -9117,7 +9112,6 @@ export type UserMutation = {
   preference?: Maybe<UserPreferenceMutation>;
   resetPassword?: Maybe<ResetPasswordResult>;
 };
-
 
 export type UserMutationResetPasswordArgs = {
   data: ResetPasswordData;
@@ -10579,6 +10573,24 @@ export type GetShareStatementQueryVariables = Exact<{
 
 
 export type GetShareStatementQuery = { report: { shareStatementReport?: { member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, dateJoined?: string | null, address?: { wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, localGovernment?: Record<"local"|"en"|"np",string> | null } | null } | null, statement?: { shareStatement?: Array<{ date: string, particular: string, noOfShares: number, returnAmountDr: number, purchaseAmountCr: number, balanceSheet: number } | null> | null, totals?: { totalShares?: number | null, totalDr?: number | null, totalCr?: number | null, totalBalanceSheet?: number | null } | null } | {} | null } | null } };
+
+export type GetAuditLogListQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAuditLogListQuery = {
+  auditLog: {
+    humanize?:
+      | {
+          __typename: 'AuditLogHumanizeResult';
+          data?: Array<{
+            timestamp?: string | null;
+            narration?: string | null;
+            extraData?: Array<string | null> | null;
+          } | null> | null;
+        }
+      | { __typename: 'RawAuditLog' }
+      | null;
+  };
+};
 
 export type GetBranchListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
@@ -16482,18 +16494,45 @@ export const GetShareStatementDocument = `
   }
 }
     `;
-export const useGetShareStatementQuery = <
-      TData = GetShareStatementQuery,
-      TError = unknown
-    >(
-      variables: GetShareStatementQueryVariables,
-      options?: UseQueryOptions<GetShareStatementQuery, TError, TData>
-    ) =>
-    useQuery<GetShareStatementQuery, TError, TData>(
-      ['getShareStatement', variables],
-      useAxios<GetShareStatementQuery, GetShareStatementQueryVariables>(GetShareStatementDocument).bind(null, variables),
-      options
-    );
+export const useGetShareStatementQuery = <TData = GetShareStatementQuery, TError = unknown>(
+  variables: GetShareStatementQueryVariables,
+  options?: UseQueryOptions<GetShareStatementQuery, TError, TData>
+) =>
+  useQuery<GetShareStatementQuery, TError, TData>(
+    ['getShareStatement', variables],
+    useAxios<GetShareStatementQuery, GetShareStatementQueryVariables>(
+      GetShareStatementDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAuditLogListDocument = `
+    query getAuditLogList {
+  auditLog {
+    humanize {
+      __typename
+      ... on AuditLogHumanizeResult {
+        data {
+          timestamp
+          narration
+          extraData
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAuditLogListQuery = <TData = GetAuditLogListQuery, TError = unknown>(
+  variables?: GetAuditLogListQueryVariables,
+  options?: UseQueryOptions<GetAuditLogListQuery, TError, TData>
+) =>
+  useQuery<GetAuditLogListQuery, TError, TData>(
+    variables === undefined ? ['getAuditLogList'] : ['getAuditLogList', variables],
+    useAxios<GetAuditLogListQuery, GetAuditLogListQueryVariables>(GetAuditLogListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetBranchListDocument = `
     query getBranchList($paginate: Pagination, $filter: BranchSearchFilter) {
   settings {
