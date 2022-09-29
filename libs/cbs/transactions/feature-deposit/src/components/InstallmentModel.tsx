@@ -38,9 +38,10 @@ export const InstallmentModel = ({
   const { data: installmentsListQueryData, refetch } = useGetInstallmentsListDataQuery(
     { id: accountId as string },
     {
-      enabled:
-        (!!accountId && productType === NatureOfDepositProduct.RecurringSaving) ||
-        (productType === NatureOfDepositProduct.Saving && isMandatory),
+      enabled: !!(
+        (accountId && productType === NatureOfDepositProduct.RecurringSaving) ||
+        (productType === NatureOfDepositProduct.Saving && isMandatory)
+      ),
     }
   );
 
