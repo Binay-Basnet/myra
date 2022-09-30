@@ -81,7 +81,7 @@ export const LoanTable = ({ data, isLoading, type, viewLink }: ILoanTable) => {
             <TablePopover
               node={props.row.original.node}
               items={
-                type === LoanObjState.Cancelled
+                type === LoanObjState.Cancelled || type === LoanObjState.Disbursed
                   ? [
                       {
                         title: 'View Loan Application',
