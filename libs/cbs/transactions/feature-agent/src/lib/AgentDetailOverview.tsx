@@ -82,7 +82,7 @@ export const AgentDetailOverview = () => {
         agentId: id as string,
       },
     },
-    { enabled: !!id }
+    { enabled: !!id, staleTime: 0 }
   );
 
   const memberListSearchOptions = useMemo(() => {
