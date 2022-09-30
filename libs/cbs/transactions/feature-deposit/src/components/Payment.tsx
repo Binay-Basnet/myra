@@ -58,6 +58,7 @@ const denominationsOptions = [
 export interface PaymentProps {
   mode: number;
   totalDeposit: number;
+  rebate: number;
 }
 
 type PaymentTableType = {
@@ -66,7 +67,7 @@ type PaymentTableType = {
   amount: string;
 };
 
-export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
+export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
   const { t } = useTranslation();
 
   const paymentModes = [
@@ -121,7 +122,9 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
 
   const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
 
-  const returnAmount = totalCashPaid - totalDeposit;
+  const returnAmount = rebate
+    ? totalCashPaid - totalDeposit + rebate
+    : totalCashPaid - totalDeposit;
 
   return (
     <ContainerWithDivider

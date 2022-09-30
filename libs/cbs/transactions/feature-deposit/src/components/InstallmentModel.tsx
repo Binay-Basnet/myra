@@ -23,7 +23,6 @@ interface IInstallmentModelProps {
   onClose: () => void;
   accountId: string | undefined;
   productType: NatureOfDepositProduct | undefined;
-  isMandatory: boolean;
 }
 
 export const InstallmentModel = ({
@@ -31,27 +30,23 @@ export const InstallmentModel = ({
   onClose,
   accountId,
   productType,
-  isMandatory,
 }: IInstallmentModelProps) => {
   const { t } = useTranslation();
 
   const { data: installmentsListQueryData, refetch } = useGetInstallmentsListDataQuery(
     { id: accountId as string },
     {
-      enabled: !!(
-        (accountId && productType === NatureOfDepositProduct.RecurringSaving) ||
-        (productType === NatureOfDepositProduct.Saving && isMandatory)
-      ),
+      enabled: !!(accountId && productType === NatureOfDepositProduct.RecurringSaving),
     }
   );
 
   const { mutate } = useSetAccountForgiveInstallmentDataMutation();
 
   useEffect(() => {
-    if (accountId) {
+    if (accountId && productType === NatureOfDepositProduct.RecurringSaving) {
       refetch();
     }
-  }, [accountId]);
+  }, [accountId, productType]);
 
   const handleForgiveInstallment = (installmentDate: string) => {
     mutate({ id: accountId as string, installmentDate }, { onSuccess: () => refetch() });

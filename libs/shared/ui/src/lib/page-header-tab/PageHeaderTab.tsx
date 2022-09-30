@@ -48,7 +48,7 @@ export const PageHeaderTab = ({
                 },
               })
             }
-            key={`${item}`}
+            key={`${item.key}`}
           >
             {t[item.title as keyof typeof en]}
           </TabElement>

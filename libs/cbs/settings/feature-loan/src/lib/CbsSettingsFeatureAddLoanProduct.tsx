@@ -256,6 +256,7 @@ export const SettingsLoanProductForm = () => {
       maxGraceDurationUnit: values?.maxGraceDurationUnit ? values?.maxGraceDurationUnit : null,
       maxLoanAmount: values?.maxLoanAmount ?? null,
       minimumLoanAmount: values?.minimumLoanAmount ?? null,
+      installmentFrequency: values?.installmentFrequency ?? null,
       rebate: {
         ...values?.rebate,
         rebateAmount: values?.rebate?.rebateAmount ?? null,
@@ -280,6 +281,13 @@ export const SettingsLoanProductForm = () => {
         dayAfterInstallmentDate: values?.penaltyOnInstallment?.dayAfterInstallmentDate ?? null,
         penaltyAmount: values?.penaltyOnInstallment?.penaltyAmount ?? null,
         penaltyLedgerMapping: values?.penaltyOnInstallment?.penaltyLedgerMapping ?? null,
+      },
+      prematurePenaltySetup: {
+        noOfDays: values?.prematurePenaltySetup?.noOfDays ?? null,
+        penaltyAmount: values?.prematurePenaltySetup?.penaltyAmount ?? null,
+        penaltyDateType: values?.prematurePenaltySetup?.penaltyDateType ?? null,
+        penaltyLedgerMapping: values?.prematurePenaltySetup?.penaltyLedgerMapping ?? null,
+        penaltyRate: values?.prematurePenaltySetup?.penaltyRate ?? null,
       },
       collateralValue: collateralValueList,
     };

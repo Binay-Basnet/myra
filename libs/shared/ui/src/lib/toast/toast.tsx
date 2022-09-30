@@ -1,4 +1,4 @@
-import { Renderable, toast as rhToast, ToastOptions } from 'react-hot-toast';
+import rhToast, { Renderable, ToastOptions } from 'react-hot-toast';
 import _ from 'lodash';
 
 import Toast from './ToastComponent';
