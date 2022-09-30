@@ -494,7 +494,7 @@ export const AddBulkDeposit = () => {
                 </Box>
               </Box>
 
-              <Payment mode={mode} totalDeposit={Number(totalDeposit)} />
+              <Payment mode={mode} totalDeposit={Number(totalDeposit)} rebate={0} />
             </form>
           </FormProvider>
         </Box>
