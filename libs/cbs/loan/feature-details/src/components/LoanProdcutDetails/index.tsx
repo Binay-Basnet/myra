@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { useGetLoanProductDetailsDataQuery } from '@coop/cbs/data-access';
 import { Box, Text } from '@coop/shared/ui';
 
+import { useLoanDetails } from '../../hooks/useLoanDetails';
+
 interface IProductProps {
   productId: string;
 }
@@ -22,6 +24,8 @@ export const LoanProductCard = ({ productId }: IProductProps) => {
       setTriggerQuery(true);
     }
   }, [productId]);
+  const { loanPreview } = useLoanDetails();
+  const loanInterest = loanPreview?.loanDetails?.interestRate;
 
   return (
     <Box border="1px solid" borderColor="border.layout" borderRadius="br2">
@@ -38,7 +42,7 @@ export const LoanProductCard = ({ productId }: IProductProps) => {
           {productData?.productCode?.prefix}-{productData?.productCode?.initialNo}
         </Text>
         <Text fontWeight="Medium" fontSize="s3">
-          Interest Rate : {productData?.interest?.minRate} -{productData?.interest?.maxRate}
+          Interest Rate : <b>{loanInterest}%</b>
         </Text>
       </Box>
       <Box

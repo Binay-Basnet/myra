@@ -45,7 +45,7 @@ export const LoanDetails = () => {
             </b>
           </li>
           <li>
-            Grace Period: <b>{loanPreview?.loanDetails?.appliedLoanAmount ?? '-'}</b>
+            Grace Period: <b>{loanPreview?.loanDetails?.principalGracePeriod ?? '-'}</b>
           </li>
         </ul>
       </Box>

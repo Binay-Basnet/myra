@@ -309,6 +309,7 @@ export type AgentTodayList = {
   account?: Maybe<DepositLoanAccount>;
   amount?: Maybe<Scalars['Amount']>;
   member?: Maybe<Member>;
+  paid?: Maybe<Scalars['Boolean']>;
 };
 
 export type AgentTodayListData = {
@@ -320,6 +321,7 @@ export type AgentTodayListInput = {
   account?: InputMaybe<Scalars['String']>;
   amount?: InputMaybe<Scalars['Amount']>;
   member?: InputMaybe<Scalars['String']>;
+  paid?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type AgentTodayListResult = {
@@ -734,6 +736,36 @@ export enum BuildingType {
   Institutional = 'INSTITUTIONAL',
   Residential = 'RESIDENTIAL'
 }
+
+export type BulkDepositInput = {
+  agentId?: InputMaybe<Scalars['String']>;
+  bankVoucher?: InputMaybe<DepositBankVoucher>;
+  cash?: InputMaybe<DepositCash>;
+  cheque?: InputMaybe<DepositCheque>;
+  depositedBy: DepositedBy;
+  doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  entries?: InputMaybe<Array<InputMaybe<BulkDepositInstanceInput>>>;
+  memberId: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+  other_doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  other_name?: InputMaybe<Scalars['String']>;
+  payment_type: DepositPaymentType;
+  sourceOfFund?: InputMaybe<Scalars['String']>;
+};
+
+export type BulkDepositInstanceInput = {
+  Amount: Scalars['String'];
+  accountId: Scalars['String'];
+  fine?: InputMaybe<Scalars['String']>;
+  noOfInstallments: Scalars['Int'];
+  rebate?: InputMaybe<Scalars['String']>;
+};
+
+export type BulkDepositResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<TransactionQuery>;
+  recordId?: Maybe<Scalars['ID']>;
+};
 
 export type CoaFullView = {
   data?: Maybe<Array<Maybe<CoaView>>>;
@@ -1266,6 +1298,11 @@ export type CooperativeBodDetails = {
   temporaryLongitude?: Maybe<Scalars['String']>;
 };
 
+export type CooperativeConnectInput = {
+  cooperativeId?: InputMaybe<Scalars['ID']>;
+  mobileNo?: InputMaybe<Scalars['String']>;
+};
+
 export type CooperativeDeclaration = {
   accountHolderdocuments?: Maybe<Array<Maybe<CooperativeDocuments>>>;
   accountHoldersName?: Maybe<Scalars['String']>;
@@ -1291,6 +1328,12 @@ export type CooperativeEconomicDetails = {
   reserveAndSurplus?: Maybe<Scalars['Float']>;
   savingDeposit?: Maybe<Scalars['Float']>;
   shareCapital?: Maybe<Scalars['Float']>;
+};
+
+export type CooperativeInformation = {
+  cooperativeId?: Maybe<Scalars['ID']>;
+  id: Scalars['ID'];
+  mobileNo?: Maybe<Scalars['String']>;
 };
 
 export type CooperativeMember = {
@@ -1715,8 +1758,8 @@ export type DepositCash = {
 };
 
 export type DepositCheque = {
+  accId: Scalars['String'];
   amount: Scalars['String'];
-  bankId: Scalars['String'];
   chequeNo: Scalars['String'];
   depositedAt: Scalars['String'];
   depositedBy: Scalars['String'];
@@ -2470,6 +2513,53 @@ export type EBankingApplyLoanResult = {
   recordID: Scalars['ID'];
 };
 
+export type EBankingAuthMutation = {
+  connectCoop?: Maybe<EbankingCooperativeResult>;
+  getNewtoken?: Maybe<AuthTokenResult>;
+  login?: Maybe<EbankingLoginResult>;
+  resendOtp?: Maybe<EbankingOtpResult>;
+  setPassword?: Maybe<EbankingPasswordResult>;
+  signUp?: Maybe<EbankingSignUpResult>;
+  verifyOtp?: Maybe<EbankingOtpResult>;
+};
+
+
+export type EBankingAuthMutationConnectCoopArgs = {
+  data?: InputMaybe<CooperativeConnectInput>;
+  userID: Scalars['ID'];
+};
+
+
+export type EBankingAuthMutationGetNewtokenArgs = {
+  refreshToken: Scalars['String'];
+};
+
+
+export type EBankingAuthMutationLoginArgs = {
+  data: EbankingLoginInput;
+};
+
+
+export type EBankingAuthMutationResendOtpArgs = {
+  mobile: Scalars['String'];
+};
+
+
+export type EBankingAuthMutationSetPasswordArgs = {
+  data: EbankingPasswordInput;
+  userID: Scalars['ID'];
+};
+
+
+export type EBankingAuthMutationSignUpArgs = {
+  mobileNo: Scalars['String'];
+};
+
+
+export type EBankingAuthMutationVerifyOtpArgs = {
+  data: EbankingOtpInput;
+};
+
 export type EBankingChequeBlockInput = {
   chequeNumber?: InputMaybe<Scalars['String']>;
   reason?: InputMaybe<Scalars['String']>;
@@ -3017,6 +3107,7 @@ export type EBankingLoanQueryHistoryArgs = {
 };
 
 export type EBankingMutation = {
+  auth?: Maybe<EBankingAuthMutation>;
   cooperativeServices?: Maybe<EBankingCooperativeServiceMutation>;
   kym?: Maybe<EBankingKymMutation>;
   utilityPayment: UtilityPayemntMutation;
@@ -3080,9 +3171,60 @@ export type EBankingTransactionQueryRecentArgs = {
   filter?: InputMaybe<RecentTransactionFilter>;
 };
 
+export type EbankingCooperative = {
+  cooperativeId?: Maybe<Scalars['ID']>;
+  id: Scalars['ID'];
+  mobileNo?: Maybe<Scalars['String']>;
+};
+
+export type EbankingCooperativeResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<EbankingCooperative>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type EbankingLoanHistoryData = {
   data?: Maybe<Array<Maybe<EBankingLoanHistory>>>;
   error?: Maybe<QueryError>;
+};
+
+export type EbankingLoginInput = {
+  mobileNo: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type EbankingLoginRecord = {
+  data?: Maybe<EbankingUser>;
+  token: AuthToken;
+};
+
+export type EbankingLoginResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<EbankingLoginRecord>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type EbankingOtpInput = {
+  mobile?: InputMaybe<Scalars['String']>;
+  otp?: InputMaybe<Scalars['Int']>;
+};
+
+export type EbankingOtpResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<EbankingUser>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type EbankingPasswordInput = {
+  dob: Scalars['String'];
+  name: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type EbankingPasswordResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<EbankingUser>;
+  recordId?: Maybe<Scalars['ID']>;
 };
 
 export enum EbankingServiceRequestType {
@@ -3107,6 +3249,26 @@ export type EbankingShareHistory = {
   numberOfShares: Scalars['Int'];
   title: Scalars['String'];
   transactionDirection: Transaction_Direction;
+};
+
+export type EbankingSignUp = {
+  id: Scalars['ID'];
+  mobileNo: Scalars['String'];
+  otp: Scalars['Int'];
+};
+
+export type EbankingSignUpResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<EbankingSignUp>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type EbankingUser = {
+  cooperatives?: Maybe<Array<Maybe<CooperativeInformation>>>;
+  dob?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  mobile?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export type Example = {
@@ -6247,15 +6409,15 @@ export type KymOccupationDetailsType = {
 };
 
 export type LadderRate = {
-  amount?: InputMaybe<Scalars['Amount']>;
-  rate?: InputMaybe<Scalars['Float']>;
-  type?: InputMaybe<Scalars['String']>;
+  amount: Scalars['Amount'];
+  rate: Scalars['Float'];
+  type: Scalars['String'];
 };
 
 export type LadderRateFormState = {
-  amount?: Maybe<Scalars['Amount']>;
-  rate?: Maybe<Scalars['Float']>;
-  type?: Maybe<Scalars['String']>;
+  amount: Scalars['Amount'];
+  rate: Scalars['Float'];
+  type: Scalars['String'];
 };
 
 export enum Language {
@@ -6552,7 +6714,13 @@ export type LoanAccountMutationRepaymentArgs = {
   data?: InputMaybe<LoanRepaymentInput>;
 };
 
+export type LoanAccountPaymentScheduleResult = {
+  data?: Maybe<LoanInstallments>;
+  error?: Maybe<QueryError>;
+};
+
 export type LoanAccountPreview = {
+  accountId?: Maybe<Scalars['String']>;
   additionalFeatures?: Maybe<LoanPreviewAdditionalFeatures>;
   collateralAndGuarantees?: Maybe<Array<Maybe<LoanCollateralAndGuarantees>>>;
   criteria?: Maybe<LoanProductCriteria>;
@@ -6562,6 +6730,7 @@ export type LoanAccountPreview = {
   memberId?: Maybe<Scalars['String']>;
   paymentSchedule?: Maybe<LoanInstallments>;
   productId?: Maybe<Scalars['String']>;
+  repaymentDetails?: Maybe<LoanPreviewRepaymentDetails>;
   statistics?: Maybe<LoanPreviewStatistics>;
 };
 
@@ -6578,6 +6747,7 @@ export type LoanAccountQuery = {
   list?: Maybe<LoanAccountConnection>;
   loanPreview?: Maybe<LoanAccountPreviewResult>;
   memberDisbursedLoanAccounts?: Maybe<Array<Maybe<LoanAccountMinimal>>>;
+  paymentSchedule?: Maybe<LoanAccountPaymentScheduleResult>;
 };
 
 
@@ -6621,6 +6791,11 @@ export type LoanAccountQueryLoanPreviewArgs = {
 
 export type LoanAccountQueryMemberDisbursedLoanAccountsArgs = {
   memberId: Scalars['ID'];
+};
+
+
+export type LoanAccountQueryPaymentScheduleArgs = {
+  loanAccountId: Scalars['ID'];
 };
 
 export type LoanAccountResult = {
@@ -6690,6 +6865,7 @@ export type LoanGeneralSettingsInput = {
 };
 
 export type LoanInstallment = {
+  dueAmount?: Maybe<Scalars['String']>;
   installmentDate: Scalars['String'];
   installmentNo: Scalars['Int'];
   interest: Scalars['String'];
@@ -6787,12 +6963,24 @@ export type LoanPreviewGeneralInformation = {
   productCode?: Maybe<Scalars['String']>;
 };
 
+export type LoanPreviewInstallment = {
+  fine?: Maybe<Scalars['String']>;
+  installmentNo?: Maybe<Scalars['Int']>;
+  interestAmount?: Maybe<Scalars['String']>;
+  principal?: Maybe<Scalars['String']>;
+};
+
 export type LoanPreviewLoanDetails = {
   appliedLoanAmount?: Maybe<Scalars['String']>;
+  disburseDate?: Maybe<Scalars['String']>;
+  expiryDate?: Maybe<Scalars['String']>;
+  /**  Extra fields for repayment page */
+  interestAmount?: Maybe<Scalars['String']>;
   interestGracePeriod?: Maybe<Scalars['Int']>;
   interestMethod?: Maybe<LoanInterestMethod>;
   interestRate?: Maybe<Scalars['Float']>;
   loanRepaymentScheme?: Maybe<LoanRepaymentScheme>;
+  paymentFrequency?: Maybe<LoanProductInstallment>;
   principalGracePeriod?: Maybe<Scalars['Int']>;
   processingCharges?: Maybe<Array<Maybe<ServiceCharge>>>;
   tenure?: Maybe<Scalars['Int']>;
@@ -6802,6 +6990,15 @@ export type LoanPreviewLoanDetails = {
   totalGuaranteeValuation?: Maybe<Scalars['String']>;
   totalProcessingChargesValuation?: Maybe<Scalars['String']>;
   totalSanctionedAmount?: Maybe<Scalars['String']>;
+};
+
+export type LoanPreviewRepaymentDetails = {
+  lastPaymentDate?: Maybe<Scalars['String']>;
+  remainingInstallments?: Maybe<Array<Maybe<LoanPreviewInstallment>>>;
+  remainingInterest?: Maybe<Scalars['String']>;
+  remainingPrincipal?: Maybe<Scalars['String']>;
+  remainingTotal?: Maybe<Scalars['String']>;
+  totalInstallmentAmount?: Maybe<Scalars['String']>;
 };
 
 export type LoanPreviewStatistics = {
@@ -8917,7 +9114,9 @@ export enum TransactionMode {
 
 export type TransactionMutation = {
   addMemberToAgent?: Maybe<DepositLoanAccountData>;
+  agentTodayDeposit?: Maybe<AgentTodayListResult>;
   agentTodayList?: Maybe<AgentTodayListResult>;
+  bulkDeposit: BulkDepositResult;
   deposit: DepositResult;
   transfer: TransferResult;
   withdraw: WithdrawResult;
@@ -8931,9 +9130,20 @@ export type TransactionMutationAddMemberToAgentArgs = {
 };
 
 
+export type TransactionMutationAgentTodayDepositArgs = {
+  agentID: Scalars['ID'];
+  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>>>;
+};
+
+
 export type TransactionMutationAgentTodayListArgs = {
   data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>>>;
   id: Scalars['ID'];
+};
+
+
+export type TransactionMutationBulkDepositArgs = {
+  data?: InputMaybe<BulkDepositInput>;
 };
 
 
@@ -9580,6 +9790,13 @@ export type ApproveLoanAccountMutationVariables = Exact<{
 
 export type ApproveLoanAccountMutation = { loanAccount: { approveOrCancel?: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
 
+export type SetLoanRepaymentMutationVariables = Exact<{
+  data?: InputMaybe<LoanRepaymentInput>;
+}>;
+
+
+export type SetLoanRepaymentMutation = { loanAccount: { repayment?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+
 export type GetNewIdMutationVariables = Exact<{
   idType?: InputMaybe<Id_Type>;
 }>;
@@ -10062,7 +10279,7 @@ export type GetAccountOpenProductDetailsQueryVariables = Exact<{
 }>;
 
 
-export type GetAccountOpenProductDetailsQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, isMandatorySaving?: boolean | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, tenureUnit?: FrequencyTenure | null, isTenureApplicable?: boolean | null, minTenureUnitNumber?: number | null, maxTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: DepositFrequency | null, maxPostingFreqDifference?: number | null, noOftransactionAllowed?: number | null, accountType?: DefaultAccountType | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, isForMinors?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: any | null, maxAmount?: any | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, rebateData?: { dayBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, rebateRate?: number | null, rebateLedgerMapping?: string | null } | null, balanceLimit?: { minAmount?: any | null, maxAmount?: any | null, avgAmount?: any | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type?: string | null, amount?: any | null, rate?: number | null } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, accountCloseCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, alternativeChannelCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, atmCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, withdrawAmountLimit?: { minAmount?: any | null, maxAmount?: any | null, avgAmount?: any | null } | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
+export type GetAccountOpenProductDetailsQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, isMandatorySaving?: boolean | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, tenureUnit?: FrequencyTenure | null, isTenureApplicable?: boolean | null, minTenureUnitNumber?: number | null, maxTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: DepositFrequency | null, maxPostingFreqDifference?: number | null, noOftransactionAllowed?: number | null, accountType?: DefaultAccountType | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, isForMinors?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: any | null, maxAmount?: any | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, rebateData?: { dayBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, rebateRate?: number | null, rebateLedgerMapping?: string | null } | null, balanceLimit?: { minAmount?: any | null, maxAmount?: any | null, avgAmount?: any | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type: string, amount: any, rate: number } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, accountCloseCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, alternativeChannelCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, atmCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, withdrawAmountLimit?: { minAmount?: any | null, maxAmount?: any | null, avgAmount?: any | null } | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
 
 export type GetAccountOpenEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -10140,7 +10357,7 @@ export type GetAgentTodayListDataQueryVariables = Exact<{
 }>;
 
 
-export type GetAgentTodayListDataQuery = { transaction: { listAgentTask?: { record?: Array<{ amount?: any | null, member?: { id: string } | null, account?: { id: string } | null } | null> | null } | null } };
+export type GetAgentTodayListDataQuery = { transaction: { listAgentTask?: { record?: Array<{ amount?: any | null, paid?: boolean | null, member?: { id: string } | null, account?: { id: string } | null } | null> | null } | null } };
 
 export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -10460,12 +10677,19 @@ export type GetLoanApplicationDetailsQueryVariables = Exact<{
 
 export type GetLoanApplicationDetailsQuery = { loanAccount: { formState?: { data?: { memberId?: string | null, productType: string, productSubType?: string | null, productId?: string | null, LoanAccountName?: string | null, appliedLoanAmount?: string | null, totalValuation?: string | null, totalSanctionedAmount?: string | null, justifySanction?: string | null, isCeoAuthority?: boolean | null, isBoardAuthority?: boolean | null, intrestRate?: number | null, tenure?: number | null, tenureType?: FrequencyTenure | null, repaymentScheme?: LoanRepaymentScheme | null, note?: string | null, collateralData?: Array<{ collateralType?: string | null, ownerName?: string | null, relation?: string | null, sheetNo?: number | null, plotNo?: number | null, kittaNo?: number | null, area?: number | null, buildingType?: BuildingType | null, constructionType?: ConstructionType | null, valuatorId?: string | null, noOfStorey?: number | null, fmvMaxAmount?: any | null, dvMinAmount?: string | null, valuationMethod?: ValuationMethod | null, valuationPercent?: number | null, collaterallValuation?: any | null, collateralDescription?: string | null, collateralFiles?: Array<string | null> | null, valuationFiles?: Array<string | null> | null, vehicleName?: string | null, vehicleModelNo?: string | null, vehicleRegistrationNo?: string | null, vehicleNo?: string | null, vehicleSeatCapacity?: number | null, vehicleCapacity?: string | null, vehicleType?: string | null, vehicleFuelType?: string | null, documentName?: string | null, valuationAmount?: string | null, description?: string | null } | null> | null, gurantee_details?: Array<{ accountId?: string | null, guranteeAmount?: any | null, maxGuranteeAmountLimit?: any | null, memberId?: string | null, totalAmount?: any | null, accountName?: string | null } | null> | null, gracePeriod?: { principalGracePeriod?: number | null, interestGracePeriod?: number | null } | null, loanProcessingCharge?: Array<{ amount?: any | null, ledgerName?: string | null, serviceName?: string | null } | null> | null } | null, error?: QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment | null } | null } };
 
+export type GetMemberLoanAccountsQueryVariables = Exact<{
+  memberId: Scalars['ID'];
+}>;
+
+
+export type GetMemberLoanAccountsQuery = { loanAccount: { memberDisbursedLoanAccounts?: Array<{ id?: string | null, name?: string | null } | null> | null } };
+
 export type GetLoanPreviewQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetLoanPreviewQuery = { loanAccount: { loanPreview?: { data?: { memberId?: string | null, productId?: string | null, additionalFeatures?: { allowPartialInstallment?: boolean | null, collateral?: boolean | null, insurance?: boolean | null, isMonthlyInterestCompulsory?: boolean | null, loanScheduleChangeOverride?: boolean | null, overrideInterest?: boolean | null, staffProduct?: boolean | null, supportMultipleAccount?: boolean | null } | null, criteria?: { gender?: Array<string | null> | null, minAge?: number | null, maxAge?: number | null, ethnicity?: Array<string | null> | null, educationQualification?: Array<string | null> | null, maritalStatus?: Array<string | null> | null, foreignEmployment?: boolean | null, occupation?: Array<string | null> | null, institutionType?: Array<string | null> | null, cooperativeUnion?: Array<string | null> | null, cooperativeType?: Array<string | null> | null } | null, collateralAndGuarantees?: Array<{ name?: string | null, valuation?: string | null } | null> | null, generalInformation?: { loanProduct?: string | null, loanSubType?: string | null, loanType?: string | null, natureOfLoanProduct?: NatureOfLoanProduct | null, loanName?: string | null, productCode?: string | null } | null, loanDetails?: { appliedLoanAmount?: string | null, interestMethod?: LoanInterestMethod | null, interestRate?: number | null, loanRepaymentScheme?: LoanRepaymentScheme | null, tenure?: number | null, tenureUnit?: FrequencyTenure | null, totalCollateralValuation?: string | null, totalGuaranteeValuation?: string | null, totalProcessingChargesValuation?: string | null, totalSanctionedAmount?: string | null, processingCharges?: Array<{ name?: string | null, amount?: any | null } | null> | null } | null, member?: { name?: Record<"local"|"en"|"np",string> | null, id: string, profilePicUrl?: string | null } | null, paymentSchedule?: { total: string, installments?: Array<{ installmentDate: string, installmentNo: number, interest: string, payment: string, principal: string, remainingPrincipal: string } | null> | null } | null, statistics?: { remainingPayableAmount?: string | null, totalPaidAmount?: string | null, totalPayableAmount?: string | null } | null } | null } | null } };
+export type GetLoanPreviewQuery = { loanAccount: { loanPreview?: { data?: { productId?: string | null, memberId?: string | null, additionalFeatures?: { allowPartialInstallment?: boolean | null, collateral?: boolean | null, insurance?: boolean | null, isMonthlyInterestCompulsory?: boolean | null, loanScheduleChangeOverride?: boolean | null, overrideInterest?: boolean | null, staffProduct?: boolean | null, supportMultipleAccount?: boolean | null } | null, criteria?: { gender?: Array<string | null> | null, minAge?: number | null, maxAge?: number | null, ethnicity?: Array<string | null> | null, educationQualification?: Array<string | null> | null, maritalStatus?: Array<string | null> | null, foreignEmployment?: boolean | null, occupation?: Array<string | null> | null, institutionType?: Array<string | null> | null, cooperativeUnion?: Array<string | null> | null, cooperativeType?: Array<string | null> | null } | null, collateralAndGuarantees?: Array<{ name?: string | null, valuation?: string | null } | null> | null, generalInformation?: { loanProduct?: string | null, loanSubType?: string | null, loanType?: string | null, natureOfLoanProduct?: NatureOfLoanProduct | null, loanName?: string | null, productCode?: string | null } | null, loanDetails?: { appliedLoanAmount?: string | null, interestMethod?: LoanInterestMethod | null, interestRate?: number | null, loanRepaymentScheme?: LoanRepaymentScheme | null, tenure?: number | null, tenureUnit?: FrequencyTenure | null, totalCollateralValuation?: string | null, totalGuaranteeValuation?: string | null, totalProcessingChargesValuation?: string | null, totalSanctionedAmount?: string | null, totalDisbursedAmount?: string | null, principalGracePeriod?: number | null, interestGracePeriod?: number | null, interestAmount?: string | null, disburseDate?: string | null, expiryDate?: string | null, paymentFrequency?: LoanProductInstallment | null, processingCharges?: Array<{ name?: string | null, amount?: any | null } | null> | null } | null, repaymentDetails?: { lastPaymentDate?: string | null, remainingPrincipal?: string | null, remainingInterest?: string | null, remainingTotal?: string | null, totalInstallmentAmount?: string | null, remainingInstallments?: Array<{ installmentNo?: number | null, principal?: string | null, fine?: string | null, interestAmount?: string | null } | null> | null } | null, member?: { name?: Record<"local"|"en"|"np",string> | null, id: string, profilePicUrl?: string | null } | null, paymentSchedule?: { total: string, installments?: Array<{ installmentDate: string, installmentNo: number, interest: string, payment: string, principal: string, remainingPrincipal: string } | null> | null } | null, statistics?: { remainingPayableAmount?: string | null, totalPaidAmount?: string | null, totalPayableAmount?: string | null } | null } | null } | null } };
 
 export type GetMemberListQueryVariables = Exact<{
   pagination: Pagination;
@@ -10579,6 +10803,11 @@ export type GetShareStatementQueryVariables = Exact<{
 
 
 export type GetShareStatementQuery = { report: { shareStatementReport?: { member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, dateJoined?: string | null, address?: { wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, localGovernment?: Record<"local"|"en"|"np",string> | null } | null } | null, statement?: { shareStatement?: Array<{ date: string, particular: string, noOfShares: number, returnAmountDr: number, purchaseAmountCr: number, balanceSheet: number } | null> | null, totals?: { totalShares?: number | null, totalDr?: number | null, totalCr?: number | null, totalBalanceSheet?: number | null } | null } | {} | null } | null } };
+
+export type GetAuditLogListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAuditLogListQuery = { auditLog: { humanize?: { __typename: 'AuditLogHumanizeResult', data?: Array<{ timestamp?: string | null, narration?: string | null, extraData?: Array<string | null> | null } | null> | null } | { __typename: 'RawAuditLog' } | null } };
 
 export type GetBranchListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
@@ -10700,7 +10929,7 @@ export type GetDepositProductSettingsEditDataQueryVariables = Exact<{
 }>;
 
 
-export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, description?: string | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, isTenureApplicable?: boolean | null, tenureUnit?: FrequencyTenure | null, minTenureUnitNumber?: number | null, maxTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: DepositFrequency | null, maxPostingFreqDifference?: number | null, accountType?: DefaultAccountType | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: any | null, maxAmount?: any | null } | null, withdrawAmountLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, fixedDepositAmountLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, rebateData?: { dayBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, rebateRate?: number | null, rebateLedgerMapping?: string | null } | null, balanceLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type?: string | null, amount?: any | null, rate?: number | null } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, accountCloseCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, chequeCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, atmCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, alternativeChannelCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, withdrawPenalty?: { penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
+export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, description?: string | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, isTenureApplicable?: boolean | null, tenureUnit?: FrequencyTenure | null, minTenureUnitNumber?: number | null, maxTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: DepositFrequency | null, maxPostingFreqDifference?: number | null, accountType?: DefaultAccountType | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: any | null, maxAmount?: any | null } | null, withdrawAmountLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, fixedDepositAmountLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, rebateData?: { dayBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, rebateRate?: number | null, rebateLedgerMapping?: string | null } | null, balanceLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type: string, amount: any, rate: number } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, accountCloseCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, chequeCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, atmCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, alternativeChannelCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, withdrawPenalty?: { penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
 
 export type GetSettingsOptionsFieldsQueryVariables = Exact<{
   searchTerm: FormFieldSearchTerm;
@@ -10836,7 +11065,7 @@ export type GetInstallmentsListDataQueryVariables = Exact<{
 }>;
 
 
-export type GetInstallmentsListDataQuery = { account: { getInstallments?: { data?: Array<{ dueDate: string, status: InstallmentState, monthName?: string | null, fine?: string | null, rebate?: string | null } | null> | null } | null } };
+export type GetInstallmentsListDataQuery = { account: { getInstallments?: { data?: Array<{ dueDate: string, status: InstallmentState, monthName?: string | null, fine?: string | null, rebate?: string | null } | null> | null, error?: QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment | null } | null } };
 
 export const MutationErrorFragmentDoc = `
     fragment MutationError on MutationError {
@@ -11515,6 +11744,27 @@ export const useApproveLoanAccountMutation = <
     useMutation<ApproveLoanAccountMutation, TError, ApproveLoanAccountMutationVariables, TContext>(
       ['approveLoanAccount'],
       useAxios<ApproveLoanAccountMutation, ApproveLoanAccountMutationVariables>(ApproveLoanAccountDocument),
+      options
+    );
+export const SetLoanRepaymentDocument = `
+    mutation setLoanRepayment($data: LoanRepaymentInput) {
+  loanAccount {
+    repayment(data: $data) {
+      error {
+        ...MutationError
+      }
+      recordId
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetLoanRepaymentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetLoanRepaymentMutation, TError, SetLoanRepaymentMutationVariables, TContext>) =>
+    useMutation<SetLoanRepaymentMutation, TError, SetLoanRepaymentMutationVariables, TContext>(
+      ['setLoanRepayment'],
+      useAxios<SetLoanRepaymentMutation, SetLoanRepaymentMutationVariables>(SetLoanRepaymentDocument),
       options
     );
 export const GetNewIdDocument = `
@@ -13636,6 +13886,7 @@ export const GetAgentTodayListDataDocument = `
           id
         }
         amount
+        paid
       }
     }
   }
@@ -15712,11 +15963,34 @@ export const useGetLoanApplicationDetailsQuery = <
       useAxios<GetLoanApplicationDetailsQuery, GetLoanApplicationDetailsQueryVariables>(GetLoanApplicationDetailsDocument).bind(null, variables),
       options
     );
+export const GetMemberLoanAccountsDocument = `
+    query getMemberLoanAccounts($memberId: ID!) {
+  loanAccount {
+    memberDisbursedLoanAccounts(memberId: $memberId) {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetMemberLoanAccountsQuery = <
+      TData = GetMemberLoanAccountsQuery,
+      TError = unknown
+    >(
+      variables: GetMemberLoanAccountsQueryVariables,
+      options?: UseQueryOptions<GetMemberLoanAccountsQuery, TError, TData>
+    ) =>
+    useQuery<GetMemberLoanAccountsQuery, TError, TData>(
+      ['getMemberLoanAccounts', variables],
+      useAxios<GetMemberLoanAccountsQuery, GetMemberLoanAccountsQueryVariables>(GetMemberLoanAccountsDocument).bind(null, variables),
+      options
+    );
 export const GetLoanPreviewDocument = `
     query getLoanPreview($id: String!) {
   loanAccount {
     loanPreview(loanAccountId: $id) {
       data {
+        productId
         additionalFeatures {
           allowPartialInstallment
           collateral
@@ -15763,10 +16037,30 @@ export const GetLoanPreviewDocument = `
           totalGuaranteeValuation
           totalProcessingChargesValuation
           totalSanctionedAmount
+          totalDisbursedAmount
+          principalGracePeriod
+          interestGracePeriod
+          interestAmount
+          disburseDate
+          expiryDate
+          paymentFrequency
           processingCharges {
             name
             amount
           }
+        }
+        repaymentDetails {
+          lastPaymentDate
+          remainingPrincipal
+          remainingInterest
+          remainingTotal
+          remainingInstallments {
+            installmentNo
+            principal
+            fine
+            interestAmount
+          }
+          totalInstallmentAmount
         }
         member {
           name
@@ -16492,6 +16786,34 @@ export const useGetShareStatementQuery = <
     useQuery<GetShareStatementQuery, TError, TData>(
       ['getShareStatement', variables],
       useAxios<GetShareStatementQuery, GetShareStatementQueryVariables>(GetShareStatementDocument).bind(null, variables),
+      options
+    );
+export const GetAuditLogListDocument = `
+    query getAuditLogList {
+  auditLog {
+    humanize {
+      __typename
+      ... on AuditLogHumanizeResult {
+        data {
+          timestamp
+          narration
+          extraData
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAuditLogListQuery = <
+      TData = GetAuditLogListQuery,
+      TError = unknown
+    >(
+      variables?: GetAuditLogListQueryVariables,
+      options?: UseQueryOptions<GetAuditLogListQuery, TError, TData>
+    ) =>
+    useQuery<GetAuditLogListQuery, TError, TData>(
+      variables === undefined ? ['getAuditLogList'] : ['getAuditLogList', variables],
+      useAxios<GetAuditLogListQuery, GetAuditLogListQueryVariables>(GetAuditLogListDocument).bind(null, variables),
       options
     );
 export const GetBranchListDocument = `
@@ -18291,10 +18613,13 @@ export const GetInstallmentsListDataDocument = `
         fine
         rebate
       }
+      error {
+        ...QueryError
+      }
     }
   }
 }
-    `;
+    ${QueryErrorFragmentDoc}`;
 export const useGetInstallmentsListDataQuery = <
       TData = GetInstallmentsListDataQuery,
       TError = unknown

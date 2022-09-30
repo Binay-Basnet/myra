@@ -8,9 +8,14 @@ import {
   LoanDetailsSidebar,
   LoanGeneralInformation,
   LoanPaymentSchedule,
+  LoanStatistics,
 } from '../components';
 
-export const CBSLoanDetails = () => (
+interface CBSLoanDetailsProps {
+  showStats?: boolean;
+}
+
+export const CBSLoanDetails = ({ showStats = true }: CBSLoanDetailsProps) => (
   <>
     <Box
       w="320px"
@@ -25,6 +30,7 @@ export const CBSLoanDetails = () => (
     <Box ml="320px" bg="white" p="s16" display="flex" flexDir="column" gap="s16">
       <LoanGeneralInformation />
       <LoanDetails />
+      {showStats && <LoanStatistics />}
       <LoanCollateralDetails />
       <LoanPaymentSchedule />
       <LoanCriteria />

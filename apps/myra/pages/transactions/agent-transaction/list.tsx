@@ -1,22 +1,19 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
-// import { AgentTransactionList } from '@coop/cbs/transactions/agent-transaction';
+import { AgentTransactionList } from '@coop/cbs/transactions/agent-transaction';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
-import { Box, MainLayout, WIPState } from '@coop/shared/ui';
+import { MainLayout } from '@coop/shared/ui';
 
-const TransactionsAgentTransactionList = () =>
-   (
-    <Box display="flex" justifyContent="center" alignItems="center">
-      <WIPState />
-    </Box>
-  )
+const TransactionsAgentTransactionList = () => (
+  // return (
+  //   <Box display="flex" justifyContent="center" alignItems="center">
+  //     <WIPState />
+  //   </Box>
+  // );
 
-  // <AgentTransactionList />;
-;
-
-TransactionsAgentTransactionList.getLayout = function getLayout(
-  page: ReactElement
-) {
+  <AgentTransactionList />
+);
+TransactionsAgentTransactionList.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
       <TransactionsSidebarLayout>{page}</TransactionsSidebarLayout>

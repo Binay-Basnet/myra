@@ -62,7 +62,7 @@ export const Penalty = () => {
                   <FormInput
                     name="penaltyOnPrincipal.dayAfterInstallmentDate"
                     type="number"
-                    label={t['loanProductDaysafterinstallmentdate']}
+                    label={t['depositProductDayaftertheinstallmentdate']}
                   />
 
                   <FormInput
@@ -99,7 +99,7 @@ export const Penalty = () => {
                   <FormInput
                     name="penaltyOnInterest.dayAfterInstallmentDate"
                     type="number"
-                    label={t['loanProductDaysafterinstallmentdate']}
+                    label={t['depositProductDayaftertheinstallmentdate']}
                   />
 
                   <FormInput
@@ -136,7 +136,7 @@ export const Penalty = () => {
                   <FormInput
                     name="penaltyOnInstallment.dayAfterInstallmentDate"
                     type="number"
-                    label={t['loanProductDaysafterinstallmentdate']}
+                    label={t['depositProductDayaftertheinstallmentdate']}
                   />
 
                   <FormInput

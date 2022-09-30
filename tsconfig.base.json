@@ -27,6 +27,7 @@
       "@coop/accounting/ui-layouts": ["libs/accounting/ui-layouts/src/index.ts"],
       "@coop/accouting/loan": ["libs/accounting/feature-loan/src/index.ts"],
       "@coop/cbs/accounts/account-form": ["libs/cbs/accounts/feature-account-form/src/index.ts"],
+      "@coop/cbs/audit-log": ["libs/cbs/settings/feature-audit-log/src/index.ts"],
       "@coop/cbs/data-access": ["libs/cbs/data-access/src/index.ts"],
       "@coop/cbs/kym-form/cooperative": ["libs/cbs/kym-form/feature-cooperative/src/index.ts"],
       "@coop/cbs/kym-form/cooperative-union": [
@@ -42,6 +43,7 @@
       "@coop/cbs/loan/details": ["libs/cbs/loan/feature-details/src/index.ts"],
       "@coop/cbs/loan/layouts": ["libs/cbs/loan/ui-layouts/src/index.ts"],
       "@coop/cbs/loan/lists": ["libs/cbs/loan/feature-lists/src/index.ts"],
+      "@coop/cbs/loan/repayment": ["libs/cbs/loan/feature-loan-repayment/src/index.ts"],
       "@coop/cbs/members/list": ["libs/cbs/members/feature-list/src/index.ts"],
       "@coop/cbs/members/profile": ["libs/cbs/members/feature-profile/src/index.ts"],
       "@coop/cbs/reports/components": ["libs/cbs/reports/ui-components/src/index.ts"],

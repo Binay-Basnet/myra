@@ -3129,6 +3129,9 @@ const ne: Record<string, string> = {
   updatePasswordText: 'Update Password',
   passwordUpdatedText: 'Password Updated Successfully',
   proceedToLoginText: 'Proceed to login',
+  depositProductDaybeforetheinstallmentdate: 'Day before the installment date',
+  declineLoanApplication: 'Decline Loan Application',
+  reasonForDecliningLoan: 'Reason For Declining Loan',
 };
 
 export default ne;

@@ -4,9 +4,7 @@ import { Option } from './SelectComponents';
 
 export const getChakraDefaultStyles: (
   hasError?: boolean
-) => ChakraStylesConfig<Option, boolean, GroupBase<Option>> | undefined = (
-  hasError
-) => ({
+) => ChakraStylesConfig<Option, boolean, GroupBase<Option>> | undefined = (hasError) => ({
   inputContainer: () => ({
     alignItems: 'center',
     display: 'flex',
@@ -66,9 +64,7 @@ export const getChakraDefaultStyles: (
     alignItems: 'center',
     height: '44px',
     marginTop: '-1px',
-    color: state.hasValue
-      ? 'neutralColorLight.Gray-80'
-      : 'neutralColorLight.Gray-50',
+    color: state.hasValue ? 'neutralColorLight.Gray-80' : 'neutralColorLight.Gray-50',
     fontSize: 'r1',
   }),
   placeholder: (provided) => ({
@@ -175,9 +171,7 @@ export const chakraSmallStyles: ChakraStylesConfig = {
     alignItems: 'center',
     height: '36px',
     marginTop: '-1px',
-    color: state.hasValue
-      ? 'neutralColorLight.Gray-80'
-      : 'neutralColorLight.Gray-50',
+    color: state.hasValue ? 'neutralColorLight.Gray-80' : 'neutralColorLight.Gray-50',
     fontSize: 'r1',
   }),
   placeholder: (provided) => ({

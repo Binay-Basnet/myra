@@ -151,7 +151,7 @@ export const AddDeposit = () => {
   const denominationTotal = useMemo(
     () =>
       denominations?.reduce(
-        (accumulator, curr) => accumulator + Number(curr.amount),
+        (accumulator, current) => accumulator + Number(current.amount),
         0 as number
       ) ?? 0,
     [denominations]
@@ -159,22 +159,56 @@ export const AddDeposit = () => {
 
   const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
 
+  const chequeAmount = watch('cheque.amount');
+
+  const bankVoucherAmount = watch('bankVoucher.amount');
+
+  const selectedPaymentMode = watch('payment_type');
+
+  const checkIsSubmitButtonDisabled = () => {
+    if (mode === 0) {
+      return false;
+    }
+
+    if (selectedPaymentMode === DepositPaymentType.Cash) {
+      if (rebate && Number(totalCashPaid ?? 0) < Number(amountToBeDeposited)) {
+        return true;
+      }
+
+      if (!rebate && Number(totalCashPaid ?? 0) < Number(totalDeposit)) return true;
+    }
+
+    if (
+      selectedPaymentMode === DepositPaymentType.BankVoucher &&
+      Number(bankVoucherAmount ?? 0) < Number(totalDeposit)
+    ) {
+      return true;
+    }
+
+    if (
+      selectedPaymentMode === DepositPaymentType.Cheque &&
+      Number(chequeAmount ?? 0) < Number(totalDeposit)
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
   const { data: installmentsListQueryData, refetch } = useGetInstallmentsListDataQuery(
     { id: accountId as string },
     {
-      enabled:
-        (!!accountId &&
-          selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving) ||
-        (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
-          selectedAccount?.product?.isMandatorySaving === true),
+      enabled: !!(
+        accountId && selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving
+      ),
     }
   );
 
   useEffect(() => {
-    if (accountId) {
+    if (accountId && selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving) {
       refetch();
     }
-  }, [accountId]);
+  }, [accountId, selectedAccount?.product?.nature]);
 
   const { firstMonth, lastMonth, fine, rebate } = useMemo(() => {
     const installmentData = installmentsListQueryData?.account?.getInstallments?.data;
@@ -241,13 +275,13 @@ export const AddDeposit = () => {
       (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
         selectedAccount?.product?.isMandatorySaving === true)
     ) {
-      filteredValues['amount'] = String(amountToBeDeposited);
+      filteredValues.amount = String(amountToBeDeposited);
     }
 
-    if (values['payment_type'] === DepositPaymentType.Cash) {
+    if (values.payment_type === DepositPaymentType.Cash) {
       filteredValues = omit({ ...filteredValues }, ['cheque', 'bankVoucher']);
-      filteredValues['cash'] = {
-        ...values['cash'],
+      filteredValues.cash = {
+        ...values.cash,
         cashPaid: values.cash?.cashPaid as string,
         disableDenomination: Boolean(values.cash?.disableDenomination),
         total: String(totalCashPaid),
@@ -260,11 +294,11 @@ export const AddDeposit = () => {
       };
     }
 
-    if (values['payment_type'] === DepositPaymentType.BankVoucher) {
+    if (values.payment_type === DepositPaymentType.BankVoucher) {
       filteredValues = omit({ ...filteredValues }, ['cheque', 'cash']);
     }
 
-    if (values['payment_type'] === DepositPaymentType.Cheque) {
+    if (values.payment_type === DepositPaymentType.Cheque) {
       filteredValues = omit({ ...filteredValues }, ['bankVoucher', 'cash']);
     }
 
@@ -333,9 +367,7 @@ export const AddDeposit = () => {
                   )}
 
                   {accountId &&
-                    (selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving ||
-                      (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
-                        selectedAccount?.product?.isMandatorySaving === true)) && (
+                    selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
                           <FormInput name="voucherId" label={t['addDepositVoucherId']} />
@@ -552,6 +584,7 @@ export const AddDeposit = () => {
                 )
               }
               mainButtonLabel={mode === 0 ? t['addDepositProceedPayment'] : t['addDepositSubmit']}
+              isMainButtonDisabled={checkIsSubmitButtonDisabled()}
               mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
             />
           </Container>
@@ -563,7 +596,6 @@ export const AddDeposit = () => {
         onClose={handleModalClose}
         accountId={selectedAccount?.id}
         productType={selectedAccount?.product?.nature}
-        isMandatory={selectedAccount?.product?.isMandatorySaving as boolean}
       />
     </>
   );

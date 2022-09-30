@@ -84,6 +84,9 @@ query getInstallmentsListData($id: ID!) {
         fine
         rebate
       }
+      error {
+        ...QueryError
+      }
     }
   }
 }

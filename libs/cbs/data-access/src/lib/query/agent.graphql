@@ -78,6 +78,7 @@ query getAgentTodayListData($id: ID!) {
           id
         }
         amount
+        paid
       }
     }
   }

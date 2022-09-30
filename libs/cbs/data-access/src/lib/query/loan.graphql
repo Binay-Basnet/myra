@@ -375,10 +375,20 @@ query getLoanApplicationDetails($id: ID!) {
   }
 }
 
+query getMemberLoanAccounts($memberId: ID!) {
+  loanAccount {
+    memberDisbursedLoanAccounts(memberId: $memberId) {
+      id
+      name
+    }
+  }
+}
+
 query getLoanPreview($id: String!) {
   loanAccount {
     loanPreview(loanAccountId: $id) {
       data {
+        productId
         additionalFeatures {
           allowPartialInstallment
           collateral
@@ -425,10 +435,30 @@ query getLoanPreview($id: String!) {
           totalGuaranteeValuation
           totalProcessingChargesValuation
           totalSanctionedAmount
+          totalDisbursedAmount
+          principalGracePeriod
+          interestGracePeriod
+          interestAmount
+          disburseDate
+          expiryDate
+          paymentFrequency
           processingCharges {
             name
             amount
           }
+        }
+        repaymentDetails {
+          lastPaymentDate
+          remainingPrincipal
+          remainingInterest
+          remainingTotal
+          remainingInstallments {
+            installmentNo
+            principal
+            fine
+            interestAmount
+          }
+          totalInstallmentAmount
         }
         member {
           name
