@@ -6549,6 +6549,11 @@ export type LoanAccountMutationRepaymentArgs = {
   data?: InputMaybe<LoanRepaymentInput>;
 };
 
+export type LoanAccountPaymentScheduleResult = {
+  data?: Maybe<LoanInstallments>;
+  error?: Maybe<QueryError>;
+};
+
 export type LoanAccountPreview = {
   accountId?: Maybe<Scalars['String']>;
   additionalFeatures?: Maybe<LoanPreviewAdditionalFeatures>;
@@ -6577,6 +6582,7 @@ export type LoanAccountQuery = {
   list?: Maybe<LoanAccountConnection>;
   loanPreview?: Maybe<LoanAccountPreviewResult>;
   memberDisbursedLoanAccounts?: Maybe<Array<Maybe<LoanAccountMinimal>>>;
+  paymentSchedule?: Maybe<LoanAccountPaymentScheduleResult>;
 };
 
 export type LoanAccountQueryFormStateArgs = {
@@ -6613,6 +6619,10 @@ export type LoanAccountQueryLoanPreviewArgs = {
 
 export type LoanAccountQueryMemberDisbursedLoanAccountsArgs = {
   memberId: Scalars['ID'];
+};
+
+export type LoanAccountQueryPaymentScheduleArgs = {
+  loanAccountId: Scalars['ID'];
 };
 
 export type LoanAccountResult = {
@@ -6682,6 +6692,7 @@ export type LoanGeneralSettingsInput = {
 };
 
 export type LoanInstallment = {
+  dueAmount?: Maybe<Scalars['String']>;
   installmentDate: Scalars['String'];
   installmentNo: Scalars['Int'];
   interest: Scalars['String'];
@@ -6779,6 +6790,13 @@ export type LoanPreviewGeneralInformation = {
   productCode?: Maybe<Scalars['String']>;
 };
 
+export type LoanPreviewInstallment = {
+  fine?: Maybe<Scalars['String']>;
+  installmentNo?: Maybe<Scalars['Int']>;
+  interestAmount?: Maybe<Scalars['String']>;
+  principal?: Maybe<Scalars['String']>;
+};
+
 export type LoanPreviewLoanDetails = {
   appliedLoanAmount?: Maybe<Scalars['String']>;
   disburseDate?: Maybe<Scalars['String']>;
@@ -6803,9 +6821,11 @@ export type LoanPreviewLoanDetails = {
 
 export type LoanPreviewRepaymentDetails = {
   lastPaymentDate?: Maybe<Scalars['String']>;
+  remainingInstallments?: Maybe<Array<Maybe<LoanPreviewInstallment>>>;
   remainingInterest?: Maybe<Scalars['String']>;
   remainingPrincipal?: Maybe<Scalars['String']>;
   remainingTotal?: Maybe<Scalars['String']>;
+  totalInstallmentAmount?: Maybe<Scalars['String']>;
 };
 
 export type LoanPreviewStatistics = {

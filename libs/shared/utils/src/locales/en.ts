@@ -3500,5 +3500,7 @@ const en: Record<string, string> = {
   depositProductDaybeforetheinstallmentdate: 'Day before the installment date',
   effectiveDaysFromStart: 'Effective Days From Start',
   remainingDaysToGetMatured: 'Remaining Days To Get Matured',
+  declineLoanApplication: 'Decline Loan Application',
+  reasonForDecliningLoan: 'Reason For Declining Loan',
 };
 export default en;
