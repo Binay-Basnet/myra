@@ -108,7 +108,10 @@ export const CBSLoanDisburseSuccess = () => {
         <LoanPaymentSchedule />
       </Box>
       <Box position="sticky" bottom="0">
-        <FormFooter mainButtonLabel="Done" mainButtonHandler={() => router.push('/loan/account')} />
+        <FormFooter
+          mainButtonLabel="Done"
+          mainButtonHandler={() => router.push('/loan/accounts')}
+        />
       </Box>
     </Container>
   );
