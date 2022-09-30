@@ -25,7 +25,7 @@ import {
 } from '@coop/shared/ui';
 import { useGetIndividualMemberDetails } from '@coop/shared/utils';
 
-import { LoanPaymentScheduleTable, LoanProductCard, Payment } from '../components';
+import { InstallmentData, LoanPaymentScheduleTable, LoanProductCard, Payment } from '../components';
 
 export type LoanRepaymentInputType = Omit<LoanRepaymentInput, 'cash'> & {
   cash?:
@@ -210,11 +210,13 @@ export const LoanRepayment = () => {
                       total={loanData?.paymentSchedule?.total as string}
                     />
                     <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
-                      <FormInput name="amountPaid" label="Amount to Pay" />
+                      <FormInput name="amountPaid" label="Amount to Pay" textAlign="right" />
                     </Grid>
+                    <Box mt="s20">
+                      <InstallmentData loanAccountId={loanAccountId} />
+                    </Box>
                   </Box>
                 )}
-                -
               </Box>
               <Box display={mode === '1' ? 'flex' : 'none'}>
                 <Payment totalDeposit={amountPaid as number} />
@@ -246,11 +248,11 @@ export const LoanRepayment = () => {
                 viewAccountTransactionsHandler={() => null}
               />
             </Box>
-            <Box p="s16">
-              <LoanProductCard  loanAccountId={loanAccountId} />
-            </Box>
-
-            <Box p="s16" />
+            {loanAccountId && (
+              <Box p="s16">
+                <LoanProductCard loanAccountId={loanAccountId} />
+              </Box>
+            )}
           </Box>
         )}
       </Box>

@@ -134,7 +134,15 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
         </Box>
       </Box>
       <Box>
-        <Box display="flex" flexDirection="column" gap="s8" p="s8">
+        <Box
+          display="flex"
+          flexDirection="column"
+          gap="s8"
+          p="s8"
+          border="1px solid"
+          borderColor="border.layout"
+          borderRadius="br2"
+        >
           <Box display="flex" justifyContent="space-between">
             <Text fontWeight="400" fontSize="s3">
               Remaining Principal Amount
