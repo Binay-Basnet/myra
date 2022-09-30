@@ -6549,6 +6549,11 @@ export type LoanAccountMutationRepaymentArgs = {
   data?: InputMaybe<LoanRepaymentInput>;
 };
 
+export type LoanAccountPaymentScheduleResult = {
+  data?: Maybe<LoanInstallments>;
+  error?: Maybe<QueryError>;
+};
+
 export type LoanAccountPreview = {
   accountId?: Maybe<Scalars['String']>;
   additionalFeatures?: Maybe<LoanPreviewAdditionalFeatures>;
@@ -6577,6 +6582,7 @@ export type LoanAccountQuery = {
   list?: Maybe<LoanAccountConnection>;
   loanPreview?: Maybe<LoanAccountPreviewResult>;
   memberDisbursedLoanAccounts?: Maybe<Array<Maybe<LoanAccountMinimal>>>;
+  paymentSchedule?: Maybe<LoanAccountPaymentScheduleResult>;
 };
 
 export type LoanAccountQueryFormStateArgs = {
@@ -6613,6 +6619,10 @@ export type LoanAccountQueryLoanPreviewArgs = {
 
 export type LoanAccountQueryMemberDisbursedLoanAccountsArgs = {
   memberId: Scalars['ID'];
+};
+
+export type LoanAccountQueryPaymentScheduleArgs = {
+  loanAccountId: Scalars['ID'];
 };
 
 export type LoanAccountResult = {
@@ -6682,6 +6692,7 @@ export type LoanGeneralSettingsInput = {
 };
 
 export type LoanInstallment = {
+  dueAmount?: Maybe<Scalars['String']>;
   installmentDate: Scalars['String'];
   installmentNo: Scalars['Int'];
   interest: Scalars['String'];
@@ -6779,6 +6790,13 @@ export type LoanPreviewGeneralInformation = {
   productCode?: Maybe<Scalars['String']>;
 };
 
+export type LoanPreviewInstallment = {
+  fine?: Maybe<Scalars['String']>;
+  installmentNo?: Maybe<Scalars['Int']>;
+  interestAmount?: Maybe<Scalars['String']>;
+  principal?: Maybe<Scalars['String']>;
+};
+
 export type LoanPreviewLoanDetails = {
   appliedLoanAmount?: Maybe<Scalars['String']>;
   disburseDate?: Maybe<Scalars['String']>;
@@ -6803,9 +6821,11 @@ export type LoanPreviewLoanDetails = {
 
 export type LoanPreviewRepaymentDetails = {
   lastPaymentDate?: Maybe<Scalars['String']>;
+  remainingInstallments?: Maybe<Array<Maybe<LoanPreviewInstallment>>>;
   remainingInterest?: Maybe<Scalars['String']>;
   remainingPrincipal?: Maybe<Scalars['String']>;
   remainingTotal?: Maybe<Scalars['String']>;
+  totalInstallmentAmount?: Maybe<Scalars['String']>;
 };
 
 export type LoanPreviewStatistics = {
@@ -12939,8 +12959,8 @@ export type GetLoanPreviewQuery = {
   loanAccount: {
     loanPreview?: {
       data?: {
-        memberId?: string | null;
         productId?: string | null;
+        memberId?: string | null;
         additionalFeatures?: {
           allowPartialInstallment?: boolean | null;
           collateral?: boolean | null;
@@ -12987,12 +13007,27 @@ export type GetLoanPreviewQuery = {
           totalGuaranteeValuation?: string | null;
           totalProcessingChargesValuation?: string | null;
           totalSanctionedAmount?: string | null;
+          totalDisbursedAmount?: string | null;
           principalGracePeriod?: number | null;
           interestGracePeriod?: number | null;
+          interestAmount?: string | null;
           disburseDate?: string | null;
           expiryDate?: string | null;
           paymentFrequency?: LoanProductInstallment | null;
           processingCharges?: Array<{ name?: string | null; amount?: any | null } | null> | null;
+        } | null;
+        repaymentDetails?: {
+          lastPaymentDate?: string | null;
+          remainingPrincipal?: string | null;
+          remainingInterest?: string | null;
+          remainingTotal?: string | null;
+          totalInstallmentAmount?: string | null;
+          remainingInstallments?: Array<{
+            installmentNo?: number | null;
+            principal?: string | null;
+            fine?: string | null;
+            interestAmount?: string | null;
+          } | null> | null;
         } | null;
         member?: {
           name?: Record<'local' | 'en' | 'np', string> | null;
@@ -20456,6 +20491,7 @@ export const GetLoanPreviewDocument = `
   loanAccount {
     loanPreview(loanAccountId: $id) {
       data {
+        productId
         additionalFeatures {
           allowPartialInstallment
           collateral
@@ -20502,8 +20538,10 @@ export const GetLoanPreviewDocument = `
           totalGuaranteeValuation
           totalProcessingChargesValuation
           totalSanctionedAmount
+          totalDisbursedAmount
           principalGracePeriod
           interestGracePeriod
+          interestAmount
           disburseDate
           expiryDate
           paymentFrequency
@@ -20511,6 +20549,19 @@ export const GetLoanPreviewDocument = `
             name
             amount
           }
+        }
+        repaymentDetails {
+          lastPaymentDate
+          remainingPrincipal
+          remainingInterest
+          remainingTotal
+          remainingInstallments {
+            installmentNo
+            principal
+            fine
+            interestAmount
+          }
+          totalInstallmentAmount
         }
         member {
           name

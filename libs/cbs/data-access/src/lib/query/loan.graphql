@@ -388,6 +388,7 @@ query getLoanPreview($id: String!) {
   loanAccount {
     loanPreview(loanAccountId: $id) {
       data {
+        productId
         additionalFeatures {
           allowPartialInstallment
           collateral
@@ -434,8 +435,10 @@ query getLoanPreview($id: String!) {
           totalGuaranteeValuation
           totalProcessingChargesValuation
           totalSanctionedAmount
+          totalDisbursedAmount
           principalGracePeriod
           interestGracePeriod
+          interestAmount
           disburseDate
           expiryDate
           paymentFrequency
@@ -443,6 +446,19 @@ query getLoanPreview($id: String!) {
             name
             amount
           }
+        }
+        repaymentDetails {
+          lastPaymentDate
+          remainingPrincipal
+          remainingInterest
+          remainingTotal
+          remainingInstallments {
+            installmentNo
+            principal
+            fine
+            interestAmount
+          }
+          totalInstallmentAmount
         }
         member {
           name

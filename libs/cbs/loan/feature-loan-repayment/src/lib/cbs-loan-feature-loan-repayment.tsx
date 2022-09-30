@@ -25,7 +25,6 @@ import {
 import { useGetIndividualMemberDetails } from '@coop/shared/utils';
 
 import { LoanProductCard, Payment } from '../components';
-import { useLoanDetails } from '../hooks/useLoanDetails';
 
 export type LoanRepaymentInputType = Omit<LoanRepaymentInput, 'cash'> & {
   cash?:
@@ -96,9 +95,6 @@ export const LoanRepayment = () => {
       setTriggerQuery(true);
     }
   }, [memberId]);
-
-  const { loan } = useLoanDetails({ id: loanAccountId });
-  const productId = loan?.productId as string;
 
   const memberLoanData = data?.loanAccount?.memberDisbursedLoanAccounts;
 
@@ -184,18 +180,22 @@ export const LoanRepayment = () => {
                 display={mode === '0' ? 'flex' : 'none'}
               >
                 <FormMemberSelect name="memberId" label="Member" />
-                <FormSelect
-                  name="loanAccountId"
-                  label="Loan Account Name"
-                  isLoading={isFetching}
-                  options={loanAccountOptions}
-                />
-
-                <Box display="flex" flexDirection="column" gap="s16" w="100%">
-                  <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
-                    <FormInput name="amountPaid" label="Amount to Pay" />
-                  </Grid>
-                </Box>
+                {memberId && (
+                  <FormSelect
+                    name="loanAccountId"
+                    label="Loan Account Name"
+                    isLoading={isFetching}
+                    options={loanAccountOptions}
+                  />
+                )}
+                {memberId && loanAccountId && (
+                  <Box display="flex" flexDirection="column" gap="s16" w="100%">
+                    <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
+                      <FormInput name="amountPaid" label="Amount to Pay" />
+                    </Grid>
+                  </Box>
+                )}
+                -
               </Box>
               <Box display={mode === '1' ? 'flex' : 'none'}>
                 <Payment totalDeposit={amountPaid as number} />
@@ -227,12 +227,12 @@ export const LoanRepayment = () => {
                 viewAccountTransactionsHandler={() => null}
               />
             </Box>
-            <Box p="s16">
-              {' '}
-              <LoanProductCard productId={productId} loanAccountId={loanAccountId} />
-            </Box>
-
-            <Box p="s16" />
+            {loanAccountId && (
+              <Box p="s16">
+                {' '}
+                <LoanProductCard loanAccountId={loanAccountId} />
+              </Box>
+            )}
           </Box>
         )}
       </Box>
