@@ -112,13 +112,13 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
               />
             </GridItem>
             <FormInput name="bankVoucher.voucher_no" label="Voucher Number" />
-            <FormInput
-              name="bankCheque.amount"
+            {/* <FormInput
+              name="amount"
               type="number"
               label="Amount"
               textAlign="right"
               placeholder="0.00"
-            />
+            /> */}
             {/* <FormInput
               type="date"
               name="cheque.depositedAt"

@@ -26,7 +26,17 @@ export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTa
         accessorKey: 'installmentNo',
         meta: {
           Footer: {
-            colspan: 4,
+            colspan: 5,
+          },
+        },
+      },
+      {
+        header: 'Installment Date',
+        accessorKey: 'installmentDate',
+        meta: {
+          isNumeric: true,
+          Footer: {
+            display: 'none',
           },
         },
       },
