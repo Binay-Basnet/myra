@@ -1,14 +1,20 @@
 import { useCallback } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { useDisclosure } from '@chakra-ui/react';
 
 import { LoanApproveOrCancel, useApproveLoanAccountMutation } from '@coop/cbs/data-access';
 import { CBSLoanDetails, LoanDetailsHeader } from '@coop/cbs/loan/details';
-import { asyncToast, Box, Button, FormFooter } from '@coop/shared/ui';
+import { FormTextArea } from '@coop/shared/form';
+import { asyncToast, Box, Button, ChakraModal, FormFooter } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 import { useLoanDetails } from '../hooks/useLoanDetails';
 
 export const CBSLoanApprove = () => {
   const router = useRouter();
+  const { t } = useTranslation();
+  const methods = useForm();
   const { loanPreview } = useLoanDetails();
 
   const { id } = router.query;
@@ -35,9 +41,15 @@ export const CBSLoanApprove = () => {
         loading: 'Declining Loan !!',
       },
       onSuccess: () => router.replace('/loan/declined'),
-      promise: mutateAsync({ id: id as string, action: LoanApproveOrCancel.Cancel }),
+      promise: mutateAsync({
+        id: id as string,
+        action: LoanApproveOrCancel.Cancel,
+        remarks: methods.getValues()['reason'],
+      }),
     });
   }, [id, mutateAsync, router]);
+
+  const { isOpen, onToggle, onClose } = useDisclosure();
 
   return (
     <>
@@ -48,7 +60,7 @@ export const CBSLoanApprove = () => {
           mainButtonLabel="Approve"
           mainButtonHandler={approveLoan}
           draftButton={
-            <Button shade="danger" minW="120px" variant="outline" onClick={declineLoan}>
+            <Button shade="danger" minW="120px" variant="outline" onClick={onToggle}>
               Decline
             </Button>
           }
@@ -58,6 +70,17 @@ export const CBSLoanApprove = () => {
           }`}
         />
       </Box>
+      <ChakraModal
+        open={isOpen}
+        onClose={onClose}
+        title="declineLoanApplication"
+        primaryButtonLabel={t['save']}
+        primaryButtonHandler={declineLoan}
+      >
+        <FormProvider {...methods}>
+          <FormTextArea name="reason" label={t['reasonForDecliningLoan']} />
+        </FormProvider>
+      </ChakraModal>
     </>
   );
 };

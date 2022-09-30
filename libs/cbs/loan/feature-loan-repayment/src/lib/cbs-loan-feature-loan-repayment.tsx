@@ -156,7 +156,6 @@ export const LoanRepayment = () => {
 
   return (
     <Container minW="container.xl" p="0" bg="white">
-      {' '}
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
         <FormHeader title="Loan Repayment" />
       </Box>
@@ -168,9 +167,7 @@ export const LoanRepayment = () => {
           borderRight="1px solid"
           borderColor="border.layout"
         >
-          {' '}
           <FormProvider {...methods}>
-            {' '}
             <form>
               <Box
                 flexDirection="column"
@@ -227,12 +224,11 @@ export const LoanRepayment = () => {
                 viewAccountTransactionsHandler={() => null}
               />
             </Box>
-            {loanAccountId && (
-              <Box p="s16">
-                {' '}
-                <LoanProductCard loanAccountId={loanAccountId} />
-              </Box>
-            )}
+            <Box p="s16">
+              <LoanProductCard  loanAccountId={loanAccountId} />
+            </Box>
+
+            <Box p="s16" />
           </Box>
         )}
       </Box>
@@ -243,7 +239,7 @@ export const LoanRepayment = () => {
               mainButtonLabel="Proceed to Payment"
               mainButtonHandler={proceedButtonHandler}
             />
-          )}{' '}
+          )}
           {mode === '1' && (
             <FormFooter
               status={<Button onClick={previousButtonHandler}> Previous</Button>}
