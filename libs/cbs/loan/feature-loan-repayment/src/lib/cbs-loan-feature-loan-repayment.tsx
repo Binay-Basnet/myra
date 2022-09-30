@@ -7,6 +7,7 @@ import {
   CashValue,
   LoanRepaymentInput,
   LoanRepaymentMethod,
+  useGetLoanPreviewQuery,
   useGetMemberLoanAccountsQuery,
   useSetLoanRepaymentMutation,
 } from '@coop/cbs/data-access';
@@ -24,7 +25,7 @@ import {
 } from '@coop/shared/ui';
 import { useGetIndividualMemberDetails } from '@coop/shared/utils';
 
-import { LoanProductCard, Payment } from '../components';
+import { LoanPaymentScheduleTable, LoanProductCard, Payment } from '../components';
 
 export type LoanRepaymentInputType = Omit<LoanRepaymentInput, 'cash'> & {
   cash?:
@@ -53,7 +54,9 @@ const cashOptions: Record<string, string> = {
 
 export const LoanRepayment = () => {
   const [triggerQuery, setTriggerQuery] = useState(false);
+  const [triggerLoanQuery, setTriggerLoanQuery] = useState(false);
   const { mutateAsync } = useSetLoanRepaymentMutation();
+
   const router = useRouter();
 
   const [mode, setMode] = useState('0');
@@ -142,10 +145,10 @@ export const LoanRepayment = () => {
     asyncToast({
       id: 'share-settings-transfer-id',
       msgs: {
-        success: 'Account has been deleted',
-        loading: 'Deleting Account',
+        success: 'Loan has been Repayed',
+        loading: 'Repaying Loan',
       },
-      onSuccess: () => router.push('/accounts/account-close/'),
+      onSuccess: () => router.push('/loan/accounts'),
       promise: mutateAsync({
         data: {
           ...(filteredValues as LoanRepaymentInput),
@@ -153,6 +156,21 @@ export const LoanRepayment = () => {
       }),
     });
   };
+  const loanPreview = useGetLoanPreviewQuery(
+    {
+      id: loanAccountId,
+    },
+    {
+      enabled: triggerLoanQuery,
+    }
+  );
+  const loanData = loanPreview?.data?.loanAccount?.loanPreview?.data;
+  const loanPaymentSchedule = loanData?.paymentSchedule?.installments;
+  useEffect(() => {
+    if (loanAccountId) {
+      setTriggerLoanQuery(true);
+    }
+  }, [loanAccountId]);
 
   return (
     <Container minW="container.xl" p="0" bg="white">
@@ -185,8 +203,12 @@ export const LoanRepayment = () => {
                     options={loanAccountOptions}
                   />
                 )}
-                {memberId && loanAccountId && (
+                {memberId && loanAccountId && loanPaymentSchedule && (
                   <Box display="flex" flexDirection="column" gap="s16" w="100%">
+                    <LoanPaymentScheduleTable
+                      data={loanPaymentSchedule}
+                      total={loanData?.paymentSchedule?.total as string}
+                    />
                     <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
                       <FormInput name="amountPaid" label="Amount to Pay" />
                     </Grid>
