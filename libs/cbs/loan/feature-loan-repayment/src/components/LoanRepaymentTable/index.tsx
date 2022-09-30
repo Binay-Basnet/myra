@@ -62,7 +62,7 @@ export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTa
       },
 
       {
-        header: 'Remaining Principal',
+        header: 'Remaining Amount',
         footer: total,
         accessorKey: 'remainingPrincipal',
         meta: {
