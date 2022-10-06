@@ -87,10 +87,7 @@ export const coopUnionSLice = createSlice({
       state.accountOperator.operator = action.payload;
     },
 
-    addCentralRepError: (
-      state,
-      action: PayloadAction<Record<string, string[]>>
-    ) => {
+    addCentralRepError: (state, action: PayloadAction<Record<string, string[]>>) => {
       state.centralRepresentative.errors = action.payload;
     },
 

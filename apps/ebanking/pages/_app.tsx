@@ -7,7 +7,8 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ChakraProvider } from '@chakra-ui/react';
 
-import { store, theme } from '@coop/shared/utils';
+import { store } from '@coop/cbs/data-access';
+import { theme } from '@coop/shared/utils';
 
 import './styles.css';
 

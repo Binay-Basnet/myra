@@ -4,9 +4,9 @@ import toast from 'react-hot-toast';
 import { BiArrowBack } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 
-import { useResetPasswordMutation } from '@coop/cbs/data-access';
+import { useAppSelector, useResetPasswordMutation } from '@coop/cbs/data-access';
 import { Box, Button, ChangePasswordLayout, Icon, PasswordInput, Text } from '@coop/shared/ui';
-import { useAppSelector, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 const Container = ({ children }) => {
   const { t } = useTranslation();

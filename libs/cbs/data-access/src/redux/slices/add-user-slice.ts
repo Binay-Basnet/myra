@@ -1,8 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { Roles, UserGender } from '@coop/cbs/data-access';
+import type { RootState } from '../store';
 
-import type { RootState } from './store';
+enum UserGender {
+  Female = 'FEMALE',
+  Male = 'MALE',
+  Other = 'OTHER',
+}
+
+enum Roles {
+  Agent = 'AGENT',
+  BranchManager = 'BRANCH_MANAGER',
+  HeadTeller = 'HEAD_TELLER',
+  Superadmin = 'SUPERADMIN',
+  Teller = 'TELLER',
+}
 
 // Define a type for the slice state
 interface AddUserState {

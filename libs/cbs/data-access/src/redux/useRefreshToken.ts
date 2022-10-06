@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { NextRouter, useRouter } from 'next/router';
 import axios from 'axios';
 
-import { logout, saveToken } from '../redux/authSlice';
+import { logout, saveToken } from './slices/auth-slice';
 
 interface IToken {
   access: string;
@@ -20,7 +20,7 @@ interface RefreshTokenResponse {
 }
 
 // https://github.com/vercel/next.js/issues/18127#issuecomment-950907739
-// Nextjs Seems to have router memoization problem. so had to create this hook
+// Next.js Seems to have router memoization problem. so had to create this hook
 function useReplace() {
   const router = useRouter();
   const routerRef = useRef(router);
@@ -36,8 +36,9 @@ export const useRefreshToken = (url: string) => {
   const replace = useReplace();
   const dispatch = useDispatch();
 
-  const refreshToken = useCallback(() => {
+  const refreshTokenPromise = useCallback(() => {
     const refreshToken = localStorage.getItem('refreshToken');
+    // eslint-disable-next-line prefer-promise-reject-errors
     if (!refreshToken) return Promise.reject(() => 'No refresh Token');
     return axios
       .post<RefreshTokenResponse>(url, {
@@ -82,21 +83,18 @@ export const useRefreshToken = (url: string) => {
       .then((res) => {
         if (res.data.data.auth?.token?.token) {
           const accessToken = res.data?.data?.auth?.token?.token?.access;
-          localStorage.setItem(
-            'refreshToken',
-            res.data.data.auth?.token?.token?.refresh
-          );
+          localStorage.setItem('refreshToken', res.data?.data?.auth?.token?.token?.refresh);
           dispatch(saveToken(accessToken));
           return accessToken;
         }
-        replace('/');
-        throw new Error('error');
+        replace('/login');
+        throw new Error('Credentials are Expired!!');
       })
-      .catch((err) => {
-        replace('/');
+      .catch(() => {
+        replace('/login');
         dispatch(logout());
       });
   }, [dispatch, replace, url]);
 
-  return refreshToken;
+  return refreshTokenPromise;
 };

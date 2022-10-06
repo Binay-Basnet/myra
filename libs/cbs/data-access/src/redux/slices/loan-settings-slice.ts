@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import type { RootState } from './store';
+import type { RootState } from '../store';
 
 // Define a type for the slice state
 
-interface insuranceSchemeProps {
+interface InsuranceScheme {
   id?: string | null;
   schemeName?: string | null;
   insuranceCompany?: string | null;
@@ -25,7 +25,7 @@ interface LoanSettingsState {
     flat?: boolean | null;
     collateralList?: { name?: string | null; enabled?: string | null }[] | null;
   } | null;
-  insuranceScheme?: insuranceSchemeProps[] | null;
+  insuranceScheme?: InsuranceScheme[] | null;
   productType?: {
     productTypes: {
       id?: string | null;
@@ -76,12 +76,9 @@ export const loanSettingSlice = createSlice({
         collateralList: action.payload,
       };
     },
-    setInsuranceScheme: (
-      state,
-      action: PayloadAction<insuranceSchemeProps[] | null>
-    ) => {
+    setInsuranceScheme: (state, action: PayloadAction<InsuranceScheme[] | null>) => {
       if (action.payload) {
-        const newArray: insuranceSchemeProps[] = [];
+        const newArray: InsuranceScheme[] = [];
         action.payload.forEach((item, index) => {
           newArray[index] = { ...item };
         });
@@ -92,8 +89,7 @@ export const loanSettingSlice = createSlice({
   },
 });
 
-export const { setEmi, setEpi, setFlat, setInsuranceScheme } =
-  loanSettingSlice.actions;
+export const { setEmi, setEpi, setFlat, setInsuranceScheme } = loanSettingSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectLoanSetting = (state: RootState) => state;

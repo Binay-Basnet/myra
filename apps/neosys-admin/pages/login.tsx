@@ -4,20 +4,14 @@ import { IoEyeOffOutline, IoEyeOutline, IoLockClosed } from 'react-icons/io5';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import {
-  Input,
-  InputGroup,
-  InputLeftElement,
-  InputRightElement,
-} from '@chakra-ui/react';
+import { Input, InputGroup, InputLeftElement, InputRightElement } from '@chakra-ui/react';
 
-import { useLoginMutation } from '@coop/cbs/data-access';
+import { login, useAppDispatch, useLoginMutation } from '@coop/cbs/data-access';
 import { Box, Button } from '@coop/shared/ui';
-import { login, useAppDispatch } from '@coop/shared/utils';
 
-import logo from "../public/logo.svg";
+import logo from '../public/logo.svg';
 
-export default function Login() {
+export const Login = () => {
   const { mutateAsync, isLoading } = useLoginMutation();
   const dispatch = useAppDispatch();
 
@@ -56,12 +50,7 @@ export default function Login() {
       </Box>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          w={300}
-          placeholder="Enter Username"
-          {...register('username')}
-          autoFocus
-        />
+        <Input w={300} placeholder="Enter Username" {...register('username')} autoFocus />
         <InputGroup h="44px" mt="s4" w={300}>
           <InputLeftElement>
             <IoLockClosed />
@@ -88,4 +77,6 @@ export default function Login() {
       </form>
     </Box>
   );
-}
+};
+
+export default Login;

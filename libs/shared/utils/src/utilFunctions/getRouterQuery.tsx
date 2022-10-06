@@ -28,44 +28,57 @@ interface GetRouterQuery {
   query?: ParsedUrlQuery;
 }
 
-const defaultOrder = {
+const DEFAULT_ORDER = {
   arrange: Arrange.Desc,
   column: 'ID',
 };
 
-export const getRouterQuery = ({ type, query }: GetRouterQuery): Pagination => {
+export const getRouterQuery = ({ query }: GetRouterQuery): Pagination => {
   try {
     const router = Router;
 
+    const sortParams = qs.parse(router.query['sort'] as string);
+
+    // Page is omitted because it is not needed for server.
     const paginationParams = query
       ? omit(qs.parse(query['paginate'] as string), 'page')
       : omit(qs.parse(router?.query['paginate'] as string), 'page');
 
-    if (type.includes('PAGINATION')) {
-      if (isEmpty(paginationParams)) {
-        return {
-          after: '',
-          first: DEFAULT_PAGE_SIZE,
-          order: defaultOrder,
-        };
-      } else {
-        return {
-          ...paginationParams,
-          order: defaultOrder,
-        };
-      }
+    if (isEmpty(paginationParams) && isEmpty(sortParams)) {
+      return {
+        after: '',
+        first: DEFAULT_PAGE_SIZE,
+        order: DEFAULT_ORDER,
+      };
+    }
+
+    if (isEmpty(paginationParams)) {
+      return {
+        after: '',
+        first: DEFAULT_PAGE_SIZE,
+        order: {
+          arrange: sortParams['arrange'] === 'asc' ? Arrange.Asc : Arrange.Desc,
+          column: sortParams['column'] as string,
+        },
+      };
+    }
+
+    if (isEmpty(sortParams)) {
+      return { ...paginationParams, order: DEFAULT_ORDER };
     }
 
     return {
-      after: '',
-      first: DEFAULT_PAGE_SIZE,
-      order: defaultOrder,
+      ...paginationParams,
+      order: {
+        arrange: sortParams['arrange'] === 'asc' ? Arrange.Asc : Arrange.Desc,
+        column: sortParams['column'] as string,
+      },
     };
   } catch (e) {
     return {
       after: '',
       first: DEFAULT_PAGE_SIZE,
-      order: defaultOrder,
+      order: DEFAULT_ORDER,
     };
   }
 };

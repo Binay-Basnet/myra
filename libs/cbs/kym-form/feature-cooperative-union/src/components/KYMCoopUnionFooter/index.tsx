@@ -1,17 +1,6 @@
-import React from 'react';
 import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 
-import { useGetCoopUnionSectionStatusQuery } from '@coop/cbs/data-access';
-import {
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  Icon,
-  Text,
-  toast,
-} from '@coop/shared/ui';
 import {
   addAccountError,
   addBodError,
@@ -20,8 +9,10 @@ import {
   setHasPressedNext,
   useAppDispatch,
   useAppSelector,
-  useTranslation,
-} from '@coop/shared/utils';
+  useGetCoopUnionSectionStatusQuery,
+} from '@coop/cbs/data-access';
+import { Box, Button, Container, FormFooter, Icon, Text, toast } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 export const KYMCoopUnionFooter = () => {
   const router = useRouter();
@@ -71,12 +62,11 @@ export const KYMCoopUnionFooter = () => {
             const response = await refetch();
 
             const sectionStatus =
-              response?.data?.members?.cooperativeUnion?.formState
-                ?.sectionStatus;
+              response?.data?.members?.cooperativeUnion?.formState?.sectionStatus;
 
             const institutionAllErrors =
-              response?.data?.members?.cooperativeUnion?.formState
-                ?.sectionStatus?.institutionInformation?.errors;
+              response?.data?.members?.cooperativeUnion?.formState?.sectionStatus
+                ?.institutionInformation?.errors;
 
             const bodAllErrors =
               response?.data?.members?.cooperativeUnion?.formState?.sectionStatus?.bodDetails?.map(
@@ -95,8 +85,8 @@ export const KYMCoopUnionFooter = () => {
               );
 
             const centralRepErrors =
-              response?.data?.members?.cooperativeUnion?.formState
-                ?.sectionStatus?.centralRepresentativeDetails?.errors;
+              response?.data?.members?.cooperativeUnion?.formState?.sectionStatus
+                ?.centralRepresentativeDetails?.errors;
 
             if (institutionAllErrors) {
               dispatch(addError(institutionAllErrors));

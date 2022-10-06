@@ -107,6 +107,7 @@ export const SharePurchaseForm = () => {
     },
     {
       staleTime: 0,
+      enabled: !!memberId,
     }
   );
 

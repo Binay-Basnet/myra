@@ -1,9 +1,8 @@
-import { ColumnDef, Row, Table } from '@tanstack/react-table';
+import { ColumnDef, Row, RowData, Table } from '@tanstack/react-table';
 
 declare module '@tanstack/table-core' {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  interface ColumnMeta {
+  interface ColumnMeta<TData extends RowData, TValue> {
+    column?: ColumnDef<TData, TValue>;
     isNumeric?: boolean;
     width?: number | string;
     Footer?: {
@@ -15,7 +14,9 @@ declare module '@tanstack/table-core' {
 
 export type Maybe<T> = T | null;
 
-export type Column<TData extends Maybe<Record<string, unknown>>> = ColumnDef<TData>;
+export type Column<TData extends Maybe<Record<string, unknown>>> = {
+  accessorKey?: keyof TData | 'actions';
+} & ColumnDef<TData>;
 
 export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
   data: Maybe<Array<Maybe<TData>>> | TData;
@@ -44,6 +45,10 @@ export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
   noDataTitle?: string;
 
   rowOnClick?: (row: TData) => void;
+
+  // Sorting Props
+  enableSorting?: boolean;
+  manualSorting?: boolean;
 }
 
 export type TableInstance<T> = Table<T>;

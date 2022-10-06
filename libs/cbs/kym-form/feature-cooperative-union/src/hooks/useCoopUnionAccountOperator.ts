@@ -6,37 +6,28 @@ import debounce from 'lodash/debounce';
 import omit from 'lodash/omit';
 
 import {
+  addAccountError,
+  addError,
   CooperativeUnionPersonnelSection,
   CoopUnionPersonnelInput,
+  useAppDispatch,
+  useAppSelector,
   useGetAccountOperatorDetailsListQuery,
   useSetPersonnelDetailsMutation,
 } from '@coop/cbs/data-access';
-import {
-  addAccountError,
-  addError,
-  useAppDispatch,
-  useAppSelector,
-} from '@coop/shared/utils';
 
 interface IUseCoopUnionBodProps {
   methods: UseFormReturn<CoopUnionPersonnelInput>;
   accountOpId: string;
 }
 
-export const useCoopUnionAccountOperator = ({
-  methods,
-  accountOpId,
-}: IUseCoopUnionBodProps) => {
+export const useCoopUnionAccountOperator = ({ methods, accountOpId }: IUseCoopUnionBodProps) => {
   const router = useRouter();
   const id = router.query['id'] as string;
   const dispatch = useAppDispatch();
 
-  const bodErrors = useAppSelector(
-    (state) => state.coopUnion.accountOperator.operator
-  );
-  const hasPressedNext = useAppSelector(
-    (state) => state.coopUnion.hasPressedNext
-  );
+  const bodErrors = useAppSelector((state) => state.coopUnion.accountOperator.operator);
+  const hasPressedNext = useAppSelector((state) => state.coopUnion.hasPressedNext);
 
   const { watch, reset, setError, clearErrors } = methods;
 
@@ -50,17 +41,15 @@ export const useCoopUnionAccountOperator = ({
       enabled: !!id,
       onSuccess: (response) => {
         const errorArr =
-          response?.members?.cooperativeUnion?.formState?.formData
-            ?.accountOperatorsDetails?.sectionStatus;
+          response?.members?.cooperativeUnion?.formState?.formData?.accountOperatorsDetails
+            ?.sectionStatus;
 
         // Add Error If New Error Is Detected
         if (errorArr) {
-          const errors = errorArr.map((errorObj, index) => {
-            return {
-              operatorId: String(index),
-              errors: errorObj.errors,
-            };
-          });
+          const errors = errorArr.map((errorObj, index) => ({
+            operatorId: String(index),
+            errors: errorObj.errors,
+          }));
 
           dispatch(addAccountError(errors));
         } else {

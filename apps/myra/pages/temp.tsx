@@ -4,7 +4,15 @@ import { DatePicker } from 'react-patro';
 
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
 import { FormDatePicker } from '@coop/shared/form';
+import { Table } from '@coop/shared/table';
 import { Box, Button } from '@coop/shared/ui';
+
+type TableType = {
+  id: number;
+  name: string;
+  age: number;
+  phoneNo: number;
+};
 
 export const Temp = () => {
   const [calendarFormat, setCalendarFormat] = useState<string>('BS');
@@ -56,6 +64,15 @@ export const Temp = () => {
           // }}
         />
       </Box>
+
+      <Table<TableType>
+        data={[{ id: 1, name: 'John Doe', age: 20, phoneNo: 9840123456 }]}
+        columns={[
+          { accessorKey: 'id', accessorFn: (row) => row.id, enableSorting: true },
+          { accessorKey: 'name', accessorFn: (row) => row.name },
+        ]}
+      />
+
       <FormProvider {...methods}>
         <form>
           <InputGroupContainer>

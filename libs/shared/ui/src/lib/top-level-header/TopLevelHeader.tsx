@@ -9,7 +9,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { format } from 'date-fns';
 
-import { Language, useAppDispatch, useSetPreferenceMutation } from '@coop/cbs/data-access';
+import {
+  Language,
+  logout,
+  useAppDispatch,
+  useAppSelector,
+  useSetPreferenceMutation,
+} from '@coop/cbs/data-access';
 import {
   Avatar,
   Box,
@@ -29,7 +35,7 @@ import {
   Text,
   TextFields,
 } from '@coop/shared/ui';
-import { logout, useAppSelector, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 import SearchBar from '../search-bar/SearchBar';
 

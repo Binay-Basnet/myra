@@ -38,12 +38,16 @@ export const MemberListPage = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'id',
         header: t['memberListTableMemberID'],
         accessorFn: (row) => row?.node?.id,
+        // enableSorting: true,
       },
       {
+        id: 'name',
         accessorFn: (row) => row?.node?.name?.local,
         header: t['memberListTableName'],
+        // enableSorting: true,
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
             <Avatar

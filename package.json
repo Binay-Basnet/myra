@@ -33,7 +33,7 @@
     "@nrwl/next": "14.6.2",
     "@raralabs/web-feedback": "^2.0.4",
     "@reduxjs/toolkit": "1.8.4",
-    "@tanstack/react-table": "^8.2.2",
+    "@tanstack/react-table": "^8.5.13",
     "@types/react-beautiful-dnd": "^13.1.2",
     "apexcharts": "^3.35.4",
     "axios": "^0.27.2",

@@ -27,7 +27,7 @@ export const useInit = () => {
   const refreshToken = useRefreshToken(url);
 
   const hasDataReturned = getMe?.data?.auth;
-  const isDatasuccessful = getMe?.data?.auth?.me?.data;
+  const hasData = getMe?.data?.auth?.me?.data;
   const userData = getMe?.data?.auth?.me?.data;
 
   useEffect(() => {
@@ -35,10 +35,9 @@ export const useInit = () => {
       .then((res) => {
         if (res) {
           setTriggerQuery(true);
-          return;
         }
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch(logout());
         replace('/login');
       });
@@ -53,5 +52,5 @@ export const useInit = () => {
         replace('/login');
       }
     }
-  }, [dispatch, hasDataReturned, isDatasuccessful, userData, replace]);
+  }, [dispatch, hasDataReturned, hasData, userData, replace]);
 };

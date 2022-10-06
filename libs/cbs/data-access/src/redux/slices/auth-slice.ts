@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { User } from '@coop/cbs/data-access';
 
-import type { RootState } from './store';
+import type { RootState } from '../store';
 
 interface AuthenticatePayload {
   user: Partial<User>;

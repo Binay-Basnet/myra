@@ -5,6 +5,8 @@ import {
   Id_Type,
   MyraUserInput,
   Roles,
+  setAddUserData,
+  useAppDispatch,
   useGetNewIdMutation,
   UserGender,
   useSetSettingsUserDataMutation,
@@ -17,7 +19,6 @@ import {
   FormSelect,
 } from '@coop/shared/form';
 import { asyncToast, Box, ChakraModal, Grid } from '@coop/shared/ui';
-import { setAddUserData, useAppDispatch } from '@coop/shared/utils';
 
 interface INewUserModalProps {
   isOpen: boolean;

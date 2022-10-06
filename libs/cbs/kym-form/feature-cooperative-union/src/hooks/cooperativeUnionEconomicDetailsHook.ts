@@ -27,7 +27,7 @@ export const useCooperativeUnionEconomicDetails = ({
 
   const { data: editValues, refetch } = useGetEconimicDetailsEditDataQuery(
     {
-      id: id,
+      id,
     },
     { enabled: id !== 'undefined' }
   );
@@ -37,8 +37,7 @@ export const useCooperativeUnionEconomicDetails = ({
       debounce((data) => {
         const economicDetail = {
           ...pickBy(
-            editValues?.members?.cooperativeUnion?.formState?.formData
-              ?.economicDetails?.data ?? {},
+            editValues?.members?.cooperativeUnion?.formState?.formData?.economicDetails?.data ?? {},
             (v) => v !== null
           ),
         };
@@ -51,12 +50,7 @@ export const useCooperativeUnionEconomicDetails = ({
           }
         });
 
-        if (
-          id &&
-          data &&
-          !isDeepEmpty(data) &&
-          !isEqual(economicDetail, data)
-        ) {
+        if (id && data && !isDeepEmpty(data) && !isEqual(economicDetail, data)) {
           mutateAsync({ id, data: dataToBeSent }).then(() => refetch());
         }
       }, 800)
@@ -68,8 +62,7 @@ export const useCooperativeUnionEconomicDetails = ({
   useEffect(() => {
     if (editValues) {
       const editValueData =
-        editValues?.members?.cooperativeUnion?.formState?.formData
-          ?.economicDetails?.data;
+        editValues?.members?.cooperativeUnion?.formState?.formData?.economicDetails?.data;
       reset({
         ...pickBy(editValueData ?? {}, (v) => v !== null),
       });

@@ -7,7 +7,9 @@ import {
   MyraUserIdentificationInput,
   MyraUserInput,
   Roles,
+  RootState,
   useAllAdministrationQuery,
+  useAppSelector,
   useGetSettingsUserEditDataQuery,
   UserGender,
   useSetSettingsUserDataMutation,
@@ -35,7 +37,7 @@ import {
   GridItem,
   Text,
 } from '@coop/shared/ui';
-import { RootState, useAppSelector, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AddUserProps {}

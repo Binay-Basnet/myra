@@ -5,9 +5,9 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Input, InputGroup, InputRightElement } from '@chakra-ui/react';
 
-import { useLoginMutation } from '@coop/cbs/data-access';
+import { login, useAppDispatch, useLoginMutation } from '@coop/cbs/data-access';
 import { Box, Button, Checkbox, Text } from '@coop/shared/ui';
-import { login, useAppDispatch, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 export const Login = () => {
   const { t } = useTranslation();

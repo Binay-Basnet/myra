@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { reset, useAppDispatch } from '@coop/shared/utils';
+import { reset, useAppDispatch } from '@coop/cbs/data-access';
 
 import { KYMCoopUnionFooter } from '../components/KYMCoopUnionFooter';
 import { KymCoopUnionFormBody } from '../components/KYMCoopUnionFormBody';
