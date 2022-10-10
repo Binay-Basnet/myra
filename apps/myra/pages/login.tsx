@@ -1,12 +1,9 @@
-import React from 'react';
 import { useForm } from 'react-hook-form';
-import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { Input, InputGroup, InputRightElement } from '@chakra-ui/react';
 
 import { login, useAppDispatch, useLoginMutation } from '@coop/cbs/data-access';
-import { Box, Button, Checkbox, Text } from '@coop/shared/ui';
+import { Box, Button, Checkbox, PasswordInput, Text, TextInput } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const Login = () => {
@@ -17,7 +14,6 @@ export const Login = () => {
   const { locale, push, asPath, replace } = useRouter();
 
   const { register, handleSubmit } = useForm();
-  const [show, setShow] = React.useState(false);
 
   const onSubmit = (data) => {
     mutateAsync({ data }).then((res) => {
@@ -85,26 +81,14 @@ export const Login = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Box display="flex" flexDir="column" gap={5}>
               <Box>
-                <Text fontSize="s3">{t['loginEmail']}</Text>
-                <Input {...register('username')} autoFocus />
+                <TextInput {...register('username')} autoFocus />
               </Box>
               <Box>
-                <Text fontSize="s3">{t['loginPassword']}</Text>
-                <InputGroup h="44px" mt="s4">
-                  <Input
-                    pr="58px"
-                    variant="outline"
-                    type={show ? 'text' : 'password'}
-                    {...register('password')}
-                  />
-                  <InputRightElement width="fit-content" pr="s16" cursor="pointer">
-                    {show ? (
-                      <IoEyeOffOutline onClick={() => setShow(false)} />
-                    ) : (
-                      <IoEyeOutline onClick={() => setShow(true)} />
-                    )}
-                  </InputRightElement>
-                </InputGroup>
+                <PasswordInput
+                  label={t['loginPassword']}
+                  register={register}
+                  fieldName="password"
+                />
               </Box>
               <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Box display="flex" gap={1}>

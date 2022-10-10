@@ -19,10 +19,11 @@ export interface PasswordInputProps extends InputProps {
   register?: UseFormRegister<FieldValues>;
 
   fieldName?: string;
+  validation?: Record<string, string | RegExp | boolean | number>;
 }
 
 export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((props, ref) => {
-  const { labelColor, label, register, fieldName, ...rest } = props;
+  const { labelColor, label, register, validation, fieldName, ...rest } = props;
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
@@ -44,11 +45,15 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
           {...rest}
           {...(register &&
             fieldName &&
-            register(fieldName, {
-              required: true,
-              minLength: 8,
-              pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/i,
-            }))}
+            register(
+              fieldName,
+              validation
+              //   {
+              //   required: true,
+              //   minLength: 8,
+              //   pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/i,
+              // }
+            ))}
         />
         <InputRightElement width="fit-content" onClick={handleClick} pr="s16" cursor="pointer">
           <Box>{show ? <IoEyeOffOutline /> : <IoEyeOutline />}</Box>

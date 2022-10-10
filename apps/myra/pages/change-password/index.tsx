@@ -54,6 +54,12 @@ const errorText = (type) => {
   }
 };
 
+const passwordValidationRegex = {
+  required: true,
+  minLength: 8,
+  pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/i,
+};
+
 const ChangePassword = () => {
   const route = useRouter();
   const { t } = useTranslation();
@@ -88,6 +94,7 @@ const ChangePassword = () => {
                 label={t['newPasswordText']}
                 register={register}
                 fieldName="password"
+                validation={passwordValidationRegex}
               />
               {passwordError && errorText(passwordError?.type)}
             </Box>
@@ -96,6 +103,7 @@ const ChangePassword = () => {
                 label={t['confirmPasswordText']}
                 register={register}
                 fieldName="cpassword"
+                validation={passwordValidationRegex}
               />
               {cPasswordError && errorText(cPasswordError?.type)}
             </Box>
