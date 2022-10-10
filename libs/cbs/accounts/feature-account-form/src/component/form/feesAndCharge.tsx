@@ -34,16 +34,26 @@ export const FeesAndCharge = () => {
   const isEbankingEnabled = watch('eBanking');
   const isMobileBanking = watch('mobileBanking');
   const isATMenabled = watch('atmFacility');
+  const isSmsBanking = watch('smsBanking');
+  const isChequeEnabled = watch('chequeFacility');
   const serviceCharge = watch('serviceCharge');
-  const atmCharges =
+  const altCharges =
     data?.settings?.general?.depositProduct?.formState?.data?.alternativeChannelCharge;
+  const chequeCharge = data?.settings?.general?.depositProduct?.formState?.data?.chequeCharge;
+  const aTMCharge = data?.settings?.general?.depositProduct?.formState?.data?.atmCharge;
 
-  const mobileBankingCharges = atmCharges?.find((d) => d?.serviceName === 'Mobile Banking');
-  const ebankingCharges = atmCharges?.find((d) => d?.serviceName === 'Ebanking');
+  const mobileBankingCharges = altCharges?.find((d) => d?.serviceName === 'Mobile Banking');
+  const ebankingCharges = altCharges?.find((d) => d?.serviceName === 'Ebanking');
+  const smsCharges = altCharges?.find((d) => d?.serviceName === 'Sms banking');
+  const chequeObject = chequeCharge?.find((d) => d?.serviceName === 'Cheque issue charge');
+  const atmObject = aTMCharge?.find((d) => d?.serviceName === 'Atm charge');
   const ebankingAmount = ebankingCharges?.amount;
   // const ebankingLedger = ebankingCharges?.ledgerName;
   const mobileBankingAmount = mobileBankingCharges?.amount;
   // const mobileBankingLedger = mobileBankingCharges?.ledgerName;
+  const smsBankingAmount = smsCharges?.amount;
+  const atmAmount = atmObject?.amount;
+  const chequeAmont = chequeObject?.amount;
   useEffect(() => {
     if (products) {
       setTriggerQuery(true);
@@ -105,8 +115,8 @@ export const FeesAndCharge = () => {
       if (isATMenabled) {
         setProductData((previous) =>
           previous
-            ? [...previous, { amount: 0, serviceName: 'ATM-Facility' }]
-            : [{ amount: 0, serviceName: 'ATM-Facility' }]
+            ? [...previous, { amount: atmAmount, serviceName: 'ATM-Facility' }]
+            : [{ amount: atmAmount, serviceName: 'ATM-Facility' }]
         );
       } else {
         const index = productData.findIndex((product) => product.serviceName === 'ATM-Facility');
@@ -120,6 +130,48 @@ export const FeesAndCharge = () => {
       }
     }
   }, [isATMenabled]);
+  useEffect(() => {
+    if (productData && typeof isChequeEnabled === 'boolean') {
+      if (isChequeEnabled) {
+        setProductData((previous) =>
+          previous
+            ? [...previous, { amount: chequeAmont, serviceName: 'Cheque issue charge' }]
+            : [{ amount: chequeAmont, serviceName: 'Cheque issue charge' }]
+        );
+      } else {
+        const index = productData.findIndex(
+          (product) => product.serviceName === 'Cheque issue charge'
+        );
+
+        unregister(`serviceCharge.${index}.name`);
+        unregister(`serviceCharge.${index}.amount`);
+
+        setProductData((previous) =>
+          previous.filter((product) => product.serviceName !== 'Cheque issue charge')
+        );
+      }
+    }
+  }, [isChequeEnabled]);
+  useEffect(() => {
+    if (productData && typeof isSmsBanking === 'boolean') {
+      if (isSmsBanking) {
+        setProductData((previous) =>
+          previous
+            ? [...previous, { amount: smsBankingAmount, serviceName: 'Sms banking' }]
+            : [{ amount: smsBankingAmount, serviceName: 'Sms banking' }]
+        );
+      } else {
+        const index = productData.findIndex((product) => product.serviceName === 'Sms banking');
+
+        unregister(`serviceCharge.${index}.name`);
+        unregister(`serviceCharge.${index}.amount`);
+
+        setProductData((previous) =>
+          previous.filter((product) => product.serviceName !== 'Sms banking')
+        );
+      }
+    }
+  }, [isSmsBanking]);
 
   return (
     <GroupContainer scrollMarginTop="200px" display="flex" flexDirection="column" gap="s16">

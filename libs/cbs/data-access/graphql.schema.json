@@ -894,7 +894,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -16595,6 +16595,18 @@
             "deprecationReason": null
           },
           {
+            "name": "chequeFacility",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "createdAt",
             "description": null,
             "args": [],
@@ -16907,6 +16919,18 @@
             "deprecationReason": null
           },
           {
+            "name": "smsBanking",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "tenure",
             "description": null,
             "args": [],
@@ -17177,6 +17201,18 @@
             "deprecationReason": null
           },
           {
+            "name": "chequeFacility",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "defaultAmountDepositAccountName",
             "description": null,
             "type": {
@@ -17387,6 +17423,18 @@
                 "name": "ServiceChargeInput",
                 "ofType": null
               }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "smsBanking",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -22344,7 +22392,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -22435,7 +22483,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -23542,7 +23590,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -27260,7 +27308,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "Date",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -27316,7 +27364,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "Date",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -27744,7 +27792,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Date",
+              "name": "String",
               "ofType": null
             },
             "defaultValue": null,
@@ -28281,24 +28329,12 @@
             "deprecationReason": null
           },
           {
-            "name": "record",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "EbankingUser",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "recordId",
+            "name": "success",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "ID",
+              "name": "Boolean",
               "ofType": null
             },
             "isDeprecated": false,
@@ -28545,7 +28581,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -28653,22 +28689,6 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "String",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "otp",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Int",
                 "ofType": null
               }
             },
@@ -76995,7 +77015,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Date",
+              "name": "String",
               "ofType": null
             },
             "defaultValue": null,
@@ -77047,7 +77067,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "Date",
+              "name": "String",
               "ofType": null
             },
             "defaultValue": null,
@@ -77709,7 +77729,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Date",
+                "name": "String",
                 "ofType": null
               }
             },

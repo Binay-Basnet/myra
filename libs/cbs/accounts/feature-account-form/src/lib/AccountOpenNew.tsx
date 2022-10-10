@@ -12,7 +12,7 @@ import {
   useSetAccountDocumentDataMutation,
   useSetAccountOpenDataMutation,
 } from '@coop/cbs/data-access';
-import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
+import { FormAgentSelect, FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
 import {
   Alert,
   asyncToast,
@@ -30,7 +30,6 @@ import {
 import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
 
 import {
-  Agent,
   DepositFrequency,
   FeesAndCharge,
   Interest,
@@ -320,10 +319,14 @@ export const AccountOpenNew = () => {
                             <Box display="flex" flexDirection="column" gap="s8">
                               <FormCheckbox name="mobileBanking" label="Mobile Banking" />
                               <FormCheckbox name="eBanking" label="eBanking" />
+                              <FormCheckbox name="smsBanking" label="SMS-Banking" />
                             </Box>
                           )}
                           {ProductData?.atmFacility && (
                             <FormCheckbox name="atmFacility" label="ATM Facility" />
+                          )}
+                          {ProductData?.chequeIssue && (
+                            <FormCheckbox name="chequeFacility" label="Cheque Facility" />
                           )}
                         </Box>
                       </Box>
@@ -335,7 +338,10 @@ export const AccountOpenNew = () => {
                         type="number"
                       />
                     </Grid>
-                    <Agent />
+                    {/* <Agent /> */}
+                    <Grid templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
+                      <FormAgentSelect name="agentId" label="Market Representative" />
+                    </Grid>
                     <FeesAndCharge />
                   </Box>
                 )}

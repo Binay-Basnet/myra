@@ -124,7 +124,7 @@ export type AccountFilter = {
 
 export type AccountHistory = {
   balance: Scalars['Float'];
-  date: Scalars['Date'];
+  date: Scalars['String'];
   id: Scalars['String'];
 };
 
@@ -1807,6 +1807,7 @@ export type DepositLoanAccount = Base & {
   atmFacility?: Maybe<Scalars['Boolean']>;
   boardAuthority?: Maybe<Scalars['Boolean']>;
   ceoAuthority?: Maybe<Scalars['Boolean']>;
+  chequeFacility?: Maybe<Scalars['Boolean']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
   defaultAmountDepositAccountName?: Maybe<Scalars['String']>;
@@ -1830,6 +1831,7 @@ export type DepositLoanAccount = Base & {
   objState: ObjState;
   productId: Scalars['ID'];
   serviceCharge?: Maybe<Array<Maybe<ServiceCharge>>>;
+  smsBanking?: Maybe<Scalars['Boolean']>;
   tenure?: Maybe<FrequencyTenure>;
   tenureNumber?: Maybe<Scalars['Int']>;
 };
@@ -1861,6 +1863,7 @@ export type DepositLoanAccountInput = {
   atmFacility?: InputMaybe<Scalars['Boolean']>;
   boardAuthority?: InputMaybe<Scalars['Boolean']>;
   ceoAuthority?: InputMaybe<Scalars['Boolean']>;
+  chequeFacility?: InputMaybe<Scalars['Boolean']>;
   defaultAmountDepositAccountName?: InputMaybe<Scalars['String']>;
   depositFrequencyDay?: InputMaybe<Scalars['Int']>;
   depositFrequencyDayOfWeek?: InputMaybe<Week>;
@@ -1878,6 +1881,7 @@ export type DepositLoanAccountInput = {
   mobileBanking?: InputMaybe<Scalars['Boolean']>;
   productId: Scalars['ID'];
   serviceCharge?: InputMaybe<Array<InputMaybe<ServiceChargeInput>>>;
+  smsBanking?: InputMaybe<Scalars['Boolean']>;
   tenure?: InputMaybe<FrequencyTenure>;
   tenureNumber?: InputMaybe<Scalars['Int']>;
 };
@@ -2429,7 +2433,7 @@ export type EBankingAnnouncementQueryListArgs = {
 };
 
 export type EBankingAppAnnouncement = {
-  date: Scalars['Date'];
+  date: Scalars['String'];
   details: Scalars['HTML'];
   id: Scalars['ID'];
   summary: Scalars['String'];
@@ -2437,7 +2441,7 @@ export type EBankingAppAnnouncement = {
 };
 
 export type EBankingAppNotification = {
-  date: Scalars['Date'];
+  date: Scalars['String'];
   description: Scalars['String'];
   id: Scalars['ID'];
   parameters: Scalars['Map'];
@@ -2580,7 +2584,7 @@ export type EBankingComplaintHistory = {
   applicationNumber: Scalars['Int'];
   complaintStatus: EBankingActiveLoanStatus;
   detailedAccount?: Maybe<Scalars['String']>;
-  feedbackDate: Scalars['Date'];
+  feedbackDate: Scalars['String'];
   id: Scalars['ID'];
   peopleInvolved?: Maybe<Scalars['String']>;
   proposedSolution?: Maybe<Scalars['String']>;
@@ -3014,11 +3018,11 @@ export type EBankingKymSectionMutationProfessionalInformationArgs = {
 export type EBankingLoanHistory = {
   activeLoanStatus?: Maybe<EBankingActiveLoanStatus>;
   amount?: Maybe<Scalars['Amount']>;
-  appliedDate?: Maybe<Scalars['Date']>;
+  appliedDate?: Maybe<Scalars['String']>;
   branch?: Maybe<Branch>;
   id: Scalars['String'];
   loanStatus: EBankingActiveLoanStatus;
-  scheduledDate?: Maybe<Scalars['Date']>;
+  scheduledDate?: Maybe<Scalars['String']>;
   status?: Maybe<EBankingServiceStatus>;
   type?: Maybe<Scalars['String']>;
 };
@@ -3069,7 +3073,7 @@ export type EBankingQuery = {
 };
 
 export type EBankingRegisterComplaintInput = {
-  date?: InputMaybe<Scalars['Date']>;
+  date?: InputMaybe<Scalars['String']>;
   detailedAccount?: InputMaybe<Scalars['String']>;
   peopleInvolved?: InputMaybe<Scalars['String']>;
   policiesViolated?: InputMaybe<Scalars['String']>;
@@ -3144,8 +3148,7 @@ export type EbankingOtpInput = {
 
 export type EbankingOtpResult = {
   error?: Maybe<MutationError>;
-  record?: Maybe<EbankingUser>;
-  recordId?: Maybe<Scalars['ID']>;
+  success?: Maybe<Scalars['Boolean']>;
 };
 
 export type EbankingPasswordInput = {
@@ -3177,7 +3180,7 @@ export type EbankingShareFilter = {
 
 export type EbankingShareHistory = {
   amount: Scalars['Float'];
-  date: Scalars['Date'];
+  date: Scalars['String'];
   id: Scalars['String'];
   numberOfShares: Scalars['Int'];
   title: Scalars['String'];
@@ -3187,7 +3190,6 @@ export type EbankingShareHistory = {
 export type EbankingSignUp = {
   id: Scalars['ID'];
   mobileNo: Scalars['String'];
-  otp: Scalars['Int'];
 };
 
 export type EbankingSignUpResult = {
@@ -8913,11 +8915,11 @@ export type TotalReport = {
 };
 
 export type TransactionFilter = {
-  fromDate?: InputMaybe<Scalars['Date']>;
+  fromDate?: InputMaybe<Scalars['String']>;
   id: Scalars['String'];
   name?: InputMaybe<Scalars['String']>;
   query?: InputMaybe<Scalars['String']>;
-  toDate?: InputMaybe<Scalars['Date']>;
+  toDate?: InputMaybe<Scalars['String']>;
   type?: InputMaybe<TranslateInput>;
 };
 
@@ -9019,7 +9021,7 @@ export enum TransactionState {
 
 export type Transactions = {
   amount: Scalars['Float'];
-  date: Scalars['Date'];
+  date: Scalars['String'];
   id: Scalars['String'];
   name: Scalars['String'];
   transactionDirection: Transaction_Direction;
@@ -10961,6 +10963,7 @@ export type GetAccountOpenProductDetailsQuery = {
             accountType?: DefaultAccountType | null;
             autoOpen?: boolean | null;
             allowLoan?: boolean | null;
+            chequeIssue?: boolean | null;
             percentageOfDeposit?: number | null;
             alternativeChannels?: boolean | null;
             atmFacility?: boolean | null;
@@ -11030,6 +11033,11 @@ export type GetAccountOpenProductDetailsQuery = {
               maxAmount?: any | null;
               avgAmount?: any | null;
             } | null;
+            chequeCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
             prematurePenalty?: {
               penaltyDateType?: PrematurePenaltyDateType | null;
               noOfDays?: number | null;
@@ -11054,11 +11062,16 @@ export type GetAccountOpenEditDataQuery = {
       data?: {
         memberId: string;
         productId: string;
+        accountName?: string | null;
+        minor?: string | null;
         tenure?: FrequencyTenure | null;
         tenureNumber?: number | null;
+        initialDepositAmount?: any | null;
+        defaultAmountDepositAccountName?: string | null;
         interestRate?: number | null;
         ceoAuthority?: boolean | null;
         boardAuthority?: boolean | null;
+        installmentAmount?: string | null;
         depositFrequencyWeekly?: Week | null;
         depositFrequencyMonthly?: WeeklyFrequency | null;
         depositFrequencyDay?: number | null;
@@ -11066,8 +11079,13 @@ export type GetAccountOpenEditDataQuery = {
         depositFrequencyDayOfWeek?: Week | null;
         depositFrequencyYearlyMonth?: Months | null;
         depositFrequencyYearlyDay?: number | null;
+        mobileBanking?: boolean | null;
+        eBanking?: boolean | null;
         atmFacility?: boolean | null;
+        smsBanking?: boolean | null;
+        chequeFacility?: boolean | null;
         agentId?: string | null;
+        serviceCharge?: Array<{ name?: string | null; amount?: any | null } | null> | null;
       } | null;
     } | null;
   };
@@ -17952,6 +17970,12 @@ export const GetAccountOpenProductDetailsDocument = `
             }
             autoOpen
             allowLoan
+            chequeIssue
+            chequeCharge {
+              serviceName
+              ledgerName
+              amount
+            }
             percentageOfDeposit
             alternativeChannels
             atmFacility
@@ -17998,19 +18022,32 @@ export const GetAccountOpenEditDataDocument = `
       data {
         memberId
         productId
+        accountName
+        minor
         tenure
         tenureNumber
+        initialDepositAmount
+        defaultAmountDepositAccountName
         interestRate
         ceoAuthority
         boardAuthority
+        installmentAmount
         depositFrequencyWeekly
         depositFrequencyMonthly
         depositFrequencyDay
         depositFrequencyFrequencyDay
         depositFrequencyDayOfWeek
+        serviceCharge {
+          name
+          amount
+        }
         depositFrequencyYearlyMonth
         depositFrequencyYearlyDay
+        mobileBanking
+        eBanking
         atmFacility
+        smsBanking
+        chequeFacility
         agentId
       }
     }
