@@ -54,44 +54,42 @@ export const useAxios = <TData, TVariables>(
         }
       )
       .catch((err) => {
-        if (err.response && err.isAxiosError) {
-          if (!err.response?.status || err.response?.status === 401) {
-            // assuming that whenever catch blocked is executed this means that the access token is invalid
-            return refreshToken().then((newAccessToken) => {
-              if (newAccessToken) {
-                const headers = {
-                  Authorization: `Bearer ${newAccessToken}`,
-                };
+        if (err.response && err.response?.status === 401) {
+          // assuming that whenever catch blocked is executed this means that the access token is invalid
+          return refreshToken().then((newAccessToken) => {
+            if (newAccessToken) {
+              const headers = {
+                Authorization: `Bearer ${newAccessToken}`,
+              };
 
-                if (config) {
-                  if (config.headers) {
-                    config.headers = { ...config.headers, ...headers };
-                  } else {
-                    config.headers = { ...headers };
-                  }
+              if (config) {
+                if (config.headers) {
+                  config.headers = { ...config.headers, ...headers };
                 } else {
-                  config = {
-                    headers,
-                  };
+                  config.headers = { ...headers };
                 }
+              } else {
+                config = {
+                  headers,
+                };
               }
+            }
 
-              return axios.post<{ data: TData }>(url, { query, variables }, config).then(
-                (
-                  res: AxiosResponse<{
-                    data: TData;
-                    errors?: { message: string }[];
-                  }>
-                ) => {
-                  if (!res.data.data || res.data.errors) {
-                    return { error: res.data.errors };
-                  }
-
-                  return res.data.data;
+            return axios.post<{ data: TData }>(url, { query, variables }, config).then(
+              (
+                res: AxiosResponse<{
+                  data: TData;
+                  errors?: { message: string }[];
+                }>
+              ) => {
+                if (!res.data.data || res.data.errors) {
+                  return { error: res.data.errors };
                 }
-              );
-            });
-          }
+
+                return res.data.data;
+              }
+            );
+          });
         }
 
         return err;

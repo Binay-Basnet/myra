@@ -87,6 +87,7 @@ export const SharePurchaseForm = () => {
   const denominations = watch('cash.denominations');
   const cashPaid = watch('cash.cashPaid');
   const disableDenomination = watch('cash.disableDenomination');
+  const extraFee = watch('extraFee');
 
   const [totalAmount, setTotalAmount] = useState(0);
   const [mode, setMode] = useState('shareInfo');
@@ -189,11 +190,20 @@ export const SharePurchaseForm = () => {
 
   useEffect(() => {
     let temp = 0;
-    chargeList?.forEach((charge) => {
-      temp += Number(charge?.charge);
-    });
+
+    if (extraFee) {
+      extraFee?.forEach((charge) => {
+        temp += Number(charge?.value);
+      });
+    } else {
+      chargeList?.forEach((charge) => {
+        temp += Number(charge?.charge);
+      });
+    }
+
     setTotalAmount(temp + noOfShares * 100);
-  }, [noOfShares, chargeList]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chargeList, extraFee, noOfShares, JSON.stringify(extraFee)]);
 
   return (
     <>
