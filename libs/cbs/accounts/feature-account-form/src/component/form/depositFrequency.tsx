@@ -3,6 +3,7 @@ import { useFormContext } from 'react-hook-form';
 
 import {
   Frequency,
+  FrequencyDay,
   Months,
   NatureOfDepositProduct,
   useGetAccountOpenProductDetailsQuery,
@@ -43,6 +44,13 @@ export const DepositFrequency = () => {
     { label: t['accThursday'], value: Week.Thursaday },
     { label: t['accFriday'], value: Week.Friday },
     { label: t['accSaturday'], value: Week.Saturday },
+  ];
+
+  const frequencyDayList = [
+    { label: 'First', value: FrequencyDay?.First },
+    { label: 'Second', value: FrequencyDay?.Second },
+    { label: 'Third', value: FrequencyDay?.Third },
+    { label: 'Last', value: FrequencyDay?.Last },
   ];
 
   const monthlyList = [
@@ -146,10 +154,10 @@ export const DepositFrequency = () => {
 
                 {monthly === WeeklyFrequency.DayOfTheWeek && (
                   <Box display="grid" mt="s16" gridTemplateColumns="repeat(3, 1fr)" gap="s16">
-                    <FormInput
+                    <FormSelect
                       name="depositFrequencyFrequencyDay"
                       label={t['accFrequencyDay']}
-                      __placeholder={t['accFrequencyDay']}
+                      options={frequencyDayList}
                     />
 
                     <FormSelect

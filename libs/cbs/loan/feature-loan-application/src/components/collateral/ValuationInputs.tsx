@@ -6,8 +6,8 @@ import { ValuationStats } from './ValuationStats';
 export const ValuationInputs = () => (
   <>
     <ValuationAmount />
-    <ValuationRange />
     <ValuationMethods />
+    <ValuationRange />
     <ValuationStats />
   </>
 );

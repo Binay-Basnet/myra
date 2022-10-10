@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
@@ -13,6 +14,8 @@ import { useLoanDetails } from '../hooks/useLoanDetails';
 
 export const CBSLoanApprove = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
+
   const { t } = useTranslation();
   const methods = useForm();
   const { loanPreview } = useLoanDetails();
@@ -28,7 +31,10 @@ export const CBSLoanApprove = () => {
         success: 'Loan Approved !!',
         loading: 'Approving Loan !!',
       },
-      onSuccess: () => router.replace('/loan/applications'),
+      onSuccess: () => {
+        queryClient.invalidateQueries('getLoanList');
+        router.replace('/loan/applications');
+      },
       promise: mutateAsync({ id: id as string, action: LoanApproveOrCancel.Approve }),
     });
   }, [id, mutateAsync, router]);
@@ -40,7 +46,9 @@ export const CBSLoanApprove = () => {
         success: 'Loan Declined !!',
         loading: 'Declining Loan !!',
       },
-      onSuccess: () => router.replace('/loan/declined'),
+      onSuccess: () => {
+        router.replace('/loan/declined');
+      },
       promise: mutateAsync({
         id: id as string,
         action: LoanApproveOrCancel.Cancel,

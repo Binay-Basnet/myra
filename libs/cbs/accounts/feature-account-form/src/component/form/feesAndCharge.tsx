@@ -102,7 +102,7 @@ export const FeesAndCharge = () => {
 
   useEffect(() => {
     if (productData && typeof isATMenabled === 'boolean') {
-      if (isMobileBanking) {
+      if (isATMenabled) {
         setProductData((previous) =>
           previous
             ? [...previous, { amount: 0, serviceName: 'ATM-Facility' }]
@@ -119,7 +119,7 @@ export const FeesAndCharge = () => {
         );
       }
     }
-  }, [isMobileBanking]);
+  }, [isATMenabled]);
 
   return (
     <GroupContainer scrollMarginTop="200px" display="flex" flexDirection="column" gap="s16">
@@ -135,7 +135,7 @@ export const FeesAndCharge = () => {
         <Box
           display="flex"
           flexDirection="column"
-          background="background.Medium"
+          background="border.layout"
           borderRadius="br2"
           p="s16"
         >
