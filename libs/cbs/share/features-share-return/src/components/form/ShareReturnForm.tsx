@@ -6,10 +6,12 @@ import { omit } from 'lodash';
 import {
   CashValue,
   Member,
+  Share_Transaction_Direction,
   SharePaymentMode,
   ShareReturnInput,
   useAddShareReturnMutation,
   useGetMemberIndividualDataQuery,
+  useGetShareChargesQuery,
   useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
 import {
@@ -182,15 +184,32 @@ export const ShareReturnForm = () => {
     }
   }, [allShares, balanceData, getValues, reset]);
 
+  const { data: chargesData } = useGetShareChargesQuery(
+    {
+      transactionType: Share_Transaction_Direction?.Purchase,
+      shareCount: noOfShares,
+    },
+    { enabled: !!noOfShares }
+  );
+
+  const chargeList = chargesData?.share?.charges;
+
   useEffect(() => {
     let temp = 0;
-    extraFee?.forEach((fee) => {
-      temp += Number(fee?.value);
-    });
 
-    setTotalAmount(noOfShares * 100 - temp);
-  }, [noOfShares, JSON.stringify(extraFee)]);
+    if (extraFee) {
+      extraFee?.forEach((charge) => {
+        temp += Number(charge?.value);
+      });
+    } else {
+      chargeList?.forEach((charge) => {
+        temp += Number(charge?.charge);
+      });
+    }
 
+    setTotalAmount(temp + noOfShares * 100);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chargeList, extraFee, noOfShares, JSON.stringify(extraFee)]);
   return (
     <>
       <FormProvider {...methods}>
