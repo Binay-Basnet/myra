@@ -1,12 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import {
-  FormEditableTable,
-  FormInput,
-  FormSelect,
-  FormTextArea,
-} from '@coop/shared/form';
+import { FormEditableTable, FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
 import { Box, Divider, Grid, GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -19,7 +14,7 @@ export const WarehouseTransferForm = () => {
     product_description: string;
   };
 
-  const search_options = [
+  const searchOptions = [
     { label: 'MI 001 - Lenovo Laptop', value: 'mi001' },
     { label: 'MI 002 - Lenovo Laptop', value: 'mi002' },
     { label: 'MI 003 - Lenovo Laptop', value: 'mi003' },
@@ -34,14 +29,7 @@ export const WarehouseTransferForm = () => {
   return (
     <FormProvider {...methods}>
       <form>
-        <Box
-          w="100%"
-          background="white"
-          p="s20"
-          display="flex"
-          flexDirection="column"
-          gap="s32"
-        >
+        <Box w="100%" background="white" p="s20" display="flex" flexDirection="column" gap="s32">
           <Grid templateColumns="repeat(4,1fr)" gap="s20">
             <GridItem colSpan={2}>
               <FormSelect
@@ -166,7 +154,7 @@ export const WarehouseTransferForm = () => {
                   header: t['warehouseTransferProduct'],
                   cellWidth: 'auto',
                   fieldType: 'search',
-                  searchOptions: search_options,
+                  searchOptions,
                 },
 
                 {

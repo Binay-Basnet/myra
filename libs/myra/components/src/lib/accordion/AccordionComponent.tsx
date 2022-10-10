@@ -1,9 +1,6 @@
-import {
-  Accordion,
-  ChakraAccordianProps as AccordionProps,
-} from '@coop/shared/ui';
+import { Accordion, ChakraAccordianProps as AccordionProps } from '@coop/shared/ui';
 
-interface accordionProps extends AccordionProps {
+interface IAccordionProps extends AccordionProps {
   id: string;
   title: string;
   children: React.ReactNode;
@@ -11,10 +8,9 @@ interface accordionProps extends AccordionProps {
 
 export const AccordionComponent =
   () =>
-  ({ id, title, children, ...rest }: accordionProps) => {
-    return (
+  ({ id, title, children, ...rest }: IAccordionProps) =>
+    (
       <Accordion id={id} title={title} {...rest}>
         {children}
       </Accordion>
     );
-  };

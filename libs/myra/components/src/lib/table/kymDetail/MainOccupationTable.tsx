@@ -2,26 +2,26 @@ import { useMemo } from 'react';
 
 import { Column, Table } from '@coop/shared/ui';
 
-export const MainOccupationTable = () => {
-  const data = [
-    {
-      id: 1,
-      occupation: 'Business',
-      firmName: 'Bal Bahadur Nepal',
-      PVNo: '1232532',
-      address: 'Tokha-12, Lalitpur',
-      income: '30,00,000',
-    },
-    {
-      id: 2,
-      occupation: 'Agricutlture',
-      firmName: 'Arava Nepal Modern Agriculture Co. Ltd',
-      PVNo: '34356',
-      address: 'Manbhawan-1, Kathmandu',
-      income: '24,00,000',
-    },
-  ];
+const data = [
+  {
+    id: 1,
+    occupation: 'Business',
+    firmName: 'Bal Bahadur Nepal',
+    PVNo: '1232532',
+    address: 'Tokha-12, Lalitpur',
+    income: '30,00,000',
+  },
+  {
+    id: 2,
+    occupation: 'Agricutlture',
+    firmName: 'Arava Nepal Modern Agriculture Co. Ltd',
+    PVNo: '34356',
+    address: 'Manbhawan-1, Kathmandu',
+    income: '24,00,000',
+  },
+];
 
+export const MainOccupationTable = () => {
   const rowData = useMemo(() => data ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -62,13 +62,5 @@ export const MainOccupationTable = () => {
     []
   );
 
-  return (
-    <Table
-      isLoading={false}
-      data={rowData}
-      columns={columns}
-      isStatic={true}
-      size="compact"
-    />
-  );
+  return <Table isLoading={false} data={rowData} columns={columns} isStatic size="compact" />;
 };

@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
@@ -24,9 +23,7 @@ interface IInventoryPageLayoutProps {
   children: React.ReactNode;
 }
 
-export const InventoryItemsLayout = ({
-  children,
-}: IInventoryPageLayoutProps) => {
+export const InventoryItemsLayout = ({ children }: IInventoryPageLayoutProps) => {
   const [openModal, setOpenModal] = useState(false);
   const [openModalUnits, setOpenModalUnits] = useState(false);
 
@@ -92,38 +89,22 @@ export const InventoryItemsLayout = ({
             height="s48"
             width="full"
             justifyContent="start"
-            leftIcon={
-              <Icon as={AiOutlineSetting} size="md" color="primary.500" />
-            }
+            leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
           >
             {t['itemInventorySettings']}
           </Button>
         </Box>
-        <Box
-          width="calc(100% - 275px)"
-          overflowX="hidden"
-          position="relative"
-          left="275px"
-        >
+        <Box width="calc(100% - 275px)" overflowX="hidden" position="relative" left="275px">
           <Box bg="white" minHeight="100vh">
             {children}
           </Box>
         </Box>
       </Box>
-      <Modal
-        isOpen={openModal}
-        onClose={onCloseModal}
-        isCentered={true}
-        trapFocus={false}
-      >
+      <Modal isOpen={openModal} onClose={onCloseModal} isCentered trapFocus={false}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <Text
-              fontSize="r2"
-              color="neutralColorLight.Gray-80"
-              fontWeight="SemiBold"
-            >
+            <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
               {t['catgAddNewCatgModal']}
             </Text>
           </ModalHeader>
@@ -173,20 +154,11 @@ export const InventoryItemsLayout = ({
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <Modal
-        isOpen={openModalUnits}
-        onClose={onCloseModalUnits}
-        isCentered={true}
-        trapFocus={false}
-      >
+      <Modal isOpen={openModalUnits} onClose={onCloseModalUnits} isCentered trapFocus={false}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <Text
-              fontSize="r2"
-              color="neutralColorLight.Gray-80"
-              fontWeight="SemiBold"
-            >
+            <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
               {t['itemUnitAddNewUnit']}
             </Text>
           </ModalHeader>
@@ -213,10 +185,7 @@ export const InventoryItemsLayout = ({
                     label={t['itemUnitFormDescription']}
                     __placeholder={t['itemUnitFormDescription']}
                   />
-                  <FormSwitch
-                    name="acceptFraction"
-                    label={t['itemUnitFormAcceptsFraction']}
-                  />
+                  <FormSwitch name="acceptFraction" label={t['itemUnitFormAcceptsFraction']} />
                 </Box>
               </form>
             </FormProvider>

@@ -14,15 +14,7 @@ import {
 } from '@chakra-ui/react';
 
 import { FormInput, FormMap, FormSwitch } from '@coop/shared/form';
-import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  GridItem,
-  Icon,
-  Text,
-} from '@coop/shared/ui';
+import { Box, Button, Divider, Grid, GridItem, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { TabColumn } from '../../tab/TabforMemberPage';
@@ -56,78 +48,64 @@ export const WarehouseLayout = ({ children }: IInventoryPageLayoutProps) => {
     setOpenModal(false);
   };
 
-  const AddWarehouseModal = () => {
-    return (
-      <Modal
-        isOpen={openModal}
-        onClose={onCloseModal}
-        isCentered={true}
-        trapFocus={false}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <Text
-              fontSize="r2"
-              color="neutralColorLight.Gray-80"
-              fontWeight="SemiBold"
-            >
-              {t['warehouseFormNewWarehouse']}
-            </Text>
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody p="s16">
-            <FormProvider {...methods}>
-              <form>
-                <Box display="flex" flexDirection="column" gap="s24">
-                  <Grid templateColumns="repeat(3,1fr)" gap="s20">
-                    <GridItem colSpan={2}>
-                      <FormInput
-                        type="text"
-                        name="name"
-                        label={t['warehouseFormName']}
-                        __placeholder={t['warehouseFormEnterName']}
-                      />
-                    </GridItem>
-                    <GridItem>
-                      <FormInput
-                        type="text"
-                        name="phoneNumber"
-                        label={t['warehouseFormPhoneNumber']}
-                        __placeholder={t['warehouseFormEnterPhoneNumber']}
-                      />
-                    </GridItem>
-                  </Grid>
-
-                  <FormSwitch
-                    name="defaultWarehouse"
-                    label={t['warehouseFormDefaultWarehouse']}
-                  />
-
-                  <Box display="flex" flexDirection="column" gap="s16">
+  const AddWarehouseModal = () => (
+    <Modal isOpen={openModal} onClose={onCloseModal} isCentered trapFocus={false}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>
+          <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
+            {t['warehouseFormNewWarehouse']}
+          </Text>
+        </ModalHeader>
+        <ModalCloseButton />
+        <ModalBody p="s16">
+          <FormProvider {...methods}>
+            <form>
+              <Box display="flex" flexDirection="column" gap="s24">
+                <Grid templateColumns="repeat(3,1fr)" gap="s20">
+                  <GridItem colSpan={2}>
                     <FormInput
                       type="text"
-                      name="address"
-                      label={t['warehouseFormAddress']}
-                      __placeholder={t['warehouseFormEnterAddress']}
+                      name="name"
+                      label={t['warehouseFormName']}
+                      __placeholder={t['warehouseFormEnterName']}
                     />
+                  </GridItem>
+                  <GridItem>
+                    <FormInput
+                      type="text"
+                      name="phoneNumber"
+                      label={t['warehouseFormPhoneNumber']}
+                      __placeholder={t['warehouseFormEnterPhoneNumber']}
+                    />
+                  </GridItem>
+                </Grid>
 
-                    <Box>
-                      <FormMap name="addressMap" />
-                    </Box>
+                <FormSwitch name="defaultWarehouse" label={t['warehouseFormDefaultWarehouse']} />
+
+                <Box display="flex" flexDirection="column" gap="s16">
+                  <FormInput
+                    type="text"
+                    name="address"
+                    label={t['warehouseFormAddress']}
+                    __placeholder={t['warehouseFormEnterAddress']}
+                  />
+
+                  <Box>
+                    <FormMap name="addressMap" />
                   </Box>
                 </Box>
-              </form>
-            </FormProvider>
-          </ModalBody>
+              </Box>
+            </form>
+          </FormProvider>
+        </ModalBody>
 
-          <ModalFooter>
-            <Button>{t['warehouseFormAddWarehouse']}</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    );
-  };
+        <ModalFooter>
+          <Button>{t['warehouseFormAddWarehouse']}</Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  );
 
   return (
     <Box display="flex">
@@ -155,20 +133,13 @@ export const WarehouseLayout = ({ children }: IInventoryPageLayoutProps) => {
           height="s48"
           width="full"
           justifyContent="start"
-          leftIcon={
-            <Icon as={AiOutlineSetting} size="md" color="primary.500" />
-          }
+          leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
         >
           {t['warehouseSettings']}
         </Button>
         <AddWarehouseModal />
       </Box>
-      <Box
-        width="calc(100% - 275px)"
-        overflowX="hidden"
-        position="relative"
-        left="275px"
-      >
+      <Box width="calc(100% - 275px)" overflowX="hidden" position="relative" left="275px">
         <Box bg="white" minHeight="100vh">
           {children}
         </Box>

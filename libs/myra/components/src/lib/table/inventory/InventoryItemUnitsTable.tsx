@@ -34,11 +34,7 @@ export const InventoryItemUnitsTable = () => {
       {
         accessor: 'actions',
         Cell: () => (
-          <IconButton
-            variant="ghost"
-            aria-label="Search database"
-            icon={<BsThreeDots />}
-          />
+          <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
         ),
       },
     ],
@@ -49,12 +45,7 @@ export const InventoryItemUnitsTable = () => {
     <>
       <InventoryPageHeader heading="itemUnitUnits" />
 
-      <Table
-        isLoading={isFetching}
-        data={rowItems}
-        columns={columns}
-        sort={true}
-      />
+      <Table isLoading={isFetching} data={rowItems} columns={columns} sort />
     </>
   );
 };

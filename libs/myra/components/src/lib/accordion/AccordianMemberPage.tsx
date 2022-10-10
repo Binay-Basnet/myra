@@ -56,7 +56,7 @@ interface AccordianProps {
   };
 }
 
-export function AccorrdianAddMember(props: AccordianProps) {
+export const AccorrdianAddMember = (props: AccordianProps) => {
   const { t } = useTranslation();
   // const { formStatus, kymCurrentSection } = props;
   const { kymCurrentSection } = props;
@@ -84,19 +84,19 @@ export function AccorrdianAddMember(props: AccordianProps) {
         cursor="pointer"
         onClick={() => setIsOpenPersonal(!isOpenPersonal)}
       >
-        <Text fontSize={'r1'} fontWeight="SemiBold">
+        <Text fontSize="r1" fontWeight="SemiBold">
           {t['kymAccInd1PersonalDetails']}
         </Text>
         {!isOpenPersonal ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenPersonal} style={{ marginTop: '0px' }}>
-        <Box display={'flex'} flexDirection="column">
-          {PersonalInformation.map((item, index) => (
+        <Box display="flex" flexDirection="column">
+          {PersonalInformation.map((item) => (
             <Box
-              key={`${item}${index}`}
+              key={`${item}${Math.random()}`}
               display="flex"
-              alignItems={'center'}
+              alignItems="center"
               borderRadius="br2"
               bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
@@ -128,19 +128,19 @@ export function AccorrdianAddMember(props: AccordianProps) {
         onClick={() => setIsOpenProfessional(!isOpenProfessional)}
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="Semibold">
+        <Text fontSize="r1" fontWeight="Semibold">
           {t['kymAccInd2ProfessionalDetails']}
         </Text>
         {!isOpenProfessional ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenProfessional}>
-        <Box display={'flex'} flexDirection="column" mb="s16">
-          {ProfessionalDetails.map((item, index) => (
+        <Box display="flex" flexDirection="column" mb="s16">
+          {ProfessionalDetails.map((item) => (
             <Box
-              key={`${item}${index}`}
+              key={`${item}${Math.random()}`}
               display="flex"
-              alignItems={'center'}
+              alignItems="center"
               borderRadius="br2"
               bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
@@ -163,19 +163,19 @@ export function AccorrdianAddMember(props: AccordianProps) {
         cursor="pointer"
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="Semibold">
+        <Text fontSize="r1" fontWeight="Semibold">
           {t['kymAccInd3COOPMembership']}
         </Text>
         {!isOpenCoopMemberShip ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenCoopMemberShip}>
-        <Box display={'flex'} flexDirection="column" mb="s16">
-          {coopmembership.map((item, index) => (
+        <Box display="flex" flexDirection="column" mb="s16">
+          {coopmembership.map((item) => (
             <Box
-              key={`${item}${index}`}
+              key={`${item}${Math.random()}`}
               display="flex"
-              alignItems={'center'}
+              alignItems="center"
               borderRadius="br2"
               bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
@@ -198,34 +198,32 @@ export function AccorrdianAddMember(props: AccordianProps) {
         cursor="pointer"
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="Semibold">
+        <Text fontSize="r1" fontWeight="Semibold">
           {t['kymAccInd4Declaration']}
         </Text>
         {!isOpenDeclaration ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenDeclaration}>
-        <Box display={'flex'} flexDirection="column" mb="s16">
-          {Decleration.map((item, index) => {
-            return (
-              <Box
-                key={`${item}${index}`}
-                display="flex"
-                alignItems={'center'}
-                borderRadius="br2"
-                bg={subsection === item ? 'background.500' : 'gray.0'}
-                py="s8"
-              >
-                <a href={`#${item}`}>
-                  <Text pl="s16" fontSize="r1" fontWeight="Regular">
-                    {t[item]}
-                  </Text>
-                </a>
-              </Box>
-            );
-          })}
+        <Box display="flex" flexDirection="column" mb="s16">
+          {Decleration.map((item) => (
+            <Box
+              key={`${item}${Math.random()}`}
+              display="flex"
+              alignItems="center"
+              borderRadius="br2"
+              bg={subsection === item ? 'background.500' : 'gray.0'}
+              py="s8"
+            >
+              <a href={`#${item}`}>
+                <Text pl="s16" fontSize="r1" fontWeight="Regular">
+                  {t[item]}
+                </Text>
+              </a>
+            </Box>
+          ))}
         </Box>
       </Collapse>
     </Box>
   );
-}
+};

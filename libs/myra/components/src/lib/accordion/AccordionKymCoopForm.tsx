@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
 import { Box, Collapse, Text } from '@coop/shared/ui';
@@ -38,10 +38,7 @@ const OrganizationInformation = [
 //     KymCooperativeInstitutionInformationSection.NumberOfEmployee,
 // };
 
-const EconomicDetails: string[] = [
-  'kymCoopAccEquityandLiabilities',
-  'kymCoopAccAssets',
-];
+const EconomicDetails: string[] = ['kymCoopAccEquityandLiabilities', 'kymCoopAccAssets'];
 
 const BoardOfDirectorsDetail: string[] = ['kymCoopAccBoardOfDirectorDetails'];
 
@@ -60,7 +57,7 @@ interface AccordianProps {
   };
 }
 
-export function AccordionKymCoopForm(props: AccordianProps) {
+export const AccordionKymCoopForm = (props: AccordianProps) => {
   const { t } = useTranslation();
   const { kymCurrentSection } = props;
   const subsection = kymCurrentSection?.subSection;
@@ -89,19 +86,19 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         cursor="pointer"
         onClick={() => setIsOpenOrganization(!isOpenOrganization)}
       >
-        <Text fontSize={'r1'} fontWeight="SemiBold">
+        <Text fontSize="r1" fontWeight="SemiBold">
           {t['kymCoopAcc1OrganizationDetails']}
         </Text>
         {!isOpenOrganization ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenOrganization} style={{ marginTop: '0px' }}>
-        <Box display={'flex'} flexDirection="column">
-          {OrganizationInformation.map((item, index) => (
+        <Box display="flex" flexDirection="column">
+          {OrganizationInformation.map((item) => (
             <Box
-              key={`${item}${index}`}
+              key={`${item}${Math.random()}`}
               display="flex"
-              alignItems={'center'}
+              alignItems="center"
               bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
@@ -132,19 +129,19 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         onClick={() => setIsOpenEconomic(!isOpenEconomic)}
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="SemiBold">
+        <Text fontSize="r1" fontWeight="SemiBold">
           {t['kymCoopAcc2EconomicDetails']}
         </Text>
         {!isOpenEconomic ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenEconomic}>
-        <Box display={'flex'} flexDirection="column" mb="s16">
-          {EconomicDetails.map((item, index) => (
+        <Box display="flex" flexDirection="column" mb="s16">
+          {EconomicDetails.map((item) => (
             <Box
-              key={`${item}${index}`}
+              key={`${item}${Math.random()}`}
               display="flex"
-              alignItems={'center'}
+              alignItems="center"
               bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
@@ -166,19 +163,19 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         cursor="pointer"
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="SemiBold">
+        <Text fontSize="r1" fontWeight="SemiBold">
           {t['kymCoopAcc3DetailsofBoardDirectors']}
         </Text>
         {!isOpenBoardOfDirectors ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenBoardOfDirectors}>
-        <Box display={'flex'} flexDirection="column" mb="s16">
-          {BoardOfDirectorsDetail.map((item, index) => (
+        <Box display="flex" flexDirection="column" mb="s16">
+          {BoardOfDirectorsDetail.map((item) => (
             <Box
-              key={`${item}${index}`}
+              key={`${item}${Math.random()}`}
               display="flex"
-              alignItems={'center'}
+              alignItems="center"
               bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
@@ -200,19 +197,19 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         cursor="pointer"
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="SemiBold">
+        <Text fontSize="r1" fontWeight="SemiBold">
           {t['kymCoopAcc4DetailsofAccountOperators']}
         </Text>
         {!isOpenAccountOperator ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenAccountOperator}>
-        <Box display={'flex'} flexDirection="column" mb="s16">
-          {AccountOperatorDetail.map((item, index) => (
+        <Box display="flex" flexDirection="column" mb="s16">
+          {AccountOperatorDetail.map((item) => (
             <Box
-              key={`${item}${index}`}
+              key={`${item}${Math.random()}`}
               display="flex"
-              alignItems={'center'}
+              alignItems="center"
               bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
@@ -234,19 +231,19 @@ export function AccordionKymCoopForm(props: AccordianProps) {
         cursor="pointer"
         minH="50px"
       >
-        <Text fontSize={'r1'} fontWeight="SemiBold">
+        <Text fontSize="r1" fontWeight="SemiBold">
           {t['kymCoopAcc5Declaration']}
         </Text>
         {!isOpenDeclaration ? <ChevronRightIcon /> : <ChevronDownIcon />}
       </Box>
 
       <Collapse in={isOpenDeclaration}>
-        <Box display={'flex'} flexDirection="column" mb="s16">
-          {Declaration.map((item, index) => (
+        <Box display="flex" flexDirection="column" mb="s16">
+          {Declaration.map((item) => (
             <Box
-              key={`${item}${index}`}
+              key={`${item}${Math.random()}`}
               display="flex"
-              alignItems={'center'}
+              alignItems="center"
               bg={subsection === item ? 'background.500' : 'gray.0'}
               py="s8"
             >
@@ -261,4 +258,4 @@ export function AccordionKymCoopForm(props: AccordianProps) {
       </Collapse>
     </Box>
   );
-}
+};

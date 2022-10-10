@@ -6,13 +6,13 @@ interface INodeProps {
   title: string;
   isExtensible: boolean;
 }
-function Node(props: INodeProps) {
+const Node = (props: INodeProps) => {
   const { code, title, isExtensible } = props;
   return (
     <NodeWrapper>
       <Tree code={code} title={title} isExtensible={isExtensible} />
     </NodeWrapper>
   );
-}
+};
 
 export default Node;

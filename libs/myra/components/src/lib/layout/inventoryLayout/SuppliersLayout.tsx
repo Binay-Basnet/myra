@@ -51,19 +51,12 @@ export const SuppliersLayout = ({ children }: IInventoryPageLayoutProps) => {
           height="s48"
           width="full"
           justifyContent="start"
-          leftIcon={
-            <Icon as={AiOutlineSetting} size="md" color="primary.500" />
-          }
+          leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
         >
           {t['suppiersSettings']}
         </Button>
       </Box>
-      <Box
-        width="calc(100% - 275px)"
-        overflowX="hidden"
-        position="relative"
-        left="275px"
-      >
+      <Box width="calc(100% - 275px)" overflowX="hidden" position="relative" left="275px">
         <Box bg="white" minHeight="100vh">
           {children}
         </Box>

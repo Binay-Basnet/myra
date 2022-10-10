@@ -1,12 +1,11 @@
-
 import { Table } from '@coop/shared/table';
 
-interface IData {
-  [key: string]: string | number;
-  id: number;
-  relationship: string;
-  fullName: string;
-}
+// interface IData {
+//   [key: string]: string | number;
+//   id: number;
+//   relationship: string;
+//   fullName: string;
+// }
 
 const data = [
   {
@@ -31,31 +30,29 @@ const data = [
   },
 ];
 
-export const FamilyMemberTable = () => {
-  return (
-    <Table
-      isLoading={false}
-      data={data}
-      columns={[
-        {
-          header: 'SN',
-          accessorFn: (row) => row?.id,
-          // disableSortBy: false,
+export const FamilyMemberTable = () => (
+  <Table
+    isLoading={false}
+    data={data}
+    columns={[
+      {
+        header: 'SN',
+        accessorFn: (row: any) => row?.id,
+        // disableSortBy: false,
+      },
+      {
+        header: 'Relationship',
+        accessorFn: (row: any) => row?.relationship,
+      },
+      {
+        header: 'Full Name',
+        accessorFn: (row: any) => row?.fullName,
+        meta: {
+          width: '80%',
         },
-        {
-          header: 'Relationship',
-          accessorFn: (row) => row?.relationship,
-        },
-        {
-          header: 'Full Name',
-          accessorFn: (row) => row?.fullName,
-          meta: {
-            width: '80%',
-          },
-        },
-      ]}
-      isStatic={true}
-      size="compact"
-    />
-  );
-};
+      },
+    ]}
+    isStatic
+    size="compact"
+  />
+);

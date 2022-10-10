@@ -41,11 +41,7 @@ export const SupplierTable = () => {
       {
         accessor: 'actions',
         Cell: () => (
-          <IconButton
-            variant="ghost"
-            aria-label="Search database"
-            icon={<BsThreeDots />}
-          />
+          <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
         ),
       },
     ],
@@ -54,14 +50,9 @@ export const SupplierTable = () => {
 
   return (
     <>
-      <TableListPageHeader heading={'supplier'} />
+      <TableListPageHeader heading="supplier" />
 
-      <Table
-        data={rowItems}
-        isLoading={isFetching}
-        columns={columns}
-        sort={true}
-      />
+      <Table data={rowItems} isLoading={isFetching} columns={columns} sort />
     </>
   );
 };

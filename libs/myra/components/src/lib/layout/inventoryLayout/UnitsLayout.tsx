@@ -3,16 +3,7 @@ import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
-import {
-  Box,
-  Button,
-  Divider,
-  Icon,
-  Input,
-  Modal,
-  Switch,
-  Text,
-} from '@coop/shared/ui';
+import { Box, Button, Divider, Icon, Input, Modal, Switch, Text } from '@coop/shared/ui';
 
 import { TabColumn } from '../../tab/TabforMemberPage';
 
@@ -27,9 +18,7 @@ const inventoryColumns = [
   },
 ];
 
-export const InventoryUnitsLayout = ({
-  children,
-}: IInventoryPageLayoutProps) => {
+export const InventoryUnitsLayout = ({ children }: IInventoryPageLayoutProps) => {
   const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
   const onCloseModal = () => {
@@ -58,51 +47,33 @@ export const InventoryUnitsLayout = ({
         <Modal
           open={openModal}
           onClose={onCloseModal}
-          isCentered={true}
+          isCentered
           title={
             <Text fontSize="r2" color="gray.800" fontWeight="SemiBold">
               Add New Unit of Measurement
             </Text>
           }
         >
-          <Box display="flex" flexDirection={'column'} gap="s24" p="s16">
-            <Box display="flex" flexDirection={'column'} gap="s4">
+          <Box display="flex" flexDirection="column" gap="s24" p="s16">
+            <Box display="flex" flexDirection="column" gap="s4">
               <Text fontSize="r2" color="gray.800" fontWeight="500">
                 Name
               </Text>
-              <Input
-                type="text"
-                h="44px"
-                w="100%"
-                variant="outline"
-                __placeholder="NIBL Bank"
-              />
+              <Input type="text" h="44px" w="100%" variant="outline" __placeholder="NIBL Bank" />
             </Box>
-            <Box display="flex" flexDirection={'column'} gap="s4">
+            <Box display="flex" flexDirection="column" gap="s4">
               <Text fontSize="r2" color="gray.800" fontWeight="500">
                 Short Name
               </Text>
-              <Input
-                type="text"
-                h="44px"
-                w="100%"
-                variant="outline"
-                __placeholder="NIBL Bank"
-              />
+              <Input type="text" h="44px" w="100%" variant="outline" __placeholder="NIBL Bank" />
             </Box>
-            <Box display="flex" flexDirection={'column'} gap="s4">
+            <Box display="flex" flexDirection="column" gap="s4">
               <Text fontSize="r2" color="gray.800" fontWeight="500">
                 Description
               </Text>
-              <Input
-                type="text"
-                h="44px"
-                w="100%"
-                variant="outline"
-                __placeholder="NIBL Bank"
-              />
+              <Input type="text" h="44px" w="100%" variant="outline" __placeholder="NIBL Bank" />
             </Box>
-            <Box display={'flex'} flexDirection={'row'} gap="s16">
+            <Box display="flex" flexDirection="row" gap="s16">
               <Switch />
               <Text fontSize="r1" color="gray.700" fontWeight="600">
                 Accept fraction
@@ -124,19 +95,12 @@ export const InventoryUnitsLayout = ({
           height="s48"
           width="full"
           justifyContent="start"
-          leftIcon={
-            <Icon as={AiOutlineSetting} size="md" color="primary.500" />
-          }
+          leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
         >
           Inventory Settings
         </Button>
       </Box>
-      <Box
-        width="calc(100% - 275px)"
-        overflowX="hidden"
-        position="relative"
-        left="275px"
-      >
+      <Box width="calc(100% - 275px)" overflowX="hidden" position="relative" left="275px">
         <Box bg="white" minHeight="100vh">
           {children}
         </Box>

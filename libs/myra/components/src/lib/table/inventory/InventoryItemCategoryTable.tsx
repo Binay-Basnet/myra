@@ -34,11 +34,7 @@ export const InventoryItemCategoryTable = () => {
       {
         accessor: 'actions',
         Cell: () => (
-          <IconButton
-            variant="ghost"
-            aria-label="Search database"
-            icon={<BsThreeDots />}
-          />
+          <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
         ),
       },
     ],
@@ -49,12 +45,7 @@ export const InventoryItemCategoryTable = () => {
     <>
       <InventoryPageHeader heading="catgItemsCategory" />
 
-      <Table
-        isLoading={isFetching}
-        data={rowItems}
-        columns={columns}
-        sort={true}
-      />
+      <Table isLoading={isFetching} data={rowItems} columns={columns} sort />
     </>
   );
 };

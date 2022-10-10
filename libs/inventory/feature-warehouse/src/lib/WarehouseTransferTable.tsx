@@ -66,12 +66,12 @@ export const WarehouseTransferTable = () => {
         buttonHandler={() => router.push('/inventory/warehouse/transfer/add')}
       />
 
-      {/* <Table*/}
-      {/*  data={rowItems}*/}
-      {/*  isLoading={isFetching}*/}
-      {/*  columns={columns}*/}
-      {/*  sort={true}*/}
-      {/* />*/}
+      {/* <Table */}
+      {/*  data={rowItems} */}
+      {/*  isLoading={isFetching} */}
+      {/*  columns={columns} */}
+      {/*  sort={true} */}
+      {/* /> */}
     </>
   );
 };

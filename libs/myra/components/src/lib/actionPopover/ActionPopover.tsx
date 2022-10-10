@@ -1,18 +1,11 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 
-import {
-  Box,
-  Popover,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
-  Text,
-} from '@coop/shared/ui';
+import { Box, Popover, PopoverBody, PopoverContent, PopoverTrigger, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-type popoverType = {
+type IPopoverType = {
   title?: string[];
 
   id: string;
@@ -23,28 +16,19 @@ type popoverType = {
   }[];
 };
 
-export const ActionPopoverComponent = ({ title, items, id }: popoverType) => {
+export const ActionPopoverComponent = ({ title, items, id }: IPopoverType) => {
   const initialFocusRef = useRef<HTMLButtonElement | null>(null);
   const { t } = useTranslation();
   return (
     <Popover placement="bottom-start" initialFocusRef={initialFocusRef}>
       <PopoverTrigger>
-        <IconButton
-          variant="ghost"
-          aria-label="Search database"
-          icon={<BsThreeDots />}
-        />
+        <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
       </PopoverTrigger>
-      <PopoverContent
-        minWidth="180px"
-        w="180px"
-        color="white"
-        _focus={{ boxShadow: 'none' }}
-      >
+      <PopoverContent minWidth="180px" w="180px" color="white" _focus={{ boxShadow: 'none' }}>
         <PopoverBody px="0" py="s8">
           <Box display="flex" flexDirection="column" alignItems="start">
             {items
-              ? items.map((item, index) => (
+              ? items.map((item) => (
                   <Box
                     px="s16"
                     py="s10"
@@ -52,29 +36,23 @@ export const ActionPopoverComponent = ({ title, items, id }: popoverType) => {
                     _hover={{ bg: 'gray.100' }}
                     cursor="pointer"
                     onClick={() => item?.onClick && item?.onClick(id)}
-                    key={`${item.title}${index}`}
+                    key={`${item.title}${Math.random()}`}
                   >
-                    <Text
-                      variant="bodyRegular"
-                      color="neutralColorLight.Gray-80"
-                    >
+                    <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
                       {t[item.title]}
                     </Text>
                   </Box>
                 ))
-              : title?.map((item, index) => (
+              : title?.map((item) => (
                   <Box
                     px="s16"
                     py="s10"
                     width="100%"
                     _hover={{ bg: 'gray.100' }}
                     cursor="pointer"
-                    key={`${item}${index}`}
+                    key={`${item}${Math.random()}`}
                   >
-                    <Text
-                      variant="bodyRegular"
-                      color="neutralColorLight.Gray-80"
-                    >
+                    <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
                       {t[item]}
                     </Text>
                   </Box>

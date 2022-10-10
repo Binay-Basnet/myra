@@ -6,12 +6,11 @@ import { useAccordion } from './Accordion';
 interface ITreeHeaderProps {
   code: string;
   title: string;
-  isExtensible?: boolean;
 }
 
-function TreeHeader(props: ITreeHeaderProps) {
+const TreeHeader = (props: ITreeHeaderProps) => {
   const { isOpen } = useAccordion();
-  const { code, title, isExtensible } = props;
+  const { code, title } = props;
   return (
     <HStack ml="-7px" alignItems="center">
       <Icon
@@ -32,6 +31,6 @@ function TreeHeader(props: ITreeHeaderProps) {
       </HStack>
     </HStack>
   );
-}
+};
 
 export default TreeHeader;

@@ -25,10 +25,7 @@ type MemberData = {
   dateOfBirth?: string | null;
 };
 
-export const AccountListTable = ({
-  data,
-  isLoading,
-}: IAccountListTableProps) => {
+export const AccountListTable = ({ data, isLoading }: IAccountListTableProps) => {
   const columns: Column<MemberData>[] = useMemo(
     () => [
       {
@@ -56,11 +53,7 @@ export const AccountListTable = ({
       {
         accessor: 'actions',
         Cell: () => (
-          <IconButton
-            variant="ghost"
-            aria-label="Search database"
-            icon={<BsThreeDots />}
-          />
+          <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
         ),
       },
     ],
@@ -69,12 +62,5 @@ export const AccountListTable = ({
 
   const rowData = useMemo(() => data && data?.members?.list, [data]);
 
-  return (
-    <Table
-      isLoading={isLoading}
-      data={rowData?.slice(0, 10) ?? []}
-      columns={columns}
-      sort={true}
-    />
-  );
+  return <Table isLoading={isLoading} data={rowData?.slice(0, 10) ?? []} columns={columns} sort />;
 };

@@ -36,39 +36,27 @@ export const InventoryItemTable = () => {
       {
         Header: t['itemListUnitPrice'],
         accessor: 'node.unitPrice',
-        Cell: ({ value }) => {
-          return <span>{Number(value).toFixed(2)}</span>;
-        },
+        Cell: ({ value }) => <span>{Number(value).toFixed(2)}</span>,
       },
 
       {
         id: 'total-cost',
         Header: t['itemListTotalCost'],
         accessor: 'node.unitPrice',
-        Cell: ({ value, row }) => {
-          return (
-            <span>
-              {Number(value * row.original.node.itemQuantity).toFixed(2)}
-            </span>
-          );
-        },
+        Cell: ({ value, row }) => (
+          <span>{Number(value * row.original.node.itemQuantity).toFixed(2)}</span>
+        ),
       },
 
       {
         Header: t['itemListItemQuantity'],
         accessor: 'node.itemQuantity',
-        Cell: ({ value }) => {
-          return <span>{Number(value).toFixed(2)}</span>;
-        },
+        Cell: ({ value }) => <span>{Number(value).toFixed(2)}</span>,
       },
       {
         accessor: 'actions',
         Cell: () => (
-          <IconButton
-            variant="ghost"
-            aria-label="Search database"
-            icon={<BsThreeDots />}
-          />
+          <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
         ),
       },
     ],
@@ -77,14 +65,9 @@ export const InventoryItemTable = () => {
 
   return (
     <>
-      <TableListPageHeader heading={'items'} />
+      <TableListPageHeader heading="items" />
 
-      <Table
-        isLoading={isFetching}
-        data={rowItems}
-        columns={columns}
-        sort={true}
-      />
+      <Table isLoading={isFetching} data={rowItems} columns={columns} sort />
     </>
   );
 };
