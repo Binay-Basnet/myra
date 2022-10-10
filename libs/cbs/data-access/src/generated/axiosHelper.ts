@@ -54,6 +54,10 @@ export const useAxios = <TData, TVariables>(
         }
       )
       .catch((err) => {
+        if (err.response?.status === 422) {
+          return { error: err.response.data.errors };
+        }
+
         if (err.response && err.response?.status === 401) {
           // assuming that whenever catch blocked is executed this means that the access token is invalid
           return refreshToken().then((newAccessToken) => {
