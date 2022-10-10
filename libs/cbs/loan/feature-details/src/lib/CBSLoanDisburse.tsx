@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiFillCheckCircle } from 'react-icons/ai';
 import { IoChevronBackOutline } from 'react-icons/io5';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { Box } from '@chakra-ui/react';
 import { omit } from 'lodash';
@@ -121,6 +122,8 @@ interface IProps {
   setMode: Dispatch<SetStateAction<'details' | 'payment' | 'success'>>;
 }
 export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
+  const queryClient = useQueryClient();
+
   const router = useRouter();
   const methods = useForm<LoanDisbursementInput>();
   const { watch, getValues } = methods;
@@ -148,6 +151,8 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
         loading: 'Disbursing Loan',
       },
       onSuccess: () => {
+        queryClient.invalidateQueries('getLoanList');
+
         setMode('success');
       },
       promise: mutateAsync({
