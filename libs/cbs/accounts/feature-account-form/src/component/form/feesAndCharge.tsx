@@ -222,6 +222,7 @@ export const FeesAndCharge = () => {
                     textAlign="right"
                     name={`serviceCharge.${index}.amount`}
                     defaultValue={val?.amount}
+                    type="number"
                   />
                 </Box>
               </Box>
