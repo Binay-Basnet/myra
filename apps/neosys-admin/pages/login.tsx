@@ -9,8 +9,6 @@ import { Input, InputGroup, InputLeftElement, InputRightElement } from '@chakra-
 import { login, useAppDispatch, useLoginMutation } from '@coop/cbs/data-access';
 import { Box, Button } from '@coop/shared/ui';
 
-import logo from '../public/logo.svg';
-
 export const Login = () => {
   const { mutateAsync, isLoading } = useLoginMutation();
   const dispatch = useAppDispatch();
@@ -46,7 +44,7 @@ export const Login = () => {
         <title>Neosys | Login</title>
       </Head>
       <Box mb="8">
-        <Image src={logo} alt="Main Logo" />
+        <Image src="/logo.svg" alt="Main Logo" layout="fill" />
       </Box>
 
       <form onSubmit={handleSubmit(onSubmit)}>

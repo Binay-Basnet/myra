@@ -6,8 +6,8 @@ const path = require('path');
  * @type {import('@nrwl/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
+  output: 'standalone',
   experimental: {
-    outputStandalone: true,
     outputFileTracingRoot: path.join(__dirname, '../../'),
   },
   nx: {
@@ -20,10 +20,15 @@ const nextConfig = {
     return [
       {
         source: '/',
-        destination: '/home',
+        destination: '/login',
         permanent: true,
       },
     ];
+  },
+
+  i18n: {
+    locales: ['en', 'ne'],
+    defaultLocale: 'en',
   },
 };
 

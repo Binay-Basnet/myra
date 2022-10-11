@@ -45,9 +45,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
         <title>E Banking</title>
       </Head>
       <QueryClientProvider client={queryClient}>
-        <ChakraProvider theme={theme}>
-          <main suppressHydrationWarning>{getLayout(<Component {...pageProps} />)}</main>
-        </ChakraProvider>
+        <main suppressHydrationWarning>{getLayout(<Component {...pageProps} />)}</main>
         <ReactQueryDevtools />
       </QueryClientProvider>
     </>

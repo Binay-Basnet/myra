@@ -3,7 +3,15 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { login, useAppDispatch, useLoginMutation } from '@coop/cbs/data-access';
-import { Box, Button, Checkbox, PasswordInput, Text, TextInput } from '@coop/shared/ui';
+import {
+  Box,
+  Button,
+  Checkbox,
+  LocaleSwitcher,
+  PasswordInput,
+  Text,
+  TextInput,
+} from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const Login = () => {
@@ -11,7 +19,7 @@ export const Login = () => {
   const { mutateAsync, isLoading } = useLoginMutation();
   const dispatch = useAppDispatch();
 
-  const { locale, push, asPath, replace } = useRouter();
+  const { replace } = useRouter();
 
   const { register, handleSubmit } = useForm();
 
@@ -64,16 +72,7 @@ export const Login = () => {
               <Image src="/loginLogo.png" layout="fill" alt="logo" />
             </Box>
 
-            <Button
-              variant="outline"
-              onClick={() =>
-                push(`/${asPath}`, undefined, {
-                  locale: locale === 'ne' ? 'en' : 'ne',
-                })
-              }
-            >
-              {locale === 'en' ? 'नेपाली' : 'English'}
-            </Button>
+            <LocaleSwitcher />
           </Box>
           <Text fontSize="l1" color="gray.700">
             {t['loginHeader']}
