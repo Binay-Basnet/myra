@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Controller, Path, useFormContext } from 'react-hook-form';
+import { Control, Controller, Path, useFormContext } from 'react-hook-form';
 
 import { Box, Checkbox } from '@coop/shared/ui';
 
@@ -7,9 +7,11 @@ import FormInput from '../FormInput/FormInput';
 
 interface IFormCheckboxGroupProps<T extends Record<string, string[]>> {
   name: Path<T>;
+  control?: Control<T>;
+  label?: string;
   list?: { label: string; value: string }[];
   showOther?: boolean;
-  orientation?: 'row' | 'column';
+  orientation?: 'row' | 'column' | 'grid';
 }
 
 export const FormCheckboxGroup = <T extends Record<string, string[]>>({
@@ -34,16 +36,24 @@ export const FormCheckboxGroup = <T extends Record<string, string[]>>({
       name={name}
       render={({ field: { onChange, value } }) => (
         <Box
-          display="flex"
-          flexDirection={orientation}
-          flexWrap="wrap"
-          columnGap="s48"
-          rowGap="s16"
+          {...(orientation === 'grid'
+            ? {
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3,1fr)',
+                gap: 's16',
+              }
+            : {
+                display: 'flex',
+                flexDir: orientation,
+                flexWrap: 'wrap',
+                columnGap: 's48',
+                rowGap: 's16',
+              })}
         >
           {list?.map((item) => (
             <Checkbox
               id={name}
-              key={item?.value}
+              key={item.value}
               label={item.label}
               isChecked={value?.includes(item.value)}
               onChange={() => {

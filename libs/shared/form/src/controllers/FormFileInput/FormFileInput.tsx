@@ -22,7 +22,7 @@ export const FormFileInput = ({ name, label, ...rest }: FormFileInputProps) => {
   return (
     <Box display="flex" flexDir="column" gap="s4">
       {label && (
-        <TextFields variant="formLabel" color="gray.700">
+        <TextFields variant="formLabel" color="gray.700" whiteSpace="nowrap">
           {label}
         </TextFields>
       )}

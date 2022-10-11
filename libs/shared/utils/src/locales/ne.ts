@@ -3133,6 +3133,11 @@ const ne: Record<string, string> = {
   declineLoanApplication: 'Decline Loan Application',
   reasonForDecliningLoan: 'Reason For Declining Loan',
 
+  alternativeChannels: 'Alternative Channels',
+  hrManagement: 'HR Manangement',
+  capacityAndTrainingManagement: 'Capacity and Training Management',
+  businessIntelligenceAndReporting: 'Business Intelligence and Reporting',
+
   kymCoopUnionSelectCentralRepresentativeamongDirectors:
     'Select Central Representative among Directors',
   depositProductPressCompletetosaveform: 'Press Complete to save form',

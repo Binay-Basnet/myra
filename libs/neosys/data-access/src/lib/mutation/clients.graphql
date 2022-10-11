@@ -1,0 +1,12 @@
+mutation addNewClient($data: OrganizationClientInput) {
+  neosys {
+    client {
+      add(data: $data) {
+        error {
+          ...MutationError
+        }
+        recordId
+      }
+    }
+  }
+}

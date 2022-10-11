@@ -28,7 +28,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
   const handleClick = () => setShow(!show);
 
   return (
-    <>
+    <Box w="auto" display="flex" flexDirection="column" flexGrow={1} gap="s4">
       <TextFields variant="formLabel" color={labelColor ?? 'gray.700'}>
         {' '}
         {label ?? 'Password'}
@@ -57,7 +57,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
           <Box>{show ? <IoEyeOffOutline /> : <IoEyeOutline />}</Box>
         </InputRightElement>
       </InputGroup>
-    </>
+    </Box>
   );
 });
 

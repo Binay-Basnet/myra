@@ -60,22 +60,6 @@ const en: Record<string, string> = {
   yourDashboard: 'Your Dashboard',
   yourMyraApplication: 'Your Myra Applications',
   moreFromMyra: 'More from Myra',
-  corebankingSystems: 'Core Banking Systems',
-  inventoryManagement: 'Inventory Management',
-  loanManagementSystem: 'Loan Management System',
-  accountingSystem: 'Accounting System',
-  fixedAssetManagement: 'Fixed Asset Management',
-  otherApplications: 'OTHER APPLICATIONS',
-  assetsAndInventoryManagement: 'Assets and Inventory Management',
-  memberAndShareManagement: 'Member and Share Management',
-  hrTrainingAndCapacityManagement: 'HR Training and Capacity Management',
-  mobileApp: 'Mobile App',
-  documentManagement: 'Document Management',
-  alternativeChannelsAndCrossConnectivity: 'Alternative Channels and Cross Connectivity',
-  reconciliationSoftware: 'Reconciliation Software',
-  crm: 'CRM',
-  complainceManagement: 'Complaince Management',
-  businessProcessManagement: 'Business Process Management',
   exploreAllApplications: 'Explore All Applications',
   sahakariName: 'Neosys Saving and Credit Cooperative',
   sahakariLocation: 'Lalitpur',
@@ -1563,7 +1547,7 @@ const en: Record<string, string> = {
   neoClientTableAddress: 'Address',
   neoClientTableDateJoined: 'Date Joined',
 
-  // clients form
+  // clients form TODO! put this is nepali
   neoClientNewUser: 'New User',
   neoClientOrganizationType: 'Organization Type',
   neoClientOrganizationCode: 'Organization Code',
@@ -1579,9 +1563,10 @@ const en: Record<string, string> = {
   neoClientRegisteredOffice: 'Registered Office',
   neoClientRegisteredNo: 'Registered No',
   neoClientRegisteredAddress: 'Registered Address',
-  neoClientRegistrationDate: 'Registration Date',
+  neoClientRegisteredAddressDetails: 'Details about the Registration',
+  neoClientRegistrationDate: 'Registered Date',
   neoClientPANVATNo: 'PAN  / VAT No',
-  neoClientAddress: 'Address',
+  neoClientAddress: 'Address Details',
   neoClientProvince: 'Province',
   neoClientSelectProvince: 'Select Province',
   neoClientDistrict: 'District',
@@ -1595,6 +1580,33 @@ const en: Record<string, string> = {
   neoClientHouseNo: 'House No.',
   neoClientEnterHouseNo: 'Enter House No.',
   neoClientMainContactPerson: 'Main Contact Person',
+  neoClientTechnicalContactPerson: 'Technical Contact Person',
+  neoClientWorkingArea: 'Working Area',
+  neoClientLicense: 'License',
+  neoClientLicenseDetails:
+    'Select installment frequency. Further details have to be added during account opening.',
+  neoClientLicenseBasic: 'Basic',
+  neoClientLicenseStandard: 'Standard',
+  neoClientLicenseProfessional: 'Professional',
+  neoClientSecuritySetup: 'Security Setup',
+  neoClientSecuritySetupDes:
+    'Select installment frequency. Further details have to be added during account opening.',
+  neoClientSecurityVPN: 'VPN',
+  neoClientSecurityPureSASS: 'Pure SASS',
+
+  neoClientDocumentDeclaration: 'Document Declaration',
+  neoClientAGMBOD: 'AGM/BOD Decision Document',
+  neoClientMOA: 'MOA/AOA',
+  neoClientTaxClearance: 'Tax Clearance',
+  neoClientRegisteredCertificate: 'Registered Certificate',
+  neoClientPANCertificate: 'PAN Certificate',
+  neoClientLatestAuditReport: 'Latest Audit Report',
+  neoClientLogo: 'Logo',
+  neoClientMinuteOfCentralRep: 'Minute Of Central Rep',
+
+  neoClientModules: 'Modules',
+  neoClientModulesDes: 'Select Modules for your onboarding. Multi select for different modules.',
+
   neoClientName: 'Name',
   neoClientPhoneNumber: 'Phone Number',
 
@@ -3502,6 +3514,32 @@ const en: Record<string, string> = {
   remainingDaysToGetMatured: 'Remaining Days To Get Matured',
   declineLoanApplication: 'Decline Loan Application',
   reasonForDecliningLoan: 'Reason For Declining Loan',
+
+  // NEOSYS
+  corebankingSystems: 'Core Banking Systems',
+  memberAndShareManagement: 'Member and Share Management',
+  accountingSystem: 'Accounting System',
+  inventoryManagement: 'Inventory Management',
+  loanManagementSystem: 'Loan Management System',
+
+  alternativeChannels: 'Alternative Channels',
+  hrManagement: 'HR Manangement',
+  capacityAndTrainingManagement: 'Capacity and Training Management',
+  businessIntelligenceAndReporting: 'Business Intelligence and Reporting',
+
+  complainceManagement: 'Compliance Management',
+  businessProcessManagement: 'Business Process Management',
+
+  fixedAssetManagement: 'Fixed Asset Management',
+  otherApplications: 'OTHER APPLICATIONS',
+  assetsAndInventoryManagement: 'Assets and Inventory Management',
+  hrTrainingAndCapacityManagement: 'HR Training and Capacity Management',
+  mobileApp: 'Mobile App',
+  documentManagement: 'Document Management',
+  alternativeChannelsAndCrossConnectivity: 'Alternative Channels and Cross Connectivity',
+  reconciliationSoftware: 'Reconciliation Software',
+  crm: 'CRM',
+  // NEOSYS-END
 
   kymCoopUnionSelectCentralRepresentativeamongDirectors:
     'Select Central Representative among Directors',

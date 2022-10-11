@@ -1,12 +1,10 @@
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import Head from 'next/head';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { login, useAppDispatch, useLoginMutation } from '@coop/cbs/data-access';
 import { FormInput, FormPasswordInput } from '@coop/shared/form';
-import { Box, Button } from '@coop/shared/ui';
+import { Box, Button, toast } from '@coop/shared/ui';
 
 export const Login = () => {
   const { mutateAsync, isLoading } = useLoginMutation();
@@ -15,12 +13,20 @@ export const Login = () => {
   const router = useRouter();
 
   const methods = useForm();
-  const { register, handleSubmit, watch } = methods;
-  const [show, setShow] = React.useState(false);
+  const { handleSubmit } = methods;
 
   const onSubmit = (data) => {
     mutateAsync({ data }).then((res) => {
-      if (res.auth.login.recordId === null) {
+      if ('error' in res) {
+        toast({
+          id: 'login-error',
+          type: 'error',
+          message: 'Username or Password is invalid',
+        });
+        return;
+      }
+      if (res?.auth?.login?.recordId === null) {
+        toast({ id: 'login-error', type: 'error', message: 'Username or Password is invalid' });
         return;
       }
       const accessToken = res?.auth?.login?.record?.token?.access;
@@ -31,8 +37,6 @@ export const Login = () => {
       router.replace('/');
     });
   };
-
-  console.log(watch());
 
   return (
     <Box
@@ -45,14 +49,11 @@ export const Login = () => {
       <Head>
         <title>Neosys | Login</title>
       </Head>
-      <Box mb="8">
-        <Image src="/logo.svg" alt="Main Logo" layout="fill" />
-      </Box>
 
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box display="flex" flexDir="column" gap="s20">
-            <Box display="flex" flexDir="column" gap="s16">
+            <Box display="flex" flexDir="column" gap="s10">
               <FormInput name="username" label="Username" placeholder="Enter Username" />
               <FormPasswordInput placeholder="Enter password" name="password" />
             </Box>

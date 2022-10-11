@@ -8,7 +8,7 @@ import Head from 'next/head';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 
 import { store } from '@coop/cbs/data-access';
-import { Box, FloatingShortcutButton } from '@coop/shared/ui';
+import { Box, FloatingShortcutButton, Toaster } from '@coop/shared/ui';
 import { neosysTheme, useInit, useSnap } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
@@ -51,6 +51,8 @@ const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
         <title>Neosys Admin</title>
       </Head>
       <ToastContainer />
+      <Toaster />
+
       <main className="app">{getLayout(<Component {...pageProps} />)}</main>
       <Box
         position="fixed"

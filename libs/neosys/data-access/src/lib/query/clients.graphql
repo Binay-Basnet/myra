@@ -1,0 +1,17 @@
+query getClientsList {
+  neosys {
+    client {
+      list {
+        id
+        clientName
+        provinceId
+        districtId
+        localGovernmentId
+        locality
+        houseNo
+        wardNo
+        dateJoined
+      }
+    }
+  }
+}

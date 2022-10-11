@@ -5,7 +5,7 @@ import { en, useTranslation } from '@coop/shared/utils';
 
 const TabElement = chakra(Tab, {
   baseStyle: {
-    color: '#636972',
+    color: 'gray.600',
     height: '60px',
     fontSize: '14px',
     fontWeight: '600',
@@ -18,7 +18,7 @@ const TabElement = chakra(Tab, {
     },
     _selected: {
       color: '#343C46',
-      boxShadow: 'inset 0px -3px 0px -1px #006837',
+      boxShadow: 'inset 0px -3px 0px -1px var(--myra-colors-primary-500)',
     },
   },
 });

@@ -15,7 +15,7 @@ import { useTranslation } from '@coop/shared/utils';
 export interface TablePopoverProps<T extends Record<string, unknown>> {
   items: {
     title: string;
-    onClick: (node: T) => void;
+    onClick?: (node: T) => void;
   }[];
 
   node: T;

@@ -13,5 +13,5 @@ export const TOAST_COLORS = {
   error: 'danger.500',
   info: 'info.900',
   warning: 'warning.500',
-  success: 'success.500',
+  success: 'primary.500',
 };

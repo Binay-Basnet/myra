@@ -1,280 +1,322 @@
-import { useMemo } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
+import { AddIcon } from '@chakra-ui/icons';
 
-import { useAllAdministrationQuery } from '@coop/cbs/data-access';
-import { InputGroupContainer } from '@coop/neosys-admin/layout';
 import {
-  FormEmailInput,
+  AllModules,
+  NatureOfCooperative,
+  OrganizationClientInput,
+  OrganizationInstallmentLicense,
+  OrganizationSecuritySetup,
+  OrganizationType,
+} from '@coop/neosys-admin/data-access';
+import {
+  FormAddress,
+  FormCheckboxGroup,
   FormFileInput,
   FormInput,
-  FormMap,
-  FormPhoneNumber,
   FormSelect,
+  FormSwitchTab,
 } from '@coop/shared/form';
-import { Box, Divider, Grid, GridItem, SlugInput, Text } from '@coop/shared/ui';
+import { Box, Button, FormSection, GridItem, Icon, SlugInput } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const NeosysClientForm = () => {
+  const methods = useFormContext<
+    Omit<OrganizationClientInput, 'organizationLogo'> & {
+      organizationLogo: string[];
+    }
+  >();
   const { t } = useTranslation();
-  const { data } = useAllAdministrationQuery();
-  const methods = useForm({});
-  const { watch } = methods;
-
-  const province = useMemo(() => {
-    return (
-      data?.administration?.all?.map((d) => ({
-        label: d.name,
-        value: d.id,
-      })) ?? []
-    );
-  }, [data?.administration?.all]);
-
-  const currentProvinceId = watch('provinceId');
-  const currentDistrictId = watch('districtId');
-  const currentLocalityId = watch('localityId');
-
-  const districtList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
-        ?.districts ?? [],
-    [currentProvinceId]
-  );
-
-  const muncipalityList = useMemo(
-    () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
-    [currentDistrictId]
-  );
-
-  const wardList = useMemo(
-    () => muncipalityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
-    [currentLocalityId]
-  );
 
   return (
-    <FormProvider {...methods}>
-      <form>
-        <Box display="flex" flexDirection="column" gap="s32" p="s20">
-          <Box display="flex" flexDirection="column" gap="s32">
-            <InputGroupContainer>
-              <FormSelect
-                name="orgnanizationType"
-                label={t['neoClientOrganizationType']}
-                __placeholder={t['neoClientOrganizationType']}
-              />
+    <form>
+      <FormSection>
+        <GridItem colSpan={2}>
+          <FormInput name="organizationName" label="Organization Name" />
+        </GridItem>
+        <FormInput type="text" name="organizationCode" label={t['neoClientOrganizationCode']} />
+      </FormSection>
 
-              <FormInput
-                type="text"
-                name="orgnanizationCode"
-                label={t['neoClientOrganizationCode']}
-                __placeholder={t['neoClientOrganizationCode']}
-              />
-            </InputGroupContainer>
-            <FormInput
-              type="text"
-              name="orgnanizationName"
-              label={t['neoClientOrganizationName']}
-              __placeholder={t['neoClientOrganizationName']}
-            />
-            <Box w="110px">
-              <FormFileInput
-                size="md"
-                label={t['neoClientOrganizationLogo']}
-                name="OrganizationLogo"
-              />
-            </Box>
-            <SlugInput
-              type="text"
-              name="URL"
-              rightAddon=".myraerp.com"
-              label={t['neoClientURL']}
-              __placeholder={t['neoClientSlug']}
-            />
-          </Box>
+      <FormSection templateColumns={2}>
+        <FormSelect
+          name="organizationType"
+          label={t['neoClientOrganizationType']}
+          options={[
+            { label: 'Province Union', value: OrganizationType.ProvinceUnion },
+            { label: 'District Union', value: OrganizationType.DistrictUnion },
+            { label: 'Preliminary', value: OrganizationType.Preliminary },
+            { label: 'Cooperative Union', value: OrganizationType.CooperativeUnion },
+          ]}
+        />
+        <FormSelect
+          name="natureOfCoop"
+          label={t['neoClientOrganizationType']}
+          options={[
+            {
+              label: 'Agriculture Cooperative',
+              value: NatureOfCooperative.AgricultureCooperative,
+            },
+            {
+              label: 'Health Cooperative',
+              value: NatureOfCooperative.HealthCooperative,
+            },
+            {
+              label: 'MultiPurpose Cooperative',
+              value: NatureOfCooperative.MultipurposeCooperative,
+            },
+            {
+              label: 'Saving And Credit Cooperative',
+              value: NatureOfCooperative.SavingAndCredit,
+            },
+            {
+              label: 'Others',
+              value: NatureOfCooperative.Others,
+            },
+          ]}
+        />
+      </FormSection>
 
-          <Divider />
-
-          <Box display="flex" flexDirection="column" gap="s16">
-            <Text
-              fontSize="r1"
-              fontWeight="SemiBold"
-              color="neutralColorLight.Gray-60"
-            >
-              {t['neoClientContactDetails']}
-            </Text>
-            <InputGroupContainer>
-              <FormInput
-                type="text"
-                name="officePhone"
-                label={t['neoClientOfficePhone']}
-                __placeholder={t['neoClientOfficePhone']}
-              />
-              <FormInput
-                type="text"
-                name="emailAddress"
-                label={t['neoClientEmailAddress']}
-                __placeholder={t['neoClientEmailAddress']}
-              />
-              <FormInput
-                type="text"
-                name="cientWebsite"
-                label={t['neoClientWebsite']}
-                __placeholder={t['neoClientWebsite']}
-              />
-            </InputGroupContainer>
-          </Box>
-
-          <Divider />
-
-          <Box display="flex" flexDirection="column" gap="s16">
-            <Text
-              fontSize="r1"
-              fontWeight="SemiBold"
-              color="neutralColorLight.Gray-60"
-            >
-              {t['neoClientRegistrationDetails']}
-            </Text>
-            <Grid templateColumns="repeat(3,1fr)" gap="s16">
-              <GridItem colSpan={2}>
-                <FormInput
-                  type="text"
-                  name="registeredOffice"
-                  label={t['neoClientRegisteredOffice']}
-                  __placeholder={t['neoClientRegisteredOffice']}
-                />
-              </GridItem>
-              <GridItem>
-                <FormInput
-                  type="text"
-                  name="registeredNo"
-                  label={t['neoClientRegisteredNo']}
-                  __placeholder={t['neoClientRegisteredNo']}
-                />
-              </GridItem>
-            </Grid>
-            <FormInput
-              type="text"
-              name="registeredAddress"
-              label={t['neoClientRegisteredAddress']}
-              __placeholder={t['neoClientRegisteredAddress']}
-            />
-            <InputGroupContainer>
-              <FormInput
-                type="text"
-                name="registrationDate"
-                label={t['neoClientRegistrationDate']}
-                __placeholder={t['neoClientRegistrationDate']}
-              />
-              <FormInput
-                type="text"
-                name="clientPANVATNo"
-                label={t['neoClientPANVATNo']}
-                __placeholder={t['neoClientPANVATNo']}
-              />
-            </InputGroupContainer>
-          </Box>
-
-          <Divider />
-
-          <Box display="flex" flexDirection="column" gap="s16">
-            <Text
-              fontSize="r1"
-              fontWeight="SemiBold"
-              color="neutralColorLight.Gray-60"
-            >
-              {t['neoClientAddress']}
-            </Text>
-            <InputGroupContainer>
-              <FormSelect
-                name="provinceId"
-                label={t['neoClientProvince']}
-                __placeholder={t['neoClientSelectProvince']}
-                options={province.map((d) => ({
-                  label: d.label,
-                  value: d.value,
-                }))}
-              />
-
-              <FormSelect
-                name="districtId"
-                label={t['neoClientDistrict']}
-                __placeholder={t['neoClientSelectDistrict']}
-                options={districtList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
-
-              <FormSelect
-                name="localityId"
-                label={t['neoClientLocalGovernment']}
-                __placeholder={t['neoClienSelectLocalGovernment']}
-                options={muncipalityList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
-              <FormSelect
-                name="wardNo"
-                label={t['neoClientWardNo']}
-                __placeholder={t['neoClientEnterWardNo']}
-                options={wardList.map((d) => ({
-                  label: d,
-                  value: d,
-                }))}
-              />
-              <FormInput
-                type="text"
-                name="locality"
-                label={t['neoClientLocality']}
-                __placeholder={t['neoClientEnterLocality']}
-              />
-              <FormInput
-                type="text"
-                name="houseNo"
-                label={t['neoClientHouseNo']}
-                __placeholder={t['neoClientEnterHouseNo']}
-              />
-            </InputGroupContainer>
-            <Box>
-              <FormMap name="kymCoopLocation" />
-            </Box>
-          </Box>
-
-          <Box display="flex" flexDirection="column" gap="s16">
-            <Text
-              fontSize="r1"
-              fontWeight="SemiBold"
-              color="neutralColorLight.Gray-60"
-            >
-              {'Main Contact Person'}
-            </Text>
-            <InputGroupContainer>
-              <FormInput
-                type="text"
-                name="name"
-                label={t['neoClientName']}
-                __placeholder={t['neoClientName']}
-              />
-
-              <FormPhoneNumber
-                // type="text"
-                name="phoneNumber"
-                label={t['neoClientPhoneNumber']}
-                __placeholder={t['neoClientPhoneNumber']}
-              />
-
-              <FormEmailInput
-                // type="email"
-                name="emailAddress"
-                label={t['neoClientEmailAddress']}
-                __placeholder={t['neoClientEmailAddress']}
-              />
-            </InputGroupContainer>
-          </Box>
+      <FormSection flexLayout>
+        <Box w="110px">
+          <FormFileInput
+            maxFiles="one"
+            size="md"
+            label={t['neoClientOrganizationLogo']}
+            name="organizationLogo"
+          />
         </Box>
-      </form>
-    </FormProvider>
+      </FormSection>
+
+      {/** TODO! */}
+      <FormSection flexLayout>
+        <SlugInput
+          type="text"
+          rightAddon=".myraerp.com"
+          label={t['neoClientURL']}
+          {...methods.register('urlSlug')}
+        />
+      </FormSection>
+
+      <RegistrationDetails />
+
+      <FormSection header="neoClientContactDetails">
+        <FormInput name="contactDetails.officePhone" label={t['neoClientOfficePhone']} />
+        <FormInput name="contactDetails.email" label={t['neoClientEmailAddress']} />
+        <FormInput name="contactDetails.website" label={t['neoClientWebsite']} />
+      </FormSection>
+
+      <FormSection header="neoClientAddress">
+        <FormAddress name="addressDetails" />
+      </FormSection>
+
+      <FormSection header="neoClientMainContactPerson">
+        <FormInput name="mainContactPerson.name" label={t['neoClientName']} />
+        <FormInput name="mainContactPerson.phoneNo" label={t['neoClientPhoneNumber']} />
+        <FormInput name="mainContactPerson.email" label={t['neoClientEmailAddress']} />
+      </FormSection>
+
+      <FormSection header="neoClientTechnicalContactPerson">
+        <FormInput name="technicalContactPerson.name" label={t['neoClientName']} />
+        <FormInput name="technicalContactPerson.phoneNo" label={t['neoClientPhoneNumber']} />
+        <FormInput name="technicalContactPerson.email" label={t['neoClientEmailAddress']} />
+      </FormSection>
+
+      <WorkingArea />
+
+      <FormSection flexLayout header="neoClientLicense" subHeader="neoClientLicenseDetails">
+        <FormSwitchTab
+          name="license"
+          options={[
+            { label: t['neoClientLicenseBasic'], value: OrganizationInstallmentLicense.Basic },
+            {
+              label: t['neoClientLicenseStandard'],
+              value: OrganizationInstallmentLicense.Standard,
+            },
+            {
+              label: t['neoClientLicenseProfessional'],
+              value: OrganizationInstallmentLicense.Professional,
+            },
+          ]}
+        />
+      </FormSection>
+
+      <FormSection flexLayout header="neoClientModules" subHeader="neoClientModulesDes">
+        <FormCheckboxGroup
+          name="modules"
+          orientation="grid"
+          list={[
+            { label: t['corebankingSystems'], value: AllModules.CoreBankingSystem },
+            { label: t['memberAndShareManagement'], value: AllModules.MemberAndShareManagement },
+
+            { label: t['accountingSystem'], value: AllModules.AccountingSystem },
+            { label: t['inventoryManagement'], value: AllModules.InventoryManagement },
+            {
+              label: t['alternativeChannels'],
+              value: AllModules.AlternativeChannels,
+            },
+            {
+              label: t['hrManagement'],
+              value: AllModules.HrManagement,
+            },
+            {
+              label: t['complainceManagement'],
+              value: AllModules.ComplianceManagement,
+            },
+
+            {
+              label: t['fixedAssetManagement'],
+              value: AllModules.FixedAssetManagement,
+            },
+
+            {
+              label: t['documentManagement'],
+              value: AllModules.DocumentManagement,
+            },
+
+            {
+              label: t['businessProcessManagement'],
+              value: AllModules.BusinessProcessManagement,
+            },
+
+            {
+              label: t['capacityAndTrainingManagement'],
+              value: AllModules.CapacityAndTrainingManagement,
+            },
+
+            {
+              label: t['businessIntelligenceAndReporting'],
+              value: AllModules.BusinessIntelligenceAndReporting,
+            },
+          ]}
+        />
+      </FormSection>
+
+      <FormSection flexLayout header="neoClientSecuritySetup" subHeader="neoClientSecuritySetupDes">
+        <FormSwitchTab
+          name="securitySetup"
+          options={[
+            { label: t['neoClientSecurityVPN'], value: OrganizationSecuritySetup.Vpn },
+            {
+              label: t['neoClientSecurityPureSASS'],
+              value: OrganizationSecuritySetup.PureSass,
+            },
+          ]}
+        />
+      </FormSection>
+
+      <FormSection templateColumns={2} header="neoClientDocumentDeclaration">
+        <FormFileInput name="documents.agmOrBodDocument" size="lg" label={t['neoClientAGMBOD']} />
+        <FormFileInput
+          name="documents.registeredCertificate"
+          size="lg"
+          label={t['neoClientRegisteredCertificate']}
+        />
+        <FormFileInput name="documents.moaOrAoa" size="lg" label={t['neoClientMOA']} />
+        <FormFileInput
+          name="documents.panCertificate"
+          size="lg"
+          label={t['neoClientPANCertificate']}
+        />
+        <FormFileInput name="documents.taxClearance" size="lg" label={t['neoClientTaxClearance']} />
+        <FormFileInput
+          name="documents.latestAuditReport"
+          size="lg"
+          label={t['neoClientLatestAuditReport']}
+        />
+        <FormFileInput name="documents.logo" size="lg" label={t['neoClientLogo']} />
+        <FormFileInput
+          name="documents.minuteOfCentralRep"
+          size="lg"
+          label={t['neoClientMinuteOfCentralRep']}
+        />
+      </FormSection>
+    </form>
+  );
+};
+
+export const RegistrationDetails = () => {
+  const { t } = useTranslation();
+
+  const { control } = useFormContext<OrganizationClientInput>();
+
+  const { fields, append } = useFieldArray({
+    control,
+    name: 'registrationDetails',
+  });
+
+  return (
+    <FormSection
+      header="neoClientRegistrationDetails"
+      subHeader="neoClientRegisteredAddressDetails"
+      flexLayout
+    >
+      <Box display="flex" flexDir="column" gap="s16">
+        {fields.map((field, index) => (
+          <Box bg="highlight.500" key={field.id}>
+            <FormSection divider={false}>
+              <GridItem colSpan={3}>
+                <FormInput
+                  label={t['neoClientRegisteredOffice']}
+                  name={`registrationDetails.${index}.registeredOffice`}
+                />
+              </GridItem>
+              <GridItem colSpan={3}>
+                <FormInput
+                  label={t['neoClientRegisteredAddress']}
+                  name={`registrationDetails.${index}.registeredAddress`}
+                />
+              </GridItem>
+              <FormInput
+                label={t['neoClientRegisteredNo']}
+                name={`registrationDetails.${index}.registeredNo`}
+              />
+              <FormInput
+                type="date"
+                label={t['neoClientRegistrationDate']}
+                name={`registrationDetails.${index}.registeredDate`}
+              />
+
+              <FormInput
+                label={t['neoClientPANVATNo']}
+                name={`registrationDetails.${index}.panOrVatNo`}
+              />
+            </FormSection>
+          </Box>
+        ))}
+      </Box>
+
+      <Button variant="outline" gap="s4" mt="s16" onClick={() => append({})}>
+        <Icon as={AddIcon} h="s12" w="s12" />
+        New Detail
+      </Button>
+    </FormSection>
+  );
+};
+
+export const WorkingArea = () => {
+  const { control } = useFormContext<OrganizationClientInput>();
+
+  const { fields, append } = useFieldArray({
+    control,
+    name: 'workingArea',
+  });
+
+  return (
+    <FormSection header="neoClientWorkingArea" flexLayout>
+      <Box display="flex" flexDir="column" gap="s16">
+        {fields.map((field, index) => (
+          <Box bg="highlight.500" key={field.id}>
+            <FormSection divider={false}>
+              <FormAddress name={`workingArea.${index}`} />
+            </FormSection>
+          </Box>
+        ))}
+      </Box>
+
+      <Button variant="outline" gap="s4" mt="s16" onClick={() => append({})}>
+        <Icon as={AddIcon} h="s12" w="s12" />
+        New Detail
+      </Button>
+    </FormSection>
   );
 };
