@@ -44,8 +44,8 @@ export interface SearchBarProps extends InputProps {}
 
 const recentSearch = [
   {
-    title: 'Share Purchase',
-    link: '/share/share-purchase',
+    title: 'Share Issue',
+    link: '/share/share-issue',
   },
   {
     title: 'Member List',
@@ -134,12 +134,10 @@ const users = [
   },
 ];
 
-export function SearchBar() {
+export const SearchBar = () => {
   const router = useRouter();
   const [inputSearch, setInputSearch] = useState('');
-  const [searchAction, setSearchAction] = useState<
-    'FOCUS' | 'SIMPLE' | 'USER' | 'EMPTY'
-  >('EMPTY');
+  const [searchAction, setSearchAction] = useState<'FOCUS' | 'SIMPLE' | 'USER' | 'EMPTY'>('EMPTY');
 
   const searchBarRef = useRef<HTMLInputElement>(null);
   const handlers = {
@@ -151,16 +149,21 @@ export function SearchBar() {
     },
   };
 
+  const searchActionFunc = () => {
+    if (searchAction === 'FOCUS' || searchAction === 'EMPTY') {
+      return recentSearch;
+    }
+    if (searchAction === 'SIMPLE') {
+      return basicSearch;
+    }
+    return users;
+  };
+
   const { focusState, setFocusState } = useSearchNavigate({
     setSearchAction,
     searchBarRef,
     setInputSearch,
-    list:
-      searchAction === 'FOCUS' || searchAction === 'EMPTY'
-        ? recentSearch
-        : searchAction === 'SIMPLE'
-        ? basicSearch
-        : users,
+    list: searchActionFunc(),
   });
 
   useEffect(() => {
@@ -172,7 +175,7 @@ export function SearchBar() {
       <GlobalHotKeys keyMap={keyMap} handlers={handlers}>
         <InputGroup
           width="100%"
-          borderRadius={'6px'}
+          borderRadius="6px"
           border="none"
           flex={1}
           color="white"
@@ -188,12 +191,12 @@ export function SearchBar() {
             type="text"
             id="search-input"
             placeholder="Search"
-            color={'white'}
+            color="white"
             fontSize="r1"
             ref={searchBarRef}
             value={inputSearch}
             border="none"
-            bg={'secondary.900'}
+            bg="secondary.900"
             onFocus={() => {
               if (inputSearch) {
                 if (inputSearch[0] === '@') {
@@ -236,7 +239,7 @@ export function SearchBar() {
               pointerEvents="none"
               color={searchAction !== 'EMPTY' ? 'gray.800' : 'currentcolor'}
               children={
-                <Text fontSize={'r1'} alignItems="center" pr="s12">
+                <Text fontSize="r1" alignItems="center" pr="s12">
                   Ctrl+/
                 </Text>
               }
@@ -261,7 +264,7 @@ export function SearchBar() {
             gap="s8"
             maxH="400px"
           >
-            {searchAction === 'FOCUS' ? (
+            {searchAction === 'FOCUS' && (
               <>
                 <Text fontSize="s3" color="gray.500" lineHeight="1.5">
                   Recent Search
@@ -269,7 +272,7 @@ export function SearchBar() {
 
                 <Box overflowY="auto">
                   {recentSearch.map((recent, index) => (
-                    <Fragment key={index}>
+                    <Fragment key={recent?.link}>
                       <RecentSearchCard
                         title={recent.title}
                         onClick={() =>
@@ -285,10 +288,11 @@ export function SearchBar() {
                   ))}
                 </Box>
               </>
-            ) : searchAction === 'SIMPLE' ? (
+            )}
+            {searchAction === 'SIMPLE' && (
               <Box overflowY="auto">
                 {basicSearch.map((basic, index) => (
-                  <Fragment key={index}>
+                  <Fragment key={basic?.link}>
                     <BasicSearchCard
                       {...basic}
                       isSelected={focusState === index}
@@ -303,29 +307,30 @@ export function SearchBar() {
                   </Fragment>
                 ))}
               </Box>
-            ) : searchAction === 'USER' ? (
+            )}
+            {searchAction === 'USER' && (
               <Box overflowY="auto">
                 {users.map((user, index) => (
-                  <Fragment key={index}>
+                  <Fragment key={user?.id}>
                     <UserSearchCard
                       id={user.id}
                       name={user.name}
                       app={user.app}
                       image={user.image}
                       isSelected={focusState === index}
-                      link={'/members/list'}
+                      link="/members/list"
                       onClick={() => router.push('/members/list')}
                     />
                   </Fragment>
                 ))}
               </Box>
-            ) : null}
+            )}
           </Box>
         </Box>
       )}
     </Box>
   );
-}
+};
 
 interface RecentSearchCardProps {
   title: string;
@@ -333,35 +338,29 @@ interface RecentSearchCardProps {
   isSelected: boolean;
 }
 
-export const RecentSearchCard = ({
-  title,
-  onClick,
-  isSelected,
-}: RecentSearchCardProps) => {
-  return (
-    <Box
-      p="s8"
-      width="100%"
-      borderRadius="br2"
-      display="flex"
-      onMouseDown={(e) => e.preventDefault()}
-      alignItems="center"
-      justifyContent="space-between"
-      gap="s10"
-      cursor="pointer"
-      onClick={onClick}
-      bg={isSelected ? 'background.500' : 'white'}
-      _hover={{ bg: 'background.500' }}
-    >
-      <Box display="flex" alignItems="center" color="gray.600" gap="s10">
-        <Icon as={MdOutlineHistory} size="sm" />
-        <Text fontSize="r1">{title}</Text>
-      </Box>
-
-      <Icon as={IoReturnDownBack} size="sm" color="gray.700" />
+export const RecentSearchCard = ({ title, onClick, isSelected }: RecentSearchCardProps) => (
+  <Box
+    p="s8"
+    width="100%"
+    borderRadius="br2"
+    display="flex"
+    onMouseDown={(e) => e.preventDefault()}
+    alignItems="center"
+    justifyContent="space-between"
+    gap="s10"
+    cursor="pointer"
+    onClick={onClick}
+    bg={isSelected ? 'background.500' : 'white'}
+    _hover={{ bg: 'background.500' }}
+  >
+    <Box display="flex" alignItems="center" color="gray.600" gap="s10">
+      <Icon as={MdOutlineHistory} size="sm" />
+      <Text fontSize="r1">{title}</Text>
     </Box>
-  );
-};
+
+    <Icon as={IoReturnDownBack} size="sm" color="gray.700" />
+  </Box>
+);
 
 interface BasicSearchCardProps {
   title: string;
@@ -381,73 +380,71 @@ export const BasicSearchCard = ({
   isSelected,
   link,
   app,
-}: BasicSearchCardProps) => {
-  return (
-    <Box
-      p="s8"
-      width="100%"
-      borderRadius="br2"
-      display="flex"
-      onMouseDown={(e) => e.preventDefault()}
-      alignItems="center"
-      justifyContent="space-between"
-      gap="s10"
-      cursor="pointer"
-      onClick={onClick}
-      bg={isSelected ? 'background.500' : 'white'}
-      _hover={{ bg: 'background.500' }}
-      role="group"
-    >
-      <Box display="flex" alignItems="center" color="gray.600" gap="s16">
-        <Icon as={ICONS[type]} />
+}: BasicSearchCardProps) => (
+  <Box
+    p="s8"
+    width="100%"
+    borderRadius="br2"
+    display="flex"
+    onMouseDown={(e) => e.preventDefault()}
+    alignItems="center"
+    justifyContent="space-between"
+    gap="s10"
+    cursor="pointer"
+    onClick={onClick}
+    bg={isSelected ? 'background.500' : 'white'}
+    _hover={{ bg: 'background.500' }}
+    role="group"
+  >
+    <Box display="flex" alignItems="center" color="gray.600" gap="s16">
+      <Icon as={ICONS[type]} />
 
-        <Box display="flex" flexDir="column">
-          <Text fontSize="r1" fontWeight="500">
-            {title}
-          </Text>
-
-          <Text fontSize="r1" color="gray.500">
-            {subtitle}
-          </Text>
-        </Box>
-      </Box>
-
-      <Box
-        px="s12"
-        py="s4"
-        borderRadius="32px"
-        display={isSelected ? 'none' : 'block'}
-        border="1px"
-        borderColor="border.layout"
-        _groupHover={{ display: 'none' }}
-      >
-        <Text fontSize="s1" color="gray.600">
-          {app}
+      <Box display="flex" flexDir="column">
+        <Text fontSize="r1" fontWeight="500">
+          {title}
         </Text>
-      </Box>
 
-      <Box
-        px="s12"
-        display={isSelected ? 'flex' : 'none'}
-        py="s4"
-        borderRadius="32px"
-        border="1px"
-        borderColor="border.layout"
-        bg="primary.500"
-        gap="s4"
-        alignItems="center"
-        _groupHover={{ display: 'flex' }}
-        as="button"
-        onClick={() => window.open(link, '_blank')}
-      >
-        <Text fontSize="s2" color="white">
-          Open In New Tab
+        <Text fontSize="r1" color="gray.500">
+          {subtitle}
         </Text>
-        <Icon as={FiArrowUpRight} size="sm" color="white" />
       </Box>
     </Box>
-  );
-};
+
+    <Box
+      px="s12"
+      py="s4"
+      borderRadius="32px"
+      display={isSelected ? 'none' : 'block'}
+      border="1px"
+      borderColor="border.layout"
+      _groupHover={{ display: 'none' }}
+    >
+      <Text fontSize="s1" color="gray.600">
+        {app}
+      </Text>
+    </Box>
+
+    <Box
+      px="s12"
+      display={isSelected ? 'flex' : 'none'}
+      py="s4"
+      borderRadius="32px"
+      border="1px"
+      borderColor="border.layout"
+      bg="primary.500"
+      gap="s4"
+      alignItems="center"
+      _groupHover={{ display: 'flex' }}
+      as="button"
+      onClick={() => window.open(link, '_blank')}
+    >
+      <Text fontSize="s2" color="white">
+        Open In New Tab
+      </Text>
+      <Icon as={FiArrowUpRight} size="sm" color="white" />
+    </Box>
+  </Box>
+);
 
 interface UserSearchCardProps {
   id: string;
@@ -467,74 +464,70 @@ export const UserSearchCard = ({
   isSelected,
   link,
   app,
-}: UserSearchCardProps) => {
-  return (
-    <Box
-      p="s8"
-      width="100%"
-      borderRadius="br2"
-      display="flex"
-      onMouseDown={(e) => e.preventDefault()}
-      alignItems="center"
-      justifyContent="space-between"
-      gap="s10"
-      cursor="pointer"
-      onClick={onClick}
-      bg={isSelected ? 'background.500' : 'white'}
-      _hover={{ bg: 'background.500' }}
-      role="group"
-    >
-      <Box display="flex" alignItems="center" color="gray.600" gap="s16" p="s8">
-        <Avatar w="s32" h="s32" title={name} src={image} />
+}: UserSearchCardProps) => (
+  <Box
+    p="s8"
+    width="100%"
+    borderRadius="br2"
+    display="flex"
+    onMouseDown={(e) => e.preventDefault()}
+    alignItems="center"
+    justifyContent="space-between"
+    gap="s10"
+    cursor="pointer"
+    onClick={onClick}
+    bg={isSelected ? 'background.500' : 'white'}
+    _hover={{ bg: 'background.500' }}
+    role="group"
+  >
+    <Box display="flex" alignItems="center" color="gray.600" gap="s16" p="s8">
+      <Avatar w="s32" h="s32" title={name} src={image} />
 
-        <Box display="flex" flexDir="column">
-          <Text fontSize="r1" fontWeight="500">
-            {name} {'('}
-            {id}
-            {')'}
-          </Text>
-
-          <Text fontSize="r1" color="gray.500">
-            Core Banking System / Members
-          </Text>
-        </Box>
-      </Box>
-
-      <Box
-        px="s12"
-        py="s4"
-        borderRadius="32px"
-        display={isSelected ? 'none' : 'block'}
-        border="1px"
-        borderColor="border.layout"
-        _groupHover={{ display: 'none' }}
-      >
-        <Text fontSize="s1" color="gray.600">
-          {app}
+      <Box display="flex" flexDir="column">
+        <Text fontSize="r1" fontWeight="500">
+          {name} ({id})
         </Text>
-      </Box>
 
-      <Box
-        px="s12"
-        display={isSelected ? 'flex' : 'none'}
-        py="s4"
-        borderRadius="32px"
-        border="1px"
-        borderColor="border.layout"
-        bg="primary.500"
-        gap="s4"
-        alignItems="center"
-        _groupHover={{ display: 'flex' }}
-        as="button"
-        onClick={() => window.open(link, '_blank')}
-      >
-        <Text fontSize="s2" color="white">
-          Open In New Tab
+        <Text fontSize="r1" color="gray.500">
+          Core Banking System / Members
         </Text>
-        <Icon as={FiArrowUpRight} size="sm" color="white" />
       </Box>
     </Box>
-  );
-};
+
+    <Box
+      px="s12"
+      py="s4"
+      borderRadius="32px"
+      display={isSelected ? 'none' : 'block'}
+      border="1px"
+      borderColor="border.layout"
+      _groupHover={{ display: 'none' }}
+    >
+      <Text fontSize="s1" color="gray.600">
+        {app}
+      </Text>
+    </Box>
+
+    <Box
+      px="s12"
+      display={isSelected ? 'flex' : 'none'}
+      py="s4"
+      borderRadius="32px"
+      border="1px"
+      borderColor="border.layout"
+      bg="primary.500"
+      gap="s4"
+      alignItems="center"
+      _groupHover={{ display: 'flex' }}
+      as="button"
+      onClick={() => window.open(link, '_blank')}
+    >
+      <Text fontSize="s2" color="white">
+        Open In New Tab
+      </Text>
+      <Icon as={FiArrowUpRight} size="sm" color="white" />
+    </Box>
+  </Box>
+);
 
 export default SearchBar;
