@@ -1,4 +1,4 @@
-import { Member, useGetShareHistoryQuery } from '@coop/cbs/data-access';
+import { useGetShareHistoryQuery } from '@coop/cbs/data-access';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import Avatar from '../avatar/Avatar';
@@ -6,19 +6,33 @@ import Box from '../box/Box';
 import Button from '../button/Button';
 import Text from '../text/Text';
 
+type MemberType = {
+  name?: string | undefined | null;
+  id?: string | undefined | null;
+  gender?: string | undefined | null;
+  age?: string | number | undefined | null;
+  maritalStatus?: string;
+  dateJoined?: string | undefined | null;
+  branch?: string;
+  phoneNo?: string | undefined | null;
+  email?: string | undefined | null;
+  address?: string;
+  profilePicUrl?: string | undefined | null;
+};
+
 /* eslint-disable-next-line */
 export interface ShareMemberCardProps {
-  memberDetails: Partial<Member>;
+  memberDetailData: MemberType;
   totalAmount: number;
   memberId: string;
   mode: string;
 }
 
 export const ShareMemberCard = ({
-  memberDetails,
   totalAmount,
   memberId,
   mode,
+  memberDetailData,
 }: ShareMemberCardProps) => {
   const { t } = useTranslation();
 
@@ -43,22 +57,20 @@ export const ShareMemberCard = ({
 
       <Box p="s16" gap="s8" display="flex">
         <Avatar
-          name={memberDetails?.name?.local ?? 'Member'}
+          name={memberDetailData?.name ?? 'Member'}
           size="lg"
-          src={memberDetails?.profilePicUrl ?? ''}
+          src={memberDetailData?.profilePicUrl ?? ''}
           cursor="pointer"
         />
         <Box display="flex" flexDirection="column">
           <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-            {memberDetails?.name?.local}
+            {memberDetailData?.name}
           </Text>
           <Text fontWeight="Regular" fontSize="r1" color="neutralColorLight.Gray-80">
-            {memberDetails?.id}
+            {memberDetailData?.id}
           </Text>
           <Text fontWeight="Regular" fontSize="r1" color="neutralColorLight.Gray-80">
-            {/* {memberProfile?.basicInformation?.gender?.local} |{' '}
-            {memberProfile?.basicInformation?.age} */}
-            Male | 19
+            {memberDetailData?.gender} | {memberDetailData?.age}
           </Text>
         </Box>
       </Box>

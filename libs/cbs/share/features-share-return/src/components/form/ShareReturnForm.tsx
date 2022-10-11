@@ -5,12 +5,10 @@ import { omit } from 'lodash';
 
 import {
   CashValue,
-  Member,
   Share_Transaction_Direction,
   SharePaymentMode,
   ShareReturnInput,
   useAddShareReturnMutation,
-  useGetMemberIndividualDataQuery,
   useGetShareChargesQuery,
   useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
@@ -27,7 +25,7 @@ import {
   ShareMemberCard,
   TabMenu,
 } from '@coop/shared/ui';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
 
 import { ShareInfoFooter } from './ShareInfoFooter';
 import { SharePaymentFooter } from './SharePaymentFooter';
@@ -102,9 +100,7 @@ export const ShareReturnForm = () => {
 
   const returnAmount = totalAmount - totalCashPaid;
 
-  const { data } = useGetMemberIndividualDataQuery({ id: memberId }, { enabled: !!memberId });
-
-  const memberDetail = data && data?.members?.details?.data;
+  const { memberDetailData } = useGetIndividualMemberDetails({ memberId });
 
   const { data: shareHistoryTableData } = useGetShareHistoryQuery(
     {
@@ -232,7 +228,7 @@ export const ShareReturnForm = () => {
 
             <Grid templateColumns="repeat(6,1fr)">
               {mode === 'shareInfo' && (
-                <GridItem colSpan={data ? 4 : 6}>
+                <GridItem colSpan={memberDetailData ? 4 : 6}>
                   <Box
                     mb="50px"
                     width="100%"
@@ -253,14 +249,14 @@ export const ShareReturnForm = () => {
                         </GridItem>
                       </FormSection>
 
-                      {memberDetail && <ShareReturnInfo totalAmount={totalAmount} />}
+                      {memberDetailData && <ShareReturnInfo totalAmount={totalAmount} />}
                     </Box>
                   </Box>
                 </GridItem>
               )}
 
               {mode === 'sharePayment' && (
-                <GridItem colSpan={data ? 4 : 6}>
+                <GridItem colSpan={memberDetailData ? 4 : 6}>
                   <ShareReturnPayment
                     totalAmount={totalAmount}
                     denominationTotal={denominationTotal}
@@ -270,13 +266,13 @@ export const ShareReturnForm = () => {
                 </GridItem>
               )}
 
-              <GridItem colSpan={data ? 2 : 0}>
-                {data && (
+              <GridItem colSpan={memberDetailData ? 2 : 0}>
+                {memberDetailData && (
                   <ShareMemberCard
                     mode={mode}
                     memberId={memberId}
                     totalAmount={totalAmount}
-                    memberDetails={memberDetail as Member}
+                    memberDetailData={memberDetailData}
                   />
                 )}
               </GridItem>

@@ -5,13 +5,11 @@ import { omit } from 'lodash';
 
 import {
   CashValue,
-  Member,
   Share_Transaction_Direction,
   SharePaymentMode,
   SharePurchaseInput,
   ShareVoucherDepositedBy,
   useAddSharePurchaseMutation,
-  useGetMemberIndividualDataQuery,
   useGetShareChargesQuery,
 } from '@coop/cbs/data-access';
 import {
@@ -27,7 +25,7 @@ import {
   ShareMemberCard,
   TabMenu,
 } from '@coop/shared/ui';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
 
 import { ShareInfoFooter } from './ShareInfoFooter';
 import { SharePaymentFooter } from './SharePaymentFooter';
@@ -102,19 +100,9 @@ export const SharePurchaseForm = () => {
 
   const returnAmount = totalCashPaid - totalAmount;
 
-  const { data } = useGetMemberIndividualDataQuery(
-    {
-      id: memberId,
-    },
-    {
-      staleTime: 0,
-      enabled: !!memberId,
-    }
-  );
+  const { memberDetailData } = useGetIndividualMemberDetails({ memberId });
 
   const { mutateAsync } = useAddSharePurchaseMutation();
-
-  const memberDetail = data && data?.members?.details?.data;
 
   const paymentButtonHandler = () => memberId && setMode('sharePayment');
 
@@ -226,7 +214,7 @@ export const SharePurchaseForm = () => {
             </Box>
             <Grid templateColumns="repeat(6,1fr)">
               {mode === 'shareInfo' && (
-                <GridItem colSpan={data ? 4 : 6}>
+                <GridItem colSpan={memberDetailData ? 4 : 6}>
                   <Box
                     mb="50px"
                     display="flex"
@@ -248,14 +236,14 @@ export const SharePurchaseForm = () => {
                         </GridItem>
                       </FormSection>
 
-                      {data && <SharePurchaseInfo totalAmount={totalAmount} />}
+                      {memberDetailData && <SharePurchaseInfo totalAmount={totalAmount} />}
                     </Box>
                   </Box>
                 </GridItem>
               )}
 
               {mode === 'sharePayment' && (
-                <GridItem colSpan={data ? 4 : 6}>
+                <GridItem colSpan={memberDetailData ? 4 : 6}>
                   <SharePurchasePayment
                     totalAmount={totalAmount}
                     denominationTotal={denominationTotal}
@@ -265,13 +253,13 @@ export const SharePurchaseForm = () => {
                 </GridItem>
               )}
 
-              <GridItem colSpan={data ? 2 : 0}>
-                {data && (
+              <GridItem colSpan={memberDetailData ? 2 : 0}>
+                {memberDetailData && (
                   <ShareMemberCard
                     mode={mode}
                     totalAmount={totalAmount}
                     memberId={memberId}
-                    memberDetails={memberDetail as Member}
+                    memberDetailData={memberDetailData}
                   />
                 )}
               </GridItem>

@@ -40,7 +40,7 @@ export const SettingsMemberLayout = ({ children }: SettingsMemberLayoutProps) =>
     <>
       <SettingsPageHeader heading={`${t['settingsMember']} - ${featureCode?.settingsMembers}`} />
       <Box
-        w="250px"
+        w="260px"
         px="s8"
         position="fixed"
         py="s16"
@@ -50,7 +50,7 @@ export const SettingsMemberLayout = ({ children }: SettingsMemberLayoutProps) =>
       >
         <SettingsInnerVerticalMenu tablinks={tabList} />
       </Box>
-      <Box ml="250px">{children}</Box>
+      <Box ml="260px">{children}</Box>
     </>
   );
 };

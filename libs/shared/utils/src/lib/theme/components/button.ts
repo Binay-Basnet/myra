@@ -1,7 +1,4 @@
-import type {
-  SystemStyleFunction,
-  SystemStyleObject,
-} from '@chakra-ui/theme-tools';
+import type { SystemStyleFunction, SystemStyleObject } from '@chakra-ui/theme-tools';
 import { mode } from '@chakra-ui/theme-tools';
 
 const baseStyle: SystemStyleObject = {
@@ -190,7 +187,7 @@ const sizes: Record<string, SystemStyleObject> = {
     py: 3,
   },
   md: {
-    h: '44px',
+    h: 10,
     minW: 10,
     fontSize: 'sm',
     px: 3,

@@ -38,15 +38,10 @@ const booleanList = [
 ];
 
 interface IKYMDeclarationProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
-export const KYMDeclaration = ({
-  setKymCurrentSection,
-}: IKYMDeclarationProps) => {
+export const KYMDeclaration = ({ setKymCurrentSection }: IKYMDeclarationProps) => {
   const { t } = useTranslation();
 
   const methods = useForm<KymIndMemberInput>();
@@ -84,13 +79,11 @@ export const KYMDeclaration = ({
 
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.individual?.formState?.data?.formData;
+      const editValueData = editValues?.members?.individual?.formState?.data?.formData;
       reset({
         // ...editValueData?.declaration,
         ...editValueData?.declaration,
-        beneficialFullName:
-          editValueData?.declaration?.beneficialFullName?.local,
+        beneficialFullName: editValueData?.declaration?.beneficialFullName?.local,
         foreignResidentialPermitTypeId:
           editValueData?.declaration?.foreignResidentialPermitTypeId ?? '',
       });
@@ -142,19 +135,14 @@ export const KYMDeclaration = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <Box
-          display="flex"
-          flexDirection="column"
-          id="Next to Kin"
-          scrollMarginTop={'200px'}
-        >
+        <Box display="flex" flexDirection="column" id="Next to Kin" scrollMarginTop="200px">
           <Box p="s20" pb="0">
             <TextFields variant="bodyRegular" fontWeight="SemiBold">
               {t['kynIndNominee']}
             </TextFields>
           </Box>
 
-          <FormSection gridLayout={true} id="kymAccIndBeneficialOwner">
+          <FormSection gridLayout id="kymAccIndBeneficialOwner">
             <GridItem colSpan={3}>
               <FormSwitchTab
                 label={t['kynIndDoyouhavebeneficialowner']}
@@ -166,10 +154,9 @@ export const KYMDeclaration = ({
               <>
                 <GridItem colSpan={1}>
                   <FormSelect
-                    name={'beneficialRelationshipId'}
+                    name="beneficialRelationshipId"
                     isLoading={familyRelationshipLoading}
                     options={getFieldOption(familyRelationShipData)}
-                    __placeholder={t['kynIndRelationship']}
                     label={t['kynIndIyespleasewritenameandrelationship']}
                   />
                 </GridItem>
@@ -178,16 +165,15 @@ export const KYMDeclaration = ({
                   <FormInput
                     type="text"
                     id="beneficialFullName"
-                    name={'beneficialFullName'}
+                    name="beneficialFullName"
                     label=" "
-                    __placeholder={t['kynIndFullName']}
                   />
                 </GridItem>
               </>
             )}
           </FormSection>
 
-          <FormSection gridLayout={true} id="kymAccIndFamilymembersinpolitics">
+          <FormSection gridLayout id="kymAccIndFamilymembersinpolitics">
             <GridItem colSpan={3}>
               <FormSwitchTab
                 label={t['kynIndPoliticallyexposedperson']}
@@ -202,17 +188,13 @@ export const KYMDeclaration = ({
                     name="politicallyExposedDetails"
                     id="politicallyExposedDetails"
                     label={t['kynIndPleasespecify']}
-                    __placeholder={t['kynIndEnterDetails']}
                   />
                 </Box>
               </GridItem>
             )}
           </FormSection>
 
-          <FormSection
-            gridLayout={true}
-            id="kymAccIndConvictedNonconvictedStatus"
-          >
+          <FormSection gridLayout id="kymAccIndConvictedNonconvictedStatus">
             <GridItem colSpan={3}>
               <FormSwitchTab
                 label={t['kynIndDeclarationofconvicted']}
@@ -226,18 +208,14 @@ export const KYMDeclaration = ({
                   <FormTextArea
                     id="convictedDetails"
                     label={t['kynIndPleasespecify']}
-                    __placeholder={t['kynIndEnterDetails']}
-                    name="politicallyExposedDetails"
+                    name="convictedDetails"
                   />
                 </Box>
               </GridItem>
             )}
           </FormSection>
 
-          <FormSection
-            gridLayout={true}
-            id="kymAccIndResidentialpermitofforeigncountry"
-          >
+          <FormSection gridLayout id="kymAccIndResidentialpermitofforeigncountry">
             <GridItem colSpan={3}>
               <FormSwitchTab
                 label={t['kynIndForeignCountry']}

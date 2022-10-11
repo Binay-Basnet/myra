@@ -136,15 +136,18 @@ export const SettingsLoanProductForm = () => {
   const submitForm = () => {
     const values = getValues();
 
-    const genderList = values?.genderId?.map((data) => data?.value);
-    const maritalStatusList = values?.maritalStatusId?.map((data) => data?.value);
-
-    const educationQualificationList = values?.educationQualification?.map((data) => data?.value);
-    const occupationList = values?.occupation?.map((data) => data?.value);
-    const ethnicityList = values?.ethnicity?.map((data) => data?.value);
-    const natureOFBusinessCoopList = values?.natureOFBusinessCoop?.map((data) => data?.value);
+    const genderList = values?.genderId?.map((data) => data?.value ?? data);
+    const maritalStatusList = values?.maritalStatusId?.map((data) => data?.value ?? data);
+    const educationQualificationList = values?.educationQualification?.map(
+      (data) => data?.value ?? data
+    );
+    const occupationList = values?.occupation?.map((data) => data?.value ?? data);
+    const ethnicityList = values?.ethnicity?.map((data) => data?.value ?? data);
+    const natureOFBusinessCoopList = values?.natureOFBusinessCoop?.map(
+      (data) => data?.value ?? data
+    );
     const natureOfBusinessInstitutionList = values?.natureOfBusinessInstitution?.map(
-      (data) => data?.value
+      (data) => data?.value ?? data
     );
 
     const loanProcessingChargeList = values?.loanProcessingCharge?.map((data) => ({

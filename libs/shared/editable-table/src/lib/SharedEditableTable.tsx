@@ -401,8 +401,8 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
               }
             }}
           >
-            <Icon as={IoAdd} fontSize="xl" />
-            <Text fontSize="s3" lineHeight="1.5">
+            <Icon as={IoAdd} fontSize="xl" color="primary.500" />
+            <Text color="primary.500" fontSize="s3" lineHeight="1.5">
               New
             </Text>
           </Box>
