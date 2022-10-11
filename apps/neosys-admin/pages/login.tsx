@@ -1,12 +1,11 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { IoEyeOffOutline, IoEyeOutline, IoLockClosed } from 'react-icons/io5';
+import { FormProvider, useForm } from 'react-hook-form';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { Input, InputGroup, InputLeftElement, InputRightElement } from '@chakra-ui/react';
 
 import { login, useAppDispatch, useLoginMutation } from '@coop/cbs/data-access';
+import { FormInput, FormPasswordInput } from '@coop/shared/form';
 import { Box, Button } from '@coop/shared/ui';
 
 export const Login = () => {
@@ -15,7 +14,8 @@ export const Login = () => {
 
   const router = useRouter();
 
-  const { register, handleSubmit } = useForm();
+  const methods = useForm();
+  const { register, handleSubmit, watch } = methods;
   const [show, setShow] = React.useState(false);
 
   const onSubmit = (data) => {
@@ -32,6 +32,8 @@ export const Login = () => {
     });
   };
 
+  console.log(watch());
+
   return (
     <Box
       h="100vh"
@@ -47,32 +49,20 @@ export const Login = () => {
         <Image src="/logo.svg" alt="Main Logo" layout="fill" />
       </Box>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input w={300} placeholder="Enter Username" {...register('username')} autoFocus />
-        <InputGroup h="44px" mt="s4" w={300}>
-          <InputLeftElement>
-            <IoLockClosed />
-          </InputLeftElement>
-          <Input
-            pr="58px"
-            variant="outline"
-            type={show ? 'text' : 'password'}
-            placeholder="Enter password"
-            {...register('password')}
-          />
-          <InputRightElement width="fit-content" pr="s16" cursor="pointer">
-            {show ? (
-              <IoEyeOffOutline onClick={() => setShow(false)} />
-            ) : (
-              <IoEyeOutline onClick={() => setShow(true)} />
-            )}
-          </InputRightElement>
-        </InputGroup>
-        <br />
-        <Button w={300} type="submit" isLoading={isLoading}>
-          Login
-        </Button>
-      </form>
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Box display="flex" flexDir="column" gap="s20">
+            <Box display="flex" flexDir="column" gap="s16">
+              <FormInput name="username" label="Username" placeholder="Enter Username" />
+              <FormPasswordInput placeholder="Enter password" name="password" />
+            </Box>
+
+            <Button width="100%" type="submit" isLoading={isLoading}>
+              Login
+            </Button>
+          </Box>
+        </form>
+      </FormProvider>
     </Box>
   );
 };

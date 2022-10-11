@@ -11,6 +11,7 @@ export * from './controllers/FormFileInput/FormFileInput';
 export * from './controllers/FormInput/FormInput';
 export * from './controllers/FormMap/FormMap';
 export * from './controllers/FormNumberInput/FormNumberInput';
+export * from './controllers/FormPasswordInput/FormPasswordInput';
 export * from './controllers/FormPhoneNumber/FormPhoneNumber';
 export * from './controllers/FormSelect/FormSelect';
 export * from './controllers/FormSwitchTab/FormSwitchTab';

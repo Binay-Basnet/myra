@@ -284,8 +284,10 @@ export const AccountOpenNew = () => {
                     {ProductData?.isForMinors && (
                       <FormSelect name="minor" label="Minor" options={minorOptions} />
                     )}
-                    {productType !== NatureOfDepositProduct?.Current &&
-                      productType !== NatureOfDepositProduct?.Saving && <Tenure />}
+                    {productType === NatureOfDepositProduct?.RecurringSaving ||
+                      productType === NatureOfDepositProduct?.TermSavingOrFd ||
+                      (productType === NatureOfDepositProduct?.Saving &&
+                        ProductData?.isMandatorySaving && <Tenure />)}
                     <Divider />
                     <Interest />
                     <DepositFrequency />
@@ -309,7 +311,9 @@ export const AccountOpenNew = () => {
                       </Box>
                     )}
 
-                    {(ProductData?.alternativeChannels || ProductData?.atmFacility) && (
+                    {(ProductData?.alternativeChannels ||
+                      ProductData?.atmFacility ||
+                      ProductData?.chequeIssue) && (
                       <Box display="flex" flexDirection="column" gap="s16">
                         <Text fontWeight="600" fontSize="r1">
                           Other Services
