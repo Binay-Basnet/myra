@@ -10963,6 +10963,7 @@ export type GetAccountOpenProductDetailsQuery = {
             accountType?: DefaultAccountType | null;
             autoOpen?: boolean | null;
             allowLoan?: boolean | null;
+            chequeIssue?: boolean | null;
             percentageOfDeposit?: number | null;
             alternativeChannels?: boolean | null;
             atmFacility?: boolean | null;
@@ -11032,6 +11033,11 @@ export type GetAccountOpenProductDetailsQuery = {
               maxAmount?: any | null;
               avgAmount?: any | null;
             } | null;
+            chequeCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
             prematurePenalty?: {
               penaltyDateType?: PrematurePenaltyDateType | null;
               noOfDays?: number | null;
@@ -11056,11 +11062,16 @@ export type GetAccountOpenEditDataQuery = {
       data?: {
         memberId: string;
         productId: string;
+        accountName?: string | null;
+        minor?: string | null;
         tenure?: FrequencyTenure | null;
         tenureNumber?: number | null;
+        initialDepositAmount?: any | null;
+        defaultAmountDepositAccountName?: string | null;
         interestRate?: number | null;
         ceoAuthority?: boolean | null;
         boardAuthority?: boolean | null;
+        installmentAmount?: string | null;
         depositFrequencyWeekly?: Week | null;
         depositFrequencyMonthly?: WeeklyFrequency | null;
         depositFrequencyDay?: number | null;
@@ -11068,8 +11079,13 @@ export type GetAccountOpenEditDataQuery = {
         depositFrequencyDayOfWeek?: Week | null;
         depositFrequencyYearlyMonth?: Months | null;
         depositFrequencyYearlyDay?: number | null;
+        mobileBanking?: boolean | null;
+        eBanking?: boolean | null;
         atmFacility?: boolean | null;
+        smsBanking?: boolean | null;
+        chequeFacility?: boolean | null;
         agentId?: string | null;
+        serviceCharge?: Array<{ name?: string | null; amount?: any | null } | null> | null;
       } | null;
     } | null;
   };
@@ -17954,6 +17970,12 @@ export const GetAccountOpenProductDetailsDocument = `
             }
             autoOpen
             allowLoan
+            chequeIssue
+            chequeCharge {
+              serviceName
+              ledgerName
+              amount
+            }
             percentageOfDeposit
             alternativeChannels
             atmFacility
@@ -18000,19 +18022,32 @@ export const GetAccountOpenEditDataDocument = `
       data {
         memberId
         productId
+        accountName
+        minor
         tenure
         tenureNumber
+        initialDepositAmount
+        defaultAmountDepositAccountName
         interestRate
         ceoAuthority
         boardAuthority
+        installmentAmount
         depositFrequencyWeekly
         depositFrequencyMonthly
         depositFrequencyDay
         depositFrequencyFrequencyDay
         depositFrequencyDayOfWeek
+        serviceCharge {
+          name
+          amount
+        }
         depositFrequencyYearlyMonth
         depositFrequencyYearlyDay
+        mobileBanking
+        eBanking
         atmFacility
+        smsBanking
+        chequeFacility
         agentId
       }
     }
