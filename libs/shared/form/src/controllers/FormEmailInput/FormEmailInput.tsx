@@ -1,4 +1,3 @@
-import React from 'react';
 import { Controller, Path, useFormContext } from 'react-hook-form';
 import { MdEmail } from 'react-icons/md';
 
@@ -8,10 +7,7 @@ interface IFormEmailInputProps<T> extends InputProps {
   name: Path<T>;
 }
 
-export const FormEmailInput = <T,>({
-  name,
-  ...rest
-}: IFormEmailInputProps<T>) => {
+export const FormEmailInput = <T,>({ name, ...rest }: IFormEmailInputProps<T>) => {
   const methods = useFormContext();
 
   const {

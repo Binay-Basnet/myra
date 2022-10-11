@@ -1,4 +1,3 @@
-import React from 'react';
 import { Control, Controller, Path, useFormContext } from 'react-hook-form';
 import { HiPhone } from 'react-icons/hi';
 
@@ -9,10 +8,7 @@ interface IFormPhoneInputProps<T> extends InputProps {
   control?: Control<T>;
 }
 
-export const FormPhoneNumber = <T,>({
-  name,
-  ...rest
-}: IFormPhoneInputProps<T>) => {
+export const FormPhoneNumber = <T,>({ name, ...rest }: IFormPhoneInputProps<T>) => {
   const methods = useFormContext();
 
   const {

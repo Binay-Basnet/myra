@@ -225,6 +225,18 @@ function editableReducer<T extends RecordWithId & Record<string, string | number
   }
 }
 
+const flexBasisFunc = (
+  column: Pick<Column<Record<string, string | number | boolean>>, 'cellWidth'>
+) => {
+  if (column.cellWidth === 'auto') {
+    return '100%';
+  }
+  if (column.cellWidth) {
+    return cellWidthObject[column.cellWidth];
+  }
+  return '30%';
+};
+
 export const EditableTable = <T extends RecordWithId & Record<string, string | number | boolean>>({
   columns,
   defaultData = [],
@@ -298,13 +310,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
                   fontSize="r1"
                   textAlign={column.isNumeric ? 'right' : 'left'}
                   flexGrow={column.cellWidth === 'auto' ? 1 : 0}
-                  flexBasis={
-                    column.cellWidth === 'auto'
-                      ? '100%'
-                      : column.cellWidth
-                      ? cellWidthObject[column.cellWidth]
-                      : '30%'
-                  }
+                  flexBasis={flexBasisFunc(column)}
                 >
                   <Text px="s8">{column.header}</Text>
                 </Box>
@@ -671,13 +677,7 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number | 
       borderLeft="1px"
       borderLeftColor="border.layout"
       flexGrow={column.cellWidth === 'auto' ? 1 : 0}
-      flexBasis={
-        column.cellWidth === 'auto'
-          ? '100%'
-          : column.cellWidth
-          ? cellWidthObject[column.cellWidth]
-          : '30%'
-      }
+      flexBasis={flexBasisFunc(column)}
       value={
         column.fieldType === 'search'
           ? column.searchOptions?.find((search) => search.value === data[column.accessor])?.label

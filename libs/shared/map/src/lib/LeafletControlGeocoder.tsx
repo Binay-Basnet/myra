@@ -20,7 +20,7 @@ export default function LeafletControlGeocoder(props: {
     });
 
     geocoder
-      .on('markgeocode', function (e) {
+      .on('markgeocode', (e) => {
         setPosition({
           latitude: e?.geocode?.center?.lat,
           longitude: e?.geocode?.center?.lng,

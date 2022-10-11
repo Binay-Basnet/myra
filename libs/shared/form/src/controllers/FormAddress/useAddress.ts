@@ -11,30 +11,26 @@ export const useAddress = ({ name }: IUseAddressProps) => {
   const { watch } = useFormContext();
   const { data } = useAllAdministrationQuery();
 
-  const provinceList = useMemo(() => {
-    return (
+  const provinceList = useMemo(
+    () =>
       data?.administration?.all?.map((d) => ({
         label: d.name,
         value: d.id,
-      })) ?? []
-    );
-  }, [data?.administration?.all]);
+      })) ?? [],
+    [data?.administration?.all]
+  );
 
   const currentProvinceId = watch(`${name}.provinceId`);
   const currentDistrictId = watch(`${name}.districtId`);
   const localGovernmentId = watch(`${name}.localGovernmentId`);
 
   const districtList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
-        ?.districts ?? [],
+    () => data?.administration.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
     [currentProvinceId]
   );
 
   const localityList = useMemo(
-    () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+    () => districtList.find((d) => d.id === currentDistrictId)?.municipalities ?? [],
     [currentDistrictId]
   );
 

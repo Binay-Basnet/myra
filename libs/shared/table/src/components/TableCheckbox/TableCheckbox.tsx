@@ -5,11 +5,7 @@ export interface TableCheckboxProps extends CheckboxProps {
   indeterminate?: boolean;
 }
 
-export function TableCheckbox({
-  indeterminate,
-  checked,
-  ...rest
-}: TableCheckboxProps) {
+export const TableCheckbox = ({ indeterminate, checked, ...rest }: TableCheckboxProps) => {
   const ref = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
@@ -19,13 +15,8 @@ export function TableCheckbox({
   }, [ref, indeterminate, checked]);
 
   return (
-    <Checkbox
-      colorScheme="primary"
-      isChecked={checked}
-      isIndeterminate={indeterminate}
-      {...rest}
-    />
+    <Checkbox colorScheme="primary" isChecked={checked} isIndeterminate={indeterminate} {...rest} />
   );
-}
+};
 
 export default TableCheckbox;
