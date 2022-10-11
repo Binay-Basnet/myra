@@ -13,6 +13,9 @@ import {
   Text,
   TextFields,
 } from '@coop/shared/ui';
+import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
+import { BiSave } from 'react-icons/bi';
+import { AccordionKymCoopForm } from '@coop/myra/components';
 import {
   KymAccountHolderDeclaration,
   KymCoopAccountOperatorDetail,
@@ -30,11 +33,8 @@ import {
   KymCoopRepresentative,
   KymEquityLiabilities,
 } from '../components/form';
-import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
-import { BiSave } from 'react-icons/bi';
-import { AccordionKymCoopForm } from '@coop/myra/components';
 
-export function KYMCooperativePage() {
+export const KYMCooperativePage = () => {
   const { t } = useTranslation();
   const [kymCurrentSection, setKymCurrentSection] = useState<{
     section: string;
@@ -48,10 +48,7 @@ export function KYMCooperativePage() {
     <>
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.xl" height="fit-content">
-          <FormHeader
-            title={t['membersFormAddNewMembers']}
-            closeLink="/members/list"
-          />
+          <FormHeader title={t['membersFormAddNewMembers']} closeLink="/members/list" />
         </Container>
       </Box>
 
@@ -113,13 +110,11 @@ export function KYMCooperativePage() {
                 {t['kymCoop5Declaration']}
               </Text>
               <KymAccountHolderDeclaration setSection={setKymCurrentSection} />
-              <KymCoopDocumentDeclarationForm
-                setSection={setKymCurrentSection}
-              />
+              <KymCoopDocumentDeclarationForm setSection={setKymCurrentSection} />
             </SectionContainer>
 
             <Box p="s20" display="flex" gap="s16" alignItems="start">
-              <Checkbox fontSize="s3">{''}</Checkbox>
+              <Checkbox fontSize="s3" />
               <TextFields variant="formInput" mt="-6px">
                 I/We agree to the&nbsp;
                 <TextFields as="span" variant="link">
@@ -165,6 +160,6 @@ export function KYMCooperativePage() {
       </Box>
     </>
   );
-}
+};
 
 export default KYMCooperativePage;

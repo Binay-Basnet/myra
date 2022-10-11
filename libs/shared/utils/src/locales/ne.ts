@@ -3132,6 +3132,13 @@ const ne: Record<string, string> = {
   depositProductDaybeforetheinstallmentdate: 'Day before the installment date',
   declineLoanApplication: 'Decline Loan Application',
   reasonForDecliningLoan: 'Reason For Declining Loan',
+
+  kymCoopUnionSelectCentralRepresentativeamongDirectors:
+    'Select Central Representative among Directors',
+  depositProductPressCompletetosaveform: 'Press Complete to save form',
+  loanProductPenaltyOn: 'Penalty On',
+  loanProductLinkedAccounts: 'Linked Accounts',
+  loanProductListofallthesavingaccounts: 'List of all the saving accounts',
 };
 
 export default ne;

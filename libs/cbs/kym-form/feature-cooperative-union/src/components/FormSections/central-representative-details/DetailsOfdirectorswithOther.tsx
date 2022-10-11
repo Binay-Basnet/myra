@@ -21,18 +21,9 @@ import {
   InputGroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import {
-  FormAddress,
-  FormInput,
-  FormRadioGroup,
-  FormSwitch,
-} from '@coop/shared/form';
+import { FormAddress, FormInput, FormRadioGroup, FormSwitch } from '@coop/shared/form';
 import { Box, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
-import {
-  getKymSectionCoOperativeUnion,
-  isDeepEmpty,
-  useTranslation,
-} from '@coop/shared/utils';
+import { getKymSectionCoOperativeUnion, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 import { CentralRepresentativeTraining } from './CentralRepresentativeTraining';
 import { useCoopUnionCentralRep } from '../../../hooks/useCoopUnionCentralRep';
@@ -43,11 +34,7 @@ interface ICRDirectorsSelectionProps {
   setCRId: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const CRDirectorsSelection = ({
-  setSection,
-  crId,
-  setCRId,
-}: ICRDirectorsSelectionProps) => {
+const CRDirectorsSelection = ({ setSection, crId, setCRId }: ICRDirectorsSelectionProps) => {
   const { t } = useTranslation();
 
   const [notAmongDirectors, setNotAmongDirectors] = useState<boolean>(false);
@@ -98,16 +85,14 @@ const CRDirectorsSelection = ({
       (personnel) => ({ name: personnel?.fullName, id: personnel?.id })
     );
 
-  const {
-    data: crDetailsEditData,
-    refetch: refetchCentralRepresentativeDetail,
-  } = useGetCentralRepresentativeDetailsQuery(
-    {
-      id: String(id),
-      includeRequiredErrors: false,
-    },
-    { enabled: !!id }
-  );
+  const { data: crDetailsEditData, refetch: refetchCentralRepresentativeDetail } =
+    useGetCentralRepresentativeDetailsQuery(
+      {
+        id: String(id),
+        includeRequiredErrors: false,
+      },
+      { enabled: !!id }
+    );
 
   useEffect(() => {
     if (crDetailsEditData) {
@@ -156,8 +141,7 @@ const CRDirectorsSelection = ({
             mutate({
               id,
               personnelId: null,
-              sectionType:
-                CooperativeUnionPersonnelSection.CentralRepresentative,
+              sectionType: CooperativeUnionPersonnelSection.CentralRepresentative,
               data: omit(data, ['id', 'cooperativeUnionId']),
             });
           }
@@ -166,8 +150,7 @@ const CRDirectorsSelection = ({
             mutate({
               id,
               personnelId: crId,
-              sectionType:
-                CooperativeUnionPersonnelSection.CentralRepresentative,
+              sectionType: CooperativeUnionPersonnelSection.CentralRepresentative,
               data: omit(data, ['id', 'cooperativeUnionId']),
             });
           }
@@ -196,8 +179,8 @@ const CRDirectorsSelection = ({
                 value: director.id,
               }))}
               orientation="vertical"
-              size={'md'}
-              label={'Select Central Representative among Directors'}
+              size="md"
+              label={t['kymCoopUnionSelectCentralRepresentativeamongDirectors']}
             />
           )}
 
@@ -226,18 +209,12 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
     methods,
   });
 
-  const isPermanentAndTemporaryAddressSame = watch(
-    'isPermanentAndTemporaryAddressSame'
-  );
+  const isPermanentAndTemporaryAddressSame = watch('isPermanentAndTemporaryAddressSame');
 
   return (
     <FormSection id="kymCoopUnionAccDetailsofdirectorsaffiliatedwithotherFirms">
       <GridItem colSpan={3}>
-        <CRDirectorsSelection
-          crId={crId}
-          setSection={setSection}
-          setCRId={setCRId}
-        />
+        <CRDirectorsSelection crId={crId} setSection={setSection} setCRId={setCRId} />
       </GridItem>
 
       <GridItem colSpan={3}>
@@ -248,9 +225,7 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                 <FormProvider {...methods}>
                   <form
                     onFocus={(e) => {
-                      const kymSection = getKymSectionCoOperativeUnion(
-                        e.target.id
-                      );
+                      const kymSection = getKymSectionCoOperativeUnion(e.target.id);
 
                       setSection(kymSection);
                     }}
@@ -259,13 +234,13 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                       <InputGroupContainer>
                         <FormInput
                           type="text"
-                          name={`fullName`}
+                          name="fullName"
                           id="centralRepresentative.fullName"
                           label={t['kymCoopUnionDirFullName']}
                         />
                         <FormInput
                           type="text"
-                          name={`designationEn`}
+                          name="designationEn"
                           id="centralRepresentative.designationEn"
                           label={t['kymCoopUnionDirDesignation']}
                         />
@@ -281,9 +256,9 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                       <Box
                         id="Temporary Address"
                         gap="s16"
-                        display={'flex'}
+                        display="flex"
                         flexDirection="column"
-                        scrollMarginTop={'200px'}
+                        scrollMarginTop="200px"
                       >
                         <Text fontSize="r1" fontWeight="SemiBold">
                           {t['kymCoopUnionDirTemporaryAddress']}
@@ -304,42 +279,38 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                       <InputGroupContainer>
                         <FormInput
                           type="date"
-                          name={`dateOfMembership`}
+                          name="dateOfMembership"
                           id="centralRepresentative.dateOfMembership"
                           label={t['kymCoopUnionDirDateofMembership']}
                         />
                         <FormInput
                           type="text"
-                          name={`highestQualification`}
+                          name="highestQualification"
                           id="centralRepresentative.highestQualification"
                           label={t['kymCoopUnionDirHighestQualification']}
                         />
                         <FormInput
                           type="number"
-                          name={`mobileNumber`}
+                          name="mobileNumber"
                           id="centralRepresentative.mobileNumber"
                           label={t['kymCoopUnionDirMobileNo']}
                         />
                         <FormInput
                           type="text"
-                          name={`email`}
+                          name="email"
                           id="centralRepresentative.email"
                           label={t['kymCoopUnionDirEmail']}
                         />
                         <FormInput
                           type="string"
-                          name={`citizenshipNo`}
+                          name="citizenshipNo"
                           id="centralRepresentative.citizenshipNo"
-                          label={
-                            t[
-                              'kymCoopUnionDirCitizenshipPassportDrivingLicenseNo'
-                            ]
-                          }
+                          label={t['kymCoopUnionDirCitizenshipPassportDrivingLicenseNo']}
                         />
 
                         <FormInput
                           type="string"
-                          name={`panNo`}
+                          name="panNo"
                           id="centralRepresentative.panNo"
                           label={t['kymCoopUnionPANNo']}
                         />
@@ -356,50 +327,50 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                       mutationId={crId}
                       size="md"
                       label={t['kymCoopUnionDirPhotograph']}
-                      name={`photograph`}
+                      name="photograph"
                       setKymCurrentSection={setSection}
                       getKymSection={getKymSectionCoOperativeUnion}
                     />
                   </Box>
-                  <Box display={'flex'} flexDirection="column" gap={'s8'}>
-                    <Text fontSize={'s3'} fontWeight="500">
+                  <Box display="flex" flexDirection="column" gap="s8">
+                    <Text fontSize="s3" fontWeight="500">
                       {t['kymCoopUnionDirPhotographOfIdentityProofDocument']}
                     </Text>
                     <Box w="124px">
                       <KYMDocumentField
                         mutationId={crId}
                         size="md"
-                        name={`identityDocumentPhoto`}
+                        name="identityDocumentPhoto"
                         setKymCurrentSection={setSection}
                         getKymSection={getKymSectionCoOperativeUnion}
                       />
                     </Box>
                   </Box>
 
-                  <Box display={'flex'} flexDirection="column" gap={'s8'}>
-                    <Text fontSize={'s3'} fontWeight="500">
+                  <Box display="flex" flexDirection="column" gap="s8">
+                    <Text fontSize="s3" fontWeight="500">
                       {t['kymCoopUnionDirSpecimenSignature']}
                     </Text>
                     <Box w="124px">
                       <KYMDocumentField
                         mutationId={crId}
                         size="md"
-                        name={`signature`}
+                        name="signature"
                         setKymCurrentSection={setSection}
                         getKymSection={getKymSectionCoOperativeUnion}
                       />
                     </Box>
                   </Box>
 
-                  <Box display={'flex'} flexDirection="column" gap={'s8'}>
-                    <Text fontSize={'s3'} fontWeight="500">
+                  <Box display="flex" flexDirection="column" gap="s8">
+                    <Text fontSize="s3" fontWeight="500">
                       {t['kymCoopUnionCRDecisionDocument']}
                     </Text>
                     <Box w="124px">
                       <KYMDocumentField
                         mutationId={crId}
                         size="md"
-                        name={`crDecisionDocument`}
+                        name="crDecisionDocument"
                         setKymCurrentSection={setSection}
                         getKymSection={getKymSectionCoOperativeUnion}
                       />

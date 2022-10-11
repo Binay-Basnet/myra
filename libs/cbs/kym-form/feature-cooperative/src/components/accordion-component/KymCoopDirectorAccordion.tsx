@@ -201,7 +201,7 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
         style={{
           marginTop: '0px',
           border: '1px solid',
-          borderColor: 'border.layout',
+          borderColor: '#E0E5EB',
         }}
       >
         <DynamicBoxGroupContainer>

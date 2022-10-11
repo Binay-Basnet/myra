@@ -284,10 +284,8 @@ export const AccountOpenNew = () => {
                     {ProductData?.isForMinors && (
                       <FormSelect name="minor" label="Minor" options={minorOptions} />
                     )}
-                    {productType === NatureOfDepositProduct?.RecurringSaving ||
-                      productType === NatureOfDepositProduct?.TermSavingOrFd ||
-                      (productType === NatureOfDepositProduct?.Saving &&
-                        ProductData?.isMandatorySaving && <Tenure />)}
+                    {productType !== NatureOfDepositProduct?.Current &&
+                      productType !== NatureOfDepositProduct?.Saving && <Tenure />}
                     <Divider />
                     <Interest />
                     <DepositFrequency />

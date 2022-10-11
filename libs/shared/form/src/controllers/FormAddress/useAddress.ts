@@ -25,7 +25,7 @@ export const useAddress = ({ name }: IUseAddressProps) => {
   const localGovernmentId = watch(`${name}.localGovernmentId`);
 
   const districtList = useMemo(
-    () => data?.administration.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
+    () => data?.administration?.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
     [currentProvinceId]
   );
 

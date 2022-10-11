@@ -17,10 +17,7 @@ interface IAddRelatedTrainingConcern {
   removeRelatedTraining: () => void;
 }
 
-const AddRelatedTraining = ({
-  index,
-  removeRelatedTraining,
-}: IAddRelatedTrainingConcern) => {
+const AddRelatedTraining = ({ index, removeRelatedTraining }: IAddRelatedTrainingConcern) => {
   const { t } = useTranslation();
   return (
     <DynamicBoxContainer>
@@ -71,29 +68,28 @@ export const BoardOfDirectorRelatedTraining = () => {
   return (
     <GroupContainer
       id="kymCoopUnionBoardOfDirectorsRelatedTraining"
-      scrollMarginTop={'200px'}
+      scrollMarginTop="200px"
+      p="s16"
+      borderBottom="1px solid"
+      borderBottomColor="border.layout"
     >
       <Box display="flex" flexDirection="column" gap="s4">
         <Text fontSize="r1" fontWeight="SemiBold">
           {t['kymCoopUnionTrainingRelatedToCoop']}
         </Text>
-        <TextFields variant="bodyRegular">
-          {t['kymCoopUnionTrainingAttended']}
-        </TextFields>
+        <TextFields variant="bodyRegular">{t['kymCoopUnionTrainingAttended']}</TextFields>
       </Box>
 
       <div>
         <DynamicBoxGroupContainer>
-          {relatedFields.map((item, index) => {
-            return (
-              <Box key={item.id}>
-                <AddRelatedTraining
-                  index={index}
-                  removeRelatedTraining={() => relatedRemove(index)}
-                />
-              </Box>
-            );
-          })}
+          {relatedFields.map((item, index) => (
+            <Box key={item.id}>
+              <AddRelatedTraining
+                index={index}
+                removeRelatedTraining={() => relatedRemove(index)}
+              />
+            </Box>
+          ))}
           <Button
             id="boardOfDirectorRelatedTrainig"
             alignSelf="start"

@@ -3502,5 +3502,12 @@ const en: Record<string, string> = {
   remainingDaysToGetMatured: 'Remaining Days To Get Matured',
   declineLoanApplication: 'Decline Loan Application',
   reasonForDecliningLoan: 'Reason For Declining Loan',
+
+  kymCoopUnionSelectCentralRepresentativeamongDirectors:
+    'Select Central Representative among Directors',
+  depositProductPressCompletetosaveform: 'Press Complete to save form',
+  loanProductPenaltyOn: 'Penalty On',
+  loanProductLinkedAccounts: 'Linked Accounts',
+  loanProductListofallthesavingaccounts: 'List of all the saving accounts',
 };
 export default en;

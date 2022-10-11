@@ -263,7 +263,6 @@ export const GridItems = () => {
               <Box w="40%">
                 <FormCheckboxGroup
                   name="cooperativeType"
-                  label={t['loanProductCoorperativeType']}
                   list={CoopTypeList}
                   orientation="column"
                 />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
@@ -25,18 +25,16 @@ export const KymCoopAccountOperatorDetail = (props: IProps) => {
 
   const [accOperatorIds, setAccOperatorIds] = useState<string[]>([]);
 
-  const { data: editValues, refetch } =
-    useGetCoOperativeAccountOperatorEditDataQuery(
-      {
-        id: String(id),
-      },
-      { enabled: !!id }
-    );
+  const { data: editValues, refetch } = useGetCoOperativeAccountOperatorEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.cooperative?.listAccountOperators?.data;
+      const editValueData = editValues?.members?.cooperative?.listAccountOperators?.data;
 
       setAccOperatorIds(
         editValueData?.reduce(
@@ -53,16 +51,11 @@ export const KymCoopAccountOperatorDetail = (props: IProps) => {
   });
   const { mutate: deleteMutate } = useDeleteCoopAccOperatorDataMutation({
     onSuccess: (res) => {
-      const deletedId = String(
-        res?.members?.cooperative?.accountOperatorDetail?.Delete?.recordId
-      );
+      const deletedId = String(res?.members?.cooperative?.accountOperatorDetail?.Delete?.recordId);
 
       const tempAccountOperatorIds = [...accOperatorIds];
 
-      tempAccountOperatorIds.splice(
-        tempAccountOperatorIds.indexOf(deletedId),
-        1
-      );
+      tempAccountOperatorIds.splice(tempAccountOperatorIds.indexOf(deletedId), 1);
 
       setAccOperatorIds([...tempAccountOperatorIds]);
     },
@@ -72,7 +65,7 @@ export const KymCoopAccountOperatorDetail = (props: IProps) => {
   };
 
   const removeAccountOperator = (accOperatorId: string) => {
-    deleteMutate({ accOperatorId: accOperatorId, id: id });
+    deleteMutate({ accOperatorId, id });
   };
 
   useEffect(() => {
@@ -83,21 +76,19 @@ export const KymCoopAccountOperatorDetail = (props: IProps) => {
 
   return (
     <FormSection
-      gridLayout={true}
+      gridLayout
       id="kymCoopAccAccountOperatorDetail"
       header="kymCoopDetailsofAccountOperators"
     >
-      {accOperatorIds.map((id) => {
-        return (
-          <GridItem key={id} colSpan={3}>
-            <AddOperator
-              setKymCurrentSection={setSection}
-              removeDirector={removeAccountOperator}
-              accountId={id}
-            />
-          </GridItem>
-        );
-      })}
+      {accOperatorIds.map((key) => (
+        <GridItem key={key} colSpan={3}>
+          <AddOperator
+            setKymCurrentSection={setSection}
+            removeDirector={removeAccountOperator}
+            accountId={key}
+          />
+        </GridItem>
+      ))}
       <GridItem colSpan={2}>
         <Button
           id="accountOperatorButton"

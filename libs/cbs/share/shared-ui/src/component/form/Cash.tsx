@@ -120,7 +120,7 @@ export const Cash = ({ denominationTotal, totalCashPaid, returnAmount }: Purchas
               <Text>{denominationTotal}</Text>
               <Text>{totalCashPaid ? returnAmount : 0}</Text>
               <Text>
-                {denominationTotal && returnAmount ? denominationTotal + returnAmount : 0}
+                {denominationTotal && returnAmount ? denominationTotal - returnAmount : 0}
               </Text>
             </Box>
           </Box>

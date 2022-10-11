@@ -92,13 +92,13 @@ export const ShareReturnForm = () => {
 
   const denominationTotal =
     denominations?.reduce(
-      (accumulator: number, curr: { value: string }) => accumulator + Number(curr.value),
+      (accumulator: number, curr: { amount?: string }) => accumulator + Number(curr.amount),
       0 as number
     ) ?? 0;
 
   const totalCashPaid: number = disableDenomination ? Number(cashPaid) : Number(denominationTotal);
 
-  const returnAmount = totalAmount - totalCashPaid;
+  const returnAmount = totalCashPaid - totalAmount;
 
   const { memberDetailData } = useGetIndividualMemberDetails({ memberId });
 
@@ -203,9 +203,10 @@ export const ShareReturnForm = () => {
       });
     }
 
-    setTotalAmount(temp + noOfShares * 100);
+    setTotalAmount(noOfShares * 100 - temp);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chargeList, extraFee, noOfShares, JSON.stringify(extraFee)]);
+
   return (
     <>
       <FormProvider {...methods}>

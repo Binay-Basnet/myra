@@ -192,7 +192,7 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
 
       <Collapse
         in={isOpen}
-        style={{ marginTop: '0px', border: '1px solid', borderColor: 'border.layout' }}
+        style={{ marginTop: '0px', border: '1px solid', borderColor: '#E0E5EB' }}
       >
         <DynamicBoxGroupContainer>
           <FormProvider {...methods}>

@@ -116,30 +116,9 @@ export const ShareRegisterTable = () => {
     [router.locale]
   );
 
-  const shareRows = useMemo(
-    () => [
-      {
-        title: 'shareActive',
-        key: 'APPROVED',
-      },
-      {
-        title: 'shareSubmitted',
-        key: 'VALIDATED',
-      },
-      {
-        title: 'shareDraft',
-        key: 'DRAFT',
-      },
-    ],
-    []
-  );
-
   return (
     <>
-      <TableListPageHeader
-        heading={`${t['shareRegisterTable']} - ${featureCode?.shareRegister}`}
-        tabItems={shareRows}
-      />
+      <TableListPageHeader heading={`${t['shareRegisterTable']} - ${featureCode?.shareRegister}`} />
 
       <Table
         isLoading={isFetching}

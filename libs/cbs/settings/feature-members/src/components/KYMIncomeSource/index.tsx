@@ -28,8 +28,6 @@ export const IncomeSourceDetailsComponent = (props: {
 
   const methods = useForm<{ dependsOn: string[] }>();
 
-  const { control } = methods;
-
   useEffect(() => {
     if (field?.__typename === 'FormField') {
       methods.reset({
@@ -58,7 +56,6 @@ export const IncomeSourceDetailsComponent = (props: {
         >
           <FormProvider {...methods}>
             <FormCheckboxGroup
-              control={control}
               name="dependsOn"
               orientation="column"
               list={[

@@ -251,12 +251,7 @@ export const GridItems = () => {
               {t['depositProductCoorperativeType']}
             </Text>
             <Box w="40%">
-              <FormCheckboxGroup
-                name="cooperativeType"
-                label={t['depositProductCoorperativeType']}
-                list={CoopTypeList}
-                orientation="column"
-              />
+              <FormCheckboxGroup name="cooperativeType" list={CoopTypeList} orientation="column" />
             </Box>
           </BoxContainer>
         )}

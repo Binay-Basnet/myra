@@ -306,7 +306,8 @@ export const SettingsDepositProductsAdd = () => {
 
               {depositNature === NatureOfDepositProduct.TermSavingOrFd && <FixedDepositAmount />}
 
-              {depositNature !== NatureOfDepositProduct.Current && <Tenure />}
+              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <Tenure />}
 
               {((depositNature === NatureOfDepositProduct.RecurringSaving && isTenureApplicable) ||
                 (depositNature === NatureOfDepositProduct.TermSavingOrFd &&
@@ -351,7 +352,7 @@ export const SettingsDepositProductsAdd = () => {
               status={
                 <Box display="flex" gap="s8">
                   <Text color="neutralColorLight.Gray-60" fontWeight="Regular" as="i" fontSize="r1">
-                    Press Complete to save form
+                    {t['depositProductPressCompletetosaveform']}
                   </Text>
                 </Box>
               }
