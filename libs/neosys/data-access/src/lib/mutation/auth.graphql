@@ -1,0 +1,46 @@
+mutation login($data: LoginInput!) {
+  auth {
+    login(data: $data) {
+      recordId
+      record {
+        token {
+          access
+          refresh
+        }
+        user {
+          id
+          objState
+          username
+          firstName
+          middleName
+          lastName
+        }
+      }
+    }
+  }
+}
+
+mutation refresh($refreshToken: String!) {
+  auth {
+    token(refreshToken: $refreshToken) {
+      token {
+        access
+        refresh
+      }
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation resetPassword($userId: String!, $newPassword: String!) {
+  user {
+    resetPassword(data: { userId: $userId, newPassword: $newPassword }) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

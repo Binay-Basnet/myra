@@ -48,7 +48,7 @@ const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <>
       <Head>
-        <title>Neosys</title>
+        <title>Neosys Admin</title>
       </Head>
       <ToastContainer />
       <main className="app">{getLayout(<Component {...pageProps} />)}</main>
@@ -68,14 +68,12 @@ const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
 
 const CustomApp = (props: AppPropsWithLayout) => (
   <Provider store={store}>
-    {/* <AuthProvider> */}
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={neosysTheme}>
         <MainApp {...props} />
       </ChakraProvider>
       <ReactQueryDevtools />
     </QueryClientProvider>
-    {/* </AuthProvider> */}
   </Provider>
 );
 

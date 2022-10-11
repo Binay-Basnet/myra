@@ -15,7 +15,7 @@
     "gen:theme-typings": "chakra-cli tokens ./libs/shared/utils/src/lib/theme/index.ts",
     "graphql-cbs:codegen": "graphql-codegen --config libs/cbs/data-access/codegen.yml -r dotenv/config",
     "graphql-ebank:codegen": "graphql-codegen --config libs/ebanking/data-access/codegen.yml -r dotenv/config",
-    "graphql-neosys:codegen": "graphql-codegen --config libs/ebanking/data-access/codegen.yml -r dotenv/config",
+    "graphql-neosys:codegen": "graphql-codegen --config libs/neosys/data-access/codegen.yml -r dotenv/config",
     "check-types": "tsc --pretty --noEmit",
     "check-format": "prettier --check .",
     "check-lint": "eslint . --ext ts --ext tsx --ext js",

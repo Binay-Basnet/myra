@@ -3,6 +3,8 @@ import { MdOutlineHelpOutline } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import { Image } from '@chakra-ui/react';
 
+import { useAppDispatch } from '@coop/cbs/data-access';
+import { logout } from '@coop/neosys-admin/data-access';
 import {
   Avatar,
   Box,
@@ -30,21 +32,22 @@ const calendarList = [
   { label: 'BS', value: 'BS' },
 ];
 
-export function TopLevelHeader() {
+export const TopLevelHeader = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   return (
     <Box px="s16" py="s10" h="60px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Image src={'/logo.svg'} alt="neosys" />
+        <Image src="/logo.svg" alt="neosys" />
 
         <Box display="flex" alignItems="center" gap="s10">
           <IconButton
             h="40px"
             icon={<Icon size="md" as={BiBell} />}
             aria-label="History"
-            variant={'ghost'}
-            color={'gray.0'}
+            variant="ghost"
+            color="gray.0"
             _hover={{ backgroundColor: 'primary.dark' }}
           />
 
@@ -52,8 +55,8 @@ export function TopLevelHeader() {
             h="40px"
             icon={<Icon size="md" as={MdOutlineHelpOutline} />}
             aria-label="History"
-            variant={'ghost'}
-            color={'gray.0'}
+            variant="ghost"
+            color="gray.0"
             _hover={{ backgroundColor: 'primary.dark' }}
           />
 
@@ -65,13 +68,13 @@ export function TopLevelHeader() {
                     w="40px"
                     h="40px"
                     as="button"
-                    display={'flex'}
-                    justifyContent={'center'}
-                    alignItems={'center'}
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
                     bg={isOpen ? 'primary.dark' : 'primary.800'}
                     _hover={{ backgroundColor: 'primary.dark' }}
                   >
-                    <Avatar src={'/avatar.png'} size="sm" />
+                    <Avatar src="/avatar.png" size="sm" />
                   </Box>
                 </PopoverTrigger>
                 <PopoverContent
@@ -79,10 +82,9 @@ export function TopLevelHeader() {
                   w="260px"
                   border="none"
                   boxShadow="0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)"
-                  outline={'none'}
+                  outline="none"
                   _focus={{
-                    boxShadow:
-                      '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
+                    boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
                   }}
                   color="white"
                   zIndex="2000"
@@ -98,35 +100,23 @@ export function TopLevelHeader() {
                         borderBottom="1px solid"
                         borderColor="border.layout"
                       >
-                        <Avatar src={'/avatar.png'} w="s32" h="s32" />
+                        <Avatar src="/avatar.png" w="s32" h="s32" />
                         <Box
                           ml="14px"
                           display="flex"
                           flexDirection="column"
                           justifyContent="space-between"
                         >
-                          <Text
-                            fontWeight="SemiBold"
-                            fontSize="s2"
-                            color="primary.500"
-                          >
+                          <Text fontWeight="SemiBold" fontSize="s2" color="primary.500">
                             Anish Bhusal
                           </Text>
-                          <Text
-                            fontWeight="Regular"
-                            fontSize="s2"
-                            color="gray.500"
-                          >
+                          <Text fontWeight="Regular" fontSize="s2" color="gray.500">
                             Teller
                           </Text>
                         </Box>
                       </Box>
 
-                      <Box
-                        p="s8"
-                        borderBottom="1px solid"
-                        borderColor="border.layout"
-                      >
+                      <Box p="s8" borderBottom="1px solid" borderColor="border.layout">
                         <Select
                           label="Branch"
                           __placeholder="Lalitpur"
@@ -231,6 +221,10 @@ export function TopLevelHeader() {
                             fontWeight="Regular"
                             fontSize="r1"
                             color="neutralColorLight.Gray-80"
+                            onClick={() => {
+                              dispatch(logout());
+                              router.push('/login');
+                            }}
                           >
                             Logout
                           </Text>
@@ -246,6 +240,6 @@ export function TopLevelHeader() {
       </Box>
     </Box>
   );
-}
+};
 
 export default TopLevelHeader;
