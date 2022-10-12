@@ -3,10 +3,8 @@ import { chakra, Tab, Tabs, Text } from '@chakra-ui/react';
 
 import Box from '../box/Box';
 
-type DetailPageTabType = 'OVERVIEW' | 'REPORTS' | 'ACTIVITY' | 'DOCUMENTS' | 'TASKS';
-
 export interface DetailPageTabsProps {
-  tabs: DetailPageTabType[];
+  tabs: string[];
 }
 
 const TabCol = chakra(Tab, {

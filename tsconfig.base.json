@@ -44,6 +44,7 @@
       "@coop/cbs/loan/layouts": ["libs/cbs/loan/ui-layouts/src/index.ts"],
       "@coop/cbs/loan/lists": ["libs/cbs/loan/feature-lists/src/index.ts"],
       "@coop/cbs/loan/repayment": ["libs/cbs/loan/feature-loan-repayment/src/index.ts"],
+      "@coop/cbs/members/details": ["libs/cbs/members/feature-details/src/index.ts"],
       "@coop/cbs/members/list": ["libs/cbs/members/feature-list/src/index.ts"],
       "@coop/cbs/members/profile": ["libs/cbs/members/feature-profile/src/index.ts"],
       "@coop/cbs/reports/components": ["libs/cbs/reports/ui-components/src/index.ts"],

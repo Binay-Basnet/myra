@@ -27,6 +27,7 @@
     "cbs-loan-feature-loan-application": "libs/cbs/loan/feature-loan-application",
     "cbs-loan-feature-loan-repayment": "libs/cbs/loan/feature-loan-repayment",
     "cbs-loan-ui-layouts": "libs/cbs/loan/ui-layouts",
+    "cbs-members-feature-details": "libs/cbs/members/feature-details",
     "cbs-members-feature-list": "libs/cbs/members/feature-list",
     "cbs-members-feature-profile": "libs/cbs/members/feature-profile",
     "cbs-reports-feature-lists": "libs/cbs/reports/feature-lists",
