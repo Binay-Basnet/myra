@@ -7710,6 +7710,33 @@ export enum NatureOfLoanProduct {
   Unprogressive = 'UNPROGRESSIVE',
 }
 
+export type NeosysAuthMutation = {
+  login?: Maybe<NeosysLoginResult>;
+  token?: Maybe<NeosysAuthTokenResult>;
+};
+
+export type NeosysAuthMutationLoginArgs = {
+  data: NeosysLoginInput;
+};
+
+export type NeosysAuthMutationTokenArgs = {
+  refreshToken: Scalars['String'];
+};
+
+export type NeosysAuthQuery = {
+  me: NeosysMeResult;
+};
+
+export type NeosysAuthToken = {
+  access: Scalars['String'];
+  refresh: Scalars['String'];
+};
+
+export type NeosysAuthTokenResult = {
+  error?: Maybe<MutationError>;
+  token?: Maybe<NeosysAuthToken>;
+};
+
 export type NeosysClientFilter = {
   dateFrom?: InputMaybe<Scalars['String']>;
   dateTo?: InputMaybe<Scalars['String']>;
@@ -7744,12 +7771,50 @@ export type NeosysClientQueryListArgs = {
   filter?: InputMaybe<NeosysClientFilter>;
 };
 
+export type NeosysLoginInput = {
+  password: Scalars['String'];
+  username: Scalars['String'];
+};
+
+export type NeosysLoginRecord = {
+  token: NeosysAuthToken;
+  user: NeosysUser;
+};
+
+export type NeosysLoginResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<NeosysLoginRecord>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type NeosysMeResult = {
+  data?: Maybe<NeosysUser>;
+  error?: Maybe<QueryError>;
+};
+
 export type NeosysMutation = {
+  auth?: Maybe<NeosysAuthMutation>;
   client?: Maybe<NeosysClientMutation>;
 };
 
 export type NeosysQuery = {
+  auth?: Maybe<NeosysAuthQuery>;
   client?: Maybe<NeosysClientQuery>;
+};
+
+export type NeosysUser = Base & {
+  contact?: Maybe<Scalars['String']>;
+  createdAt: Scalars['Time'];
+  createdBy: Identity;
+  email?: Maybe<Scalars['String']>;
+  firstName: Scalars['Localized'];
+  id: Scalars['ID'];
+  lastName: Scalars['Localized'];
+  middleName: Scalars['Localized'];
+  modifiedAt: Scalars['Time'];
+  modifiedBy: Identity;
+  objState: ObjState;
+  username: Scalars['String'];
 };
 
 export type Nominee = {
@@ -7878,25 +7943,25 @@ export type OrganizationClientContactDetails = {
 };
 
 export type OrganizationClientDocuments = {
-  agmOrBodDocument?: Maybe<Scalars['String']>;
-  latestAuditReport?: Maybe<Scalars['String']>;
-  logo?: Maybe<Scalars['String']>;
-  minuteOfCentralRep?: Maybe<Scalars['String']>;
-  moaOrAoa?: Maybe<Scalars['String']>;
-  panCertificate?: Maybe<Scalars['String']>;
-  registeredCertificate?: Maybe<Scalars['String']>;
-  taxClearance?: Maybe<Scalars['String']>;
+  agmOrBodDocument?: Maybe<Array<Maybe<Scalars['String']>>>;
+  latestAuditReport?: Maybe<Array<Maybe<Scalars['String']>>>;
+  logo?: Maybe<Array<Maybe<Scalars['String']>>>;
+  minuteOfCentralRep?: Maybe<Array<Maybe<Scalars['String']>>>;
+  moaOrAoa?: Maybe<Array<Maybe<Scalars['String']>>>;
+  panCertificate?: Maybe<Array<Maybe<Scalars['String']>>>;
+  registeredCertificate?: Maybe<Array<Maybe<Scalars['String']>>>;
+  taxClearance?: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 export type OrganizationClientDocumentsInput = {
-  agmOrBodDocument?: InputMaybe<Scalars['String']>;
-  latestAuditReport?: InputMaybe<Scalars['String']>;
-  logo?: InputMaybe<Scalars['String']>;
-  minuteOfCentralRep?: InputMaybe<Scalars['String']>;
-  moaOrAoa?: InputMaybe<Scalars['String']>;
-  panCertificate?: InputMaybe<Scalars['String']>;
-  registeredCertificate?: InputMaybe<Scalars['String']>;
-  taxClearance?: InputMaybe<Scalars['String']>;
+  agmOrBodDocument?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  latestAuditReport?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  logo?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  minuteOfCentralRep?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  moaOrAoa?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  panCertificate?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  registeredCertificate?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  taxClearance?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 export type OrganizationClientInput = {
@@ -9621,23 +9686,25 @@ export enum WithdrawWith {
 }
 
 export type LoginMutationVariables = Exact<{
-  data: LoginInput;
+  data: NeosysLoginInput;
 }>;
 
 export type LoginMutation = {
-  auth: {
-    login?: {
-      recordId?: string | null;
-      record?: {
-        token: { access: string; refresh: string };
-        user: {
-          id: string;
-          objState: ObjState;
-          username: string;
-          firstName: Record<'local' | 'en' | 'np', string>;
-          middleName: Record<'local' | 'en' | 'np', string>;
-          lastName: Record<'local' | 'en' | 'np', string>;
-        };
+  neosys: {
+    auth?: {
+      login?: {
+        recordId?: string | null;
+        record?: {
+          token: { access: string; refresh: string };
+          user: {
+            id: string;
+            objState: ObjState;
+            username: string;
+            firstName: Record<'local' | 'en' | 'np', string>;
+            middleName: Record<'local' | 'en' | 'np', string>;
+            lastName: Record<'local' | 'en' | 'np', string>;
+          };
+        } | null;
       } | null;
     } | null;
   };
@@ -9648,36 +9715,18 @@ export type RefreshMutationVariables = Exact<{
 }>;
 
 export type RefreshMutation = {
-  auth: {
-    token?: {
-      token?: { access: string; refresh: string } | null;
-      error?:
-        | MutationError_AuthorizationError_Fragment
-        | MutationError_BadRequestError_Fragment
-        | MutationError_NotFoundError_Fragment
-        | MutationError_ServerError_Fragment
-        | MutationError_ValidationError_Fragment
-        | null;
-    } | null;
-  };
-};
-
-export type ResetPasswordMutationVariables = Exact<{
-  userId: Scalars['String'];
-  newPassword: Scalars['String'];
-}>;
-
-export type ResetPasswordMutation = {
-  user: {
-    resetPassword?: {
-      recordId?: string | null;
-      error?:
-        | MutationError_AuthorizationError_Fragment
-        | MutationError_BadRequestError_Fragment
-        | MutationError_NotFoundError_Fragment
-        | MutationError_ServerError_Fragment
-        | MutationError_ValidationError_Fragment
-        | null;
+  neosys: {
+    auth?: {
+      token?: {
+        token?: { access: string; refresh: string } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
     } | null;
   };
 };
@@ -9706,16 +9755,18 @@ export type AddNewClientMutation = {
 export type GetMeQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetMeQuery = {
-  auth: {
-    me: {
-      data?: { id: string; username: string; email?: string | null } | null;
-      error?:
-        | MutationError_AuthorizationError_Fragment
-        | MutationError_BadRequestError_Fragment
-        | MutationError_NotFoundError_Fragment
-        | MutationError_ServerError_Fragment
-        | null;
-    };
+  neosys: {
+    auth?: {
+      me: {
+        data?: { id: string; username: string; email?: string | null } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+      };
+    } | null;
   };
 };
 
@@ -9892,22 +9943,24 @@ export const PaginationFragmentDoc = `
 }
     `;
 export const LoginDocument = `
-    mutation login($data: LoginInput!) {
-  auth {
-    login(data: $data) {
-      recordId
-      record {
-        token {
-          access
-          refresh
-        }
-        user {
-          id
-          objState
-          username
-          firstName
-          middleName
-          lastName
+    mutation login($data: NeosysLoginInput!) {
+  neosys {
+    auth {
+      login(data: $data) {
+        recordId
+        record {
+          token {
+            access
+            refresh
+          }
+          user {
+            id
+            objState
+            username
+            firstName
+            middleName
+            lastName
+          }
         }
       }
     }
@@ -9924,14 +9977,16 @@ export const useLoginMutation = <TError = unknown, TContext = unknown>(
   );
 export const RefreshDocument = `
     mutation refresh($refreshToken: String!) {
-  auth {
-    token(refreshToken: $refreshToken) {
-      token {
-        access
-        refresh
-      }
-      error {
-        ...MutationError
+  neosys {
+    auth {
+      token(refreshToken: $refreshToken) {
+        token {
+          access
+          refresh
+        }
+        error {
+          ...MutationError
+        }
       }
     }
   }
@@ -9943,31 +9998,6 @@ export const useRefreshMutation = <TError = unknown, TContext = unknown>(
   useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
     ['refresh'],
     useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
-    options
-  );
-export const ResetPasswordDocument = `
-    mutation resetPassword($userId: String!, $newPassword: String!) {
-  user {
-    resetPassword(data: {userId: $userId, newPassword: $newPassword}) {
-      recordId
-      error {
-        ...MutationError
-      }
-    }
-  }
-}
-    ${MutationErrorFragmentDoc}`;
-export const useResetPasswordMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    ResetPasswordMutation,
-    TError,
-    ResetPasswordMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<ResetPasswordMutation, TError, ResetPasswordMutationVariables, TContext>(
-    ['resetPassword'],
-    useAxios<ResetPasswordMutation, ResetPasswordMutationVariables>(ResetPasswordDocument),
     options
   );
 export const AddNewClientDocument = `
@@ -9999,15 +10029,17 @@ export const useAddNewClientMutation = <TError = unknown, TContext = unknown>(
   );
 export const GetMeDocument = `
     query getMe {
-  auth {
-    me {
-      data {
-        id
-        username
-        email
-      }
-      error {
-        ...MutationError
+  neosys {
+    auth {
+      me {
+        data {
+          id
+          username
+          email
+        }
+        error {
+          ...MutationError
+        }
       }
     }
   }

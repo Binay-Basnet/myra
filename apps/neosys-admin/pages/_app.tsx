@@ -5,15 +5,13 @@ import { Provider } from 'react-redux';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 
 import { store } from '@coop/cbs/data-access';
 import { Box, FloatingShortcutButton, Toaster } from '@coop/shared/ui';
-import { neosysTheme, useInit, useSnap } from '@coop/shared/utils';
+import { neosysTheme, useSnap } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
-
-const { ToastContainer } = createStandaloneToast();
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -40,7 +38,7 @@ const queryClient = new QueryClient({
 });
 
 const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
-  useInit();
+  // useInit();
   useSnap();
 
   const getLayout = Component.getLayout || ((page) => page);
@@ -50,7 +48,6 @@ const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       <Head>
         <title>Neosys Admin</title>
       </Head>
-      <ToastContainer />
       <Toaster />
 
       <main className="app">{getLayout(<Component {...pageProps} />)}</main>

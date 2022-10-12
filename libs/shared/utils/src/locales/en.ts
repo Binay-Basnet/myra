@@ -1559,6 +1559,7 @@ const en: Record<string, string> = {
   neoClientOfficePhone: 'Office Phone',
   neoClientEmailAddress: 'Email Address',
   neoClientWebsite: 'Website',
+  neoClientNatureOfCoop: 'Nature of COOP',
   neoClientRegistrationDetails: 'Registration Details',
   neoClientRegisteredOffice: 'Registered Office',
   neoClientRegisteredNo: 'Registered No',

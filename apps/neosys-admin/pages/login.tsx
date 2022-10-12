@@ -2,7 +2,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { login, useAppDispatch, useLoginMutation } from '@coop/cbs/data-access';
+import { login, useAppDispatch, useLoginMutation } from '@coop/neosys-admin/data-access';
 import { FormInput, FormPasswordInput } from '@coop/shared/form';
 import { Box, Button, toast } from '@coop/shared/ui';
 
@@ -25,13 +25,13 @@ export const Login = () => {
         });
         return;
       }
-      if (res?.auth?.login?.recordId === null) {
+      if (res?.neosys?.auth?.login?.recordId === null) {
         toast({ id: 'login-error', type: 'error', message: 'Username or Password is invalid' });
         return;
       }
-      const accessToken = res?.auth?.login?.record?.token?.access;
-      const refreshToken = res?.auth?.login?.record?.token?.refresh;
-      const user = res?.auth?.login?.record?.user;
+      const accessToken = res?.neosys?.auth?.login?.record?.token?.access;
+      const refreshToken = res?.neosys?.auth?.login?.record?.token?.refresh;
+      const user = res?.neosys?.auth?.login?.record?.user;
       dispatch(login({ user, token: accessToken }));
       localStorage.setItem('refreshToken', refreshToken);
       router.replace('/');

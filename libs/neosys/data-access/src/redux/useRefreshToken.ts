@@ -11,9 +11,11 @@ interface IToken {
 }
 interface RefreshTokenResponse {
   data: {
-    auth: {
-      token: {
-        token: IToken;
+    neosys: {
+      auth: {
+        token: {
+          token: IToken;
+        };
       };
     };
   };
@@ -42,48 +44,50 @@ export const useRefreshToken = (url: string) => {
     if (!refreshToken) return Promise.reject(() => 'No refresh Token');
     return axios
       .post<RefreshTokenResponse>(url, {
-        query: `mutation{
-          auth{
-            token(refreshToken:"${refreshToken}"){
-            token{
-              refresh
-              access
-            }
-              error {
-                  ... on BadRequestError {
-                  __typename
-                  badRequestErrorMessage: message
-                  jpt:code
-                }
-                ... on ServerError {
-                  __typename
-                  serverErrorMessage: message
-                  yes:code
-                }
-                ... on AuthorizationError {
-                  __typename
-                  authorizationErrorMsg: message
-                  no:code
-                }
-                ... on ValidationError {
-                  __typename
-                  validationErrorMsg: message
-                  haha:code
-                }
-                ... on NotFoundError {
-                  __typename
-                  notFoundErrorMsg: message
-                  hey:code
-                }
-            }
-            }
+        query: `mutation {
+  neosys {
+    auth {
+      token(refreshToken: "${refreshToken}") {
+        token {
+          refresh
+          access
+        }
+        error {
+          ... on BadRequestError {
+            __typename
+            badRequestErrorMessage: message
+            jpt: code
           }
-        }`,
+          ... on ServerError {
+            __typename
+            serverErrorMessage: message
+            yes: code
+          }
+          ... on AuthorizationError {
+            __typename
+            authorizationErrorMsg: message
+            no: code
+          }
+          ... on ValidationError {
+            __typename
+            validationErrorMsg: message
+            haha: code
+          }
+          ... on NotFoundError {
+            __typename
+            notFoundErrorMsg: message
+            hey: code
+          }
+        }
+      }
+    }
+  }
+}`,
       })
       .then((res) => {
-        if (res.data.data.auth?.token?.token) {
-          const accessToken = res.data?.data?.auth?.token?.token?.access;
-          localStorage.setItem('refreshToken', res.data?.data?.auth?.token?.token?.refresh);
+        if (res.data.data.neosys.auth?.token?.token) {
+          const accessToken = res.data?.data?.neosys.auth?.token?.token?.access;
+          localStorage.setItem('refreshToken', res.data?.data?.neosys.auth?.token?.token?.refresh);
           dispatch(saveToken(accessToken));
           return accessToken;
         }

@@ -50,7 +50,7 @@ export const NeosysClientForm = () => {
         />
         <FormSelect
           name="natureOfCoop"
-          label={t['neoClientOrganizationType']}
+          label={t['neoClientNatureOfCoop']}
           options={[
             {
               label: 'Agriculture Cooperative',

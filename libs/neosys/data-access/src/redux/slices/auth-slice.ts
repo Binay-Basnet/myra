@@ -1,16 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { User } from '@coop/cbs/data-access';
+import { NeosysUser } from '@coop/neosys-admin/data-access';
 
 import type { RootState } from '../store';
 
 interface AuthenticatePayload {
-  user: Partial<User>;
+  user: Partial<NeosysUser>;
   token: string;
 }
 // Define a type for the slice state
 interface AuthState {
-  user: Partial<User> | null;
+  user: Partial<NeosysUser> | null;
   isLogged: boolean | null;
   token: string | null;
 }
@@ -31,7 +31,7 @@ export const authSlice = createSlice({
       state.token = action.payload;
     },
     // Use the PayloadAction type to declare the contents of `action.payload`
-    authenticate: (state, action: PayloadAction<{ user: Partial<User> }>) => {
+    authenticate: (state, action: PayloadAction<{ user: Partial<NeosysUser> }>) => {
       state.user = action.payload.user;
       state.isLogged = true;
     },

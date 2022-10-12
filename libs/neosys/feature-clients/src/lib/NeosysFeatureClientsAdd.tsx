@@ -17,18 +17,8 @@ export const NeosysFeatureClientsAdd = () => {
 
   const { t } = useTranslation();
   const methods = useForm<
-    Omit<OrganizationClientInput, 'organizationLogo' | 'documents'> & {
+    Omit<OrganizationClientInput, 'organizationLogo'> & {
       organizationLogo: string[];
-      documents: {
-        agmOrBodDocument?: string[];
-        latestAuditReport?: string[];
-        logo?: string[];
-        minuteOfCentralRep?: string[];
-        moaOrAoa?: string[];
-        panCertificate?: string[];
-        registeredCertificate?: string[];
-        taxClearance?: string[];
-      };
     }
   >({
     defaultValues: {
@@ -98,16 +88,6 @@ export const NeosysFeatureClientsAdd = () => {
                 data: {
                   ...formValues,
                   organizationLogo: formValues.organizationLogo[0],
-                  documents: {
-                    agmOrBodDocument: formValues?.documents?.agmOrBodDocument?.[0],
-                    latestAuditReport: formValues?.documents?.latestAuditReport?.[0],
-                    logo: formValues?.documents?.logo?.[0],
-                    minuteOfCentralRep: formValues?.documents?.minuteOfCentralRep?.[0],
-                    moaOrAoa: formValues?.documents?.moaOrAoa?.[0],
-                    panCertificate: formValues?.documents?.panCertificate?.[0],
-                    registeredCertificate: formValues?.documents?.registeredCertificate?.[0],
-                    taxClearance: formValues?.documents?.taxClearance?.[0],
-                  },
                 },
               }),
             });

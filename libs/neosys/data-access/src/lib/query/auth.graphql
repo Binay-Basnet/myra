@@ -1,14 +1,16 @@
 query getMe {
-  auth {
-    me {
-      data {
-        id
-        username
-        email
-      }
-      error {
-        ...MutationError
-      }
-    }
+  neosys {
+     auth {
+       me {
+         data {
+           id
+           username
+           email
+         }
+         error {
+           ...MutationError
+         }
+       }
+     }
   }
 }

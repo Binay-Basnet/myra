@@ -61,6 +61,8 @@ export const FileInput = ({
   generateUrls,
   ...rest
 }: FileInputProps) => {
+  console.log(maxFiles);
+
   const [files, setFiles] = useState<File[]>([]);
   const [fileNames, setFileNames] = useState<string[] | FileWithUrl[]>([]);
   const [alreadyAddedFiles, setAlreadyAddedFiles] = useState<
@@ -73,6 +75,7 @@ export const FileInput = ({
 
   const { getInputProps, getRootProps, isFocused, isDragAccept, isDragReject } = useDropzone({
     onDrop,
+    disabled: maxFiles === 'one' && files.length === 1,
 
     maxFiles: maxFiles === 'one' ? 1 : Infinity,
     multiple: maxFiles !== 'one',
@@ -283,7 +286,6 @@ export const FilePreview = ({
         justifyContent="space-between"
         gap="s12"
         p="s8"
-        minWidth="128px"
         maxWidth="100%"
       >
         <Box display="flex" alignItems="center" gap="s8">
