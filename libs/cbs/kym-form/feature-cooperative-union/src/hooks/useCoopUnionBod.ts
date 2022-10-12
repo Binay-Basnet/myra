@@ -10,6 +10,7 @@ import {
   addError,
   CooperativeUnionPersonnelSection,
   CoopUnionPersonnelInput,
+  RootState,
   useAppDispatch,
   useAppSelector,
   useGetBoardOfDirectorsDetailsListQuery,
@@ -71,6 +72,13 @@ export const useCoopUnionBod = ({ methods, directorId }: IUseCoopUnionBodProps) 
     },
   });
 
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetchEdit();
+  }, [preference?.date]);
+
   // Get Back The Initial Data when page reloads or user edits
   useEffect(() => {
     if (directorDetail) {
@@ -86,7 +94,7 @@ export const useCoopUnionBod = ({ methods, directorId }: IUseCoopUnionBodProps) 
         },
       });
     }
-  }, [editLoading]);
+  }, [editLoading, editValues]);
 
   // Call The Mutation To Add Data on Each Form Change
   useEffect(() => {

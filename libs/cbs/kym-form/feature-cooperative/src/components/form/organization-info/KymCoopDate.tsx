@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { KymCooperativeFormInput } from '@coop/cbs/data-access';
-import { FormInput } from '@coop/shared/form';
+import { FormDatePicker } from '@coop/shared/form';
 import { FormSection } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
@@ -28,9 +28,9 @@ export const KymCoopDate = (props: IProps) => {
         }}
       >
         <FormSection gridLayout id="kymCoopAccCooperativeDate">
-          <FormInput type="date" name="lastAuditDate" label={t['kymCoopLastAuditDate']} />
+          <FormDatePicker name="lastAuditDate" label={t['kymCoopLastAuditDate']} />
 
-          <FormInput type="date" name="lastAgmDate" label={t['kymCoopLastAGMDate']} />
+          <FormDatePicker name="lastAgmDate" label={t['kymCoopLastAGMDate']} />
         </FormSection>
       </form>
     </FormProvider>

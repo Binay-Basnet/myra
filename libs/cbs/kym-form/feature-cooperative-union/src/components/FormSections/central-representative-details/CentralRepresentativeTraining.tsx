@@ -8,7 +8,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput } from '@coop/shared/form';
+import { FormDatePicker, FormInput } from '@coop/shared/form';
 import { Box, Button, Icon, Text, TextFields } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -38,8 +38,7 @@ const AddRelatedTraining = ({ index, removeRelatedTraining }: IAddRelatedTrainin
           id="centralRepresentative.trainingAttended.subjectOfTraining"
           label={t['kymCoopUnionSubjectOfTraining']}
         />
-        <FormInput
-          type="date"
+        <FormDatePicker
           name={`trainingAttended.${index}.dateOfTraining`}
           id="centralRepresentative.trainingAttended.dateOfTraining"
           label={t['kymCoopUnionDateOfTraining']}

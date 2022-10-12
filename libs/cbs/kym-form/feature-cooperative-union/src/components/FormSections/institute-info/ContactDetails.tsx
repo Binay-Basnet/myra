@@ -1,12 +1,9 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
-import { FormEmailInput, FormInput, FormPhoneNumber } from '@coop/shared/form';
+import { FormDatePicker, FormEmailInput, FormInput, FormPhoneNumber } from '@coop/shared/form';
 import { FormSection } from '@coop/shared/ui';
-import {
-  getKymSectionCoOperativeUnion,
-  useTranslation,
-} from '@coop/shared/utils';
+import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
 
 import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
 
@@ -28,37 +25,18 @@ export const ContactDetails = ({ setSection }: IContactDetailsProps) => {
           setSection(kymSection);
         }}
       >
-        <FormSection
-          id="kymCoopUnionAccContactDetails"
-          header="kymCoopUnionContactDetails"
-        >
+        <FormSection id="kymCoopUnionAccContactDetails" header="kymCoopUnionContactDetails">
           <FormPhoneNumber name="phone" label={t['kymCoopUnionPhone']} />
 
           <FormInput type="number" name="fax" label={t['kymCoopUnionFax']} />
 
           <FormEmailInput name="contactEmail" label={t['kymCoopUnionEmail']} />
 
-          <FormInput
-            type="text"
-            name="website"
-            label={t['kymCoopUnionWebsiteLinkAny']}
-          />
+          <FormInput type="text" name="website" label={t['kymCoopUnionWebsiteLinkAny']} />
 
-          <FormInput
-            type="number"
-            name="postBoxNo"
-            label={t['kymCoopUnionPostBoxNo']}
-          />
-          <FormInput
-            type="number"
-            name="noOfEmployee"
-            label={t['kymCoopUnionNumberOfEmployees']}
-          />
-          <FormInput
-            type="date"
-            name="lastAgmDate"
-            label={t['kymCoopUnionAGMDetailsDate']}
-          />
+          <FormInput type="number" name="postBoxNo" label={t['kymCoopUnionPostBoxNo']} />
+          <FormInput type="number" name="noOfEmployee" label={t['kymCoopUnionNumberOfEmployees']} />
+          <FormDatePicker name="lastAgmDate" label={t['kymCoopUnionAGMDetailsDate']} />
         </FormSection>
       </form>
     </FormProvider>

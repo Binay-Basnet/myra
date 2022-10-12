@@ -3,10 +3,17 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 
-import { useGetValuatorQuery, useSetValuatorMutation, ValuatorType } from '@coop/cbs/data-access';
+import {
+  RootState,
+  useAppSelector,
+  useGetValuatorQuery,
+  useSetValuatorMutation,
+  ValuatorType,
+} from '@coop/cbs/data-access';
 import { ContainerWithDivider, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
   FormAddress,
+  FormDatePicker,
   FormEmailInput,
   FormFileInput,
   FormInput,
@@ -34,7 +41,7 @@ export const CbsSettingsFeatureValuatorAdd = () => {
 
   const { reset } = methods;
 
-  const { data: editValues } = useGetValuatorQuery(
+  const { data: editValues, refetch } = useGetValuatorQuery(
     { id: router.query['id'] as string },
     { enabled: !!router.query['id'] && router.query['action'] === 'edit' }
   );
@@ -62,6 +69,19 @@ export const CbsSettingsFeatureValuatorAdd = () => {
       },
     });
   };
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    if (router.asPath.includes('edit')) {
+      refetch();
+    }
+
+    if (router.asPath.includes('add')) {
+      reset({ renewalDate: '', contractDate: '' });
+    }
+  }, [preference?.date, router?.asPath]);
 
   useEffect(() => {
     if (editData) {
@@ -150,14 +170,12 @@ export const CbsSettingsFeatureValuatorAdd = () => {
                         label={t['settingsGeneralValuatorFormValuationLicenseNo']}
                       />
 
-                      <FormInput
-                        type="date"
+                      <FormDatePicker
                         name="renewalDate"
                         label={t['settingsGeneralValuatorFormValuatorLatestRenewalDate']}
                       />
 
-                      <FormInput
-                        type="date"
+                      <FormDatePicker
                         name="contractDate"
                         label={t['settingsGeneralValuatorFormValuatorSaccosContractDate']}
                       />

@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 
 import {
+  RootState,
+  useAppSelector,
   useGetInsBoardDirectorEditListQuery,
   useSetAddDirectorInstitutionMutation,
 } from '@coop/cbs/data-access';
@@ -14,16 +16,10 @@ import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 interface IAddDirector {
   removeDirector: (directorId: string) => void;
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
   directorId: string;
 }
-export const DirectorsWithAffliation = ({
-  setKymCurrentSection,
-  directorId,
-}: IAddDirector) => {
+export const DirectorsWithAffliation = ({ setKymCurrentSection, directorId }: IAddDirector) => {
   const { t } = useTranslation();
   const methods = useForm();
 
@@ -34,22 +30,18 @@ export const DirectorsWithAffliation = ({
   const id = String(router?.query?.['id']);
 
   const { mutate } = useSetAddDirectorInstitutionMutation();
-  const { data: editValues } = useGetInsBoardDirectorEditListQuery({
-    id: id,
+  const { data: editValues, refetch: refetchEdit } = useGetInsBoardDirectorEditListQuery({
+    id,
   });
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.institution?.listDirectors?.data;
+      const editValueData = editValues?.members?.institution?.listDirectors?.data;
 
-      const familyMemberDetail = editValueData?.find(
-        (data) => data?.id === directorId
-      );
+      const familyMemberDetail = editValueData?.find((data) => data?.id === directorId);
 
       if (familyMemberDetail) {
         reset({
-          isAffiliatedWithOtherFirms:
-            familyMemberDetail?.isAffiliatedWithOtherFirms,
+          isAffiliatedWithOtherFirms: familyMemberDetail?.isAffiliatedWithOtherFirms,
           firmDetails: {
             ...familyMemberDetail?.firmDetails,
           },
@@ -57,6 +49,14 @@ export const DirectorsWithAffliation = ({
       }
     }
   }, [editValues]);
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetchEdit();
+  }, [preference?.date]);
+
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
@@ -66,6 +66,7 @@ export const DirectorsWithAffliation = ({
 
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
+
   const isAffiliated = watch(`isAffiliatedWithOtherFirms`);
 
   return (
@@ -79,17 +80,17 @@ export const DirectorsWithAffliation = ({
         <Box display="flex" flexDirection="column" gap="s16">
           <FormSwitch
             id="DirectorInstitutionAffiliationId"
-            name={`isAffiliatedWithOtherFirms`}
+            name="isAffiliatedWithOtherFirms"
             label={t['kymInsIsaffiliatedwithotherfirms']}
           />
           {isAffiliated && (
             <Box>
-              <Grid templateColumns={'repeat(2, 1fr)'} gap="s20">
+              <Grid templateColumns="repeat(2, 1fr)" gap="s20">
                 <FormInput
                   id="DirectorInstitutionAffiliationId"
                   type="text"
                   bg="white"
-                  name={`firmDetails.directorName`}
+                  name="firmDetails.directorName"
                   label={t['kymInsNameofDirector']}
                   __placeholder={t['kymInsEnterNameofDirector']}
                 />
@@ -97,7 +98,7 @@ export const DirectorsWithAffliation = ({
                   id="DirectorInstitutionAffiliationId"
                   type="text"
                   bg="white"
-                  name={`firmDetails.institutionName`}
+                  name="firmDetails.institutionName"
                   label={t['kymInsNameofInstitution']}
                   __placeholder={t['kymInsEnterNameofInstitution']}
                 />
@@ -107,7 +108,7 @@ export const DirectorsWithAffliation = ({
                   id="DirectorInstitutionAffiliationId"
                   type="text"
                   bg="white"
-                  name={`firmDetails.address`}
+                  name="firmDetails.address"
                   label={t['kymInsAddressofInstitution']}
                   __placeholder={t['kymInsEnterAddressofInstitution']}
                 />
@@ -115,16 +116,16 @@ export const DirectorsWithAffliation = ({
                   id="DirectorInstitutionAffiliationId"
                   type="text"
                   bg="white"
-                  name={`firmDetails.designation`}
+                  name="firmDetails.designation"
                   label={t['kymInsDesignation']}
                   __placeholder={t['kymInsEnterDesignation']}
                 />
                 <FormInput
                   id="DirectorInstitutionAffiliationId"
                   type="number"
-                  textAlign={'right'}
+                  textAlign="right"
                   bg="white"
-                  name={`firmDetails.yearlyIncome`}
+                  name="firmDetails.yearlyIncome"
                   label={t['kymInsYearlyIncome']}
                   __placeholder="0.00"
                 />

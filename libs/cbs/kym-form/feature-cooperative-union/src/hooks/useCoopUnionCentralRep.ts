@@ -10,6 +10,7 @@ import {
   addCentralRepError,
   CooperativeUnionPersonnelSection,
   CoopUnionPersonnelInput,
+  RootState,
   useAppDispatch,
   useAppSelector,
   useGetCentralRepresentativeDetailsQuery,
@@ -87,6 +88,13 @@ export const useCoopUnionCentralRep = ({ methods }: IUseCoopUnionCentralRep) => 
       },
     }
   );
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetch();
+  }, [preference?.date]);
 
   useDeepCompareEffect(() => {
     if (crDetailsEditData) {

@@ -10,13 +10,17 @@ import { useRouter } from 'next/router';
 import { format } from 'date-fns';
 
 import {
+  DateType,
   Language,
   logout,
+  RootState,
+  setPreference,
   useAppDispatch,
   useAppSelector,
   useSetPreferenceMutation,
 } from '@coop/cbs/data-access';
 import {
+  asyncToast,
   Avatar,
   Box,
   Button,
@@ -50,8 +54,8 @@ const languageList = [
 ];
 
 const calendarList = [
-  { label: 'AD', value: 'AD' },
-  { label: 'BS', value: 'BS' },
+  { label: 'AD', value: DateType.Ad },
+  { label: 'BS', value: DateType.Bs },
 ];
 const keyMap = {
   inputFocus: ['ctrl+/'],
@@ -87,6 +91,8 @@ export const TopLevelHeader = () => {
   const dispatch = useAppDispatch();
   const { mutateAsync } = useSetPreferenceMutation();
   const userId = useAppSelector((state) => state?.auth?.user?.id);
+
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
 
   const helpOptions = [
     {
@@ -577,14 +583,30 @@ export const TopLevelHeader = () => {
                             value={router?.locale}
                             options={languageList}
                             onChange={(value) => {
-                              mutateAsync({
-                                id: userId || '',
-                                data: {
-                                  language: value === 'en' ? Language?.English : Language?.Nepali,
+                              asyncToast({
+                                id: 'update-language-preference',
+                                promise: mutateAsync({
+                                  id: userId || '',
+                                  data: {
+                                    language: value === 'en' ? Language?.English : Language?.Nepali,
+                                  },
+                                }),
+                                msgs: {
+                                  loading: 'Updating Language Preference',
+                                  success: 'Updated Language Preference',
                                 },
-                              });
-                              router.push(`/${router.asPath}`, undefined, {
-                                locale: value,
+                                onSuccess: (res) => {
+                                  res?.user?.preference?.update?.record &&
+                                    dispatch(
+                                      setPreference({
+                                        preference: res?.user?.preference?.update?.record,
+                                      })
+                                    );
+
+                                  router.push(`/${router.asPath}`, undefined, {
+                                    locale: value,
+                                  });
+                                },
                               });
                             }}
                           />
@@ -606,7 +628,32 @@ export const TopLevelHeader = () => {
                           >
                             Calendar
                           </Text>
-                          <SwitchTabs value="AD" options={calendarList} />
+                          <SwitchTabs
+                            value={preference?.date ?? DateType.Ad}
+                            options={calendarList}
+                            onChange={(value) => {
+                              asyncToast({
+                                id: 'update-calendar-preference',
+                                promise: mutateAsync({
+                                  id: userId || '',
+                                  data: {
+                                    date: value === DateType.Ad ? DateType.Ad : DateType.Bs,
+                                  },
+                                }),
+                                msgs: {
+                                  loading: 'Updating Calendar Preference',
+                                  success: 'Updated Calendar Preference',
+                                },
+                                onSuccess: (res) =>
+                                  res?.user?.preference?.update?.record &&
+                                  dispatch(
+                                    setPreference({
+                                      preference: res?.user?.preference?.update?.record,
+                                    })
+                                  ),
+                              });
+                            }}
+                          />
                         </Box>
 
                         <Box

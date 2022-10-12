@@ -4,13 +4,15 @@ import { useRouter } from 'next/router';
 
 import {
   BranchCategory,
+  RootState,
   useAllAdministrationQuery,
+  useAppSelector,
   useGetBranchEditDataQuery,
   useGetCoaListQuery,
   useSetBranchDataMutation,
 } from '@coop/cbs/data-access';
 import { ContainerWithDivider, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormMap, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { FormDatePicker, FormInput, FormMap, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
   Box,
   Container,
@@ -139,6 +141,19 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
     }
   }, [editValues, id]);
 
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    if (router.asPath.includes('edit')) {
+      refetch();
+    }
+
+    if (router.asPath.includes('add')) {
+      reset({ estDate: '' });
+    }
+  }, [preference?.date, router?.asPath]);
+
   useEffect(() => {
     if (id) {
       refetch();
@@ -161,17 +176,9 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                     <Box>
                       <InputGroupContainer>
                         <GridItem colSpan={2}>
-                          <FormInput
-                            name="name"
-                            label={t['serviceCenterFormName']}
-                            __placeholder={t['serviceCenterEnterName']}
-                          />
+                          <FormInput name="name" label={t['serviceCenterFormName']} />
                         </GridItem>
-                        <FormInput
-                          name="branchCode"
-                          label={t['serviceCenterCode']}
-                          __placeholder={t['serviceCenterCodeEnter']}
-                        />
+                        <FormInput name="branchCode" label={t['serviceCenterCode']} />
                       </InputGroupContainer>
 
                       <InputGroupContainer mt="s16">
@@ -179,20 +186,13 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                           type="text"
                           name="managerName"
                           label={t['serviceCenterManager']}
-                          __placeholder={t['serviceCenterEnterManager']}
                         />
                         <FormSelect
                           label={t['serviceCenterCategory']}
-                          __placeholder={t['serviceCenterCategoryEnter']}
                           name="category"
                           options={branchCategories}
                         />
-                        <FormInput
-                          type="date"
-                          label={t['settingsBranchEstablishedDate']}
-                          __placeholder={t['branchEnterEstablishedDate']}
-                          name="estDate"
-                        />
+                        <FormDatePicker label={t['settingsBranchEstablishedDate']} name="estDate" />
                       </InputGroupContainer>
                     </Box>
 
@@ -205,13 +205,11 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                           <FormSelect
                             name="provinceId"
                             label={t['kymIndProvince']}
-                            __placeholder={t['kymIndSelectProvince']}
                             options={province}
                           />
                           <FormSelect
                             name="districtId"
                             label={t['kymIndDistrict']}
-                            __placeholder={t['kymIndSelectDistrict']}
                             options={districtList.map((d) => ({
                               label: d.name,
                               value: d.id,
@@ -220,7 +218,6 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                           <FormSelect
                             name="localGovernmentId"
                             label={t['kymIndLocalGovernment']}
-                            __placeholder={t['kymIndSelectLocalGovernment']}
                             options={localityList.map((d) => ({
                               label: d.name,
                               value: d.id,
@@ -229,18 +226,12 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                           <FormSelect
                             name="wardNo"
                             label={t['kymIndWardNo']}
-                            __placeholder={t['kymIndEnterWardNo']}
                             options={wardList.map((d) => ({
                               label: d,
                               value: d,
                             }))}
                           />
-                          <FormInput
-                            type="text"
-                            name="locality"
-                            label={t['kymIndLocality']}
-                            __placeholder={t['kymIndEnterLocality']}
-                          />
+                          <FormInput type="text" name="locality" label={t['kymIndLocality']} />
                         </InputGroupContainer>
 
                         <Box>
@@ -251,16 +242,8 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
 
                     <Box>
                       <InputGroupContainer>
-                        <FormInput
-                          name="phoneNumber"
-                          label={t['settingsBranchPhoneNumber']}
-                          __placeholder={t['settingsBranchPhoneNumber__placeholder']}
-                        />
-                        <FormInput
-                          name="email"
-                          label={t['settingsBranchEmail']}
-                          __placeholder={t['settingsBranchEmail__placeholder']}
-                        />
+                        <FormInput name="phoneNumber" label={t['settingsBranchPhoneNumber']} />
+                        <FormInput name="email" label={t['settingsBranchEmail']} />
                       </InputGroupContainer>
                     </Box>
 
@@ -280,13 +263,11 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                           <InputGroupContainer>
                             <FormSelect
                               label={t['settingsBranchRecievableAccount']}
-                              __placeholder={t['settingsBranchRecievableAccount__placeholder']}
                               name="receivableAccountId"
                               options={coaList}
                             />
                             <FormSelect
                               label={t['settingsBranchPayableAccount']}
-                              __placeholder={t['settingsBranchPayableAccount__placeholder']}
                               name="payableAccountId"
                               options={coaList}
                             />
@@ -299,13 +280,11 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                       <InputGroupContainer>
                         <FormSelect
                           label={t['settinsBranchPLTransfer']}
-                          __placeholder={t['settingsBranchPLTransderLabel']}
                           name="plTransferId"
                           options={coaList}
                         />
                         <FormSelect
                           label={t['settinsBranchTDSTransfer']}
-                          __placeholder={t['settingsBranchTDSTransderLabel']}
                           name="tdsTransaferId"
                           options={coaList}
                         />

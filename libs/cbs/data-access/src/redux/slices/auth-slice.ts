@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { User } from '@coop/cbs/data-access';
+import { User, UserPreference } from '@coop/cbs/data-access';
 
 import type { RootState } from '../store';
 
@@ -13,6 +13,7 @@ interface AuthState {
   user: Partial<User> | null;
   isLogged: boolean | null;
   token: string | null;
+  preference: UserPreference | null;
 }
 
 // Define the initial state using that type
@@ -20,6 +21,7 @@ const initialState: AuthState = {
   user: null,
   isLogged: null,
   token: null,
+  preference: null,
 };
 
 export const authSlice = createSlice({
@@ -40,6 +42,9 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
       state.isLogged = true;
     },
+    setPreference: (state, action: PayloadAction<{ preference: UserPreference }>) => {
+      state.preference = action.payload.preference;
+    },
     logout: (state) => {
       localStorage.clear();
       state.user = null;
@@ -50,7 +55,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const { authenticate, logout, saveToken, login } = authSlice.actions;
+export const { authenticate, logout, saveToken, login, setPreference } = authSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectAuth = (state: RootState) => state;

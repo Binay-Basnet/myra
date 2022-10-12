@@ -865,7 +865,7 @@ const ne: Record<string, string> = {
   kymIndEnterLastname: 'थर हाल्नुहोस',
   kymIndGender: 'लिङ्ग',
   kymIndSelectGender: 'लिङ्ग छान्नुहोस',
-  kymIndDateofBirthBS: 'जन्म मिति (बि. स.)',
+  kymIndDateofBirthBS: 'जन्म मिति',
   kymIndEnterdateofbirth: 'जन्म मिति',
   kymIndEthnicity: 'जात',
   kymIndSelectEthnicity: 'जात छान्नुहोस',

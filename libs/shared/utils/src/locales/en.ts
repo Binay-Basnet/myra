@@ -347,8 +347,8 @@ const en: Record<string, string> = {
   settingsBranchCategoriesRegional: 'Regional Office',
   settingsBranchCategoriesService: 'Service Center',
   settingsBranchCategoriesContact: 'Contact Office',
-  settingsBranchSave: 'Save Account',
-  settingsBranchBranchCode__placeholder: 'Enter Branch Code',
+  settingsBranchSave: 'Save Service Center',
+  settingsBranchBranchCode__placeholder: 'Enter Service Center Code',
 
   // SETTINGS PAGE
 
@@ -1012,7 +1012,7 @@ const en: Record<string, string> = {
   kymIndEnterLastname: 'Enter Last name',
   kymIndGender: 'Gender',
   kymIndSelectGender: 'Select Gender',
-  kymIndDateofBirthBS: 'Date of Birth(BS)',
+  kymIndDateofBirthBS: 'Date of Birth',
   kymIndEnterdateofbirth: 'Enter date of birth',
   kymIndEthnicity: 'Ethnicity',
   kymIndSelectEthnicity: 'Select Ethnicity',

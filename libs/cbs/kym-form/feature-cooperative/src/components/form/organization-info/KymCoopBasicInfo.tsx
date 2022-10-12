@@ -1,8 +1,7 @@
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { KymCooperativeFormInput } from '@coop/cbs/data-access';
-import { FormInput } from '@coop/shared/form';
+import { FormDatePicker, FormInput } from '@coop/shared/form';
 import { FormSection } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
@@ -27,35 +26,12 @@ export const KymCoopBasicInfo = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <FormSection
-          gridLayout={true}
-          id="kymCoopAccBasicInformation"
-          header="kymCoopBASICINFORMATION"
-        >
-          <FormInput
-            type="text"
-            name={'nameOfOrganization'}
-            label={t['kymCoopNameofOrganization']}
-            __placeholder={t['kymCoopEnterNameofOrganization']}
-          />
-          <FormInput
-            type="number"
-            name="regdNumber"
-            label={t['kymCoopRegisrationNo']}
-            __placeholder={t['kymCoopEnterRegisteredNumber']}
-          />
+        <FormSection gridLayout id="kymCoopAccBasicInformation" header="kymCoopBASICINFORMATION">
+          <FormInput type="text" name="nameOfOrganization" label={t['kymCoopNameofOrganization']} />
+          <FormInput type="number" name="regdNumber" label={t['kymCoopRegisrationNo']} />
 
-          <FormInput
-            type="text"
-            name="regdOffice"
-            label={t['kymCoopRegistrationoffice']}
-            __placeholder={t['kymCoopEnterRegisteredAddress']}
-          />
-          <FormInput
-            type="date"
-            name="regdDate"
-            label={t['kymCoopRegistrationDate']}
-          />
+          <FormInput type="text" name="regdOffice" label={t['kymCoopRegistrationoffice']} />
+          <FormDatePicker name="regdDate" label={t['kymCoopRegistrationDate']} />
         </FormSection>
       </form>
     </FormProvider>

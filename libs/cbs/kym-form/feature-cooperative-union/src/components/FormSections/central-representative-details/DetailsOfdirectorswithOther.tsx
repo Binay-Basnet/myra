@@ -21,7 +21,13 @@ import {
   InputGroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormAddress, FormInput, FormRadioGroup, FormSwitch } from '@coop/shared/form';
+import {
+  FormAddress,
+  FormDatePicker,
+  FormInput,
+  FormRadioGroup,
+  FormSwitch,
+} from '@coop/shared/form';
 import { Box, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
 import { getKymSectionCoOperativeUnion, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
@@ -277,8 +283,7 @@ export const AddRepresentative = ({ setSection }: IAddRepresentativeProps) => {
                         )}
                       </Box>
                       <InputGroupContainer>
-                        <FormInput
-                          type="date"
+                        <FormDatePicker
                           name="dateOfMembership"
                           id="centralRepresentative.dateOfMembership"
                           label={t['kymCoopUnionDirDateofMembership']}

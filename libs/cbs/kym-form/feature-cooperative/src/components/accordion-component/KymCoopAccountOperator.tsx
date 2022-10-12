@@ -8,12 +8,14 @@ import debounce from 'lodash/debounce';
 
 import {
   KymCoopAccountOperatorDetailsFormInput,
+  RootState,
   useAllAdministrationQuery,
+  useAppSelector,
   useGetCoOperativeAccountOperatorEditDataQuery,
   useSetCoopAccOperatorDataMutation,
 } from '@coop/cbs/data-access';
 import { DynamicBoxGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
+import { FormDatePicker, FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -45,10 +47,12 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
   const router = useRouter();
 
   const id = String(router?.query?.['id']);
-  const { data: editValues } = useGetCoOperativeAccountOperatorEditDataQuery({
+  const { data: editValues, refetch } = useGetCoOperativeAccountOperatorEditDataQuery({
     id,
   });
+
   const { mutate } = useSetCoopAccOperatorDataMutation();
+
   useEffect(() => {
     if (editValues) {
       const editValueData = editValues?.members?.cooperative?.listAccountOperators?.data;
@@ -80,6 +84,13 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
       }
     }
   }, [editValues]);
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetch();
+  }, [preference?.date]);
 
   useEffect(() => {
     const subscription = watch(
@@ -334,9 +345,8 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
                 </FormSection>
 
                 <FormSection gridLayout>
-                  <FormInput
+                  <FormDatePicker
                     id="accountOperatorCoop"
-                    type="date"
                     name="dateOfMembership"
                     label={t['kymCoopDateOfMembership']}
                   />

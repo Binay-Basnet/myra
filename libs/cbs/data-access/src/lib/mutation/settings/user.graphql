@@ -13,6 +13,11 @@ mutation setPreference($id: ID!, $data: UserPreferenceInput!) {
     preference {
       update(id: $id, data: $data) {
         recordId
+        record {
+          language
+          languageCode
+          date
+        }
         error {
           ...MutationError
         }

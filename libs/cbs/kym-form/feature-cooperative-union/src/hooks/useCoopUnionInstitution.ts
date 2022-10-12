@@ -9,6 +9,7 @@ import {
   addError,
   CoopUnionInstitutionInformationInput,
   GetCooperativeUnionKymEditDataQuery,
+  RootState,
   setFormDirty,
   useAppDispatch,
   useAppSelector,
@@ -110,7 +111,7 @@ export const useCoopUnionInstitution = ({ methods }: IUseCoopUnionInstProps) => 
         });
       }
     }
-  }, [editLoading]);
+  }, [editLoading, editValues]);
 
   // Call The Mutation To Add Data on Each Form Change
   useEffect(() => {
@@ -124,6 +125,13 @@ export const useCoopUnionInstitution = ({ methods }: IUseCoopUnionInstProps) => 
 
     return () => subscription.unsubscribe();
   }, [watch, id]);
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetchEdit();
+  }, [preference?.date]);
 
   // Trigger Validations When Change In Redux Error Object is Detected
   useDeepCompareEffect(() => {

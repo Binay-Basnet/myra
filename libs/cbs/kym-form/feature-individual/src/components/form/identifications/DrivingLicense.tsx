@@ -7,22 +7,21 @@ import isEqual from 'lodash/isEqual';
 import {
   Id_Type,
   KymIndIdentification,
+  RootState,
+  useAppSelector,
   useGetIndividualKymIdentificationListQuery,
   useGetNewIdMutation,
   useSetKymIndividualIdentificationDataMutation,
 } from '@coop/cbs/data-access';
-import { FormInput } from '@coop/shared/form';
+import { FormDatePicker, FormInput } from '@coop/shared/form';
 import { Box, FormSection, Text } from '@coop/shared/ui';
 import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 interface IDrivingLicenseProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
-type drivingLicenseData =
+type DrivingLicenseDataType =
   | {
       id: string;
       idNo: string;
@@ -37,8 +36,7 @@ const getDrivingLicenseData = (
   identificationListData: KymIndIdentification[] | null | undefined
 ) => {
   const drivingLicenseData = identificationListData?.find(
-    (identification: KymIndIdentification | null) =>
-      identification?.idType === 'drivingLicense'
+    (identification: KymIndIdentification | null) => identification?.idType === 'drivingLicense'
   );
 
   return {
@@ -49,9 +47,7 @@ const getDrivingLicenseData = (
   };
 };
 
-export const DrivingLicense = ({
-  setKymCurrentSection,
-}: IDrivingLicenseProps) => {
+export const DrivingLicense = ({ setKymCurrentSection }: IDrivingLicenseProps) => {
   const [mutationId, setMutationId] = useState('');
 
   const { t } = useTranslation();
@@ -70,19 +66,18 @@ export const DrivingLicense = ({
     onSuccess: () => refetch(),
   });
 
-  const { data: identificationListData, refetch } =
-    useGetIndividualKymIdentificationListQuery(
-      {
-        id: String(id),
-      },
-      { enabled: !!id }
-    );
+  const { data: identificationListData, refetch } = useGetIndividualKymIdentificationListQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (identificationListData?.members?.individual?.listIdentification?.data) {
       const drivingLicenseData = getDrivingLicenseData(
         identificationListData?.members?.individual?.listIdentification
-          ?.data as drivingLicenseData
+          ?.data as DrivingLicenseDataType
       );
 
       if (drivingLicenseData?.id) {
@@ -97,19 +92,22 @@ export const DrivingLicense = ({
     }
   }, [identificationListData]);
 
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetch();
+  }, [preference?.date]);
+
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
         const drivingLicenseData = getDrivingLicenseData(
           identificationListData?.members?.individual?.listIdentification
-            ?.data as drivingLicenseData
+            ?.data as DrivingLicenseDataType
         );
 
-        if (
-          id &&
-          !isDeepEmpty(data) &&
-          !isEqual({ ...data, id: mutationId }, drivingLicenseData)
-        ) {
+        if (id && !isDeepEmpty(data) && !isEqual({ ...data, id: mutationId }, drivingLicenseData)) {
           if (!mutationId) {
             newIDMutate({ idType: Id_Type.Kymidentification }).then((res) => {
               setMutationId(res.newId);
@@ -136,13 +134,7 @@ export const DrivingLicense = ({
   return (
     <Box>
       <FormProvider {...methods}>
-        <Text
-          p="s20"
-          pb="0"
-          fontSize="r1"
-          fontWeight="medium"
-          color="neutralColorLight.Gray-70"
-        >
+        <Text p="s20" pb="0" fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
           {t['kymIndDrivingLicense']}
         </Text>
         <form
@@ -151,27 +143,12 @@ export const DrivingLicense = ({
             setKymCurrentSection(kymSection);
           }}
         >
-          <FormSection gridLayout={true}>
-            <FormInput
-              type="text"
-              name="idNo"
-              label={t['kymIndDrivingLicenseNo']}
-              __placeholder={t['kymIndDrivingLicenseNo']}
-            />
+          <FormSection gridLayout>
+            <FormInput type="text" name="idNo" label={t['kymIndDrivingLicenseNo']} />
 
-            <FormInput
-              type="text"
-              name="place"
-              label={t['kymIndDrivingLicenseIssuePlace']}
-              __placeholder={t['kymIndDrivingLicenseIssuePlace']}
-            />
+            <FormInput type="text" name="place" label={t['kymIndDrivingLicenseIssuePlace']} />
 
-            <FormInput
-              type="date"
-              name="date"
-              label={t['kymIndDrivingLicenseIssueDate']}
-              __placeholder={t['kymIndDrivingLicenseIssueDate']}
-            />
+            <FormDatePicker name="date" label={t['kymIndDrivingLicenseIssueDate']} />
           </FormSection>
         </form>
       </FormProvider>

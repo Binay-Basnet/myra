@@ -7,6 +7,8 @@ import { CloseIcon } from '@chakra-ui/icons';
 
 import {
   CoopUnionPersonnelInput,
+  RootState,
+  useAppSelector,
   useDeletePersonnelDetailsMutation,
   useGetAccountOperatorDetailsListQuery,
   useGetNewIdMutation,
@@ -17,7 +19,7 @@ import {
   InputGroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormAddress, FormInput, FormSwitch } from '@coop/shared/form';
+import { FormAddress, FormDatePicker, FormInput, FormSwitch } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -177,40 +179,34 @@ const AddDirector = ({
                     )}
                   </Box>
                   <InputGroupContainer>
-                    <FormInput
-                      type="date"
+                    <FormDatePicker
                       name="dateOfMembership"
                       id="accountOperator.dateOfMembership"
                       label={t['kymCoopUnionOpDateOfMembership']}
-                      __placeholder="DD-MM-YYYY"
                     />
                     <FormInput
                       type="text"
                       name="highestQualification"
                       id="accountOperator.highestQualification"
                       label={t['kymCoopUnionOpHighestQualification']}
-                      __placeholder={t['kymCoopUnionOpEnterHighestQualification']}
                     />
                     <FormInput
                       type="number"
                       name="mobileNumber"
                       id="accountOperator.mobileNumber"
                       label={t['kymCoopUnionOpMobileNo']}
-                      __placeholder={t['kymCoopUnionOpEnterMobileNo']}
                     />
                     <FormInput
                       type="text"
                       name="email"
                       id="accountOperator.email"
                       label={t['kymCoopUnionOpEmail']}
-                      __placeholder={t['kymCoopUnionOpEnterEmail']}
                     />
                     <FormInput
                       type="string"
                       name="citizenshipNo"
                       id="accountOperator.citizenshipNo"
                       label={t['kymCoopUnionOpCitizenshipPassportDrivingLicenseNo']}
-                      __placeholder={t['kymCoopUnionOpEnterCitizenshipNo']}
                     />
 
                     <FormInput
@@ -218,7 +214,6 @@ const AddDirector = ({
                       name="panNo"
                       id="centralRepresentative.panNo"
                       label={t['kymCoopUnionPANNo']}
-                      __placeholder={t['kymCoopUnionPANNo__placeholder']}
                     />
                   </InputGroupContainer>
                   {/* <Text fontSize="r1" fontWeight="SemiBold">
@@ -229,19 +224,16 @@ const AddDirector = ({
                 type="text"
                 name={`subjectOfTraining`}
                 label={t['kymCoopUnionOpSubjectofTraining']}
-                __placeholder={t['kymCoopUnionOpEnterSubjectofTraining']}
               />
               <FormInput
                 type="date"
                 name={`dateOfTraining`}
                 label={t['kymCoopUnionOpDateofTraining']}
-                __placeholder={t['kymCoopUnionOpEnterDateofTraining']}
               />
               <FormInput
                 type="number"
                 name={`trainingOrganization`}
                 label={t['kymCoopUnionOpTrainingOrganization']}
-                __placeholder={t['kymCoopUnionOpEnterTrainingOrganization']}
               />
             </InputGroupContainer> */}
 
@@ -344,6 +336,13 @@ export const AccountOperatorInfo = ({ setSection }: IAccountOperatorInfoProps) =
       );
     }
   }, [accountOperatorEditValues]);
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetch();
+  }, [preference?.date]);
 
   useEffect(() => {
     refetch();

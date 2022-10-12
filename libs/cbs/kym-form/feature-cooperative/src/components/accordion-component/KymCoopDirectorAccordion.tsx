@@ -8,12 +8,14 @@ import debounce from 'lodash/debounce';
 
 import {
   KymCoopDirectorDetailsFormInput,
+  RootState,
   useAllAdministrationQuery,
+  useAppSelector,
   useGetCoOperativeDirectorEditDataQuery,
   useSetCooPdirectorDataMutation,
 } from '@coop/cbs/data-access';
 import { DynamicBoxGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
+import { FormDatePicker, FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -46,7 +48,7 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
 
   const { mutate } = useSetCooPdirectorDataMutation();
 
-  const { data: editValues } = useGetCoOperativeDirectorEditDataQuery({
+  const { data: editValues, refetch } = useGetCoOperativeDirectorEditDataQuery({
     id,
   });
 
@@ -80,6 +82,14 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
       }
     }
   }, [editValues]);
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetch();
+  }, [preference?.date]);
+
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
@@ -332,7 +342,7 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
                 </FormSection>
 
                 <FormSection gridLayout>
-                  <FormInput
+                  <FormDatePicker
                     id="boardDirectorCoop"
                     type="date"
                     name="dateOfMembership"

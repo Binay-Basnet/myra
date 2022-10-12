@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import {
   FormFieldSearchTerm,
+  RootState,
+  useAppSelector,
   useGetIndividualKymEditDataQuery,
   useGetIndividualKymOptionsQuery,
   useGetKymFormStatusQuery,
@@ -46,12 +48,19 @@ export const KYMIndividualPage = () => {
   const kymFormStatus =
     kymFormStatusQuery?.data?.members?.individual?.formState?.data?.sectionStatus;
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery(
+  const { data: editValues, refetch: refetchEdit } = useGetIndividualKymEditDataQuery(
     {
       id: String(id),
     },
     { enabled: !!id }
   );
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetchEdit();
+  }, [preference?.date]);
 
   const { data: maritalStatusData, refetch } = useGetIndividualKymOptionsQuery({
     searchTerm: FormFieldSearchTerm.MaritalStatus,

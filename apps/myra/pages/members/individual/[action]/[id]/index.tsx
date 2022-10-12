@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 import { KYMIndividualPage } from '@coop/cbs/kym-form/feature-individual';
 import { MainLayout } from '@coop/shared/ui';

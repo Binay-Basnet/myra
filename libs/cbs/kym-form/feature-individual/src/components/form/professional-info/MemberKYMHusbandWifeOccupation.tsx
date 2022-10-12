@@ -7,6 +7,8 @@ import debounce from 'lodash/debounce';
 
 import {
   FormFieldSearchTerm,
+  RootState,
+  useAppSelector,
   useDeleteMemberOccupationMutation,
   useGetIndividualKymFamilyOccupationListQuery,
   useGetIndividualKymOptionsQuery,
@@ -15,7 +17,7 @@ import {
 } from '@coop/cbs/data-access';
 import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
 import { DynamicBoxGroupContainer, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
+import { FormCheckbox, FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 import { Box, Button, FormSection, GridItem, Icon, IconButton, TextFields } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
@@ -44,7 +46,6 @@ export const SpouseOccupationInput = ({ option, optionIndex }: DynamicInputProps
       formType={option?.fieldType}
       name={`options.${optionIndex}.value`}
       label={option?.name?.local}
-      __placeholder={option?.name?.local}
     />
   );
 };
@@ -114,6 +115,13 @@ const HusbandWifeOccupation = ({
     }
   }, [familyOccupationListData]);
 
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetch();
+  }, [preference?.date]);
+
   const { mutate } = useSetMemberOccupationMutation({
     onSuccess: () => refetch(),
   });
@@ -168,7 +176,6 @@ const HusbandWifeOccupation = ({
                   name="occupationId"
                   id="spouseOccupationId"
                   label={t['kymIndOccupation']}
-                  __placeholder={t['kymIndSelectOccupation']}
                   options={getFieldOption(occupationData)}
                 />
               </GridItem>
@@ -178,7 +185,6 @@ const HusbandWifeOccupation = ({
                   name="orgName"
                   id="spouseOrgName"
                   label={t['kymIndOrgFirmName']}
-                  __placeholder={t['kymIndOrgFirmName']}
                   bg="white"
                 />
               </GridItem>
@@ -187,7 +193,6 @@ const HusbandWifeOccupation = ({
                 name="panVatNo"
                 id="spousePanVatNo"
                 label={t['kymIndPanVATNo']}
-                __placeholder={t['kymIndPanVATNumber']}
                 bg="white"
               />
               <FormInput
@@ -195,7 +200,6 @@ const HusbandWifeOccupation = ({
                 name="address"
                 id="spouseAddress"
                 label={t['kymIndAddress']}
-                __placeholder={t['kymIndEnterAddress']}
                 bg="white"
               />
               <FormInput
@@ -205,7 +209,6 @@ const HusbandWifeOccupation = ({
                 name="estimatedAnnualIncome"
                 label={t['kymIndEstimatedAnnualIncome']}
                 bg="white"
-                __placeholder="0.00"
               />
               {/* {occupationFieldNames.map((option, optionIndex) => {
                 return (
@@ -229,13 +232,11 @@ const HusbandWifeOccupation = ({
 
           {isOwner && (
             <InputGroupContainer>
-              <FormInput
+              <FormDatePicker
                 bg="white"
-                type="date"
                 id="spouseEstablishedDate"
                 name="establishedDate"
                 label={t['kymIndEstablishedDate']}
-                __placeholder={t['kymIndEstablishedDate']}
               />
               <FormInput
                 bg="white"
@@ -243,7 +244,6 @@ const HusbandWifeOccupation = ({
                 id="spouseRegistrationNo"
                 name="registrationNo"
                 label={t['kymIndRegistrationNo']}
-                __placeholder={t['kymIndRegistrationNo']}
               />
               <FormInput
                 bg="white"
@@ -251,7 +251,6 @@ const HusbandWifeOccupation = ({
                 id="spouseContact"
                 name="contact"
                 label={t['kymIndContactNo']}
-                __placeholder={t['kymIndContactNo']}
               />
             </InputGroupContainer>
           )}

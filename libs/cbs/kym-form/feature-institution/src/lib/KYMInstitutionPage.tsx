@@ -5,15 +5,7 @@ import { useRouter } from 'next/router';
 import { useGetKymFormStatusInstitutionQuery } from '@coop/cbs/data-access';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { AccorrdianAddInstitution } from '@coop/myra/components';
-import {
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  FormHeader,
-  Icon,
-  Text,
-} from '@coop/shared/ui';
+import { Box, Button, Container, FormFooter, FormHeader, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
@@ -32,7 +24,7 @@ import {
   TransactionProfileInstitution,
 } from '../components-form';
 
-export function KYMInstitutionPage() {
+export const KYMInstitutionPage = () => {
   const { t } = useTranslation();
   const [kymCurrentSection, setKymCurrentSection] = React.useState<{
     section: string;
@@ -42,17 +34,13 @@ export function KYMInstitutionPage() {
   const id = String(router?.query?.['id']);
   const kymFormStatusQuery = useGetKymFormStatusInstitutionQuery({ id });
   const kymFormStatus =
-    kymFormStatusQuery?.data?.members?.institution?.formState?.data
-      ?.sectionStatus;
+    kymFormStatusQuery?.data?.members?.institution?.formState?.data?.sectionStatus;
 
   return (
     <>
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.xl" height="fit-content">
-          <FormHeader
-            title={t['membersFormAddNewMembers']}
-            closeLink="/members/list"
-          />
+          <FormHeader title={t['membersFormAddNewMembers']} closeLink="/members/list" />
         </Container>
       </Box>
 
@@ -85,21 +73,15 @@ export function KYMInstitutionPage() {
               <OperatorOfficeAddress setSection={setKymCurrentSection} />
               <BranchOfficeAddress setSection={setKymCurrentSection} />
               <ContactDetailsInstitution setSection={setKymCurrentSection} />
-              <BankAccountDetailsInstitution
-                setSection={setKymCurrentSection}
-              />
-              <InstitutionKYMSisterConcernDetails
-                setSection={setKymCurrentSection}
-              />
+              <BankAccountDetailsInstitution setSection={setKymCurrentSection} />
+              <InstitutionKYMSisterConcernDetails setSection={setKymCurrentSection} />
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymIns2TransactionProfile']}
               </Text>
-              <TransactionProfileInstitution
-                setSection={setKymCurrentSection}
-              />
+              <TransactionProfileInstitution setSection={setKymCurrentSection} />
             </SectionContainer>
 
             <SectionContainer>
@@ -121,12 +103,8 @@ export function KYMInstitutionPage() {
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymIns5Declaration']}
               </Text>
-              <DocumentDeclarationInstitution
-                setSection={setKymCurrentSection}
-              />
-              <AccountHolderDeclarationInstitution
-                setSection={setKymCurrentSection}
-              />
+              <DocumentDeclarationInstitution setSection={setKymCurrentSection} />
+              <AccountHolderDeclarationInstitution setSection={setKymCurrentSection} />
             </SectionContainer>
           </Box>
         </Box>
@@ -166,6 +144,6 @@ export function KYMInstitutionPage() {
       </Box>
     </>
   );
-}
+};
 
 export default KYMInstitutionPage;

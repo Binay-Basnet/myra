@@ -18,6 +18,7 @@ import { GroupContainer, InputGroupContainer } from '@coop/cbs/settings/ui-conta
 import {
   FormBranchSelect,
   FormCheckboxGroup,
+  FormDatePicker,
   FormEmailInput,
   FormFileInput,
   FormInput,
@@ -214,6 +215,23 @@ export const AddUser = () => {
     }
   );
 
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    if (router.asPath.includes('edit')) {
+      refetchUserData();
+    }
+
+    if (router.asPath.includes('add')) {
+      reset({
+        dob: '',
+        citizenship: { date: '' },
+        drivingLicense: { date: '' },
+        passport: { date: '' },
+      });
+    }
+  }, [preference?.date, router?.asPath]);
+
   useEffect(() => {
     const userData = userQueryData?.settings?.myraUser?.formState?.data;
 
@@ -261,29 +279,19 @@ export const AddUser = () => {
           <FormProvider {...methods}>
             <form>
               <FormSection header="settingsUserAddUserBasicInformation">
-                <FormInput type="text" name="name" label="Name" __placeholder="Enter Name" />
+                <FormInput type="text" name="name" label="Name" />
 
-                <FormSelect
-                  name="gender"
-                  label="Gender"
-                  __placeholder="Select Gender"
-                  options={genderOptions}
-                />
+                <FormSelect name="gender" label="Gender" options={genderOptions} />
 
-                <FormInput type="date" name="dob" label="Date of Birth (BS)" />
+                {/* <FormInput type="date" name="dob" label="Date of Birth (BS)" /> */}
 
-                {/* <FormDatePicker name="dob" label="Date of Birth" /> */}
+                <FormDatePicker name="dob" label="Date of Birth" />
 
-                <FormPhoneNumber name="contactNo" label="Mobile No" __placeholder="Mobile No" />
+                <FormPhoneNumber name="contactNo" label="Mobile No" />
 
-                <FormEmailInput name="email" label="Email" __placeholder="Email" />
+                <FormEmailInput name="email" label="Email" />
 
-                <FormSelect
-                  name="role"
-                  label="Role"
-                  __placeholder="Select Role"
-                  options={roleOptions}
-                />
+                <FormSelect name="role" label="Role" options={roleOptions} />
 
                 <FormBranchSelect
                   name="branch"
@@ -319,21 +327,17 @@ export const AddUser = () => {
                           type="text"
                           name="citizenship.idNo"
                           label={t['kynIndCitizenshipNo']}
-                          __placeholder={t['kynIndCitizenshipNo']}
                         />
 
                         <FormInput
                           type="text"
                           name="citizenship.place"
                           label={t['kynIndCitizenshipIssuePlace']}
-                          __placeholder={t['kynIndCitizenshipIssuePlace']}
                         />
 
-                        <FormInput
-                          type="date"
+                        <FormDatePicker
                           name="citizenship.date"
                           label={t['kynIndCitizenshipIssueDate']}
-                          __placeholder={t['kynIndCitizenshipIssueDate']}
                         />
                       </InputGroupContainer>
                     </Box>
@@ -350,21 +354,17 @@ export const AddUser = () => {
                           type="text"
                           name="drivingLicense.idNo"
                           label={t['kymIndDrivingLicenseNo']}
-                          __placeholder={t['kymIndDrivingLicenseNo']}
                         />
 
                         <FormInput
                           type="text"
                           name="drivingLicense.place"
                           label={t['kymIndDrivingLicenseIssuePlace']}
-                          __placeholder={t['kymIndDrivingLicenseIssuePlace']}
                         />
 
-                        <FormInput
-                          type="date"
+                        <FormDatePicker
                           name="drivingLicense.date"
                           label={t['kymIndDrivingLicenseIssueDate']}
-                          __placeholder={t['kymIndDrivingLicenseIssueDate']}
                         />
                       </InputGroupContainer>
                     </Box>
@@ -377,26 +377,15 @@ export const AddUser = () => {
                       </Text>
 
                       <InputGroupContainer>
-                        <FormInput
-                          type="text"
-                          name="passport.idNo"
-                          label={t['kymIndPassportNo']}
-                          __placeholder={t['kymIndPassportNo']}
-                        />
+                        <FormInput type="text" name="passport.idNo" label={t['kymIndPassportNo']} />
 
                         <FormInput
                           type="text"
                           name="passport.place"
                           label={t['kymIndPassportIssuePlace']}
-                          __placeholder={t['kymIndPassportIssuePlace']}
                         />
 
-                        <FormInput
-                          type="date"
-                          name="passport.date"
-                          label={t['kymIndPassportIssueDate']}
-                          __placeholder={t['kymIndPassportIssueDate']}
-                        />
+                        <FormDatePicker name="passport.date" label={t['kymIndPassportIssueDate']} />
                       </InputGroupContainer>
                     </Box>
                   )}
@@ -412,14 +401,12 @@ export const AddUser = () => {
                           type="text"
                           name="voterCard.idNo"
                           label={t['kymIndVoterCardNo']}
-                          __placeholder={t['kymIndVoterCardNo']}
                         />
 
                         <FormInput
                           type="text"
                           name="voterCard.place"
                           label={t['kymIndVoterCardPollingStation']}
-                          __placeholder={t['kymIndVoterCardPollingStation']}
                         />
                       </InputGroupContainer>
                     </Box>
@@ -436,7 +423,6 @@ export const AddUser = () => {
                           type="text"
                           name="nationalId.idNo"
                           label={t['kymIndNationalIDNo']}
-                          __placeholder={t['kymIndNationalIDNo']}
                         />
                       </InputGroupContainer>
                     </Box>
@@ -448,13 +434,11 @@ export const AddUser = () => {
                 <FormSelect
                   name="permanentAddress.provinceId"
                   label={t['kymIndProvince']}
-                  __placeholder={t['kymIndSelectProvince']}
                   options={province}
                 />
                 <FormSelect
                   name="permanentAddress.districtId"
                   label={t['kymIndDistrict']}
-                  __placeholder={t['kymIndSelectDistrict']}
                   options={districtList.map((d) => ({
                     label: d.name,
                     value: d.id,
@@ -463,7 +447,6 @@ export const AddUser = () => {
                 <FormSelect
                   name="permanentAddress.localGovernmentId"
                   label={t['kymIndLocalGovernment']}
-                  __placeholder={t['kymIndSelectLocalGovernment']}
                   options={localityList.map((d) => ({
                     label: d.name,
                     value: d.id,
@@ -472,7 +455,6 @@ export const AddUser = () => {
                 <FormSelect
                   name="permanentAddress.wardNo"
                   label={t['kymIndWardNo']}
-                  __placeholder={t['kymIndEnterWardNo']}
                   options={wardList?.map((d) => ({
                     label: d,
                     value: d,
@@ -482,13 +464,11 @@ export const AddUser = () => {
                   type="text"
                   name="permanentAddress.locality"
                   label={t['kymIndLocality']}
-                  __placeholder={t['kymIndEnterLocality']}
                 />
                 <FormInput
                   type="number"
                   name="permanentAddress.houseNo"
                   label={t['kymIndHouseNo']}
-                  __placeholder={t['kymIndEnterHouseNo']}
                 />
 
                 <GridItem colSpan={2}>
@@ -519,13 +499,11 @@ export const AddUser = () => {
                       <FormSelect
                         name="temporaryAddress.provinceId"
                         label={t['kymIndProvince']}
-                        __placeholder={t['kymIndSelectProvince']}
                         options={province}
                       />
                       <FormSelect
                         name="temporaryAddress.districtId"
                         label={t['kymIndDistrict']}
-                        __placeholder={t['kymIndSelectDistrict']}
                         options={districtTempList.map((d) => ({
                           label: d.name,
                           value: d.id,
@@ -534,7 +512,6 @@ export const AddUser = () => {
                       <FormSelect
                         name="temporaryAddress.localGovernmentId"
                         label={t['kymIndLocalGovernment']}
-                        __placeholder={t['kymIndSelectLocalGovernment']}
                         options={localityTempList.map((d) => ({
                           label: d.name,
                           value: d.id,
@@ -543,7 +520,6 @@ export const AddUser = () => {
                       <FormSelect
                         name="temporaryAddress.wardNo"
                         label={t['kymIndWardNo']}
-                        __placeholder={t['kymIndEnterWardNo']}
                         options={wardTempList.map((d) => ({
                           label: d,
                           value: d,
@@ -553,13 +529,11 @@ export const AddUser = () => {
                         type="text"
                         name="temporaryAddress.locality"
                         label={t['kymIndLocality']}
-                        __placeholder={t['kymIndEnterLocality']}
                       />
                       <FormInput
                         type="number"
                         name="temporaryAddress.houseNo"
                         label={t['kymIndHouseNo']}
-                        __placeholder={t['kymIndEnterHouseNo']}
                       />
 
                       <GridItem colSpan={2}>
@@ -574,18 +548,8 @@ export const AddUser = () => {
                 header="kymIndINCASERESIDINGINRENTEDHOUSE"
                 id="kymAccIndIncaseofresidinginRentedHouse"
               >
-                <FormInput
-                  type="text"
-                  name="landlordName"
-                  label={t['kymIndLandlordName']}
-                  __placeholder={t['kymIndLandlordName']}
-                />
-                <FormInput
-                  type="number"
-                  name="landlordContact"
-                  label={t['kymIndContactNo']}
-                  __placeholder={t['kymIndContactNo']}
-                />
+                <FormInput type="text" name="landlordName" label={t['kymIndLandlordName']} />
+                <FormInput type="number" name="landlordContact" label={t['kymIndContactNo']} />
               </FormSection>
 
               <GroupContainer>

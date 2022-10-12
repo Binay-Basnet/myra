@@ -3,6 +3,8 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
 import {
+  RootState,
+  useAppSelector,
   useDeleteCooPdirectorDataMutation,
   useGetCoOperativeDirectorEditDataQuery,
   useGetNewIdMutation,
@@ -38,12 +40,20 @@ export const KymCoopBoardDirectorDetail = (props: IProps) => {
 
       setCoopDirectorIds(
         editValueData?.reduce(
-          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id as string] : prevVal),
           [] as string[]
         ) ?? []
       );
     }
   }, [editValues]);
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetch();
+  }, [preference?.date]);
+
   useEffect(() => {
     if (id) {
       refetch();

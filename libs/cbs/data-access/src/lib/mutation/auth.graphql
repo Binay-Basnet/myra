@@ -7,13 +7,20 @@ mutation login($data: LoginInput!) {
           access
           refresh
         }
-        user {
-          id
-          objState
-          username
-          firstName
-          middleName
-          lastName
+        data {
+          user {
+            id
+            objState
+            username
+            firstName
+            middleName
+            lastName
+          }
+          preference {
+            language
+            languageCode
+            date
+          }
         }
       }
     }

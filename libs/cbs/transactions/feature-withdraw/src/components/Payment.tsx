@@ -1,6 +1,13 @@
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useGetBankListQuery, WithdrawBy, WithdrawPaymentType } from '@coop/cbs/data-access';
+import {
+  RootState,
+  useAppSelector,
+  useGetBankListQuery,
+  WithdrawBy,
+  WithdrawPaymentType,
+} from '@coop/cbs/data-access';
 import {
   BoxContainer,
   ContainerWithDivider,
@@ -8,6 +15,7 @@ import {
 } from '@coop/cbs/transactions/ui-containers';
 import {
   FormAgentSelect,
+  FormDatePicker,
   FormEditableTable,
   FormFileInput,
   FormInput,
@@ -78,7 +86,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
     },
   ];
 
-  const { watch } = useFormContext();
+  const { watch, reset } = useFormContext();
 
   const { data: bankList } = useGetBankListQuery();
 
@@ -101,6 +109,13 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
   const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
 
   const returnAmount = Number(totalCashPaid) - Number(totalWithdraw);
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    reset({ bankCheque: { depositedAt: '' } });
+  }, [preference?.date]);
 
   return (
     <ContainerWithDivider
@@ -142,8 +157,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
               __placeholder="0.00"
             />
 
-            <FormInput
-              type="date"
+            <FormDatePicker
               name="bankCheque.depositedAt"
               label={t['withdrawPaymentDepositedDate']}
             />

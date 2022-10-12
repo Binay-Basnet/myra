@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-import { login, useAppDispatch, useLoginMutation } from '@coop/cbs/data-access';
+import { login, setPreference, useAppDispatch, useLoginMutation } from '@coop/cbs/data-access';
 import {
   Box,
   Button,
@@ -30,8 +30,9 @@ export const Login = () => {
       }
       const accessToken = res?.auth?.login?.record?.token?.access;
       const refreshToken = res?.auth?.login?.record?.token?.refresh;
-      const user = res?.auth?.login?.record?.user;
+      const user = res?.auth?.login?.record?.data?.user;
       dispatch(login({ user, token: accessToken }));
+      dispatch(setPreference({ preference: res?.auth?.login?.record?.data?.preference }));
       localStorage.setItem('refreshToken', refreshToken);
       replace('/');
     });

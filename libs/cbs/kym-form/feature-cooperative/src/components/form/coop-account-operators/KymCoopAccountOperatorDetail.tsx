@@ -3,6 +3,8 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
 import {
+  RootState,
+  useAppSelector,
   useDeleteCoopAccOperatorDataMutation,
   useGetCoOperativeAccountOperatorEditDataQuery,
   useGetNewIdMutation,
@@ -38,12 +40,20 @@ export const KymCoopAccountOperatorDetail = (props: IProps) => {
 
       setAccOperatorIds(
         editValueData?.reduce(
-          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id as string] : prevVal),
           [] as string[]
         ) ?? []
       );
     }
   }, [editValues]);
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetch();
+  }, [preference?.date]);
+
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {
       setAccOperatorIds([...accOperatorIds, res.newId]);
@@ -80,12 +90,12 @@ export const KymCoopAccountOperatorDetail = (props: IProps) => {
       id="kymCoopAccAccountOperatorDetail"
       header="kymCoopDetailsofAccountOperators"
     >
-      {accOperatorIds.map((key) => (
-        <GridItem key={key} colSpan={3}>
+      {accOperatorIds.map((accountId) => (
+        <GridItem key={accountId} colSpan={3}>
           <AddOperator
             setKymCurrentSection={setSection}
             removeDirector={removeAccountOperator}
-            accountId={key}
+            accountId={accountId}
           />
         </GridItem>
       ))}

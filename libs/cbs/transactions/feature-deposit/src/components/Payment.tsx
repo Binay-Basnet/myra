@@ -1,6 +1,13 @@
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { DepositedBy, DepositPaymentType, useGetBankListQuery } from '@coop/cbs/data-access';
+import {
+  DepositedBy,
+  DepositPaymentType,
+  RootState,
+  useAppSelector,
+  useGetBankListQuery,
+} from '@coop/cbs/data-access';
 import {
   BoxContainer,
   ContainerWithDivider,
@@ -8,6 +15,7 @@ import {
 } from '@coop/cbs/transactions/ui-containers';
 import {
   FormAgentSelect,
+  FormDatePicker,
   FormEditableTable,
   FormFileInput,
   FormInput,
@@ -100,7 +108,7 @@ export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
     },
   ];
 
-  const { watch } = useFormContext();
+  const { watch, reset } = useFormContext();
 
   const selectedPaymentMode = watch('payment_type');
 
@@ -125,6 +133,13 @@ export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
   const returnAmount = rebate
     ? totalCashPaid - totalDeposit + rebate
     : totalCashPaid - totalDeposit;
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    reset({ bankVoucher: { depositedAt: '' }, cheque: { depositedAt: '' } });
+  }, [preference?.date]);
 
   return (
     <ContainerWithDivider
@@ -165,8 +180,7 @@ export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
               textAlign="right"
             />
 
-            <FormInput
-              type="date"
+            <FormDatePicker
               name="bankVoucher.depositedAt"
               label={t['depositPaymentDepositedDate']}
             />
@@ -203,11 +217,7 @@ export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
               textAlign="right"
             />
 
-            <FormInput
-              type="date"
-              name="cheque.depositedAt"
-              label={t['depositPaymentDepositedDate']}
-            />
+            <FormDatePicker name="cheque.depositedAt" label={t['depositPaymentDepositedDate']} />
 
             <FormInput
               type="text"

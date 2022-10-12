@@ -1,8 +1,8 @@
 import { Control, Controller, Path, useFormContext } from 'react-hook-form';
 import { UseControllerProps } from 'react-hook-form/dist/types/controller';
 import { DatePicker } from 'react-patro';
-import format from 'date-fns/format';
 
+import { RootState, useAppSelector } from '@coop/cbs/data-access';
 import { Box, InputProps, TextFields } from '@coop/shared/ui';
 
 // import './FormDatePicker.css';
@@ -15,7 +15,7 @@ interface IFormDatePickerProps<T> extends InputProps {
 }
 
 export const FormDatePicker = <T,>({ name, label, ...rest }: IFormDatePickerProps<T>) => {
-  // const user = useAppSelector((state: RootState) => state?.auth?.user);
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
 
   const methods = useFormContext();
 
@@ -40,13 +40,13 @@ export const FormDatePicker = <T,>({ name, label, ...rest }: IFormDatePickerProp
 
           <DatePicker
             id={name}
-            calendarType="AD"
-            key={value}
+            calendarType={preference?.date ?? 'AD'}
+            key={`${preference?.date}-${value}`}
             dateFormat="yyyy-mm-dd"
             errorText={errors[name]?.message as string}
             onChange={(...args: (number | Date)[]) => {
               if (args[3]) {
-                onChange(format(args[3], 'yyyy-MM-dd'));
+                onChange(args[0]);
               }
               if (errors[name]?.type === 'required') {
                 clearErrors(name);
