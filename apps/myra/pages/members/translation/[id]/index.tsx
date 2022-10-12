@@ -35,7 +35,7 @@ const Translation = () => {
   const translatedData = useGetMemberTranslationQuery({ id });
   const translationDataArray = translatedData?.data?.members?.translate.data;
 
-  const { mutate } = useSetOfficialUseMutation();
+  const { mutateAsync } = useSetOfficialUseMutation();
   const methods = useForm({});
   const { watch, reset } = methods;
 
@@ -64,24 +64,26 @@ const Translation = () => {
     PEP: 'PEP Risk',
   };
 
+  const { data: editValues, refetch } = useGetOfficialUseQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
+
   React.useEffect(() => {
     const subscription = watch(
       debounce((data) => {
         if (id) {
-          mutate({ ...data, id, riskCategory: riskCategoryOptions[data?.riskCategory] });
+          mutateAsync({ ...data, id, riskCategory: riskCategoryOptions[data?.riskCategory] }).then(
+            () => refetch()
+          );
         }
       }, 800)
     );
 
     return () => subscription.unsubscribe();
   }, [watch, router.isReady]);
-
-  const { data: editValues } = useGetOfficialUseQuery(
-    {
-      id: String(id),
-    },
-    { enabled: !!id }
-  );
 
   React.useEffect(() => {
     if (editValues) {
