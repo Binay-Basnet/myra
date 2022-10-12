@@ -7,7 +7,7 @@ import { Accordion, AccordionButton, AccordionItem, AccordionPanel, Flex } from 
 import { debounce } from 'lodash';
 
 import {
-  KymIndMemberInput,
+  OfficialUseRiskCategory,
   useGetMemberTranslationQuery,
   useGetOfficialUseQuery,
   useSetOfficialUseMutation,
@@ -36,7 +36,7 @@ const Translation = () => {
   const translationDataArray = translatedData?.data?.members?.translate.data;
 
   const { mutate } = useSetOfficialUseMutation();
-  const methods = useForm<KymIndMemberInput>({});
+  const methods = useForm({});
   const { watch, reset } = methods;
 
   const booleanList = [
@@ -51,10 +51,10 @@ const Translation = () => {
   ];
 
   const riskCategoryOptions = {
-    'Low Risk': 'LOW',
-    'Medium Risk': 'MEDIUM',
-    'High Risk': 'HIGH',
-    'PEP Risk': 'PEP',
+    'Low Risk': OfficialUseRiskCategory?.Low,
+    'Medium Risk': OfficialUseRiskCategory?.Medium,
+    'High Risk': OfficialUseRiskCategory?.High,
+    'PEP Risk': OfficialUseRiskCategory?.Pep,
   };
 
   const riskCategoryReverseOptions = {
