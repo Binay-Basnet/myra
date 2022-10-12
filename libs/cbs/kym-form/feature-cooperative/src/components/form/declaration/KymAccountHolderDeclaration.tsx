@@ -32,7 +32,6 @@ export const KymAccountHolderDeclaration = (props: IProps) => {
           }}
         >
           <FormSection
-            gridLayout={true}
             id="kymCoopAccAccountHolderDeclaration"
             header="kymCoopAccountHolderDeclaration"
           >
@@ -62,11 +61,7 @@ const Documents = ({ setSection }: IDocProps) => {
   const id = String(router?.query?.['id']);
 
   return (
-    <FormSection
-      header="kymCoopDOCUMENTDECLARATION"
-      gridLayout={true}
-      templateColumns={2}
-    >
+    <FormSection header="kymCoopDOCUMENTDECLARATION" templateColumns={2}>
       <GridItem>
         <Box w="124px">
           <KYMDocumentField

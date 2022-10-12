@@ -5,7 +5,9 @@ import omit from 'lodash/omit';
 
 import {
   Collateral,
+  FrequencyTenure,
   LoanProductInput,
+  LoanProductInstallment,
   LoanRepaymentScheme,
   useGetLoanGeneralSettingsQuery,
   useGetLoanProductEditDataQuery,
@@ -98,7 +100,25 @@ export const SettingsLoanProductForm = () => {
     others: CollateralValues;
   };
 
-  const methods = useForm<LoanProductForm>({});
+  const methods = useForm<LoanProductForm>({
+    defaultValues: {
+      isTenureApplicable: false,
+      isPenaltyApplicable: false,
+      allowPartialInstallment: false,
+      isMonthlyInstallmentCompulsory: false,
+      minGraceDurationUnit: FrequencyTenure.Day,
+      maxGraceDurationUnit: FrequencyTenure.Day,
+      isStaffProduct: false,
+      supportMultipleAccounts: false,
+      loanScheduleChangeOverride: false,
+      updateInterest: false,
+      waiveInterest: false,
+      isInsuranceApplicable: false,
+      isCollateralRequired: false,
+      allowGurantee: false,
+      installmentFrequency: LoanProductInstallment.Daily,
+    },
+  });
 
   const { getValues, reset, watch } = methods;
 

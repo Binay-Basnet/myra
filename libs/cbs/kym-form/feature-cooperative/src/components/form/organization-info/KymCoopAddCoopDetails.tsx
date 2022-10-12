@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import {
@@ -39,22 +38,15 @@ export const KymCoopAddCoopDetails = (props: IProps) => {
         }}
       >
         <FormSection
-          gridLayout={true}
           id="kymCoopAccAdditionalCoorperativeDetails"
           header="kymCoopAdditionalCoorperativeDetails"
         >
           <FormSelect
             name="cooperativeTypeId"
             label={t['kymCoopType']}
-            __placeholder={t['kymCoopSelectType']}
             options={getFieldOption(cooperativeTypeFields)}
           />
-          <FormInput
-            type="text"
-            name="mainServiceProduct"
-            label={t['kymCoopMainServiceProduct']}
-            __placeholder={t['kymCoopEnterMainServiceProduct']}
-          />
+          <FormInput type="text" name="mainServiceProduct" label={t['kymCoopMainServiceProduct']} />
         </FormSection>
       </form>
     </FormProvider>

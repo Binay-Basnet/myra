@@ -85,11 +85,7 @@ export const KymCoopBoardDirectorDetail = (props: IProps) => {
   };
 
   return (
-    <FormSection
-      gridLayout
-      id="kymCoopAccBoardOfDirectorDetails"
-      header="kymCoopBoardofdirectordetails"
-    >
+    <FormSection id="kymCoopAccBoardOfDirectorDetails" header="kymCoopBoardofdirectordetails">
       {coopDirectorIds.map((item) => (
         <GridItem key={item} colSpan={3}>
           <AddDirector setSection={setSection} directorId={item} removeDirector={removeDirector} />

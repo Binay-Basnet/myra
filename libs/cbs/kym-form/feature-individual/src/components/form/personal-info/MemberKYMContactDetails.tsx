@@ -13,10 +13,7 @@ import { FormSection } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 interface IMemberKYMContactDetailsProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const MemberKYMContactDetails = ({
@@ -41,8 +38,7 @@ export const MemberKYMContactDetails = ({
 
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.individual?.formState?.data?.formData;
+      const editValueData = editValues?.members?.individual?.formState?.data?.formData;
 
       reset({
         ...editValueData?.contactDetails,
@@ -78,27 +74,10 @@ export const MemberKYMContactDetails = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <FormSection
-          id="kymAccIndContactDetails"
-          header="kymIndCONTACTDETAILS"
-          gridLayout={true}
-        >
-          <FormPhoneNumber
-            name="mobileNumber"
-            label={t['kymIndMobileNo']}
-            __placeholder={t['kymIndEnterMobileNo']}
-          />
-          <FormPhoneNumber
-            name="phoneNumber"
-            label={t['kymIndPhoneNo']}
-            __placeholder={t['kymIndEnterPhoneNo']}
-          />
-          <FormEmailInput
-            type="text"
-            name="email"
-            label={t['kymIndEmail']}
-            __placeholder={t['kymIndEnterEmail']}
-          />
+        <FormSection id="kymAccIndContactDetails" header="kymIndCONTACTDETAILS">
+          <FormPhoneNumber name="mobileNumber" label={t['kymIndMobileNo']} />
+          <FormPhoneNumber name="phoneNumber" label={t['kymIndPhoneNo']} />
+          <FormEmailInput type="text" name="email" label={t['kymIndEmail']} />
         </FormSection>
       </form>
     </FormProvider>

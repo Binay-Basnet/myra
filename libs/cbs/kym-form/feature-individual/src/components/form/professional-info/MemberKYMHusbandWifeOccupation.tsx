@@ -324,7 +324,6 @@ export const MemberKYMHusbandWifeOccupation = ({
 
   return (
     <FormSection
-      gridLayout
       templateColumns={1}
       id="kymAccIndMainOccupationofHusabandWife"
       header="kymIndEnterMAINOCCUPATIONOFHUSBANDWIFE"

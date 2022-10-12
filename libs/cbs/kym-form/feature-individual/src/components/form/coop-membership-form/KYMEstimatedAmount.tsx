@@ -17,15 +17,10 @@ import { getKymSection, useTranslation } from '@coop/shared/utils';
 import { getFieldOption } from '../../../utils/getFieldOption';
 
 interface IKYMEstimatedAmountProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
-export const KYMEstimatedAmount = ({
-  setKymCurrentSection,
-}: IKYMEstimatedAmountProps) => {
+export const KYMEstimatedAmount = ({ setKymCurrentSection }: IKYMEstimatedAmountProps) => {
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -35,10 +30,9 @@ export const KYMEstimatedAmount = ({
 
   const { watch, reset } = methods;
 
-  const { data: estimatedAnnualTransactionData } =
-    useGetIndividualKymOptionsQuery({
-      searchTerm: FormFieldSearchTerm.EstimatedAnnualTransaction,
-    });
+  const { data: estimatedAnnualTransactionData } = useGetIndividualKymOptionsQuery({
+    searchTerm: FormFieldSearchTerm.EstimatedAnnualTransaction,
+  });
 
   const { data: editValues } = useGetIndividualKymEditDataQuery(
     {
@@ -49,14 +43,12 @@ export const KYMEstimatedAmount = ({
 
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.individual?.formState?.data?.formData;
+      const editValueData = editValues?.members?.individual?.formState?.data?.formData;
 
       reset({
         ...editValueData?.estimatedTransactions,
         estimatedAnnualTransactionFrequencyId:
-          editValueData?.estimatedTransactions
-            ?.estimatedAnnualTransactionFrequencyId ?? '',
+          editValueData?.estimatedTransactions?.estimatedAnnualTransactionFrequencyId ?? '',
       });
     }
   }, [editValues]);
@@ -84,7 +76,6 @@ export const KYMEstimatedAmount = ({
         }}
       >
         <FormSection
-          gridLayout={true}
           id="kymAccIndEstimatedWithdrawDepositAmountintheInstitureion"
           header="kynIndESTIMATEDWITHDRAWDEPOSITAMOUNTINTHEINSTITUTION"
         >
@@ -92,7 +83,6 @@ export const KYMEstimatedAmount = ({
             type="number"
             name="estimatedAnnualTransactionAmount"
             label={t['kynIndEstimatedannualaccounttransaction']}
-            __placeholder="0.00"
             textAlign="right"
           />
         </FormSection>
@@ -111,35 +101,27 @@ export const KYMEstimatedAmount = ({
             />
           </InputGroupContainer> */}
 
-        <Box
-          p="s20"
-          id="kymAccIndEstimatedWithdrawDepositAmountintheInstitureion"
-        >
+        <Box p="s20" id="kymAccIndEstimatedWithdrawDepositAmountintheInstitureion">
           <FormRadioGroup
             label={t['kynIndEstimatednoofAnnualTransaction']}
             id="estimatedAnnualTransactionFrequencyId"
             name="estimatedAnnualTransactionFrequencyId"
-            options={getFieldOption(
-              estimatedAnnualTransactionData,
-              (label) => label
-            )}
+            options={getFieldOption(estimatedAnnualTransactionData, (label) => label)}
             labelFontSize="s3"
           />
         </Box>
 
-        <FormSection gridLayout={true}>
+        <FormSection>
           <FormInput
             type="number"
             name="estimatedAnnualDepositAmount"
             label={t['kynIndEstimatedAnnualDeposit']}
-            __placeholder="0.00"
             textAlign="right"
           />
           <FormInput
             type="number"
             name="estimatedAnnualLoanAmount"
             label={t['kynIndEstimatedAnnualLoan']}
-            __placeholder="0.00"
             textAlign="right"
           />
         </FormSection>

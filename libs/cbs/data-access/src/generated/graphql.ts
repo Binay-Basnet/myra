@@ -14701,12 +14701,15 @@ export type GetDepositProductSettingsEditDataQuery = {
             genderId?: Array<string | null> | null;
             maritalStatusId?: Array<string | null> | null;
             educationQualification?: Array<string | null> | null;
+            transactionAllowed?: DepositFrequency | null;
+            noOftransactionAllowed?: number | null;
             ethnicity?: Array<string | null> | null;
             occupation?: Array<string | null> | null;
             foreignEmployment?: boolean | null;
             natureOfBusinessInstitution?: Array<string | null> | null;
             natureOFBusinessCoop?: Array<string | null> | null;
             cooperativeType?: Array<string | null> | null;
+            isForMinors?: boolean | null;
             depositFrequency?: Frequency | null;
             penalty?: boolean | null;
             rebate?: boolean | null;
@@ -22758,12 +22761,15 @@ export const GetDepositProductSettingsEditDataDocument = `
             genderId
             maritalStatusId
             educationQualification
+            transactionAllowed
+            noOftransactionAllowed
             ethnicity
             occupation
             foreignEmployment
             natureOfBusinessInstitution
             natureOFBusinessCoop
             cooperativeType
+            isForMinors
             depositAmount {
               minAmount
               maxAmount

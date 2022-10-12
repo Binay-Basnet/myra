@@ -1,6 +1,6 @@
 import { PrematurePenaltyDateType, useGetCoaListQuery } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { FormSection, Text } from '@coop/shared/ui';
+import { Alert, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const PrematurePenalty = () => {
@@ -59,6 +59,13 @@ export const PrematurePenalty = () => {
         }
         textAlign="right"
       />
+      <GridItem colSpan={3}>
+        <Alert status="warning">
+          <Text fontWeight="Medium" fontSize="r1">
+            {t['penaltyAlert']}
+          </Text>
+        </Alert>
+      </GridItem>
     </FormSection>
   );
 };

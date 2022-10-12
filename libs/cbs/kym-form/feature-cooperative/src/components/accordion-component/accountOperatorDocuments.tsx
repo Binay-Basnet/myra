@@ -1,13 +1,9 @@
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import { Box, FormSection } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
-import { getKymSectionInstitution } from '@coop/shared/utils';
+import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 interface IKYMDocumentDeclarationProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
   accountId: string;
 }
 
@@ -17,11 +13,11 @@ export const BottomOperatorCoop = ({
 }: IKYMDocumentDeclarationProps) => {
   const { t } = useTranslation();
   return (
-    <FormSection gridLayout={true} templateColumns={2}>
+    <FormSection templateColumns={2}>
       <KYMDocumentField
         mutationId={accountId}
         label={t['kymCoopPhotograph']}
-        name={`photograph`}
+        name="photograph"
         getKymSection={getKymSectionInstitution}
         setKymCurrentSection={setKymCurrentSection}
       />
@@ -29,7 +25,7 @@ export const BottomOperatorCoop = ({
         mutationId={accountId}
         size="lg"
         label={t['kymCoopPhotographOfIdentityProofDocument']}
-        name={`identityDocumentPhoto`}
+        name="identityDocumentPhoto"
         getKymSection={getKymSectionInstitution}
         setKymCurrentSection={setKymCurrentSection}
       />
@@ -38,7 +34,7 @@ export const BottomOperatorCoop = ({
           mutationId={accountId}
           size="md"
           label={t['kymCoopSignature']}
-          name={`signature`}
+          name="signature"
           getKymSection={getKymSectionInstitution}
           setKymCurrentSection={setKymCurrentSection}
         />

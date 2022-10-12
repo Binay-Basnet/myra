@@ -3,7 +3,9 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import {
+  DepositFrequency as DepositFreq,
   DepositProductInput,
+  Frequency,
   KymMemberTypesEnum,
   NatureOfDepositProduct,
   ServiceType,
@@ -65,7 +67,6 @@ type DepositForm = Omit<
   natureOfBusinessInstitution: SelectOption;
   chequeCharge: ServiceType[];
   atmCharge: ServiceType[];
-  // ladderRateData: LadderRateType[];
 };
 
 export const SettingsDepositProductsAdd = () => {
@@ -75,7 +76,26 @@ export const SettingsDepositProductsAdd = () => {
 
   const { mutateAsync } = useSetDepositProductMutation();
 
-  const methods = useForm<DepositForm>({});
+  const methods = useForm<DepositForm>({
+    defaultValues: {
+      depositFrequency: Frequency.Daily,
+      transactionAllowed: DepositFreq.Monthly,
+      isTenureApplicable: false,
+      penalty: false,
+      rebate: false,
+      postingFrequency: DepositFreq.Monthly,
+      autoOpen: false,
+      staffProduct: false,
+      isForMinors: false,
+      alternativeChannels: false,
+      atmFacility: false,
+      chequeIssue: false,
+      allowLoan: false,
+      supportMultiple: false,
+      withdrawRestricted: false,
+      wealthBuildingProduct: false,
+    },
+  });
 
   const { getValues, watch, reset, resetField } = methods;
   const depositNature = watch('nature');
@@ -151,6 +171,7 @@ export const SettingsDepositProductsAdd = () => {
       chequeCharge: chequeChargeList,
       alternativeChannelCharge: alternativeChannelList,
       atmCharge: atmChargeList,
+      transactionAllowed: values?.transactionAllowed ? values?.transactionAllowed : null,
       tenureUnit: values?.tenureUnit ? values?.tenureUnit : null,
       maxTenureUnitNumber: values?.maxTenureUnitNumber ? values?.maxTenureUnitNumber : null,
       minTenureUnitNumber: values?.minTenureUnitNumber ? values?.minTenureUnitNumber : null,
@@ -327,7 +348,8 @@ export const SettingsDepositProductsAdd = () => {
 
               {depositNature === NatureOfDepositProduct.Saving && <LadderRate />}
 
-              {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <DormantSetup />}
+              {(depositNature === NatureOfDepositProduct.Current ||
+                depositNature === NatureOfDepositProduct.Saving) && <DormantSetup />}
 
               {(depositNature === NatureOfDepositProduct.RecurringSaving ||
                 depositNature === NatureOfDepositProduct.TermSavingOrFd) && <PrematuredPenalty />}

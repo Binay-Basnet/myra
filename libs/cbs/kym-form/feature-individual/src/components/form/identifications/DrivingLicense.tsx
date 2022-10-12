@@ -143,7 +143,7 @@ export const DrivingLicense = ({ setKymCurrentSection }: IDrivingLicenseProps) =
             setKymCurrentSection(kymSection);
           }}
         >
-          <FormSection gridLayout>
+          <FormSection>
             <FormInput type="text" name="idNo" label={t['kymIndDrivingLicenseNo']} />
 
             <FormInput type="text" name="place" label={t['kymIndDrivingLicenseIssuePlace']} />

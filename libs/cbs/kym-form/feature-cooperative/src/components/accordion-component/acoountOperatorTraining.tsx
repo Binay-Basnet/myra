@@ -60,7 +60,6 @@ export const DynamicAddtraining = () => {
 
   return (
     <FormSection
-      gridLayout
       header="kymCoopTrainingRelatedToCoop"
       subHeader="kymCoopTrainingRelatedToCoopsubText"
     >

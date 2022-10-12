@@ -1,4 +1,11 @@
-import { useGetCoaListQuery } from '@coop/cbs/data-access';
+import { useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
+
+import {
+  useGetCoaListQuery,
+  useGetDepositProductSettingsEditDataQuery,
+} from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 import { GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -11,6 +18,12 @@ type AlternativeChannelTable = {
 
 export const AlternativeChannels = () => {
   const { t } = useTranslation();
+  const router = useRouter();
+  const id = String(router?.query?.['id']);
+
+  const methods = useFormContext();
+
+  const { reset } = methods;
 
   const { data: coa } = useGetCoaListQuery({
     filter: {
@@ -24,6 +37,28 @@ export const AlternativeChannels = () => {
     label: item?.name?.en as string,
     value: item?.id as string,
   }));
+
+  const { data: editValues } = useGetDepositProductSettingsEditDataQuery(
+    {
+      id,
+    },
+    {
+      staleTime: 0,
+    }
+  );
+
+  const editedData = editValues?.settings?.general?.depositProduct?.formState?.data;
+
+  useEffect(() => {
+    reset({
+      ...editedData,
+      alternativeChannelCharge: editedData?.alternativeChannelCharge?.map((record) => ({
+        serviceName: record?.serviceName,
+        ledgerName: record?.ledgerName,
+        amount: record?.amount,
+      })),
+    });
+  }, [editValues]);
 
   return (
     <GridItem mt="s32" colSpan={3}>

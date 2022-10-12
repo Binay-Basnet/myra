@@ -140,7 +140,7 @@ export const Citizenship = ({ setKymCurrentSection }: ICitizenshipProps) => {
             setKymCurrentSection(kymSection);
           }}
         >
-          <FormSection gridLayout>
+          <FormSection>
             <FormInput type="text" name="idNo" label={t['kynIndCitizenshipNo']} />
 
             <FormInput type="text" name="place" label={t['kynIndCitizenshipIssuePlace']} />

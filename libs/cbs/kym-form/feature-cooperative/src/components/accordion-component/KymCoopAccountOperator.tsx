@@ -214,7 +214,7 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
               }}
             >
               <Box display="flex" flexDirection="column" gap="s48">
-                <FormSection gridLayout>
+                <FormSection>
                   <FormInput
                     id="accountOperatorCoop"
                     type="text"
@@ -229,7 +229,7 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
                   />
                 </FormSection>
 
-                <FormSection gridLayout header="kymCoopPermanentAddress">
+                <FormSection header="kymCoopPermanentAddress">
                   <FormSelect
                     id="accountOperatorCoop"
                     name="permanentAddress.provinceId"
@@ -281,7 +281,7 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
                   </GridItem>
                 </FormSection>
 
-                <FormSection gridLayout header="kymCoopTemporaryAddress">
+                <FormSection header="kymCoopTemporaryAddress">
                   <GridItem colSpan={3}>
                     <FormSwitch
                       name="isPermanentAndTemporaryAddressSame"
@@ -344,7 +344,7 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
                   )}
                 </FormSection>
 
-                <FormSection gridLayout>
+                <FormSection>
                   <FormDatePicker
                     id="accountOperatorCoop"
                     name="dateOfMembership"

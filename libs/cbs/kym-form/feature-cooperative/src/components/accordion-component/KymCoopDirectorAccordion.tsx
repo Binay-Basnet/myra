@@ -223,7 +223,7 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
               }}
             >
               <Box display="flex" flexDirection="column" gap="s48">
-                <FormSection gridLayout>
+                <FormSection>
                   <FormInput
                     id="boardDirectorCoop"
                     type="text"
@@ -238,7 +238,7 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
                   />
                 </FormSection>
 
-                <FormSection gridLayout header="kymCoopPermanentAddress">
+                <FormSection header="kymCoopPermanentAddress">
                   <FormSelect
                     id="boardDirectorCoop"
                     name="permanentAddress.provinceId"
@@ -284,7 +284,7 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
                   </GridItem>
                 </FormSection>
 
-                <FormSection gridLayout header="kymCoopTemporaryAddress">
+                <FormSection header="kymCoopTemporaryAddress">
                   <GridItem colSpan={3}>
                     <FormSwitch
                       id="boardOfDirectorsDetails"
@@ -341,7 +341,7 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
                   )}
                 </FormSection>
 
-                <FormSection gridLayout>
+                <FormSection>
                   <FormDatePicker
                     id="boardDirectorCoop"
                     type="date"

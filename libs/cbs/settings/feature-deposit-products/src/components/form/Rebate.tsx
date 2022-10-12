@@ -31,7 +31,7 @@ export const Rebate = () => {
               <SubHeadingText>{t['depositProductRebate']} </SubHeadingText>
               <SubText>{t['depositProductEnterRebatedetails']} </SubText>
             </TextBoxContainer>
-            <FormSwitchTab name="rebate" options={enableSwitch} defaultValue="false" />
+            <FormSwitchTab name="rebate" options={enableSwitch} />
           </Box>
           {rebate && (
             <BoxContainer p="s16" border="1px solid" borderColor="border.layout" borderRadius="4px">

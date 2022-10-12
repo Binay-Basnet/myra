@@ -142,7 +142,7 @@ export const KYMDeclaration = ({ setKymCurrentSection }: IKYMDeclarationProps) =
             </TextFields>
           </Box>
 
-          <FormSection gridLayout id="kymAccIndBeneficialOwner">
+          <FormSection id="kymAccIndBeneficialOwner">
             <GridItem colSpan={3}>
               <FormSwitchTab
                 label={t['kynIndDoyouhavebeneficialowner']}
@@ -173,7 +173,7 @@ export const KYMDeclaration = ({ setKymCurrentSection }: IKYMDeclarationProps) =
             )}
           </FormSection>
 
-          <FormSection gridLayout id="kymAccIndFamilymembersinpolitics">
+          <FormSection id="kymAccIndFamilymembersinpolitics">
             <GridItem colSpan={3}>
               <FormSwitchTab
                 label={t['kynIndPoliticallyexposedperson']}
@@ -194,7 +194,7 @@ export const KYMDeclaration = ({ setKymCurrentSection }: IKYMDeclarationProps) =
             )}
           </FormSection>
 
-          <FormSection gridLayout id="kymAccIndConvictedNonconvictedStatus">
+          <FormSection id="kymAccIndConvictedNonconvictedStatus">
             <GridItem colSpan={3}>
               <FormSwitchTab
                 label={t['kynIndDeclarationofconvicted']}
@@ -215,7 +215,7 @@ export const KYMDeclaration = ({ setKymCurrentSection }: IKYMDeclarationProps) =
             )}
           </FormSection>
 
-          <FormSection gridLayout id="kymAccIndResidentialpermitofforeigncountry">
+          <FormSection id="kymAccIndResidentialpermitofforeigncountry">
             <GridItem colSpan={3}>
               <FormSwitchTab
                 label={t['kynIndForeignCountry']}

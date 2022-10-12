@@ -30,11 +30,7 @@ export const DepositFrequency = () => {
       header="depositProductDepositFrequency"
       subHeader="depositProductSelectdepositfrequency"
     >
-      <FormSwitchTab
-        defaultValue={Frequency.Daily}
-        name="depositFrequency"
-        options={DepositFrequencyOptions}
-      />
+      <FormSwitchTab name="depositFrequency" options={DepositFrequencyOptions} />
     </FormSection>
   );
 };

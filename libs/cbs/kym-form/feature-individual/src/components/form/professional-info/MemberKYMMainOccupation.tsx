@@ -411,7 +411,7 @@ export const MemberKYMMainOccupation = ({
 
   return (
     <Box id="kymAccIndMainProfession" scrollMarginTop="200px">
-      <FormSection gridLayout templateColumns={1} header="kymIndMAINOCCUPATION">
+      <FormSection templateColumns={1} header="kymIndMAINOCCUPATION">
         <DynamicBoxGroupContainer>
           {occupationIds.map((oId) => (
             <MainOccupation
@@ -444,7 +444,7 @@ export const MemberKYMMainOccupation = ({
               setKymCurrentSection(kymSection);
             }}
           >
-            <FormSection gridLayout header="kymIndForeignEmploymentDetails">
+            <FormSection header="kymIndForeignEmploymentDetails">
               <FormSelect
                 id="nameOfCountry"
                 control={control}

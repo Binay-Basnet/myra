@@ -211,7 +211,7 @@ const MemberMaritalStatus = ({ setKymCurrentSection }: IMemberMaritalStatusProps
           setKymCurrentSection(kymSection);
         }}
       >
-        <FormSection gridLayout header="kymIndFAMILYDETAILS">
+        <FormSection header="kymIndFAMILYDETAILS">
           <FormSelect
             name="maritalStatusId"
             label={t['kymIndMartialStatus']}
@@ -300,7 +300,7 @@ const MemberFamilyDetails = ({ setKymCurrentSection }: IMemberFamilyDetailsProps
   };
 
   return (
-    <FormSection gridLayout templateColumns={1} header="kymIndFamilymembers">
+    <FormSection templateColumns={1} header="kymIndFamilymembers">
       <DynamicBoxGroupContainer>
         {familyMemberIds.map((familyMemberId) => (
           <Box key={familyMemberId}>

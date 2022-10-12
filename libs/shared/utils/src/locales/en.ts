@@ -3548,5 +3548,8 @@ const en: Record<string, string> = {
   loanProductPenaltyOn: 'Penalty On',
   loanProductLinkedAccounts: 'Linked Accounts',
   loanProductListofallthesavingaccounts: 'List of all the saving accounts',
+  penaltyAlert:
+    'If both penalty amount and penalty rate is filled, the total penalty is the total sum of the two.',
+  loanProductpenaltyRate: 'Penalty Rate',
 };
 export default en;

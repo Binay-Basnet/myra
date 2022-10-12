@@ -32,11 +32,7 @@ export const KymCoopDocumentDeclarationForm = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <FormSection
-          header="kymCoopDOCUMENTDECLARATION"
-          gridLayout={true}
-          templateColumns={2}
-        >
+        <FormSection header="kymCoopDOCUMENTDECLARATION" templateColumns={2}>
           <KYMDocumentField
             mutationId={id}
             label={t['kymCoopAGMDecisionDocument']}

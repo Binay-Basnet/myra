@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { useGetCoaListQuery } from '@coop/cbs/data-access';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
+import { Alert, Box, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, SubHeadingText, SubText, TextBoxContainer } from '../formui';
@@ -45,7 +45,7 @@ export const Penalty = () => {
               <SubHeadingText>{t['depositProductpenalty']} </SubHeadingText>
               <SubText>{t['depositProductEnterPenaltydetails']} </SubText>
             </TextBoxContainer>
-            <FormSwitchTab name="penalty" defaultValue="false" options={enableSwitch} />
+            <FormSwitchTab name="penalty" options={enableSwitch} />
           </Box>
           {penalty && (
             <BoxContainer p="s16" border="1px solid" borderColor="border.layout" borderRadius="br2">
@@ -59,7 +59,7 @@ export const Penalty = () => {
                 <FormInput
                   name="penaltyData.penaltyRate"
                   type="number"
-                  label={t['depositProductPenalty']}
+                  label={t['depositProductPenaltyRate']}
                   textAlign="right"
                   rightElement={
                     <Text fontWeight="Medium" fontSize="r1" color="primary.500">
@@ -78,6 +78,13 @@ export const Penalty = () => {
                   label={t['depositProductPenaltyedgerMapping']}
                   options={coaList}
                 />
+                <GridItem colSpan={3}>
+                  <Alert status="warning">
+                    <Text fontWeight="Medium" fontSize="r1">
+                      {t['penaltyAlert']}
+                    </Text>
+                  </Alert>
+                </GridItem>
               </Grid>
             </BoxContainer>
           )}

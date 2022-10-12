@@ -140,7 +140,7 @@ export const MemberKYMAddress = ({ setKymCurrentSection }: IMemberKYMAddressProp
           setKymCurrentSection(kymSection);
         }}
       >
-        <FormSection gridLayout id="kymAccIndPermanentAddress" header="kymIndPermanentAddress">
+        <FormSection id="kymAccIndPermanentAddress" header="kymIndPermanentAddress">
           <FormSelect
             name="permanentAddress.provinceId"
             label={t['kymIndProvince']}
@@ -174,24 +174,14 @@ export const MemberKYMAddress = ({ setKymCurrentSection }: IMemberKYMAddressProp
               value: d,
             }))}
           />
-          <FormInput
-            type="text"
-            name="permanentAddress.locality"
-            label={t['kymIndLocality']}
-            __placeholder={t['kymIndEnterLocality']}
-          />
-          <FormInput
-            type="number"
-            name="permanentAddress.houseNo"
-            label={t['kymIndHouseNo']}
-            __placeholder={t['kymIndEnterHouseNo']}
-          />
+          <FormInput type="text" name="permanentAddress.locality" label={t['kymIndLocality']} />
+          <FormInput type="number" name="permanentAddress.houseNo" label={t['kymIndHouseNo']} />
           <GridItem colSpan={2}>
             <FormMap name="permanentAddress.coordinates" />
           </GridItem>
         </FormSection>
 
-        <FormSection gridLayout id="kymAccIndTemporaryAddress" header="kymIndTemporaryAddress">
+        <FormSection id="kymAccIndTemporaryAddress" header="kymIndTemporaryAddress">
           <GridItem colSpan={3}>
             <FormSwitch
               name="sameTempAsPermanentAddress"
@@ -203,13 +193,11 @@ export const MemberKYMAddress = ({ setKymCurrentSection }: IMemberKYMAddressProp
               <FormSelect
                 name="temporaryAddress.provinceId"
                 label={t['kymIndProvince']}
-                __placeholder={t['kymIndSelectProvince']}
                 options={province}
               />
               <FormSelect
                 name="temporaryAddress.districtId"
                 label={t['kymIndDistrict']}
-                __placeholder={t['kymIndSelectDistrict']}
                 options={districtTempList.map((d) => ({
                   label: d.name,
                   value: d.id,
@@ -218,7 +206,6 @@ export const MemberKYMAddress = ({ setKymCurrentSection }: IMemberKYMAddressProp
               <FormSelect
                 name="temporaryAddress.localGovernmentId"
                 label={t['kymIndLocalGovernment']}
-                __placeholder={t['kymIndSelectLocalGovernment']}
                 options={localityTempList.map((d) => ({
                   label: d.name,
                   value: d.id,
@@ -227,24 +214,13 @@ export const MemberKYMAddress = ({ setKymCurrentSection }: IMemberKYMAddressProp
               <FormSelect
                 name="temporaryAddress.wardNo"
                 label={t['kymIndWardNo']}
-                __placeholder={t['kymIndEnterWardNo']}
                 options={wardTempList.map((d) => ({
                   label: d,
                   value: d,
                 }))}
               />
-              <FormInput
-                type="text"
-                name="temporaryAddress.locality"
-                label={t['kymIndLocality']}
-                __placeholder={t['kymIndEnterLocality']}
-              />
-              <FormInput
-                type="number"
-                name="temporaryAddress.houseNo"
-                label={t['kymIndHouseNo']}
-                __placeholder={t['kymIndEnterHouseNo']}
-              />
+              <FormInput type="text" name="temporaryAddress.locality" label={t['kymIndLocality']} />
+              <FormInput type="number" name="temporaryAddress.houseNo" label={t['kymIndHouseNo']} />
               <GridItem colSpan={2}>
                 <FormMap name="temporaryAddress.coordinates" />
               </GridItem>
@@ -284,7 +260,6 @@ export const MemberKYMAddress = ({ setKymCurrentSection }: IMemberKYMAddressProp
         {/* </FormSection> */}
 
         <FormSection
-          gridLayout
           header="kymIndINCASERESIDINGINRENTEDHOUSE"
           id="kymAccIndIncaseofresidinginRentedHouse"
         >

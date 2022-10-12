@@ -27,11 +27,7 @@ export const KymCoopCurrentMembers = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <FormSection
-          gridLayout={true}
-          id="kymCoopAccCurrentMembers"
-          header="kymCoopCurrentMembers"
-        >
+        <FormSection id="kymCoopAccCurrentMembers" header="kymCoopCurrentMembers">
           <FormInput
             type="number"
             min={0}

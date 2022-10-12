@@ -1,10 +1,7 @@
 import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import {
-  KymCooperativeFormInput,
-  useAllAdministrationQuery,
-} from '@coop/cbs/data-access';
+import { KymCooperativeFormInput, useAllAdministrationQuery } from '@coop/cbs/data-access';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
 import { FormSection, GridItem } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
@@ -26,14 +23,14 @@ export const KymCoopOpAddress = (props: IProps) => {
   useCooperative({ methods });
   const { data } = useAllAdministrationQuery();
 
-  const province = useMemo(() => {
-    return (
+  const province = useMemo(
+    () =>
       data?.administration?.all?.map((d) => ({
         label: d.name,
         value: d.id,
-      })) ?? []
-    );
-  }, [data?.administration?.all]);
+      })) ?? [],
+    [data?.administration?.all]
+  );
 
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch('operatingAddress.provinceId');
@@ -41,16 +38,12 @@ export const KymCoopOpAddress = (props: IProps) => {
   const currentLocalityId = watch('operatingAddress.localGovernmentId');
 
   const districtList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
-        ?.districts ?? [],
+    () => data?.administration.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
     [currentProvinceId]
   );
 
   const muncipalityList = useMemo(
-    () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+    () => districtList.find((d) => d.id === currentDistrictId)?.municipalities ?? [],
     [currentDistrictId]
   );
   const wardList = useMemo(
@@ -65,15 +58,10 @@ export const KymCoopOpAddress = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <FormSection
-          gridLayout={true}
-          id="kymCoopAccOperatingAddress"
-          header="kymCoopOperatingAddress"
-        >
+        <FormSection id="kymCoopAccOperatingAddress" header="kymCoopOperatingAddress">
           <FormSelect
             name="operatingAddress.provinceId"
             label={t['kymCoopProvince']}
-            __placeholder={t['kymCoopSelectState']}
             options={province}
             id="operatingAddressCOOP"
           />
@@ -81,7 +69,6 @@ export const KymCoopOpAddress = (props: IProps) => {
             id="operatingAddressCOOP"
             name="operatingAddress.districtId"
             label={t['kymCoopDistrict']}
-            __placeholder={t['kymCoopSelectDistrict']}
             options={districtList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -91,7 +78,6 @@ export const KymCoopOpAddress = (props: IProps) => {
             id="operatingAddressCOOP"
             name="operatingAddress.localGovernmentId"
             label={t['kymCoopVDCLocalGov']}
-            __placeholder={t['kymCoopSelectLocalGov']}
             options={muncipalityList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -102,7 +88,6 @@ export const KymCoopOpAddress = (props: IProps) => {
             id="operatingAddressCOOP"
             name="operatingAddress.wardNo"
             label={t['kymCoopWardNo']}
-            __placeholder={t['kymCoopEnterWardNo']}
             options={wardList?.map((d) => ({
               label: d,
               value: d,
@@ -113,21 +98,16 @@ export const KymCoopOpAddress = (props: IProps) => {
             type="text"
             name="operatingAddress.locality"
             label={t['kymCoopLocality']}
-            __placeholder={t['kymCoopEnterLocality']}
           />
           <FormInput
             id="operatingAddressCOOP"
             type="text"
             name="operatingAddress.houseNo"
             label={t['kymCoopRepresentativeHouseNo']}
-            __placeholder={t['kymCoopRepresentativeEnterHouseNo']}
           />
 
           <GridItem colSpan={2}>
-            <FormMap
-              name="operatingAddress.coordinates"
-              id="operatingAddressCOOP"
-            />
+            <FormMap name="operatingAddress.coordinates" id="operatingAddressCOOP" />
           </GridItem>
         </FormSection>
       </form>

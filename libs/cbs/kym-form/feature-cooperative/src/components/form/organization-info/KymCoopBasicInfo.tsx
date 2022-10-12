@@ -26,7 +26,7 @@ export const KymCoopBasicInfo = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <FormSection gridLayout id="kymCoopAccBasicInformation" header="kymCoopBASICINFORMATION">
+        <FormSection id="kymCoopAccBasicInformation" header="kymCoopBASICINFORMATION">
           <FormInput type="text" name="nameOfOrganization" label={t['kymCoopNameofOrganization']} />
           <FormInput type="number" name="regdNumber" label={t['kymCoopRegisrationNo']} />
 

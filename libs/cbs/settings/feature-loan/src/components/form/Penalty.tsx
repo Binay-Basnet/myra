@@ -4,7 +4,7 @@ import { useGetCoaListQuery } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { SubHeadingText, SubText } from '@coop/shared/components';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
+import { Alert, Box, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, TextBoxContainer } from '../formui';
@@ -89,7 +89,7 @@ export const Penalty = () => {
                   <FormInput
                     name="penaltyOnPrincipal.penaltyRate"
                     type="number"
-                    label={t['loanProductpenalty']}
+                    label={t['loanProductpenaltyRate']}
                     textAlign="right"
                     rightElement={
                       <Text fontWeight="Medium" fontSize="r1" color="primary.500">
@@ -107,6 +107,13 @@ export const Penalty = () => {
                     label={t['loanProductPenaltyedgerMapping']}
                     options={coaList}
                   />
+                  <GridItem colSpan={3}>
+                    <Alert status="warning">
+                      <Text fontWeight="Medium" fontSize="r1">
+                        {t['penaltyAlert']}
+                      </Text>
+                    </Alert>
+                  </GridItem>
                 </InputGroupContainer>
                 {/* {penaltyListVal === 'principal' && (
                   <InputGroupContainer>
@@ -119,7 +126,7 @@ export const Penalty = () => {
                     <FormInput
                       name="penaltyOnPrincipal.penaltyRate"
                       type="number"
-                      label={t['loanProductpenalty']}
+                      label={t['loanProductpenaltyRate']}
                       textAlign="right"
                       rightElement={
                         <Text fontWeight="Medium" fontSize="r1" color="primary.500">
@@ -137,6 +144,13 @@ export const Penalty = () => {
                       label={t['loanProductPenaltyedgerMapping']}
                       options={coaList}
                     />
+                    <GridItem colSpan={3}>
+                  <Alert status="warning">
+          <Text fontWeight="Medium" fontSize="r1">
+            {t['penaltyAlert']}
+          </Text>
+        </Alert>
+                </GridItem>
                   </InputGroupContainer>
                 )}
 
@@ -151,7 +165,7 @@ export const Penalty = () => {
                     <FormInput
                       name="penaltyOnInterest.penaltyRate"
                       type="number"
-                      label={t['loanProductpenalty']}
+                      label={t['loanProductpenaltyRate']}
                       textAlign="right"
                       rightElement={
                         <Text fontWeight="Medium" fontSize="r1" color="primary.500">
@@ -169,6 +183,13 @@ export const Penalty = () => {
                       label={t['loanProductPenaltyedgerMapping']}
                       options={coaList}
                     />
+                    <GridItem colSpan={3}>
+                  <Alert status="warning">
+          <Text fontWeight="Medium" fontSize="r1">
+            {t['penaltyAlert']}
+          </Text>
+        </Alert>
+                </GridItem>
                   </InputGroupContainer>
                 )}
 
@@ -183,7 +204,7 @@ export const Penalty = () => {
                     <FormInput
                       name="penaltyOnInstallment.penaltyRate"
                       type="number"
-                      label={t['loanProductpenalty']}
+                      label={t['loanProductpenaltyRate']}
                       textAlign="right"
                       rightElement={
                         <Text fontWeight="Medium" fontSize="r1" color="primary.500">
@@ -201,6 +222,13 @@ export const Penalty = () => {
                       label={t['loanProductPenaltyedgerMapping']}
                       options={coaList}
                     />
+                    <GridItem colSpan={3}>
+                  <Alert status="warning">
+          <Text fontWeight="Medium" fontSize="r1">
+            {t['penaltyAlert']}
+          </Text>
+        </Alert>
+                </GridItem>
                   </InputGroupContainer>
                 )} */}
               </BoxContainer>

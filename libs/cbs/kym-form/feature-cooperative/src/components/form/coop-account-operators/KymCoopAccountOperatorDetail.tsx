@@ -85,11 +85,7 @@ export const KymCoopAccountOperatorDetail = (props: IProps) => {
   }, [id]);
 
   return (
-    <FormSection
-      gridLayout
-      id="kymCoopAccAccountOperatorDetail"
-      header="kymCoopDetailsofAccountOperators"
-    >
+    <FormSection id="kymCoopAccAccountOperatorDetail" header="kymCoopDetailsofAccountOperators">
       {accOperatorIds.map((accountId) => (
         <GridItem key={accountId} colSpan={3}>
           <AddOperator

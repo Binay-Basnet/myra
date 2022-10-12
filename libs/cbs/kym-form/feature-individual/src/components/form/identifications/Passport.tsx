@@ -139,7 +139,7 @@ export const Passport = ({ setKymCurrentSection }: IPassportProps) => {
             setKymCurrentSection(kymSection);
           }}
         >
-          <FormSection gridLayout>
+          <FormSection>
             <FormInput type="text" name="idNo" label={t['kymIndPassportNo']} />
 
             <FormInput type="text" name="place" label={t['kymIndPassportIssuePlace']} />
