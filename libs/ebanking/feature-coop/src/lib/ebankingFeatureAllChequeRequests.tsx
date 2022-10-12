@@ -5,6 +5,7 @@ import { AddIcon } from '@chakra-ui/icons';
 
 import { AccountPopover } from '@coop/ebanking/accounts';
 import { ChequeRequestCard, InfoCard } from '@coop/ebanking/cards';
+import { EmptyState } from '@coop/ebanking/components';
 import {
   EBankingServiceStatus,
   useGetCoopPastChequeRequestsQuery,
@@ -13,6 +14,7 @@ import { FormSwitchTab } from '@coop/shared/form';
 import {
   Box,
   Button,
+  Divider,
   Icon,
   PathBar,
   Popover,
@@ -20,6 +22,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   Text,
+  VStack,
 } from '@coop/shared/ui';
 import { getLoggedInUserId, useTranslation } from '@coop/shared/utils';
 
@@ -63,6 +66,8 @@ export const EBankingFeatureAllChequeRequests = () => {
       filter: { status },
     });
 
+  const chequeData = chequeRequestsQueryData?.eBanking?.cooperativeServices?.cheque?.pastRequests;
+
   useEffect(() => {
     refetchChequeRequests();
   }, [status]);
@@ -72,7 +77,7 @@ export const EBankingFeatureAllChequeRequests = () => {
       <PathBar
         paths={[
           { label: 'COOP', link: '/coop' },
-          { label: 'Cheque Block Request', link: '/coop/cheque/block' },
+          { label: 'All Cheque Requests', link: '/coop/cheque/all' },
         ]}
         button={
           <Popover placement="bottom-end" gutter={3}>
@@ -103,8 +108,8 @@ export const EBankingFeatureAllChequeRequests = () => {
                       onClick={() => router.push(addButton.link)}
                       key={addButton.link}
                     >
-                      <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
-                      <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                      <Icon mr="s10" size="sm" color="primary.500" as={AddIcon} />
+                      <Text fontSize="r1" color="neutralColorLight.Gray-80">
                         {t[addButton.label] ?? addButton.label}
                       </Text>
                     </Box>
@@ -123,11 +128,22 @@ export const EBankingFeatureAllChequeRequests = () => {
             </form>
           </FormProvider>
 
-          <Box>
-            {chequeRequestsQueryData?.eBanking?.cooperativeServices?.cheque?.pastRequests?.map(
-              (request) => request && <ChequeRequestCard requestInfo={request} />
+          <VStack
+            width="100%"
+            bg="white"
+            spacing="0"
+            alignItems="start"
+            divider={<Divider borderBottom="1px" borderBottomColor="border.layout" />}
+            borderRadius="br2"
+          >
+            {chequeData?.length === 0 || !chequeData ? (
+              <Box w="100%" display="flex" justifyContent="center" py="s32">
+                <EmptyState title="No Cheque History" />
+              </Box>
+            ) : (
+              chequeData?.map((request) => request && <ChequeRequestCard requestInfo={request} />)
             )}
-          </Box>
+          </VStack>
         </Box>
       </InfoCard>
     </Box>

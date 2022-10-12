@@ -36,3 +36,33 @@ mutation setBlockChequeRequestData($memberID: String!, $data: EBankingChequeBloc
     }
   }
 }
+
+mutation applyForLoan($memberId: String!, $data: EBankingApplyLoanInput) {
+  eBanking {
+    cooperativeServices {
+      loan {
+        apply(memberID: $memberId, data: $data) {
+          error {
+            ...MutationError
+          }
+          recordID
+        }
+      }
+    }
+  }
+}
+
+mutation addNewComplaint($memberId: String!, $data: EBankingRegisterComplaintInput) {
+  eBanking {
+    cooperativeServices {
+      complaint {
+        register(memberID: $memberId, data: $data) {
+          error {
+            ...MutationError
+          }
+          recordID
+        }
+      }
+    }
+  }
+}

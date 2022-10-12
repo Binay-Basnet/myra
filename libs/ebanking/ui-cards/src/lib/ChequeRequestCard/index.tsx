@@ -90,8 +90,6 @@ export const ChequeRequestCard = ({ requestInfo }: IChequeRequestCardProps) => {
       pt="s16"
       pb="s8"
       pr="s40"
-      borderBottom="1px"
-      borderColor="border.layout"
     >
       <Box display="flex" alignItems="flex-start" gap="s12">
         {typeOfRequest && (

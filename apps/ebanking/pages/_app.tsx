@@ -8,6 +8,7 @@ import Head from 'next/head';
 import { ChakraProvider } from '@chakra-ui/react';
 
 import { store } from '@coop/cbs/data-access';
+import { Toaster } from '@coop/shared/ui';
 import { theme } from '@coop/shared/utils';
 
 import './styles.css';
@@ -44,6 +45,8 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       <Head>
         <title>E Banking</title>
       </Head>
+      <Toaster />
+
       <QueryClientProvider client={queryClient}>
         <main suppressHydrationWarning>{getLayout(<Component {...pageProps} />)}</main>
         <ReactQueryDevtools />

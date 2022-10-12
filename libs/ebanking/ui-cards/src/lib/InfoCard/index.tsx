@@ -24,7 +24,7 @@ export const InfoCard = ({
     bg="white"
     spacing="0"
     alignItems="start"
-    divider={<Divider border="1px" borderColor="border.layout" />}
+    divider={<Divider borderBottom="1px" borderBottomColor="border.layout" />}
     borderRadius="br2"
   >
     <Box
@@ -33,7 +33,8 @@ export const InfoCard = ({
       w="100%"
       justifyContent="space-between"
       px="s16"
-      height="50px"
+      py={subtitle ? 's16' : 's0'}
+      minH="50px"
     >
       <Box display="flex" flexDir="column" gap="s4">
         <Text fontSize="r1" color="gray.800" fontWeight="600" lineHeight="125%">

@@ -1,10 +1,9 @@
 import { ReactElement } from 'react';
 
+import { NewComplaint } from '@coop/ebanking/coop';
 import { EbankingMainLayout } from '@coop/ebanking/ui-layout';
 
-import Temp from '../../temp';
-
-const COOPNewComplaintPage = () => <Temp />;
+const COOPNewComplaintPage = () => <NewComplaint />;
 
 COOPNewComplaintPage.getLayout = function (page: ReactElement) {
   return <EbankingMainLayout>{page}</EbankingMainLayout>;

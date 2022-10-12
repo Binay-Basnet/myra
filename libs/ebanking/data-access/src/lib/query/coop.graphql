@@ -79,3 +79,36 @@ query getCoopPastChequeRequests($memberId: ID!, $filter: EBankingCooperativeServ
     }
   }
 }
+
+query getComplaintsList($memberId: ID!, $filter: EBankingCooperativeServiceFilter) {
+  eBanking {
+    cooperativeServices {
+      complaint {
+        history(memberID: $memberId, filter: $filter) {
+          data {
+            id
+            feedbackDate
+            detailedAccount
+          }
+        }
+      }
+    }
+  }
+}
+
+query getDownloadCoopList($filter: EBankingDownloadsFilter) {
+  eBanking {
+    cooperativeServices {
+      downloads {
+        files(filter: $filter) {
+          id
+          name
+          category
+          extension
+          size
+          url
+        }
+      }
+    }
+  }
+}

@@ -32,8 +32,8 @@ export const EbankingFeatureChequeRequest = () => {
 
   const memberID = getLoggedInUserId();
 
-  const handleSubmitRequest = () => {
-    asyncToast({
+  const handleSubmitRequest = async () => {
+    await asyncToast({
       id: 'add-new-cheque-request',
       promise: addNewChequeRequest({
         memberID,
