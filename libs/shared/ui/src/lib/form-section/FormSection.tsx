@@ -2,11 +2,13 @@ import React from 'react';
 
 import { Box, Grid, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
+
 /* eslint-disable-next-line */
 export interface FormSectionProps {
   id?: string;
   header?: string;
   subHeader?: string;
+  gridLayout?: boolean;
   flexLayout?: boolean;
   divider?: boolean;
   templateColumns?: number;
