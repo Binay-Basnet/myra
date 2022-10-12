@@ -8,6 +8,7 @@ import Head from 'next/head';
 import { ChakraProvider } from '@chakra-ui/react';
 
 import { store } from '@coop/cbs/data-access';
+import { useInit } from '@coop/neosys-admin/data-access';
 import { Box, FloatingShortcutButton, Toaster } from '@coop/shared/ui';
 import { neosysTheme, useSnap } from '@coop/shared/utils';
 
@@ -38,7 +39,7 @@ const queryClient = new QueryClient({
 });
 
 const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
-  // useInit();
+  useInit();
   useSnap();
 
   const getLayout = Component.getLayout || ((page) => page);

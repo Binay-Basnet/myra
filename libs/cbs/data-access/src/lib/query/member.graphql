@@ -396,3 +396,23 @@ query getMemberDetails($id: ID!) {
     }
   }
 }
+
+query getOfficialUse($id: ID!) {
+  members {
+    officialUse(id: $id) {
+      recordId
+      record {
+        id
+        isStaff
+        checkSanction
+        checkNegative
+        riskCategory
+        docCollectedAndVerified
+        acceptableAddressDoc
+      }
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

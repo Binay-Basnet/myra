@@ -3,17 +3,14 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineEye } from 'react-icons/ai';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
-import {
-  Accordion,
-  AccordionButton,
-  AccordionItem,
-  AccordionPanel,
-  Flex,
-} from '@chakra-ui/react';
+import { Accordion, AccordionButton, AccordionItem, AccordionPanel, Flex } from '@chakra-ui/react';
+import { debounce } from 'lodash';
 
 import {
   KymIndMemberInput,
   useGetMemberTranslationQuery,
+  useGetOfficialUseQuery,
+  useSetOfficialUseMutation,
 } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormRadioGroup, FormSwitchTab } from '@coop/shared/form';
@@ -38,7 +35,9 @@ const Translation = () => {
   const translatedData = useGetMemberTranslationQuery({ id });
   const translationDataArray = translatedData?.data?.members?.translate.data;
 
+  const { mutate } = useSetOfficialUseMutation();
   const methods = useForm<KymIndMemberInput>({});
+  const { watch, reset } = methods;
 
   const booleanList = [
     {
@@ -51,24 +50,56 @@ const Translation = () => {
     },
   ];
 
+  const riskCategoryOptions = {
+    'Low Risk': 'LOW',
+    'Medium Risk': 'MEDIUM',
+    'High Risk': 'HIGH',
+    'PEP Risk': 'PEP',
+  };
+
+  const riskCategoryReverseOptions = {
+    LOW: 'Low Risk',
+    MEDIUM: 'Medium Risk',
+    HIGH: 'High Risk',
+    PEP: 'PEP Risk',
+  };
+
+  React.useEffect(() => {
+    const subscription = watch(
+      debounce((data) => {
+        if (id) {
+          mutate({ ...data, id, riskCategory: riskCategoryOptions[data?.riskCategory] });
+        }
+      }, 800)
+    );
+
+    return () => subscription.unsubscribe();
+  }, [watch, router.isReady]);
+
+  const { data: editValues } = useGetOfficialUseQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
+
+  React.useEffect(() => {
+    if (editValues) {
+      const editValueData = editValues?.members?.officialUse?.record;
+      const riskCategory = editValueData?.riskCategory;
+
+      const riskOption = riskCategoryReverseOptions[riskCategory] ?? '';
+
+      reset({ ...editValueData, riskCategory: riskOption });
+    }
+  }, [editValues]);
+
   return (
     <>
       <FormProvider {...methods}>
         <form>
-          <Container
-            height="fit-content"
-            minW="container.xl"
-            p="0"
-            background="white"
-            pb="110px"
-          >
-            <Box
-              position="sticky"
-              top="110px"
-              bg="gray.100"
-              width="100%"
-              zIndex="10"
-            >
+          <Container height="fit-content" minW="container.xl" p="0" background="white" pb="110px">
+            <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
               <FormHeader title={t['membersFormAddNewMembers']} />
             </Box>
             <Box p="s20" mt={1}>
@@ -78,36 +109,35 @@ const Translation = () => {
                 </Text>
 
                 <GroupContainer>
+                  <Box>
+                    <FormSwitchTab
+                      label="Is Member a Staff?"
+                      options={booleanList}
+                      name="isStaff"
+                    />
+                  </Box>
+
                   <FormSwitchTab
                     label="Name Check In Sanction List"
                     options={booleanList}
-                    name="nameCheckInSactionList"
+                    name="checkSanction"
                   />
 
                   <Box>
                     <FormSwitchTab
                       label="Name Check in Negative List"
                       options={booleanList}
-                      name="nameCheckInNegative List"
+                      name="checkNegative"
                     />
                   </Box>
 
                   <Box>
-                    <Text
-                      fontWeight="Regular"
-                      fontSize="s3"
-                      color="neutralColorLight.gray-80"
-                    >
+                    <Text fontWeight="Regular" fontSize="s3" color="neutralColorLight.gray-80">
                       Risk Category
                     </Text>
                     <FormRadioGroup
                       name="riskCategory"
-                      radioList={[
-                        'Low Risk',
-                        'Medium Risk',
-                        'High Risk',
-                        'PEP',
-                      ]}
+                      radioList={['Low Risk', 'Medium Risk', 'High Risk', 'PEP Risk']}
                       labelFontSize="s3"
                     />
                   </Box>
@@ -115,13 +145,13 @@ const Translation = () => {
                   <FormSwitchTab
                     label="Above documents collected and verified with original?"
                     options={booleanList}
-                    name="nameCheckInNegative List"
+                    name="docCollectedAndVerified"
                   />
 
                   <FormSwitchTab
                     label="Acceptable address verifying document obtained?"
                     options={booleanList}
-                    name="nameCheckInNegative List"
+                    name="acceptableAddressDoc"
                   />
                 </GroupContainer>
               </GroupContainer>
@@ -132,18 +162,10 @@ const Translation = () => {
                 <AccordionItem>
                   {({ isExpanded }) => (
                     <>
-                      <AccordionButton
-                        bg={isExpanded ? '#E0E5EB' : ''}
-                        h="60px"
-                      >
+                      <AccordionButton bg={isExpanded ? '#E0E5EB' : ''} h="60px">
                         <Box flex="1" textAlign="left">
-                          <Text
-                            fontSize="r2"
-                            fontWeight="600"
-                            textTransform="capitalize"
-                          >
-                            {translationDataArray?.length} texts needs to be
-                            translated to Nepali
+                          <Text fontSize="r2" fontWeight="600" textTransform="capitalize">
+                            {translationDataArray?.length} texts needs to be translated to Nepali
                           </Text>
                         </Box>
                         {isExpanded ? (
@@ -166,16 +188,12 @@ const Translation = () => {
                           <Box display="flex" flexDirection="column">
                             {translationDataArray?.map((item) => (
                               <Box display="flex" key={item?.id}>
-                                  <Text fontSize="r1" w={200}>
-                                    {item?.data}
-                                  </Text>
-                                  <Box w={100} />
-                                  <Input
-                                    type="text"
-                                    defaultValue={item?.translatedValue}
-                                    w={400}
-                                  />
-                                </Box>
+                                <Text fontSize="r1" w={200}>
+                                  {item?.data}
+                                </Text>
+                                <Box w={100} />
+                                <Input type="text" defaultValue={item?.translatedValue} w={400} />
+                              </Box>
                             ))}
                           </Box>
                         </Flex>
@@ -204,11 +222,7 @@ const Translation = () => {
                 </Box>
               }
               draftButton={
-                <Button
-                  type="submit"
-                  variant="ghost"
-                  onClick={() => router.push(`/pdf?id=${id}`)}
-                >
+                <Button type="submit" variant="ghost" onClick={() => router.push(`/pdf?id=${id}`)}>
                   <Icon as={AiOutlineEye} color="primary.500" />
                   <Text
                     alignSelf="center"
