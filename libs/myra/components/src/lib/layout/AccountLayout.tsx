@@ -33,7 +33,7 @@ const accountColumns = [
   },
   {
     title: 'accountDepositProduct',
-    link: '/accounts/deposit-products',
+    link: '/accounts/products',
     addLinkId: '/settings/general/deposit-products',
   },
 ];

@@ -20,6 +20,34 @@ export const SettingsDepositProducts = () => {
 
   const newId = useGetNewIdMutation();
 
+  return (
+    <>
+      <Box borderBottom="1px solid " borderColor="border.layout" p="8px 16px">
+        <Box display="flex" justifyContent="space-between" alignItems="center" h="100%">
+          <Text fontSize="r2" fontWeight="600" color="gray.800">
+            {`${t['settingsDepositProducts']} - ${featureCode?.settingsDepositProduct}`}
+          </Text>
+          <Button
+            leftIcon={<AddIcon h="11px" />}
+            onClick={() =>
+              newId
+                .mutateAsync({ idType: Id_Type.Depositproduct })
+                .then((res) => router.push(`/settings/general/deposit-products/add/${res?.newId}`))
+            }
+          >
+            {t['settingsDepositProductNew']}
+          </Button>
+        </Box>
+      </Box>
+
+      <DepositProductTable />
+    </>
+  );
+};
+
+export const DepositProductTable = () => {
+  const router = useRouter();
+  const { t } = useTranslation();
   const { data, isLoading } = useGetDepositProductSettingsListQuery(
     {
       paginate: {
@@ -39,7 +67,6 @@ export const SettingsDepositProducts = () => {
       onClick: (id: string) => router.push(`/settings/general/deposit-products/edit/${id}`),
     },
   ];
-
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -89,37 +116,16 @@ export const SettingsDepositProducts = () => {
     ],
     [t]
   );
-
   return (
-    <>
-      <Box borderBottom="1px solid " borderColor="border.layout" p="8px 16px">
-        <Box display="flex" justifyContent="space-between" alignItems="center" h="100%">
-          <Text fontSize="r2" fontWeight="600" color="gray.800">
-            {`${t['settingsDepositProducts']} - ${featureCode?.settingsDepositProduct}`}
-          </Text>
-          <Button
-            leftIcon={<AddIcon h="11px" />}
-            onClick={() =>
-              newId
-                .mutateAsync({ idType: Id_Type.Depositproduct })
-                .then((res) => router.push(`/settings/general/deposit-products/add/${res?.newId}`))
-            }
-          >
-            {t['settingsDepositProductNew']}
-          </Button>
-        </Box>
-      </Box>
-
-      <Table
-        isLoading={isLoading}
-        data={rowData}
-        columns={columns}
-        pagination={{
-          total: data?.settings?.general?.depositProduct?.list?.totalCount ?? 'Many',
-          pageInfo: data?.settings?.general?.depositProduct?.list?.pageInfo,
-        }}
-      />
-    </>
+    <Table
+      isLoading={isLoading}
+      data={rowData}
+      columns={columns}
+      pagination={{
+        total: data?.settings?.general?.depositProduct?.list?.totalCount ?? 'Many',
+        pageInfo: data?.settings?.general?.depositProduct?.list?.pageInfo,
+      }}
+    />
   );
 };
 
