@@ -50,14 +50,16 @@ export const AlternativeChannels = () => {
   const editedData = editValues?.settings?.general?.depositProduct?.formState?.data;
 
   useEffect(() => {
-    reset({
-      ...editedData,
-      alternativeChannelCharge: editedData?.alternativeChannelCharge?.map((record) => ({
-        serviceName: record?.serviceName,
-        ledgerName: record?.ledgerName,
-        amount: record?.amount,
-      })),
-    });
+    if (editedData) {
+      reset({
+        ...editedData,
+        alternativeChannelCharge: editedData?.alternativeChannelCharge?.map((record) => ({
+          serviceName: record?.serviceName,
+          ledgerName: record?.ledgerName,
+          amount: record?.amount,
+        })),
+      });
+    }
   }, [editValues]);
 
   return (
