@@ -1,11 +1,4 @@
-import { useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
-import { useRouter } from 'next/router';
-
-import {
-  useGetCoaListQuery,
-  useGetDepositProductSettingsEditDataQuery,
-} from '@coop/cbs/data-access';
+import { useGetCoaListQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 import { GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -18,12 +11,6 @@ type AlternativeChannelTable = {
 
 export const AlternativeChannels = () => {
   const { t } = useTranslation();
-  const router = useRouter();
-  const id = String(router?.query?.['id']);
-
-  const methods = useFormContext();
-
-  const { reset } = methods;
 
   const { data: coa } = useGetCoaListQuery({
     filter: {
@@ -38,58 +25,24 @@ export const AlternativeChannels = () => {
     value: item?.id as string,
   }));
 
-  const { data: editValues } = useGetDepositProductSettingsEditDataQuery(
-    {
-      id,
-    },
-    {
-      staleTime: 0,
-    }
-  );
-
-  const editedData = editValues?.settings?.general?.depositProduct?.formState?.data;
-
-  useEffect(() => {
-    if (editedData) {
-      reset({
-        ...editedData,
-        alternativeChannelCharge: editedData?.alternativeChannelCharge?.map((record) => ({
-          serviceName: record?.serviceName,
-          ledgerName: record?.ledgerName,
-          amount: record?.amount,
-        })),
-      });
-    }
-  }, [editValues]);
+  const serviceList = [
+    { label: 'Mobile Banking', value: 'Mobile Banking' },
+    { label: 'Ebanking', value: 'Ebanking' },
+    { label: 'Sms banking', value: 'Sms banking' },
+  ];
 
   return (
     <GridItem mt="s32" colSpan={3}>
       <FormEditableTable<AlternativeChannelTable>
         name="alternativeChannelCharge"
-        canAddRow={false}
         debug={false}
-        defaultData={[
-          {
-            serviceName: 'Mobile Banking',
-            amount: 0,
-            ledgerName: ' ',
-          },
-          {
-            serviceName: 'Ebanking',
-            amount: 0,
-            ledgerName: ' ',
-          },
-          {
-            serviceName: 'Sms banking',
-            amount: 0,
-            ledgerName: ' ',
-          },
-        ]}
         columns={[
           {
             accessor: 'serviceName',
             header: t['depositProductAccServiceTableServiceName'],
             cellWidth: 'auto',
+            fieldType: 'search',
+            searchOptions: serviceList,
           },
           {
             accessor: 'ledgerName',

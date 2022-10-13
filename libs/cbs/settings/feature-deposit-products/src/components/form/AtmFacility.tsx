@@ -25,24 +25,20 @@ export const AtmFacility = () => {
     value: item?.id as string,
   }));
 
+  const atmList = [{ label: 'Atm charge', value: 'Atm charge' }];
+
   return (
     <GridItem mt="s32" colSpan={3}>
       <FormEditableTable<AtmFacilityTable>
         name="atmCharge"
         debug={false}
-        canAddRow={false}
-        defaultData={[
-          {
-            serviceName: 'Atm charge',
-            amount: 0,
-            ledgerName: ' ',
-          },
-        ]}
         columns={[
           {
             accessor: 'serviceName',
             header: t['depositProductAccServiceTableServiceName'],
             cellWidth: 'auto',
+            fieldType: 'search',
+            searchOptions: atmList,
           },
           {
             accessor: 'ledgerName',

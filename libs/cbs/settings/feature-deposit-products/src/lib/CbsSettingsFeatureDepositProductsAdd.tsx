@@ -94,6 +94,8 @@ export const SettingsDepositProductsAdd = () => {
       supportMultiple: false,
       withdrawRestricted: false,
       wealthBuildingProduct: false,
+      ladderRate: false,
+      isMandatorySaving: false,
     },
   });
 
