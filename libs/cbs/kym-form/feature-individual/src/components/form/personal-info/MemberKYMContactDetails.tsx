@@ -1,5 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { KymIndMemberInput } from '@coop/cbs/data-access';
 import { FormEmailInput, FormPhoneNumber } from '@coop/shared/form';
 import { FormSection } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
@@ -15,7 +16,7 @@ export const MemberKYMContactDetails = ({
 }: IMemberKYMContactDetailsProps) => {
   const { t } = useTranslation();
 
-  const methods = useForm();
+  const methods = useForm<KymIndMemberInput>();
   useIndividual({ methods });
 
   return (
