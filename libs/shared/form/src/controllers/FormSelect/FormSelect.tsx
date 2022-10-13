@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Control, Controller, FieldValues, useFormContext } from 'react-hook-form';
 import { ControllerRenderProps, UseControllerProps } from 'react-hook-form/dist/types/controller';
+import { get } from 'lodash';
 
 import { Select, SelectProps } from '@coop/shared/ui';
 
@@ -66,7 +67,7 @@ const FormControl = <T,>({
 
   return (
     <Select
-      errorText={errors[name as string]?.message as string}
+      errorText={name ? (get(errors, name)?.message as string) : undefined}
       options={options}
       value={rest.isMulti ? filteredValue : foundValue}
       inputId={name}

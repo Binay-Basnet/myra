@@ -162,6 +162,7 @@ query getDepositProductSettingsEditData($id: ID!) {
               penaltyAmount
               penaltyRate
             }
+            isMandatorySaving
             autoOpen
             allowLoan
             percentageOfDeposit

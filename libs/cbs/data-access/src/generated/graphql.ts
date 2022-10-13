@@ -14744,6 +14744,7 @@ export type GetDepositProductSettingsEditDataQuery = {
             postingFrequency?: DepositFrequency | null;
             maxPostingFreqDifference?: number | null;
             accountType?: DefaultAccountType | null;
+            isMandatorySaving?: boolean | null;
             autoOpen?: boolean | null;
             allowLoan?: boolean | null;
             percentageOfDeposit?: number | null;
@@ -22891,6 +22892,7 @@ export const GetDepositProductSettingsEditDataDocument = `
               penaltyAmount
               penaltyRate
             }
+            isMandatorySaving
             autoOpen
             allowLoan
             percentageOfDeposit

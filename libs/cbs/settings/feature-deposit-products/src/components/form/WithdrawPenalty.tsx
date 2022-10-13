@@ -1,23 +1,22 @@
-import { useGetCoaListQuery } from '@coop/cbs/data-access';
-import { FormInput, FormSelect } from '@coop/shared/form';
+import { FormInput } from '@coop/shared/form';
 import { Alert, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const WithdrawPenalty = () => {
   const { t } = useTranslation();
 
-  const { data: coa } = useGetCoaListQuery({
-    filter: {
-      active: true,
-    },
-  });
+  // const { data: coa } = useGetCoaListQuery({
+  //   filter: {
+  //     active: true,
+  //   },
+  // });
 
-  const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
+  // const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
 
-  const coaList = coaData?.map((item) => ({
-    label: item?.name?.en as string,
-    value: item?.id as string,
-  }));
+  // const coaList = coaData?.map((item) => ({
+  //   label: item?.name?.en as string,
+  //   value: item?.id as string,
+  // }));
 
   return (
     <FormSection header="depositProductWithdrawPenaltySetup">
@@ -37,11 +36,11 @@ export const WithdrawPenalty = () => {
         }
         type="number"
       />
-      <FormSelect
+      {/* <FormSelect
         name="withdrawPenalty.penaltyLedgerMapping"
         label={t['depositProductPenaltyedgerMapping']}
         options={coaList}
-      />
+      /> */}
       <GridItem colSpan={3}>
         <Alert status="warning">
           <Text fontWeight="Medium" fontSize="r1">

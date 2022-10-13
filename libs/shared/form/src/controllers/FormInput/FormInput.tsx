@@ -1,10 +1,11 @@
-import { Control, Controller, Path, useFormContext } from 'react-hook-form';
+import { Control, Controller, useFormContext } from 'react-hook-form';
 import { UseControllerProps } from 'react-hook-form/dist/types/controller';
+import { get } from 'lodash';
 
 import { Input, InputProps } from '@coop/shared/ui';
 
 interface IFormInputProps<T> extends InputProps {
-  name: Path<T> | string;
+  name: string;
   control?: Control<T>;
   rules?: UseControllerProps['rules'];
 }
@@ -26,7 +27,7 @@ export const FormInput = <T,>({ name, ...rest }: IFormInputProps<T>) => {
       render={({ field: { onChange, value, ...fieldProps } }) => (
         <Input
           id={name}
-          errorText={errors[name]?.message as string}
+          errorText={get(errors, name)?.message as string}
           onChange={(e) => {
             onChange(e);
             if (errors[name]?.type === 'required') {

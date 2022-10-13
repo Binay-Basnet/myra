@@ -1,9 +1,8 @@
 import { useFormContext } from 'react-hook-form';
 
-import { useGetCoaListQuery } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { SubHeadingText, SubText } from '@coop/shared/components';
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Alert, Box, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -41,18 +40,18 @@ export const Penalty = () => {
   //   },
   // ];
 
-  const { data: coa } = useGetCoaListQuery({
-    filter: {
-      active: true,
-    },
-  });
+  // const { data: coa } = useGetCoaListQuery({
+  //   filter: {
+  //     active: true,
+  //   },
+  // });
 
-  const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
+  // const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
 
-  const coaList = coaData?.map((item) => ({
-    label: item?.name?.en as string,
-    value: item?.id as string,
-  }));
+  // const coaList = coaData?.map((item) => ({
+  //   label: item?.name?.en as string,
+  //   value: item?.id as string,
+  // }));
 
   return (
     <FormSection>
@@ -102,11 +101,7 @@ export const Penalty = () => {
                     type="number"
                     label={t['loanProductPenaltyAmount']}
                   />
-                  <FormSelect
-                    name="penaltyOnPrincipal.penaltyLedgerMapping"
-                    label={t['loanProductPenaltyedgerMapping']}
-                    options={coaList}
-                  />
+
                   <GridItem colSpan={3}>
                     <Alert status="warning">
                       <Text fontWeight="Medium" fontSize="r1">
@@ -115,6 +110,12 @@ export const Penalty = () => {
                     </Alert>
                   </GridItem>
                 </InputGroupContainer>
+
+                {/* <FormSelect
+                  name="penaltyOnInterest.penaltyLedgerMapping"
+                  label={t['loanProductPenaltyedgerMapping']}
+                  options={coaList}
+                /> */}
                 {/* {penaltyListVal === 'principal' && (
                   <InputGroupContainer>
                     <FormInput
@@ -139,11 +140,7 @@ export const Penalty = () => {
                       type="number"
                       label={t['loanProductPenaltyAmount']}
                     />
-                    <FormSelect
-                      name="penaltyOnPrincipal.penaltyLedgerMapping"
-                      label={t['loanProductPenaltyedgerMapping']}
-                      options={coaList}
-                    />
+                   
                     <GridItem colSpan={3}>
                   <Alert status="warning">
           <Text fontWeight="Medium" fontSize="r1">
@@ -178,11 +175,7 @@ export const Penalty = () => {
                       type="number"
                       label={t['loanProductPenaltyAmount']}
                     />
-                    <FormSelect
-                      name="penaltyOnInterest.penaltyLedgerMapping"
-                      label={t['loanProductPenaltyedgerMapping']}
-                      options={coaList}
-                    />
+                  
                     <GridItem colSpan={3}>
                   <Alert status="warning">
           <Text fontWeight="Medium" fontSize="r1">
@@ -217,11 +210,7 @@ export const Penalty = () => {
                       type="number"
                       label={t['loanProductPenaltyAmount']}
                     />
-                    <FormSelect
-                      name="penaltyOnInstallment.penaltyLedgerMapping"
-                      label={t['loanProductPenaltyedgerMapping']}
-                      options={coaList}
-                    />
+                    
                     <GridItem colSpan={3}>
                   <Alert status="warning">
           <Text fontWeight="Medium" fontSize="r1">

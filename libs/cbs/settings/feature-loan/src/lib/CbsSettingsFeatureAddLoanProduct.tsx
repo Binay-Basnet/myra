@@ -340,15 +340,15 @@ export const SettingsLoanProductForm = () => {
       },
       onSuccess: () => router.push('/settings/general/loan-products'),
       promise: mutateAsync({ id, data: updatedData as LoanProductInput }),
-      // onError: (error) => {
-      //   if (error.__typename === 'ValidationError') {
-      //     Object.keys(error.validationErrorMsg).map((key) =>
-      //       methods.setError(key as keyof LoanProductInput, {
-      //         message: error.validationErrorMsg[key][0] as string,
-      //       })
-      //     );
-      //   }
-      // },
+      onError: (error) => {
+        if (error.__typename === 'ValidationError') {
+          Object.keys(error.validationErrorMsg).map((key) =>
+            methods.setError(key as keyof LoanProductInput, {
+              message: error.validationErrorMsg[key][0] as string,
+            })
+          );
+        }
+      },
     });
   };
 
