@@ -144,7 +144,7 @@ export const DepositFrequency = () => {
                 {monthly === WeeklyFrequency.Day && (
                   <Box display="grid" mt="s16" gridTemplateColumns="repeat(3, 1fr)" gap="s16">
                     <FormInput
-                      type="text"
+                      type="number"
                       name="depositFrequencyDay"
                       label={t['accDay']}
                       __placeholder={t['accEnterDay']}
@@ -199,11 +199,10 @@ export const DepositFrequency = () => {
                     options={monthsList}
                   />
 
-                  <FormSelect
+                  <FormInput
                     name="depositFrequencyYearlyDay"
                     label={t['accSelectDay']}
-                    __placeholder={t['accSelectDay']}
-                    options={daysList}
+                    type="number"
                   />
                 </Box>
               </Box>
