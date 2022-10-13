@@ -52,6 +52,9 @@ const getIndividualData = (data: GetIndividualKymEditDataQuery | undefined) => {
     ...editValueData?.rentedHouse,
     landlordName: editValueData?.rentedHouse?.landlordName?.local,
     maritalStatusId: editValueData?.maritalStatusId,
+    ...editValueData?.estimatedTransactions,
+    estimatedAnnualTransactionFrequencyId:
+      editValueData?.estimatedTransactions?.estimatedAnnualTransactionFrequencyId ?? '',
   };
 };
 
