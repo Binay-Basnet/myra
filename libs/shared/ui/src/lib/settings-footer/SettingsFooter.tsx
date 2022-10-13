@@ -9,7 +9,7 @@ export interface SettingsFooterProps {
   handleSave?: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
-export function SettingsFooter(props: SettingsFooterProps) {
+export const SettingsFooter = (props: SettingsFooterProps) => {
   const { handleDiscard, handleSave } = props;
   return (
     <Box
@@ -31,6 +31,6 @@ export function SettingsFooter(props: SettingsFooterProps) {
       <Button onClick={handleSave}>Save Changes</Button>
     </Box>
   );
-}
+};
 
 export default SettingsFooter;
