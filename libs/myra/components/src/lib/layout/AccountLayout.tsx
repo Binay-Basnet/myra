@@ -31,6 +31,11 @@ const accountColumns = [
     link: '/accounts/account-close',
     addLinkId: '/accounts/account-close',
   },
+  {
+    title: 'accountDepositProduct',
+    link: '/accounts/deposit-products',
+    addLinkId: '/settings/general/deposit-products',
+  },
 ];
 
 const addButtoncolumns = [
@@ -41,6 +46,10 @@ const addButtoncolumns = [
   {
     title: 'accountClose',
     link: '/accounts/account-close',
+  },
+  {
+    title: 'accountDepositProduct',
+    link: '/settings/general/deposit-products',
   },
 ];
 export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {

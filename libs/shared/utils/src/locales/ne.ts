@@ -3150,6 +3150,9 @@ const ne: Record<string, string> = {
     'If both rebate amount and rebate rate is filled, the total rebate is the total sum of the two.',
   loanProductpenaltyRate: 'Penalty Rate',
   loanProductRebateRate: 'Rebate Rate',
+
+  // account deposit product
+  accountDepositProduct: 'Deposit Product',
 };
 
 export default ne;
