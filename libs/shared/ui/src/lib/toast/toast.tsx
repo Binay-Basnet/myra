@@ -46,6 +46,8 @@ type MutationError =
 
 const getError = (error: MutationError) => {
   switch (error.__typename) {
+    case 'ValidationError':
+      return error.validationErrorMsg;
     case 'BadRequestError':
       return error.badRequestErrorMessage;
     case 'AuthorizationError':
@@ -120,12 +122,21 @@ export const asyncToast = async <T extends Record<string, unknown>>({
         if (errorKeys[0]) {
           const error = getError(errorKeys[0]);
 
-          onError && onError(errorKeys[0]);
-          toast({
-            id,
-            type: 'error',
-            message: error,
-          });
+          if (typeof error === 'string') {
+            onError && onError(errorKeys[0]);
+            toast({
+              id,
+              type: 'error',
+              message: error,
+            });
+          } else {
+            onError && onError(errorKeys[0]);
+            toast({
+              id,
+              type: 'error',
+              message: 'Some fields are empty or invalid',
+            });
+          }
         } else {
           onSuccess && onSuccess(response);
           toast({

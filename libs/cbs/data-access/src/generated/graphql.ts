@@ -8912,7 +8912,7 @@ export type ShareRegister = {
   startNumber: Scalars['Int'];
   status?: Maybe<Share_Status>;
   totalAmount?: Maybe<Scalars['Float']>;
-  transactionDate?: Maybe<Scalars['Date']>;
+  transactionDate?: Maybe<Scalars['String']>;
   transactionDirection: Share_Transaction_Direction;
   voucherNumber?: Maybe<Scalars['String']>;
 };
@@ -8929,8 +8929,8 @@ export type ShareRegisterEdge = {
 };
 
 export type ShareRegisterFilter = {
-  dateFrom?: InputMaybe<Scalars['Date']>;
-  dateTo?: InputMaybe<Scalars['Date']>;
+  dateFrom?: InputMaybe<Scalars['String']>;
+  dateTo?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   memberId?: InputMaybe<Scalars['String']>;
   memberSearchText?: InputMaybe<Scalars['String']>;

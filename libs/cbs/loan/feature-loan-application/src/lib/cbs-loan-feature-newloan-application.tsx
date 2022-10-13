@@ -60,7 +60,7 @@ export const NewLoanApplication = () => {
   const productId = watch('productId');
 
   const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
-    useGetIndividualMemberDetails({ memberId });
+    useGetIndividualMemberDetails({ memberId: String(memberId) });
 
   const { data: loanTypeData } = useGetLoanProductTypesQuery();
   const { data: loanSubTypeData } = useGetLoanProductSubTypeQuery(
@@ -146,6 +146,15 @@ export const NewLoanApplication = () => {
         success: 'Loan Applied Successfully',
       },
       promise: promise(),
+      onError: (error) => {
+        if (error.__typename === 'ValidationError') {
+          Object.keys(error.validationErrorMsg).map((key) =>
+            methods.setError(key as keyof LoanAccountInput, {
+              message: error.validationErrorMsg[key][0] as string,
+            })
+          );
+        }
+      },
       onSuccess: () => {
         queryClient.invalidateQueries('getLoanList');
         router.push('/loan/applications?objState=SUBMITTED');
@@ -155,14 +164,14 @@ export const NewLoanApplication = () => {
 
   // Errors for products
   const { errors, isFetching, loanProductOptions } = useLoanProductErrors({
-    memberId,
-    loanSubType,
-    loanType,
-    productId,
+    memberId: String(memberId),
+    loanSubType: String(loanSubType),
+    loanType: String(loanType),
+    productId: String(productId),
   });
 
   // Get Currently Selected Loan Product
-  const { loanProduct } = useLoanProductDetails({ productId });
+  const { loanProduct } = useLoanProductDetails({ productId: String(productId) });
 
   // Reset Fields
   useEffect(() => {
@@ -257,7 +266,7 @@ export const NewLoanApplication = () => {
                   )}
                   {errors && showCriteria && (
                     <Box border="1px solid" borderColor="border.layout" borderRadius="br2" p="s16">
-                      <CriteriaCard productId={productId} />
+                      <CriteriaCard productId={String(productId)} />
                     </Box>
                   )}
                   {productId && !errors && (
@@ -335,6 +344,7 @@ export const NewLoanApplication = () => {
           }
           mainButtonLabel="Send For Approval"
           mainButtonHandler={sendForApprovalHandler}
+          isMainButtonDisabled={!memberId || !productId || !loanType || !loanSubType}
         />
       </Box>
     </Container>

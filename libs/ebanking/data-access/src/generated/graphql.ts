@@ -8912,7 +8912,7 @@ export type ShareRegister = {
   startNumber: Scalars['Int'];
   status?: Maybe<Share_Status>;
   totalAmount?: Maybe<Scalars['Float']>;
-  transactionDate?: Maybe<Scalars['Date']>;
+  transactionDate?: Maybe<Scalars['String']>;
   transactionDirection: Share_Transaction_Direction;
   voucherNumber?: Maybe<Scalars['String']>;
 };
@@ -8929,8 +8929,8 @@ export type ShareRegisterEdge = {
 };
 
 export type ShareRegisterFilter = {
-  dateFrom?: InputMaybe<Scalars['Date']>;
-  dateTo?: InputMaybe<Scalars['Date']>;
+  dateFrom?: InputMaybe<Scalars['String']>;
+  dateTo?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   memberId?: InputMaybe<Scalars['String']>;
   memberSearchText?: InputMaybe<Scalars['String']>;
@@ -10217,6 +10217,31 @@ export type SetKymIndividualIdentificationDataMutationVariables = Exact<{
 
 export type SetKymIndividualIdentificationDataMutation = {
   members: { individual?: { identification: { upsert: { recordId?: string | null } } } | null };
+};
+
+export type SetOfficialUseMutationVariables = Exact<{
+  id: Scalars['ID'];
+  isStaff?: InputMaybe<Scalars['Boolean']>;
+  checkSanction?: InputMaybe<Scalars['Boolean']>;
+  checkNegative?: InputMaybe<Scalars['Boolean']>;
+  riskCategory?: InputMaybe<OfficialUseRiskCategory>;
+  docCollectedAndVerified?: InputMaybe<Scalars['Boolean']>;
+  acceptableAddressDoc?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type SetOfficialUseMutation = {
+  members: {
+    officialUse?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
 };
 
 export type SetInstitutionDataMutationVariables = Exact<{
@@ -13876,6 +13901,34 @@ export type GetMemberDetailsQuery = {
   };
 };
 
+export type GetOfficialUseQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetOfficialUseQuery = {
+  members: {
+    officialUse?: {
+      recordId?: string | null;
+      record?: {
+        id?: string | null;
+        isStaff?: boolean | null;
+        checkSanction?: boolean | null;
+        checkNegative?: boolean | null;
+        riskCategory?: OfficialUseRiskCategory | null;
+        docCollectedAndVerified?: boolean | null;
+        acceptableAddressDoc?: boolean | null;
+      } | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
 export type GetMemberPdfQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -14648,12 +14701,15 @@ export type GetDepositProductSettingsEditDataQuery = {
             genderId?: Array<string | null> | null;
             maritalStatusId?: Array<string | null> | null;
             educationQualification?: Array<string | null> | null;
+            transactionAllowed?: DepositFrequency | null;
+            noOftransactionAllowed?: number | null;
             ethnicity?: Array<string | null> | null;
             occupation?: Array<string | null> | null;
             foreignEmployment?: boolean | null;
             natureOfBusinessInstitution?: Array<string | null> | null;
             natureOFBusinessCoop?: Array<string | null> | null;
             cooperativeType?: Array<string | null> | null;
+            isForMinors?: boolean | null;
             depositFrequency?: Frequency | null;
             penalty?: boolean | null;
             rebate?: boolean | null;
@@ -16714,6 +16770,33 @@ export const useSetKymIndividualIdentificationDataMutation = <TError = unknown, 
       SetKymIndividualIdentificationDataMutation,
       SetKymIndividualIdentificationDataMutationVariables
     >(SetKymIndividualIdentificationDataDocument),
+    options
+  );
+export const SetOfficialUseDocument = `
+    mutation setOfficialUse($id: ID!, $isStaff: Boolean, $checkSanction: Boolean, $checkNegative: Boolean, $riskCategory: OfficialUseRiskCategory, $docCollectedAndVerified: Boolean, $acceptableAddressDoc: Boolean) {
+  members {
+    officialUse(
+      data: {id: $id, isStaff: $isStaff, checkSanction: $checkSanction, checkNegative: $checkNegative, riskCategory: $riskCategory, docCollectedAndVerified: $docCollectedAndVerified, acceptableAddressDoc: $acceptableAddressDoc}
+    ) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetOfficialUseMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetOfficialUseMutation,
+    TError,
+    SetOfficialUseMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetOfficialUseMutation, TError, SetOfficialUseMutationVariables, TContext>(
+    ['setOfficialUse'],
+    useAxios<SetOfficialUseMutation, SetOfficialUseMutationVariables>(SetOfficialUseDocument),
     options
   );
 export const SetInstitutionDataDocument = `
@@ -21786,6 +21869,39 @@ export const useGetMemberDetailsQuery = <TData = GetMemberDetailsQuery, TError =
     ),
     options
   );
+export const GetOfficialUseDocument = `
+    query getOfficialUse($id: ID!) {
+  members {
+    officialUse(id: $id) {
+      recordId
+      record {
+        id
+        isStaff
+        checkSanction
+        checkNegative
+        riskCategory
+        docCollectedAndVerified
+        acceptableAddressDoc
+      }
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useGetOfficialUseQuery = <TData = GetOfficialUseQuery, TError = unknown>(
+  variables: GetOfficialUseQueryVariables,
+  options?: UseQueryOptions<GetOfficialUseQuery, TError, TData>
+) =>
+  useQuery<GetOfficialUseQuery, TError, TData>(
+    ['getOfficialUse', variables],
+    useAxios<GetOfficialUseQuery, GetOfficialUseQueryVariables>(GetOfficialUseDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetMemberPdfDocument = `
     query getMemberPDF($id: ID!) {
   members {
@@ -22821,12 +22937,15 @@ export const GetDepositProductSettingsEditDataDocument = `
             genderId
             maritalStatusId
             educationQualification
+            transactionAllowed
+            noOftransactionAllowed
             ethnicity
             occupation
             foreignEmployment
             natureOfBusinessInstitution
             natureOFBusinessCoop
             cooperativeType
+            isForMinors
             depositAmount {
               minAmount
               maxAmount
