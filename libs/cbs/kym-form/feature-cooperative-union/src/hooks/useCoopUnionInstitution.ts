@@ -70,6 +70,7 @@ export const useCoopUnionInstitution = ({ methods }: IUseCoopUnionInstProps) => 
     data: editValues,
     refetch: refetchEdit,
     isLoading: editLoading,
+    isFetching,
   } = useGetCooperativeUnionKymEditDataQuery(
     {
       id,
@@ -143,5 +144,5 @@ export const useCoopUnionInstitution = ({ methods }: IUseCoopUnionInstProps) => 
         message: value[1][0],
       });
     });
-  }, [errors]);
+  }, [errors, isFetching]);
 };

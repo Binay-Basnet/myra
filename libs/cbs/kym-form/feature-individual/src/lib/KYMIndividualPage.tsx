@@ -3,6 +3,8 @@ import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import {
+  reset,
+  useAppDispatch,
   FormFieldSearchTerm,
   RootState,
   useAppSelector,
@@ -10,9 +12,8 @@ import {
   useGetIndividualKymOptionsQuery,
   useGetKymFormStatusQuery,
 } from '@coop/cbs/data-access';
-import { Box, Button, Container, FormFooter, FormHeader, Icon, Text } from '@coop/shared/ui';
+import { Box, Container, FormHeader, Text } from '@coop/shared/ui';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
-import { BiSave } from 'react-icons/bi';
 import { AccorrdianAddMember } from '@coop/myra/components';
 import {
   KYMBasiccoopDetails,
@@ -30,6 +31,7 @@ import {
   MemberKYMIncomeSourceDetails,
   MemberKYMMainOccupation,
   MemberKYMProfession,
+  KymIndividualFooter,
 } from '../components/form';
 
 export const KYMIndividualPage = () => {
@@ -79,6 +81,11 @@ export const KYMIndividualPage = () => {
       }
     }
   }, [marriedData]);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(reset());
+  }, []);
 
   return (
     <>
@@ -155,34 +162,7 @@ export const KYMIndividualPage = () => {
 
       <Box position="sticky" bottom="0" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.xl" height="fit-content">
-          <FormFooter
-            status={
-              <Box display="flex" gap="s8">
-                <Text as="i" fontSize="r1">
-                  {t['formDetails']}
-                </Text>
-                <Text as="i" fontSize="r1">
-                  09:41 AM
-                </Text>
-              </Box>
-            }
-            draftButton={
-              <Button type="submit" variant="ghost">
-                <Icon as={BiSave} color="primary.500" />
-                <Text
-                  alignSelf="center"
-                  color="primary.500"
-                  fontWeight="Medium"
-                  fontSize="s2"
-                  ml="5px"
-                >
-                  {t['saveDraft']}
-                </Text>
-              </Button>
-            }
-            mainButtonLabel={t['next']}
-            mainButtonHandler={() => router.push(`/members/translation/${id}`)}
-          />
+          <KymIndividualFooter />
         </Container>
       </Box>
     </>

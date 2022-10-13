@@ -63,7 +63,6 @@ export const KYMCoopUnionFooter = () => {
 
             const sectionStatus =
               response?.data?.members?.cooperativeUnion?.formState?.sectionStatus;
-
             const institutionAllErrors =
               response?.data?.members?.cooperativeUnion?.formState?.sectionStatus
                 ?.institutionInformation?.errors;

@@ -61,8 +61,6 @@ export const FileInput = ({
   generateUrls,
   ...rest
 }: FileInputProps) => {
-  console.log(maxFiles);
-
   const [files, setFiles] = useState<File[]>([]);
   const [fileNames, setFileNames] = useState<string[] | FileWithUrl[]>([]);
   const [alreadyAddedFiles, setAlreadyAddedFiles] = useState<

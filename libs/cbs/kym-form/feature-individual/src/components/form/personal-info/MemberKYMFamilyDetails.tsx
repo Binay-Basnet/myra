@@ -12,11 +12,9 @@ import {
   RootState,
   useAppSelector,
   useDeleteMemberFamilyDetailsMutation,
-  useGetIndividualKymEditDataQuery,
   useGetIndividualKymFamilyMembersListQuery,
   useGetIndividualKymOptionsQuery,
   useGetNewIdMutation,
-  useSetMemberDataMutation,
   useSetMemberFamilyDetailsMutation,
 } from '@coop/cbs/data-access';
 import { DynamicBoxContainer, DynamicBoxGroupContainer } from '@coop/cbs/kym-form/ui-containers';
@@ -24,6 +22,7 @@ import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 import { Box, Button, FormSection, Icon, IconButton } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
+import { useIndividual } from '../../hooks/useIndividual';
 import { getFieldOption } from '../../../utils/getFieldOption';
 
 interface IAddFamilyMember {
@@ -161,47 +160,12 @@ const MemberMaritalStatus = ({ setKymCurrentSection }: IMemberMaritalStatusProps
 
   const methods = useForm<KymIndMemberInput>();
 
-  const { watch, reset } = methods;
-
-  const router = useRouter();
-
-  const id = router?.query?.['id'];
+  useIndividual({ methods });
 
   const { data: maritalStatusData, isLoading: maritalStatusLoading } =
     useGetIndividualKymOptionsQuery({
       searchTerm: FormFieldSearchTerm.MaritalStatus,
     });
-
-  const { data: editValues, refetch } = useGetIndividualKymEditDataQuery(
-    {
-      id: String(id),
-    },
-    { enabled: !!id }
-  );
-
-  useEffect(() => {
-    if (editValues) {
-      const editValueData = editValues?.members?.individual?.formState?.data?.formData;
-
-      reset({
-        maritalStatusId: editValueData?.maritalStatusId,
-      });
-    }
-  }, [editValues]);
-
-  const { mutate } = useSetMemberDataMutation();
-
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        if (id) {
-          mutate({ id: String(id), data }, { onSuccess: () => refetch() });
-        }
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
 
   return (
     <FormProvider {...methods}>

@@ -1,18 +1,12 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
-import debounce from 'lodash/debounce';
-import pickBy from 'lodash/pickBy';
 
-import {
-  KymIndMemberInput,
-  useAllAdministrationQuery,
-  useGetIndividualKymEditDataQuery,
-  useSetMemberDataMutation,
-} from '@coop/cbs/data-access';
+import { KymIndMemberInput, useAllAdministrationQuery } from '@coop/cbs/data-access';
 import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
 import { FormSection, GridItem } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
+
+import { useIndividual } from '../../hooks/useIndividual';
 
 interface IMemberKYMAddressProps {
   setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
@@ -21,13 +15,10 @@ interface IMemberKYMAddressProps {
 export const MemberKYMAddress = ({ setKymCurrentSection }: IMemberKYMAddressProps) => {
   const { t } = useTranslation();
 
-  const router = useRouter();
-
-  const id = router?.query?.['id'];
-
   const methods = useForm<KymIndMemberInput>();
+  useIndividual({ methods });
 
-  const { watch, control, reset } = methods;
+  const { watch } = methods;
 
   const isPermanentAndTemporaryAddressSame = watch('sameTempAsPermanentAddress');
   const { data } = useAllAdministrationQuery();
@@ -79,58 +70,6 @@ export const MemberKYMAddress = ({ setKymCurrentSection }: IMemberKYMAddressProp
     () => localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
     [currentTempLocalityId]
   );
-
-  const { data: editValues } = useGetIndividualKymEditDataQuery(
-    {
-      id: String(id),
-    },
-    { enabled: !!id }
-  );
-
-  useEffect(() => {
-    if (editValues) {
-      const editValueData = editValues?.members?.individual?.formState?.data?.formData;
-
-      reset({
-        permanentAddress: {
-          ...editValueData?.permanentAddress,
-          locality: editValueData?.permanentAddress?.locality?.local,
-        },
-        temporaryAddress: {
-          ...editValueData?.temporaryAddress?.address,
-          locality: editValueData?.temporaryAddress?.address?.locality?.local,
-        },
-        sameTempAsPermanentAddress: editValueData?.temporaryAddress?.sameTempAsPermanentAddress,
-        ...editValueData?.rentedHouse,
-        landlordName: editValueData?.rentedHouse?.landlordName?.local,
-      });
-    }
-  }, [editValues]);
-
-  const { mutate } = useSetMemberDataMutation();
-
-  useEffect(() => {
-    const subscription = watch(
-      debounce((val) => {
-        if (id) {
-          mutate({
-            id: String(id),
-            data: {
-              ...val,
-              permanentAddress: {
-                ...pickBy(val?.permanentAddress ?? {}, (v) => v !== 0),
-              },
-              temporaryAddress: {
-                ...pickBy(val?.temporaryAddress ?? {}, (v) => v !== 0),
-              },
-            },
-          });
-        }
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
 
   return (
     <FormProvider {...methods}>
@@ -270,7 +209,6 @@ export const MemberKYMAddress = ({ setKymCurrentSection }: IMemberKYMAddressProp
             __placeholder={t['kymIndLandlordName']}
           />
           <FormInput
-            control={control}
             type="number"
             name="landlordContact"
             label={t['kymIndContactNo']}

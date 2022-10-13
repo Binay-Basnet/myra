@@ -1,21 +1,15 @@
-import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
-import debounce from 'lodash/debounce';
 
 import {
   FormFieldSearchTerm,
   KymIndMemberInput,
-  RootState,
-  useAppSelector,
-  useGetIndividualKymEditDataQuery,
   useGetIndividualKymOptionsQuery,
-  useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
 import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 import { FormSection } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
+import { useIndividual } from '../../hooks/useIndividual';
 import { getFieldOption } from '../../../utils/getFieldOption';
 
 interface IMemberKYMBasicInfoProps {
@@ -25,14 +19,8 @@ interface IMemberKYMBasicInfoProps {
 export const MemberKYMBasicInfo = ({ setKymCurrentSection }: IMemberKYMBasicInfoProps) => {
   const { t } = useTranslation();
 
-  const router = useRouter();
-  const id = router?.query?.['id'];
-
   const methods = useForm<KymIndMemberInput>({});
-
-  const { watch, reset } = methods;
-
-  const { mutate } = useSetMemberDataMutation();
+  useIndividual({ methods });
 
   const { data: genderFields, isLoading: genderLoading } = useGetIndividualKymOptionsQuery({
     searchTerm: FormFieldSearchTerm.Gender,
@@ -54,52 +42,6 @@ export const MemberKYMBasicInfo = ({ setKymCurrentSection }: IMemberKYMBasicInfo
     useGetIndividualKymOptionsQuery({
       searchTerm: FormFieldSearchTerm.Nationality,
     });
-
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        if (id) {
-          mutate({ id: String(id), data });
-        }
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
-
-  const { data: editValues, refetch } = useGetIndividualKymEditDataQuery(
-    {
-      id: String(id),
-    },
-    { enabled: !!id }
-  );
-
-  useEffect(() => {
-    if (editValues) {
-      const editValueData = editValues?.members?.individual?.formState?.data?.formData;
-
-      reset({
-        ...editValueData?.basicInformation,
-        firstName: editValueData?.basicInformation?.firstName?.local,
-        middleName: editValueData?.basicInformation?.middleName?.local,
-        lastName: editValueData?.basicInformation?.lastName?.local,
-        nationalityId: nationalityFields?.form?.options?.predefined?.data?.[0]?.id,
-      });
-    }
-  }, [nationalityFields, editValues]);
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    refetch();
-  }, [preference?.date]);
-
-  useEffect(() => {
-    if (id) {
-      refetch();
-    }
-  }, [id]);
 
   return (
     <FormProvider {...methods}>
