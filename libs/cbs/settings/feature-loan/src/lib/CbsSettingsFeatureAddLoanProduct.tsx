@@ -5,6 +5,7 @@ import omit from 'lodash/omit';
 
 import {
   Collateral,
+  CriteriaSection,
   FrequencyTenure,
   LoanProductInput,
   LoanProductInstallment,
@@ -124,6 +125,7 @@ export const SettingsLoanProductForm = () => {
 
   const repaymentScheme = watch('repaymentScheme');
   const collateralTypes = watch('collateralTypes');
+  const criteria = watch('criteria');
 
   const { data: editValues, refetch } = useGetLoanProductEditDataQuery(
     {
@@ -156,19 +158,32 @@ export const SettingsLoanProductForm = () => {
   const submitForm = () => {
     const values = getValues();
 
-    const genderList = values?.genderId?.map((data) => data?.value ?? data);
-    const maritalStatusList = values?.maritalStatusId?.map((data) => data?.value ?? data);
-    const educationQualificationList = values?.educationQualification?.map(
-      (data) => data?.value ?? data
-    );
-    const occupationList = values?.occupation?.map((data) => data?.value ?? data);
-    const ethnicityList = values?.ethnicity?.map((data) => data?.value ?? data);
-    const natureOFBusinessCoopList = values?.natureOFBusinessCoop?.map(
-      (data) => data?.value ?? data
-    );
-    const natureOfBusinessInstitutionList = values?.natureOfBusinessInstitution?.map(
-      (data) => data?.value ?? data
-    );
+    const genderList = criteria?.includes(CriteriaSection.Gender)
+      ? values?.genderId?.map((data) => data?.value ?? data)
+      : null;
+    const maritalStatusList = criteria?.includes(CriteriaSection.MaritalStatus)
+      ? values?.maritalStatusId?.map((data) => data?.value ?? data)
+      : null;
+    const educationQualificationList = criteria?.includes(CriteriaSection.EducationQualification)
+      ? values?.educationQualification?.map((data) => data?.value ?? data)
+      : null;
+    const occupationList = criteria?.includes(CriteriaSection.OccupationDetails)
+      ? values?.occupation?.map((data) => data?.value ?? data)
+      : null;
+    const ethnicityList = criteria?.includes(CriteriaSection.Ethnicity)
+      ? values?.ethnicity?.map((data) => data?.value ?? data)
+      : null;
+    const natureOFBusinessCoopList = criteria?.includes(CriteriaSection.NatureOfBusinessCoopunion)
+      ? values?.natureOFBusinessCoop?.map((data) => data?.value ?? data)
+      : null;
+    const natureOfBusinessInstitutionList = criteria?.includes(
+      CriteriaSection.NatureOfBusinessInstitutions
+    )
+      ? values?.natureOfBusinessInstitution?.map((data) => data?.value ?? data)
+      : null;
+    const coopTypeList = criteria?.includes(CriteriaSection.CooperativeType)
+      ? values?.cooperativeType?.map((data) => data)
+      : null;
 
     const loanProcessingChargeList = values?.loanProcessingCharge?.map((data) => ({
       serviceName: data?.serviceName,
@@ -267,10 +282,11 @@ export const SettingsLoanProductForm = () => {
       occupation: occupationList,
       natureOfBusinessInstitution: natureOfBusinessInstitutionList,
       natureOFBusinessCoop: natureOFBusinessCoopList,
+      cooperativeType: coopTypeList,
       loanProcessingCharge: loanProcessingChargeList,
       tenureUnit: values?.tenureUnit ? values?.tenureUnit : null,
-      minAge: values?.minAge ? values?.minAge : null,
-      maxAge: values?.maxAge ? values?.maxAge : null,
+      minAge: values?.minAge && criteria?.includes(CriteriaSection.Age) ? values?.minAge : null,
+      maxAge: values?.maxAge && criteria?.includes(CriteriaSection.Age) ? values?.maxAge : null,
       interestMethod: values?.interestMethod ?? null,
       postingFrequency: values?.postingFrequency ?? null,
       maxTenureUnitNumber: values?.maxTenureUnitNumber ? values?.maxTenureUnitNumber : null,

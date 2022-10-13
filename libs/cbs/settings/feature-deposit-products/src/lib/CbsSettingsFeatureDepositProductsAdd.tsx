@@ -3,6 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import {
+  CriteriaSection,
   DepositFrequency as DepositFreq,
   DepositProductInput,
   Frequency,
@@ -104,23 +105,37 @@ export const SettingsDepositProductsAdd = () => {
   const typesOfMember = watch('typeOfMember');
   const isMandatorySaving = watch('isMandatorySaving');
   const isTenureApplicable = watch('isTenureApplicable');
+  const criteria = watch('criteria');
 
   const submitForm = () => {
     const values = getValues();
 
-    const genderList = values?.genderId?.map((data) => data?.value ?? data);
-    const maritalStatusList = values?.maritalStatusId?.map((data) => data?.value ?? data);
-    const educationQualificationList = values?.educationQualification?.map(
-      (data) => data?.value ?? data
-    );
-    const occupationList = values?.occupation?.map((data) => data?.value ?? data);
-    const ethnicityList = values?.ethnicity?.map((data) => data?.value ?? data);
-    const natureOFBusinessCoopList = values?.natureOFBusinessCoop?.map(
-      (data) => data?.value ?? data
-    );
-    const natureOfBusinessInstitutionList = values?.natureOfBusinessInstitution?.map(
-      (data) => data?.value ?? data
-    );
+    const genderList = criteria?.includes(CriteriaSection.Gender)
+      ? values?.genderId?.map((data) => data?.value ?? data)
+      : null;
+    const maritalStatusList = criteria?.includes(CriteriaSection.MaritalStatus)
+      ? values?.maritalStatusId?.map((data) => data?.value ?? data)
+      : null;
+    const educationQualificationList = criteria?.includes(CriteriaSection.EducationQualification)
+      ? values?.educationQualification?.map((data) => data?.value ?? data)
+      : null;
+    const occupationList = criteria?.includes(CriteriaSection.OccupationDetails)
+      ? values?.occupation?.map((data) => data?.value ?? data)
+      : null;
+    const ethnicityList = criteria?.includes(CriteriaSection.Ethnicity)
+      ? values?.ethnicity?.map((data) => data?.value ?? data)
+      : null;
+    const natureOFBusinessCoopList = criteria?.includes(CriteriaSection.NatureOfBusinessCoopunion)
+      ? values?.natureOFBusinessCoop?.map((data) => data?.value ?? data)
+      : null;
+    const natureOfBusinessInstitutionList = criteria?.includes(
+      CriteriaSection.NatureOfBusinessInstitutions
+    )
+      ? values?.natureOfBusinessInstitution?.map((data) => data?.value ?? data)
+      : null;
+    const coopTypeList = criteria?.includes(CriteriaSection.CooperativeType)
+      ? values?.cooperativeType?.map((data) => data)
+      : null;
 
     const ladderRateDataList = values?.ladderRateData?.map((data) => ({
       type: data?.type,
@@ -167,6 +182,7 @@ export const SettingsDepositProductsAdd = () => {
       occupation: occupationList,
       natureOfBusinessInstitution: natureOfBusinessInstitutionList,
       natureOFBusinessCoop: natureOFBusinessCoopList,
+      cooperativeType: coopTypeList,
       ladderRateData: ladderRateDataList,
       serviceCharge: serviceChargeList,
       accountCloseCharge: accountCloseChargeList,
@@ -201,8 +217,10 @@ export const SettingsDepositProductsAdd = () => {
         rebateAmount: values?.rebateData?.rebateAmount ?? null,
         rebateLedgerMapping: values?.rebateData?.rebateLedgerMapping ?? null,
       },
-      maxAge: values?.maxAge ? Number(values?.maxAge) : null,
-      minAge: values?.minAge ? Number(values?.minAge) : null,
+      maxAge:
+        values?.maxAge && criteria?.includes(CriteriaSection.Age) ? Number(values?.maxAge) : null,
+      minAge:
+        values?.minAge && criteria?.includes(CriteriaSection.Age) ? Number(values?.minAge) : null,
       maxPostingFreqDifference: values?.maxPostingFreqDifference ?? null,
       percentageOfDeposit: values?.percentageOfDeposit ?? null,
       depositAmount: {

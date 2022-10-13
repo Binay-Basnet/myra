@@ -3,6 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import isEmpty from 'lodash/isEmpty';
 
 import {
+  CriteriaSection,
   FormCategory,
   FormFieldSearchTerm,
   useGetSettingsOptionsFieldsQuery,
@@ -19,38 +20,38 @@ export const GridItems = () => {
   const memberType = watch('typeOfMember');
 
   useEffect(() => {
-    if (!criteria?.includes('AGE')) {
+    if (!criteria?.includes(CriteriaSection.Age)) {
       resetField('minAge');
       resetField('maxAge');
     }
-    if (!criteria?.includes('GENDER')) {
+    if (!criteria?.includes(CriteriaSection.Gender)) {
       resetField('genderId');
     }
-    if (!criteria?.includes('MARITAL_STATUS')) {
+    if (!criteria?.includes(CriteriaSection.MaritalStatus)) {
       resetField('maritalStatusId');
     }
-    if (!criteria?.includes('EDUCATION_QUALIFICATION')) {
+    if (!criteria?.includes(CriteriaSection.EducationQualification)) {
       resetField('educationQualification');
     }
-    if (!criteria?.includes('ETHNICITY')) {
+    if (!criteria?.includes(CriteriaSection.Ethnicity)) {
       resetField('ethnicity');
     }
-    if (!criteria?.includes('OCCUPATION_DETAILS')) {
+    if (!criteria?.includes(CriteriaSection.OccupationDetails)) {
       resetField('occupation');
     }
-    if (!criteria?.includes('FOREIGN_EMPLOYMENT')) {
+    if (!criteria?.includes(CriteriaSection.ForeignEmployment)) {
       resetField('foreignEmployment');
     }
-    if (!criteria?.includes('NATURE_OF_BUSINESS_INSTITUTIONS')) {
+    if (!criteria?.includes(CriteriaSection.NatureOfBusinessInstitutions)) {
       resetField('natureOfBusinessInstitution');
     }
-    if (!criteria?.includes('COOPERATIVE_TYPE')) {
+    if (!criteria?.includes(CriteriaSection.CooperativeType)) {
       resetField('cooperativeType');
     }
-    if (!criteria?.includes('NATURE_OF_BUSINESS_COOPUNION')) {
+    if (!criteria?.includes(CriteriaSection.NatureOfBusinessCoopunion)) {
       resetField('natureOFBusinessCoop');
     }
-  }, [JSON.stringify(criteria)]);
+  }, [criteria]);
 
   const { t } = useTranslation();
 
