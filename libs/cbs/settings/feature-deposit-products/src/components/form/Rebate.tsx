@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Box, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
+import { Alert, Box, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, SubHeadingText, SubText, TextBoxContainer } from '../formui';
@@ -74,6 +74,13 @@ export const Rebate = () => {
                       </Text>
                     }
                   />
+                </GridItem>
+                <GridItem colSpan={3}>
+                  <Alert status="warning">
+                    <Text fontWeight="Medium" fontSize="r1">
+                      {t['rebateAlert']}
+                    </Text>
+                  </Alert>
                 </GridItem>
               </Grid>
             </BoxContainer>

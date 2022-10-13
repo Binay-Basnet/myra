@@ -103,7 +103,6 @@ export const SettingsLoanProductForm = () => {
 
   const methods = useForm<LoanProductForm>({
     defaultValues: {
-      isTenureApplicable: false,
       isPenaltyApplicable: false,
       allowPartialInstallment: false,
       isMonthlyInstallmentCompulsory: false,
@@ -118,6 +117,8 @@ export const SettingsLoanProductForm = () => {
       isCollateralRequired: false,
       allowGurantee: false,
       installmentFrequency: LoanProductInstallment.Daily,
+      isRebateApplicable: false,
+      tenureUnit: FrequencyTenure.Day,
     },
   });
 
@@ -284,11 +285,11 @@ export const SettingsLoanProductForm = () => {
       natureOFBusinessCoop: natureOFBusinessCoopList,
       cooperativeType: coopTypeList,
       loanProcessingCharge: loanProcessingChargeList,
-      tenureUnit: values?.tenureUnit ? values?.tenureUnit : null,
       minAge: values?.minAge && criteria?.includes(CriteriaSection.Age) ? values?.minAge : null,
       maxAge: values?.maxAge && criteria?.includes(CriteriaSection.Age) ? values?.maxAge : null,
       interestMethod: values?.interestMethod ?? null,
       postingFrequency: values?.postingFrequency ?? null,
+      tenureUnit: values?.tenureUnit ? values?.tenureUnit : null,
       maxTenureUnitNumber: values?.maxTenureUnitNumber ? values?.maxTenureUnitNumber : null,
       minTenureUnitNumber: values?.minTenureUnitNumber ? values?.minTenureUnitNumber : null,
       minGraceDurationUnit: values?.minGraceDurationUnit ? values?.minGraceDurationUnit : null,
@@ -339,6 +340,15 @@ export const SettingsLoanProductForm = () => {
       },
       onSuccess: () => router.push('/settings/general/loan-products'),
       promise: mutateAsync({ id, data: updatedData as LoanProductInput }),
+      // onError: (error) => {
+      //   if (error.__typename === 'ValidationError') {
+      //     Object.keys(error.validationErrorMsg).map((key) =>
+      //       methods.setError(key as keyof LoanProductInput, {
+      //         message: error.validationErrorMsg[key][0] as string,
+      //       })
+      //     );
+      //   }
+      // },
     });
   };
 

@@ -7,6 +7,7 @@ import {
   DepositFrequency as DepositFreq,
   DepositProductInput,
   Frequency,
+  FrequencyTenure,
   KymMemberTypesEnum,
   NatureOfDepositProduct,
   ServiceType,
@@ -97,6 +98,7 @@ export const SettingsDepositProductsAdd = () => {
       wealthBuildingProduct: false,
       ladderRate: false,
       isMandatorySaving: false,
+      tenureUnit: FrequencyTenure.Day,
     },
   });
 
@@ -190,9 +192,11 @@ export const SettingsDepositProductsAdd = () => {
       alternativeChannelCharge: alternativeChannelList,
       atmCharge: atmChargeList,
       transactionAllowed: values?.transactionAllowed ? values?.transactionAllowed : null,
-      tenureUnit: values?.tenureUnit ? values?.tenureUnit : null,
-      maxTenureUnitNumber: values?.maxTenureUnitNumber ? values?.maxTenureUnitNumber : null,
-      minTenureUnitNumber: values?.minTenureUnitNumber ? values?.minTenureUnitNumber : null,
+      tenureUnit: values?.tenureUnit && isTenureApplicable ? values?.tenureUnit : null,
+      maxTenureUnitNumber:
+        values?.maxTenureUnitNumber && isTenureApplicable ? values?.maxTenureUnitNumber : null,
+      minTenureUnitNumber:
+        values?.minTenureUnitNumber && isTenureApplicable ? values?.minTenureUnitNumber : null,
       depositFrequency: values?.depositFrequency ? values?.depositFrequency : null,
       postingFrequency: values?.postingFrequency ? values?.postingFrequency : null,
       accountType: values?.accountType ? values?.accountType : null,

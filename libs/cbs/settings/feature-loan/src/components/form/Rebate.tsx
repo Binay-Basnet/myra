@@ -4,7 +4,7 @@ import { useGetCoaListQuery } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/settings/ui-containers';
 import { SubHeadingText, SubText } from '@coop/shared/components';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
+import { Alert, Box, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, TextBoxContainer } from '../formui';
@@ -60,7 +60,7 @@ export const Rebate = () => {
                 <FormInput
                   name="rebate.rebateRate"
                   type="number"
-                  label={t['loanProductRebate']}
+                  label={t['loanProductRebateRate']}
                   textAlign="right"
                   rightElement={
                     <Text fontWeight="Medium" fontSize="r1" color="primary.500">
@@ -79,6 +79,13 @@ export const Rebate = () => {
                   label={t['loanProductloanLedgerMapping']}
                   options={coaList}
                 />
+                <GridItem colSpan={3}>
+                  <Alert status="warning">
+                    <Text fontWeight="Medium" fontSize="r1">
+                      {t['rebateAlert']}
+                    </Text>
+                  </Alert>
+                </GridItem>
               </InputGroupContainer>
             </BoxContainer>
           )}

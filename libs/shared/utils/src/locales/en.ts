@@ -3550,6 +3550,9 @@ const en: Record<string, string> = {
   loanProductListofallthesavingaccounts: 'List of all the saving accounts',
   penaltyAlert:
     'If both penalty amount and penalty rate is filled, the total penalty is the total sum of the two.',
+  rebateAlert:
+    'If both rebate amount and rebate rate is filled, the total rebate is the total sum of the two.',
   loanProductpenaltyRate: 'Penalty Rate',
+  loanProductRebateRate: 'Rebate Rate',
 };
 export default en;

@@ -24,13 +24,13 @@ export const BankVoucher = ({ totalAmount }: PurchaseProps) => {
     value: item?.id as string,
   }));
 
-  const { reset } = useFormContext();
+  const { resetField } = useFormContext();
 
   // refetch data when calendar preference is updated
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
 
   useEffect(() => {
-    reset({ bankVoucher: { depositedDate: '' } });
+    resetField('bankVoucher.depositedDate');
   }, [preference?.date]);
 
   return (
