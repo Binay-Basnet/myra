@@ -47,8 +47,7 @@ export const KYMIndividualPage = () => {
   }>();
 
   const kymFormStatusQuery = useGetKymFormStatusQuery({ id }, { enabled: id !== 'undefined' });
-  const kymFormStatus =
-    kymFormStatusQuery?.data?.members?.individual?.formState?.data?.sectionStatus;
+  const kymFormStatus = kymFormStatusQuery?.data?.members?.individual?.formState?.sectionStatus;
 
   const { data: editValues, refetch: refetchEdit } = useGetIndividualKymEditDataQuery(
     {
