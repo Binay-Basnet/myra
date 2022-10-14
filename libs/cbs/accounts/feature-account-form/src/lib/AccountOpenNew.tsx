@@ -10,7 +10,6 @@ import {
   DepositLoanAccountInput,
   DepositPaymentType,
   NatureOfDepositProduct,
-  ServiceTypeFormState,
   useGetAccountOpenEditDataQuery,
   useGetAccountOpenMinorListQuery,
   useGetAccountOpenProductDetailsQuery,
@@ -104,7 +103,7 @@ const cashOptions: Record<string, string> = {
 export const AccountOpenNew = () => {
   const [mode, setMode] = useState('0');
 
-  const [productData, setProductData] = useState<ServiceTypeFormState[]>([]);
+  const [totalCharge, setTotalCharge] = useState<number>(0);
 
   const [fileList, setFileList] = useState<FileListType>({
     signature: [],
@@ -137,16 +136,6 @@ export const AccountOpenNew = () => {
   const id = String(router?.query?.['id']);
   const { mutateAsync } = useSetAccountOpenDataMutation();
   const { mutate: mutateDocs } = useSetAccountDocumentDataMutation();
-
-  const serviceCharge = watch('serviceCharge');
-
-  const totalCharge = useMemo(
-    () =>
-      serviceCharge
-        ? serviceCharge?.reduce((a, b) => a + Number(b?.amount), 0)
-        : productData?.reduce((a, b) => a + Number(b.amount), 0),
-    [serviceCharge, productData]
-  );
 
   const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
     useGetIndividualMemberDetails({ memberId });
@@ -503,11 +492,7 @@ export const AccountOpenNew = () => {
                     <Grid templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
                       <FormAgentSelect name="agentId" label="Market Representative" />
                     </Grid>
-                    <FeesAndCharge
-                      productData={productData}
-                      setProductData={setProductData}
-                      totalCharge={totalCharge}
-                    />
+                    <FeesAndCharge setTotalCharge={setTotalCharge} />
                   </Box>
                 )}
               </Box>

@@ -1,23 +1,27 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { ServiceTypeFormState, useGetAccountOpenProductDetailsQuery } from '@coop/cbs/data-access';
+import {
+  DepositLoanAccountInput,
+  ServiceTypeFormState,
+  useGetAccountOpenProductDetailsQuery,
+} from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IFeesAndCharge {
-  setProductData: Dispatch<SetStateAction<ServiceTypeFormState[]>>;
-  productData: ServiceTypeFormState[];
-  totalCharge: number;
+  setTotalCharge: Dispatch<SetStateAction<number>>;
 }
 
-export const FeesAndCharge = ({ setProductData, productData, totalCharge }: IFeesAndCharge) => {
+export const FeesAndCharge = ({ setTotalCharge }: IFeesAndCharge) => {
   const { t } = useTranslation();
 
+  const [productData, setProductData] = useState<ServiceTypeFormState[]>([]);
+
   const [triggerQuery, setTriggerQuery] = useState(false);
-  const { watch, register, unregister } = useFormContext();
+  const { watch, register, unregister } = useFormContext<DepositLoanAccountInput>();
   const products = watch('productId');
   const { data, isLoading } = useGetAccountOpenProductDetailsQuery(
     { id: products },
@@ -39,6 +43,7 @@ export const FeesAndCharge = ({ setProductData, productData, totalCharge }: IFee
   const isMobileBanking = watch('mobileBanking');
   const isATMenabled = watch('atmFacility');
   const isSmsBanking = watch('smsBanking');
+  const serviceCharge = watch('serviceCharge');
   const isChequeEnabled = watch('chequeFacility');
   const altCharges =
     data?.settings?.general?.depositProduct?.formState?.data?.alternativeChannelCharge;
@@ -176,6 +181,14 @@ export const FeesAndCharge = ({ setProductData, productData, totalCharge }: IFee
     }
   }, [isSmsBanking]);
 
+  useEffect(() => {
+    setTotalCharge(
+      serviceCharge
+        ? serviceCharge?.reduce((a, b) => a + Number(b?.amount), 0)
+        : productData?.reduce((a, b) => a + Number(b.amount), 0)
+    );
+  }, [JSON.stringify(serviceCharge), JSON.stringify(productData)]);
+
   return (
     <GroupContainer scrollMarginTop="200px" display="flex" flexDirection="column" gap="s16">
       <Box p="s20" background="neutralColorLight.Gray-0">
@@ -237,7 +250,9 @@ export const FeesAndCharge = ({ setProductData, productData, totalCharge }: IFee
             </Text>
 
             <Text fontSize="s3" fontWeight="600">
-              {totalCharge}
+              {serviceCharge
+                ? serviceCharge?.reduce((a, b) => a + Number(b?.amount), 0)
+                : productData?.reduce((a, b) => a + Number(b.amount), 0)}
             </Text>
           </Box>
         </Box>
