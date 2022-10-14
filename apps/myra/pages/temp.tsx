@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { DatePicker } from 'react-patro';
+import { DatePicker } from '@raralabs/react-patro';
 
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
 import { FormDatePicker } from '@coop/shared/form';

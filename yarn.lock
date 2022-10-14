@@ -3879,6 +3879,14 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.6.tgz#cee20bd55e68a1720bdab363ecf0c821ded4cd45"
   integrity sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==
 
+"@raralabs/react-patro@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@raralabs/react-patro/-/react-patro-1.0.1.tgz#8bc5ba08e30c18bec6c69430c71baae92613108d"
+  integrity sha512-8nEQztOj1/rOCZoY1r0Srp8Nm1ZYvSwfsc4XZj7792Jz42cIVBIGzjvy8o980iAKn5W+Vaw6giIrpzg0UqFLpA==
+  dependencies:
+    "@popperjs/core" "^2.9.2"
+    date-fns "^2.22.1"
+
 "@raralabs/web-feedback@^2.0.4":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@raralabs/web-feedback/-/web-feedback-2.0.4.tgz#543b0c7253003e94231f379016eeeb67c5b752cd"
