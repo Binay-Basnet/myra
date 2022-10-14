@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import {
@@ -18,7 +17,7 @@ type IReturnInfo = {
 export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
   const { t } = useTranslation();
   const methods = useFormContext();
-  const { watch, getValues, reset, register } = methods;
+  const { watch, register } = methods;
 
   const memberId = watch('memberId');
   const noOfShares = watch('noOfReturnedShares');
@@ -41,22 +40,6 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
   });
 
   const chargeList = chargesData?.share?.charges;
-
-  useEffect(() => {
-    if (balanceData) {
-      if (allShares) {
-        reset({
-          ...getValues(),
-          noOfReturnedShares: balanceData?.count ?? 0,
-        });
-      } else {
-        reset({
-          ...getValues(),
-          noOfReturnedShares: 0,
-        });
-      }
-    }
-  }, [allShares, balanceData, getValues, reset]);
 
   const shareResult = () => {
     if (balanceData) {

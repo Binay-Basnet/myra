@@ -178,18 +178,22 @@ export const SharePurchaseForm = () => {
 
   useEffect(() => {
     let temp = 0;
+    if (chargeList) {
+      if (extraFee) {
+        extraFee?.forEach((charge) => {
+          temp += Number(charge?.value);
+        });
+      } else {
+        chargeList?.forEach((charge) => {
+          temp += Number(charge?.charge);
+        });
+      }
 
-    if (extraFee) {
-      extraFee?.forEach((charge) => {
-        temp += Number(charge?.value);
-      });
+      setTotalAmount(temp + noOfShares * 100);
     } else {
-      chargeList?.forEach((charge) => {
-        temp += Number(charge?.charge);
-      });
+      setTotalAmount(noOfShares * 100);
     }
 
-    setTotalAmount(temp + noOfShares * 100);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chargeList, extraFee, noOfShares, JSON.stringify(extraFee)]);
 

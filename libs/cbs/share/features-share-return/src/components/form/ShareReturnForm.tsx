@@ -193,17 +193,21 @@ export const ShareReturnForm = () => {
   useEffect(() => {
     let temp = 0;
 
-    if (extraFee) {
-      extraFee?.forEach((charge) => {
-        temp += Number(charge?.value);
-      });
-    } else {
-      chargeList?.forEach((charge) => {
-        temp += Number(charge?.charge);
-      });
-    }
+    if (chargeList) {
+      if (extraFee) {
+        extraFee?.forEach((charge) => {
+          temp += Number(charge?.value);
+        });
+      } else {
+        chargeList?.forEach((charge) => {
+          temp += Number(charge?.charge);
+        });
+      }
 
-    setTotalAmount(noOfShares * 100 - temp);
+      setTotalAmount(noOfShares * 100 - temp);
+    } else {
+      setTotalAmount(noOfShares * 100);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chargeList, extraFee, noOfShares, JSON.stringify(extraFee)]);
 

@@ -80,10 +80,11 @@ export const SharePurchasePayment = ({
         <BankVoucher totalAmount={totalAmount} />
       )}
 
-      {paymentModes === SharePaymentMode.Account && <ShareAccount />}
+      {paymentModes === SharePaymentMode.Account && <ShareAccount totalAmount={totalAmount} />}
 
       {paymentModes === SharePaymentMode.Cash && (
         <ShareCash
+          totalAmount={totalAmount}
           denominationTotal={denominationTotal}
           totalCashPaid={totalCashPaid}
           returnAmount={returnAmount}
