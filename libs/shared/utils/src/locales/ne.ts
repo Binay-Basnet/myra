@@ -3153,6 +3153,14 @@ const ne: Record<string, string> = {
 
   // account deposit product
   accountDepositProduct: 'Deposit Product',
+
+  // transfer
+  navbarTransfer: 'Transfers',
+  newTransfer: 'New Transfer',
+  transfer: 'Transfer',
+  transferVaultTransfer: 'Vault Transfer',
+  transferTellerTransfer: 'Teller Transfer',
+  transferBranchTransfer: 'Branch Transfer',
 };
 
 export default ne;

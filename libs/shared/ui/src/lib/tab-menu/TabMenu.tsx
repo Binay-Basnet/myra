@@ -1,4 +1,5 @@
 import { IconType } from 'react-icons';
+import { AiOutlineSend } from 'react-icons/ai';
 import { BsArrowLeftRight, BsFileText } from 'react-icons/bs';
 import { ImStack } from 'react-icons/im';
 import { IoIosList } from 'react-icons/io';
@@ -20,7 +21,7 @@ const NAVBAR_TAB_OBJECT: Record<string, number> = {
   transactions: 3,
   loan: 4,
   reports: 5,
-  utilities: 6,
+  transfer: 6,
 };
 
 const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
@@ -54,6 +55,11 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
     title: 'reports',
     icon: BsFileText,
     link: '/reports/cbs/share-report',
+  },
+  {
+    title: 'transfer',
+    icon: AiOutlineSend,
+    link: '/transfer',
   },
 ];
 
