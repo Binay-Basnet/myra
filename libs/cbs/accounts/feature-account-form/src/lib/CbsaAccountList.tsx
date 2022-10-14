@@ -97,7 +97,7 @@ export const CBSAccountList = () => {
         columns={columns}
         pagination={{
           total: data?.account?.list?.totalCount ?? 'Many',
-          pageInfo: data?.account.list?.pageInfo,
+          pageInfo: data?.account?.list?.pageInfo,
         }}
       />
     </>
