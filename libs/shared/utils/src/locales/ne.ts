@@ -3162,6 +3162,18 @@ const ne: Record<string, string> = {
   transferVaultTransfer: 'Vault Transfer',
   transferTellerTransfer: 'Teller Transfer',
   transferBranchTransfer: 'Branch Transfer',
+
+  memberSettingsNewMemberCharges: 'New Member Charges',
+  memberSettingsDifferentCharges: 'Different charges for different member type.',
+  memberSettingsMemberType: 'Member Type',
+  memberSettingsLedgerMapping: 'Ledger Mapping',
+  memberSettingsCharge: 'Charge',
+  memberSettingsIndividual: 'Individual',
+  memberSettingsInstitution: 'Institution',
+  memberSettingsCooperative: 'Cooperative',
+  memberSettingsCooperativeUnion: 'Cooperative Union',
+
+  discardChanges: 'Discard Changes',
 };
 
 export default ne;

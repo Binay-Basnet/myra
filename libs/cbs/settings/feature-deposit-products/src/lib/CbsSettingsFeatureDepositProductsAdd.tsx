@@ -260,6 +260,15 @@ export const SettingsDepositProductsAdd = () => {
       },
       onSuccess: () => router.push('/settings/general/deposit-products'),
       promise: mutateAsync({ id, data: updatedData as DepositProductInput }),
+      onError: (error) => {
+        if (error.__typename === 'ValidationError') {
+          Object.keys(error.validationErrorMsg).map((key) =>
+            methods.setError(key as keyof DepositProductInput, {
+              message: error.validationErrorMsg[key][0] as string,
+            })
+          );
+        }
+      },
     });
   };
 

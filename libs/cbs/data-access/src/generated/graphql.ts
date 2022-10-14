@@ -10718,6 +10718,31 @@ export type SetProductTypeMutation = {
   };
 };
 
+export type AddGeneralMemberMutationVariables = Exact<{
+  data: GeneralMemberInput;
+}>;
+
+export type AddGeneralMemberMutation = {
+  settings: {
+    general?: {
+      KYM?: {
+        general?: {
+          generalMember?: {
+            recordId: string;
+            error?:
+              | MutationError_AuthorizationError_Fragment
+              | MutationError_BadRequestError_Fragment
+              | MutationError_NotFoundError_Fragment
+              | MutationError_ServerError_Fragment
+              | MutationError_ValidationError_Fragment
+              | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type UpsertNewOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
   data: FormOptionUpsertInput;
@@ -14589,6 +14614,39 @@ export type GetLoanProductTypeQuery = {
   };
 };
 
+export type GetGeneralMemberSettingsDataQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetGeneralMemberSettingsDataQuery = {
+  settings: {
+    general?: {
+      KYM?: {
+        general?: {
+          generalMember?: {
+            record?: {
+              memberType?: {
+                individual?: boolean | null;
+                institution?: boolean | null;
+                cooperative?: boolean | null;
+                cooperativeUnion?: boolean | null;
+              } | null;
+              risk?: {
+                generalRisk?: number | null;
+                mediumRisk?: number | null;
+                highRisk?: number | null;
+              } | null;
+              charge?: Array<{
+                memberType: KymMemberTypesEnum;
+                ledgerId: string;
+                charge: number;
+              } | null> | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetPreDefinedFieldsQueryVariables = Exact<{
   filter: PredefinedElementFilter;
 }>;
@@ -17392,6 +17450,37 @@ export const useSetProductTypeMutation = <TError = unknown, TContext = unknown>(
   useMutation<SetProductTypeMutation, TError, SetProductTypeMutationVariables, TContext>(
     ['setProductType'],
     useAxios<SetProductTypeMutation, SetProductTypeMutationVariables>(SetProductTypeDocument),
+    options
+  );
+export const AddGeneralMemberDocument = `
+    mutation addGeneralMember($data: GeneralMemberInput!) {
+  settings {
+    general {
+      KYM {
+        general {
+          generalMember(data: $data) {
+            recordId
+            error {
+              ...MutationError
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddGeneralMemberMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddGeneralMemberMutation,
+    TError,
+    AddGeneralMemberMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddGeneralMemberMutation, TError, AddGeneralMemberMutationVariables, TContext>(
+    ['addGeneralMember'],
+    useAxios<AddGeneralMemberMutation, AddGeneralMemberMutationVariables>(AddGeneralMemberDocument),
     options
   );
 export const UpsertNewOptionDocument = `
@@ -22649,6 +22738,54 @@ export const useGetLoanProductTypeQuery = <TData = GetLoanProductTypeQuery, TErr
     variables === undefined ? ['getLoanProductType'] : ['getLoanProductType', variables],
     useAxios<GetLoanProductTypeQuery, GetLoanProductTypeQueryVariables>(
       GetLoanProductTypeDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetGeneralMemberSettingsDataDocument = `
+    query getGeneralMemberSettingsData {
+  settings {
+    general {
+      KYM {
+        general {
+          generalMember {
+            record {
+              memberType {
+                individual
+                institution
+                cooperative
+                cooperativeUnion
+              }
+              risk {
+                generalRisk
+                mediumRisk
+                highRisk
+              }
+              charge {
+                memberType
+                ledgerId
+                charge
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetGeneralMemberSettingsDataQuery = <
+  TData = GetGeneralMemberSettingsDataQuery,
+  TError = unknown
+>(
+  variables?: GetGeneralMemberSettingsDataQueryVariables,
+  options?: UseQueryOptions<GetGeneralMemberSettingsDataQuery, TError, TData>
+) =>
+  useQuery<GetGeneralMemberSettingsDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getGeneralMemberSettingsData']
+      : ['getGeneralMemberSettingsData', variables],
+    useAxios<GetGeneralMemberSettingsDataQuery, GetGeneralMemberSettingsDataQueryVariables>(
+      GetGeneralMemberSettingsDataDocument
     ).bind(null, variables),
     options
   );

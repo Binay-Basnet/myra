@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button } from '@chakra-ui/react';
 
+import { useTranslation } from '@coop/shared/utils';
+
 import Box from '../box/Box';
 
 /* eslint-disable-next-line */
@@ -10,6 +12,7 @@ export interface SettingsFooterProps {
 }
 
 export const SettingsFooter = (props: SettingsFooterProps) => {
+  const { t } = useTranslation();
   const { handleDiscard, handleSave } = props;
   return (
     <Box
@@ -26,9 +29,9 @@ export const SettingsFooter = (props: SettingsFooterProps) => {
       zIndex="12"
     >
       <Button variant="ghost" onClick={handleDiscard}>
-        Discard Changes
+        {t['discardChanges']}
       </Button>
-      <Button onClick={handleSave}>Save Changes</Button>
+      <Button onClick={handleSave}>{t['saveChanges']} </Button>
     </Box>
   );
 };
