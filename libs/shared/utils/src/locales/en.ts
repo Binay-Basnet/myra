@@ -292,9 +292,9 @@ const en: Record<string, string> = {
   shareRegisterTableMemberID: 'Member ID',
   shareRegisterTableName: 'Name',
   shareRegisterTableNameToFrom: 'From - To',
-  shareRegisterTableNameShareDr: 'Share Dr',
-  shareRegisterTableNameShareCr: 'Share Cr',
-  shareRegisterTableNameBalance: 'Balance',
+  shareRegisterTableNameShareDr: 'Returned',
+  shareRegisterTableNameShareCr: 'Issued',
+  shareRegisterTableNameBalance: 'Amount',
   shareRegisterTableViewDetail: 'View Detail',
   shareRegisterTableViewMemberProfile: 'View Member Profile',
 
