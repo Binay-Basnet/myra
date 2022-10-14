@@ -92,6 +92,7 @@
       "@coop/ebanking/data-access": ["libs/ebanking/data-access/src/index.ts"],
       "@coop/ebanking/funds": ["libs/ebanking/feature-funds/src/index.ts"],
       "@coop/ebanking/home": ["libs/ebanking/feature-home/src/index.ts"],
+      "@coop/ebanking/products": ["libs/ebanking/feature-products/src/index.ts"],
       "@coop/ebanking/ui-layout": ["libs/ebanking/ui-layout/src/index.ts"],
       "@coop/inventory/inventory": ["libs/inventory/feature-inventory/src/index.ts"],
       "@coop/inventory/warehouse": ["libs/inventory/feature-warehouse/src/index.ts"],

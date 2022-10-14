@@ -1,0 +1,26 @@
+query getShareSummary {
+  eBanking {
+    share {
+      summary {
+        totalShare
+        value
+      }
+    }
+  }
+}
+
+
+query getEbankingShareHistory {
+  eBanking {
+    share {
+      history {
+        id
+        title
+        date
+        amount
+        transactionDirection
+        numberOfShares
+      }
+    }
+  }
+}

@@ -6,6 +6,7 @@ import { IoCashOutline } from 'react-icons/io5';
 import { SiFormstack } from 'react-icons/si';
 import { TbCalendarTime } from 'react-icons/tb';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Skeleton } from '@chakra-ui/react';
 
@@ -81,6 +82,7 @@ const DOWNLOADS_DICT: Record<
 };
 
 export const EbankingFeatureCoop = () => {
+  const router = useRouter();
   const { data: chequeServices, isLoading: chequeLoading } = useGetCoopChequeServicesQuery();
   const { data: loanList, isLoading: loanLoading } = useGetCoopLoanServicesQuery();
   const { data: complaintList, isLoading: complaintLoading } = useGetCoopComplaintServicesQuery();
@@ -100,12 +102,14 @@ export const EbankingFeatureCoop = () => {
             w="100%"
             justifyContent="space-between"
             cursor="pointer"
+            onClick={() => router.push('/share-info')}
           >
             <Text fontSize="r1" fontWeight="600" color="gray.800">
               My Share Information
             </Text>
             <Icon as={ChevronRightIcon} size="lg" color="gray.500" />
           </Box>
+
           <Box
             py="s12"
             display="flex"
@@ -119,6 +123,22 @@ export const EbankingFeatureCoop = () => {
             </Text>
             <Icon as={ChevronRightIcon} size="lg" color="gray.500" />
           </Box>
+
+          <Box
+            py="s12"
+            display="flex"
+            alignItems="center"
+            w="100%"
+            justifyContent="space-between"
+            cursor="pointer"
+            onClick={() => router.push('/coop/products')}
+          >
+            <Text fontSize="r1" fontWeight="600" color="gray.800">
+              View All Products
+            </Text>
+            <Icon as={ChevronRightIcon} size="lg" color="gray.500" />
+          </Box>
+
           <Box py="s8" display="flex" alignItems="center" w="100%" justifyContent="space-between">
             <Text fontSize="r1" fontWeight="600" color="gray.800">
               Default Account

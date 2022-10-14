@@ -30,6 +30,7 @@ export interface ModalChakraProps extends Omit<ChakraModalProps, 'isOpen' | 'onC
   isDanger?: boolean;
   isDisabled?: boolean;
   width?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | string;
+  hasCloseBtn?: boolean;
 }
 
 export const ChakraModal = (props: ModalChakraProps) => {
@@ -48,6 +49,7 @@ export const ChakraModal = (props: ModalChakraProps) => {
     isDisabled,
     isDanger,
     width = 'xl',
+    hasCloseBtn = true,
     ...rest
   } = props;
 
@@ -76,13 +78,15 @@ export const ChakraModal = (props: ModalChakraProps) => {
             <TextFields variant="pageHeader">{t[title] ?? title}</TextFields>
           </Box>
         )}
-        <ModalCloseButton _focus={{}} p={0}>
-          <IconButton
-            variant="ghost"
-            aria-label="close"
-            icon={<Icon as={IoCloseOutline} size="lg" color="gray.500" />}
-          />
-        </ModalCloseButton>
+        {hasCloseBtn && (
+          <ModalCloseButton _focus={{}} p={0}>
+            <IconButton
+              variant="ghost"
+              aria-label="close"
+              icon={<Icon as={IoCloseOutline} size="lg" color="gray.500" />}
+            />
+          </ModalCloseButton>
+        )}
         <ModalBody
           p="s16"
           borderBottom={

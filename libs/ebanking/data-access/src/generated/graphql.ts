@@ -1309,6 +1309,7 @@ export type CooperativeBodDetails = {
 export type CooperativeConnectInput = {
   cooperativeId?: InputMaybe<Scalars['ID']>;
   mobileNo?: InputMaybe<Scalars['String']>;
+  pinCode?: InputMaybe<Scalars['Int']>;
 };
 
 export type CooperativeDeclaration = {
@@ -1339,7 +1340,6 @@ export type CooperativeEconomicDetails = {
 };
 
 export type CooperativeInformation = {
-  cooperativeId?: Maybe<Scalars['ID']>;
   id: Scalars['ID'];
   mobileNo?: Maybe<Scalars['String']>;
 };
@@ -2134,7 +2134,7 @@ export type DepositProductInput = {
   genderId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   individualDocuments?: InputMaybe<Array<InputMaybe<IndividualRequiredDocument>>>;
   institutionDocuments?: InputMaybe<Array<InputMaybe<InstitutionRequiredDocument>>>;
-  interest: InterestRate;
+  interest?: InputMaybe<InterestRate>;
   isForMinors?: InputMaybe<Scalars['Boolean']>;
   isMandatorySaving?: InputMaybe<Scalars['Boolean']>;
   isTenureApplicable?: InputMaybe<Scalars['Boolean']>;
@@ -2147,7 +2147,7 @@ export type DepositProductInput = {
   maxTenureUnitNumber?: InputMaybe<Scalars['Int']>;
   minAge?: InputMaybe<Scalars['Int']>;
   minTenureUnitNumber?: InputMaybe<Scalars['Int']>;
-  nature: NatureOfDepositProduct;
+  nature?: InputMaybe<NatureOfDepositProduct>;
   natureOFBusinessCoop?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   natureOfBusinessInstitution?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   noOftransactionAllowed?: InputMaybe<Scalars['Int']>;
@@ -2157,8 +2157,8 @@ export type DepositProductInput = {
   percentageOfDeposit?: InputMaybe<Scalars['Float']>;
   postingFrequency?: InputMaybe<DepositFrequency>;
   prematurePenalty?: InputMaybe<PrematurePenalty>;
-  productCode: ProductCode;
-  productName: Scalars['String'];
+  productCode?: InputMaybe<ProductCode>;
+  productName?: InputMaybe<Scalars['String']>;
   rebate?: InputMaybe<Scalars['Boolean']>;
   rebateData?: InputMaybe<RebateTypeInput>;
   serviceCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
@@ -2498,30 +2498,42 @@ export type EBankingApplyLoanResult = {
 };
 
 export type EBankingAuthMutation = {
-  connectCoop?: Maybe<EbankingCooperativeResult>;
-  getNewtoken?: Maybe<AuthTokenResult>;
+  checkAccount?: Maybe<EbankingAccountExistsResult>;
+  getNewToken?: Maybe<AuthTokenResult>;
   login?: Maybe<EbankingLoginResult>;
+  loginToCooperative?: Maybe<EbankingCooperativeLoginResult>;
   resendOtp?: Maybe<EbankingOtpResult>;
+  setNewPin?: Maybe<EbankingUserResult>;
   setPassword?: Maybe<EbankingPasswordResult>;
   signUp?: Maybe<EbankingSignUpResult>;
   verifyOtp?: Maybe<EbankingOtpResult>;
 };
 
-export type EBankingAuthMutationConnectCoopArgs = {
-  data?: InputMaybe<CooperativeConnectInput>;
-  userID: Scalars['ID'];
+export type EBankingAuthMutationCheckAccountArgs = {
+  coopId: Scalars['ID'];
+  mobileNumber: Scalars['String'];
 };
 
-export type EBankingAuthMutationGetNewtokenArgs = {
+export type EBankingAuthMutationGetNewTokenArgs = {
   refreshToken: Scalars['String'];
+  tokenFor: EBankingTokenType;
 };
 
 export type EBankingAuthMutationLoginArgs = {
   data: EbankingLoginInput;
 };
 
+export type EBankingAuthMutationLoginToCooperativeArgs = {
+  cooperativeId: Scalars['ID'];
+  pinCode?: InputMaybe<Scalars['Int']>;
+};
+
 export type EBankingAuthMutationResendOtpArgs = {
   mobile: Scalars['String'];
+};
+
+export type EBankingAuthMutationSetNewPinArgs = {
+  data?: InputMaybe<CooperativeConnectInput>;
 };
 
 export type EBankingAuthMutationSetPasswordArgs = {
@@ -3088,10 +3100,12 @@ export type EBankingNotificationQuery = {
 
 export type EBankingQuery = {
   account?: Maybe<EBankingAccountQuery>;
+  auth?: Maybe<EbankingAuthQuery>;
   cooperativeServices?: Maybe<EBankingCooperativeServiceQuery>;
   home: EBankingCombined;
   kym?: Maybe<EBankingKymQuery>;
   me?: Maybe<Member>;
+  neosysClientsList?: Maybe<Array<Maybe<NeosysClientMinimalInfo>>>;
   notification?: Maybe<EBankingNotificationQuery>;
   products?: Maybe<ProductsQuery>;
   services?: Maybe<Array<Maybe<Services>>>;
@@ -3123,6 +3137,11 @@ export type EBankingShareQueryHistoryArgs = {
   filter?: InputMaybe<EbankingShareFilter>;
 };
 
+export enum EBankingTokenType {
+  Cooperative = 'COOPERATIVE',
+  Myra = 'MYRA',
+}
+
 export type EBankingTransactionQuery = {
   monthly: Array<Maybe<MonthlyTransactions>>;
   recent?: Maybe<Array<Maybe<Transactions>>>;
@@ -3136,15 +3155,37 @@ export type EBankingTransactionQueryRecentArgs = {
   filter?: InputMaybe<RecentTransactionFilter>;
 };
 
-export type EbankingCooperative = {
-  cooperativeId?: Maybe<Scalars['ID']>;
-  id: Scalars['ID'];
-  mobileNo?: Maybe<Scalars['String']>;
+export type EbankingAccountExistsResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<EbankingAccountRecord>;
+  success?: Maybe<Scalars['Boolean']>;
 };
 
-export type EbankingCooperativeResult = {
+export type EbankingAccountRecord = {
+  fullName?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+};
+
+export type EbankingAuthQuery = {
+  meCooperativeUser?: Maybe<MeCooperativeUserResult>;
+  meMyraUser?: Maybe<MeMyraUserResult>;
+};
+
+export type EbankingCooperative = {
+  cooperativeId?: Maybe<Scalars['ID']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberMobileNo?: Maybe<Scalars['String']>;
+  myraUserId: Scalars['ID'];
+};
+
+export type EbankingCooperativeLoginRecord = {
+  data?: Maybe<EbankingCooperative>;
+  token: AuthToken;
+};
+
+export type EbankingCooperativeLoginResult = {
   error?: Maybe<MutationError>;
-  record?: Maybe<EbankingCooperative>;
+  record?: Maybe<EbankingCooperativeLoginRecord>;
   recordId?: Maybe<Scalars['ID']>;
 };
 
@@ -3232,6 +3273,12 @@ export type EbankingUser = {
   id: Scalars['ID'];
   mobile?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+};
+
+export type EbankingUserResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<EbankingUser>;
+  recordId?: Maybe<Scalars['ID']>;
 };
 
 export type Example = {
@@ -4637,6 +4684,7 @@ export type KymIndFamilyMemberMutationUpsertArgs = {
 export type KymIndFamilyMemberQueryResult = {
   data?: Maybe<Array<Maybe<KymIndFamilyMember>>>;
   error?: Maybe<QueryError>;
+  sectionStatus?: Maybe<KymFormStatus>;
 };
 
 export type KymIndFamilyMemberResult = {
@@ -4687,6 +4735,7 @@ export type KymIndIdentificationMutationUpsertArgs = {
 export type KymIndIdentificationQueryResult = {
   data?: Maybe<Array<Maybe<KymIndIdentification>>>;
   error?: Maybe<QueryError>;
+  sectionStatus?: Maybe<KymFormStatus>;
 };
 
 export type KymIndIdentificationResult = {
@@ -4726,6 +4775,7 @@ export type KymIndIncomeSourceMutationUpsertArgs = {
 export type KymIndIncomeSourceQueryResult = {
   data?: Maybe<Array<Maybe<KymIndIncomeSource>>>;
   error?: Maybe<QueryError>;
+  sectionStatus?: Maybe<KymFormStatus>;
 };
 
 export type KymIndIncomeSourceResult = {
@@ -4800,6 +4850,7 @@ export type KymIndOccupationMutationUpsertArgs = {
 export type KymIndOccupationQueryResult = {
   data?: Maybe<Array<Maybe<KymIndOccupation>>>;
   error?: Maybe<QueryError>;
+  sectionStatus?: Maybe<KymFormStatus>;
 };
 
 export type KymIndOccupationResult = {
@@ -5747,13 +5798,12 @@ export type KymIndFormData = {
 
 export type KymIndFormState = {
   formData?: Maybe<KymIndFormData>;
-  lastUpdated: KymIndAddLus;
-  sectionStatus?: Maybe<KymFormStatus>;
 };
 
 export type KymIndFormStateQuery = {
   data?: Maybe<KymIndFormState>;
   error?: Maybe<QueryError>;
+  sectionStatus?: Maybe<KymFormStatus>;
 };
 
 export type KymIndGetResult = {
@@ -7047,16 +7097,16 @@ export type LoanProductInput = {
   postingFrequency?: InputMaybe<LoanProductInstallment>;
   prematurePenaltySetup?: InputMaybe<PrematurePenalty>;
   productCode?: InputMaybe<ProductCode>;
-  productName: Scalars['String'];
-  productNature: NatureOfLoanProduct;
-  productSubType: Scalars['String'];
-  productType: Scalars['ID'];
+  productName?: InputMaybe<Scalars['String']>;
+  productNature?: InputMaybe<NatureOfLoanProduct>;
+  productSubType?: InputMaybe<Scalars['String']>;
+  productType?: InputMaybe<Scalars['ID']>;
   rebate?: InputMaybe<RebateTypeInput>;
   repaymentScheme?: InputMaybe<Array<InputMaybe<LoanRepaymentScheme>>>;
   requiredDocuments?: InputMaybe<Array<InputMaybe<LoanRequiredDocuments>>>;
   supportMultipleAccounts?: InputMaybe<Scalars['Boolean']>;
   tenureUnit?: InputMaybe<FrequencyTenure>;
-  typeOfMember: Array<InputMaybe<KymMemberTypesEnum>>;
+  typeOfMember?: InputMaybe<Array<InputMaybe<KymMemberTypesEnum>>>;
   updateInterest?: InputMaybe<Scalars['Boolean']>;
   waiveInterest?: InputMaybe<Scalars['Boolean']>;
 };
@@ -7332,6 +7382,16 @@ export type LoginResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type MeCooperativeUserResult = {
+  data?: Maybe<EbankingCooperative>;
+  error?: Maybe<QueryError>;
+};
+
+export type MeMyraUserResult = {
+  data?: Maybe<EbankingUser>;
+  error?: Maybe<QueryError>;
+};
+
 export type MeResult = {
   data?: Maybe<UserData>;
   error?: Maybe<QueryError>;
@@ -7439,6 +7499,7 @@ export type MemberQueryEntryArgs = {
 };
 
 export type MemberQueryIndividualArgs = {
+  hasPressedNext?: InputMaybe<Scalars['Boolean']>;
   id: Scalars['String'];
 };
 
@@ -13566,12 +13627,22 @@ export type GetMemberTranslationQuery = {
 
 export type GetKymFormStatusQueryVariables = Exact<{
   id: Scalars['String'];
+  hasPressedNext?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type GetKymFormStatusQuery = {
   members: {
     individual?: {
-      formState?: { data?: { sectionStatus?: { id?: string | null } | null } | null } | null;
+      formState?: {
+        sectionStatus?: {
+          id?: string | null;
+          errors?: Record<string, Array<string>> | null;
+          sectionStatus?: {
+            errors?: Array<string> | null;
+            incomplete?: Array<string> | null;
+          } | null;
+        } | null;
+      } | null;
     } | null;
   };
 };
@@ -13647,12 +13718,21 @@ export type GetMemberIndividualDataQuery = {
 
 export type GetIndividualKymEditDataQueryVariables = Exact<{
   id: Scalars['String'];
+  hasPressedNext?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type GetIndividualKymEditDataQuery = {
   members: {
     individual?: {
       formState?: {
+        sectionStatus?: {
+          id?: string | null;
+          errors?: Record<string, Array<string>> | null;
+          sectionStatus?: {
+            errors?: Array<string> | null;
+            incomplete?: Array<string> | null;
+          } | null;
+        } | null;
         data?: {
           formData?: {
             maritalStatusId?: string | null;
@@ -15392,6 +15472,239 @@ export type GetInstallmentsListDataQuery = {
   };
 };
 
+export type SignUpMutationVariables = Exact<{
+  mobileNo: Scalars['String'];
+}>;
+
+export type SignUpMutation = {
+  eBanking: {
+    auth?: {
+      signUp?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type VerifyOtpMutationVariables = Exact<{
+  data: EbankingOtpInput;
+}>;
+
+export type VerifyOtpMutation = {
+  eBanking: {
+    auth?: {
+      verifyOtp?: {
+        success?: boolean | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type SetPasswordMutationVariables = Exact<{
+  data: EbankingPasswordInput;
+  userId: Scalars['ID'];
+}>;
+
+export type SetPasswordMutation = {
+  eBanking: {
+    auth?: {
+      setPassword?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type EBankingLoginMutationVariables = Exact<{
+  data: EbankingLoginInput;
+}>;
+
+export type EBankingLoginMutation = {
+  eBanking: {
+    auth?: {
+      login?: {
+        recordId?: string | null;
+        record?: {
+          data?: {
+            id: string;
+            dob?: string | null;
+            mobile?: string | null;
+            name?: string | null;
+            cooperatives?: Array<{ id: string; mobileNo?: string | null } | null> | null;
+          } | null;
+          token: { access: string; refresh: string };
+        } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type CheckAccountMutationVariables = Exact<{
+  id: Scalars['ID'];
+  mobileNumber: Scalars['String'];
+}>;
+
+export type CheckAccountMutation = {
+  eBanking: {
+    auth?: {
+      checkAccount?: {
+        success?: boolean | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+        record?: { fullName?: string | null; memberId?: string | null } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetCoopListQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetCoopListQuery = {
+  eBanking: {
+    neosysClientsList?: Array<{
+      id?: string | null;
+      clientName?: string | null;
+      localGovernmentId?: string | null;
+    } | null> | null;
+  };
+};
+
+export type GetEbankingMeQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetEbankingMeQuery = {
+  eBanking: {
+    me?: {
+      id: string;
+      name?: Record<'local' | 'en' | 'np', string> | null;
+      contact?: string | null;
+    } | null;
+  };
+};
+
+export type SetNewPinMutationVariables = Exact<{
+  data?: InputMaybe<CooperativeConnectInput>;
+}>;
+
+export type SetNewPinMutation = {
+  eBanking: {
+    auth?: {
+      setNewPin?: {
+        record?: {
+          name?: string | null;
+          id: string;
+          mobile?: string | null;
+          cooperatives?: Array<{ id: string; mobileNo?: string | null } | null> | null;
+        } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type LoginToCooperativeMutationVariables = Exact<{
+  cooperativeId: Scalars['ID'];
+  pinCode?: InputMaybe<Scalars['Int']>;
+}>;
+
+export type LoginToCooperativeMutation = {
+  eBanking: {
+    auth?: {
+      loginToCooperative?: {
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+        record?: {
+          data?: {
+            cooperativeId?: string | null;
+            memberId?: string | null;
+            memberMobileNo?: string | null;
+            myraUserId: string;
+          } | null;
+          token: { refresh: string; access: string };
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetCoopMeQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetCoopMeQuery = {
+  eBanking: {
+    auth?: {
+      meCooperativeUser?: {
+        data?: {
+          myraUserId: string;
+          memberMobileNo?: string | null;
+          cooperativeId?: string | null;
+          memberId?: string | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetMyraMeQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetMyraMeQuery = {
+  eBanking: {
+    auth?: {
+      meMyraUser?: {
+        data?: {
+          id: string;
+          name?: string | null;
+          mobile?: string | null;
+          dob?: string | null;
+          cooperatives?: Array<{ id: string; mobileNo?: string | null } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type SetChequeRequestDataMutationVariables = Exact<{
   memberID: Scalars['String'];
   data?: InputMaybe<EBankingChequeRequestInput>;
@@ -15564,6 +15877,221 @@ export type GetLoanHistoryQuery = {
           } | null> | null;
         } | null;
       } | null;
+    } | null;
+  };
+};
+
+export type GetEbankLoanProductTypesQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetEbankLoanProductTypesQuery = {
+  eBanking: { products?: { getLoanProductType?: { productType?: string | null } | null } | null };
+};
+
+export type GetLoanProductsQueryVariables = Exact<{
+  productSubTypeId: Scalars['ID'];
+}>;
+
+export type GetLoanProductsQuery = {
+  eBanking: {
+    products?: {
+      loanProducts?: {
+        data?: Array<{ id: string; productName: string; productType: string } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanProductSubTypesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetLoanProductSubTypesQuery = {
+  eBanking: {
+    products?: {
+      loanProductSubTypes?: Array<{
+        id?: string | null;
+        productSubType?: string | null;
+        productTypeID?: string | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
+export type GetLoanProductDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetLoanProductDataQuery = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        formState?: {
+          data?: {
+            id: string;
+            productName: string;
+            productType: string;
+            productSubType: string;
+            description?: string | null;
+            typeOfMember: Array<KymMemberTypesEnum | null>;
+            minAge?: number | null;
+            maxAge?: number | null;
+            isStaffProduct?: boolean | null;
+            isInsuranceApplicable?: boolean | null;
+            isTenureApplicable?: boolean | null;
+            isMonthlyInstallmentCompulsory?: boolean | null;
+            isPenaltyApplicable?: boolean | null;
+            isRebateApplicable?: boolean | null;
+            isCollateralRequired?: boolean | null;
+            allowPartialInstallment?: boolean | null;
+            supportMultipleAccounts?: boolean | null;
+            minTenureUnitNumber?: number | null;
+            maxTenureUnitNumber?: number | null;
+            interest?: {
+              minRate?: number | null;
+              maxRate?: number | null;
+              defaultRate: number;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanProductCriteriaQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+export type GetLoanProductCriteriaQuery = {
+  eBanking: {
+    products?: {
+      getLoanProductCriteria?: {
+        data?: {
+          minAge?: number | null;
+          maxAge?: number | null;
+          gender?: Array<string | null> | null;
+          ethnicity?: Array<string | null> | null;
+          educationQualification?: Array<string | null> | null;
+          maritalStatus?: Array<string | null> | null;
+          foreignEmployment?: boolean | null;
+          occupation?: Array<string | null> | null;
+          institutionType?: Array<string | null> | null;
+          cooperativeType?: Array<string | null> | null;
+          cooperativeUnion?: Array<string | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetDepositProductQueryVariables = Exact<{
+  nature: NatureOfDepositProduct;
+}>;
+
+export type GetDepositProductQuery = {
+  eBanking: {
+    products?: {
+      depositProduct?: {
+        data?: Array<{
+          id?: string | null;
+          productName?: string | null;
+          description?: string | null;
+          nature?: NatureOfDepositProduct | null;
+          typeOfMember?: Array<KymMemberTypesEnum | null> | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetDepositProductCriteriaQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+export type GetDepositProductCriteriaQuery = {
+  eBanking: {
+    products?: {
+      getDepositProductCriteria?: {
+        data?: {
+          minAge?: number | null;
+          maxAge?: number | null;
+          gender?: Array<string | null> | null;
+          maritalStatus?: Array<string | null> | null;
+          occupation?: Array<string | null> | null;
+          educationQualification?: Array<string | null> | null;
+          ethnicity?: Array<string | null> | null;
+          foreignEmployment?: boolean | null;
+          institutionType?: Array<string | null> | null;
+          cooperativeUnion?: Array<string | null> | null;
+          cooperativeType?: Array<string | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetShareSummaryQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetShareSummaryQuery = {
+  eBanking: { share?: { summary: { totalShare: number; value: number } } | null };
+};
+
+export type GetEbankingShareHistoryQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetEbankingShareHistoryQuery = {
+  eBanking: {
+    share?: {
+      history?: Array<{
+        id: string;
+        title: string;
+        date: string;
+        amount: number;
+        transactionDirection: Transaction_Direction;
+        numberOfShares: number;
+      } | null> | null;
+    } | null;
+  };
+};
+
+export type GetEbankRecentTransactionsQueryVariables = Exact<{
+  filter?: InputMaybe<RecentTransactionFilter>;
+}>;
+
+export type GetEbankRecentTransactionsQuery = {
+  eBanking: {
+    transaction?: {
+      recent?: Array<{
+        id: string;
+        name: string;
+        transactionType: Transaction_Type;
+        date: string;
+        transactionDirection: Transaction_Direction;
+        amount: number;
+      } | null> | null;
+    } | null;
+  };
+};
+
+export type GetMonthlyTransactionsQueryVariables = Exact<{
+  filter?: InputMaybe<Filter>;
+}>;
+
+export type GetMonthlyTransactionsQuery = {
+  eBanking: {
+    transaction?: {
+      monthly: Array<{
+        id: string;
+        closingBalance?: number | null;
+        month: string;
+        transactions: Array<{
+          id: string;
+          name: string;
+          transactionType: Transaction_Type;
+          date: string;
+          transactionDirection: Transaction_Direction;
+          amount: number;
+        } | null>;
+      } | null>;
     } | null;
   };
 };
@@ -21419,13 +21947,16 @@ export const useGetMemberTranslationQuery = <TData = GetMemberTranslationQuery, 
     options
   );
 export const GetKymFormStatusDocument = `
-    query getKymFormStatus($id: String!) {
+    query getKymFormStatus($id: String!, $hasPressedNext: Boolean) {
   members {
-    individual(id: $id) {
+    individual(id: $id, hasPressedNext: $hasPressedNext) {
       formState {
-        data {
+        sectionStatus {
+          id
+          errors
           sectionStatus {
-            id
+            errors
+            incomplete
           }
         }
       }
@@ -21528,10 +22059,18 @@ export const useGetMemberIndividualDataQuery = <
     options
   );
 export const GetIndividualKymEditDataDocument = `
-    query getIndividualKymEditData($id: String!) {
+    query getIndividualKymEditData($id: String!, $hasPressedNext: Boolean) {
   members {
-    individual(id: $id) {
+    individual(id: $id, hasPressedNext: $hasPressedNext) {
       formState {
+        sectionStatus {
+          id
+          errors
+          sectionStatus {
+            errors
+            incomplete
+          }
+        }
         data {
           formData {
             basicInformation {
@@ -23918,6 +24457,316 @@ export const useGetInstallmentsListDataQuery = <
     ).bind(null, variables),
     options
   );
+export const SignUpDocument = `
+    mutation signUp($mobileNo: String!) {
+  eBanking {
+    auth {
+      signUp(mobileNo: $mobileNo) {
+        error {
+          ...MutationError
+        }
+        recordId
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSignUpMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SignUpMutation, TError, SignUpMutationVariables, TContext>
+) =>
+  useMutation<SignUpMutation, TError, SignUpMutationVariables, TContext>(
+    ['signUp'],
+    useAxios<SignUpMutation, SignUpMutationVariables>(SignUpDocument),
+    options
+  );
+export const VerifyOtpDocument = `
+    mutation verifyOTP($data: EbankingOtpInput!) {
+  eBanking {
+    auth {
+      verifyOtp(data: $data) {
+        error {
+          ...MutationError
+        }
+        success
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useVerifyOtpMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<VerifyOtpMutation, TError, VerifyOtpMutationVariables, TContext>
+) =>
+  useMutation<VerifyOtpMutation, TError, VerifyOtpMutationVariables, TContext>(
+    ['verifyOTP'],
+    useAxios<VerifyOtpMutation, VerifyOtpMutationVariables>(VerifyOtpDocument),
+    options
+  );
+export const SetPasswordDocument = `
+    mutation setPassword($data: EbankingPasswordInput!, $userId: ID!) {
+  eBanking {
+    auth {
+      setPassword(data: $data, userID: $userId) {
+        error {
+          ...MutationError
+        }
+        recordId
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetPasswordMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetPasswordMutation, TError, SetPasswordMutationVariables, TContext>
+) =>
+  useMutation<SetPasswordMutation, TError, SetPasswordMutationVariables, TContext>(
+    ['setPassword'],
+    useAxios<SetPasswordMutation, SetPasswordMutationVariables>(SetPasswordDocument),
+    options
+  );
+export const EBankingLoginDocument = `
+    mutation eBankingLogin($data: EbankingLoginInput!) {
+  eBanking {
+    auth {
+      login(data: $data) {
+        recordId
+        record {
+          data {
+            id
+            cooperatives {
+              id
+              mobileNo
+            }
+            dob
+            mobile
+            name
+          }
+          token {
+            access
+            refresh
+          }
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useEBankingLoginMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    EBankingLoginMutation,
+    TError,
+    EBankingLoginMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<EBankingLoginMutation, TError, EBankingLoginMutationVariables, TContext>(
+    ['eBankingLogin'],
+    useAxios<EBankingLoginMutation, EBankingLoginMutationVariables>(EBankingLoginDocument),
+    options
+  );
+export const CheckAccountDocument = `
+    mutation checkAccount($id: ID!, $mobileNumber: String!) {
+  eBanking {
+    auth {
+      checkAccount(coopId: $id, mobileNumber: $mobileNumber) {
+        success
+        error {
+          ...MutationError
+        }
+        record {
+          fullName
+          memberId
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useCheckAccountMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    CheckAccountMutation,
+    TError,
+    CheckAccountMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<CheckAccountMutation, TError, CheckAccountMutationVariables, TContext>(
+    ['checkAccount'],
+    useAxios<CheckAccountMutation, CheckAccountMutationVariables>(CheckAccountDocument),
+    options
+  );
+export const GetCoopListDocument = `
+    query getCoopList {
+  eBanking {
+    neosysClientsList {
+      id
+      clientName
+      localGovernmentId
+    }
+  }
+}
+    `;
+export const useGetCoopListQuery = <TData = GetCoopListQuery, TError = unknown>(
+  variables?: GetCoopListQueryVariables,
+  options?: UseQueryOptions<GetCoopListQuery, TError, TData>
+) =>
+  useQuery<GetCoopListQuery, TError, TData>(
+    variables === undefined ? ['getCoopList'] : ['getCoopList', variables],
+    useAxios<GetCoopListQuery, GetCoopListQueryVariables>(GetCoopListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetEbankingMeDocument = `
+    query getEbankingMe {
+  eBanking {
+    me {
+      id
+      name
+      contact
+    }
+  }
+}
+    `;
+export const useGetEbankingMeQuery = <TData = GetEbankingMeQuery, TError = unknown>(
+  variables?: GetEbankingMeQueryVariables,
+  options?: UseQueryOptions<GetEbankingMeQuery, TError, TData>
+) =>
+  useQuery<GetEbankingMeQuery, TError, TData>(
+    variables === undefined ? ['getEbankingMe'] : ['getEbankingMe', variables],
+    useAxios<GetEbankingMeQuery, GetEbankingMeQueryVariables>(GetEbankingMeDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const SetNewPinDocument = `
+    mutation setNewPin($data: CooperativeConnectInput) {
+  eBanking {
+    auth {
+      setNewPin(data: $data) {
+        record {
+          name
+          id
+          mobile
+          cooperatives {
+            id
+            mobileNo
+          }
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetNewPinMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetNewPinMutation, TError, SetNewPinMutationVariables, TContext>
+) =>
+  useMutation<SetNewPinMutation, TError, SetNewPinMutationVariables, TContext>(
+    ['setNewPin'],
+    useAxios<SetNewPinMutation, SetNewPinMutationVariables>(SetNewPinDocument),
+    options
+  );
+export const LoginToCooperativeDocument = `
+    mutation loginToCooperative($cooperativeId: ID!, $pinCode: Int) {
+  eBanking {
+    auth {
+      loginToCooperative(cooperativeId: $cooperativeId, pinCode: $pinCode) {
+        error {
+          ...MutationError
+        }
+        record {
+          data {
+            cooperativeId
+            memberId
+            memberMobileNo
+            myraUserId
+          }
+          token {
+            refresh
+            access
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useLoginToCooperativeMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    LoginToCooperativeMutation,
+    TError,
+    LoginToCooperativeMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<LoginToCooperativeMutation, TError, LoginToCooperativeMutationVariables, TContext>(
+    ['loginToCooperative'],
+    useAxios<LoginToCooperativeMutation, LoginToCooperativeMutationVariables>(
+      LoginToCooperativeDocument
+    ),
+    options
+  );
+export const GetCoopMeDocument = `
+    query getCoopMe {
+  eBanking {
+    auth {
+      meCooperativeUser {
+        data {
+          myraUserId
+          memberMobileNo
+          cooperativeId
+          memberId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCoopMeQuery = <TData = GetCoopMeQuery, TError = unknown>(
+  variables?: GetCoopMeQueryVariables,
+  options?: UseQueryOptions<GetCoopMeQuery, TError, TData>
+) =>
+  useQuery<GetCoopMeQuery, TError, TData>(
+    variables === undefined ? ['getCoopMe'] : ['getCoopMe', variables],
+    useAxios<GetCoopMeQuery, GetCoopMeQueryVariables>(GetCoopMeDocument).bind(null, variables),
+    options
+  );
+export const GetMyraMeDocument = `
+    query getMyraMe {
+  eBanking {
+    auth {
+      meMyraUser {
+        data {
+          id
+          cooperatives {
+            id
+            mobileNo
+          }
+          name
+          mobile
+          dob
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMyraMeQuery = <TData = GetMyraMeQuery, TError = unknown>(
+  variables?: GetMyraMeQueryVariables,
+  options?: UseQueryOptions<GetMyraMeQuery, TError, TData>
+) =>
+  useQuery<GetMyraMeQuery, TError, TData>(
+    variables === undefined ? ['getMyraMe'] : ['getMyraMe', variables],
+    useAxios<GetMyraMeQuery, GetMyraMeQueryVariables>(GetMyraMeDocument).bind(null, variables),
+    options
+  );
 export const SetChequeRequestDataDocument = `
     mutation setChequeRequestData($memberID: String!, $data: EBankingChequeRequestInput) {
   eBanking {
@@ -24208,5 +25057,356 @@ export const useGetLoanHistoryQuery = <TData = GetLoanHistoryQuery, TError = unk
       null,
       variables
     ),
+    options
+  );
+export const GetEbankLoanProductTypesDocument = `
+    query getEbankLoanProductTypes($id: ID!) {
+  eBanking {
+    products {
+      getLoanProductType(id: $id) {
+        productType
+      }
+    }
+  }
+}
+    `;
+export const useGetEbankLoanProductTypesQuery = <
+  TData = GetEbankLoanProductTypesQuery,
+  TError = unknown
+>(
+  variables: GetEbankLoanProductTypesQueryVariables,
+  options?: UseQueryOptions<GetEbankLoanProductTypesQuery, TError, TData>
+) =>
+  useQuery<GetEbankLoanProductTypesQuery, TError, TData>(
+    ['getEbankLoanProductTypes', variables],
+    useAxios<GetEbankLoanProductTypesQuery, GetEbankLoanProductTypesQueryVariables>(
+      GetEbankLoanProductTypesDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanProductsDocument = `
+    query getLoanProducts($productSubTypeId: ID!) {
+  eBanking {
+    products {
+      loanProducts(productSubTypeId: $productSubTypeId) {
+        data {
+          id
+          productName
+          productType
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProductsQuery = <TData = GetLoanProductsQuery, TError = unknown>(
+  variables: GetLoanProductsQueryVariables,
+  options?: UseQueryOptions<GetLoanProductsQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductsQuery, TError, TData>(
+    ['getLoanProducts', variables],
+    useAxios<GetLoanProductsQuery, GetLoanProductsQueryVariables>(GetLoanProductsDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetLoanProductSubTypesDocument = `
+    query getLoanProductSubTypes {
+  eBanking {
+    products {
+      loanProductSubTypes {
+        id
+        productSubType
+        productTypeID
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProductSubTypesQuery = <
+  TData = GetLoanProductSubTypesQuery,
+  TError = unknown
+>(
+  variables?: GetLoanProductSubTypesQueryVariables,
+  options?: UseQueryOptions<GetLoanProductSubTypesQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductSubTypesQuery, TError, TData>(
+    variables === undefined ? ['getLoanProductSubTypes'] : ['getLoanProductSubTypes', variables],
+    useAxios<GetLoanProductSubTypesQuery, GetLoanProductSubTypesQueryVariables>(
+      GetLoanProductSubTypesDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanProductDataDocument = `
+    query getLoanProductData($id: ID!) {
+  settings {
+    general {
+      loanProducts {
+        formState(id: $id) {
+          data {
+            id
+            productName
+            productType
+            productSubType
+            description
+            typeOfMember
+            minAge
+            maxAge
+            isStaffProduct
+            isInsuranceApplicable
+            isTenureApplicable
+            isMonthlyInstallmentCompulsory
+            isPenaltyApplicable
+            isRebateApplicable
+            isCollateralRequired
+            allowPartialInstallment
+            supportMultipleAccounts
+            minTenureUnitNumber
+            maxTenureUnitNumber
+            interest {
+              minRate
+              maxRate
+              defaultRate
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProductDataQuery = <TData = GetLoanProductDataQuery, TError = unknown>(
+  variables: GetLoanProductDataQueryVariables,
+  options?: UseQueryOptions<GetLoanProductDataQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductDataQuery, TError, TData>(
+    ['getLoanProductData', variables],
+    useAxios<GetLoanProductDataQuery, GetLoanProductDataQueryVariables>(
+      GetLoanProductDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanProductCriteriaDocument = `
+    query getLoanProductCriteria($productId: ID!) {
+  eBanking {
+    products {
+      getLoanProductCriteria(productId: $productId) {
+        data {
+          minAge
+          maxAge
+          gender
+          ethnicity
+          educationQualification
+          maritalStatus
+          foreignEmployment
+          occupation
+          institutionType
+          cooperativeType
+          cooperativeUnion
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProductCriteriaQuery = <
+  TData = GetLoanProductCriteriaQuery,
+  TError = unknown
+>(
+  variables: GetLoanProductCriteriaQueryVariables,
+  options?: UseQueryOptions<GetLoanProductCriteriaQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductCriteriaQuery, TError, TData>(
+    ['getLoanProductCriteria', variables],
+    useAxios<GetLoanProductCriteriaQuery, GetLoanProductCriteriaQueryVariables>(
+      GetLoanProductCriteriaDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDepositProductDocument = `
+    query getDepositProduct($nature: NatureOfDepositProduct!) {
+  eBanking {
+    products {
+      depositProduct(filter: $nature) {
+        data {
+          id
+          productName
+          description
+          nature
+          typeOfMember
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetDepositProductQuery = <TData = GetDepositProductQuery, TError = unknown>(
+  variables: GetDepositProductQueryVariables,
+  options?: UseQueryOptions<GetDepositProductQuery, TError, TData>
+) =>
+  useQuery<GetDepositProductQuery, TError, TData>(
+    ['getDepositProduct', variables],
+    useAxios<GetDepositProductQuery, GetDepositProductQueryVariables>(
+      GetDepositProductDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetDepositProductCriteriaDocument = `
+    query getDepositProductCriteria($productId: ID!) {
+  eBanking {
+    products {
+      getDepositProductCriteria(productId: $productId) {
+        data {
+          minAge
+          maxAge
+          gender
+          maritalStatus
+          occupation
+          educationQualification
+          ethnicity
+          foreignEmployment
+          institutionType
+          cooperativeUnion
+          cooperativeType
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetDepositProductCriteriaQuery = <
+  TData = GetDepositProductCriteriaQuery,
+  TError = unknown
+>(
+  variables: GetDepositProductCriteriaQueryVariables,
+  options?: UseQueryOptions<GetDepositProductCriteriaQuery, TError, TData>
+) =>
+  useQuery<GetDepositProductCriteriaQuery, TError, TData>(
+    ['getDepositProductCriteria', variables],
+    useAxios<GetDepositProductCriteriaQuery, GetDepositProductCriteriaQueryVariables>(
+      GetDepositProductCriteriaDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetShareSummaryDocument = `
+    query getShareSummary {
+  eBanking {
+    share {
+      summary {
+        totalShare
+        value
+      }
+    }
+  }
+}
+    `;
+export const useGetShareSummaryQuery = <TData = GetShareSummaryQuery, TError = unknown>(
+  variables?: GetShareSummaryQueryVariables,
+  options?: UseQueryOptions<GetShareSummaryQuery, TError, TData>
+) =>
+  useQuery<GetShareSummaryQuery, TError, TData>(
+    variables === undefined ? ['getShareSummary'] : ['getShareSummary', variables],
+    useAxios<GetShareSummaryQuery, GetShareSummaryQueryVariables>(GetShareSummaryDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetEbankingShareHistoryDocument = `
+    query getEbankingShareHistory {
+  eBanking {
+    share {
+      history {
+        id
+        title
+        date
+        amount
+        transactionDirection
+        numberOfShares
+      }
+    }
+  }
+}
+    `;
+export const useGetEbankingShareHistoryQuery = <
+  TData = GetEbankingShareHistoryQuery,
+  TError = unknown
+>(
+  variables?: GetEbankingShareHistoryQueryVariables,
+  options?: UseQueryOptions<GetEbankingShareHistoryQuery, TError, TData>
+) =>
+  useQuery<GetEbankingShareHistoryQuery, TError, TData>(
+    variables === undefined ? ['getEbankingShareHistory'] : ['getEbankingShareHistory', variables],
+    useAxios<GetEbankingShareHistoryQuery, GetEbankingShareHistoryQueryVariables>(
+      GetEbankingShareHistoryDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetEbankRecentTransactionsDocument = `
+    query getEbankRecentTransactions($filter: RecentTransactionFilter) {
+  eBanking {
+    transaction {
+      recent(filter: $filter) {
+        id
+        name
+        transactionType
+        date
+        transactionDirection
+        amount
+      }
+    }
+  }
+}
+    `;
+export const useGetEbankRecentTransactionsQuery = <
+  TData = GetEbankRecentTransactionsQuery,
+  TError = unknown
+>(
+  variables?: GetEbankRecentTransactionsQueryVariables,
+  options?: UseQueryOptions<GetEbankRecentTransactionsQuery, TError, TData>
+) =>
+  useQuery<GetEbankRecentTransactionsQuery, TError, TData>(
+    variables === undefined
+      ? ['getEbankRecentTransactions']
+      : ['getEbankRecentTransactions', variables],
+    useAxios<GetEbankRecentTransactionsQuery, GetEbankRecentTransactionsQueryVariables>(
+      GetEbankRecentTransactionsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMonthlyTransactionsDocument = `
+    query getMonthlyTransactions($filter: Filter) {
+  eBanking {
+    transaction {
+      monthly(filter: $filter) {
+        id
+        closingBalance
+        month
+        transactions {
+          id
+          name
+          transactionType
+          date
+          transactionDirection
+          amount
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMonthlyTransactionsQuery = <
+  TData = GetMonthlyTransactionsQuery,
+  TError = unknown
+>(
+  variables?: GetMonthlyTransactionsQueryVariables,
+  options?: UseQueryOptions<GetMonthlyTransactionsQuery, TError, TData>
+) =>
+  useQuery<GetMonthlyTransactionsQuery, TError, TData>(
+    variables === undefined ? ['getMonthlyTransactions'] : ['getMonthlyTransactions', variables],
+    useAxios<GetMonthlyTransactionsQuery, GetMonthlyTransactionsQueryVariables>(
+      GetMonthlyTransactionsDocument
+    ).bind(null, variables),
     options
   );

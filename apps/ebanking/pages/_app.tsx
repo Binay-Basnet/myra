@@ -7,7 +7,7 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ChakraProvider } from '@chakra-ui/react';
 
-import { store } from '@coop/cbs/data-access';
+import { store, useCoopInit, useInit } from '@coop/ebanking/data-access';
 import { Toaster } from '@coop/shared/ui';
 import { theme } from '@coop/shared/utils';
 
@@ -39,6 +39,9 @@ const queryClient = new QueryClient({
 
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout || ((page) => page);
+
+  useCoopInit();
+  useInit();
 
   return (
     <>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import { LoaderOverlay } from '@coop/ebanking/components';
 
@@ -9,9 +10,10 @@ import { SignUpStatus } from '../types/SignUpStatus';
 
 export const SignUpPage = () => {
   const [status, setStatus] = useState<SignUpStatus>(SignUpStatus.INITIAL);
+  const methods = useForm();
 
   return (
-    <>
+    <FormProvider {...methods}>
       {status === SignUpStatus.LOADING && <LoaderOverlay />}
 
       {(() => {
@@ -25,6 +27,6 @@ export const SignUpPage = () => {
 
         return <SignUpHomePage setStatus={setStatus} />;
       })()}
-    </>
+    </FormProvider>
   );
 };

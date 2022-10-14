@@ -26,26 +26,22 @@ export interface InputProps extends ChakraInputProps {
   rightAddonText?: string;
 }
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  (
-    {
-      type,
-      name,
-      rightElement,
-      leftElement,
-      helperText,
-      placeholder,
-      errorText,
-      label,
-      // fontSize,
-      // __placeholder,
-      size = 'default',
-      // fontWeight,
-      rightAddonText,
-      ...rest
-    }: InputProps,
-    ref
-  ) => (
+export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+  const {
+    type,
+    name,
+    rightElement,
+    leftElement,
+    helperText,
+    placeholder,
+    errorText,
+    label,
+    size = 'default',
+    rightAddonText,
+    ...rest
+  } = props;
+
+  return (
     <Box w="auto" display="flex" flexDirection="column" flexGrow={1} gap="s4">
       {label && (
         <TextFields variant="formLabel" color="gray.700">
@@ -59,6 +55,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <ChakraInput
           type={type}
           data-testid={name}
+          name={name}
           ref={ref}
           h="100%"
           isInvalid={!!errorText}
@@ -90,8 +87,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         </TextFields>
       ) : null}
     </Box>
-  )
-);
+  );
+});
 
 export default Input;
 
