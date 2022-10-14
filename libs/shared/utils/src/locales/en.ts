@@ -3553,6 +3553,7 @@ const en: Record<string, string> = {
   rebateAlert:
     'If both rebate amount and rebate rate is filled, the total rebate is the total sum of the two.',
   loanProductpenaltyRate: 'Penalty Rate',
+  loanLayoutTopButton: 'New Loan',
   loanProductRebateRate: 'Rebate Rate',
 
   // account deposit product

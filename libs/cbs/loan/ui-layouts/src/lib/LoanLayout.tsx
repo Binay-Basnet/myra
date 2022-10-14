@@ -1,9 +1,17 @@
 import React from 'react';
-import { AiOutlinePlus, AiOutlineSetting } from 'react-icons/ai';
+import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
 import { TabColumn } from '@coop/myra/components';
-import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
+import {
+  AddButtonList,
+  Box,
+  Button,
+  Divider,
+  Icon,
+  PopOverComponentForButtonList,
+  Text,
+} from '@coop/shared/ui';
 
 interface IAccountPageLayoutProps {
   children: React.ReactNode;
@@ -29,7 +37,16 @@ const accountColumns = [
   },
   { title: 'Declined Loan', link: '/loan/declined' },
 ];
-
+const addButtoncolumns = [
+  {
+    title: 'New Loan Application',
+    link: '/loan/apply',
+  },
+  {
+    title: 'Loan Repayment',
+    link: '/loan/repayments',
+  },
+];
 export const LoanListLayout = ({ children }: IAccountPageLayoutProps) => {
   const router = useRouter();
 
@@ -42,7 +59,7 @@ export const LoanListLayout = ({ children }: IAccountPageLayoutProps) => {
           </Text>
         </Box>
         <Box p="s16">
-          <Button
+          {/* <Button
             display="flex"
             justifyContent="start"
             onClick={() => router.push('/loan/apply')}
@@ -51,8 +68,16 @@ export const LoanListLayout = ({ children }: IAccountPageLayoutProps) => {
             leftIcon={<Icon as={AiOutlinePlus} size="md" color="white" />}
           >
             New Loan Application
-          </Button>
 
+          </Button> */}
+
+          <PopOverComponentForButtonList buttonLabel="loanLayoutTopButton">
+            {addButtoncolumns.map((item) => (
+              <Box key={item?.title}>
+                <AddButtonList label={item?.title} onClick={() => router.push(`${item.link}`)} />
+              </Box>
+            ))}
+          </PopOverComponentForButtonList>
           <Divider my="s16" />
           <TabColumn list={accountColumns} />
           <Divider my="s16" />

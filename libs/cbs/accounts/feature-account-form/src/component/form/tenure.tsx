@@ -117,8 +117,10 @@ export const Tenure = () => {
               <ul>
                 <li>
                   {' '}
-                  {productData?.minTenureUnitNumber} {productData?.tenureUnit} -{' '}
-                  {productData?.maxTenureUnitNumber} {productData?.tenureUnit}
+                  <b>
+                    {productData?.minTenureUnitNumber} {productData?.tenureUnit} -{' '}
+                    {productData?.maxTenureUnitNumber} {productData?.tenureUnit}
+                  </b>
                 </li>
               </ul>
             </Alert>

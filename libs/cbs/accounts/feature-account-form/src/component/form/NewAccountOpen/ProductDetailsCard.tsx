@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { useGetAccountOpenProductDetailsQuery } from '@coop/cbs/data-access';
+import {
+  NatureOfDepositProduct,
+  useGetAccountOpenProductDetailsQuery,
+} from '@coop/cbs/data-access';
 import { Box, Text } from '@coop/shared/ui';
 
 interface ProductProps {
@@ -39,7 +42,11 @@ export const ProductCard = ({ productId }: ProductProps) => {
           }
         </Text>
         <Text fontWeight="Medium" fontSize="s3">
-          Interest Rate : {productData?.interest?.minRate} -{productData?.interest?.maxRate}
+          Interest Rate :
+          <b>
+            {' '}
+            {productData?.interest?.minRate} % -{productData?.interest?.maxRate}%{' '}
+          </b>
         </Text>
       </Box>
       <Box
@@ -89,16 +96,19 @@ export const ProductCard = ({ productId }: ProductProps) => {
             {productData?.withdrawAmountLimit?.maxAmount}
           </Text>
         </Box>
-        <Box display="flex" flexDirection="column" gap="s4">
-          <Text fontSize="s3" fontWeight="400">
-            Tenure
-          </Text>
+        {productData?.nature !== NatureOfDepositProduct?.Saving &&
+          productData?.nature !== NatureOfDepositProduct?.Current && (
+            <Box display="flex" flexDirection="column" gap="s4">
+              <Text fontSize="s3" fontWeight="400">
+                Tenure
+              </Text>
 
-          <Text fontSize="s3" fontWeight="600">
-            {productData?.minTenureUnitNumber} {productData?.tenureUnit}-
-            {productData?.maxTenureUnitNumber} {productData?.tenureUnit}
-          </Text>
-        </Box>
+              <Text fontSize="s3" fontWeight="600">
+                {productData?.minTenureUnitNumber} {productData?.tenureUnit}-
+                {productData?.maxTenureUnitNumber} {productData?.tenureUnit}
+              </Text>
+            </Box>
+          )}
       </Box>
     </Box>
   );

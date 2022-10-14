@@ -106,7 +106,7 @@ query getEbankingMe {
 mutation setNewPin($data: CooperativeConnectInput) {
   eBanking {
     auth {
-      setNewPin(data: $data){
+      setNewPin(data: $data) {
         record {
           name
           id
@@ -124,10 +124,10 @@ mutation setNewPin($data: CooperativeConnectInput) {
   }
 }
 
-mutation loginToCooperative($cooperativeId: ID!, $pinCode: Int){
+mutation loginToCooperative($cooperativeId: ID!, $pinCode: Int) {
   eBanking {
     auth {
-      loginToCooperative(cooperativeId: $cooperativeId, pinCode: $pinCode){
+      loginToCooperative(cooperativeId: $cooperativeId, pinCode: $pinCode) {
         error {
           ...MutationError
         }
@@ -148,7 +148,7 @@ mutation loginToCooperative($cooperativeId: ID!, $pinCode: Int){
   }
 }
 
-query getCoopMe{
+query getCoopMe {
   eBanking {
     auth {
       meCooperativeUser {
