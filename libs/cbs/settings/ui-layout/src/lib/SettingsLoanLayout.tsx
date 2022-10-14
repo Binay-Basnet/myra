@@ -19,6 +19,10 @@ const tabList = [
     title: 'settingsProductTypeGeneral',
     to: '/settings/general/loan/product-type',
   },
+  {
+    title: 'settingsSideBarValuator',
+    to: '/settings/general/loan/valuator',
+  },
 ];
 
 interface ISettingsLoanLayout {

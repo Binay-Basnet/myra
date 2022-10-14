@@ -51,10 +51,6 @@ const tabList: TabList[] = [
     title: 'settingsSideBarShare',
     to: '/settings/general/share',
   },
-  {
-    title: 'settingsSideBarValuator',
-    to: '/settings/general/valuator/list',
-  },
 ];
 
 export const SettingSideBar = () => {

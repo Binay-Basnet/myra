@@ -99,7 +99,7 @@ export const CbsSettingsFeatureValuatorList = () => {
         buttonLabel={t['settingsGeneralValuatorNewValuator']}
         buttonHandler={() => {
           mutateAsync({}).then((res) => {
-            router.push(`/settings/general/valuator/add/${res?.newId}`);
+            router.push(`/settings/general/loan/valuator/add/${res?.newId}`);
           });
         }}
       />

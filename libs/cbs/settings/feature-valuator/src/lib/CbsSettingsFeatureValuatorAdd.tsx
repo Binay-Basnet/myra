@@ -65,7 +65,7 @@ export const CbsSettingsFeatureValuatorAdd = () => {
       onSuccess: () => {
         queryClient.invalidateQueries('getValuatorList');
         queryClient.invalidateQueries('getValuator');
-        router.push('/settings/general/valuator/list');
+        router.push('/settings/general/loan/valuator');
       },
     });
   };
