@@ -1,15 +1,14 @@
 query getEbankLoanProductTypes($id: ID!) {
   eBanking {
     products {
-      getLoanProductType(id:$id) {
+      getLoanProductType(id: $id) {
         productType
       }
     }
   }
 }
 
-
-query getLoanProducts($productSubTypeId: ID!){
+query getLoanProducts($productSubTypeId: ID!) {
   eBanking {
     products {
       loanProducts(productSubTypeId: $productSubTypeId) {
@@ -23,7 +22,6 @@ query getLoanProducts($productSubTypeId: ID!){
   }
 }
 
-
 query getLoanProductSubTypes {
   eBanking {
     products {
@@ -36,8 +34,7 @@ query getLoanProductSubTypes {
   }
 }
 
-
-query getLoanProductData($id:ID!) {
+query getLoanProductData($id: ID!) {
   settings {
     general {
       loanProducts {
@@ -79,23 +76,22 @@ query getLoanProductCriteria($productId: ID!) {
     products {
       getLoanProductCriteria(productId: $productId) {
         data {
-          minAge,
-          maxAge,
-          gender,
-          ethnicity,
-          educationQualification,
-          maritalStatus,
-          foreignEmployment,
-          occupation,
-          institutionType,
-          cooperativeType,
+          minAge
+          maxAge
+          gender
+          ethnicity
+          educationQualification
+          maritalStatus
+          foreignEmployment
+          occupation
+          institutionType
+          cooperativeType
           cooperativeUnion
         }
       }
     }
   }
 }
-
 
 query getDepositProduct($nature: NatureOfDepositProduct!) {
   eBanking {

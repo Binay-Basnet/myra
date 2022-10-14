@@ -20,8 +20,7 @@ export const Interest = () => {
     }
   );
 
-  const ProductData =
-    poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
+  const ProductData = poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
 
   useEffect(() => {
     if (products) {
@@ -37,19 +36,9 @@ export const Interest = () => {
     (ceoInterest ? Number(ProductData?.interest?.ceoAuthority) : 0) +
     (BoardInterest ? Number(ProductData?.interest?.boardAuthority) : 0);
   return (
-    <Box display="flex" flexDirection={'column'} gap="s16">
-      <Box
-        display="flex"
-        flexDirection="column"
-        w="100%"
-        background="neutralColorLight.Gray-0"
-      >
-        <Text
-          fontSize="r1"
-          fontWeight="SemiBold"
-          color="neutralColorLight.Gray-60"
-          mb="s16"
-        >
+    <Box display="flex" flexDirection="column" gap="s16">
+      <Box display="flex" flexDirection="column" w="100%" background="neutralColorLight.Gray-0">
+        <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-60" mb="s16">
           {t['accInterest']}
         </Text>
         <Box display="grid" gridTemplateColumns="repeat(1, 1fr)" gap="s16">
@@ -58,8 +47,8 @@ export const Interest = () => {
               name="interestRate"
               type="number"
               label={t['accountOpenInterestRate']}
-              textAlign={'right'}
-              isDisabled={true}
+              textAlign="right"
+              isDisabled
               value={valueInput}
               rightElement={
                 <Text fontWeight="Medium" fontSize="r1" color="primary.500">
@@ -69,40 +58,36 @@ export const Interest = () => {
             />
           </InputGroupContainer>
           <InputGroupContainer>
-            <Box
-              display={'flex'}
-              flexDirection="row"
-              justifyContent={'space-between'}
-            >
-              <FormCheckbox
-                name="ceoAuthority"
-                label={t['accountOpenCEOAuthority']}
-              />
-              <FormCheckbox
-                name="boardAuthority"
-                label={t['accountOpenBoardAuthority']}
-              />
+            <Box display="flex" flexDirection="row" justifyContent="space-between">
+              <FormCheckbox name="ceoAuthority" label={t['accountOpenCEOAuthority']} />
+              <FormCheckbox name="boardAuthority" label={t['accountOpenBoardAuthority']} />
             </Box>
           </InputGroupContainer>
 
           <Alert status="info" title="Rates">
-            <Box display={'flex'} flexDirection="column" gap="s4">
-              <Text fontWeight={'400'} fontSize="r1">
-                Interest Rate: {ProductData?.interest?.minRate} -{' '}
-                {ProductData?.interest?.maxRate}
+            <Box display="flex" flexDirection="column" gap="s4">
+              <Text fontWeight="400" fontSize="r1">
+                Interest Rate:{' '}
+                <b>
+                  {ProductData?.interest?.minRate} %- {ProductData?.interest?.maxRate} %{' '}
+                </b>
               </Text>
-              <Box display={'flex'} flexDirection="row" gap="s4">
-                <Text fontWeight={'400'} fontSize="r1">
-                  Ladder Rate:
-                </Text>
-                {ProductData?.ladderRateData?.map((item, index) => {
-                  return (
-                    <Text fontWeight={'400'} fontSize="r1" key={index}>
-                      {item?.amount} and more : {item?.rate} |
+              {ProductData?.ladderRate && (
+                <Box display="flex" flexDirection="row" gap="s4">
+                  <Text fontWeight="400" fontSize="r1">
+                    Ladder Rate:
+                  </Text>
+                  {ProductData?.ladderRateData?.map((item) => (
+                    <Text fontWeight="400" fontSize="r1" key={`${item?.rate}${item?.type}`}>
+                      <b>
+                        {' '}
+                        {item?.amount} and more : {item?.rate}%{' '}
+                      </b>
+                      |
                     </Text>
-                  );
-                })}
-              </Box>
+                  ))}
+                </Box>
+              )}
             </Box>{' '}
           </Alert>
         </Box>

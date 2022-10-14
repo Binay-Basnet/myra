@@ -3,7 +3,9 @@ import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { AccordionPanel } from '@chakra-ui/react';
 
 import {
+  NatureOfDepositProduct,
   PrematurePenaltyDateType,
+  useGetAccountOpenProductDetailsQuery,
   useGetAccountOpenProductPenaltyQuery,
 } from '@coop/cbs/data-access';
 import { Accordion, AccordionButton, AccordionItem, Box, Icon, Text } from '@coop/shared/ui';
@@ -24,6 +26,14 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
       enabled: triggerQuery,
     }
   );
+  const productDetails = useGetAccountOpenProductDetailsQuery(
+    { id: productId },
+    {
+      enabled: triggerQuery,
+    }
+  );
+  const productNature =
+    productDetails?.data?.settings?.general?.depositProduct?.formState?.data?.nature;
   const penaltyData =
     poductDetails?.data?.settings?.general?.depositProduct?.getPenaltyRebateInfo?.data?.penalty;
   const rebateData =
@@ -212,163 +222,169 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
             </>
           )}
         </AccordionItem>
-        <AccordionItem>
-          {({ isExpanded }) => (
-            <>
-              <AccordionButton
-                border="none"
-                p="s16"
-                bg="white"
-                display="flex"
-                alignItems="center"
-                h="40px"
-                justifyContent="space-between"
-                _hover={{}}
-                _expanded={{}}
-              >
-                <Text color="gray.800" fontWeight="500" fontSize="r1">
-                  Premature Penalty Setup
-                </Text>
-                <Icon
-                  as={isExpanded ? ChevronDownIcon : ChevronRightIcon}
-                  color="gray.800"
-                  flexShrink={0}
-                />
-              </AccordionButton>
-              <AccordionPanel p="s16">
-                <Box px="s20">
-                  <ul>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Penalty Date Type
-                        </Text>
+        {productNature !== NatureOfDepositProduct?.Current &&
+          productNature !== NatureOfDepositProduct?.Saving && (
+            <AccordionItem>
+              {({ isExpanded }) => (
+                <>
+                  <AccordionButton
+                    border="none"
+                    p="s16"
+                    bg="white"
+                    display="flex"
+                    alignItems="center"
+                    h="40px"
+                    justifyContent="space-between"
+                    _hover={{}}
+                    _expanded={{}}
+                  >
+                    <Text color="gray.800" fontWeight="500" fontSize="r1">
+                      Premature Penalty Setup
+                    </Text>
+                    <Icon
+                      as={isExpanded ? ChevronDownIcon : ChevronRightIcon}
+                      color="gray.800"
+                      flexShrink={0}
+                    />
+                  </AccordionButton>
+                  <AccordionPanel p="s16">
+                    <Box px="s20">
+                      <ul>
+                        <li>
+                          <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
+                            <Text fontWeight="400" fontSize="s3">
+                              Penalty Date Type
+                            </Text>
 
-                        <Text fontWeight="600" fontSize="s3">
-                          {(prematurePenaltyData?.penaltyDateType ===
-                            PrematurePenaltyDateType.EffectiveDaysFromStart &&
-                            t['effectiveDaysFromStart']) ||
-                            (prematurePenaltyData?.penaltyDateType ===
-                              PrematurePenaltyDateType.RemainingDaysToGetMatured &&
-                              t['remainingDaysToGetMatured'])}
-                        </Text>
-                      </Box>
-                    </li>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          No. of Days
-                        </Text>
+                            <Text fontWeight="600" fontSize="s3">
+                              {(prematurePenaltyData?.penaltyDateType ===
+                                PrematurePenaltyDateType.EffectiveDaysFromStart &&
+                                t['effectiveDaysFromStart']) ||
+                                (prematurePenaltyData?.penaltyDateType ===
+                                  PrematurePenaltyDateType.RemainingDaysToGetMatured &&
+                                  t['remainingDaysToGetMatured'])}
+                            </Text>
+                          </Box>
+                        </li>
+                        <li>
+                          <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
+                            <Text fontWeight="400" fontSize="s3">
+                              No. of Days
+                            </Text>
 
-                        <Text fontWeight="600" fontSize="s3">
-                          {prematurePenaltyData?.noOfDays} %
-                        </Text>
-                      </Box>
-                    </li>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Penalty Ledger Mapping
-                        </Text>
+                            <Text fontWeight="600" fontSize="s3">
+                              {prematurePenaltyData?.noOfDays} %
+                            </Text>
+                          </Box>
+                        </li>
+                        <li>
+                          <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
+                            <Text fontWeight="400" fontSize="s3">
+                              Penalty Ledger Mapping
+                            </Text>
 
-                        <Text fontWeight="600" fontSize="s3">
-                          {prematurePenaltyData?.penaltyLedgerMapping}
-                        </Text>
-                      </Box>
-                    </li>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Penalty Amount
-                        </Text>
+                            <Text fontWeight="600" fontSize="s3">
+                              {prematurePenaltyData?.penaltyLedgerMapping}
+                            </Text>
+                          </Box>
+                        </li>
+                        <li>
+                          <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
+                            <Text fontWeight="400" fontSize="s3">
+                              Penalty Amount
+                            </Text>
 
-                        <Text fontWeight="600" fontSize="s3">
-                          {prematurePenaltyData?.penaltyAmount}
-                        </Text>
-                      </Box>
-                    </li>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Penalty Rate
-                        </Text>
+                            <Text fontWeight="600" fontSize="s3">
+                              {prematurePenaltyData?.penaltyAmount}
+                            </Text>
+                          </Box>
+                        </li>
+                        <li>
+                          <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
+                            <Text fontWeight="400" fontSize="s3">
+                              Penalty Rate
+                            </Text>
 
-                        <Text fontWeight="600" fontSize="s3">
-                          {prematurePenaltyData?.penaltyRate}%
-                        </Text>
-                      </Box>
-                    </li>
-                  </ul>
-                </Box>
-              </AccordionPanel>
-            </>
+                            <Text fontWeight="600" fontSize="s3">
+                              {prematurePenaltyData?.penaltyRate}%
+                            </Text>
+                          </Box>
+                        </li>
+                      </ul>
+                    </Box>
+                  </AccordionPanel>
+                </>
+              )}
+            </AccordionItem>
           )}
-        </AccordionItem>
-        <AccordionItem>
-          {({ isExpanded }) => (
-            <>
-              <AccordionButton
-                border="none"
-                p="s16"
-                bg="white"
-                display="flex"
-                alignItems="center"
-                h="40px"
-                justifyContent="space-between"
-                _hover={{}}
-                _expanded={{}}
-              >
-                <Text color="gray.800" fontWeight="500" fontSize="r1">
-                  Withdraw Penalty Setup
-                </Text>
-                <Icon
-                  as={isExpanded ? ChevronDownIcon : ChevronRightIcon}
-                  color="gray.800"
-                  flexShrink={0}
-                />
-              </AccordionButton>
-              <AccordionPanel p="s16">
-                <Box px="s20">
-                  <ul>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Penalty Amount
-                        </Text>
+        {productNature !== NatureOfDepositProduct?.Current &&
+          productNature !== NatureOfDepositProduct?.Saving && (
+            <AccordionItem>
+              {({ isExpanded }) => (
+                <>
+                  <AccordionButton
+                    border="none"
+                    p="s16"
+                    bg="white"
+                    display="flex"
+                    alignItems="center"
+                    h="40px"
+                    justifyContent="space-between"
+                    _hover={{}}
+                    _expanded={{}}
+                  >
+                    <Text color="gray.800" fontWeight="500" fontSize="r1">
+                      Withdraw Penalty Setup
+                    </Text>
+                    <Icon
+                      as={isExpanded ? ChevronDownIcon : ChevronRightIcon}
+                      color="gray.800"
+                      flexShrink={0}
+                    />
+                  </AccordionButton>
+                  <AccordionPanel p="s16">
+                    <Box px="s20">
+                      <ul>
+                        <li>
+                          <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
+                            <Text fontWeight="400" fontSize="s3">
+                              Penalty Amount
+                            </Text>
 
-                        <Text fontWeight="600" fontSize="s3">
-                          {withdrawData?.penaltyAmount}
-                        </Text>
-                      </Box>
-                    </li>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Penalty Rate
-                        </Text>
+                            <Text fontWeight="600" fontSize="s3">
+                              {withdrawData?.penaltyAmount}
+                            </Text>
+                          </Box>
+                        </li>
+                        <li>
+                          <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
+                            <Text fontWeight="400" fontSize="s3">
+                              Penalty Rate
+                            </Text>
 
-                        <Text fontWeight="600" fontSize="s3">
-                          {withdrawData?.penaltyRate} %
-                        </Text>
-                      </Box>
-                    </li>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Penalty Ledger Mapping
-                        </Text>
+                            <Text fontWeight="600" fontSize="s3">
+                              {withdrawData?.penaltyRate} %
+                            </Text>
+                          </Box>
+                        </li>
+                        <li>
+                          <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
+                            <Text fontWeight="400" fontSize="s3">
+                              Penalty Ledger Mapping
+                            </Text>
 
-                        <Text fontWeight="600" fontSize="s3">
-                          {withdrawData?.penaltyLedgerMapping}
-                        </Text>
-                      </Box>
-                    </li>
-                  </ul>
-                </Box>
-              </AccordionPanel>
-            </>
+                            <Text fontWeight="600" fontSize="s3">
+                              {withdrawData?.penaltyLedgerMapping}
+                            </Text>
+                          </Box>
+                        </li>
+                      </ul>
+                    </Box>
+                  </AccordionPanel>
+                </>
+              )}
+            </AccordionItem>
           )}
-        </AccordionItem>
       </Accordion>
     </Box>
   );
