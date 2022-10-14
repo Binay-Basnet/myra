@@ -1,6 +1,6 @@
-import { Control, Controller, Path, useFormContext } from 'react-hook-form';
+import { Controller, Path, useFormContext } from 'react-hook-form';
 import { UseControllerProps } from 'react-hook-form/dist/types/controller';
-import { DatePicker } from 'react-patro';
+import { DatePicker } from '@raralabs/react-patro';
 
 import { RootState, useAppSelector } from '@coop/cbs/data-access';
 import { Box, InputProps, TextFields } from '@coop/shared/ui';
@@ -10,7 +10,6 @@ import { Box, InputProps, TextFields } from '@coop/shared/ui';
 interface IFormDatePickerProps<T> extends InputProps {
   name: Path<T> | string;
   label?: string;
-  control?: Control<T>;
   rules?: UseControllerProps['rules'];
 }
 
