@@ -3909,6 +3909,24 @@ export type GeneralBranchSettingsQueryListArgs = {
   paginate?: InputMaybe<Pagination>;
 };
 
+export type GeneralMemberData = {
+  charge?: Maybe<Array<Maybe<MemberChargeData>>>;
+  memberType?: Maybe<MemberActiveData>;
+  risk?: Maybe<MemberRiskData>;
+};
+
+export type GeneralMemberInput = {
+  charge?: InputMaybe<Array<InputMaybe<MemberChargeInput>>>;
+  memberType?: InputMaybe<MemberActiveInput>;
+  risk?: InputMaybe<MemberRiskInput>;
+};
+
+export type GeneralMemberResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<GeneralMemberData>;
+  recordId: Scalars['ID'];
+};
+
 export type GeneralSettingsMutation = {
   KYM?: Maybe<KymMutation>;
   branch?: Maybe<GeneralBranchSettingsMutation>;
@@ -4493,30 +4511,6 @@ export type KymAddressInput = {
   wardNo?: InputMaybe<Scalars['Int']>;
 };
 
-export type KymAllowed = {
-  allowed: Scalars['Boolean'];
-  id: Scalars['ID'];
-  name: Scalars['String'];
-};
-
-export type KymAllowedError = KymAllowedInvalidDataError;
-
-export type KymAllowedInput = {
-  allowed: Scalars['Boolean'];
-  id: Scalars['ID'];
-};
-
-export type KymAllowedInvalidDataError = {
-  error?: Maybe<Scalars['InvalidData']>;
-};
-
-export type KymAllowedResult = {
-  error?: Maybe<KymAllowedError>;
-  query?: Maybe<KymQuery>;
-  record?: Maybe<KymAllowed>;
-  recordId: Scalars['ID'];
-};
-
 export type KymDeclaration = Base & {
   content: Scalars['Localized'];
   createdAt: Scalars['Time'];
@@ -4588,26 +4582,15 @@ export type KymFieldInputData = {
 };
 
 export type KymGeneralSettingsMutation = {
-  addRiskLevel: KymMemberRiskResult;
-  switchAllowed: KymAllowedResult;
-  updateRiskLevel: KymMemberRiskResult;
+  generalMember?: Maybe<GeneralMemberResult>;
 };
 
-export type KymGeneralSettingsMutationAddRiskLevelArgs = {
-  data: KymMemberRiskInput;
-};
-
-export type KymGeneralSettingsMutationSwitchAllowedArgs = {
-  input: KymAllowedInput;
-};
-
-export type KymGeneralSettingsMutationUpdateRiskLevelArgs = {
-  data: KymMemberRiskInput;
+export type KymGeneralSettingsMutationGeneralMemberArgs = {
+  data: GeneralMemberInput;
 };
 
 export type KymGeneralSettingsQuery = {
-  allowed: Array<KymAllowed>;
-  riskLevel: Array<Maybe<KymMemberRisk>>;
+  generalMember?: Maybe<GeneralMemberResult>;
 };
 
 export type KymIndBasicInformation = {
@@ -4873,31 +4856,6 @@ export type KymIndRentedHouse = {
 export type KymIndTemporaryAddress = {
   address?: Maybe<KymAddress>;
   sameTempAsPermanentAddress?: Maybe<Scalars['Boolean']>;
-};
-
-export type KymMemberRisk = {
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  years: Scalars['Float'];
-};
-
-export type KymMemberRiskError = KymMemberRiskInvalidDataError;
-
-export type KymMemberRiskInput = {
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  years: Scalars['Float'];
-};
-
-export type KymMemberRiskInvalidDataError = {
-  error?: Maybe<Scalars['InvalidData']>;
-};
-
-export type KymMemberRiskResult = {
-  error?: Maybe<KymMemberRiskError>;
-  query?: Maybe<KymQuery>;
-  record?: Maybe<KymMemberRisk>;
-  recordId: Scalars['ID'];
 };
 
 export type KymMutation = {
@@ -7418,6 +7376,32 @@ export type Member = Base & {
   type: KymMemberTypesEnum;
 };
 
+export type MemberActiveData = {
+  cooperative?: Maybe<Scalars['Boolean']>;
+  cooperativeUnion?: Maybe<Scalars['Boolean']>;
+  individual?: Maybe<Scalars['Boolean']>;
+  institution?: Maybe<Scalars['Boolean']>;
+};
+
+export type MemberActiveInput = {
+  cooperative?: InputMaybe<Scalars['Boolean']>;
+  cooperativeUnion?: InputMaybe<Scalars['Boolean']>;
+  individual?: InputMaybe<Scalars['Boolean']>;
+  institution?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type MemberChargeData = {
+  charge: Scalars['Int'];
+  ledgerId: Scalars['ID'];
+  memberType: KymMemberTypesEnum;
+};
+
+export type MemberChargeInput = {
+  charge: Scalars['Int'];
+  ledgerId: Scalars['ID'];
+  memberType: KymMemberTypesEnum;
+};
+
 export type MemberDetailsResult = {
   data?: Maybe<Member>;
 };
@@ -7518,6 +7502,18 @@ export type MemberQueryOfficialUseArgs = {
 
 export type MemberQueryTranslateArgs = {
   id: Scalars['ID'];
+};
+
+export type MemberRiskData = {
+  generalRisk?: Maybe<Scalars['Int']>;
+  highRisk?: Maybe<Scalars['Int']>;
+  mediumRisk?: Maybe<Scalars['Int']>;
+};
+
+export type MemberRiskInput = {
+  generalRisk?: InputMaybe<Scalars['Int']>;
+  highRisk?: InputMaybe<Scalars['Int']>;
+  mediumRisk?: InputMaybe<Scalars['Int']>;
 };
 
 export type MemberShare = {
