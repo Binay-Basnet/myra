@@ -55,6 +55,7 @@ export type Account = {
 
 export type AccountActivityEntry = {
   ID: Scalars['ID'];
+  agentName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['Localized']>;
@@ -163,6 +164,7 @@ export type AccountSummary = {
 };
 
 export type AccountTransactionFilter = {
+  depositedBy?: InputMaybe<Scalars['String']>;
   from?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
   query?: InputMaybe<Scalars['String']>;
@@ -1731,9 +1733,11 @@ export type DepositAccount = Base & {
   balance?: Maybe<Scalars['String']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
-  fine?: Maybe<Scalars['String']>;
+  dues?: Maybe<Dues>;
+  guaranteedAmount?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   installmentAmount?: Maybe<Scalars['String']>;
+  interestAccured?: Maybe<Scalars['String']>;
   lastTransactionDate?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   modifiedAt: Scalars['Time'];
@@ -1789,8 +1793,8 @@ export type DepositCheque = {
   accId: Scalars['String'];
   amount: Scalars['String'];
   chequeNo: Scalars['String'];
-  depositedAt: Scalars['String'];
-  depositedBy: Scalars['String'];
+  isDifferentMember?: InputMaybe<Scalars['Boolean']>;
+  memberId?: InputMaybe<Scalars['String']>;
 };
 
 export enum DepositFrequency {
@@ -1801,16 +1805,16 @@ export enum DepositFrequency {
 }
 
 export type DepositInput = {
-  accountId: Scalars['String'];
+  accountId?: InputMaybe<Scalars['String']>;
   agentId?: InputMaybe<Scalars['String']>;
-  amount: Scalars['String'];
+  amount?: InputMaybe<Scalars['String']>;
   bankVoucher?: InputMaybe<DepositBankVoucher>;
   cash?: InputMaybe<DepositCash>;
   cheque?: InputMaybe<DepositCheque>;
   depositedBy: DepositedBy;
   doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   fine?: InputMaybe<Scalars['String']>;
-  memberId: Scalars['String'];
+  memberId?: InputMaybe<Scalars['String']>;
   noOfInstallments?: InputMaybe<Scalars['Int']>;
   notes?: InputMaybe<Scalars['String']>;
   other_doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -1818,7 +1822,7 @@ export type DepositInput = {
   payment_type: DepositPaymentType;
   rebate?: InputMaybe<Scalars['String']>;
   sourceOfFund?: InputMaybe<Scalars['String']>;
-  voucherId: Scalars['String'];
+  voucherId?: InputMaybe<Scalars['String']>;
 };
 
 export type DepositIro = {
@@ -1869,6 +1873,7 @@ export type DepositLoanAccount = Base & {
   depositFrequencyWeekly?: Maybe<Week>;
   depositFrequencyYearlyDay?: Maybe<Scalars['Int']>;
   depositFrequencyYearlyMonth?: Maybe<Months>;
+  dues?: Maybe<Dues>;
   eBanking?: Maybe<Scalars['Boolean']>;
   id: Scalars['ID'];
   initialDepositAmount?: Maybe<Scalars['Amount']>;
@@ -1930,6 +1935,7 @@ export type DepositLoanAccountInput = {
   memberId: Scalars['ID'];
   minor?: InputMaybe<Scalars['String']>;
   mobileBanking?: InputMaybe<Scalars['Boolean']>;
+  openingPayment?: InputMaybe<DepositInput>;
   productId: Scalars['ID'];
   serviceCharge?: InputMaybe<Array<InputMaybe<ServiceChargeInput>>>;
   smsBanking?: InputMaybe<Scalars['Boolean']>;
@@ -2474,6 +2480,12 @@ export type DormantSetup = {
 export type DormantSetupFormState = {
   condition?: Maybe<Scalars['String']>;
   duration?: Maybe<Scalars['String']>;
+};
+
+export type Dues = {
+  dueInstallments?: Maybe<Scalars['Int']>;
+  fine?: Maybe<Scalars['String']>;
+  totalDue?: Maybe<Scalars['String']>;
 };
 
 export type EBankingAccountQuery = {
@@ -9503,6 +9515,7 @@ export type TransactionMutation = {
   agentTodayList?: Maybe<AgentTodayListResult>;
   bulkDeposit: BulkDepositResult;
   deposit: DepositResult;
+  endOfDay?: Maybe<Scalars['String']>;
   transfer: TransferResult;
   withdraw: WithdrawResult;
 };
@@ -9549,6 +9562,7 @@ export type TransactionMutationWithdrawArgs = {
 export type TransactionQuery = {
   agentDetail?: Maybe<AgentRecord>;
   assignedMemberList: AssignedMembersListConnection;
+  endOfDayDate: Scalars['String'];
   listAgent: AccountAgentListConnection;
   listAgentTask?: Maybe<AgentTodayListData>;
   listDeposit: AccountActivityListConnection;
@@ -10042,6 +10056,14 @@ export type SetAgentTodayListDataMutationVariables = Exact<{
 
 
 export type SetAgentTodayListDataMutation = { transaction: { agentTodayList?: { error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+
+export type SetAgentTodayDepositDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>> | InputMaybe<AgentTodayListInput>>;
+}>;
+
+
+export type SetAgentTodayDepositDataMutation = { transaction: { agentTodayDeposit?: { error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
 
 export type LoginMutationVariables = Exact<{
   data: LoginInput;
@@ -10662,6 +10684,11 @@ export type SetAccountForgiveInstallmentDataMutationVariables = Exact<{
 
 export type SetAccountForgiveInstallmentDataMutation = { account: { forgiveInstallment?: { recordId: string } | null } };
 
+export type SetEndOfDayDataMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SetEndOfDayDataMutation = { transaction: { endOfDay?: string | null } };
+
 export type GetAccountMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
   pagination?: InputMaybe<Pagination>;
@@ -10697,7 +10724,7 @@ export type GetAccountTableListQueryVariables = Exact<{
 }>;
 
 
-export type GetAccountTableListQuery = { account: { list?: { totalCount: number, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null, edges?: Array<{ node?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, installmentAmount?: string | null, balance?: string | null, accountOpenedDate?: string | null, lastTransactionDate?: string | null, accountExpiryDate?: string | null, overDrawnBalance?: string | null, fine?: string | null, createdBy: { id: string }, modifiedBy: { id: string }, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null, product: { id: string, productCode: string, productName: string, nature: NatureOfDepositProduct, minimumBalance?: string | null, isMandatorySaving?: boolean | null } } | null }> | null } | null } };
+export type GetAccountTableListQuery = { account: { list?: { totalCount: number, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null, edges?: Array<{ node?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, installmentAmount?: string | null, balance?: string | null, accountOpenedDate?: string | null, lastTransactionDate?: string | null, accountExpiryDate?: string | null, overDrawnBalance?: string | null, createdBy: { id: string }, modifiedBy: { id: string }, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null, product: { id: string, productCode: string, productName: string, nature: NatureOfDepositProduct, minimumBalance?: string | null, isMandatorySaving?: boolean | null }, dues?: { fine?: string | null, totalDue?: string | null, dueInstallments?: number | null } | null } | null }> | null } | null } };
 
 export type GetAccountDocumentsListQueryVariables = Exact<{
   subscriptionId: Scalars['String'];
@@ -10753,7 +10780,7 @@ export type GetAgentAssignedMemberListDataQueryVariables = Exact<{
 }>;
 
 
-export type GetAgentAssignedMemberListDataQuery = { transaction: { assignedMemberList: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, assignedDate?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null } | null, account?: { id: string } | null, product?: { productName: string } | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetAgentAssignedMemberListDataQuery = { transaction: { assignedMemberList: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, assignedDate?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null } | null, account?: { id: string, dues?: { totalDue?: string | null } | null } | null, product?: { productName: string } | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type GetAgentTodayListDataQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -11454,7 +11481,7 @@ export type GetDepositListDataQueryVariables = Exact<{
 }>;
 
 
-export type GetDepositListDataQuery = { transaction: { listDeposit: { totalCount: number, edges?: Array<{ cursor: string, node?: { ID: string, name?: Record<"local"|"en"|"np",string> | null, amount?: string | null, state: TransactionState, paymentMode?: string | null, processedBy?: string | null, date?: string | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetDepositListDataQuery = { transaction: { listDeposit: { totalCount: number, edges?: Array<{ cursor: string, node?: { ID: string, name?: Record<"local"|"en"|"np",string> | null, amount?: string | null, state: TransactionState, paymentMode?: string | null, processedBy?: string | null, date?: string | null, agentName?: string | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
 
 export type GetWithdrawListDataQueryVariables = Exact<{
   filter?: InputMaybe<AccountTransactionFilter>;
@@ -11478,6 +11505,11 @@ export type GetInstallmentsListDataQueryVariables = Exact<{
 
 
 export type GetInstallmentsListDataQuery = { account: { getInstallments?: { data?: Array<{ dueDate: string, status: InstallmentState, monthName?: string | null, fine?: string | null, rebate?: string | null } | null> | null, error?: QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment | null } | null } };
+
+export type GetEndOfDayDateDataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetEndOfDayDateDataQuery = { transaction: { endOfDayDate: string } };
 
 export const MutationErrorFragmentDoc = `
     fragment MutationError on MutationError {
@@ -11775,6 +11807,26 @@ export const useSetAgentTodayListDataMutation = <
     useMutation<SetAgentTodayListDataMutation, TError, SetAgentTodayListDataMutationVariables, TContext>(
       ['setAgentTodayListData'],
       useAxios<SetAgentTodayListDataMutation, SetAgentTodayListDataMutationVariables>(SetAgentTodayListDataDocument),
+      options
+    );
+export const SetAgentTodayDepositDataDocument = `
+    mutation setAgentTodayDepositData($id: ID!, $data: [AgentTodayListInput]) {
+  transaction {
+    agentTodayDeposit(agentID: $id, data: $data) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetAgentTodayDepositDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetAgentTodayDepositDataMutation, TError, SetAgentTodayDepositDataMutationVariables, TContext>) =>
+    useMutation<SetAgentTodayDepositDataMutation, TError, SetAgentTodayDepositDataMutationVariables, TContext>(
+      ['setAgentTodayDepositData'],
+      useAxios<SetAgentTodayDepositDataMutation, SetAgentTodayDepositDataMutationVariables>(SetAgentTodayDepositDataDocument),
       options
     );
 export const LoginDocument = `
@@ -13710,6 +13762,22 @@ export const useSetAccountForgiveInstallmentDataMutation = <
       useAxios<SetAccountForgiveInstallmentDataMutation, SetAccountForgiveInstallmentDataMutationVariables>(SetAccountForgiveInstallmentDataDocument),
       options
     );
+export const SetEndOfDayDataDocument = `
+    mutation setEndOfDayData {
+  transaction {
+    endOfDay
+  }
+}
+    `;
+export const useSetEndOfDayDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetEndOfDayDataMutation, TError, SetEndOfDayDataMutationVariables, TContext>) =>
+    useMutation<SetEndOfDayDataMutation, TError, SetEndOfDayDataMutationVariables, TContext>(
+      ['setEndOfDayData'],
+      useAxios<SetEndOfDayDataMutation, SetEndOfDayDataMutationVariables>(SetEndOfDayDataDocument),
+      options
+    );
 export const GetAccountMemberListDocument = `
     query getAccountMemberList($objState: ObjState, $pagination: Pagination) {
   members {
@@ -14043,7 +14111,11 @@ export const GetAccountTableListDocument = `
             minimumBalance
             isMandatorySaving
           }
-          fine
+          dues {
+            fine
+            totalDue
+            dueInstallments
+          }
         }
       }
     }
@@ -14310,6 +14382,9 @@ export const GetAgentAssignedMemberListDataDocument = `
           }
           account {
             id
+            dues {
+              totalDue
+            }
           }
           product {
             productName
@@ -19022,6 +19097,7 @@ export const GetDepositListDataDocument = `
           paymentMode
           processedBy
           date
+          agentName
         }
         cursor
       }
@@ -19151,5 +19227,24 @@ export const useGetInstallmentsListDataQuery = <
     useQuery<GetInstallmentsListDataQuery, TError, TData>(
       ['getInstallmentsListData', variables],
       useAxios<GetInstallmentsListDataQuery, GetInstallmentsListDataQueryVariables>(GetInstallmentsListDataDocument).bind(null, variables),
+      options
+    );
+export const GetEndOfDayDateDataDocument = `
+    query getEndOfDayDateData {
+  transaction {
+    endOfDayDate
+  }
+}
+    `;
+export const useGetEndOfDayDateDataQuery = <
+      TData = GetEndOfDayDateDataQuery,
+      TError = unknown
+    >(
+      variables?: GetEndOfDayDateDataQueryVariables,
+      options?: UseQueryOptions<GetEndOfDayDateDataQuery, TError, TData>
+    ) =>
+    useQuery<GetEndOfDayDateDataQuery, TError, TData>(
+      variables === undefined ? ['getEndOfDayDateData'] : ['getEndOfDayDateData', variables],
+      useAxios<GetEndOfDayDateDataQuery, GetEndOfDayDateDataQueryVariables>(GetEndOfDayDateDataDocument).bind(null, variables),
       options
     );

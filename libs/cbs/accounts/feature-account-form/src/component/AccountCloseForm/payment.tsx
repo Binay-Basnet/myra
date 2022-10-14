@@ -59,7 +59,7 @@ type PaymentTableType = {
 };
 
 export const Payment = ({ totalDeposit }: PaymentProps) => {
-  const { watch, reset } = useFormContext();
+  const { watch, resetField } = useFormContext();
 
   const selectedPaymentMode = watch('paymentMode');
 
@@ -85,7 +85,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
 
   useEffect(() => {
-    reset({ accountTransfer: { depositedDate: '' } });
+    resetField('accountTransfer.depositedDate');
   }, [preference?.date]);
 
   return (
@@ -139,17 +139,6 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
               textAlign="right"
               placeholder="0.00"
             />
-            {/* <FormInput
-              type="date"
-              name="cheque.depositedAt"
-              label="Deposited Date"
-            />
-
-            <FormInput
-              type="text"
-              name="cheque.depositedBy"
-              label="Deposited By"
-            /> */}
             <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
               {' '}
               <Text fontWeight="500" fontSize="r1">

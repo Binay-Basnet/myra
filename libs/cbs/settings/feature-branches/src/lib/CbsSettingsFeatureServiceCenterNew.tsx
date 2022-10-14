@@ -31,7 +31,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
 
   const methods = useForm({});
 
-  const { getValues, watch, reset } = methods;
+  const { getValues, watch, reset, resetField } = methods;
 
   const id = String(router?.query?.['id']);
 
@@ -150,7 +150,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
     }
 
     if (router.asPath.includes('add')) {
-      reset({ estDate: '' });
+      resetField('estDate');
     }
   }, [preference?.date, router?.asPath]);
 

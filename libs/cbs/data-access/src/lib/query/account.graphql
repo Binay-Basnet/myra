@@ -286,7 +286,11 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
             minimumBalance
             isMandatorySaving
           }
-          fine
+          dues {
+            fine
+            totalDue
+            dueInstallments
+          }
         }
       }
     }

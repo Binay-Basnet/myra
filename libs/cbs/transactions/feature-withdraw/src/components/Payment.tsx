@@ -15,7 +15,6 @@ import {
 } from '@coop/cbs/transactions/ui-containers';
 import {
   FormAgentSelect,
-  FormDatePicker,
   FormEditableTable,
   FormFileInput,
   FormInput,
@@ -86,7 +85,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
     },
   ];
 
-  const { watch, reset } = useFormContext();
+  const { watch, resetField } = useFormContext();
 
   const { data: bankList } = useGetBankListQuery();
 
@@ -114,7 +113,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
 
   useEffect(() => {
-    reset({ bankCheque: { depositedAt: '' } });
+    resetField('bankCheque.depositedAt');
   }, [preference?.date]);
 
   return (
@@ -154,18 +153,6 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
               type="number"
               label={t['withdrawPaymentAmount']}
               textAlign="right"
-              __placeholder="0.00"
-            />
-
-            <FormDatePicker
-              name="bankCheque.depositedAt"
-              label={t['withdrawPaymentDepositedDate']}
-            />
-
-            <FormInput
-              type="text"
-              name="bankCheque.depositedBy"
-              label={t['withdrawPaymentDepositedBy']}
             />
           </InputGroupContainer>
         )}
@@ -272,7 +259,6 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
           {/* <FormSelect
             name="sourceOfFund"
             label="Source of Fund"
-            __placeholder="Select Source of Fund"
             options={sourceOfFundsList.map((source) => ({
               label: source,
               value: source,

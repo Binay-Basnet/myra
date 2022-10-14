@@ -29,3 +29,9 @@ mutation setAccountForgiveInstallmentData($id: ID!, $installmentDates: [String!]
     }
   }
 }
+
+mutation setEndOfDayData {
+  transaction {
+    endOfDay
+  }
+}

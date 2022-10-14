@@ -1,5 +1,5 @@
 import { NatureOfDepositProduct, useGetAccountTableListQuery } from '@coop/cbs/data-access';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 import { Option } from './CustomSelect';
 import FormCustomSelect from './FormCustomSelect';
@@ -15,7 +15,10 @@ export const FormAccountSelect = ({ name, label, memberId, placeholder }: IAccou
   const { t } = useTranslation();
   const { data: accountListData, isFetching } = useGetAccountTableListQuery(
     {
-      paginate: getRouterQuery({ type: ['PAGINATION'] }),
+      paginate: {
+        first: -1,
+        after: '',
+      },
       filter: { memberId },
     },
     {
@@ -31,10 +34,10 @@ export const FormAccountSelect = ({ name, label, memberId, placeholder }: IAccou
     [NatureOfDepositProduct.Current]: t['addDepositCurrent'],
   };
 
-  const availableBalance = accountListData?.account?.list?.edges;
+  const accountsList = accountListData?.account?.list?.edges;
 
   const accountOptions: Option[] =
-    availableBalance?.reduce(
+    accountsList?.reduce(
       (prevVal, curVal) => [
         ...prevVal,
         {
@@ -47,7 +50,7 @@ export const FormAccountSelect = ({ name, label, memberId, placeholder }: IAccou
               ? accountTypes[curVal?.node?.product?.nature]
               : '',
             balance: curVal?.node?.balance as string,
-            fine: curVal?.node?.fine as string,
+            fine: curVal?.node?.dues?.fine as string,
           },
         },
       ],

@@ -82,7 +82,7 @@ export const AddUser = () => {
 
   const methods = useForm<UserFormInput>();
 
-  const { watch, getValues, reset } = methods;
+  const { watch, getValues, reset, resetField } = methods;
 
   const role = watch('role');
 
@@ -223,12 +223,10 @@ export const AddUser = () => {
     }
 
     if (router.asPath.includes('add')) {
-      reset({
-        dob: '',
-        citizenship: { date: '' },
-        drivingLicense: { date: '' },
-        passport: { date: '' },
-      });
+      resetField('dob');
+      resetField('citizenship.date');
+      resetField('drivingLicense.date');
+      resetField('passport.date');
     }
   }, [preference?.date, router?.asPath]);
 

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 
 import {
@@ -31,7 +32,7 @@ export const AgentDetailOverview = () => {
 
   const methods = useForm();
 
-  const { getValues, reset } = methods;
+  const { getValues, reset, watch } = methods;
 
   const [showMemberTable, setShowMemberTable] = useState<boolean>(false);
 
@@ -41,6 +42,21 @@ export const AgentDetailOverview = () => {
     },
     { staleTime: 0, enabled: !!id }
   );
+
+  const { data: assignedMemberListQueryData } = useGetAgentAssignedMemberListDataQuery(
+    {
+      pagination: {
+        first: -1,
+        after: '',
+      },
+      filter: {
+        agentId: id as string,
+      },
+    },
+    { enabled: !!id, staleTime: 0 }
+  );
+
+  const accounts = watch('accounts');
 
   useEffect(() => {
     if (agentTodayListQueryData?.transaction?.listAgentTask?.record?.length) {
@@ -55,6 +71,23 @@ export const AgentDetailOverview = () => {
       });
     }
   }, [agentTodayListQueryData]);
+
+  useDeepCompareEffect(() => {
+    reset({
+      accounts: accounts?.map(
+        (record: { account: string | undefined; member: string | undefined }) => {
+          const account = assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.find(
+            (member) => member?.node?.account?.id === record?.account
+          );
+          return {
+            member: record?.member,
+            account: record?.account,
+            amount: account?.node?.account?.dues?.totalDue,
+          };
+        }
+      ),
+    });
+  }, [accounts, assignedMemberListQueryData]);
 
   const getMemberAccounts = async (mId: string) =>
     new Promise<{ label: string; value: string }[]>((resolve) => {
@@ -71,19 +104,6 @@ export const AgentDetailOverview = () => {
 
       resolve(tempAccountList);
     });
-
-  const { data: assignedMemberListQueryData } = useGetAgentAssignedMemberListDataQuery(
-    {
-      pagination: {
-        first: -1,
-        after: '',
-      },
-      filter: {
-        agentId: id as string,
-      },
-    },
-    { enabled: !!id, staleTime: 0 }
-  );
 
   const memberListSearchOptions = useMemo(() => {
     const tempMembers: { label: string; value: string }[] = [];
@@ -104,6 +124,13 @@ export const AgentDetailOverview = () => {
 
   const { mutateAsync: setAgentTodayList } = useSetAgentTodayListDataMutation();
 
+  const { refetch } = useGetAgentTodayListDataQuery(
+    {
+      id: id as string,
+    },
+    { staleTime: 0, enabled: !!id }
+  );
+
   const handleSaveTodayList = () => {
     asyncToast({
       id: 'set-agent-today-list',
@@ -121,7 +148,7 @@ export const AgentDetailOverview = () => {
         loading: t['agentOverviewAddingTodaysList'],
         success: t['agentOverviewAddedTodaysList'],
       },
-      onSuccess: () => null,
+      onSuccess: () => refetch(),
     });
   };
 
@@ -207,6 +234,17 @@ export const AgentDetailOverview = () => {
                     accessor: 'amount',
                     header: t['agentOverviewAmount'],
                     isNumeric: true,
+                    // cell: (row) => {
+                    //   const account =
+                    //     assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.find(
+                    //       (member) => member?.node?.account?.id === row?.account
+                    //     );
+
+                    //   return (
+                    //     <Text textAlign="right">{account?.node?.account?.dues?.totalDue}</Text>
+                    //   );
+                    // },
+
                     // accessorFn: (row) =>
                     //   row.quantity
                     //     ? Number(row.value) * Number(row.quantity)

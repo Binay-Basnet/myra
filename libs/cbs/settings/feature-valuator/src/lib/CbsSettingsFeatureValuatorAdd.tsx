@@ -39,7 +39,7 @@ export const CbsSettingsFeatureValuatorAdd = () => {
 
   const methods = useForm();
 
-  const { reset } = methods;
+  const { reset, resetField } = methods;
 
   const { data: editValues, refetch } = useGetValuatorQuery(
     { id: router.query['id'] as string },
@@ -79,7 +79,8 @@ export const CbsSettingsFeatureValuatorAdd = () => {
     }
 
     if (router.asPath.includes('add')) {
-      reset({ renewalDate: '', contractDate: '' });
+      resetField('renewalDate');
+      resetField('contractDate');
     }
   }, [preference?.date, router?.asPath]);
 

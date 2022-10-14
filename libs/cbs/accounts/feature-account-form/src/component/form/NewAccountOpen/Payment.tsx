@@ -66,8 +66,7 @@ const denominationsOptions = [
 /* eslint-disable-next-line */
 export interface PaymentProps {
   mode: number;
-  totalDeposit: number;
-  rebate: number;
+  totalAmount: number;
 }
 
 type PaymentTableType = {
@@ -76,7 +75,7 @@ type PaymentTableType = {
   amount: string;
 };
 
-export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
+export const Payment = ({ mode, totalAmount }: PaymentProps) => {
   const { t } = useTranslation();
 
   const paymentModes = [
@@ -113,15 +112,15 @@ export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
 
   const memberId = watch('memberId');
 
-  const isDiffMember = watch('cheque.isDifferentMember');
+  const isDiffMember = watch('openingPayment.cheque.isDifferentMember');
 
-  const dmemberId = watch('cheque.memberId');
+  const dmemberId = watch('openingPayment.cheque.memberId');
 
-  const selectedPaymentMode = watch('payment_type');
+  const selectedPaymentMode = watch('openingPayment.payment_type');
 
-  const depositedBy = watch('depositedBy');
+  const depositedBy = watch('openingPayment.depositedBy');
 
-  const denominations = watch('cash.denominations');
+  const denominations = watch('openingPayment.cash.denominations');
 
   const { data: bankList } = useGetBankListQuery();
 
@@ -131,22 +130,19 @@ export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
       0 as number
     ) ?? 0;
 
-  const disableDenomination = watch('cash.disableDenomination');
+  const disableDenomination = watch('openingPayment.cash.disableDenomination');
 
-  const cashPaid = watch('cash.cashPaid');
+  const cashPaid = watch('openingPayment.cash.cashPaid');
 
-  const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
+  const totalCashPaid = (disableDenomination ? cashPaid : denominationTotal) ?? 0;
 
-  const returnAmount = rebate
-    ? totalCashPaid - totalDeposit + rebate
-    : totalCashPaid - totalDeposit;
+  const returnAmount = totalCashPaid - totalAmount ?? 0;
 
   // refetch data when calendar preference is updated
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
 
   useEffect(() => {
-    resetField('bankVoucher.depositedAt');
-    resetField('cheque.depositedAt');
+    resetField('openingPayment.bankVoucher.depositedAt');
   }, [preference?.date]);
 
   return (
@@ -161,14 +157,14 @@ export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
         <FormSwitchTab
           label={t['depositPaymentPaymentMode']}
           options={paymentModes}
-          name="payment_type"
+          name="openingPayment.payment_type"
         />
 
         {selectedPaymentMode === DepositPaymentType.BankVoucher && (
           <InputGroupContainer>
             <GridItem colSpan={2}>
               <FormSelect
-                name="bankVoucher.bankId"
+                name="openingPayment.bankVoucher.bankId"
                 label={t['depositPaymentBankName']}
                 options={
                   bankList?.bank?.bank?.list?.map((bank) => ({
@@ -179,23 +175,26 @@ export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
               />
             </GridItem>
 
-            <FormInput name="bankVoucher.voucherId" label={t['addDepositVoucherId']} />
+            <FormInput
+              name="openingPayment.bankVoucher.voucherId"
+              label={t['addDepositVoucherId']}
+            />
 
             <FormInput
-              name="bankVoucher.amount"
+              name="openingPayment.bankVoucher.amount"
               type="number"
               label={t['depositPaymentAmount']}
               textAlign="right"
             />
 
             <FormDatePicker
-              name="bankVoucher.depositedAt"
+              name="openingPayment.bankVoucher.depositedAt"
               label={t['depositPaymentDepositedDate']}
             />
 
             <FormInput
               type="text"
-              name="bankVoucher.depositedBy"
+              name="openingPayment.bankVoucher.depositedBy"
               label={t['depositPaymentDepositedBy']}
             />
           </InputGroupContainer>
@@ -205,29 +204,29 @@ export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
           <InputGroupContainer>
             <GridItem colSpan={3}>
               <FormCheckbox
-                name="cheque.isDifferentMember"
+                name="openingPayment.cheque.isDifferentMember"
                 label="Cheque is from different member"
               />
             </GridItem>
 
             {isDiffMember && (
               <GridItem colSpan={3}>
-                <FormMemberSelect name="cheque.memberId" label="Member" />
+                <FormMemberSelect name="openingPayment.cheque.memberId" label="Member" />
               </GridItem>
             )}
 
             <GridItem colSpan={2}>
               <FormAccountSelect
-                name="cheque.accId"
+                name="openingPayment.cheque.accId"
                 memberId={isDiffMember ? dmemberId : memberId}
                 label="Account Name"
               />
             </GridItem>
 
-            <FormInput name="cheque.chequeNo" label={t['depositePaymentChequeNo']} />
+            <FormInput name="openingPayment.cheque.chequeNo" label={t['depositePaymentChequeNo']} />
 
             <FormInput
-              name="cheque.amount"
+              name="openingPayment.cheque.amount"
               type="number"
               label={t['depositPaymentAmount']}
               textAlign="right"
@@ -239,7 +238,7 @@ export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
           <>
             <InputGroupContainer>
               <FormInput
-                name="cash.cashPaid"
+                name="openingPayment.cash.cashPaid"
                 type="number"
                 label={t['depositPaymentCash']}
                 textAlign="right"
@@ -247,14 +246,14 @@ export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
             </InputGroupContainer>
 
             <FormSwitch
-              name="cash.disableDenomination"
+              name="openingPayment.cash.disableDenomination"
               label={t['depositPaymentDisableDenomination']}
               defaultChecked={false}
             />
 
             {!disableDenomination && (
               <FormEditableTable<PaymentTableType>
-                name="cash.denominations"
+                name="openingPayment.cash.denominations"
                 columns={[
                   {
                     accessor: 'value',
@@ -337,7 +336,7 @@ export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
       <BoxContainer>
         <Grid templateColumns="repeat(2, 1fr)" columnGap="s20">
           <FormSelect
-            name="sourceOfFund"
+            name="openingPayment.sourceOfFund"
             label={t['depositPaymentSourceOfFund']}
             options={sourceOfFundsList.map((source) => ({
               label: source,
@@ -345,7 +344,11 @@ export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
             }))}
           />
 
-          <FormFileInput size="md" label={t['depositPaymentFileUpload']} name="doc_identifiers" />
+          <FormFileInput
+            size="md"
+            label={t['depositPaymentFileUpload']}
+            name="openingPayment.doc_identifiers"
+          />
         </Grid>
       </BoxContainer>
 
@@ -353,24 +356,27 @@ export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
         <FormSwitchTab
           label={t['depositPaymentDepositedBy']}
           options={depositors}
-          name="depositedBy"
+          name="openingPayment.depositedBy"
         />
 
         {depositedBy === DepositedBy.Agent && (
           <InputGroupContainer>
-            <FormAgentSelect name="agentId" label={t['depositPaymentMarketRepresentative']} />
+            <FormAgentSelect
+              name="openingPayment.agentId"
+              label={t['depositPaymentMarketRepresentative']}
+            />
           </InputGroupContainer>
         )}
 
         {depositedBy === DepositedBy.Other && (
           <>
             <InputGroupContainer>
-              <FormInput name="other_name" label={t['depositPaymentName']} />
+              <FormInput name="openingPayment.other_name" label={t['depositPaymentName']} />
             </InputGroupContainer>
 
             <Box width="50%">
               <FormFileInput
-                name="other_doc_identifiers"
+                name="openingPayment.other_doc_identifiers"
                 label={t['depositPaymentCitizenshipDocument']}
                 size="md"
               />
@@ -380,7 +386,7 @@ export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
       </BoxContainer>
 
       <BoxContainer>
-        <FormTextArea name="notes" label={t['depositPaymentNote']} rows={5} />
+        <FormTextArea name="openingPayment.notes" label={t['depositPaymentNote']} rows={5} />
       </BoxContainer>
     </ContainerWithDivider>
   );

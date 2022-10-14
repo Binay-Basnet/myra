@@ -17,6 +17,8 @@ import {
   setPreference,
   useAppDispatch,
   useAppSelector,
+  useGetEndOfDayDateDataQuery,
+  useSetEndOfDayDataMutation,
   useSetPreferenceMutation,
 } from '@coop/cbs/data-access';
 import {
@@ -68,7 +70,6 @@ const keyMap = {
   // addFocus: ["a"]
 };
 const currentDate = format(new Date(), 'yyyy-MM-dd');
-const closingDate = format(new Date(), 'yyyy-MM-dd');
 
 // export const Input = forwardRef<HTMLInputElement, InputProps>(
 //   (props: InputProps, ref) => {
@@ -158,6 +159,12 @@ export const TopLevelHeader = () => {
       }
     },
   };
+
+  const { data: endOfDayData, refetch: refetchEndOfDay } = useGetEndOfDayDateDataQuery();
+
+  const closingDate = endOfDayData?.transaction?.endOfDayDate;
+
+  const { mutateAsync: closeDay } = useSetEndOfDayDataMutation();
 
   return (
     <GlobalHotKeys keyMap={keyMap} handlers={handlers}>
@@ -272,7 +279,24 @@ export const TopLevelHeader = () => {
                       </Text>
                     </PopoverBody>
                     <PopoverBody p="s8">
-                      <Button variant="solid" display="flex" justifyContent="center" w="100%">
+                      <Button
+                        variant="solid"
+                        display="flex"
+                        justifyContent="center"
+                        w="100%"
+                        onClick={() => {
+                          asyncToast({
+                            id: 'set-close-day',
+                            promise: closeDay({}),
+                            msgs: {
+                              loading: 'Closing the Day',
+                              success: 'Day Closed',
+                            },
+                            onSuccess: () => refetchEndOfDay(),
+                          });
+                        }}
+                        disabled={closingDate !== currentDate}
+                      >
                         Close Day
                       </Button>
                     </PopoverBody>

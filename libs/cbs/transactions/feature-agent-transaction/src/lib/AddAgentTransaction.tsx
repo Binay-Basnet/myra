@@ -1,24 +1,15 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import {
-  useGetAccountTableListQuery,
   useGetAgentAssignedMemberListDataQuery,
   useGetAgentTodayListDataQuery,
-  useSetAgentTodayListDataMutation,
+  useSetAgentTodayDepositDataMutation,
 } from '@coop/cbs/data-access';
 import { AgentSelect } from '@coop/cbs/transactions/ui-components';
 import { BoxContainer } from '@coop/cbs/transactions/ui-containers';
 import { FormEditableTable } from '@coop/shared/form';
-import {
-  asyncToast,
-  Box,
-  Container,
-  DEFAULT_PAGE_SIZE,
-  FormFooter,
-  FormHeader,
-  Text,
-} from '@coop/shared/ui';
+import { asyncToast, Box, Container, FormFooter, FormHeader, Text } from '@coop/shared/ui';
 import { getRouterQuery } from '@coop/shared/utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -39,36 +30,34 @@ export const AddAgentTransaction = () => {
 
   const agentId: string = watch('agentId');
 
-  const [memberId, setMemberId] = useState<string>('');
-
-  const { refetch } = useGetAccountTableListQuery(
+  const { data: assignedMemberListQueryData } = useGetAgentAssignedMemberListDataQuery(
     {
-      paginate: {
-        first: DEFAULT_PAGE_SIZE,
+      pagination: {
+        first: -1,
         after: '',
       },
-      filter: { memberId },
+      filter: {
+        agentId: agentId as string,
+      },
     },
-    {
-      enabled: !!memberId,
-    }
+    { enabled: !!agentId, staleTime: 0 }
   );
 
-  // const router = useRouter();
-  const getMemberAccounts = async (id: string) => {
-    setMemberId(id);
+  const getMemberAccounts = async (mId: string) =>
+    new Promise<{ label: string; value: string }[]>((resolve) => {
+      const tempAccountList: { label: string; value: string }[] = [];
 
-    const response = await refetch();
+      assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.forEach((member) => {
+        if (member?.node?.member?.id === mId) {
+          tempAccountList.push({
+            label: member?.node?.product?.productName as string,
+            value: member?.node?.account?.id as string,
+          });
+        }
+      });
 
-    return new Promise<{ label: string; value: string }[]>((resolve) => {
-      resolve(
-        response?.data?.account?.list?.edges?.map((account) => ({
-          label: account?.node?.product?.productName,
-          value: account?.node?.id,
-        })) as { label: string; value: string }[]
-      );
+      resolve(tempAccountList);
     });
-  };
 
   const { data: agentTodayListQueryData } = useGetAgentTodayListDataQuery(
     {
@@ -107,11 +96,11 @@ export const AddAgentTransaction = () => {
     [memberListQueryData]
   );
 
-  const { mutateAsync: setAgentTodayList } = useSetAgentTodayListDataMutation();
+  const { mutateAsync: setAgentTodayList } = useSetAgentTodayDepositDataMutation();
 
   const handleSaveTodayList = () => {
     asyncToast({
-      id: 'set-agent-today-list-confirm',
+      id: 'set-agent-today-transaction-confirm',
       promise: setAgentTodayList({
         id: agentId,
         data: getValues()['accounts'].map(
@@ -124,23 +113,19 @@ export const AddAgentTransaction = () => {
         ),
       }),
       msgs: {
-        loading: 'Adding Agent Todays List',
-        success: 'Added Agent Todays List',
+        loading: 'Adding Agent Todays Transaction',
+        success: 'Added Agent Todays Transaction',
       },
       onSuccess: () => null,
     });
   };
-
-  // const accounts = watch('accounts');
-
-  // console.log({ accounts });
 
   return (
     <>
       <Container minW="container.xl" height="fit-content">
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
-            title="New Agent Transaction"
+            title="New Market Representative Transaction"
             closeLink="/transactions/agent-transaction/list"
           />
         </Box>

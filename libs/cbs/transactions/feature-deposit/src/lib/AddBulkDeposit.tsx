@@ -12,7 +12,6 @@ import {
   useGetAccountTableListQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
-import { MemberSelect } from '@coop/cbs/transactions/ui-components';
 import { FormEditableTable } from '@coop/shared/form';
 import {
   Box,
@@ -21,6 +20,7 @@ import {
   DEFAULT_PAGE_SIZE,
   FormFooter,
   FormHeader,
+  FormMemberSelect,
   MemberCard,
   Text,
 } from '@coop/shared/ui';
@@ -74,7 +74,6 @@ const cashOptions: Record<string, string> = {
   '1': CashValue.Cash_1,
 };
 
-const FINE = '0';
 const REBATE = '0';
 
 export const AddBulkDeposit = () => {
@@ -133,7 +132,8 @@ export const AddBulkDeposit = () => {
     () =>
       accountListData?.account?.list?.edges?.map((account) => ({
         accountId: account?.node?.id as string,
-        noOfInstallments: '1',
+        noOfInstallments:
+          account?.node?.product?.nature === NatureOfDepositProduct.RecurringSaving ? '' : 'N/A',
         amount: '',
         rebate: '',
         accountName: account?.node?.product?.productName ?? '',
@@ -141,7 +141,7 @@ export const AddBulkDeposit = () => {
           ? accountTypes[account?.node?.product?.nature]
           : '',
         accountBalance: account?.node?.balance ?? '',
-        accountFine: account?.node?.fine ?? '',
+        accountFine: account?.node?.dues?.fine ?? '',
       })) ?? [],
     [accountListData]
   );
@@ -167,6 +167,8 @@ export const AddBulkDeposit = () => {
         ?.node,
     [accountId]
   );
+
+  const FINE = useMemo(() => selectedAccount?.dues?.fine ?? '0', [selectedAccount]);
 
   // const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -259,7 +261,7 @@ export const AddBulkDeposit = () => {
         return {
           accountName: filteredAccount?.product?.productName,
           amount,
-          fine: filteredAccount?.fine,
+          fine: filteredAccount?.dues?.fine,
           rebate: '0',
         };
       }),
@@ -273,7 +275,7 @@ export const AddBulkDeposit = () => {
         (accountData) => accountData.node?.id === item
       )?.node;
 
-      total = Number(amount) - (Number(filteredAccount?.fine) || 0);
+      total = Number(amount) - (Number(filteredAccount?.dues?.fine) || 0);
     });
 
     return total;
@@ -303,7 +305,7 @@ export const AddBulkDeposit = () => {
                   flexDirection="column"
                   gap="s24"
                 >
-                  <MemberSelect name="memberId" label="Member" __placeholder="Select Member" />
+                  <FormMemberSelect name="memberId" label="Member" />
 
                   {memberId && (
                     <MemberCard

@@ -1,10 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import omit from 'lodash/omit';
 
 import {
+  CashValue,
+  DepositedBy,
+  DepositInput,
   DepositLoanAccountInput,
+  DepositPaymentType,
   NatureOfDepositProduct,
+  ServiceTypeFormState,
   useGetAccountOpenEditDataQuery,
   useGetAccountOpenMinorListQuery,
   useGetAccountOpenProductDetailsQuery,
@@ -38,6 +44,7 @@ import {
 } from '../component/form';
 import { AccordianComponent } from '../component/form/NewAccountOpen/AccordianComponent';
 import { CriteriaCard } from '../component/form/NewAccountOpen/CriteriaCard';
+import { Payment } from '../component/form/NewAccountOpen/Payment';
 import { ProductCard } from '../component/form/NewAccountOpen/ProductDetailsCard';
 
 type OptionType = { label: string; value: string };
@@ -63,7 +70,42 @@ type FileListType = {
   taxClearance: string[];
 };
 
+type CustomDepositInput = Omit<DepositInput, 'cash'> & {
+  cash?:
+    | {
+        cashPaid: string;
+        disableDenomination: boolean;
+        total: string;
+        returned_amount: string;
+        denominations: { value?: string; quantity?: number; amount?: string }[];
+      }
+    | undefined
+    | null;
+};
+
+type CustomDepositLoanAccountInput = Omit<DepositLoanAccountInput, 'openingPayment'> & {
+  // tenure?: FrequencyTenure | null | undefined;
+  openingPayment: CustomDepositInput;
+};
+
+const cashOptions: Record<string, string> = {
+  '1000': CashValue.Cash_1000,
+  '500': CashValue.Cash_500,
+  '100': CashValue.Cash_100,
+  '50': CashValue.Cash_50,
+  '25': CashValue.Cash_25,
+  '20': CashValue.Cash_20,
+  '10': CashValue.Cash_10,
+  '5': CashValue.Cash_5,
+  '2': CashValue.Cash_2,
+  '1': CashValue.Cash_1,
+};
+
 export const AccountOpenNew = () => {
+  const [mode, setMode] = useState('0');
+
+  const [productData, setProductData] = useState<ServiceTypeFormState[]>([]);
+
   const [fileList, setFileList] = useState<FileListType>({
     signature: [],
     fingerPrintPhoto: [],
@@ -78,15 +120,33 @@ export const AccountOpenNew = () => {
   const [triggerQuery, setTriggerQuery] = useState(false);
   const [showCriteria, setShowCriteria] = useState(false);
   const [triggerProductQuery, setTriggerProductQuery] = useState(false);
-  const [mode, setMode] = useState('0');
+  // const [mode, setMode] = useState<number>(0); // 0: form, 1: payment
 
-  const methods = useForm<DepositLoanAccountInput>();
+  const methods = useForm<CustomDepositLoanAccountInput>({
+    defaultValues: {
+      openingPayment: {
+        payment_type: DepositPaymentType.Cash,
+        cash: { disableDenomination: false },
+        depositedBy: DepositedBy.Self,
+      },
+    },
+  });
   const { getValues, watch, reset } = methods;
   const memberId = watch('memberId');
   const router = useRouter();
   const id = String(router?.query?.['id']);
   const { mutateAsync } = useSetAccountOpenDataMutation();
   const { mutate: mutateDocs } = useSetAccountDocumentDataMutation();
+
+  const serviceCharge = watch('serviceCharge');
+
+  const totalCharge = useMemo(
+    () =>
+      serviceCharge
+        ? serviceCharge?.reduce((a, b) => a + Number(b?.amount), 0)
+        : productData?.reduce((a, b) => a + Number(b.amount), 0),
+    [serviceCharge, productData]
+  );
 
   const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
     useGetIndividualMemberDetails({ memberId });
@@ -150,7 +210,7 @@ export const AccountOpenNew = () => {
   };
   const { data: minorData } = useGetAccountOpenMinorListQuery(
     {
-      memberId,
+      memberId: memberId as string,
     },
     { enabled: triggerQuery }
   );
@@ -160,10 +220,106 @@ export const AccountOpenNew = () => {
     label: item?.fullName?.local as string,
     value: item?.familyMemberId as string,
   }));
+
+  const proceedToPaymentHandler = () => {
+    setMode('1');
+  };
+
+  const initialDepositAmount = watch('initialDepositAmount');
+
+  const totalDeposit = totalCharge + Number(initialDepositAmount ?? 0);
+
+  const disableDenomination = watch('openingPayment.cash.disableDenomination');
+
+  const cashPaid = watch('openingPayment.cash.cashPaid');
+
+  const denominations = watch('openingPayment.cash.denominations');
+
+  const denominationTotal = useMemo(
+    () =>
+      denominations?.reduce(
+        (accumulator, current) => accumulator + Number(current.amount),
+        0 as number
+      ) ?? 0,
+    [denominations]
+  );
+
+  const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
+
+  const returnAmount = Number(totalCashPaid) - totalDeposit;
+
+  const chequeAmount = watch('openingPayment.cheque.amount');
+
+  const bankVoucherAmount = watch('openingPayment.bankVoucher.amount');
+
+  const selectedPaymentMode = watch('openingPayment.payment_type');
+
+  const checkIsSubmitButtonDisabled = () => {
+    if (mode === '0') {
+      return false;
+    }
+
+    if (
+      selectedPaymentMode === DepositPaymentType.Cash &&
+      Number(totalCashPaid ?? 0) < Number(totalDeposit)
+    ) {
+      if (Number(totalCashPaid ?? 0) < Number(totalDeposit)) {
+        return true;
+      }
+    }
+
+    if (
+      selectedPaymentMode === DepositPaymentType.BankVoucher &&
+      Number(bankVoucherAmount ?? 0) < Number(totalDeposit)
+    ) {
+      return true;
+    }
+
+    if (
+      selectedPaymentMode === DepositPaymentType.Cheque &&
+      Number(chequeAmount ?? 0) < Number(totalDeposit)
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
   const submitForm = () => {
     const values = getValues();
-    const updatedData = {
-      ...values,
+
+    let updatedData;
+
+    if (values.openingPayment?.payment_type === DepositPaymentType.Cash) {
+      updatedData = omit({ ...values }, ['openingPayment.cheque', 'openingPayment.bankVoucher']);
+
+      updatedData.openingPayment = {
+        ...values.openingPayment,
+        cash: {
+          ...values.openingPayment.cash,
+          cashPaid: values.openingPayment.cash?.cashPaid as string,
+          disableDenomination: Boolean(values.openingPayment.cash?.disableDenomination),
+          total: String(totalCashPaid),
+          returned_amount: String(returnAmount),
+          denominations:
+            values.openingPayment.cash?.denominations?.map(({ value, quantity }) => ({
+              value: cashOptions[value as string],
+              quantity,
+            })) ?? [],
+        },
+      };
+    }
+
+    if (values.openingPayment?.payment_type === DepositPaymentType.BankVoucher) {
+      updatedData = omit({ ...values }, ['openingPayment.cheque', 'openingPayment.cash']);
+    }
+
+    if (values.openingPayment?.payment_type === DepositPaymentType.Cheque) {
+      updatedData = omit({ ...values }, ['openingPayment.bankVoucher', 'openingPayment.cash']);
+    }
+
+    updatedData = {
+      ...updatedData,
       tenure: values?.tenure ? values?.tenure : null,
       depositFrequencyMonthly: values?.depositFrequencyMonthly
         ? values?.depositFrequencyMonthly
@@ -192,7 +348,7 @@ export const AccountOpenNew = () => {
         loading: 'Opening new Account',
       },
       onSuccess: () => router.push('/accounts/list'),
-      promise: mutateAsync({ id, data: updatedData }),
+      promise: mutateAsync({ id, data: updatedData as DepositLoanAccountInput }),
     });
 
     Object.keys(fileList).forEach((fieldName) => {
@@ -224,13 +380,13 @@ export const AccountOpenNew = () => {
       refetch();
     }
   }, [refetch]);
+
   return (
     <Container minW="container.xl" p="0" bg="white">
-      {' '}
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
         <FormHeader title={`${t['newAccountOpen']} - ${featureCode?.newAccountOpen}`} />
       </Box>
-      <Box display={mode === '0' ? 'flex' : 'none'} flexDirection="row" minH="calc(100vh - 230px)">
+      <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
         <Box
           display="flex"
           flexDirection="column"
@@ -238,16 +394,19 @@ export const AccountOpenNew = () => {
           borderRight="1px solid"
           borderColor="border.layout"
         >
-          {' '}
           <FormProvider {...methods}>
-            {' '}
             <form>
-              <Box display="flex" flexDirection="column" gap="s32" p="s20" w="100%">
+              <Box
+                display={mode === '0' ? 'flex' : 'none'}
+                flexDirection="column"
+                gap="s32"
+                p="s20"
+                w="100%"
+              >
                 <FormMemberSelect name="memberId" label="Member" />
                 <FormSelect
                   name="productId"
                   label={t['accProductName']}
-                  __placeholder={t['accSelectProduct']}
                   isLoading={isFetching}
                   options={productOptions}
                 />
@@ -344,9 +503,22 @@ export const AccountOpenNew = () => {
                     <Grid templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
                       <FormAgentSelect name="agentId" label="Market Representative" />
                     </Grid>
-                    <FeesAndCharge />
+                    <FeesAndCharge
+                      productData={productData}
+                      setProductData={setProductData}
+                      totalCharge={totalCharge}
+                    />
                   </Box>
                 )}
+              </Box>
+              <Box
+                display={mode === '1' ? 'flex' : 'none'}
+                flexDirection="column"
+                gap="s32"
+                p="s20"
+                w="100%"
+              >
+                <Payment mode={Number(mode)} totalAmount={totalDeposit} />
               </Box>
             </form>
           </FormProvider>
@@ -366,7 +538,7 @@ export const AccountOpenNew = () => {
               <MemberCard
                 memberDetails={{
                   name: memberDetailData?.name,
-                  avatar: 'https://bit.ly/dan-abramov',
+                  avatar: memberDetailData?.profilePicUrl ?? '',
                   memberID: memberDetailData?.id,
                   gender: memberDetailData?.gender,
                   age: memberDetailData?.age,
@@ -395,13 +567,27 @@ export const AccountOpenNew = () => {
       <Box position="sticky" bottom={0}>
         <Box>
           {mode === '0' && (
-            <FormFooter mainButtonLabel="Submit Form" mainButtonHandler={submitForm} />
+            <FormFooter
+              status={
+                <Box display="flex" gap="s32">
+                  <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
+                    Total Deposit Amount
+                  </Text>
+                  <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
+                    {totalDeposit ?? '---'}
+                  </Text>
+                </Box>
+              }
+              mainButtonLabel="Proceed to Payment"
+              mainButtonHandler={proceedToPaymentHandler}
+            />
           )}{' '}
           {mode === '1' && (
             <FormFooter
               status={<Button onClick={previousButtonHandler}> Previous</Button>}
               mainButtonLabel="Confirm Payment"
               mainButtonHandler={submitForm}
+              isMainButtonDisabled={checkIsSubmitButtonDisabled()}
             />
           )}
         </Box>

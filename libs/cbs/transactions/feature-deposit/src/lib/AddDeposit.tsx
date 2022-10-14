@@ -63,7 +63,6 @@ const cashOptions: Record<string, string> = {
   '1': CashValue.Cash_1,
 };
 
-const FINE = '0';
 const REBATE = '0';
 
 export const AddDeposit = () => {
@@ -91,7 +90,7 @@ export const AddDeposit = () => {
   const memberId = watch('memberId');
 
   const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
-    useGetIndividualMemberDetails({ memberId });
+    useGetIndividualMemberDetails({ memberId: memberId || '' });
 
   const { data: accountListData } = useGetAccountTableListQuery(
     {
@@ -125,6 +124,8 @@ export const AddDeposit = () => {
         ?.node,
     [accountId]
   );
+
+  const FINE = useMemo(() => selectedAccount?.dues?.fine ?? '0', [selectedAccount]);
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -358,7 +359,7 @@ export const AddDeposit = () => {
                               NatureOfDepositProduct.RecurringSaving ||
                             (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
                               selectedAccount?.product?.isMandatorySaving === true)
-                              ? FINE
+                              ? fine ?? FINE
                               : '',
                         },
                         value: account.node?.id as string,
@@ -542,7 +543,7 @@ export const AddDeposit = () => {
                               minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
                               guaranteeBalance: '1000',
                               overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
-                              fine: FINE,
+                              fine: fine ?? FINE,
                               // branch: 'Kumaripati',
                               openDate: selectedAccount?.accountOpenedDate ?? 'N/A',
                               expiryDate: selectedAccount?.accountExpiryDate ?? 'N/A',

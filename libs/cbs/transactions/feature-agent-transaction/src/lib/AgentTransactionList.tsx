@@ -1,8 +1,6 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 
-import { useGetAgentListDataQuery } from '@coop/cbs/data-access';
-import { ActionPopoverComponent } from '@coop/myra/components';
+import { useGetDepositListDataQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, PageHeader, Text } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
@@ -25,7 +23,7 @@ const MEMBER_TAB_ITEMS = [
 export const AgentTransactionList = () => {
   const { t } = useTranslation();
 
-  const router = useRouter();
+  // const router = useRouter();
 
   // const { data, isFetching } = useGetMemberListQuery({
   //   pagination: getRouterQuery({ type: ['PAGINATION'] }),
@@ -34,30 +32,30 @@ export const AgentTransactionList = () => {
   //   },
   // });
 
-  const { data, isFetching } = useGetAgentListDataQuery(
+  const { data, isFetching } = useGetDepositListDataQuery(
     {
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
-      // filter: {
-      //   objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-      // },
+      filter: { depositedBy: 'agent' },
     },
-    { staleTime: 0 }
+    {
+      staleTime: 0,
+    }
   );
 
-  const rowData = useMemo(() => data?.transaction?.listAgent?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.transaction?.listDeposit?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         header: 'Date',
-        accessorFn: (row) => row?.node?.phoneNo,
+        accessorFn: (row) => row?.node?.date,
         // meta: {
         //   width: '20%',
         // },
       },
       {
         header: 'Transaction ID',
-        accessorFn: (row) => row?.node?.id,
+        accessorFn: (row) => row?.node?.ID,
       },
       {
         accessorFn: (row) => row?.node?.agentName,
@@ -82,29 +80,29 @@ export const AgentTransactionList = () => {
       },
       {
         header: 'Amount',
-        accessorFn: (row) => row?.node?.assignedMember,
+        accessorFn: (row) => row?.node?.amount,
       },
-      {
-        id: '_actions',
-        header: '',
-        accessorKey: 'actions',
-        cell: (cell) => (
-          <ActionPopoverComponent
-            items={[
-              {
-                title: 'transactionsAgentListViewDetail',
-                onClick: () => {
-                  router.push(`/transactions/agent/${cell?.row?.original?.node?.id}/overview`);
-                },
-              },
-            ]}
-            id={cell?.row?.original?.node?.id as string}
-          />
-        ),
-        meta: {
-          width: '60px',
-        },
-      },
+      // {
+      //   id: '_actions',
+      //   header: '',
+      //   accessorKey: 'actions',
+      //   cell: (cell) => (
+      //     <ActionPopoverComponent
+      //       items={[
+      //         {
+      //           title: 'transactionsAgentListViewDetail',
+      //           onClick: () => {
+      //             router.push(`/transactions/agent/${cell?.row?.original?.node?.ID}/overview`);
+      //           },
+      //         },
+      //       ]}
+      //       id={cell?.row?.original?.node?.ID as string}
+      //     />
+      //   ),
+      //   meta: {
+      //     width: '60px',
+      //   },
+      // },
     ],
     [t]
   );
@@ -114,14 +112,14 @@ export const AgentTransactionList = () => {
       <PageHeader heading="Market Representative Transaction" tabItems={MEMBER_TAB_ITEMS} />
 
       <Table
-        data={[]}
-        getRowId={(row) => String(row?.node?.id)}
+        data={rowData}
+        getRowId={(row) => String(row?.node?.ID)}
         isLoading={isFetching}
         columns={columns}
         noDataTitle="Market Representative Transaction"
         pagination={{
-          total: data?.transaction?.listAgent?.totalCount ?? 'Many',
-          pageInfo: data?.transaction?.listAgent?.pageInfo,
+          total: data?.transaction?.listDeposit?.totalCount ?? 'Many',
+          pageInfo: data?.transaction?.listDeposit?.pageInfo,
         }}
       />
     </>

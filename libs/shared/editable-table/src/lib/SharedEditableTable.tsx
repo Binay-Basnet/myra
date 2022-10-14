@@ -648,7 +648,7 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number | 
     if (column?.loadOptions) {
       getAsyncOptions();
     }
-  }, [column?.loadOptions]);
+  }, []);
 
   return (
     <Editable

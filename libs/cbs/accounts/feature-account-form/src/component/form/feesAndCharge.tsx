@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { ServiceTypeFormState, useGetAccountOpenProductDetailsQuery } from '@coop/cbs/data-access';
@@ -7,10 +7,14 @@ import { FormInput } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-export const FeesAndCharge = () => {
-  const { t } = useTranslation();
+interface IFeesAndCharge {
+  setProductData: Dispatch<SetStateAction<ServiceTypeFormState[]>>;
+  productData: ServiceTypeFormState[];
+  totalCharge: number;
+}
 
-  const [productData, setProductData] = useState<ServiceTypeFormState[]>([]);
+export const FeesAndCharge = ({ setProductData, productData, totalCharge }: IFeesAndCharge) => {
+  const { t } = useTranslation();
 
   const [triggerQuery, setTriggerQuery] = useState(false);
   const { watch, register, unregister } = useFormContext();
@@ -36,7 +40,6 @@ export const FeesAndCharge = () => {
   const isATMenabled = watch('atmFacility');
   const isSmsBanking = watch('smsBanking');
   const isChequeEnabled = watch('chequeFacility');
-  const serviceCharge = watch('serviceCharge');
   const altCharges =
     data?.settings?.general?.depositProduct?.formState?.data?.alternativeChannelCharge;
   const chequeCharge = data?.settings?.general?.depositProduct?.formState?.data?.chequeCharge;
@@ -234,9 +237,7 @@ export const FeesAndCharge = () => {
             </Text>
 
             <Text fontSize="s3" fontWeight="600">
-              {serviceCharge
-                ? serviceCharge?.reduce((a, b) => a + Number(b.amount), 0)
-                : productData?.reduce((a, b) => a + Number(b.amount), 0)}
+              {totalCharge}
             </Text>
           </Box>
         </Box>
