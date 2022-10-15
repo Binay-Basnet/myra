@@ -13,7 +13,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/cbs/settings/feature-audit-log"],
+      "outputs": ["{workspaceRoot}/coverage/libs/cbs/settings/feature-audit-log"],
       "options": {
         "jestConfig": "libs/cbs/settings/feature-audit-log/jest.config.ts",
         "passWithNoTests": true

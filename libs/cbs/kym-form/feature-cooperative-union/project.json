@@ -14,14 +14,12 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/cbs/kym-form/feature-cooperative-union/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["libs/cbs/kym-form/feature-cooperative-union/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/cbs/kym-form/feature-cooperative-union"],
+      "outputs": ["{workspaceRoot}/coverage/libs/cbs/kym-form/feature-cooperative-union"],
       "options": {
         "jestConfig": "libs/cbs/kym-form/feature-cooperative-union/jest.config.ts",
         "passWithNoTests": true

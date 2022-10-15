@@ -19,7 +19,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/cbs/utils"],
+      "outputs": ["{workspaceRoot}/coverage/libs/cbs/utils"],
       "options": {
         "jestConfig": "libs/cbs/utils/jest.config.ts",
         "passWithNoTests": true

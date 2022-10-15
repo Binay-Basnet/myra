@@ -1,5 +1,4 @@
 {
-  "root": "libs/cbs/share/shared-ui",
   "sourceRoot": "libs/cbs/share/shared-ui/src",
   "projectType": "library",
   "tags": [],
@@ -13,7 +12,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/cbs/share/shared-ui"],
+      "outputs": ["{workspaceRoot}/coverage/libs/cbs/share/shared-ui"],
       "options": {
         "jestConfig": "libs/cbs/share/shared-ui/jest.config.js",
         "passWithNoTests": true

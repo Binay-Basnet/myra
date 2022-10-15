@@ -19,7 +19,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/shared/editable-table"],
+      "outputs": ["{workspaceRoot}/coverage/libs/shared/editable-table"],
       "options": {
         "jestConfig": "libs/shared/editable-table/jest.config.ts",
         "passWithNoTests": true

@@ -19,7 +19,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/neosys/data-access"],
+      "outputs": ["{workspaceRoot}/coverage/libs/neosys/data-access"],
       "options": {
         "jestConfig": "libs/neosys/data-access/jest.config.ts",
         "passWithNoTests": true

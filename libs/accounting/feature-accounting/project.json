@@ -14,14 +14,12 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/accounting/feature-accounting/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["libs/accounting/feature-accounting/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/accounting/feature-accounting"],
+      "outputs": ["{workspaceRoot}/coverage/libs/accounting/feature-accounting"],
       "options": {
         "jestConfig": "libs/accounting/feature-accounting/jest.config.ts",
         "passWithNoTests": true

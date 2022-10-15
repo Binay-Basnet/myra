@@ -1,9 +1,8 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import {
   DepositLoanAccountInput,
-  ServiceTypeFormState,
   useGetAccountOpenProductDetailsQuery,
 } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
@@ -18,180 +17,99 @@ interface IFeesAndCharge {
 export const FeesAndCharge = ({ setTotalCharge }: IFeesAndCharge) => {
   const { t } = useTranslation();
 
-  const [productData, setProductData] = useState<ServiceTypeFormState[]>([]);
-
   const [triggerQuery, setTriggerQuery] = useState(false);
-  const { watch, register, unregister } = useFormContext<DepositLoanAccountInput>();
+  const { watch, control } = useFormContext<DepositLoanAccountInput>();
+
+  const { append, remove, fields } = useFieldArray({
+    control,
+    name: 'serviceCharge',
+  });
+
   const products = watch('productId');
-  const { data, isLoading } = useGetAccountOpenProductDetailsQuery(
+  const { data } = useGetAccountOpenProductDetailsQuery(
     { id: products },
     {
       enabled: triggerQuery,
     }
   );
 
-  // const ProductData =
-  //   poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
-
-  // const ProductDatalist = ProductData?.serviceCharge;
-  // let sum = 0;
-  // ProductDatalist?.map((tot) => {
-  //   return (sum = Number(sum) + Number(tot?.amount));
-  // });
-
   const isEbankingEnabled = watch('eBanking');
-  const isMobileBanking = watch('mobileBanking');
+  const isMobileBankingEnabled = watch('mobileBanking');
   const isATMenabled = watch('atmFacility');
-  const isSmsBanking = watch('smsBanking');
+  const isSmsBankingEnabled = watch('smsBanking');
   const serviceCharge = watch('serviceCharge');
   const isChequeEnabled = watch('chequeFacility');
+
   const altCharges =
     data?.settings?.general?.depositProduct?.formState?.data?.alternativeChannelCharge;
   const chequeCharge = data?.settings?.general?.depositProduct?.formState?.data?.chequeCharge;
   const aTMCharge = data?.settings?.general?.depositProduct?.formState?.data?.atmCharge;
+  const extraCharge = data?.settings?.general?.depositProduct?.formState?.data?.serviceCharge;
 
-  const mobileBankingCharges = altCharges?.find((d) => d?.serviceName === 'Mobile Banking');
-  const ebankingCharges = altCharges?.find((d) => d?.serviceName === 'Ebanking');
-  const smsCharges = altCharges?.find((d) => d?.serviceName === 'Sms banking');
-  const chequeObject = chequeCharge?.find((d) => d?.serviceName === 'Cheque issue charge');
-  const atmObject = aTMCharge?.find((d) => d?.serviceName === 'Atm charge');
-  const ebankingAmount = ebankingCharges?.amount;
-  // const ebankingLedger = ebankingCharges?.ledgerName;
-  const mobileBankingAmount = mobileBankingCharges?.amount;
-  // const mobileBankingLedger = mobileBankingCharges?.ledgerName;
-  const smsBankingAmount = smsCharges?.amount;
-  const atmAmount = atmObject?.amount;
-  const chequeAmont = chequeObject?.amount;
+  const chargeChecks = [
+    ...(extraCharge?.map((charge) => ({
+      name: charge?.serviceName,
+      amount: charge?.amount,
+      isEnabled: true,
+    })) ?? []),
+
+    {
+      name: 'Mobile Banking',
+      amount: altCharges?.find((d) => d?.serviceName === 'Mobile Banking')?.amount,
+      isEnabled: isMobileBankingEnabled || false,
+    },
+    {
+      name: 'Ebanking',
+      amount: altCharges?.find((d) => d?.serviceName === 'Ebanking')?.amount,
+      isEnabled: isEbankingEnabled || false,
+    },
+    {
+      name: 'Sms banking',
+      amount: altCharges?.find((d) => d?.serviceName === 'Sms banking')?.amount,
+      isEnabled: isSmsBankingEnabled || false,
+    },
+    {
+      name: 'Cheque issue charge',
+      amount: chequeCharge?.find((d) => d?.serviceName === 'Cheque issue charge')?.amount,
+      isEnabled: isChequeEnabled || false,
+    },
+    {
+      name: 'Atm charge',
+      amount: aTMCharge?.find((d) => d?.serviceName === 'Atm charge')?.amount,
+      isEnabled: isATMenabled || false,
+    },
+  ];
+
   useEffect(() => {
     if (products) {
       setTriggerQuery(true);
     }
   }, [products]);
 
-  useEffect(() => {
-    const firstArray =
-      (data?.settings.general?.depositProduct?.formState?.data
-        ?.serviceCharge as ServiceTypeFormState[]) ?? [];
-
-    setProductData([...firstArray]);
-  }, [isLoading]);
+  const checkArray = chargeChecks.map((check) => check.isEnabled);
 
   useEffect(() => {
-    if (productData && typeof isEbankingEnabled === 'boolean') {
-      if (isEbankingEnabled) {
-        setProductData((previous) =>
-          previous
-            ? [...previous, { amount: ebankingAmount, serviceName: 'Ebanking' }]
-            : [{ amount: ebankingAmount, serviceName: 'Ebanking' }]
-        );
+    chargeChecks.forEach((charge) => {
+      const alreadyExists = fields?.find((f) => f?.name === charge.name);
+      if (alreadyExists && charge.isEnabled) return;
+      if (charge.isEnabled) {
+        append({ name: charge.name, amount: charge.amount });
       } else {
-        const index = productData.findIndex((product) => product.serviceName === 'Ebanking');
-
-        unregister(`serviceCharge.${index}.name`);
-        unregister(`serviceCharge.${index}.amount`);
-
-        setProductData((previous) =>
-          previous.filter((product) => product.serviceName !== 'Ebanking')
-        );
+        const index = fields?.findIndex((f) => f?.name === charge.name);
+        if (index !== -1) {
+          remove(index);
+        }
       }
-    }
-  }, [isEbankingEnabled]);
+    });
+  }, [JSON.stringify(checkArray)]);
 
   useEffect(() => {
-    if (productData && typeof isMobileBanking === 'boolean') {
-      if (isMobileBanking) {
-        setProductData((previous) =>
-          previous
-            ? [...previous, { amount: mobileBankingAmount, serviceName: 'Mobile Banking' }]
-            : [{ amount: mobileBankingAmount, serviceName: 'Mobile Banking' }]
-        );
-      } else {
-        const index = productData.findIndex((product) => product.serviceName === 'Mobile Banking');
-
-        unregister(`serviceCharge.${index}.name`);
-        unregister(`serviceCharge.${index}.amount`);
-
-        setProductData((previous) =>
-          previous.filter((product) => product.serviceName !== 'Mobile Banking')
-        );
-      }
-    }
-  }, [isMobileBanking]);
-
-  useEffect(() => {
-    if (productData && typeof isATMenabled === 'boolean') {
-      if (isATMenabled) {
-        setProductData((previous) =>
-          previous
-            ? [...previous, { amount: atmAmount, serviceName: 'ATM-Facility' }]
-            : [{ amount: atmAmount, serviceName: 'ATM-Facility' }]
-        );
-      } else {
-        const index = productData.findIndex((product) => product.serviceName === 'ATM-Facility');
-
-        unregister(`serviceCharge.${index}.name`);
-        unregister(`serviceCharge.${index}.amount`);
-
-        setProductData((previous) =>
-          previous.filter((product) => product.serviceName !== 'ATM-Facility')
-        );
-      }
-    }
-  }, [isATMenabled]);
-  useEffect(() => {
-    if (productData && typeof isChequeEnabled === 'boolean') {
-      if (isChequeEnabled) {
-        setProductData((previous) =>
-          previous
-            ? [...previous, { amount: chequeAmont, serviceName: 'Cheque issue charge' }]
-            : [{ amount: chequeAmont, serviceName: 'Cheque issue charge' }]
-        );
-      } else {
-        const index = productData.findIndex(
-          (product) => product.serviceName === 'Cheque issue charge'
-        );
-
-        unregister(`serviceCharge.${index}.name`);
-        unregister(`serviceCharge.${index}.amount`);
-
-        setProductData((previous) =>
-          previous.filter((product) => product.serviceName !== 'Cheque issue charge')
-        );
-      }
-    }
-  }, [isChequeEnabled]);
-  useEffect(() => {
-    if (productData && typeof isSmsBanking === 'boolean') {
-      if (isSmsBanking) {
-        setProductData((previous) =>
-          previous
-            ? [...previous, { amount: smsBankingAmount, serviceName: 'Sms banking' }]
-            : [{ amount: smsBankingAmount, serviceName: 'Sms banking' }]
-        );
-      } else {
-        const index = productData.findIndex((product) => product.serviceName === 'Sms banking');
-
-        unregister(`serviceCharge.${index}.name`);
-        unregister(`serviceCharge.${index}.amount`);
-
-        setProductData((previous) =>
-          previous.filter((product) => product.serviceName !== 'Sms banking')
-        );
-      }
-    }
-  }, [isSmsBanking]);
-
-  useEffect(() => {
-    setTotalCharge(
-      serviceCharge
-        ? serviceCharge?.reduce((a, b) => a + Number(b?.amount), 0)
-        : productData?.reduce((a, b) => a + Number(b.amount), 0)
-    );
-  }, [JSON.stringify(serviceCharge), JSON.stringify(productData)]);
+    setTotalCharge(serviceCharge?.reduce((a, b) => a + Number(b?.amount), 0) ?? 0);
+  }, [JSON.stringify(serviceCharge)]);
 
   return (
     <GroupContainer scrollMarginTop="200px" display="flex" flexDirection="column" gap="s16">
-      <Box p="s20" background="neutralColorLight.Gray-0">
+      <Box background="neutralColorLight.Gray-0">
         <Box mb="s16">
           <Text fontSize="r1" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
             {t['accFeesChargesSummary']}
@@ -207,52 +125,31 @@ export const FeesAndCharge = ({ setTotalCharge }: IFeesAndCharge) => {
           borderRadius="br2"
           p="s16"
         >
-          {productData?.map((val, index) => {
-            register(`serviceCharge.${index}.name`, {
-              value: val?.serviceName,
-            });
-
-            register(`serviceCharge.${index}.amount`, {
-              value: val?.amount,
-            });
-
-            // register(`serviceCharge.${index}.ledgerCode`, {
-            //   value: data?.ledgerName,
-            // });
-
-            return (
-              <Box
-                key={`${val?.ledgerName}${val?.serviceName}`}
-                display="flex"
-                flexDirection="row"
-                justifyContent="space-between"
-                py="s16"
-              >
-                <Box>
-                  <Text fontSize="s3" fontWeight="Medium">
-                    {val?.serviceName}
-                  </Text>
-                </Box>
-                <Box w="300px">
-                  <FormInput
-                    textAlign="right"
-                    name={`serviceCharge.${index}.amount`}
-                    defaultValue={val?.amount}
-                    type="number"
-                  />
-                </Box>
+          {fields?.map((val, index) => (
+            <Box
+              key={val.id}
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-between"
+              py="s16"
+            >
+              <Box>
+                <Text fontSize="s3" fontWeight="Medium">
+                  {val?.name}
+                </Text>
               </Box>
-            );
-          })}
+              <Box w="300px">
+                <FormInput textAlign="right" name={`serviceCharge.${index}.amount`} type="number" />
+              </Box>
+            </Box>
+          ))}
           <Box display="flex" flexDirection="row" justifyContent="space-between" py="s16">
             <Text fontSize="s3" fontWeight="600">
               Total Amount
             </Text>
 
             <Text fontSize="s3" fontWeight="600">
-              {serviceCharge
-                ? serviceCharge?.reduce((a, b) => a + Number(b?.amount), 0)
-                : productData?.reduce((a, b) => a + Number(b.amount), 0)}
+              {serviceCharge?.reduce((a, b) => a + Number(b?.amount), 0)}
             </Text>
           </Box>
         </Box>

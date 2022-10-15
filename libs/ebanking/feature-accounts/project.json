@@ -14,14 +14,12 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/ebanking/feature-accounts/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["libs/ebanking/feature-accounts/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ebanking/feature-accounts"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ebanking/feature-accounts"],
       "options": {
         "jestConfig": "libs/ebanking/feature-accounts/jest.config.ts",
         "passWithNoTests": true

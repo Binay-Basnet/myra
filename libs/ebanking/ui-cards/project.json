@@ -19,7 +19,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ebanking/ui-cards"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ebanking/ui-cards"],
       "options": {
         "jestConfig": "libs/ebanking/ui-cards/jest.config.ts",
         "passWithNoTests": true

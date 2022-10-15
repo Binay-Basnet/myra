@@ -19,7 +19,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/inventory/ui-layout"],
+      "outputs": ["{workspaceRoot}/coverage/libs/inventory/ui-layout"],
       "options": {
         "jestConfig": "libs/inventory/ui-layout/jest.config.ts",
         "passWithNoTests": true

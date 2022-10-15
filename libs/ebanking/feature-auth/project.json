@@ -13,7 +13,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ebanking/feature-auth"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ebanking/feature-auth"],
       "options": {
         "jestConfig": "libs/ebanking/feature-auth/jest.config.ts",
         "passWithNoTests": true

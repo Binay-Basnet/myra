@@ -14,14 +14,12 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/cbs/transactions/feature-account-transfer/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["libs/cbs/transactions/feature-account-transfer/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/cbs/transactions/feature-account-transfer"],
+      "outputs": ["{workspaceRoot}/coverage/libs/cbs/transactions/feature-account-transfer"],
       "options": {
         "jestConfig": "libs/cbs/transactions/feature-account-transfer/jest.config.ts",
         "passWithNoTests": true

@@ -19,7 +19,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/neosys/feature-clients"],
+      "outputs": ["{workspaceRoot}/coverage/libs/neosys/feature-clients"],
       "options": {
         "jestConfig": "libs/neosys/feature-clients/jest.config.ts",
         "passWithNoTests": true

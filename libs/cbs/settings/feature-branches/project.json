@@ -14,14 +14,12 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/cbs/settings/feature-branches/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["libs/cbs/settings/feature-branches/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/cbs/settings/feature-branches"],
+      "outputs": ["{workspaceRoot}/coverage/libs/cbs/settings/feature-branches"],
       "options": {
         "jestConfig": "libs/cbs/settings/feature-branches/jest.config.ts",
         "passWithNoTests": true

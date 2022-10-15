@@ -53,7 +53,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/neosys-admin"],
+      "outputs": ["{workspaceRoot}/coverage/apps/neosys-admin"],
       "options": {
         "jestConfig": "apps/neosys-admin/jest.config.ts",
         "passWithNoTests": true
