@@ -51,32 +51,38 @@ export const FeesAndCharge = ({ setTotalCharge }: IFeesAndCharge) => {
       name: charge?.serviceName,
       amount: charge?.amount,
       isEnabled: true,
+      shouldFocus: false,
     })) ?? []),
 
     {
       name: 'Mobile Banking',
       amount: altCharges?.find((d) => d?.serviceName === 'Mobile Banking')?.amount,
       isEnabled: isMobileBankingEnabled || false,
+      shouldFocus: true,
     },
     {
       name: 'Ebanking',
       amount: altCharges?.find((d) => d?.serviceName === 'Ebanking')?.amount,
       isEnabled: isEbankingEnabled || false,
+      shouldFocus: true,
     },
     {
       name: 'Sms banking',
       amount: altCharges?.find((d) => d?.serviceName === 'Sms banking')?.amount,
       isEnabled: isSmsBankingEnabled || false,
+      shouldFocus: true,
     },
     {
       name: 'Cheque issue charge',
       amount: chequeCharge?.find((d) => d?.serviceName === 'Cheque issue charge')?.amount,
       isEnabled: isChequeEnabled || false,
+      shouldFocus: true,
     },
     {
       name: 'Atm charge',
       amount: aTMCharge?.find((d) => d?.serviceName === 'Atm charge')?.amount,
       isEnabled: isATMenabled || false,
+      shouldFocus: true,
     },
   ];
 
@@ -93,7 +99,12 @@ export const FeesAndCharge = ({ setTotalCharge }: IFeesAndCharge) => {
       const alreadyExists = fields?.find((f) => f?.name === charge.name);
       if (alreadyExists && charge.isEnabled) return;
       if (charge.isEnabled) {
-        append({ name: charge.name, amount: charge.amount });
+        append(
+          { name: charge.name, amount: charge.amount },
+          {
+            shouldFocus: charge.shouldFocus,
+          }
+        );
       } else {
         const index = fields?.findIndex((f) => f?.name === charge.name);
         if (index !== -1) {
