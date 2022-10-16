@@ -3178,6 +3178,13 @@ const ne: Record<string, string> = {
   memberSettingsCooperativeUnion: 'Cooperative Union',
 
   discardChanges: 'Discard Changes',
+
+  /* Alternative Channels Start */
+
+  settingsAlternativeChannel: 'Alternative Channel',
+  acFeeAndCharges: 'Fee And Charges',
+
+  /* Alternative Channels End */
 };
 
 export default ne;

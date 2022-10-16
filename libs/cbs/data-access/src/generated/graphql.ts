@@ -345,6 +345,48 @@ export enum AllModules {
   QualityAssuranceForNefscun = 'QUALITY_ASSURANCE_FOR_NEFSCUN',
 }
 
+export type AlternativeChannelCharges = {
+  amount?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  ledgerId?: Maybe<Scalars['String']>;
+  serviceType?: Maybe<AlternativeChannelServiceType>;
+};
+
+export type AlternativeChannelChargesInput = {
+  amount?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  ledgerId?: InputMaybe<Scalars['String']>;
+  serviceType?: InputMaybe<AlternativeChannelServiceType>;
+};
+
+export type AlternativeChannelChargesRecord = {
+  data?: Maybe<Array<Maybe<AlternativeChannelCharges>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type AlternativeChannelChargesResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<Array<Maybe<AlternativeChannelCharges>>>;
+};
+
+export enum AlternativeChannelServiceType {
+  Ebanking = 'EBANKING',
+  MobileBanking = 'MOBILE_BANKING',
+  SmsBanking = 'SMS_BANKING',
+}
+
+export type AlternativeChannelSettingsMutation = {
+  feesAndCharges?: Maybe<AlternativeChannelChargesResult>;
+};
+
+export type AlternativeChannelSettingsMutationFeesAndChargesArgs = {
+  data?: InputMaybe<Array<InputMaybe<AlternativeChannelChargesInput>>>;
+};
+
+export type AlternativeChannelSettingsQuery = {
+  feesAndCharges?: Maybe<AlternativeChannelChargesRecord>;
+};
+
 export type AmountLimit = {
   avgAmount?: InputMaybe<Scalars['Amount']>;
   maxAmount?: InputMaybe<Scalars['Amount']>;
@@ -3941,6 +3983,7 @@ export type GeneralMemberResult = {
 
 export type GeneralSettingsMutation = {
   KYM?: Maybe<KymMutation>;
+  alternativeChannel?: Maybe<AlternativeChannelSettingsMutation>;
   branch?: Maybe<GeneralBranchSettingsMutation>;
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsMutation>;
   deposit?: Maybe<DepositSettingsMutation>;
@@ -3954,6 +3997,7 @@ export type GeneralSettingsMutation = {
 
 export type GeneralSettingsQuery = {
   KYM?: Maybe<KymQuery>;
+  alternativeChannel?: Maybe<AlternativeChannelSettingsQuery>;
   branch?: Maybe<GeneralBranchSettingsQuery>;
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsQuery>;
   deposit?: Maybe<DepositSettingsQuery>;
@@ -3963,6 +4007,22 @@ export type GeneralSettingsQuery = {
   organization?: Maybe<OrganizationSettingsQuery>;
   share?: Maybe<ShareSettingsQuery>;
   valuator?: Maybe<ValuatorSettingsQuery>;
+};
+
+export enum GlobalPagesIconType {
+  Add = 'ADD',
+  List = 'LIST',
+  Profile = 'PROFILE',
+  Reports = 'REPORTS',
+  Settings = 'SETTINGS',
+}
+
+export type GlobalPagesResultNode = {
+  fullCode?: Maybe<Scalars['String']>;
+  hasParam?: Maybe<Scalars['Boolean']>;
+  iconType?: Maybe<GlobalPagesIconType>;
+  page?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
 };
 
 export enum GracePeriod {
@@ -8487,6 +8547,7 @@ export type Query = {
   neosys: NeosysQuery;
   report: ReportQuery;
   routesAndCodes: RoutesAndCodesQuery;
+  search: SearchQuery;
   settings: SettingsQuery;
   share: ShareQuery;
   transaction: TransactionQuery;
@@ -8720,6 +8781,41 @@ export enum SavingTransactionType {
   Deposit = 'DEPOSIT',
   Withdraw = 'WITHDRAW',
 }
+
+export type SearchFilterData = {
+  filterMode?: InputMaybe<Filter_Mode>;
+  id?: InputMaybe<Scalars['ID']>;
+  objState?: InputMaybe<ObjState>;
+  page?: InputMaybe<Scalars['String']>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
+export type SearchListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<SearchResultNode>;
+};
+
+export type SearchQuery = {
+  globalPages: SearchQueryResult;
+};
+
+export type SearchQueryGlobalPagesArgs = {
+  filter?: InputMaybe<SearchFilterData>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type SearchQueryResult = {
+  data?: Maybe<SearchQueryResultData>;
+  error?: Maybe<QueryError>;
+};
+
+export type SearchQueryResultData = {
+  edges?: Maybe<Array<Maybe<SearchListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SearchResultNode = GlobalPagesResultNode;
 
 export type SectionDetailsFilter = {
   id: Scalars['ID'];
@@ -10489,6 +10585,36 @@ export type SaveNewReportMutation = {
           }
         | {}
         | null;
+    } | null;
+  };
+};
+
+export type SaveAlternativeChargesMutationVariables = Exact<{
+  data?: InputMaybe<
+    Array<InputMaybe<AlternativeChannelChargesInput>> | InputMaybe<AlternativeChannelChargesInput>
+  >;
+}>;
+
+export type SaveAlternativeChargesMutation = {
+  settings: {
+    general?: {
+      alternativeChannel?: {
+        feesAndCharges?: {
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+          record?: Array<{
+            id?: string | null;
+            amount?: string | null;
+            ledgerId?: string | null;
+            serviceType?: AlternativeChannelServiceType | null;
+          } | null> | null;
+        } | null;
+      } | null;
     } | null;
   };
 };
@@ -14160,6 +14286,25 @@ export type GetShareStatementQuery = {
   };
 };
 
+export type GetAlternativeFeeAndChargesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAlternativeFeeAndChargesQuery = {
+  settings: {
+    general?: {
+      alternativeChannel?: {
+        feesAndCharges?: {
+          data?: Array<{
+            id?: string | null;
+            serviceType?: AlternativeChannelServiceType | null;
+            ledgerId?: string | null;
+            amount?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetAuditLogListQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAuditLogListQuery = {
@@ -17166,6 +17311,47 @@ export const useSaveNewReportMutation = <TError = unknown, TContext = unknown>(
   useMutation<SaveNewReportMutation, TError, SaveNewReportMutationVariables, TContext>(
     ['saveNewReport'],
     useAxios<SaveNewReportMutation, SaveNewReportMutationVariables>(SaveNewReportDocument),
+    options
+  );
+export const SaveAlternativeChargesDocument = `
+    mutation saveAlternativeCharges($data: [AlternativeChannelChargesInput]) {
+  settings {
+    general {
+      alternativeChannel {
+        feesAndCharges(data: $data) {
+          error {
+            ...MutationError
+          }
+          record {
+            id
+            amount
+            ledgerId
+            serviceType
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSaveAlternativeChargesMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SaveAlternativeChargesMutation,
+    TError,
+    SaveAlternativeChargesMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SaveAlternativeChargesMutation,
+    TError,
+    SaveAlternativeChargesMutationVariables,
+    TContext
+  >(
+    ['saveAlternativeCharges'],
+    useAxios<SaveAlternativeChargesMutation, SaveAlternativeChargesMutationVariables>(
+      SaveAlternativeChargesDocument
+    ),
     options
   );
 export const SetBranchDataDocument = `
@@ -22137,6 +22323,40 @@ export const useGetShareStatementQuery = <TData = GetShareStatementQuery, TError
     ['getShareStatement', variables],
     useAxios<GetShareStatementQuery, GetShareStatementQueryVariables>(
       GetShareStatementDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAlternativeFeeAndChargesDocument = `
+    query getAlternativeFeeAndCharges {
+  settings {
+    general {
+      alternativeChannel {
+        feesAndCharges {
+          data {
+            id
+            serviceType
+            ledgerId
+            amount
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAlternativeFeeAndChargesQuery = <
+  TData = GetAlternativeFeeAndChargesQuery,
+  TError = unknown
+>(
+  variables?: GetAlternativeFeeAndChargesQueryVariables,
+  options?: UseQueryOptions<GetAlternativeFeeAndChargesQuery, TError, TData>
+) =>
+  useQuery<GetAlternativeFeeAndChargesQuery, TError, TData>(
+    variables === undefined
+      ? ['getAlternativeFeeAndCharges']
+      : ['getAlternativeFeeAndCharges', variables],
+    useAxios<GetAlternativeFeeAndChargesQuery, GetAlternativeFeeAndChargesQueryVariables>(
+      GetAlternativeFeeAndChargesDocument
     ).bind(null, variables),
     options
   );

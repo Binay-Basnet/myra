@@ -11,6 +11,10 @@ type TabList = {
 
 const tabList: TabList[] = [
   {
+    title: 'settingsAlternativeChannel',
+    to: '/settings/general/alternative-channels/charges',
+  },
+  {
     title: 'settingsAuditLog',
     to: '/settings/general/audit-log',
   },
@@ -63,6 +67,8 @@ export const SettingSideBar = () => {
       flexDirection="column"
       flexShrink={0}
       minWidth="220px"
+      h="100vh"
+      zIndex="100"
     >
       <Box height="60px" py="s12" px="s16">
         <Text fontSize="l1" fontWeight="600" color="gray.800">

@@ -1,0 +1,16 @@
+query getAlternativeFeeAndCharges{
+  settings {
+    general {
+      alternativeChannel {
+        feesAndCharges {
+          data{
+            id
+            serviceType
+            ledgerId
+            amount
+          }
+        }
+      }
+    }
+  }
+}

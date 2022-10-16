@@ -34,6 +34,7 @@
     "cbs-reports-ui-components": "libs/cbs/reports/ui-components",
     "cbs-reports-ui-layouts": "libs/cbs/reports/ui-layouts",
     "cbs-settings--feature-loan": "libs/cbs/settings/feature-loan",
+    "cbs-settings-feature-alternative-channels": "libs/cbs/settings/feature-alternative-channels",
     "cbs-settings-feature-audit-log": "libs/cbs/settings/feature-audit-log",
     "cbs-settings-feature-branches": "libs/cbs/settings/feature-branches",
     "cbs-settings-feature-coa": "libs/cbs/settings/feature-coa",

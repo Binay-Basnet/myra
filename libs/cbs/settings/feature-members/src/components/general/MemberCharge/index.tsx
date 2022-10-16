@@ -66,23 +66,27 @@ export const NewMemberCharge = () => {
           <Box display="flex" flexDirection="column" gap="s20">
             <FormEditableTable<NewChangeTable>
               name="charge"
+              canAddRow={false}
               columns={[
                 {
                   accessor: 'memberType',
                   header: t['memberSettingsMemberType'],
                   fieldType: 'select',
                   selectOptions: MemberTypeList,
+                  cellWidth: 'auto',
                 },
                 {
                   accessor: 'ledgerId',
                   header: t['memberSettingsLedgerMapping'],
                   fieldType: 'select',
                   selectOptions: ledgerOptions,
+                  cellWidth: 'auto',
                 },
                 {
                   accessor: 'charge',
                   header: t['memberSettingsCharge'],
                   isNumeric: true,
+                  cellWidth: 'auto',
                 },
               ]}
             />

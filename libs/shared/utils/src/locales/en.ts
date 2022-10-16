@@ -3578,5 +3578,13 @@ const en: Record<string, string> = {
   memberSettingsCooperativeUnion: 'Cooperative Union',
 
   discardChanges: 'Discard Changes',
+
+  /* Alternative Channels Start */
+
+  settingsAlternativeChannel: 'Alternative Channel',
+  acFeeAndCharges: 'Fee And Charges',
+  acBasicCharge: 'Basic Charge for Alternative Channels.',
+
+  /* Alternative Channels End */
 };
 export default en;
