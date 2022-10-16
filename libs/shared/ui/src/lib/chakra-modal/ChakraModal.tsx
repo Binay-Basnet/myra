@@ -109,7 +109,7 @@ export const ChakraModal = (props: ModalChakraProps) => {
               {secondaryButtonLabel && (
                 <Button
                   width="150px"
-                  variant="outline"
+                  variant="ghost"
                   shade={isSecondaryDanger ? 'danger' : 'neutral'}
                   onClick={secondaryButtonHandler}
                 >

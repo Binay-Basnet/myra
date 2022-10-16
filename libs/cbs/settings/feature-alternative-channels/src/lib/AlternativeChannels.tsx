@@ -3,8 +3,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import {
   AlternativeChannelServiceType,
+  useGetAcFeeCoaQuery,
   useGetAlternativeFeeAndChargesQuery,
-  useGetCoaListQuery,
   useSaveAlternativeChargesMutation,
 } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
@@ -23,13 +23,9 @@ export const AlternativeChannels = () => {
 
   const methods = useForm<{ charges: ChargesEditTable[] }>();
 
-  const { data: coa } = useGetCoaListQuery({
-    filter: {
-      active: true,
-    },
-  });
+  const { data: coa } = useGetAcFeeCoaQuery({});
 
-  const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
+  const coaData = coa?.settings.chartsOfAccount?.accountsUnder?.data;
 
   const coaList = coaData?.map((item) => ({
     label: item?.name?.en as string,
@@ -76,15 +72,15 @@ export const AlternativeChannels = () => {
                 cellWidth: 'auto',
                 selectOptions: [
                   {
-                    label: 'Mobile Banking',
+                    label: t['acMobileBanking'],
                     value: AlternativeChannelServiceType.MobileBanking,
                   },
                   {
-                    label: 'eBanking',
+                    label: t['acEBanking'],
                     value: AlternativeChannelServiceType.Ebanking,
                   },
                   {
-                    label: 'SMS Banking',
+                    label: t['acSMSBanking'],
                     value: AlternativeChannelServiceType.SmsBanking,
                   },
                 ],

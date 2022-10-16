@@ -6,7 +6,7 @@ import Box from '../box/Box';
 import Text from '../text/Text';
 import TextFields from '../text-fields/TextFields';
 
-export function WIPState() {
+export const WIPState = () => {
   const { t } = useTranslation();
 
   return (
@@ -16,41 +16,22 @@ export function WIPState() {
       justifyContent="center"
       alignItems="center"
       gap="s16"
-      mt="110px"
     >
-      <Image
-        height={100}
-        width={100}
-        src="/workInProgress.svg"
-        alt="cetral chakra"
-      />
+      <Image height={100} width={100} src="/workInProgress.svg" alt="cetral chakra" />
       <Text color="neutralColorLight.Gray-70" fontWeight="500" fontSize="m1">
         {t['workinProgress']}
       </Text>
-      <Text
-        color="neutralColorLight.Gray-50"
-        fontWeight="Regular"
-        fontSize="r1"
-      >
+      <Text color="neutralColorLight.Gray-50" fontWeight="Regular" fontSize="r1">
         {t['ThisPageIsUnderConstruction']} &nbsp;
-        <TextFields
-          onClick={() => window.location.reload()}
-          as="span"
-          variant="link"
-        >
+        <TextFields onClick={() => window.location.reload()} as="span" variant="link">
           {t['follow']}
         </TextFields>
-        <Text
-          as="span"
-          color="neutralColorLight.Gray-50"
-          fontWeight="Regular"
-          fontSize="r1"
-        >
+        <Text as="span" color="neutralColorLight.Gray-50" fontWeight="Regular" fontSize="r1">
           {t['usForUpdates']}.
         </Text>
       </Text>
     </Box>
   );
-}
+};
 
 export default WIPState;

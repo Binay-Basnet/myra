@@ -10736,6 +10736,25 @@ export type SaveAlternativeChargesMutation = {
   };
 };
 
+export type ActivateServiceMutationVariables = Exact<{
+  data?: InputMaybe<AlternativeChannelServiceActivationInput>;
+}>;
+
+export type ActivateServiceMutation = {
+  alternativeChannel?: {
+    serviceActivation?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  } | null;
+};
+
 export type SetBranchDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: BranchInput;
@@ -14422,6 +14441,63 @@ export type GetAlternativeFeeAndChargesQuery = {
   };
 };
 
+export type GetActivatedServiceQueryVariables = Exact<{
+  memberId: Scalars['String'];
+}>;
+
+export type GetActivatedServiceQuery = {
+  alternativeChannel: {
+    memberActivations?: {
+      eBanking?: boolean | null;
+      mobileBanking?: boolean | null;
+      smsBanking?: boolean | null;
+    } | null;
+  };
+};
+
+export type GetAlternativeChannelListQueryVariables = Exact<{
+  filter?: InputMaybe<AlternativeChannelFilter>;
+  paginate?: InputMaybe<Pagination>;
+}>;
+
+export type GetAlternativeChannelListQuery = {
+  alternativeChannel: {
+    list?: {
+      totalCount: number;
+      pageInfo?: PaginationFragment | null;
+      edges?: Array<{
+        cursor: string;
+        data?: {
+          id?: string | null;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          memberId?: string | null;
+          coopConnection?: boolean | null;
+          lastActive?: string | null;
+          phoneNumber?: string | null;
+          serviceStatus?: AlternativeChannelStatus | null;
+          serviceType?: AlternativeChannelServiceType | null;
+        } | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
+export type GetAcFeeCoaQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAcFeeCoaQuery = {
+  settings: {
+    chartsOfAccount?: {
+      accountsUnder?: {
+        data?: Array<{
+          id: string;
+          accountCode: string;
+          name: Record<'local' | 'en' | 'np', string>;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetAuditLogListQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAuditLogListQuery = {
@@ -17469,6 +17545,31 @@ export const useSaveAlternativeChargesMutation = <TError = unknown, TContext = u
     useAxios<SaveAlternativeChargesMutation, SaveAlternativeChargesMutationVariables>(
       SaveAlternativeChargesDocument
     ),
+    options
+  );
+export const ActivateServiceDocument = `
+    mutation activateService($data: AlternativeChannelServiceActivationInput) {
+  alternativeChannel {
+    serviceActivation(data: $data) {
+      error {
+        ...MutationError
+      }
+      recordId
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useActivateServiceMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ActivateServiceMutation,
+    TError,
+    ActivateServiceMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ActivateServiceMutation, TError, ActivateServiceMutationVariables, TContext>(
+    ['activateService'],
+    useAxios<ActivateServiceMutation, ActivateServiceMutationVariables>(ActivateServiceDocument),
     options
   );
 export const SetBranchDataDocument = `
@@ -22475,6 +22576,96 @@ export const useGetAlternativeFeeAndChargesQuery = <
     useAxios<GetAlternativeFeeAndChargesQuery, GetAlternativeFeeAndChargesQueryVariables>(
       GetAlternativeFeeAndChargesDocument
     ).bind(null, variables),
+    options
+  );
+export const GetActivatedServiceDocument = `
+    query getActivatedService($memberId: String!) {
+  alternativeChannel {
+    memberActivations(memberId: $memberId) {
+      eBanking
+      mobileBanking
+      smsBanking
+    }
+  }
+}
+    `;
+export const useGetActivatedServiceQuery = <TData = GetActivatedServiceQuery, TError = unknown>(
+  variables: GetActivatedServiceQueryVariables,
+  options?: UseQueryOptions<GetActivatedServiceQuery, TError, TData>
+) =>
+  useQuery<GetActivatedServiceQuery, TError, TData>(
+    ['getActivatedService', variables],
+    useAxios<GetActivatedServiceQuery, GetActivatedServiceQueryVariables>(
+      GetActivatedServiceDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAlternativeChannelListDocument = `
+    query getAlternativeChannelList($filter: AlternativeChannelFilter, $paginate: Pagination) {
+  alternativeChannel {
+    list(filter: $filter, paginate: $paginate) {
+      totalCount
+      pageInfo {
+        ...Pagination
+      }
+      edges {
+        cursor
+        data {
+          id
+          name
+          memberId
+          coopConnection
+          lastActive
+          phoneNumber
+          serviceStatus
+          serviceType
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetAlternativeChannelListQuery = <
+  TData = GetAlternativeChannelListQuery,
+  TError = unknown
+>(
+  variables?: GetAlternativeChannelListQueryVariables,
+  options?: UseQueryOptions<GetAlternativeChannelListQuery, TError, TData>
+) =>
+  useQuery<GetAlternativeChannelListQuery, TError, TData>(
+    variables === undefined
+      ? ['getAlternativeChannelList']
+      : ['getAlternativeChannelList', variables],
+    useAxios<GetAlternativeChannelListQuery, GetAlternativeChannelListQueryVariables>(
+      GetAlternativeChannelListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAcFeeCoaDocument = `
+    query getACFeeCOA {
+  settings {
+    chartsOfAccount {
+      accountsUnder(accountCode: ["160.6", "160.8"]) {
+        data {
+          id
+          accountCode
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAcFeeCoaQuery = <TData = GetAcFeeCoaQuery, TError = unknown>(
+  variables?: GetAcFeeCoaQueryVariables,
+  options?: UseQueryOptions<GetAcFeeCoaQuery, TError, TData>
+) =>
+  useQuery<GetAcFeeCoaQuery, TError, TData>(
+    variables === undefined ? ['getACFeeCOA'] : ['getACFeeCOA', variables],
+    useAxios<GetAcFeeCoaQuery, GetAcFeeCoaQueryVariables>(GetAcFeeCoaDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetAuditLogListDocument = `

@@ -64,12 +64,12 @@ const variantOutline: SystemStyleFunction = (props) => {
 
     border: '1px solid',
     borderColor: c === 'gray' ? borderColor : `${c}.500`,
-    color: c === 'gray' ? 'gray.500' : `${c}.500`,
+    color: c === 'gray' ? 'gray.800' : `${c}.800`,
 
     _hover: {
       bg: 'none',
-      borderColor: c === 'gray' ? borderColor : `${c}.700`,
-      color: c === 'gray' ? 'gray.500' : `${c}.700`,
+      borderColor: c === 'gray' ? borderColor : `${c}.900`,
+      color: c === 'gray' ? 'gray.900' : `${c}.900`,
     },
     _active: {
       bg: 'none',

@@ -17,3 +17,14 @@ mutation saveAlternativeCharges($data: [AlternativeChannelChargesInput]) {
     }
   }
 }
+
+mutation activateService($data: AlternativeChannelServiceActivationInput){
+  alternativeChannel {
+    serviceActivation(data: $data){
+      error {
+        ...MutationError
+      }
+      recordId
+    }
+  }
+}

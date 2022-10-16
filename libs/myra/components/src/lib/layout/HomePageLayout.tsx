@@ -62,7 +62,7 @@ const moreFromMyra = [
   {
     title: 'alternativeChannelsAndCrossConnectivity',
     img: '/tnt.svg',
-    link: '/members/list',
+    link: '/alternative-channels/mBanking/users',
   },
   {
     title: 'complainceManagement',

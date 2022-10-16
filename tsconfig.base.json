@@ -20,6 +20,11 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "paths": {
+      "@coop/ac/activation-form": [
+        "libs/alternative-channels/feature-activation-form/src/index.ts"
+      ],
+      "@coop/ac/layouts": ["libs/alternative-channels/ui-layouts/src/index.ts"],
+      "@coop/ac/lists": ["libs/alternative-channels/feature-lists/src/index.ts"],
       "@coop/accounting/accounting": ["libs/accounting/feature-accounting/src/index.ts"],
       "@coop/accounting/purchase": ["libs/accounting/feature-purchase/src/index.ts"],
       "@coop/accounting/sales": ["libs/accounting/feature-sales/src/index.ts"],

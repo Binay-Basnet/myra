@@ -36,7 +36,7 @@ export const FormFooter = ({
       borderTop="1px solid"
       borderColor="border.layout"
     >
-      <Text fontStyle="italic" as="div" onClick={statusHandler}>
+      <Text as="div" onClick={statusHandler}>
         {status}
       </Text>
       <Box display="flex" gap="s16">
