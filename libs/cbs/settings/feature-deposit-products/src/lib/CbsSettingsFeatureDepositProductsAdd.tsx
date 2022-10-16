@@ -197,7 +197,7 @@ export const SettingsDepositProductsAdd = () => {
         values?.maxTenureUnitNumber && isTenureApplicable ? values?.maxTenureUnitNumber : null,
       minTenureUnitNumber:
         values?.minTenureUnitNumber && isTenureApplicable ? values?.minTenureUnitNumber : null,
-      depositFrequency: values?.depositFrequency ? values?.depositFrequency : null,
+      depositFrequency: isMandatorySaving ? values?.depositFrequency : null,
       postingFrequency: values?.postingFrequency ? values?.postingFrequency : null,
       accountType: values?.accountType ? values?.accountType : null,
       interest: {
@@ -350,13 +350,15 @@ export const SettingsDepositProductsAdd = () => {
                 <DepositFrequency />
               )}
 
-              {depositNature === NatureOfDepositProduct.RecurringSaving && (
+              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                (depositNature === NatureOfDepositProduct.Saving && isMandatorySaving)) && (
                 <>
                   {/* <DepositAmount /> */}
                   <Penalty />
-                  <Rebate />
                 </>
               )}
+
+              {depositNature === NatureOfDepositProduct.RecurringSaving && <Rebate />}
 
               {depositNature === NatureOfDepositProduct.TermSavingOrFd && <FixedDepositAmount />}
 

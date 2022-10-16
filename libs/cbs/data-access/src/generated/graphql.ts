@@ -197,6 +197,11 @@ export type AccountTransferPaymentForAccountClose = {
   note?: InputMaybe<Scalars['String']>;
 };
 
+export type AccountTransferPaymentForAlternativeChannel = {
+  destination_account: Scalars['ID'];
+  note?: InputMaybe<Scalars['String']>;
+};
+
 export type AccountTypeDetailsUnion = BankChartsOfAccount | JournalChartsOfAccount;
 
 export type AddCoaAccountInput = {
@@ -345,6 +350,17 @@ export enum AllModules {
   QualityAssuranceForNefscun = 'QUALITY_ASSURANCE_FOR_NEFSCUN',
 }
 
+export type AlternativeChannelActivation = {
+  coopConnection?: Maybe<Scalars['Boolean']>;
+  id?: Maybe<Scalars['String']>;
+  lastActive?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['Localized']>;
+  phoneNumber?: Maybe<Scalars['String']>;
+  serviceStatus?: Maybe<AlternativeChannelStatus>;
+  serviceType?: Maybe<AlternativeChannelServiceType>;
+};
+
 export type AlternativeChannelCharges = {
   amount?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -369,6 +385,80 @@ export type AlternativeChannelChargesResult = {
   record?: Maybe<Array<Maybe<AlternativeChannelCharges>>>;
 };
 
+export type AlternativeChannelConnection = {
+  edges?: Maybe<Array<Maybe<AlternativeChannelEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export enum AlternativeChannelDepositedBy {
+  Others = 'OTHERS',
+  Self = 'SELF',
+}
+
+export type AlternativeChannelEdge = {
+  cursor: Scalars['String'];
+  data?: Maybe<AlternativeChannelActivation>;
+};
+
+export type AlternativeChannelFilter = {
+  serviceType?: InputMaybe<AlternativeChannelServiceType>;
+  status?: InputMaybe<AlternativeChannelStatus>;
+};
+
+export type AlternativeChannelMemberActivations = {
+  eBanking?: Maybe<Scalars['Boolean']>;
+  mobileBanking?: Maybe<Scalars['Boolean']>;
+  smsBanking?: Maybe<Scalars['Boolean']>;
+};
+
+export type AlternativeChannelMutation = {
+  serviceActivation?: Maybe<AlternativeChannelServiceActivationResult>;
+};
+
+export type AlternativeChannelMutationServiceActivationArgs = {
+  data?: InputMaybe<AlternativeChannelServiceActivationInput>;
+};
+
+export enum AlternativeChannelPaymentMode {
+  Account = 'ACCOUNT',
+  BankVoucher = 'BANK_VOUCHER',
+  Cash = 'CASH',
+}
+
+export type AlternativeChannelQuery = {
+  list?: Maybe<AlternativeChannelConnection>;
+  memberActivations?: Maybe<AlternativeChannelMemberActivations>;
+};
+
+export type AlternativeChannelQueryListArgs = {
+  filter?: InputMaybe<AlternativeChannelFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type AlternativeChannelQueryMemberActivationsArgs = {
+  memberId: Scalars['String'];
+};
+
+export type AlternativeChannelServiceActivationInput = {
+  accountTransfer?: InputMaybe<AccountTransferPaymentForAlternativeChannel>;
+  bankCheque?: InputMaybe<BankChequePaymentForAlternativeChannel>;
+  cash?: InputMaybe<DepositCash>;
+  email?: InputMaybe<Scalars['String']>;
+  memberId?: InputMaybe<Scalars['String']>;
+  paymentMode: AlternativeChannelPaymentMode;
+  phoneNumber?: InputMaybe<Scalars['String']>;
+  pin?: InputMaybe<Scalars['Int']>;
+  service?: InputMaybe<Array<InputMaybe<AlternativeChannelServiceType>>>;
+  totalAmount?: InputMaybe<Scalars['String']>;
+};
+
+export type AlternativeChannelServiceActivationResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<AlternativeChannelQuery>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export enum AlternativeChannelServiceType {
   Ebanking = 'EBANKING',
   MobileBanking = 'MOBILE_BANKING',
@@ -386,6 +476,11 @@ export type AlternativeChannelSettingsMutationFeesAndChargesArgs = {
 export type AlternativeChannelSettingsQuery = {
   feesAndCharges?: Maybe<AlternativeChannelChargesRecord>;
 };
+
+export enum AlternativeChannelStatus {
+  Active = 'ACTIVE',
+  Inactive = 'INACTIVE',
+}
 
 export type AmountLimit = {
   avgAmount?: InputMaybe<Scalars['Amount']>;
@@ -603,6 +698,14 @@ export type BankChequePaymentForAccountClose = {
   bank: Scalars['ID'];
   cheque_no: Scalars['String'];
   note?: InputMaybe<Scalars['String']>;
+};
+
+export type BankChequePaymentForAlternativeChannel = {
+  bank: Scalars['ID'];
+  depositedBy?: InputMaybe<AlternativeChannelDepositedBy>;
+  deposited_date?: InputMaybe<Scalars['String']>;
+  note?: InputMaybe<Scalars['String']>;
+  voucher_id: Scalars['String'];
 };
 
 export type BankDataMutation = {
@@ -2556,6 +2659,7 @@ export type EBankingAuthMutation = {
   getNewToken?: Maybe<AuthTokenResult>;
   login?: Maybe<EbankingLoginResult>;
   loginToCooperative?: Maybe<EbankingCooperativeLoginResult>;
+  requestSource?: Maybe<RequestSource>;
   resendOtp?: Maybe<EbankingOtpResult>;
   setNewPin?: Maybe<EbankingUserResult>;
   setPassword?: Maybe<EbankingPasswordResult>;
@@ -2566,6 +2670,7 @@ export type EBankingAuthMutation = {
 export type EBankingAuthMutationCheckAccountArgs = {
   coopId: Scalars['ID'];
   mobileNumber: Scalars['String'];
+  pin: Scalars['Int'];
 };
 
 export type EBankingAuthMutationGetNewTokenArgs = {
@@ -2579,6 +2684,7 @@ export type EBankingAuthMutationLoginArgs = {
 
 export type EBankingAuthMutationLoginToCooperativeArgs = {
   cooperativeId: Scalars['ID'];
+  mobileNumber: Scalars['String'];
   pinCode?: InputMaybe<Scalars['Int']>;
 };
 
@@ -3147,6 +3253,10 @@ export type EBankingMutation = {
   utilityPayment: UtilityPayemntMutation;
 };
 
+export type EBankingMutationAuthArgs = {
+  type?: InputMaybe<RequestSource>;
+};
+
 export type EBankingNotificationQuery = {
   announcements?: Maybe<EBankingAnnouncementQuery>;
   appNotifications?: Maybe<EBankingAppNotificationQuery>;
@@ -3211,7 +3321,7 @@ export type EBankingTransactionQueryRecentArgs = {
 
 export type EbankingAccountExistsResult = {
   error?: Maybe<MutationError>;
-  record?: Maybe<EbankingAccountRecord>;
+  record?: Maybe<EbankingUser>;
   success?: Maybe<Scalars['Boolean']>;
 };
 
@@ -7659,6 +7769,7 @@ export type Municipality = {
 
 export type Mutation = {
   account: DepositLoanAccountMutation;
+  alternativeChannel?: Maybe<AlternativeChannelMutation>;
   auth: AuthMutation;
   bank: BankMutation;
   document: DocumentMutation;
@@ -8532,6 +8643,7 @@ export type QuarterlyDividendRateInput = {
 export type Query = {
   account: DepositLoanAccountQuery;
   administration: AdministrationQuery;
+  alternativeChannel: AlternativeChannelQuery;
   auditLog: AuditLogQuery;
   auth: AuthQuery;
   bank: BankQuery;
@@ -8670,6 +8782,11 @@ export type ReportResult = {
   memberId?: Maybe<Scalars['ID']>;
   statement?: Maybe<StatementReport>;
 };
+
+export enum RequestSource {
+  Ebanking = 'EBANKING',
+  MobileBanking = 'MOBILE_BANKING',
+}
 
 export type ResetPasswordData = {
   newPassword: Scalars['String'];
