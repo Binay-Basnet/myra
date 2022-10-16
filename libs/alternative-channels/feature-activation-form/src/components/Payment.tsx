@@ -231,12 +231,8 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
                 </Text>
               </Box>
             </Box>
-            <Box display="flex" flexDirection="column" gap="s4">
-              <Text fontWeight="500" fontSize="r1">
-                Note
-              </Text>
-              <FormTextArea name="cash.note" label="Note" rows={5} />
-            </Box>
+
+            <FormTextArea name="cash.note" label="Note" rows={5} />
           </>
         )}
       </BoxContainer>

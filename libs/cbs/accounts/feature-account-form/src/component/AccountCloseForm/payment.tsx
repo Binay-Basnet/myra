@@ -154,13 +154,11 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
             <Grid templateColumns="repeat(2,1fr)" gap="s20">
               <FormInput name="cash.cashPaid" type="number" label="Cash" textAlign="right" />
             </Grid>
-
             <FormSwitch
               name="cash.disableDenomination"
               label="Disable Denomination"
               defaultChecked={false}
             />
-
             {!disableDenomination && (
               <FormEditableTable<PaymentTableType>
                 name="cash.denominations"
@@ -201,7 +199,6 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
                 canAddRow={false}
               />
             )}
-
             <Box
               display="flex"
               flexDirection="column"
@@ -239,12 +236,8 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
                 </Text>
               </Box>
             </Box>
-            <Box display="flex" flexDirection="column" gap="s4">
-              <Text fontWeight="500" fontSize="r1">
-                Note
-              </Text>
-              <FormTextArea name="cash.note" label="Note" rows={5} />
-            </Box>
+
+            <FormTextArea name="cash.note" label="Note" rows={5} />
           </>
         )}
       </BoxContainer>

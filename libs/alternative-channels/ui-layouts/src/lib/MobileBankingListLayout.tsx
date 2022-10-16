@@ -44,7 +44,7 @@ export const MobileBankingListLayout = ({ children }: IAccountPageLayoutProps) =
           <TabColumn list={accountColumns} />
           <Divider my="s16" />
           <Button
-            onClick={() => router.push('/settings/alternative-charges/charges')}
+            onClick={() => router.push('/settings/general/alternative-channels/charges')}
             variant="ghost"
             color="#37474F"
             height="s48"
