@@ -351,7 +351,9 @@ export const AddDeposit = () => {
                   )}
 
                   {accountId &&
-                    selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving && (
+                    (selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving ||
+                      (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+                        selectedAccount?.product?.isMandatorySaving)) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
                           <FormInput name="voucherId" label={t['addDepositVoucherId']} />

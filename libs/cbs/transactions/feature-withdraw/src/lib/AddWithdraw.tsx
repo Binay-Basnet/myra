@@ -184,7 +184,7 @@ export const AddWithdraw = () => {
     }
 
     if (values.payment_type === WithdrawPaymentType.BankCheque) {
-      filteredValues = omit({ ...filteredValues }, ['cash', 'file', 'withdrawBy']);
+      filteredValues = omit({ ...values }, ['cash', 'file', 'withdrawBy']);
 
       asyncToast({
         id: 'add-new-withdraw',

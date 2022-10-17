@@ -58,46 +58,56 @@ export const ProductCard = ({ productId }: ProductProps) => {
         p="s16"
       >
         {' '}
-        <Box display="flex" flexDirection="column" gap="s4">
-          <Text fontSize="s3" fontWeight="400">
-            Allowed Number of Transactions
-          </Text>
+        {productData?.noOftransactionAllowed && (
+          <Box display="flex" flexDirection="column" gap="s4">
+            <Text fontSize="s3" fontWeight="400">
+              Allowed Number of Transactions
+            </Text>
 
-          <Text fontSize="s3" fontWeight="600">
-            {productData?.noOftransactionAllowed}
-          </Text>
-        </Box>
-        <Box display="flex" flexDirection="column" gap="s4">
-          <Text fontSize="s3" fontWeight="400">
-            Balance Limit
-          </Text>
+            <Text fontSize="s3" fontWeight="600">
+              {productData?.noOftransactionAllowed}
+            </Text>
+          </Box>
+        )}
+        {(productData?.balanceLimit?.minAmount || productData?.balanceLimit?.maxAmount) && (
+          <Box display="flex" flexDirection="column" gap="s4">
+            <Text fontSize="s3" fontWeight="400">
+              Balance Limit
+            </Text>
 
-          <Text fontSize="s3" fontWeight="600">
-            {productData?.balanceLimit?.minAmount}- {productData?.balanceLimit?.maxAmount}
-          </Text>
-        </Box>
-        <Box display="flex" flexDirection="column" gap="s4">
-          <Text fontSize="s3" fontWeight="400">
-            Deposit Amount Limit
-          </Text>
+            <Text fontSize="s3" fontWeight="600">
+              {productData?.balanceLimit?.minAmount}- {productData?.balanceLimit?.maxAmount}
+            </Text>
+          </Box>
+        )}
+        {(productData?.depositAmount?.minAmount || productData?.depositAmount?.maxAmount) && (
+          <Box display="flex" flexDirection="column" gap="s4">
+            <Text fontSize="s3" fontWeight="400">
+              Deposit Amount Limit
+            </Text>
 
-          <Text fontSize="s3" fontWeight="600">
-            {productData?.depositAmount?.minAmount}- {productData?.depositAmount?.maxAmount}
-          </Text>
-        </Box>
-        <Box display="flex" flexDirection="column" gap="s4">
-          <Text fontSize="s3" fontWeight="400">
-            Withdraw Amount Limit
-          </Text>
+            <Text fontSize="s3" fontWeight="600">
+              {productData?.depositAmount?.minAmount}- {productData?.depositAmount?.maxAmount}
+            </Text>
+          </Box>
+        )}
+        {(productData?.withdrawAmountLimit?.minAmount ||
+          productData?.withdrawAmountLimit?.maxAmount) && (
+          <Box display="flex" flexDirection="column" gap="s4">
+            <Text fontSize="s3" fontWeight="400">
+              Withdraw Amount Limit
+            </Text>
 
-          <Text fontSize="s3" fontWeight="600">
-            {' '}
-            {productData?.withdrawAmountLimit?.minAmount}-
-            {productData?.withdrawAmountLimit?.maxAmount}
-          </Text>
-        </Box>
+            <Text fontSize="s3" fontWeight="600">
+              {' '}
+              {productData?.withdrawAmountLimit?.minAmount}-
+              {productData?.withdrawAmountLimit?.maxAmount}
+            </Text>
+          </Box>
+        )}
         {productData?.nature !== NatureOfDepositProduct?.Saving &&
-          productData?.nature !== NatureOfDepositProduct?.Current && (
+          productData?.nature !== NatureOfDepositProduct?.Current &&
+          (productData?.minTenureUnitNumber || productData?.maxTenureUnitNumber) && (
             <Box display="flex" flexDirection="column" gap="s4">
               <Text fontSize="s3" fontWeight="400">
                 Tenure

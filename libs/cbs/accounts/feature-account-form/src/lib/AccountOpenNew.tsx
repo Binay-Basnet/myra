@@ -187,6 +187,7 @@ export const AccountOpenNew = () => {
 
   const ProductData = poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
   const productType = ProductData?.nature;
+  const isMandatoryFlag = ProductData?.isMandatorySaving;
 
   useEffect(() => {
     if (productID) {
@@ -279,32 +280,49 @@ export const AccountOpenNew = () => {
 
     let updatedData;
 
-    if (values.openingPayment?.payment_type === DepositPaymentType.Cash) {
-      updatedData = omit({ ...values }, ['openingPayment.cheque', 'openingPayment.bankVoucher']);
+    if (totalDeposit !== 0) {
+      if (values.openingPayment?.payment_type === DepositPaymentType.Cash) {
+        updatedData = {
+          ...values,
+          openingPayment: {
+            ...omit({ ...values?.openingPayment }, ['cheque', 'bankVoucher']),
+            cash: {
+              ...values.openingPayment.cash,
+              cashPaid: values.openingPayment.cash?.cashPaid as string,
+              disableDenomination: Boolean(values.openingPayment.cash?.disableDenomination),
+              total: String(totalCashPaid),
+              returned_amount: String(returnAmount),
+              denominations:
+                values.openingPayment.cash?.denominations?.map(({ value, quantity }) => ({
+                  value: cashOptions[value as string],
+                  quantity,
+                })) ?? [],
+            },
+          },
+        };
+      }
 
-      updatedData.openingPayment = {
-        ...values.openingPayment,
-        cash: {
-          ...values.openingPayment.cash,
-          cashPaid: values.openingPayment.cash?.cashPaid as string,
-          disableDenomination: Boolean(values.openingPayment.cash?.disableDenomination),
-          total: String(totalCashPaid),
-          returned_amount: String(returnAmount),
-          denominations:
-            values.openingPayment.cash?.denominations?.map(({ value, quantity }) => ({
-              value: cashOptions[value as string],
-              quantity,
-            })) ?? [],
-        },
-      };
-    }
+      if (values.openingPayment?.payment_type === DepositPaymentType.BankVoucher) {
+        updatedData = {
+          ...values,
+          openingPayment: {
+            ...omit(values?.openingPayment, ['cheque', 'cash']),
+            bankVoucher: { ...values.openingPayment.bankVoucher },
+          },
+        };
+      }
 
-    if (values.openingPayment?.payment_type === DepositPaymentType.BankVoucher) {
-      updatedData = omit({ ...values }, ['openingPayment.cheque', 'openingPayment.cash']);
-    }
-
-    if (values.openingPayment?.payment_type === DepositPaymentType.Cheque) {
-      updatedData = omit({ ...values }, ['openingPayment.bankVoucher', 'openingPayment.cash']);
+      if (values.openingPayment?.payment_type === DepositPaymentType.Cheque) {
+        updatedData = {
+          ...values,
+          openingPayment: {
+            ...omit(values?.openingPayment, ['cash', 'bankVoucher']),
+            cheque: { ...values.openingPayment.cheque },
+          },
+        };
+      }
+    } else {
+      updatedData = { ...omit({ ...values }, ['openingPayment']) };
     }
 
     updatedData = {
@@ -435,8 +453,11 @@ export const AccountOpenNew = () => {
                     {productType !== NatureOfDepositProduct?.Current &&
                       productType !== NatureOfDepositProduct?.Saving && <Tenure />}
                     <Divider />
-                    <Interest />
-                    <DepositFrequency />
+                    {productType !== NatureOfDepositProduct?.Current && <Interest />}
+                    {(productType === NatureOfDepositProduct?.RecurringSaving ||
+                      (productType === NatureOfDepositProduct.Saving && isMandatoryFlag)) && (
+                      <DepositFrequency />
+                    )}
                     {(productType === NatureOfDepositProduct?.TermSavingOrFd ||
                       productType === NatureOfDepositProduct?.RecurringSaving) && (
                       <Box display="flex" flexDirection="column" gap="s16">
@@ -566,10 +587,10 @@ export const AccountOpenNew = () => {
                 </Box>
               }
               isMainButtonDisabled={!!errors || !memberId || !productID || !accountName}
-              mainButtonLabel="Proceed to Payment"
-              mainButtonHandler={proceedToPaymentHandler}
+              mainButtonLabel={totalDeposit === 0 ? 'Open Account' : 'Proceed to Payment'}
+              mainButtonHandler={totalDeposit === 0 ? submitForm : proceedToPaymentHandler}
             />
-          )}{' '}
+          )}
           {mode === '1' && (
             <FormFooter
               status={<Button onClick={previousButtonHandler}> Previous</Button>}

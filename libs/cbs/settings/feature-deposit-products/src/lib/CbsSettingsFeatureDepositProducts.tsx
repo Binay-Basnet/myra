@@ -50,10 +50,7 @@ export const DepositProductTable = () => {
   const { t } = useTranslation();
   const { data, isLoading } = useGetDepositProductSettingsListQuery(
     {
-      paginate: {
-        ...getRouterQuery({ type: ['PAGINATION'], query: router.query }),
-        order: null,
-      },
+      paginate: getRouterQuery({ type: ['PAGINATION'] }),
     },
     {
       staleTime: 0,
