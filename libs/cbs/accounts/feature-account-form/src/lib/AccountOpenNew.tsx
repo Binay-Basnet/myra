@@ -242,7 +242,7 @@ export const AccountOpenNew = () => {
   const bankVoucherAmount = watch('openingPayment.bankVoucher.amount');
 
   const selectedPaymentMode = watch('openingPayment.payment_type');
-
+  const accountName = watch('accountName');
   const checkIsSubmitButtonDisabled = () => {
     if (mode === '0') {
       return false;
@@ -508,12 +508,14 @@ export const AccountOpenNew = () => {
             </form>
           </FormProvider>
           {memberId && productID && !errors && (
-            <RequiredDocuments
-              setFileList={setFileList}
-              id={id}
-              productId={productID}
-              memberId={memberId}
-            />
+            <Box display={mode === '0' ? 'flex' : 'none'} flexDirection="column">
+              <RequiredDocuments
+                setFileList={setFileList}
+                id={id}
+                productId={productID}
+                memberId={memberId}
+              />
+            </Box>
           )}
         </Box>
 
@@ -563,6 +565,7 @@ export const AccountOpenNew = () => {
                   </Text>
                 </Box>
               }
+              isMainButtonDisabled={!!errors || !memberId || !productID || !accountName}
               mainButtonLabel="Proceed to Payment"
               mainButtonHandler={proceedToPaymentHandler}
             />

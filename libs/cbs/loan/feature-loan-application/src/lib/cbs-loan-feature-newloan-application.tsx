@@ -344,7 +344,7 @@ export const NewLoanApplication = () => {
           }
           mainButtonLabel="Send For Approval"
           mainButtonHandler={sendForApprovalHandler}
-          isMainButtonDisabled={!memberId || !productId || !loanType || !loanSubType}
+          isMainButtonDisabled={!!errors || !memberId || !productId || !loanType || !loanSubType}
         />
       </Box>
     </Container>

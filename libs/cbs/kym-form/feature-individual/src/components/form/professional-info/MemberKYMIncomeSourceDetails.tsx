@@ -9,11 +9,9 @@ import {
   FormFieldSearchTerm,
   KymIndMemberInput,
   useDeleteMemberIncomeSourceMutation,
-  useGetIndividualKymEditDataQuery,
   useGetIndividualKymIncomeSourceListQuery,
   useGetIndividualKymOptionsQuery,
   useGetNewIdMutation,
-  useSetMemberDataMutation,
   useSetMemberIncomeSourceMutation,
 } from '@coop/cbs/data-access';
 import {
@@ -25,6 +23,7 @@ import { FormInput, FormRadioGroup } from '@coop/shared/form';
 import { Box, Button, FormSection, GridItem, Icon, Text } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
+import { useIndividual } from '../../hooks/useIndividual';
 import { getFieldOption } from '../../../utils/getFieldOption';
 
 // const IncomeSourceInput = ({ option, fieldIndex, optionIndex }: any) => {
@@ -180,21 +179,21 @@ export const MemberKYMIncomeSourceDetails = ({
 
   const methods = useForm<KymIndMemberInput>();
 
-  const { watch, reset } = methods;
+  useIndividual({ methods });
 
-  const { mutate } = useSetMemberDataMutation();
+  // const { mutate } = useSetMemberDataMutation();
 
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        if (id) {
-          mutate({ id: String(id), data });
-        }
-      }, 800)
-    );
+  // useEffect(() => {
+  //   const subscription = watch(
+  //     debounce((data) => {
+  //       if (id) {
+  //         mutate({ id: String(id), data });
+  //       }
+  //     }, 800)
+  //   );
 
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
+  //   return () => subscription.unsubscribe();
+  // }, [watch, router.isReady]);
 
   const { data: familyIncomeData } = useGetIndividualKymOptionsQuery({
     searchTerm: FormFieldSearchTerm.FamilyIncomeSource,
@@ -202,21 +201,21 @@ export const MemberKYMIncomeSourceDetails = ({
 
   const [incomeSourceIds, setIncomeSourceIds] = useState<string[]>([]);
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery(
-    {
-      id: String(id),
-    },
-    { enabled: !!id }
-  );
+  // const { data: editValues } = useGetIndividualKymEditDataQuery(
+  //   {
+  //     id: String(id),
+  //   },
+  //   { enabled: !!id }
+  // );
 
-  useEffect(() => {
-    if (editValues) {
-      reset({
-        annualIncomeSourceId:
-          editValues?.members?.individual?.formState?.data?.formData?.annualIncomeSourceId ?? '',
-      });
-    }
-  }, [editValues]);
+  // useEffect(() => {
+  //   if (editValues) {
+  //     reset({
+  //       annualIncomeSourceId:
+  //         editValues?.members?.individual?.formState?.data?.formData?.annualIncomeSourceId ?? '',
+  //     });
+  //   }
+  // }, [editValues]);
 
   const { data: incomeSourceListEditValues } = useGetIndividualKymIncomeSourceListQuery(
     {
