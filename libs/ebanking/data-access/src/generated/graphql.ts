@@ -55,11 +55,14 @@ export type Account = {
 
 export type AccountActivityEntry = {
   ID: Scalars['ID'];
+  agentName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['Localized']>;
   paymentMode?: Maybe<Scalars['String']>;
   processedBy?: Maybe<Scalars['String']>;
+  profilePic?: Maybe<Scalars['String']>;
+  profilePicUrl?: Maybe<Scalars['String']>;
   state: TransactionState;
 };
 
@@ -163,6 +166,7 @@ export type AccountSummary = {
 };
 
 export type AccountTransactionFilter = {
+  depositedBy?: InputMaybe<Scalars['String']>;
   from?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
   query?: InputMaybe<Scalars['String']>;
@@ -191,6 +195,11 @@ export type AccountTransferListEdges = {
 export type AccountTransferPaymentForAccountClose = {
   depositedBy: Scalars['String'];
   depositedDate: Scalars['String'];
+  destination_account: Scalars['ID'];
+  note?: InputMaybe<Scalars['String']>;
+};
+
+export type AccountTransferPaymentForAlternativeChannel = {
   destination_account: Scalars['ID'];
   note?: InputMaybe<Scalars['String']>;
 };
@@ -341,6 +350,138 @@ export enum AllModules {
   InventoryManagement = 'INVENTORY_MANAGEMENT',
   MemberAndShareManagement = 'MEMBER_AND_SHARE_MANAGEMENT',
   QualityAssuranceForNefscun = 'QUALITY_ASSURANCE_FOR_NEFSCUN',
+}
+
+export type AlternativeChannelActivation = {
+  coopConnection?: Maybe<Scalars['Boolean']>;
+  id?: Maybe<Scalars['String']>;
+  lastActive?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['Localized']>;
+  phoneNumber?: Maybe<Scalars['String']>;
+  serviceStatus?: Maybe<AlternativeChannelStatus>;
+  serviceType?: Maybe<AlternativeChannelServiceType>;
+};
+
+export type AlternativeChannelCharges = {
+  amount?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  ledgerId?: Maybe<Scalars['String']>;
+  serviceType?: Maybe<AlternativeChannelServiceType>;
+};
+
+export type AlternativeChannelChargesInput = {
+  amount?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  ledgerId?: InputMaybe<Scalars['String']>;
+  serviceType?: InputMaybe<AlternativeChannelServiceType>;
+};
+
+export type AlternativeChannelChargesRecord = {
+  data?: Maybe<Array<Maybe<AlternativeChannelCharges>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type AlternativeChannelChargesResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<Array<Maybe<AlternativeChannelCharges>>>;
+};
+
+export type AlternativeChannelConnection = {
+  edges?: Maybe<Array<Maybe<AlternativeChannelEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export enum AlternativeChannelDepositedBy {
+  Others = 'OTHERS',
+  Self = 'SELF',
+}
+
+export type AlternativeChannelEdge = {
+  cursor: Scalars['String'];
+  data?: Maybe<AlternativeChannelActivation>;
+};
+
+export type AlternativeChannelFilter = {
+  serviceType?: InputMaybe<AlternativeChannelServiceType>;
+  status?: InputMaybe<AlternativeChannelStatus>;
+};
+
+export type AlternativeChannelMemberActivations = {
+  eBanking?: Maybe<Scalars['Boolean']>;
+  mobileBanking?: Maybe<Scalars['Boolean']>;
+  smsBanking?: Maybe<Scalars['Boolean']>;
+};
+
+export type AlternativeChannelMutation = {
+  serviceActivation?: Maybe<AlternativeChannelServiceActivationResult>;
+};
+
+export type AlternativeChannelMutationServiceActivationArgs = {
+  data?: InputMaybe<AlternativeChannelServiceActivationInput>;
+};
+
+export enum AlternativeChannelPaymentMode {
+  Account = 'ACCOUNT',
+  BankVoucher = 'BANK_VOUCHER',
+  Cash = 'CASH',
+}
+
+export type AlternativeChannelQuery = {
+  list?: Maybe<AlternativeChannelConnection>;
+  memberActivations?: Maybe<AlternativeChannelMemberActivations>;
+};
+
+export type AlternativeChannelQueryListArgs = {
+  filter?: InputMaybe<AlternativeChannelFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type AlternativeChannelQueryMemberActivationsArgs = {
+  memberId: Scalars['String'];
+};
+
+export type AlternativeChannelServiceActivationInput = {
+  accountTransfer?: InputMaybe<AccountTransferPaymentForAlternativeChannel>;
+  bankCheque?: InputMaybe<BankChequePaymentForAlternativeChannel>;
+  cash?: InputMaybe<DepositCash>;
+  email?: InputMaybe<Scalars['String']>;
+  memberId?: InputMaybe<Scalars['String']>;
+  paymentMode: AlternativeChannelPaymentMode;
+  phoneNumber?: InputMaybe<Scalars['String']>;
+  pin?: InputMaybe<Scalars['Int']>;
+  service?: InputMaybe<Array<InputMaybe<AlternativeChannelServiceType>>>;
+  totalAmount?: InputMaybe<Scalars['String']>;
+};
+
+export type AlternativeChannelServiceActivationResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<AlternativeChannelQuery>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
+export enum AlternativeChannelServiceType {
+  Ebanking = 'EBANKING',
+  MobileBanking = 'MOBILE_BANKING',
+  SmsBanking = 'SMS_BANKING',
+}
+
+export type AlternativeChannelSettingsMutation = {
+  feesAndCharges?: Maybe<AlternativeChannelChargesResult>;
+};
+
+export type AlternativeChannelSettingsMutationFeesAndChargesArgs = {
+  data?: InputMaybe<Array<InputMaybe<AlternativeChannelChargesInput>>>;
+};
+
+export type AlternativeChannelSettingsQuery = {
+  feesAndCharges?: Maybe<AlternativeChannelChargesRecord>;
+};
+
+export enum AlternativeChannelStatus {
+  Active = 'ACTIVE',
+  Inactive = 'INACTIVE',
 }
 
 export type AmountLimit = {
@@ -559,6 +700,14 @@ export type BankChequePaymentForAccountClose = {
   bank: Scalars['ID'];
   cheque_no: Scalars['String'];
   note?: InputMaybe<Scalars['String']>;
+};
+
+export type BankChequePaymentForAlternativeChannel = {
+  bank: Scalars['ID'];
+  depositedBy?: InputMaybe<AlternativeChannelDepositedBy>;
+  deposited_date?: InputMaybe<Scalars['String']>;
+  note?: InputMaybe<Scalars['String']>;
+  voucher_id: Scalars['String'];
 };
 
 export type BankDataMutation = {
@@ -1341,7 +1490,10 @@ export type CooperativeEconomicDetails = {
 
 export type CooperativeInformation = {
   id: Scalars['ID'];
+  logoId?: Maybe<Scalars['String']>;
+  logoUrl?: Maybe<Scalars['String']>;
   mobileNo?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export type CooperativeMember = {
@@ -1708,9 +1860,11 @@ export type DepositAccount = Base & {
   balance?: Maybe<Scalars['String']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
-  fine?: Maybe<Scalars['String']>;
+  dues?: Maybe<Dues>;
+  guaranteedAmount?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   installmentAmount?: Maybe<Scalars['String']>;
+  interestAccured?: Maybe<Scalars['String']>;
   lastTransactionDate?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   modifiedAt: Scalars['Time'];
@@ -1766,8 +1920,8 @@ export type DepositCheque = {
   accId: Scalars['String'];
   amount: Scalars['String'];
   chequeNo: Scalars['String'];
-  depositedAt: Scalars['String'];
-  depositedBy: Scalars['String'];
+  isDifferentMember?: InputMaybe<Scalars['Boolean']>;
+  memberId?: InputMaybe<Scalars['String']>;
 };
 
 export enum DepositFrequency {
@@ -1778,16 +1932,16 @@ export enum DepositFrequency {
 }
 
 export type DepositInput = {
-  accountId: Scalars['String'];
+  accountId?: InputMaybe<Scalars['String']>;
   agentId?: InputMaybe<Scalars['String']>;
-  amount: Scalars['String'];
+  amount?: InputMaybe<Scalars['String']>;
   bankVoucher?: InputMaybe<DepositBankVoucher>;
   cash?: InputMaybe<DepositCash>;
   cheque?: InputMaybe<DepositCheque>;
   depositedBy: DepositedBy;
   doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   fine?: InputMaybe<Scalars['String']>;
-  memberId: Scalars['String'];
+  memberId?: InputMaybe<Scalars['String']>;
   noOfInstallments?: InputMaybe<Scalars['Int']>;
   notes?: InputMaybe<Scalars['String']>;
   other_doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -1795,7 +1949,7 @@ export type DepositInput = {
   payment_type: DepositPaymentType;
   rebate?: InputMaybe<Scalars['String']>;
   sourceOfFund?: InputMaybe<Scalars['String']>;
-  voucherId: Scalars['String'];
+  voucherId?: InputMaybe<Scalars['String']>;
 };
 
 export type DepositIro = {
@@ -1846,6 +2000,7 @@ export type DepositLoanAccount = Base & {
   depositFrequencyWeekly?: Maybe<Week>;
   depositFrequencyYearlyDay?: Maybe<Scalars['Int']>;
   depositFrequencyYearlyMonth?: Maybe<Months>;
+  dues?: Maybe<Dues>;
   eBanking?: Maybe<Scalars['Boolean']>;
   id: Scalars['ID'];
   initialDepositAmount?: Maybe<Scalars['Amount']>;
@@ -1907,6 +2062,7 @@ export type DepositLoanAccountInput = {
   memberId: Scalars['ID'];
   minor?: InputMaybe<Scalars['String']>;
   mobileBanking?: InputMaybe<Scalars['Boolean']>;
+  openingPayment?: InputMaybe<DepositInput>;
   productId: Scalars['ID'];
   serviceCharge?: InputMaybe<Array<InputMaybe<ServiceChargeInput>>>;
   smsBanking?: InputMaybe<Scalars['Boolean']>;
@@ -2432,6 +2588,12 @@ export type DormantSetupFormState = {
   duration?: Maybe<Scalars['String']>;
 };
 
+export type Dues = {
+  dueInstallments?: Maybe<Scalars['Int']>;
+  fine?: Maybe<Scalars['String']>;
+  totalDue?: Maybe<Scalars['String']>;
+};
+
 export type EBankingAccountQuery = {
   get?: Maybe<Account>;
   list?: Maybe<AccountConnection>;
@@ -2502,6 +2664,7 @@ export type EBankingAuthMutation = {
   getNewToken?: Maybe<AuthTokenResult>;
   login?: Maybe<EbankingLoginResult>;
   loginToCooperative?: Maybe<EbankingCooperativeLoginResult>;
+  requestSource?: Maybe<RequestSource>;
   resendOtp?: Maybe<EbankingOtpResult>;
   setNewPin?: Maybe<EbankingUserResult>;
   setPassword?: Maybe<EbankingPasswordResult>;
@@ -2512,6 +2675,7 @@ export type EBankingAuthMutation = {
 export type EBankingAuthMutationCheckAccountArgs = {
   coopId: Scalars['ID'];
   mobileNumber: Scalars['String'];
+  pin: Scalars['Int'];
 };
 
 export type EBankingAuthMutationGetNewTokenArgs = {
@@ -2525,6 +2689,7 @@ export type EBankingAuthMutationLoginArgs = {
 
 export type EBankingAuthMutationLoginToCooperativeArgs = {
   cooperativeId: Scalars['ID'];
+  mobileNumber: Scalars['String'];
   pinCode?: InputMaybe<Scalars['Int']>;
 };
 
@@ -3093,6 +3258,10 @@ export type EBankingMutation = {
   utilityPayment: UtilityPayemntMutation;
 };
 
+export type EBankingMutationAuthArgs = {
+  type?: InputMaybe<RequestSource>;
+};
+
 export type EBankingNotificationQuery = {
   announcements?: Maybe<EBankingAnnouncementQuery>;
   appNotifications?: Maybe<EBankingAppNotificationQuery>;
@@ -3157,7 +3326,7 @@ export type EBankingTransactionQueryRecentArgs = {
 
 export type EbankingAccountExistsResult = {
   error?: Maybe<MutationError>;
-  record?: Maybe<EbankingAccountRecord>;
+  record?: Maybe<EbankingUser>;
   success?: Maybe<Scalars['Boolean']>;
 };
 
@@ -3909,8 +4078,27 @@ export type GeneralBranchSettingsQueryListArgs = {
   paginate?: InputMaybe<Pagination>;
 };
 
+export type GeneralMemberData = {
+  charge?: Maybe<Array<Maybe<MemberChargeData>>>;
+  memberType?: Maybe<MemberActiveData>;
+  risk?: Maybe<MemberRiskData>;
+};
+
+export type GeneralMemberInput = {
+  charge?: InputMaybe<Array<InputMaybe<MemberChargeInput>>>;
+  memberType?: InputMaybe<MemberActiveInput>;
+  risk?: InputMaybe<MemberRiskInput>;
+};
+
+export type GeneralMemberResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<GeneralMemberData>;
+  recordId: Scalars['ID'];
+};
+
 export type GeneralSettingsMutation = {
   KYM?: Maybe<KymMutation>;
+  alternativeChannel?: Maybe<AlternativeChannelSettingsMutation>;
   branch?: Maybe<GeneralBranchSettingsMutation>;
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsMutation>;
   deposit?: Maybe<DepositSettingsMutation>;
@@ -3924,6 +4112,7 @@ export type GeneralSettingsMutation = {
 
 export type GeneralSettingsQuery = {
   KYM?: Maybe<KymQuery>;
+  alternativeChannel?: Maybe<AlternativeChannelSettingsQuery>;
   branch?: Maybe<GeneralBranchSettingsQuery>;
   chartsOfAccount?: Maybe<ChartsOfAccountSettingsQuery>;
   deposit?: Maybe<DepositSettingsQuery>;
@@ -3933,6 +4122,22 @@ export type GeneralSettingsQuery = {
   organization?: Maybe<OrganizationSettingsQuery>;
   share?: Maybe<ShareSettingsQuery>;
   valuator?: Maybe<ValuatorSettingsQuery>;
+};
+
+export enum GlobalPagesIconType {
+  Add = 'ADD',
+  List = 'LIST',
+  Profile = 'PROFILE',
+  Reports = 'REPORTS',
+  Settings = 'SETTINGS',
+}
+
+export type GlobalPagesResultNode = {
+  fullCode?: Maybe<Scalars['String']>;
+  hasParam?: Maybe<Scalars['Boolean']>;
+  iconType?: Maybe<GlobalPagesIconType>;
+  page?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
 };
 
 export enum GracePeriod {
@@ -4493,30 +4698,6 @@ export type KymAddressInput = {
   wardNo?: InputMaybe<Scalars['Int']>;
 };
 
-export type KymAllowed = {
-  allowed: Scalars['Boolean'];
-  id: Scalars['ID'];
-  name: Scalars['String'];
-};
-
-export type KymAllowedError = KymAllowedInvalidDataError;
-
-export type KymAllowedInput = {
-  allowed: Scalars['Boolean'];
-  id: Scalars['ID'];
-};
-
-export type KymAllowedInvalidDataError = {
-  error?: Maybe<Scalars['InvalidData']>;
-};
-
-export type KymAllowedResult = {
-  error?: Maybe<KymAllowedError>;
-  query?: Maybe<KymQuery>;
-  record?: Maybe<KymAllowed>;
-  recordId: Scalars['ID'];
-};
-
 export type KymDeclaration = Base & {
   content: Scalars['Localized'];
   createdAt: Scalars['Time'];
@@ -4588,26 +4769,15 @@ export type KymFieldInputData = {
 };
 
 export type KymGeneralSettingsMutation = {
-  addRiskLevel: KymMemberRiskResult;
-  switchAllowed: KymAllowedResult;
-  updateRiskLevel: KymMemberRiskResult;
+  generalMember?: Maybe<GeneralMemberResult>;
 };
 
-export type KymGeneralSettingsMutationAddRiskLevelArgs = {
-  data: KymMemberRiskInput;
-};
-
-export type KymGeneralSettingsMutationSwitchAllowedArgs = {
-  input: KymAllowedInput;
-};
-
-export type KymGeneralSettingsMutationUpdateRiskLevelArgs = {
-  data: KymMemberRiskInput;
+export type KymGeneralSettingsMutationGeneralMemberArgs = {
+  data: GeneralMemberInput;
 };
 
 export type KymGeneralSettingsQuery = {
-  allowed: Array<KymAllowed>;
-  riskLevel: Array<Maybe<KymMemberRisk>>;
+  generalMember?: Maybe<GeneralMemberResult>;
 };
 
 export type KymIndBasicInformation = {
@@ -4873,31 +5043,6 @@ export type KymIndRentedHouse = {
 export type KymIndTemporaryAddress = {
   address?: Maybe<KymAddress>;
   sameTempAsPermanentAddress?: Maybe<Scalars['Boolean']>;
-};
-
-export type KymMemberRisk = {
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  years: Scalars['Float'];
-};
-
-export type KymMemberRiskError = KymMemberRiskInvalidDataError;
-
-export type KymMemberRiskInput = {
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  years: Scalars['Float'];
-};
-
-export type KymMemberRiskInvalidDataError = {
-  error?: Maybe<Scalars['InvalidData']>;
-};
-
-export type KymMemberRiskResult = {
-  error?: Maybe<KymMemberRiskError>;
-  query?: Maybe<KymQuery>;
-  record?: Maybe<KymMemberRisk>;
-  recordId: Scalars['ID'];
 };
 
 export type KymMutation = {
@@ -7418,6 +7563,32 @@ export type Member = Base & {
   type: KymMemberTypesEnum;
 };
 
+export type MemberActiveData = {
+  cooperative?: Maybe<Scalars['Boolean']>;
+  cooperativeUnion?: Maybe<Scalars['Boolean']>;
+  individual?: Maybe<Scalars['Boolean']>;
+  institution?: Maybe<Scalars['Boolean']>;
+};
+
+export type MemberActiveInput = {
+  cooperative?: InputMaybe<Scalars['Boolean']>;
+  cooperativeUnion?: InputMaybe<Scalars['Boolean']>;
+  individual?: InputMaybe<Scalars['Boolean']>;
+  institution?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type MemberChargeData = {
+  charge: Scalars['Int'];
+  ledgerId: Scalars['ID'];
+  memberType: KymMemberTypesEnum;
+};
+
+export type MemberChargeInput = {
+  charge: Scalars['Int'];
+  ledgerId: Scalars['ID'];
+  memberType: KymMemberTypesEnum;
+};
+
 export type MemberDetailsResult = {
   data?: Maybe<Member>;
 };
@@ -7520,6 +7691,18 @@ export type MemberQueryTranslateArgs = {
   id: Scalars['ID'];
 };
 
+export type MemberRiskData = {
+  generalRisk?: Maybe<Scalars['Int']>;
+  highRisk?: Maybe<Scalars['Int']>;
+  mediumRisk?: Maybe<Scalars['Int']>;
+};
+
+export type MemberRiskInput = {
+  generalRisk?: InputMaybe<Scalars['Int']>;
+  highRisk?: InputMaybe<Scalars['Int']>;
+  mediumRisk?: InputMaybe<Scalars['Int']>;
+};
+
 export type MemberShare = {
   history?: Maybe<Array<Maybe<ShareRegister>>>;
   summary?: Maybe<ShareBalance>;
@@ -7591,6 +7774,7 @@ export type Municipality = {
 
 export type Mutation = {
   account: DepositLoanAccountMutation;
+  alternativeChannel?: Maybe<AlternativeChannelMutation>;
   auth: AuthMutation;
   bank: BankMutation;
   document: DocumentMutation;
@@ -8464,6 +8648,7 @@ export type QuarterlyDividendRateInput = {
 export type Query = {
   account: DepositLoanAccountQuery;
   administration: AdministrationQuery;
+  alternativeChannel: AlternativeChannelQuery;
   auditLog: AuditLogQuery;
   auth: AuthQuery;
   bank: BankQuery;
@@ -8479,6 +8664,7 @@ export type Query = {
   neosys: NeosysQuery;
   report: ReportQuery;
   routesAndCodes: RoutesAndCodesQuery;
+  search: SearchQuery;
   settings: SettingsQuery;
   share: ShareQuery;
   transaction: TransactionQuery;
@@ -8602,6 +8788,11 @@ export type ReportResult = {
   statement?: Maybe<StatementReport>;
 };
 
+export enum RequestSource {
+  Ebanking = 'EBANKING',
+  MobileBanking = 'MOBILE_BANKING',
+}
+
 export type ResetPasswordData = {
   newPassword: Scalars['String'];
   userId: Scalars['String'];
@@ -8712,6 +8903,41 @@ export enum SavingTransactionType {
   Deposit = 'DEPOSIT',
   Withdraw = 'WITHDRAW',
 }
+
+export type SearchFilterData = {
+  filterMode?: InputMaybe<Filter_Mode>;
+  id?: InputMaybe<Scalars['ID']>;
+  objState?: InputMaybe<ObjState>;
+  page?: InputMaybe<Scalars['String']>;
+  query?: InputMaybe<Scalars['String']>;
+};
+
+export type SearchListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<SearchResultNode>;
+};
+
+export type SearchQuery = {
+  globalPages: SearchQueryResult;
+};
+
+export type SearchQueryGlobalPagesArgs = {
+  filter?: InputMaybe<SearchFilterData>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type SearchQueryResult = {
+  data?: Maybe<SearchQueryResultData>;
+  error?: Maybe<QueryError>;
+};
+
+export type SearchQueryResultData = {
+  edges?: Maybe<Array<Maybe<SearchListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SearchResultNode = GlobalPagesResultNode;
 
 export type SectionDetailsFilter = {
   id: Scalars['ID'];
@@ -9316,6 +9542,7 @@ export type TransactionMutation = {
   agentTodayList?: Maybe<AgentTodayListResult>;
   bulkDeposit: BulkDepositResult;
   deposit: DepositResult;
+  endOfDay?: Maybe<Scalars['String']>;
   transfer: TransferResult;
   withdraw: WithdrawResult;
 };
@@ -9355,6 +9582,7 @@ export type TransactionMutationWithdrawArgs = {
 export type TransactionQuery = {
   agentDetail?: Maybe<AgentRecord>;
   assignedMemberList: AssignedMembersListConnection;
+  endOfDayDate: Scalars['String'];
   listAgent: AccountAgentListConnection;
   listAgentTask?: Maybe<AgentTodayListData>;
   listDeposit: AccountActivityListConnection;
@@ -9872,6 +10100,25 @@ export type SetAgentTodayListDataMutationVariables = Exact<{
 export type SetAgentTodayListDataMutation = {
   transaction: {
     agentTodayList?: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
+export type SetAgentTodayDepositDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>> | InputMaybe<AgentTodayListInput>>;
+}>;
+
+export type SetAgentTodayDepositDataMutation = {
+  transaction: {
+    agentTodayDeposit?: {
       error?:
         | MutationError_AuthorizationError_Fragment
         | MutationError_BadRequestError_Fragment
@@ -10464,6 +10711,55 @@ export type SaveNewReportMutation = {
   };
 };
 
+export type SaveAlternativeChargesMutationVariables = Exact<{
+  data?: InputMaybe<
+    Array<InputMaybe<AlternativeChannelChargesInput>> | InputMaybe<AlternativeChannelChargesInput>
+  >;
+}>;
+
+export type SaveAlternativeChargesMutation = {
+  settings: {
+    general?: {
+      alternativeChannel?: {
+        feesAndCharges?: {
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+          record?: Array<{
+            id?: string | null;
+            amount?: string | null;
+            ledgerId?: string | null;
+            serviceType?: AlternativeChannelServiceType | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type ActivateServiceMutationVariables = Exact<{
+  data?: InputMaybe<AlternativeChannelServiceActivationInput>;
+}>;
+
+export type ActivateServiceMutation = {
+  alternativeChannel?: {
+    serviceActivation?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  } | null;
+};
+
 export type SetBranchDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: BranchInput;
@@ -10683,6 +10979,31 @@ export type SetProductTypeMutation = {
             | MutationError_ServerError_Fragment
             | MutationError_ValidationError_Fragment
             | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type AddGeneralMemberMutationVariables = Exact<{
+  data: GeneralMemberInput;
+}>;
+
+export type AddGeneralMemberMutation = {
+  settings: {
+    general?: {
+      KYM?: {
+        general?: {
+          generalMember?: {
+            recordId: string;
+            error?:
+              | MutationError_AuthorizationError_Fragment
+              | MutationError_BadRequestError_Fragment
+              | MutationError_NotFoundError_Fragment
+              | MutationError_ServerError_Fragment
+              | MutationError_ValidationError_Fragment
+              | null;
+          } | null;
         } | null;
       } | null;
     } | null;
@@ -11293,6 +11614,10 @@ export type SetAccountForgiveInstallmentDataMutation = {
   account: { forgiveInstallment?: { recordId: string } | null };
 };
 
+export type SetEndOfDayDataMutationVariables = Exact<{ [key: string]: never }>;
+
+export type SetEndOfDayDataMutation = { transaction: { endOfDay?: string | null } };
+
 export type GetAccountMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
   pagination?: InputMaybe<Pagination>;
@@ -11541,7 +11866,6 @@ export type GetAccountTableListQuery = {
           lastTransactionDate?: string | null;
           accountExpiryDate?: string | null;
           overDrawnBalance?: string | null;
-          fine?: string | null;
           createdBy: { id: string };
           modifiedBy: { id: string };
           member?: {
@@ -11567,6 +11891,11 @@ export type GetAccountTableListQuery = {
             minimumBalance?: string | null;
             isMandatorySaving?: boolean | null;
           };
+          dues?: {
+            fine?: string | null;
+            totalDue?: string | null;
+            dueInstallments?: number | null;
+          } | null;
         } | null;
       }> | null;
     } | null;
@@ -11751,7 +12080,7 @@ export type GetAgentAssignedMemberListDataQuery = {
           id: string;
           assignedDate?: string | null;
           member?: { id: string; name?: Record<'local' | 'en' | 'np', string> | null } | null;
-          account?: { id: string } | null;
+          account?: { id: string; dues?: { totalDue?: string | null } | null } | null;
           product?: { productName: string } | null;
         } | null;
       } | null> | null;
@@ -14098,6 +14427,82 @@ export type GetShareStatementQuery = {
   };
 };
 
+export type GetAlternativeFeeAndChargesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAlternativeFeeAndChargesQuery = {
+  settings: {
+    general?: {
+      alternativeChannel?: {
+        feesAndCharges?: {
+          data?: Array<{
+            id?: string | null;
+            serviceType?: AlternativeChannelServiceType | null;
+            ledgerId?: string | null;
+            amount?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetActivatedServiceQueryVariables = Exact<{
+  memberId: Scalars['String'];
+}>;
+
+export type GetActivatedServiceQuery = {
+  alternativeChannel: {
+    memberActivations?: {
+      eBanking?: boolean | null;
+      mobileBanking?: boolean | null;
+      smsBanking?: boolean | null;
+    } | null;
+  };
+};
+
+export type GetAlternativeChannelListQueryVariables = Exact<{
+  filter?: InputMaybe<AlternativeChannelFilter>;
+  paginate?: InputMaybe<Pagination>;
+}>;
+
+export type GetAlternativeChannelListQuery = {
+  alternativeChannel: {
+    list?: {
+      totalCount: number;
+      pageInfo?: PaginationFragment | null;
+      edges?: Array<{
+        cursor: string;
+        data?: {
+          id?: string | null;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          memberId?: string | null;
+          coopConnection?: boolean | null;
+          lastActive?: string | null;
+          phoneNumber?: string | null;
+          serviceStatus?: AlternativeChannelStatus | null;
+          serviceType?: AlternativeChannelServiceType | null;
+        } | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
+export type GetAcFeeCoaQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAcFeeCoaQuery = {
+  settings: {
+    chartsOfAccount?: {
+      accountsUnder?: {
+        data?: Array<{
+          id: string;
+          accountCode: string;
+          name: Record<'local' | 'en' | 'np', string>;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetAuditLogListQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAuditLogListQuery = {
@@ -14552,6 +14957,39 @@ export type GetLoanProductTypeQuery = {
   };
 };
 
+export type GetGeneralMemberSettingsDataQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetGeneralMemberSettingsDataQuery = {
+  settings: {
+    general?: {
+      KYM?: {
+        general?: {
+          generalMember?: {
+            record?: {
+              memberType?: {
+                individual?: boolean | null;
+                institution?: boolean | null;
+                cooperative?: boolean | null;
+                cooperativeUnion?: boolean | null;
+              } | null;
+              risk?: {
+                generalRisk?: number | null;
+                mediumRisk?: number | null;
+                highRisk?: number | null;
+              } | null;
+              charge?: Array<{
+                memberType: KymMemberTypesEnum;
+                ledgerId: string;
+                charge: number;
+              } | null> | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetPreDefinedFieldsQueryVariables = Exact<{
   filter: PredefinedElementFilter;
 }>;
@@ -14801,6 +15239,7 @@ export type GetDepositProductSettingsEditDataQuery = {
             postingFrequency?: DepositFrequency | null;
             maxPostingFreqDifference?: number | null;
             accountType?: DefaultAccountType | null;
+            isMandatorySaving?: boolean | null;
             autoOpen?: boolean | null;
             allowLoan?: boolean | null;
             percentageOfDeposit?: number | null;
@@ -15376,6 +15815,7 @@ export type GetDepositListDataQuery = {
           paymentMode?: string | null;
           processedBy?: string | null;
           date?: string | null;
+          agentName?: string | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -15472,6 +15912,10 @@ export type GetInstallmentsListDataQuery = {
   };
 };
 
+export type GetEndOfDayDateDataQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetEndOfDayDateDataQuery = { transaction: { endOfDayDate: string } };
+
 export type SignUpMutationVariables = Exact<{
   mobileNo: Scalars['String'];
 }>;
@@ -15551,7 +15995,12 @@ export type EBankingLoginMutation = {
             dob?: string | null;
             mobile?: string | null;
             name?: string | null;
-            cooperatives?: Array<{ id: string; mobileNo?: string | null } | null> | null;
+            cooperatives?: Array<{
+              id: string;
+              name?: string | null;
+              logoUrl?: string | null;
+              mobileNo?: string | null;
+            } | null> | null;
           } | null;
           token: { access: string; refresh: string };
         } | null;
@@ -15570,6 +16019,7 @@ export type EBankingLoginMutation = {
 export type CheckAccountMutationVariables = Exact<{
   id: Scalars['ID'];
   mobileNumber: Scalars['String'];
+  pin: Scalars['Int'];
 }>;
 
 export type CheckAccountMutation = {
@@ -15584,7 +16034,6 @@ export type CheckAccountMutation = {
           | MutationError_ServerError_Fragment
           | MutationError_ValidationError_Fragment
           | null;
-        record?: { fullName?: string | null; memberId?: string | null } | null;
       } | null;
     } | null;
   };
@@ -15643,6 +16092,7 @@ export type SetNewPinMutation = {
 export type LoginToCooperativeMutationVariables = Exact<{
   cooperativeId: Scalars['ID'];
   pinCode?: InputMaybe<Scalars['Int']>;
+  mobileNumber: Scalars['String'];
 }>;
 
 export type LoginToCooperativeMutation = {
@@ -15698,7 +16148,12 @@ export type GetMyraMeQuery = {
           name?: string | null;
           mobile?: string | null;
           dob?: string | null;
-          cooperatives?: Array<{ id: string; mobileNo?: string | null } | null> | null;
+          cooperatives?: Array<{
+            id: string;
+            name?: string | null;
+            logoUrl?: string | null;
+            mobileNo?: string | null;
+          } | null> | null;
         } | null;
       } | null;
     } | null;
@@ -16436,6 +16891,37 @@ export const useSetAgentTodayListDataMutation = <TError = unknown, TContext = un
     ['setAgentTodayListData'],
     useAxios<SetAgentTodayListDataMutation, SetAgentTodayListDataMutationVariables>(
       SetAgentTodayListDataDocument
+    ),
+    options
+  );
+export const SetAgentTodayDepositDataDocument = `
+    mutation setAgentTodayDepositData($id: ID!, $data: [AgentTodayListInput]) {
+  transaction {
+    agentTodayDeposit(agentID: $id, data: $data) {
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetAgentTodayDepositDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAgentTodayDepositDataMutation,
+    TError,
+    SetAgentTodayDepositDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAgentTodayDepositDataMutation,
+    TError,
+    SetAgentTodayDepositDataMutationVariables,
+    TContext
+  >(
+    ['setAgentTodayDepositData'],
+    useAxios<SetAgentTodayDepositDataMutation, SetAgentTodayDepositDataMutationVariables>(
+      SetAgentTodayDepositDataDocument
     ),
     options
   );
@@ -17660,6 +18146,72 @@ export const useSaveNewReportMutation = <TError = unknown, TContext = unknown>(
     useAxios<SaveNewReportMutation, SaveNewReportMutationVariables>(SaveNewReportDocument),
     options
   );
+export const SaveAlternativeChargesDocument = `
+    mutation saveAlternativeCharges($data: [AlternativeChannelChargesInput]) {
+  settings {
+    general {
+      alternativeChannel {
+        feesAndCharges(data: $data) {
+          error {
+            ...MutationError
+          }
+          record {
+            id
+            amount
+            ledgerId
+            serviceType
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSaveAlternativeChargesMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SaveAlternativeChargesMutation,
+    TError,
+    SaveAlternativeChargesMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SaveAlternativeChargesMutation,
+    TError,
+    SaveAlternativeChargesMutationVariables,
+    TContext
+  >(
+    ['saveAlternativeCharges'],
+    useAxios<SaveAlternativeChargesMutation, SaveAlternativeChargesMutationVariables>(
+      SaveAlternativeChargesDocument
+    ),
+    options
+  );
+export const ActivateServiceDocument = `
+    mutation activateService($data: AlternativeChannelServiceActivationInput) {
+  alternativeChannel {
+    serviceActivation(data: $data) {
+      error {
+        ...MutationError
+      }
+      recordId
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useActivateServiceMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ActivateServiceMutation,
+    TError,
+    ActivateServiceMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ActivateServiceMutation, TError, ActivateServiceMutationVariables, TContext>(
+    ['activateService'],
+    useAxios<ActivateServiceMutation, ActivateServiceMutationVariables>(ActivateServiceDocument),
+    options
+  );
 export const SetBranchDataDocument = `
     mutation setBranchData($id: ID!, $data: BranchInput!) {
   settings {
@@ -17942,6 +18494,37 @@ export const useSetProductTypeMutation = <TError = unknown, TContext = unknown>(
   useMutation<SetProductTypeMutation, TError, SetProductTypeMutationVariables, TContext>(
     ['setProductType'],
     useAxios<SetProductTypeMutation, SetProductTypeMutationVariables>(SetProductTypeDocument),
+    options
+  );
+export const AddGeneralMemberDocument = `
+    mutation addGeneralMember($data: GeneralMemberInput!) {
+  settings {
+    general {
+      KYM {
+        general {
+          generalMember(data: $data) {
+            recordId
+            error {
+              ...MutationError
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddGeneralMemberMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddGeneralMemberMutation,
+    TError,
+    AddGeneralMemberMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddGeneralMemberMutation, TError, AddGeneralMemberMutationVariables, TContext>(
+    ['addGeneralMember'],
+    useAxios<AddGeneralMemberMutation, AddGeneralMemberMutationVariables>(AddGeneralMemberDocument),
     options
   );
 export const UpsertNewOptionDocument = `
@@ -18930,6 +19513,26 @@ export const useSetAccountForgiveInstallmentDataMutation = <TError = unknown, TC
     >(SetAccountForgiveInstallmentDataDocument),
     options
   );
+export const SetEndOfDayDataDocument = `
+    mutation setEndOfDayData {
+  transaction {
+    endOfDay
+  }
+}
+    `;
+export const useSetEndOfDayDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEndOfDayDataMutation,
+    TError,
+    SetEndOfDayDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetEndOfDayDataMutation, TError, SetEndOfDayDataMutationVariables, TContext>(
+    ['setEndOfDayData'],
+    useAxios<SetEndOfDayDataMutation, SetEndOfDayDataMutationVariables>(SetEndOfDayDataDocument),
+    options
+  );
 export const GetAccountMemberListDocument = `
     query getAccountMemberList($objState: ObjState, $pagination: Pagination) {
   members {
@@ -19266,7 +19869,11 @@ export const GetAccountTableListDocument = `
             minimumBalance
             isMandatorySaving
           }
-          fine
+          dues {
+            fine
+            totalDue
+            dueInstallments
+          }
         }
       }
     }
@@ -19538,6 +20145,9 @@ export const GetAgentAssignedMemberListDataDocument = `
           }
           account {
             id
+            dues {
+              totalDue
+            }
           }
           product {
             productName
@@ -22574,6 +23184,130 @@ export const useGetShareStatementQuery = <TData = GetShareStatementQuery, TError
     ).bind(null, variables),
     options
   );
+export const GetAlternativeFeeAndChargesDocument = `
+    query getAlternativeFeeAndCharges {
+  settings {
+    general {
+      alternativeChannel {
+        feesAndCharges {
+          data {
+            id
+            serviceType
+            ledgerId
+            amount
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAlternativeFeeAndChargesQuery = <
+  TData = GetAlternativeFeeAndChargesQuery,
+  TError = unknown
+>(
+  variables?: GetAlternativeFeeAndChargesQueryVariables,
+  options?: UseQueryOptions<GetAlternativeFeeAndChargesQuery, TError, TData>
+) =>
+  useQuery<GetAlternativeFeeAndChargesQuery, TError, TData>(
+    variables === undefined
+      ? ['getAlternativeFeeAndCharges']
+      : ['getAlternativeFeeAndCharges', variables],
+    useAxios<GetAlternativeFeeAndChargesQuery, GetAlternativeFeeAndChargesQueryVariables>(
+      GetAlternativeFeeAndChargesDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetActivatedServiceDocument = `
+    query getActivatedService($memberId: String!) {
+  alternativeChannel {
+    memberActivations(memberId: $memberId) {
+      eBanking
+      mobileBanking
+      smsBanking
+    }
+  }
+}
+    `;
+export const useGetActivatedServiceQuery = <TData = GetActivatedServiceQuery, TError = unknown>(
+  variables: GetActivatedServiceQueryVariables,
+  options?: UseQueryOptions<GetActivatedServiceQuery, TError, TData>
+) =>
+  useQuery<GetActivatedServiceQuery, TError, TData>(
+    ['getActivatedService', variables],
+    useAxios<GetActivatedServiceQuery, GetActivatedServiceQueryVariables>(
+      GetActivatedServiceDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAlternativeChannelListDocument = `
+    query getAlternativeChannelList($filter: AlternativeChannelFilter, $paginate: Pagination) {
+  alternativeChannel {
+    list(filter: $filter, paginate: $paginate) {
+      totalCount
+      pageInfo {
+        ...Pagination
+      }
+      edges {
+        cursor
+        data {
+          id
+          name
+          memberId
+          coopConnection
+          lastActive
+          phoneNumber
+          serviceStatus
+          serviceType
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetAlternativeChannelListQuery = <
+  TData = GetAlternativeChannelListQuery,
+  TError = unknown
+>(
+  variables?: GetAlternativeChannelListQueryVariables,
+  options?: UseQueryOptions<GetAlternativeChannelListQuery, TError, TData>
+) =>
+  useQuery<GetAlternativeChannelListQuery, TError, TData>(
+    variables === undefined
+      ? ['getAlternativeChannelList']
+      : ['getAlternativeChannelList', variables],
+    useAxios<GetAlternativeChannelListQuery, GetAlternativeChannelListQueryVariables>(
+      GetAlternativeChannelListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAcFeeCoaDocument = `
+    query getACFeeCOA {
+  settings {
+    chartsOfAccount {
+      accountsUnder(accountCode: ["160.6", "160.8"]) {
+        data {
+          id
+          accountCode
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAcFeeCoaQuery = <TData = GetAcFeeCoaQuery, TError = unknown>(
+  variables?: GetAcFeeCoaQueryVariables,
+  options?: UseQueryOptions<GetAcFeeCoaQuery, TError, TData>
+) =>
+  useQuery<GetAcFeeCoaQuery, TError, TData>(
+    variables === undefined ? ['getACFeeCOA'] : ['getACFeeCOA', variables],
+    useAxios<GetAcFeeCoaQuery, GetAcFeeCoaQueryVariables>(GetAcFeeCoaDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetAuditLogListDocument = `
     query getAuditLogList {
   auditLog {
@@ -23175,6 +23909,54 @@ export const useGetLoanProductTypeQuery = <TData = GetLoanProductTypeQuery, TErr
     ).bind(null, variables),
     options
   );
+export const GetGeneralMemberSettingsDataDocument = `
+    query getGeneralMemberSettingsData {
+  settings {
+    general {
+      KYM {
+        general {
+          generalMember {
+            record {
+              memberType {
+                individual
+                institution
+                cooperative
+                cooperativeUnion
+              }
+              risk {
+                generalRisk
+                mediumRisk
+                highRisk
+              }
+              charge {
+                memberType
+                ledgerId
+                charge
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetGeneralMemberSettingsDataQuery = <
+  TData = GetGeneralMemberSettingsDataQuery,
+  TError = unknown
+>(
+  variables?: GetGeneralMemberSettingsDataQueryVariables,
+  options?: UseQueryOptions<GetGeneralMemberSettingsDataQuery, TError, TData>
+) =>
+  useQuery<GetGeneralMemberSettingsDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getGeneralMemberSettingsData']
+      : ['getGeneralMemberSettingsData', variables],
+    useAxios<GetGeneralMemberSettingsDataQuery, GetGeneralMemberSettingsDataQueryVariables>(
+      GetGeneralMemberSettingsDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetPreDefinedFieldsDocument = `
     query getPreDefinedFields($filter: PredefinedElementFilter!) {
   settings {
@@ -23572,6 +24354,7 @@ export const GetDepositProductSettingsEditDataDocument = `
               penaltyAmount
               penaltyRate
             }
+            isMandatorySaving
             autoOpen
             allowLoan
             percentageOfDeposit
@@ -24322,6 +25105,7 @@ export const GetDepositListDataDocument = `
           paymentMode
           processedBy
           date
+          agentName
         }
         cursor
       }
@@ -24457,10 +25241,28 @@ export const useGetInstallmentsListDataQuery = <
     ).bind(null, variables),
     options
   );
+export const GetEndOfDayDateDataDocument = `
+    query getEndOfDayDateData {
+  transaction {
+    endOfDayDate
+  }
+}
+    `;
+export const useGetEndOfDayDateDataQuery = <TData = GetEndOfDayDateDataQuery, TError = unknown>(
+  variables?: GetEndOfDayDateDataQueryVariables,
+  options?: UseQueryOptions<GetEndOfDayDateDataQuery, TError, TData>
+) =>
+  useQuery<GetEndOfDayDateDataQuery, TError, TData>(
+    variables === undefined ? ['getEndOfDayDateData'] : ['getEndOfDayDateData', variables],
+    useAxios<GetEndOfDayDateDataQuery, GetEndOfDayDateDataQueryVariables>(
+      GetEndOfDayDateDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const SignUpDocument = `
     mutation signUp($mobileNo: String!) {
   eBanking {
-    auth {
+    auth(type: EBANKING) {
       signUp(mobileNo: $mobileNo) {
         error {
           ...MutationError
@@ -24482,7 +25284,7 @@ export const useSignUpMutation = <TError = unknown, TContext = unknown>(
 export const VerifyOtpDocument = `
     mutation verifyOTP($data: EbankingOtpInput!) {
   eBanking {
-    auth {
+    auth(type: EBANKING) {
       verifyOtp(data: $data) {
         error {
           ...MutationError
@@ -24504,7 +25306,7 @@ export const useVerifyOtpMutation = <TError = unknown, TContext = unknown>(
 export const SetPasswordDocument = `
     mutation setPassword($data: EbankingPasswordInput!, $userId: ID!) {
   eBanking {
-    auth {
+    auth(type: EBANKING) {
       setPassword(data: $data, userID: $userId) {
         error {
           ...MutationError
@@ -24526,7 +25328,7 @@ export const useSetPasswordMutation = <TError = unknown, TContext = unknown>(
 export const EBankingLoginDocument = `
     mutation eBankingLogin($data: EbankingLoginInput!) {
   eBanking {
-    auth {
+    auth(type: EBANKING) {
       login(data: $data) {
         recordId
         record {
@@ -24534,6 +25336,8 @@ export const EBankingLoginDocument = `
             id
             cooperatives {
               id
+              name
+              logoUrl
               mobileNo
             }
             dob
@@ -24567,17 +25371,13 @@ export const useEBankingLoginMutation = <TError = unknown, TContext = unknown>(
     options
   );
 export const CheckAccountDocument = `
-    mutation checkAccount($id: ID!, $mobileNumber: String!) {
+    mutation checkAccount($id: ID!, $mobileNumber: String!, $pin: Int!) {
   eBanking {
-    auth {
-      checkAccount(coopId: $id, mobileNumber: $mobileNumber) {
+    auth(type: EBANKING) {
+      checkAccount(coopId: $id, mobileNumber: $mobileNumber, pin: $pin) {
         success
         error {
           ...MutationError
-        }
-        record {
-          fullName
-          memberId
         }
       }
     }
@@ -24646,7 +25446,7 @@ export const useGetEbankingMeQuery = <TData = GetEbankingMeQuery, TError = unkno
 export const SetNewPinDocument = `
     mutation setNewPin($data: CooperativeConnectInput) {
   eBanking {
-    auth {
+    auth(type: EBANKING) {
       setNewPin(data: $data) {
         record {
           name
@@ -24674,10 +25474,14 @@ export const useSetNewPinMutation = <TError = unknown, TContext = unknown>(
     options
   );
 export const LoginToCooperativeDocument = `
-    mutation loginToCooperative($cooperativeId: ID!, $pinCode: Int) {
+    mutation loginToCooperative($cooperativeId: ID!, $pinCode: Int, $mobileNumber: String!) {
   eBanking {
-    auth {
-      loginToCooperative(cooperativeId: $cooperativeId, pinCode: $pinCode) {
+    auth(type: EBANKING) {
+      loginToCooperative(
+        cooperativeId: $cooperativeId
+        pinCode: $pinCode
+        mobileNumber: $mobileNumber
+      ) {
         error {
           ...MutationError
         }
@@ -24747,6 +25551,8 @@ export const GetMyraMeDocument = `
           id
           cooperatives {
             id
+            name
+            logoUrl
             mobileNo
           }
           name
