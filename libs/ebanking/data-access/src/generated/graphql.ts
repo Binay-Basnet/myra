@@ -7142,6 +7142,7 @@ export type LoanProduct = Base & {
   penaltyOnInstallment?: Maybe<Penalty>;
   penaltyOnInterest?: Maybe<Penalty>;
   penaltyOnPrincipal?: Maybe<Penalty>;
+  penaltyType?: Maybe<PenaltyType>;
   postingFrequency?: Maybe<LoanProductInstallment>;
   prematurePenaltySetup?: Maybe<PrematurePenaltyFormState>;
   productCode?: Maybe<ProductCodeType>;
@@ -7239,6 +7240,7 @@ export type LoanProductInput = {
   penaltyOnInstallment?: InputMaybe<PenaltyTypeInput>;
   penaltyOnInterest?: InputMaybe<PenaltyTypeInput>;
   penaltyOnPrincipal?: InputMaybe<PenaltyTypeInput>;
+  penaltyType?: InputMaybe<PenaltyType>;
   postingFrequency?: InputMaybe<LoanProductInstallment>;
   prematurePenaltySetup?: InputMaybe<PrematurePenalty>;
   productCode?: InputMaybe<ProductCode>;
@@ -8483,6 +8485,12 @@ export type PenaltyRebateResult = {
   data?: Maybe<PenaltyRebate>;
   error?: Maybe<QueryError>;
 };
+
+export enum PenaltyType {
+  Installment = 'INSTALLMENT',
+  Interest = 'INTEREST',
+  Principal = 'PRINCIPAL',
+}
 
 export type PenaltyTypeInput = {
   dayAfterInstallmentDate?: InputMaybe<Scalars['Int']>;
@@ -14427,6 +14435,32 @@ export type GetShareStatementQuery = {
   };
 };
 
+export type GetGlobalSearchQueryVariables = Exact<{
+  filter?: InputMaybe<SearchFilterData>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetGlobalSearchQuery = {
+  search: {
+    globalPages: {
+      data?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            fullCode?: string | null;
+            hasParam?: boolean | null;
+            iconType?: GlobalPagesIconType | null;
+            page?: string | null;
+            url?: string | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      } | null;
+    };
+  };
+};
+
 export type GetAlternativeFeeAndChargesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAlternativeFeeAndChargesQuery = {
@@ -15816,6 +15850,7 @@ export type GetDepositListDataQuery = {
           processedBy?: string | null;
           date?: string | null;
           agentName?: string | null;
+          profilePicUrl?: string | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -15847,6 +15882,7 @@ export type GetWithdrawListDataQuery = {
           paymentMode?: string | null;
           processedBy?: string | null;
           date?: string | null;
+          profilePicUrl?: string | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -23184,6 +23220,44 @@ export const useGetShareStatementQuery = <TData = GetShareStatementQuery, TError
     ).bind(null, variables),
     options
   );
+export const GetGlobalSearchDocument = `
+    query getGlobalSearch($filter: SearchFilterData, $pagination: Pagination) {
+  search {
+    globalPages(filter: $filter, pagination: $pagination) {
+      data {
+        edges {
+          cursor
+          node {
+            ... on GlobalPagesResultNode {
+              fullCode
+              hasParam
+              iconType
+              page
+              url
+            }
+          }
+        }
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetGlobalSearchQuery = <TData = GetGlobalSearchQuery, TError = unknown>(
+  variables?: GetGlobalSearchQueryVariables,
+  options?: UseQueryOptions<GetGlobalSearchQuery, TError, TData>
+) =>
+  useQuery<GetGlobalSearchQuery, TError, TData>(
+    variables === undefined ? ['getGlobalSearch'] : ['getGlobalSearch', variables],
+    useAxios<GetGlobalSearchQuery, GetGlobalSearchQueryVariables>(GetGlobalSearchDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetAlternativeFeeAndChargesDocument = `
     query getAlternativeFeeAndCharges {
   settings {
@@ -25106,6 +25180,7 @@ export const GetDepositListDataDocument = `
           processedBy
           date
           agentName
+          profilePicUrl
         }
         cursor
       }
@@ -25144,6 +25219,7 @@ export const GetWithdrawListDataDocument = `
           paymentMode
           processedBy
           date
+          profilePicUrl
         }
         cursor
       }

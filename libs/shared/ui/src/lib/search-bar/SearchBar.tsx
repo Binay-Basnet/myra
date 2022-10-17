@@ -16,6 +16,7 @@ import { useRouter } from 'next/router';
 import {
   Avatar,
   Box,
+  Flex,
   Input,
   InputGroup,
   InputLeftElement,
@@ -24,8 +25,13 @@ import {
   Text,
 } from '@chakra-ui/react';
 
+import { Filter_Mode, useGetGlobalSearchQuery } from '@coop/cbs/data-access';
+import { useGetNewIdMutation } from '@coop/ebanking/data-access';
+import { useDebounce } from '@coop/shared/utils';
+
 import { useSearchNavigate } from './useSearchNavigate';
 import Icon from '../icon/Icon';
+import Loader from '../loader/Loader';
 
 const keyMap = {
   inputFocus: ['ctrl+/'],
@@ -61,49 +67,11 @@ const recentSearch = [
   },
 ];
 
-const basicSearch = [
-  {
-    title: 'Member List',
-    subtitle: 'Member',
-    app: 'Core Banking System',
-    link: '/members/list',
-    type: 'LIST',
-  },
-  {
-    title: 'Share Register',
-    subtitle: 'Report',
-    app: 'Core Banking System',
-    link: '/reports/cbs/share-report/new',
-    type: 'REPORT',
-  },
-  {
-    title: 'KYM Form - Individual (34531)',
-    subtitle: 'Form',
-    app: 'Core Banking System',
-    link: '/members/list',
-    type: 'FORM',
-  },
-  {
-    title: 'Ram Dhakal',
-    subtitle: 'Member',
-    app: 'Core Banking System',
-    link: '/members/list',
-    type: 'MEMBER',
-  },
-  {
-    title: 'Deposit Product',
-    subtitle: 'Deposit Product',
-    app: 'Core Banking System',
-    link: '/settings/general/deposit-products',
-    type: 'SETTINGS',
-  },
-];
-
 const ICONS: Record<string, IconType> = {
   LIST: IoList,
-  REPORT: IoDocumentTextOutline,
-  FORM: AiOutlinePlus,
-  MEMBER: FaUser,
+  REPORTS: IoDocumentTextOutline,
+  ADD: AiOutlinePlus,
+  PROFILE: FaUser,
   SETTINGS: AiOutlineSetting,
 };
 
@@ -136,8 +104,24 @@ const users = [
 
 export const SearchBar = () => {
   const router = useRouter();
+
   const [inputSearch, setInputSearch] = useState('');
   const [searchAction, setSearchAction] = useState<'FOCUS' | 'SIMPLE' | 'USER' | 'EMPTY'>('EMPTY');
+
+  const debouncedValue = useDebounce(inputSearch, 800);
+
+  const { mutateAsync: getNewId } = useGetNewIdMutation();
+  const { data: globalSearchData, isLoading } = useGetGlobalSearchQuery(
+    {
+      filter: { filterMode: Filter_Mode.Or, query: debouncedValue },
+      pagination: { after: '', first: 8 },
+    },
+    {
+      enabled: searchAction === 'SIMPLE',
+    }
+  );
+
+  const globalSearch = globalSearchData?.search?.globalPages?.data?.edges;
 
   const searchBarRef = useRef<HTMLInputElement>(null);
   const handlers = {
@@ -154,7 +138,10 @@ export const SearchBar = () => {
       return recentSearch;
     }
     if (searchAction === 'SIMPLE') {
-      return basicSearch;
+      return globalSearch?.map((s) => ({
+        link: s?.node?.url,
+        hasParam: Boolean(s?.node?.hasParam),
+      }));
     }
     return users;
   };
@@ -168,7 +155,7 @@ export const SearchBar = () => {
 
   useEffect(() => {
     setFocusState('EMPTY');
-  }, [searchAction]);
+  }, [searchAction, setFocusState]);
 
   return (
     <Box position="relative" width="100%">
@@ -191,6 +178,7 @@ export const SearchBar = () => {
             type="text"
             id="search-input"
             placeholder="Search"
+            autoComplete="off"
             color="white"
             fontSize="r1"
             ref={searchBarRef}
@@ -220,7 +208,6 @@ export const SearchBar = () => {
             }}
             onBlur={() => {
               setFocusState('EMPTY');
-
               setSearchAction('EMPTY');
             }}
             _hover={{ color: 'gray.800', backgroundColor: 'gray.0' }}
@@ -264,6 +251,11 @@ export const SearchBar = () => {
             gap="s8"
             maxH="400px"
           >
+            {isLoading && (
+              <Box>
+                <Loader height={80} />
+              </Box>
+            )}
             {searchAction === 'FOCUS' && (
               <>
                 <Text fontSize="s3" color="gray.500" lineHeight="1.5">
@@ -291,21 +283,44 @@ export const SearchBar = () => {
             )}
             {searchAction === 'SIMPLE' && (
               <Box overflowY="auto">
-                {basicSearch.map((basic, index) => (
-                  <Fragment key={basic?.link}>
-                    <BasicSearchCard
-                      {...basic}
-                      isSelected={focusState === index}
-                      onClick={() =>
-                        router.push(basic.link).then(() => {
-                          setSearchAction('EMPTY');
-                          searchBarRef?.current?.blur();
-                          setInputSearch('');
-                        })
-                      }
-                    />
-                  </Fragment>
-                ))}
+                {globalSearch?.length === 0 ? (
+                  <NoResultFound />
+                ) : (
+                  globalSearch?.map((basic, index) => (
+                    <Fragment key={basic?.node?.url}>
+                      <BasicSearchCard
+                        subtitle="Member"
+                        type={basic?.node?.iconType as string}
+                        app="Core Banking System"
+                        link={basic?.node?.url as string}
+                        title={basic?.node?.page as string}
+                        isSelected={focusState === index}
+                        hasParam={basic?.node?.hasParam as boolean}
+                        onClick={async () => {
+                          const response = basic?.node?.hasParam ? await getNewId({}) : null;
+
+                          router
+                            .push(
+                              `${basic?.node?.url}${
+                                response ? `/${response?.newId}` : ''
+                              }` as string
+                            )
+                            .then(() => {
+                              // const currentSearch = {
+                              //   title: basic?.node?.page,
+                              //   url: basic?.node?.url,
+                              //   hasParams: basic?.node?.hasParam,
+                              // };
+
+                              setSearchAction('EMPTY');
+                              searchBarRef?.current?.blur();
+                              setInputSearch('');
+                            });
+                        }}
+                      />
+                    </Fragment>
+                  ))
+                )}
               </Box>
             )}
             {searchAction === 'USER' && (
@@ -370,6 +385,7 @@ interface BasicSearchCardProps {
   isSelected: boolean;
   onClick?: () => void;
   link: string;
+  hasParam: boolean;
 }
 
 export const BasicSearchCard = ({
@@ -379,72 +395,81 @@ export const BasicSearchCard = ({
   type,
   isSelected,
   link,
+  hasParam,
   app,
-}: BasicSearchCardProps) => (
-  <Box
-    p="s8"
-    width="100%"
-    borderRadius="br2"
-    display="flex"
-    onMouseDown={(e) => e.preventDefault()}
-    alignItems="center"
-    justifyContent="space-between"
-    gap="s10"
-    cursor="pointer"
-    onClick={onClick}
-    bg={isSelected ? 'background.500' : 'white'}
-    _hover={{ bg: 'background.500' }}
-    role="group"
-  >
-    <Box display="flex" alignItems="center" color="gray.600" gap="s16">
-      <Icon as={ICONS[type]} />
+}: BasicSearchCardProps) => {
+  const { mutateAsync: getNewId } = useGetNewIdMutation();
 
-      <Box display="flex" flexDir="column">
-        <Text fontSize="r1" fontWeight="500">
-          {title}
-        </Text>
+  return (
+    <Box
+      p="s8"
+      width="100%"
+      borderRadius="br2"
+      display="flex"
+      onMouseDown={(e) => e.preventDefault()}
+      alignItems="center"
+      justifyContent="space-between"
+      gap="s10"
+      cursor="pointer"
+      onClick={onClick}
+      bg={isSelected ? 'background.500' : 'white'}
+      _hover={{ bg: 'background.500' }}
+      role="group"
+    >
+      <Box display="flex" alignItems="center" color="gray.600" gap="s16">
+        <Icon as={ICONS[type]} />
 
-        <Text fontSize="r1" color="gray.500">
-          {subtitle}
+        <Box display="flex" flexDir="column">
+          <Text fontSize="r1" fontWeight="500">
+            {title}
+          </Text>
+
+          <Text fontSize="r1" color="gray.500">
+            {subtitle}
+          </Text>
+        </Box>
+      </Box>
+
+      <Box
+        px="s12"
+        py="s4"
+        borderRadius="32px"
+        display={isSelected ? 'none' : 'block'}
+        border="1px"
+        borderColor="border.layout"
+        _groupHover={{ display: 'none' }}
+      >
+        <Text fontSize="s1" color="gray.600">
+          {app}
         </Text>
       </Box>
-    </Box>
 
-    <Box
-      px="s12"
-      py="s4"
-      borderRadius="32px"
-      display={isSelected ? 'none' : 'block'}
-      border="1px"
-      borderColor="border.layout"
-      _groupHover={{ display: 'none' }}
-    >
-      <Text fontSize="s1" color="gray.600">
-        {app}
-      </Text>
-    </Box>
+      <Box
+        px="s12"
+        display={isSelected ? 'flex' : 'none'}
+        py="s4"
+        borderRadius="32px"
+        border="1px"
+        borderColor="border.layout"
+        bg="primary.500"
+        gap="s4"
+        alignItems="center"
+        _groupHover={{ display: 'flex' }}
+        as="button"
+        onClick={async () => {
+          const response = hasParam ? await getNewId({}) : null;
 
-    <Box
-      px="s12"
-      display={isSelected ? 'flex' : 'none'}
-      py="s4"
-      borderRadius="32px"
-      border="1px"
-      borderColor="border.layout"
-      bg="primary.500"
-      gap="s4"
-      alignItems="center"
-      _groupHover={{ display: 'flex' }}
-      as="button"
-      onClick={() => window.open(link, '_blank')}
-    >
-      <Text fontSize="s2" color="white">
-        Open In New Tab
-      </Text>
-      <Icon as={FiArrowUpRight} size="sm" color="white" />
+          window.open(`${link}${response ? `/${response?.newId}` : ''}` as string);
+        }}
+      >
+        <Text fontSize="s2" color="white">
+          Open In New Tab
+        </Text>
+        <Icon as={FiArrowUpRight} size="sm" color="white" />
+      </Box>
     </Box>
-  </Box>
-);
+  );
+};
 
 interface UserSearchCardProps {
   id: string;
@@ -528,6 +553,33 @@ export const UserSearchCard = ({
       <Icon as={FiArrowUpRight} size="sm" color="white" />
     </Box>
   </Box>
+);
+
+interface INoResultFoundProps {
+  title?: string;
+  subtitle?: string;
+}
+
+export const NoResultFound = ({
+  title = 'No Result Found',
+  subtitle = 'Try Adjusting your search',
+}: INoResultFoundProps) => (
+  <Flex
+    h="140px"
+    alignItems="center"
+    justifyContent="center"
+    flexDir="column"
+    gap="s4"
+    fontWeight={500}
+  >
+    <Text fontSize="r1" color="gray.700">
+      {title}
+    </Text>
+
+    <Text fontSize="s3" color="gray.500">
+      {subtitle}
+    </Text>
+  </Flex>
 );
 
 export default SearchBar;
