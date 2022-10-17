@@ -49,8 +49,7 @@ export const KymIndividualFooter = () => {
       mainButtonLabel={t['next']}
       mainButtonHandler={async () => {
         const response = await refetch();
-        const sectionStatus =
-          response?.data?.members?.individual?.formState?.sectionStatus?.sectionStatus;
+        const sectionStatus = response?.data?.members?.individual?.formState?.sectionStatus?.errors;
         const basicAllErrors =
           response?.data?.members?.individual?.formState?.sectionStatus?.errors;
 
@@ -61,7 +60,7 @@ export const KymIndividualFooter = () => {
         }
         if (response) {
           dispatch(setIndividualHasPressedNext(true));
-          if (sectionStatus?.errors?.length === 0) {
+          if (!sectionStatus) {
             router.push(`/members/translation/${router.query['id']}`);
           } else {
             toast({

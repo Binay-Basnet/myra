@@ -14,7 +14,6 @@ import {
   useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
-import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
 import { FormInput } from '@coop/shared/form';
 import {
   asyncToast,
@@ -23,6 +22,7 @@ import {
   Container,
   DEFAULT_PAGE_SIZE,
   Divider,
+  FormAccountSelect,
   FormFooter,
   FormHeader,
   FormMemberSelect,
@@ -343,32 +343,17 @@ export const AddDeposit = () => {
                   <FormMemberSelect name="memberId" label="Member" />
 
                   {memberId && (
-                    <FormCustomSelect
+                    <FormAccountSelect
                       name="accountId"
                       label={t['addDepositSelectDepositAccount']}
-                      options={accountListData?.account?.list?.edges?.map((account) => ({
-                        accountInfo: {
-                          accountName: account.node?.product.productName,
-                          accountId: account.node?.id,
-                          accountType: account?.node?.product?.nature
-                            ? accountTypes[account?.node?.product?.nature]
-                            : '',
-                          balance: account?.node?.balance ?? '0',
-                          fine:
-                            account?.node?.product?.nature ===
-                              NatureOfDepositProduct.RecurringSaving ||
-                            (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
-                              selectedAccount?.product?.isMandatorySaving === true)
-                              ? fine ?? FINE
-                              : '',
-                        },
-                        value: account.node?.id as string,
-                      }))}
+                      memberId={memberId}
                     />
                   )}
 
                   {accountId &&
-                    selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving && (
+                    (selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving ||
+                      (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+                        selectedAccount?.product?.isMandatorySaving)) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
                           <FormInput name="voucherId" label={t['addDepositVoucherId']} />

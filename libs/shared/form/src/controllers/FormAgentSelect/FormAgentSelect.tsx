@@ -14,21 +14,17 @@ type OptionType = { label: string; value: string };
 
 export const FormAgentSelect = ({ name, label }: IFormAgentSelectProps) => {
   const [agentId, setAgentId] = useState('');
-  const [trigger, setTrigger] = useState(false);
 
-  const { data: agentListQueryData, isFetching } = useGetSettingsUserListDataQuery(
-    {
-      paginate: getRouterQuery({ type: ['PAGINATION'] }),
-      filter: {
-        query: agentId,
-        role: Roles.Agent,
-      },
+  const { data: agentListQueryData, isFetching } = useGetSettingsUserListDataQuery({
+    paginate: {
+      ...getRouterQuery({ type: ['PAGINATION'] }),
+      first: 10,
     },
-    {
-      staleTime: 0,
-      enabled: trigger,
-    }
-  );
+    filter: {
+      query: agentId,
+      role: Roles.Agent,
+    },
+  });
 
   const agentList = agentListQueryData?.settings?.myraUser?.list?.edges;
 
@@ -51,7 +47,6 @@ export const FormAgentSelect = ({ name, label }: IFormAgentSelectProps) => {
       onInputChange={debounce((id) => {
         if (id) {
           setAgentId(id);
-          setTrigger(true);
         }
       }, 800)}
       options={agentOptions}

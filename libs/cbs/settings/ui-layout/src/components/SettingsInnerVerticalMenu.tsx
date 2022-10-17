@@ -43,7 +43,7 @@ export const SettingsInnerVerticalMenu = ({ tablinks }: IVerticalSidebarProps) =
   const router = useRouter();
 
   const currentIndex = useMemo(
-    () => tablinks.findIndex((link) => router.pathname.includes(link.to)),
+    () => tablinks.findIndex((link) => router.pathname === link.to),
     [router.pathname]
   );
 
