@@ -60,7 +60,7 @@ export const CbsSettingsFeatureProductType = () => {
             <Divider />
             <ProductSubTypeTable />
           </Box>
-          <SettingsFooter handleSave={handleSave} />
+          <SettingsFooter handleSave={handleSave} zIndex={1} />
         </form>
       </FormProvider>
     </Box>

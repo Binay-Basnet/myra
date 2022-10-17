@@ -8,7 +8,6 @@ import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { AllowChequeIssue } from './AllowChequeIssue';
-import { AlternativeChannels } from './AlternativeChannels';
 import { AtmFacility } from './AtmFacility';
 import { SubHeadingText } from '../formui';
 
@@ -35,7 +34,6 @@ export const Questions = () => {
   const allowLoan = watch('allowLoan');
   const withdrawRestricted = watch('withdrawRestricted');
   const ladderRateEditData = watch('ladderRateData');
-  const alternativeChannels = watch('alternativeChannels');
   const chequeIssue = watch('chequeIssue');
   const atmFacility = watch('atmFacility');
 
@@ -89,8 +87,6 @@ export const Questions = () => {
             </Box>
             <FormSwitchTab name="alternativeChannels" options={yesNo} />
           </Box>
-
-          {alternativeChannels && <AlternativeChannels />}
         </GridItem>
       </FormSection>
 

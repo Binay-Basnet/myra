@@ -2,7 +2,6 @@ export * from './AccountCloseServices';
 export * from './AccountOpenServices';
 export * from './AllowChequeIssue';
 export * from './AllowedTransaction';
-export * from './AlternativeChannels';
 export * from './AtmFacility';
 export * from './BalanceLimit';
 export * from './Criteria';

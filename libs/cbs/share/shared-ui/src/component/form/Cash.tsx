@@ -48,7 +48,12 @@ export const Cash = ({
   return (
     <FormSection templateColumns={2}>
       <GridItem colSpan={1}>
-        <FormInput type="text" name="cash.cashPaid" label={t['sharePurchaseCash']} />
+        <FormInput
+          textAlign="right"
+          type="number"
+          name="cash.cashPaid"
+          label={t['sharePurchaseCash']}
+        />
       </GridItem>
 
       <GridItem colSpan={2}>
@@ -128,9 +133,7 @@ export const Cash = ({
             >
               <Text>{denominationTotal}</Text>
               <Text>{totalCashPaid ? returnAmount : 0}</Text>
-              <Text>
-                {denominationTotal && returnAmount ? denominationTotal - returnAmount : 0}
-              </Text>
+              <Text>{totalAmount || 0}</Text>
             </Box>
           </Box>
         </GridItem>
@@ -170,7 +173,7 @@ export const Cash = ({
             >
               <Text>{cashPaid || 0}</Text>
               <Text>{cashReturn || 0}</Text>
-              <Text>{cashPaid - cashReturn || 0}</Text>
+              <Text>{totalAmount || 0}</Text>
             </Box>
           </Box>
         </GridItem>
