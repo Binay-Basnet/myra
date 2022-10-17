@@ -66,7 +66,6 @@ export const NewMemberCharge = () => {
           <Box display="flex" flexDirection="column" gap="s20">
             <FormEditableTable<NewChangeTable>
               name="charge"
-              canAddRow={false}
               columns={[
                 {
                   accessor: 'memberType',

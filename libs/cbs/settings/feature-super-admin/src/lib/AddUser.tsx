@@ -198,8 +198,8 @@ export const AddUser = () => {
     asyncToast({
       id: 'create-new-user',
       msgs: {
-        success: 'New User Created',
-        loading: 'Creating New User',
+        success: router.asPath.includes('edit') ? 'User Updated' : 'New User Created',
+        loading: router.asPath.includes('edit') ? 'Updating User' : 'Creating New User',
       },
       onSuccess: () => router.push('/settings/users/super-admin'),
       promise: mutateAsync({ id: id as string, data: formValues }),
