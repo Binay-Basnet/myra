@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import {
   RootState,
   useAppSelector,
-  useGetBankListQuery,
+  useGetCoaBankListQuery,
   WithdrawBy,
   WithdrawPaymentType,
 } from '@coop/cbs/data-access';
@@ -24,7 +24,7 @@ import {
   FormTextArea,
 } from '@coop/shared/form';
 import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 const denominationsOptions = [
   { label: '1000x', value: '1000' },
@@ -87,7 +87,16 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
 
   const { watch, resetField } = useFormContext();
 
-  const { data: bankList } = useGetBankListQuery();
+  const { data: bank } = useGetCoaBankListQuery({
+    accountCode: featureCode.accountCode as string[],
+  });
+
+  const bankListArr = bank?.settings?.chartsOfAccount?.accountsUnder?.data;
+
+  const bankList = bankListArr?.map((item) => ({
+    label: item?.name?.local as string,
+    value: item?.id as string,
+  }));
 
   const selectedPaymentMode = watch('payment_type');
 
@@ -137,12 +146,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
               <FormSelect
                 name="bankCheque.bankId"
                 label={t['withdrawPaymentBankName']}
-                options={
-                  bankList?.bank?.bank?.list?.map((bank) => ({
-                    label: bank?.name as string,
-                    value: bank?.id as string,
-                  })) ?? []
-                }
+                options={bankList}
               />
             </GridItem>
 

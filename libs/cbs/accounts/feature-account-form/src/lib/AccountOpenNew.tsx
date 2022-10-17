@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import omit from 'lodash/omit';
 
 import {
   CashValue,
@@ -281,31 +280,34 @@ export const AccountOpenNew = () => {
     let updatedData;
 
     if (values.openingPayment?.payment_type === DepositPaymentType.Cash) {
-      updatedData = omit({ ...values }, ['openingPayment.cheque', 'openingPayment.bankVoucher']);
-
-      updatedData.openingPayment = {
-        ...values.openingPayment,
-        cash: {
-          ...values.openingPayment.cash,
-          cashPaid: values.openingPayment.cash?.cashPaid as string,
-          disableDenomination: Boolean(values.openingPayment.cash?.disableDenomination),
-          total: String(totalCashPaid),
-          returned_amount: String(returnAmount),
-          denominations:
-            values.openingPayment.cash?.denominations?.map(({ value, quantity }) => ({
-              value: cashOptions[value as string],
-              quantity,
-            })) ?? [],
+      updatedData = {
+        ...values,
+        openingPayment: {
+          cash: {
+            ...values.openingPayment.cash,
+            cashPaid: values.openingPayment.cash?.cashPaid as string,
+            disableDenomination: Boolean(values.openingPayment.cash?.disableDenomination),
+            total: String(totalCashPaid),
+            returned_amount: String(returnAmount),
+            denominations:
+              values.openingPayment.cash?.denominations?.map(({ value, quantity }) => ({
+                value: cashOptions[value as string],
+                quantity,
+              })) ?? [],
+          },
         },
       };
     }
 
     if (values.openingPayment?.payment_type === DepositPaymentType.BankVoucher) {
-      updatedData = omit({ ...values }, ['openingPayment.cheque', 'openingPayment.cash']);
+      updatedData = {
+        ...values,
+        openingPayment: { bankVoucher: { ...values.openingPayment.bankVoucher } },
+      };
     }
 
     if (values.openingPayment?.payment_type === DepositPaymentType.Cheque) {
-      updatedData = omit({ ...values }, ['openingPayment.bankVoucher', 'openingPayment.cash']);
+      updatedData = { ...values, openingPayment: { cheque: { ...values.openingPayment.cheque } } };
     }
 
     updatedData = {
