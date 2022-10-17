@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { GlobalHotKeys } from 'react-hotkeys';
 import { BiBell } from 'react-icons/bi';
 import { BsArrowRight } from 'react-icons/bs';
@@ -71,21 +71,38 @@ const keyMap = {
 };
 const currentDate = format(new Date(), 'yyyy-MM-dd');
 
-// export const Input = forwardRef<HTMLInputElement, InputProps>(
-//   (props: InputProps, ref) => {
-//     return (
-//       <ChakraInput
-//         {...props}
-//         ref={ref}
-//         onKeyDown={(e) => {
-//           if (e.key === 'Escape') {
-//             e.currentTarget?.blur();
-//           }
-//         }}
-//       />
-//     );
-//   }
-// );
+const AppSwitcherIconWrapper = (props: {
+  children: React.ReactNode;
+  onClick: React.MouseEventHandler<HTMLDivElement> | undefined;
+}) => {
+  const { children, onClick } = props;
+  return (
+    <Box
+      display="flex"
+      flexDirection="column"
+      textAlign="center"
+      alignItems="center"
+      gap="s8"
+      p="s8"
+      cursor="pointer"
+      borderRadius="br2"
+      _hover={{ bg: 'primary.0' }}
+      onClick={onClick}
+    >
+      {children}
+    </Box>
+  );
+};
+
+const AppSwitcherText = (props: { children: React.ReactNode }) => {
+  const { children } = props;
+  return (
+    <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-60" lineHeight="125%">
+      {children}
+    </Text>
+  );
+};
+
 export const TopLevelHeader = () => {
   const { t } = useTranslation();
   const router = useRouter();
@@ -351,97 +368,29 @@ export const TopLevelHeader = () => {
                   >
                     <PopoverBody p={0}>
                       <Box display="grid" gridTemplateColumns="repeat(3,1fr)" gap="s8">
-                        <Box
-                          display="flex"
-                          flexDirection="column"
-                          textAlign="center"
-                          alignItems="center"
-                          gap="s8"
-                          p="s8"
-                          cursor="pointer"
-                          borderRadius="br2"
-                          _hover={{ bg: 'primary.0' }}
-                          onClick={() => router.push('/members/list')}
-                        >
+                        <AppSwitcherIconWrapper onClick={() => router.push('/members/list')}>
                           <Image width={48} height={48} src="/cbs.svg" alt="Core Banking System" />
-                          <Text
-                            fontSize="s3"
-                            fontWeight="Medium"
-                            color="neutralColorLight.Gray-60"
-                            lineHeight="125%"
-                          >
-                            {t['corebankingSystems']}
-                          </Text>
-                        </Box>
-
-                        <Box
-                          display="flex"
-                          flexDirection="column"
-                          textAlign="center"
-                          alignItems="center"
-                          gap="s8"
-                          cursor="pointer"
-                          p="s8"
-                          borderRadius="br2"
-                          _hover={{ bg: 'primary.0' }}
-                          onClick={() => router.push('/inventory/register')}
-                        >
+                          <AppSwitcherText>{t['corebankingSystems']}</AppSwitcherText>
+                        </AppSwitcherIconWrapper>
+                        <AppSwitcherIconWrapper onClick={() => router.push('/inventory/register')}>
                           <Image
                             width={48}
                             height={48}
                             src="/inventory.svg"
                             alt="Inventory System"
                           />
-                          <Text
-                            fontSize="s3"
-                            fontWeight="Medium"
-                            color="neutralColorLight.Gray-60"
-                            lineHeight="125%"
-                          >
-                            {t['inventoryManagement']}
-                          </Text>
-                        </Box>
-
-                        <Box
-                          display="flex"
-                          flexDirection="column"
-                          textAlign="center"
-                          alignItems="center"
-                          gap="s8"
-                          p="s8"
-                          cursor="pointer"
-                          borderRadius="br2"
-                          _hover={{ bg: 'primary.0' }}
-                          onClick={() => router.push('/loan')}
-                        >
+                          <AppSwitcherText> {t['inventoryManagement']}</AppSwitcherText>
+                        </AppSwitcherIconWrapper>
+                        <AppSwitcherIconWrapper onClick={() => router.push('/members/list')}>
                           <Image
                             height={48}
                             width={48}
                             src="/memberandshare.svg"
                             alt="Fixed Asset Management"
                           />
-                          <Text
-                            fontSize="s3"
-                            fontWeight="Medium"
-                            color="neutralColorLight.Gray-60"
-                            lineHeight="125%"
-                            overflow="hidden"
-                            textOverflow="ellipsis"
-                          >
-                            {t['memberAndShareManagement']}
-                          </Text>
-                        </Box>
-
-                        <Box
-                          display="flex"
-                          flexDirection="column"
-                          textAlign="center"
-                          alignItems="center"
-                          gap="s8"
-                          p="s8"
-                          cursor="pointer"
-                          borderRadius="br2"
-                          _hover={{ bg: 'primary.0' }}
+                          <AppSwitcherText> {t['memberAndShareManagement']}</AppSwitcherText>
+                        </AppSwitcherIconWrapper>
+                        <AppSwitcherIconWrapper
                           onClick={() => router.push('/accounting/sales/list')}
                         >
                           <Image
@@ -450,15 +399,17 @@ export const TopLevelHeader = () => {
                             src="/accounting.svg"
                             alt="Accounting System"
                           />
-                          <Text
-                            fontSize="s3"
-                            fontWeight="Medium"
-                            color="neutralColorLight.Gray-60"
-                            lineHeight="125%"
-                          >
-                            {t['accountingSystem']}
-                          </Text>
-                        </Box>
+                          <AppSwitcherText> {t['accountingSystem']}</AppSwitcherText>
+                        </AppSwitcherIconWrapper>
+
+                        <AppSwitcherIconWrapper
+                          onClick={() => router.push('/alternative-channels/mBanking/users')}
+                        >
+                          <Image width={48} height={48} src="/tnt.svg" alt="Alternativer channel" />
+                          <AppSwitcherText>
+                            {t['alternativeChannelsAndCrossConnectivity']}
+                          </AppSwitcherText>
+                        </AppSwitcherIconWrapper>
                       </Box>
                       <Divider mt="s24" mb="s24" />
                       <Box>
