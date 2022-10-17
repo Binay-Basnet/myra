@@ -2,6 +2,7 @@ export * from './components/GRID2X3';
 export * from './constants/DEFAULT_PAGE_SIZE';
 export * from './constants/FEATURE_CODE';
 export * from './hooks/useChakraToast';
+export * from './hooks/useDebounce';
 export * from './hooks/useGetIndividualMemberDetails';
 export * from './hooks/useInit';
 export * from './hooks/useReplace';

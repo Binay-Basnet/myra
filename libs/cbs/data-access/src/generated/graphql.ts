@@ -14435,6 +14435,32 @@ export type GetShareStatementQuery = {
   };
 };
 
+export type GetGlobalSearchQueryVariables = Exact<{
+  filter?: InputMaybe<SearchFilterData>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetGlobalSearchQuery = {
+  search: {
+    globalPages: {
+      data?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            fullCode?: string | null;
+            hasParam?: boolean | null;
+            iconType?: GlobalPagesIconType | null;
+            page?: string | null;
+            url?: string | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      } | null;
+    };
+  };
+};
+
 export type GetAlternativeFeeAndChargesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAlternativeFeeAndChargesQuery = {
@@ -22557,6 +22583,44 @@ export const useGetShareStatementQuery = <TData = GetShareStatementQuery, TError
     useAxios<GetShareStatementQuery, GetShareStatementQueryVariables>(
       GetShareStatementDocument
     ).bind(null, variables),
+    options
+  );
+export const GetGlobalSearchDocument = `
+    query getGlobalSearch($filter: SearchFilterData, $pagination: Pagination) {
+  search {
+    globalPages(filter: $filter, pagination: $pagination) {
+      data {
+        edges {
+          cursor
+          node {
+            ... on GlobalPagesResultNode {
+              fullCode
+              hasParam
+              iconType
+              page
+              url
+            }
+          }
+        }
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetGlobalSearchQuery = <TData = GetGlobalSearchQuery, TError = unknown>(
+  variables?: GetGlobalSearchQueryVariables,
+  options?: UseQueryOptions<GetGlobalSearchQuery, TError, TData>
+) =>
+  useQuery<GetGlobalSearchQuery, TError, TData>(
+    variables === undefined ? ['getGlobalSearch'] : ['getGlobalSearch', variables],
+    useAxios<GetGlobalSearchQuery, GetGlobalSearchQueryVariables>(GetGlobalSearchDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetAlternativeFeeAndChargesDocument = `
