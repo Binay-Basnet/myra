@@ -187,6 +187,7 @@ export const AccountOpenNew = () => {
 
   const ProductData = poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
   const productType = ProductData?.nature;
+  const isMandatoryFlag = ProductData?.isMandatorySaving;
 
   useEffect(() => {
     if (productID) {
@@ -435,8 +436,11 @@ export const AccountOpenNew = () => {
                     {productType !== NatureOfDepositProduct?.Current &&
                       productType !== NatureOfDepositProduct?.Saving && <Tenure />}
                     <Divider />
-                    <Interest />
-                    <DepositFrequency />
+                    {productType !== NatureOfDepositProduct?.Current && <Interest />}
+                    {(productType === NatureOfDepositProduct?.RecurringSaving ||
+                      (productType === NatureOfDepositProduct.Saving && isMandatoryFlag)) && (
+                      <DepositFrequency />
+                    )}
                     {(productType === NatureOfDepositProduct?.TermSavingOrFd ||
                       productType === NatureOfDepositProduct?.RecurringSaving) && (
                       <Box display="flex" flexDirection="column" gap="s16">
