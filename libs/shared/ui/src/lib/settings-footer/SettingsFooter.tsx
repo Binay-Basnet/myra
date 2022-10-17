@@ -9,13 +9,13 @@ import Box from '../box/Box';
 export interface SettingsFooterProps {
   handleDiscard?: React.MouseEventHandler<HTMLButtonElement> | undefined;
   handleSave?: React.MouseEventHandler<HTMLButtonElement> | undefined;
-
+  zIndex?: number;
   saveLoading?: boolean;
 }
 
 export const SettingsFooter = (props: SettingsFooterProps) => {
   const { t } = useTranslation();
-  const { handleDiscard, handleSave, saveLoading } = props;
+  const { handleDiscard, handleSave, saveLoading, zIndex } = props;
   return (
     <Box
       p="s16"
@@ -29,7 +29,7 @@ export const SettingsFooter = (props: SettingsFooterProps) => {
       justifyContent="flex-end"
       bg="white"
       gap={2}
-      zIndex="12"
+      zIndex={zIndex || 12}
     >
       <Button variant="ghost" onClick={handleDiscard}>
         {t['discardChanges']}
