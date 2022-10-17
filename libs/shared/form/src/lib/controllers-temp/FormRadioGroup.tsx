@@ -18,6 +18,7 @@ export const FormRadioGroup = ({ name, label, ...rest }: IFormSelectProps) => {
   } = methods;
 
   const error = errors[name];
+
   return (
     <Controller
       control={control}
@@ -28,7 +29,11 @@ export const FormRadioGroup = ({ name, label, ...rest }: IFormSelectProps) => {
         <Box display="flex" flexDirection="column" gap="s16">
           <TextFields variant="formLabel">{label}</TextFields>
           <RadioGroup {...rest} value={value} onChange={onChange} name={name} id={name} />
-          {error ? error?.message : null}
+          {error ? (
+            <TextFields variant="formHelper" color="danger.500">
+              {error?.message as string}
+            </TextFields>
+          ) : null}
         </Box>
       )}
     />

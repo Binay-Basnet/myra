@@ -56,6 +56,11 @@ export const FormDatePicker = <T,>({ name, label, ...rest }: IFormDatePickerProp
             {...rest}
             {...fieldProps}
           />
+          {errors[name] ? (
+            <TextFields variant="formHelper" color="danger.500">
+              {errors[name]?.message as string}
+            </TextFields>
+          ) : null}
         </Box>
       )}
     />
