@@ -16758,14 +16758,6 @@ react-leaflet@^4.0.0:
   dependencies:
     "@react-leaflet/core" "^2.0.1"
 
-react-patro@^0.0.4-beta:
-  version "0.0.4-beta"
-  resolved "https://registry.yarnpkg.com/react-patro/-/react-patro-0.0.4-beta.tgz#12145b692d9f692c5f9f11746c06dd142a9631ab"
-  integrity sha512-rbnEoKa0j4OOVQZ73cpp33oI34lQRiiIacBtDo3OcqBvsnCebgR95GfKo+451pS4qcp8P5h8QjiL8ZWDI70E4Q==
-  dependencies:
-    "@popperjs/core" "^2.9.2"
-    date-fns "^2.22.1"
-
 react-pdf@^5.7.2:
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/react-pdf/-/react-pdf-5.7.2.tgz#c458dedf7983822668b40dcac1eae052c1f6e056"
