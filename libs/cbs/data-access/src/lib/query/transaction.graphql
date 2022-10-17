@@ -12,6 +12,7 @@ query getDepositListData($filter: AccountTransactionFilter, $pagination: Paginat
           processedBy
           date
           agentName
+          profilePicUrl
         }
         cursor
       }
@@ -38,6 +39,7 @@ query getWithdrawListData($filter: AccountTransactionFilter, $pagination: Pagina
           paymentMode
           processedBy
           date
+          profilePicUrl
         }
         cursor
       }

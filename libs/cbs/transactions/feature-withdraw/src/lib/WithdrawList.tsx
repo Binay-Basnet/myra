@@ -50,7 +50,11 @@ export const WithdrawList = () => {
         header: t['withdrawListTransactionName'],
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
-            <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
+            <Avatar
+              name={props.getValue() as string}
+              size="sm"
+              src={props?.row?.original?.node?.profilePicUrl ?? ''}
+            />
             <Text
               fontSize="s3"
               textTransform="capitalize"

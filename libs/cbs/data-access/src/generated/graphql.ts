@@ -61,6 +61,8 @@ export type AccountActivityEntry = {
   name?: Maybe<Scalars['Localized']>;
   paymentMode?: Maybe<Scalars['String']>;
   processedBy?: Maybe<Scalars['String']>;
+  profilePic?: Maybe<Scalars['String']>;
+  profilePicUrl?: Maybe<Scalars['String']>;
   state: TransactionState;
 };
 
@@ -15811,6 +15813,7 @@ export type GetDepositListDataQuery = {
           processedBy?: string | null;
           date?: string | null;
           agentName?: string | null;
+          profilePicUrl?: string | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -15842,6 +15845,7 @@ export type GetWithdrawListDataQuery = {
           paymentMode?: string | null;
           processedBy?: string | null;
           date?: string | null;
+          profilePicUrl?: string | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -24466,6 +24470,7 @@ export const GetDepositListDataDocument = `
           processedBy
           date
           agentName
+          profilePicUrl
         }
         cursor
       }
@@ -24504,6 +24509,7 @@ export const GetWithdrawListDataDocument = `
           paymentMode
           processedBy
           date
+          profilePicUrl
         }
         cursor
       }

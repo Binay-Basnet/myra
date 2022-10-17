@@ -13,7 +13,6 @@ import {
   WithdrawPaymentType,
   WithdrawWith,
 } from '@coop/cbs/data-access';
-import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import {
@@ -22,6 +21,7 @@ import {
   Button,
   Container,
   DEFAULT_PAGE_SIZE,
+  FormAccountSelect,
   FormFooter,
   FormHeader,
   FormMemberSelect,
@@ -225,27 +225,10 @@ export const AddWithdraw = () => {
                   <FormMemberSelect name="memberId" label={t['addWithdrawMember']} />
 
                   {memberId && (
-                    <FormCustomSelect
+                    <FormAccountSelect
                       name="accountId"
                       label={t['addWithdrawSelectWithdrawAccount']}
-                      options={accountListData?.account?.list?.edges?.map((account) => ({
-                        accountInfo: {
-                          accountName: account.node?.product.productName,
-                          accountId: account.node?.product?.id,
-                          accountType: account?.node?.product?.nature
-                            ? accountTypes[account?.node?.product?.nature]
-                            : '',
-                          balance: account?.node?.balance ?? '0',
-                          fine:
-                            account?.node?.product?.nature ===
-                              NatureOfDepositProduct.RecurringSaving ||
-                            (account?.node?.product?.nature === NatureOfDepositProduct.Saving &&
-                              account?.node?.product?.isMandatorySaving === true)
-                              ? FINE
-                              : '',
-                        },
-                        value: account.node?.id as string,
-                      }))}
+                      memberId={memberId}
                     />
                   )}
 
