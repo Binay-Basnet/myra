@@ -95,6 +95,7 @@ query getLoanProductEditData($id: ID!) {
             isMonthlyInstallmentCompulsory
             interestMethod
             isPenaltyApplicable
+            #penaltyType
             penaltyOnPrincipal {
               dayAfterInstallmentDate
               penaltyRate

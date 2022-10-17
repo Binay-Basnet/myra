@@ -12,7 +12,7 @@ export const Penalty = () => {
   const { t } = useTranslation();
   const { watch } = useFormContext();
   const penalty = watch('isPenaltyApplicable');
-  // const penaltyListVal = watch('penaltyListVal');
+  // const penaltyType = watch('penaltyType');
 
   const enableSwitch = [
     {
@@ -76,7 +76,7 @@ export const Penalty = () => {
                   <TextBoxContainer>
                     <SubHeadingText>{t['loanProductPenaltyOn']} </SubHeadingText>
                   </TextBoxContainer>
-                  {/* <FormSwitchTab name="penaltyListVal" options={penaltyList} /> */}
+                  {/* <FormSwitchTab name="penaltyType" options={penaltyList} /> */}
                 </Box>
                 <InputGroupContainer>
                   <FormInput
@@ -116,7 +116,7 @@ export const Penalty = () => {
                   label={t['loanProductPenaltyedgerMapping']}
                   options={coaList}
                 /> */}
-                {/* {penaltyListVal === 'principal' && (
+                {/* {penaltyType === 'principal' && (
                   <InputGroupContainer>
                     <FormInput
                       name="penaltyOnPrincipal.dayAfterInstallmentDate"
@@ -151,7 +151,7 @@ export const Penalty = () => {
                   </InputGroupContainer>
                 )}
 
-                {penaltyListVal === 'interest' && (
+                {penaltyType === 'interest' && (
                   <InputGroupContainer>
                     <FormInput
                       name="penaltyOnInterest.dayAfterInstallmentDate"
@@ -186,7 +186,7 @@ export const Penalty = () => {
                   </InputGroupContainer>
                 )}
 
-                {penaltyListVal === 'installment' && (
+                {penaltyType === 'installment' && (
                   <InputGroupContainer>
                     <FormInput
                       name="penaltyOnInstallment.dayAfterInstallmentDate"

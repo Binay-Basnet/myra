@@ -89,7 +89,6 @@ export const SettingsDepositProductsAdd = () => {
       autoOpen: false,
       staffProduct: false,
       isForMinors: false,
-      alternativeChannels: false,
       atmFacility: false,
       chequeIssue: false,
       allowLoan: false,
@@ -103,11 +102,18 @@ export const SettingsDepositProductsAdd = () => {
   });
 
   const { getValues, watch, reset, resetField } = methods;
+  const criteria = watch('criteria');
+  const chequeIssue = watch('chequeIssue');
+  const penalty = watch('penalty');
+  const rebate = watch('rebate');
+  const atmFacility = watch('atmFacility');
+  const allowLoan = watch('allowLoan');
   const depositNature = watch('nature');
+  const ladderRate = watch('ladderRate');
   const typesOfMember = watch('typeOfMember');
+  const withdrawRestricted = watch('withdrawRestricted');
   const isMandatorySaving = watch('isMandatorySaving');
   const isTenureApplicable = watch('isTenureApplicable');
-  const criteria = watch('criteria');
 
   const submitForm = () => {
     const values = getValues();
@@ -139,11 +145,13 @@ export const SettingsDepositProductsAdd = () => {
       ? values?.cooperativeType?.map((data) => data)
       : null;
 
-    const ladderRateDataList = values?.ladderRateData?.map((data) => ({
-      type: data?.type,
-      rate: data?.rate,
-      amount: data?.amount.toString(),
-    }));
+    const ladderRateDataList = ladderRate
+      ? values?.ladderRateData?.map((data) => ({
+          type: data?.type,
+          rate: data?.rate,
+          amount: data?.amount.toString(),
+        }))
+      : null;
 
     const serviceChargeList = values?.serviceCharge?.map((data) => ({
       serviceName: data?.serviceName,
@@ -157,23 +165,21 @@ export const SettingsDepositProductsAdd = () => {
       amount: data?.amount.toString(),
     }));
 
-    const alternativeChannelList = values?.alternativeChannelCharge?.map((data) => ({
-      serviceName: data?.serviceName,
-      ledgerName: data?.ledgerName,
-      amount: data?.amount.toString(),
-    }));
+    const chequeChargeList = chequeIssue
+      ? values?.chequeCharge?.map((data) => ({
+          serviceName: data?.serviceName,
+          ledgerName: data?.ledgerName,
+          amount: data?.amount.toString(),
+        }))
+      : null;
 
-    const chequeChargeList = values?.chequeCharge?.map((data) => ({
-      serviceName: data?.serviceName,
-      ledgerName: data?.ledgerName,
-      amount: data?.amount.toString(),
-    }));
-
-    const atmChargeList = values?.atmCharge?.map((data) => ({
-      serviceName: data?.serviceName,
-      ledgerName: data?.ledgerName,
-      amount: data?.amount.toString(),
-    }));
+    const atmChargeList = atmFacility
+      ? values?.atmCharge?.map((data) => ({
+          serviceName: data?.serviceName,
+          ledgerName: data?.ledgerName,
+          amount: data?.amount.toString(),
+        }))
+      : null;
 
     const updatedData = {
       ...values,
@@ -189,15 +195,18 @@ export const SettingsDepositProductsAdd = () => {
       serviceCharge: serviceChargeList,
       accountCloseCharge: accountCloseChargeList,
       chequeCharge: chequeChargeList,
-      alternativeChannelCharge: alternativeChannelList,
       atmCharge: atmChargeList,
+      specifyWithdrawRestriction: withdrawRestricted ? values?.specifyWithdrawRestriction : null,
       transactionAllowed: values?.transactionAllowed ? values?.transactionAllowed : null,
       tenureUnit: values?.tenureUnit && isTenureApplicable ? values?.tenureUnit : null,
       maxTenureUnitNumber:
         values?.maxTenureUnitNumber && isTenureApplicable ? values?.maxTenureUnitNumber : null,
       minTenureUnitNumber:
         values?.minTenureUnitNumber && isTenureApplicable ? values?.minTenureUnitNumber : null,
-      depositFrequency: isMandatorySaving ? values?.depositFrequency : null,
+      depositFrequency:
+        depositNature === NatureOfDepositProduct.RecurringSaving || isMandatorySaving
+          ? values?.depositFrequency
+          : null,
       postingFrequency: values?.postingFrequency ? values?.postingFrequency : null,
       accountType: values?.accountType ? values?.accountType : null,
       interest: {
@@ -209,24 +218,24 @@ export const SettingsDepositProductsAdd = () => {
         minRate: values?.interest?.minRate ?? null,
       },
       penaltyData: {
-        dayAfterInstallmentDate: values?.penaltyData?.dayAfterInstallmentDate ?? null,
-        penaltyAmount: values?.penaltyData?.penaltyAmount ?? null,
-        penaltyRate: values?.penaltyData?.penaltyRate ?? null,
-        penaltyLedgerMapping: values?.penaltyData?.penaltyLedgerMapping ?? null,
+        dayAfterInstallmentDate: penalty ? values?.penaltyData?.dayAfterInstallmentDate : null,
+        penaltyAmount: penalty ? values?.penaltyData?.penaltyAmount : null,
+        penaltyRate: penalty ? values?.penaltyData?.penaltyRate : null,
+        // penaltyLedgerMapping: penalty ? values?.penaltyData?.penaltyLedgerMapping : null,
       },
       rebateData: {
-        dayBeforeInstallmentDate: values?.rebateData?.dayBeforeInstallmentDate ?? null,
-        noOfInstallment: values?.rebateData?.noOfInstallment ?? null,
-        rebateRate: values?.rebateData?.rebateRate ?? null,
-        rebateAmount: values?.rebateData?.rebateAmount ?? null,
-        rebateLedgerMapping: values?.rebateData?.rebateLedgerMapping ?? null,
+        dayBeforeInstallmentDate: rebate ? values?.rebateData?.dayBeforeInstallmentDate : null,
+        noOfInstallment: rebate ? values?.rebateData?.noOfInstallment : null,
+        rebateRate: rebate ? values?.rebateData?.rebateRate : null,
+        rebateAmount: rebate ? values?.rebateData?.rebateAmount : null,
+        rebateLedgerMapping: rebate ? values?.rebateData?.rebateLedgerMapping : null,
       },
       maxAge:
         values?.maxAge && criteria?.includes(CriteriaSection.Age) ? Number(values?.maxAge) : null,
       minAge:
         values?.minAge && criteria?.includes(CriteriaSection.Age) ? Number(values?.minAge) : null,
       maxPostingFreqDifference: values?.maxPostingFreqDifference ?? null,
-      percentageOfDeposit: values?.percentageOfDeposit ?? null,
+      percentageOfDeposit: allowLoan ? values?.percentageOfDeposit : null,
       depositAmount: {
         maxAmount: values?.depositAmount?.maxAmount ?? null,
         minAmount: values?.depositAmount?.minAmount ?? null,
@@ -355,10 +364,9 @@ export const SettingsDepositProductsAdd = () => {
                 <>
                   {/* <DepositAmount /> */}
                   <Penalty />
+                  <Rebate />
                 </>
               )}
-
-              {depositNature === NatureOfDepositProduct.RecurringSaving && <Rebate />}
 
               {depositNature === NatureOfDepositProduct.TermSavingOrFd && <FixedDepositAmount />}
 

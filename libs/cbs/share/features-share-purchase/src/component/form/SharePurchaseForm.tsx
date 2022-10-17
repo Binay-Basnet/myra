@@ -68,6 +68,10 @@ type ShareReturnFormType = Omit<SharePurchaseInput, 'selectAllShares'> & {
 
 export const SharePurchaseForm = () => {
   const { t } = useTranslation();
+
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [mode, setMode] = useState('shareInfo');
+
   const methods = useForm<ShareReturnFormType>({
     defaultValues: {
       paymentMode: SharePaymentMode.BankVoucherOrCheque,
@@ -86,9 +90,6 @@ export const SharePurchaseForm = () => {
   const cashPaid = watch('cash.cashPaid');
   const disableDenomination = watch('cash.disableDenomination');
   const extraFee = watch('extraFee');
-
-  const [totalAmount, setTotalAmount] = useState(0);
-  const [mode, setMode] = useState('shareInfo');
 
   const denominationTotal =
     denominations?.reduce(
@@ -110,6 +111,7 @@ export const SharePurchaseForm = () => {
 
   const handleSubmit = () => {
     const values = getValues();
+
     let updatedValues: SharePurchaseInput = {
       ...omit(values, ['amount', 'accountAmount', 'accountId']),
       totalAmount: totalAmount.toString(),
@@ -177,6 +179,7 @@ export const SharePurchaseForm = () => {
   const chargeList = chargesData?.share?.charges;
 
   useEffect(() => {
+    // const values = getValues();
     let temp = 0;
     if (chargeList) {
       if (extraFee) {
@@ -193,6 +196,13 @@ export const SharePurchaseForm = () => {
     } else {
       setTotalAmount(noOfShares * 100);
     }
+
+    // reset({
+    //   ...values,
+    //   cash: {
+    //     cashPaid: totalAmount.toString(),
+    //   },
+    // });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chargeList, extraFee, noOfShares, JSON.stringify(extraFee)]);
@@ -277,6 +287,7 @@ export const SharePurchaseForm = () => {
           <Container minW="container.xl" height="fit-content" p="0">
             {mode === 'shareInfo' && (
               <ShareInfoFooter
+                disableButton={noOfShares}
                 totalAmount={totalAmount}
                 paymentButtonHandler={paymentButtonHandler}
               />

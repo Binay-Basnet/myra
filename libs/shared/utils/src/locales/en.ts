@@ -3618,5 +3618,10 @@ const en: Record<string, string> = {
   acLastActive: 'Last Active',
 
   /* Alternative Channels End */
+
+  loanProductPressCompletetoSaveForm: 'Press Complete to save form',
+  depositProductDayBeforetheinstallmentdate: 'Day before the installment date',
+  depositProductInactive: 'Inactive',
+  depositProductActive: 'Active',
 };
 export default en;
