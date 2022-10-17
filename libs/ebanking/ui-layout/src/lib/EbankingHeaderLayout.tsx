@@ -39,7 +39,14 @@ export const EbankingHeaderLayout = ({ children }: IEbankingHeaderLayoutProps) =
         </Button>
       </Box>
     </Box>
-    <Box w="100%" h="100%" display="flex" justifyContent="center" bg="white" minH="100vh">
+    <Box
+      w="100%"
+      h="100%"
+      display="flex"
+      justifyContent="center"
+      bg="white"
+      minH="calc(100vh - 60px)"
+    >
       <Box w="445px" px="s16" display="flex" flexDir="column" py="s32" gap="s32">
         {children}
       </Box>
