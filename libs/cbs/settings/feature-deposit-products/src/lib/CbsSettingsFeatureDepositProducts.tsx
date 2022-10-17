@@ -23,7 +23,9 @@ const DEPOSIT_TAB_ITEMS = [
   },
 ];
 
-export const SettingsDepositProducts = () => {
+export const SettingsDepositProducts = () => <DepositProductTable />;
+
+export const DepositProductTable = () => {
   const newId = useGetNewIdMutation();
   const router = useRouter();
   const { t } = useTranslation();
