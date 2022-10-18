@@ -335,6 +335,7 @@ export const SearchBar = () => {
                         title={basic?.node?.page as string}
                         isSelected={focusState === index}
                         hasParam={basic?.node?.hasParam as boolean}
+                        fullCode={basic?.node?.fullCode}
                         onClick={async () => {
                           const response = basic?.node?.hasParam ? await getNewId({}) : null;
 
@@ -437,6 +438,7 @@ interface BasicSearchCardProps {
   onClick?: () => void;
   link: string;
   hasParam: boolean;
+  fullCode: string | undefined | null;
 }
 
 export const BasicSearchCard = ({
@@ -447,6 +449,7 @@ export const BasicSearchCard = ({
   isSelected,
   link,
   hasParam,
+  fullCode,
   app,
 }: BasicSearchCardProps) => {
   const { mutateAsync: getNewId } = useGetNewIdMutation();
@@ -472,7 +475,7 @@ export const BasicSearchCard = ({
 
         <Box display="flex" flexDir="column">
           <Text fontSize="r1" fontWeight="500">
-            {title}
+            {title} ({fullCode})
           </Text>
 
           <Text fontSize="r1" color="gray.500">
