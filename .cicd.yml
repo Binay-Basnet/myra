@@ -25,7 +25,7 @@ steps:
   commands:
   # - yarn cache --force clean
   # - yarn install --force --cache
-  # - npm install --cache /tmp/empty-cache
+  - yarn install --cache /tmp/empty-cache
   - yarn
   - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD
 
