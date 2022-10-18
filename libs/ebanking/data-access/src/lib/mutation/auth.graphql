@@ -1,6 +1,6 @@
 mutation signUp($mobileNo: String!) {
   eBanking {
-    auth {
+    auth(type: EBANKING) {
       signUp(mobileNo: $mobileNo) {
         error {
           ...MutationError
@@ -13,7 +13,7 @@ mutation signUp($mobileNo: String!) {
 
 mutation verifyOTP($data: EbankingOtpInput!) {
   eBanking {
-    auth {
+    auth(type: EBANKING) {
       verifyOtp(data: $data) {
         error {
           ...MutationError
@@ -26,7 +26,7 @@ mutation verifyOTP($data: EbankingOtpInput!) {
 
 mutation setPassword($data: EbankingPasswordInput!, $userId: ID!) {
   eBanking {
-    auth {
+    auth(type: EBANKING) {
       setPassword(data: $data, userID: $userId) {
         error {
           ...MutationError
@@ -39,7 +39,7 @@ mutation setPassword($data: EbankingPasswordInput!, $userId: ID!) {
 
 mutation eBankingLogin($data: EbankingLoginInput!) {
   eBanking {
-    auth {
+    auth(type: EBANKING) {
       login(data: $data) {
         recordId
         record {
@@ -47,6 +47,8 @@ mutation eBankingLogin($data: EbankingLoginInput!) {
             id
             cooperatives {
               id
+              name
+              logoUrl
               mobileNo
             }
             dob
@@ -66,17 +68,13 @@ mutation eBankingLogin($data: EbankingLoginInput!) {
   }
 }
 
-mutation checkAccount($id: ID!, $mobileNumber: String!) {
+mutation checkAccount($id: ID!, $mobileNumber: String!, $pin: Int!) {
   eBanking {
-    auth {
-      checkAccount(coopId: $id, mobileNumber: $mobileNumber) {
+    auth(type: EBANKING) {
+      checkAccount(coopId: $id, mobileNumber: $mobileNumber, pin: $pin ) {
         success
         error {
           ...MutationError
-        }
-        record {
-          fullName
-          memberId
         }
       }
     }
@@ -105,7 +103,7 @@ query getEbankingMe {
 
 mutation setNewPin($data: CooperativeConnectInput) {
   eBanking {
-    auth {
+    auth(type: EBANKING) {
       setNewPin(data: $data) {
         record {
           name
@@ -124,10 +122,10 @@ mutation setNewPin($data: CooperativeConnectInput) {
   }
 }
 
-mutation loginToCooperative($cooperativeId: ID!, $pinCode: Int) {
+mutation loginToCooperative($cooperativeId: ID!, $pinCode: Int, $mobileNumber: String!) {
   eBanking {
-    auth {
-      loginToCooperative(cooperativeId: $cooperativeId, pinCode: $pinCode) {
+    auth(type: EBANKING) {
+      loginToCooperative(cooperativeId: $cooperativeId, pinCode: $pinCode, mobileNumber: $mobileNumber) {
         error {
           ...MutationError
         }
@@ -150,7 +148,7 @@ mutation loginToCooperative($cooperativeId: ID!, $pinCode: Int) {
 
 query getCoopMe {
   eBanking {
-    auth {
+    auth{
       meCooperativeUser {
         data {
           myraUserId
@@ -171,6 +169,8 @@ query getMyraMe {
           id
           cooperatives {
             id
+            name
+            logoUrl
             mobileNo
           }
           name

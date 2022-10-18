@@ -192,6 +192,7 @@ export const ShareReturnForm = () => {
 
   useEffect(() => {
     let temp = 0;
+    // const values = getValues();
 
     if (chargeList) {
       if (extraFee) {
@@ -208,6 +209,12 @@ export const ShareReturnForm = () => {
     } else {
       setTotalAmount(noOfShares * 100);
     }
+    // reset({
+    //   ...values,
+    //   cash: {
+    //     cashPaid: totalAmount.toString(),
+    //   },
+    // });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chargeList, extraFee, noOfShares, JSON.stringify(extraFee)]);
 
@@ -285,12 +292,12 @@ export const ShareReturnForm = () => {
           </Container>
         </form>
       </FormProvider>
-
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.xl" height="fit-content" p="0">
             {mode === 'shareInfo' && (
               <ShareInfoFooter
+                disableButton={noOfShares}
                 totalAmount={totalAmount}
                 paymentButtonHandler={paymentButtonHandler}
               />

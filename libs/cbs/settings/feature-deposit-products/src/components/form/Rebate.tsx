@@ -40,7 +40,7 @@ export const Rebate = () => {
                   <FormInput
                     name="rebateData.dayBeforeInstallmentDate"
                     type="number"
-                    label={t['depositProductDayaftertheinstallmentdate']}
+                    label={t['depositProductDayBeforetheinstallmentdate']}
                   />
                 </GridItem>
                 <GridItem>

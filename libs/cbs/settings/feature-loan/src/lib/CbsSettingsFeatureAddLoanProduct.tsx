@@ -124,9 +124,13 @@ export const SettingsLoanProductForm = () => {
 
   const { getValues, reset, watch } = methods;
 
-  const repaymentScheme = watch('repaymentScheme');
-  const collateralTypes = watch('collateralTypes');
   const criteria = watch('criteria');
+  const allowGurantee = watch('allowGurantee');
+  const repaymentScheme = watch('repaymentScheme');
+  const isCollateralRequired = watch('isCollateralRequired');
+  const collateralTypes = watch('collateralTypes');
+  const isPenaltyApplicable = watch('isPenaltyApplicable');
+  const isInsuranceApplicable = watch('isInsuranceApplicable');
 
   const { data: editValues, refetch } = useGetLoanProductEditDataQuery(
     {
@@ -297,39 +301,49 @@ export const SettingsLoanProductForm = () => {
       maxLoanAmount: values?.maxLoanAmount ?? null,
       minimumLoanAmount: values?.minimumLoanAmount ?? null,
       installmentFrequency: values?.installmentFrequency ?? null,
+      collateralValue: isCollateralRequired ? collateralValueList : null,
+      collateralTypes: isCollateralRequired ? collateralTypes : null,
+      maxPercentOfGurantee: allowGurantee ? values?.maxPercentOfGurantee : null,
       rebate: {
         ...values?.rebate,
         rebateAmount: values?.rebate?.rebateAmount ?? null,
       },
       penaltyOnPrincipal: {
-        ...values?.penaltyOnPrincipal,
-        penaltyRate: values?.penaltyOnPrincipal?.penaltyRate ?? null,
-        dayAfterInstallmentDate: values?.penaltyOnPrincipal?.dayAfterInstallmentDate ?? null,
-        penaltyAmount: values?.penaltyOnPrincipal?.penaltyAmount ?? null,
-        penaltyLedgerMapping: values?.penaltyOnPrincipal?.penaltyLedgerMapping ?? null,
+        penaltyRate: isPenaltyApplicable ? values?.penaltyOnPrincipal?.penaltyRate : null,
+        dayAfterInstallmentDate: isPenaltyApplicable
+          ? values?.penaltyOnPrincipal?.dayAfterInstallmentDate
+          : null,
+        penaltyAmount: isPenaltyApplicable ? values?.penaltyOnPrincipal?.penaltyAmount : null,
+        // penaltyLedgerMapping: isPenaltyApplicable ? values?.penaltyOnPrincipal?.penaltyLedgerMapping : null,
       },
       penaltyOnInterest: {
-        ...values?.penaltyOnInterest,
-        penaltyRate: values?.penaltyOnInterest?.penaltyRate ?? null,
-        dayAfterInstallmentDate: values?.penaltyOnInterest?.dayAfterInstallmentDate ?? null,
-        penaltyAmount: values?.penaltyOnInterest?.penaltyAmount ?? null,
-        penaltyLedgerMapping: values?.penaltyOnInterest?.penaltyLedgerMapping ?? null,
+        penaltyRate: isPenaltyApplicable ? values?.penaltyOnInterest?.penaltyRate : null,
+        dayAfterInstallmentDate: isPenaltyApplicable
+          ? values?.penaltyOnInterest?.dayAfterInstallmentDate
+          : null,
+        penaltyAmount: isPenaltyApplicable ? values?.penaltyOnInterest?.penaltyAmount : null,
+        // penaltyLedgerMapping: isPenaltyApplicable ? values?.penaltyOnInterest?.penaltyLedgerMapping : null,
       },
       penaltyOnInstallment: {
-        ...values?.penaltyOnInstallment,
-        penaltyRate: values?.penaltyOnInstallment?.penaltyRate ?? null,
-        dayAfterInstallmentDate: values?.penaltyOnInstallment?.dayAfterInstallmentDate ?? null,
-        penaltyAmount: values?.penaltyOnInstallment?.penaltyAmount ?? null,
-        penaltyLedgerMapping: values?.penaltyOnInstallment?.penaltyLedgerMapping ?? null,
+        penaltyRate: isPenaltyApplicable ? values?.penaltyOnInstallment?.penaltyRate : null,
+        dayAfterInstallmentDate: isPenaltyApplicable
+          ? values?.penaltyOnInstallment?.dayAfterInstallmentDate
+          : null,
+        penaltyAmount: isPenaltyApplicable ? values?.penaltyOnInstallment?.penaltyAmount : null,
+        // penaltyLedgerMapping: isPenaltyApplicable ? values?.penaltyOnInstallment?.penaltyLedgerMapping : null,
       },
       prematurePenaltySetup: {
         noOfDays: values?.prematurePenaltySetup?.noOfDays ?? null,
         penaltyAmount: values?.prematurePenaltySetup?.penaltyAmount ?? null,
         penaltyDateType: values?.prematurePenaltySetup?.penaltyDateType ?? null,
-        penaltyLedgerMapping: values?.prematurePenaltySetup?.penaltyLedgerMapping ?? null,
         penaltyRate: values?.prematurePenaltySetup?.penaltyRate ?? null,
+        // penaltyLedgerMapping: values?.prematurePenaltySetup?.penaltyLedgerMapping ?? null,
       },
-      collateralValue: collateralValueList,
+      insuranceType: {
+        amount: isInsuranceApplicable ? values?.insuranceType?.amount : null,
+        rate: isInsuranceApplicable ? values?.insuranceType?.rate : null,
+        type: isInsuranceApplicable ? values?.insuranceType?.type : null,
+      },
     };
 
     asyncToast({
@@ -475,7 +489,7 @@ export const SettingsLoanProductForm = () => {
               status={
                 <Box display="flex" gap="s8">
                   <Text color="neutralColorLight.Gray-60" fontWeight="Regular" as="i" fontSize="r1">
-                    Press Complete to save form
+                    {t['loanProductPressCompletetoSaveForm']}
                   </Text>
                 </Box>
               }

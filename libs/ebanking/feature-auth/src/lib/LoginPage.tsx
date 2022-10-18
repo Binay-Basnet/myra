@@ -2,8 +2,7 @@ import { FieldValues, useForm, UseFormRegister } from 'react-hook-form';
 import { AiOutlineMobile } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
-import { useAppDispatch, useEBankingLoginMutation } from '@coop/ebanking/data-access';
-import { login } from '@coop/neosys-admin/data-access';
+import { login, useAppDispatch, useEBankingLoginMutation } from '@coop/ebanking/data-access';
 import { Box, Button, Checkbox, Icon, Input, PasswordInput, Text, toast } from '@coop/shared/ui';
 
 import { AuthContainer } from '../components/AuthContainer';

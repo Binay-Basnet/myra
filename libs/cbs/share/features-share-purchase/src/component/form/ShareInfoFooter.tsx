@@ -2,11 +2,16 @@ import { Box, FormFooter, Text } from '@coop/shared/ui';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type FooterProps = {
+  disableButton: number;
   totalAmount: number;
   paymentButtonHandler: () => void;
 };
 
-export const ShareInfoFooter = ({ paymentButtonHandler, totalAmount }: FooterProps) => {
+export const ShareInfoFooter = ({
+  paymentButtonHandler,
+  totalAmount,
+  disableButton,
+}: FooterProps) => {
   const { t } = useTranslation();
 
   return (
@@ -16,19 +21,20 @@ export const ShareInfoFooter = ({ paymentButtonHandler, totalAmount }: FooterPro
           <Text color="neutralColorLight.Gray-60" fontWeight="Regular" as="i" fontSize="r1">
             {totalAmount ? (
               <Text>
-                Total Amount
+                {t['sharePurchaseTotalAmount']}
                 <Text ml="s32" color="neutralColorLight.Gray-70" fontWeight="SemiBold" as="span">
                   {amountConverter(totalAmount)}
                 </Text>
               </Text>
             ) : (
-              ' Form details saved to draft 09:41 AM'
+              'Form details saved to draft 09:41 AM'
             )}
           </Text>
         </Box>
       }
       mainButtonLabel={t['proceedToPayment']}
       mainButtonHandler={paymentButtonHandler}
+      isMainButtonDisabled={!disableButton}
     />
   );
 };

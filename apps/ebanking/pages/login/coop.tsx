@@ -5,29 +5,33 @@ import { useRouter } from 'next/router';
 
 import {
   switchCooperative,
-  useGetCoopListQuery,
+  useAppSelector,
   useLoginToCooperativeMutation,
 } from '@coop/ebanking/data-access';
 import { EbankingHeaderLayout } from '@coop/ebanking/ui-layout';
-import { Box, Button, Input, Text, TextFields } from '@coop/shared/ui';
+import { Avatar, Box, Button, Input, Text, TextFields } from '@coop/shared/ui';
 
 const CoopSelectPage = () => {
   const methods = useForm();
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const cooperativesList = useAppSelector((state) => state?.auth?.user?.cooperatives);
+
   const [selectedCoop, setSelectedCoop] = useState<string | null>(null);
   const [status, setStatus] = useState<'coop-select' | 'pin'>('coop-select');
 
-  const { data } = useGetCoopListQuery();
-  const { mutateAsync: loginToCooperative } = useLoginToCooperativeMutation();
+  const { mutateAsync: loginToCooperative, isLoading } = useLoginToCooperativeMutation();
 
-  const filteredCoopList = data?.eBanking?.neosysClientsList?.filter((d) => d.id);
+  const selectedCoopPhone = cooperativesList?.find((c) => c.id === selectedCoop)?.mobileNo;
 
   const onSubmit = async () => {
+    if (!selectedCoopPhone) return;
+
     const response = await loginToCooperative({
       cooperativeId: selectedCoop,
-      pinCode: methods.getValues('pin'),
+      pinCode: methods.getValues('pin') as number,
+      mobileNumber: selectedCoopPhone,
     });
 
     const errors = response?.eBanking?.auth?.loginToCooperative?.error;
@@ -67,7 +71,7 @@ const CoopSelectPage = () => {
               </Box>
 
               <Box display="flex" flexDir="column" gap="s16">
-                {filteredCoopList?.map((coop) => (
+                {cooperativesList?.map((coop) => (
                   <Box
                     cursor="pointer"
                     h="60px"
@@ -81,13 +85,16 @@ const CoopSelectPage = () => {
                     px="s16"
                     display="flex"
                     alignItems="center"
+                    gap="s8"
                     onClick={() => {
                       setSelectedCoop(coop.id);
                       setStatus('pin');
                     }}
                   >
+                    <Avatar src={coop.logoUrl} name={coop?.name} size="sm" />
+
                     <Text fontSize="r1" color="gray.800">
-                      {coop.clientName}
+                      {coop.name}
                     </Text>
                   </Box>
                 ))}
@@ -125,7 +132,12 @@ const CoopSelectPage = () => {
                   />
                 </Box>
               </FormProvider>
-              <Button width="100%" isDisabled={!selectedCoop} onClick={onSubmit}>
+              <Button
+                width="100%"
+                isDisabled={!selectedCoop}
+                onClick={onSubmit}
+                isLoading={isLoading}
+              >
                 Continue
               </Button>
             </>
