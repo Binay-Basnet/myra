@@ -405,7 +405,7 @@ steps:
   - yarn cache clean
   # - npm install --force --cache
   - yarn
-  - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD --verbose
+  - npx nx affected --target=build --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD --verbose
 
 volumes:
 - name: node_modules
