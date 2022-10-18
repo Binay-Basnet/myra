@@ -171,6 +171,7 @@ export const ActivationForm = () => {
         success: 'Service Activated!!',
         loading: 'Activating Services!!',
       },
+
       onSuccess: () => {
         router.push(`/alternative-channels/${router.query['type']}/users`);
         queryClient.invalidateQueries('getActivatedService');

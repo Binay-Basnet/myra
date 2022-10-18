@@ -9,7 +9,7 @@ import {
   useGetAlternativeChannelListQuery,
 } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { ChakraModal, DetailCardContent, Grid, SwitchTabs } from '@coop/shared/ui';
+import { Box, ChakraModal, DetailCardContent, Grid, SwitchTabs } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 interface ACTableProps {
@@ -45,8 +45,18 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
       {
         header: t['acStatus'],
         accessorFn: (row) => row?.data?.serviceStatus,
-        cell: ({ getValue }) =>
-          getValue() === AlternativeChannelStatus.Active ? t['acActive'] : t['acInactive'],
+        cell: ({ getValue }) => (
+          <Box display="flex" alignItems="center" gap="s8">
+            {getValue() === AlternativeChannelStatus.Active ? (
+              <Box w="8px" h="8px" bg="primary.500" borderRadius="100%" />
+            ) : (
+              <Box w="8px" h="8px" bg="danger.500" borderRadius="100%" />
+            )}
+            <Box>
+              {getValue() === AlternativeChannelStatus.Active ? t['acActive'] : t['acInactive']}
+            </Box>
+          </Box>
+        ),
       },
       {
         id: 'phoneNumber',

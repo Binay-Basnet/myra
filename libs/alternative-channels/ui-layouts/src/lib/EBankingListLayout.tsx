@@ -35,7 +35,7 @@ export const EBankingListLayout = ({ children }: IAccountPageLayoutProps) => {
             leftIcon={<Icon as={HiPlus} />}
             w="100%"
             justifyContent="start"
-            onClick={() => router.push('/alternative-channels/activation?type=smsBanking')}
+            onClick={() => router.push('/alternative-channels/activation?type=eBanking')}
           >
             {t['new']}
           </Button>
