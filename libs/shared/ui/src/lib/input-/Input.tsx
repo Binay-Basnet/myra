@@ -55,6 +55,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref)
         <ChakraInput
           type={type}
           data-testid={name}
+          _focus={{
+            borderColor: errorText ? 'danger.500' : 'primary.500',
+          }}
           name={name}
           ref={ref}
           h="100%"
