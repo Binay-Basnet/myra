@@ -279,6 +279,7 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
             dateJoined
           }
           overDrawnBalance
+          guaranteedAmount
           product {
             id
             productCode

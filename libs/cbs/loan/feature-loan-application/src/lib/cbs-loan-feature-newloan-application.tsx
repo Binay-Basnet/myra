@@ -30,7 +30,7 @@ import {
   AccordianComponent,
   CriteriaCard,
   Interest,
-  // LinkedAccounts,
+  LinkedAccounts,
   LoanProcessingCharge,
   LoanProductCard,
   LoanRepaymentSchemeComponent,
@@ -289,7 +289,7 @@ export const NewLoanApplication = () => {
                     <LoanAmountDetails />
                     <Interest />
                     <Tenure />
-                    {/* <LinkedAccounts /> */}
+                    <LinkedAccounts />
                     <LoanRepaymentSchemeComponent />
                     <LoanPaymentSchedule />
                     <LoanProcessingCharge />

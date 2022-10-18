@@ -1,4 +1,4 @@
-import { FormInput } from '@coop/shared/form';
+import { FormAmountInput, FormInput } from '@coop/shared/form';
 import { Alert, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -20,8 +20,7 @@ export const WithdrawPenalty = () => {
 
   return (
     <FormSection header="depositProductWithdrawPenaltySetup">
-      <FormInput
-        type="number"
+      <FormAmountInput
         name="withdrawPenalty.penaltyAmount"
         label={t['depositProductPenaltyAmount']}
       />

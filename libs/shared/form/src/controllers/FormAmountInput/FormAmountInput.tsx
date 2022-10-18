@@ -1,18 +1,15 @@
 import { Control, Controller, Path, useFormContext } from 'react-hook-form';
 
-import { AccountInput, InputProps } from '@coop/shared/ui';
+import { AmountInput, InputProps } from '@coop/shared/ui';
 
 /* eslint-disable-next-line */
-interface FormAccountInputProps<T> extends InputProps {
+
+interface FormAmountInputProps<T> extends InputProps {
   name: Path<T>;
   control?: Control<T>;
 }
 
-export const FormAccountInput = <T,>({
-  name,
-  __placeholder,
-  ...rest
-}: FormAccountInputProps<T>) => {
+export const FormAmountInput = <T,>({ name, ...rest }: FormAmountInputProps<T>) => {
   const methods = useFormContext();
 
   const {
@@ -25,7 +22,7 @@ export const FormAccountInput = <T,>({
       control={control}
       name={name}
       render={({ field: { onChange, value, ...fieldProps } }) => (
-        <AccountInput
+        <AmountInput
           id={name}
           onChange={onChange}
           value={value}
@@ -38,4 +35,4 @@ export const FormAccountInput = <T,>({
   );
 };
 
-export default FormAccountInput;
+export default FormAmountInput;

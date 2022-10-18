@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import { FormInput, FormSwitchTab } from '@coop/shared/form';
+import { FormAmountInput, FormInput, FormSwitchTab } from '@coop/shared/form';
 import { Alert, Box, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -67,9 +67,8 @@ export const Penalty = () => {
                   }
                 />
 
-                <FormInput
+                <FormAmountInput
                   name="penaltyData.penaltyAmount"
-                  type="number"
                   label={t['depositProductPenaltyAmount']}
                 />
                 {/* <FormSelect

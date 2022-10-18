@@ -1,4 +1,4 @@
-import { FormInput } from '@coop/shared/form';
+import { FormAmountInput } from '@coop/shared/form';
 import { FormSection } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -7,14 +7,8 @@ export const BalanceLimit = () => {
 
   return (
     <FormSection header="depositProductBalanceLimit">
-      <FormInput
-        name="balanceLimit.minAmount"
-        label={t['depositProductMinimumAmount']}
-      />
-      <FormInput
-        name="balanceLimit.maxAmount"
-        label={t['depositProductMaximumAmount']}
-      />
+      <FormAmountInput name="balanceLimit.minAmount" label={t['depositProductMinimumAmount']} />
+      <FormAmountInput name="balanceLimit.maxAmount" label={t['depositProductMaximumAmount']} />
     </FormSection>
   );
 };

@@ -231,7 +231,7 @@ export const LoanRepayment = () => {
               <MemberCard
                 memberDetails={{
                   name: memberDetailData?.name,
-                  avatar: 'https://bit.ly/dan-abramov',
+                  avatar: memberDetailData?.profilePicUrl ?? '',
                   memberID: memberDetailData?.id,
                   gender: memberDetailData?.gender,
                   age: memberDetailData?.age,

@@ -1,5 +1,5 @@
 import { PrematurePenaltyDateType } from '@coop/cbs/data-access';
-import { FormInput, FormSelect } from '@coop/shared/form';
+import { FormAmountInput, FormInput, FormSelect } from '@coop/shared/form';
 import { Alert, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -43,11 +43,9 @@ export const PrematurePenalty = () => {
         label={t['depositProductPenaltyLedgerMapping']}
         options={coaList}
       /> */}
-      <FormInput
+      <FormAmountInput
         name="prematurePenaltySetup.penaltyAmount"
-        type="number"
         label={t['depositProductPenaltyAmount']}
-        textAlign="right"
       />
       <FormInput
         name="prematurePenaltySetup.penaltyRate"
