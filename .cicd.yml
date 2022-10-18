@@ -27,7 +27,7 @@ steps:
   - npm install --force --cache
   # - yarn install --cache /tmp/empty-cache
   - yarn
-  - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD
+  - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD --verbose
 
 volumes:
 - name: node_modules
