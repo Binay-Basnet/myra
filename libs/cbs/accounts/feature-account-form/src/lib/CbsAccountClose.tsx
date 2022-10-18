@@ -543,7 +543,7 @@ export const CbsAccountClose = () => {
                           ID: selectedAccount?.product?.id,
                           currentBalance: selectedAccount?.balance ?? '0',
                           minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
-                          guaranteeBalance: '1000',
+                          guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
                           overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                           fine: FINE,
                           // branch: 'Kumaripati',

@@ -346,7 +346,7 @@ export const AddWithdraw = () => {
                               ID: selectedAccount?.product?.id,
                               currentBalance: selectedAccount?.balance ?? '0',
                               minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
-                              guaranteeBalance: '1000',
+                              guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
                               overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                               fine: selectedAccount?.dues?.fine ?? '0',
                               // branch: 'Kumaripati',

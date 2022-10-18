@@ -11967,6 +11967,7 @@ export type GetAccountTableListQuery = {
           lastTransactionDate?: string | null;
           accountExpiryDate?: string | null;
           overDrawnBalance?: string | null;
+          guaranteedAmount?: string | null;
           createdBy: { id: string };
           modifiedBy: { id: string };
           member?: {
@@ -19359,6 +19360,7 @@ export const GetAccountTableListDocument = `
             dateJoined
           }
           overDrawnBalance
+          guaranteedAmount
           product {
             id
             productCode
