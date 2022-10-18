@@ -2157,6 +2157,7 @@ export type DepositProduct = Base & {
   productCode: Scalars['String'];
   productName: Scalars['String'];
   typeOfMember?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
+  withdrawRestricted?: Maybe<Scalars['Boolean']>;
 };
 
 export type DepositProductCategoryList = {
@@ -10062,6 +10063,12 @@ export enum WeeklyFrequency {
   DayOfTheWeek = 'DAY_OF_THE_WEEK',
 }
 
+export type WithdrawBankCheque = {
+  amount: Scalars['String'];
+  bankId: Scalars['String'];
+  chequeNo: Scalars['String'];
+};
+
 export enum WithdrawBy {
   Agent = 'AGENT',
   Self = 'SELF',
@@ -10071,13 +10078,14 @@ export type WithdrawInput = {
   accountId: Scalars['String'];
   agentId?: InputMaybe<Scalars['String']>;
   amount: Scalars['String'];
-  bankCheque?: InputMaybe<DepositCheque>;
+  bankCheque?: InputMaybe<WithdrawBankCheque>;
   cash?: InputMaybe<DepositCash>;
   chequeNo?: InputMaybe<Scalars['String']>;
   doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   fine?: InputMaybe<Scalars['String']>;
   memberId: Scalars['String'];
   notes?: InputMaybe<Scalars['String']>;
+  override?: InputMaybe<Scalars['Boolean']>;
   payment_type: WithdrawPaymentType;
   sourceOfFund?: InputMaybe<Scalars['String']>;
   withdrawSlipNo?: InputMaybe<Scalars['String']>;
@@ -11983,6 +11991,7 @@ export type GetAccountTableListQuery = {
             nature: NatureOfDepositProduct;
             minimumBalance?: string | null;
             isMandatorySaving?: boolean | null;
+            withdrawRestricted?: boolean | null;
           };
           dues?: {
             fine?: string | null;
@@ -19355,6 +19364,7 @@ export const GetAccountTableListDocument = `
             nature
             minimumBalance
             isMandatorySaving
+            withdrawRestricted
           }
           dues {
             fine

@@ -198,7 +198,10 @@ export const SettingsDepositProductsAdd = () => {
       chequeCharge: chequeChargeList,
       atmCharge: atmChargeList,
       specifyWithdrawRestriction: withdrawRestricted ? values?.specifyWithdrawRestriction : null,
-      transactionAllowed: values?.transactionAllowed ? values?.transactionAllowed : null,
+      transactionAllowed:
+        depositNature !== NatureOfDepositProduct.TermSavingOrFd && values?.transactionAllowed
+          ? values?.transactionAllowed
+          : null,
       tenureUnit: values?.tenureUnit && isTenureApplicable ? values?.tenureUnit : null,
       maxTenureUnitNumber:
         values?.maxTenureUnitNumber && isTenureApplicable ? values?.maxTenureUnitNumber : null,
