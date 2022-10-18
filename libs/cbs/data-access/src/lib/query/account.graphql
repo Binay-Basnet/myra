@@ -286,6 +286,7 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
             nature
             minimumBalance
             isMandatorySaving
+            withdrawRestricted
           }
           dues {
             fine

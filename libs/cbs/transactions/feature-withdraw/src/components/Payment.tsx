@@ -85,7 +85,12 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
     },
   ];
 
-  const { watch, resetField } = useFormContext();
+  const { watch, resetField, setValue } = useFormContext();
+
+  useEffect(() => {
+    setValue('cash.cashPaid', String(totalWithdraw));
+    setValue('bankCheque.amount', String(totalWithdraw));
+  }, [totalWithdraw]);
 
   const { data: bank } = useGetCoaBankListQuery({
     accountCode: featureCode.accountCode as string[],

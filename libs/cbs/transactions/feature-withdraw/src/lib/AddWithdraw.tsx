@@ -16,6 +16,7 @@ import {
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import {
+  Alert,
   asyncToast,
   Box,
   Button,
@@ -229,6 +230,15 @@ export const AddWithdraw = () => {
                       name="accountId"
                       label={t['addWithdrawSelectWithdrawAccount']}
                       memberId={memberId}
+                    />
+                  )}
+
+                  {selectedAccount?.product?.withdrawRestricted && (
+                    <Alert
+                      status="info"
+                      hideCloseIcon
+                      title="Withdraw Restricted"
+                      subtitle="Withdraw is restricted for this account."
                     />
                   )}
 
