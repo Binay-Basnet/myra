@@ -402,7 +402,7 @@ steps:
   - name: neosys-admin-app
     path: /drone/src/apps/neosys-admin/dist
   commands:
-  # - yarn cache clean
+  - yarn cache clean
   # - npm install --force --cache
   - yarn
   - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD
