@@ -89,6 +89,8 @@ volumes:
 - name: storybook-build
   host:
     path: /build-cache/myra-ui-dev/storybook
+depends_on:
+- Build all the apps - dev
 
 trigger:
   branch:
@@ -400,6 +402,8 @@ steps:
   - name: neosys-admin-app
     path: /drone/src/apps/neosys-admin/dist
   commands:
+  - npm cache --force clean
+  - yarn install --force --cache
   - yarn
   - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD
 
