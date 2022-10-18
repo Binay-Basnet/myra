@@ -312,7 +312,7 @@ export const AddBulkDeposit = () => {
                       isInline
                       memberDetails={{
                         name: memberDetailData?.name,
-                        avatar: 'https://bit.ly/dan-abramov',
+                        avatar: memberDetailData?.profilePicUrl ?? '',
                         memberID: memberDetailData?.id,
                         gender: memberDetailData?.gender,
                         age: memberDetailData?.age,
@@ -337,7 +337,7 @@ export const AddBulkDeposit = () => {
                               ID: selectedAccount?.product?.id,
                               currentBalance: selectedAccount?.balance ?? '0',
                               minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
-                              guaranteeBalance: '1000',
+                              guaranteeBalance: selectedAccount?.guaranteedAmount ?? '',
                               overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                               fine: FINE,
                               // branch: 'Kumaripati',
