@@ -2157,6 +2157,7 @@ export type DepositProduct = Base & {
   productCode: Scalars['String'];
   productName: Scalars['String'];
   typeOfMember?: Maybe<Array<Maybe<KymMemberTypesEnum>>>;
+  withdrawRestricted?: Maybe<Scalars['Boolean']>;
 };
 
 export type DepositProductCategoryList = {
@@ -7142,7 +7143,6 @@ export type LoanProduct = Base & {
   penaltyOnInstallment?: Maybe<Penalty>;
   penaltyOnInterest?: Maybe<Penalty>;
   penaltyOnPrincipal?: Maybe<Penalty>;
-  penaltyType?: Maybe<PenaltyType>;
   postingFrequency?: Maybe<LoanProductInstallment>;
   prematurePenaltySetup?: Maybe<PrematurePenaltyFormState>;
   productCode?: Maybe<ProductCodeType>;
@@ -7240,7 +7240,6 @@ export type LoanProductInput = {
   penaltyOnInstallment?: InputMaybe<PenaltyTypeInput>;
   penaltyOnInterest?: InputMaybe<PenaltyTypeInput>;
   penaltyOnPrincipal?: InputMaybe<PenaltyTypeInput>;
-  penaltyType?: InputMaybe<PenaltyType>;
   postingFrequency?: InputMaybe<LoanProductInstallment>;
   prematurePenaltySetup?: InputMaybe<PrematurePenalty>;
   productCode?: InputMaybe<ProductCode>;
@@ -8485,12 +8484,6 @@ export type PenaltyRebateResult = {
   data?: Maybe<PenaltyRebate>;
   error?: Maybe<QueryError>;
 };
-
-export enum PenaltyType {
-  Installment = 'INSTALLMENT',
-  Interest = 'INTEREST',
-  Principal = 'PRINCIPAL',
-}
 
 export type PenaltyTypeInput = {
   dayAfterInstallmentDate?: InputMaybe<Scalars['Int']>;
@@ -9978,6 +9971,12 @@ export enum WeeklyFrequency {
   DayOfTheWeek = 'DAY_OF_THE_WEEK',
 }
 
+export type WithdrawBankCheque = {
+  amount: Scalars['String'];
+  bankId: Scalars['String'];
+  chequeNo: Scalars['String'];
+};
+
 export enum WithdrawBy {
   Agent = 'AGENT',
   Self = 'SELF',
@@ -9987,13 +9986,14 @@ export type WithdrawInput = {
   accountId: Scalars['String'];
   agentId?: InputMaybe<Scalars['String']>;
   amount: Scalars['String'];
-  bankCheque?: InputMaybe<DepositCheque>;
+  bankCheque?: InputMaybe<WithdrawBankCheque>;
   cash?: InputMaybe<DepositCash>;
   chequeNo?: InputMaybe<Scalars['String']>;
   doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   fine?: InputMaybe<Scalars['String']>;
   memberId: Scalars['String'];
   notes?: InputMaybe<Scalars['String']>;
+  override?: InputMaybe<Scalars['Boolean']>;
   payment_type: WithdrawPaymentType;
   sourceOfFund?: InputMaybe<Scalars['String']>;
   withdrawSlipNo?: InputMaybe<Scalars['String']>;
