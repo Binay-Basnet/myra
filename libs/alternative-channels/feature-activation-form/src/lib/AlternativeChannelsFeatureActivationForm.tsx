@@ -298,7 +298,7 @@ export const ActivationForm = () => {
                   {t['acTotalAmount']}
                 </Text>
                 <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
-                  {0 ?? '---'}
+                  {totalAmount ?? '---'}
                 </Text>
               </Box>
             ) : (
