@@ -51,14 +51,17 @@ export const Questions = () => {
 
   return (
     <>
-      <FormSection>
-        <GridItem colSpan={3}>
-          <Box display="flex" flexDirection="row" justifyContent="space-between">
-            <SubHeadingText>{t['depositProductAutoOpenwhenmemberjoins']}</SubHeadingText>
-            <FormSwitchTab name="autoOpen" options={yesNo} />
-          </Box>
-        </GridItem>
-      </FormSection>
+      {(depositNature === NatureOfDepositProduct.Current ||
+        depositNature === NatureOfDepositProduct.Saving) && (
+        <FormSection>
+          <GridItem colSpan={3}>
+            <Box display="flex" flexDirection="row" justifyContent="space-between">
+              <SubHeadingText>{t['depositProductAutoOpenwhenmemberjoins']}</SubHeadingText>
+              <FormSwitchTab name="autoOpen" options={yesNo} />
+            </Box>
+          </GridItem>
+        </FormSection>
+      )}
 
       <FormSection>
         <GridItem colSpan={3}>

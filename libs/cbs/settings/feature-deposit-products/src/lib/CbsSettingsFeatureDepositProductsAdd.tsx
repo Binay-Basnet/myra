@@ -97,6 +97,7 @@ export const SettingsDepositProductsAdd = () => {
       wealthBuildingProduct: false,
       ladderRate: false,
       isMandatorySaving: false,
+      alternativeChannels: false,
       tenureUnit: FrequencyTenure.Day,
     },
   });

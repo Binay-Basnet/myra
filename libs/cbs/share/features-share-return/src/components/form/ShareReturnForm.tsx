@@ -192,7 +192,7 @@ export const ShareReturnForm = () => {
 
   useEffect(() => {
     let temp = 0;
-    // const values = getValues();
+    const values = getValues();
 
     if (chargeList) {
       if (extraFee) {
@@ -209,12 +209,12 @@ export const ShareReturnForm = () => {
     } else {
       setTotalAmount(noOfShares * 100);
     }
-    // reset({
-    //   ...values,
-    //   cash: {
-    //     cashPaid: totalAmount.toString(),
-    //   },
-    // });
+    reset({
+      ...values,
+      cash: {
+        cashPaid: totalAmount.toString(),
+      },
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chargeList, extraFee, noOfShares, JSON.stringify(extraFee)]);
 

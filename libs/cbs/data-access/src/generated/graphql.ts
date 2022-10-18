@@ -7579,6 +7579,22 @@ export type MemberActiveInput = {
   institution?: InputMaybe<Scalars['Boolean']>;
 };
 
+export type MemberBasicInfoView = {
+  address?: Maybe<Scalars['Localized']>;
+  addressId?: Maybe<Scalars['String']>;
+  contactNumber?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  fathersName?: Maybe<Scalars['String']>;
+  gender?: Maybe<Scalars['Localized']>;
+  genderId?: Maybe<Scalars['String']>;
+  grandFathersName?: Maybe<Scalars['String']>;
+  maritalStatus?: Maybe<Scalars['Localized']>;
+  maritalStatusId?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberJoined?: Maybe<Scalars['String']>;
+  mothersName?: Maybe<Scalars['String']>;
+};
+
 export type MemberChargeData = {
   charge: Scalars['Int'];
   ledgerId: Scalars['ID'];
@@ -7643,6 +7659,27 @@ export type MemberMutationTranslateArgs = {
   memberId: Scalars['ID'];
 };
 
+export type MemberOverviewData = {
+  accounts?: Maybe<Scalars['String']>;
+  bio?: Maybe<Scalars['String']>;
+  overview?: Maybe<OverviewView>;
+  reports?: Maybe<Scalars['String']>;
+  share?: Maybe<Scalars['String']>;
+  transactions?: Maybe<Scalars['String']>;
+};
+
+export type MemberOverviewResult = {
+  data?: Maybe<MemberOverviewData>;
+  error?: Maybe<QueryError>;
+};
+
+export type MemberPaymentView = {
+  accountName?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']>;
+  paymentType?: Maybe<Scalars['String']>;
+};
+
 export type MemberProfile =
   | CooperativeUnionMember
   | KymCooperativeFormStateQuery
@@ -7657,6 +7694,7 @@ export type MemberQuery = {
   individual?: Maybe<KymIndQuery>;
   institution?: Maybe<KymInsQuery>;
   list: KymMemberListConnection;
+  memberOverview?: Maybe<MemberOverviewResult>;
   memberPDF: Scalars['String'];
   memberTypes: MemberTypeResult;
   officialUse?: Maybe<OfficialUseResult>;
@@ -7681,6 +7719,10 @@ export type MemberQueryListArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type MemberQueryMemberOverviewArgs = {
+  id: Scalars['ID'];
+};
+
 export type MemberQueryMemberPdfArgs = {
   id: Scalars['ID'];
 };
@@ -7691,6 +7733,14 @@ export type MemberQueryOfficialUseArgs = {
 
 export type MemberQueryTranslateArgs = {
   id: Scalars['ID'];
+};
+
+export type MemberRecentTransactionView = {
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']>;
+  noOfShares?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['String']>;
+  txnType?: Maybe<Scalars['String']>;
 };
 
 export type MemberRiskData = {
@@ -7708,6 +7758,12 @@ export type MemberRiskInput = {
 export type MemberShare = {
   history?: Maybe<Array<Maybe<ShareRegister>>>;
   summary?: Maybe<ShareBalance>;
+};
+
+export type MemberStatisticsView = {
+  accountBalance?: Maybe<Scalars['String']>;
+  loanBalance?: Maybe<Scalars['String']>;
+  totalShareValue?: Maybe<Scalars['String']>;
 };
 
 export type MemberTypeResult = {
@@ -8430,6 +8486,13 @@ export enum OrganizationType {
   Preliminary = 'PRELIMINARY',
   ProvinceUnion = 'PROVINCE_UNION',
 }
+
+export type OverviewView = {
+  basicInformation?: Maybe<MemberBasicInfoView>;
+  payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
+  recentTransactions?: Maybe<Array<Maybe<MemberRecentTransactionView>>>;
+  statistics?: Maybe<MemberStatisticsView>;
+};
 
 export type PageInfo = {
   endCursor?: Maybe<Scalars['Cursor']>;
