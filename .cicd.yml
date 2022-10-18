@@ -23,7 +23,7 @@ steps:
   - name: neosys-admin-app
     path: /drone/src/apps/neosys-admin/dist
   commands:
-  - rmdir /drone/src/apps/myra/dist
+  - rm -rf /drone/src/apps/myra/dist
   - yarn
   - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD
 
