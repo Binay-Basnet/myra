@@ -9,6 +9,7 @@ export const EbankingUsersList = () => {
   return (
     <>
       <PageHeader heading={`${t['acUsers']}`} />
+
       <ACTable serviceType={AlternativeChannelServiceType.Ebanking} />
     </>
   );
