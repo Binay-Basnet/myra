@@ -4124,6 +4124,22 @@ export type GeneralSettingsQuery = {
   valuator?: Maybe<ValuatorSettingsQuery>;
 };
 
+export enum GlobalPageAppName {
+  AccountingSystem = 'ACCOUNTING_SYSTEM',
+  CoreBankingSystem = 'CORE_BANKING_SYSTEM',
+  InventoryMgmt = 'INVENTORY_MGMT',
+  Settings = 'SETTINGS',
+}
+
+export enum GlobalPageMenuName {
+  Accounts = 'ACCOUNTS',
+  Loan = 'LOAN',
+  Member = 'MEMBER',
+  Reports = 'REPORTS',
+  Share = 'SHARE',
+  Transactions = 'TRANSACTIONS',
+}
+
 export enum GlobalPagesIconType {
   Add = 'ADD',
   List = 'LIST',
@@ -4133,9 +4149,11 @@ export enum GlobalPagesIconType {
 }
 
 export type GlobalPagesResultNode = {
+  appName?: Maybe<GlobalPageAppName>;
   fullCode?: Maybe<Scalars['String']>;
   hasParam?: Maybe<Scalars['Boolean']>;
   iconType?: Maybe<GlobalPagesIconType>;
+  menuName?: Maybe<GlobalPageMenuName>;
   page?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
 };
@@ -6683,6 +6701,7 @@ export type LoanAccountFormState = {
   isBoardAuthority?: Maybe<Scalars['Boolean']>;
   isCeoAuthority?: Maybe<Scalars['Boolean']>;
   justifySanction?: Maybe<Scalars['String']>;
+  linkedAccountId?: Maybe<Scalars['String']>;
   loanProcessingCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
   memberId?: Maybe<Scalars['ID']>;
   note?: Maybe<Scalars['String']>;
@@ -6758,6 +6777,7 @@ export type LoanAccountInput = {
   isBoardAuthority?: InputMaybe<Scalars['Boolean']>;
   isCeoAuthority?: InputMaybe<Scalars['Boolean']>;
   justifySanction?: InputMaybe<Scalars['String']>;
+  linkedAccountId?: InputMaybe<Scalars['String']>;
   loanProcessingCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
   memberId?: InputMaybe<Scalars['ID']>;
   nomineeDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -7142,6 +7162,7 @@ export type LoanProduct = Base & {
   penaltyOnInstallment?: Maybe<Penalty>;
   penaltyOnInterest?: Maybe<Penalty>;
   penaltyOnPrincipal?: Maybe<Penalty>;
+  penaltyType?: Maybe<PenaltyType>;
   postingFrequency?: Maybe<LoanProductInstallment>;
   prematurePenaltySetup?: Maybe<PrematurePenaltyFormState>;
   productCode?: Maybe<ProductCodeType>;
@@ -7239,6 +7260,7 @@ export type LoanProductInput = {
   penaltyOnInstallment?: InputMaybe<PenaltyTypeInput>;
   penaltyOnInterest?: InputMaybe<PenaltyTypeInput>;
   penaltyOnPrincipal?: InputMaybe<PenaltyTypeInput>;
+  penaltyType?: InputMaybe<PenaltyType>;
   postingFrequency?: InputMaybe<LoanProductInstallment>;
   prematurePenaltySetup?: InputMaybe<PrematurePenalty>;
   productCode?: InputMaybe<ProductCode>;
@@ -7591,6 +7613,7 @@ export type MemberBasicInfoView = {
   memberCode?: Maybe<Scalars['String']>;
   memberJoined?: Maybe<Scalars['String']>;
   mothersName?: Maybe<Scalars['String']>;
+  profilePic?: Maybe<Scalars['String']>;
 };
 
 export type MemberChargeData = {
@@ -8546,6 +8569,12 @@ export type PenaltyRebateResult = {
   data?: Maybe<PenaltyRebate>;
   error?: Maybe<QueryError>;
 };
+
+export enum PenaltyType {
+  Installment = 'INSTALLMENT',
+  Interest = 'INTEREST',
+  Principal = 'PRINCIPAL',
+}
 
 export type PenaltyTypeInput = {
   dayAfterInstallmentDate?: InputMaybe<Scalars['Int']>;
@@ -10033,12 +10062,6 @@ export enum WeeklyFrequency {
   DayOfTheWeek = 'DAY_OF_THE_WEEK',
 }
 
-export type WithdrawBankCheque = {
-  amount: Scalars['String'];
-  bankId: Scalars['String'];
-  chequeNo: Scalars['String'];
-};
-
 export enum WithdrawBy {
   Agent = 'AGENT',
   Self = 'SELF',
@@ -10048,14 +10071,13 @@ export type WithdrawInput = {
   accountId: Scalars['String'];
   agentId?: InputMaybe<Scalars['String']>;
   amount: Scalars['String'];
-  bankCheque?: InputMaybe<WithdrawBankCheque>;
+  bankCheque?: InputMaybe<DepositCheque>;
   cash?: InputMaybe<DepositCash>;
   chequeNo?: InputMaybe<Scalars['String']>;
   doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   fine?: InputMaybe<Scalars['String']>;
   memberId: Scalars['String'];
   notes?: InputMaybe<Scalars['String']>;
-  override?: InputMaybe<Scalars['Boolean']>;
   payment_type: WithdrawPaymentType;
   sourceOfFund?: InputMaybe<Scalars['String']>;
   withdrawSlipNo?: InputMaybe<Scalars['String']>;

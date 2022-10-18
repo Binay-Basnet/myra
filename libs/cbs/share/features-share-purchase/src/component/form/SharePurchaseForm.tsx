@@ -205,7 +205,7 @@ export const SharePurchaseForm = () => {
       },
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chargeList, extraFee, noOfShares, JSON.stringify(extraFee)]);
+  }, [chargeList, extraFee, noOfShares, JSON.stringify(extraFee), totalAmount]);
 
   return (
     <>
