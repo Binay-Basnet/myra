@@ -3,8 +3,10 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Skeleton } from '@chakra-ui/react';
+import dayjs from 'dayjs';
 
 import { AccountLargeCard, InfoCard, TransactionCard } from '@coop/ebanking/cards';
+import { EmptyState } from '@coop/ebanking/components';
 import { useGetAccountDetailsQuery } from '@coop/ebanking/data-access';
 import { Box, Button, Divider, Grid, Icon, PathBar } from '@coop/shared/ui';
 
@@ -17,11 +19,13 @@ export const EbankingAccountDetailPage = () => {
   const { data: accountDetails, isLoading } = useGetAccountDetailsQuery(
     {
       id: String(router.query['id']),
+      transactionPagination: { first: 10, after: '' },
     },
     { enabled: typeof router.query['id'] === 'string' }
   );
 
-  const account = accountDetails?.eBanking?.account?.get;
+  const account = accountDetails?.eBanking?.account?.get?.data;
+  const transactions = accountDetails?.eBanking?.account?.get?.data?.transactions?.edges;
 
   return (
     <Box display="flex" flexDir="column" gap="s16">
@@ -37,11 +41,11 @@ export const EbankingAccountDetailPage = () => {
       />
       {account ? (
         <AccountLargeCard
-          isDefault
+          isDefault={account?.isDefault}
           account={{
             accountNumber: account.accountNumber,
             name: account.name,
-            amount: account.amount,
+            amount: Number(account.balance),
             interestRate: account.interestRate,
           }}
         />
@@ -67,8 +71,14 @@ export const EbankingAccountDetailPage = () => {
                 title="Interest Earned"
                 value={account.interestEarned.toLocaleString('en-IN')}
               />
-              <AccountDetail title="Total Balance" value={account.amount.toLocaleString('en-IN')} />
-              <AccountDetail title="Subscribed Date" value={account.subscribedDate} />
+              <AccountDetail
+                title="Total Balance"
+                value={Number(account.balance).toLocaleString('en-IN')}
+              />
+              <AccountDetail
+                title="Subscribed Date"
+                value={dayjs(account.subscribedDate).format('DD MMM YYYY [at] hh:mm A')}
+              />
             </Grid>
           </InfoCard>
         ) : (
@@ -89,11 +99,22 @@ export const EbankingAccountDetailPage = () => {
             </Button>
           }
         >
-          {account?.transactions?.map((transaction) => (
-            <Fragment key={transaction.id}>
-              <TransactionCard transaction={transaction} />
-            </Fragment>
-          ))}
+          {transactions?.length === 0 ? (
+            <Box display="flex" alignItems="center" justifyContent="center" h="200px">
+              <EmptyState title="No Recent Transactions Found" />
+            </Box>
+          ) : (
+            transactions?.map((transaction) => (
+              <Fragment key={transaction?.node?.id}>
+                {transaction && (
+                  <TransactionCard
+                    accountName={account?.name as string}
+                    transaction={transaction?.node}
+                  />
+                )}
+              </Fragment>
+            ))
+          )}
         </InfoCard>
       </Box>
     </Box>

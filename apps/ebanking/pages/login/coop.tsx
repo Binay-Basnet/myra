@@ -43,16 +43,18 @@ const CoopSelectPage = () => {
       return;
     }
 
-    const accessToken = response?.eBanking?.auth?.loginToCooperative?.record?.token?.access;
-    const refreshToken = response?.eBanking?.auth?.loginToCooperative?.record?.token?.refresh;
-    const user = response?.eBanking?.auth?.loginToCooperative?.record?.data;
+    if (response) {
+      const accessToken = response?.eBanking?.auth?.loginToCooperative?.record?.token?.access;
+      const refreshToken = response?.eBanking?.auth?.loginToCooperative?.record?.token?.refresh;
+      const user = response?.eBanking?.auth?.loginToCooperative?.record?.data;
 
-    if (user && accessToken) {
-      dispatch(switchCooperative({ user, token: accessToken }));
+      if (user && accessToken) {
+        dispatch(switchCooperative({ user, token: accessToken }));
+      }
+      localStorage.setItem('coop-refreshToken', String(refreshToken));
+
+      router.replace('/home');
     }
-    localStorage.setItem('coop-refreshToken', String(refreshToken));
-
-    router.replace('/home');
   };
 
   return (

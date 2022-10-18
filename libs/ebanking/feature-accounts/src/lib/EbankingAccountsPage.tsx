@@ -6,7 +6,9 @@ import { useGetAccountListQuery } from '@coop/ebanking/data-access';
 import { Box, Divider, Grid } from '@coop/shared/ui';
 
 export const EbankingAccountsPage = () => {
-  const { data: accountList, isLoading } = useGetAccountListQuery();
+  const { data: accountList, isLoading } = useGetAccountListQuery({
+    transactionPagination: { first: 10, after: '' },
+  });
 
   return (
     <Box display="flex" flexDir="column" gap="s16">
@@ -21,9 +23,18 @@ export const EbankingAccountsPage = () => {
             <Skeleton h="144px" />
           </>
         )}
-        {accountList?.eBanking?.account?.list?.edges.map(({ node: { isDefault, ...rest } }) => (
-          <Fragment key={rest.id}>
-            <AccountCard account={rest} isDefault={isDefault} />
+        {accountList?.eBanking?.account?.list?.accounts?.map((account) => (
+          <Fragment key={account?.id}>
+            <AccountCard
+              account={{
+                id: account?.id,
+                name: account?.name,
+                balance: account?.balance,
+                accountNumber: account?.accountNumber,
+                interestRate: account?.interestRate,
+              }}
+              isDefault={Boolean(account?.isDefault)}
+            />
           </Fragment>
         ))}
       </Grid>

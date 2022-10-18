@@ -18,11 +18,11 @@ import {
 interface IAccountCardProps {
   isDefault: boolean;
   account: {
-    id: string;
-    name: string;
-    accountNumber: string;
-    amount: number;
-    interestRate: number;
+    id: string | undefined;
+    name: string | undefined;
+    accountNumber: string | undefined;
+    balance: string | undefined;
+    interestRate: number | undefined;
   };
 }
 
@@ -103,10 +103,10 @@ export const AccountCard = ({ isDefault, account }: IAccountCardProps) => {
       <Divider />
       <Box display="flex" alignItems="center" justifyContent="space-between" mt="s8">
         <TextFields variant="pageHeader" color="gray.800">
-          NRs. {account.amount.toLocaleString('en-IN')}
+          NRs. {Number(account.balance).toLocaleString('en-IN') ?? '-'}
         </TextFields>
         <TextFields variant="bodyRegular" color="gray.600">
-          Interest Rate: {account.interestRate.toFixed(2)}%
+          Interest Rate: {account?.interestRate?.toFixed(2) ?? 'N/A'}%
         </TextFields>
       </Box>
     </Box>

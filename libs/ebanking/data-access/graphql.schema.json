@@ -9,29 +9,6 @@
     "subscriptionType": null,
     "types": [
       {
-        "kind": "ENUM",
-        "name": "ACCOUNT_TYPE",
-        "description": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "LOAN",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "SAVING",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
         "name": "AbbsTransaction",
         "description": null,
@@ -68,217 +45,6 @@
               "kind": "SCALAR",
               "name": "String",
               "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "Account",
-        "description": null,
-        "fields": [
-          {
-            "name": "accountNumber",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "accountType",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "ACCOUNT_TYPE",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "amount",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "history",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "AccountHistory",
-                  "ofType": null
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "interestBooked",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "interestEarned",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "interestRate",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "isDefault",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "name",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "subscribedDate",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "transactions",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "Transactions",
-                  "ofType": null
-                }
-              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -864,7 +630,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "Account",
+                "name": "EbankingAccount",
                 "ofType": null
               }
             },
@@ -949,6 +715,193 @@
                 "name": "String",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AccountMinimal",
+        "description": null,
+        "fields": [
+          {
+            "name": "accountNumber",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "balance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "interestRate",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isDefault",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "productName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AccountMinimalResult",
+        "description": null,
+        "fields": [
+          {
+            "name": "accountProductIds",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Map",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "accounts",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "AccountMinimal",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recentTransactions",
+            "description": null,
+            "args": [
+              {
+                "name": "paginate",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "Pagination",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "EbankingTransactionConnection",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -23658,7 +23611,7 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "Account",
+              "name": "EbankingAccountResult",
               "ofType": null
             },
             "isDeprecated": false,
@@ -23667,23 +23620,10 @@
           {
             "name": "list",
             "description": null,
-            "args": [
-              {
-                "name": "paginate",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "Pagination",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
+            "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "AccountConnection",
+              "name": "AccountMinimalResult",
               "ofType": null
             },
             "isDeprecated": false,
@@ -24974,7 +24914,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "Account",
+                  "name": "EbankingAccount",
                   "ofType": null
                 }
               }
@@ -24994,7 +24934,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "Transactions",
+                  "name": "EbankingTransaction",
                   "ofType": null
                 }
               }
@@ -29321,18 +29261,6 @@
             "deprecationReason": null
           },
           {
-            "name": "transaction",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "EBankingTransactionQuery",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "utilityPayments",
             "description": null,
             "args": [],
@@ -29576,11 +29504,11 @@
             "description": null,
             "args": [
               {
-                "name": "filter",
+                "name": "paginate",
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "RecentTransactionFilter",
+                  "name": "Pagination",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -29589,13 +29517,253 @@
               }
             ],
             "type": {
+              "kind": "OBJECT",
+              "name": "EbankingTransactionConnection",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "EbankingAccount",
+        "description": null,
+        "fields": [
+          {
+            "name": "accountNumber",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "accountSubType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "accountType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "balance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "history",
+            "description": null,
+            "args": [],
+            "type": {
               "kind": "LIST",
               "name": null,
               "ofType": {
-                "kind": "OBJECT",
-                "name": "Transactions",
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "AccountHistory",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "interestBooked",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "interestEarned",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "interestRate",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isDefault",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "productId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "subscribedDate",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "transactions",
+            "description": null,
+            "args": [
+              {
+                "name": "paginate",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "Pagination",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "EbankingTransactionConnection",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -29686,6 +29854,64 @@
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "EbankingAccountResult",
+        "description": null,
+        "fields": [
+          {
+            "name": "data",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "EbankingAccount",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "error",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "QueryError",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "EbankingAccountType",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "LOAN",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SAVING",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {
@@ -30275,7 +30501,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -30510,6 +30736,277 @@
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "EbankingTransaction",
+        "description": null,
+        "fields": [
+          {
+            "name": "accountId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "amount",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "date",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "month",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "Months",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "transactionDirection",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "EbankingTransactionDirection",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "EbankingTransactionConnection",
+        "description": null,
+        "fields": [
+          {
+            "name": "edges",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "EbankingTransactionEdge",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "pageInfo",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "PageInfo",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "totalCount",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "EbankingTransactionDirection",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "INCOMING",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "OUTGOING",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "EbankingTransactionEdge",
+        "description": null,
+        "fields": [
+          {
+            "name": "cursor",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "node",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "EbankingTransaction",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "EbankingTransactionType",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "DEPOSIT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHARE_PURCHASE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "TRANSFER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "WITHDRAW",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {
@@ -35664,6 +36161,88 @@
       },
       {
         "kind": "ENUM",
+        "name": "GlobalPageAppName",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "ACCOUNTING_SYSTEM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CORE_BANKING_SYSTEM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVENTORY_MGMT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SETTINGS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "GlobalPageMenuName",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "ACCOUNTS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "LOAN",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "MEMBER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "REPORTS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SHARE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "TRANSACTIONS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
         "name": "GlobalPagesIconType",
         "description": null,
         "fields": null,
@@ -35709,6 +36288,18 @@
         "description": null,
         "fields": [
           {
+            "name": "appName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "GlobalPageAppName",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "fullCode",
             "description": null,
             "args": [],
@@ -35739,6 +36330,18 @@
             "type": {
               "kind": "ENUM",
               "name": "GlobalPagesIconType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "menuName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "GlobalPageMenuName",
               "ofType": null
             },
             "isDeprecated": false,
@@ -57640,6 +58243,18 @@
             "deprecationReason": null
           },
           {
+            "name": "linkedAccountId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "loanProcessingCharge",
             "description": null,
             "args": [],
@@ -58358,6 +58973,18 @@
           },
           {
             "name": "justifySanction",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "linkedAccountId",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -61794,6 +62421,18 @@
             "deprecationReason": null
           },
           {
+            "name": "penaltyType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "PenaltyType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "postingFrequency",
             "description": null,
             "args": [],
@@ -62948,6 +63587,18 @@
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "PenaltyTypeInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "penaltyType",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "PenaltyType",
               "ofType": null
             },
             "defaultValue": null,
@@ -65537,6 +66188,185 @@
       },
       {
         "kind": "OBJECT",
+        "name": "MemberBasicInfoView",
+        "description": null,
+        "fields": [
+          {
+            "name": "address",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Localized",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "addressId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "contactNumber",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "email",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "fathersName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "gender",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Localized",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "genderId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "grandFathersName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "maritalStatus",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Localized",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "maritalStatusId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "memberCode",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "memberJoined",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "mothersName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "profilePic",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "MemberChargeData",
         "description": null,
         "fields": [
@@ -65972,6 +66802,183 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "MemberOverviewData",
+        "description": null,
+        "fields": [
+          {
+            "name": "accounts",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "bio",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "overview",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "OverviewView",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "reports",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "share",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "transactions",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "MemberOverviewResult",
+        "description": null,
+        "fields": [
+          {
+            "name": "data",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "MemberOverviewData",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "error",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "QueryError",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "MemberPaymentView",
+        "description": null,
+        "fields": [
+          {
+            "name": "accountName",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "amount",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "date",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "paymentType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "UNION",
         "name": "MemberProfile",
         "description": null,
@@ -66188,6 +67195,35 @@
             "deprecationReason": null
           },
           {
+            "name": "memberOverview",
+            "description": null,
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "MemberOverviewResult",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "memberPDF",
             "description": null,
             "args": [
@@ -66294,6 +67330,77 @@
                 "name": "TranslateQueryResult",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "MemberRecentTransactionView",
+        "description": null,
+        "fields": [
+          {
+            "name": "amount",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "date",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "noOfShares",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "title",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "txnType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -66426,6 +67533,53 @@
             "type": {
               "kind": "OBJECT",
               "name": "ShareBalance",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "MemberStatisticsView",
+        "description": null,
+        "fields": [
+          {
+            "name": "accountBalance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "loanBalance",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "totalShareValue",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -66797,7 +67951,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "Float",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -66847,7 +68001,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "Transactions",
+                  "name": "EbankingTransaction",
                   "ofType": null
                 }
               }
@@ -72928,6 +74082,73 @@
       },
       {
         "kind": "OBJECT",
+        "name": "OverviewView",
+        "description": null,
+        "fields": [
+          {
+            "name": "basicInformation",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "MemberBasicInfoView",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "payments",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "MemberPaymentView",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recentTransactions",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "MemberRecentTransactionView",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "statistics",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "MemberStatisticsView",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "PageInfo",
         "description": null,
         "fields": [
@@ -73380,6 +74601,35 @@
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "PenaltyType",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "INSTALLMENT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INTEREST",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PRINCIPAL",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {
@@ -81533,41 +82783,6 @@
       },
       {
         "kind": "ENUM",
-        "name": "TRANSACTION_TYPE",
-        "description": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "DEPOSIT",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "SHARE_PURCHASE",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "TRANSFER",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "WITHDRAW",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
         "name": "TaxPayerOptions",
         "description": null,
         "fields": null,
@@ -82568,113 +83783,6 @@
             "deprecationReason": null
           }
         ],
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "Transactions",
-        "description": null,
-        "fields": [
-          {
-            "name": "amount",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "date",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "name",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "transactionDirection",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "TRANSACTION_DIRECTION",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "transactionType",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "TRANSACTION_TYPE",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
         "possibleTypes": null
       },
       {
@@ -86817,14 +87925,19 @@
         "name": "asBase",
         "description": null,
         "isRepeatable": false,
-        "locations": ["OBJECT"],
+        "locations": [
+          "OBJECT"
+        ],
         "args": []
       },
       {
         "name": "date",
         "description": null,
         "isRepeatable": false,
-        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
+        "locations": [
+          "FIELD_DEFINITION",
+          "INPUT_FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "after",
@@ -86893,7 +88006,10 @@
         "name": "email",
         "description": null,
         "isRepeatable": false,
-        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
+        "locations": [
+          "FIELD_DEFINITION",
+          "INPUT_FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "required",
@@ -86925,7 +88041,9 @@
         "name": "faker",
         "description": null,
         "isRepeatable": false,
-        "locations": ["FIELD_DEFINITION"],
+        "locations": [
+          "FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "tag",
@@ -86945,7 +88063,10 @@
         "name": "goField",
         "description": null,
         "isRepeatable": false,
-        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
+        "locations": [
+          "FIELD_DEFINITION",
+          "INPUT_FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "forceResolver",
@@ -86977,7 +88098,11 @@
         "name": "include",
         "description": "The @include directive may be provided for fields, fragment spreads, and inline fragments, and allows for conditional inclusion during execution as described by the if argument.",
         "isRepeatable": false,
-        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
+        "locations": [
+          "FIELD",
+          "FRAGMENT_SPREAD",
+          "INLINE_FRAGMENT"
+        ],
         "args": [
           {
             "name": "if",
@@ -87001,7 +88126,10 @@
         "name": "localized",
         "description": null,
         "isRepeatable": false,
-        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
+        "locations": [
+          "FIELD_DEFINITION",
+          "INPUT_FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "format",
@@ -87069,7 +88197,10 @@
         "name": "nestedField",
         "description": null,
         "isRepeatable": false,
-        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
+        "locations": [
+          "FIELD_DEFINITION",
+          "INPUT_FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "section_name",
@@ -87101,7 +88232,10 @@
         "name": "number",
         "description": null,
         "isRepeatable": false,
-        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
+        "locations": [
+          "FIELD_DEFINITION",
+          "INPUT_FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "max",
@@ -87157,7 +88291,11 @@
         "name": "skip",
         "description": "The @skip directive may be provided for fields, fragment spreads, and inline fragments, and allows for conditional exclusion during execution as described by the if argument.",
         "isRepeatable": false,
-        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
+        "locations": [
+          "FIELD",
+          "FRAGMENT_SPREAD",
+          "INLINE_FRAGMENT"
+        ],
         "args": [
           {
             "name": "if",
@@ -87181,7 +88319,9 @@
         "name": "specifiedBy",
         "description": "The @specifiedBy built-in directive is used within the type system definition language to provide a scalar specification URL for specifying the behavior of custom scalar types.",
         "isRepeatable": false,
-        "locations": ["SCALAR"],
+        "locations": [
+          "SCALAR"
+        ],
         "args": [
           {
             "name": "url",
@@ -87205,7 +88345,10 @@
         "name": "text",
         "description": null,
         "isRepeatable": false,
-        "locations": ["FIELD_DEFINITION", "INPUT_FIELD_DEFINITION"],
+        "locations": [
+          "FIELD_DEFINITION",
+          "INPUT_FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "format",
@@ -87273,7 +88416,9 @@
         "name": "translate",
         "description": null,
         "isRepeatable": false,
-        "locations": ["INPUT_FIELD_DEFINITION"],
+        "locations": [
+          "INPUT_FIELD_DEFINITION"
+        ],
         "args": [
           {
             "name": "lang",
@@ -87297,7 +88442,10 @@
         "name": "validate",
         "description": null,
         "isRepeatable": false,
-        "locations": ["INPUT_OBJECT", "OBJECT"],
+        "locations": [
+          "INPUT_OBJECT",
+          "OBJECT"
+        ],
         "args": []
       }
     ]

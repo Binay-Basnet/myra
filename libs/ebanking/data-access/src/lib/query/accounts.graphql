@@ -1,15 +1,31 @@
-query getAccountList {
+query getAccountList($transactionPagination: Pagination) {
   eBanking {
     account {
-      list(paginate: { first: 6 }) {
-        edges {
-          node {
-            id
-            name
-            amount
-            isDefault
-            accountNumber
-            interestRate
+      list {
+        accounts {
+          id
+          name
+          productName
+          accountNumber
+          isDefault
+          balance
+          interestRate
+        }
+        recentTransactions(paginate: $transactionPagination) {
+          edges {
+            cursor
+            node {
+              id
+              accountId
+              name
+              date
+              month
+              transactionDirection
+              amount
+            }
+          }
+          pageInfo {
+            ...Pagination
           }
         }
       }
@@ -28,32 +44,44 @@ query getAccountSummary {
   }
 }
 
-query getAccountDetails($id: ID!) {
+query getAccountDetails($id: ID!, $transactionPagination: Pagination) {
   eBanking {
     account {
       get(id: $id) {
-        id
-        name
-        accountNumber
-        isDefault
-        amount
-        interestRate
-        accountType
-        interestBooked
-        interestEarned
-        subscribedDate
-        history {
+        data {
           id
-          date
-          balance
-        }
-        transactions {
-          id
+          productId
           name
-          date
-          amount
-          transactionType
-          transactionDirection
+          accountNumber
+          isDefault
+          balance
+          interestRate
+          accountType
+          accountSubType
+          interestBooked
+          interestEarned
+          subscribedDate
+          history {
+            id
+            balance
+            date
+          }
+          transactions(paginate: $transactionPagination) {
+            edges {
+              node {
+                id
+                accountId
+                name
+                date
+                month
+                transactionDirection
+                amount
+              }
+            }
+            pageInfo {
+              ...Pagination
+            }
+          }
         }
       }
     }

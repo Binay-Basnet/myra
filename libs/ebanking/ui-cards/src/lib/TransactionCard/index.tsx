@@ -1,11 +1,12 @@
-import { Transactions } from '@coop/ebanking/data-access';
+import { EbankingTransaction, EbankingTransactionDirection } from '@coop/ebanking/data-access';
 import { Box, Icon, TextFields } from '@coop/shared/ui';
 
 interface ITransactionCardProps {
-  transaction: Transactions;
+  transaction: EbankingTransaction;
+  accountName: string;
 }
 
-export const TransactionCard = ({ transaction }: ITransactionCardProps) => (
+export const TransactionCard = ({ transaction, accountName }: ITransactionCardProps) => (
   <Box
     display="flex"
     alignItems="center"
@@ -15,7 +16,7 @@ export const TransactionCard = ({ transaction }: ITransactionCardProps) => (
     p="s16"
   >
     <Box display="flex" gap="s16">
-      {transaction.transactionDirection === 'SOLD' ? (
+      {transaction.transactionDirection === EbankingTransactionDirection.Outgoing ? (
         <Icon as={WithdrawIcon} />
       ) : (
         <Icon as={TransferIcon} />
@@ -26,17 +27,21 @@ export const TransactionCard = ({ transaction }: ITransactionCardProps) => (
           {transaction.name}
         </TextFields>
         <TextFields variant="formHelper" color="gray.500" textTransform="capitalize">
-          {transaction.transactionType.toLowerCase().replace('_', ' ')}
+          {accountName}
         </TextFields>
       </Box>
     </Box>
     <Box display="flex" flexDir="column" alignItems="flex-end" gap="s4">
       <TextFields
         variant="tableHeader"
-        color={transaction.transactionDirection === 'SOLD' ? 'danger.500' : 'success.400'}
+        color={
+          transaction.transactionDirection === EbankingTransactionDirection.Outgoing
+            ? 'danger.500'
+            : 'success.400'
+        }
       >
-        {transaction.transactionDirection === 'SOLD' ? '-' : '+'}
-        {transaction.amount.toFixed(2)}
+        {transaction.transactionDirection === EbankingTransactionDirection.Outgoing ? '-' : '+'}
+        {Number(transaction.amount).toFixed(2)}
       </TextFields>
       <TextFields variant="formHelper" color="gray.500">
         {transaction.date}

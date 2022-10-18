@@ -18,6 +18,7 @@ export const useCoopInit = () => {
   const [triggerQuery, setTriggerQuery] = React.useState(false);
   const dispatch = useAppDispatch();
   const replace = useReplace();
+
   const router = useRouter();
 
   const isMyra = router.pathname.includes('setup') || router.pathname.includes('/login');

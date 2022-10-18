@@ -14,11 +14,11 @@ export const AnnouncementAccountAccordion = () => {
           <>
             <AnnouncementsAccBtn isExpanded={isExpanded} label="Accounts Summary" />
             <AccordionPanel p="0">
-              {accountsList?.eBanking?.account?.list?.edges?.map((account) => (
+              {accountsList?.eBanking?.account?.list?.accounts?.map((account) => (
                 <AnnouncementAccountCard
-                  name={account.node.name}
-                  balance={`NRs. ${account.node.amount.toFixed(2)}`}
-                  isDefault={account.node.isDefault}
+                  name={account?.name as string}
+                  balance={`NRs. ${Number(account?.balance).toFixed(2)}`}
+                  isDefault={account?.isDefault as boolean}
                 />
               ))}
             </AccordionPanel>

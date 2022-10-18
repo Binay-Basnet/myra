@@ -59,7 +59,7 @@ export const ShareHeader = () => {
             </TextFields>
             <TextFields variant="stickyCardHeader">
               Rs.{' '}
-              {shareSummary?.eBanking?.share?.summary?.value.toLocaleString('en-IN', {
+              {Number(shareSummary?.eBanking?.share?.summary?.value).toLocaleString('en-IN', {
                 maximumFractionDigits: 0,
               }) ?? 'N/A'}
             </TextFields>

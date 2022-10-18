@@ -4,7 +4,9 @@ import { useGetAccountListQuery } from '@coop/ebanking/data-access';
 import { Box, Button, Icon, Popover, PopoverContent, PopoverTrigger, Text } from '@coop/shared/ui';
 
 export const AccountPopover = () => {
-  const { data: accountList } = useGetAccountListQuery();
+  const { data: accountList } = useGetAccountListQuery({
+    transactionPagination: { first: 10, after: '' },
+  });
 
   return (
     <Popover placement="bottom-end">
@@ -28,32 +30,32 @@ export const AccountPopover = () => {
             Accounts
           </Text>
           <Text color="primary.500" fontSize="r1" fontWeight="500">
-            (7)
+            ({accountList?.eBanking?.account?.list?.accounts?.length ?? 0})
           </Text>
         </Box>
         <Box>
-          {accountList?.eBanking?.account?.list?.edges?.map((account) => (
+          {accountList?.eBanking?.account?.list?.accounts?.map((account) => (
             <Box
-              key={account.node.id}
+              key={account?.id}
               px="s12"
               py="6px"
               cursor="pointer"
               display="flex"
               alignItems="center"
               justifyContent="space-between"
-              bg={account.node.isDefault ? 'gray.100' : 'white'}
+              bg={account?.isDefault ? 'gray.100' : 'white'}
               _hover={{ bg: 'gray.100' }}
             >
               <Box display="flex" flexDir="column" gap="s4">
                 <Text color="primary.500" fontSize="r1" fontWeight="500">
-                  {account.node.name}
+                  {account?.name}
                 </Text>
                 <Text color="gray.600" fontSize="r1" fontWeight="500">
-                  {account.node.accountNumber}
+                  {account?.accountNumber}
                 </Text>
               </Box>
 
-              {account.node.isDefault && <Icon as={IoCheckmark} color="primary.500" gap="s4" />}
+              {account?.isDefault && <Icon as={IoCheckmark} color="primary.500" gap="s4" />}
             </Box>
           ))}
         </Box>
