@@ -257,12 +257,16 @@ export const SettingsDepositProductsAdd = () => {
         maxAmount: values?.balanceLimit?.maxAmount ?? null,
         minAmount: values?.balanceLimit?.minAmount ?? null,
       },
-      prematurePenalty: {
-        ...values?.prematurePenalty,
-        penaltyDateType: values?.prematurePenalty?.penaltyDateType
-          ? values?.prematurePenalty?.penaltyDateType
+      prematurePenalty:
+        depositNature === NatureOfDepositProduct.RecurringSaving ||
+        depositNature === NatureOfDepositProduct.TermSavingOrFd
+          ? {
+              ...values?.prematurePenalty,
+              penaltyDateType: values?.prematurePenalty?.penaltyDateType
+                ? values?.prematurePenalty?.penaltyDateType
+                : null,
+            }
           : null,
-      },
     };
 
     asyncToast({
