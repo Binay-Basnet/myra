@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: apps/neosys-admin/Dockerfile
-    image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/myra-ui-admin:dev
+    image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/myra-ui-admin:main
     container_name: ${ADMIN_CONTAINER_NAME}
     env_file: .env
     ports:
