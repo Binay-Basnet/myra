@@ -108,7 +108,15 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
     },
   ];
 
-  const { watch, resetField } = useFormContext();
+  const { watch, resetField, setValue } = useFormContext();
+
+  useEffect(() => {
+    if (totalAmount) {
+      setValue('openingPayment.bankVoucher.amount', String(totalAmount));
+      setValue('openingPayment.cheque.amount', String(totalAmount));
+      setValue('openingPayment.cash.cashPaid', String(totalAmount));
+    }
+  }, [totalAmount]);
 
   const memberId = watch('memberId');
 
