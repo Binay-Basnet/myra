@@ -241,6 +241,7 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
           id
           objState
           createdAt
+          accountName
           createdBy {
             id
             # name

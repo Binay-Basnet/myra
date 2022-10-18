@@ -356,6 +356,15 @@ export const AccountOpenNew = () => {
       },
       onSuccess: () => router.push('/accounts/list'),
       promise: mutateAsync({ id, data: updatedData as DepositLoanAccountInput }),
+      onError: (error) => {
+        if (error.__typename === 'ValidationError') {
+          Object.keys(error.validationErrorMsg).map((key) =>
+            methods.setError(key as keyof DepositLoanAccountInput, {
+              message: error.validationErrorMsg[key][0] as string,
+            })
+          );
+        }
+      },
     });
 
     Object.keys(fileList).forEach((fieldName) => {
