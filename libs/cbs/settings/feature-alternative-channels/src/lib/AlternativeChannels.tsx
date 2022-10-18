@@ -68,9 +68,9 @@ export const AlternativeChannels = () => {
               {
                 accessor: 'serviceType',
                 header: 'Service Name',
-                fieldType: 'select',
+                fieldType: 'search',
                 cellWidth: 'auto',
-                selectOptions: [
+                searchOptions: [
                   {
                     label: t['acMobileBanking'],
                     value: AlternativeChannelServiceType.MobileBanking,
