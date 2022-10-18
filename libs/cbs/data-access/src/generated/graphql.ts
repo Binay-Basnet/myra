@@ -1490,7 +1490,10 @@ export type CooperativeEconomicDetails = {
 
 export type CooperativeInformation = {
   id: Scalars['ID'];
+  logoId?: Maybe<Scalars['String']>;
+  logoUrl?: Maybe<Scalars['String']>;
   mobileNo?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export type CooperativeMember = {
@@ -7139,6 +7142,7 @@ export type LoanProduct = Base & {
   penaltyOnInstallment?: Maybe<Penalty>;
   penaltyOnInterest?: Maybe<Penalty>;
   penaltyOnPrincipal?: Maybe<Penalty>;
+  penaltyType?: Maybe<PenaltyType>;
   postingFrequency?: Maybe<LoanProductInstallment>;
   prematurePenaltySetup?: Maybe<PrematurePenaltyFormState>;
   productCode?: Maybe<ProductCodeType>;
@@ -7236,6 +7240,7 @@ export type LoanProductInput = {
   penaltyOnInstallment?: InputMaybe<PenaltyTypeInput>;
   penaltyOnInterest?: InputMaybe<PenaltyTypeInput>;
   penaltyOnPrincipal?: InputMaybe<PenaltyTypeInput>;
+  penaltyType?: InputMaybe<PenaltyType>;
   postingFrequency?: InputMaybe<LoanProductInstallment>;
   prematurePenaltySetup?: InputMaybe<PrematurePenalty>;
   productCode?: InputMaybe<ProductCode>;
@@ -8480,6 +8485,12 @@ export type PenaltyRebateResult = {
   data?: Maybe<PenaltyRebate>;
   error?: Maybe<QueryError>;
 };
+
+export enum PenaltyType {
+  Installment = 'INSTALLMENT',
+  Interest = 'INTEREST',
+  Principal = 'PRINCIPAL',
+}
 
 export type PenaltyTypeInput = {
   dayAfterInstallmentDate?: InputMaybe<Scalars['Int']>;
@@ -11856,6 +11867,7 @@ export type GetAccountTableListQuery = {
           id: string;
           objState: ObjState;
           createdAt: string;
+          accountName?: string | null;
           modifiedAt: string;
           installmentAmount?: string | null;
           balance?: string | null;
@@ -19194,6 +19206,7 @@ export const GetAccountTableListDocument = `
           id
           objState
           createdAt
+          accountName
           createdBy {
             id
           }

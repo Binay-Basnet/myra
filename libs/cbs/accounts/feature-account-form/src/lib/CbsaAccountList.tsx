@@ -60,7 +60,7 @@ export const CBSAccountList = () => {
 
       {
         header: 'Account Name',
-        accessorFn: (row) => row?.node?.product?.productName,
+        accessorFn: (row) => row?.node?.accountName,
       },
       {
         header: 'Product Name',
