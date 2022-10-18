@@ -23,8 +23,8 @@ steps:
   - name: neosys-admin-app
     path: /drone/src/apps/neosys-admin/dist
   commands:
-  - npm cache --force clean
-  - npm install --force --cache
+  # - npm cache --force clean
+  # - npm install --force --cache
   # - yarn install --cache /tmp/empty-cache
   - yarn
   - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD --verbose
@@ -402,10 +402,10 @@ steps:
   - name: neosys-admin-app
     path: /drone/src/apps/neosys-admin/dist
   commands:
-  - yarn cache clean
+  # - npm cache clean
   # - npm install --force --cache
   - yarn
-  - npx nx affected --target=build --base=$(cat /drone/previous-success-build-commit-sha) --verbose
+  - npx nx affected --target=build --parallel --base=$(cat /drone/previous-success-build-commit-sha) --head=HEAD --verbose
 
 volumes:
 - name: node_modules
