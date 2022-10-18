@@ -5,7 +5,10 @@ import omit from 'lodash/omit';
 
 import {
   Collateral,
+  CriteriaSection,
+  FrequencyTenure,
   LoanProductInput,
+  LoanProductInstallment,
   LoanRepaymentScheme,
   useGetLoanGeneralSettingsQuery,
   useGetLoanProductEditDataQuery,
@@ -25,6 +28,7 @@ import {
   InsuranceApplicable,
   Interest,
   LoanProcessing,
+  LoanRepayment,
   LoanRepaymentSchemes,
   NewQuestions,
   PartialPayment,
@@ -33,9 +37,9 @@ import {
   ProductCode,
   Rebate,
   RequiredDocumentSetup,
+  Tenure,
   TypesOfMember,
 } from '../components/form';
-import { Tenure } from '../components/form/Tenure';
 
 export const SettingsLoanProductForm = () => {
   const router = useRouter();
@@ -97,12 +101,36 @@ export const SettingsLoanProductForm = () => {
     others: CollateralValues;
   };
 
-  const methods = useForm<LoanProductForm>({});
+  const methods = useForm<LoanProductForm>({
+    defaultValues: {
+      isPenaltyApplicable: false,
+      allowPartialInstallment: false,
+      isMonthlyInstallmentCompulsory: false,
+      minGraceDurationUnit: FrequencyTenure.Day,
+      maxGraceDurationUnit: FrequencyTenure.Day,
+      isStaffProduct: false,
+      supportMultipleAccounts: false,
+      loanScheduleChangeOverride: false,
+      updateInterest: false,
+      waiveInterest: false,
+      isInsuranceApplicable: false,
+      isCollateralRequired: false,
+      allowGurantee: false,
+      installmentFrequency: LoanProductInstallment.Daily,
+      isRebateApplicable: false,
+      tenureUnit: FrequencyTenure.Day,
+    },
+  });
 
   const { getValues, reset, watch } = methods;
 
+  const criteria = watch('criteria');
+  const allowGurantee = watch('allowGurantee');
   const repaymentScheme = watch('repaymentScheme');
+  const isCollateralRequired = watch('isCollateralRequired');
   const collateralTypes = watch('collateralTypes');
+  const isPenaltyApplicable = watch('isPenaltyApplicable');
+  const isInsuranceApplicable = watch('isInsuranceApplicable');
 
   const { data: editValues, refetch } = useGetLoanProductEditDataQuery(
     {
@@ -135,16 +163,32 @@ export const SettingsLoanProductForm = () => {
   const submitForm = () => {
     const values = getValues();
 
-    const genderList = values?.genderId?.map((data) => data?.value);
-    const maritalStatusList = values?.maritalStatusId?.map((data) => data?.value);
-
-    const educationQualificationList = values?.educationQualification?.map((data) => data?.value);
-    const occupationList = values?.occupation?.map((data) => data?.value);
-    const ethnicityList = values?.ethnicity?.map((data) => data?.value);
-    const natureOFBusinessCoopList = values?.natureOFBusinessCoop?.map((data) => data?.value);
-    const natureOfBusinessInstitutionList = values?.natureOfBusinessInstitution?.map(
-      (data) => data?.value
-    );
+    const genderList = criteria?.includes(CriteriaSection.Gender)
+      ? values?.genderId?.map((data) => data?.value ?? data)
+      : null;
+    const maritalStatusList = criteria?.includes(CriteriaSection.MaritalStatus)
+      ? values?.maritalStatusId?.map((data) => data?.value ?? data)
+      : null;
+    const educationQualificationList = criteria?.includes(CriteriaSection.EducationQualification)
+      ? values?.educationQualification?.map((data) => data?.value ?? data)
+      : null;
+    const occupationList = criteria?.includes(CriteriaSection.OccupationDetails)
+      ? values?.occupation?.map((data) => data?.value ?? data)
+      : null;
+    const ethnicityList = criteria?.includes(CriteriaSection.Ethnicity)
+      ? values?.ethnicity?.map((data) => data?.value ?? data)
+      : null;
+    const natureOFBusinessCoopList = criteria?.includes(CriteriaSection.NatureOfBusinessCoopunion)
+      ? values?.natureOFBusinessCoop?.map((data) => data?.value ?? data)
+      : null;
+    const natureOfBusinessInstitutionList = criteria?.includes(
+      CriteriaSection.NatureOfBusinessInstitutions
+    )
+      ? values?.natureOfBusinessInstitution?.map((data) => data?.value ?? data)
+      : null;
+    const coopTypeList = criteria?.includes(CriteriaSection.CooperativeType)
+      ? values?.cooperativeType?.map((data) => data)
+      : null;
 
     const loanProcessingChargeList = values?.loanProcessingCharge?.map((data) => ({
       serviceName: data?.serviceName,
@@ -243,44 +287,63 @@ export const SettingsLoanProductForm = () => {
       occupation: occupationList,
       natureOfBusinessInstitution: natureOfBusinessInstitutionList,
       natureOFBusinessCoop: natureOFBusinessCoopList,
+      cooperativeType: coopTypeList,
       loanProcessingCharge: loanProcessingChargeList,
-      tenureUnit: values?.tenureUnit ? values?.tenureUnit : null,
-      minAge: values?.minAge ? values?.minAge : null,
-      maxAge: values?.maxAge ? values?.maxAge : null,
+      minAge: values?.minAge && criteria?.includes(CriteriaSection.Age) ? values?.minAge : null,
+      maxAge: values?.maxAge && criteria?.includes(CriteriaSection.Age) ? values?.maxAge : null,
       interestMethod: values?.interestMethod ?? null,
       postingFrequency: values?.postingFrequency ?? null,
+      tenureUnit: values?.tenureUnit ? values?.tenureUnit : null,
       maxTenureUnitNumber: values?.maxTenureUnitNumber ? values?.maxTenureUnitNumber : null,
       minTenureUnitNumber: values?.minTenureUnitNumber ? values?.minTenureUnitNumber : null,
       minGraceDurationUnit: values?.minGraceDurationUnit ? values?.minGraceDurationUnit : null,
       maxGraceDurationUnit: values?.maxGraceDurationUnit ? values?.maxGraceDurationUnit : null,
       maxLoanAmount: values?.maxLoanAmount ?? null,
       minimumLoanAmount: values?.minimumLoanAmount ?? null,
+      installmentFrequency: values?.installmentFrequency ?? null,
+      collateralValue: isCollateralRequired ? collateralValueList : null,
+      collateralTypes: isCollateralRequired ? collateralTypes : null,
+      maxPercentOfGurantee: allowGurantee ? values?.maxPercentOfGurantee : null,
       rebate: {
         ...values?.rebate,
         rebateAmount: values?.rebate?.rebateAmount ?? null,
       },
       penaltyOnPrincipal: {
-        ...values?.penaltyOnPrincipal,
-        penaltyRate: values?.penaltyOnPrincipal?.penaltyRate ?? null,
-        dayAfterInstallmentDate: values?.penaltyOnPrincipal?.dayAfterInstallmentDate ?? null,
-        penaltyAmount: values?.penaltyOnPrincipal?.penaltyAmount ?? null,
-        penaltyLedgerMapping: values?.penaltyOnPrincipal?.penaltyLedgerMapping ?? null,
+        penaltyRate: isPenaltyApplicable ? values?.penaltyOnPrincipal?.penaltyRate : null,
+        dayAfterInstallmentDate: isPenaltyApplicable
+          ? values?.penaltyOnPrincipal?.dayAfterInstallmentDate
+          : null,
+        penaltyAmount: isPenaltyApplicable ? values?.penaltyOnPrincipal?.penaltyAmount : null,
+        // penaltyLedgerMapping: isPenaltyApplicable ? values?.penaltyOnPrincipal?.penaltyLedgerMapping : null,
       },
       penaltyOnInterest: {
-        ...values?.penaltyOnInterest,
-        penaltyRate: values?.penaltyOnInterest?.penaltyRate ?? null,
-        dayAfterInstallmentDate: values?.penaltyOnInterest?.dayAfterInstallmentDate ?? null,
-        penaltyAmount: values?.penaltyOnInterest?.penaltyAmount ?? null,
-        penaltyLedgerMapping: values?.penaltyOnInterest?.penaltyLedgerMapping ?? null,
+        penaltyRate: isPenaltyApplicable ? values?.penaltyOnInterest?.penaltyRate : null,
+        dayAfterInstallmentDate: isPenaltyApplicable
+          ? values?.penaltyOnInterest?.dayAfterInstallmentDate
+          : null,
+        penaltyAmount: isPenaltyApplicable ? values?.penaltyOnInterest?.penaltyAmount : null,
+        // penaltyLedgerMapping: isPenaltyApplicable ? values?.penaltyOnInterest?.penaltyLedgerMapping : null,
       },
       penaltyOnInstallment: {
-        ...values?.penaltyOnInstallment,
-        penaltyRate: values?.penaltyOnInstallment?.penaltyRate ?? null,
-        dayAfterInstallmentDate: values?.penaltyOnInstallment?.dayAfterInstallmentDate ?? null,
-        penaltyAmount: values?.penaltyOnInstallment?.penaltyAmount ?? null,
-        penaltyLedgerMapping: values?.penaltyOnInstallment?.penaltyLedgerMapping ?? null,
+        penaltyRate: isPenaltyApplicable ? values?.penaltyOnInstallment?.penaltyRate : null,
+        dayAfterInstallmentDate: isPenaltyApplicable
+          ? values?.penaltyOnInstallment?.dayAfterInstallmentDate
+          : null,
+        penaltyAmount: isPenaltyApplicable ? values?.penaltyOnInstallment?.penaltyAmount : null,
+        // penaltyLedgerMapping: isPenaltyApplicable ? values?.penaltyOnInstallment?.penaltyLedgerMapping : null,
       },
-      collateralValue: collateralValueList,
+      prematurePenaltySetup: {
+        noOfDays: values?.prematurePenaltySetup?.noOfDays ?? null,
+        penaltyAmount: values?.prematurePenaltySetup?.penaltyAmount ?? null,
+        penaltyDateType: values?.prematurePenaltySetup?.penaltyDateType ?? null,
+        penaltyRate: values?.prematurePenaltySetup?.penaltyRate ?? null,
+        // penaltyLedgerMapping: values?.prematurePenaltySetup?.penaltyLedgerMapping ?? null,
+      },
+      insuranceType: {
+        amount: isInsuranceApplicable ? values?.insuranceType?.amount : null,
+        rate: isInsuranceApplicable ? values?.insuranceType?.rate : null,
+        type: isInsuranceApplicable ? values?.insuranceType?.type : null,
+      },
     };
 
     asyncToast({
@@ -291,6 +354,15 @@ export const SettingsLoanProductForm = () => {
       },
       onSuccess: () => router.push('/settings/general/loan-products'),
       promise: mutateAsync({ id, data: updatedData as LoanProductInput }),
+      onError: (error) => {
+        if (error.__typename === 'ValidationError') {
+          Object.keys(error.validationErrorMsg).map((key) =>
+            methods.setError(key as keyof LoanProductInput, {
+              message: error.validationErrorMsg[key][0] as string,
+            })
+          );
+        }
+      },
     });
   };
 
@@ -397,7 +469,7 @@ export const SettingsLoanProductForm = () => {
             <PrematurePenalty />
             {repaymentScheme && repaymentScheme?.includes(LoanRepaymentScheme.Epi) && <Rebate />}
 
-            {/* <LoanRepayment /> */}
+            <LoanRepayment />
             <NewQuestions />
             <InstallmentFrequency />
             <Interest />
@@ -417,7 +489,7 @@ export const SettingsLoanProductForm = () => {
               status={
                 <Box display="flex" gap="s8">
                   <Text color="neutralColorLight.Gray-60" fontWeight="Regular" as="i" fontSize="r1">
-                    Press Complete to save form
+                    {t['loanProductPressCompletetoSaveForm']}
                   </Text>
                 </Box>
               }

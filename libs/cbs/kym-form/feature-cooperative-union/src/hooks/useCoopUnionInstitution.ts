@@ -6,32 +6,28 @@ import { pickBy } from 'lodash';
 import debounce from 'lodash/debounce';
 
 import {
+  addError,
   CoopUnionInstitutionInformationInput,
   GetCooperativeUnionKymEditDataQuery,
-  useGetCooperativeUnionKymEditDataQuery,
-  useSetCooperativeUnionInstitutionDataMutation,
-} from '@coop/cbs/data-access';
-import {
-  addError,
+  RootState,
   setFormDirty,
   useAppDispatch,
   useAppSelector,
-} from '@coop/shared/utils';
+  useGetCooperativeUnionKymEditDataQuery,
+  useSetCooperativeUnionInstitutionDataMutation,
+} from '@coop/cbs/data-access';
 
 interface IUseCoopUnionInstProps {
   methods: UseFormReturn<CoopUnionInstitutionInformationInput>;
 }
 
-const getInstitutionData = (
-  data: GetCooperativeUnionKymEditDataQuery | undefined
-) => {
+const getInstitutionData = (data: GetCooperativeUnionKymEditDataQuery | undefined) => {
   if (!data) {
     return {};
   }
 
   const editValueData =
-    data?.members?.cooperativeUnion?.formState?.formData?.institutionInformation
-      ?.data;
+    data?.members?.cooperativeUnion?.formState?.formData?.institutionInformation?.data;
 
   if (!editValueData) return null;
 
@@ -60,18 +56,12 @@ const getInstitutionData = (
   };
 };
 
-export const useCoopUnionInstitution = ({
-  methods,
-}: IUseCoopUnionInstProps) => {
+export const useCoopUnionInstitution = ({ methods }: IUseCoopUnionInstProps) => {
   const router = useRouter();
   const id = router.query['id'] as string;
   const dispatch = useAppDispatch();
-  const { errors } = useAppSelector(
-    (state) => state.coopUnion.institutionInformation
-  );
-  const hasPressedNext = useAppSelector(
-    (state) => state.coopUnion.hasPressedNext
-  );
+  const { errors } = useAppSelector((state) => state.coopUnion.institutionInformation);
+  const hasPressedNext = useAppSelector((state) => state.coopUnion.hasPressedNext);
 
   const { watch, reset, setError, clearErrors } = methods;
 
@@ -80,6 +70,7 @@ export const useCoopUnionInstitution = ({
     data: editValues,
     refetch: refetchEdit,
     isLoading: editLoading,
+    isFetching,
   } = useGetCooperativeUnionKymEditDataQuery(
     {
       id,
@@ -89,8 +80,8 @@ export const useCoopUnionInstitution = ({
       enabled: !!id,
       onSuccess: (response) => {
         const errorObj =
-          response?.members?.cooperativeUnion?.formState?.formData
-            ?.institutionInformation?.sectionStatus?.errors;
+          response?.members?.cooperativeUnion?.formState?.formData?.institutionInformation
+            ?.sectionStatus?.errors;
 
         // Add Error If New Error Is Detected
         if (errorObj) {
@@ -103,13 +94,12 @@ export const useCoopUnionInstitution = ({
   );
 
   // Mutation To Set Data
-  const { mutateAsync: setData } =
-    useSetCooperativeUnionInstitutionDataMutation({
-      onSuccess: async () => {
-        await refetchEdit();
-        dispatch(setFormDirty(true));
-      },
-    });
+  const { mutateAsync: setData } = useSetCooperativeUnionInstitutionDataMutation({
+    onSuccess: async () => {
+      await refetchEdit();
+      dispatch(setFormDirty(true));
+    },
+  });
 
   // Get Back The Initial Data when page reloads or user edits
   useEffect(() => {
@@ -122,7 +112,7 @@ export const useCoopUnionInstitution = ({
         });
       }
     }
-  }, [editLoading]);
+  }, [editLoading, editValues]);
 
   // Call The Mutation To Add Data on Each Form Change
   useEffect(() => {
@@ -137,6 +127,13 @@ export const useCoopUnionInstitution = ({
     return () => subscription.unsubscribe();
   }, [watch, id]);
 
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetchEdit();
+  }, [preference?.date]);
+
   // Trigger Validations When Change In Redux Error Object is Detected
   useDeepCompareEffect(() => {
     // Cleanup Previous Errors
@@ -147,5 +144,5 @@ export const useCoopUnionInstitution = ({
         message: value[1][0],
       });
     });
-  }, [errors]);
+  }, [errors, isFetching]);
 };

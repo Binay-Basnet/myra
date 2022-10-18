@@ -1,2 +1,2 @@
-export * from './lib/cbsSettingsFeatureServiceCenterNew';
+export * from './lib/CbsSettingsFeatureServiceCenterNew';
 export * from './lib/CbsSettingsServiceCenter';

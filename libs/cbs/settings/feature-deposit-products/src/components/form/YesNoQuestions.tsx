@@ -8,7 +8,6 @@ import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { AllowChequeIssue } from './AllowChequeIssue';
-import { AlternativeChannels } from './AlternativeChannels';
 import { AtmFacility } from './AtmFacility';
 import { SubHeadingText } from '../formui';
 
@@ -35,7 +34,6 @@ export const Questions = () => {
   const allowLoan = watch('allowLoan');
   const withdrawRestricted = watch('withdrawRestricted');
   const ladderRateEditData = watch('ladderRateData');
-  const alternativeChannels = watch('alternativeChannels');
   const chequeIssue = watch('chequeIssue');
   const atmFacility = watch('atmFacility');
 
@@ -53,14 +51,17 @@ export const Questions = () => {
 
   return (
     <>
-      <FormSection>
-        <GridItem colSpan={3}>
-          <Box display="flex" flexDirection="row" justifyContent="space-between">
-            <SubHeadingText>{t['depositProductAutoOpenwhenmemberjoins']}</SubHeadingText>
-            <FormSwitchTab name="autoOpen" options={yesNo} />
-          </Box>
-        </GridItem>
-      </FormSection>
+      {(depositNature === NatureOfDepositProduct.Current ||
+        depositNature === NatureOfDepositProduct.Saving) && (
+        <FormSection>
+          <GridItem colSpan={3}>
+            <Box display="flex" flexDirection="row" justifyContent="space-between">
+              <SubHeadingText>{t['depositProductAutoOpenwhenmemberjoins']}</SubHeadingText>
+              <FormSwitchTab name="autoOpen" options={yesNo} />
+            </Box>
+          </GridItem>
+        </FormSection>
+      )}
 
       <FormSection>
         <GridItem colSpan={3}>
@@ -89,12 +90,11 @@ export const Questions = () => {
             </Box>
             <FormSwitchTab name="alternativeChannels" options={yesNo} />
           </Box>
-
-          {alternativeChannels && <AlternativeChannels />}
         </GridItem>
       </FormSection>
 
-      {depositNature === NatureOfDepositProduct.VoluntaryOrOptional && (
+      {(depositNature === NatureOfDepositProduct.Current ||
+        depositNature === NatureOfDepositProduct.Saving) && (
         <FormSection>
           <GridItem colSpan={3}>
             <Box display="flex" flexDirection="row" justifyContent="space-between">
@@ -106,7 +106,8 @@ export const Questions = () => {
         </FormSection>
       )}
 
-      {depositNature === NatureOfDepositProduct.VoluntaryOrOptional && (
+      {(depositNature === NatureOfDepositProduct.Current ||
+        depositNature === NatureOfDepositProduct.Saving) && (
         <FormSection>
           <GridItem colSpan={3}>
             <Box display="flex" flexDirection="row" justifyContent="space-between">
@@ -119,8 +120,7 @@ export const Questions = () => {
         </FormSection>
       )}
 
-      {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-        depositNature === NatureOfDepositProduct.TermSavingOrFd) && (
+      {depositNature !== NatureOfDepositProduct.Current && (
         <FormSection>
           <GridItem colSpan={3}>
             <Box display="flex" flexDirection="column" gap="s16">
@@ -158,7 +158,7 @@ export const Questions = () => {
         </FormSection>
       )}
 
-      {depositNature !== NatureOfDepositProduct.Mandatory && (
+      {depositNature !== NatureOfDepositProduct.Current && (
         <FormSection>
           <GridItem colSpan={3}>
             <Box display="flex" flexDirection="row" justifyContent="space-between">
@@ -170,7 +170,7 @@ export const Questions = () => {
       )}
 
       {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-        depositNature === NatureOfDepositProduct.Mandatory) && (
+        depositNature === NatureOfDepositProduct.Saving) && (
         <FormSection>
           <GridItem colSpan={3}>
             <Box display="flex" flexDirection="column" gap="s16">
@@ -200,7 +200,8 @@ export const Questions = () => {
         </FormSection>
       )}
 
-      {depositNature === NatureOfDepositProduct.RecurringSaving && (
+      {(depositNature === NatureOfDepositProduct.Saving ||
+        depositNature === NatureOfDepositProduct.RecurringSaving) && (
         <FormSection>
           <GridItem colSpan={3}>
             <Box display="flex" flexDirection="row" justifyContent="space-between">

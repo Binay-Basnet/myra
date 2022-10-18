@@ -151,80 +151,82 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
 
   return (
     <Box display="flex">
-      <Box width="240px" p="s12" position="fixed" flexShrink={0}>
-        <Text fontSize="l1" fontWeight="600" color="gray.800">
-          {t['memberLayout']}
-        </Text>
-        <Divider my="s16" />
+      <Box width="260px" position="fixed" flexShrink={0}>
+        <Box height="60px" py="s12" px="s16">
+          <Text fontSize="l1" fontWeight="600" color="gray.800">
+            {t['memberLayout']}
+          </Text>
+        </Box>
 
-        <Button
-          width="full"
-          size="lg"
-          justifyContent="start"
-          leftIcon={<AddIcon h="11px" />}
-          onClick={() => {
-            onOpenModal();
-          }}
-        >
-          {t['memberLayoutNewMember']}
-        </Button>
+        <Box p="s16">
+          <Button
+            width="full"
+            size="md"
+            justifyContent="start"
+            leftIcon={<AddIcon h="11px" />}
+            onClick={() => {
+              onOpenModal();
+            }}
+          >
+            {t['memberLayoutNewMember']}
+          </Button>
 
-        <Modal
-          open={openModal}
-          onClose={onCloseModal}
-          isCentered
-          title={
-            <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
-              {t['memberLayoutSelectMemberType']}
-            </Text>
-          }
-        >
-          <Box py="s16">
-            <Grid templateColumns="repeat(2, 1fr)" gap="s16">
-              {/* {memberTypes?.[0]?.type?.map((item, index) => { */}
-              {memberTypes?.map((item) => {
-                if (!item) {
-                  return null;
-                }
-                const dataItem = item as keyof typeof memberTypesArray;
+          <Modal
+            open={openModal}
+            onClose={onCloseModal}
+            isCentered
+            title={
+              <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
+                {t['memberLayoutSelectMemberType']}
+              </Text>
+            }
+          >
+            <Box py="s16">
+              <Grid templateColumns="repeat(2, 1fr)" gap="s16">
+                {/* {memberTypes?.[0]?.type?.map((item, index) => { */}
+                {memberTypes?.map((item) => {
+                  if (!item) {
+                    return null;
+                  }
+                  const dataItem = item as keyof typeof memberTypesArray;
 
-                return (
-                  <GridItem key={item}>
-                    <MemberTypeButton
-                      icon={memberTypesArray[dataItem]?.icon}
-                      title={memberTypesArray[dataItem]?.title}
-                      featCode={memberTypesArray[dataItem]?.featureCode}
-                      subtitle={memberTypesArray[dataItem]?.subtitle}
-                      onClick={() => memberTypeRedirect(item as MemberType)}
-                    />
-                  </GridItem>
-                );
-              })}
-            </Grid>
-          </Box>
-        </Modal>
-        <Divider my="s16" />
-        <TabColumn list={memberColumns} />
-        <Divider my="s16" />
-        <Button
-          onClick={() => router.push('/settings/general/members')}
-          variant="ghost"
-          color="#37474F"
-          height="s48"
-          width="full"
-          justifyContent="start"
-          leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
-        >
-          {t['memberLayoutMemberSettings']}
-        </Button>
+                  return (
+                    <GridItem key={item}>
+                      <MemberTypeButton
+                        icon={memberTypesArray[dataItem]?.icon}
+                        title={memberTypesArray[dataItem]?.title}
+                        featCode={memberTypesArray[dataItem]?.featureCode}
+                        subtitle={memberTypesArray[dataItem]?.subtitle}
+                        onClick={() => memberTypeRedirect(item as MemberType)}
+                      />
+                    </GridItem>
+                  );
+                })}
+              </Grid>
+            </Box>
+          </Modal>
+          <Divider my="s16" />
+          <TabColumn list={memberColumns} />
+          <Divider my="s16" />
+          <Button
+            onClick={() => router.push('/settings/general/members')}
+            variant="ghost"
+            color="#37474F"
+            height="s48"
+            width="full"
+            justifyContent="start"
+            leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
+          >
+            {t['memberLayoutMemberSettings']}
+          </Button>
+        </Box>
       </Box>
-
       <Box
-        boxShadow="xl"
-        width="calc(100% - 240px)"
+        // boxShadow="xl"
+        width="calc(100% - 260px)"
         overflowX="hidden"
         position="relative"
-        left="240px"
+        left="260px"
       >
         <Box bg="white" minHeight="calc(100vh - 110px)" width="100%">
           {children}

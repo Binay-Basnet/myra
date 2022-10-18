@@ -7,22 +7,21 @@ import isEqual from 'lodash/isEqual';
 import {
   Id_Type,
   KymIndIdentification,
+  RootState,
+  useAppSelector,
   useGetIndividualKymIdentificationListQuery,
   useGetNewIdMutation,
   useSetKymIndividualIdentificationDataMutation,
 } from '@coop/cbs/data-access';
-import { FormInput } from '@coop/shared/form';
+import { FormDatePicker, FormInput } from '@coop/shared/form';
 import { Box, FormSection, Text } from '@coop/shared/ui';
 import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 interface ICitizenshipProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
-type citizenshipData =
+type CitizenshipDataType =
   | {
       id: string;
       idNo: string;
@@ -33,12 +32,9 @@ type citizenshipData =
   | null
   | undefined;
 
-const getCitizenshipData = (
-  identificationListData: KymIndIdentification[] | null | undefined
-) => {
+const getCitizenshipData = (identificationListData: KymIndIdentification[] | null | undefined) => {
   const citizenshipData = identificationListData?.find(
-    (identification: KymIndIdentification | null) =>
-      identification?.idType === 'citizenship'
+    (identification: KymIndIdentification | null) => identification?.idType === 'citizenship'
   );
 
   return {
@@ -68,19 +64,17 @@ export const Citizenship = ({ setKymCurrentSection }: ICitizenshipProps) => {
     onSuccess: () => refetch(),
   });
 
-  const { data: identificationListData, refetch } =
-    useGetIndividualKymIdentificationListQuery(
-      {
-        id: String(id),
-      },
-      { enabled: !!id }
-    );
+  const { data: identificationListData, refetch } = useGetIndividualKymIdentificationListQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (identificationListData?.members?.individual?.listIdentification?.data) {
       const citizenshipData = getCitizenshipData(
-        identificationListData?.members?.individual?.listIdentification
-          ?.data as citizenshipData
+        identificationListData?.members?.individual?.listIdentification?.data as CitizenshipDataType
       );
 
       if (citizenshipData?.id) {
@@ -95,19 +89,22 @@ export const Citizenship = ({ setKymCurrentSection }: ICitizenshipProps) => {
     }
   }, [identificationListData]);
 
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetch();
+  }, [preference?.date]);
+
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
         const citizenshipData = getCitizenshipData(
           identificationListData?.members?.individual?.listIdentification
-            ?.data as citizenshipData
+            ?.data as CitizenshipDataType
         );
 
-        if (
-          id &&
-          !isDeepEmpty(data) &&
-          !isEqual({ ...data, id: mutationId }, citizenshipData)
-        ) {
+        if (id && !isDeepEmpty(data) && !isEqual({ ...data, id: mutationId }, citizenshipData)) {
           if (!mutationId) {
             newIDMutate({ idType: Id_Type.Kymidentification }).then((res) => {
               setMutationId(res.newId);
@@ -134,13 +131,7 @@ export const Citizenship = ({ setKymCurrentSection }: ICitizenshipProps) => {
   return (
     <Box>
       <FormProvider {...methods}>
-        <Text
-          fontSize="r1"
-          p="s20"
-          pb="0"
-          fontWeight="medium"
-          color="neutralColorLight.Gray-70"
-        >
+        <Text fontSize="r1" p="s20" pb="0" fontWeight="medium" color="neutralColorLight.Gray-70">
           {t['kynIndCitizenship']}
         </Text>
         <form
@@ -149,27 +140,12 @@ export const Citizenship = ({ setKymCurrentSection }: ICitizenshipProps) => {
             setKymCurrentSection(kymSection);
           }}
         >
-          <FormSection gridLayout={true}>
-            <FormInput
-              type="text"
-              name="idNo"
-              label={t['kynIndCitizenshipNo']}
-              __placeholder={t['kynIndCitizenshipNo']}
-            />
+          <FormSection>
+            <FormInput type="text" name="idNo" label={t['kynIndCitizenshipNo']} />
 
-            <FormInput
-              type="text"
-              name="place"
-              label={t['kynIndCitizenshipIssuePlace']}
-              __placeholder={t['kynIndCitizenshipIssuePlace']}
-            />
+            <FormInput type="text" name="place" label={t['kynIndCitizenshipIssuePlace']} />
 
-            <FormInput
-              type="date"
-              name="date"
-              label={t['kynIndCitizenshipIssueDate']}
-              __placeholder={t['kynIndCitizenshipIssueDate']}
-            />
+            <FormDatePicker name="date" label={t['kynIndCitizenshipIssueDate']} />
           </FormSection>
         </form>
       </FormProvider>

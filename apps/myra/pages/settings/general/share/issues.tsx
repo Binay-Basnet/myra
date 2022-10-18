@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { ShareSettingsFeeAndCharges } from '@coop/cbs/settings/share';
 import {
   SettingsGeneralLayout,

@@ -33,52 +33,36 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Loan applications can be filled properly.',
-      'Loan settings are applied in loan application and loan product form.',
-      'Account open and account close are implemented.',
-      'Reports related to share issue and return can be saved in the report section.',
-      'Market representatives can be created in the settings section.',
-      'Nepali translations are implemented in many pages.',
-      'Settings related to share are implemented.',
-      'In the transaction section, members can be assigned to the market representative.',
-      'Transactions can be mapped with payment mode like cash, bank voucher, cheque, bank account.',
-      'Global search in the header section is implemented.',
-      'Deposit products and deposit sections can be implemented in the settings section.',
-      'Charts of accounts are implemented with tree view and also ledger mapping.',
+      'Loan declined and table details',
+      'Loan details pages are designed.',
+      'Loan disbursement form and table data details.',
+      'Loan repayment form and table data details.',
+      'Audit log UI layout and filters.',
+      'Change password UIand functions.',
     ],
   },
   bugsSquashed: {
     title: 'Bug Squashed',
     data: [
-      'File upload issues in coop-union form are resolved.',
-      'Page not found issues in reports section are resolved.',
-      'When you open the map the background screen UI shifts.',
-      'All Radio button areas are fixed in case of clicking.',
-      'Upload issue in transactions section.',
-      '404 not found in account closed/inventory/ sales section.',
-      'After member search in the account open, share purchase return the searched data will disappear.',
-      'All kym form fields cannot be updated in kym setting however new can be added and reflected.',
-      'Kym individual form with estimated annual transactions changes the list to 50, 100, 500, more than 500… are set.',
-      'Register table of shares is fixed.',
-      'Pages not found in charts of accounts section are solved.',
-      'Kym institution forms are implemented with some changes.',
+      'Transactions fixes related to amount  populate, validation in payment mode.',
+      'Loan product product changes and fixes are done.',
+      'User role names are populated in user role details.',
+      'Submit Text changed in different sections of pages, share register table details',
+      'Agent details are fixed up.',
+      'Notfound pages are fixed.',
     ],
   },
   knownBugs: {
     title: 'Known Bugs',
     data: [
-      'Date calendar in nepali to be implemented.',
-      'Without allocating shares for members,it can open an account that is an issue.',
-      'Drop down list might not be relevant.',
-      'Validation not applicable at any where.',
-      'Multiple upload on edit not applicable.',
-      'Some input contains zero value as default.',
-      'Voluntary related products, accounts open are only working properly for now.Search in accounts, share, all members are listed for now .',
-      'Remaining 3 kym form inst, coop and coop union might contain bugs.',
+      'Date calendar in Nepali to be implemented, Drop down list might not be relevant.',
+      'Multiple upload on edit is not applicable, Some input contains zero value as default.',
       'Every table has a search field that needs to be implemented.',
       'Validation shows, alerts, and toast messages still need to be implemented.',
       'Nepali translations are still yet to be completed and fixed.',
-      'Save draft are not implemented',
+      'Save drafts are not implemented, More than 100 shares cannot be purchased as well as returned.',
+      'Validation in the audit log and many other pages are remaining.',
+      'Preview page of kym form needs to be implemented. ',
     ],
   },
 };
@@ -92,10 +76,11 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
       isCentered
       title={
         <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
-          What's New
+          What&apos;s New
         </Text>
       }
       modalContentProps={{ minW: '60vw' }}
+      scrollBehavior="inside"
       footerPrimary1Props={
         <Box
           p={3}
@@ -116,8 +101,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.2</Text>
-          <Text fontSize="s3">Aug 15, 2022</Text>
+          <Text fontSize="r2">Version 1.0.3</Text>
+          <Text fontSize="s3">October 17, 2022</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>
@@ -127,8 +112,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
             </Text>
           </Box>
           <UnorderedList>
-            {whatsNewData.features.data.map((item, index) => (
-              <ListItem key={index} fontSize="s3">
+            {whatsNewData.features.data.map((item) => (
+              <ListItem key={item} fontSize="s3">
                 {item}
               </ListItem>
             ))}
@@ -143,8 +128,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
           </Box>
 
           <UnorderedList>
-            {whatsNewData.bugsSquashed.data.map((item, index) => (
-              <ListItem key={index} fontSize="s3">
+            {whatsNewData.bugsSquashed.data.map((item) => (
+              <ListItem key={item} fontSize="s3">
                 {item}
               </ListItem>
             ))}
@@ -158,8 +143,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
             </Text>
           </Box>
           <UnorderedList>
-            {whatsNewData?.knownBugs?.data.map((item, index) => (
-              <ListItem key={index} fontSize="s3">
+            {whatsNewData?.knownBugs?.data.map((item) => (
+              <ListItem key={item} fontSize="s3">
                 {item}
               </ListItem>
             ))}
@@ -300,7 +285,7 @@ export const FloatingShortcutButton = () => {
               >
                 <Text fontSize="s3" fontWeight="500" cursor="pointer" color="gray.600">
                   {' '}
-                  What's New?
+                  What&apos;s New?
                 </Text>
               </Box>
 
@@ -325,21 +310,21 @@ export const FloatingShortcutButton = () => {
         modalContentProps={{ minW: '60vw' }}
       >
         <Grid templateColumns="repeat(2, 1fr)" rowGap="s48" columnGap="80px" mx="-s8" py="s8">
-          {helpOptions.map(({ title, shortcuts }, index) => (
-            <Box display="flex" flexDirection="column" gap="s16" key={index}>
+          {helpOptions.map(({ title, shortcuts }) => (
+            <Box display="flex" flexDirection="column" gap="s16" key={title}>
               <Text fontSize="r2" fontWeight={500} color="black">
                 {title}
               </Text>
 
-              {shortcuts.map(({ title, shortcutKeys }, index) => (
-                <Box key={index} display="flex" justifyContent="space-between" alignItems="center">
+              {shortcuts.map(({ title: item, shortcutKeys }) => (
+                <Box key={item} display="flex" justifyContent="space-between" alignItems="center">
                   <Text color="neutralColorLight.Gray-70" fontSize="r1" fontWeight={400}>
-                    {title}
+                    {item}
                   </Text>
 
                   <Box display="flex" gap="s12">
-                    {shortcutKeys.map((key, index) => (
-                      <ShortcutTab shortcut={key} key={index} />
+                    {shortcutKeys.map((key) => (
+                      <ShortcutTab shortcut={key} key={JSON.stringify(key)} />
                     ))}
                   </Box>
                 </Box>

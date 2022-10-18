@@ -18,15 +18,10 @@ import { getKymSection } from '@coop/shared/utils';
 import { getFieldOption } from '../../../utils/getFieldOption';
 
 interface IMemberKYMProfessionProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
-export const MemberKYMProfession = ({
-  setKymCurrentSection,
-}: IMemberKYMProfessionProps) => {
+export const MemberKYMProfession = ({ setKymCurrentSection }: IMemberKYMProfessionProps) => {
   const router = useRouter();
 
   const id = router?.query?.['id'];
@@ -35,10 +30,9 @@ export const MemberKYMProfession = ({
 
   const { watch, reset } = methods;
 
-  const { data: occupationData, isLoading: occupationLoading } =
-    useGetIndividualKymOptionsQuery({
-      searchTerm: FormFieldSearchTerm.Occupation,
-    });
+  const { data: occupationData, isLoading: occupationLoading } = useGetIndividualKymOptionsQuery({
+    searchTerm: FormFieldSearchTerm.Occupation,
+  });
 
   const { mutateAsync } = useSetMemberDataMutation({
     onSuccess: () => refetch(),
@@ -53,8 +47,7 @@ export const MemberKYMProfession = ({
 
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.individual?.formState?.data?.formData;
+      const editValueData = editValues?.members?.individual?.formState?.data?.formData;
 
       reset({
         ...editValueData?.profession,
@@ -82,12 +75,12 @@ export const MemberKYMProfession = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <FormSection header="kymIndPROFESSION" flexLayout={true}>
+        <FormSection header="kymIndPROFESSION" flexLayout>
           {occupationLoading ? (
             <Skeleton height="40px" />
           ) : (
             <FormCheckboxGroup
-              name={'professionId'}
+              name="professionId"
               showOther
               list={getFieldOption(occupationData)}
             />

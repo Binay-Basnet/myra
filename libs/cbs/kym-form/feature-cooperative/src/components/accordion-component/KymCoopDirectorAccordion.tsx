@@ -8,12 +8,14 @@ import debounce from 'lodash/debounce';
 
 import {
   KymCoopDirectorDetailsFormInput,
+  RootState,
   useAllAdministrationQuery,
+  useAppSelector,
   useGetCoOperativeDirectorEditDataQuery,
   useSetCooPdirectorDataMutation,
 } from '@coop/cbs/data-access';
 import { DynamicBoxGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
+import { FormDatePicker, FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -46,7 +48,7 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
 
   const { mutate } = useSetCooPdirectorDataMutation();
 
-  const { data: editValues } = useGetCoOperativeDirectorEditDataQuery({
+  const { data: editValues, refetch } = useGetCoOperativeDirectorEditDataQuery({
     id,
   });
 
@@ -80,6 +82,14 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
       }
     }
   }, [editValues]);
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetch();
+  }, [preference?.date]);
+
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
@@ -201,7 +211,7 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
         style={{
           marginTop: '0px',
           border: '1px solid',
-          borderColor: 'border.layout',
+          borderColor: '#E0E5EB',
         }}
       >
         <DynamicBoxGroupContainer>
@@ -213,7 +223,7 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
               }}
             >
               <Box display="flex" flexDirection="column" gap="s48">
-                <FormSection gridLayout>
+                <FormSection>
                   <FormInput
                     id="boardDirectorCoop"
                     type="text"
@@ -228,7 +238,7 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
                   />
                 </FormSection>
 
-                <FormSection gridLayout header="kymCoopPermanentAddress">
+                <FormSection header="kymCoopPermanentAddress">
                   <FormSelect
                     id="boardDirectorCoop"
                     name="permanentAddress.provinceId"
@@ -274,7 +284,7 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
                   </GridItem>
                 </FormSection>
 
-                <FormSection gridLayout header="kymCoopTemporaryAddress">
+                <FormSection header="kymCoopTemporaryAddress">
                   <GridItem colSpan={3}>
                     <FormSwitch
                       id="boardOfDirectorsDetails"
@@ -331,8 +341,8 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
                   )}
                 </FormSection>
 
-                <FormSection gridLayout>
-                  <FormInput
+                <FormSection>
+                  <FormDatePicker
                     id="boardDirectorCoop"
                     type="date"
                     name="dateOfMembership"

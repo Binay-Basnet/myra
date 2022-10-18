@@ -1,0 +1,16 @@
+query getMe {
+  neosys {
+     auth {
+       me {
+         data {
+           id
+           username
+           email
+         }
+         error {
+           ...MutationError
+         }
+       }
+     }
+  }
+}

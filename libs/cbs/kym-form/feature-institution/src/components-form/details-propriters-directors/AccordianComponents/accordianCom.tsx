@@ -1,31 +1,27 @@
-import React, { useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 
 import {
+  RootState,
   useAllAdministrationQuery,
+  useAppSelector,
   useGetInsBoardDirectorEditListQuery,
   useSetAddDirectorInstitutionMutation,
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
+import { FormDatePicker, FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 interface IAddDirector {
   removeDirector: (directorId: string) => void;
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
   directorId: string;
 }
 
-export const DirectorTopPart = ({
-  setKymCurrentSection,
-  directorId,
-}: IAddDirector) => {
+export const DirectorTopPart = ({ setKymCurrentSection, directorId }: IAddDirector) => {
   const { t } = useTranslation();
   const methods = useForm();
 
@@ -36,17 +32,14 @@ export const DirectorTopPart = ({
   const id = String(router?.query?.['id']);
 
   const { mutate } = useSetAddDirectorInstitutionMutation();
-  const { data: editValues } = useGetInsBoardDirectorEditListQuery({
-    id: id,
+  const { data: editValues, refetch: refetchEdit } = useGetInsBoardDirectorEditListQuery({
+    id,
   });
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.institution?.listDirectors?.data;
+      const editValueData = editValues?.members?.institution?.listDirectors?.data;
 
-      const familyMemberDetail = editValueData?.find(
-        (data) => data?.id === directorId
-      );
+      const familyMemberDetail = editValueData?.find((data) => data?.id === directorId);
 
       if (familyMemberDetail) {
         reset({
@@ -79,6 +72,14 @@ export const DirectorTopPart = ({
       }
     }
   }, [editValues]);
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetchEdit();
+  }, [preference?.date]);
+
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
@@ -91,14 +92,14 @@ export const DirectorTopPart = ({
 
   const { data } = useAllAdministrationQuery();
 
-  const province = useMemo(() => {
-    return (
+  const province = useMemo(
+    () =>
       data?.administration?.all?.map((d) => ({
         label: d.name,
         value: d.id,
-      })) ?? []
-    );
-  }, [data?.administration?.all]);
+      })) ?? [],
+    [data?.administration?.all]
+  );
 
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch(`permanentAddress.provinceId`);
@@ -106,16 +107,12 @@ export const DirectorTopPart = ({
   const currentLocalityId = watch('permanentAddress.localGovernmentId');
 
   const districtList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
-        ?.districts ?? [],
+    () => data?.administration.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
     [currentProvinceId]
   );
 
   const localityList = useMemo(
-    () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+    () => districtList.find((d) => d.id === currentDistrictId)?.municipalities ?? [],
     [currentDistrictId]
   );
   const wardList = useMemo(
@@ -129,28 +126,21 @@ export const DirectorTopPart = ({
   const currentTempLocalityId = watch('temporaryAddress.localGovernmentId');
 
   const districtTempList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentTempProvinceId)
-        ?.districts ?? [],
+    () => data?.administration.all.find((d) => d.id === currentTempProvinceId)?.districts ?? [],
     [currentTempProvinceId]
   );
 
   const localityTempList = useMemo(
-    () =>
-      districtTempList.find((d) => d.id === currentTemptDistrictId)
-        ?.municipalities ?? [],
+    () => districtTempList.find((d) => d.id === currentTemptDistrictId)?.municipalities ?? [],
     [currentTemptDistrictId]
   );
 
   const wardTempList = useMemo(
-    () =>
-      localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
+    () => localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
     [currentTempLocalityId]
   );
 
-  const isPermanentAndTemporaryAddressSame = watch(
-    `isTemporaryAndPermanentAddressSame`
-  );
+  const isPermanentAndTemporaryAddressSame = watch(`isTemporaryAndPermanentAddressSame`);
 
   //   const resetDirectorForm = () => {
   //     const values = getValues();
@@ -168,21 +158,19 @@ export const DirectorTopPart = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <Box display={'flex'} flexDirection="column" gap={'s32'}>
+        <Box display="flex" flexDirection="column" gap="s32">
           <InputGroupContainer>
             <FormInput
               id="DirectorInstitutionId"
               type="text"
-              name={`name`}
+              name="name"
               label={t['kymInsFullName']}
-              __placeholder={t['kymInsEnterFullName']}
             />
             <FormInput
               id="DirectorInstitutionId"
               type="text"
-              name={`designation`}
+              name="designation"
               label={t['kymInsDesignation']}
-              __placeholder={t['kymInsEnterDesignation']}
             />
           </InputGroupContainer>
 
@@ -197,17 +185,15 @@ export const DirectorTopPart = ({
             > */}
           <InputGroupContainer>
             <FormSelect
-              name={`permanentAddress.provinceId`}
+              name="permanentAddress.provinceId"
               id="DirectorInstitutionId"
               label={t['kymInsState']}
-              __placeholder={t['kymInsSelectState']}
               options={province}
             />
             <FormSelect
-              name={`permanentAddress.districtId`}
+              name="permanentAddress.districtId"
               id="DirectorInstitutionId"
               label={t['kymInsDistrict']}
-              __placeholder={t['kymInsSelectDistrict']}
               options={districtList.map((d) => ({
                 label: d.name,
                 value: d.id,
@@ -215,9 +201,8 @@ export const DirectorTopPart = ({
             />
             <FormSelect
               id="DirectorInstitutionId"
-              name={`permanentAddress.localGovernmentId`}
+              name="permanentAddress.localGovernmentId"
               label={t['kymInsVDCMunicipality']}
-              __placeholder={t['kymInsSelectVDCMunicipality']}
               options={localityList.map((d) => ({
                 label: d.name,
                 value: d.id,
@@ -225,9 +210,8 @@ export const DirectorTopPart = ({
             />
             <FormSelect
               id="DirectorInstitutionId"
-              name={`permanentAddress.wardNo`}
+              name="permanentAddress.wardNo"
               label={t['kymInsWardNo']}
-              __placeholder={t['kymInsEnterWardNo']}
               options={wardList?.map((d) => ({
                 label: d,
                 value: d,
@@ -236,32 +220,27 @@ export const DirectorTopPart = ({
             <FormInput
               id="DirectorInstitutionId"
               type="text"
-              name={`permanentAddress.locality`}
+              name="permanentAddress.locality"
               label={t['kymInsLocality']}
-              __placeholder={t['kymInsEnterLocality']}
             />
             <FormInput
               id="DirectorInstitutionId"
               type="text"
-              name={`permanentAddress.houseNo`}
+              name="permanentAddress.houseNo"
               label={t['kymInsHouseNo']}
-              __placeholder={t['kymInsEnterHouseNo']}
             />
           </InputGroupContainer>
 
           <Box>
-            <FormMap
-              name={`permanentAddress.coordinates`}
-              id="DirectorInstitutionId"
-            />
+            <FormMap name="permanentAddress.coordinates" id="DirectorInstitutionId" />
           </Box>
 
           <Box
             id="Temporary Address"
             gap="s32"
-            display={'flex'}
+            display="flex"
             flexDirection="column"
-            scrollMarginTop={'200px'}
+            scrollMarginTop="200px"
           >
             <Text fontSize="r1" fontWeight="SemiBold">
               {t['kymInsTemporaryAddress']}
@@ -269,7 +248,7 @@ export const DirectorTopPart = ({
 
             <FormSwitch
               id="isPermanentAndTemporaryAddressSame"
-              name={`isTemporaryAndPermanentAddressSame`}
+              name="isTemporaryAndPermanentAddressSame"
               label={t['kymInsTemporaryAddressPermanent']}
             />
 
@@ -278,16 +257,14 @@ export const DirectorTopPart = ({
                 <InputGroupContainer>
                   <FormSelect
                     id="DirectorInstitutionId"
-                    name={`temporaryAddress.provinceId`}
+                    name="temporaryAddress.provinceId"
                     label={t['kymInsState']}
-                    __placeholder={t['kymInsSelectState']}
                     options={province}
                   />
                   <FormSelect
                     id="DirectorInstitutionId"
-                    name={`temporaryAddress.districtId`}
+                    name="temporaryAddress.districtId"
                     label={t['kymInsDistrict']}
-                    __placeholder={t['kymInsSelectDistrict']}
                     options={districtTempList.map((d) => ({
                       label: d.name,
                       value: d.id,
@@ -295,9 +272,8 @@ export const DirectorTopPart = ({
                   />
                   <FormSelect
                     id="DirectorInstitutionId"
-                    name={`temporaryAddress.localGovernmentId`}
+                    name="temporaryAddress.localGovernmentId"
                     label={t['kymInsVDCMunicipality']}
-                    __placeholder={t['kymInsSelectVDCMunicipality']}
                     options={localityTempList.map((d) => ({
                       label: d.name,
                       value: d.id,
@@ -305,9 +281,8 @@ export const DirectorTopPart = ({
                   />
                   <FormSelect
                     id="DirectorInstitutionId"
-                    name={`temporaryAddress.wardNo`}
+                    name="temporaryAddress.wardNo"
                     label={t['kymInsWardNo']}
-                    __placeholder={t['kymInsEnterWardNo']}
                     options={wardTempList?.map((d) => ({
                       label: d,
                       value: d,
@@ -316,69 +291,57 @@ export const DirectorTopPart = ({
                   <FormInput
                     id="DirectorInstitutionId"
                     type="text"
-                    name={`temporaryAddress.locality`}
+                    name="temporaryAddress.locality"
                     label={t['kymInsLocality']}
-                    __placeholder={t['kymInsEnterLocality']}
                   />
                   <FormInput
                     id="DirectorInstitutionId"
                     type="text"
-                    name={`temporaryAddress.houseNo`}
+                    name="temporaryAddress.houseNo"
                     label={t['kymInsHouseNo']}
-                    __placeholder={t['kymInsEnterHouseNo']}
                   />
                 </InputGroupContainer>
-                <FormMap
-                  id="DirectorInstitutionId"
-                  name={`temporaryAddress.coordinates`}
-                />
+                <FormMap id="DirectorInstitutionId" name="temporaryAddress.coordinates" />
               </>
             )}
           </Box>
 
           <Box>
             <InputGroupContainer>
-              <FormInput
+              <FormDatePicker
                 id="DirectorInstitutionId"
-                type="date"
-                name={`dateOfMembership`}
+                name="dateOfMembership"
                 label={t['kymInsDateOfMembership']}
-                __placeholder="DD-MM-YYYY"
               />
               <FormInput
                 id="DirectorInstitutionId"
                 type="text"
-                name={`highestQualification`}
+                name="highestQualification"
                 label={t['kymInsHighestQualification']}
-                __placeholder={t['kymInsEnterHigestQualification']}
               />
               <FormInput
                 id="DirectorInstitutionId"
                 type="string"
-                name={`mobileNo`}
+                name="mobileNo"
                 label={t['kymInsMobileNo']}
-                __placeholder={t['kymInsEnterMobileNo']}
               />
               <FormInput
                 id="DirectorInstitutionId"
                 type="text"
-                name={`email`}
+                name="email"
                 label={t['kymInsEmail']}
-                __placeholder={t['kymInsEnterEmail']}
               />
               <FormInput
                 id="DirectorInstitutionId"
                 type="string"
-                name={`citizenshipNo`}
+                name="citizenshipNo"
                 label={t['kymInsCitizenshipPassportDrivingLicenseNo']}
-                __placeholder={t['kymInsEnterNo']}
               />
               <FormInput
                 id="DirectorInstitutionId"
                 type="string"
-                name={`panNo`}
+                name="panNo"
                 label={t['kymInsPanNo']}
-                __placeholder={t['kymInsPanEnterNo']}
               />
             </InputGroupContainer>
           </Box>

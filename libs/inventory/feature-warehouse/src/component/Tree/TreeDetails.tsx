@@ -2,7 +2,7 @@ import { useAccordion } from './Accordion';
 import LeafNode from './LeafNode';
 import Node from './Node';
 
-function TreeDetails() {
+const TreeDetails = () => {
   const { isOpen } = useAccordion();
   if (!isOpen) return null;
 
@@ -31,13 +31,11 @@ function TreeDetails() {
     <>
       {data.map((d) => {
         if (d.type === 'GROUP')
-          return (
-            <Node code={d.code} title={d.title} isExtensible={d.isExtensible} />
-          );
+          return <Node code={d.code} title={d.title} isExtensible={d.isExtensible} />;
         return <LeafNode code={d.code} title={d.title} />;
       })}
     </>
   );
-}
+};
 
 export default TreeDetails;

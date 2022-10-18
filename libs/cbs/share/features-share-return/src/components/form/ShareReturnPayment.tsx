@@ -51,13 +51,14 @@ export const ShareReturnPayment = ({
           <BankCheque totalAmount={totalAmount} />
         )}
 
-        {paymentModes === SharePaymentMode.Account && <ShareAccount />}
+        {paymentModes === SharePaymentMode.Account && <ShareAccount totalAmount={totalAmount} />}
 
         {paymentModes === SharePaymentMode.Cash && (
           <ShareCash
             denominationTotal={denominationTotal}
             totalCashPaid={totalCashPaid}
             returnAmount={returnAmount}
+            totalAmount={totalAmount}
           />
         )}
       </Box>

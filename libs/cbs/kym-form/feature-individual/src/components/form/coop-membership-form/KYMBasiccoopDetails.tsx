@@ -18,20 +18,8 @@ import {
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import {
-  Box,
-  Button,
-  FormMemberSelect,
-  FormSection,
-  GridItem,
-  Icon,
-} from '@coop/shared/ui';
-import {
-  getKymSection,
-  getRouterQuery,
-  isDeepEmpty,
-  useTranslation,
-} from '@coop/shared/utils';
+import { Box, Button, FormMemberSelect, FormSection, GridItem, Icon } from '@coop/shared/ui';
+import { getKymSection, getRouterQuery, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 import { FamilyMember } from './FamilyMember';
 import { getFieldOption } from '../../../utils/getFieldOption';
@@ -48,10 +36,7 @@ const booleanList = [
 ];
 
 interface IKYMBasiccoopDetailsFamilyMemberProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
 const KYMBasiccoopDetailsFamilyMember = ({
@@ -95,8 +80,7 @@ const KYMBasiccoopDetailsFamilyMember = ({
 
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.individual?.formState?.data?.formData;
+      const editValueData = editValues?.members?.individual?.formState?.data?.formData;
 
       reset({
         isFamilyAMember: editValueData?.isFamilyAMember,
@@ -109,8 +93,7 @@ const KYMBasiccoopDetailsFamilyMember = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        const editValueData =
-          editValues?.members?.individual?.formState?.data?.formData;
+        const editValueData = editValues?.members?.individual?.formState?.data?.formData;
         if (id && !isDeepEmpty(data) && !isEqual(data, editValueData)) {
           mutate({ id: String(id), data });
         }
@@ -124,30 +107,25 @@ const KYMBasiccoopDetailsFamilyMember = ({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
   });
 
-  const memberSelectOption = memberListData?.members?.list?.edges?.map(
-    (item) => ({
-      value: item?.node?.id ?? '',
-      label: `${item?.node?.id ?? ''}-${item?.node?.name?.local ?? ''}`,
-    })
-  );
+  const memberSelectOption = memberListData?.members?.list?.edges?.map((item) => ({
+    value: item?.node?.id ?? '',
+    label: `${item?.node?.id ?? ''}-${item?.node?.name?.local ?? ''}`,
+  }));
 
   // const selectedMemberDetails = memberListData?.members?.list?.edges?.filter(
   //   (item) => item?.node?.id === selectedFamilyMember
   // );
 
-  const [familyMemberMutationIds, setFamilyMemberMutationIds] = useState<
-    string[]
-  >([]);
+  const [familyMemberMutationIds, setFamilyMemberMutationIds] = useState<string[]>([]);
 
   const [familyMemberIds, setFamilyMemberIds] = useState<string[]>([]);
 
-  const { data: familyMemberListQueryData, refetch } =
-    useGetIndividualKymFamilyMembersListQuery(
-      {
-        id: String(id),
-      },
-      { enabled: !!id }
-    );
+  const { data: familyMemberListQueryData, refetch } = useGetIndividualKymFamilyMembersListQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (familyMemberListQueryData) {
@@ -165,8 +143,7 @@ const KYMBasiccoopDetailsFamilyMember = ({
 
       setFamilyMemberIds(
         editValueData?.reduce(
-          (prevVal, curVal) =>
-            curVal ? [...prevVal, curVal.familyMemberId as string] : prevVal,
+          (prevVal, curVal) => (curVal ? [...prevVal, curVal.familyMemberId as string] : prevVal),
           [] as string[]
         ) ?? []
       );
@@ -183,24 +160,17 @@ const KYMBasiccoopDetailsFamilyMember = ({
   const { mutate: deleteMutate } = useDeleteMemberFamilyDetailsMutation({
     onSuccess: (res) => {
       // refetch();
-      const deletedId = String(
-        res?.members?.individual?.familyMember?.delete?.recordId
-      );
+      const deletedId = String(res?.members?.individual?.familyMember?.delete?.recordId);
 
       const tempFamilyMemberMutationIds = [...familyMemberMutationIds];
 
-      tempFamilyMemberMutationIds.splice(
-        tempFamilyMemberMutationIds.indexOf(deletedId),
-        1
-      );
+      tempFamilyMemberMutationIds.splice(tempFamilyMemberMutationIds.indexOf(deletedId), 1);
 
       setFamilyMemberMutationIds([...tempFamilyMemberMutationIds]);
 
       const tempFamilyMemberIds = [...familyMemberIds];
 
-      setFamilyMemberIds([
-        ...familyMemberIds.splice(tempFamilyMemberIds.indexOf(deletedId), 1),
-      ]);
+      setFamilyMemberIds([...familyMemberIds.splice(tempFamilyMemberIds.indexOf(deletedId), 1)]);
     },
   });
 
@@ -220,7 +190,7 @@ const KYMBasiccoopDetailsFamilyMember = ({
   }, [id]);
 
   return (
-    <FormSection gridLayout={true} id="kymAccIndFamilyMemberinthisinstitution">
+    <FormSection id="kymAccIndFamilyMemberinthisinstitution">
       <GridItem colSpan={3}>
         <FormProvider {...methods}>
           <form
@@ -258,7 +228,7 @@ const KYMBasiccoopDetailsFamilyMember = ({
                   mt={1}
                   type="text"
                   flexGrow="1"
-                  id={`familyMemberInThisCooperative.0.memberId`}
+                  id="familyMemberInThisCooperative.0.memberId"
                   __placeholder={t['kynIndFirstName']}
                   bg="white"
                 />
@@ -288,15 +258,10 @@ const KYMBasiccoopDetailsFamilyMember = ({
 };
 
 interface IKYMBasiccoopDetailsBasicProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
-const KYMBasiccoopDetailsBasic = ({
-  setKymCurrentSection,
-}: IKYMBasiccoopDetailsBasicProps) => {
+const KYMBasiccoopDetailsBasic = ({ setKymCurrentSection }: IKYMBasiccoopDetailsBasicProps) => {
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -307,10 +272,9 @@ const KYMBasiccoopDetailsBasic = ({
 
   const { watch, reset } = methods;
 
-  const { data: purposeData, isLoading: purposeLoading } =
-    useGetIndividualKymOptionsQuery({
-      searchTerm: FormFieldSearchTerm.Purpose,
-    });
+  const { data: purposeData, isLoading: purposeLoading } = useGetIndividualKymOptionsQuery({
+    searchTerm: FormFieldSearchTerm.Purpose,
+  });
 
   const isMemberOfAnotherCooperative = watch('isMemberOfAnotherCooperative');
 
@@ -323,8 +287,7 @@ const KYMBasiccoopDetailsBasic = ({
 
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.individual?.formState?.data?.formData;
+      const editValueData = editValues?.members?.individual?.formState?.data?.formData;
 
       reset({
         ...editValueData?.membershipDetails,
@@ -355,11 +318,7 @@ const KYMBasiccoopDetailsBasic = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <FormSection
-          gridLayout={true}
-          templateColumns={2}
-          id="kymAccIndMainPurposeofBecomingMember"
-        >
+        <FormSection templateColumns={2} id="kymAccIndMainPurposeofBecomingMember">
           <FormSelect
             name="purposeId"
             label={t['kynIndMainpurposeofbecomingmember']}
@@ -369,7 +328,7 @@ const KYMBasiccoopDetailsBasic = ({
           />
         </FormSection>
 
-        <FormSection gridLayout={true}>
+        <FormSection>
           <GridItem colSpan={3}>
             <FormSwitchTab
               label={t['kynIndMemberofAnothercooperative']}
@@ -427,10 +386,7 @@ const KYMBasiccoopDetailsBasic = ({
 };
 
 interface IKYMBasiccoopDetailsIntroducerProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
 const KYMBasiccoopDetailsIntroducer = ({
@@ -455,8 +411,7 @@ const KYMBasiccoopDetailsIntroducer = ({
 
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.individual?.formState?.data?.formData;
+      const editValueData = editValues?.members?.individual?.formState?.data?.formData;
 
       reset({
         ...editValueData?.introducers,
@@ -486,20 +441,10 @@ const KYMBasiccoopDetailsIntroducer = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <FormSection
-          header="kymIndIntroducers"
-          gridLayout={true}
-          templateColumns={2}
-        >
-          <FormMemberSelect
-            name="firstIntroducerId"
-            label={t['kymIndFirstIntroducer']}
-          />
+        <FormSection header="kymIndIntroducers" templateColumns={2}>
+          <FormMemberSelect name="firstIntroducerId" label={t['kymIndFirstIntroducer']} />
 
-          <FormMemberSelect
-            name="secondIntroducerId"
-            label={t['kymIndSecondIntroducer']}
-          />
+          <FormMemberSelect name="secondIntroducerId" label={t['kymIndSecondIntroducer']} />
         </FormSection>
       </form>
     </FormProvider>
@@ -507,33 +452,18 @@ const KYMBasiccoopDetailsIntroducer = ({
 };
 
 interface IKYMBasiccoopDetailsProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
-export const KYMBasiccoopDetails = ({
-  setKymCurrentSection,
-}: IKYMBasiccoopDetailsProps) => {
-  return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      id="kymAccIndIncomeSourceDetails"
-    >
-      <KYMBasiccoopDetailsBasic setKymCurrentSection={setKymCurrentSection} />
+export const KYMBasiccoopDetails = ({ setKymCurrentSection }: IKYMBasiccoopDetailsProps) => (
+  <Box display="flex" flexDirection="column" id="kymAccIndIncomeSourceDetails">
+    <KYMBasiccoopDetailsBasic setKymCurrentSection={setKymCurrentSection} />
 
-      <KYMBasiccoopDetailsIntroducer
-        setKymCurrentSection={setKymCurrentSection}
-      />
+    <KYMBasiccoopDetailsIntroducer setKymCurrentSection={setKymCurrentSection} />
 
-      <KYMBasiccoopDetailsFamilyMember
-        setKymCurrentSection={setKymCurrentSection}
-      />
-    </Box>
-  );
-};
+    <KYMBasiccoopDetailsFamilyMember setKymCurrentSection={setKymCurrentSection} />
+  </Box>
+);
 
 // export const FamilyMember = ({ control, index }: any) => {
 //   const { t } = useTranslation();

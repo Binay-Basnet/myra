@@ -6,27 +6,23 @@ import debounce from 'lodash/debounce';
 import omit from 'lodash/omit';
 
 import {
+  addBodError,
+  addError,
   CooperativeUnionPersonnelSection,
   CoopUnionPersonnelInput,
+  RootState,
+  useAppDispatch,
+  useAppSelector,
   useGetBoardOfDirectorsDetailsListQuery,
   useSetPersonnelDetailsMutation,
 } from '@coop/cbs/data-access';
-import {
-  addBodError,
-  addError,
-  useAppDispatch,
-  useAppSelector,
-} from '@coop/shared/utils';
 
 interface IUseCoopUnionBodProps {
   methods: UseFormReturn<CoopUnionPersonnelInput>;
   directorId: string;
 }
 
-export const useCoopUnionBod = ({
-  methods,
-  directorId,
-}: IUseCoopUnionBodProps) => {
+export const useCoopUnionBod = ({ methods, directorId }: IUseCoopUnionBodProps) => {
   const router = useRouter();
   const id = router.query['id'] as string;
   const dispatch = useAppDispatch();
@@ -34,9 +30,7 @@ export const useCoopUnionBod = ({
   const bodErrors = useAppSelector((state) => state.coopUnion.bod.director);
   const { watch, reset, setError, clearErrors } = methods;
 
-  const hasPressedNext = useAppSelector(
-    (state) => state.coopUnion.hasPressedNext
-  );
+  const hasPressedNext = useAppSelector((state) => state.coopUnion.hasPressedNext);
 
   const {
     data: editValues,
@@ -48,17 +42,15 @@ export const useCoopUnionBod = ({
       enabled: !!id,
       onSuccess: (response) => {
         const errorArr =
-          response?.members?.cooperativeUnion?.formState?.formData
-            ?.boardOfDirectorsDetails?.sectionStatus;
+          response?.members?.cooperativeUnion?.formState?.formData?.boardOfDirectorsDetails
+            ?.sectionStatus;
 
         // Add Error If New Error Is Detected
         if (errorArr) {
-          const errors = errorArr.map((errorObj, index) => {
-            return {
-              directorId: String(index),
-              errors: errorObj.errors,
-            };
-          });
+          const errors = errorArr.map((errorObj, index) => ({
+            directorId: String(index),
+            errors: errorObj.errors,
+          }));
 
           dispatch(addBodError(errors));
         } else {
@@ -80,6 +72,13 @@ export const useCoopUnionBod = ({
     },
   });
 
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetchEdit();
+  }, [preference?.date]);
+
   // Get Back The Initial Data when page reloads or user edits
   useEffect(() => {
     if (directorDetail) {
@@ -95,7 +94,7 @@ export const useCoopUnionBod = ({
         },
       });
     }
-  }, [editLoading]);
+  }, [editLoading, editValues]);
 
   // Call The Mutation To Add Data on Each Form Change
   useEffect(() => {

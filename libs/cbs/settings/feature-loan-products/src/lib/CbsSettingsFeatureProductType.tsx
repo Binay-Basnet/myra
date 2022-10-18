@@ -12,7 +12,7 @@ type ProductTypeTableType = {
   description: string;
 };
 
-type ProductSubTypeTable = {
+type ProductSubTypeTableType = {
   productSubType: string;
   productTypeID: string;
   id?: string;
@@ -20,10 +20,10 @@ type ProductSubTypeTable = {
 
 type ProductTypeForm = {
   productType: ProductTypeTableType[];
-  productSubType: ProductSubTypeTable[];
+  productSubType: ProductSubTypeTableType[];
 };
 
-export function CbsSettingsFeatureProductType() {
+export const CbsSettingsFeatureProductType = () => {
   const methods = useForm<ProductTypeForm>();
 
   const { mutateAsync: setProductType } = useSetProductTypeMutation();
@@ -46,13 +46,13 @@ export function CbsSettingsFeatureProductType() {
     if (productData) {
       methods.reset({
         productType: productData.productTypes as ProductTypeTableType[],
-        productSubType: productData.productSubTypes as ProductSubTypeTable[],
+        productSubType: productData.productSubTypes as ProductSubTypeTableType[],
       });
     }
   }, [isLoading]);
 
   return (
-    <Box pb="s20" width="full" display={'flex'} flexDirection={'column'}>
+    <Box pb="s40" width="full" display="flex" flexDirection="column">
       <FormProvider {...methods}>
         <form>
           <Box display="flex" flexDirection="column" rowGap="s32" padding="s16">
@@ -60,11 +60,11 @@ export function CbsSettingsFeatureProductType() {
             <Divider />
             <ProductSubTypeTable />
           </Box>
-          <SettingsFooter handleSave={handleSave} />
+          <SettingsFooter handleSave={handleSave} zIndex={1} />
         </form>
       </FormProvider>
     </Box>
   );
-}
+};
 
 export default CbsSettingsFeatureProductType;

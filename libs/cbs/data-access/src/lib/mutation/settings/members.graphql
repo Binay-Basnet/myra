@@ -1,3 +1,20 @@
+mutation addGeneralMember($data: GeneralMemberInput!) {
+  settings {
+    general {
+      KYM {
+        general {
+          generalMember(data: $data) {
+            recordId
+            error {
+              ...MutationError
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 mutation upsertNewOption($fieldId: ID!, $data: FormOptionUpsertInput!) {
   settings {
     form {

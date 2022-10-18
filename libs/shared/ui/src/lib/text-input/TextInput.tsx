@@ -10,34 +10,24 @@ export interface TextInputProps extends InputProps {
   __placeholder?: string;
 }
 
-export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
-  (props, ref) => {
-    const { labelColor, label, __placeholder, ...rest } = props;
-    return (
-      <>
-        {label && (
-          <TextFields
-            mb="s4"
-            variant="formLabel"
-            whiteSpace="nowrap"
-            color={labelColor ?? 'gray.700'}
-          >
-            {label}
-          </TextFields>
-        )}
+export const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
+  const { labelColor, label, ...rest } = props;
+  return (
+    <>
+      {label && (
+        <TextFields
+          mb="s4"
+          variant="formLabel"
+          whiteSpace="nowrap"
+          color={labelColor ?? 'gray.700'}
+        >
+          {label}
+        </TextFields>
+      )}
 
-        <Input
-          flexGrow={0}
-          variant={'outline'}
-          type="text"
-          borderRadius="br2"
-          __placeholder={__placeholder ?? 'Enter'}
-          ref={ref}
-          {...rest}
-        />
-      </>
-    );
-  }
-);
+      <Input flexGrow={0} variant="outline" type="text" borderRadius="br2" ref={ref} {...rest} />
+    </>
+  );
+});
 
 export default TextInput;

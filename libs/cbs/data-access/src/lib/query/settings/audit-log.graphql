@@ -1,0 +1,14 @@
+query getAuditLogList{
+  auditLog {
+    humanize {
+      __typename
+      ... on AuditLogHumanizeResult {
+        data {
+          timestamp
+          narration
+          extraData
+        }
+      }
+    }
+  }
+}

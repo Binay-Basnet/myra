@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
 import {
+  RootState,
+  useAppSelector,
   useDeleteCoopAccOperatorDataMutation,
   useGetCoOperativeAccountOperatorEditDataQuery,
   useGetNewIdMutation,
@@ -25,27 +27,33 @@ export const KymCoopAccountOperatorDetail = (props: IProps) => {
 
   const [accOperatorIds, setAccOperatorIds] = useState<string[]>([]);
 
-  const { data: editValues, refetch } =
-    useGetCoOperativeAccountOperatorEditDataQuery(
-      {
-        id: String(id),
-      },
-      { enabled: !!id }
-    );
+  const { data: editValues, refetch } = useGetCoOperativeAccountOperatorEditDataQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.cooperative?.listAccountOperators?.data;
+      const editValueData = editValues?.members?.cooperative?.listAccountOperators?.data;
 
       setAccOperatorIds(
         editValueData?.reduce(
-          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id as string] : prevVal),
           [] as string[]
         ) ?? []
       );
     }
   }, [editValues]);
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetch();
+  }, [preference?.date]);
+
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {
       setAccOperatorIds([...accOperatorIds, res.newId]);
@@ -53,16 +61,11 @@ export const KymCoopAccountOperatorDetail = (props: IProps) => {
   });
   const { mutate: deleteMutate } = useDeleteCoopAccOperatorDataMutation({
     onSuccess: (res) => {
-      const deletedId = String(
-        res?.members?.cooperative?.accountOperatorDetail?.Delete?.recordId
-      );
+      const deletedId = String(res?.members?.cooperative?.accountOperatorDetail?.Delete?.recordId);
 
       const tempAccountOperatorIds = [...accOperatorIds];
 
-      tempAccountOperatorIds.splice(
-        tempAccountOperatorIds.indexOf(deletedId),
-        1
-      );
+      tempAccountOperatorIds.splice(tempAccountOperatorIds.indexOf(deletedId), 1);
 
       setAccOperatorIds([...tempAccountOperatorIds]);
     },
@@ -72,7 +75,7 @@ export const KymCoopAccountOperatorDetail = (props: IProps) => {
   };
 
   const removeAccountOperator = (accOperatorId: string) => {
-    deleteMutate({ accOperatorId: accOperatorId, id: id });
+    deleteMutate({ accOperatorId, id });
   };
 
   useEffect(() => {
@@ -82,22 +85,16 @@ export const KymCoopAccountOperatorDetail = (props: IProps) => {
   }, [id]);
 
   return (
-    <FormSection
-      gridLayout={true}
-      id="kymCoopAccAccountOperatorDetail"
-      header="kymCoopDetailsofAccountOperators"
-    >
-      {accOperatorIds.map((id) => {
-        return (
-          <GridItem key={id} colSpan={3}>
-            <AddOperator
-              setKymCurrentSection={setSection}
-              removeDirector={removeAccountOperator}
-              accountId={id}
-            />
-          </GridItem>
-        );
-      })}
+    <FormSection id="kymCoopAccAccountOperatorDetail" header="kymCoopDetailsofAccountOperators">
+      {accOperatorIds.map((accountId) => (
+        <GridItem key={accountId} colSpan={3}>
+          <AddOperator
+            setKymCurrentSection={setSection}
+            removeDirector={removeAccountOperator}
+            accountId={accountId}
+          />
+        </GridItem>
+      ))}
       <GridItem colSpan={2}>
         <Button
           id="accountOperatorButton"

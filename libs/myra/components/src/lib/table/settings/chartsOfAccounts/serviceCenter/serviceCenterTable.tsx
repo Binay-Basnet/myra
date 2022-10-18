@@ -29,7 +29,7 @@ export const SettingsServiceCenterTable = () => {
   const popoverTitle = [
     {
       title: 'depositProductEdit',
-      onClick: (id: string) => router.push(`/settings/general/branches/edit/${id}`),
+      onClick: (id: string) => router.push(`/settings/general/service-center/edit/${id}`),
     },
   ];
 

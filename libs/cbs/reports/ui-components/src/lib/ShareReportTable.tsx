@@ -25,7 +25,7 @@ interface ShareReportTableProps {
 
 export const ShareReportTable = ({ shareReport, shareTotal }: ShareReportTableProps) => (
   <Box p="s32">
-    <Table<ShareReport>
+    <Table
       variant="report"
       size="report"
       isStatic

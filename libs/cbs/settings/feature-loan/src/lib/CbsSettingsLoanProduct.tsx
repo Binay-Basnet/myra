@@ -15,6 +15,36 @@ export const SettingsLoanProduct = () => {
 
   const newId = useGetNewIdMutation();
 
+  return (
+    <>
+      <Box borderBottom="1px solid " borderColor="border.layout" p="8px 16px">
+        <Box display="flex" justifyContent="space-between" alignItems="center" h="100%">
+          <Text fontSize="r2" fontWeight="600" color="gray.800">
+            {`${t['loanProductsLoanProducts']} - ${featureCode?.settingsLoanProduct}`}
+          </Text>
+          <Button
+            leftIcon={<AddIcon h="11px" />}
+            onClick={() =>
+              newId
+                .mutateAsync({ idType: Id_Type.Loanproduct })
+                .then((res) => router.push(`/settings/general/loan-products/add/${res?.newId}`))
+            }
+          >
+            {t['loanProductsNewLoanProduct']}
+          </Button>
+        </Box>
+      </Box>
+
+      <LoanProductTable />
+    </>
+  );
+};
+
+export const LoanProductTable = () => {
+  const router = useRouter();
+
+  const { t } = useTranslation();
+
   const { data, isLoading } = useGetLoanProductListQuery(
     router.query['before']
       ? {
@@ -108,34 +138,14 @@ export const SettingsLoanProduct = () => {
   );
 
   return (
-    <>
-      <Box borderBottom="1px solid " borderColor="border.layout" p="8px 16px">
-        <Box display="flex" justifyContent="space-between" alignItems="center" h="100%">
-          <Text fontSize="r2" fontWeight="600" color="gray.800">
-            {`${t['loanProductsLoanProducts']} - ${featureCode?.settingsLoanProduct}`}
-          </Text>
-          <Button
-            leftIcon={<AddIcon h="11px" />}
-            onClick={() =>
-              newId
-                .mutateAsync({ idType: Id_Type.Loanproduct })
-                .then((res) => router.push(`/settings/general/loan-products/add/${res?.newId}`))
-            }
-          >
-            {t['loanProductsNewLoanProduct']}
-          </Button>
-        </Box>
-      </Box>
-
-      <Table
-        isLoading={isLoading}
-        data={rowData}
-        columns={columns}
-        pagination={{
-          total: data?.settings?.general?.loanProducts?.list?.totalCount ?? 'Many',
-          pageInfo: data?.settings?.general?.loanProducts?.list?.pageInfo,
-        }}
-      />
-    </>
+    <Table
+      isLoading={isLoading}
+      data={rowData}
+      columns={columns}
+      pagination={{
+        total: data?.settings?.general?.loanProducts?.list?.totalCount ?? 'Many',
+        pageInfo: data?.settings?.general?.loanProducts?.list?.pageInfo,
+      }}
+    />
   );
 };

@@ -53,7 +53,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/ebanking"],
+      "outputs": ["{workspaceRoot}/coverage/apps/ebanking"],
       "options": {
         "jestConfig": "apps/ebanking/jest.config.ts",
         "passWithNoTests": true

@@ -5,13 +5,11 @@ import { omit } from 'lodash';
 
 import {
   CashValue,
-  Member,
   Share_Transaction_Direction,
   SharePaymentMode,
   SharePurchaseInput,
   ShareVoucherDepositedBy,
   useAddSharePurchaseMutation,
-  useGetMemberIndividualDataQuery,
   useGetShareChargesQuery,
 } from '@coop/cbs/data-access';
 import {
@@ -27,7 +25,7 @@ import {
   ShareMemberCard,
   TabMenu,
 } from '@coop/shared/ui';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
 
 import { ShareInfoFooter } from './ShareInfoFooter';
 import { SharePaymentFooter } from './SharePaymentFooter';
@@ -70,6 +68,10 @@ type ShareReturnFormType = Omit<SharePurchaseInput, 'selectAllShares'> & {
 
 export const SharePurchaseForm = () => {
   const { t } = useTranslation();
+
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [mode, setMode] = useState('shareInfo');
+
   const methods = useForm<ShareReturnFormType>({
     defaultValues: {
       paymentMode: SharePaymentMode.BankVoucherOrCheque,
@@ -78,7 +80,7 @@ export const SharePurchaseForm = () => {
       },
     },
   });
-  const { watch, getValues } = methods;
+  const { watch, getValues, reset } = methods;
 
   const router = useRouter();
 
@@ -87,9 +89,7 @@ export const SharePurchaseForm = () => {
   const denominations = watch('cash.denominations');
   const cashPaid = watch('cash.cashPaid');
   const disableDenomination = watch('cash.disableDenomination');
-
-  const [totalAmount, setTotalAmount] = useState(0);
-  const [mode, setMode] = useState('shareInfo');
+  const extraFee = watch('extraFee');
 
   const denominationTotal =
     denominations?.reduce(
@@ -101,18 +101,9 @@ export const SharePurchaseForm = () => {
 
   const returnAmount = totalCashPaid - totalAmount;
 
-  const { data } = useGetMemberIndividualDataQuery(
-    {
-      id: memberId,
-    },
-    {
-      staleTime: 0,
-    }
-  );
+  const { memberDetailData } = useGetIndividualMemberDetails({ memberId });
 
   const { mutateAsync } = useAddSharePurchaseMutation();
-
-  const memberDetail = data && data?.members?.details?.data;
 
   const paymentButtonHandler = () => memberId && setMode('sharePayment');
 
@@ -120,6 +111,7 @@ export const SharePurchaseForm = () => {
 
   const handleSubmit = () => {
     const values = getValues();
+
     let updatedValues: SharePurchaseInput = {
       ...omit(values, ['amount', 'accountAmount', 'accountId']),
       totalAmount: totalAmount.toString(),
@@ -187,12 +179,33 @@ export const SharePurchaseForm = () => {
   const chargeList = chargesData?.share?.charges;
 
   useEffect(() => {
+    const values = getValues();
+
     let temp = 0;
-    chargeList?.forEach((charge) => {
-      temp += Number(charge?.charge);
+    if (chargeList) {
+      if (extraFee) {
+        extraFee?.forEach((charge) => {
+          temp += Number(charge?.value);
+        });
+      } else {
+        chargeList?.forEach((charge) => {
+          temp += Number(charge?.charge);
+        });
+      }
+
+      setTotalAmount(temp + noOfShares * 100);
+    } else {
+      setTotalAmount(noOfShares * 100);
+    }
+
+    reset({
+      ...values,
+      cash: {
+        cashPaid: totalAmount.toString(),
+      },
     });
-    setTotalAmount(temp + noOfShares * 100);
-  }, [noOfShares, chargeList]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chargeList, extraFee, noOfShares, JSON.stringify(extraFee), totalAmount]);
 
   return (
     <>
@@ -215,7 +228,7 @@ export const SharePurchaseForm = () => {
             </Box>
             <Grid templateColumns="repeat(6,1fr)">
               {mode === 'shareInfo' && (
-                <GridItem colSpan={data ? 4 : 6}>
+                <GridItem colSpan={memberDetailData ? 4 : 6}>
                   <Box
                     mb="50px"
                     display="flex"
@@ -223,27 +236,28 @@ export const SharePurchaseForm = () => {
                     h="100%"
                     background="gray.0"
                     minH="calc(100vh - 170px)"
-                    border="1px solid"
+                    borderRight="1px solid"
                     borderColor="border.layout"
                   >
                     <Box w="100%">
                       <FormSection>
                         <GridItem colSpan={2}>
                           <FormMemberSelect
+                            allMembers
                             name="memberId"
                             label={t['sharePurchaseSelectMember']}
                           />
                         </GridItem>
                       </FormSection>
 
-                      {data && <SharePurchaseInfo totalAmount={totalAmount} />}
+                      {memberDetailData && <SharePurchaseInfo totalAmount={totalAmount} />}
                     </Box>
                   </Box>
                 </GridItem>
               )}
 
               {mode === 'sharePayment' && (
-                <GridItem colSpan={data ? 4 : 6}>
+                <GridItem colSpan={memberDetailData ? 4 : 6}>
                   <SharePurchasePayment
                     totalAmount={totalAmount}
                     denominationTotal={denominationTotal}
@@ -253,13 +267,13 @@ export const SharePurchaseForm = () => {
                 </GridItem>
               )}
 
-              <GridItem colSpan={data ? 2 : 0}>
-                {data && (
+              <GridItem colSpan={memberDetailData ? 2 : 0}>
+                {memberDetailData && (
                   <ShareMemberCard
                     mode={mode}
                     totalAmount={totalAmount}
                     memberId={memberId}
-                    memberDetails={memberDetail as Member}
+                    memberDetailData={memberDetailData}
                   />
                 )}
               </GridItem>
@@ -273,6 +287,7 @@ export const SharePurchaseForm = () => {
           <Container minW="container.xl" height="fit-content" p="0">
             {mode === 'shareInfo' && (
               <ShareInfoFooter
+                disableButton={noOfShares}
                 totalAmount={totalAmount}
                 paymentButtonHandler={paymentButtonHandler}
               />

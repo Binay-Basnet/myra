@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { GlobalHotKeys } from 'react-hotkeys';
 import { BiBell } from 'react-icons/bi';
 import { BsArrowRight } from 'react-icons/bs';
@@ -9,8 +9,20 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { format } from 'date-fns';
 
-import { Language, useAppDispatch, useSetPreferenceMutation } from '@coop/cbs/data-access';
 import {
+  DateType,
+  Language,
+  logout,
+  RootState,
+  setPreference,
+  useAppDispatch,
+  useAppSelector,
+  useGetEndOfDayDateDataQuery,
+  useSetEndOfDayDataMutation,
+  useSetPreferenceMutation,
+} from '@coop/cbs/data-access';
+import {
+  asyncToast,
   Avatar,
   Box,
   Button,
@@ -29,7 +41,7 @@ import {
   Text,
   TextFields,
 } from '@coop/shared/ui';
-import { logout, useAppSelector, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 import SearchBar from '../search-bar/SearchBar';
 
@@ -44,8 +56,8 @@ const languageList = [
 ];
 
 const calendarList = [
-  { label: 'AD', value: 'AD' },
-  { label: 'BS', value: 'BS' },
+  { label: 'AD', value: DateType.Ad },
+  { label: 'BS', value: DateType.Bs },
 ];
 const keyMap = {
   inputFocus: ['ctrl+/'],
@@ -58,29 +70,47 @@ const keyMap = {
   // addFocus: ["a"]
 };
 const currentDate = format(new Date(), 'yyyy-MM-dd');
-const closingDate = format(new Date(), 'yyyy-MM-dd');
 
-// export const Input = forwardRef<HTMLInputElement, InputProps>(
-//   (props: InputProps, ref) => {
-//     return (
-//       <ChakraInput
-//         {...props}
-//         ref={ref}
-//         onKeyDown={(e) => {
-//           if (e.key === 'Escape') {
-//             e.currentTarget?.blur();
-//           }
-//         }}
-//       />
-//     );
-//   }
-// );
+const AppSwitcherIconWrapper = (props: {
+  children: React.ReactNode;
+  onClick: React.MouseEventHandler<HTMLDivElement> | undefined;
+}) => {
+  const { children, onClick } = props;
+  return (
+    <Box
+      display="flex"
+      flexDirection="column"
+      textAlign="center"
+      alignItems="center"
+      gap="s8"
+      p="s8"
+      cursor="pointer"
+      borderRadius="br2"
+      _hover={{ bg: 'primary.0' }}
+      onClick={onClick}
+    >
+      {children}
+    </Box>
+  );
+};
+
+const AppSwitcherText = (props: { children: React.ReactNode }) => {
+  const { children } = props;
+  return (
+    <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-60" lineHeight="125%">
+      {children}
+    </Text>
+  );
+};
+
 export const TopLevelHeader = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { mutateAsync } = useSetPreferenceMutation();
   const userId = useAppSelector((state) => state?.auth?.user?.id);
+
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
 
   const helpOptions = [
     {
@@ -146,6 +176,12 @@ export const TopLevelHeader = () => {
       }
     },
   };
+
+  const { data: endOfDayData, refetch: refetchEndOfDay } = useGetEndOfDayDateDataQuery();
+
+  const closingDate = endOfDayData?.transaction?.endOfDayDate;
+
+  const { mutateAsync: closeDay } = useSetEndOfDayDataMutation();
 
   return (
     <GlobalHotKeys keyMap={keyMap} handlers={handlers}>
@@ -260,7 +296,24 @@ export const TopLevelHeader = () => {
                       </Text>
                     </PopoverBody>
                     <PopoverBody p="s8">
-                      <Button variant="solid" display="flex" justifyContent="center" w="100%">
+                      <Button
+                        variant="solid"
+                        display="flex"
+                        justifyContent="center"
+                        w="100%"
+                        onClick={() => {
+                          asyncToast({
+                            id: 'set-close-day',
+                            promise: closeDay({}),
+                            msgs: {
+                              loading: 'Closing the Day',
+                              success: 'Day Closed',
+                            },
+                            onSuccess: () => refetchEndOfDay(),
+                          });
+                        }}
+                        disabled={closingDate !== currentDate}
+                      >
                         Close Day
                       </Button>
                     </PopoverBody>
@@ -315,97 +368,29 @@ export const TopLevelHeader = () => {
                   >
                     <PopoverBody p={0}>
                       <Box display="grid" gridTemplateColumns="repeat(3,1fr)" gap="s8">
-                        <Box
-                          display="flex"
-                          flexDirection="column"
-                          textAlign="center"
-                          alignItems="center"
-                          gap="s8"
-                          p="s8"
-                          cursor="pointer"
-                          borderRadius="br2"
-                          _hover={{ bg: 'primary.0' }}
-                          onClick={() => router.push('/members/list')}
-                        >
+                        <AppSwitcherIconWrapper onClick={() => router.push('/members/list')}>
                           <Image width={48} height={48} src="/cbs.svg" alt="Core Banking System" />
-                          <Text
-                            fontSize="s3"
-                            fontWeight="Medium"
-                            color="neutralColorLight.Gray-60"
-                            lineHeight="125%"
-                          >
-                            {t['corebankingSystems']}
-                          </Text>
-                        </Box>
-
-                        <Box
-                          display="flex"
-                          flexDirection="column"
-                          textAlign="center"
-                          alignItems="center"
-                          gap="s8"
-                          cursor="pointer"
-                          p="s8"
-                          borderRadius="br2"
-                          _hover={{ bg: 'primary.0' }}
-                          onClick={() => router.push('/inventory/register')}
-                        >
+                          <AppSwitcherText>{t['corebankingSystems']}</AppSwitcherText>
+                        </AppSwitcherIconWrapper>
+                        <AppSwitcherIconWrapper onClick={() => router.push('/inventory/register')}>
                           <Image
                             width={48}
                             height={48}
                             src="/inventory.svg"
                             alt="Inventory System"
                           />
-                          <Text
-                            fontSize="s3"
-                            fontWeight="Medium"
-                            color="neutralColorLight.Gray-60"
-                            lineHeight="125%"
-                          >
-                            {t['inventoryManagement']}
-                          </Text>
-                        </Box>
-
-                        <Box
-                          display="flex"
-                          flexDirection="column"
-                          textAlign="center"
-                          alignItems="center"
-                          gap="s8"
-                          p="s8"
-                          cursor="pointer"
-                          borderRadius="br2"
-                          _hover={{ bg: 'primary.0' }}
-                          onClick={() => router.push('/loan')}
-                        >
+                          <AppSwitcherText> {t['inventoryManagement']}</AppSwitcherText>
+                        </AppSwitcherIconWrapper>
+                        <AppSwitcherIconWrapper onClick={() => router.push('/members/list')}>
                           <Image
                             height={48}
                             width={48}
                             src="/memberandshare.svg"
                             alt="Fixed Asset Management"
                           />
-                          <Text
-                            fontSize="s3"
-                            fontWeight="Medium"
-                            color="neutralColorLight.Gray-60"
-                            lineHeight="125%"
-                            overflow="hidden"
-                            textOverflow="ellipsis"
-                          >
-                            {t['memberAndShareManagement']}
-                          </Text>
-                        </Box>
-
-                        <Box
-                          display="flex"
-                          flexDirection="column"
-                          textAlign="center"
-                          alignItems="center"
-                          gap="s8"
-                          p="s8"
-                          cursor="pointer"
-                          borderRadius="br2"
-                          _hover={{ bg: 'primary.0' }}
+                          <AppSwitcherText> {t['memberAndShareManagement']}</AppSwitcherText>
+                        </AppSwitcherIconWrapper>
+                        <AppSwitcherIconWrapper
                           onClick={() => router.push('/accounting/sales/list')}
                         >
                           <Image
@@ -414,15 +399,17 @@ export const TopLevelHeader = () => {
                             src="/accounting.svg"
                             alt="Accounting System"
                           />
-                          <Text
-                            fontSize="s3"
-                            fontWeight="Medium"
-                            color="neutralColorLight.Gray-60"
-                            lineHeight="125%"
-                          >
-                            {t['accountingSystem']}
-                          </Text>
-                        </Box>
+                          <AppSwitcherText> {t['accountingSystem']}</AppSwitcherText>
+                        </AppSwitcherIconWrapper>
+
+                        <AppSwitcherIconWrapper
+                          onClick={() => router.push('/alternative-channels/mBanking/users')}
+                        >
+                          <Image width={48} height={48} src="/tnt.svg" alt="Alternativer channel" />
+                          <AppSwitcherText>
+                            {t['alternativeChannelsAndCrossConnectivity']}
+                          </AppSwitcherText>
+                        </AppSwitcherIconWrapper>
                       </Box>
                       <Divider mt="s24" mb="s24" />
                       <Box>
@@ -571,14 +558,30 @@ export const TopLevelHeader = () => {
                             value={router?.locale}
                             options={languageList}
                             onChange={(value) => {
-                              mutateAsync({
-                                id: userId || '',
-                                data: {
-                                  language: value === 'en' ? Language?.English : Language?.Nepali,
+                              asyncToast({
+                                id: 'update-language-preference',
+                                promise: mutateAsync({
+                                  id: userId || '',
+                                  data: {
+                                    language: value === 'en' ? Language?.English : Language?.Nepali,
+                                  },
+                                }),
+                                msgs: {
+                                  loading: 'Updating Language Preference',
+                                  success: 'Updated Language Preference',
                                 },
-                              });
-                              router.push(`/${router.asPath}`, undefined, {
-                                locale: value,
+                                onSuccess: (res) => {
+                                  res?.user?.preference?.update?.record &&
+                                    dispatch(
+                                      setPreference({
+                                        preference: res?.user?.preference?.update?.record,
+                                      })
+                                    );
+
+                                  router.push(`/${router.asPath}`, undefined, {
+                                    locale: value,
+                                  });
+                                },
                               });
                             }}
                           />
@@ -600,7 +603,32 @@ export const TopLevelHeader = () => {
                           >
                             Calendar
                           </Text>
-                          <SwitchTabs value="AD" options={calendarList} />
+                          <SwitchTabs
+                            value={preference?.date ?? DateType.Ad}
+                            options={calendarList}
+                            onChange={(value) => {
+                              asyncToast({
+                                id: 'update-calendar-preference',
+                                promise: mutateAsync({
+                                  id: userId || '',
+                                  data: {
+                                    date: value === DateType.Ad ? DateType.Ad : DateType.Bs,
+                                  },
+                                }),
+                                msgs: {
+                                  loading: 'Updating Calendar Preference',
+                                  success: 'Updated Calendar Preference',
+                                },
+                                onSuccess: (res) =>
+                                  res?.user?.preference?.update?.record &&
+                                  dispatch(
+                                    setPreference({
+                                      preference: res?.user?.preference?.update?.record,
+                                    })
+                                  ),
+                              });
+                            }}
+                          />
                         </Box>
 
                         <Box
@@ -627,6 +655,28 @@ export const TopLevelHeader = () => {
                               color="neutralColorLight.Gray-80"
                             >
                               Profile Settings
+                            </Text>
+                          </Box>
+
+                          <Box
+                            _hover={{
+                              bg: 'background.500',
+                              borderRadius: 'br2',
+                            }}
+                            h="40px"
+                            px="s16"
+                            display="flex"
+                            alignItems="center"
+                            cursor="pointer"
+                            onClick={() => router.push('/change-password')}
+                          >
+                            <Text
+                              textAlign="start"
+                              fontWeight="Regular"
+                              fontSize="r1"
+                              color="neutralColorLight.Gray-80"
+                            >
+                              Change Password
                             </Text>
                           </Box>
 

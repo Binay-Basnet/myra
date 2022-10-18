@@ -1,0 +1,26 @@
+{
+  "name": "alternative-channels-feature-activation-form",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/alternative-channels/feature-activation-form/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/alternative-channels/feature-activation-form/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/alternative-channels/feature-activation-form/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

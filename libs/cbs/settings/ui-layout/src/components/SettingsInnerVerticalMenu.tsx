@@ -15,6 +15,7 @@ const TabCol = chakra(Tab, {
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    textAlign: 'left',
     _selected: {
       bg: '#EEF2F7',
       fontWeight: '600',
@@ -25,6 +26,7 @@ const TabCol = chakra(Tab, {
     },
     _hover: {
       bg: 'gray.100',
+      borderRadius: 'br2',
     },
   },
 });

@@ -1,7 +1,4 @@
-query getDepositListData(
-  $filter: AccountTransactionFilter
-  $pagination: Pagination
-) {
+query getDepositListData($filter: AccountTransactionFilter, $pagination: Pagination) {
   transaction {
     listDeposit(filter: $filter, pagination: $pagination) {
       totalCount
@@ -14,6 +11,8 @@ query getDepositListData(
           paymentMode
           processedBy
           date
+          agentName
+          profilePicUrl
         }
         cursor
       }
@@ -27,10 +26,7 @@ query getDepositListData(
   }
 }
 
-query getWithdrawListData(
-  $filter: AccountTransactionFilter
-  $pagination: Pagination
-) {
+query getWithdrawListData($filter: AccountTransactionFilter, $pagination: Pagination) {
   transaction {
     listWithdraw(filter: $filter, pagination: $pagination) {
       totalCount
@@ -43,6 +39,7 @@ query getWithdrawListData(
           paymentMode
           processedBy
           date
+          profilePicUrl
         }
         cursor
       }
@@ -56,10 +53,7 @@ query getWithdrawListData(
   }
 }
 
-query getAccountTransferListData(
-  $filter: AccountTransactionFilter
-  $pagination: Pagination
-) {
+query getAccountTransferListData($filter: AccountTransactionFilter, $pagination: Pagination) {
   transaction {
     listTransfer(filter: $filter, pagination: $pagination) {
       totalCount
@@ -93,6 +87,15 @@ query getInstallmentsListData($id: ID!) {
         fine
         rebate
       }
+      error {
+        ...QueryError
+      }
     }
+  }
+}
+
+query getEndOfDayDateData {
+  transaction {
+    endOfDayDate
   }
 }

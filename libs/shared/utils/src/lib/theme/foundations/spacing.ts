@@ -13,6 +13,7 @@ export const spacing = {
   s40: '40px',
   s48: '48px',
   s60: '60px',
+  s64: '64px',
 };
 export default spacing;
 

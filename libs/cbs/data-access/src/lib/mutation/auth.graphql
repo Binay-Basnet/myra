@@ -7,13 +7,20 @@ mutation login($data: LoginInput!) {
           access
           refresh
         }
-        user {
-          id
-          objState
-          username
-          firstName
-          middleName
-          lastName
+        data {
+          user {
+            id
+            objState
+            username
+            firstName
+            middleName
+            lastName
+          }
+          preference {
+            language
+            languageCode
+            date
+          }
         }
       }
     }
@@ -27,6 +34,17 @@ mutation refresh($refreshToken: String!) {
         access
         refresh
       }
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation resetPassword($userId: String!, $newPassword: String!) {
+  user {
+    resetPassword(data: { userId: $userId, newPassword: $newPassword }) {
+      recordId
       error {
         ...MutationError
       }

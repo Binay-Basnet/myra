@@ -1,21 +1,30 @@
 import React from 'react';
 
-import { Box, Divider, Text, VStack } from '@coop/shared/ui';
+import { Box, Button, Divider, Text, VStack } from '@coop/shared/ui';
 
 export interface InfoCardProps {
   title: string;
   subtitle?: string;
   children?: React.ReactNode;
   btn?: React.ReactNode;
+  footerButtonLabel?: string;
+  footerButtonHandler?: () => void;
 }
 
-export const InfoCard = ({ title, subtitle, children, btn }: InfoCardProps) => (
+export const InfoCard = ({
+  title,
+  subtitle,
+  children,
+  btn,
+  footerButtonLabel,
+  footerButtonHandler,
+}: InfoCardProps) => (
   <VStack
     width="100%"
     bg="white"
     spacing="0"
     alignItems="start"
-    divider={<Divider border="1px" borderColor="border.layout" />}
+    divider={<Divider borderBottom="1px" borderBottomColor="border.layout" />}
     borderRadius="br2"
   >
     <Box
@@ -24,7 +33,8 @@ export const InfoCard = ({ title, subtitle, children, btn }: InfoCardProps) => (
       w="100%"
       justifyContent="space-between"
       px="s16"
-      height="50px"
+      py={subtitle ? 's16' : 's0'}
+      minH="50px"
     >
       <Box display="flex" flexDir="column" gap="s4">
         <Text fontSize="r1" color="gray.800" fontWeight="600" lineHeight="125%">
@@ -39,6 +49,11 @@ export const InfoCard = ({ title, subtitle, children, btn }: InfoCardProps) => (
       {btn}
     </Box>
     <Box width="100%">{children}</Box>
+    {footerButtonLabel && footerButtonHandler && (
+      <Box p="s16">
+        <Button onClick={footerButtonHandler}>{footerButtonLabel}</Button>
+      </Box>
+    )}
   </VStack>
 );
 

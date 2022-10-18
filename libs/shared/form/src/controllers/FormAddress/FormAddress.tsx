@@ -14,21 +14,16 @@ export interface IFormAddressProps {
   name: string;
 }
 
-export const FormAddress = ({
-  sectionId,
-  sectionHeader,
-  name,
-}: IFormAddressProps) => {
+export const FormAddress = ({ sectionId, sectionHeader, name }: IFormAddressProps) => {
   if (sectionId && sectionHeader) {
     return (
       <FormSection id={sectionId} header={sectionHeader}>
         <AddressGroup name={name} />
       </FormSection>
     );
-  } else {
-    return <AddressGroup name={name} />;
   }
-}
+  return <AddressGroup name={name} />;
+};
 
 interface IAddressGroupProps {
   name: string;

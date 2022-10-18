@@ -7,22 +7,21 @@ import isEqual from 'lodash/isEqual';
 import {
   Id_Type,
   KymIndIdentification,
+  RootState,
+  useAppSelector,
   useGetIndividualKymIdentificationListQuery,
   useGetNewIdMutation,
   useSetKymIndividualIdentificationDataMutation,
 } from '@coop/cbs/data-access';
-import { FormInput } from '@coop/shared/form';
+import { FormDatePicker, FormInput } from '@coop/shared/form';
 import { Box, FormSection, Text } from '@coop/shared/ui';
 import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 interface IPassportProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
-type passportData =
+type PassportDataType =
   | {
       id: string;
       idNo: string;
@@ -33,12 +32,9 @@ type passportData =
   | null
   | undefined;
 
-const getPassportData = (
-  identificationListData: KymIndIdentification[] | null | undefined
-) => {
+const getPassportData = (identificationListData: KymIndIdentification[] | null | undefined) => {
   const passportData = identificationListData?.find(
-    (identification: KymIndIdentification | null) =>
-      identification?.idType === 'passport'
+    (identification: KymIndIdentification | null) => identification?.idType === 'passport'
   );
 
   return {
@@ -68,19 +64,17 @@ export const Passport = ({ setKymCurrentSection }: IPassportProps) => {
     onSuccess: () => refetch(),
   });
 
-  const { data: identificationListData, refetch } =
-    useGetIndividualKymIdentificationListQuery(
-      {
-        id: String(id),
-      },
-      { enabled: !!id }
-    );
+  const { data: identificationListData, refetch } = useGetIndividualKymIdentificationListQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (identificationListData?.members?.individual?.listIdentification?.data) {
       const passportData = getPassportData(
-        identificationListData?.members?.individual?.listIdentification
-          ?.data as passportData
+        identificationListData?.members?.individual?.listIdentification?.data as PassportDataType
       );
 
       if (passportData?.id) {
@@ -95,19 +89,21 @@ export const Passport = ({ setKymCurrentSection }: IPassportProps) => {
     }
   }, [identificationListData]);
 
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetch();
+  }, [preference?.date]);
+
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
         const passportData = getPassportData(
-          identificationListData?.members?.individual?.listIdentification
-            ?.data as passportData
+          identificationListData?.members?.individual?.listIdentification?.data as PassportDataType
         );
 
-        if (
-          id &&
-          !isDeepEmpty(data) &&
-          !isEqual({ ...data, id: mutationId }, passportData)
-        ) {
+        if (id && !isDeepEmpty(data) && !isEqual({ ...data, id: mutationId }, passportData)) {
           if (!mutationId) {
             newIDMutate({ idType: Id_Type.Kymidentification }).then((res) => {
               setMutationId(res.newId);
@@ -134,13 +130,7 @@ export const Passport = ({ setKymCurrentSection }: IPassportProps) => {
   return (
     <Box>
       <FormProvider {...methods}>
-        <Text
-          p="s20"
-          pb="0"
-          fontSize="r1"
-          fontWeight="medium"
-          color="neutralColorLight.Gray-70"
-        >
+        <Text p="s20" pb="0" fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
           {t['kymIndPassport']}
         </Text>
         <form
@@ -149,27 +139,12 @@ export const Passport = ({ setKymCurrentSection }: IPassportProps) => {
             setKymCurrentSection(kymSection);
           }}
         >
-          <FormSection gridLayout={true}>
-            <FormInput
-              type="text"
-              name="idNo"
-              label={t['kymIndPassportNo']}
-              __placeholder={t['kymIndPassportNo']}
-            />
+          <FormSection>
+            <FormInput type="text" name="idNo" label={t['kymIndPassportNo']} />
 
-            <FormInput
-              type="text"
-              name="place"
-              label={t['kymIndPassportIssuePlace']}
-              __placeholder={t['kymIndPassportIssuePlace']}
-            />
+            <FormInput type="text" name="place" label={t['kymIndPassportIssuePlace']} />
 
-            <FormInput
-              type="date"
-              name="date"
-              label={t['kymIndPassportIssueDate']}
-              __placeholder={t['kymIndPassportIssueDate']}
-            />
+            <FormDatePicker name="date" label={t['kymIndPassportIssueDate']} />
           </FormSection>
         </form>
       </FormProvider>

@@ -17,9 +17,16 @@ interface IMemberSelectProps extends SelectProps {
   name: string;
   label?: string;
   placeholder?: string;
+  allMembers?: boolean;
 }
 
-export const FormMemberSelect = ({ name, label, placeholder, ...rest }: IMemberSelectProps) => {
+export const FormMemberSelect = ({
+  name,
+  label,
+  placeholder,
+  allMembers,
+  ...rest
+}: IMemberSelectProps) => {
   const [IDMember, setIDMember] = useState('');
   const { watch } = useFormContext();
 
@@ -27,13 +34,13 @@ export const FormMemberSelect = ({ name, label, placeholder, ...rest }: IMemberS
     {
       pagination: {
         ...getRouterQuery({ type: ['PAGINATION'] }),
-        first: 20,
+        first: 10,
       },
       filter: {
         query: IDMember,
         id: IDMember,
         filterMode: Filter_Mode.Or,
-        objState: ObjState?.Approved,
+        objState: allMembers ? null : ObjState?.Approved,
       },
     },
     {
@@ -78,6 +85,8 @@ export const FormMemberSelect = ({ name, label, placeholder, ...rest }: IMemberS
       onInputChange={debounce((id) => {
         if (id) {
           setIDMember(id);
+        } else {
+          setIDMember('');
         }
       }, 800)}
       options={memberOptions}

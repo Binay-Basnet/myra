@@ -25,24 +25,20 @@ export const AllowChequeIssue = () => {
     value: item?.id as string,
   }));
 
+  const chequeList = [{ label: 'Cheque issue charge', value: 'Cheque issue charge' }];
+
   return (
     <GridItem mt="s32" colSpan={3}>
       <FormEditableTable<AllowChequeTable>
         name="chequeCharge"
         debug={false}
-        canAddRow={false}
-        defaultData={[
-          {
-            serviceName: 'Cheque issue charge',
-            amount: 0,
-            ledgerName: ' ',
-          },
-        ]}
         columns={[
           {
             accessor: 'serviceName',
             header: t['depositProductAccServiceTableServiceName'],
             cellWidth: 'auto',
+            fieldType: 'search',
+            searchOptions: chequeList,
           },
           {
             accessor: 'ledgerName',

@@ -10,6 +10,8 @@ import {
   FormFieldSearchTerm,
   FormOption,
   KymIndMemberInput,
+  RootState,
+  useAppSelector,
   useDeleteMemberOccupationMutation,
   useGetConfigQuery,
   useGetIndividualKymEditDataQuery,
@@ -20,20 +22,9 @@ import {
   useSetMemberOccupationMutation,
 } from '@coop/cbs/data-access';
 import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
-import {
-  DynamicBoxGroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
-import {
-  Box,
-  Button,
-  FormSection,
-  GridItem,
-  Icon,
-  IconButton,
-  TextFields,
-} from '@coop/shared/ui';
+import { DynamicBoxGroupContainer, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { FormCheckbox, FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
+import { Box, Button, FormSection, GridItem, Icon, IconButton, TextFields } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
@@ -45,17 +36,10 @@ interface DynamicInputProps {
 }
 
 interface IMemberKYMMainOccupationProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
-export const MainOccupationInput = ({
-  option,
-  optionIndex,
-  fieldIndex,
-}: DynamicInputProps) => {
+export const MainOccupationInput = ({ option, optionIndex, fieldIndex }: DynamicInputProps) => {
   const { register } = useFormContext();
 
   useEffect(() => {
@@ -69,17 +53,13 @@ export const MainOccupationInput = ({
       formType={option?.field?.fieldType}
       name={`mainOccupation.${fieldIndex}.options.${optionIndex}.value`}
       label={String(option?.name?.local)}
-      __placeholder={String(option?.name?.local)}
     />
   );
 };
 
 interface IMainOccupationProps {
   removeMainOccupation: (occupationId: string) => void;
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
   occupationId: string;
 }
 
@@ -110,8 +90,7 @@ const MainOccupation = ({
   );
 
   const profession =
-    editValues?.members?.individual?.formState?.data?.formData?.profession
-      ?.professionId ?? [];
+    editValues?.members?.individual?.formState?.data?.formData?.profession?.professionId ?? [];
 
   // console.log(
   //   'test',
@@ -122,7 +101,7 @@ const MainOccupation = ({
     searchTerm: FormFieldSearchTerm.Occupation,
   });
 
-  const { data: familyOccupationListData } =
+  const { data: familyOccupationListData, refetch: refetchEdit } =
     useGetIndividualKymFamilyOccupationListQuery(
       {
         id: String(id),
@@ -133,12 +112,9 @@ const MainOccupation = ({
 
   useEffect(() => {
     if (familyOccupationListData) {
-      const editValueData =
-        familyOccupationListData?.members?.individual?.listOccupation?.data;
+      const editValueData = familyOccupationListData?.members?.individual?.listOccupation?.data;
 
-      const occupationDetail = editValueData?.find(
-        (data) => data?.id === occupationId
-      );
+      const occupationDetail = editValueData?.find((data) => data?.id === occupationId);
 
       if (occupationDetail) {
         reset({
@@ -155,6 +131,13 @@ const MainOccupation = ({
       }
     }
   }, [familyOccupationListData]);
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetchEdit();
+  }, [preference?.date]);
 
   const { mutateAsync } = useSetMemberOccupationMutation({
     onSuccess: () => refetch(),
@@ -210,15 +193,12 @@ const MainOccupation = ({
               <InputGroupContainer>
                 <GridItem colSpan={1}>
                   <FormSelect
-                    name={`occupationId`}
+                    name="occupationId"
                     label={t['kymIndOccupation']}
-                    __placeholder={t['kymIndSelectOccupation']}
                     options={
                       (profession as string[])?.map((data: string) => ({
                         label: String(
-                          getFieldOption(occupationData)?.find(
-                            (prev) => prev.value === data
-                          )?.label
+                          getFieldOption(occupationData)?.find((prev) => prev.value === data)?.label
                         ),
                         value: data,
                       })) ?? []
@@ -226,36 +206,17 @@ const MainOccupation = ({
                   />
                 </GridItem>
                 <GridItem colSpan={2}>
-                  <FormInput
-                    bg="white"
-                    type="text"
-                    name={`orgName`}
-                    label={t['kymIndOrgFirmName']}
-                    __placeholder={t['kymIndOrgFirmName']}
-                  />
+                  <FormInput bg="white" type="text" name="orgName" label={t['kymIndOrgFirmName']} />
                 </GridItem>
 
+                <FormInput bg="white" type="number" name="panVatNo" label={t['kymIndPanVATNo']} />
+                <FormInput type="text" bg="white" name="address" label={t['kymIndAddress']} />
                 <FormInput
                   bg="white"
                   type="number"
-                  name={`panVatNo`}
-                  label={t['kymIndPanVATNo']}
-                  __placeholder={t['kymIndPanVATNumber']}
-                />
-                <FormInput
-                  type="text"
-                  bg="white"
-                  name={`address`}
-                  label={t['kymIndAddress']}
-                  __placeholder={t['kymIndEnterAddress']}
-                />
-                <FormInput
-                  bg="white"
-                  type="number"
-                  textAlign={'right'}
-                  name={`estimatedAnnualIncome`}
+                  textAlign="right"
+                  name="estimatedAnnualIncome"
                   label={t['kymIndEstimatedAnnualIncome']}
-                  __placeholder="0.00"
                 />
 
                 {/* {occupationFieldNames.map((option, optionIndex) => {
@@ -274,36 +235,25 @@ const MainOccupation = ({
 
             <Box display="flex" gap="16px" flexDirection="column">
               <Box display="flex" gap="9px" alignItems="center">
-                {/* TODO! CHANGE THIS IS DISABLED AFTER BACKEND*/}
-                <FormCheckbox name={`isOwner`} />
-                <TextFields variant="formLabel">
-                  {t['kymIndAreyouowner']}
-                </TextFields>
+                {/* TODO! CHANGE THIS IS DISABLED AFTER BACKEND */}
+                <FormCheckbox name="isOwner" />
+                <TextFields variant="formLabel">{t['kymIndAreyouowner']}</TextFields>
               </Box>
 
               {isOwner && (
                 <InputGroupContainer>
-                  <FormInput
+                  <FormDatePicker
                     bg="white"
-                    type="date"
-                    name={`establishedDate`}
+                    name="establishedDate"
                     label={t['kymIndEstablishedDate']}
-                    __placeholder={t['kymIndEstablishedDate']}
                   />
                   <FormInput
                     bg="white"
                     type="number"
-                    name={`registrationNo`}
+                    name="registrationNo"
                     label={t['kymIndRegistrationNo']}
-                    __placeholder={t['kymIndRegistrationNo']}
                   />
-                  <FormInput
-                    bg="white"
-                    type="number"
-                    name={`contact`}
-                    label={t['kymIndContactNo']}
-                    __placeholder={t['kymIndContactNo']}
-                  />
+                  <FormInput bg="white" type="number" name="contact" label={t['kymIndContactNo']} />
                 </InputGroupContainer>
               )}
             </Box>
@@ -353,8 +303,7 @@ export const MemberKYMMainOccupation = ({
   useEffect(() => {
     if (editValues) {
       const editValueData =
-        editValues?.members?.individual?.formState?.data?.formData
-          ?.foreignEmployment;
+        editValues?.members?.individual?.formState?.data?.formData?.foreignEmployment;
 
       reset({ ...editValueData, isForeignEmployment: true });
       // if (foreignEmpEnable)
@@ -365,19 +314,17 @@ export const MemberKYMMainOccupation = ({
     }
   }, [editValues]);
 
-  const { data: occupationListEditValues } =
-    useGetIndividualKymFamilyOccupationListQuery(
-      {
-        id: String(id),
-        isSpouse: false,
-      },
-      { enabled: !!id }
-    );
+  const { data: occupationListEditValues } = useGetIndividualKymFamilyOccupationListQuery(
+    {
+      id: String(id),
+      isSpouse: false,
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (occupationListEditValues) {
-      const editValueData =
-        occupationListEditValues?.members?.individual?.listOccupation?.data;
+      const editValueData = occupationListEditValues?.members?.individual?.listOccupation?.data;
 
       setOccupationIds(
         editValueData?.reduce(
@@ -396,9 +343,7 @@ export const MemberKYMMainOccupation = ({
 
   const { mutate: deleteMutate } = useDeleteMemberOccupationMutation({
     onSuccess: (res) => {
-      const deletedId = String(
-        res?.members?.individual?.occupation?.delete?.recordId
-      );
+      const deletedId = String(res?.members?.individual?.occupation?.delete?.recordId);
 
       const tempOccupationIds = [...occupationIds];
 
@@ -455,8 +400,7 @@ export const MemberKYMMainOccupation = ({
 
   const professionId = occupationData?.form?.options?.predefined?.data;
   const professionData =
-    editValues?.members?.individual?.formState?.data?.formData?.profession
-      ?.professionId;
+    editValues?.members?.individual?.formState?.data?.formData?.profession?.professionId;
 
   useEffect(() => {
     refetch();
@@ -466,23 +410,17 @@ export const MemberKYMMainOccupation = ({
   }, [editValues]);
 
   return (
-    <Box id="kymAccIndMainProfession" scrollMarginTop={'200px'}>
-      <FormSection
-        gridLayout={true}
-        templateColumns={1}
-        header="kymIndMAINOCCUPATION"
-      >
+    <Box id="kymAccIndMainProfession" scrollMarginTop="200px">
+      <FormSection templateColumns={1} header="kymIndMAINOCCUPATION">
         <DynamicBoxGroupContainer>
-          {occupationIds.map((id) => {
-            return (
-              <MainOccupation
-                key={id}
-                removeMainOccupation={removeOccuapation}
-                setKymCurrentSection={setKymCurrentSection}
-                occupationId={id}
-              />
-            );
-          })}
+          {occupationIds.map((oId) => (
+            <MainOccupation
+              key={oId}
+              removeMainOccupation={removeOccuapation}
+              setKymCurrentSection={setKymCurrentSection}
+              occupationId={oId}
+            />
+          ))}
 
           <Button
             id="mainOccupationButton"
@@ -506,16 +444,12 @@ export const MemberKYMMainOccupation = ({
               setKymCurrentSection(kymSection);
             }}
           >
-            <FormSection
-              gridLayout={true}
-              header="kymIndForeignEmploymentDetails"
-            >
+            <FormSection header="kymIndForeignEmploymentDetails">
               <FormSelect
                 id="nameOfCountry"
                 control={control}
                 name="foreignEmpCountryId"
                 label={t['kymIndNameofCountry']}
-                __placeholder={t['kymIndSelectCountry']}
                 options={countryOptions}
               />
               <FormSelect
@@ -523,19 +457,17 @@ export const MemberKYMMainOccupation = ({
                 id="typeOfVisa"
                 name="typeOfVisaId"
                 label={t['kymIndTypeofVisa']}
-                __placeholder={t['kymIndEnterTypeofVisa']}
                 options={visaTypes}
               />
               <FormInput
                 bg="white"
                 control={control}
                 type="number"
-                textAlign={'right'}
-                name={`foreignEstimatedAnnualIncome`}
+                textAlign="right"
+                name="foreignEstimatedAnnualIncome"
                 id="estimatedAnnualIncome"
                 label={t['kymIndEstimatedAnnualIncome']}
                 helperText={t['kymIndWriteStudentVISA']}
-                __placeholder="0.00"
               />
             </FormSection>
           </form>

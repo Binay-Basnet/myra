@@ -3,7 +3,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import {
+  CriteriaSection,
+  DepositFrequency as DepositFreq,
   DepositProductInput,
+  Frequency,
+  FrequencyTenure,
   KymMemberTypesEnum,
   NatureOfDepositProduct,
   ServiceType,
@@ -26,6 +30,7 @@ import {
   GridItems,
   Interest,
   LadderRate,
+  MandatoryProduct,
   Penalty,
   PostingFrequency,
   PrematuredPenalty,
@@ -73,30 +78,81 @@ export const SettingsDepositProductsAdd = () => {
 
   const { mutateAsync } = useSetDepositProductMutation();
 
-  const methods = useForm<DepositForm>({});
+  const methods = useForm<DepositForm>({
+    defaultValues: {
+      depositFrequency: Frequency.Daily,
+      transactionAllowed: DepositFreq.Monthly,
+      isTenureApplicable: false,
+      penalty: false,
+      rebate: false,
+      postingFrequency: DepositFreq.Monthly,
+      autoOpen: false,
+      staffProduct: false,
+      isForMinors: false,
+      atmFacility: false,
+      chequeIssue: false,
+      allowLoan: false,
+      supportMultiple: false,
+      withdrawRestricted: false,
+      wealthBuildingProduct: false,
+      ladderRate: false,
+      isMandatorySaving: false,
+      alternativeChannels: false,
+      tenureUnit: FrequencyTenure.Day,
+    },
+  });
 
   const { getValues, watch, reset, resetField } = methods;
+  const criteria = watch('criteria');
+  const chequeIssue = watch('chequeIssue');
+  const penalty = watch('penalty');
+  const rebate = watch('rebate');
+  const atmFacility = watch('atmFacility');
+  const allowLoan = watch('allowLoan');
   const depositNature = watch('nature');
+  const ladderRate = watch('ladderRate');
   const typesOfMember = watch('typeOfMember');
+  const withdrawRestricted = watch('withdrawRestricted');
+  const isMandatorySaving = watch('isMandatorySaving');
+  const isTenureApplicable = watch('isTenureApplicable');
 
   const submitForm = () => {
     const values = getValues();
 
-    const genderList = values?.genderId?.map((data) => data?.value);
-    const maritalStatusList = values?.maritalStatusId?.map((data) => data?.value);
-    const educationQualificationList = values?.educationQualification?.map((data) => data?.value);
-    const occupationList = values?.occupation?.map((data) => data?.value);
-    const ethnicityList = values?.ethnicity?.map((data) => data?.value);
-    const natureOFBusinessCoopList = values?.natureOFBusinessCoop?.map((data) => data?.value);
-    const natureOfBusinessInstitutionList = values?.natureOfBusinessInstitution?.map(
-      (data) => data?.value
-    );
+    const genderList = criteria?.includes(CriteriaSection.Gender)
+      ? values?.genderId?.map((data) => data?.value ?? data)
+      : null;
+    const maritalStatusList = criteria?.includes(CriteriaSection.MaritalStatus)
+      ? values?.maritalStatusId?.map((data) => data?.value ?? data)
+      : null;
+    const educationQualificationList = criteria?.includes(CriteriaSection.EducationQualification)
+      ? values?.educationQualification?.map((data) => data?.value ?? data)
+      : null;
+    const occupationList = criteria?.includes(CriteriaSection.OccupationDetails)
+      ? values?.occupation?.map((data) => data?.value ?? data)
+      : null;
+    const ethnicityList = criteria?.includes(CriteriaSection.Ethnicity)
+      ? values?.ethnicity?.map((data) => data?.value ?? data)
+      : null;
+    const natureOFBusinessCoopList = criteria?.includes(CriteriaSection.NatureOfBusinessCoopunion)
+      ? values?.natureOFBusinessCoop?.map((data) => data?.value ?? data)
+      : null;
+    const natureOfBusinessInstitutionList = criteria?.includes(
+      CriteriaSection.NatureOfBusinessInstitutions
+    )
+      ? values?.natureOfBusinessInstitution?.map((data) => data?.value ?? data)
+      : null;
+    const coopTypeList = criteria?.includes(CriteriaSection.CooperativeType)
+      ? values?.cooperativeType?.map((data) => data)
+      : null;
 
-    const ladderRateDataList = values?.ladderRateData?.map((data) => ({
-      type: data?.type,
-      rate: data?.rate,
-      amount: data?.amount.toString(),
-    }));
+    const ladderRateDataList = ladderRate
+      ? values?.ladderRateData?.map((data) => ({
+          type: data?.type,
+          rate: data?.rate,
+          amount: data?.amount.toString(),
+        }))
+      : null;
 
     const serviceChargeList = values?.serviceCharge?.map((data) => ({
       serviceName: data?.serviceName,
@@ -110,23 +166,21 @@ export const SettingsDepositProductsAdd = () => {
       amount: data?.amount.toString(),
     }));
 
-    const alternativeChannelList = values?.alternativeChannelCharge?.map((data) => ({
-      serviceName: data?.serviceName,
-      ledgerName: data?.ledgerName,
-      amount: data?.amount.toString(),
-    }));
+    const chequeChargeList = chequeIssue
+      ? values?.chequeCharge?.map((data) => ({
+          serviceName: data?.serviceName,
+          ledgerName: data?.ledgerName,
+          amount: data?.amount.toString(),
+        }))
+      : null;
 
-    const chequeChargeList = values?.chequeCharge?.map((data) => ({
-      serviceName: data?.serviceName,
-      ledgerName: data?.ledgerName,
-      amount: data?.amount.toString(),
-    }));
-
-    const atmChargeList = values?.atmCharge?.map((data) => ({
-      serviceName: data?.serviceName,
-      ledgerName: data?.ledgerName,
-      amount: data?.amount.toString(),
-    }));
+    const atmChargeList = atmFacility
+      ? values?.atmCharge?.map((data) => ({
+          serviceName: data?.serviceName,
+          ledgerName: data?.ledgerName,
+          amount: data?.amount.toString(),
+        }))
+      : null;
 
     const updatedData = {
       ...values,
@@ -137,35 +191,52 @@ export const SettingsDepositProductsAdd = () => {
       occupation: occupationList,
       natureOfBusinessInstitution: natureOfBusinessInstitutionList,
       natureOFBusinessCoop: natureOFBusinessCoopList,
+      cooperativeType: coopTypeList,
       ladderRateData: ladderRateDataList,
       serviceCharge: serviceChargeList,
       accountCloseCharge: accountCloseChargeList,
       chequeCharge: chequeChargeList,
-      alternativeChannelCharge: alternativeChannelList,
       atmCharge: atmChargeList,
-      tenureUnit: values?.tenureUnit ? values?.tenureUnit : null,
-      maxTenureUnitNumber: values?.maxTenureUnitNumber ? values?.maxTenureUnitNumber : null,
-      minTenureUnitNumber: values?.minTenureUnitNumber ? values?.minTenureUnitNumber : null,
-      depositFrequency: values?.depositFrequency ? values?.depositFrequency : null,
+      specifyWithdrawRestriction: withdrawRestricted ? values?.specifyWithdrawRestriction : null,
+      transactionAllowed: values?.transactionAllowed ? values?.transactionAllowed : null,
+      tenureUnit: values?.tenureUnit && isTenureApplicable ? values?.tenureUnit : null,
+      maxTenureUnitNumber:
+        values?.maxTenureUnitNumber && isTenureApplicable ? values?.maxTenureUnitNumber : null,
+      minTenureUnitNumber:
+        values?.minTenureUnitNumber && isTenureApplicable ? values?.minTenureUnitNumber : null,
+      depositFrequency:
+        depositNature === NatureOfDepositProduct.RecurringSaving || isMandatorySaving
+          ? values?.depositFrequency
+          : null,
       postingFrequency: values?.postingFrequency ? values?.postingFrequency : null,
       accountType: values?.accountType ? values?.accountType : null,
+      interest: {
+        additionalRate: values?.interest?.additionalRate ?? null,
+        boardAuthority: values?.interest?.boardAuthority ?? null,
+        ceoAuthority: values?.interest?.ceoAuthority ?? null,
+        defaultRate: values?.interest?.defaultRate ?? null,
+        maxRate: values?.interest?.maxRate ?? null,
+        minRate: values?.interest?.minRate ?? null,
+      },
       penaltyData: {
-        dayAfterInstallmentDate: values?.penaltyData?.dayAfterInstallmentDate ?? null,
-        penaltyAmount: values?.penaltyData?.penaltyAmount ?? null,
-        penaltyRate: values?.penaltyData?.penaltyRate ?? null,
-        penaltyLedgerMapping: values?.penaltyData?.penaltyLedgerMapping ?? null,
+        dayAfterInstallmentDate: penalty ? values?.penaltyData?.dayAfterInstallmentDate : null,
+        penaltyAmount: penalty ? values?.penaltyData?.penaltyAmount : null,
+        penaltyRate: penalty ? values?.penaltyData?.penaltyRate : null,
+        // penaltyLedgerMapping: penalty ? values?.penaltyData?.penaltyLedgerMapping : null,
       },
       rebateData: {
-        dayBeforeInstallmentDate: values?.rebateData?.dayBeforeInstallmentDate ?? null,
-        noOfInstallment: values?.rebateData?.noOfInstallment ?? null,
-        rebateRate: values?.rebateData?.rebateRate ?? null,
-        rebateAmount: values?.rebateData?.rebateAmount ?? null,
-        rebateLedgerMapping: values?.rebateData?.rebateLedgerMapping ?? null,
+        dayBeforeInstallmentDate: rebate ? values?.rebateData?.dayBeforeInstallmentDate : null,
+        noOfInstallment: rebate ? values?.rebateData?.noOfInstallment : null,
+        rebateRate: rebate ? values?.rebateData?.rebateRate : null,
+        rebateAmount: rebate ? values?.rebateData?.rebateAmount : null,
+        rebateLedgerMapping: rebate ? values?.rebateData?.rebateLedgerMapping : null,
       },
-      maxAge: values?.maxAge ? Number(values?.maxAge) : null,
-      minAge: values?.minAge ? Number(values?.minAge) : null,
+      maxAge:
+        values?.maxAge && criteria?.includes(CriteriaSection.Age) ? Number(values?.maxAge) : null,
+      minAge:
+        values?.minAge && criteria?.includes(CriteriaSection.Age) ? Number(values?.minAge) : null,
       maxPostingFreqDifference: values?.maxPostingFreqDifference ?? null,
-      percentageOfDeposit: values?.percentageOfDeposit ?? null,
+      percentageOfDeposit: allowLoan ? values?.percentageOfDeposit : null,
       depositAmount: {
         maxAmount: values?.depositAmount?.maxAmount ?? null,
         minAmount: values?.depositAmount?.minAmount ?? null,
@@ -198,7 +269,16 @@ export const SettingsDepositProductsAdd = () => {
         loading: 'Adding New Deposit',
       },
       onSuccess: () => router.push('/settings/general/deposit-products'),
-      promise: mutateAsync({ id, data: updatedData }),
+      promise: mutateAsync({ id, data: updatedData as DepositProductInput }),
+      onError: (error) => {
+        if (error.__typename === 'ValidationError') {
+          Object.keys(error.validationErrorMsg).map((key) =>
+            methods.setError(key as keyof DepositProductInput, {
+              message: error.validationErrorMsg[key][0] as string,
+            })
+          );
+        }
+      },
     });
   };
 
@@ -265,18 +345,25 @@ export const SettingsDepositProductsAdd = () => {
                 <GridItems />
               </Box>
 
-              {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <AllowedTransaction />}
+              {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <BalanceLimit />}
 
               {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                depositNature === NatureOfDepositProduct.Mandatory) && <BalanceLimit />}
+                depositNature === NatureOfDepositProduct.Saving) && <AllowedTransaction />}
+
+              {depositNature === NatureOfDepositProduct.RecurringSaving && <DepositFrequency />}
 
               {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <TransactionLimit />}
 
+              {depositNature === NatureOfDepositProduct.Saving && <MandatoryProduct />}
+
+              {depositNature === NatureOfDepositProduct.Saving && isMandatorySaving && (
+                <DepositFrequency />
+              )}
+
               {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                depositNature === NatureOfDepositProduct.Mandatory) && (
+                (depositNature === NatureOfDepositProduct.Saving && isMandatorySaving)) && (
                 <>
                   {/* <DepositAmount /> */}
-                  <DepositFrequency />
                   <Penalty />
                   <Rebate />
                 </>
@@ -285,28 +372,31 @@ export const SettingsDepositProductsAdd = () => {
               {depositNature === NatureOfDepositProduct.TermSavingOrFd && <FixedDepositAmount />}
 
               {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <DefaultAccountName />}
-
-              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
                 depositNature === NatureOfDepositProduct.TermSavingOrFd) && <Tenure />}
 
-              {/* {(depositNature === NatureOfDepositProduct.RecurringSaving ||
-                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <MaximumTenure />} */}
+              {((depositNature === NatureOfDepositProduct.RecurringSaving && isTenureApplicable) ||
+                (depositNature === NatureOfDepositProduct.TermSavingOrFd &&
+                  isTenureApplicable)) && <DefaultAccountName />}
 
-              <Interest />
-              <PostingFrequency />
+              {depositNature !== NatureOfDepositProduct.Current && (
+                <>
+                  <Interest />
+                  <PostingFrequency />
+                </>
+              )}
+
               <AccountOpenServices />
               <AccountCloseServices />
 
               <Questions />
 
-              {depositNature === NatureOfDepositProduct.VoluntaryOrOptional && <LadderRate />}
+              {depositNature === NatureOfDepositProduct.Saving && <LadderRate />}
 
-              {depositNature !== NatureOfDepositProduct.TermSavingOrFd && <DormantSetup />}
+              {(depositNature === NatureOfDepositProduct.Current ||
+                depositNature === NatureOfDepositProduct.Saving) && <DormantSetup />}
 
-              {depositNature !== NatureOfDepositProduct.VoluntaryOrOptional && (
-                <PrematuredPenalty />
-              )}
+              {(depositNature === NatureOfDepositProduct.RecurringSaving ||
+                depositNature === NatureOfDepositProduct.TermSavingOrFd) && <PrematuredPenalty />}
 
               {(depositNature === NatureOfDepositProduct.RecurringSaving ||
                 depositNature === NatureOfDepositProduct.TermSavingOrFd) && <WithdrawPenalty />}
@@ -328,7 +418,7 @@ export const SettingsDepositProductsAdd = () => {
               status={
                 <Box display="flex" gap="s8">
                   <Text color="neutralColorLight.Gray-60" fontWeight="Regular" as="i" fontSize="r1">
-                    Press Complete to save form
+                    {t['depositProductPressCompletetosaveform']}
                   </Text>
                 </Box>
               }

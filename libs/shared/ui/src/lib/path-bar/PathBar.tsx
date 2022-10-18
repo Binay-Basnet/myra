@@ -13,7 +13,7 @@ export interface PathBarProps {
   button?: React.ReactNode;
 }
 
-export function PathBar({ paths, button }: PathBarProps) {
+export const PathBar = ({ paths, button }: PathBarProps) => {
   const router = useRouter();
 
   return (
@@ -39,7 +39,7 @@ export function PathBar({ paths, button }: PathBarProps) {
         />
 
         {paths.map((path, index) => (
-          <Fragment key={index}>
+          <Fragment key={path.link}>
             <Text
               fontSize="r1"
               color="gray.800"
@@ -52,13 +52,7 @@ export function PathBar({ paths, button }: PathBarProps) {
               {path.label}
             </Text>
             {paths.length !== index + 1 && (
-              <Text
-                fontSize="r2"
-                mt="-3px"
-                px="s8"
-                color="gray.800"
-                fontWeight="500"
-              >
+              <Text fontSize="r2" mt="-3px" px="s8" color="gray.800" fontWeight="500">
                 /
               </Text>
             )}
@@ -68,6 +62,6 @@ export function PathBar({ paths, button }: PathBarProps) {
       {button}
     </Box>
   );
-}
+};
 
 export default PathBar;

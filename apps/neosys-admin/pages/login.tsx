@@ -1,39 +1,37 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { IoEyeOffOutline, IoEyeOutline, IoLockClosed } from 'react-icons/io5';
+import { FormProvider, useForm } from 'react-hook-form';
 import Head from 'next/head';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
-import {
-  Input,
-  InputGroup,
-  InputLeftElement,
-  InputRightElement,
-} from '@chakra-ui/react';
 
-import { useLoginMutation } from '@coop/cbs/data-access';
-import { Box, Button } from '@coop/shared/ui';
-import { login, useAppDispatch } from '@coop/shared/utils';
+import { login, useAppDispatch, useLoginMutation } from '@coop/neosys-admin/data-access';
+import { FormInput, FormPasswordInput } from '@coop/shared/form';
+import { Box, Button, toast } from '@coop/shared/ui';
 
-import logo from "../public/logo.svg";
-
-export default function Login() {
+export const Login = () => {
   const { mutateAsync, isLoading } = useLoginMutation();
   const dispatch = useAppDispatch();
 
   const router = useRouter();
 
-  const { register, handleSubmit } = useForm();
-  const [show, setShow] = React.useState(false);
+  const methods = useForm();
+  const { handleSubmit } = methods;
 
   const onSubmit = (data) => {
     mutateAsync({ data }).then((res) => {
-      if (res.auth.login.recordId === null) {
+      if ('error' in res) {
+        toast({
+          id: 'login-error',
+          type: 'error',
+          message: 'Username or Password is invalid',
+        });
         return;
       }
-      const accessToken = res?.auth?.login?.record?.token?.access;
-      const refreshToken = res?.auth?.login?.record?.token?.refresh;
-      const user = res?.auth?.login?.record?.user;
+      if (res?.neosys?.auth?.login?.recordId === null) {
+        toast({ id: 'login-error', type: 'error', message: 'Username or Password is invalid' });
+        return;
+      }
+      const accessToken = res?.neosys?.auth?.login?.record?.token?.access;
+      const refreshToken = res?.neosys?.auth?.login?.record?.token?.refresh;
+      const user = res?.neosys?.auth?.login?.record?.user;
       dispatch(login({ user, token: accessToken }));
       localStorage.setItem('refreshToken', refreshToken);
       router.replace('/');
@@ -51,41 +49,23 @@ export default function Login() {
       <Head>
         <title>Neosys | Login</title>
       </Head>
-      <Box mb="8">
-        <Image src={logo} alt="Main Logo" />
-      </Box>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          w={300}
-          placeholder="Enter Username"
-          {...register('username')}
-          autoFocus
-        />
-        <InputGroup h="44px" mt="s4" w={300}>
-          <InputLeftElement>
-            <IoLockClosed />
-          </InputLeftElement>
-          <Input
-            pr="58px"
-            variant="outline"
-            type={show ? 'text' : 'password'}
-            placeholder="Enter password"
-            {...register('password')}
-          />
-          <InputRightElement width="fit-content" pr="s16" cursor="pointer">
-            {show ? (
-              <IoEyeOffOutline onClick={() => setShow(false)} />
-            ) : (
-              <IoEyeOutline onClick={() => setShow(true)} />
-            )}
-          </InputRightElement>
-        </InputGroup>
-        <br />
-        <Button w={300} type="submit" isLoading={isLoading}>
-          Login
-        </Button>
-      </form>
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Box display="flex" flexDir="column" gap="s20">
+            <Box display="flex" flexDir="column" gap="s10">
+              <FormInput name="username" label="Username" placeholder="Enter Username" />
+              <FormPasswordInput placeholder="Enter password" name="password" />
+            </Box>
+
+            <Button width="100%" type="submit" isLoading={isLoading}>
+              Login
+            </Button>
+          </Box>
+        </form>
+      </FormProvider>
     </Box>
   );
-}
+};
+
+export default Login;

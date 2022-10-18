@@ -16,13 +16,10 @@ import { Box, FormSection, Text } from '@coop/shared/ui';
 import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 interface INationalIDProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
-type nationalIdData =
+type NationalIdData =
   | {
       id: string;
       idNo: string;
@@ -33,17 +30,14 @@ type nationalIdData =
   | null
   | undefined;
 
-const getNationalIDData = (
-  identificationListData: KymIndIdentification[] | null | undefined
-) => {
-  const nationalIdData = identificationListData?.find(
-    (identification: KymIndIdentification | null) =>
-      identification?.idType === 'nationalId'
+const getNationalIDData = (identificationListData: KymIndIdentification[] | null | undefined) => {
+  const NationalIdData = identificationListData?.find(
+    (identification: KymIndIdentification | null) => identification?.idType === 'nationalId'
   );
 
   return {
-    idNo: nationalIdData?.idNo,
-    id: nationalIdData?.id,
+    idNo: NationalIdData?.idNo,
+    id: NationalIdData?.id,
   };
 };
 
@@ -66,26 +60,24 @@ export const NationalID = ({ setKymCurrentSection }: INationalIDProps) => {
     onSuccess: () => refetch(),
   });
 
-  const { data: identificationListData, refetch } =
-    useGetIndividualKymIdentificationListQuery(
-      {
-        id: String(id),
-      },
-      { enabled: !!id }
-    );
+  const { data: identificationListData, refetch } = useGetIndividualKymIdentificationListQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (identificationListData?.members?.individual?.listIdentification?.data) {
-      const nationalIdData = getNationalIDData(
-        identificationListData?.members?.individual?.listIdentification
-          ?.data as nationalIdData
+      const NationalIdData = getNationalIDData(
+        identificationListData?.members?.individual?.listIdentification?.data as NationalIdData
       );
 
-      if (nationalIdData?.id) {
-        setMutationId(nationalIdData.id);
+      if (NationalIdData?.id) {
+        setMutationId(NationalIdData.id);
 
         reset({
-          idNo: nationalIdData?.idNo,
+          idNo: NationalIdData?.idNo,
         });
       }
     }
@@ -94,16 +86,11 @@ export const NationalID = ({ setKymCurrentSection }: INationalIDProps) => {
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        const nationalIdData = getNationalIDData(
-          identificationListData?.members?.individual?.listIdentification
-            ?.data as nationalIdData
+        const NationalIdData = getNationalIDData(
+          identificationListData?.members?.individual?.listIdentification?.data as NationalIdData
         );
 
-        if (
-          id &&
-          !isDeepEmpty(data) &&
-          !isEqual({ ...data, id: mutationId }, nationalIdData)
-        ) {
+        if (id && !isDeepEmpty(data) && !isEqual({ ...data, id: mutationId }, NationalIdData)) {
           if (!mutationId) {
             newIDMutate({ idType: Id_Type.Kymidentification }).then((res) => {
               setMutationId(res.newId);
@@ -130,13 +117,7 @@ export const NationalID = ({ setKymCurrentSection }: INationalIDProps) => {
   return (
     <Box>
       <FormProvider {...methods}>
-        <Text
-          p="s20"
-          pb="0"
-          fontSize="r1"
-          fontWeight="medium"
-          color="neutralColorLight.Gray-70"
-        >
+        <Text p="s20" pb="0" fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
           {t['kymIndNationalID']}
         </Text>
         <form
@@ -145,13 +126,8 @@ export const NationalID = ({ setKymCurrentSection }: INationalIDProps) => {
             setKymCurrentSection(kymSection);
           }}
         >
-          <FormSection gridLayout={true}>
-            <FormInput
-              type="text"
-              name="idNo"
-              label={t['kymIndNationalIDNo']}
-              __placeholder={t['kymIndNationalIDNo']}
-            />
+          <FormSection>
+            <FormInput type="text" name="idNo" label={t['kymIndNationalIDNo']} />
           </FormSection>
         </form>
       </FormProvider>

@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import {
   authenticate,
   logout,
+  setPreference,
   useAppDispatch,
   useGetMeQuery,
   useRefreshToken,
@@ -27,18 +28,18 @@ export const useInit = () => {
   const refreshToken = useRefreshToken(url);
 
   const hasDataReturned = getMe?.data?.auth;
-  const isDatasuccessful = getMe?.data?.auth?.me?.data;
-  const userData = getMe?.data?.auth?.me?.data;
+  const userData = getMe?.data?.auth?.me?.data?.user;
+  const preference = getMe?.data?.auth?.me?.data?.preference;
+  const hasData = getMe?.data?.auth?.me?.data;
 
   useEffect(() => {
     refreshToken()
       .then((res) => {
         if (res) {
           setTriggerQuery(true);
-          return;
         }
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch(logout());
         replace('/login');
       });
@@ -48,10 +49,11 @@ export const useInit = () => {
     if (hasDataReturned) {
       if (userData) {
         dispatch(authenticate({ user: userData }));
+        preference && dispatch(setPreference({ preference }));
       } else {
         dispatch(logout());
         replace('/login');
       }
     }
-  }, [dispatch, hasDataReturned, isDatasuccessful, userData, replace]);
+  }, [dispatch, hasDataReturned, hasData, userData, replace]);
 };

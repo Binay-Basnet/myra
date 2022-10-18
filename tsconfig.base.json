@@ -20,6 +20,11 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "paths": {
+      "@coop/ac/activation-form": [
+        "libs/alternative-channels/feature-activation-form/src/index.ts"
+      ],
+      "@coop/ac/layouts": ["libs/alternative-channels/ui-layouts/src/index.ts"],
+      "@coop/ac/lists": ["libs/alternative-channels/feature-lists/src/index.ts"],
       "@coop/accounting/accounting": ["libs/accounting/feature-accounting/src/index.ts"],
       "@coop/accounting/purchase": ["libs/accounting/feature-purchase/src/index.ts"],
       "@coop/accounting/sales": ["libs/accounting/feature-sales/src/index.ts"],
@@ -27,6 +32,7 @@
       "@coop/accounting/ui-layouts": ["libs/accounting/ui-layouts/src/index.ts"],
       "@coop/accouting/loan": ["libs/accounting/feature-loan/src/index.ts"],
       "@coop/cbs/accounts/account-form": ["libs/cbs/accounts/feature-account-form/src/index.ts"],
+      "@coop/cbs/audit-log": ["libs/cbs/settings/feature-audit-log/src/index.ts"],
       "@coop/cbs/data-access": ["libs/cbs/data-access/src/index.ts"],
       "@coop/cbs/kym-form/cooperative": ["libs/cbs/kym-form/feature-cooperative/src/index.ts"],
       "@coop/cbs/kym-form/cooperative-union": [
@@ -38,7 +44,12 @@
       "@coop/cbs/kym-form/formElements": ["libs/cbs/kym-form/ui-form-elements/src/index.ts"],
       "@coop/cbs/kym-form/institution": ["libs/cbs/kym-form/feature-institution/src/index.ts"],
       "@coop/cbs/kym-form/ui-containers": ["libs/cbs/kym-form/ui-containers/src/index.ts"],
-      "@coop/cbs/loan": ["libs/cbs/loan/feature-newloan-application/src/index.ts"],
+      "@coop/cbs/loan": ["libs/cbs/loan/feature-loan-application/src/index.ts"],
+      "@coop/cbs/loan/details": ["libs/cbs/loan/feature-details/src/index.ts"],
+      "@coop/cbs/loan/layouts": ["libs/cbs/loan/ui-layouts/src/index.ts"],
+      "@coop/cbs/loan/lists": ["libs/cbs/loan/feature-lists/src/index.ts"],
+      "@coop/cbs/loan/repayment": ["libs/cbs/loan/feature-loan-repayment/src/index.ts"],
+      "@coop/cbs/members/details": ["libs/cbs/members/feature-details/src/index.ts"],
       "@coop/cbs/members/list": ["libs/cbs/members/feature-list/src/index.ts"],
       "@coop/cbs/members/profile": ["libs/cbs/members/feature-profile/src/index.ts"],
       "@coop/cbs/reports/components": ["libs/cbs/reports/ui-components/src/index.ts"],
@@ -79,11 +90,14 @@
       "@coop/cbs/transactions/withdraw": ["libs/cbs/transactions/feature-withdraw/src/index.ts"],
       "@coop/cbs/utils": ["libs/cbs/utils/src/index.ts"],
       "@coop/ebanking/accounts": ["libs/ebanking/feature-accounts/src/index.ts"],
+      "@coop/ebanking/auth": ["libs/ebanking/feature-auth/src/index.ts"],
       "@coop/ebanking/cards": ["libs/ebanking/ui-cards/src/index.ts"],
+      "@coop/ebanking/components": ["libs/ebanking/ui-components/src/index.ts"],
       "@coop/ebanking/coop": ["libs/ebanking/feature-coop/src/index.ts"],
       "@coop/ebanking/data-access": ["libs/ebanking/data-access/src/index.ts"],
       "@coop/ebanking/funds": ["libs/ebanking/feature-funds/src/index.ts"],
       "@coop/ebanking/home": ["libs/ebanking/feature-home/src/index.ts"],
+      "@coop/ebanking/products": ["libs/ebanking/feature-products/src/index.ts"],
       "@coop/ebanking/ui-layout": ["libs/ebanking/ui-layout/src/index.ts"],
       "@coop/inventory/inventory": ["libs/inventory/feature-inventory/src/index.ts"],
       "@coop/inventory/warehouse": ["libs/inventory/feature-warehouse/src/index.ts"],
@@ -100,6 +114,9 @@
       "@coop/neosys-admin/settings": ["libs/neosys/feature-settings/src/index.ts"],
       "@coop/neosys-admin/ui-components": ["libs/neosys/ui-components/src/index.ts"],
       "@coop/neosys-admin/users": ["libs/neosys/feature-users/src/index.ts"],
+      "@coop/settings/alternative-channels": [
+        "libs/cbs/settings/feature-alternative-channels/src/index.ts"
+      ],
       "@coop/shared/components": ["libs/shared/components/src/index.ts"],
       "@coop/shared/editable-table": ["libs/shared/editable-table/src/index.ts"],
       "@coop/shared/form": ["libs/shared/form/src/index.ts"],

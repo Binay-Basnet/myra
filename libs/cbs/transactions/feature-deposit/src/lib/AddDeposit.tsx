@@ -14,7 +14,6 @@ import {
   useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
-import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
 import { FormInput } from '@coop/shared/form';
 import {
   asyncToast,
@@ -23,6 +22,7 @@ import {
   Container,
   DEFAULT_PAGE_SIZE,
   Divider,
+  FormAccountSelect,
   FormFooter,
   FormHeader,
   FormMemberSelect,
@@ -63,7 +63,6 @@ const cashOptions: Record<string, string> = {
   '1': CashValue.Cash_1,
 };
 
-const FINE = '0';
 const REBATE = '0';
 
 export const AddDeposit = () => {
@@ -72,10 +71,10 @@ export const AddDeposit = () => {
   const { t } = useTranslation();
 
   const accountTypes = {
-    [NatureOfDepositProduct.Mandatory]: t['addDepositMandatorySavingAccount'],
+    [NatureOfDepositProduct.Saving]: t['addDepositSaving'],
     [NatureOfDepositProduct.RecurringSaving]: t['addDepositRecurringSavingAccount'],
     [NatureOfDepositProduct.TermSavingOrFd]: t['addDepositTermSavingAccount'],
-    [NatureOfDepositProduct.VoluntaryOrOptional]: t['addDepositVoluntarySavingAccount'],
+    [NatureOfDepositProduct.Current]: t['addDepositCurrent'],
   };
 
   const methods = useForm<DepositFormInput>({
@@ -91,7 +90,7 @@ export const AddDeposit = () => {
   const memberId = watch('memberId');
 
   const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
-    useGetIndividualMemberDetails({ memberId });
+    useGetIndividualMemberDetails({ memberId: memberId || '' });
 
   const { data: accountListData } = useGetAccountTableListQuery(
     {
@@ -126,6 +125,8 @@ export const AddDeposit = () => {
     [accountId]
   );
 
+  const FINE = useMemo(() => selectedAccount?.dues?.fine ?? '0', [selectedAccount]);
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const [mode, setMode] = useState<number>(0); // 0: form 1: payment
@@ -151,7 +152,7 @@ export const AddDeposit = () => {
   const denominationTotal = useMemo(
     () =>
       denominations?.reduce(
-        (accumulator, curr) => accumulator + Number(curr.amount),
+        (accumulator, current) => accumulator + Number(current.amount),
         0 as number
       ) ?? 0,
     [denominations]
@@ -159,21 +160,56 @@ export const AddDeposit = () => {
 
   const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
 
+  const chequeAmount = watch('cheque.amount');
+
+  const bankVoucherAmount = watch('bankVoucher.amount');
+
+  const selectedPaymentMode = watch('payment_type');
+
+  const checkIsSubmitButtonDisabled = () => {
+    if (mode === 0) {
+      return false;
+    }
+
+    if (selectedPaymentMode === DepositPaymentType.Cash) {
+      if (rebate && Number(totalCashPaid ?? 0) < Number(amountToBeDeposited)) {
+        return true;
+      }
+
+      if (!rebate && Number(totalCashPaid ?? 0) < Number(totalDeposit)) return true;
+    }
+
+    if (
+      selectedPaymentMode === DepositPaymentType.BankVoucher &&
+      Number(bankVoucherAmount ?? 0) < Number(totalDeposit)
+    ) {
+      return true;
+    }
+
+    if (
+      selectedPaymentMode === DepositPaymentType.Cheque &&
+      Number(chequeAmount ?? 0) < Number(totalDeposit)
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
   const { data: installmentsListQueryData, refetch } = useGetInstallmentsListDataQuery(
     { id: accountId as string },
     {
-      enabled:
-        (!!accountId &&
-          selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving) ||
-        selectedAccount?.product?.nature === NatureOfDepositProduct.Mandatory,
+      enabled: !!(
+        accountId && selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving
+      ),
     }
   );
 
   useEffect(() => {
-    if (accountId) {
+    if (accountId && selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving) {
       refetch();
     }
-  }, [accountId]);
+  }, [accountId, selectedAccount?.product?.nature]);
 
   const { firstMonth, lastMonth, fine, rebate } = useMemo(() => {
     const installmentData = installmentsListQueryData?.account?.getInstallments?.data;
@@ -237,15 +273,16 @@ export const AddDeposit = () => {
 
     if (
       selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving ||
-      selectedAccount?.product?.nature === NatureOfDepositProduct.Mandatory
+      (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+        selectedAccount?.product?.isMandatorySaving === true)
     ) {
-      filteredValues['amount'] = String(amountToBeDeposited);
+      filteredValues.amount = String(amountToBeDeposited);
     }
 
-    if (values['payment_type'] === DepositPaymentType.Cash) {
+    if (values.payment_type === DepositPaymentType.Cash) {
       filteredValues = omit({ ...filteredValues }, ['cheque', 'bankVoucher']);
-      filteredValues['cash'] = {
-        ...values['cash'],
+      filteredValues.cash = {
+        ...values.cash,
         cashPaid: values.cash?.cashPaid as string,
         disableDenomination: Boolean(values.cash?.disableDenomination),
         total: String(totalCashPaid),
@@ -258,11 +295,11 @@ export const AddDeposit = () => {
       };
     }
 
-    if (values['payment_type'] === DepositPaymentType.BankVoucher) {
+    if (values.payment_type === DepositPaymentType.BankVoucher) {
       filteredValues = omit({ ...filteredValues }, ['cheque', 'cash']);
     }
 
-    if (values['payment_type'] === DepositPaymentType.Cheque) {
+    if (values.payment_type === DepositPaymentType.Cheque) {
       filteredValues = omit({ ...filteredValues }, ['bankVoucher', 'cash']);
     }
 
@@ -306,32 +343,17 @@ export const AddDeposit = () => {
                   <FormMemberSelect name="memberId" label="Member" />
 
                   {memberId && (
-                    <FormCustomSelect
+                    <FormAccountSelect
                       name="accountId"
                       label={t['addDepositSelectDepositAccount']}
-                      options={accountListData?.account?.list?.edges?.map((account) => ({
-                        accountInfo: {
-                          accountName: account.node?.product.productName,
-                          accountId: account.node?.id,
-                          accountType: account?.node?.product?.nature
-                            ? accountTypes[account?.node?.product?.nature]
-                            : '',
-                          balance: account?.node?.balance ?? '0',
-                          fine:
-                            account?.node?.product?.nature ===
-                              NatureOfDepositProduct.RecurringSaving ||
-                            account?.node?.product?.nature === NatureOfDepositProduct.Mandatory
-                              ? FINE
-                              : '',
-                        },
-                        value: account.node?.id as string,
-                      }))}
+                      memberId={memberId}
                     />
                   )}
 
                   {accountId &&
                     (selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving ||
-                      selectedAccount?.product?.nature === NatureOfDepositProduct.Mandatory) && (
+                      (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+                        selectedAccount?.product?.isMandatorySaving)) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
                           <FormInput name="voucherId" label={t['addDepositVoucherId']} />
@@ -390,8 +412,8 @@ export const AddDeposit = () => {
                     )}
 
                   {accountId &&
-                    selectedAccount?.product?.nature ===
-                      NatureOfDepositProduct.VoluntaryOrOptional && (
+                    (selectedAccount?.product?.nature === NatureOfDepositProduct.Current ||
+                      selectedAccount?.product?.nature === NatureOfDepositProduct.Saving) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
                           <FormInput name="voucherId" label={t['addDepositVoucherId']} />
@@ -437,8 +459,8 @@ export const AddDeposit = () => {
 
                         {(selectedAccount?.product?.nature ===
                           NatureOfDepositProduct.RecurringSaving ||
-                          selectedAccount?.product?.nature ===
-                            NatureOfDepositProduct.Mandatory) && (
+                          (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+                            selectedAccount?.product?.isMandatorySaving === true)) && (
                           <Box display="flex" justifyContent="space-between">
                             <Text fontSize="s3" fontWeight={500} color="gray.600">
                               {t['addDepositFine']}
@@ -506,7 +528,7 @@ export const AddDeposit = () => {
                               minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
                               guaranteeBalance: '1000',
                               overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
-                              fine: FINE,
+                              fine: fine ?? FINE,
                               // branch: 'Kumaripati',
                               openDate: selectedAccount?.accountOpenedDate ?? 'N/A',
                               expiryDate: selectedAccount?.accountExpiryDate ?? 'N/A',
@@ -521,7 +543,11 @@ export const AddDeposit = () => {
                 )}
               </Box>
 
-              <Payment mode={mode} totalDeposit={Number(totalDeposit)} />
+              <Payment
+                mode={mode}
+                totalDeposit={Number(totalDeposit)}
+                rebate={Number(rebate ?? 0)}
+              />
             </form>
           </FormProvider>
         </Box>
@@ -548,6 +574,7 @@ export const AddDeposit = () => {
                 )
               }
               mainButtonLabel={mode === 0 ? t['addDepositProceedPayment'] : t['addDepositSubmit']}
+              isMainButtonDisabled={checkIsSubmitButtonDisabled()}
               mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
             />
           </Container>

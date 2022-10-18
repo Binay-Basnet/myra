@@ -1,6 +1,7 @@
+import { useGetCoaBankListQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 import { Box, FormSection, GridItem } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 type LoanProcessingTable = {
   serviceName: string;
@@ -8,19 +9,19 @@ type LoanProcessingTable = {
   amount: number;
 };
 
-const ledgerName = [
-  {
-    label: 'Purchase Ledger',
-    value: 'purchaseLedger',
-  },
-  {
-    label: 'Sales Ledger',
-    value: 'salesLedger',
-  },
-];
-
 export const LoanProcessing = () => {
   const { t } = useTranslation();
+
+  const { data } = useGetCoaBankListQuery({
+    accountCode: featureCode.ledgerAccountCode as string[],
+  });
+
+  const ledgerData = data?.settings?.chartsOfAccount?.accountsUnder?.data;
+
+  const ledgerName = ledgerData?.map((item) => ({
+    label: item?.name?.local as string,
+    value: item?.id as string,
+  }));
 
   return (
     <FormSection

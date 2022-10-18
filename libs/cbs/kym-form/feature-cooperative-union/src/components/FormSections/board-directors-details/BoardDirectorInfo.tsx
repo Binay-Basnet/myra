@@ -7,6 +7,8 @@ import { CloseIcon } from '@chakra-ui/icons';
 
 import {
   CoopUnionPersonnelInput,
+  RootState,
+  useAppSelector,
   useDeletePersonnelDetailsMutation,
   useGetBoardOfDirectorsDetailsListQuery,
   useGetNewIdMutation,
@@ -17,7 +19,13 @@ import {
   InputGroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormAddress, FormEmailInput, FormInput, FormSwitch } from '@coop/shared/form';
+import {
+  FormAddress,
+  FormDatePicker,
+  FormEmailInput,
+  FormInput,
+  FormSwitch,
+} from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -101,7 +109,7 @@ const AddDirector = ({ removeDirector, index, directorId, setSection }: IAddDire
       {/* <DynamicBoxGroupContainer> */}
       <Collapse
         in={isOpen}
-        style={{ marginTop: '0px', border: '1px solid', borderColor: 'border.layout' }}
+        style={{ marginTop: '0px', border: '1px solid', borderColor: '#E0E5EB' }}
       >
         <DynamicBoxGroupContainer>
           <SectionContainer>
@@ -134,10 +142,15 @@ const AddDirector = ({ removeDirector, index, directorId, setSection }: IAddDire
                     </FormSection>
                   </Box>
 
-                  <Box display="flex" flexDirection="column" gap="s16">
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    gap="s16"
+                    borderBottom="1px solid"
+                    borderBottomColor="border.layout"
+                  >
                     <FormSection header="kymCoopUnionTemporaryAddress" id="Temporary Address">
                       <GridItem colSpan={3}>
-                        {' '}
                         <FormSwitch
                           control={control}
                           id="boardOfDirectors.isPermanentAndTemporaryAddressSame"
@@ -150,9 +163,8 @@ const AddDirector = ({ removeDirector, index, directorId, setSection }: IAddDire
                       )}
                     </FormSection>
 
-                    <InputGroupContainer>
-                      <FormInput
-                        type="date"
+                    <InputGroupContainer p="s16">
+                      <FormDatePicker
                         name="dateOfMembership"
                         id="boardOfDirectors.dateOfMembership"
                         label={t['kymCoopUnionDateOfMembership']}
@@ -194,7 +206,7 @@ const AddDirector = ({ removeDirector, index, directorId, setSection }: IAddDire
               </form>
             </FormProvider>
 
-            <Grid templateColumns="repeat(2, 1fr)" mt="s32" rowGap="s32" columnGap="s20">
+            <Grid templateColumns="repeat(2, 1fr)" p="s16" mt="s32" rowGap="s32" columnGap="s20">
               <KYMDocumentField
                 mutationId={directorId}
                 label={t['kymCoopUnionPhotograph']}
@@ -241,7 +253,7 @@ export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {
 
   const [directorIds, setDirectorIds] = useState<string[]>([]);
 
-  const { data: bodEditValues } = useGetBoardOfDirectorsDetailsListQuery(
+  const { data: bodEditValues, refetch: refetchEdit } = useGetBoardOfDirectorsDetailsListQuery(
     {
       id: String(id),
     },
@@ -264,6 +276,13 @@ export const BoardDirectorInfo = ({ setSection }: IBoardDirectorInfoProps) => {
       );
     }
   }, [bodEditValues]);
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetchEdit();
+  }, [preference?.date]);
 
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {

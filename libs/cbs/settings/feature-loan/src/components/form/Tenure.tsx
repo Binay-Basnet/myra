@@ -12,7 +12,7 @@ interface IRightElementProps {
   t: Record<string, string>;
 }
 
-export const inputRightElementText = (props: IRightElementProps) => {
+const inputRightElementText = (props: IRightElementProps) => {
   const { rightElement, t } = props;
   if (rightElement === FrequencyTenure.Day) {
     return t['days'];
@@ -35,17 +35,6 @@ export const Tenure = () => {
   const { resetField, watch } = useFormContext();
   const [rightElement, setRightElement] = useState('days');
   const minimumTenureUnit = watch('minTenureUnit');
-
-  const applicableSwitch = [
-    {
-      label: t['depositProductApplicable'],
-      value: true,
-    },
-    {
-      label: t['depositProductNotApplicable'],
-      value: false,
-    },
-  ];
 
   const unitOptions = [
     {
@@ -76,10 +65,8 @@ export const Tenure = () => {
       <GridItem colSpan={3}>
         <Box display="flex" flexDirection="row" justifyContent="space-between">
           <SubHeadingText>{t['depositProductTenure']}</SubHeadingText>
-          <FormSwitchTab name="isTenureApplicable" options={applicableSwitch} />
         </Box>
       </GridItem>
-
       <GridItem colSpan={3}>
         <BoxContainer
           p="s16"

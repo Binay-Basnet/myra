@@ -130,6 +130,16 @@ export const chakraDefaultStyles: ChakraStylesConfig<any> | undefined = {
   }),
 };
 
+const optionColor = (state: any) => {
+  if (state.isSelected && !state.isMulti && state.options.length > 5) {
+    return 'primary.500';
+  }
+  if (state.isDisabled) {
+    return 'neutralColorLight.Gray-40';
+  }
+  return 'neutralColorLight.Gray-80';
+};
+
 export const searchBarStyle: ChakraStylesConfig<any> | undefined = {
   menu: (provided) => ({
     ...provided,
@@ -149,12 +159,7 @@ export const searchBarStyle: ChakraStylesConfig<any> | undefined = {
   }),
   option: (provided, state) => ({
     ...provided,
-    color:
-      state.isSelected && !state.isMulti && state.options.length > 5
-        ? 'primary.500'
-        : state.isDisabled
-        ? 'neutralColorLight.Gray-40'
-        : 'neutralColorLight.Gray-80',
+    color: optionColor(state),
     fontWeight: state.isSelected && !state.isMulti ? 600 : 400,
     bg: state.isFocused ? 'highlight.500' : 'none',
     p: 's8',

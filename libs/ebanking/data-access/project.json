@@ -19,7 +19,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ebanking/data-access"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ebanking/data-access"],
       "options": {
         "jestConfig": "libs/ebanking/data-access/jest.config.ts",
         "passWithNoTests": true

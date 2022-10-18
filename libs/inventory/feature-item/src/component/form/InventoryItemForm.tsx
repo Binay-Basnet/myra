@@ -9,21 +9,8 @@ import {
   DynamicBoxGroupContainer,
   GroupContainer,
 } from '@coop/neosys-admin/layout';
-import {
-  FormEditableTable,
-  FormInput,
-  FormSelect,
-  FormSwitchTab,
-} from '@coop/shared/form';
-import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  GridItem,
-  Icon,
-  Text,
-} from '@coop/shared/ui';
+import { FormEditableTable, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { Box, Button, Divider, Grid, GridItem, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 type VarinatProductTable = {
@@ -52,7 +39,7 @@ const VariantProduct = ({ index, removeVariantProduct }: IVariantProduct) => {
         aria-label="close"
         alignSelf="flex-end"
       />
-      <Grid templateColumns={'repeat(2, 1fr)'} gap="s20">
+      <Grid templateColumns="repeat(2, 1fr)" gap="s20">
         <FormInput
           type="text"
           bg="white"
@@ -100,9 +87,9 @@ export const InventoryItemForm = () => {
     const tableData = variantProduct.reduce(
       (accumulator, currentVal) =>
         accumulator.concat(
-          currentVal.options.split(',').map((option: string) => {
-            return { sku: itemCode, itemName: `${itemName}-${option}` };
-          })
+          currentVal.options
+            .split(',')
+            .map((option: string) => ({ sku: itemCode, itemName: `${itemName}-${option}` }))
         ),
       [{}]
     );
@@ -195,11 +182,7 @@ export const InventoryItemForm = () => {
       <Divider />
 
       <Box flexDirection="column" display="flex" gap="s16">
-        <Text
-          fontSize="r2"
-          fontWeight="SemiBold"
-          color="neutralColorLight.Gray-80"
-        >
+        <Text fontSize="r2" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
           {t['invItemProductInformation']}
         </Text>
         <FormSwitchTab
@@ -241,19 +224,17 @@ export const InventoryItemForm = () => {
 
       {productInfo === 'variantProduct' && (
         <Box display="flex" flexDirection="column" gap="s32">
-          <GroupContainer scrollMarginTop={'200px'}>
+          <GroupContainer scrollMarginTop="200px">
             <Box>
               <DynamicBoxGroupContainer>
-                {variantProducts.map((item, index) => {
-                  return (
-                    <Box key={item.id}>
-                      <VariantProduct
-                        index={index}
-                        removeVariantProduct={() => variantProductRemove(index)}
-                      />
-                    </Box>
-                  );
-                })}
+                {variantProducts.map((item, index) => (
+                  <Box key={item.id}>
+                    <VariantProduct
+                      index={index}
+                      removeVariantProduct={() => variantProductRemove(index)}
+                    />
+                  </Box>
+                ))}
                 <Box display="flex" justifyContent="space-between">
                   <Button
                     id="newDetailButton"
@@ -312,11 +293,7 @@ export const InventoryItemForm = () => {
 
       {!addnInfo && (
         <Box>
-          <Button
-            leftIcon={<IoAddOutline />}
-            variant="ghost"
-            onClick={() => setAddnInfo(true)}
-          >
+          <Button leftIcon={<IoAddOutline />} variant="ghost" onClick={() => setAddnInfo(true)}>
             {t['invItemAddAdditionalInformation']}
           </Button>
         </Box>
@@ -326,11 +303,7 @@ export const InventoryItemForm = () => {
         <>
           <Divider />
           <Box>
-            <Text
-              fontSize="r1"
-              fontWeight="SemiBold"
-              color="neutralColorLight.Gray-50"
-            >
+            <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-50">
               {t['invItemAddtionalInformation']}
             </Text>
 

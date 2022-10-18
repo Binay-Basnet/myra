@@ -1,10 +1,5 @@
 import { IconType } from 'react-icons';
-import {
-  IoApps,
-  IoArrowDownOutline,
-  IoGridOutline,
-  IoPerson,
-} from 'react-icons/io5';
+import { IoApps, IoArrowDownOutline, IoGridOutline, IoPerson } from 'react-icons/io5';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
@@ -47,9 +42,8 @@ export const SettingsLayout = () => {
   const route = useRouter();
   const currentIndex =
     NAVBAR_TAB_OBJECT[
-      Object.keys(NAVBAR_TAB_OBJECT).find((string) =>
-        route.pathname.includes(string)
-      ) ?? '/settings'
+      Object.keys(NAVBAR_TAB_OBJECT).find((string) => route.pathname.includes(string)) ??
+        '/settings'
     ];
 
   return (
@@ -58,17 +52,12 @@ export const SettingsLayout = () => {
       p="0 s16"
       background="secondary.700"
       alignItems="center"
-      justifyContent={'flex-start'}
+      justifyContent="flex-start"
       display="flex"
     >
       <Box w="10%" px="s16">
         {' '}
-        <Text
-          fontWeight={'600'}
-          fontSize="16px"
-          color={'gray.0'}
-          letterSpacing="wide"
-        >
+        <Text fontWeight="600" fontSize="16px" color="gray.0" letterSpacing="wide">
           {' '}
           Settings
         </Text>
@@ -82,7 +71,7 @@ export const SettingsLayout = () => {
                 ? true
                 : route.asPath.includes(title.toLowerCase());
             return (
-              <Link href={link} key={index}>
+              <Link href={link} key={link}>
                 <Tab
                   // isDisabled
                   borderRadius="br3 br3 0 0"
@@ -100,11 +89,7 @@ export const SettingsLayout = () => {
                   alignItems="center"
                   gap="s12"
                 >
-                  <Icon
-                    as={icon}
-                    size={'md'}
-                    color={isActive ? 'primary.500' : 'primary.300'}
-                  />
+                  <Icon as={icon} size="md" color={isActive ? 'primary.500' : 'primary.300'} />
 
                   <Text
                     color={isActive ? 'gray.800' : 'gray.0'}

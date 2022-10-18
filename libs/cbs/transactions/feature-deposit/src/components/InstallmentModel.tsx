@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Modal,
   ModalBody,
@@ -15,7 +15,7 @@ import {
   useGetInstallmentsListDataQuery,
   useSetAccountForgiveInstallmentDataMutation,
 } from '@coop/cbs/data-access';
-import { Box, Button, Divider, Text } from '@coop/shared/ui';
+import { asyncToast, Box, Button, Divider, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IInstallmentModelProps {
@@ -33,29 +33,63 @@ export const InstallmentModel = ({
 }: IInstallmentModelProps) => {
   const { t } = useTranslation();
 
+  const [forgivenList, setForgivenList] = useState<string[]>([]);
+
   const { data: installmentsListQueryData, refetch } = useGetInstallmentsListDataQuery(
     { id: accountId as string },
     {
-      enabled:
-        (!!accountId && productType === NatureOfDepositProduct.RecurringSaving) ||
-        productType === NatureOfDepositProduct.Mandatory,
+      enabled: !!(accountId && productType === NatureOfDepositProduct.RecurringSaving),
     }
   );
 
-  const { mutate } = useSetAccountForgiveInstallmentDataMutation();
+  const { mutateAsync: setForgiveInstallment } = useSetAccountForgiveInstallmentDataMutation();
 
   useEffect(() => {
-    if (accountId) {
+    if (accountId && productType === NatureOfDepositProduct.RecurringSaving) {
       refetch();
     }
-  }, [accountId]);
+  }, [accountId, productType]);
 
   const handleForgiveInstallment = (installmentDate: string) => {
-    mutate({ id: accountId as string, installmentDate }, { onSuccess: () => refetch() });
+    setForgivenList((list) => [...list, installmentDate]);
+  };
+
+  const handleUnforgiveInstallment = (installmentDate: string) => {
+    setForgivenList((list) => {
+      const temp = [...list];
+      const unforgiveIndex = list.indexOf(installmentDate);
+      temp.splice(unforgiveIndex, 1);
+      return temp;
+    });
+  };
+
+  const handleSave = () => {
+    if (forgivenList?.length) {
+      asyncToast({
+        id: 'set-forgive-installments',
+        promise: setForgiveInstallment({
+          id: accountId as string,
+          installmentDates: forgivenList,
+        }),
+        msgs: {
+          loading: 'Adding installments to forgive',
+          success: 'Added installments to forgive',
+        },
+        onSuccess: () => {
+          handleModalClose();
+          refetch();
+        },
+      });
+    }
+  };
+
+  const handleModalClose = () => {
+    setForgivenList([]);
+    onClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal isOpen={isOpen} onClose={handleModalClose} isCentered>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
@@ -101,6 +135,13 @@ export const InstallmentModel = ({
                     <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-60">
                       {t['installmentModalDone']}
                     </Text>
+                  ) : forgivenList.includes(installment?.dueDate as string) ? (
+                    <Button
+                      variant="ghost"
+                      onClick={() => handleUnforgiveInstallment(installment?.dueDate as string)}
+                    >
+                      Unforgive
+                    </Button>
                   ) : (
                     <Button
                       variant="ghost"
@@ -117,7 +158,7 @@ export const InstallmentModel = ({
 
         <Divider />
         <ModalFooter>
-          <Button variant="solid" onClick={onClose}>
+          <Button variant="solid" onClick={handleSave}>
             {t['installmentModalSave']}
           </Button>
         </ModalFooter>

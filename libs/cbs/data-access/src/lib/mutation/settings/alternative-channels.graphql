@@ -1,0 +1,30 @@
+mutation saveAlternativeCharges($data: [AlternativeChannelChargesInput]) {
+  settings {
+    general {
+      alternativeChannel {
+        feesAndCharges(data: $data) {
+          error {
+            ...MutationError
+          }
+          record {
+            id
+            amount
+            ledgerId
+            serviceType
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation activateService($data: AlternativeChannelServiceActivationInput){
+  alternativeChannel {
+    serviceActivation(data: $data){
+      error {
+        ...MutationError
+      }
+      recordId
+    }
+  }
+}

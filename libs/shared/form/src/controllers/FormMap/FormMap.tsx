@@ -1,4 +1,3 @@
-import React from 'react';
 import { Controller, Path, useFormContext } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 
@@ -25,11 +24,9 @@ export function FormMap<T>({ name }: FormMapProps<T>) {
     <Controller
       name={name}
       control={control}
-      render={({ field: { onChange, value } }) => {
-        return (
-          <MapComponent id={name} currentLoc={value} setCurrentLoc={onChange} />
-        );
-      }}
+      render={({ field: { onChange, value } }) => (
+        <MapComponent id={name} currentLoc={value} setCurrentLoc={onChange} />
+      )}
     />
   );
 }

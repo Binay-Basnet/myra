@@ -7,7 +7,7 @@ import {
   DynamicBoxGroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput } from '@coop/shared/form';
+import { FormDatePicker, FormInput } from '@coop/shared/form';
 import { Box, Button, FormSection, GridItem, Icon } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -36,8 +36,7 @@ const AddSister = ({ index, removeTraining }: IAddTraining) => {
           name={`coopRelatedTraining.${index}.subjectOfTraining`}
           label={t['kymCoopSubjectOfTraining']}
         />
-        <FormInput
-          type="date"
+        <FormDatePicker
           name={`coopRelatedTraining.${index}.dateOfTraining`}
           label={t['kymCoopDateOfTraining']}
         />
@@ -61,7 +60,6 @@ export const DynamicAddtraining = () => {
 
   return (
     <FormSection
-      gridLayout
       header="kymCoopTrainingRelatedToCoop"
       subHeader="kymCoopTrainingRelatedToCoopsubText"
     >

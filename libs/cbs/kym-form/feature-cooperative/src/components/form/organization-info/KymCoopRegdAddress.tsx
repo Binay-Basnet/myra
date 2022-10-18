@@ -1,10 +1,7 @@
 import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import {
-  KymCooperativeFormInput,
-  useAllAdministrationQuery,
-} from '@coop/cbs/data-access';
+import { KymCooperativeFormInput, useAllAdministrationQuery } from '@coop/cbs/data-access';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
 import { FormSection, GridItem } from '@coop/shared/ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
@@ -74,14 +71,14 @@ export const KymCoopRegdAddress = (props: IProps) => {
   // }, [id]);
   const { data } = useAllAdministrationQuery();
 
-  const province = useMemo(() => {
-    return (
+  const province = useMemo(
+    () =>
       data?.administration?.all?.map((d) => ({
         label: d.name,
         value: d.id,
-      })) ?? []
-    );
-  }, [data?.administration?.all]);
+      })) ?? [],
+    [data?.administration?.all]
+  );
 
   // FOR PERMANENT ADDRESS
   const currentProvinceId = watch('registeredAddress.provinceId');
@@ -89,16 +86,12 @@ export const KymCoopRegdAddress = (props: IProps) => {
   const currentLocalityId = watch('registeredAddress.localGovernmentId');
 
   const districtList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
-        ?.districts ?? [],
+    () => data?.administration.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
     [currentProvinceId, data]
   );
 
   const muncipalityList = useMemo(
-    () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
+    () => districtList.find((d) => d.id === currentDistrictId)?.municipalities ?? [],
     [currentDistrictId, districtList]
   );
   const wardList = useMemo(
@@ -113,23 +106,17 @@ export const KymCoopRegdAddress = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <FormSection
-          gridLayout={true}
-          id="kymCoopAccRegisteredAddress"
-          header="kymCoopRegisteredAddress"
-        >
+        <FormSection id="kymCoopAccRegisteredAddress" header="kymCoopRegisteredAddress">
           <FormSelect
             id="registeredCoopAddress"
             name="registeredAddress.provinceId"
             label={t['kymCoopProvince']}
-            __placeholder={t['kymCoopSelectState']}
             options={province}
           />
           <FormSelect
             id="registeredCoopAddress"
             name="registeredAddress.districtId"
             label={t['kymCoopDistrict']}
-            __placeholder={t['kymCoopSelectDistrict']}
             options={districtList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -139,7 +126,6 @@ export const KymCoopRegdAddress = (props: IProps) => {
             id="registeredCoopAddress"
             name="registeredAddress.localGovernmentId"
             label={t['kymCoopMunicipality']}
-            __placeholder={t['kymCoopSelectMunicipality']}
             options={muncipalityList.map((d) => ({
               label: d.name,
               value: d.id,
@@ -150,7 +136,6 @@ export const KymCoopRegdAddress = (props: IProps) => {
             id="registeredCoopAddress"
             name="registeredAddress.wardNo"
             label={t['kymCoopWardNo']}
-            __placeholder={t['kymCoopEnterWardNo']}
             options={wardList?.map((d) => ({
               label: d,
               value: d,
@@ -161,14 +146,12 @@ export const KymCoopRegdAddress = (props: IProps) => {
             type="text"
             name="registeredAddress.locality"
             label={t['kymCoopLocality']}
-            __placeholder={t['kymCoopEnterLocality']}
           />
           <FormInput
             id="registeredCoopAddress"
             type="text"
             name="registeredAddress.houseNo"
             label={t['kymCoopRepresentativeHouseNo']}
-            __placeholder={t['kymCoopRepresentativeEnterHouseNo']}
           />
 
           <GridItem colSpan={2}>

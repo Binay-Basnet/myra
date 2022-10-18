@@ -37,7 +37,7 @@ const tabList: TabList[] = [
 export const SettingsUserSideBar = () => (
   <Box
     position="fixed"
-    w="275px"
+    w="240px"
     display="flex"
     flexDirection="column"
     gap="s16"

@@ -1,13 +1,22 @@
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { DepositedBy, DepositPaymentType, useGetBankListQuery } from '@coop/cbs/data-access';
-import { AgentSelect } from '@coop/cbs/transactions/ui-components';
+import {
+  DepositedBy,
+  DepositPaymentType,
+  RootState,
+  useAppSelector,
+  useGetCoaBankListQuery,
+} from '@coop/cbs/data-access';
 import {
   BoxContainer,
   ContainerWithDivider,
   InputGroupContainer,
 } from '@coop/cbs/transactions/ui-containers';
 import {
+  FormAgentSelect,
+  FormCheckbox,
+  FormDatePicker,
   FormEditableTable,
   FormFileInput,
   FormInput,
@@ -16,8 +25,8 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { Box, FormAccountSelect, FormMemberSelect, Grid, GridItem, Text } from '@coop/shared/ui';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 const sourceOfFundsList = [
   'Personal Savings',
@@ -58,6 +67,7 @@ const denominationsOptions = [
 export interface PaymentProps {
   mode: number;
   totalDeposit: number;
+  rebate: number;
 }
 
 type PaymentTableType = {
@@ -66,7 +76,7 @@ type PaymentTableType = {
   amount: string;
 };
 
-export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
+export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
   const { t } = useTranslation();
 
   const paymentModes = [
@@ -99,7 +109,13 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
     },
   ];
 
-  const { watch } = useFormContext();
+  const { watch, resetField } = useFormContext();
+
+  const memberId = watch('memberId');
+
+  const isDiffMember = watch('cheque.isDifferentMember');
+
+  const dmemberId = watch('cheque.memberId');
 
   const selectedPaymentMode = watch('payment_type');
 
@@ -107,7 +123,16 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
 
   const denominations = watch('cash.denominations');
 
-  const { data: bankList } = useGetBankListQuery();
+  const { data: bank } = useGetCoaBankListQuery({
+    accountCode: featureCode.accountCode as string[],
+  });
+
+  const bankListArr = bank?.settings?.chartsOfAccount?.accountsUnder?.data;
+
+  const bankList = bankListArr?.map((item) => ({
+    label: item?.name?.local as string,
+    value: item?.id as string,
+  }));
 
   const denominationTotal =
     denominations?.reduce(
@@ -121,7 +146,17 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
 
   const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
 
-  const returnAmount = totalCashPaid - totalDeposit;
+  const returnAmount = rebate
+    ? totalCashPaid - totalDeposit + rebate
+    : totalCashPaid - totalDeposit;
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    resetField('bankVoucher.depositedAt');
+    resetField('cheque.depositedAt');
+  }, [preference?.date]);
 
   return (
     <ContainerWithDivider
@@ -144,12 +179,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
               <FormSelect
                 name="bankVoucher.bankId"
                 label={t['depositPaymentBankName']}
-                options={
-                  bankList?.bank?.bank?.list?.map((bank) => ({
-                    label: bank?.name as string,
-                    value: bank?.id as string,
-                  })) ?? []
-                }
+                options={bankList}
               />
             </GridItem>
 
@@ -162,8 +192,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
               textAlign="right"
             />
 
-            <FormInput
-              type="date"
+            <FormDatePicker
               name="bankVoucher.depositedAt"
               label={t['depositPaymentDepositedDate']}
             />
@@ -178,16 +207,24 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
 
         {selectedPaymentMode === DepositPaymentType.Cheque && (
           <InputGroupContainer>
+            <GridItem colSpan={3}>
+              <FormCheckbox
+                name="cheque.isDifferentMember"
+                label="Cheque is from different member"
+              />
+            </GridItem>
+
+            {isDiffMember && (
+              <GridItem colSpan={3}>
+                <FormMemberSelect name="cheque.memberId" label="Member" />
+              </GridItem>
+            )}
+
             <GridItem colSpan={2}>
-              <FormSelect
-                name="cheque.bankId"
-                label={t['depositPaymentBankName']}
-                options={
-                  bankList?.bank?.bank?.list?.map((bank) => ({
-                    label: bank?.name as string,
-                    value: bank?.id as string,
-                  })) ?? []
-                }
+              <FormAccountSelect
+                name="cheque.accId"
+                memberId={isDiffMember ? dmemberId : memberId}
+                label="Account Name"
               />
             </GridItem>
 
@@ -198,18 +235,6 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
               type="number"
               label={t['depositPaymentAmount']}
               textAlign="right"
-            />
-
-            <FormInput
-              type="date"
-              name="cheque.depositedAt"
-              label={t['depositPaymentDepositedDate']}
-            />
-
-            <FormInput
-              type="text"
-              name="cheque.depositedBy"
-              label={t['depositPaymentDepositedBy']}
             />
           </InputGroupContainer>
         )}
@@ -337,7 +362,7 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
 
         {depositedBy === DepositedBy.Agent && (
           <InputGroupContainer>
-            <AgentSelect name="agentId" label={t['depositPaymentMarketRepresentative']} />
+            <FormAgentSelect name="agentId" label={t['depositPaymentMarketRepresentative']} />
           </InputGroupContainer>
         )}
 

@@ -1,4 +1,4 @@
-import { Renderable, toast as rhToast, ToastOptions } from 'react-hot-toast';
+import rhToast, { Renderable, ToastOptions } from 'react-hot-toast';
 import _ from 'lodash';
 
 import Toast from './ToastComponent';
@@ -46,6 +46,8 @@ type MutationError =
 
 const getError = (error: MutationError) => {
   switch (error.__typename) {
+    case 'ValidationError':
+      return error.validationErrorMsg;
     case 'BadRequestError':
       return error.badRequestErrorMessage;
     case 'AuthorizationError':
@@ -79,6 +81,7 @@ interface AsyncToastProps<T extends Record<string, unknown>> {
   id: string;
   promise: Promise<T>;
   onSuccess?: (response: T) => void;
+  onError?: (error: MutationError) => void;
   msgs: {
     loading: Renderable;
     success: Renderable;
@@ -90,6 +93,7 @@ export const asyncToast = async <T extends Record<string, unknown>>({
   id,
   msgs,
   onSuccess,
+  onError,
   promise,
 }: AsyncToastProps<T>) => {
   const errMsg = 'Something Went Wrong!!';
@@ -117,11 +121,22 @@ export const asyncToast = async <T extends Record<string, unknown>>({
 
         if (errorKeys[0]) {
           const error = getError(errorKeys[0]);
-          toast({
-            id,
-            type: 'error',
-            message: error,
-          });
+
+          if (typeof error === 'string') {
+            onError && onError(errorKeys[0]);
+            toast({
+              id,
+              type: 'error',
+              message: error,
+            });
+          } else {
+            onError && onError(errorKeys[0]);
+            toast({
+              id,
+              type: 'error',
+              message: 'Some fields are empty or invalid',
+            });
+          }
         } else {
           onSuccess && onSuccess(response);
           toast({

@@ -64,12 +64,15 @@ query getDepositProductSettingsEditData($id: ID!) {
             genderId
             maritalStatusId
             educationQualification
+            transactionAllowed
+            noOftransactionAllowed
             ethnicity
             occupation
             foreignEmployment
             natureOfBusinessInstitution
             natureOFBusinessCoop
             cooperativeType
+            isForMinors
             depositAmount {
               minAmount
               maxAmount
@@ -159,6 +162,7 @@ query getDepositProductSettingsEditData($id: ID!) {
               penaltyAmount
               penaltyRate
             }
+            isMandatorySaving
             autoOpen
             allowLoan
             percentageOfDeposit

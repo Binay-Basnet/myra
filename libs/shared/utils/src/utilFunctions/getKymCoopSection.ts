@@ -1,10 +1,5 @@
 // organization detail
-const basicInfo = [
-  'nameOfOrganization',
-  'regdNumber',
-  'regdOffice',
-  'regdDate',
-];
+const basicInfo = ['nameOfOrganization', 'regdNumber', 'regdOffice', 'regdDate'];
 
 const registeredAddress = [
   'registeredCoopAddress',
@@ -26,11 +21,7 @@ const operatingAddress = [
 ];
 
 const contactDetails = ['email', 'website', 'contactNumber'];
-const currentMembers = [
-  'noOfMaleMembers',
-  'noOfFemaleMembers',
-  'noOfOtherMembers',
-];
+const currentMembers = ['noOfMaleMembers', 'noOfFemaleMembers', 'noOfOtherMembers'];
 const representative = [
   'representativeFullName',
   'representativeDesignatiton',
@@ -54,11 +45,7 @@ const representative = [
   'temporaryRepresentativeAddress.coordinates',
 ];
 const coopAddressDetails = ['cooperativeTypeId', 'mainServiceProduct'];
-const numOfEmployee = [
-  'noOfMaleEmployee',
-  'noOfFemaleEmployee',
-  'totalEmployee',
-];
+const numOfEmployee = ['noOfMaleEmployee', 'noOfFemaleEmployee', 'totalEmployee'];
 const cooperativeDate = ['lastAuditDate', 'lastAgmDate'];
 
 // economic details
@@ -227,6 +214,5 @@ export const getKymCoopSection = (id: string) => {
       subSection: 'kymCoopAccDocumentDeclaration',
     };
   }
-
-  return;
+  return null;
 };

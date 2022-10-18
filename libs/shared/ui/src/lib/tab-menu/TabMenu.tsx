@@ -1,9 +1,9 @@
 import { IconType } from 'react-icons';
+import { AiOutlineSend } from 'react-icons/ai';
 import { BsArrowLeftRight, BsFileText } from 'react-icons/bs';
 import { ImStack } from 'react-icons/im';
 import { IoIosList } from 'react-icons/io';
 import { IoCubeOutline, IoPerson } from 'react-icons/io5';
-import { MdOutlineWaterDrop } from 'react-icons/md';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
@@ -21,7 +21,7 @@ const NAVBAR_TAB_OBJECT: Record<string, number> = {
   transactions: 3,
   loan: 4,
   reports: 5,
-  utilities: 6,
+  transfer: 6,
 };
 
 const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
@@ -49,7 +49,7 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   {
     title: 'loan',
     icon: BsArrowLeftRight,
-    link: '/loan',
+    link: '/loan/applications',
   },
   {
     title: 'reports',
@@ -57,9 +57,9 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
     link: '/reports/cbs/share-report',
   },
   {
-    title: 'utilities',
-    icon: MdOutlineWaterDrop,
-    link: '/utilities',
+    title: 'transfer',
+    icon: AiOutlineSend,
+    link: '/transfer',
   },
 ];
 

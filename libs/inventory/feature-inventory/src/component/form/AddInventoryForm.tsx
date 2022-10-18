@@ -1,11 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import {
-  FieldCardComponents,
-  TextBoxContainer,
-  TopText,
-} from '@coop/shared/components';
+import { FieldCardComponents, TextBoxContainer, TopText } from '@coop/shared/components';
 import {
   FormInput,
   FormNumberInput,
@@ -32,14 +28,7 @@ export const AddInventoryForm = () => {
   return (
     <FormProvider {...methods}>
       <form>
-        <Box
-          w="100%"
-          background="white"
-          p="s20"
-          display="flex"
-          flexDirection="column"
-          gap="s32"
-        >
+        <Box w="100%" background="white" p="s20" display="flex" flexDirection="column" gap="s32">
           <InputGroupContainer>
             <GridItem colSpan={2}>
               <FormSelect
@@ -71,11 +60,7 @@ export const AddInventoryForm = () => {
               />
             </GridItem>
             <GridItem>
-              <FormInput
-                type="date"
-                name="tax"
-                label={t['invFormInvoiceDate']}
-              />
+              <FormInput type="date" name="tax" label={t['invFormInvoiceDate']} />
             </GridItem>
             <GridItem>
               <FormInput type="date" name="tax" label={t['invFormDueDate']} />
@@ -106,46 +91,22 @@ export const AddInventoryForm = () => {
           <Divider />
 
           <Box display="grid" gap="s32" gridTemplateColumns="repeat(2,1fr)">
-            <FormTextArea
-              name="note"
-              label={t['invFormNotes']}
-              __placeholder={t['invFormNote']}
-            />
-            <FieldCardComponents rows={'repeat(5,1fr)'}>
-              <GridItem
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Text
-                  color="neutralColorLight.Gray-60"
-                  fontWeight="Medium"
-                  fontSize="s3"
-                >
+            <FormTextArea name="note" label={t['invFormNotes']} __placeholder={t['invFormNote']} />
+            <FieldCardComponents rows="repeat(5,1fr)">
+              <GridItem display="flex" justifyContent="space-between" alignItems="center">
+                <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
                   {t['invForSubTotal']}
                 </Text>
 
                 <Box p="s12">
-                  <Text
-                    color="neutralLightColor.Gray-50"
-                    fontWeight="SemiBold"
-                    fontSize="r1"
-                  >
+                  <Text color="neutralLightColor.Gray-50" fontWeight="SemiBold" fontSize="r1">
                     2,000.00
                   </Text>
                 </Box>
               </GridItem>
 
-              <GridItem
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Text
-                  color="neutralColorLight.Gray-60"
-                  fontWeight="Medium"
-                  fontSize="s3"
-                >
+              <GridItem display="flex" justifyContent="space-between" alignItems="center">
+                <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
                   {t['invFormDiscount']}
                 </Text>
 
@@ -160,72 +121,36 @@ export const AddInventoryForm = () => {
                 </Box>
               </GridItem>
 
-              <GridItem
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Text
-                  color="neutralColorLight.Gray-60"
-                  fontWeight="Medium"
-                  fontSize="s3"
-                >
+              <GridItem display="flex" justifyContent="space-between" alignItems="center">
+                <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
                   {t['invFormTaxableTotal']}
                 </Text>
                 <Box p="s12">
-                  <Text
-                    color="neutralLightColor.Gray-50"
-                    fontWeight="SemiBold"
-                    fontSize="r1"
-                  >
+                  <Text color="neutralLightColor.Gray-50" fontWeight="SemiBold" fontSize="r1">
                     5,000.00
                   </Text>
                 </Box>
               </GridItem>
 
-              <GridItem
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Text
-                  color="neutralColorLight.Gray-60"
-                  fontWeight="600"
-                  fontSize="s3"
-                >
+              <GridItem display="flex" justifyContent="space-between" alignItems="center">
+                <Text color="neutralColorLight.Gray-60" fontWeight="600" fontSize="s3">
                   {t['invFormVAT']}
                 </Text>
 
                 <Box p="s12">
-                  <Text
-                    color="neutralLightColor.Gray-50"
-                    fontWeight="SemiBold"
-                    fontSize="r1"
-                  >
+                  <Text color="neutralLightColor.Gray-50" fontWeight="SemiBold" fontSize="r1">
                     2000
                   </Text>
                 </Box>
               </GridItem>
 
-              <GridItem
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Text
-                  color="neutralColorLight.Gray-80"
-                  fontWeight="600"
-                  fontSize="s3"
-                >
+              <GridItem display="flex" justifyContent="space-between" alignItems="center">
+                <Text color="neutralColorLight.Gray-80" fontWeight="600" fontSize="s3">
                   {t['invFormGrandTotal']}
                 </Text>
 
                 <Box p="s12">
-                  <Text
-                    color="neutralLightColor.Gray-70"
-                    fontWeight="SemiBold"
-                    fontSize="r1"
-                  >
+                  <Text color="neutralLightColor.Gray-70" fontWeight="SemiBold" fontSize="r1">
                     12,000
                   </Text>
                 </Box>
@@ -242,12 +167,7 @@ export const AddInventoryForm = () => {
             <FormSwitchTab name="tds" options={tdsList} />
           </Box>
           {tds === 'applicable' && (
-            <Box
-              p="s16"
-              border="1px solid"
-              borderColor="border.layout"
-              borderRadius="br2"
-            >
+            <Box p="s16" border="1px solid" borderColor="border.layout" borderRadius="br2">
               <InputGroupContainer>
                 <FormSelect
                   name="tdsLedgerAccount"

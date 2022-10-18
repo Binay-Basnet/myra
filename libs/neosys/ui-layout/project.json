@@ -19,7 +19,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/neosys/ui-layout"],
+      "outputs": ["{workspaceRoot}/coverage/libs/neosys/ui-layout"],
       "options": {
         "jestConfig": "libs/neosys/ui-layout/jest.config.ts",
         "passWithNoTests": true

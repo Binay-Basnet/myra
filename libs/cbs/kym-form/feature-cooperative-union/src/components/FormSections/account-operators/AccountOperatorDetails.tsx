@@ -7,6 +7,8 @@ import { CloseIcon } from '@chakra-ui/icons';
 
 import {
   CoopUnionPersonnelInput,
+  RootState,
+  useAppSelector,
   useDeletePersonnelDetailsMutation,
   useGetAccountOperatorDetailsListQuery,
   useGetNewIdMutation,
@@ -17,7 +19,7 @@ import {
   InputGroupContainer,
   SectionContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormAddress, FormInput, FormSwitch } from '@coop/shared/form';
+import { FormAddress, FormDatePicker, FormInput, FormSwitch } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -29,10 +31,7 @@ import {
   IconButton,
   Text,
 } from '@coop/shared/ui';
-import {
-  getKymSectionCoOperativeUnion,
-  useTranslation,
-} from '@coop/shared/utils';
+import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
 
 import { AccountOperatorTraining } from './accountOperatorTraining';
 import { useCoopUnionAccountOperator } from '../../../hooks/useCoopUnionAccountOperator';
@@ -59,9 +58,7 @@ const AddDirector = ({
 
   const [isOpen, setIsOpen] = React.useState(true);
 
-  const isPermanentAndTemporaryAddressSame = watch(
-    `isPermanentAndTemporaryAddressSame`
-  );
+  const isPermanentAndTemporaryAddressSame = watch(`isPermanentAndTemporaryAddressSame`);
 
   return (
     <>
@@ -74,7 +71,7 @@ const AddDirector = ({
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          cursor={'pointer'}
+          cursor="pointer"
           h="60px"
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -83,14 +80,14 @@ const AddDirector = ({
             {isOpen ? (
               <IconButton
                 size="xs"
-                variant={'ghost'}
+                variant="ghost"
                 aria-label="close"
                 icon={<Icon as={IoChevronUpOutline} />}
               />
             ) : (
               <IconButton
                 size="xs"
-                variant={'ghost'}
+                variant="ghost"
                 aria-label="close"
                 icon={<Icon as={IoChevronDownOutline} />}
               />
@@ -100,7 +97,7 @@ const AddDirector = ({
         {!isOpen && (
           <IconButton
             size="sm"
-            variant={'ghost'}
+            variant="ghost"
             aria-label="close"
             icon={<CloseIcon />}
             ml="s16"
@@ -113,9 +110,9 @@ const AddDirector = ({
       <Collapse in={isOpen} style={{ marginTop: '0px' }}>
         <DynamicBoxGroupContainer
           p="s20"
-          border={'1px solid'}
+          border="1px solid"
           borderColor="border.layout"
-          borderRadius={'4px'}
+          borderRadius="4px"
         >
           <SectionContainer>
             <FormProvider {...methods}>
@@ -131,13 +128,13 @@ const AddDirector = ({
                     <InputGroupContainer>
                       <FormInput
                         type="text"
-                        name={`fullName`}
+                        name="fullName"
                         id="accountOperator.fullName"
                         label={t['kymCoopUnionOpFullName']}
                       />
                       <FormInput
                         type="text"
-                        name={`designationEn`}
+                        name="designationEn"
                         id="accountOperator.designationEn"
                         label={t['kymCoopUnionOpDesignation']}
                       />
@@ -151,22 +148,22 @@ const AddDirector = ({
                       <FormAddress name="permanentAddress" />
                     </InputGroupContainer>
 
-                    <Box></Box>
+                    <Box />
                   </Box>
 
                   <Box
                     id="Temporary Address"
                     gap="s16"
-                    display={'flex'}
+                    display="flex"
                     flexDirection="column"
-                    scrollMarginTop={'200px'}
+                    scrollMarginTop="200px"
                   >
                     <Text fontSize="r1" fontWeight="SemiBold">
                       {t['kymCoopUnionOpTemporaryAddress']}
                     </Text>
 
                     <FormSwitch
-                      name={`isPermanentAndTemporaryAddressSame`}
+                      name="isPermanentAndTemporaryAddressSame"
                       id="accountOperator.isPermanentAndTemporaryAddressSame"
                       label={t['kymCoopUnionOpTemporaryAddressPermanent']}
                     />
@@ -177,57 +174,46 @@ const AddDirector = ({
                           <FormAddress name="temporaryAddress" />
                         </InputGroupContainer>
 
-                        <Box mt="-16px"></Box>
+                        <Box mt="-16px" />
                       </>
                     )}
                   </Box>
                   <InputGroupContainer>
-                    <FormInput
-                      type="date"
-                      name={`dateOfMembership`}
+                    <FormDatePicker
+                      name="dateOfMembership"
                       id="accountOperator.dateOfMembership"
                       label={t['kymCoopUnionOpDateOfMembership']}
-                      __placeholder="DD-MM-YYYY"
                     />
                     <FormInput
                       type="text"
-                      name={`highestQualification`}
+                      name="highestQualification"
                       id="accountOperator.highestQualification"
                       label={t['kymCoopUnionOpHighestQualification']}
-                      __placeholder={
-                        t['kymCoopUnionOpEnterHighestQualification']
-                      }
                     />
                     <FormInput
                       type="number"
-                      name={`mobileNumber`}
+                      name="mobileNumber"
                       id="accountOperator.mobileNumber"
                       label={t['kymCoopUnionOpMobileNo']}
-                      __placeholder={t['kymCoopUnionOpEnterMobileNo']}
                     />
                     <FormInput
                       type="text"
-                      name={`email`}
+                      name="email"
                       id="accountOperator.email"
                       label={t['kymCoopUnionOpEmail']}
-                      __placeholder={t['kymCoopUnionOpEnterEmail']}
                     />
                     <FormInput
                       type="string"
-                      name={`citizenshipNo`}
+                      name="citizenshipNo"
                       id="accountOperator.citizenshipNo"
-                      label={
-                        t['kymCoopUnionOpCitizenshipPassportDrivingLicenseNo']
-                      }
-                      __placeholder={t['kymCoopUnionOpEnterCitizenshipNo']}
+                      label={t['kymCoopUnionOpCitizenshipPassportDrivingLicenseNo']}
                     />
 
                     <FormInput
                       type="string"
-                      name={`panNo`}
+                      name="panNo"
                       id="centralRepresentative.panNo"
                       label={t['kymCoopUnionPANNo']}
-                      __placeholder={t['kymCoopUnionPANNo__placeholder']}
                     />
                   </InputGroupContainer>
                   {/* <Text fontSize="r1" fontWeight="SemiBold">
@@ -238,19 +224,16 @@ const AddDirector = ({
                 type="text"
                 name={`subjectOfTraining`}
                 label={t['kymCoopUnionOpSubjectofTraining']}
-                __placeholder={t['kymCoopUnionOpEnterSubjectofTraining']}
               />
               <FormInput
                 type="date"
                 name={`dateOfTraining`}
                 label={t['kymCoopUnionOpDateofTraining']}
-                __placeholder={t['kymCoopUnionOpEnterDateofTraining']}
               />
               <FormInput
                 type="number"
                 name={`trainingOrganization`}
                 label={t['kymCoopUnionOpTrainingOrganization']}
-                __placeholder={t['kymCoopUnionOpEnterTrainingOrganization']}
               />
             </InputGroupContainer> */}
 
@@ -259,23 +242,18 @@ const AddDirector = ({
               </form>
             </FormProvider>
 
-            <Grid
-              templateColumns="repeat(2, 1fr)"
-              rowGap="s32"
-              mt="s32"
-              columnGap="s20"
-            >
+            <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" mt="s32" columnGap="s20">
               <KYMDocumentField
                 mutationId={accountOperatorId}
                 label={t['kymCoopUnionOpPhotograph']}
-                name={`photograph`}
+                name="photograph"
                 setKymCurrentSection={setSection}
                 getKymSection={getKymSectionCoOperativeUnion}
               />
               <KYMDocumentField
                 mutationId={accountOperatorId}
                 label={t['kymCoopUnionOpPhotographOfIdentityProofDocument']}
-                name={`identityDocumentPhoto`}
+                name="identityDocumentPhoto"
                 setKymCurrentSection={setSection}
                 getKymSection={getKymSectionCoOperativeUnion}
               />
@@ -283,7 +261,7 @@ const AddDirector = ({
                 <KYMDocumentField
                   size="md"
                   mutationId={accountOperatorId}
-                  name={`signature`}
+                  name="signature"
                   label={t['kymCoopUnionOpSpecimenSignature']}
                   setKymCurrentSection={setSection}
                   getKymSection={getKymSectionCoOperativeUnion}
@@ -297,7 +275,7 @@ const AddDirector = ({
           justifyContent="flex-end"
           border="1px solid"
           borderColor="border.layout"
-          alignItems={'center'}
+          alignItems="center"
           h="60px"
           px="s20"
         >
@@ -328,9 +306,7 @@ interface IAccountOperatorInfoProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
 
-export const AccountOperatorInfo = ({
-  setSection,
-}: IAccountOperatorInfoProps) => {
+export const AccountOperatorInfo = ({ setSection }: IAccountOperatorInfoProps) => {
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -339,19 +315,18 @@ export const AccountOperatorInfo = ({
 
   const [accountOperatorIds, setAccountOperatorIds] = useState<string[]>([]);
 
-  const { data: accountOperatorEditValues, refetch } =
-    useGetAccountOperatorDetailsListQuery(
-      {
-        id: String(id),
-      },
-      { enabled: !!id }
-    );
+  const { data: accountOperatorEditValues, refetch } = useGetAccountOperatorDetailsListQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (accountOperatorEditValues) {
       const editValueData =
-        accountOperatorEditValues?.members?.cooperativeUnion?.formState
-          ?.formData?.accountOperatorsDetails?.data?.personnelDetails;
+        accountOperatorEditValues?.members?.cooperativeUnion?.formState?.formData
+          ?.accountOperatorsDetails?.data?.personnelDetails;
 
       setAccountOperatorIds(
         editValueData?.reduce(
@@ -361,6 +336,13 @@ export const AccountOperatorInfo = ({
       );
     }
   }, [accountOperatorEditValues]);
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetch();
+  }, [preference?.date]);
 
   useEffect(() => {
     refetch();
@@ -378,9 +360,7 @@ export const AccountOperatorInfo = ({
 
   const { mutate: deleteMutation } = useDeletePersonnelDetailsMutation({
     onSuccess: (res) => {
-      const deletedId = String(
-        res?.members?.cooperativeUnion?.deletePersonnel?.recordId
-      );
+      const deletedId = String(res?.members?.cooperativeUnion?.deletePersonnel?.recordId);
 
       const tempAccOperatorIds = [...accountOperatorIds];
 
@@ -401,24 +381,22 @@ export const AccountOperatorInfo = ({
     >
       <GridItem colSpan={3}>
         <Grid gap="s16">
-          {accountOperatorIds.map((accountOperatorId, index) => {
-            return (
-              <Box
-                key={accountOperatorId}
-                display="flex"
-                flexDirection={'column'}
-                id="Details of Account Operators"
-                scrollMarginTop={'200px'}
-              >
-                <AddDirector
-                  index={index}
-                  setSection={setSection}
-                  accountOperatorId={accountOperatorId}
-                  removeAccount={() => removeAccountOperator(accountOperatorId)}
-                />
-              </Box>
-            );
-          })}
+          {accountOperatorIds.map((accountOperatorId, index) => (
+            <Box
+              key={accountOperatorId}
+              display="flex"
+              flexDirection="column"
+              id="Details of Account Operators"
+              scrollMarginTop="200px"
+            >
+              <AddDirector
+                index={index}
+                setSection={setSection}
+                accountOperatorId={accountOperatorId}
+                removeAccount={() => removeAccountOperator(accountOperatorId)}
+              />
+            </Box>
+          ))}
           <GridItem colSpan={1}>
             <Button
               id="accountOperator.accountOperatorButton"

@@ -4,11 +4,11 @@ import { useTranslation } from '@coop/shared/utils';
 
 import { BoardDirectorInfo } from './BoardDirectorInfo';
 
-interface directorDetailsProps {
+interface DirectorDetailsProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
 
-export const DirectorDetails = (props: directorDetailsProps) => {
+export const DirectorDetails = (props: DirectorDetailsProps) => {
   const { t } = useTranslation();
   const { setSection } = props;
 

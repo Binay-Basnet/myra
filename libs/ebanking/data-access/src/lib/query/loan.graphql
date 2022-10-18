@@ -1,0 +1,21 @@
+query getLoanHistory($memberId: ID!, $filter: EBankingCooperativeServiceFilter) {
+  eBanking {
+    cooperativeServices {
+      loan {
+        history(memberId: $memberId, filter: $filter) {
+          data {
+            id
+            activeLoanStatus
+            amount
+            branch {
+              id
+              branchCode
+              name
+            }
+            type
+          }
+        }
+      }
+    }
+  }
+}

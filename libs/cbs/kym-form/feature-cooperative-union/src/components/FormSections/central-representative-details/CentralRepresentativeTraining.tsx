@@ -8,7 +8,7 @@ import {
   GroupContainer,
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput } from '@coop/shared/form';
+import { FormDatePicker, FormInput } from '@coop/shared/form';
 import { Box, Button, Icon, Text, TextFields } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -17,10 +17,7 @@ interface IAddRelatedTrainingConcern {
   removeRelatedTraining: () => void;
 }
 
-const AddRelatedTraining = ({
-  index,
-  removeRelatedTraining,
-}: IAddRelatedTrainingConcern) => {
+const AddRelatedTraining = ({ index, removeRelatedTraining }: IAddRelatedTrainingConcern) => {
   const { t } = useTranslation();
   return (
     <DynamicBoxContainer>
@@ -41,8 +38,7 @@ const AddRelatedTraining = ({
           id="centralRepresentative.trainingAttended.subjectOfTraining"
           label={t['kymCoopUnionSubjectOfTraining']}
         />
-        <FormInput
-          type="date"
+        <FormDatePicker
           name={`trainingAttended.${index}.dateOfTraining`}
           id="centralRepresentative.trainingAttended.dateOfTraining"
           label={t['kymCoopUnionDateOfTraining']}
@@ -69,31 +65,24 @@ export const CentralRepresentativeTraining = () => {
   });
 
   return (
-    <GroupContainer
-      id="kymCoopUnionBoardOfDirectorsRelatedTraining"
-      scrollMarginTop={'200px'}
-    >
+    <GroupContainer id="kymCoopUnionBoardOfDirectorsRelatedTraining" scrollMarginTop="200px">
       <Box display="flex" flexDirection="column" gap="s4">
         <Text fontSize="r1" fontWeight="SemiBold">
           {t['kymCoopUnionTrainingRelatedToCoop']}
         </Text>
-        <TextFields variant="bodyRegular">
-          {t['kymCoopUnionTrainingAttended']}
-        </TextFields>
+        <TextFields variant="bodyRegular">{t['kymCoopUnionTrainingAttended']}</TextFields>
       </Box>
 
       <div>
         <DynamicBoxGroupContainer>
-          {relatedFields.map((item, index) => {
-            return (
-              <Box key={item.id}>
-                <AddRelatedTraining
-                  index={index}
-                  removeRelatedTraining={() => relatedRemove(index)}
-                />
-              </Box>
-            );
-          })}
+          {relatedFields.map((item, index) => (
+            <Box key={item.id}>
+              <AddRelatedTraining
+                index={index}
+                removeRelatedTraining={() => relatedRemove(index)}
+              />
+            </Box>
+          ))}
           <Button
             alignSelf="start"
             leftIcon={<Icon size="md" as={AiOutlinePlus} />}

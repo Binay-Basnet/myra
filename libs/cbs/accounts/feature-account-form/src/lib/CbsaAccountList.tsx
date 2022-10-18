@@ -60,6 +60,10 @@ export const CBSAccountList = () => {
 
       {
         header: 'Account Name',
+        accessorFn: (row) => row?.node?.accountName,
+      },
+      {
+        header: 'Product Name',
         accessorFn: (row) => row?.node?.product?.productName,
       },
       {
@@ -97,7 +101,7 @@ export const CBSAccountList = () => {
         columns={columns}
         pagination={{
           total: data?.account?.list?.totalCount ?? 'Many',
-          pageInfo: data?.account.list?.pageInfo,
+          pageInfo: data?.account?.list?.pageInfo,
         }}
       />
     </>

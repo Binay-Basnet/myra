@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import {
+  CriteriaSection,
   FormCategory,
   FormFieldSearchTerm,
   useGetSettingsOptionsFieldsQuery,
@@ -22,40 +23,39 @@ export const GridItems = () => {
     { label: t['yes'], value: true },
     { label: t['no'], value: false },
   ];
-
   useEffect(() => {
-    if (!criteria?.includes('AGE')) {
+    if (!criteria?.includes(CriteriaSection.Age)) {
       resetField('minAge');
       resetField('maxAge');
     }
-    if (!criteria?.includes('GENDER')) {
+    if (!criteria?.includes(CriteriaSection.Gender)) {
       resetField('genderId');
     }
-    if (!criteria?.includes('MARITAL_STATUS')) {
+    if (!criteria?.includes(CriteriaSection.MaritalStatus)) {
       resetField('maritalStatusId');
     }
-    if (!criteria?.includes('EDUCATION_QUALIFICATION')) {
+    if (!criteria?.includes(CriteriaSection.EducationQualification)) {
       resetField('educationQualification');
     }
-    if (!criteria?.includes('ETHNICITY')) {
+    if (!criteria?.includes(CriteriaSection.Ethnicity)) {
       resetField('ethnicity');
     }
-    if (!criteria?.includes('OCCUPATION_DETAILS')) {
+    if (!criteria?.includes(CriteriaSection.OccupationDetails)) {
       resetField('occupation');
     }
-    if (!criteria?.includes('FOREIGN_EMPLOYMENT')) {
+    if (!criteria?.includes(CriteriaSection.ForeignEmployment)) {
       resetField('foreignEmployment');
     }
-    if (!criteria?.includes('NATURE_OF_BUSINESS_INSTITUTIONS')) {
+    if (!criteria?.includes(CriteriaSection.NatureOfBusinessInstitutions)) {
       resetField('natureOfBusinessInstitution');
     }
-    if (!criteria?.includes('COOPERATIVE_TYPE')) {
+    if (!criteria?.includes(CriteriaSection.CooperativeType)) {
       resetField('cooperativeType');
     }
-    if (!criteria?.includes('NATURE_OF_BUSINESS_COOPUNION')) {
+    if (!criteria?.includes(CriteriaSection.NatureOfBusinessCoopunion)) {
       resetField('natureOFBusinessCoop');
     }
-  }, [JSON.stringify(criteria)]);
+  }, [criteria]);
 
   const { data: genderFields } = useGetSettingsOptionsFieldsQuery({
     searchTerm: FormFieldSearchTerm.Gender,
@@ -153,21 +153,13 @@ export const GridItems = () => {
           memberType?.indexOf('INDIVIDUAL') !== -1 &&
           criteria &&
           criteria.indexOf('AGE') !== -1 && (
-            <FormInput
-              name="maxAge"
-              __placeholder={t['loanProductMinAgeEnter']}
-              label={t['loanProductMinAge']}
-            />
+            <FormInput name="maxAge" label={t['loanProductMinAge']} />
           )}
         {memberType &&
           memberType?.indexOf('INDIVIDUAL') !== -1 &&
           criteria &&
           criteria.indexOf('AGE') !== -1 && (
-            <FormInput
-              name="minAge"
-              __placeholder={t['loanProductMaxAgeEnter']}
-              label={t['loanProductMaxAge']}
-            />
+            <FormInput name="minAge" label={t['loanProductMaxAge']} />
           )}
         {memberType &&
           memberType?.indexOf('INDIVIDUAL') !== -1 &&
@@ -177,7 +169,6 @@ export const GridItems = () => {
               name="genderId"
               options={GenderList}
               label={t['loanProductGender']}
-              __placeholder={t['loanProductSelectGender']}
               isMulti
             />
           )}
@@ -189,7 +180,6 @@ export const GridItems = () => {
               name="maritalStatusId"
               options={MartialOptions}
               label={t['loanProductMarital']}
-              __placeholder={t['loanProductSelectMaritalStatus']}
               isMulti
             />
           )}
@@ -201,7 +191,6 @@ export const GridItems = () => {
               name="educationQualification"
               options={EducationalOptions}
               label={t['loanProductEducationQualification']}
-              __placeholder={t['loanProductSelectEducationQualification']}
               isMulti
             />
           )}
@@ -213,7 +202,6 @@ export const GridItems = () => {
               name="ethnicity"
               options={EthnicityList}
               label={t['loanProductEthinicity']}
-              __placeholder={t['loanProductSelectEthinicity']}
               isMulti
             />
           )}
@@ -225,7 +213,6 @@ export const GridItems = () => {
               name="occupation"
               options={OccupationOptions}
               label={t['loanProductOccupationDetails']}
-              __placeholder={t['loanProductSelectOccupationDetails']}
               isMulti
             />
           )}
@@ -237,7 +224,6 @@ export const GridItems = () => {
               name="natureOfBusinessInstitution"
               options={InstituitionList}
               label={t['loanProductNatureBusinessIns']}
-              __placeholder={t['loanProductSelectNatureofBusiness']}
               isMulti
             />
           )}
@@ -263,7 +249,6 @@ export const GridItems = () => {
               <Box w="40%">
                 <FormCheckboxGroup
                   name="cooperativeType"
-                  label={t['loanProductCoorperativeType']}
                   list={CoopTypeList}
                   orientation="column"
                 />
@@ -278,7 +263,6 @@ export const GridItems = () => {
               name="natureOFBusinessCoop"
               options={CoopUnionList}
               label={t['loanProductNatureBusinessCoopUnion']}
-              __placeholder={t['loanProductSelectNatureofBusiness']}
               isMulti
             />
           )}

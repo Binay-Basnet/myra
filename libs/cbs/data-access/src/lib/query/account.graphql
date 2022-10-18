@@ -72,6 +72,7 @@ query getAccountOpenProductDetails($id: ID!) {
             educationQualification
             ethnicity
             occupation
+            isMandatorySaving
             foreignEmployment
             natureOfBusinessInstitution
             natureOFBusinessCoop
@@ -155,6 +156,12 @@ query getAccountOpenProductDetails($id: ID!) {
             }
             autoOpen
             allowLoan
+            chequeIssue
+            chequeCharge {
+              serviceName
+              ledgerName
+              amount
+            }
             percentageOfDeposit
             alternativeChannels
             atmFacility
@@ -187,20 +194,32 @@ query getAccountOpenEditData($id: ID!) {
       data {
         memberId
         productId
+        accountName
+        minor
         tenure
         tenureNumber
+        initialDepositAmount
+        defaultAmountDepositAccountName
         interestRate
         ceoAuthority
         boardAuthority
+        installmentAmount
         depositFrequencyWeekly
         depositFrequencyMonthly
         depositFrequencyDay
         depositFrequencyFrequencyDay
         depositFrequencyDayOfWeek
+        serviceCharge {
+          name
+          amount
+        }
         depositFrequencyYearlyMonth
         depositFrequencyYearlyDay
+        mobileBanking
+        eBanking
         atmFacility
-        #        chequeIssue
+        smsBanking
+        chequeFacility
         agentId
       }
     }
@@ -222,6 +241,7 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
           id
           objState
           createdAt
+          accountName
           createdBy {
             id
             # name
@@ -265,8 +285,13 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
             productName
             nature
             minimumBalance
+            isMandatorySaving
           }
-          fine
+          dues {
+            fine
+            totalDue
+            dueInstallments
+          }
         }
       }
     }

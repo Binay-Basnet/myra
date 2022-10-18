@@ -73,17 +73,16 @@ query getMemberTranslation($id: ID!) {
   }
 }
 
-query getKymFormStatus($id: String!) {
+query getKymFormStatus($id: String!, $hasPressedNext: Boolean) {
   members {
-    individual(id: $id) {
+    individual(id: $id, hasPressedNext: $hasPressedNext) {
       formState {
-        data {
+        sectionStatus {
+          id
+          errors
           sectionStatus {
-            id
-            #            errors {
-            #              sectionName
-            #              errors
-            #            }
+            errors
+            incomplete
           }
         }
       }
@@ -158,10 +157,18 @@ query getMemberIndividualData($id: ID!) {
   }
 }
 
-query getIndividualKymEditData($id: String!) {
+query getIndividualKymEditData($id: String!, $hasPressedNext: Boolean) {
   members {
-    individual(id: $id) {
+    individual(id: $id, hasPressedNext: $hasPressedNext) {
       formState {
+        sectionStatus {
+          id
+          errors
+          sectionStatus {
+            errors
+            incomplete
+          }
+        }
         data {
           formData {
             basicInformation {
@@ -392,6 +399,26 @@ query getMemberDetails($id: ID!) {
             }
           }
         }
+      }
+    }
+  }
+}
+
+query getOfficialUse($id: ID!) {
+  members {
+    officialUse(id: $id) {
+      recordId
+      record {
+        id
+        isStaff
+        checkSanction
+        checkNegative
+        riskCategory
+        docCollectedAndVerified
+        acceptableAddressDoc
+      }
+      error {
+        ...MutationError
       }
     }
   }

@@ -30,8 +30,8 @@ const ChartsOfAccounts = () => {
       <SettingsPageHeader
         heading={`${t['settingsCoa']} - ${featureCode?.settingsChartsOfAccount}`}
         tabItems={tabList}
-        buttonLabel={t['settingsCoaNewAccount']}
-        buttonHandler={() => router.push('/settings/general/charts-of-accounts/add-new-account')}
+        // buttonLabel={t['settingsCoaNewAccount']}
+        // buttonHandler={() => router.push('/settings/general/charts-of-accounts/add-new-account')}
       />
       <Box>
         {(router.query['objState'] === 'full-view' || !router.query['objState']) && <COAFullView />}

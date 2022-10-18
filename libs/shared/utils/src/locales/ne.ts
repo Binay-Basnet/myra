@@ -231,9 +231,13 @@ const ne: Record<string, string> = {
   shareRegisterTableMemberID: 'सदस्य नं',
   shareRegisterTableName: 'नाम',
   shareRegisterTableNameToFrom: 'शेयर नं',
-  shareRegisterTableNameShareDr: 'शेयर डेबिट',
-  shareRegisterTableNameShareCr: 'शेयर क्रेडिट',
-  shareRegisterTableNameBalance: 'मौज्दात',
+  // ........................................................Share change ........................./
+  // shareRegisterTableNameShareDr: 'शेयर डेबिट',
+  // shareRegisterTableNameShareCr: 'शेयर क्रेडिट',
+  // shareRegisterTableNameBalance: 'मौज्दात',
+  shareRegisterTableNameShareDr: 'Returned',
+  shareRegisterTableNameShareCr: 'Issued',
+  shareRegisterTableNameBalance: 'Amount',
   shareRegisterTableViewDetail: 'विवरण हेर्नुहोस',
   shareRegisterTableViewMemberProfile: 'सदस्य विवरण हेर्नुहोस',
   shareReturnTableDate: 'मिति',
@@ -865,7 +869,7 @@ const ne: Record<string, string> = {
   kymIndEnterLastname: 'थर हाल्नुहोस',
   kymIndGender: 'लिङ्ग',
   kymIndSelectGender: 'लिङ्ग छान्नुहोस',
-  kymIndDateofBirthBS: 'जन्म मिति (बि. स.)',
+  kymIndDateofBirthBS: 'जन्म मिति',
   kymIndEnterdateofbirth: 'जन्म मिति',
   kymIndEthnicity: 'जात',
   kymIndSelectEthnicity: 'जात छान्नुहोस',
@@ -2608,7 +2612,7 @@ const ne: Record<string, string> = {
   loanProductFlatratePenalty: 'Flat-rate Penalty',
   loanProductPenaltyAmount: 'Penalty Amount',
   loanProductEnterRebatedetails: 'Enter Rebate details.',
-  loanProductDaysafterinstallmentdate: 'Days after installment date',
+  loanProductDaysafterinstallmentdate: 'Days before installment date',
   loanProductRebateAmount: 'Rebate Amount',
   loanProductPercentageDepositedAmount: 'Percentage of Deposited Amount',
   loanProductNoInstallment: 'No. of Installment',
@@ -3109,9 +3113,116 @@ const ne: Record<string, string> = {
   agentAssignedMembersCancel: 'Cancel',
   agentAssignedMembersHelperText:
     'This member has already been assigned to an market representative. Do you want to override the market representative?',
+  depositProductSaving: 'Saving',
+  depositProductCurrent: 'Current',
+  depositProductMandatoryProduct: 'Is this mandatory saving product?',
+  addDepositSaving: 'Saving Account',
+  addDepositCurrent: 'Current Account',
+
+  memberNavApproved: 'Approved',
 
   // audit log
   settingsAuditLog: 'Audit Log',
+
+  // change password
+  backText: 'Back',
+  passwordRecoveryText: 'Password Recovery',
+  enterNewPasswordText: 'Please enter your new password',
+  newPasswordText: 'New Password',
+  confirmPasswordText: 'Confirm Password',
+  updatePasswordText: 'Update Password',
+  passwordUpdatedText: 'Password Updated Successfully',
+  proceedToLoginText: 'Proceed to login',
+  depositProductDaybeforetheinstallmentdate: 'Day before the installment date',
+  declineLoanApplication: 'Decline Loan Application',
+  reasonForDecliningLoan: 'Reason For Declining Loan',
+
+  alternativeChannels: 'Alternative Channels',
+  hrManagement: 'HR Manangement',
+  capacityAndTrainingManagement: 'Capacity and Training Management',
+  businessIntelligenceAndReporting: 'Business Intelligence and Reporting',
+
+  kymCoopUnionSelectCentralRepresentativeamongDirectors:
+    'Select Central Representative among Directors',
+  depositProductPressCompletetosaveform: 'Press Complete to save form',
+  loanProductPenaltyOn: 'Penalty On',
+  loanProductLinkedAccounts: 'Linked Accounts',
+  loanProductListofallthesavingaccounts: 'List of all the saving accounts',
+  penaltyAlert:
+    'If both penalty amount and penalty rate is filled, the total penalty is the total sum of the two.',
+  rebateAlert:
+    'If both rebate amount and rebate rate is filled, the total rebate is the total sum of the two.',
+  loanProductpenaltyRate: 'Penalty Rate',
+  loanLayoutTopButton: 'New Loan',
+  loanProductRebateRate: 'Rebate Rate',
+
+  // account deposit product
+  accountDepositProduct: 'Deposit Product',
+
+  // transfer
+  navbarTransfer: 'Transfers',
+  newTransfer: 'New Transfer',
+  transfer: 'Transfer',
+  transferVaultTransfer: 'Vault Transfer',
+  transferTellerTransfer: 'Teller Transfer',
+  transferBranchTransfer: 'Branch Transfer',
+
+  memberSettingsNewMemberCharges: 'New Member Charges',
+  memberSettingsDifferentCharges: 'Different charges for different member type.',
+  memberSettingsMemberType: 'Member Type',
+  memberSettingsLedgerMapping: 'Ledger Mapping',
+  memberSettingsCharge: 'Charge',
+  memberSettingsIndividual: 'Individual',
+  memberSettingsInstitution: 'Institution',
+  memberSettingsCooperative: 'Cooperative',
+  memberSettingsCooperativeUnion: 'Cooperative Union',
+
+  discardChanges: 'Discard Changes',
+
+  /* Alternative Channels Start */
+
+  settingsAlternativeChannel: 'Alternative Channels',
+  acFeeAndCharges: 'Fee And Charges',
+  acBasicCharge: 'Basic Charge for Alternative Channels.',
+  acMobileBanking: 'Mobile Banking',
+  acEBanking: 'eBanking',
+  acSMSBanking: 'SMS Banking',
+  acUsers: 'Users',
+  acName: 'Name',
+  acStatus: 'Status',
+  acPhoneNumber: 'Phone Number',
+  acActive: 'Active',
+  acInactive: 'Inactive',
+  acCoopConnection: 'Coop Connection',
+  acMobileBankingSettings: 'Mobile Banking Settings',
+  acEBankingSettings: 'Ebanking Settings',
+  acSMSBankingSettings: 'SMS Banking Settings',
+  acUpdateUser: 'Update User',
+  acServiceStatus: 'Service Status',
+  acNewServiceActivationForm: 'New Service Activation Form',
+  acMember: 'Member',
+  acService: 'Service',
+  acUserInformation: 'User Information',
+  acUserInformationDetails: 'Following phone number will be used for application login.',
+  acEmail: 'Email',
+  acGeneratePin: 'Generate Pin',
+  acDescription: 'Description',
+  acGeneratedPin: 'Generated Pin',
+  acFeeDes: 'All Charge for Selected Service',
+  acMobileBankingActivationCharge: 'Mobile Banking Activation Charge',
+  acEBankingActivationCharge: 'Ebanking Activation Charge',
+  acSMSBankingActivationCharge: 'SMS Banking Activation Charge',
+  acTotal: 'Total',
+  acTotalAmount: 'Total Amount',
+  acProceedToPayment: 'Proceed To Payment',
+  acLastActive: 'Last Active',
+
+  /* Alternative Channels End */
+
+  loanProductPressCompletetoSaveForm: 'Press Complete to save form',
+  depositProductDayBeforetheinstallmentdate: 'Day before the installment date',
+  depositProductInactive: 'Inactive',
+  depositProductActive: 'Active',
 };
 
 export default ne;

@@ -22,10 +22,16 @@ mutation setAccountTransferData($data: TransferInput!) {
   }
 }
 
-mutation setAccountForgiveInstallmentData($id: ID!, $installmentDate: String!) {
+mutation setAccountForgiveInstallmentData($id: ID!, $installmentDates: [String!]!) {
   account {
-    forgiveInstallment(id: $id, installmentDate: $installmentDate) {
+    forgiveInstallment(id: $id, installmentDate: $installmentDates) {
       recordId
     }
+  }
+}
+
+mutation setEndOfDayData {
+  transaction {
+    endOfDay
   }
 }

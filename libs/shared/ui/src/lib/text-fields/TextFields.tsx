@@ -22,7 +22,7 @@ export interface TextFieldsProps extends TextProps {
   onClick?: () => void;
 }
 
-export function TextFields(props: TextFieldsProps) {
+export const TextFields = (props: TextFieldsProps) => {
   const { children, variant, ...rest } = props;
 
   switch (variant) {
@@ -82,13 +82,7 @@ export function TextFields(props: TextFieldsProps) {
       );
     case 'switch':
       return (
-        <Text
-          fontSize="r1"
-          color="neutralColorLight.Gray-80"
-          fontWeight="500"
-          {...rest}
-          lineHeight="1.3"
-        >
+        <Text fontSize="r1" fontWeight="500" {...rest} lineHeight="1.3">
           {children}
         </Text>
       );
@@ -128,6 +122,6 @@ export function TextFields(props: TextFieldsProps) {
         </Text>
       );
   }
-}
+};
 
 export default TextFields;

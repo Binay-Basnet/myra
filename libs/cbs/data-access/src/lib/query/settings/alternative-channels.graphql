@@ -1,0 +1,65 @@
+query getAlternativeFeeAndCharges {
+  settings {
+    general {
+      alternativeChannel {
+        feesAndCharges {
+          data {
+            id
+            serviceType
+            ledgerId
+            amount
+          }
+        }
+      }
+    }
+  }
+}
+
+query getActivatedService($memberId: String!) {
+  alternativeChannel {
+    memberActivations(memberId: $memberId) {
+      eBanking
+      mobileBanking
+      smsBanking
+    }
+  }
+}
+
+query getAlternativeChannelList($filter: AlternativeChannelFilter, $paginate: Pagination) {
+  alternativeChannel {
+    list(filter: $filter, paginate: $paginate) {
+      totalCount
+      pageInfo {
+        ...Pagination
+      }
+      edges {
+        cursor
+        data {
+          id
+          name
+          memberId
+          coopConnection
+          lastActive
+          phoneNumber
+          serviceStatus
+          serviceType
+        }
+      }
+    }
+  }
+}
+
+
+query getACFeeCOA {
+  settings {
+    chartsOfAccount {
+      accountsUnder(accountCode: ["160.6", "160.8"]) {
+        data {
+          id
+          accountCode
+          name
+        }
+      }
+    }
+  }
+}

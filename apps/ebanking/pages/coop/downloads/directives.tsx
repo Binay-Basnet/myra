@@ -1,13 +1,10 @@
 import { ReactElement } from 'react';
 
+import { DownloadsList } from '@coop/ebanking/coop';
 import { EbankingMainLayout } from '@coop/ebanking/ui-layout';
 
-import Temp from '../../temp';
+const CoopDirectives = () => <DownloadsList category="Directives" />;
 
-const COOPDirectivesDownloadsPage = () => <Temp />;
+CoopDirectives.getLayout = (page: ReactElement) => <EbankingMainLayout>{page}</EbankingMainLayout>;
 
-COOPDirectivesDownloadsPage.getLayout = function (page: ReactElement) {
-  return <EbankingMainLayout>{page}</EbankingMainLayout>;
-};
-
-export default COOPDirectivesDownloadsPage;
+export default CoopDirectives;

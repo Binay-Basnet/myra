@@ -1,13 +1,12 @@
 import { ReactElement } from 'react';
 
+import { ApplyForLoan } from '@coop/ebanking/coop';
 import { EbankingMainLayout } from '@coop/ebanking/ui-layout';
 
-import Temp from '../../temp';
+const COOPLoanApplyPage = () => <ApplyForLoan />;
 
-const COOPLoanApplyPage = () => <Temp />;
-
-COOPLoanApplyPage.getLayout = function (page: ReactElement) {
-  return <EbankingMainLayout>{page}</EbankingMainLayout>;
-};
+COOPLoanApplyPage.getLayout = (page: ReactElement) => (
+  <EbankingMainLayout>{page}</EbankingMainLayout>
+);
 
 export default COOPLoanApplyPage;

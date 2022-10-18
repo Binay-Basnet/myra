@@ -1,9 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import omit from 'lodash/omit';
 
 import {
+  CashValue,
+  DepositedBy,
+  DepositInput,
   DepositLoanAccountInput,
+  DepositPaymentType,
   NatureOfDepositProduct,
   useGetAccountOpenEditDataQuery,
   useGetAccountOpenMinorListQuery,
@@ -12,7 +17,7 @@ import {
   useSetAccountDocumentDataMutation,
   useSetAccountOpenDataMutation,
 } from '@coop/cbs/data-access';
-import { FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
+import { FormAgentSelect, FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
 import {
   Alert,
   asyncToast,
@@ -30,7 +35,6 @@ import {
 import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
 
 import {
-  Agent,
   DepositFrequency,
   FeesAndCharge,
   Interest,
@@ -39,6 +43,7 @@ import {
 } from '../component/form';
 import { AccordianComponent } from '../component/form/NewAccountOpen/AccordianComponent';
 import { CriteriaCard } from '../component/form/NewAccountOpen/CriteriaCard';
+import { Payment } from '../component/form/NewAccountOpen/Payment';
 import { ProductCard } from '../component/form/NewAccountOpen/ProductDetailsCard';
 
 type OptionType = { label: string; value: string };
@@ -53,7 +58,7 @@ type FileList =
   | 'InsSignature'
   | 'taxClearance';
 
-export type FileListType = {
+type FileListType = {
   signature: string[];
   nominee: string[];
   photo: string[];
@@ -64,7 +69,42 @@ export type FileListType = {
   taxClearance: string[];
 };
 
+type CustomDepositInput = Omit<DepositInput, 'cash'> & {
+  cash?:
+    | {
+        cashPaid: string;
+        disableDenomination: boolean;
+        total: string;
+        returned_amount: string;
+        denominations: { value?: string; quantity?: number; amount?: string }[];
+      }
+    | undefined
+    | null;
+};
+
+type CustomDepositLoanAccountInput = Omit<DepositLoanAccountInput, 'openingPayment'> & {
+  // tenure?: FrequencyTenure | null | undefined;
+  openingPayment: CustomDepositInput;
+};
+
+const cashOptions: Record<string, string> = {
+  '1000': CashValue.Cash_1000,
+  '500': CashValue.Cash_500,
+  '100': CashValue.Cash_100,
+  '50': CashValue.Cash_50,
+  '25': CashValue.Cash_25,
+  '20': CashValue.Cash_20,
+  '10': CashValue.Cash_10,
+  '5': CashValue.Cash_5,
+  '2': CashValue.Cash_2,
+  '1': CashValue.Cash_1,
+};
+
 export const AccountOpenNew = () => {
+  const [mode, setMode] = useState('0');
+
+  const [totalCharge, setTotalCharge] = useState<number>(0);
+
   const [fileList, setFileList] = useState<FileListType>({
     signature: [],
     fingerPrintPhoto: [],
@@ -79,9 +119,17 @@ export const AccountOpenNew = () => {
   const [triggerQuery, setTriggerQuery] = useState(false);
   const [showCriteria, setShowCriteria] = useState(false);
   const [triggerProductQuery, setTriggerProductQuery] = useState(false);
-  const [mode, setMode] = useState('0');
+  // const [mode, setMode] = useState<number>(0); // 0: form, 1: payment
 
-  const methods = useForm<DepositLoanAccountInput>();
+  const methods = useForm<CustomDepositLoanAccountInput>({
+    defaultValues: {
+      openingPayment: {
+        payment_type: DepositPaymentType.Cash,
+        cash: { disableDenomination: false },
+        depositedBy: DepositedBy.Self,
+      },
+    },
+  });
   const { getValues, watch, reset } = methods;
   const memberId = watch('memberId');
   const router = useRouter();
@@ -139,6 +187,7 @@ export const AccountOpenNew = () => {
 
   const ProductData = poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
   const productType = ProductData?.nature;
+  const isMandatoryFlag = ProductData?.isMandatorySaving;
 
   useEffect(() => {
     if (productID) {
@@ -151,20 +200,133 @@ export const AccountOpenNew = () => {
   };
   const { data: minorData } = useGetAccountOpenMinorListQuery(
     {
-      memberId,
+      memberId: memberId as string,
     },
     { enabled: triggerQuery }
   );
 
   const minorDetails = minorData?.account?.listMinors?.data;
-  const minorOptions = minorDetails?.map((data) => ({
-    label: data?.fullName?.local as string,
-    value: data?.familyMemberId as string,
+  const minorOptions = minorDetails?.map((item) => ({
+    label: item?.fullName?.local as string,
+    value: item?.familyMemberId as string,
   }));
+
+  const proceedToPaymentHandler = () => {
+    setMode('1');
+  };
+
+  const initialDepositAmount = watch('initialDepositAmount');
+
+  const totalDeposit = totalCharge + Number(initialDepositAmount ?? 0);
+
+  const disableDenomination = watch('openingPayment.cash.disableDenomination');
+
+  const cashPaid = watch('openingPayment.cash.cashPaid');
+
+  const denominations = watch('openingPayment.cash.denominations');
+
+  const denominationTotal = useMemo(
+    () =>
+      denominations?.reduce(
+        (accumulator, current) => accumulator + Number(current.amount),
+        0 as number
+      ) ?? 0,
+    [denominations]
+  );
+
+  const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
+
+  const returnAmount = Number(totalCashPaid) - totalDeposit;
+
+  const chequeAmount = watch('openingPayment.cheque.amount');
+
+  const bankVoucherAmount = watch('openingPayment.bankVoucher.amount');
+
+  const selectedPaymentMode = watch('openingPayment.payment_type');
+  const accountName = watch('accountName');
+  const checkIsSubmitButtonDisabled = () => {
+    if (mode === '0') {
+      return false;
+    }
+
+    if (
+      selectedPaymentMode === DepositPaymentType.Cash &&
+      Number(totalCashPaid ?? 0) < Number(totalDeposit)
+    ) {
+      if (Number(totalCashPaid ?? 0) < Number(totalDeposit)) {
+        return true;
+      }
+    }
+
+    if (
+      selectedPaymentMode === DepositPaymentType.BankVoucher &&
+      Number(bankVoucherAmount ?? 0) < Number(totalDeposit)
+    ) {
+      return true;
+    }
+
+    if (
+      selectedPaymentMode === DepositPaymentType.Cheque &&
+      Number(chequeAmount ?? 0) < Number(totalDeposit)
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
   const submitForm = () => {
     const values = getValues();
-    const updatedData = {
-      ...values,
+
+    let updatedData;
+
+    if (totalDeposit !== 0) {
+      if (values.openingPayment?.payment_type === DepositPaymentType.Cash) {
+        updatedData = {
+          ...values,
+          openingPayment: {
+            ...omit({ ...values?.openingPayment }, ['cheque', 'bankVoucher']),
+            cash: {
+              ...values.openingPayment.cash,
+              cashPaid: values.openingPayment.cash?.cashPaid as string,
+              disableDenomination: Boolean(values.openingPayment.cash?.disableDenomination),
+              total: String(totalCashPaid),
+              returned_amount: String(returnAmount),
+              denominations:
+                values.openingPayment.cash?.denominations?.map(({ value, quantity }) => ({
+                  value: cashOptions[value as string],
+                  quantity,
+                })) ?? [],
+            },
+          },
+        };
+      }
+
+      if (values.openingPayment?.payment_type === DepositPaymentType.BankVoucher) {
+        updatedData = {
+          ...values,
+          openingPayment: {
+            ...omit(values?.openingPayment, ['cheque', 'cash']),
+            bankVoucher: { ...values.openingPayment.bankVoucher },
+          },
+        };
+      }
+
+      if (values.openingPayment?.payment_type === DepositPaymentType.Cheque) {
+        updatedData = {
+          ...values,
+          openingPayment: {
+            ...omit(values?.openingPayment, ['cash', 'bankVoucher']),
+            cheque: { ...values.openingPayment.cheque },
+          },
+        };
+      }
+    } else {
+      updatedData = { ...omit({ ...values }, ['openingPayment']) };
+    }
+
+    updatedData = {
+      ...updatedData,
       tenure: values?.tenure ? values?.tenure : null,
       depositFrequencyMonthly: values?.depositFrequencyMonthly
         ? values?.depositFrequencyMonthly
@@ -193,7 +355,16 @@ export const AccountOpenNew = () => {
         loading: 'Opening new Account',
       },
       onSuccess: () => router.push('/accounts/list'),
-      promise: mutateAsync({ id, data: updatedData }),
+      promise: mutateAsync({ id, data: updatedData as DepositLoanAccountInput }),
+      onError: (error) => {
+        if (error.__typename === 'ValidationError') {
+          Object.keys(error.validationErrorMsg).map((key) =>
+            methods.setError(key as keyof DepositLoanAccountInput, {
+              message: error.validationErrorMsg[key][0] as string,
+            })
+          );
+        }
+      },
     });
 
     Object.keys(fileList).forEach((fieldName) => {
@@ -225,13 +396,13 @@ export const AccountOpenNew = () => {
       refetch();
     }
   }, [refetch]);
+
   return (
     <Container minW="container.xl" p="0" bg="white">
-      {' '}
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
         <FormHeader title={`${t['newAccountOpen']} - ${featureCode?.newAccountOpen}`} />
       </Box>
-      <Box display={mode === '0' ? 'flex' : 'none'} flexDirection="row" minH="calc(100vh - 230px)">
+      <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
         <Box
           display="flex"
           flexDirection="column"
@@ -239,16 +410,19 @@ export const AccountOpenNew = () => {
           borderRight="1px solid"
           borderColor="border.layout"
         >
-          {' '}
           <FormProvider {...methods}>
-            {' '}
             <form>
-              <Box display="flex" flexDirection="column" gap="s32" p="s20" w="100%">
+              <Box
+                display={mode === '0' ? 'flex' : 'none'}
+                flexDirection="column"
+                gap="s32"
+                p="s20"
+                w="100%"
+              >
                 <FormMemberSelect name="memberId" label="Member" />
                 <FormSelect
                   name="productId"
                   label={t['accProductName']}
-                  __placeholder={t['accSelectProduct']}
                   isLoading={isFetching}
                   options={productOptions}
                 />
@@ -256,9 +430,7 @@ export const AccountOpenNew = () => {
                   <Alert
                     status="error"
                     title="Error"
-                    bottomButtonlabel={
-                      productType === NatureOfDepositProduct?.Mandatory ? '' : 'View All Criteria'
-                    }
+                    bottomButtonlabel="View All Criteria"
                     bottomButtonHandler={() => setShowCriteria((prev) => !prev)}
                     hideCloseIcon
                   >
@@ -276,7 +448,7 @@ export const AccountOpenNew = () => {
                     </Box>
                   </Alert>
                 )}
-                {productType !== NatureOfDepositProduct?.Mandatory && showCriteria && (
+                {showCriteria && (
                   <Box border="1px solid" borderColor="border.layout" borderRadius="br2" p="s16">
                     <CriteriaCard productId={productID} />
                   </Box>
@@ -287,11 +459,14 @@ export const AccountOpenNew = () => {
                     {ProductData?.isForMinors && (
                       <FormSelect name="minor" label="Minor" options={minorOptions} />
                     )}
-                    {productType !== NatureOfDepositProduct?.VoluntaryOrOptional &&
-                      productType !== NatureOfDepositProduct?.Mandatory && <Tenure />}
+                    {productType !== NatureOfDepositProduct?.Current &&
+                      productType !== NatureOfDepositProduct?.Saving && <Tenure />}
                     <Divider />
-                    <Interest />
-                    <DepositFrequency />
+                    {productType !== NatureOfDepositProduct?.Current && <Interest />}
+                    {(productType === NatureOfDepositProduct?.RecurringSaving ||
+                      (productType === NatureOfDepositProduct.Saving && isMandatoryFlag)) && (
+                      <DepositFrequency />
+                    )}
                     {(productType === NatureOfDepositProduct?.TermSavingOrFd ||
                       productType === NatureOfDepositProduct?.RecurringSaving) && (
                       <Box display="flex" flexDirection="column" gap="s16">
@@ -312,7 +487,9 @@ export const AccountOpenNew = () => {
                       </Box>
                     )}
 
-                    {(ProductData?.alternativeChannels || ProductData?.atmFacility) && (
+                    {(ProductData?.alternativeChannels ||
+                      ProductData?.atmFacility ||
+                      ProductData?.chequeIssue) && (
                       <Box display="flex" flexDirection="column" gap="s16">
                         <Text fontWeight="600" fontSize="r1">
                           Other Services
@@ -322,10 +499,14 @@ export const AccountOpenNew = () => {
                             <Box display="flex" flexDirection="column" gap="s8">
                               <FormCheckbox name="mobileBanking" label="Mobile Banking" />
                               <FormCheckbox name="eBanking" label="eBanking" />
+                              <FormCheckbox name="smsBanking" label="SMS-Banking" />
                             </Box>
                           )}
                           {ProductData?.atmFacility && (
                             <FormCheckbox name="atmFacility" label="ATM Facility" />
+                          )}
+                          {ProductData?.chequeIssue && (
+                            <FormCheckbox name="chequeFacility" label="Cheque Facility" />
                           )}
                         </Box>
                       </Box>
@@ -337,20 +518,34 @@ export const AccountOpenNew = () => {
                         type="number"
                       />
                     </Grid>
-                    <Agent />
-                    <FeesAndCharge />
+                    {/* <Agent /> */}
+                    <Grid templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
+                      <FormAgentSelect name="agentId" label="Market Representative" />
+                    </Grid>
+                    <FeesAndCharge setTotalCharge={setTotalCharge} />
                   </Box>
                 )}
+              </Box>
+              <Box
+                display={mode === '1' ? 'flex' : 'none'}
+                flexDirection="column"
+                gap="s32"
+                p="s20"
+                w="100%"
+              >
+                <Payment mode={Number(mode)} totalAmount={totalDeposit} />
               </Box>
             </form>
           </FormProvider>
           {memberId && productID && !errors && (
-            <RequiredDocuments
-              setFileList={setFileList}
-              id={id}
-              productId={productID}
-              memberId={memberId}
-            />
+            <Box display={mode === '0' ? 'flex' : 'none'} flexDirection="column">
+              <RequiredDocuments
+                setFileList={setFileList}
+                id={id}
+                productId={productID}
+                memberId={memberId}
+              />
+            </Box>
           )}
         </Box>
 
@@ -360,7 +555,7 @@ export const AccountOpenNew = () => {
               <MemberCard
                 memberDetails={{
                   name: memberDetailData?.name,
-                  avatar: 'https://bit.ly/dan-abramov',
+                  avatar: memberDetailData?.profilePicUrl ?? '',
                   memberID: memberDetailData?.id,
                   gender: memberDetailData?.gender,
                   age: memberDetailData?.age,
@@ -389,13 +584,28 @@ export const AccountOpenNew = () => {
       <Box position="sticky" bottom={0}>
         <Box>
           {mode === '0' && (
-            <FormFooter mainButtonLabel="Submit Form" mainButtonHandler={submitForm} />
-          )}{' '}
+            <FormFooter
+              status={
+                <Box display="flex" gap="s32">
+                  <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
+                    Total Deposit Amount
+                  </Text>
+                  <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
+                    {totalDeposit ?? '---'}
+                  </Text>
+                </Box>
+              }
+              isMainButtonDisabled={!!errors || !memberId || !productID || !accountName}
+              mainButtonLabel={totalDeposit === 0 ? 'Open Account' : 'Proceed to Payment'}
+              mainButtonHandler={totalDeposit === 0 ? submitForm : proceedToPaymentHandler}
+            />
+          )}
           {mode === '1' && (
             <FormFooter
               status={<Button onClick={previousButtonHandler}> Previous</Button>}
               mainButtonLabel="Confirm Payment"
               mainButtonHandler={submitForm}
+              isMainButtonDisabled={checkIsSubmitButtonDisabled()}
             />
           )}
         </Box>

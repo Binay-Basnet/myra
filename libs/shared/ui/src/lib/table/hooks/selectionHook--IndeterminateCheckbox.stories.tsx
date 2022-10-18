@@ -2,10 +2,11 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import { IndeterminateCheckbox } from './selectionHook';
 
-export default {
+const Story: ComponentMeta<typeof IndeterminateCheckbox> = {
   component: IndeterminateCheckbox,
   title: 'IndeterminateCheckbox',
-} as ComponentMeta<typeof IndeterminateCheckbox>;
+};
+export default Story;
 
 const Template: ComponentStory<typeof IndeterminateCheckbox> = (args) => (
   <IndeterminateCheckbox {...args} />

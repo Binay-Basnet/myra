@@ -19,7 +19,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/myra/components"],
+      "outputs": ["{workspaceRoot}/coverage/libs/myra/components"],
       "options": {
         "jestConfig": "libs/myra/components/jest.config.ts",
         "passWithNoTests": true

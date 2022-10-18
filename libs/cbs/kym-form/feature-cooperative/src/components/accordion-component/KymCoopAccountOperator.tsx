@@ -8,12 +8,14 @@ import debounce from 'lodash/debounce';
 
 import {
   KymCoopAccountOperatorDetailsFormInput,
+  RootState,
   useAllAdministrationQuery,
+  useAppSelector,
   useGetCoOperativeAccountOperatorEditDataQuery,
   useSetCoopAccOperatorDataMutation,
 } from '@coop/cbs/data-access';
 import { DynamicBoxGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
+import { FormDatePicker, FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -45,10 +47,12 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
   const router = useRouter();
 
   const id = String(router?.query?.['id']);
-  const { data: editValues } = useGetCoOperativeAccountOperatorEditDataQuery({
+  const { data: editValues, refetch } = useGetCoOperativeAccountOperatorEditDataQuery({
     id,
   });
+
   const { mutate } = useSetCoopAccOperatorDataMutation();
+
   useEffect(() => {
     if (editValues) {
       const editValueData = editValues?.members?.cooperative?.listAccountOperators?.data;
@@ -80,6 +84,13 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
       }
     }
   }, [editValues]);
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetch();
+  }, [preference?.date]);
 
   useEffect(() => {
     const subscription = watch(
@@ -192,7 +203,7 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
 
       <Collapse
         in={isOpen}
-        style={{ marginTop: '0px', border: '1px solid', borderColor: 'border.layout' }}
+        style={{ marginTop: '0px', border: '1px solid', borderColor: '#E0E5EB' }}
       >
         <DynamicBoxGroupContainer>
           <FormProvider {...methods}>
@@ -203,7 +214,7 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
               }}
             >
               <Box display="flex" flexDirection="column" gap="s48">
-                <FormSection gridLayout>
+                <FormSection>
                   <FormInput
                     id="accountOperatorCoop"
                     type="text"
@@ -218,7 +229,7 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
                   />
                 </FormSection>
 
-                <FormSection gridLayout header="kymCoopPermanentAddress">
+                <FormSection header="kymCoopPermanentAddress">
                   <FormSelect
                     id="accountOperatorCoop"
                     name="permanentAddress.provinceId"
@@ -270,7 +281,7 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
                   </GridItem>
                 </FormSection>
 
-                <FormSection gridLayout header="kymCoopTemporaryAddress">
+                <FormSection header="kymCoopTemporaryAddress">
                   <GridItem colSpan={3}>
                     <FormSwitch
                       name="isPermanentAndTemporaryAddressSame"
@@ -333,10 +344,9 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
                   )}
                 </FormSection>
 
-                <FormSection gridLayout>
-                  <FormInput
+                <FormSection>
+                  <FormDatePicker
                     id="accountOperatorCoop"
-                    type="date"
                     name="dateOfMembership"
                     label={t['kymCoopDateOfMembership']}
                   />

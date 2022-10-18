@@ -1,3 +1,34 @@
+query getGeneralMemberSettingsData {
+  settings {
+    general {
+      KYM {
+        general {
+          generalMember {
+            record {
+              memberType {
+                individual
+                institution
+                cooperative
+                cooperativeUnion
+              }
+              risk {
+                generalRisk
+                mediumRisk
+                highRisk
+              }
+              charge {
+                memberType
+                ledgerId
+                charge
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 query getPreDefinedFields($filter: PredefinedElementFilter!) {
   settings {
     form {

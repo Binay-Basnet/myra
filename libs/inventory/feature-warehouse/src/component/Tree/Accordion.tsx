@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import { Box } from '@chakra-ui/react';
 
 const AccordionContext = createContext<{
@@ -9,27 +9,22 @@ const AccordionContext = createContext<{
 interface IAccordionProps {
   children: React.ReactNode;
 }
-function Accordion(props: IAccordionProps) {
+const Accordion = (props: IAccordionProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { children } = props;
 
-  const onClick = () => {
-    setIsOpen((isOpen) => !isOpen);
-  };
+  const onClick = useCallback(() => setIsOpen((item) => !item), []);
+  const AccordianProviderValue = useMemo(() => ({ isOpen, onClick }), [isOpen, onClick]);
   return (
-    <AccordionContext.Provider value={{ isOpen, onClick }}>
-      {children}
-    </AccordionContext.Provider>
+    <AccordionContext.Provider value={AccordianProviderValue}>{children}</AccordionContext.Provider>
   );
-}
+};
 
 export const useAccordion = () => {
   const context = useContext(AccordionContext);
 
   if (context === undefined) {
-    throw new Error(
-      'useAccordion should be used within coponents wrapped by Accordion only'
-    );
+    throw new Error('useAccordion should be used within coponents wrapped by Accordion only');
   }
 
   return context;
@@ -38,7 +33,7 @@ export const useAccordion = () => {
 interface IAccordionSummaryProps {
   children: React.ReactNode;
 }
-function AccordionSummary({ children }: IAccordionSummaryProps) {
+const AccordionSummary = ({ children }: IAccordionSummaryProps) => {
   const { onClick } = useAccordion();
 
   return (
@@ -46,12 +41,12 @@ function AccordionSummary({ children }: IAccordionSummaryProps) {
       {children}
     </Box>
   );
-}
+};
 
 interface IAccordionDetailsProps {
   children: React.ReactNode;
 }
-function AccordionDetails({ children }: IAccordionDetailsProps) {
+const AccordionDetails = ({ children }: IAccordionDetailsProps) => {
   const { isOpen } = useAccordion();
   return (
     <Box
@@ -65,7 +60,7 @@ function AccordionDetails({ children }: IAccordionDetailsProps) {
       {children}
     </Box>
   );
-}
+};
 Accordion.Details = AccordionDetails;
 Accordion.Summary = AccordionSummary;
 

@@ -5,11 +5,11 @@ import { omit } from 'lodash';
 
 import {
   CashValue,
-  Member,
+  Share_Transaction_Direction,
   SharePaymentMode,
   ShareReturnInput,
   useAddShareReturnMutation,
-  useGetMemberIndividualDataQuery,
+  useGetShareChargesQuery,
   useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
 import {
@@ -25,7 +25,7 @@ import {
   ShareMemberCard,
   TabMenu,
 } from '@coop/shared/ui';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
 
 import { ShareInfoFooter } from './ShareInfoFooter';
 import { SharePaymentFooter } from './SharePaymentFooter';
@@ -92,17 +92,15 @@ export const ShareReturnForm = () => {
 
   const denominationTotal =
     denominations?.reduce(
-      (accumulator: number, curr: { value: string }) => accumulator + Number(curr.value),
+      (accumulator: number, curr: { amount?: string }) => accumulator + Number(curr.amount),
       0 as number
     ) ?? 0;
 
   const totalCashPaid: number = disableDenomination ? Number(cashPaid) : Number(denominationTotal);
 
-  const returnAmount = totalAmount - totalCashPaid;
+  const returnAmount = totalCashPaid - totalAmount;
 
-  const { data } = useGetMemberIndividualDataQuery({ id: memberId }, { enabled: !!memberId });
-
-  const memberDetail = data && data?.members?.details?.data;
+  const { memberDetailData } = useGetIndividualMemberDetails({ memberId });
 
   const { data: shareHistoryTableData } = useGetShareHistoryQuery(
     {
@@ -182,14 +180,43 @@ export const ShareReturnForm = () => {
     }
   }, [allShares, balanceData, getValues, reset]);
 
+  const { data: chargesData } = useGetShareChargesQuery(
+    {
+      transactionType: Share_Transaction_Direction?.Purchase,
+      shareCount: noOfShares,
+    },
+    { enabled: !!noOfShares }
+  );
+
+  const chargeList = chargesData?.share?.charges;
+
   useEffect(() => {
     let temp = 0;
-    extraFee?.forEach((fee) => {
-      temp += Number(fee?.value);
-    });
+    const values = getValues();
 
-    setTotalAmount(noOfShares * 100 - temp);
-  }, [noOfShares, JSON.stringify(extraFee)]);
+    if (chargeList) {
+      if (extraFee) {
+        extraFee?.forEach((charge) => {
+          temp += Number(charge?.value);
+        });
+      } else {
+        chargeList?.forEach((charge) => {
+          temp += Number(charge?.charge);
+        });
+      }
+
+      setTotalAmount(noOfShares * 100 - temp);
+    } else {
+      setTotalAmount(noOfShares * 100);
+    }
+    reset({
+      ...values,
+      cash: {
+        cashPaid: totalAmount.toString(),
+      },
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chargeList, extraFee, noOfShares, JSON.stringify(extraFee), totalAmount]);
 
   return (
     <>
@@ -213,34 +240,35 @@ export const ShareReturnForm = () => {
 
             <Grid templateColumns="repeat(6,1fr)">
               {mode === 'shareInfo' && (
-                <GridItem colSpan={data ? 4 : 6}>
+                <GridItem colSpan={memberDetailData ? 4 : 6}>
                   <Box
                     mb="50px"
                     width="100%"
                     h="100%"
                     background="gray.0"
                     minH="calc(100vh - 170px)"
-                    border="1px solid"
+                    borderRight="1px solid"
                     borderColor="border.layout"
                   >
                     <Box w="100%">
                       <FormSection>
                         <GridItem colSpan={2}>
                           <FormMemberSelect
+                            allMembers
                             name="memberId"
                             label={t['sharePurchaseSelectMember']}
                           />
                         </GridItem>
                       </FormSection>
 
-                      {memberDetail && <ShareReturnInfo totalAmount={totalAmount} />}
+                      {memberDetailData && <ShareReturnInfo totalAmount={totalAmount} />}
                     </Box>
                   </Box>
                 </GridItem>
               )}
 
               {mode === 'sharePayment' && (
-                <GridItem colSpan={data ? 4 : 6}>
+                <GridItem colSpan={memberDetailData ? 4 : 6}>
                   <ShareReturnPayment
                     totalAmount={totalAmount}
                     denominationTotal={denominationTotal}
@@ -250,13 +278,13 @@ export const ShareReturnForm = () => {
                 </GridItem>
               )}
 
-              <GridItem colSpan={data ? 2 : 0}>
-                {data && (
+              <GridItem colSpan={memberDetailData ? 2 : 0}>
+                {memberDetailData && (
                   <ShareMemberCard
                     mode={mode}
                     memberId={memberId}
                     totalAmount={totalAmount}
-                    memberDetails={memberDetail as Member}
+                    memberDetailData={memberDetailData}
                   />
                 )}
               </GridItem>
@@ -264,12 +292,12 @@ export const ShareReturnForm = () => {
           </Container>
         </form>
       </FormProvider>
-
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.xl" height="fit-content" p="0">
             {mode === 'shareInfo' && (
               <ShareInfoFooter
+                disableButton={noOfShares}
                 totalAmount={totalAmount}
                 paymentButtonHandler={paymentButtonHandler}
               />

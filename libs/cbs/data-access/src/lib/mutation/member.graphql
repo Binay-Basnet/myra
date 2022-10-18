@@ -44,11 +44,7 @@ mutation deleteMemberFamilyDetails($memberId: ID!, $id: ID!) {
   }
 }
 
-mutation setMemberOccupation(
-  $id: ID!
-  $isSpouse: Boolean!
-  $data: KYMIndOccupationInput!
-) {
+mutation setMemberOccupation($id: ID!, $isSpouse: Boolean!, $data: KYMIndOccupationInput!) {
   members {
     individual(id: $id) {
       occupation {
@@ -106,32 +102,50 @@ mutation setKymCooperativeData($id: ID!, $data: KymCooperativeFormInput!) {
   }
 }
 
-mutation setKYMDocumentData(
-  $memberId: String!
-  $fieldId: String!
-  $identifiers: [String!]!
-) {
+mutation setKYMDocumentData($memberId: String!, $fieldId: String!, $identifiers: [String!]!) {
   document {
-    KYMUpsert(
-      memberId: $memberId
-      fieldId: $fieldId
-      identifiers: $identifiers
-    ) {
+    KYMUpsert(memberId: $memberId, fieldId: $fieldId, identifiers: $identifiers) {
       recordId
     }
   }
 }
 
-mutation setKymIndividualIdentificationData(
-  $id: ID!
-  $data: KYMIndIdentificationInput!
-) {
+mutation setKymIndividualIdentificationData($id: ID!, $data: KYMIndIdentificationInput!) {
   members {
     individual(id: $id) {
       identification {
         upsert(data: $data) {
           recordId
         }
+      }
+    }
+  }
+}
+
+mutation setOfficialUse(
+  $id: ID!
+  $isStaff: Boolean
+  $checkSanction: Boolean
+  $checkNegative: Boolean
+  $riskCategory: OfficialUseRiskCategory
+  $docCollectedAndVerified: Boolean
+  $acceptableAddressDoc: Boolean
+) {
+  members {
+    officialUse(
+      data: {
+        id: $id
+        isStaff: $isStaff
+        checkSanction: $checkSanction
+        checkNegative: $checkNegative
+        riskCategory: $riskCategory
+        docCollectedAndVerified: $docCollectedAndVerified
+        acceptableAddressDoc: $acceptableAddressDoc
+      }
+    ) {
+      recordId
+      error {
+        ...MutationError
       }
     }
   }

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';

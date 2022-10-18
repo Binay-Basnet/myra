@@ -7,7 +7,7 @@ interface ITestProps {
   code: string;
   title: string;
 }
-function LeafNode(props: ITestProps) {
+const LeafNode = (props: ITestProps) => {
   const { code, title } = props;
 
   return (
@@ -25,5 +25,5 @@ function LeafNode(props: ITestProps) {
       </HStack>
     </NodeWrapper>
   );
-}
+};
 export default LeafNode;

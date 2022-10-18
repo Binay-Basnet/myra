@@ -16,13 +16,10 @@ import { Box, FormSection, Text } from '@coop/shared/ui';
 import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 interface IVoterCardProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
-type voterCardData =
+type VoterCardData =
   | {
       id: string;
       idNo: string;
@@ -33,18 +30,15 @@ type voterCardData =
   | null
   | undefined;
 
-const getVoterCardData = (
-  identificationListData: KymIndIdentification[] | null | undefined
-) => {
-  const voterCardData = identificationListData?.find(
-    (identification: KymIndIdentification | null) =>
-      identification?.idType === 'voterCard'
+const getVoterCardData = (identificationListData: KymIndIdentification[] | null | undefined) => {
+  const VoterCardData = identificationListData?.find(
+    (identification: KymIndIdentification | null) => identification?.idType === 'voterCard'
   );
 
   return {
-    idNo: voterCardData?.idNo,
-    place: voterCardData?.place?.local,
-    id: voterCardData?.id,
+    idNo: VoterCardData?.idNo,
+    place: VoterCardData?.place?.local,
+    id: VoterCardData?.id,
   };
 };
 
@@ -67,27 +61,25 @@ export const VoterCard = ({ setKymCurrentSection }: IVoterCardProps) => {
     onSuccess: () => refetch(),
   });
 
-  const { data: identificationListData, refetch } =
-    useGetIndividualKymIdentificationListQuery(
-      {
-        id: String(id),
-      },
-      { enabled: !!id }
-    );
+  const { data: identificationListData, refetch } = useGetIndividualKymIdentificationListQuery(
+    {
+      id: String(id),
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (identificationListData?.members?.individual?.listIdentification?.data) {
-      const voterCardData = getVoterCardData(
-        identificationListData?.members?.individual?.listIdentification
-          ?.data as voterCardData
+      const VoterCardData = getVoterCardData(
+        identificationListData?.members?.individual?.listIdentification?.data as VoterCardData
       );
 
-      if (voterCardData?.id) {
-        setMutationId(voterCardData.id);
+      if (VoterCardData?.id) {
+        setMutationId(VoterCardData.id);
 
         reset({
-          idNo: voterCardData?.idNo,
-          place: voterCardData?.place,
+          idNo: VoterCardData?.idNo,
+          place: VoterCardData?.place,
         });
       }
     }
@@ -96,16 +88,11 @@ export const VoterCard = ({ setKymCurrentSection }: IVoterCardProps) => {
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        const voterCardData = getVoterCardData(
-          identificationListData?.members?.individual?.listIdentification
-            ?.data as voterCardData
+        const VoterCardData = getVoterCardData(
+          identificationListData?.members?.individual?.listIdentification?.data as VoterCardData
         );
 
-        if (
-          id &&
-          !isDeepEmpty(data) &&
-          !isEqual({ ...data, id: mutationId }, voterCardData)
-        ) {
+        if (id && !isDeepEmpty(data) && !isEqual({ ...data, id: mutationId }, VoterCardData)) {
           if (!mutationId) {
             newIDMutate({ idType: Id_Type.Kymidentification }).then((res) => {
               setMutationId(res.newId);
@@ -132,13 +119,7 @@ export const VoterCard = ({ setKymCurrentSection }: IVoterCardProps) => {
   return (
     <Box>
       <FormProvider {...methods}>
-        <Text
-          p="s20"
-          pb="0"
-          fontSize="r1"
-          fontWeight="medium"
-          color="neutralColorLight.Gray-70"
-        >
+        <Text p="s20" pb="0" fontSize="r1" fontWeight="medium" color="neutralColorLight.Gray-70">
           {t['kymIndVoterCard']}
         </Text>
         <form
@@ -147,20 +128,10 @@ export const VoterCard = ({ setKymCurrentSection }: IVoterCardProps) => {
             setKymCurrentSection(kymSection);
           }}
         >
-          <FormSection gridLayout={true}>
-            <FormInput
-              type="text"
-              name="idNo"
-              label={t['kymIndVoterCardNo']}
-              __placeholder={t['kymIndVoterCardNo']}
-            />
+          <FormSection>
+            <FormInput type="text" name="idNo" label={t['kymIndVoterCardNo']} />
 
-            <FormInput
-              type="text"
-              name="place"
-              label={t['kymIndVoterCardPollingStation']}
-              __placeholder={t['kymIndVoterCardPollingStation']}
-            />
+            <FormInput type="text" name="place" label={t['kymIndVoterCardPollingStation']} />
           </FormSection>
         </form>
       </FormProvider>

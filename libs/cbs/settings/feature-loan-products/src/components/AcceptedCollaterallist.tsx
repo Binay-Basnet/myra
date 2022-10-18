@@ -1,5 +1,5 @@
 // import debounce from 'lodash/debounce';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   DragDropContext,
   Draggable,
@@ -11,8 +11,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { IoClose } from 'react-icons/io5';
 import { RiArrowDownSLine, RiArrowUpSLine } from 'react-icons/ri';
 import { AddIcon } from '@chakra-ui/icons';
-import { uniqueId } from 'lodash';
 
+import { useGetNewIdMutation } from '@coop/cbs/data-access';
 import { FormInput, FormSwitch } from '@coop/shared/form';
 import { Box, Button, Collapse, Icon, Text } from '@coop/shared/ui';
 import { GRID2X3, useTranslation } from '@coop/shared/utils';
@@ -27,6 +27,8 @@ interface ICollateralProps {
 
 export const AcceptedCollateral = (props: ICollateralProps) => {
   const [hasNewField, setHasNewField] = useState(false);
+
+  const { mutateAsync: getNewId } = useGetNewIdMutation({});
 
   const { list, setList } = props;
   const { t } = useTranslation();
@@ -96,7 +98,7 @@ export const AcceptedCollateral = (props: ICollateralProps) => {
                         {...provide.draggableProps}
                       >
                         <AcceptedCollateralOption
-                          setList={setList}
+                          // setList={setList}
                           dragHandleProps={provide.dragHandleProps}
                           option={item}
                         />
@@ -114,14 +116,16 @@ export const AcceptedCollateral = (props: ICollateralProps) => {
         {hasNewField && (
           <FormProvider {...methods}>
             <form
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
+
+                const response = await getNewId({});
                 setList((prev) => [
                   ...prev,
                   {
                     enabled: true,
                     name: methods.getValues()['name'],
-                    id: uniqueId('row'),
+                    id: response.newId,
                   },
                 ]);
                 setHasNewField(false);
@@ -140,13 +144,15 @@ export const AcceptedCollateral = (props: ICollateralProps) => {
                     <FormInput type="text" name="name" />
                   </Box>
                   <Button
-                    onClick={() => {
+                    onClick={async () => {
+                      const response = await getNewId({});
+
                       setList((prev) => [
                         ...prev,
                         {
                           enabled: true,
                           name: methods.getValues()['name'],
-                          id: uniqueId('row'),
+                          id: response.newId,
                         },
                       ]);
                       setHasNewField(false);
@@ -192,13 +198,12 @@ export const AcceptedCollateral = (props: ICollateralProps) => {
 };
 
 interface IAcceptedCollateralOptionProps {
-  setList: React.Dispatch<React.SetStateAction<{ name: string; enabled: boolean; id: string }[]>>;
+  // setList: React.Dispatch<React.SetStateAction<{ name: string; enabled: boolean; id: string }[]>>;
   dragHandleProps: DraggableProvidedDragHandleProps | undefined;
   option: { name: string; enabled: boolean; id: string };
 }
 
 export const AcceptedCollateralOption = ({
-  setList,
   dragHandleProps,
   option,
 }: IAcceptedCollateralOptionProps) => {
@@ -209,27 +214,27 @@ export const AcceptedCollateralOption = ({
     },
   });
 
-  const { watch } = methods;
+  // const { watch } = methods;
 
-  const [isEditable, setIsEditable] = useState(!option.name);
+  // const [isEditable, setIsEditable] = useState(!option.name);
 
-  useEffect(() => {
-    const subscription = watch(() => {
-      setList((prev) =>
-        prev.map((d) =>
-          d.name === option.name
-            ? {
-                name: methods.getValues()['name'],
-                enabled: methods.getValues()['enabled'],
-                id: d.id,
-              }
-            : d
-        )
-      );
-    });
+  // useEffect(() => {
+  //   const subscription = watch(() => {
+  //     setList((prev) =>
+  //       prev.map((d) =>
+  //         d.name === option.name
+  //           ? {
+  //               name: methods.getValues()['name'],
+  //               enabled: methods.getValues()['enabled'],
+  //               id: d.id,
+  //             }
+  //           : d
+  //       )
+  //     );
+  //   });
 
-    return () => subscription.unsubscribe();
-  }, [watch]);
+  //   return () => subscription.unsubscribe();
+  // }, [watch]);
 
   return (
     <Box display="flex" alignItems="center" justifyContent="space-between" gap="s8" w="100%">
@@ -241,24 +246,23 @@ export const AcceptedCollateralOption = ({
           justifyContent="flex-start"
           alignItems="center"
           gap="s20"
-          onSubmit={(e) => {
-            setIsEditable(false);
-            setList((prev) =>
-              prev.map((d) =>
-                d.name === option.name
-                  ? {
-                      name: methods.getValues()['name'],
-                      enabled: methods.getValues()['enabled'],
-                      id: d.id,
-                    }
-                  : d
-              )
-            );
+          // onSubmit={(e) => {
+          //   setIsEditable(false);
+          //   setList((prev) =>
+          //     prev.map((d) =>
+          //       d.name === option.name
+          //         ? {
+          //             name: methods.getValues()['name'],
+          //             enabled: methods.getValues()['enabled'],
+          //             id: d.id,
+          //           }
+          //         : d
+          //     )
+          //   );
 
-            e.preventDefault();
-          }}
+          //   e.preventDefault();
+          // }}
         >
-          {}
           <Box {...dragHandleProps}>
             <Icon size="md" as={GRID2X3} />
           </Box>
@@ -270,24 +274,24 @@ export const AcceptedCollateralOption = ({
             alignItems="center"
             gap="s8"
           >
-            {isEditable ? (
+            {/* {isEditable ? (
               <FormInput type="text" name="name" />
-            ) : (
-              <Text
-                onClick={() => setIsEditable(true)}
-                fontSize="r1"
-                fontWeight="400"
-                color="gray.800"
-                my="7.5px"
-              >
-                {methods.getValues().name}
-              </Text>
-            )}
+            ) : ( */}
+            <Text
+              // onClick={() => setIsEditable(true)}
+              fontSize="r1"
+              fontWeight="400"
+              color="gray.800"
+              my="7.5px"
+            >
+              {methods.getValues().name}
+            </Text>
+            {/* )} */}
           </Box>
         </Box>
       </FormProvider>
 
-      <Button variant="ghost">
+      {/* <Button variant="ghost">
         <Icon
           onClick={() => {
             setList((prev) => prev.filter((d) => d.id !== option.id));
@@ -298,7 +302,7 @@ export const AcceptedCollateralOption = ({
           cursor="pointer"
           _hover={{ color: 'gray.800' }}
         />
-      </Button>
+      </Button> */}
     </Box>
   );
 };

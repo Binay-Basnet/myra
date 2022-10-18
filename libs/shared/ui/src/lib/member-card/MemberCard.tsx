@@ -449,7 +449,7 @@ export const MemberCard = ({
                   {accountInfo.lastTransactionDate && (
                     <Box display="flex" justifyContent="space-between">
                       <Text fontSize="s3" fontWeight={400} color="gray.500">
-                        Last Transcation Date
+                        Last Transaction Date
                       </Text>
                       <Text fontSize="s3" fontWeight={500} color="gray.800">
                         {accountInfo.lastTransactionDate}

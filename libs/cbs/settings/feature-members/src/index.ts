@@ -1,3 +1,4 @@
+export * from './components/general/MemberCharge';
 export * from './components/general/MemberRiskLevel';
 export * from './components/general/TypeOfMember';
 export * from './lib/CbsSettingsFeatureMembers';

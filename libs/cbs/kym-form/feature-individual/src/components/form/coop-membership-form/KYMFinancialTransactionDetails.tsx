@@ -13,10 +13,7 @@ import { FormSection } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 interface IKYMFinancialTransactionDetailsProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const KYMFinancialTransactionDetails = ({
@@ -46,8 +43,7 @@ export const KYMFinancialTransactionDetails = ({
 
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.individual?.formState?.data?.formData;
+      const editValueData = editValues?.members?.individual?.formState?.data?.formData;
 
       reset({
         ...editValueData?.initialTransactionDetails,
@@ -78,7 +74,6 @@ export const KYMFinancialTransactionDetails = ({
         }}
       >
         <FormSection
-          gridLayout={true}
           id="kymAccIndFinancialTransactionDetails"
           header="kynIndFINANCIALTRANSACTIONDETAILS"
           subHeader="kynIndDetailsoftheamount"
@@ -88,30 +83,21 @@ export const KYMFinancialTransactionDetails = ({
             name="initialShare"
             textAlign="right"
             label={t['kymIndFinancialShare']}
-            __placeholder="0.00"
           />
           <FormInput
             type="number"
             name="initialSaving"
             label={t['kymIndFinancialSavings']}
             textAlign="right"
-            __placeholder="0.00"
           />
 
-          <FormInput
-            type="number"
-            name="initialLoan"
-            label={t['kymIndLoan']}
-            textAlign="right"
-            __placeholder="0.00"
-          />
+          <FormInput type="number" name="initialLoan" label={t['kymIndLoan']} textAlign="right" />
 
           <FormInput
             type="number"
             name="otherFinancialAmount"
             label={t['kymIndFinancialOther']}
             textAlign="right"
-            __placeholder="0.00"
           />
         </FormSection>
         {/* {financialTransactionDetailsData?.members?.individual?.options.list?.data?.[0]?.options?.map(

@@ -9,11 +9,9 @@ import {
   FormFieldSearchTerm,
   KymIndMemberInput,
   useDeleteMemberIncomeSourceMutation,
-  useGetIndividualKymEditDataQuery,
   useGetIndividualKymIncomeSourceListQuery,
   useGetIndividualKymOptionsQuery,
   useGetNewIdMutation,
-  useSetMemberDataMutation,
   useSetMemberIncomeSourceMutation,
 } from '@coop/cbs/data-access';
 import {
@@ -22,16 +20,10 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormRadioGroup } from '@coop/shared/form';
-import {
-  Box,
-  Button,
-  FormSection,
-  GridItem,
-  Icon,
-  Text,
-} from '@coop/shared/ui';
+import { Box, Button, FormSection, GridItem, Icon, Text } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
+import { useIndividual } from '../../hooks/useIndividual';
 import { getFieldOption } from '../../../utils/getFieldOption';
 
 // const IncomeSourceInput = ({ option, fieldIndex, optionIndex }: any) => {
@@ -58,10 +50,7 @@ import { getFieldOption } from '../../../utils/getFieldOption';
 
 interface IIncomeSourceProps {
   incomeSourceId: string;
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
   removeIncomeSource: (incomeSourceId: string) => void;
 }
 
@@ -87,17 +76,14 @@ const IncomeSource = ({
   //   });
 
   const { data: editValues } = useGetIndividualKymIncomeSourceListQuery({
-    id: id,
+    id,
   });
 
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.individual?.listIncomeSource?.data;
+      const editValueData = editValues?.members?.individual?.listIncomeSource?.data;
 
-      const incomeSourceDetail = editValueData?.find(
-        (data) => data?.id === incomeSourceId
-      );
+      const incomeSourceDetail = editValueData?.find((data) => data?.id === incomeSourceId);
 
       if (incomeSourceDetail) {
         reset({
@@ -148,9 +134,8 @@ const IncomeSource = ({
               <FormInput
                 type="text"
                 bg="white"
-                name={`incomeSource`}
+                name="incomeSource"
                 label={t['kymIndIncomeSource']}
-                __placeholder={t['kymIndEnterIncomeSource']}
               />
             </GridItem>
             <GridItem colSpan={1}>
@@ -158,9 +143,8 @@ const IncomeSource = ({
                 type="number"
                 textAlign="right"
                 bg="white"
-                name={`amount`}
+                name="amount"
                 label={t['kymIndAmount']}
-                __placeholder="0.00"
               />
             </GridItem>
 
@@ -182,10 +166,7 @@ const IncomeSource = ({
 };
 
 interface IMemberKYMIncomeSourceDetailsProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
 export const MemberKYMIncomeSourceDetails = ({
@@ -198,21 +179,21 @@ export const MemberKYMIncomeSourceDetails = ({
 
   const methods = useForm<KymIndMemberInput>();
 
-  const { watch, reset } = methods;
+  useIndividual({ methods });
 
-  const { mutate } = useSetMemberDataMutation();
+  // const { mutate } = useSetMemberDataMutation();
 
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        if (id) {
-          mutate({ id: String(id), data });
-        }
-      }, 800)
-    );
+  // useEffect(() => {
+  //   const subscription = watch(
+  //     debounce((data) => {
+  //       if (id) {
+  //         mutate({ id: String(id), data });
+  //       }
+  //     }, 800)
+  //   );
 
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
+  //   return () => subscription.unsubscribe();
+  // }, [watch, router.isReady]);
 
   const { data: familyIncomeData } = useGetIndividualKymOptionsQuery({
     searchTerm: FormFieldSearchTerm.FamilyIncomeSource,
@@ -220,7 +201,23 @@ export const MemberKYMIncomeSourceDetails = ({
 
   const [incomeSourceIds, setIncomeSourceIds] = useState<string[]>([]);
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery(
+  // const { data: editValues } = useGetIndividualKymEditDataQuery(
+  //   {
+  //     id: String(id),
+  //   },
+  //   { enabled: !!id }
+  // );
+
+  // useEffect(() => {
+  //   if (editValues) {
+  //     reset({
+  //       annualIncomeSourceId:
+  //         editValues?.members?.individual?.formState?.data?.formData?.annualIncomeSourceId ?? '',
+  //     });
+  //   }
+  // }, [editValues]);
+
+  const { data: incomeSourceListEditValues } = useGetIndividualKymIncomeSourceListQuery(
     {
       id: String(id),
     },
@@ -228,27 +225,8 @@ export const MemberKYMIncomeSourceDetails = ({
   );
 
   useEffect(() => {
-    if (editValues) {
-      reset({
-        annualIncomeSourceId:
-          editValues?.members?.individual?.formState?.data?.formData
-            ?.annualIncomeSourceId ?? '',
-      });
-    }
-  }, [editValues]);
-
-  const { data: incomeSourceListEditValues } =
-    useGetIndividualKymIncomeSourceListQuery(
-      {
-        id: String(id),
-      },
-      { enabled: !!id }
-    );
-
-  useEffect(() => {
     if (incomeSourceListEditValues) {
-      const editValueData =
-        incomeSourceListEditValues?.members?.individual?.listIncomeSource?.data;
+      const editValueData = incomeSourceListEditValues?.members?.individual?.listIncomeSource?.data;
 
       setIncomeSourceIds(
         editValueData?.reduce(
@@ -267,9 +245,7 @@ export const MemberKYMIncomeSourceDetails = ({
 
   const { mutate: deleteMutate } = useDeleteMemberIncomeSourceMutation({
     onSuccess: (res) => {
-      const deletedId = String(
-        res?.members?.individual?.incomeSource?.delete?.recordId
-      );
+      const deletedId = String(res?.members?.individual?.incomeSource?.delete?.recordId);
 
       const tempOccupationIds = [...incomeSourceIds];
 
@@ -297,7 +273,6 @@ export const MemberKYMIncomeSourceDetails = ({
           }}
         >
           <FormSection
-            gridLayout={true}
             templateColumns={1}
             header="kymIndINCOMESOURCEDETAILS"
             id="kymAccIndIncomeSourceDetails"
@@ -310,26 +285,19 @@ export const MemberKYMIncomeSourceDetails = ({
             />
 
             <Box display="flex" gap="s16" flexDirection="column">
-              <Text
-                fontSize="s3"
-                fontWeight="Medium"
-                color="neutralColorLight.Gray-70"
-                mb="s4"
-              >
+              <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-70" mb="s4">
                 {t['kynIndIncomegreater']}
               </Text>
               <DynamicBoxGroupContainer>
-                {incomeSourceIds.map((id) => {
-                  return (
-                    <Box key={id}>
-                      <IncomeSource
-                        incomeSourceId={id}
-                        setKymCurrentSection={setKymCurrentSection}
-                        removeIncomeSource={removeIncomeSource}
-                      />
-                    </Box>
-                  );
-                })}
+                {incomeSourceIds.map((key) => (
+                  <Box key={key}>
+                    <IncomeSource
+                      incomeSourceId={key}
+                      setKymCurrentSection={setKymCurrentSection}
+                      removeIncomeSource={removeIncomeSource}
+                    />
+                  </Box>
+                ))}
                 <Button
                   id="incomeSourceDetailsButton"
                   alignSelf="start"

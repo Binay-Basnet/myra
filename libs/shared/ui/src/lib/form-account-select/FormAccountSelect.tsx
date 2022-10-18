@@ -1,5 +1,5 @@
 import { NatureOfDepositProduct, useGetAccountTableListQuery } from '@coop/cbs/data-access';
-import { getRouterQuery } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 import { Option } from './CustomSelect';
 import FormCustomSelect from './FormCustomSelect';
@@ -11,17 +11,14 @@ interface IAccountSelectProps {
   placeholder?: string;
 }
 
-const accountTypes = {
-  [NatureOfDepositProduct.Mandatory]: 'Mandatory Saving Account',
-  [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
-  [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
-  [NatureOfDepositProduct.VoluntaryOrOptional]: 'Voluntary Saving Account',
-};
-
 export const FormAccountSelect = ({ name, label, memberId, placeholder }: IAccountSelectProps) => {
+  const { t } = useTranslation();
   const { data: accountListData, isFetching } = useGetAccountTableListQuery(
     {
-      paginate: getRouterQuery({ type: ['PAGINATION'] }),
+      paginate: {
+        first: -1,
+        after: '',
+      },
       filter: { memberId },
     },
     {
@@ -30,10 +27,17 @@ export const FormAccountSelect = ({ name, label, memberId, placeholder }: IAccou
     }
   );
 
-  const availableBalance = accountListData?.account?.list?.edges;
+  const accountTypes = {
+    [NatureOfDepositProduct.Saving]: t['addDepositSaving'],
+    [NatureOfDepositProduct.RecurringSaving]: t['addDepositRecurringSavingAccount'],
+    [NatureOfDepositProduct.TermSavingOrFd]: t['addDepositTermSavingAccount'],
+    [NatureOfDepositProduct.Current]: t['addDepositCurrent'],
+  };
+
+  const accountsList = accountListData?.account?.list?.edges;
 
   const accountOptions: Option[] =
-    availableBalance?.reduce(
+    accountsList?.reduce(
       (prevVal, curVal) => [
         ...prevVal,
         {
@@ -46,7 +50,7 @@ export const FormAccountSelect = ({ name, label, memberId, placeholder }: IAccou
               ? accountTypes[curVal?.node?.product?.nature]
               : '',
             balance: curVal?.node?.balance as string,
-            fine: curVal?.node?.fine as string,
+            fine: curVal?.node?.dues?.fine as string,
           },
         },
       ],

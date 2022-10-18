@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
@@ -22,24 +22,32 @@ export const MemberListPage = () => {
 
   const router = useRouter();
 
-  const { data, isFetching } = useGetMemberListQuery({
+  const { data, isFetching, refetch } = useGetMemberListQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
     filter: {
       objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
     },
   });
 
+  React.useEffect(() => {
+    refetch();
+  }, []);
+
   const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: 'id',
         header: t['memberListTableMemberID'],
         accessorFn: (row) => row?.node?.id,
+        // enableSorting: true,
       },
       {
+        id: 'name',
         accessorFn: (row) => row?.node?.name?.local,
         header: t['memberListTableName'],
+        // enableSorting: true,
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
             <Avatar

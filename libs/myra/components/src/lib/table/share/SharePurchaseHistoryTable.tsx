@@ -5,11 +5,11 @@ import { useGetShareHistoryQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
-type shareHistoryProps = {
+type IShareHistoryProps = {
   id: string;
 };
 
-export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
+export const SharePurchaseHistoryTable = ({ id }: IShareHistoryProps) => {
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -31,9 +31,7 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         header: t['sn'],
         footer: () => '',
         accessorFn: (row) => row?.id,
-        cell: (props) => {
-          return <span>{props.row.index + 1}</span>;
-        },
+        cell: (props) => <span>{props.row.index + 1}</span>,
 
         meta: {
           width: '10%',
@@ -50,13 +48,11 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         header: t['sharePurchaseTableShareNumber'],
         accessorFn: (row) => row?.startNumber,
         footer: () => '',
-        cell: (props) => {
-          return (
-            <span>
-              {props.getValue() as string} to {props?.row?.original?.endNumber}
-            </span>
-          );
-        },
+        cell: (props) => (
+          <span>
+            {props.getValue() as string} to {props?.row?.original?.endNumber}
+          </span>
+        ),
       },
 
       {
@@ -65,15 +61,9 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         accessorFn: (row) => row?.debit,
         footer: () => '',
 
-        cell: (props) => {
-          return (
-            <span>
-              {props.getValue()
-                ? `${amountConverter(props.getValue() as string)}`
-                : '-'}
-            </span>
-          );
-        },
+        cell: (props) => (
+          <span>{props.getValue() ? `${amountConverter(props.getValue() as string)}` : '-'}</span>
+        ),
       },
       {
         id: 'share-cr',
@@ -84,24 +74,16 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
         //   width: '20%',
         // },
         accessorFn: (row) => row?.credit,
-        cell: (props) => {
-          return (
-            <span>
-              {props.getValue()
-                ? `${amountConverter(props.getValue() as string)}`
-                : '-'}
-            </span>
-          );
-        },
+        cell: (props) => (
+          <span>{props.getValue() ? `${amountConverter(props.getValue() as string)}` : '-'}</span>
+        ),
       },
       {
         header: t['sharePurchaseTableBalance'],
 
         accessorFn: (row) => row?.balance,
         footer: () => shareHistoryTableData?.share.history?.balance?.amount,
-        cell: (props) => {
-          return <span>{amountConverter(props.getValue() as string)}</span>;
-        },
+        cell: (props) => <span>{amountConverter(props.getValue() as string)}</span>,
         meta: {
           isNumeric: true,
         },
@@ -112,8 +94,8 @@ export const SharePurchaseHistoryTable = ({ id }: shareHistoryProps) => {
 
   return (
     <Table
-      showFooter={true}
-      isStatic={true}
+      showFooter
+      isStatic
       size="compact"
       isLoading={isFetching}
       data={rowData ?? []}

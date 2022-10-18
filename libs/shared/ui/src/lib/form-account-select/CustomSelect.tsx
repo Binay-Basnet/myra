@@ -34,7 +34,7 @@ export interface SelectProps
   onChange?: ((newValue: Option) => void) | any;
 }
 
-export function Select({
+export const Select = ({
   // size,
   errorText,
   helperText,
@@ -43,26 +43,25 @@ export function Select({
   options,
   value,
   ...rest
-}: SelectProps) {
-  // const [sortedOptions, setSortedOptions] = useState(options ?? []);
-
-  // useEffect(() => {
-  //   if (isMulti) {
-  //     setSortedOptions(options ?? []);
-  //   }
-  // }, [JSON.stringify(options)]);
-
+}: SelectProps) => {
+  // a filter function that runs against each 'option' in `options`
+  const filterOption = (option: any, inputValue: string): boolean =>
+    (option.label.toString().match(inputValue) || []).length > 0;
   return (
+    // const [sortedOptions, setSortedOptions] = useState(options ?? []);
+
+    // useEffect(() => {
+    //   if (isMulti) {
+    //     setSortedOptions(options ?? []);
+    //   }
+    // }, [JSON.stringify(options)]);
+
     <Flex direction="column" gap="s4">
       <TextFields variant="formLabel" color="gray.700">
         {label}
       </TextFields>
       <ChakraSelect<Option, boolean, GroupBase<Option>>
-        key={
-          !isMulti
-            ? `my_unique_select_key__${JSON.stringify(value)}`
-            : 'isMulti'
-        }
+        key={!isMulti ? `my_unique_select_key__${JSON.stringify(value)}` : 'isMulti'}
         // onMenuClose={() => {
         //   if (isMulti) {
         //     setSortedOptions((prev) =>
@@ -88,18 +87,11 @@ export function Select({
         isMulti={isMulti}
         hideSelectedOptions={false}
         isClearable={false}
-        chakraStyles={
-          chakraDefaultStyles as ChakraStylesConfig<
-            Option,
-            boolean,
-            GroupBase<Option>
-          >
-        }
+        chakraStyles={chakraDefaultStyles as ChakraStylesConfig<Option, boolean, GroupBase<Option>>}
         components={
-          customComponents as Partial<
-            SelectComponentsConfig<Option, boolean, GroupBase<Option>>
-          >
+          customComponents as Partial<SelectComponentsConfig<Option, boolean, GroupBase<Option>>>
         }
+        filterOption={filterOption}
         {...rest}
       />
       {errorText ? (
@@ -113,6 +105,6 @@ export function Select({
       ) : null}
     </Flex>
   );
-}
+};
 
 export default Select;

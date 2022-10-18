@@ -14,14 +14,12 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/cbs/share/features-share-return/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["libs/cbs/share/features-share-return/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/cbs/share/features-share-return"],
+      "outputs": ["{workspaceRoot}/coverage/libs/cbs/share/features-share-return"],
       "options": {
         "jestConfig": "libs/cbs/share/features-share-return/jest.config.ts",
         "passWithNoTests": true

@@ -62,13 +62,8 @@ export const Alert = ({
   return (
     <Collapse in={isAlertShown}>
       <ChakraAlert variant={status}>
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          width="100%"
-        >
-          <Box display={'flex'} flexDirection="column" gap="s8">
+        <Box display="flex" alignItems="center" justifyContent="space-between" width="100%">
+          <Box display="flex" flexDirection="column" gap="s8">
             <Box display="flex">
               <AlertIcon as={ICON_DICT[status]} />
 
@@ -83,11 +78,7 @@ export const Alert = ({
               </Box>
             </Box>
             {bottomButtonlabel && (
-              <Box
-                display={'flex'}
-                flexDirection="row"
-                justifyContent={'flex-start'}
-              >
+              <Box display="flex" flexDirection="row" justifyContent="flex-start">
                 <Button
                   variant="link"
                   shade={status === 'error' ? 'danger' : 'primary'}
@@ -117,6 +108,6 @@ export const Alert = ({
       </ChakraAlert>
     </Collapse>
   );
-}
+};
 
 export default Alert;

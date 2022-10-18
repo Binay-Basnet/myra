@@ -19,7 +19,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ebanking/feature-coop"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ebanking/feature-coop"],
       "options": {
         "jestConfig": "libs/ebanking/feature-coop/jest.config.ts",
         "passWithNoTests": true

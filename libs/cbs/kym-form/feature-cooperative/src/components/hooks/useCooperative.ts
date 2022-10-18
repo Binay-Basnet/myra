@@ -5,10 +5,12 @@ import { pickBy } from 'lodash';
 import debounce from 'lodash/debounce';
 
 import {
+  KymCooperativeFormInput,
+  RootState,
+  useAppSelector,
   useGetCoOperativeKymEditDataQuery,
   useSetCooperativeDataMutation,
 } from '@coop/cbs/data-access';
-import { KymCooperativeFormInput } from '@coop/cbs/data-access';
 
 interface IInstitutionHookProps {
   methods: UseFormReturn<KymCooperativeFormInput>;
@@ -25,7 +27,7 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
     refetch,
   } = useGetCoOperativeKymEditDataQuery(
     {
-      id: id,
+      id,
     },
     { enabled: id !== 'undefined' }
   );
@@ -45,20 +47,14 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
 
     return () => subscription.unsubscribe();
   }, [watch, router.isReady, editValues]);
-  const editLastValues =
-    editValues?.members?.cooperative?.formState?.data?.formData;
+  const editLastValues = editValues?.members?.cooperative?.formState?.data?.formData;
 
   useEffect(() => {
     if (editLastValues) {
-      const editTruthyData = pickBy(
-        editLastValues,
-        (v) => v !== 0 && v !== '' && v !== null
-      );
-      const registeredAddressLocality =
-        editLastValues?.registeredAddress?.locality?.local;
+      const editTruthyData = pickBy(editLastValues, (v) => v !== 0 && v !== '' && v !== null);
+      const registeredAddressLocality = editLastValues?.registeredAddress?.locality?.local;
 
-      const operatingAddressLocality =
-        editLastValues?.operatingAddress?.locality?.local;
+      const operatingAddressLocality = editLastValues?.operatingAddress?.locality?.local;
       const permanentAdrressLocality =
         editLastValues?.permanentRepresentativeAddress?.locality?.local;
       const temporaryAddressLocality =
@@ -83,7 +79,14 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
         },
       });
     }
-  }, [editLoading]);
+  }, [editLoading, editLastValues]);
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetch();
+  }, [preference?.date]);
 
   useEffect(() => {
     if (id) {

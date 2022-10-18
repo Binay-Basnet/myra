@@ -26,25 +26,22 @@ export interface InputProps extends ChakraInputProps {
   rightAddonText?: string;
 }
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  (
-    {
-      name,
-      rightElement,
-      leftElement,
-      helperText,
-      placeholder,
-      errorText,
-      label,
-      // fontSize,
-      // __placeholder,
-      size = 'default',
-      // fontWeight,
-      rightAddonText,
-      ...rest
-    }: InputProps,
-    ref
-  ) => (
+export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+  const {
+    type,
+    name,
+    rightElement,
+    leftElement,
+    helperText,
+    placeholder,
+    errorText,
+    label,
+    size = 'default',
+    rightAddonText,
+    ...rest
+  } = props;
+
+  return (
     <Box w="auto" display="flex" flexDirection="column" flexGrow={1} gap="s4">
       {label && (
         <TextFields variant="formLabel" color="gray.700">
@@ -56,7 +53,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {leftElement && <InputLeftElement pointerEvents="none" children={leftElement} />}
 
         <ChakraInput
+          type={type}
           data-testid={name}
+          name={name}
           ref={ref}
           h="100%"
           isInvalid={!!errorText}
@@ -66,9 +65,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           borderRight={rightAddonText && 'none'}
           {...rest}
         />
-        {rightElement && (
-          <InputRightElement pointerEvents="none" children={rightElement} ml="s4" px="s12" />
-        )}
+        {rightElement && <InputRightElement children={rightElement} ml="s4" px="s12" />}
         {rightAddonText && (
           <InputRightAddon
             children={rightAddonText}
@@ -90,8 +87,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         </TextFields>
       ) : null}
     </Box>
-  )
-);
+  );
+});
 
 export default Input;
 

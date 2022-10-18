@@ -27,19 +27,33 @@ type PurchaseProps = {
   denominationTotal: number;
   totalCashPaid: number;
   returnAmount: number;
+  totalAmount: number;
 };
 
-export const Cash = ({ denominationTotal, totalCashPaid, returnAmount }: PurchaseProps) => {
+export const Cash = ({
+  denominationTotal,
+  totalCashPaid,
+  returnAmount,
+  totalAmount,
+}: PurchaseProps) => {
   const { t } = useTranslation();
   const methods = useFormContext();
   const { watch } = methods;
 
+  const cashPaid = watch('cash.cashPaid');
   const disableDenomination = watch('cash.disableDenomination');
+
+  const cashReturn = cashPaid - totalAmount;
 
   return (
     <FormSection templateColumns={2}>
       <GridItem colSpan={1}>
-        <FormInput type="text" name="cash.cashPaid" label={t['sharePurchaseCash']} />
+        <FormInput
+          textAlign="right"
+          type="number"
+          name="cash.cashPaid"
+          label={t['sharePurchaseCash']}
+        />
       </GridItem>
 
       <GridItem colSpan={2}>
@@ -119,9 +133,47 @@ export const Cash = ({ denominationTotal, totalCashPaid, returnAmount }: Purchas
             >
               <Text>{denominationTotal}</Text>
               <Text>{totalCashPaid ? returnAmount : 0}</Text>
-              <Text>
-                {denominationTotal && returnAmount ? denominationTotal + returnAmount : 0}
-              </Text>
+              <Text>{totalAmount || 0}</Text>
+            </Box>
+          </Box>
+        </GridItem>
+      )}
+
+      {disableDenomination && (
+        <GridItem colSpan={2}>
+          <Box
+            border="1px solid"
+            borderColor="border.layout"
+            display="flex"
+            justifyContent="space-between"
+            mt="s16"
+            borderRadius="br2"
+            p="s8"
+          >
+            <Box
+              color="neutralColorLight.Gray-60"
+              fontSize="r1"
+              fontWeight="Regular"
+              display="flex"
+              flexDirection="column"
+              gap="s8"
+            >
+              <Text>{t['sharePurchaseTotal']}</Text>
+              <Text>{t['sharePurchaseReturn']}</Text>
+              <Text>{t['sharePurchaseGrandTotal']}</Text>
+            </Box>
+
+            <Box
+              color="neutralColorLight.Gray-60"
+              fontSize="r1"
+              fontWeight="Regular"
+              display="flex"
+              flexDirection="column"
+              gap="s8"
+            >
+              <Text>{cashPaid || 0}</Text>
+              <Text>{cashReturn || 0}</Text>
+              <Text>{totalAmount || 0}</Text>
             </Box>
           </Box>
         </GridItem>

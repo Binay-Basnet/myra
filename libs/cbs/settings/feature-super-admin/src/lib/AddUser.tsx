@@ -7,14 +7,18 @@ import {
   MyraUserIdentificationInput,
   MyraUserInput,
   Roles,
+  RootState,
   useAllAdministrationQuery,
+  useAppSelector,
   useGetSettingsUserEditDataQuery,
   UserGender,
   useSetSettingsUserDataMutation,
 } from '@coop/cbs/data-access';
 import { GroupContainer, InputGroupContainer } from '@coop/cbs/settings/ui-containers';
 import {
+  FormBranchSelect,
   FormCheckboxGroup,
+  FormDatePicker,
   FormEmailInput,
   FormFileInput,
   FormInput,
@@ -34,9 +38,7 @@ import {
   GridItem,
   Text,
 } from '@coop/shared/ui';
-import { RootState, useAppSelector, useTranslation } from '@coop/shared/utils';
-
-import { BranchSelect } from '../components';
+import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AddUserProps {}
@@ -80,7 +82,7 @@ export const AddUser = () => {
 
   const methods = useForm<UserFormInput>();
 
-  const { watch, getValues, reset } = methods;
+  const { watch, getValues, reset, resetField } = methods;
 
   const role = watch('role');
 
@@ -196,8 +198,8 @@ export const AddUser = () => {
     asyncToast({
       id: 'create-new-user',
       msgs: {
-        success: 'New User Created',
-        loading: 'Creating New User',
+        success: router.asPath.includes('edit') ? 'User Updated' : 'New User Created',
+        loading: router.asPath.includes('edit') ? 'Updating User' : 'Creating New User',
       },
       onSuccess: () => router.push('/settings/users/super-admin'),
       promise: mutateAsync({ id: id as string, data: formValues }),
@@ -212,6 +214,21 @@ export const AddUser = () => {
       enabled: !!id,
     }
   );
+
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    if (router.asPath.includes('edit')) {
+      refetchUserData();
+    }
+
+    if (router.asPath.includes('add')) {
+      resetField('dob');
+      resetField('citizenship.date');
+      resetField('drivingLicense.date');
+      resetField('passport.date');
+    }
+  }, [preference?.date, router?.asPath]);
 
   useEffect(() => {
     const userData = userQueryData?.settings?.myraUser?.formState?.data;
@@ -260,34 +277,23 @@ export const AddUser = () => {
           <FormProvider {...methods}>
             <form>
               <FormSection header="settingsUserAddUserBasicInformation">
-                <FormInput type="text" name="name" label="Name" __placeholder="Enter Name" />
+                <FormInput type="text" name="name" label="Name" />
 
-                <FormSelect
-                  name="gender"
-                  label="Gender"
-                  __placeholder="Select Gender"
-                  options={genderOptions}
-                />
+                <FormSelect name="gender" label="Gender" options={genderOptions} />
 
-                <FormInput type="date" name="dob" label="Date of Birth (BS)" />
+                {/* <FormInput type="date" name="dob" label="Date of Birth (BS)" /> */}
 
-                {/* <FormDatePicker name="dob" label="Date of Birth" /> */}
+                <FormDatePicker name="dob" label="Date of Birth" />
 
-                <FormPhoneNumber name="contactNo" label="Mobile No" __placeholder="Mobile No" />
+                <FormPhoneNumber name="contactNo" label="Mobile No" />
 
-                <FormEmailInput name="email" label="Email" __placeholder="Email" />
+                <FormEmailInput name="email" label="Email" />
 
-                <FormSelect
-                  name="role"
-                  label="Role"
-                  __placeholder="Select Role"
-                  options={roleOptions}
-                />
+                <FormSelect name="role" label="Role" options={roleOptions} />
 
-                <BranchSelect
+                <FormBranchSelect
                   name="branch"
                   label="Service Center"
-                  __placeholder="Select Service Center"
                   isDisabled={role === Roles.Superadmin}
                 />
               </FormSection>
@@ -319,21 +325,17 @@ export const AddUser = () => {
                           type="text"
                           name="citizenship.idNo"
                           label={t['kynIndCitizenshipNo']}
-                          __placeholder={t['kynIndCitizenshipNo']}
                         />
 
                         <FormInput
                           type="text"
                           name="citizenship.place"
                           label={t['kynIndCitizenshipIssuePlace']}
-                          __placeholder={t['kynIndCitizenshipIssuePlace']}
                         />
 
-                        <FormInput
-                          type="date"
+                        <FormDatePicker
                           name="citizenship.date"
                           label={t['kynIndCitizenshipIssueDate']}
-                          __placeholder={t['kynIndCitizenshipIssueDate']}
                         />
                       </InputGroupContainer>
                     </Box>
@@ -350,21 +352,17 @@ export const AddUser = () => {
                           type="text"
                           name="drivingLicense.idNo"
                           label={t['kymIndDrivingLicenseNo']}
-                          __placeholder={t['kymIndDrivingLicenseNo']}
                         />
 
                         <FormInput
                           type="text"
                           name="drivingLicense.place"
                           label={t['kymIndDrivingLicenseIssuePlace']}
-                          __placeholder={t['kymIndDrivingLicenseIssuePlace']}
                         />
 
-                        <FormInput
-                          type="date"
+                        <FormDatePicker
                           name="drivingLicense.date"
                           label={t['kymIndDrivingLicenseIssueDate']}
-                          __placeholder={t['kymIndDrivingLicenseIssueDate']}
                         />
                       </InputGroupContainer>
                     </Box>
@@ -377,26 +375,15 @@ export const AddUser = () => {
                       </Text>
 
                       <InputGroupContainer>
-                        <FormInput
-                          type="text"
-                          name="passport.idNo"
-                          label={t['kymIndPassportNo']}
-                          __placeholder={t['kymIndPassportNo']}
-                        />
+                        <FormInput type="text" name="passport.idNo" label={t['kymIndPassportNo']} />
 
                         <FormInput
                           type="text"
                           name="passport.place"
                           label={t['kymIndPassportIssuePlace']}
-                          __placeholder={t['kymIndPassportIssuePlace']}
                         />
 
-                        <FormInput
-                          type="date"
-                          name="passport.date"
-                          label={t['kymIndPassportIssueDate']}
-                          __placeholder={t['kymIndPassportIssueDate']}
-                        />
+                        <FormDatePicker name="passport.date" label={t['kymIndPassportIssueDate']} />
                       </InputGroupContainer>
                     </Box>
                   )}
@@ -412,14 +399,12 @@ export const AddUser = () => {
                           type="text"
                           name="voterCard.idNo"
                           label={t['kymIndVoterCardNo']}
-                          __placeholder={t['kymIndVoterCardNo']}
                         />
 
                         <FormInput
                           type="text"
                           name="voterCard.place"
                           label={t['kymIndVoterCardPollingStation']}
-                          __placeholder={t['kymIndVoterCardPollingStation']}
                         />
                       </InputGroupContainer>
                     </Box>
@@ -436,7 +421,6 @@ export const AddUser = () => {
                           type="text"
                           name="nationalId.idNo"
                           label={t['kymIndNationalIDNo']}
-                          __placeholder={t['kymIndNationalIDNo']}
                         />
                       </InputGroupContainer>
                     </Box>
@@ -448,13 +432,11 @@ export const AddUser = () => {
                 <FormSelect
                   name="permanentAddress.provinceId"
                   label={t['kymIndProvince']}
-                  __placeholder={t['kymIndSelectProvince']}
                   options={province}
                 />
                 <FormSelect
                   name="permanentAddress.districtId"
                   label={t['kymIndDistrict']}
-                  __placeholder={t['kymIndSelectDistrict']}
                   options={districtList.map((d) => ({
                     label: d.name,
                     value: d.id,
@@ -463,7 +445,6 @@ export const AddUser = () => {
                 <FormSelect
                   name="permanentAddress.localGovernmentId"
                   label={t['kymIndLocalGovernment']}
-                  __placeholder={t['kymIndSelectLocalGovernment']}
                   options={localityList.map((d) => ({
                     label: d.name,
                     value: d.id,
@@ -472,7 +453,6 @@ export const AddUser = () => {
                 <FormSelect
                   name="permanentAddress.wardNo"
                   label={t['kymIndWardNo']}
-                  __placeholder={t['kymIndEnterWardNo']}
                   options={wardList?.map((d) => ({
                     label: d,
                     value: d,
@@ -482,13 +462,11 @@ export const AddUser = () => {
                   type="text"
                   name="permanentAddress.locality"
                   label={t['kymIndLocality']}
-                  __placeholder={t['kymIndEnterLocality']}
                 />
                 <FormInput
                   type="number"
                   name="permanentAddress.houseNo"
                   label={t['kymIndHouseNo']}
-                  __placeholder={t['kymIndEnterHouseNo']}
                 />
 
                 <GridItem colSpan={2}>
@@ -519,13 +497,11 @@ export const AddUser = () => {
                       <FormSelect
                         name="temporaryAddress.provinceId"
                         label={t['kymIndProvince']}
-                        __placeholder={t['kymIndSelectProvince']}
                         options={province}
                       />
                       <FormSelect
                         name="temporaryAddress.districtId"
                         label={t['kymIndDistrict']}
-                        __placeholder={t['kymIndSelectDistrict']}
                         options={districtTempList.map((d) => ({
                           label: d.name,
                           value: d.id,
@@ -534,7 +510,6 @@ export const AddUser = () => {
                       <FormSelect
                         name="temporaryAddress.localGovernmentId"
                         label={t['kymIndLocalGovernment']}
-                        __placeholder={t['kymIndSelectLocalGovernment']}
                         options={localityTempList.map((d) => ({
                           label: d.name,
                           value: d.id,
@@ -543,7 +518,6 @@ export const AddUser = () => {
                       <FormSelect
                         name="temporaryAddress.wardNo"
                         label={t['kymIndWardNo']}
-                        __placeholder={t['kymIndEnterWardNo']}
                         options={wardTempList.map((d) => ({
                           label: d,
                           value: d,
@@ -553,13 +527,11 @@ export const AddUser = () => {
                         type="text"
                         name="temporaryAddress.locality"
                         label={t['kymIndLocality']}
-                        __placeholder={t['kymIndEnterLocality']}
                       />
                       <FormInput
                         type="number"
                         name="temporaryAddress.houseNo"
                         label={t['kymIndHouseNo']}
-                        __placeholder={t['kymIndEnterHouseNo']}
                       />
 
                       <GridItem colSpan={2}>
@@ -574,18 +546,8 @@ export const AddUser = () => {
                 header="kymIndINCASERESIDINGINRENTEDHOUSE"
                 id="kymAccIndIncaseofresidinginRentedHouse"
               >
-                <FormInput
-                  type="text"
-                  name="landlordName"
-                  label={t['kymIndLandlordName']}
-                  __placeholder={t['kymIndLandlordName']}
-                />
-                <FormInput
-                  type="number"
-                  name="landlordContact"
-                  label={t['kymIndContactNo']}
-                  __placeholder={t['kymIndContactNo']}
-                />
+                <FormInput type="text" name="landlordName" label={t['kymIndLandlordName']} />
+                <FormInput type="number" name="landlordContact" label={t['kymIndContactNo']} />
               </FormSection>
 
               <GroupContainer>
@@ -599,7 +561,7 @@ export const AddUser = () => {
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.xl" height="fit-content">
             <FormFooter
-              mainButtonLabel="Send Invitation"
+              mainButtonLabel={router?.asPath?.includes('edit') ? 'Save' : 'Send Invitation'}
               mainButtonHandler={handleSendInvitation}
             />
           </Container>

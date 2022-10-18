@@ -13,37 +13,35 @@ const data = [
   },
 ];
 
-export const IncomeSourceTable = () => {
-  return (
-    <Table
-      isLoading={false}
-      data={data}
-      columns={[
-        {
-          header: 'SN',
-          accessorFn: (row) => row?.id,
-          meta: {
-            width: 's16',
-          },
+export const IncomeSourceTable = () => (
+  <Table
+    isLoading={false}
+    data={data}
+    columns={[
+      {
+        header: 'SN',
+        accessorFn: (row: any) => row?.id,
+        meta: {
+          width: 's16',
         },
+      },
 
-        {
-          header: 'Income Source',
-          accessorFn: (row) => row?.incomeSource,
-          meta: {
-            width: '80%',
-          },
+      {
+        header: 'Income Source',
+        accessorFn: (row: any) => row?.incomeSource,
+        meta: {
+          width: '80%',
         },
-        {
-          header: 'Amount',
-          accessorFn: (row) => row?.amount,
-          meta: {
-            isNumeric: true,
-          },
+      },
+      {
+        header: 'Amount',
+        accessorFn: (row: any) => row?.amount,
+        meta: {
+          isNumeric: true,
         },
-      ]}
-      isStatic={true}
-      size="compact"
-    />
-  );
-};
+      },
+    ]}
+    isStatic
+    size="compact"
+  />
+);

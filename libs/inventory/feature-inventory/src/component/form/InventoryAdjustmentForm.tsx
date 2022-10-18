@@ -13,7 +13,7 @@ type InventoryAdjustmentTable = {
   product_description: string;
 };
 
-const search_options = [
+const searchOptions = [
   { label: 'MI 001 - Lenovo Laptop', value: 'mi001' },
   { label: 'MI 002 - Lenovo Laptop', value: 'mi002' },
   { label: 'MI 003 - Lenovo Laptop', value: 'mi003' },
@@ -32,13 +32,7 @@ const InventoryAdjustmentForm = () => {
   return (
     <FormProvider {...methods}>
       <form>
-        <Box
-          p="s20"
-          display="flex"
-          flexDirection="column"
-          gap="s32"
-          bg="neutralColorLight.Gray-0"
-        >
+        <Box p="s20" display="flex" flexDirection="column" gap="s32" bg="neutralColorLight.Gray-0">
           <InputGroupContainer>
             <FormInput
               type="text"
@@ -67,7 +61,7 @@ const InventoryAdjustmentForm = () => {
                   header: t['inventoryAdjustmentTableProduct'],
                   cellWidth: 'auto',
                   fieldType: 'search',
-                  searchOptions: search_options,
+                  searchOptions,
                 },
                 {
                   accessor: 'quantity',
@@ -100,11 +94,7 @@ const InventoryAdjustmentForm = () => {
           <Divider />
 
           <Box>
-            <FormTextArea
-              name="note"
-              label=" "
-              __placeholder={t['invFormNote']}
-            />
+            <FormTextArea name="note" label=" " __placeholder={t['invFormNote']} />
           </Box>
         </Box>
       </form>

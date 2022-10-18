@@ -1,8 +1,11 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { FormFieldSearchTerm, KymInsInput } from '@coop/cbs/data-access';
-import { useGetInstitutionKymOptionsQuery } from '@coop/cbs/data-access';
-import { FormInput, FormSelect } from '@coop/shared/form';
+import {
+  FormFieldSearchTerm,
+  KymInsInput,
+  useGetInstitutionKymOptionsQuery,
+} from '@coop/cbs/data-access';
+import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 import { FormSection, GridItem } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
@@ -33,51 +36,23 @@ export const BasicDetailsInstitution = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <FormSection
-          id="kymInsBasicInformation"
-          header="kymInsBasicInformation"
-        >
+        <FormSection id="kymInsBasicInformation" header="kymInsBasicInformation">
           <GridItem colSpan={2}>
-            <FormInput
-              type="text"
-              name={'institutionName'}
-              label={t['kymInsNameofInstitution']}
-              __placeholder={t['kymInsNameofInstitution']}
-            />
+            <FormInput type="text" name="institutionName" label={t['kymInsNameofInstitution']} />
           </GridItem>
           <FormSelect
             name="institutionTypeId"
             label={t['kymInsOrganizationType']}
-            __placeholder={t['kymInsSelectOrganizationType']}
             options={getOption(organizationFields)}
             isLoading={OrganizationLoading}
           />
-          <FormInput
-            type="text"
-            name="natureOfBusiness"
-            label={t['kymInsNatureofBusiness']}
-            __placeholder={t['kymInsNatureofBusiness']}
-          />
+          <FormInput type="text" name="natureOfBusiness" label={t['kymInsNatureofBusiness']} />
 
-          <FormInput
-            type="date"
-            name="registrationDate"
-            label={t['kymInsRegistrationDate']}
-            __placeholder="DD-MM-YYYY"
-          />
-          <FormInput
-            type="number"
-            name="vatOrPanNo"
-            label={t['kymInsVATPanNo']}
-            __placeholder={t['kymInsEnterVATPanNo']}
-          />
+          <FormDatePicker name="registrationDate" label={t['kymInsRegistrationDate']} />
 
-          <FormInput
-            type="text"
-            name="noOfBranches"
-            label={t['serviceCenterNoOfServiceCenter']}
-            __placeholder={t['serviceCenterEnterNoOfServiceCenter']}
-          />
+          <FormInput type="number" name="vatOrPanNo" label={t['kymInsVATPanNo']} />
+
+          <FormInput type="text" name="noOfBranches" label={t['serviceCenterNoOfServiceCenter']} />
         </FormSection>
       </form>
     </FormProvider>

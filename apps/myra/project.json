@@ -52,7 +52,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/myra"],
+      "outputs": ["{workspaceRoot}/coverage/apps/myra"],
       "options": {
         "jestConfig": "apps/myra/jest.config.ts",
         "passWithNoTests": true

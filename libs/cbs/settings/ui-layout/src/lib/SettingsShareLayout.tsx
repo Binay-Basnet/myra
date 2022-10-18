@@ -55,7 +55,7 @@ export const SettingsShareLayout = ({ children }: SettingsShareLayoutProps) => {
       >
         <SettingsInnerVerticalMenu tablinks={tabList} />
       </Box>
-      <Box ml="300px">{children}</Box>
+      <Box ml="250px">{children}</Box>
     </>
   );
 };

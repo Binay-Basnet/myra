@@ -1,4 +1,4 @@
-import { Box, Divider, Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 
 import { useTranslation } from '@coop/shared/utils';
 
@@ -11,14 +11,13 @@ type TabList = {
 
 const tabList: TabList[] = [
   {
+    title: 'settingsAlternativeChannel',
+    to: '/settings/general/alternative-channels/charges',
+  },
+  {
     title: 'settingsAuditLog',
     to: '/settings/general/audit-log',
   },
-  {
-    title: 'serviceCenterSettings',
-    to: '/settings/general/service-center',
-  },
-
   {
     title: 'settingsSideBarChartsOfAccounts',
     to: '/settings/general/charts-of-accounts',
@@ -49,13 +48,12 @@ const tabList: TabList[] = [
     to: '/settings/general/organization',
   },
   {
+    title: 'serviceCenterSettings',
+    to: '/settings/general/service-center',
+  },
+  {
     title: 'settingsSideBarShare',
     to: '/settings/general/share',
-  },
-
-  {
-    title: 'settingsSideBarValuator',
-    to: '/settings/general/valuator/list',
   },
 ];
 
@@ -64,19 +62,22 @@ export const SettingSideBar = () => {
   return (
     <Box
       position="fixed"
-      w="240px"
+      w="260px"
       display="flex"
       flexDirection="column"
-      gap="s16"
-      p="s12"
       flexShrink={0}
       minWidth="220px"
+      h="100vh"
+      zIndex="100"
     >
-      <Text fontSize="l1" fontWeight="600" color="gray.800">
-        {t['settingsGeneral']}
-      </Text>
-      <Divider borderColor="border.layout" />
-      <VerticalSideBarForSettings tablinks={tabList} />
+      <Box height="60px" py="s12" px="s16">
+        <Text fontSize="l1" fontWeight="600" color="gray.800">
+          {t['settingsGeneral']}
+        </Text>
+      </Box>
+      <Box p="s16">
+        <VerticalSideBarForSettings tablinks={tabList} />
+      </Box>
     </Box>
   );
 };

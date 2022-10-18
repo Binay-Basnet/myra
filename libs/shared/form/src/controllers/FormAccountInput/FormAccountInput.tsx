@@ -1,4 +1,3 @@
-import React from 'react';
 import { Control, Controller, Path, useFormContext } from 'react-hook-form';
 
 import { AmountInput, InputProps } from '@coop/shared/ui';

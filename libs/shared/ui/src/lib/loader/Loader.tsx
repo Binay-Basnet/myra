@@ -7,7 +7,7 @@ export interface LoaderProps {
   height?: number;
 }
 
-export function Loader({ height }: LoaderProps) {
+export const Loader = ({ height }: LoaderProps) => {
   const options = {
     animationData: LoadingAnimation,
     loop: true,
@@ -19,7 +19,7 @@ export function Loader({ height }: LoaderProps) {
 
   const { View } = useLottie(options, style);
 
-  return <>{View}</>;
-}
+  return View;
+};
 
 export default Loader;

@@ -37,7 +37,7 @@ export const Map = (props: MapProps) => {
     <MapContainer
       center={[0, 0]}
       zoom={13}
-      scrollWheelZoom={true}
+      scrollWheelZoom
       style={{ height: 450, width: '100%' }}
     >
       <MapContent position={position} setPosition={setPosition} />
@@ -93,7 +93,7 @@ const MapContent = (props: MapProps) => {
       <LeafletControlGeocoder setPosition={setPosition} />
       {position && (
         <Marker
-          draggable={true}
+          draggable
           eventHandlers={eventHandlers}
           position={[position?.latitude, position?.longitude]}
           ref={markerRef}

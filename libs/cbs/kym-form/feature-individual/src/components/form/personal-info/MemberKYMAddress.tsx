@@ -1,18 +1,11 @@
-import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
-import debounce from 'lodash/debounce';
-import pickBy from 'lodash/pickBy';
 
-import {
-  KymIndMemberInput,
-  useAllAdministrationQuery,
-  useGetIndividualKymEditDataQuery,
-  useSetMemberDataMutation,
-} from '@coop/cbs/data-access';
-import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
+import { KymIndMemberInput } from '@coop/cbs/data-access';
+import { FormAddress, FormInput, FormSwitch } from '@coop/shared/form';
 import { FormSection, GridItem } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
+
+import { useIndividual } from '../../hooks/useIndividual';
 
 interface IMemberKYMAddressProps {
   setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
@@ -21,116 +14,61 @@ interface IMemberKYMAddressProps {
 export const MemberKYMAddress = ({ setKymCurrentSection }: IMemberKYMAddressProps) => {
   const { t } = useTranslation();
 
-  const router = useRouter();
-
-  const id = router?.query?.['id'];
-
   const methods = useForm<KymIndMemberInput>();
+  useIndividual({ methods });
 
-  const { watch, control, reset } = methods;
+  const { watch } = methods;
 
   const isPermanentAndTemporaryAddressSame = watch('sameTempAsPermanentAddress');
-  const { data } = useAllAdministrationQuery();
+  // const { data } = useAllAdministrationQuery();
 
-  const province = useMemo(
-    () =>
-      data?.administration?.all?.map((d) => ({
-        label: d.name,
-        value: d.id,
-      })) ?? [],
-    [data?.administration?.all]
-  );
+  // const province = useMemo(
+  //   () =>
+  //     data?.administration?.all?.map((d) => ({
+  //       label: d.name,
+  //       value: d.id,
+  //     })) ?? [],
+  //   [data?.administration?.all]
+  // );
 
-  // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch('permanentAddress.provinceId');
-  const currentDistrictId = watch('permanentAddress.districtId');
-  const currentLocalityId = watch('permanentAddress.localGovernmentId');
+  // // FOR PERMANENT ADDRESS
+  // const currentProvinceId = watch('permanentAddress.provinceId');
+  // const currentDistrictId = watch('permanentAddress.districtId');
+  // const currentLocalityId = watch('permanentAddress.localGovernmentId');
 
-  const districtList = useMemo(
-    () => data?.administration.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
-    [currentProvinceId]
-  );
+  // const districtList = useMemo(
+  //   () => data?.administration.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
+  //   [currentProvinceId]
+  // );
 
-  const localityList = useMemo(
-    () => districtList.find((d) => d.id === currentDistrictId)?.municipalities ?? [],
-    [currentDistrictId]
-  );
+  // const localityList = useMemo(
+  //   () => districtList.find((d) => d.id === currentDistrictId)?.municipalities ?? [],
+  //   [currentDistrictId]
+  // );
 
-  const wardList = useMemo(
-    () => localityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
-    [currentLocalityId]
-  );
-  // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch('temporaryAddress.provinceId');
-  const currentTemptDistrictId = watch('temporaryAddress.districtId');
-  const currentTempLocalityId = watch('temporaryAddress.localGovernmentId');
+  // const wardList = useMemo(
+  //   () => localityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
+  //   [currentLocalityId]
+  // );
+  // // FOR TEMPORARY ADDRESS
+  // const currentTempProvinceId = watch('temporaryAddress.provinceId');
+  // const currentTemptDistrictId = watch('temporaryAddress.districtId');
+  // const currentTempLocalityId = watch('temporaryAddress.localGovernmentId');
 
-  const districtTempList = useMemo(
-    () => data?.administration.all.find((d) => d.id === currentTempProvinceId)?.districts ?? [],
-    [currentTempProvinceId]
-  );
+  // const districtTempList = useMemo(
+  //   () => data?.administration.all.find((d) => d.id === currentTempProvinceId)?.districts ?? [],
+  //   [currentTempProvinceId]
+  // );
 
-  const localityTempList = useMemo(
-    () => districtTempList.find((d) => d.id === currentTemptDistrictId)?.municipalities ?? [],
-    [currentTemptDistrictId]
-  );
+  // const localityTempList = useMemo(
+  //   () => districtTempList.find((d) => d.id === currentTemptDistrictId)?.municipalities ?? [],
+  //   [currentTemptDistrictId]
+  // );
 
-  const wardTempList = useMemo(
-    () => localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
-    [currentTempLocalityId]
-  );
-
-  const { data: editValues } = useGetIndividualKymEditDataQuery(
-    {
-      id: String(id),
-    },
-    { enabled: !!id }
-  );
-
-  useEffect(() => {
-    if (editValues) {
-      const editValueData = editValues?.members?.individual?.formState?.data?.formData;
-
-      reset({
-        permanentAddress: {
-          ...editValueData?.permanentAddress,
-          locality: editValueData?.permanentAddress?.locality?.local,
-        },
-        temporaryAddress: {
-          ...editValueData?.temporaryAddress?.address,
-          locality: editValueData?.temporaryAddress?.address?.locality?.local,
-        },
-        sameTempAsPermanentAddress: editValueData?.temporaryAddress?.sameTempAsPermanentAddress,
-        ...editValueData?.rentedHouse,
-        landlordName: editValueData?.rentedHouse?.landlordName?.local,
-      });
-    }
-  }, [editValues]);
-
-  const { mutate } = useSetMemberDataMutation();
-
-  useEffect(() => {
-    const subscription = watch(
-      debounce((val) => {
-        if (id) {
-          mutate({
-            id: String(id),
-            data: {
-              ...val,
-              permanentAddress: {
-                ...pickBy(val?.permanentAddress ?? {}, (v) => v !== 0),
-              },
-              temporaryAddress: {
-                ...pickBy(val?.temporaryAddress ?? {}, (v) => v !== 0),
-              },
-            },
-          });
-        }
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
+  // const wardTempList = useMemo(
+  //   () => localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
+  //   [currentTempLocalityId]
+  // );
 
   return (
     <FormProvider {...methods}>
@@ -140,116 +78,20 @@ export const MemberKYMAddress = ({ setKymCurrentSection }: IMemberKYMAddressProp
           setKymCurrentSection(kymSection);
         }}
       >
-        <FormSection gridLayout id="kymAccIndPermanentAddress" header="kymIndPermanentAddress">
-          <FormSelect
-            name="permanentAddress.provinceId"
-            label={t['kymIndProvince']}
-            __placeholder={t['kymIndSelectProvince']}
-            options={province}
-          />
-          <FormSelect
-            name="permanentAddress.districtId"
-            label={t['kymIndDistrict']}
-            __placeholder={t['kymIndSelectDistrict']}
-            options={districtList.map((d) => ({
-              label: d.name,
-              value: d.id,
-            }))}
-          />
-          <FormSelect
-            name="permanentAddress.localGovernmentId"
-            label={t['kymIndLocalGovernment']}
-            __placeholder={t['kymIndSelectLocalGovernment']}
-            options={localityList.map((d) => ({
-              label: d.name,
-              value: d.id,
-            }))}
-          />
-          <FormSelect
-            name="permanentAddress.wardNo"
-            label={t['kymIndWardNo']}
-            __placeholder={t['kymIndEnterWardNo']}
-            options={wardList?.map((d) => ({
-              label: d,
-              value: d,
-            }))}
-          />
-          <FormInput
-            type="text"
-            name="permanentAddress.locality"
-            label={t['kymIndLocality']}
-            __placeholder={t['kymIndEnterLocality']}
-          />
-          <FormInput
-            type="number"
-            name="permanentAddress.houseNo"
-            label={t['kymIndHouseNo']}
-            __placeholder={t['kymIndEnterHouseNo']}
-          />
-          <GridItem colSpan={2}>
-            <FormMap name="permanentAddress.coordinates" />
-          </GridItem>
-        </FormSection>
+        <FormAddress
+          sectionId="kymAccIndPermanentAddress"
+          sectionHeader="kymIndPermanentAddress"
+          name="permanentAddress"
+        />
 
-        <FormSection gridLayout id="kymAccIndTemporaryAddress" header="kymIndTemporaryAddress">
+        <FormSection id="kymAccIndTemporaryAddress" header="kymIndTemporaryAddress">
           <GridItem colSpan={3}>
             <FormSwitch
               name="sameTempAsPermanentAddress"
               label={t['kymIndTemporaryAddressPermanent']}
             />
           </GridItem>
-          {!isPermanentAndTemporaryAddressSame && (
-            <>
-              <FormSelect
-                name="temporaryAddress.provinceId"
-                label={t['kymIndProvince']}
-                __placeholder={t['kymIndSelectProvince']}
-                options={province}
-              />
-              <FormSelect
-                name="temporaryAddress.districtId"
-                label={t['kymIndDistrict']}
-                __placeholder={t['kymIndSelectDistrict']}
-                options={districtTempList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
-              <FormSelect
-                name="temporaryAddress.localGovernmentId"
-                label={t['kymIndLocalGovernment']}
-                __placeholder={t['kymIndSelectLocalGovernment']}
-                options={localityTempList.map((d) => ({
-                  label: d.name,
-                  value: d.id,
-                }))}
-              />
-              <FormSelect
-                name="temporaryAddress.wardNo"
-                label={t['kymIndWardNo']}
-                __placeholder={t['kymIndEnterWardNo']}
-                options={wardTempList.map((d) => ({
-                  label: d,
-                  value: d,
-                }))}
-              />
-              <FormInput
-                type="text"
-                name="temporaryAddress.locality"
-                label={t['kymIndLocality']}
-                __placeholder={t['kymIndEnterLocality']}
-              />
-              <FormInput
-                type="number"
-                name="temporaryAddress.houseNo"
-                label={t['kymIndHouseNo']}
-                __placeholder={t['kymIndEnterHouseNo']}
-              />
-              <GridItem colSpan={2}>
-                <FormMap name="temporaryAddress.coordinates" />
-              </GridItem>
-            </>
-          )}
+          {!isPermanentAndTemporaryAddressSame && <FormAddress name="temporaryAddress" />}
         </FormSection>
         {/* <Box
           id="kymAccIndTemporaryAddress"
@@ -284,7 +126,6 @@ export const MemberKYMAddress = ({ setKymCurrentSection }: IMemberKYMAddressProp
         {/* </FormSection> */}
 
         <FormSection
-          gridLayout
           header="kymIndINCASERESIDINGINRENTEDHOUSE"
           id="kymAccIndIncaseofresidinginRentedHouse"
         >
@@ -295,7 +136,6 @@ export const MemberKYMAddress = ({ setKymCurrentSection }: IMemberKYMAddressProp
             __placeholder={t['kymIndLandlordName']}
           />
           <FormInput
-            control={control}
             type="number"
             name="landlordContact"
             label={t['kymIndContactNo']}

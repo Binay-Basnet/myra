@@ -94,71 +94,73 @@ export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayo
 
   return (
     <Box>
-      <Box width="275px" p="s24" position="fixed">
-        <Text fontSize="l1" fontWeight="600" color="gray.800">
-          {t['transactionSidebarTransaction']}
-        </Text>
-        <Divider my="s16" />
+      <Box width="260px" position="fixed">
+        <Box height="60px" py="s12" px="s16">
+          <Text fontSize="l1" fontWeight="600" color="gray.800">
+            {t['transactionSidebarTransaction']}
+          </Text>
+        </Box>
 
-        <Popover placement="bottom-start" gutter={3}>
-          <PopoverTrigger>
-            <Button width="full" size="lg" justifyContent="start" leftIcon={<AddIcon />}>
-              {t['transactionSidebarNewTransaction']}
-            </Button>
-          </PopoverTrigger>
+        <Box p="s16">
+          <Popover placement="bottom-start" gutter={3}>
+            <PopoverTrigger>
+              <Button width="full" size="md" justifyContent="start" leftIcon={<AddIcon />}>
+                {t['transactionSidebarNewTransaction']}
+              </Button>
+            </PopoverTrigger>
 
-          <PopoverContent
-            // bg="gray.0"
-            p={0}
-            w="225px"
-            _focus={{
-              boxShadow: 'none',
-            }}
+            <PopoverContent
+              // bg="gray.0"
+              p={0}
+              w="225px"
+              _focus={{
+                boxShadow: 'none',
+              }}
+            >
+              <PopoverBody p={0}>
+                <Box>
+                  {dropdownButtons.map((addButton) => (
+                    <Box
+                      px="s16"
+                      py="s10"
+                      width="100%"
+                      display="flex"
+                      alignItems="center"
+                      _hover={{ bg: 'gray.100' }}
+                      cursor="pointer"
+                      onClick={() => router.push(addButton.link)}
+                      key={addButton.link}
+                    >
+                      <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
+                      <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+                        {t[addButton.label]}
+                      </Text>
+                    </Box>
+                  ))}
+                </Box>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
+          <Divider my="s16" />
+
+          <TabColumn list={transactionSidebarColumns} />
+          <Divider my="s16" />
+          <Button
+            variant="ghost"
+            color="#37474F"
+            height="s48"
+            width="full"
+            justifyContent="start"
+            leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
           >
-            <PopoverBody p={0}>
-              <Box>
-                {dropdownButtons.map((addButton) => (
-                  <Box
-                    px="s16"
-                    py="s10"
-                    width="100%"
-                    display="flex"
-                    alignItems="center"
-                    _hover={{ bg: 'gray.100' }}
-                    cursor="pointer"
-                    onClick={() => router.push(addButton.link)}
-                    key={addButton.link}
-                  >
-                    <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
-                    <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                      {t[addButton.label]}
-                    </Text>
-                  </Box>
-                ))}
-              </Box>
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
-
-        <Divider my="s16" />
-        <TabColumn list={transactionSidebarColumns} />
-        <Divider my="s16" />
-        <Button
-          variant="ghost"
-          color="#37474F"
-          height="s48"
-          width="full"
-          justifyContent="start"
-          leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
-        >
-          {t['transactionSidebarTransactionSettings']}
-        </Button>
+            {t['transactionSidebarTransactionSettings']}
+          </Button>
+        </Box>
       </Box>
       <Box
-        boxShadow="xl"
-        width="calc(100% - 240px)"
+        width="calc(100% - 260px)"
         position="relative"
-        left="275px"
+        left="260px"
         minH="calc(100vh - 110px)"
         bg="white"
       >

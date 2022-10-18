@@ -1,5 +1,8 @@
-import { useGetCoaBankListQuery } from '@coop/cbs/data-access';
-import { FormInput, FormSelect } from '@coop/shared/form';
+import { useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
+
+import { RootState, useAppSelector, useGetCoaBankListQuery } from '@coop/cbs/data-access';
+import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 import { FormSection, GridItem } from '@coop/shared/ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
@@ -20,6 +23,15 @@ export const BankVoucher = ({ totalAmount }: PurchaseProps) => {
     label: item?.name?.local as string,
     value: item?.id as string,
   }));
+
+  const { resetField } = useFormContext();
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    resetField('bankVoucher.depositedDate');
+  }, [preference?.date]);
 
   return (
     <FormSection templateColumns={2}>
@@ -46,11 +58,7 @@ export const BankVoucher = ({ totalAmount }: PurchaseProps) => {
       </GridItem>
 
       <GridItem colSpan={1}>
-        <FormInput
-          type="date"
-          name="bankVoucher.depositedDate"
-          label={t['sharePurchaseDepositedDate']}
-        />
+        <FormDatePicker name="bankVoucher.depositedDate" label={t['sharePurchaseDepositedDate']} />
       </GridItem>
     </FormSection>
   );

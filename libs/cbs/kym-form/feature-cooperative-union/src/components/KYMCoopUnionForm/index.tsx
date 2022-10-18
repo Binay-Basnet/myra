@@ -17,17 +17,13 @@ interface KYMCoopFormProps {
   setKymCurrentSection: (section: KYMSection) => void;
 }
 
-export const KYMCoopUnionForm = React.memo(
-  ({ setKymCurrentSection }: KYMCoopFormProps) => {
-    return (
-      <Box zIndex={1} background="gray.0" ml="320" pb="120px">
-        <InstituteInfo setSection={setKymCurrentSection} />
-        <DirectorDetails setSection={setKymCurrentSection} />
-        <AccountOperatorDetails setSection={setKymCurrentSection} />
-        <CentralRepresentativeDetails setSection={setKymCurrentSection} />
-        <EconomicDetails setSection={setKymCurrentSection} />
-        <Declaration setSection={setKymCurrentSection} />
-      </Box>
-    );
-  }
-);
+export const KYMCoopUnionForm = React.memo(({ setKymCurrentSection }: KYMCoopFormProps) => (
+  <Box zIndex={1} background="gray.0" ml="320" pb="120px">
+    <InstituteInfo setSection={setKymCurrentSection} />
+    <DirectorDetails setSection={setKymCurrentSection} />
+    <AccountOperatorDetails setSection={setKymCurrentSection} />
+    <CentralRepresentativeDetails setSection={setKymCurrentSection} />
+    <EconomicDetails setSection={setKymCurrentSection} />
+    <Declaration setSection={setKymCurrentSection} />
+  </Box>
+));

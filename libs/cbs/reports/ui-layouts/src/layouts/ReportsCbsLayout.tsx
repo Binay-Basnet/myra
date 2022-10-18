@@ -44,7 +44,7 @@ export const ReportsCbsLayout = ({ children }: ReportsCbsLayoutProps) => {
       )}
 
       <Box
-        ml={router.query['objState'] !== 'table-view' ? '300px' : '0'}
+        ml={router.query['objState'] !== 'table-view' ? '250px' : '0'}
         bg="white"
         minH="calc(100vh-110px)"
       >

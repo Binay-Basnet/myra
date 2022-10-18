@@ -14,14 +14,12 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/inventory/feature-inventory/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["libs/inventory/feature-inventory/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/inventory/feature-inventory"],
+      "outputs": ["{workspaceRoot}/coverage/libs/inventory/feature-inventory"],
       "options": {
         "jestConfig": "libs/inventory/feature-inventory/jest.config.ts",
         "passWithNoTests": true

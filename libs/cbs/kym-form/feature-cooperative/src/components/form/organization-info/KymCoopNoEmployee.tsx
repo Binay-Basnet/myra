@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { KymCooperativeFormInput } from '@coop/cbs/data-access';
@@ -25,8 +24,7 @@ export const KymCoopNoEmployee = (props: IProps) => {
   useCooperative({ methods });
 
   const totalEmployee =
-    (Number(watch('noOfMaleEmployee')) ?? 0) +
-    Number(watch('noOfFemaleEmployee') ?? 0);
+    (Number(watch('noOfMaleEmployee')) ?? 0) + Number(watch('noOfFemaleEmployee') ?? 0);
 
   return (
     <FormProvider {...methods}>
@@ -36,27 +34,21 @@ export const KymCoopNoEmployee = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <FormSection
-          gridLayout={true}
-          id="kymCoopAccNumberofEmployee"
-          header="kymCoopNumberofEmployee"
-        >
+        <FormSection id="kymCoopAccNumberofEmployee" header="kymCoopNumberofEmployee">
           <FormInput
             type="number"
-            textAlign={'right'}
+            textAlign="right"
             name="noOfMaleEmployee"
             label={t['kymCoopMale']}
-            __placeholder="0"
             // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             //   setMaleNum(Number(e.target.value))
             // }
           />
           <FormInput
             type="number"
-            textAlign={'right'}
+            textAlign="right"
             name="noOfFemaleEmployee"
             label={t['kymCoopFemale']}
-            __placeholder="0"
             // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             //   setFemaleNum(Number(e.target.value))
             // }
@@ -66,12 +58,11 @@ export const KymCoopNoEmployee = (props: IProps) => {
             bg="neutralColorLight.Gray-20"
             border="1px solid"
             borderColor="disabled.disabled"
-            isDisabled={true}
+            isDisabled
             type="number"
-            textAlign={'right'}
+            textAlign="right"
             name="totalEmployee"
             label={t['kymCoopTotal']}
-            __placeholder="0"
             value={totalEmployee}
           />
         </FormSection>

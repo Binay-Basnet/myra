@@ -8,17 +8,15 @@ interface ITreeProps {
   isExtensible?: boolean;
 }
 
-function Tree(props: ITreeProps) {
-  return (
-    <Accordion>
-      <Accordion.Summary>
-        <TreeHeader {...props} />
-      </Accordion.Summary>
-      <Accordion.Details>
-        <TreeDetails />
-      </Accordion.Details>
-    </Accordion>
-  );
-}
+const Tree = (props: ITreeProps) => (
+  <Accordion>
+    <Accordion.Summary>
+      <TreeHeader {...props} />
+    </Accordion.Summary>
+    <Accordion.Details>
+      <TreeDetails />
+    </Accordion.Details>
+  </Accordion>
+);
 
 export default Tree;

@@ -1,12 +1,5 @@
 import { useState } from 'react';
-import {
-  Box,
-  Input,
-  InputGroup,
-  InputProps,
-  InputRightElement,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Input, InputGroup, InputProps, InputRightElement, Text } from '@chakra-ui/react';
 
 /* eslint-disable-next-line */
 export interface AmountInputProps extends InputProps {
@@ -16,29 +9,24 @@ export interface AmountInputProps extends InputProps {
 }
 
 export const AmountInput = (props: AmountInputProps) => {
-  const { labelColor, label, __placeholder, ...rest } = props;
+  const { labelColor, label, ...rest } = props;
   const [isDebit, setIsDebit] = useState(true);
   const handleClick = () => setIsDebit(!isDebit);
 
   return (
     <>
-      <Text
-        fontWeight={'500'}
-        color={labelColor ?? 'gray.700'}
-        fontSize="s2"
-        mb="s4"
-      >
+      <Text fontWeight="500" color={labelColor ?? 'gray.700'} fontSize="s2" mb="s4">
         {' '}
         {label ?? 'Amount'}
       </Text>
       <InputGroup h="44px">
         <Input
           pr="58px"
-          variant={'outline'}
+          variant="outline"
           type="number"
-          fontSize={'s2'}
-          textAlign={'right'}
-          __placeholder={__placeholder ?? '0.00'}
+          fontSize="s2"
+          textAlign="right"
+          // __placeholder={__placeholder ?? '0.00'}
           {...rest}
         />
         <InputRightElement
@@ -46,14 +34,10 @@ export const AmountInput = (props: AmountInputProps) => {
           width="fit-content"
           onClick={handleClick}
           pr="s16"
-          cursor={'pointer'}
+          cursor="pointer"
         >
           <Box w="30px">
-            <Text
-              fontSize="s2"
-              fontWeight={'500'}
-              color={isDebit ? '#143E9F' : '#FC814A'}
-            >
+            <Text fontSize="s2" fontWeight="500" color={isDebit ? '#143E9F' : '#FC814A'}>
               {isDebit ? 'DR' : 'CR'}
             </Text>
           </Box>

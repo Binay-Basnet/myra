@@ -234,7 +234,7 @@ query getCollateralList {
 
 query getLoanList($paginate: Pagination, $filter: LoanAccountSearchFilter) {
   loanAccount {
-    list(paginate: $paginate, filter:$filter) {
+    list(paginate: $paginate, filter: $filter) {
       totalCount
       edges {
         cursor
@@ -300,7 +300,7 @@ query getLoanInstallments(
 
 query getLoanApplicationDetails($id: ID!) {
   loanAccount {
-    formState(id: $id){
+    formState(id: $id) {
       data {
         memberId
         productType
@@ -346,10 +346,11 @@ query getLoanApplicationDetails($id: ID!) {
           maxGuranteeAmountLimit
           memberId
           totalAmount
+          accountName
         }
         gracePeriod {
-          gracePeriod
-          installmentNo
+          principalGracePeriod
+          interestGracePeriod
         }
         totalValuation
         totalSanctionedAmount
@@ -369,6 +370,120 @@ query getLoanApplicationDetails($id: ID!) {
       }
       error {
         ...QueryError
+      }
+    }
+  }
+}
+
+query getMemberLoanAccounts($memberId: ID!) {
+  loanAccount {
+    memberDisbursedLoanAccounts(memberId: $memberId) {
+      id
+      name
+    }
+  }
+}
+
+query getLoanPreview($id: String!) {
+  loanAccount {
+    loanPreview(loanAccountId: $id) {
+      data {
+        productId
+        additionalFeatures {
+          allowPartialInstallment
+          collateral
+          insurance
+          isMonthlyInterestCompulsory
+          loanScheduleChangeOverride
+          overrideInterest
+          staffProduct
+          supportMultipleAccount
+        }
+        criteria {
+          gender
+          minAge
+          maxAge
+          ethnicity
+          educationQualification
+          maritalStatus
+          foreignEmployment
+          occupation
+          institutionType
+          cooperativeUnion
+          cooperativeType
+        }
+        collateralAndGuarantees {
+          name
+          valuation
+        }
+        generalInformation {
+          loanProduct
+          loanSubType
+          loanType
+          natureOfLoanProduct
+          loanName
+          productCode
+        }
+        loanDetails {
+          appliedLoanAmount
+          interestMethod
+          interestRate
+          loanRepaymentScheme
+          tenure
+          tenureUnit
+          totalCollateralValuation
+          totalGuaranteeValuation
+          totalProcessingChargesValuation
+          totalSanctionedAmount
+          totalDisbursedAmount
+          principalGracePeriod
+          interestGracePeriod
+          interestAmount
+          disburseDate
+          expiryDate
+          paymentFrequency
+          processingCharges {
+            name
+            amount
+          }
+        }
+        repaymentDetails {
+          lastPaymentDate
+          remainingPrincipal
+          remainingInterest
+          remainingTotal
+          remainingInstallments {
+            installmentNo
+            principal
+            fine
+            interestAmount
+          }
+          totalInstallmentAmount
+        }
+        member {
+          name
+          id
+          profilePicUrl
+        }
+
+        memberId
+        productId
+        paymentSchedule {
+          total
+          installments {
+            installmentDate
+            installmentNo
+            interest
+            payment
+            principal
+            remainingPrincipal
+          }
+        }
+        statistics {
+          remainingPayableAmount
+          totalPaidAmount
+          totalPayableAmount
+        }
       }
     }
   }

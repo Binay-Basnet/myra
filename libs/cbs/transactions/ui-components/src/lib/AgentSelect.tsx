@@ -11,28 +11,25 @@ interface IAgentSelectProps {
   __placeholder?: string;
 }
 
-export const AgentSelect = ({
-  name,
-  label,
-  __placeholder,
-}: IAgentSelectProps) => {
+type OptionType = { label: string; value: string };
+
+export const AgentSelect = ({ name, label, __placeholder }: IAgentSelectProps) => {
   const [agentId, setAgentId] = useState('');
   const [trigger, setTrigger] = useState(false);
 
-  const { data: agentListQueryData, isFetching } =
-    useGetSettingsUserListDataQuery(
-      {
-        paginate: getRouterQuery({ type: ['PAGINATION'] }),
-        filter: {
-          query: agentId,
-          role: Roles.Agent,
-        },
+  const { data: agentListQueryData, isFetching } = useGetSettingsUserListDataQuery(
+    {
+      paginate: getRouterQuery({ type: ['PAGINATION'] }),
+      filter: {
+        query: agentId,
+        role: Roles.Agent,
       },
-      {
-        staleTime: 0,
-        enabled: trigger,
-      }
-    );
+    },
+    {
+      staleTime: 0,
+      enabled: trigger,
+    }
+  );
 
   // useEffect(() => {
   //   setAgentId(watch(name));
@@ -40,17 +37,16 @@ export const AgentSelect = ({
 
   const agentList = agentListQueryData?.settings?.myraUser?.list?.edges;
 
-  type optionType = { label: string; value: string };
-
-  const agentOptions = agentList?.reduce((prevVal, curVal) => {
-    return [
+  const agentOptions = agentList?.reduce(
+    (prevVal, curVal) => [
       ...prevVal,
       {
         label: `${curVal?.node?.name} [ID:${curVal?.node?.id}]`,
         value: curVal?.node?.id as string,
       },
-    ];
-  }, [] as optionType[]);
+    ],
+    [] as OptionType[]
+  );
 
   return (
     <FormSelect

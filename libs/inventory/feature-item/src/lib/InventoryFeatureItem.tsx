@@ -3,15 +3,7 @@ import { BiSave } from 'react-icons/bi';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import {
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  Icon,
-  IconButton,
-  Text,
-} from '@coop/shared/ui';
+import { Box, Button, Container, FormFooter, Icon, IconButton, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { InventoryItemForm } from '../component/form/InventoryItemForm';
@@ -19,7 +11,7 @@ import { InventoryItemForm } from '../component/form/InventoryItemForm';
 /* eslint-disable-next-line */
 export interface InventoryFeatureItemProps {}
 
-export function InventoryFeatureItem() {
+export const InventoryFeatureItem = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const methods = useForm({});
@@ -31,23 +23,19 @@ export function InventoryFeatureItem() {
             height="60px"
             display="flex"
             justifyContent="space-between"
-            alignItems={'center'}
+            alignItems="center"
             px="s16"
             py="s20"
             background="neutralColorLight.Gray-0"
             borderBottom="1px solid "
             borderColor="border.layout"
           >
-            <Text
-              fontSize="r2"
-              fontWeight="SemiBold"
-              color="neutralColorLight.Gray-80"
-            >
+            <Text fontSize="r2" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
               {t['invItemAddNewItem']}
             </Text>
 
             <IconButton
-              variant={'ghost'}
+              variant="ghost"
               aria-label="close"
               icon={<Icon as={IoCloseOutline} size="md" />}
               onClick={() => router.back()}
@@ -86,4 +74,4 @@ export function InventoryFeatureItem() {
       </Box>
     </>
   );
-}
+};

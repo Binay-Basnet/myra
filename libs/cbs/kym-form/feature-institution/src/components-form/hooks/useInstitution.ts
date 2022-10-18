@@ -5,10 +5,12 @@ import { pickBy } from 'lodash';
 import debounce from 'lodash/debounce';
 
 import {
+  KymInsInput,
+  RootState,
+  useAppSelector,
   useGetInstitutionKymEditDataQuery,
   useSetInstitutionDataMutation,
 } from '@coop/cbs/data-access';
-import { KymInsInput } from '@coop/cbs/data-access';
 
 interface IInstitutionHookProps {
   methods: UseFormReturn<KymInsInput>;
@@ -22,8 +24,7 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
     onSuccess: (res) => {
       setError('institutionName', {
         type: 'custom',
-        message:
-          res?.members?.institution?.add?.error?.error?.['institutionName'][0],
+        message: res?.members?.institution?.add?.error?.error?.['institutionName'][0],
       });
     },
     onError: () => {
@@ -40,7 +41,7 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
     refetch,
   } = useGetInstitutionKymEditDataQuery(
     {
-      id: id,
+      id,
     },
     { enabled: id !== 'undefined' }
   );
@@ -49,13 +50,16 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
     const subscription = watch(
       debounce((data) => {
         if (data && id !== 'undefined') {
-          mutate({
-            id: router.query['id'] as string,
-            data: {
-              ...data,
-              accountType: data?.accountType === '' ? null : data?.accountType,
+          mutate(
+            {
+              id: router.query['id'] as string,
+              data: {
+                ...data,
+                accountType: data?.accountType === '' ? null : data?.accountType,
+              },
             },
-          });
+            { onSuccess: () => refetch() }
+          );
           // refetch();
         }
       }, 800)
@@ -63,22 +67,17 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
 
     return () => subscription.unsubscribe();
   }, [watch, router.isReady, editValues]);
-  const lastEditValues =
-    editValues?.members?.institution?.formState?.data?.formData;
+
+  const lastEditValues = editValues?.members?.institution?.formState?.data?.formData;
 
   useEffect(() => {
     if (lastEditValues) {
       const truthyEditValue = pickBy(lastEditValues ?? {}, (v) => v !== null);
-      const editValueData =
-        editValues?.members?.institution?.formState?.data?.formData;
-      const registeredAddressLocality =
-        editValueData?.registeredAddress?.locality?.local;
-      const operatingAddressLocality =
-        editValueData?.operatingOfficeAddress?.locality?.local;
-      const branchOfficeAddress =
-        editValueData?.branchOfficeAddress?.locality?.local;
-      const accountHoldersAddress =
-        editValueData?.accountHolderAddress?.locality?.local;
+      const editValueData = editValues?.members?.institution?.formState?.data?.formData;
+      const registeredAddressLocality = editValueData?.registeredAddress?.locality?.local;
+      const operatingAddressLocality = editValueData?.operatingOfficeAddress?.locality?.local;
+      const branchOfficeAddress = editValueData?.branchOfficeAddress?.locality?.local;
+      const accountHoldersAddress = editValueData?.accountHolderAddress?.locality?.local;
 
       reset({
         ...truthyEditValue,
@@ -101,6 +100,13 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
       });
     }
   }, [editLoading, lastEditValues]);
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetch();
+  }, [preference?.date]);
 
   useEffect(() => {
     if (id) {

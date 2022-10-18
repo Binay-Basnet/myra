@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import {
@@ -7,7 +6,7 @@ import {
   useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
 import { FieldCardComponents } from '@coop/shared/components';
-import { FormCheckbox, FormInput, FormNumberInput } from '@coop/shared/form';
+import { FormCheckbox, FormNumberInput } from '@coop/shared/form';
 import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
@@ -18,7 +17,7 @@ type IReturnInfo = {
 export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
   const { t } = useTranslation();
   const methods = useFormContext();
-  const { watch, getValues, reset, register } = methods;
+  const { watch, register } = methods;
 
   const memberId = watch('memberId');
   const noOfShares = watch('noOfReturnedShares');
@@ -42,22 +41,6 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
 
   const chargeList = chargesData?.share?.charges;
 
-  useEffect(() => {
-    if (balanceData) {
-      if (allShares) {
-        reset({
-          ...getValues(),
-          noOfReturnedShares: balanceData?.count ?? 0,
-        });
-      } else {
-        reset({
-          ...getValues(),
-          noOfReturnedShares: 0,
-        });
-      }
-    }
-  }, [allShares, balanceData, getValues, reset]);
-
   const shareResult = () => {
     if (balanceData) {
       if (allShares) {
@@ -72,9 +55,7 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
     <Box display="flex" flexDirection="column" pb="28px" background="gray.0">
       <FormSection header="shareReturnShareInformation">
         <GridItem colSpan={3}>
-          <FormInput
-            type="text"
-            textAlign="right"
+          <FormNumberInput
             id="noOfShares"
             name="noOfReturnedShares"
             label={t['shareReturnNoOfShares']}
@@ -102,7 +83,7 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
                   {t['shareReturnRemainingShareValue']}
                 </Text>
                 <Text fontWeight="SemiBold" fontSize="r1">
-                  {shareResult()}
+                  {shareResult() * 100}
                 </Text>
               </Box>
             </Box>

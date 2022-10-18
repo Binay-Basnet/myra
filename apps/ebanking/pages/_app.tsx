@@ -1,11 +1,14 @@
-import React, { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { Provider } from 'react-redux';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { ChakraProvider } from '@chakra-ui/react';
 
+import { store, useCoopInit, useInit } from '@coop/ebanking/data-access';
+import { Toaster } from '@coop/shared/ui';
 import { theme } from '@coop/shared/utils';
 
 import './styles.css';
@@ -37,21 +40,33 @@ const queryClient = new QueryClient({
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout || ((page) => page);
 
+  useCoopInit();
+  useInit();
+
   return (
     <>
       <Head>
         <title>E Banking</title>
       </Head>
+      <Toaster />
+
       <QueryClientProvider client={queryClient}>
-        <ChakraProvider theme={theme}>
-          <main suppressHydrationWarning>
-            {getLayout(<Component {...pageProps} />)}
-          </main>
-        </ChakraProvider>
+        <main suppressHydrationWarning>{getLayout(<Component {...pageProps} />)}</main>
         <ReactQueryDevtools />
       </QueryClientProvider>
     </>
   );
-}
+};
 
-export default App;
+const CustomApp = (props: AppPropsWithLayout) => (
+  <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider theme={theme}>
+        <App {...props} />
+      </ChakraProvider>
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  </Provider>
+);
+
+export default CustomApp;

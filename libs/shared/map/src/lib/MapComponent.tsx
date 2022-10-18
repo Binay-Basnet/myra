@@ -7,7 +7,7 @@ import axios from 'axios';
 import { Box, Button, Icon, IconButton, Modal, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-const Map = dynamic(() => import('../lib/Map'), { ssr: false });
+const Map = dynamic(() => import('./Map'), { ssr: false });
 
 type MapPosition = {
   latitude: number;
@@ -38,18 +38,15 @@ const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
   useEffect(() => {
     const getPermanentAddress = async () => {
       try {
-        const data = await reverseGeoCodeAddress(
-          currentLoc?.latitude,
-          currentLoc?.longitude
-        );
+        const data = await reverseGeoCodeAddress(currentLoc?.latitude, currentLoc?.longitude);
         const address = data?.data?.address;
         setAddress(
-          `${address?.amenity ? address?.amenity + ', ' : ''}${
-            address?.road ? address?.road + ', ' : ''
-          }${address?.neighbourhood ? address?.neighbourhood + ', ' : ''}${
-            address?.suburb ? address?.suburb + ', ' : ''
-          }${address?.town ? address?.town + ', ' : ''}${
-            address?.city ? address?.city + ', ' : ''
+          `${address?.amenity ? `${address?.amenity}, ` : ''}${
+            address?.road ? `${address?.road}, ` : ''
+          }${address?.neighbourhood ? `${address?.neighbourhood}, ` : ''}${
+            address?.suburb ? `${address?.suburb}, ` : ''
+          }${address?.town ? `${address?.town}, ` : ''}${
+            address?.city ? `${address?.city}, ` : ''
           }${address?.country ? address?.country : ''}`
         );
       } catch (e) {
@@ -66,9 +63,7 @@ const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
   const reverseGeoCodeAddress = (lat: number, lon: number) =>
     lat !== undefined &&
     lat !== null &&
-    axios.get(
-      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
-    );
+    axios.get(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`);
   return (
     <Box display="flex" flexDir="column" gap="s20">
       <Button
@@ -89,14 +84,10 @@ const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
         onClose={() => {
           closeModal();
         }}
-        isCentered={true}
+        isCentered
         size="3xl"
         title={
-          <Text
-            fontSize="r2"
-            color="neutralColorLight.Gray-80"
-            fontWeight="SemiBold"
-          >
+          <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
             {t['pinOnMap']}
           </Text>
         }
@@ -131,12 +122,7 @@ const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
           gap="s16"
         >
           <Box display="flex" flexDirection="column">
-            <Text
-              fontSize="r2"
-              noOfLines={1}
-              fontWeight="500"
-              textTransform="capitalize"
-            >
+            <Text fontSize="r2" noOfLines={1} fontWeight="500" textTransform="capitalize">
               {address}
             </Text>
             <Text fontSize="s2" color="gray.600">
@@ -146,7 +132,7 @@ const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
           <Box display="flex" alignItems="center">
             <IconButton
               id={id}
-              variant={'ghost'}
+              variant="ghost"
               aria-label="edit"
               colorScheme="gray"
               icon={<Icon as={IoCreateOutline} size="lg" />}
@@ -155,7 +141,7 @@ const MapComponent = ({ id, currentLoc, setCurrentLoc }: MapComponentProps) => {
 
             <IconButton
               id={id}
-              variant={'ghost'}
+              variant="ghost"
               aria-label="close"
               colorScheme="gray"
               icon={<Icon as={IoCloseOutline} size="lg" />}

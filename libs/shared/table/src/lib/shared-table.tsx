@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import {
   Box,
   Collapse,
@@ -12,11 +13,14 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { flexRender } from '@tanstack/react-table';
+import { flexRender, SortingState } from '@tanstack/react-table';
+import qs from 'qs';
 
 import { Loader, NoDataState, Pagination, TableSearch, Text } from '@coop/shared/ui';
 
+// eslint-disable-next-line import/no-cycle
 import { TableSelectionBar } from '../components';
+// eslint-disable-next-line import/no-cycle
 import { useTable } from '../hooks/useTable';
 import { Column, TableProps } from '../types/Table';
 
@@ -33,9 +37,15 @@ export const Table = <T extends Record<string, unknown>>({
   variant = 'simple',
   showFooter,
   rowOnClick,
+  enableSorting,
+  manualSorting = true,
 }: TableProps<T>) => {
+  const router = useRouter();
+  const sortQuery = router.query['sort'] as string;
+
   const [tableSize, setTableSize] = React.useState(size);
   const [rowSelection, setRowSelection] = React.useState({});
+  const [sorting, setSorting] = React.useState<SortingState>([]);
 
   const table = useTable<T>({
     columns,
@@ -43,11 +53,28 @@ export const Table = <T extends Record<string, unknown>>({
     isStatic,
 
     state: {
+      sorting,
       rowSelection,
     },
+
+    onSortingChange: setSorting,
     onRowSelectionChange: setRowSelection,
     getRowId,
+    enableSorting,
+    manualSorting,
   });
+
+  useEffect(() => {
+    if (sortQuery) {
+      setSorting([
+        {
+          id: qs.parse(sortQuery)['column'] as string,
+          desc: qs.parse(sortQuery)['arrange'] === 'desc',
+        },
+      ]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.isReady]);
 
   return (
     <>
@@ -56,15 +83,31 @@ export const Table = <T extends Record<string, unknown>>({
       </Collapse>
       {!isStatic && (
         <TableSearch
-          __placeholder={searchPlaceholder}
+          placeholder={searchPlaceholder}
           pagination={pagination}
           size={tableSize}
           setSize={setTableSize}
         />
       )}
 
-      <TableContainer minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}>
-        <ChakraTable size={tableSize} variant={variant}>
+      <TableContainer
+        minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}
+        {...(variant === 'report'
+          ? { borderRadius: 'br2', border: '1px', borderColor: 'border.element' }
+          : {})}
+      >
+        <ChakraTable
+          size={tableSize}
+          variant={variant}
+          {...(variant === 'report'
+            ? {
+                borderRadius: 'br2',
+                border: '1px',
+                borderColor: 'border.element',
+                overflow: 'hidden',
+              }
+            : {})}
+        >
           <Thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <Tr key={headerGroup.id}>
@@ -77,9 +120,46 @@ export const Table = <T extends Record<string, unknown>>({
                     px="s12"
                     py="0"
                   >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
+                    {header.isPlaceholder ? null : (
+                      <Box
+                        cursor={header.column.getCanSort() ? 'pointer' : 'default'}
+                        {...{
+                          onClick: (e) => {
+                            const toggleSort = header.column.getToggleSortingHandler();
+
+                            if (toggleSort && header.column.getCanSort()) {
+                              toggleSort(e);
+                              if (header.column.getNextSortingOrder()) {
+                                router.push(
+                                  {
+                                    query: {
+                                      ...router.query,
+                                      sort: qs.stringify({
+                                        column: header.column.id,
+                                        arrange: header.column.getNextSortingOrder(),
+                                      }),
+                                    },
+                                  },
+                                  undefined,
+                                  { shallow: true }
+                                );
+                              } else {
+                                delete router.query['sort'];
+                                router.push(router, undefined, { shallow: true });
+                              }
+                            }
+                          },
+                        }}
+                      >
+                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        {header.column.getCanSort()
+                          ? {
+                              asc: ' 🔼',
+                              desc: ' 🔽',
+                            }[header.column.getIsSorted() as string] ?? null
+                          : null}
+                      </Box>
+                    )}
                   </Th>
                 ))}
               </Tr>
@@ -125,7 +205,10 @@ export const Table = <T extends Record<string, unknown>>({
                 _hover={isStatic ? {} : { bg: 'background.500' }}
                 bg={row.getIsSelected() ? 'primary.0' : 'white'}
                 cursor={rowOnClick ? 'pointer' : 'default'}
-                onClick={() => (rowOnClick ? rowOnClick(row.original) : null)}
+                onClick={(e) => {
+                  rowOnClick && rowOnClick(row.original);
+                  e.stopPropagation();
+                }}
               >
                 {row.getVisibleCells().map((cell) => (
                   <Td
@@ -141,6 +224,7 @@ export const Table = <T extends Record<string, unknown>>({
                       overflow="hidden"
                       width={cell.column.columnDef.meta?.width}
                       whiteSpace="nowrap"
+                      textTransform="capitalize"
                     >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </Text>

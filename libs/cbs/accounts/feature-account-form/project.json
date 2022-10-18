@@ -14,14 +14,12 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/cbs/accounts/feature-account-form/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["libs/cbs/accounts/feature-account-form/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/cbs/accounts/feature-account-form"],
+      "outputs": ["{workspaceRoot}/coverage/libs/cbs/accounts/feature-account-form"],
       "options": {
         "jestConfig": "libs/cbs/accounts/feature-account-form/jest.config.ts",
         "passWithNoTests": true

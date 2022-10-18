@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Box, Flex, useRadio, useRadioGroup, UseRadioProps } from '@chakra-ui/react';
+import { Box, HStack, useRadio, useRadioGroup, UseRadioProps } from '@chakra-ui/react';
 
 import TextFields from '../text-fields/TextFields';
 
@@ -16,10 +16,13 @@ const SwitchTab = (props: UseRadioProps & { children: React.ReactNode }) => {
       <Box
         {...checkbox}
         cursor="pointer"
-        bg="background.500"
-        borderRight="1px"
-        borderRightColor="border.layout"
-        color="gray.600"
+        // bg="background.500"
+        // borderRight="1px"
+        // borderRightColor="border.layout"
+        color="gray.500"
+        _hover={{
+          color: 'gray.700',
+        }}
         _checked={{
           bg: 'gray.0',
           color: 'primary.500',
@@ -29,16 +32,17 @@ const SwitchTab = (props: UseRadioProps & { children: React.ReactNode }) => {
           bg: 'background.500',
           color: 'gray.300',
         }}
-        _focus={{
-          boxShadow: 'none',
-        }}
         display="flex"
         alignItems="center"
-        py="s10"
-        px="s16"
+        h="s32"
+        borderRadius="br1"
+        boxShadow={isChecked ? 'E0' : 'none'}
+        px="s20"
         gap="s8"
+        transition="ease-in 0.2s background"
+        position="relative"
       >
-        <Box w="6px" h="6px" rounded="full" bg={isChecked ? 'primary.500' : 'gray.500'} />
+        {isChecked && <Box w="6px" h="6px" rounded="full" bg="primary.500" />}
         <TextFields variant="switch" whiteSpace="nowrap">
           {children}
         </TextFields>
@@ -73,13 +77,20 @@ export const SwitchTabs = ({
   helperText,
   defaultValue,
 }: SwitchTabsProps) => {
-  const { getRootProps, getRadioProps, setValue } = useRadioGroup({
+  const {
+    getRootProps,
+    getRadioProps,
+    setValue,
+    value: checkedValue,
+  } = useRadioGroup({
     name,
     defaultValue: value?.toString(),
     onChange,
   });
 
   const group = getRootProps();
+
+  const checkedIndex = options.findIndex((r) => r.value === checkedValue);
 
   useEffect(() => {
     if (value !== undefined) {
@@ -97,26 +108,43 @@ export const SwitchTabs = ({
         </TextFields>
       )}
 
-      <Flex
+      <HStack
         {...group}
-        border="1px"
-        borderColor="border.layout"
+        bg="background.500"
         overflow="hidden"
-        borderRight="0"
-        gap="0"
         borderRadius="br2"
         width="fit-content"
+        p="s4"
+        spacing={0}
       >
-        {options?.map((val) => {
-          const radio = getRadioProps({ value: val.value.toString() });
+        {options?.map((val, index) => {
+          const radio = getRadioProps({ value: val.value.toString() }) as UseRadioProps;
 
           return (
-            <SwitchTab name={name} key={val.label} {...radio} id={id}>
-              {val.label}
-            </SwitchTab>
+            <Box
+              position="relative"
+              _after={
+                radio.isChecked || checkedIndex - 1 === index || index === options.length - 1
+                  ? {}
+                  : {
+                      content: "''",
+                      position: 'absolute',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      right: '0',
+                      width: '1px',
+                      height: '10px',
+                      background: 'border.element',
+                    }
+              }
+            >
+              <SwitchTab name={name} key={val.label} {...radio} id={id}>
+                {val.label}
+              </SwitchTab>
+            </Box>
           );
         })}
-      </Flex>
+      </HStack>
       {errorText ? (
         <TextFields variant="formHelper" color="danger.500">
           {errorText}

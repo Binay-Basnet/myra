@@ -6,15 +6,10 @@ import { FormSection } from '@coop/shared/ui';
 import { getKymSection } from '@coop/shared/utils';
 
 interface IKYMDocumentDeclarationProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
-export const KYMDocumentDeclaration = ({
-  setKymCurrentSection,
-}: IKYMDocumentDeclarationProps) => {
+export const KYMDocumentDeclaration = ({ setKymCurrentSection }: IKYMDocumentDeclarationProps) => {
   // const { t } = useTranslation();
 
   const router = useRouter();
@@ -22,11 +17,7 @@ export const KYMDocumentDeclaration = ({
   const id = String(router?.query?.['id']);
 
   return (
-    <FormSection
-      header="kynIndDOCUMENTDECLARATION"
-      templateColumns={2}
-      gridLayout={true}
-    >
+    <FormSection header="kynIndDOCUMENTDECLARATION" templateColumns={2}>
       <KYMDocumentField
         mutationId={id}
         label="Passport Size Photo"

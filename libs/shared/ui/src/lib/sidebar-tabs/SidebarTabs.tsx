@@ -29,14 +29,10 @@ const TabCol = chakra(Tab, {
   },
 });
 
-export function SidebarTabs({ title, to }: SidebarTabsProps) {
-  return (
-    <Link href={to}>
-      <TabCol>
-        <Text as="div">{title}</Text>
-      </TabCol>
-    </Link>
-  );
-}
-
-export default SidebarTabs;
+export const SidebarTabs = ({ title, to }: SidebarTabsProps) => (
+  <Link href={to}>
+    <TabCol>
+      <Text as="div">{title}</Text>
+    </TabCol>
+  </Link>
+);

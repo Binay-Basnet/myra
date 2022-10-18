@@ -47,41 +47,43 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
 
   return (
     <Box display="flex">
-      <Box width="240px" p="s12" flexShrink={0} position="fixed" zIndex={1}>
-        <Text fontSize="l1" fontWeight="SemiBold" color="gray.800">
-          {t['shareLayout']}
-        </Text>
-        <Divider my="s16" />
+      <Box width="260px" flexShrink={0} position="fixed" zIndex={1}>
+        <Box height="60px" py="s12" px="s16">
+          <Text fontSize="l1" fontWeight="SemiBold" color="gray.800">
+            {t['shareLayout']}
+          </Text>
+        </Box>
+        <Box p="s16">
+          <PopOverComponentForButtonList buttonLabel="shareLayoutNewShare">
+            {addButtoncolumns.map((item) => (
+              <Box key={item?.title}>
+                <AddButtonList label={t[item.title]} onClick={() => router.push(`${item.link}`)} />
+              </Box>
+            ))}
+          </PopOverComponentForButtonList>
 
-        <PopOverComponentForButtonList buttonLabel="shareLayoutNewShare">
-          {addButtoncolumns.map((item) => (
-            <Box key={item?.title}>
-              <AddButtonList label={t[item.title]} onClick={() => router.push(`${item.link}`)} />
-            </Box>
-          ))}
-        </PopOverComponentForButtonList>
-
-        <Divider my="s16" />
-        <TabColumn list={shareColumns} />
-        <Divider my="s16" />
-        <Button
-          onClick={() => router.push('/settings/general/share')}
-          variant="ghost"
-          color="#37474F"
-          height="s48"
-          width="full"
-          justifyContent="start"
-          leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
-        >
-          {t['shareLayoutShareSettings']}
-        </Button>
+          <Divider my="s16" />
+          <TabColumn list={shareColumns} />
+          <Divider my="s16" />
+          <Button
+            onClick={() => router.push('/settings/general/share')}
+            variant="ghost"
+            color="#37474F"
+            height="s48"
+            width="full"
+            justifyContent="start"
+            leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
+          >
+            {t['shareLayoutShareSettings']}
+          </Button>
+        </Box>
       </Box>
       <Box
-        boxShadow="xl"
-        width="calc(100% - 240px)"
+        // boxShadow="xl"
+        width="calc(100% - 260px)"
         overflowX="hidden"
         position="relative"
-        left="240px"
+        left="260px"
       >
         <Box bg="white" minHeight="100vh">
           {children}

@@ -1,6 +1,6 @@
-import { PrematurePenaltyDateType, useGetCoaListQuery } from '@coop/cbs/data-access';
+import { PrematurePenaltyDateType } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { FormSection, Text } from '@coop/shared/ui';
+import { Alert, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const PrematuredPenalty = () => {
@@ -17,18 +17,18 @@ export const PrematuredPenalty = () => {
     },
   ];
 
-  const { data: coa } = useGetCoaListQuery({
-    filter: {
-      active: true,
-    },
-  });
+  // const { data: coa } = useGetCoaListQuery({
+  //   filter: {
+  //     active: true,
+  //   },
+  // });
 
-  const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
+  // const coaData = coa?.settings?.general?.chartsOfAccount?.accounts?.data;
 
-  const coaList = coaData?.map((item) => ({
-    label: item?.name?.en as string,
-    value: item?.id as string,
-  }));
+  // const coaList = coaData?.map((item) => ({
+  //   label: item?.name?.en as string,
+  //   value: item?.id as string,
+  // }));
 
   return (
     <FormSection header="depositProductPrematuredPenaltySetup">
@@ -38,11 +38,11 @@ export const PrematuredPenalty = () => {
         options={penaltyDataType}
       />
       <FormInput name="prematurePenalty.noOfDays" label={t['depositProductNumberofDays']} />
-      <FormSelect
+      {/* <FormSelect
         name="prematurePenalty.penaltyLedgerMapping"
         label={t['depositProductPenaltyLedgerMapping']}
         options={coaList}
-      />
+      /> */}
       <FormInput
         name="prematurePenalty.penaltyAmount"
         type="number"
@@ -59,6 +59,14 @@ export const PrematuredPenalty = () => {
         }
         textAlign="right"
       />
+
+      <GridItem colSpan={3}>
+        <Alert status="warning">
+          <Text fontWeight="Medium" fontSize="r1">
+            {t['penaltyAlert']}
+          </Text>
+        </Alert>
+      </GridItem>
     </FormSection>
   );
 };

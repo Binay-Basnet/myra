@@ -33,11 +33,7 @@ export const InventoryUseOfMeasureTable = () => {
       {
         accessor: 'actions',
         Cell: () => (
-          <IconButton
-            variant="ghost"
-            aria-label="Search database"
-            icon={<BsThreeDots />}
-          />
+          <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
         ),
       },
     ],
@@ -46,14 +42,9 @@ export const InventoryUseOfMeasureTable = () => {
 
   return (
     <>
-      <TableListPageHeader heading={'Units of Measure'} />
+      <TableListPageHeader heading="Units of Measure" />
 
-      <Table
-        isLoading={isFetching}
-        data={rowItems}
-        columns={columns}
-        sort={true}
-      />
+      <Table isLoading={isFetching} data={rowItems} columns={columns} sort />
     </>
   );
 };

@@ -49,6 +49,9 @@ query getAgentAssignedMemberListData($filter: AssignedMemberListFiler, $paginati
           }
           account {
             id
+            dues {
+              totalDue
+            }
           }
           product {
             productName
@@ -78,6 +81,7 @@ query getAgentTodayListData($id: ID!) {
           id
         }
         amount
+        paid
       }
     }
   }

@@ -1,13 +1,20 @@
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useGetBankListQuery, WithdrawBy, WithdrawPaymentType } from '@coop/cbs/data-access';
-import { AgentSelect } from '@coop/cbs/transactions/ui-components';
+import {
+  RootState,
+  useAppSelector,
+  useGetCoaBankListQuery,
+  WithdrawBy,
+  WithdrawPaymentType,
+} from '@coop/cbs/data-access';
 import {
   BoxContainer,
   ContainerWithDivider,
   InputGroupContainer,
 } from '@coop/cbs/transactions/ui-containers';
 import {
+  FormAgentSelect,
   FormEditableTable,
   FormFileInput,
   FormInput,
@@ -17,7 +24,7 @@ import {
   FormTextArea,
 } from '@coop/shared/form';
 import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 const denominationsOptions = [
   { label: '1000x', value: '1000' },
@@ -78,9 +85,18 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
     },
   ];
 
-  const { watch } = useFormContext();
+  const { watch, resetField } = useFormContext();
 
-  const { data: bankList } = useGetBankListQuery();
+  const { data: bank } = useGetCoaBankListQuery({
+    accountCode: featureCode.accountCode as string[],
+  });
+
+  const bankListArr = bank?.settings?.chartsOfAccount?.accountsUnder?.data;
+
+  const bankList = bankListArr?.map((item) => ({
+    label: item?.name?.local as string,
+    value: item?.id as string,
+  }));
 
   const selectedPaymentMode = watch('payment_type');
 
@@ -101,6 +117,13 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
   const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
 
   const returnAmount = Number(totalCashPaid) - Number(totalWithdraw);
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    resetField('bankCheque.depositedAt');
+  }, [preference?.date]);
 
   return (
     <ContainerWithDivider
@@ -123,12 +146,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
               <FormSelect
                 name="bankCheque.bankId"
                 label={t['withdrawPaymentBankName']}
-                options={
-                  bankList?.bank?.bank?.list?.map((bank) => ({
-                    label: bank?.name as string,
-                    value: bank?.id as string,
-                  })) ?? []
-                }
+                options={bankList}
               />
             </GridItem>
 
@@ -139,19 +157,6 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
               type="number"
               label={t['withdrawPaymentAmount']}
               textAlign="right"
-              __placeholder="0.00"
-            />
-
-            <FormInput
-              type="date"
-              name="bankCheque.depositedAt"
-              label={t['withdrawPaymentDepositedDate']}
-            />
-
-            <FormInput
-              type="text"
-              name="bankCheque.depositedBy"
-              label={t['withdrawPaymentDepositedBy']}
             />
           </InputGroupContainer>
         )}
@@ -258,7 +263,6 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
           {/* <FormSelect
             name="sourceOfFund"
             label="Source of Fund"
-            __placeholder="Select Source of Fund"
             options={sourceOfFundsList.map((source) => ({
               label: source,
               value: source,
@@ -278,7 +282,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
 
         {withdrawnBy === WithdrawBy.Agent && (
           <InputGroupContainer>
-            <AgentSelect name="agentId" label={t['withdrawPaymentMarketRepresentative']} />
+            <FormAgentSelect name="agentId" label={t['withdrawPaymentMarketRepresentative']} />
           </InputGroupContainer>
         )}
       </BoxContainer>

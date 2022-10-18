@@ -8,6 +8,8 @@ import debounce from 'lodash/debounce';
 
 import {
   KymInsDirectorInput,
+  RootState,
+  useAppSelector,
   useDeleteDirectorInstitutionMutation,
   useGetInsBoardDirectorEditListQuery,
   useGetNewIdMutation,
@@ -27,28 +29,16 @@ import {
 } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
-import {
-  DirectorsWithAffliation,
-  DirectorTopPart,
-  DocumentComponent,
-} from './AccordianComponents';
+import { DirectorsWithAffliation, DirectorTopPart, DocumentComponent } from './AccordianComponents';
 
 interface IAddDirector {
   removeDirector: (directorId: string) => void;
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
   directorId: string;
   index: number;
 }
 
-const AddDirector = ({
-  removeDirector,
-  setKymCurrentSection,
-  directorId,
-  index,
-}: IAddDirector) => {
+const AddDirector = ({ removeDirector, setKymCurrentSection, directorId, index }: IAddDirector) => {
   const { t } = useTranslation();
   const methods = useForm();
 
@@ -83,13 +73,13 @@ const AddDirector = ({
         <Box display="flex" alignItems="center">
           <Box
             flex={1}
-            px={'s16'}
+            px="s16"
             h="60px"
             bg="gray.200"
             display="flex"
-            justifyContent={'space-between'}
+            justifyContent="space-between"
             alignItems="center"
-            cursor={'pointer'}
+            cursor="pointer"
             onClick={() => setIsOpen(!isOpen)}
           >
             <Text fontSize="r1">{`Director${index}`}</Text>
@@ -97,14 +87,14 @@ const AddDirector = ({
               {isOpen ? (
                 <IconButton
                   size="xs"
-                  variant={'ghost'}
+                  variant="ghost"
                   aria-label="close"
                   icon={<Icon as={IoChevronUpOutline} />}
                 />
               ) : (
                 <IconButton
                   size="xs"
-                  variant={'ghost'}
+                  variant="ghost"
                   aria-label="close"
                   icon={<Icon as={IoChevronDownOutline} />}
                 />
@@ -114,7 +104,7 @@ const AddDirector = ({
           {!isOpen && (
             <IconButton
               size="sm"
-              variant={'ghost'}
+              variant="ghost"
               aria-label="close"
               icon={<CloseIcon />}
               ml="s16"
@@ -130,9 +120,9 @@ const AddDirector = ({
           <SectionContainer
             pt="s16"
             mt="0"
-            border={'1px solid'}
+            border="1px solid"
             borderColor="border.layout"
-            borderRadius={'4px'}
+            borderRadius="4px"
             gap="s32"
             px="s20"
             pb="s20"
@@ -142,10 +132,7 @@ const AddDirector = ({
               directorId={directorId}
               setKymCurrentSection={setKymCurrentSection}
             />
-            <DocumentComponent
-              directorId={directorId}
-              setSection={setKymCurrentSection}
-            />
+            <DocumentComponent directorId={directorId} setSection={setKymCurrentSection} />
             <DirectorsWithAffliation
               directorId={directorId}
               removeDirector={removeDirector}
@@ -158,7 +145,7 @@ const AddDirector = ({
             justifyContent="flex-end"
             border="1px solid"
             borderColor="border.layout"
-            alignItems={'center'}
+            alignItems="center"
             h="60px"
             px="s20"
           >
@@ -205,7 +192,7 @@ export const BoardDirectorInfo = (props: IProps) => {
 
   const [directorIds, setDirectorIds] = useState<string[]>([]);
 
-  const { data: editValues } = useGetInsBoardDirectorEditListQuery(
+  const { data: editValues, refetch: refetchEdit } = useGetInsBoardDirectorEditListQuery(
     {
       id: String(id),
     },
@@ -213,8 +200,7 @@ export const BoardDirectorInfo = (props: IProps) => {
   );
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.institution?.listDirectors?.data;
+      const editValueData = editValues?.members?.institution?.listDirectors?.data;
 
       setDirectorIds(
         editValueData?.reduce(
@@ -225,6 +211,13 @@ export const BoardDirectorInfo = (props: IProps) => {
     }
   }, [editValues]);
 
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetchEdit();
+  }, [preference?.date]);
+
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {
       setDirectorIds([...directorIds, res.newId]);
@@ -232,9 +225,7 @@ export const BoardDirectorInfo = (props: IProps) => {
   });
   const { mutate: deleteMutate } = useDeleteDirectorInstitutionMutation({
     onSuccess: (res) => {
-      const deletedId = String(
-        res?.members?.institution?.director?.Delete?.recordId
-      );
+      const deletedId = String(res?.members?.institution?.director?.Delete?.recordId);
 
       const tempDirectorIds = [...directorIds];
 
@@ -264,18 +255,16 @@ export const BoardDirectorInfo = (props: IProps) => {
         >
           <GridItem colSpan={3}>
             <Grid gap="s16">
-              {directorIds.map((id, index) => {
-                return (
-                  <Box key={id} display="flex" flexDirection={'column'}>
-                    <AddDirector
-                      setKymCurrentSection={setSection}
-                      removeDirector={removeDirector}
-                      directorId={id}
-                      index={index + 1}
-                    />
-                  </Box>
-                );
-              })}
+              {directorIds.map((dirId, index) => (
+                <Box key={dirId} display="flex" flexDirection="column">
+                  <AddDirector
+                    setKymCurrentSection={setSection}
+                    removeDirector={removeDirector}
+                    directorId={dirId}
+                    index={index + 1}
+                  />
+                </Box>
+              ))}
               <GridItem colSpan={1}>
                 <Button
                   id="addDirectorButton"

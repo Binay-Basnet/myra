@@ -1,0 +1,183 @@
+mutation signUp($mobileNo: String!) {
+  eBanking {
+    auth(type: EBANKING) {
+      signUp(mobileNo: $mobileNo) {
+        error {
+          ...MutationError
+        }
+        recordId
+      }
+    }
+  }
+}
+
+mutation verifyOTP($data: EbankingOtpInput!) {
+  eBanking {
+    auth(type: EBANKING) {
+      verifyOtp(data: $data) {
+        error {
+          ...MutationError
+        }
+        success
+      }
+    }
+  }
+}
+
+mutation setPassword($data: EbankingPasswordInput!, $userId: ID!) {
+  eBanking {
+    auth(type: EBANKING) {
+      setPassword(data: $data, userID: $userId) {
+        error {
+          ...MutationError
+        }
+        recordId
+      }
+    }
+  }
+}
+
+mutation eBankingLogin($data: EbankingLoginInput!) {
+  eBanking {
+    auth(type: EBANKING) {
+      login(data: $data) {
+        recordId
+        record {
+          data {
+            id
+            cooperatives {
+              id
+              name
+              logoUrl
+              mobileNo
+            }
+            dob
+            mobile
+            name
+          }
+          token {
+            access
+            refresh
+          }
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation checkAccount($id: ID!, $mobileNumber: String!, $pin: Int!) {
+  eBanking {
+    auth(type: EBANKING) {
+      checkAccount(coopId: $id, mobileNumber: $mobileNumber, pin: $pin ) {
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+query getCoopList {
+  eBanking {
+    neosysClientsList {
+      id
+      clientName
+      localGovernmentId
+    }
+  }
+}
+
+query getEbankingMe {
+  eBanking {
+    me {
+      id
+      name
+      contact
+    }
+  }
+}
+
+mutation setNewPin($data: CooperativeConnectInput) {
+  eBanking {
+    auth(type: EBANKING) {
+      setNewPin(data: $data) {
+        record {
+          name
+          id
+          mobile
+          cooperatives {
+            id
+            mobileNo
+          }
+        }
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation loginToCooperative($cooperativeId: ID!, $pinCode: Int, $mobileNumber: String!) {
+  eBanking {
+    auth(type: EBANKING) {
+      loginToCooperative(cooperativeId: $cooperativeId, pinCode: $pinCode, mobileNumber: $mobileNumber) {
+        error {
+          ...MutationError
+        }
+        record {
+          data {
+            cooperativeId
+            memberId
+            memberMobileNo
+            myraUserId
+          }
+          token {
+            refresh
+            access
+          }
+        }
+      }
+    }
+  }
+}
+
+query getCoopMe {
+  eBanking {
+    auth{
+      meCooperativeUser {
+        data {
+          myraUserId
+          memberMobileNo
+          cooperativeId
+          memberId
+        }
+      }
+    }
+  }
+}
+
+query getMyraMe {
+  eBanking {
+    auth {
+      meMyraUser {
+        data {
+          id
+          cooperatives {
+            id
+            name
+            logoUrl
+            mobileNo
+          }
+          name
+          mobile
+          dob
+        }
+      }
+    }
+  }
+}

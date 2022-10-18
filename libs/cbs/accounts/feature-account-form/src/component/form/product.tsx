@@ -207,38 +207,40 @@ export const Product = () => {
             </Box>
 
             <Grid templateColumns="repeat(3,1fr)" gap="s32">
-              {productData?.nature !== NatureOfDepositProduct?.VoluntaryOrOptional && (
-                <GridItem display="flex" flexDirection="column">
-                  <Box display="flex" flexDirection="column" gap="s4">
-                    <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
-                      {/* {t['accInterestRate']} */}
-                      Tenure
-                    </TextFields>
-                    <Box pl="s24">
-                      <ul>
-                        <li>
-                          <TextFields
-                            color="neutralColorLight.Gray-70"
-                            fontSize="s2"
-                            fontWeight="Regular"
-                          >
-                            Minimum: {productData?.minTenureUnitNumber} {productData?.tenureUnit}
-                          </TextFields>
-                        </li>
-                        <li>
-                          <TextFields
-                            color="neutralColorLight.Gray-70"
-                            fontSize="s2"
-                            fontWeight="Regular"
-                          >
-                            Maximum: : {productData?.maxTenureUnitNumber} {productData?.tenureUnit}
-                          </TextFields>
-                        </li>
-                      </ul>
+              {productData?.nature !== NatureOfDepositProduct?.Saving &&
+                productData?.nature !== NatureOfDepositProduct?.Current && (
+                  <GridItem display="flex" flexDirection="column">
+                    <Box display="flex" flexDirection="column" gap="s4">
+                      <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
+                        {/* {t['accInterestRate']} */}
+                        Tenure
+                      </TextFields>
+                      <Box pl="s24">
+                        <ul>
+                          <li>
+                            <TextFields
+                              color="neutralColorLight.Gray-70"
+                              fontSize="s2"
+                              fontWeight="Regular"
+                            >
+                              Minimum: {productData?.minTenureUnitNumber} {productData?.tenureUnit}
+                            </TextFields>
+                          </li>
+                          <li>
+                            <TextFields
+                              color="neutralColorLight.Gray-70"
+                              fontSize="s2"
+                              fontWeight="Regular"
+                            >
+                              Maximum: : {productData?.maxTenureUnitNumber}{' '}
+                              {productData?.tenureUnit}
+                            </TextFields>
+                          </li>
+                        </ul>
+                      </Box>
                     </Box>
-                  </Box>
-                </GridItem>
-              )}
+                  </GridItem>
+                )}
 
               <GridItem display="flex" flexDirection="column">
                 <Box display="flex" flexDirection="column" gap="s4">
@@ -255,7 +257,8 @@ export const Product = () => {
                           fontWeight="Regular"
                         >
                           Minimum:
-                          {productData?.nature !== NatureOfDepositProduct?.VoluntaryOrOptional
+                          {productData?.nature !== NatureOfDepositProduct?.Saving &&
+                          productData?.nature !== NatureOfDepositProduct?.Current
                             ? productData?.depositAmount?.minAmount
                             : productData?.balanceLimit?.minAmount}
                         </TextFields>
@@ -268,7 +271,8 @@ export const Product = () => {
                           fontWeight="Regular"
                         >
                           Maximum:{' '}
-                          {productData?.nature !== NatureOfDepositProduct?.VoluntaryOrOptional
+                          {productData?.nature !== NatureOfDepositProduct?.Saving &&
+                          productData?.nature !== NatureOfDepositProduct?.Current
                             ? productData?.depositAmount?.minAmount
                             : productData?.balanceLimit?.maxAmount}
                         </TextFields>
@@ -310,224 +314,217 @@ export const Product = () => {
                 </Box>
               </GridItem>
 
-              {(productData?.nature === NatureOfDepositProduct?.RecurringSaving ||
-                productData?.nature === NatureOfDepositProduct?.TermSavingOrFd ||
-                productData?.nature === NatureOfDepositProduct?.VoluntaryOrOptional) &&
-                productData?.criteria && (
-                  <>
-                    <GridItem display="flex" flexDirection="column">
-                      <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
-                        {/* {t['accInterestRate']} */}
-                        Criteria
-                      </TextFields>
-                      <Box display="flex" flexDirection="column" gap="s4">
-                        <Box display="flex" flexDirection="column" gap="s16" pl="s24">
-                          <ul>
+              {productData?.criteria && (
+                <>
+                  <GridItem display="flex" flexDirection="column">
+                    <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
+                      {/* {t['accInterestRate']} */}
+                      Criteria
+                    </TextFields>
+                    <Box display="flex" flexDirection="column" gap="s4">
+                      <Box display="flex" flexDirection="column" gap="s16" pl="s24">
+                        <ul>
+                          <li>
+                            <TextFields
+                              color="neutralColorLight.Gray-70"
+                              fontSize="s2"
+                              fontWeight="Regular"
+                            >
+                              Age:{' '}
+                              <b>
+                                {' '}
+                                Mininum: {productData?.minAge} : Maximum {productData?.maxAge}
+                              </b>
+                            </TextFields>
+                          </li>
+                          {productData?.genderId && (
                             <li>
                               <TextFields
                                 color="neutralColorLight.Gray-70"
                                 fontSize="s2"
+                                display="flex"
+                                flexDirection="row"
+                                gap="s4"
                                 fontWeight="Regular"
                               >
-                                Age:{' '}
-                                <b>
-                                  {' '}
-                                  Mininum: {productData?.minAge} : Maximum {productData?.maxAge}
-                                </b>
+                                Gender:{' '}
+                                {tempGender?.map((item) => (
+                                  <Text fontSize="s2" fontWeight="bold" pl="s4">
+                                    {item}
+                                  </Text>
+                                ))}
                               </TextFields>
                             </li>
-                            {productData?.genderId && (
-                              <li>
-                                <TextFields
-                                  color="neutralColorLight.Gray-70"
-                                  fontSize="s2"
-                                  display="flex"
-                                  flexDirection="row"
-                                  gap="s4"
-                                  fontWeight="Regular"
-                                >
-                                  Gender:{' '}
-                                  {tempGender?.map((item) => (
-                                    <Text fontSize="s2" fontWeight="bold" pl="s4">
-                                      {item}
-                                    </Text>
-                                  ))}
-                                </TextFields>
-                              </li>
-                            )}
-                          </ul>
+                          )}
+                        </ul>
 
-                          <ul>
-                            {productData?.foreignEmployment && (
-                              <li>
-                                <TextFields
-                                  color="neutralColorLight.Gray-70"
-                                  fontSize="s2"
-                                  fontWeight="Regular"
-                                  display="flex"
-                                  flexDirection="row"
-                                  gap="s4"
-                                >
-                                  Foreign Employment:{' '}
-                                  <b>{productData?.foreignEmployment ? 'true' : 'false'}</b>
-                                </TextFields>
-                              </li>
-                            )}
+                        <ul>
+                          {productData?.foreignEmployment && (
+                            <li>
+                              <TextFields
+                                color="neutralColorLight.Gray-70"
+                                fontSize="s2"
+                                fontWeight="Regular"
+                                display="flex"
+                                flexDirection="row"
+                                gap="s4"
+                              >
+                                Foreign Employment:{' '}
+                                <b>{productData?.foreignEmployment ? 'true' : 'false'}</b>
+                              </TextFields>
+                            </li>
+                          )}
 
-                            {productData?.typeOfMember?.includes(
-                              KymMemberTypesEnum.Institution
-                            ) && (
-                              <li>
-                                <TextFields
-                                  color="neutralColorLight.Gray-70"
-                                  fontSize="s2"
-                                  fontWeight="Regular"
-                                >
-                                  Business (Institutions):{' '}
-                                  {tempIns?.map((item) => (
-                                    <Text fontSize="s2" fontWeight="bold" p="s4">
-                                      {item}
-                                    </Text>
-                                  ))}
-                                </TextFields>
-                              </li>
-                            )}
-                          </ul>
-                        </Box>
-                      </Box>
-                    </GridItem>
-                    {productData?.maritalStatusId ||
-                      productData?.occupation ||
-                      productData?.typeOfMember?.includes(KymMemberTypesEnum?.CooperativeUnion) ||
-                      productData?.typeOfMember?.includes(KymMemberTypesEnum?.Cooperative)}
-                    <GridItem display="flex" flexDirection="column">
-                      <Box display="flex" flexDirection="column" gap="s4">
-                        <Box display="flex" flexDirection="column" gap="s16" pl="s24">
-                          <ul>
-                            {productData?.maritalStatusId && (
-                              <li>
-                                <TextFields
-                                  color="neutralColorLight.Gray-70"
-                                  fontSize="s2"
-                                  fontWeight="Regular"
-                                  display="flex"
-                                  flexDirection="row"
-                                  gap="s4"
-                                >
-                                  {' '}
-                                  Marital Status:
-                                  {tempMarriage?.map((item) => (
-                                    <Text fontSize="s2" fontWeight="bold" pl="s4">
-                                      {item}
-                                    </Text>
-                                  ))}
-                                </TextFields>
-                              </li>
-                            )}
-                            {productData?.occupation && (
-                              <li>
-                                <TextFields
-                                  color="neutralColorLight.Gray-70"
-                                  fontSize="s2"
-                                  fontWeight="Regular"
-                                  display="flex"
-                                  flexDirection="row"
-                                  gap="s4"
-                                >
-                                  Occupation Detail
-                                  {tempOccupationOptions?.map((item) => (
-                                    <Text fontSize="s2" fontWeight="bold" p="s4">
-                                      {item}
-                                    </Text>
-                                  ))}
-                                </TextFields>
-                              </li>
-                            )}
-                          </ul>
-
-                          <ul>
-                            {productData?.typeOfMember?.includes(
-                              KymMemberTypesEnum?.CooperativeUnion
-                            ) && (
-                              <li>
-                                <TextFields
-                                  color="neutralColorLight.Gray-70"
-                                  fontSize="s2"
-                                  fontWeight="Regular"
-                                >
-                                  Nature of Business ( COOP Union):
-                                  {tempCoopUnionOptions?.map((item) => (
-                                    <Text fontSize="s2" fontWeight="bold" p="s4">
-                                      {item}
-                                    </Text>
-                                  ))}
-                                </TextFields>
-                              </li>
-                            )}
-                            {productData?.typeOfMember?.includes(
-                              KymMemberTypesEnum?.Cooperative
-                            ) && (
-                              <li>
-                                <TextFields
-                                  color="neutralColorLight.Gray-70"
-                                  fontSize="s2"
-                                  fontWeight="Regular"
-                                  display="flex"
-                                  flexDirection="row"
-                                  gap="s4"
-                                >
-                                  Cooperative Type:{' '}
-                                  {tempCoopOptions?.map((item) => (
-                                    <Text fontSize="s2" fontWeight="bold" p="s4">
-                                      {item}
-                                    </Text>
-                                  ))}
-                                </TextFields>
-                              </li>
-                            )}
-                          </ul>
-                        </Box>
-                      </Box>
-                    </GridItem>
-                    <GridItem display="flex" flexDirection="column">
-                      <Box display="flex" flexDirection="column" gap="s4">
-                        <Box display="flex" flexDirection="column" gap="s16" pl="s24">
-                          <ul>
+                          {productData?.typeOfMember?.includes(KymMemberTypesEnum.Institution) && (
                             <li>
                               <TextFields
                                 color="neutralColorLight.Gray-70"
                                 fontSize="s2"
                                 fontWeight="Regular"
                               >
-                                Education Qualification:{' '}
-                                {tempEducationOptions?.map((item) => (
+                                Business (Institutions):{' '}
+                                {tempIns?.map((item) => (
                                   <Text fontSize="s2" fontWeight="bold" p="s4">
                                     {item}
                                   </Text>
                                 ))}
                               </TextFields>
                             </li>
-
+                          )}
+                        </ul>
+                      </Box>
+                    </Box>
+                  </GridItem>
+                  {productData?.maritalStatusId ||
+                    productData?.occupation ||
+                    productData?.typeOfMember?.includes(KymMemberTypesEnum?.CooperativeUnion) ||
+                    productData?.typeOfMember?.includes(KymMemberTypesEnum?.Cooperative)}
+                  <GridItem display="flex" flexDirection="column">
+                    <Box display="flex" flexDirection="column" gap="s4">
+                      <Box display="flex" flexDirection="column" gap="s16" pl="s24">
+                        <ul>
+                          {productData?.maritalStatusId && (
                             <li>
                               <TextFields
                                 color="neutralColorLight.Gray-70"
                                 fontSize="s2"
                                 fontWeight="Regular"
+                                display="flex"
+                                flexDirection="row"
+                                gap="s4"
                               >
-                                Ethinicity:{' '}
-                                {tempEthnicityOptions?.map((item) => (
+                                {' '}
+                                Marital Status:
+                                {tempMarriage?.map((item) => (
+                                  <Text fontSize="s2" fontWeight="bold" pl="s4">
+                                    {item}
+                                  </Text>
+                                ))}
+                              </TextFields>
+                            </li>
+                          )}
+                          {productData?.occupation && (
+                            <li>
+                              <TextFields
+                                color="neutralColorLight.Gray-70"
+                                fontSize="s2"
+                                fontWeight="Regular"
+                                display="flex"
+                                flexDirection="row"
+                                gap="s4"
+                              >
+                                Occupation Detail
+                                {tempOccupationOptions?.map((item) => (
                                   <Text fontSize="s2" fontWeight="bold" p="s4">
                                     {item}
                                   </Text>
                                 ))}
                               </TextFields>
                             </li>
-                          </ul>
-                        </Box>
+                          )}
+                        </ul>
+
+                        <ul>
+                          {productData?.typeOfMember?.includes(
+                            KymMemberTypesEnum?.CooperativeUnion
+                          ) && (
+                            <li>
+                              <TextFields
+                                color="neutralColorLight.Gray-70"
+                                fontSize="s2"
+                                fontWeight="Regular"
+                              >
+                                Nature of Business ( COOP Union):
+                                {tempCoopUnionOptions?.map((item) => (
+                                  <Text fontSize="s2" fontWeight="bold" p="s4">
+                                    {item}
+                                  </Text>
+                                ))}
+                              </TextFields>
+                            </li>
+                          )}
+                          {productData?.typeOfMember?.includes(KymMemberTypesEnum?.Cooperative) && (
+                            <li>
+                              <TextFields
+                                color="neutralColorLight.Gray-70"
+                                fontSize="s2"
+                                fontWeight="Regular"
+                                display="flex"
+                                flexDirection="row"
+                                gap="s4"
+                              >
+                                Cooperative Type:{' '}
+                                {tempCoopOptions?.map((item) => (
+                                  <Text fontSize="s2" fontWeight="bold" p="s4">
+                                    {item}
+                                  </Text>
+                                ))}
+                              </TextFields>
+                            </li>
+                          )}
+                        </ul>
                       </Box>
-                    </GridItem>
-                  </>
-                )}
+                    </Box>
+                  </GridItem>
+                  <GridItem display="flex" flexDirection="column">
+                    <Box display="flex" flexDirection="column" gap="s4">
+                      <Box display="flex" flexDirection="column" gap="s16" pl="s24">
+                        <ul>
+                          <li>
+                            <TextFields
+                              color="neutralColorLight.Gray-70"
+                              fontSize="s2"
+                              fontWeight="Regular"
+                            >
+                              Education Qualification:{' '}
+                              {tempEducationOptions?.map((item) => (
+                                <Text fontSize="s2" fontWeight="bold" p="s4">
+                                  {item}
+                                </Text>
+                              ))}
+                            </TextFields>
+                          </li>
+
+                          <li>
+                            <TextFields
+                              color="neutralColorLight.Gray-70"
+                              fontSize="s2"
+                              fontWeight="Regular"
+                            >
+                              Ethinicity:{' '}
+                              {tempEthnicityOptions?.map((item) => (
+                                <Text fontSize="s2" fontWeight="bold" p="s4">
+                                  {item}
+                                </Text>
+                              ))}
+                            </TextFields>
+                          </li>
+                        </ul>
+                      </Box>
+                    </Box>
+                  </GridItem>
+                </>
+              )}
 
               <GridItem display="flex" flexDirection="column">
                 <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
@@ -535,8 +532,8 @@ export const Product = () => {
                 </TextFields>
                 <Box pl="s24" display="grid">
                   <ul>
-                    {productData?.individualDocuments?.map((item, index) => (
-                      <li key={`${item}${index}`}>
+                    {productData?.individualDocuments?.map((item) => (
+                      <li key={`${item}`}>
                         <TextFields
                           color="neutralColorLight.Gray-70"
                           fontSize="s2"
@@ -558,25 +555,26 @@ export const Product = () => {
                 </Box>
               </GridItem>
 
-              {productData?.nature !== NatureOfDepositProduct?.VoluntaryOrOptional && (
-                <>
-                  {' '}
-                  <GridItem display="flex" flexDirection="column">
-                    <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
-                      {t['accPenalty']}
-                    </TextFields>
-                    <Box pl="s24">
-                      <ul>
-                        <li>
-                          <TextFields
-                            color="neutralColorLight.Gray-70"
-                            fontSize="s2"
-                            fontWeight="Regular"
-                          >
-                            Penalty {productData?.penaltyData?.penaltyRate} %
-                          </TextFields>
-                        </li>
-                        {/*
+              {productData?.nature !== NatureOfDepositProduct?.Current &&
+                productData?.nature !== NatureOfDepositProduct?.Saving && (
+                  <>
+                    {' '}
+                    <GridItem display="flex" flexDirection="column">
+                      <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
+                        {t['accPenalty']}
+                      </TextFields>
+                      <Box pl="s24">
+                        <ul>
+                          <li>
+                            <TextFields
+                              color="neutralColorLight.Gray-70"
+                              fontSize="s2"
+                              fontWeight="Regular"
+                            >
+                              Penalty {productData?.penaltyData?.penaltyRate} %
+                            </TextFields>
+                          </li>
+                          {/*
                       <li>
                         <TextFields
                           color="neutralColorLight.Gray-70"
@@ -596,25 +594,25 @@ export const Product = () => {
                           Penalty 3
                         </TextFields>
                       </li> */}
-                      </ul>
-                    </Box>
-                  </GridItem>
-                  <GridItem display="flex" flexDirection="column" gap="s4">
-                    <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
-                      {t['accRebate']}
-                    </TextFields>
-                    <Box pl="s24">
-                      <ul>
-                        <li>
-                          <TextFields
-                            color="neutralColorLight.Gray-70"
-                            fontSize="s2"
-                            fontWeight="Regular"
-                          >
-                            Rebate {productData?.rebateData?.rebateAmount} %
-                          </TextFields>
-                        </li>
-                        {/*
+                        </ul>
+                      </Box>
+                    </GridItem>
+                    <GridItem display="flex" flexDirection="column" gap="s4">
+                      <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
+                        {t['accRebate']}
+                      </TextFields>
+                      <Box pl="s24">
+                        <ul>
+                          <li>
+                            <TextFields
+                              color="neutralColorLight.Gray-70"
+                              fontSize="s2"
+                              fontWeight="Regular"
+                            >
+                              Rebate {productData?.rebateData?.rebateAmount} %
+                            </TextFields>
+                          </li>
+                          {/*
                       <li>
                         <TextFields
                           color="neutralColorLight.Gray-70"
@@ -634,11 +632,11 @@ export const Product = () => {
                           Rebate 3
                         </TextFields>
                       </li> */}
-                      </ul>
-                    </Box>
-                  </GridItem>
-                </>
-              )}
+                        </ul>
+                      </Box>
+                    </GridItem>
+                  </>
+                )}
             </Grid>
           </Box>
         )}

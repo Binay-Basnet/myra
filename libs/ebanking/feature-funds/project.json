@@ -19,7 +19,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ebanking/feature-funds"],
+      "outputs": ["{workspaceRoot}/coverage/libs/ebanking/feature-funds"],
       "options": {
         "jestConfig": "libs/ebanking/feature-funds/jest.config.ts",
         "passWithNoTests": true

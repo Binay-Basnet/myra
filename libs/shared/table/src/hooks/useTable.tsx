@@ -1,10 +1,12 @@
 import {
   ColumnDef,
   getCoreRowModel,
+  getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
 
 import { IUseTableProps } from '../types/UseTable';
+// eslint-disable-next-line import/no-cycle
 import { getCheckBoxColumn } from '../utils/getCheckBoxColumn';
 
 export const useTable = <T extends Record<string, unknown>>({
@@ -22,16 +24,21 @@ export const useTable = <T extends Record<string, unknown>>({
 
   return useReactTable<T>({
     defaultColumn: {
+      enableSorting: false,
+
       meta: {
         width: '150px',
       },
     },
 
     enableRowSelection: true,
+
     data: data as unknown as T[],
     columns: isStatic ? columnsWithoutRowSelection : columnsWithRowSelection,
 
     ...rest,
+
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
 };

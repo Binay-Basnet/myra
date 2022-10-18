@@ -1,0 +1,24 @@
+query getGlobalSearch($filter: SearchFilterData, $pagination: Pagination) {
+  search {
+    globalPages(filter: $filter, pagination: $pagination) {
+      data {
+        edges {
+          cursor
+          node {
+            ... on GlobalPagesResultNode {
+              fullCode
+              hasParam
+              iconType
+              page
+              url
+            }
+          }
+        }
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+      }
+    }
+  }
+}

@@ -46,16 +46,16 @@ export const AddMemberModal = ({
         loading: t['agentAssignedMembersAssigningNewMember'],
         success: t['agentAssignedMembersAssignedNewMember'],
       },
-      onSuccess: (response) => {
-        if (response?.transaction?.addMemberToAgent?.error) {
-          if (response?.transaction?.addMemberToAgent?.error?.code === 418) {
-            setIsOverrideMemberAlertOpen(true);
-          }
-        } else {
-          reset();
-          refetchAssignedMembersList();
-        }
+      onSuccess: () => {
+        reset();
+        refetchAssignedMembersList();
         onClose();
+      },
+      onError: (error) => {
+        if (error?.code === 418) {
+          setIsOverrideMemberAlertOpen(true);
+          onClose();
+        }
       },
     });
   };

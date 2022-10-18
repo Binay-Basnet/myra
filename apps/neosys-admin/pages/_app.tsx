@@ -1,18 +1,18 @@
-import React, { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider } from 'react-redux';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 
-import { Box, FloatingShortcutButton } from '@coop/shared/ui';
-import { neosysTheme, store, useInit, useSnap } from '@coop/shared/utils';
+import { store } from '@coop/cbs/data-access';
+import { useInit } from '@coop/neosys-admin/data-access';
+import { Box, FloatingShortcutButton, Toaster } from '@coop/shared/ui';
+import { neosysTheme, useSnap } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
-
-const { ToastContainer } = createStandaloneToast();
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -47,9 +47,10 @@ const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <>
       <Head>
-        <title>Neosys</title>
+        <title>Neosys Admin</title>
       </Head>
-      <ToastContainer />
+      <Toaster />
+
       <main className="app">{getLayout(<Component {...pageProps} />)}</main>
       <Box
         position="fixed"
@@ -63,19 +64,17 @@ const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       </Box>
     </>
   );
-}
+};
 
 const CustomApp = (props: AppPropsWithLayout) => (
-    <Provider store={store}>
-      {/* <AuthProvider> */}
-      <QueryClientProvider client={queryClient}>
-        <ChakraProvider theme={neosysTheme}>
-          <MainApp {...props} />
-        </ChakraProvider>
-        <ReactQueryDevtools />
-      </QueryClientProvider>
-      {/* </AuthProvider> */}
-    </Provider>
-  )
+  <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider theme={neosysTheme}>
+        <MainApp {...props} />
+      </ChakraProvider>
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  </Provider>
+);
 
 export default CustomApp;

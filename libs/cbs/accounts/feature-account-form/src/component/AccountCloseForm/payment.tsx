@@ -1,8 +1,15 @@
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { AccountClosePaymentMode, useGetBankListQuery } from '@coop/cbs/data-access';
+import {
+  AccountClosePaymentMode,
+  RootState,
+  useAppSelector,
+  useGetBankListQuery,
+} from '@coop/cbs/data-access';
 import { BoxContainer, ContainerWithDivider } from '@coop/cbs/transactions/ui-containers';
 import {
+  FormDatePicker,
   FormEditableTable,
   FormInput,
   FormSelect,
@@ -52,7 +59,7 @@ type PaymentTableType = {
 };
 
 export const Payment = ({ totalDeposit }: PaymentProps) => {
-  const { watch } = useFormContext();
+  const { watch, resetField } = useFormContext();
 
   const selectedPaymentMode = watch('paymentMode');
 
@@ -74,6 +81,13 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
 
   const returnAmount = totalCashPaid - totalDeposit;
 
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    resetField('accountTransfer.depositedDate');
+  }, [preference?.date]);
+
   return (
     <ContainerWithDivider borderRight="1px" borderColor="border.layout" p="s16" pb="100px">
       <BoxContainer>
@@ -89,7 +103,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
               />
             </GridItem>
 
-            <FormInput type="date" name="accountTransfer.depositedDate" label="Deposited Date" />
+            <FormDatePicker name="accountTransfer.depositedDate" label="Deposited Date" />
 
             <FormInput type="text" name="accountTransfer.depositedBy" label="Deposited By" />
             <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
@@ -125,17 +139,6 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
               textAlign="right"
               placeholder="0.00"
             />
-            {/* <FormInput
-              type="date"
-              name="cheque.depositedAt"
-              label="Deposited Date"
-            />
-
-            <FormInput
-              type="text"
-              name="cheque.depositedBy"
-              label="Deposited By"
-            /> */}
             <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
               {' '}
               <Text fontWeight="500" fontSize="r1">
@@ -151,13 +154,11 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
             <Grid templateColumns="repeat(2,1fr)" gap="s20">
               <FormInput name="cash.cashPaid" type="number" label="Cash" textAlign="right" />
             </Grid>
-
             <FormSwitch
               name="cash.disableDenomination"
               label="Disable Denomination"
               defaultChecked={false}
             />
-
             {!disableDenomination && (
               <FormEditableTable<PaymentTableType>
                 name="cash.denominations"
@@ -198,7 +199,6 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
                 canAddRow={false}
               />
             )}
-
             <Box
               display="flex"
               flexDirection="column"
@@ -236,12 +236,8 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
                 </Text>
               </Box>
             </Box>
-            <Box display="flex" flexDirection="column" gap="s4">
-              <Text fontWeight="500" fontSize="r1">
-                Note
-              </Text>
-              <FormTextArea name="cash.note" label="Note" rows={5} />
-            </Box>
+
+            <FormTextArea name="cash.note" label="Note" rows={5} />
           </>
         )}
       </BoxContainer>

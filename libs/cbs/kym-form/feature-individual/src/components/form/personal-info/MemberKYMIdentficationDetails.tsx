@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 
 import {
   KymIndMemberInput,
+  RootState,
+  useAppSelector,
   useGetIndividualKymEditDataQuery,
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
@@ -12,19 +14,10 @@ import { FormCheckboxGroup } from '@coop/shared/form';
 import { Box, FormSection } from '@coop/shared/ui';
 import { getKymSection } from '@coop/shared/utils';
 
-import {
-  Citizenship,
-  DrivingLicense,
-  NationalID,
-  Passport,
-  VoterCard,
-} from '../identifications';
+import { Citizenship, DrivingLicense, NationalID, Passport, VoterCard } from '../identifications';
 
 interface IMemberKYMIdentificationDetailsProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
 const identificationOptions = [
@@ -69,7 +62,7 @@ export const MemberKYMIdentificationDetails = ({
   //   checkedIds.length !== 0 && setCurrentDetailsShown([...checkedIds]);
   // }, [JSON.stringify(checkedIds)]);
 
-  const { data: editValues } = useGetIndividualKymEditDataQuery(
+  const { data: editValues, refetch: refetchEdit } = useGetIndividualKymEditDataQuery(
     {
       id: String(id),
     },
@@ -78,14 +71,20 @@ export const MemberKYMIdentificationDetails = ({
 
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.individual?.formState?.data?.formData;
+      const editValueData = editValues?.members?.individual?.formState?.data?.formData;
 
       reset({
         identificationSelection: editValueData?.identificationSelection,
       });
     }
   }, [editValues]);
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetchEdit();
+  }, [preference?.date]);
 
   const { mutate } = useSetMemberDataMutation();
 
@@ -111,12 +110,12 @@ export const MemberKYMIdentificationDetails = ({
           }}
         >
           <FormSection
-            flexLayout={true}
+            flexLayout
             header="kymIndIDENTIFICATIONDETAILS"
             subHeader="kymIndChooseidentificationdetails"
           >
             <FormCheckboxGroup
-              name={'identificationSelection'}
+              name="identificationSelection"
               showOther={false}
               list={identificationOptions}
             />

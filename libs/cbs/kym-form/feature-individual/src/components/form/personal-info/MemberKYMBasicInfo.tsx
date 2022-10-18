@@ -1,107 +1,47 @@
-import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
-import debounce from 'lodash/debounce';
 
 import {
   FormFieldSearchTerm,
   KymIndMemberInput,
-  useGetIndividualKymEditDataQuery,
   useGetIndividualKymOptionsQuery,
-  useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
-import { FormInput, FormSelect } from '@coop/shared/form';
+import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 import { FormSection } from '@coop/shared/ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
+import { useIndividual } from '../../hooks/useIndividual';
 import { getFieldOption } from '../../../utils/getFieldOption';
 
 interface IMemberKYMBasicInfoProps {
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
 }
 
-export const MemberKYMBasicInfo = ({
-  setKymCurrentSection,
-}: IMemberKYMBasicInfoProps) => {
+export const MemberKYMBasicInfo = ({ setKymCurrentSection }: IMemberKYMBasicInfoProps) => {
   const { t } = useTranslation();
 
-  const router = useRouter();
-  const id = router?.query?.['id'];
-
   const methods = useForm<KymIndMemberInput>({});
+  useIndividual({ methods });
 
-  const { watch, reset } = methods;
+  const { data: genderFields, isLoading: genderLoading } = useGetIndividualKymOptionsQuery({
+    searchTerm: FormFieldSearchTerm.Gender,
+  });
 
-  const { mutate } = useSetMemberDataMutation();
+  const { data: ethnicityFields, isLoading: ethnicityLoading } = useGetIndividualKymOptionsQuery({
+    searchTerm: FormFieldSearchTerm.Ethnicity,
+  });
 
-  const { data: genderFields, isLoading: genderLoading } =
-    useGetIndividualKymOptionsQuery({
-      searchTerm: FormFieldSearchTerm.Gender,
-    });
+  const { data: educationFields, isLoading: educationLoading } = useGetIndividualKymOptionsQuery({
+    searchTerm: FormFieldSearchTerm.EducationQualification,
+  });
 
-  const { data: ethnicityFields, isLoading: ethnicityLoading } =
-    useGetIndividualKymOptionsQuery({
-      searchTerm: FormFieldSearchTerm.Ethnicity,
-    });
-
-  const { data: educationFields, isLoading: educationLoading } =
-    useGetIndividualKymOptionsQuery({
-      searchTerm: FormFieldSearchTerm.EducationQualification,
-    });
-
-  const { data: religionFields, isLoading: religionLoading } =
-    useGetIndividualKymOptionsQuery({
-      searchTerm: FormFieldSearchTerm.Religion,
-    });
+  const { data: religionFields, isLoading: religionLoading } = useGetIndividualKymOptionsQuery({
+    searchTerm: FormFieldSearchTerm.Religion,
+  });
 
   const { data: nationalityFields, isLoading: nationalityLoading } =
     useGetIndividualKymOptionsQuery({
       searchTerm: FormFieldSearchTerm.Nationality,
     });
-
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        if (id) {
-          mutate({ id: String(id), data });
-        }
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
-
-  const { data: editValues, refetch } = useGetIndividualKymEditDataQuery(
-    {
-      id: String(id),
-    },
-    { enabled: !!id }
-  );
-
-  useEffect(() => {
-    if (editValues) {
-      const editValueData =
-        editValues?.members?.individual?.formState?.data?.formData;
-
-      reset({
-        ...editValueData?.basicInformation,
-        firstName: editValueData?.basicInformation?.firstName?.local,
-        middleName: editValueData?.basicInformation?.middleName?.local,
-        lastName: editValueData?.basicInformation?.lastName?.local,
-        nationalityId:
-          nationalityFields?.form?.options?.predefined?.data?.[0]?.id,
-      });
-    }
-  }, [nationalityFields, editValues]);
-
-  useEffect(() => {
-    if (id) {
-      refetch();
-    }
-  }, [id]);
 
   return (
     <FormProvider {...methods}>
@@ -111,45 +51,20 @@ export const MemberKYMBasicInfo = ({
           setKymCurrentSection(kymSection);
         }}
       >
-        <FormSection
-          id="kymAccIndBasicInformation"
-          header="kymIndBASICINFORMATION"
-        >
-          <FormInput
-            type="text"
-            name="firstName"
-            label={t['kymIndFirstName']}
-            __placeholder={t['kymIndEnterFirstName']}
-          />
-          <FormInput
-            type="text"
-            name="middleName"
-            label={t['kymIndMiddleName']}
-            __placeholder={t['kymIndEnterMiddlename']}
-          />
-          <FormInput
-            type="text"
-            name="lastName"
-            label={t['kymIndLastName']}
-            __placeholder={t['kymIndEnterLastname']}
-          />
+        <FormSection id="kymAccIndBasicInformation" header="kymIndBASICINFORMATION">
+          <FormInput type="text" name="firstName" label={t['kymIndFirstName']} />
+          <FormInput type="text" name="middleName" label={t['kymIndMiddleName']} />
+          <FormInput type="text" name="lastName" label={t['kymIndLastName']} />
           <FormSelect
             name="genderId"
             label={t['kymIndGender']}
-            __placeholder={t['kymIndSelectGender']}
             isLoading={genderLoading}
             options={getFieldOption(genderFields)}
           />
-          <FormInput
-            type="date"
-            name="dateOfBirth"
-            label={t['kymIndDateofBirthBS']}
-            __placeholder={t['kymIndEnterdateofbirth']}
-          />
+          <FormDatePicker name="dateOfBirth" label={t['kymIndDateofBirthBS']} />
           <FormSelect
             name="ethnicityId"
             label={t['kymIndEthnicity']}
-            __placeholder={t['kymIndSelectEthnicity']}
             isLoading={ethnicityLoading}
             options={getFieldOption(ethnicityFields)}
           />
@@ -158,22 +73,19 @@ export const MemberKYMBasicInfo = ({
             name="nationalityId"
             isDisabled
             label={t['kymIndNationality']}
-            __placeholder={t['kymIndEnterNationality']}
             isLoading={nationalityLoading}
             options={getFieldOption(nationalityFields)}
           />
 
           <FormSelect
-            name={'educationQualificationId'}
+            name="educationQualificationId"
             label={t['kymIndEducationalQualification']}
-            __placeholder={t['kymIndSelectEducationalQualification']}
             isLoading={educationLoading}
             options={getFieldOption(educationFields)}
           />
           <FormSelect
             name="religionId"
             label={t['kymIndReligion']}
-            __placeholder={t['kymIndSelectReligion']}
             isLoading={religionLoading}
             options={getFieldOption(religionFields)}
           />

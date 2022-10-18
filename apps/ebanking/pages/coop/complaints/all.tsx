@@ -1,13 +1,12 @@
 import { ReactElement } from 'react';
 
+import { PastComplaints } from '@coop/ebanking/coop';
 import { EbankingMainLayout } from '@coop/ebanking/ui-layout';
 
-import Temp from '../../temp';
+const COOPAllComplaintPage = () => <PastComplaints />;
 
-const COOPAllComplaintPage = () => <Temp />;
-
-COOPAllComplaintPage.getLayout = function (page: ReactElement) {
-  return <EbankingMainLayout>{page}</EbankingMainLayout>;
-};
+COOPAllComplaintPage.getLayout = (page: ReactElement) => (
+  <EbankingMainLayout>{page}</EbankingMainLayout>
+);
 
 export default COOPAllComplaintPage;

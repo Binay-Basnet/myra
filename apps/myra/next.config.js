@@ -10,6 +10,7 @@ const nextConfig = {
   experimental: {
     outputFileTracingRoot: path.join(__dirname, '../../'),
   },
+  reactStrictMode: false,
 
   webpack: (config) => {
     // load worker files as a urls with `file-loader`

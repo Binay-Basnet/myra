@@ -32,37 +32,25 @@ export const InventoryRegisterTable = () => {
       {
         Header: t['inRegUnitPrice'],
         accessor: 'node.unitPrice',
-        Cell: ({ value }) => {
-          return <span>{Number(value).toFixed(2)}</span>;
-        },
+        Cell: ({ value }) => <span>{Number(value).toFixed(2)}</span>,
       },
       {
         id: 'total-cost',
         Header: t['inRegTotalCost'],
         accessor: 'node.unitPrice',
-        Cell: ({ value, row }) => {
-          return (
-            <span>
-              {Number(value * row.original.node.itemQuantity).toFixed(2)}
-            </span>
-          );
-        },
+        Cell: ({ value, row }) => (
+          <span>{Number(value * row.original.node.itemQuantity).toFixed(2)}</span>
+        ),
       },
       {
         Header: t['inRegItemQuantity'],
         accessor: 'node.itemQuantity',
-        Cell: ({ value }) => {
-          return <span>{Number(value).toFixed(2)}</span>;
-        },
+        Cell: ({ value }) => <span>{Number(value).toFixed(2)}</span>,
       },
       {
         accessor: 'actions',
         Cell: () => (
-          <IconButton
-            variant="ghost"
-            aria-label="Search database"
-            icon={<BsThreeDots />}
-          />
+          <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
         ),
       },
     ],
@@ -73,12 +61,7 @@ export const InventoryRegisterTable = () => {
     <>
       <TableListPageHeader heading={t['inventory']} />
 
-      <Table
-        isLoading={isFetching}
-        data={rowItems}
-        columns={columns}
-        sort={true}
-      />
+      <Table isLoading={isFetching} data={rowItems} columns={columns} sort />
     </>
   );
 };

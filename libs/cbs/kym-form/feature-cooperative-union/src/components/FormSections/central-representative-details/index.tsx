@@ -4,13 +4,11 @@ import { useTranslation } from '@coop/shared/utils';
 
 import { AddRepresentative } from './DetailsOfdirectorswithOther';
 
-interface centralRepresntativeDetailsProps {
+interface CentralRepresntativeDetailsProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
 
-export const CentralRepresentativeDetails = (
-  props: centralRepresntativeDetailsProps
-) => {
+export const CentralRepresentativeDetails = (props: CentralRepresntativeDetailsProps) => {
   const { setSection } = props;
   const { t } = useTranslation();
 

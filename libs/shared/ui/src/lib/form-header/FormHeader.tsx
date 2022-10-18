@@ -41,6 +41,7 @@ export const FormHeader = ({ title, closeLink, buttonLabel, buttonHandler }: For
           variant="ghost"
           aria-label="close"
           color="gray.500"
+          height="40px"
           icon={<Icon as={IoClose} size="lg" />}
           onClick={() => {
             if (closeLink) {

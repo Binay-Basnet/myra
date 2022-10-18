@@ -6,7 +6,7 @@ import { useGetNewIdMutation, useGetValuatorListQuery, ValuatorEdge } from '@coo
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { formatAddress } from '@coop/cbs/utils';
 import { Column, Table } from '@coop/shared/table';
-import { TablePopover } from '@coop/shared/ui';
+import { Box, TablePopover } from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const CBSSettingsValuatorPopover = ({ cell }: CellContext<ValuatorEdge, unknown>) => {
@@ -18,13 +18,13 @@ const CBSSettingsValuatorPopover = ({ cell }: CellContext<ValuatorEdge, unknown>
         {
           title: 'settingsValuatorViewProfile',
           onClick: (row) => {
-            router.push(`/settings/general/valuator/edit/${row.node?.id}`);
+            router.push(`/settings/general/loan/valuator/edit/${row.node?.id}`);
           },
         },
         {
           title: 'settingsValuatorEdit',
           onClick: (row) => {
-            router.push(`/settings/general/valuator/edit/${row.node?.id}`);
+            router.push(`/settings/general/loan/valuator/edit/${row.node?.id}`);
           },
         },
       ]}
@@ -62,7 +62,11 @@ export const CbsSettingsFeatureValuatorList = () => {
       },
       {
         header: t['settingsGeneralValuatorValuatorType'],
-        accessorFn: (row) => row?.node?.valuatorType,
+        cell: (row) => (
+          <Box textTransform="capitalize">
+            {row?.row?.original?.node?.valuatorType?.toLowerCase()}
+          </Box>
+        ),
       },
       {
         header: t['settingsGeneralValuatorAddress'],
@@ -95,7 +99,7 @@ export const CbsSettingsFeatureValuatorList = () => {
         buttonLabel={t['settingsGeneralValuatorNewValuator']}
         buttonHandler={() => {
           mutateAsync({}).then((res) => {
-            router.push(`/settings/general/valuator/add/${res?.newId}`);
+            router.push(`/settings/general/loan/valuator/add/${res?.newId}`);
           });
         }}
       />

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Control, Controller, useFormContext } from 'react-hook-form';
 import { Box } from '@chakra-ui/react';
 
@@ -19,6 +18,7 @@ export const FormRadioGroup = ({ name, label, ...rest }: IFormSelectProps) => {
   } = methods;
 
   const error = errors[name];
+
   return (
     <Controller
       control={control}
@@ -28,14 +28,12 @@ export const FormRadioGroup = ({ name, label, ...rest }: IFormSelectProps) => {
         // @ts-ignore
         <Box display="flex" flexDirection="column" gap="s16">
           <TextFields variant="formLabel">{label}</TextFields>
-          <RadioGroup
-            {...rest}
-            value={value}
-            onChange={onChange}
-            name={name}
-            id={name}
-          />
-          {error ? error?.message : null}
+          <RadioGroup {...rest} value={value} onChange={onChange} name={name} id={name} />
+          {error ? (
+            <TextFields variant="formHelper" color="danger.500">
+              {error?.message as string}
+            </TextFields>
+          ) : null}
         </Box>
       )}
     />

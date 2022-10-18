@@ -28,30 +28,11 @@ export const KymCoopContactDetails = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <FormSection
-          gridLayout={true}
-          id="kymCoopAccContactDetails"
-          header="kymCoopContactDetails"
-        >
-          <FormInput
-            type="text"
-            name="email"
-            label={t['kymCoopOfficialEmail']}
-            __placeholder={t['kymCoopEnterEmailAddress']}
-          />
-          <FormInput
-            type="text"
-            name="website"
-            label={t['kymCoopWebsiteLink']}
-            __placeholder={t['kymCoopEnterWebsiteURL']}
-          />
+        <FormSection id="kymCoopAccContactDetails" header="kymCoopContactDetails">
+          <FormInput type="text" name="email" label={t['kymCoopOfficialEmail']} />
+          <FormInput type="text" name="website" label={t['kymCoopWebsiteLink']} />
 
-          <FormInput
-            type="text"
-            name="contactNumber"
-            label={t['kymCoopPhoneno']}
-            __placeholder={t['kymCoopEnterPhoneNumber']}
-          />
+          <FormInput type="text" name="contactNumber" label={t['kymCoopPhoneno']} />
         </FormSection>
       </form>
     </FormProvider>

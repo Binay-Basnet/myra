@@ -19,6 +19,10 @@ const tabList = [
     title: 'settingsProductTypeGeneral',
     to: '/settings/general/loan/product-type',
   },
+  {
+    title: 'settingsSideBarValuator',
+    to: '/settings/general/loan/valuator',
+  },
 ];
 
 interface ISettingsLoanLayout {
@@ -61,7 +65,7 @@ export const SettingsLoanLayout = ({ children }: ISettingsLoanLayout) => {
       >
         <SettingsInnerVerticalMenu tablinks={tabList} />
       </Box>
-      <Box ml="300px">{children}</Box>
+      <Box ml="250px">{children}</Box>
     </>
   );
 };

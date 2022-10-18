@@ -7,25 +7,22 @@ import omit from 'lodash/omit';
 import pickBy from 'lodash/pickBy';
 
 import {
+  addCentralRepError,
   CooperativeUnionPersonnelSection,
   CoopUnionPersonnelInput,
+  RootState,
+  useAppDispatch,
+  useAppSelector,
   useGetCentralRepresentativeDetailsQuery,
   useSetPersonnelDetailsMutation,
 } from '@coop/cbs/data-access';
-import {
-  addCentralRepError,
-  isDeepEmpty,
-  useAppDispatch,
-  useAppSelector,
-} from '@coop/shared/utils';
+import { isDeepEmpty } from '@coop/shared/utils';
 
 interface IUseCoopUnionCentralRep {
   methods: UseFormReturn<CoopUnionPersonnelInput>;
 }
 
-export const useCoopUnionCentralRep = ({
-  methods,
-}: IUseCoopUnionCentralRep) => {
+export const useCoopUnionCentralRep = ({ methods }: IUseCoopUnionCentralRep) => {
   const [notAmongDirectors, setNotAmongDirectors] = useState<boolean>(false);
   const [crId, setCRId] = useState<string>('');
 
@@ -35,12 +32,8 @@ export const useCoopUnionCentralRep = ({
   const id = String(router?.query?.['id']);
 
   const { reset, watch, clearErrors, setError } = methods;
-  const { errors } = useAppSelector(
-    (state) => state.coopUnion.centralRepresentative
-  );
-  const hasPressedNext = useAppSelector(
-    (state) => state.coopUnion.hasPressedNext
-  );
+  const { errors } = useAppSelector((state) => state.coopUnion.centralRepresentative);
+  const hasPressedNext = useAppSelector((state) => state.coopUnion.hasPressedNext);
 
   const { mutate } = useSetPersonnelDetailsMutation({
     onSuccess: () => refetch(),
@@ -54,8 +47,7 @@ export const useCoopUnionCentralRep = ({
             mutate({
               id,
               personnelId: null,
-              sectionType:
-                CooperativeUnionPersonnelSection.CentralRepresentative,
+              sectionType: CooperativeUnionPersonnelSection.CentralRepresentative,
               data,
             });
           }
@@ -64,8 +56,7 @@ export const useCoopUnionCentralRep = ({
             mutate({
               id,
               personnelId: crId,
-              sectionType:
-                CooperativeUnionPersonnelSection.CentralRepresentative,
+              sectionType: CooperativeUnionPersonnelSection.CentralRepresentative,
               data: omit(data, ['centralRepID']),
             });
           }
@@ -76,28 +67,34 @@ export const useCoopUnionCentralRep = ({
     return () => subscription.unsubscribe();
   }, [watch, router.isReady, crId]);
 
-  const { data: crDetailsEditData, refetch } =
-    useGetCentralRepresentativeDetailsQuery(
-      {
-        id: String(id),
-        includeRequiredErrors: hasPressedNext,
-      },
-      {
-        enabled: !!id,
-        onSuccess: (response) => {
-          const errorObj =
-            response?.members?.cooperativeUnion?.formState?.formData
-              ?.centralRepresentativeDetails?.sectionStatus?.errors;
+  const { data: crDetailsEditData, refetch } = useGetCentralRepresentativeDetailsQuery(
+    {
+      id: String(id),
+      includeRequiredErrors: hasPressedNext,
+    },
+    {
+      enabled: !!id,
+      onSuccess: (response) => {
+        const errorObj =
+          response?.members?.cooperativeUnion?.formState?.formData?.centralRepresentativeDetails
+            ?.sectionStatus?.errors;
 
-          // Add Error If New Error Is Detected
-          if (errorObj) {
-            dispatch(addCentralRepError(errorObj));
-          } else {
-            dispatch(addCentralRepError(null));
-          }
-        },
-      }
-    );
+        // Add Error If New Error Is Detected
+        if (errorObj) {
+          dispatch(addCentralRepError(errorObj));
+        } else {
+          dispatch(addCentralRepError(null));
+        }
+      },
+    }
+  );
+
+  // refetch data when calendar preference is updated
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetch();
+  }, [preference?.date]);
 
   useDeepCompareEffect(() => {
     if (crDetailsEditData) {
