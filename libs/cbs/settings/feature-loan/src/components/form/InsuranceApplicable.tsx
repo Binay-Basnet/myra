@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { FormAmountInput, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { Box, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -55,8 +55,7 @@ export const InsuranceApplicable = () => {
               </GridItem>
 
               <GridItem colSpan={1}>
-                <FormInput
-                  type="text"
+                <FormAmountInput
                   name="insuranceType.amount"
                   label={t['loanProductInsuranceAmount']}
                 />

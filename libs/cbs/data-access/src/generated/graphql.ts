@@ -13790,6 +13790,7 @@ export type GetLoanApplicationDetailsQuery = {
         productId?: string | null;
         LoanAccountName?: string | null;
         appliedLoanAmount?: string | null;
+        linkedAccountId?: string | null;
         totalValuation?: string | null;
         totalSanctionedAmount?: string | null;
         justifySanction?: string | null;
@@ -14893,6 +14894,7 @@ export type GetLoanProductEditDataQuery = {
             isMonthlyInstallmentCompulsory?: boolean | null;
             interestMethod?: LoanInterestMethod | null;
             isPenaltyApplicable?: boolean | null;
+            penaltyType?: PenaltyType | null;
             isRebateApplicable?: boolean | null;
             minGraceDurationUnit?: FrequencyTenure | null;
             minGraceDurationUnitNumber?: number | null;
@@ -21765,6 +21767,7 @@ export const GetLoanApplicationDetailsDocument = `
           principalGracePeriod
           interestGracePeriod
         }
+        linkedAccountId
         totalValuation
         totalSanctionedAmount
         justifySanction
@@ -23182,6 +23185,7 @@ export const GetLoanProductEditDataDocument = `
             isMonthlyInstallmentCompulsory
             interestMethod
             isPenaltyApplicable
+            penaltyType
             penaltyOnPrincipal {
               dayAfterInstallmentDate
               penaltyRate

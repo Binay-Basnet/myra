@@ -10,6 +10,7 @@ import {
   LoanProductInput,
   LoanProductInstallment,
   LoanRepaymentScheme,
+  PenaltyType,
   useGetLoanGeneralSettingsQuery,
   useGetLoanProductEditDataQuery,
   useSetLoanProductMutation,
@@ -119,6 +120,7 @@ export const SettingsLoanProductForm = () => {
       installmentFrequency: LoanProductInstallment.Daily,
       isRebateApplicable: false,
       tenureUnit: FrequencyTenure.Day,
+      penaltyType: PenaltyType.Principal,
     },
   });
 
