@@ -2070,6 +2070,11 @@ export type DepositLoanAccountInput = {
   tenureNumber?: InputMaybe<Scalars['Int']>;
 };
 
+export type DepositLoanAccountListResult = {
+  data?: Maybe<Array<Maybe<DepositLoanAccount>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type DepositLoanAccountMutation = {
   add?: Maybe<DepositLoanAccountResult>;
   close?: Maybe<DepositAccountCloseResult>;
@@ -2095,6 +2100,7 @@ export type DepositLoanAccountQuery = {
   get?: Maybe<DepositLoanAccount>;
   getInstallments?: Maybe<InstallmentResult>;
   list?: Maybe<DepositLoanAccountConnection>;
+  listDefaultAccounts?: Maybe<DepositLoanAccountListResult>;
   listMinors?: Maybe<KymIndFamilyMemberQueryResult>;
 };
 
@@ -2117,6 +2123,11 @@ export type DepositLoanAccountQueryGetInstallmentsArgs = {
 export type DepositLoanAccountQueryListArgs = {
   filter?: InputMaybe<DepositLoanAccountSearchFilter>;
   paginate?: InputMaybe<Pagination>;
+};
+
+export type DepositLoanAccountQueryListDefaultAccountsArgs = {
+  memberId: Scalars['ID'];
+  productId: Scalars['ID'];
 };
 
 export type DepositLoanAccountQueryListMinorsArgs = {
@@ -2266,6 +2277,17 @@ export type DepositProductFormStateResult = {
   error?: Maybe<QueryError>;
 };
 
+export type DepositProductInactiveData = {
+  id: Scalars['ID'];
+  remarks: Scalars['String'];
+};
+
+export type DepositProductInactiveResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<DepositProductSettingsQuery>;
+  recordId: Scalars['ID'];
+};
+
 export type DepositProductInput = {
   accountCloseCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
   accountType?: InputMaybe<DefaultAccountType>;
@@ -2351,16 +2373,22 @@ export type DepositProductResult = {
 
 export type DepositProductSearchFilter = {
   id?: InputMaybe<Scalars['ID']>;
+  objState?: InputMaybe<DepositProductStatus>;
   query?: InputMaybe<Scalars['String']>;
 };
 
 export type DepositProductSettingsMutation = {
   add?: Maybe<DepositProductResult>;
+  makeInactive?: Maybe<DepositProductInactiveResult>;
 };
 
 export type DepositProductSettingsMutationAddArgs = {
   data?: InputMaybe<DepositProductInput>;
   id: Scalars['ID'];
+};
+
+export type DepositProductSettingsMutationMakeInactiveArgs = {
+  data?: InputMaybe<DepositProductInactiveData>;
 };
 
 export type DepositProductSettingsQuery = {
@@ -2396,6 +2424,11 @@ export type DepositProductSettingsQueryListArgs = {
   filter?: InputMaybe<DepositProductSearchFilter>;
   paginate?: InputMaybe<Pagination>;
 };
+
+export enum DepositProductStatus {
+  Active = 'ACTIVE',
+  Inactive = 'INACTIVE',
+}
 
 export type DepositResult = {
   error?: Maybe<MutationError>;

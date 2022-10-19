@@ -10,5 +10,5 @@ export const amountToWordsConverter = (amount: number | string) => {
     },
   });
   const convertedAmount = typeof amount === 'string' ? parseInt(amount, 10) : amount;
-  return toWords.convert(convertedAmount);
+  return toWords.convert(convertedAmount ?? 0);
 };

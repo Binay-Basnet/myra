@@ -40,8 +40,10 @@ export const ShareRegisterTable = () => {
         accessorFn: (row) => row?.node.transactionDirection,
         cell: (props) => (
           <span>
-            {(props.getValue() === Share_Transaction_Direction.Purchase && 'Purchase') ||
-              (props.getValue() === Share_Transaction_Direction.Return && 'Return')}
+            {(props.getValue() === Share_Transaction_Direction.Purchase &&
+              t['shareRegisterTableIssue']) ||
+              (props.getValue() === Share_Transaction_Direction.Return &&
+                t['shareRegisterTableReturn'])}
           </span>
         ),
       },

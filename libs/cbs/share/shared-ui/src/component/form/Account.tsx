@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
 import { useGetAccountTableListQuery } from '@coop/cbs/data-access';
-import { FormInput } from '@coop/shared/form';
+import { FormAmountInput } from '@coop/shared/form';
 import {
   Alert,
   Box,
@@ -64,11 +64,10 @@ export const Account = ({ totalAmount }: AmountType) => {
       </GridItem>
 
       <GridItem colSpan={1}>
-        <FormInput
-          type="text"
+        <FormAmountInput
           name="accountAmount"
           label={t['sharePurchaseAccountAmount']}
-          defaultValue={totalAmount}
+          defaultValue={totalAmount ?? 0}
           isDisabled
         />
       </GridItem>

@@ -180,7 +180,6 @@ export const SharePurchaseForm = () => {
 
   useEffect(() => {
     const values = getValues();
-
     let temp = 0;
     if (chargeList) {
       if (extraFee) {
@@ -204,8 +203,20 @@ export const SharePurchaseForm = () => {
         cashPaid: totalAmount.toString(),
       },
     });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chargeList, extraFee, noOfShares, JSON.stringify(extraFee), totalAmount]);
+
+  // useEffect(() => {
+  //   const values = getValues();
+  //   reset({
+  //     ...values,
+  //     shareCount: 0,
+  //     paymentMode: SharePaymentMode.BankVoucherOrCheque,
+  //   });
+
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [memberId]);
 
   return (
     <>

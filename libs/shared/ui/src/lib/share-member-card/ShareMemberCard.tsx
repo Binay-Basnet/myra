@@ -1,4 +1,4 @@
-import { useGetShareHistoryQuery } from '@coop/cbs/data-access';
+import { Share_Transaction_Direction, useGetShareHistoryQuery } from '@coop/cbs/data-access';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import Avatar from '../avatar/Avatar';
@@ -122,7 +122,10 @@ export const ShareMemberCard = ({
               >
                 <Box>
                   <Text fontWeight="Medium" fontSize="s3" color="neutralColorLight.Gray-80">
-                    {item?.debit ? t['sharePurchaseTableShareDr'] : t['sharePurchaseTableShareCr']}
+                    {item?.transactionDirection === Share_Transaction_Direction.Purchase &&
+                      t['sharePurchaseTableShareCr']}
+                    {item?.transactionDirection === Share_Transaction_Direction.Return &&
+                      t['sharePurchaseTableShareDr']}
                   </Text>
                   <Text fontWeight="Medium" fontSize="s3" color="neutralColorLight.Gray-60">
                     {item?.transactionDate}

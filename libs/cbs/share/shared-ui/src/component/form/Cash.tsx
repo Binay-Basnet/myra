@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import { FormEditableTable, FormInput, FormSwitch } from '@coop/shared/form';
+import { FormAmountInput, FormEditableTable, FormSwitch } from '@coop/shared/form';
 import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -48,12 +48,7 @@ export const Cash = ({
   return (
     <FormSection templateColumns={2}>
       <GridItem colSpan={1}>
-        <FormInput
-          textAlign="right"
-          type="number"
-          name="cash.cashPaid"
-          label={t['sharePurchaseCash']}
-        />
+        <FormAmountInput name="cash.cashPaid" label={t['sharePurchaseCash']} />
       </GridItem>
 
       <GridItem colSpan={2}>
