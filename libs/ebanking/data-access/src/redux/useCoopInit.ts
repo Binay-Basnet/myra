@@ -16,6 +16,8 @@ const url = process.env['NX_SCHEMA_PATH'] ?? '';
 
 export const useCoopInit = () => {
   const [triggerQuery, setTriggerQuery] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
+
   const dispatch = useAppDispatch();
   const replace = useReplace();
 
@@ -38,7 +40,10 @@ export const useCoopInit = () => {
   const userData = getMe?.data?.eBanking?.auth?.meCooperativeUser?.data;
 
   useEffect(() => {
-    if (!isMyraLoggedIn) return;
+    if (!isMyraLoggedIn) {
+      setIsLoading(false);
+      return;
+    }
 
     if (!isMyra) {
       refreshToken()
@@ -49,7 +54,7 @@ export const useCoopInit = () => {
         })
         .catch(() => {
           dispatch(logoutCooperative());
-          replace('/login/coop');
+          replace('/login/coop').then(() => setIsLoading(false));
         });
     }
   }, [dispatch, refreshToken, replace, isMyraLoggedIn]);
@@ -62,10 +67,13 @@ export const useCoopInit = () => {
             user: userData,
           })
         );
+        setIsLoading(false);
       } else if (!isMyra) {
         dispatch(logoutCooperative());
-        replace('/login/coop');
+        replace('/login/coop').then(() => setIsLoading(false));
       }
     }
   }, [dispatch, hasDataReturned, hasData, userData, replace]);
+
+  return { isLoading };
 };

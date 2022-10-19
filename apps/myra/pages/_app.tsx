@@ -9,7 +9,7 @@ import Script from 'next/script';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 
 import { store } from '@coop/cbs/data-access';
-import { Toaster } from '@coop/shared/ui';
+import { Box, Loader, Toaster } from '@coop/shared/ui';
 import { theme, useInit, useSnap } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
@@ -43,8 +43,8 @@ const queryClient = new QueryClient({
 });
 
 const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
-  useInit();
   useSnap();
+  const { isLoading } = useInit();
 
   const getLayout = Component.getLayout || ((page) => page);
 
@@ -56,17 +56,13 @@ const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       <Script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" />
       <ToastContainer />
       <Toaster />
-      <main className="app">{getLayout(<Component {...pageProps} />)}</main>
-      {/* <Box
-        position="fixed"
-        bottom="40px"
-        left="32px"
-        display="flex"
-        flexDirection="row-reverse"
-        zIndex="99"
-      >
-        <FloatingShortcutButton />
-      </Box> */}
+      {isLoading ? (
+        <Box h="100vh" bg="white" display="flex" alignItems="center" justifyContent="center">
+          <Loader height={300} />
+        </Box>
+      ) : (
+        <main className="app">{getLayout(<Component {...pageProps} />)}</main>
+      )}
     </>
   );
 };

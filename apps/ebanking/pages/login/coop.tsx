@@ -53,7 +53,7 @@ const CoopSelectPage = () => {
       }
       localStorage.setItem('coop-refreshToken', String(refreshToken));
 
-      router.replace('/home');
+      router.replace('/');
     }
   };
 

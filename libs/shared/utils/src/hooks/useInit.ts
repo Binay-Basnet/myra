@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   authenticate,
@@ -14,6 +14,7 @@ import { useReplace } from './useReplace';
 const url = process.env['NX_SCHEMA_PATH'] ?? '';
 
 export const useInit = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [triggerQuery, setTriggerQuery] = React.useState(false);
   const dispatch = useAppDispatch();
   const replace = useReplace();
@@ -41,7 +42,7 @@ export const useInit = () => {
       })
       .catch(() => {
         dispatch(logout());
-        replace('/login');
+        replace('/login').then(() => setIsLoading(false));
       });
   }, [dispatch, refreshToken, replace]);
 
@@ -50,10 +51,13 @@ export const useInit = () => {
       if (userData) {
         dispatch(authenticate({ user: userData }));
         preference && dispatch(setPreference({ preference }));
+        setIsLoading(false);
       } else {
         dispatch(logout());
-        replace('/login');
+        replace('/login').then(() => setIsLoading(false));
       }
     }
   }, [dispatch, hasDataReturned, hasData, userData, replace]);
+
+  return { isLoading };
 };
