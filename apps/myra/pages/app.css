@@ -1,3 +1,7 @@
+:root {
+  --cl-primary: #006837;
+}
+
 .rl-nepali-datepicker-wrapper .input-wrapper {
   height: 44px;
 }

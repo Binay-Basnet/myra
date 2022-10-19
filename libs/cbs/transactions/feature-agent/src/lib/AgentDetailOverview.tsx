@@ -73,20 +73,23 @@ export const AgentDetailOverview = () => {
   }, [agentTodayListQueryData]);
 
   useDeepCompareEffect(() => {
-    reset({
-      accounts: accounts?.map(
-        (record: { account: string | undefined; member: string | undefined }) => {
-          const account = assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.find(
-            (member) => member?.node?.account?.id === record?.account
-          );
-          return {
-            member: record?.member,
-            account: record?.account,
-            amount: account?.node?.account?.dues?.totalDue,
-          };
-        }
-      ),
-    });
+    if (accounts?.length) {
+      reset({
+        accounts: accounts?.map(
+          (record: { account: string | undefined; member: string | undefined }) => {
+            const account =
+              assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.find(
+                (member) => member?.node?.account?.id === record?.account
+              );
+            return {
+              member: record?.member,
+              account: record?.account,
+              amount: account?.node?.account?.dues?.totalDue,
+            };
+          }
+        ),
+      });
+    }
   }, [accounts, assignedMemberListQueryData]);
 
   const getMemberAccounts = async (mId: string) =>

@@ -158,16 +158,16 @@ export const Questions = () => {
         </FormSection>
       )}
 
-      {depositNature !== NatureOfDepositProduct.Current && (
-        <FormSection>
-          <GridItem colSpan={3}>
-            <Box display="flex" flexDirection="row" justifyContent="space-between">
-              <SubHeadingText>{t['depositProductSupportMultipleAccount']}</SubHeadingText>
-              <FormSwitchTab name="supportMultiple" options={yesNo} />
-            </Box>
-          </GridItem>
-        </FormSection>
-      )}
+      {/* {depositNature !== NatureOfDepositProduct.Current && ( */}
+      <FormSection>
+        <GridItem colSpan={3}>
+          <Box display="flex" flexDirection="row" justifyContent="space-between">
+            <SubHeadingText>{t['depositProductSupportMultipleAccount']}</SubHeadingText>
+            <FormSwitchTab name="supportMultiple" options={yesNo} />
+          </Box>
+        </GridItem>
+      </FormSection>
+      {/* )} */}
 
       {(depositNature === NatureOfDepositProduct.RecurringSaving ||
         depositNature === NatureOfDepositProduct.Saving) && (
