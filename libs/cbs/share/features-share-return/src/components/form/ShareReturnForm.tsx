@@ -182,7 +182,7 @@ export const ShareReturnForm = () => {
 
   const { data: chargesData, isLoading } = useGetShareChargesQuery(
     {
-      transactionType: Share_Transaction_Direction?.Purchase,
+      transactionType: Share_Transaction_Direction?.Return,
       shareCount: noOfShares,
     },
     { enabled: !!noOfShares }
@@ -203,13 +203,15 @@ export const ShareReturnForm = () => {
         });
       }
 
-      setTotalAmount(temp + noOfShares * 100);
+      setTotalAmount(noOfShares * 100 - temp);
     } else {
       setTotalAmount(noOfShares * 100);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading, extraFee, noOfShares, JSON.stringify(extraFee)]);
+  }, [isLoading, extraFee, noOfShares, JSON.stringify(chargeList), JSON.stringify(extraFee)]);
+
+  console.log(totalAmount, chargeList, extraFee);
 
   return (
     <>
