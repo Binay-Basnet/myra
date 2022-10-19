@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { SharePaymentMode, ShareVoucherDepositedBy } from '@coop/cbs/data-access';
@@ -32,7 +33,7 @@ export const SharePurchasePayment = ({
 }: PurchaseProps) => {
   const { t } = useTranslation();
   const methods = useFormContext();
-  const { watch } = methods;
+  const { watch, setValue } = methods;
 
   const depositedBy = watch('bankVoucher.depositedBy');
   const paymentModes = watch('paymentMode');
@@ -53,6 +54,10 @@ export const SharePurchasePayment = ({
       value: ShareVoucherDepositedBy?.Other,
     },
   ];
+
+  useEffect(() => {
+    setValue('cash.cashPaid', totalAmount);
+  }, [totalAmount, setValue]);
 
   return (
     <Box minHeight="100vh" background="gray.0" border="1px solid" borderColor="border.layout">

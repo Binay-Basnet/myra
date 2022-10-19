@@ -80,7 +80,7 @@ export const SharePurchaseForm = () => {
       },
     },
   });
-  const { watch, getValues, reset } = methods;
+  const { watch, getValues } = methods;
 
   const router = useRouter();
 
@@ -168,7 +168,7 @@ export const SharePurchaseForm = () => {
     });
   };
 
-  const { data: chargesData } = useGetShareChargesQuery(
+  const { data: chargesData, isLoading } = useGetShareChargesQuery(
     {
       transactionType: Share_Transaction_Direction?.Purchase,
       shareCount: noOfShares,
@@ -179,7 +179,6 @@ export const SharePurchaseForm = () => {
   const chargeList = chargesData?.share?.charges;
 
   useEffect(() => {
-    const values = getValues();
     let temp = 0;
     if (chargeList) {
       if (extraFee) {
@@ -197,26 +196,8 @@ export const SharePurchaseForm = () => {
       setTotalAmount(noOfShares * 100);
     }
 
-    reset({
-      ...values,
-      cash: {
-        cashPaid: totalAmount.toString(),
-      },
-    });
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chargeList, extraFee, noOfShares, JSON.stringify(extraFee), totalAmount]);
-
-  // useEffect(() => {
-  //   const values = getValues();
-  //   reset({
-  //     ...values,
-  //     shareCount: 0,
-  //     paymentMode: SharePaymentMode.BankVoucherOrCheque,
-  //   });
-
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [memberId]);
+  }, [isLoading, extraFee, noOfShares, JSON.stringify(extraFee)]);
 
   return (
     <>
