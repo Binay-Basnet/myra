@@ -29,7 +29,7 @@
     "@emotion/react": "11.10.4",
     "@emotion/styled": "11.10.4",
     "@fontsource/inter": "^4.5.10",
-    "@hookform/resolvers": "^2.8.8",
+    "@hookform/resolvers": "^2.9.9",
     "@nrwl/next": "15.0.0",
     "@raralabs/react-patro": "^1.0.1",
     "@raralabs/web-feedback": "^2.0.4",
