@@ -340,8 +340,8 @@ export const AddDeposit = () => {
           <FormHeader
             title={`${t['addDepositNewDeposit']} - ${featureCode?.newDeposit}`}
             closeLink="/transactions/deposit/list"
-            buttonLabel={t['addDepositAddBulkDeposit']}
-            buttonHandler={() => router.push('/transactions/deposit/add-bulk-deposit')}
+            // buttonLabel={t['addDepositAddBulkDeposit']}
+            // buttonHandler={() => router.push('/transactions/deposit/add-bulk-deposit')}
           />
         </Box>
 
@@ -543,7 +543,7 @@ export const AddDeposit = () => {
                               type: selectedAccount?.product?.nature
                                 ? accountTypes[selectedAccount?.product?.nature]
                                 : '',
-                              ID: selectedAccount?.product?.id,
+                              ID: selectedAccount?.id,
                               currentBalance: selectedAccount?.balance ?? '0',
                               minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
                               guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',

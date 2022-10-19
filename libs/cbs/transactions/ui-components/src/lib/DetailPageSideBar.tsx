@@ -85,7 +85,7 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
             <Text fontSize="r1" fontWeight="500" color="primary.500">
               {agentDetailQueryData?.transaction?.agentDetail?.data?.name}
             </Text>
-            <Text fontSize="s3" fontWeight="400" color="gray.800">
+            <Text fontSize="s3" fontWeight="400" color="gray.800" wordBreak="break-all">
               {agentDetailQueryData?.transaction?.agentDetail?.data?.branch}
             </Text>
             <Box display="flex" alignItems="center" gap="s10">

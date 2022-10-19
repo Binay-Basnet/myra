@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import {
   useGetAgentAssignedMemberListDataQuery,
@@ -24,6 +25,8 @@ type DepositAccountTable = {
 };
 
 export const AddAgentTransaction = () => {
+  const router = useRouter();
+
   const methods = useForm();
 
   const { watch, getValues } = methods;
@@ -116,7 +119,7 @@ export const AddAgentTransaction = () => {
         loading: 'Adding Agent Todays Transaction',
         success: 'Added Agent Todays Transaction',
       },
-      onSuccess: () => null,
+      onSuccess: () => router.push('/transactions/agent-transaction/list'),
     });
   };
 
@@ -223,16 +226,6 @@ export const AddAgentTransaction = () => {
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.xl" height="fit-content">
             <FormFooter
-              // status={
-              //   <Box display="flex" gap="s32">
-              //     <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-50">
-              //       Total Deposit Amount
-              //     </Text>
-              //     <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
-              //       ---
-              //     </Text>
-              //   </Box>
-              // }
               mainButtonLabel="Save Transaction"
               mainButtonHandler={handleSaveTodayList}
             />

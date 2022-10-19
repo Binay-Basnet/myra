@@ -334,7 +334,7 @@ export const AddBulkDeposit = () => {
                               type: selectedAccount?.product?.nature
                                 ? accountTypes[selectedAccount?.product?.nature]
                                 : '',
-                              ID: selectedAccount?.product?.id,
+                              ID: selectedAccount?.id,
                               currentBalance: selectedAccount?.balance ?? '0',
                               minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
                               guaranteeBalance: selectedAccount?.guaranteedAmount ?? '',

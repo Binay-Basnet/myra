@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
 
-import { useGetDepositListDataQuery } from '@coop/cbs/data-access';
+import { DepositedBy, useGetDepositListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
-import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, Text } from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
@@ -17,6 +16,12 @@ const tabList = [
     key: 'SUBMITTED',
   },
 ];
+
+const depositedBy = {
+  [DepositedBy.Agent]: 'Market Representative',
+  [DepositedBy.Self]: 'Self',
+  [DepositedBy.Other]: 'Other',
+};
 
 /* eslint-disable-next-line */
 export interface DepositListProps {}
@@ -73,7 +78,7 @@ export const DepositList = () => {
       },
       {
         header: t['depositListDepositedBy'],
-        accessorFn: (row) => row?.node?.processedBy,
+        accessorFn: (row) => (row?.node?.processedBy ? depositedBy[row?.node?.processedBy] : ''),
       },
 
       {
@@ -88,19 +93,19 @@ export const DepositList = () => {
           isNumeric: true,
         },
       },
-      {
-        id: '_actions',
-        header: '',
-        accessorKey: 'actions',
-        cell: (cell) => {
-          const member = cell?.row?.original?.node;
-          const memberData = { id: member?.ID };
-          return <PopoverComponent items={[]} member={memberData} />;
-        },
-        meta: {
-          width: '60px',
-        },
-      },
+      // {
+      //   id: '_actions',
+      //   header: '',
+      //   accessorKey: 'actions',
+      //   cell: (cell) => {
+      //     const member = cell?.row?.original?.node;
+      //     const memberData = { id: member?.ID };
+      //     return <PopoverComponent items={[]} member={memberData} />;
+      //   },
+      //   meta: {
+      //     width: '60px',
+      //   },
+      // },
     ],
     [t]
   );

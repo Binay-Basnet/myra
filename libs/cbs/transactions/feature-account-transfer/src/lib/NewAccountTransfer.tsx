@@ -11,7 +11,6 @@ import {
   useSetAccountTransferDataMutation,
   WithdrawWith,
 } from '@coop/cbs/data-access';
-import { FormCustomSelect } from '@coop/cbs/transactions/ui-components';
 import {
   BoxContainer,
   ContainerWithDivider,
@@ -23,6 +22,7 @@ import {
   Box,
   Container,
   DEFAULT_PAGE_SIZE,
+  FormAccountSelect,
   FormFooter,
   FormHeader,
   FormMemberSelect,
@@ -107,19 +107,19 @@ export const NewAccountTransfer = () => {
     memberCitizenshipUrl: destMemberCitizenshipUrl,
   } = useGetIndividualMemberDetails({ memberId: destMemberId });
 
-  const { data: destAccountListData } = useGetAccountTableListQuery(
-    {
-      paginate: {
-        first: DEFAULT_PAGE_SIZE,
-        after: '',
-      },
-      filter: { memberId: destMemberId },
-    },
-    {
-      staleTime: 0,
-      enabled: !!destMemberId,
-    }
-  );
+  // const { data: destAccountListData } = useGetAccountTableListQuery(
+  //   {
+  //     paginate: {
+  //       first: DEFAULT_PAGE_SIZE,
+  //       after: '',
+  //     },
+  //     filter: { memberId: destMemberId },
+  //   },
+  //   {
+  //     staleTime: 0,
+  //     enabled: !!destMemberId,
+  //   }
+  // );
 
   const srcAccountId = watch('srcAccountId');
 
@@ -186,27 +186,28 @@ export const NewAccountTransfer = () => {
                       <FormMemberSelect name="memberId" label={t['newAccountTransferMember']} />
 
                       {memberId && (
-                        <FormCustomSelect
+                        <FormAccountSelect
                           name="srcAccountId"
                           label={t['newAccountTransferSourceAccount']}
-                          options={accountListData?.account?.list?.edges?.map((account) => ({
-                            accountInfo: {
-                              accountName: account.node?.product.productName,
-                              accountId: account.node?.product?.id,
-                              accountType: account?.node?.product?.nature
-                                ? accountTypes[account?.node?.product?.nature]
-                                : '',
-                              balance: account?.node?.balance ?? '0',
-                              fine:
-                                account?.node?.product?.nature ===
-                                  NatureOfDepositProduct.RecurringSaving ||
-                                (account?.node?.product?.nature === NatureOfDepositProduct.Saving &&
-                                  account?.node?.product?.isMandatorySaving === true)
-                                  ? FINE
-                                  : '',
-                            },
-                            value: account.node?.id as string,
-                          }))}
+                          memberId={memberId}
+                          // options={accountListData?.account?.list?.edges?.map((account) => ({
+                          //   accountInfo: {
+                          //     accountName: account.node?.product.productName,
+                          //     accountId: account.node?.product?.id,
+                          //     accountType: account?.node?.product?.nature
+                          //       ? accountTypes[account?.node?.product?.nature]
+                          //       : '',
+                          //     balance: account?.node?.balance ?? '0',
+                          //     fine:
+                          //       account?.node?.product?.nature ===
+                          //         NatureOfDepositProduct.RecurringSaving ||
+                          //       (account?.node?.product?.nature === NatureOfDepositProduct.Saving &&
+                          //         account?.node?.product?.isMandatorySaving === true)
+                          //         ? FINE
+                          //         : '',
+                          //   },
+                          //   value: account.node?.id as string,
+                          // }))}
                         />
                       )}
                     </BoxContainer>
@@ -220,28 +221,29 @@ export const NewAccountTransfer = () => {
                         />
 
                         {transferType === TransferType.Self && (
-                          <FormCustomSelect
+                          <FormAccountSelect
                             name="destAccountId"
                             label={t['newAccountTransferReceipentAccount']}
-                            options={accountListData?.account?.list?.edges?.map((account) => ({
-                              accountInfo: {
-                                accountName: account.node?.product.productName,
-                                accountId: account.node?.product?.id,
-                                accountType: account?.node?.product?.nature
-                                  ? accountTypes[account?.node?.product?.nature]
-                                  : '',
-                                balance: account?.node?.balance ?? '0',
-                                fine:
-                                  account?.node?.product?.nature ===
-                                    NatureOfDepositProduct.RecurringSaving ||
-                                  (account?.node?.product?.nature ===
-                                    NatureOfDepositProduct.Saving &&
-                                    account?.node?.product?.isMandatorySaving === true)
-                                    ? FINE
-                                    : '',
-                              },
-                              value: account.node?.id as string,
-                            }))}
+                            memberId={memberId}
+                            // options={accountListData?.account?.list?.edges?.map((account) => ({
+                            //   accountInfo: {
+                            //     accountName: account.node?.product.productName,
+                            //     accountId: account.node?.product?.id,
+                            //     accountType: account?.node?.product?.nature
+                            //       ? accountTypes[account?.node?.product?.nature]
+                            //       : '',
+                            //     balance: account?.node?.balance ?? '0',
+                            //     fine:
+                            //       account?.node?.product?.nature ===
+                            //         NatureOfDepositProduct.RecurringSaving ||
+                            //       (account?.node?.product?.nature ===
+                            //         NatureOfDepositProduct.Saving &&
+                            //         account?.node?.product?.isMandatorySaving === true)
+                            //         ? FINE
+                            //         : '',
+                            //   },
+                            //   value: account.node?.id as string,
+                            // }))}
                           />
                         )}
 
@@ -252,30 +254,31 @@ export const NewAccountTransfer = () => {
                               label={t['newAccountTransferReceipentMember']}
                             />
 
-                            <FormCustomSelect
+                            <FormAccountSelect
                               name="destAccountId"
                               label={t['newAccountTransferReceipentAccount']}
-                              options={destAccountListData?.account?.list?.edges?.map(
-                                (account) => ({
-                                  accountInfo: {
-                                    accountName: account.node?.product.productName,
-                                    accountId: account.node?.product?.id,
-                                    accountType: account?.node?.product?.nature
-                                      ? accountTypes[account?.node?.product?.nature]
-                                      : '',
-                                    balance: account?.node?.balance ?? '0',
-                                    fine:
-                                      account?.node?.product?.nature ===
-                                        NatureOfDepositProduct.RecurringSaving ||
-                                      (account?.node?.product?.nature ===
-                                        NatureOfDepositProduct.Saving &&
-                                        account?.node?.product?.isMandatorySaving === true)
-                                        ? FINE
-                                        : '',
-                                  },
-                                  value: account.node?.id as string,
-                                })
-                              )}
+                              memberId={destMemberId}
+                              // options={destAccountListData?.account?.list?.edges?.map(
+                              //   (account) => ({
+                              //     accountInfo: {
+                              //       accountName: account.node?.product.productName,
+                              //       accountId: account.node?.product?.id,
+                              //       accountType: account?.node?.product?.nature
+                              //         ? accountTypes[account?.node?.product?.nature]
+                              //         : '',
+                              //       balance: account?.node?.balance ?? '0',
+                              //       fine:
+                              //         account?.node?.product?.nature ===
+                              //           NatureOfDepositProduct.RecurringSaving ||
+                              //         (account?.node?.product?.nature ===
+                              //           NatureOfDepositProduct.Saving &&
+                              //           account?.node?.product?.isMandatorySaving === true)
+                              //           ? FINE
+                              //           : '',
+                              //     },
+                              //     value: account.node?.id as string,
+                              //   })
+                              // )}
                             />
                           </>
                         )}
@@ -351,7 +354,7 @@ export const NewAccountTransfer = () => {
                               type: sourceAccount?.product?.nature
                                 ? accountTypes[sourceAccount?.product?.nature]
                                 : '',
-                              ID: sourceAccount?.product?.id,
+                              ID: sourceAccount?.id,
                               currentBalance: sourceAccount?.balance ?? '0',
                               minimumBalance: sourceAccount?.product?.minimumBalance ?? '0',
                               guaranteeBalance: sourceAccount?.guaranteedAmount ?? '0',
