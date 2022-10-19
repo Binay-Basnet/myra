@@ -56,7 +56,7 @@ export const SharePurchasePayment = ({
   ];
 
   useEffect(() => {
-    setValue('cash.cashPaid', totalAmount);
+    setValue('cash.cashPaid', String(totalAmount));
   }, [totalAmount, setValue]);
 
   return (

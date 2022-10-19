@@ -38,7 +38,7 @@ export const ShareReturnPayment = ({
   ];
 
   useEffect(() => {
-    setValue('cash.cashPaid', totalAmount);
+    setValue('cash.cashPaid', String(totalAmount));
   }, [totalAmount, setValue]);
 
   return (
