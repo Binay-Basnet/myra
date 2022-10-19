@@ -3202,7 +3202,6 @@ const en: Record<string, string> = {
   memberShareCardTotalShareCount: 'Total Share Count',
   memberShareCardTotalShareBalance: 'Total Share Balance',
   sharePurchaseTableShareCr: 'Share Issue',
-  sharePurchaseTableShareDr: 'Share Credit',
   sharePurchaseName: 'Name',
   sharePurchaseCitizenshipDocument: 'Citizenship Document',
   previous: 'Previous',
@@ -3623,5 +3622,8 @@ const en: Record<string, string> = {
   depositProductDayBeforetheinstallmentdate: 'Day before the installment date',
   depositProductInactive: 'Inactive',
   depositProductActive: 'Active',
+  sharePurchaseTableShareDr: 'Share Return',
+  shareRegisterTableIssue: 'Issue',
+  shareRegisterTableReturn: 'Return',
 };
 export default en;

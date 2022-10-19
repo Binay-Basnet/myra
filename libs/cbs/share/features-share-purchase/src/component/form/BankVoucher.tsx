@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { RootState, useAppSelector, useGetCoaBankListQuery } from '@coop/cbs/data-access';
-import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
+import { FormAmountInput, FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 import { FormSection, GridItem } from '@coop/shared/ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
@@ -48,12 +48,11 @@ export const BankVoucher = ({ totalAmount }: PurchaseProps) => {
       </GridItem>
 
       <GridItem colSpan={1}>
-        <FormInput
-          type="text"
+        <FormAmountInput
           name="amount"
           isDisabled
           label={t['sharePurchaseAmount']}
-          defaultValue={totalAmount}
+          defaultValue={totalAmount ?? 0}
         />
       </GridItem>
 

@@ -47,34 +47,35 @@ export const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
                 </Text>
               </GridItem>
 
-              {chargeList?.map((item, index) => {
-                register(`extraFee.${index}.Id`, {
-                  value: item?.id,
-                });
+              {chargeList &&
+                chargeList?.map((item, index) => {
+                  register(`extraFee.${index}.Id`, {
+                    value: item?.id,
+                  });
 
-                register(`extraFee.${index}.value`, {
-                  value: item?.charge,
-                });
-                return (
-                  <GridItem display="flex" justifyContent="space-between">
-                    <Text
-                      color="neutralLightColor.Gray-60"
-                      fontWeight="Medium"
-                      fontSize="s3"
-                      display="flex"
-                      alignItems="center"
-                    >
-                      {item?.name}
-                    </Text>
-                    <Box width="300px">
-                      <FormNumberInput
-                        name={`extraFee.${index}.value`}
-                        defaultValue={item?.charge}
-                      />
-                    </Box>
-                  </GridItem>
-                );
-              })}
+                  register(`extraFee.${index}.value`, {
+                    value: item?.charge,
+                  });
+                  return (
+                    <GridItem display="flex" justifyContent="space-between">
+                      <Text
+                        color="neutralLightColor.Gray-60"
+                        fontWeight="Medium"
+                        fontSize="s3"
+                        display="flex"
+                        alignItems="center"
+                      >
+                        {item?.name}
+                      </Text>
+                      <Box width="300px">
+                        <FormNumberInput
+                          name={`extraFee.${index}.value`}
+                          defaultValue={item?.charge}
+                        />
+                      </Box>
+                    </GridItem>
+                  );
+                })}
 
               <GridItem display="flex" justifyContent="space-between" alignItems="center">
                 <Text color="neutralLightColor.Gray-80" fontWeight="SemiBold" fontSize="s3">
