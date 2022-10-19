@@ -8,12 +8,14 @@ export const InstallmentData = ({ loanAccountId }: IProps) => {
   const loanPreview = useGetLoanPreviewQuery({ id: loanAccountId });
   const loanRepaymentData =
     loanPreview?.data?.loanAccount?.loanPreview?.data?.repaymentDetails?.remainingInstallments;
+  const loanTotal =
+    loanPreview?.data?.loanAccount?.loanPreview?.data?.repaymentDetails?.totalInstallmentAmount;
 
   return (
     <Box display="flex" flexDirection="column" gap="s32">
-      {loanRepaymentData?.map((data, index) => (
+      {loanRepaymentData?.map((data) => (
         <Box
-          display={index === 0 ? 'flex' : 'none'}
+          display="flex"
           flexDirection="column"
           p="s16"
           gap="s18"
@@ -48,7 +50,7 @@ export const InstallmentData = ({ loanAccountId }: IProps) => {
               Total Amount{' '}
             </Text>
             <Text fontWeight="600" fontSize="s3">
-              {Number(Number(data?.interestAmount) + Number(data?.principal))}{' '}
+              {loanTotal}{' '}
             </Text>
           </Box>
         </Box>

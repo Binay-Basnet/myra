@@ -3222,6 +3222,9 @@ const ne: Record<string, string> = {
   depositProductDayBeforetheinstallmentdate: 'Day before the installment date',
   depositProductInactive: 'Inactive',
   depositProductActive: 'Active',
+
+  /* Account Open */
+  accountNavDormant: 'Dormant',
   sharePurchaseTableShareDr: 'Share Return',
   shareRegisterTableIssue: 'Issue',
   shareRegisterTableReturn: 'Return',
