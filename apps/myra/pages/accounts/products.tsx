@@ -2,15 +2,10 @@ import { ReactElement } from 'react';
 
 import { DepositProductTable } from '@coop/cbs/settings/deposit-products';
 import { AccountPagesLayout } from '@coop/myra/components';
-import { MainLayout, TableListPageHeader } from '@coop/shared/ui';
+import { MainLayout } from '@coop/shared/ui';
 
 // TODO ( Update this page when design arrives )
-const AccountDepositProductPage = () => (
-  <>
-    <TableListPageHeader heading="Deposit Products" />
-    <DepositProductTable />
-  </>
-);
+const AccountDepositProductPage = () => <DepositProductTable addNew={false} />;
 
 AccountDepositProductPage.getLayout = function getLayout(page: ReactElement) {
   return (

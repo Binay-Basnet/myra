@@ -19,3 +19,15 @@ mutation setDepositProduct($id: ID!, $data: DepositProductInput) {
     }
   }
 }
+
+mutation setDepositProductInactive($data: DepositProductInactiveData) {
+  settings {
+    general {
+      depositProduct {
+        makeInactive(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}

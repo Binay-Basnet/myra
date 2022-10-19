@@ -7781,10 +7781,6 @@ export type MemberMutationInstitutionArgs = {
   id: Scalars['ID'];
 };
 
-export type MemberMutationMakeInactiveArgs = {
-  memberId: Scalars['ID'];
-};
-
 export type MemberMutationOfficialUseArgs = {
   data: OfficialUseInputData;
 };
@@ -7843,10 +7839,6 @@ export type MemberQueryDetailsArgs = {
 
 export type MemberQueryEntryArgs = {
   membeId: Scalars['String'];
-};
-
-export type MemberQueryGetAllAccountsArgs = {
-  memberId: Scalars['ID'];
 };
 
 export type MemberQueryIndividualArgs = {
@@ -11014,6 +11006,16 @@ export type SetDepositProductMutation = {
         } | null;
       } | null;
     } | null;
+  };
+};
+
+export type SetDepositProductInactiveMutationVariables = Exact<{
+  data?: InputMaybe<DepositProductInactiveData>;
+}>;
+
+export type SetDepositProductInactiveMutation = {
+  settings: {
+    general?: { depositProduct?: { makeInactive?: { recordId: string } | null } | null } | null;
   };
 };
 
@@ -14376,55 +14378,6 @@ export type GetOfficialUseQuery = {
   };
 };
 
-export type GetMemberDetailsOverviewQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-export type GetMemberDetailsOverviewQuery = {
-  members: {
-    memberOverview?: {
-      data?: {
-        overview?: {
-          basicInformation?: {
-            profilePic?: string | null;
-            memberCode?: string | null;
-            memberJoined?: string | null;
-            genderId?: string | null;
-            gender?: Record<'local' | 'en' | 'np', string> | null;
-            maritalStatusId?: string | null;
-            maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
-            contactNumber?: string | null;
-            email?: string | null;
-            addressId?: string | null;
-            address?: Record<'local' | 'en' | 'np', string> | null;
-            fathersName?: string | null;
-            mothersName?: string | null;
-            grandFathersName?: string | null;
-          } | null;
-          statistics?: {
-            totalShareValue?: string | null;
-            accountBalance?: string | null;
-            loanBalance?: string | null;
-          } | null;
-          payments?: Array<{
-            date?: string | null;
-            accountName?: string | null;
-            paymentType?: string | null;
-            amount?: string | null;
-          } | null> | null;
-          recentTransactions?: Array<{
-            date?: string | null;
-            title?: string | null;
-            txnType?: string | null;
-            amount?: string | null;
-            noOfShares?: number | null;
-          } | null> | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
-
 export type GetMemberPdfQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -17759,6 +17712,39 @@ export const useSetDepositProductMutation = <TError = unknown, TContext = unknow
     ['setDepositProduct'],
     useAxios<SetDepositProductMutation, SetDepositProductMutationVariables>(
       SetDepositProductDocument
+    ),
+    options
+  );
+export const SetDepositProductInactiveDocument = `
+    mutation setDepositProductInactive($data: DepositProductInactiveData) {
+  settings {
+    general {
+      depositProduct {
+        makeInactive(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSetDepositProductInactiveMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDepositProductInactiveMutation,
+    TError,
+    SetDepositProductInactiveMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetDepositProductInactiveMutation,
+    TError,
+    SetDepositProductInactiveMutationVariables,
+    TContext
+  >(
+    ['setDepositProductInactive'],
+    useAxios<SetDepositProductInactiveMutation, SetDepositProductInactiveMutationVariables>(
+      SetDepositProductInactiveDocument
     ),
     options
   );
@@ -22222,66 +22208,6 @@ export const useGetOfficialUseQuery = <TData = GetOfficialUseQuery, TError = unk
       null,
       variables
     ),
-    options
-  );
-export const GetMemberDetailsOverviewDocument = `
-    query getMemberDetailsOverview($id: ID!) {
-  members {
-    memberOverview(id: $id) {
-      data {
-        overview {
-          basicInformation {
-            profilePic
-            memberCode
-            memberJoined
-            genderId
-            gender
-            maritalStatusId
-            maritalStatus
-            contactNumber
-            email
-            addressId
-            address
-            fathersName
-            mothersName
-            grandFathersName
-          }
-          statistics {
-            totalShareValue
-            accountBalance
-            loanBalance
-          }
-          payments {
-            date
-            accountName
-            paymentType
-            amount
-          }
-          recentTransactions {
-            date
-            title
-            txnType
-            amount
-            noOfShares
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetMemberDetailsOverviewQuery = <
-  TData = GetMemberDetailsOverviewQuery,
-  TError = unknown
->(
-  variables: GetMemberDetailsOverviewQueryVariables,
-  options?: UseQueryOptions<GetMemberDetailsOverviewQuery, TError, TData>
-) =>
-  useQuery<GetMemberDetailsOverviewQuery, TError, TData>(
-    ['getMemberDetailsOverview', variables],
-    useAxios<GetMemberDetailsOverviewQuery, GetMemberDetailsOverviewQueryVariables>(
-      GetMemberDetailsOverviewDocument
-    ).bind(null, variables),
     options
   );
 export const GetMemberPdfDocument = `
