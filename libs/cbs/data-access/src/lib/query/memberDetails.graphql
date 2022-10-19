@@ -1,0 +1,44 @@
+query getMemberDetailsOverview($id: ID!) {
+  members {
+    memberOverview(id: $id) {
+      data {
+        overview {
+          basicInformation {
+            profilePic
+            memberCode
+            memberJoined
+            genderId
+            gender
+            maritalStatusId
+            maritalStatus
+            contactNumber
+            email
+            addressId
+            address
+            fathersName
+            mothersName
+            grandFathersName
+          }
+          statistics {
+            totalShareValue
+            accountBalance
+            loanBalance
+          }
+          payments {
+            date
+            accountName
+            paymentType
+            amount
+          }
+          recentTransactions {
+            date
+            title
+            txnType
+            amount
+            noOfShares
+          }
+        }
+      }
+    }
+  }
+}

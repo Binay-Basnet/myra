@@ -8,7 +8,7 @@ export const MEMBER_TAB_ITEMS = [
     key: 'VALIDATED',
   },
   {
-    title: 'memberNavDraft',
-    key: 'DRAFT',
+    title: 'accountNavDormant',
+    key: 'DORMANT',
   },
 ];

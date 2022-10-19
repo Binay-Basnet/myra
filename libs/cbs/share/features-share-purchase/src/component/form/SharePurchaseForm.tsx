@@ -199,7 +199,6 @@ export const SharePurchaseForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, extraFee, noOfShares, JSON.stringify(chargeList), JSON.stringify(extraFee)]);
 
-
   return (
     <>
       <FormProvider {...methods}>

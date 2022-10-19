@@ -50,7 +50,7 @@ export const LoanAmountDetails = () => {
             </Button>
           </Box>
           <Box display="flex" alignItems="center" justifyContent="space-between">
-            <TextFields variant="formLabel">Total Sanctioned Loan Applied</TextFields>
+            <TextFields variant="formLabel">Total Sanctioned Loan Amount</TextFields>
             <Box>
               <FormNumberInput name="totalSanctionedAmount" size="sm" />
             </Box>

@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
@@ -19,6 +20,7 @@ const memberTypeSlug = {
 
 export const MemberListPage = () => {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
 
   const router = useRouter();
 
@@ -140,6 +142,10 @@ export const MemberListPage = () => {
       <Table
         data={rowData}
         getRowId={(row) => String(row?.node?.id)}
+        rowOnClick={(row) => {
+          queryClient.invalidateQueries('getMemberDetailsOverview');
+          router.push(`/members/details?id=${row?.node?.id}`);
+        }}
         isLoading={isFetching}
         columns={columns}
         noDataTitle={t['member']}

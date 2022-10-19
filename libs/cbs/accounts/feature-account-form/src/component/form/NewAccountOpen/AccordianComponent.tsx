@@ -299,7 +299,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                               </Text>
 
                               <Text fontWeight="600" fontSize="s3">
-                                {prematurePenaltyData?.noOfDays} %
+                                {prematurePenaltyData?.noOfDays}
                               </Text>
                             </Box>
                           </li>
