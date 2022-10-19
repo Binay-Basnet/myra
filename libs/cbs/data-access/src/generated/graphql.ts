@@ -27,30 +27,10 @@ export type Scalars = {
   Time: string;
 };
 
-export enum Account_Type {
-  Loan = 'LOAN',
-  Saving = 'SAVING',
-}
-
 export type AbbsTransaction = {
   abbsStatus?: Maybe<Scalars['Boolean']>;
   payableAccountId?: Maybe<Scalars['String']>;
   receivableAccountId?: Maybe<Scalars['String']>;
-};
-
-export type Account = {
-  accountNumber: Scalars['String'];
-  accountType: Account_Type;
-  amount: Scalars['Float'];
-  history?: Maybe<Array<AccountHistory>>;
-  id: Scalars['String'];
-  interestBooked: Scalars['Float'];
-  interestEarned: Scalars['Float'];
-  interestRate: Scalars['Float'];
-  isDefault: Scalars['Boolean'];
-  name: Scalars['String'];
-  subscribedDate: Scalars['String'];
-  transactions?: Maybe<Array<Transactions>>;
 };
 
 export type AccountActivityEntry = {
@@ -118,7 +98,7 @@ export type AccountConnection = {
 
 export type AccountEdge = {
   cursor: Scalars['Cursor'];
-  node: Account;
+  node: EbankingAccount;
 };
 
 export type AccountFilter = {
@@ -129,6 +109,26 @@ export type AccountHistory = {
   balance: Scalars['Float'];
   date: Scalars['String'];
   id: Scalars['String'];
+};
+
+export type AccountMinimal = {
+  accountNumber: Scalars['String'];
+  balance: Scalars['String'];
+  id: Scalars['String'];
+  interestRate: Scalars['Float'];
+  isDefault: Scalars['Boolean'];
+  name: Scalars['String'];
+  productName: Scalars['String'];
+};
+
+export type AccountMinimalResult = {
+  accountProductIds?: Maybe<Scalars['Map']>;
+  accounts?: Maybe<Array<Maybe<AccountMinimal>>>;
+  recentTransactions?: Maybe<EbankingTransactionConnection>;
+};
+
+export type AccountMinimalResultRecentTransactionsArgs = {
+  paginate?: InputMaybe<Pagination>;
 };
 
 export enum AccountOperationType {
@@ -2596,17 +2596,13 @@ export type Dues = {
 };
 
 export type EBankingAccountQuery = {
-  get?: Maybe<Account>;
-  list?: Maybe<AccountConnection>;
+  get?: Maybe<EbankingAccountResult>;
+  list?: Maybe<AccountMinimalResult>;
   summary?: Maybe<AccountSummary>;
 };
 
 export type EBankingAccountQueryGetArgs = {
   id: Scalars['ID'];
-};
-
-export type EBankingAccountQueryListArgs = {
-  paginate?: InputMaybe<Pagination>;
 };
 
 export enum EBankingActiveLoanStatus {
@@ -2779,8 +2775,8 @@ export type EBankingChequeWithdrawViaCollectorInput = {
 };
 
 export type EBankingCombined = {
-  accounts: Array<Maybe<Account>>;
-  recentTransactions: Array<Maybe<Transactions>>;
+  accounts: Array<Maybe<EbankingAccount>>;
+  recentTransactions: Array<Maybe<EbankingTransaction>>;
   services: Array<Maybe<Services>>;
   share: EbankingShare;
   utilityPayments: Array<Maybe<UtilityPayments>>;
@@ -3280,7 +3276,6 @@ export type EBankingQuery = {
   products?: Maybe<ProductsQuery>;
   services?: Maybe<Array<Maybe<Services>>>;
   share?: Maybe<EBankingShareQuery>;
-  transaction?: Maybe<EBankingTransactionQuery>;
   utilityPayments?: Maybe<Array<Maybe<UtilityPayments>>>;
 };
 
@@ -3314,7 +3309,7 @@ export enum EBankingTokenType {
 
 export type EBankingTransactionQuery = {
   monthly: Array<Maybe<MonthlyTransactions>>;
-  recent?: Maybe<Array<Maybe<Transactions>>>;
+  recent?: Maybe<EbankingTransactionConnection>;
 };
 
 export type EBankingTransactionQueryMonthlyArgs = {
@@ -3322,7 +3317,28 @@ export type EBankingTransactionQueryMonthlyArgs = {
 };
 
 export type EBankingTransactionQueryRecentArgs = {
-  filter?: InputMaybe<RecentTransactionFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type EbankingAccount = {
+  accountNumber: Scalars['String'];
+  accountSubType: Scalars['String'];
+  accountType: Scalars['String'];
+  balance: Scalars['String'];
+  history?: Maybe<Array<AccountHistory>>;
+  id: Scalars['String'];
+  interestBooked: Scalars['Float'];
+  interestEarned: Scalars['Float'];
+  interestRate: Scalars['Float'];
+  isDefault: Scalars['Boolean'];
+  name: Scalars['String'];
+  productId?: Maybe<Scalars['String']>;
+  subscribedDate: Scalars['String'];
+  transactions?: Maybe<EbankingTransactionConnection>;
+};
+
+export type EbankingAccountTransactionsArgs = {
+  paginate?: InputMaybe<Pagination>;
 };
 
 export type EbankingAccountExistsResult = {
@@ -3335,6 +3351,16 @@ export type EbankingAccountRecord = {
   fullName?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
 };
+
+export type EbankingAccountResult = {
+  data?: Maybe<EbankingAccount>;
+  error?: Maybe<QueryError>;
+};
+
+export enum EbankingAccountType {
+  Loan = 'LOAN',
+  Saving = 'SAVING',
+}
 
 export type EbankingAuthQuery = {
   meCooperativeUser?: Maybe<MeCooperativeUserResult>;
@@ -3410,7 +3436,7 @@ export enum EbankingServiceRequestType {
 
 export type EbankingShare = {
   totalShare: Scalars['Int'];
-  value: Scalars['Float'];
+  value: Scalars['String'];
 };
 
 export type EbankingShareFilter = {
@@ -3436,6 +3462,39 @@ export type EbankingSignUpResult = {
   record?: Maybe<EbankingSignUp>;
   recordId?: Maybe<Scalars['ID']>;
 };
+
+export type EbankingTransaction = {
+  accountId?: Maybe<Scalars['String']>;
+  amount: Scalars['String'];
+  date: Scalars['String'];
+  id: Scalars['String'];
+  month: Months;
+  name: Scalars['String'];
+  transactionDirection: EbankingTransactionDirection;
+};
+
+export type EbankingTransactionConnection = {
+  edges?: Maybe<Array<Maybe<EbankingTransactionEdge>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export enum EbankingTransactionDirection {
+  Incoming = 'INCOMING',
+  Outgoing = 'OUTGOING',
+}
+
+export type EbankingTransactionEdge = {
+  cursor: Scalars['String'];
+  node: EbankingTransaction;
+};
+
+export enum EbankingTransactionType {
+  Deposit = 'DEPOSIT',
+  SharePurchase = 'SHARE_PURCHASE',
+  Transfer = 'TRANSFER',
+  Withdraw = 'WITHDRAW',
+}
 
 export type EbankingUser = {
   cooperatives?: Maybe<Array<Maybe<CooperativeInformation>>>;
@@ -7824,10 +7883,10 @@ export type MonthlyDividendRateInput = {
 };
 
 export type MonthlyTransactions = {
-  closingBalance?: Maybe<Scalars['Float']>;
+  closingBalance?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   month: Scalars['String'];
-  transactions: Array<Maybe<Transactions>>;
+  transactions: Array<Maybe<EbankingTransaction>>;
 };
 
 export enum Months {
@@ -9566,13 +9625,6 @@ export enum Transaction_Direction {
   Sold = 'SOLD',
 }
 
-export enum Transaction_Type {
-  Deposit = 'DEPOSIT',
-  SharePurchase = 'SHARE_PURCHASE',
-  Transfer = 'TRANSFER',
-  Withdraw = 'WITHDRAW',
-}
-
 export enum TaxPayerOptions {
   Cooperative = 'COOPERATIVE',
   Member = 'MEMBER',
@@ -9720,15 +9772,6 @@ export enum TransactionState {
   Active = 'ACTIVE',
   Submitted = 'SUBMITTED',
 }
-
-export type Transactions = {
-  amount: Scalars['Float'];
-  date: Scalars['String'];
-  id: Scalars['String'];
-  name: Scalars['String'];
-  transactionDirection: Transaction_Direction;
-  transactionType: Transaction_Type;
-};
 
 export type TransferData = {
   id?: Maybe<Scalars['ID']>;
@@ -12941,174 +12984,6 @@ export type GetCoopUnionSectionStatusQuery = {
         } | null;
       } | null;
     } | null;
-  };
-};
-
-export type GetAccountListQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetAccountListQuery = {
-  eBanking: {
-    account?: {
-      list?: {
-        edges: Array<{
-          node: {
-            id: string;
-            name: string;
-            amount: number;
-            isDefault: boolean;
-            accountNumber: string;
-            interestRate: number;
-          };
-        }>;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetAccountSummaryQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetAccountSummaryQuery = {
-  eBanking: { account?: { summary?: { totalSaving: number; totalLoan: number } | null } | null };
-};
-
-export type GetAccountDetailsQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-export type GetAccountDetailsQuery = {
-  eBanking: {
-    account?: {
-      get?: {
-        id: string;
-        name: string;
-        accountNumber: string;
-        isDefault: boolean;
-        amount: number;
-        interestRate: number;
-        accountType: Account_Type;
-        interestBooked: number;
-        interestEarned: number;
-        subscribedDate: string;
-        history?: Array<{ id: string; date: string; balance: number }> | null;
-        transactions?: Array<{
-          id: string;
-          name: string;
-          date: string;
-          amount: number;
-          transactionType: Transaction_Type;
-          transactionDirection: Transaction_Direction;
-        }> | null;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetCoopChequeServicesQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetCoopChequeServicesQuery = {
-  eBanking: {
-    cooperativeServices?: {
-      cheque?: { options: Array<{ name: string; enabled: boolean }> } | null;
-    } | null;
-  };
-};
-
-export type GetCoopLoanServicesQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetCoopLoanServicesQuery = {
-  eBanking: {
-    cooperativeServices?: {
-      loan?: {
-        options: Array<{ name: string; enabled: boolean; requestType?: string | null }>;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetCoopComplaintServicesQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetCoopComplaintServicesQuery = {
-  eBanking: {
-    cooperativeServices?: {
-      complaint?: {
-        options: Array<{ name: string; enabled: boolean; requestType?: string | null }>;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetCoopDownloadsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetCoopDownloadsQuery = {
-  eBanking: {
-    cooperativeServices?: {
-      downloads?: {
-        options: Array<{ name: string; enabled: boolean; requestType?: string | null }>;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetAnnouncementListQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetAnnouncementListQuery = {
-  eBanking: {
-    notification?: {
-      announcements?: {
-        list: Array<{
-          id: string;
-          details: any;
-          summary: string;
-          title: string;
-          date: string;
-        } | null>;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetHomeServiceListQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetHomeServiceListQuery = {
-  eBanking: {
-    services?: Array<{
-      id: string;
-      name: string;
-      service_id: string;
-      icon: string;
-      enabled: boolean;
-    } | null> | null;
-  };
-};
-
-export type GetRecentTransactionsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetRecentTransactionsQuery = {
-  eBanking: {
-    transaction?: {
-      recent?: Array<{
-        id: string;
-        name: string;
-        transactionType: Transaction_Type;
-        date: string;
-        transactionDirection: Transaction_Direction;
-        amount: number;
-      } | null> | null;
-    } | null;
-  };
-};
-
-export type GetUtilityListQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetUtilityListQuery = {
-  eBanking: {
-    utilityPayments?: Array<{
-      id: string;
-      name: string;
-      enabled: boolean;
-      icon: string;
-      service_id: string;
-    } | null> | null;
   };
 };
 
@@ -20552,318 +20427,6 @@ export const useGetCoopUnionSectionStatusQuery = <
     useAxios<GetCoopUnionSectionStatusQuery, GetCoopUnionSectionStatusQueryVariables>(
       GetCoopUnionSectionStatusDocument
     ).bind(null, variables),
-    options
-  );
-export const GetAccountListDocument = `
-    query getAccountList {
-  eBanking {
-    account {
-      list(paginate: {first: 6}) {
-        edges {
-          node {
-            id
-            name
-            amount
-            isDefault
-            accountNumber
-            interestRate
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetAccountListQuery = <TData = GetAccountListQuery, TError = unknown>(
-  variables?: GetAccountListQueryVariables,
-  options?: UseQueryOptions<GetAccountListQuery, TError, TData>
-) =>
-  useQuery<GetAccountListQuery, TError, TData>(
-    variables === undefined ? ['getAccountList'] : ['getAccountList', variables],
-    useAxios<GetAccountListQuery, GetAccountListQueryVariables>(GetAccountListDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
-export const GetAccountSummaryDocument = `
-    query getAccountSummary {
-  eBanking {
-    account {
-      summary {
-        totalSaving
-        totalLoan
-      }
-    }
-  }
-}
-    `;
-export const useGetAccountSummaryQuery = <TData = GetAccountSummaryQuery, TError = unknown>(
-  variables?: GetAccountSummaryQueryVariables,
-  options?: UseQueryOptions<GetAccountSummaryQuery, TError, TData>
-) =>
-  useQuery<GetAccountSummaryQuery, TError, TData>(
-    variables === undefined ? ['getAccountSummary'] : ['getAccountSummary', variables],
-    useAxios<GetAccountSummaryQuery, GetAccountSummaryQueryVariables>(
-      GetAccountSummaryDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetAccountDetailsDocument = `
-    query getAccountDetails($id: ID!) {
-  eBanking {
-    account {
-      get(id: $id) {
-        id
-        name
-        accountNumber
-        isDefault
-        amount
-        interestRate
-        accountType
-        interestBooked
-        interestEarned
-        subscribedDate
-        history {
-          id
-          date
-          balance
-        }
-        transactions {
-          id
-          name
-          date
-          amount
-          transactionType
-          transactionDirection
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetAccountDetailsQuery = <TData = GetAccountDetailsQuery, TError = unknown>(
-  variables: GetAccountDetailsQueryVariables,
-  options?: UseQueryOptions<GetAccountDetailsQuery, TError, TData>
-) =>
-  useQuery<GetAccountDetailsQuery, TError, TData>(
-    ['getAccountDetails', variables],
-    useAxios<GetAccountDetailsQuery, GetAccountDetailsQueryVariables>(
-      GetAccountDetailsDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetCoopChequeServicesDocument = `
-    query getCoopChequeServices {
-  eBanking {
-    cooperativeServices {
-      cheque {
-        options {
-          name
-          enabled
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetCoopChequeServicesQuery = <TData = GetCoopChequeServicesQuery, TError = unknown>(
-  variables?: GetCoopChequeServicesQueryVariables,
-  options?: UseQueryOptions<GetCoopChequeServicesQuery, TError, TData>
-) =>
-  useQuery<GetCoopChequeServicesQuery, TError, TData>(
-    variables === undefined ? ['getCoopChequeServices'] : ['getCoopChequeServices', variables],
-    useAxios<GetCoopChequeServicesQuery, GetCoopChequeServicesQueryVariables>(
-      GetCoopChequeServicesDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetCoopLoanServicesDocument = `
-    query getCoopLoanServices {
-  eBanking {
-    cooperativeServices {
-      loan {
-        options {
-          name
-          enabled
-          requestType
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetCoopLoanServicesQuery = <TData = GetCoopLoanServicesQuery, TError = unknown>(
-  variables?: GetCoopLoanServicesQueryVariables,
-  options?: UseQueryOptions<GetCoopLoanServicesQuery, TError, TData>
-) =>
-  useQuery<GetCoopLoanServicesQuery, TError, TData>(
-    variables === undefined ? ['getCoopLoanServices'] : ['getCoopLoanServices', variables],
-    useAxios<GetCoopLoanServicesQuery, GetCoopLoanServicesQueryVariables>(
-      GetCoopLoanServicesDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetCoopComplaintServicesDocument = `
-    query getCoopComplaintServices {
-  eBanking {
-    cooperativeServices {
-      complaint {
-        options {
-          name
-          enabled
-          requestType
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetCoopComplaintServicesQuery = <
-  TData = GetCoopComplaintServicesQuery,
-  TError = unknown
->(
-  variables?: GetCoopComplaintServicesQueryVariables,
-  options?: UseQueryOptions<GetCoopComplaintServicesQuery, TError, TData>
-) =>
-  useQuery<GetCoopComplaintServicesQuery, TError, TData>(
-    variables === undefined
-      ? ['getCoopComplaintServices']
-      : ['getCoopComplaintServices', variables],
-    useAxios<GetCoopComplaintServicesQuery, GetCoopComplaintServicesQueryVariables>(
-      GetCoopComplaintServicesDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetCoopDownloadsDocument = `
-    query getCoopDownloads {
-  eBanking {
-    cooperativeServices {
-      downloads {
-        options {
-          name
-          enabled
-          requestType
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetCoopDownloadsQuery = <TData = GetCoopDownloadsQuery, TError = unknown>(
-  variables?: GetCoopDownloadsQueryVariables,
-  options?: UseQueryOptions<GetCoopDownloadsQuery, TError, TData>
-) =>
-  useQuery<GetCoopDownloadsQuery, TError, TData>(
-    variables === undefined ? ['getCoopDownloads'] : ['getCoopDownloads', variables],
-    useAxios<GetCoopDownloadsQuery, GetCoopDownloadsQueryVariables>(GetCoopDownloadsDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
-export const GetAnnouncementListDocument = `
-    query getAnnouncementList {
-  eBanking {
-    notification {
-      announcements {
-        list {
-          id
-          details
-          summary
-          title
-          date
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetAnnouncementListQuery = <TData = GetAnnouncementListQuery, TError = unknown>(
-  variables?: GetAnnouncementListQueryVariables,
-  options?: UseQueryOptions<GetAnnouncementListQuery, TError, TData>
-) =>
-  useQuery<GetAnnouncementListQuery, TError, TData>(
-    variables === undefined ? ['getAnnouncementList'] : ['getAnnouncementList', variables],
-    useAxios<GetAnnouncementListQuery, GetAnnouncementListQueryVariables>(
-      GetAnnouncementListDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetHomeServiceListDocument = `
-    query getHomeServiceList {
-  eBanking {
-    services {
-      id
-      name
-      service_id
-      icon
-      enabled
-    }
-  }
-}
-    `;
-export const useGetHomeServiceListQuery = <TData = GetHomeServiceListQuery, TError = unknown>(
-  variables?: GetHomeServiceListQueryVariables,
-  options?: UseQueryOptions<GetHomeServiceListQuery, TError, TData>
-) =>
-  useQuery<GetHomeServiceListQuery, TError, TData>(
-    variables === undefined ? ['getHomeServiceList'] : ['getHomeServiceList', variables],
-    useAxios<GetHomeServiceListQuery, GetHomeServiceListQueryVariables>(
-      GetHomeServiceListDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetRecentTransactionsDocument = `
-    query getRecentTransactions {
-  eBanking {
-    transaction {
-      recent {
-        id
-        name
-        transactionType
-        date
-        transactionDirection
-        amount
-      }
-    }
-  }
-}
-    `;
-export const useGetRecentTransactionsQuery = <TData = GetRecentTransactionsQuery, TError = unknown>(
-  variables?: GetRecentTransactionsQueryVariables,
-  options?: UseQueryOptions<GetRecentTransactionsQuery, TError, TData>
-) =>
-  useQuery<GetRecentTransactionsQuery, TError, TData>(
-    variables === undefined ? ['getRecentTransactions'] : ['getRecentTransactions', variables],
-    useAxios<GetRecentTransactionsQuery, GetRecentTransactionsQueryVariables>(
-      GetRecentTransactionsDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetUtilityListDocument = `
-    query getUtilityList {
-  eBanking {
-    utilityPayments {
-      id
-      name
-      enabled
-      icon
-      service_id
-    }
-  }
-}
-    `;
-export const useGetUtilityListQuery = <TData = GetUtilityListQuery, TError = unknown>(
-  variables?: GetUtilityListQueryVariables,
-  options?: UseQueryOptions<GetUtilityListQuery, TError, TData>
-) =>
-  useQuery<GetUtilityListQuery, TError, TData>(
-    variables === undefined ? ['getUtilityList'] : ['getUtilityList', variables],
-    useAxios<GetUtilityListQuery, GetUtilityListQueryVariables>(GetUtilityListDocument).bind(
-      null,
-      variables
-    ),
     options
   );
 export const GetKymFormStatusInstitutionDocument = `

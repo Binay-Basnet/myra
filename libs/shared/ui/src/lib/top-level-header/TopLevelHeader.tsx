@@ -1,9 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { GlobalHotKeys } from 'react-hotkeys';
-import { BiBell } from 'react-icons/bi';
 import { BsArrowRight } from 'react-icons/bs';
 import { CgMenuGridO } from 'react-icons/cg';
-import { RiHistoryFill } from 'react-icons/ri';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -27,6 +25,7 @@ import {
   Box,
   Button,
   Divider,
+  FloatingShortcutButton,
   Grid,
   Icon,
   IconButton,
@@ -234,14 +233,14 @@ export const TopLevelHeader = () => {
           alignItems="center"
         >
           <Box w="50%" display="flex" justifyContent="flex-start" alignItems="center" gap="s16">
-            <IconButton
+            {/* <IconButton
               h="40px"
               icon={<Icon size="md" as={RiHistoryFill} />}
               aria-label="History"
               variant="ghost"
               color="gray.0"
               _hover={{ backgroundColor: 'secondary.800' }}
-            />
+            /> */}
             <SearchBar />
           </Box>
           <Box flex={1} display="flex" justifyContent="flex-end" alignItems="center">
@@ -322,7 +321,7 @@ export const TopLevelHeader = () => {
               )}
             </Popover>
 
-            <IconButton
+            {/* <IconButton
               ml="s16"
               width="40px"
               height="40px"
@@ -332,7 +331,8 @@ export const TopLevelHeader = () => {
               color="white"
               borderRadius="br1"
               _hover={{ backgroundColor: 'secondary.900' }}
-            />
+            /> */}
+            <FloatingShortcutButton />
 
             <Popover placement="bottom-end" gutter={3}>
               {() => (

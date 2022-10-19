@@ -1,6 +1,11 @@
 import { useState } from 'react';
-import { AiOutlineBug, AiOutlineExclamation, AiOutlineStar } from 'react-icons/ai';
-import { BsBook, BsFacebook, BsHeart, BsInstagram, BsQuestionLg, BsTwitter } from 'react-icons/bs';
+import {
+  AiOutlineBug,
+  AiOutlineExclamation,
+  AiOutlineQuestionCircle,
+  AiOutlineStar,
+} from 'react-icons/ai';
+import { BsBook, BsFacebook, BsHeart, BsInstagram, BsTwitter } from 'react-icons/bs';
 import { TbMessageDots } from 'react-icons/tb';
 
 import {
@@ -218,14 +223,15 @@ export const FloatingShortcutButton = () => {
       <Popover placement="top-start" gutter={3}>
         <PopoverTrigger>
           <IconButton
-            aria-label="button"
+            ml="s16"
             width="40px"
             height="40px"
-            boxShadow=" 0px 4px 10px rgba(52, 60, 70, 0.1)"
-            // boxShadow={' 0px  10px rgba(52, 60, 70, 0.1)'}
-            icon={<BsQuestionLg color="white" />}
-            borderRadius="50%"
-            colorScheme="gray"
+            icon={<Icon size="md" as={AiOutlineQuestionCircle} />}
+            aria-label="help"
+            variant="ghost"
+            color="white"
+            borderRadius="br1"
+            _hover={{ backgroundColor: 'secondary.900' }}
           />
         </PopoverTrigger>
 

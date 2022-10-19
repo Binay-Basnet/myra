@@ -9,7 +9,7 @@ import Script from 'next/script';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 
 import { store } from '@coop/cbs/data-access';
-import { Box, FloatingShortcutButton, Toaster } from '@coop/shared/ui';
+import { Toaster } from '@coop/shared/ui';
 import { theme, useInit, useSnap } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
@@ -57,7 +57,7 @@ const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
       <ToastContainer />
       <Toaster />
       <main className="app">{getLayout(<Component {...pageProps} />)}</main>
-      <Box
+      {/* <Box
         position="fixed"
         bottom="40px"
         left="32px"
@@ -66,7 +66,7 @@ const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
         zIndex="99"
       >
         <FloatingShortcutButton />
-      </Box>
+      </Box> */}
     </>
   );
 };
