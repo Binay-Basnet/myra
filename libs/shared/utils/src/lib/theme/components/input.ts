@@ -77,6 +77,9 @@ const variantOutline: PartsStyleFunction<typeof parts> = (props) => {
       _invalid: {
         borderColor: 'danger.500',
         boxShadow: 'none',
+        _focus: {
+          boxShadow: `0 0 0 2px ${getColor(theme, 'danger.300')}`,
+        },
       },
       _focus: {
         zIndex: 1,

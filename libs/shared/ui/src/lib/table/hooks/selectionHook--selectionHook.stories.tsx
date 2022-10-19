@@ -1,10 +1,12 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { selectionHook } from './selectionHook';
 
-export default {
+const Story: ComponentMeta<typeof selectionHook> = {
   component: selectionHook,
   title: 'selectionHook',
-} as ComponentMeta<typeof selectionHook>;
+};
+export default Story;
 
 const Template: ComponentStory<typeof selectionHook> = (args) => <selectionHook {...args} />;
 

@@ -1,5 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
+import { EBankingTokenType } from '@coop/ebanking/data-access';
+
 import { RootState, useAppSelector } from '../redux/store';
 import { useRefreshToken } from '../redux/useRefreshToken';
 
@@ -18,9 +20,12 @@ export const useAxios = <TData, TVariables>(
 
   const auth = useAppSelector((state: RootState) => state?.auth);
 
-  const refreshToken = useRefreshToken(url);
   const masterToken = auth?.token;
   const coopToken = auth?.cooperative?.token;
+  const refreshToken = useRefreshToken(
+    url,
+    coopToken ? EBankingTokenType.Cooperative : EBankingTokenType.Myra
+  );
 
   return async (variables?: TVariables, config?: AxiosRequestConfig<TData>) => {
     if (coopToken) {

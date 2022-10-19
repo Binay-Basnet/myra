@@ -97,6 +97,7 @@ export const SettingsDepositProductsAdd = () => {
       wealthBuildingProduct: false,
       ladderRate: false,
       isMandatorySaving: false,
+      alternativeChannels: false,
       tenureUnit: FrequencyTenure.Day,
     },
   });
@@ -197,7 +198,10 @@ export const SettingsDepositProductsAdd = () => {
       chequeCharge: chequeChargeList,
       atmCharge: atmChargeList,
       specifyWithdrawRestriction: withdrawRestricted ? values?.specifyWithdrawRestriction : null,
-      transactionAllowed: values?.transactionAllowed ? values?.transactionAllowed : null,
+      transactionAllowed:
+        depositNature !== NatureOfDepositProduct.TermSavingOrFd && values?.transactionAllowed
+          ? values?.transactionAllowed
+          : null,
       tenureUnit: values?.tenureUnit && isTenureApplicable ? values?.tenureUnit : null,
       maxTenureUnitNumber:
         values?.maxTenureUnitNumber && isTenureApplicable ? values?.maxTenureUnitNumber : null,
@@ -253,12 +257,16 @@ export const SettingsDepositProductsAdd = () => {
         maxAmount: values?.balanceLimit?.maxAmount ?? null,
         minAmount: values?.balanceLimit?.minAmount ?? null,
       },
-      prematurePenalty: {
-        ...values?.prematurePenalty,
-        penaltyDateType: values?.prematurePenalty?.penaltyDateType
-          ? values?.prematurePenalty?.penaltyDateType
+      prematurePenalty:
+        depositNature === NatureOfDepositProduct.RecurringSaving ||
+        depositNature === NatureOfDepositProduct.TermSavingOrFd
+          ? {
+              ...values?.prematurePenalty,
+              penaltyDateType: values?.prematurePenalty?.penaltyDateType
+                ? values?.prematurePenalty?.penaltyDateType
+                : null,
+            }
           : null,
-      },
     };
 
     asyncToast({

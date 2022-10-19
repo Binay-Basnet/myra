@@ -14,6 +14,8 @@ const url = process.env['NX_SCHEMA_PATH'] ?? '';
 
 export const useInit = () => {
   const [triggerMyraQuery, setTriggerMyraQuery] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
+
   const dispatch = useAppDispatch();
   const replace = useReplace();
 
@@ -40,7 +42,7 @@ export const useInit = () => {
       })
       .catch(() => {
         dispatch(logout());
-        replace('/login');
+        replace('/login').then(() => setIsLoading(false));
       });
   }, [dispatch, refreshToken, replace]);
 
@@ -52,10 +54,13 @@ export const useInit = () => {
             user: userData,
           })
         );
+        setIsLoading(false);
       } else {
         dispatch(logout());
-        replace('/login');
+        replace('/login').then(() => setIsLoading(false));
       }
     }
   }, [dispatch, hasDataReturned, hasData, userData, replace]);
+
+  return { isLoading };
 };

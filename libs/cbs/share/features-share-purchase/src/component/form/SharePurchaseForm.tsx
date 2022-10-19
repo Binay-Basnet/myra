@@ -168,7 +168,7 @@ export const SharePurchaseForm = () => {
     });
   };
 
-  const { data: chargesData } = useGetShareChargesQuery(
+  const { data: chargesData, isLoading } = useGetShareChargesQuery(
     {
       transactionType: Share_Transaction_Direction?.Purchase,
       shareCount: noOfShares,
@@ -179,7 +179,6 @@ export const SharePurchaseForm = () => {
   const chargeList = chargesData?.share?.charges;
 
   useEffect(() => {
-    // const values = getValues();
     let temp = 0;
     if (chargeList) {
       if (extraFee) {
@@ -197,15 +196,8 @@ export const SharePurchaseForm = () => {
       setTotalAmount(noOfShares * 100);
     }
 
-    // reset({
-    //   ...values,
-    //   cash: {
-    //     cashPaid: totalAmount.toString(),
-    //   },
-    // });
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chargeList, extraFee, noOfShares, JSON.stringify(extraFee)]);
+  }, [isLoading, extraFee, noOfShares, JSON.stringify(chargeList), JSON.stringify(extraFee)]);
 
   return (
     <>

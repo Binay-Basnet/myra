@@ -18,7 +18,7 @@ export const FeesAndCharge = ({ setTotalCharge }: IFeesAndCharge) => {
   const { t } = useTranslation();
 
   const [triggerQuery, setTriggerQuery] = useState(false);
-  const { watch, control } = useFormContext<DepositLoanAccountInput>();
+  const { watch, control, resetField } = useFormContext<DepositLoanAccountInput>();
 
   const { append, remove, fields } = useFieldArray({
     control,
@@ -89,6 +89,7 @@ export const FeesAndCharge = ({ setTotalCharge }: IFeesAndCharge) => {
   useEffect(() => {
     if (products) {
       setTriggerQuery(true);
+      resetField('serviceCharge');
     }
   }, [products]);
 

@@ -247,7 +247,6 @@ const ne: Record<string, string> = {
   shareReturnTableBalance: 'मौज्दात',
   sharePurchaseTableDate: 'मिति',
   sharePurchaseTableShareNumber: 'शेयर नं',
-  sharePurchaseTableShareDr: 'शेयर डेबिट',
   sharePurchaseTableShareCr: 'शेयर क्रेडिट',
   sharePurchaseTableBalance: 'मौज्दात',
   settingsCoaTableAccountCode: 'खाता कोड',
@@ -3223,6 +3222,9 @@ const ne: Record<string, string> = {
   depositProductDayBeforetheinstallmentdate: 'Day before the installment date',
   depositProductInactive: 'Inactive',
   depositProductActive: 'Active',
+  sharePurchaseTableShareDr: 'Share Return',
+  shareRegisterTableIssue: 'Issue',
+  shareRegisterTableReturn: 'Return',
 };
 
 export default ne;

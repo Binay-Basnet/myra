@@ -171,6 +171,7 @@ export const ActivationForm = () => {
         success: 'Service Activated!!',
         loading: 'Activating Services!!',
       },
+
       onSuccess: () => {
         router.push(`/alternative-channels/${router.query['type']}/users`);
         queryClient.invalidateQueries('getActivatedService');
@@ -298,7 +299,7 @@ export const ActivationForm = () => {
                   {t['acTotalAmount']}
                 </Text>
                 <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
-                  {0 ?? '---'}
+                  {totalAmount ?? '---'}
                 </Text>
               </Box>
             ) : (

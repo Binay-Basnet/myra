@@ -16,6 +16,7 @@ import {
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
 import {
+  Alert,
   asyncToast,
   Box,
   Button,
@@ -232,6 +233,15 @@ export const AddWithdraw = () => {
                     />
                   )}
 
+                  {selectedAccount?.product?.withdrawRestricted && (
+                    <Alert
+                      status="info"
+                      hideCloseIcon
+                      title="Withdraw Restricted"
+                      subtitle="Withdraw is restricted for this account."
+                    />
+                  )}
+
                   {memberId && accountId && (
                     <FormSwitchTab
                       name="withdrawWith"
@@ -336,7 +346,7 @@ export const AddWithdraw = () => {
                               ID: selectedAccount?.product?.id,
                               currentBalance: selectedAccount?.balance ?? '0',
                               minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
-                              guaranteeBalance: '1000',
+                              guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
                               overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                               fine: selectedAccount?.dues?.fine ?? '0',
                               // branch: 'Kumaripati',

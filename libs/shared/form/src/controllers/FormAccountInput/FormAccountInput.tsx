@@ -1,6 +1,6 @@
 import { Control, Controller, Path, useFormContext } from 'react-hook-form';
 
-import { AmountInput, InputProps } from '@coop/shared/ui';
+import { AccountInput, InputProps } from '@coop/shared/ui';
 
 /* eslint-disable-next-line */
 interface FormAccountInputProps<T> extends InputProps {
@@ -25,7 +25,7 @@ export const FormAccountInput = <T,>({
       control={control}
       name={name}
       render={({ field: { onChange, value, ...fieldProps } }) => (
-        <AmountInput
+        <AccountInput
           id={name}
           onChange={onChange}
           value={value}

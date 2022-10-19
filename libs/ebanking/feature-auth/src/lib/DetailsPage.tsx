@@ -1,8 +1,10 @@
 import { Dispatch, SetStateAction } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useForm, useFormContext } from 'react-hook-form';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import { useSetPasswordMutation } from '@coop/ebanking/data-access';
 import { Box, Button, ChakraModal, Icon, Input, PasswordInput, Text } from '@coop/shared/ui';
@@ -14,8 +16,36 @@ interface IDetailsPageProps {
   setStatus: Dispatch<SetStateAction<SignUpStatus>>;
 }
 
+const validationSchema = yup.object({
+  name: yup.string().required('Name is Required.'),
+  dob: yup.string().required('Date of Birth is Required.'),
+  password: yup
+    .string()
+    .required('No password provided')
+    .min(8, 'Password is too short - should be 8 chars minimum.')
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character'
+    ),
+  cPassword: yup.string().test('passwords-match', 'Passwords must match', function (value) {
+    return this.parent.password === value;
+  }),
+});
+
 export const DetailsPage = ({ setStatus }: IDetailsPageProps) => {
   const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<{
+    dob: string;
+    name: string;
+    password: string;
+    cPassword: string;
+  }>({ resolver: yupResolver(validationSchema) });
+
   const { isOpen, onClose, onToggle } = useDisclosure();
 
   const { mutateAsync, isLoading } = useSetPasswordMutation({
@@ -28,12 +58,8 @@ export const DetailsPage = ({ setStatus }: IDetailsPageProps) => {
     },
   });
 
-  const { register, handleSubmit } = useFormContext<{
+  const { getValues } = useFormContext<{
     id: string;
-    dob: string;
-    name: string;
-    password: string;
-    cPassword: string;
   }>();
 
   return (
@@ -41,22 +67,34 @@ export const DetailsPage = ({ setStatus }: IDetailsPageProps) => {
       onSubmit={handleSubmit(async (data) => {
         await mutateAsync({
           data: { dob: data.dob, password: data.password, name: data.name },
-          userId: data.id,
+          userId: getValues()['id'],
         });
       })}
     >
       <AuthContainer title="Your Details" subtitle="Enter your details to continue with sign up.">
         <Box display="flex" flexDir="column" gap="s20">
-          <Input placeholder="Enter your full name" label="Your Name" {...register('name')} />
-          <Input type="date" label="Date of Birth (BS)" {...register('dob')} />
+          <Input
+            placeholder="Enter your full name"
+            label="Your Name"
+            errorText={errors.name?.message}
+            {...register('name')}
+          />
+          <Input
+            type="date"
+            label="Date of Birth (BS)"
+            errorText={errors.dob?.message}
+            {...register('dob')}
+          />
           <PasswordInput
             placeholder="Enter your Password"
             label="Password"
+            errorText={errors.password?.message}
             {...register('password')}
           />
           <PasswordInput
             placeholder="Retype your Password"
             label="Confirm Password"
+            errorText={errors.cPassword?.message}
             {...register('cPassword')}
           />
         </Box>

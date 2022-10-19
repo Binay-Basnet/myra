@@ -5,6 +5,7 @@ import omit from 'lodash/omit';
 
 import {
   CashValue,
+  DepositAccount,
   DepositedBy,
   DepositInput,
   DepositPaymentType,
@@ -261,7 +262,11 @@ export const AddDeposit = () => {
     [amountToBeDeposited]
   );
 
-  const returnAmount = Number(totalCashPaid) - totalDeposit;
+  const returnAmount =
+    selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+    selectedAccount?.product?.isMandatorySaving
+      ? 0
+      : Number(totalCashPaid) - totalDeposit;
 
   const handleSubmit = () => {
     const values = getValues();
@@ -270,14 +275,6 @@ export const AddDeposit = () => {
       fine: fine ?? FINE,
       rebate: rebate ?? REBATE,
     };
-
-    if (
-      selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving ||
-      (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
-        selectedAccount?.product?.isMandatorySaving === true)
-    ) {
-      filteredValues.amount = String(amountToBeDeposited);
-    }
 
     if (values.payment_type === DepositPaymentType.Cash) {
       filteredValues = omit({ ...filteredValues }, ['cheque', 'bankVoucher']);
@@ -301,6 +298,28 @@ export const AddDeposit = () => {
 
     if (values.payment_type === DepositPaymentType.Cheque) {
       filteredValues = omit({ ...filteredValues }, ['bankVoucher', 'cash']);
+    }
+
+    if (
+      selectedAccount?.product?.nature === NatureOfDepositProduct.RecurringSaving ||
+      (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+        selectedAccount?.product?.isMandatorySaving === true)
+    ) {
+      if (noOfInstallments) {
+        filteredValues.amount = String(amountToBeDeposited);
+      } else {
+        if (values.payment_type === DepositPaymentType.Cash) {
+          filteredValues.amount = filteredValues?.cash?.total;
+        }
+
+        if (values.payment_type === DepositPaymentType.BankVoucher) {
+          filteredValues.amount = filteredValues?.bankVoucher?.amount;
+        }
+
+        if (values.payment_type === DepositPaymentType.Cheque) {
+          filteredValues.amount = filteredValues?.cheque?.amount;
+        }
+      }
     }
 
     asyncToast({
@@ -413,7 +432,8 @@ export const AddDeposit = () => {
 
                   {accountId &&
                     (selectedAccount?.product?.nature === NatureOfDepositProduct.Current ||
-                      selectedAccount?.product?.nature === NatureOfDepositProduct.Saving) && (
+                      (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+                        !selectedAccount?.product?.isMandatorySaving)) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
                           <FormInput name="voucherId" label={t['addDepositVoucherId']} />
@@ -526,7 +546,7 @@ export const AddDeposit = () => {
                               ID: selectedAccount?.product?.id,
                               currentBalance: selectedAccount?.balance ?? '0',
                               minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
-                              guaranteeBalance: '1000',
+                              guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
                               overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                               fine: fine ?? FINE,
                               // branch: 'Kumaripati',
@@ -547,6 +567,7 @@ export const AddDeposit = () => {
                 mode={mode}
                 totalDeposit={Number(totalDeposit)}
                 rebate={Number(rebate ?? 0)}
+                selectedAccount={selectedAccount as DepositAccount}
               />
             </form>
           </FormProvider>
@@ -586,6 +607,7 @@ export const AddDeposit = () => {
         onClose={handleModalClose}
         accountId={selectedAccount?.id}
         productType={selectedAccount?.product?.nature}
+        selectedAccount={selectedAccount as DepositAccount}
       />
     </>
   );

@@ -1,65 +1,53 @@
-import { useState } from 'react';
-import {
-  Box,
-  Input,
-  InputGroup,
-  InputProps,
-  InputRightElement,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Input, InputGroup, InputProps, Text } from '@chakra-ui/react';
+
+import { amountToWordsConverter } from '@coop/shared/utils';
+
+import TextFields from '../text-fields/TextFields';
 
 /* eslint-disable-next-line */
 export interface AmountInputProps extends InputProps {
-  labelColor?: string;
   label?: string | number;
-  __placeholder?: string;
+  errorText?: string;
 }
 
 export const AmountInput = (props: AmountInputProps) => {
-  const { labelColor, label, __placeholder, ...rest } = props;
-  const [isDebit, setIsDebit] = useState(true);
-  const handleClick = () => setIsDebit(!isDebit);
+  const { label, value, errorText, ...rest } = props;
 
   return (
-    <>
-      <Text
-        fontWeight={'500'}
-        color={labelColor ?? 'gray.700'}
-        fontSize="s2"
-        mb="s4"
-      >
-        {' '}
-        {label ?? 'Amount'}
-      </Text>
-      <InputGroup h="44px">
-        <Input
-          pr="58px"
-          variant={'outline'}
-          type="number"
-          fontSize={'s2'}
-          textAlign={'right'}
-          __placeholder={__placeholder ?? '0.00'}
-          {...rest}
-        />
-        <InputRightElement
-          // pointerEvents={'none'}
-          width="fit-content"
-          onClick={handleClick}
-          pr="s16"
-          cursor={'pointer'}
-        >
-          <Box w="30px">
+    <Box display="flex" flexDirection="column" gap="s4">
+      {label && (
+        <TextFields variant="formLabel" color="gray.700">
+          {label}
+        </TextFields>
+      )}
+      <InputGroup display="flex" flexDirection="column">
+        <Input variant="outline" value={value} type="number" textAlign="right" {...rest} />
+      </InputGroup>
+
+      {(() => {
+        if (errorText) {
+          return (
+            <TextFields variant="formHelper" color="danger.500">
+              {errorText}
+            </TextFields>
+          );
+        }
+        if (value) {
+          return (
             <Text
               fontSize="s2"
-              fontWeight={'500'}
-              color={isDebit ? '#143E9F' : '#FC814A'}
+              fontWeight="Regular"
+              color="gray.600"
+              textAlign="right"
+              fontStyle="Italic"
             >
-              {isDebit ? 'DR' : 'CR'}
+              {amountToWordsConverter(Number(value))}
             </Text>
-          </Box>
-        </InputRightElement>
-      </InputGroup>
-    </>
+          );
+        }
+        return null;
+      })()}
+    </Box>
   );
 };
 

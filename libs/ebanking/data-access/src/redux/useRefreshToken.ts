@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { NextRouter, useRouter } from 'next/router';
 import axios from 'axios';
 
-import { EBankingTokenType } from '@coop/ebanking/data-access';
+import { EBankingTokenType, logoutCooperative } from '@coop/ebanking/data-access';
 
 import { logout, saveCoopToken, saveToken } from './slices/auth-slice';
 
@@ -111,12 +111,22 @@ export const useRefreshToken = (url: string, type: EBankingTokenType = EBankingT
 
           return accessToken;
         }
-        replace('/login');
-        throw new Error('Credentials are Expired!!');
+        if (type === EBankingTokenType.Myra) {
+          replace('/login');
+          throw new Error('Credentials are Expired!!');
+        } else {
+          replace('/login/coop');
+          throw new Error('Credentials are Expired!!');
+        }
       })
       .catch(() => {
-        replace('/login');
-        dispatch(logout());
+        if (type === EBankingTokenType.Myra) {
+          replace('/login');
+          dispatch(logout());
+        } else {
+          replace('/login/coop');
+          dispatch(logoutCooperative());
+        }
       });
   }, [dispatch, replace, url]);
 

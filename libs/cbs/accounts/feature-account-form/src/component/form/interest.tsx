@@ -10,7 +10,7 @@ import { useTranslation } from '@coop/shared/utils';
 export const Interest = () => {
   const { t } = useTranslation();
   const [triggerQuery, setTriggerQuery] = useState(false);
-  const { watch } = useFormContext();
+  const { watch, setValue } = useFormContext();
   const products = watch('productId');
 
   const poductDetails = useGetAccountOpenProductDetailsQuery(
@@ -35,6 +35,11 @@ export const Interest = () => {
     Number(ProductData?.interest?.defaultRate) +
     (ceoInterest ? Number(ProductData?.interest?.ceoAuthority) : 0) +
     (BoardInterest ? Number(ProductData?.interest?.boardAuthority) : 0);
+
+  useEffect(() => {
+    setValue('interestRate', valueInput);
+  }, [valueInput, setValue]);
+
   return (
     <Box display="flex" flexDirection="column" gap="s16">
       <Box display="flex" flexDirection="column" w="100%" background="neutralColorLight.Gray-0">

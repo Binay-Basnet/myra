@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 
 import {
+  DepositAccount,
   InstallmentState,
   NatureOfDepositProduct,
   useGetInstallmentsListDataQuery,
@@ -23,6 +24,7 @@ interface IInstallmentModelProps {
   onClose: () => void;
   accountId: string | undefined;
   productType: NatureOfDepositProduct | undefined;
+  selectedAccount: DepositAccount;
 }
 
 export const InstallmentModel = ({
@@ -30,6 +32,7 @@ export const InstallmentModel = ({
   onClose,
   accountId,
   productType,
+  selectedAccount,
 }: IInstallmentModelProps) => {
   const { t } = useTranslation();
 
@@ -38,7 +41,12 @@ export const InstallmentModel = ({
   const { data: installmentsListQueryData, refetch } = useGetInstallmentsListDataQuery(
     { id: accountId as string },
     {
-      enabled: !!(accountId && productType === NatureOfDepositProduct.RecurringSaving),
+      enabled: !!(
+        accountId &&
+        (productType === NatureOfDepositProduct.RecurringSaving ||
+          (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+            selectedAccount?.product?.isMandatorySaving))
+      ),
     }
   );
 

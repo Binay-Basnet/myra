@@ -4,10 +4,10 @@ import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { Skeleton, useDisclosure } from '@chakra-ui/react';
 
 import { AccountCard, InfoCard, TransactionCard, UtilityHomeCard } from '@coop/ebanking/cards';
+import { EmptyState } from '@coop/ebanking/components';
 import {
   useGetAccountListQuery,
   useGetHomeServiceListQuery,
-  useGetRecentTransactionsQuery,
   useGetUtilityListQuery,
 } from '@coop/ebanking/data-access';
 import { Box, Button, Collapse, Divider, Grid, GridItem, Icon, Text } from '@coop/shared/ui';
@@ -20,13 +20,16 @@ export const EbankingHomePage = () => {
 
   const { data: servicesList, isLoading } = useGetHomeServiceListQuery();
   const { data: utilityList } = useGetUtilityListQuery();
-  const { data: accountList, isLoading: accountsLoading } = useGetAccountListQuery();
-  const { data: transactionList } = useGetRecentTransactionsQuery();
+  const { data: accountList, isLoading: accountsLoading } = useGetAccountListQuery({
+    transactionPagination: { first: 10, after: '' },
+  });
 
   const utilityPayments = [
     ...(utilityList?.eBanking?.utilityPayments ?? []),
     ...(utilityList?.eBanking?.utilityPayments ?? []),
   ];
+
+  const transactions = accountList?.eBanking?.account?.list?.recentTransactions?.edges;
 
   return (
     <Box display="flex" flexDir="column" gap="s24">
@@ -156,13 +159,20 @@ export const EbankingHomePage = () => {
               <Skeleton h="144px" />
             </>
           )}
-          {accountList?.eBanking?.account?.list?.edges
-            .slice(0, 2)
-            .map(({ node: { isDefault, ...rest } }) => (
-              <Fragment key={rest.id}>
-                <AccountCard account={rest} isDefault={isDefault} />
-              </Fragment>
-            ))}
+          {accountList?.eBanking?.account?.list?.accounts?.slice(0, 2).map((account) => (
+            <Fragment key={account?.id}>
+              <AccountCard
+                account={{
+                  id: account?.id,
+                  name: account?.name,
+                  balance: account?.balance,
+                  accountNumber: account?.accountNumber,
+                  interestRate: account?.interestRate,
+                }}
+                isDefault={Boolean(account?.isDefault)}
+              />
+            </Fragment>
+          ))}
         </Grid>
       </Box>
       <Divider />
@@ -176,11 +186,26 @@ export const EbankingHomePage = () => {
           </Button>
         }
       >
-        {transactionList?.eBanking?.transaction?.recent?.map((transaction) => (
-          <Fragment key={transaction?.id}>
-            {transaction && <TransactionCard transaction={transaction} />}
-          </Fragment>
-        ))}
+        {transactions?.length === 0 ? (
+          <Box display="flex" alignItems="center" justifyContent="center" h="200px">
+            <EmptyState title="No Recent Transactions Found" />
+          </Box>
+        ) : (
+          transactions?.map((transaction) => (
+            <Fragment key={transaction?.node?.id}>
+              {transaction && (
+                <TransactionCard
+                  accountName={
+                    accountList?.eBanking?.account?.list?.accounts?.find(
+                      (account) => account?.id === transaction?.node?.id
+                    )?.name as string
+                  }
+                  transaction={transaction?.node}
+                />
+              )}
+            </Fragment>
+          ))
+        )}
       </InfoCard>
     </Box>
   );

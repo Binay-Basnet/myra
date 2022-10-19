@@ -207,7 +207,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                             </Text>
 
                             <Text fontWeight="600" fontSize="s3">
-                              {rebateData?.noOfInstallment} %
+                              {rebateData?.noOfInstallment}
                             </Text>
                           </Box>
                         </li>

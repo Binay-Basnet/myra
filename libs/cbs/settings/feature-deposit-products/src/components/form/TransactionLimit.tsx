@@ -1,4 +1,4 @@
-import { FormInput } from '@coop/shared/form';
+import { FormAmountInput } from '@coop/shared/form';
 import { Box, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -17,17 +17,13 @@ export const TransactionLimit = () => {
             </Text>
           </Box>
           <Grid templateColumns="repeat(3,1fr)" gap="s16">
-            <FormInput
-              textAlign="right"
+            <FormAmountInput
               name="depositAmount.minAmount"
-              type="number"
               label={t['depositProductMinimumAmount']}
             />
 
-            <FormInput
-              textAlign="right"
+            <FormAmountInput
               name="depositAmount.maxAmount"
-              type="number"
               label={t['depositProductMaximumAmount']}
             />
           </Grid>
@@ -42,17 +38,13 @@ export const TransactionLimit = () => {
             </Text>
           </Box>
           <Grid templateColumns="repeat(3,1fr)" gap="s16">
-            <FormInput
-              textAlign="right"
+            <FormAmountInput
               name="withdrawAmountLimit.minAmount"
-              type="number"
               label={t['depositProductMinimumAmount']}
             />
 
-            <FormInput
-              textAlign="right"
+            <FormAmountInput
               name="withdrawAmountLimit.maxAmount"
-              type="number"
               label={t['depositProductMaximumAmount']}
             />
           </Grid>

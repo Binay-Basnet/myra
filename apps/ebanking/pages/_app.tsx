@@ -5,10 +5,10 @@ import { Provider } from 'react-redux';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import { ChakraProvider } from '@chakra-ui/react';
+import { Box, ChakraProvider } from '@chakra-ui/react';
 
 import { store, useCoopInit, useInit } from '@coop/ebanking/data-access';
-import { Toaster } from '@coop/shared/ui';
+import { Loader, Toaster } from '@coop/shared/ui';
 import { theme } from '@coop/shared/utils';
 
 import './styles.css';
@@ -38,10 +38,10 @@ const queryClient = new QueryClient({
 });
 
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
-  const getLayout = Component.getLayout || ((page) => page);
+  const { isLoading: coopLoading } = useCoopInit();
+  const { isLoading: loading } = useInit();
 
-  useCoopInit();
-  useInit();
+  const getLayout = Component.getLayout || ((page) => page);
 
   return (
     <>
@@ -51,7 +51,13 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       <Toaster />
 
       <QueryClientProvider client={queryClient}>
-        <main suppressHydrationWarning>{getLayout(<Component {...pageProps} />)}</main>
+        {coopLoading || loading ? (
+          <Box h="100vh" bg="white" display="flex" alignItems="center" justifyContent="center">
+            <Loader height={300} />
+          </Box>
+        ) : (
+          <main suppressHydrationWarning>{getLayout(<Component {...pageProps} />)}</main>
+        )}
         <ReactQueryDevtools />
       </QueryClientProvider>
     </>

@@ -51,14 +51,17 @@ export const Questions = () => {
 
   return (
     <>
-      <FormSection>
-        <GridItem colSpan={3}>
-          <Box display="flex" flexDirection="row" justifyContent="space-between">
-            <SubHeadingText>{t['depositProductAutoOpenwhenmemberjoins']}</SubHeadingText>
-            <FormSwitchTab name="autoOpen" options={yesNo} />
-          </Box>
-        </GridItem>
-      </FormSection>
+      {(depositNature === NatureOfDepositProduct.Current ||
+        depositNature === NatureOfDepositProduct.Saving) && (
+        <FormSection>
+          <GridItem colSpan={3}>
+            <Box display="flex" flexDirection="row" justifyContent="space-between">
+              <SubHeadingText>{t['depositProductAutoOpenwhenmemberjoins']}</SubHeadingText>
+              <FormSwitchTab name="autoOpen" options={yesNo} />
+            </Box>
+          </GridItem>
+        </FormSection>
+      )}
 
       <FormSection>
         <GridItem colSpan={3}>
@@ -155,16 +158,16 @@ export const Questions = () => {
         </FormSection>
       )}
 
-      {depositNature !== NatureOfDepositProduct.Current && (
-        <FormSection>
-          <GridItem colSpan={3}>
-            <Box display="flex" flexDirection="row" justifyContent="space-between">
-              <SubHeadingText>{t['depositProductSupportMultipleAccount']}</SubHeadingText>
-              <FormSwitchTab name="supportMultiple" options={yesNo} />
-            </Box>
-          </GridItem>
-        </FormSection>
-      )}
+      {/* {depositNature !== NatureOfDepositProduct.Current && ( */}
+      <FormSection>
+        <GridItem colSpan={3}>
+          <Box display="flex" flexDirection="row" justifyContent="space-between">
+            <SubHeadingText>{t['depositProductSupportMultipleAccount']}</SubHeadingText>
+            <FormSwitchTab name="supportMultiple" options={yesNo} />
+          </Box>
+        </GridItem>
+      </FormSection>
+      {/* )} */}
 
       {(depositNature === NatureOfDepositProduct.RecurringSaving ||
         depositNature === NatureOfDepositProduct.Saving) && (

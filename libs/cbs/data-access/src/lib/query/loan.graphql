@@ -352,6 +352,7 @@ query getLoanApplicationDetails($id: ID!) {
           principalGracePeriod
           interestGracePeriod
         }
+        linkedAccountId
         totalValuation
         totalSanctionedAmount
         justifySanction

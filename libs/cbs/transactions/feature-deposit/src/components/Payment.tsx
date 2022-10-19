@@ -2,8 +2,10 @@ import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import {
+  DepositAccount,
   DepositedBy,
   DepositPaymentType,
+  NatureOfDepositProduct,
   RootState,
   useAppSelector,
   useGetCoaBankListQuery,
@@ -28,14 +30,14 @@ import {
 import { Box, FormAccountSelect, FormMemberSelect, Grid, GridItem, Text } from '@coop/shared/ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
-const sourceOfFundsList = [
-  'Personal Savings',
-  'Share Sales',
-  'Dividends',
-  'Property Sales',
-  'Inheritances',
-  'Compensation',
-];
+// const sourceOfFundsList = [
+//   'Personal Savings',
+//   'Share Sales',
+//   'Dividends',
+//   'Property Sales',
+//   'Inheritances',
+//   'Compensation',
+// ];
 
 // const denominationsOptions = [
 //   { label: '1000x', value: CashValue.Cash_1000 },
@@ -68,6 +70,7 @@ export interface PaymentProps {
   mode: number;
   totalDeposit: number;
   rebate: number;
+  selectedAccount?: DepositAccount;
 }
 
 type PaymentTableType = {
@@ -76,7 +79,7 @@ type PaymentTableType = {
   amount: string;
 };
 
-export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
+export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: PaymentProps) => {
   const { t } = useTranslation();
 
   const paymentModes = [
@@ -109,7 +112,13 @@ export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
     },
   ];
 
-  const { watch, resetField } = useFormContext();
+  const { watch, resetField, setValue } = useFormContext();
+
+  useEffect(() => {
+    setValue('cash.cashPaid', String(totalDeposit));
+    setValue('cheque.amount', String(totalDeposit));
+    setValue('bankVoucher.amount', String(totalDeposit));
+  }, [totalDeposit]);
 
   const memberId = watch('memberId');
 
@@ -146,9 +155,13 @@ export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
 
   const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
 
-  const returnAmount = rebate
-    ? totalCashPaid - totalDeposit + rebate
-    : totalCashPaid - totalDeposit;
+  const returnAmount =
+    selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+    selectedAccount?.product?.isMandatorySaving
+      ? 0
+      : rebate
+      ? totalCashPaid - totalDeposit + rebate
+      : totalCashPaid - totalDeposit;
 
   // refetch data when calendar preference is updated
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
@@ -340,14 +353,15 @@ export const Payment = ({ mode, totalDeposit, rebate }: PaymentProps) => {
 
       <BoxContainer>
         <Grid templateColumns="repeat(2, 1fr)" columnGap="s20">
-          <FormSelect
+          {/* <FormSelect
             name="sourceOfFund"
             label={t['depositPaymentSourceOfFund']}
             options={sourceOfFundsList.map((source) => ({
               label: source,
               value: source,
             }))}
-          />
+          /> */}
+          <FormInput name="sourceOfFund" label={t['depositPaymentSourceOfFund']} />
 
           <FormFileInput size="md" label={t['depositPaymentFileUpload']} name="doc_identifiers" />
         </Grid>

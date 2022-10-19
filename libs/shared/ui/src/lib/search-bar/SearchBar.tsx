@@ -48,24 +48,24 @@ const keyMap = {
 /* eslint-disable-next-line */
 export interface SearchBarProps extends InputProps {}
 
-const recentSearch = [
-  {
-    title: 'Share Issue',
-    link: '/share/share-issue',
-  },
-  {
-    title: 'Member List',
-    link: '/members/list',
-  },
-  {
-    title: 'Account List',
-    link: '/accounts/list',
-  },
-  {
-    title: 'Share Register Report',
-    link: '/reports/cbs/share-report/new',
-  },
-];
+// const recentSearch = [
+//   {
+//     title: 'Share Issue',
+//     link: '/share/share-issue',
+//   },
+//   {
+//     title: 'Member List',
+//     link: '/members/list',
+//   },
+//   {
+//     title: 'Account List',
+//     link: '/accounts/list',
+//   },
+//   {
+//     title: 'Share Register Report',
+//     link: '/reports/cbs/share-report/new',
+//   },
+// ];
 
 const ICONS: Record<string, IconType> = {
   LIST: IoList,
@@ -110,11 +110,21 @@ export const SearchBar = () => {
 
   const debouncedValue = useDebounce(inputSearch, 800);
 
+  const recentSearches = (
+    typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('recent-search') ?? '[]') : []
+  ) as {
+    title: string;
+    link: string;
+    hasParams: boolean;
+  }[];
+
+  const recentSearch = recentSearches?.reverse().slice(0, 4);
+
   const { mutateAsync: getNewId } = useGetNewIdMutation();
   const { data: globalSearchData, isLoading } = useGetGlobalSearchQuery(
     {
-      filter: { filterMode: Filter_Mode.Or, query: debouncedValue },
-      pagination: { after: '', first: 8 },
+      filter: { filterMode: Filter_Mode.Or, query: debouncedValue, page: debouncedValue },
+      pagination: { after: '', first: 4 },
     },
     {
       enabled: searchAction === 'SIMPLE',
@@ -135,7 +145,10 @@ export const SearchBar = () => {
 
   const searchActionFunc = () => {
     if (searchAction === 'FOCUS' || searchAction === 'EMPTY') {
-      return recentSearch;
+      return recentSearches?.map((s) => ({
+        ...s,
+        hasParam: Boolean(s?.hasParams),
+      }));
     }
     if (searchAction === 'SIMPLE') {
       return globalSearch?.map((s) => ({
@@ -159,81 +172,116 @@ export const SearchBar = () => {
 
   return (
     <Box position="relative" width="100%">
-      <GlobalHotKeys keyMap={keyMap} handlers={handlers}>
-        <InputGroup
-          width="100%"
-          borderRadius="6px"
-          border="none"
-          flex={1}
-          color="white"
-          borderColor="secondary.700"
-          _hover={{ color: 'gray.700' }}
-        >
-          <InputLeftElement
-            pointerEvents="none"
-            children={<Icon as={IoSearch} fontSize="lg" />}
-            color={searchAction !== 'EMPTY' ? 'gray.800' : 'currentcolor'}
-          />
-          <Input
-            type="text"
-            id="search-input"
-            placeholder="Search"
-            autoComplete="off"
-            color="white"
-            fontSize="r1"
-            ref={searchBarRef}
-            value={inputSearch}
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+
+          const formSearch = globalSearch?.find((search) => search?.node?.fullCode === inputSearch);
+
+          if (formSearch) {
+            const response = formSearch?.node?.hasParam ? await getNewId({}) : null;
+
+            router
+              .push(`${formSearch?.node?.url}${response ? `/${response?.newId}` : ''}` as string)
+              .then(() => {
+                const currentSearch = {
+                  title: formSearch?.node?.page,
+                  link: formSearch?.node?.url,
+                  hasParams: formSearch?.node?.hasParam,
+                };
+
+                if (recentSearches && recentSearches?.length !== 0) {
+                  localStorage.setItem(
+                    'recent-search',
+                    JSON.stringify([...recentSearches, currentSearch])
+                  );
+                } else {
+                  localStorage.setItem('recent-search', JSON.stringify([currentSearch]));
+                }
+
+                setSearchAction('EMPTY');
+                searchBarRef?.current?.blur();
+                setInputSearch('');
+              });
+          }
+        }}
+      >
+        <GlobalHotKeys keyMap={keyMap} handlers={handlers}>
+          <InputGroup
+            width="100%"
+            borderRadius="6px"
             border="none"
-            bg="secondary.900"
-            onFocus={() => {
-              if (inputSearch) {
-                if (inputSearch[0] === '@') {
+            flex={1}
+            color="white"
+            borderColor="secondary.700"
+            _hover={{ color: 'gray.700' }}
+          >
+            <InputLeftElement
+              pointerEvents="none"
+              children={<Icon as={IoSearch} fontSize="lg" />}
+              color={searchAction !== 'EMPTY' ? 'gray.800' : 'currentcolor'}
+            />
+            <Input
+              type="text"
+              id="search-input"
+              placeholder="Search"
+              autoComplete="off"
+              color="white"
+              fontSize="r1"
+              ref={searchBarRef}
+              value={inputSearch}
+              border="none"
+              bg="secondary.900"
+              onFocus={() => {
+                if (inputSearch) {
+                  if (inputSearch[0] === '@') {
+                    setSearchAction('USER');
+                  } else {
+                    setSearchAction('SIMPLE');
+                  }
+                } else {
+                  setSearchAction('FOCUS');
+                }
+              }}
+              onChange={(e) => {
+                setInputSearch(e.target.value);
+                if (e.target.value[0] === '' || !e.target.value[0]) {
+                  setSearchAction('FOCUS');
+                } else if (e.target.value[0] === '@') {
                   setSearchAction('USER');
                 } else {
                   setSearchAction('SIMPLE');
                 }
-              } else {
-                setSearchAction('FOCUS');
-              }
-            }}
-            onChange={(e) => {
-              setInputSearch(e.target.value);
-              if (e.target.value[0] === '' || !e.target.value[0]) {
-                setSearchAction('FOCUS');
-              } else if (e.target.value[0] === '@') {
-                setSearchAction('USER');
-              } else {
-                setSearchAction('SIMPLE');
-              }
-            }}
-            onBlur={() => {
-              setFocusState('EMPTY');
-              setSearchAction('EMPTY');
-            }}
-            _hover={{ color: 'gray.800', backgroundColor: 'gray.0' }}
-            _focus={{ color: 'gray.800', backgroundColor: 'gray.0' }}
-          />
+              }}
+              onBlur={() => {
+                setFocusState('EMPTY');
+                setSearchAction('EMPTY');
+              }}
+              _hover={{ color: 'gray.800', backgroundColor: 'gray.0' }}
+              _focus={{ color: 'gray.800', backgroundColor: 'gray.0' }}
+            />
 
-          {searchAction === 'SIMPLE' || searchAction === 'USER' ? (
-            <InputRightElement
-              cursor="pointer"
-              onMouseDown={(e) => e.preventDefault()}
-              color="gray.800"
-              children={<Icon as={IoClose} />}
-            />
-          ) : (
-            <InputRightElement
-              pointerEvents="none"
-              color={searchAction !== 'EMPTY' ? 'gray.800' : 'currentcolor'}
-              children={
-                <Text fontSize="r1" alignItems="center" pr="s12">
-                  Ctrl+/
-                </Text>
-              }
-            />
-          )}
-        </InputGroup>
-      </GlobalHotKeys>
+            {searchAction === 'SIMPLE' || searchAction === 'USER' ? (
+              <InputRightElement
+                cursor="pointer"
+                onMouseDown={(e) => e.preventDefault()}
+                color="gray.800"
+                children={<Icon as={IoClose} />}
+              />
+            ) : (
+              <InputRightElement
+                pointerEvents="none"
+                color={searchAction !== 'EMPTY' ? 'gray.800' : 'currentcolor'}
+                children={
+                  <Text fontSize="r1" alignItems="center" pr="s12">
+                    Ctrl+/
+                  </Text>
+                }
+              />
+            )}
+          </InputGroup>
+        </GlobalHotKeys>
+      </form>
 
       {searchAction === 'EMPTY' ? null : (
         <Box onMouseDown={(e) => e.preventDefault()}>
@@ -258,26 +306,52 @@ export const SearchBar = () => {
             )}
             {searchAction === 'FOCUS' && (
               <>
-                <Text fontSize="s3" color="gray.500" lineHeight="1.5">
-                  Recent Search
-                </Text>
+                {recentSearch && recentSearch?.length !== 0 && (
+                  <Text fontSize="s3" color="gray.500" lineHeight="1.5">
+                    Recent Search
+                  </Text>
+                )}
 
                 <Box overflowY="auto">
-                  {recentSearch.map((recent, index) => (
-                    <Fragment key={recent?.link}>
-                      <RecentSearchCard
-                        title={recent.title}
-                        onClick={() =>
-                          router.push(recent.link).then(() => {
-                            setSearchAction('EMPTY');
-                            searchBarRef?.current?.blur();
-                            setInputSearch('');
-                          })
-                        }
-                        isSelected={focusState === index}
-                      />
-                    </Fragment>
-                  ))}
+                  {recentSearch && recentSearch?.length === 0 ? (
+                    <NoResultFound title="No Recent Search!" />
+                  ) : (
+                    recentSearch.map((recent, index) => (
+                      <Fragment key={recent?.link}>
+                        <RecentSearchCard
+                          title={recent.title}
+                          onClick={async () => {
+                            const response = recent.hasParams ? await getNewId({}) : null;
+
+                            router
+                              .push(
+                                `${recent.link}${response ? `/${response?.newId}` : ''}` as string
+                              )
+                              .then(() => {
+                                const currentSearch = recent;
+
+                                if (recentSearches && recentSearches?.length !== 0) {
+                                  localStorage.setItem(
+                                    'recent-search',
+                                    JSON.stringify([...recentSearches, currentSearch])
+                                  );
+                                } else {
+                                  localStorage.setItem(
+                                    'recent-search',
+                                    JSON.stringify([currentSearch])
+                                  );
+                                }
+
+                                setSearchAction('EMPTY');
+                                searchBarRef?.current?.blur();
+                                setInputSearch('');
+                              });
+                          }}
+                          isSelected={focusState === index}
+                        />
+                      </Fragment>
+                    ))
+                  )}
                 </Box>
               </>
             )}
@@ -296,6 +370,7 @@ export const SearchBar = () => {
                         title={basic?.node?.page as string}
                         isSelected={focusState === index}
                         hasParam={basic?.node?.hasParam as boolean}
+                        fullCode={basic?.node?.fullCode}
                         onClick={async () => {
                           const response = basic?.node?.hasParam ? await getNewId({}) : null;
 
@@ -306,11 +381,23 @@ export const SearchBar = () => {
                               }` as string
                             )
                             .then(() => {
-                              // const currentSearch = {
-                              //   title: basic?.node?.page,
-                              //   url: basic?.node?.url,
-                              //   hasParams: basic?.node?.hasParam,
-                              // };
+                              const currentSearch = {
+                                title: basic?.node?.page,
+                                link: basic?.node?.url,
+                                hasParams: basic?.node?.hasParam,
+                              };
+
+                              if (recentSearches && recentSearches?.length !== 0) {
+                                localStorage.setItem(
+                                  'recent-search',
+                                  JSON.stringify([...recentSearches, currentSearch])
+                                );
+                              } else {
+                                localStorage.setItem(
+                                  'recent-search',
+                                  JSON.stringify([currentSearch])
+                                );
+                              }
 
                               setSearchAction('EMPTY');
                               searchBarRef?.current?.blur();
@@ -386,6 +473,7 @@ interface BasicSearchCardProps {
   onClick?: () => void;
   link: string;
   hasParam: boolean;
+  fullCode: string | undefined | null;
 }
 
 export const BasicSearchCard = ({
@@ -396,6 +484,7 @@ export const BasicSearchCard = ({
   isSelected,
   link,
   hasParam,
+  fullCode,
   app,
 }: BasicSearchCardProps) => {
   const { mutateAsync: getNewId } = useGetNewIdMutation();
@@ -421,7 +510,7 @@ export const BasicSearchCard = ({
 
         <Box display="flex" flexDir="column">
           <Text fontSize="r1" fontWeight="500">
-            {title}
+            {title} ({fullCode})
           </Text>
 
           <Text fontSize="r1" color="gray.500">

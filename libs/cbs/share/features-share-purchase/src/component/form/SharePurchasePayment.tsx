@@ -1,14 +1,9 @@
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { SharePaymentMode, ShareVoucherDepositedBy } from '@coop/cbs/data-access';
 import { ShareAccount, ShareCash } from '@coop/cbs/share/shared-ui';
-import {
-  FormFileInput,
-  FormInput,
-  FormSelect,
-  FormSwitchTab,
-  FormTextArea,
-} from '@coop/shared/form';
+import { FormFileInput, FormInput, FormSwitchTab, FormTextArea } from '@coop/shared/form';
 import { Box, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -21,14 +16,14 @@ type PurchaseProps = {
   returnAmount: number;
 };
 
-const sourceOfFundsList = [
-  'Personal Savings',
-  'Share Sales',
-  'Dividends',
-  'Property Sales',
-  'Inheritances',
-  'Compensation',
-];
+// const sourceOfFundsList = [
+//   'Personal Savings',
+//   'Share Sales',
+//   'Dividends',
+//   'Property Sales',
+//   'Inheritances',
+//   'Compensation',
+// ];
 
 export const SharePurchasePayment = ({
   totalAmount,
@@ -38,7 +33,7 @@ export const SharePurchasePayment = ({
 }: PurchaseProps) => {
   const { t } = useTranslation();
   const methods = useFormContext();
-  const { watch } = methods;
+  const { watch, setValue } = methods;
 
   const depositedBy = watch('bankVoucher.depositedBy');
   const paymentModes = watch('paymentMode');
@@ -59,6 +54,10 @@ export const SharePurchasePayment = ({
       value: ShareVoucherDepositedBy?.Other,
     },
   ];
+
+  useEffect(() => {
+    setValue('cash.cashPaid', String(totalAmount));
+  }, [totalAmount, setValue]);
 
   return (
     <Box minHeight="100vh" background="gray.0" border="1px solid" borderColor="border.layout">
@@ -125,14 +124,15 @@ export const SharePurchasePayment = ({
           <GridItem colSpan={3}>
             <Grid mt="s16" templateColumns="repeat(2,1fr)" gap="s20">
               <GridItem colSpan={1}>
-                <FormSelect
+                {/* <FormSelect
                   name="bankVoucher.sourceOfFund"
                   label={t['sharePurchaseSourceofFund']}
                   options={sourceOfFundsList.map((source) => ({
                     label: source,
                     value: source,
                   }))}
-                />
+                /> */}
+                <FormInput name="bankVoucher.sourceOfFund" label={t['sharePurchaseSourceofFund']} />
               </GridItem>
               <GridItem colSpan={1}>
                 <FormFileInput name="bankVoucher.fileUpload" label={t['sharePurchaseFileUpload']} />
@@ -147,14 +147,15 @@ export const SharePurchasePayment = ({
           <GridItem colSpan={3}>
             <Grid mt="s16" templateColumns="repeat(2,1fr)" gap="s20">
               <GridItem colSpan={1}>
-                <FormSelect
+                {/* <FormSelect
                   name="cash.sourceOfFund"
                   label={t['sharePurchaseSourceofFund']}
                   options={sourceOfFundsList.map((source) => ({
                     label: source,
                     value: source,
                   }))}
-                />
+                /> */}
+                <FormInput name="cash.sourceOfFund" label={t['sharePurchaseSourceofFund']} />
               </GridItem>
               <GridItem colSpan={1}>
                 <FormFileInput name="cash.fileUpload" label={t['sharePurchaseFileUpload']} />

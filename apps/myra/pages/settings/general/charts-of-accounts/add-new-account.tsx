@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { useQueryClient } from 'react-query';
@@ -12,12 +12,7 @@ import {
   useGetCoaFullViewQuery,
 } from '@coop/cbs/data-access';
 import { SettingsLayout } from '@coop/cbs/settings/ui-layout';
-import {
-  FormAccountInput,
-  FormInput,
-  FormSelect,
-  FormSwitchTab,
-} from '@coop/shared/form';
+import { FormAccountInput, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
   asyncToast,
   Box,
@@ -45,7 +40,7 @@ const getNewAccountCode = (coaFullViewData: FullViewData[], under: string) => {
   const foundAccount = coaFullViewData?.find((d) => d.under === under);
 
   if (!foundAccount) {
-    return `${under  }.1`;
+    return `${under}.1`;
   }
 
   const childAccount =
@@ -64,7 +59,7 @@ const getNewAccountCode = (coaFullViewData: FullViewData[], under: string) => {
   const accountCodeArray = accountCode.split('.');
   const lastCode = accountCodeArray.pop();
 
-  return `${accountCodeArray.join('.')  }.${  Number(lastCode[0]) + 1}`;
+  return `${accountCodeArray.join('.')}.${Number(lastCode[0]) + 1}`;
 };
 
 const AddNewAccount = () => {
@@ -107,18 +102,14 @@ const AddNewAccount = () => {
   const { mutateAsync: addNewAccount } = useAddNewAccountInCoaMutation();
   const { data: coaFullView } = useGetCoaFullViewQuery();
 
-  const underAccounts =
-    coaFullView?.settings?.chartsOfAccount.fullView.data?.map((d) => ({
-      label: d.name.en,
-      value: d.accountCode,
-    }));
+  const underAccounts = coaFullView?.settings?.chartsOfAccount.fullView.data?.map((d) => ({
+    label: d.name.en,
+    value: d.accountCode,
+  }));
 
   const coaFullViewData = coaFullView?.settings?.chartsOfAccount.fullView.data;
 
-  const newCode = getNewAccountCode(
-    coaFullViewData,
-    router.query['under'] as string
-  );
+  const newCode = getNewAccountCode(coaFullViewData, router.query['under'] as string);
 
   useEffect(() => {
     methods.reset({
@@ -140,13 +131,7 @@ const AddNewAccount = () => {
     <>
       {/* <Form<AddCoaAccountInput> methods={methods}> */}
       <form>
-        <Container
-          minW="container.lg"
-          height="fit-content"
-          p="0"
-          pb="55px"
-          background="gray.0"
-        >
+        <Container minW="container.lg" height="fit-content" p="0" pb="55px" background="gray.0">
           <FormProvider {...methods}>
             <form>
               <Box
@@ -166,11 +151,7 @@ const AddNewAccount = () => {
                   {t['settingsCoaAddNewAccount']}
                 </Text>
                 <Box>
-                  <CloseIcon
-                    cursor="pointer"
-                    onClick={() => router.back()}
-                    color="#91979F"
-                  />
+                  <CloseIcon cursor="pointer" onClick={() => router.back()} color="#91979F" />
                 </Box>
               </Box>
 
@@ -185,11 +166,7 @@ const AddNewAccount = () => {
               >
                 <Grid gap={5} templateColumns="repeat(3,1fr)">
                   <GridItem colSpan={2}>
-                    <FormInput
-                      type="text"
-                      name="name"
-                      label={t['settingsCoaAccountName']}
-                    />
+                    <FormInput type="text" name="name" label={t['settingsCoaAccountName']} />
                   </GridItem>
                   <GridItem>
                     <FormSelect
@@ -311,19 +288,13 @@ const AddNewAccount = () => {
 
                   {accountType === CoaTypesOfAccount.Journal && (
                     <GridItem>
-                      <FormInput
-                        name="journalCode"
-                        label={t['settingsCoaJournalCode']}
-                      />
+                      <FormInput name="journalCode" label={t['settingsCoaJournalCode']} />
                     </GridItem>
                   )}
 
                   {accountType === CoaTypesOfAccount.Bank && (
                     <GridItem>
-                      <FormInput
-                        name="bankGLCode"
-                        label={t['settingsCoaBankGLCode']}
-                      />
+                      <FormInput name="bankGLCode" label={t['settingsCoaBankGLCode']} />
                     </GridItem>
                   )}
                 </Grid>
@@ -365,19 +336,12 @@ const AddNewAccount = () => {
                   </Box>
 
                   <Box justifySelf="flex-end">
-                    <FormSwitchTab
-                      name="isApplicableToAllBranches"
-                      options={list}
-                    />
+                    <FormSwitchTab name="isApplicableToAllBranches" options={list} />
                   </Box>
                 </Box>
 
                 <Divider />
-                <Box
-                  display="grid"
-                  gridTemplateColumns="repeat(2, 2fr)"
-                  gap={5}
-                >
+                <Box display="grid" gridTemplateColumns="repeat(2, 2fr)" gap={5}>
                   <Box>
                     <Text color="Gray.700" fontWeight="medium" fontSize="s3">
                       {t['settingsCoaBSAccount']}
@@ -385,19 +349,12 @@ const AddNewAccount = () => {
                   </Box>
 
                   <Box justifySelf="flex-end">
-                    <FormSwitchTab
-                      name="isBalanceSheetAccount"
-                      options={list}
-                    />
+                    <FormSwitchTab name="isBalanceSheetAccount" options={list} />
                   </Box>
                 </Box>
 
                 <Divider />
-                <Box
-                  display="grid"
-                  gridTemplateColumns="repeat(2, 2fr)"
-                  gap={5}
-                >
+                <Box display="grid" gridTemplateColumns="repeat(2, 2fr)" gap={5}>
                   <Box>
                     <Text color="Gray.700" fontWeight="medium" fontSize="s3">
                       {t['settingsCoaSummationAccount']}
@@ -410,11 +367,7 @@ const AddNewAccount = () => {
                 </Box>
 
                 <Divider />
-                <Box
-                  display="grid"
-                  gridTemplateColumns="repeat(2, 2fr)"
-                  gap={5}
-                >
+                <Box display="grid" gridTemplateColumns="repeat(2, 2fr)" gap={5}>
                   <Box>
                     <Text color="Gray.700" fontWeight="medium" fontSize="s3">
                       {t['settingsCoaIBTAC']}
@@ -427,11 +380,7 @@ const AddNewAccount = () => {
                 </Box>
 
                 <Divider />
-                <Box
-                  display="grid"
-                  gridTemplateColumns="repeat(2, 2fr)"
-                  gap={5}
-                >
+                <Box display="grid" gridTemplateColumns="repeat(2, 2fr)" gap={5}>
                   <Box>
                     <Text color="Gray.700" fontWeight="medium" fontSize="s3">
                       {t['settingsCoaIntransitAC']}
@@ -444,11 +393,7 @@ const AddNewAccount = () => {
                 </Box>
 
                 <Divider />
-                <Box
-                  display="grid"
-                  gridTemplateColumns="repeat(2, 2fr)"
-                  gap={5}
-                >
+                <Box display="grid" gridTemplateColumns="repeat(2, 2fr)" gap={5}>
                   <Box>
                     <Text color="Gray.700" fontWeight="medium" fontSize="s3">
                       {t['settingsCoaPLAccount']}
@@ -456,19 +401,12 @@ const AddNewAccount = () => {
                   </Box>
 
                   <Box justifySelf="flex-end">
-                    <FormSwitchTab
-                      name="isProfitAndLossAccount"
-                      options={list}
-                    />
+                    <FormSwitchTab name="isProfitAndLossAccount" options={list} />
                   </Box>
                 </Box>
 
                 <Divider />
-                <Box
-                  display="grid"
-                  gridTemplateColumns="repeat(2, 2fr)"
-                  gap={5}
-                >
+                <Box display="grid" gridTemplateColumns="repeat(2, 2fr)" gap={5}>
                   <Box display="flex" flexDirection="column" gap="0">
                     <Text color="Gray.700" fontWeight="medium" fontSize="s3">
                       {t['settingsCoaAllowFreeEntry']}
@@ -484,11 +422,7 @@ const AddNewAccount = () => {
                 </Box>
 
                 <Divider />
-                <Box
-                  display="grid"
-                  gridTemplateColumns="repeat(2, 2fr)"
-                  gap={5}
-                >
+                <Box display="grid" gridTemplateColumns="repeat(2, 2fr)" gap={5}>
                   <Box>
                     <Text color="Gray.700" fontWeight="medium" fontSize="s3">
                       {t['settingsCoaAllowTransaction']}
@@ -512,12 +446,7 @@ const AddNewAccount = () => {
               draftButton={
                 <Button type="submit" variant="ghost" shade="neutral">
                   <Icon as={BiSave} />
-                  <Text
-                    alignSelf="center"
-                    fontWeight="Medium"
-                    fontSize="s2"
-                    ml="5px"
-                  >
+                  <Text alignSelf="center" fontWeight="Medium" fontSize="s2" ml="5px">
                     {t['saveDraft']}
                   </Text>
                 </Button>
