@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
-import { formatAddress } from '@coop/cbs/utils';
+import { formatTableAddress } from '@coop/cbs/utils';
 import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, PageHeader, Text } from '@coop/shared/ui';
@@ -67,23 +67,29 @@ export const MemberListPage = () => {
         ),
 
         meta: {
-          width: '60%',
+          width: '400px',
         },
       },
       {
         header: t['memberListTableAddress'],
-        accessorFn: (row) => formatAddress(row?.node?.address),
+        accessorFn: (row) => formatTableAddress(row?.node?.address),
+        meta: {
+          width: '220px',
+        },
       },
       {
         header: t['memberListTablePhoneNo'],
         accessorFn: (row) => row?.node?.contact,
         meta: {
-          width: '30%',
+          width: '120px',
         },
       },
       {
         header: t['memberListDateJoined'],
         accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
+        meta: {
+          width: '100px',
+        },
       },
       {
         id: '_actions',
