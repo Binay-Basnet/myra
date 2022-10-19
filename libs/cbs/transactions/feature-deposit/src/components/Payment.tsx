@@ -30,14 +30,14 @@ import {
 import { Box, FormAccountSelect, FormMemberSelect, Grid, GridItem, Text } from '@coop/shared/ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
-const sourceOfFundsList = [
-  'Personal Savings',
-  'Share Sales',
-  'Dividends',
-  'Property Sales',
-  'Inheritances',
-  'Compensation',
-];
+// const sourceOfFundsList = [
+//   'Personal Savings',
+//   'Share Sales',
+//   'Dividends',
+//   'Property Sales',
+//   'Inheritances',
+//   'Compensation',
+// ];
 
 // const denominationsOptions = [
 //   { label: '1000x', value: CashValue.Cash_1000 },
@@ -353,14 +353,15 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
 
       <BoxContainer>
         <Grid templateColumns="repeat(2, 1fr)" columnGap="s20">
-          <FormSelect
+          {/* <FormSelect
             name="sourceOfFund"
             label={t['depositPaymentSourceOfFund']}
             options={sourceOfFundsList.map((source) => ({
               label: source,
               value: source,
             }))}
-          />
+          /> */}
+          <FormInput name="sourceOfFund" label={t['depositPaymentSourceOfFund']} />
 
           <FormFileInput size="md" label={t['depositPaymentFileUpload']} name="doc_identifiers" />
         </Grid>
