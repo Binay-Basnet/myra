@@ -247,21 +247,7 @@ export const CbsSettingsFeatureValuatorAdd = () => {
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.lg" p="0" height="fit-content">
-            <FormFooter
-              status={
-                <Box display="flex" gap="s8">
-                  <Text as="i" fontSize="r1">
-                    {t['formDetails']}
-                  </Text>
-                  <Text as="i" fontSize="r1">
-                    09:41 AM
-                  </Text>
-                </Box>
-              }
-              draftButton={null}
-              mainButtonHandler={handleSave}
-              mainButtonLabel="Save"
-            />
+            <FormFooter draftButton={null} mainButtonHandler={handleSave} mainButtonLabel="Save" />
           </Container>
         </Box>
       </Box>
