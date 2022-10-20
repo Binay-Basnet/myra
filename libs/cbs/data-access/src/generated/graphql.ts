@@ -122,12 +122,13 @@ export type AccountMinimal = {
 };
 
 export type AccountMinimalResult = {
-  accountProductIds?: Maybe<Scalars['Map']>;
+  accountIds?: Maybe<Array<Maybe<Scalars['String']>>>;
   accounts?: Maybe<Array<Maybe<AccountMinimal>>>;
   recentTransactions?: Maybe<EbankingTransactionConnection>;
 };
 
 export type AccountMinimalResultRecentTransactionsArgs = {
+  filter?: InputMaybe<EbankingTransactionFilter>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -1779,6 +1780,11 @@ export enum DashboardTodayType {
   Withdraws = 'WITHDRAWS',
 }
 
+export type DateFilter = {
+  from?: InputMaybe<Scalars['String']>;
+  to?: InputMaybe<Scalars['String']>;
+};
+
 export enum DateType {
   Ad = 'AD',
   Bs = 'BS',
@@ -3371,6 +3377,7 @@ export type EbankingAccount = {
 };
 
 export type EbankingAccountTransactionsArgs = {
+  filter?: InputMaybe<EbankingTransactionFilter>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -3520,6 +3527,11 @@ export type EbankingTransactionConnection = {
   totalCount?: Maybe<Scalars['Int']>;
 };
 
+export enum EbankingTransactionCrOrDr {
+  Credit = 'CREDIT',
+  Debit = 'DEBIT',
+}
+
 export enum EbankingTransactionDirection {
   Incoming = 'INCOMING',
   Outgoing = 'OUTGOING',
@@ -3528,6 +3540,12 @@ export enum EbankingTransactionDirection {
 export type EbankingTransactionEdge = {
   cursor: Scalars['String'];
   node: EbankingTransaction;
+};
+
+export type EbankingTransactionFilter = {
+  accounts?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  date?: InputMaybe<DateFilter>;
+  transactionDirection?: InputMaybe<EbankingTransactionCrOrDr>;
 };
 
 export enum EbankingTransactionType {
@@ -7723,6 +7741,7 @@ export type MemberBasicInfoView = {
   maritalStatusId?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
   memberJoined?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
   mothersName?: Maybe<Scalars['String']>;
   profilePic?: Maybe<Scalars['String']>;
 };
@@ -7888,8 +7907,13 @@ export type MemberRecentTransactionView = {
   date?: Maybe<Scalars['String']>;
   noOfShares?: Maybe<Scalars['Int']>;
   title?: Maybe<Scalars['String']>;
-  txnType?: Maybe<Scalars['String']>;
+  txnType?: Maybe<MemberRecentTransactionViewTxnType>;
 };
+
+export enum MemberRecentTransactionViewTxnType {
+  Credit = 'CREDIT',
+  Debit = 'DEBIT',
+}
 
 export type MemberRiskData = {
   generalRisk?: Maybe<Scalars['Int']>;
@@ -12340,7 +12364,13 @@ export type GetMeQuery = {
   auth: {
     me: {
       data?: {
-        user?: { id: string; username: string; email?: string | null } | null;
+        user?: {
+          id: string;
+          username: string;
+          email?: string | null;
+          firstName: Record<'local' | 'en' | 'np', string>;
+          lastName: Record<'local' | 'en' | 'np', string>;
+        } | null;
         preference?: {
           language?: Language | null;
           languageCode?: string | null;
@@ -14433,7 +14463,7 @@ export type GetMemberDetailsOverviewQuery = {
           recentTransactions?: Array<{
             date?: string | null;
             title?: string | null;
-            txnType?: string | null;
+            txnType?: MemberRecentTransactionViewTxnType | null;
             amount?: string | null;
             noOfShares?: number | null;
           } | null> | null;
@@ -19755,6 +19785,8 @@ export const GetMeDocument = `
           id
           username
           email
+          firstName
+          lastName
         }
         preference {
           language

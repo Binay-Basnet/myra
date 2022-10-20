@@ -48,7 +48,7 @@ const errorText = (type) => {
     default:
       return (
         <Text fontSize="s2" color="red">
-          Password must have 1 lowercase, 1 uppercase and 1 special character
+          Password must have 1 lowercase, 1 uppercase, 1 number and 1 special character
         </Text>
       );
   }

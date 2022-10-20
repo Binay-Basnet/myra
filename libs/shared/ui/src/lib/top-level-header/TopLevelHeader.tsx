@@ -107,7 +107,8 @@ export const TopLevelHeader = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { mutateAsync } = useSetPreferenceMutation();
-  const userId = useAppSelector((state) => state?.auth?.user?.id);
+  const user = useAppSelector((state) => state?.auth?.user);
+  const userId = user?.id;
 
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
 
@@ -509,7 +510,7 @@ export const TopLevelHeader = () => {
                             justifyContent="space-between"
                           >
                             <Text fontWeight="SemiBold" fontSize="s2" color="primary.500">
-                              Anish Bhusal
+                              {user?.firstName?.local} {user?.lastName?.local}
                             </Text>
                             <Text fontWeight="Regular" fontSize="s2" color="gray.600">
                               Teller

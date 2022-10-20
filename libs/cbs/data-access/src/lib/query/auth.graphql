@@ -6,6 +6,8 @@ query getMe {
           id
           username
           email
+          firstName
+          lastName
         }
         preference {
           language
