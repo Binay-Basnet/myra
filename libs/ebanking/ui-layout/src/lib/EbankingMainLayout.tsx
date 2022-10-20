@@ -14,10 +14,11 @@ export const EbankingMainLayout = ({ children }: IEbankingMainLayoutProps) => (
   <>
     <EbankingHeader />
 
-    <Box w="80%" h="100%" display="flex" mx="auto">
+    <Box w={{ '2xl': '80%', xl: '90%', lg: '95%' }} h="100%" display="flex" mx="auto">
       <Box w="18.5%" position="sticky" top="60px" h="100%" py="s32" flexShrink={0}>
         <EbankingSidebar />
       </Box>
+
       <Box borderX="1px" borderColor="gray.200" px="s16" py="s32" width="100%">
         {children}
       </Box>

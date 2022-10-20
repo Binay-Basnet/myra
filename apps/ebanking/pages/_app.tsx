@@ -38,8 +38,8 @@ const queryClient = new QueryClient({
 });
 
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
-  const { isLoading: coopLoading } = useCoopInit();
   const { isLoading: loading } = useInit();
+  const { isLoading: coopLoading } = useCoopInit({ isMeEnabled: !loading });
 
   const getLayout = Component.getLayout || ((page) => page);
 

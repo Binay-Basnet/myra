@@ -2070,6 +2070,11 @@ export type DepositLoanAccountInput = {
   tenureNumber?: InputMaybe<Scalars['Int']>;
 };
 
+export type DepositLoanAccountListResult = {
+  data?: Maybe<Array<Maybe<DepositLoanAccount>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type DepositLoanAccountMutation = {
   add?: Maybe<DepositLoanAccountResult>;
   close?: Maybe<DepositAccountCloseResult>;
@@ -2095,6 +2100,7 @@ export type DepositLoanAccountQuery = {
   get?: Maybe<DepositLoanAccount>;
   getInstallments?: Maybe<InstallmentResult>;
   list?: Maybe<DepositLoanAccountConnection>;
+  listDefaultAccounts?: Maybe<DepositLoanAccountListResult>;
   listMinors?: Maybe<KymIndFamilyMemberQueryResult>;
 };
 
@@ -2117,6 +2123,11 @@ export type DepositLoanAccountQueryGetInstallmentsArgs = {
 export type DepositLoanAccountQueryListArgs = {
   filter?: InputMaybe<DepositLoanAccountSearchFilter>;
   paginate?: InputMaybe<Pagination>;
+};
+
+export type DepositLoanAccountQueryListDefaultAccountsArgs = {
+  memberId: Scalars['ID'];
+  productId: Scalars['ID'];
 };
 
 export type DepositLoanAccountQueryListMinorsArgs = {
@@ -2266,6 +2277,17 @@ export type DepositProductFormStateResult = {
   error?: Maybe<QueryError>;
 };
 
+export type DepositProductInactiveData = {
+  id: Scalars['ID'];
+  remarks: Scalars['String'];
+};
+
+export type DepositProductInactiveResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<DepositProductSettingsQuery>;
+  recordId: Scalars['ID'];
+};
+
 export type DepositProductInput = {
   accountCloseCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
   accountType?: InputMaybe<DefaultAccountType>;
@@ -2351,16 +2373,22 @@ export type DepositProductResult = {
 
 export type DepositProductSearchFilter = {
   id?: InputMaybe<Scalars['ID']>;
+  objState?: InputMaybe<DepositProductStatus>;
   query?: InputMaybe<Scalars['String']>;
 };
 
 export type DepositProductSettingsMutation = {
   add?: Maybe<DepositProductResult>;
+  makeInactive?: Maybe<DepositProductInactiveResult>;
 };
 
 export type DepositProductSettingsMutationAddArgs = {
   data?: InputMaybe<DepositProductInput>;
   id: Scalars['ID'];
+};
+
+export type DepositProductSettingsMutationMakeInactiveArgs = {
+  data?: InputMaybe<DepositProductInactiveData>;
 };
 
 export type DepositProductSettingsQuery = {
@@ -2396,6 +2424,11 @@ export type DepositProductSettingsQueryListArgs = {
   filter?: InputMaybe<DepositProductSearchFilter>;
   paginate?: InputMaybe<Pagination>;
 };
+
+export enum DepositProductStatus {
+  Active = 'ACTIVE',
+  Inactive = 'INACTIVE',
+}
 
 export type DepositResult = {
   error?: Maybe<MutationError>;
@@ -3368,9 +3401,17 @@ export type EbankingAuthQuery = {
 };
 
 export type EbankingCooperative = {
+  cooperativeDistrict?: Maybe<Scalars['String']>;
   cooperativeId?: Maybe<Scalars['ID']>;
+  cooperativeLocalGovt?: Maybe<Scalars['String']>;
+  cooperativeName?: Maybe<Scalars['String']>;
+  cooperativeProvince?: Maybe<Scalars['String']>;
+  cooperativeWard?: Maybe<Scalars['Int']>;
   memberId?: Maybe<Scalars['String']>;
   memberMobileNo?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
+  memberProfilePicId?: Maybe<Scalars['String']>;
+  memberProfilePicUrl?: Maybe<Scalars['String']>;
   myraUserId: Scalars['ID'];
 };
 
@@ -6827,7 +6868,6 @@ export type LoanAccountGuranteeResult = {
 };
 
 export type LoanAccountInput = {
-  LoanAccountName?: InputMaybe<Scalars['String']>;
   appliedLoanAmount?: InputMaybe<Scalars['String']>;
   collateralData?: InputMaybe<Array<InputMaybe<LoanAccountCollateralData>>>;
   fingerprintDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -6838,6 +6878,7 @@ export type LoanAccountInput = {
   isCeoAuthority?: InputMaybe<Scalars['Boolean']>;
   justifySanction?: InputMaybe<Scalars['String']>;
   linkedAccountId?: InputMaybe<Scalars['String']>;
+  loanAccountName?: InputMaybe<Scalars['String']>;
   loanProcessingCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
   memberId?: InputMaybe<Scalars['ID']>;
   nomineeDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -7645,6 +7686,16 @@ export type Member = Base & {
   type: KymMemberTypesEnum;
 };
 
+export type MemberAccountData = {
+  depositAccount?: Maybe<Array<Maybe<DepositAccount>>>;
+  loanAccount?: Maybe<Array<Maybe<LoanAccount>>>;
+};
+
+export type MemberAccountResult = {
+  data?: Maybe<MemberAccountData>;
+  error?: Maybe<QueryError>;
+};
+
 export type MemberActiveData = {
   cooperative?: Maybe<Scalars['Boolean']>;
   cooperativeUnion?: Maybe<Scalars['Boolean']>;
@@ -7698,6 +7749,12 @@ export enum MemberIdentityLevel {
   Vip = 'VIP',
 }
 
+export type MemberInactiveResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<KymEntryQuery>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type MemberMutation = {
   cooperative?: Maybe<KymCooperativeMutation>;
   cooperativeUnion?: Maybe<KymCoopUnionMutation>;
@@ -7705,6 +7762,7 @@ export type MemberMutation = {
   generateExcel: Scalars['String'];
   individual?: Maybe<KymIndMutation>;
   institution?: Maybe<KymInsMutation>;
+  makeInactive?: Maybe<MemberInactiveResult>;
   officialUse?: Maybe<OfficialUseResult>;
   /**  id is the ID of member  */
   translate?: Maybe<TranslateData>;
@@ -7729,6 +7787,10 @@ export type MemberMutationIndividualArgs = {
 
 export type MemberMutationInstitutionArgs = {
   id: Scalars['ID'];
+};
+
+export type MemberMutationMakeInactiveArgs = {
+  memberId: Scalars['ID'];
 };
 
 export type MemberMutationOfficialUseArgs = {
@@ -7772,6 +7834,7 @@ export type MemberQuery = {
   cooperativeUnion?: Maybe<KymCoopUnionQuery>;
   details: MemberDetailsResult;
   entry?: Maybe<KymEntryQuery>;
+  getAllAccounts?: Maybe<MemberAccountResult>;
   individual?: Maybe<KymIndQuery>;
   institution?: Maybe<KymInsQuery>;
   list: KymMemberListConnection;
@@ -7788,6 +7851,10 @@ export type MemberQueryDetailsArgs = {
 
 export type MemberQueryEntryArgs = {
   membeId: Scalars['String'];
+};
+
+export type MemberQueryGetAllAccountsArgs = {
+  memberId: Scalars['ID'];
 };
 
 export type MemberQueryIndividualArgs = {
@@ -9112,12 +9179,12 @@ export type ServerError = {
 
 export type ServiceCharge = {
   amount?: Maybe<Scalars['Amount']>;
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
 };
 
 export type ServiceChargeInput = {
-  amount?: InputMaybe<Scalars['Amount']>;
-  name?: InputMaybe<Scalars['String']>;
+  amount: Scalars['Amount'];
+  name: Scalars['String'];
 };
 
 export type ServiceType = {
@@ -11976,7 +12043,7 @@ export type GetAccountOpenEditDataQuery = {
         smsBanking?: boolean | null;
         chequeFacility?: boolean | null;
         agentId?: string | null;
-        serviceCharge?: Array<{ name?: string | null; amount?: any | null } | null> | null;
+        serviceCharge?: Array<{ name: string; amount?: any | null } | null> | null;
       } | null;
     } | null;
   };
@@ -13810,7 +13877,7 @@ export type GetLoanPreviewQuery = {
           disburseDate?: string | null;
           expiryDate?: string | null;
           paymentFrequency?: LoanProductInstallment | null;
-          processingCharges?: Array<{ name?: string | null; amount?: any | null } | null> | null;
+          processingCharges?: Array<{ name: string; amount?: any | null } | null> | null;
         } | null;
         repaymentDetails?: {
           lastPaymentDate?: string | null;
@@ -16116,10 +16183,18 @@ export type LoginToCooperativeMutation = {
           | null;
         record?: {
           data?: {
-            cooperativeId?: string | null;
-            memberId?: string | null;
-            memberMobileNo?: string | null;
             myraUserId: string;
+            cooperativeId?: string | null;
+            cooperativeName?: string | null;
+            cooperativeProvince?: string | null;
+            cooperativeDistrict?: string | null;
+            cooperativeWard?: number | null;
+            cooperativeLocalGovt?: string | null;
+            memberId?: string | null;
+            memberName?: string | null;
+            memberProfilePicId?: string | null;
+            memberProfilePicUrl?: string | null;
+            memberMobileNo?: string | null;
           } | null;
           token: { refresh: string; access: string };
         } | null;
@@ -16136,9 +16211,17 @@ export type GetCoopMeQuery = {
       meCooperativeUser?: {
         data?: {
           myraUserId: string;
-          memberMobileNo?: string | null;
           cooperativeId?: string | null;
+          cooperativeName?: string | null;
+          cooperativeProvince?: string | null;
+          cooperativeDistrict?: string | null;
+          cooperativeWard?: number | null;
+          cooperativeLocalGovt?: string | null;
           memberId?: string | null;
+          memberName?: string | null;
+          memberProfilePicId?: string | null;
+          memberProfilePicUrl?: string | null;
+          memberMobileNo?: string | null;
         } | null;
       } | null;
     } | null;
@@ -25363,10 +25446,18 @@ export const LoginToCooperativeDocument = `
         }
         record {
           data {
-            cooperativeId
-            memberId
-            memberMobileNo
             myraUserId
+            cooperativeId
+            cooperativeName
+            cooperativeProvince
+            cooperativeDistrict
+            cooperativeWard
+            cooperativeLocalGovt
+            memberId
+            memberName
+            memberProfilePicId
+            memberProfilePicUrl
+            memberMobileNo
           }
           token {
             refresh
@@ -25400,9 +25491,17 @@ export const GetCoopMeDocument = `
       meCooperativeUser {
         data {
           myraUserId
-          memberMobileNo
           cooperativeId
+          cooperativeName
+          cooperativeProvince
+          cooperativeDistrict
+          cooperativeWard
+          cooperativeLocalGovt
           memberId
+          memberName
+          memberProfilePicId
+          memberProfilePicUrl
+          memberMobileNo
         }
       }
     }

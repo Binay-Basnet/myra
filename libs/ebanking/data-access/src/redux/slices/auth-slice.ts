@@ -83,6 +83,7 @@ export const authSlice = createSlice({
     },
 
     switchCooperative: (state, action: PayloadAction<CoopAuthenticatePayload>) => {
+      // localStorage.removeItem('coop-refreshToken');
       state.cooperative.token = action.payload.token;
       state.cooperative.user = action.payload.user;
       state.cooperative.isLogged = true;

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import { EBankingTokenType } from '@coop/ebanking/data-access';
@@ -17,6 +18,7 @@ export const useAxios = <TData, TVariables>(
   ) {
     url = window.localStorage.getItem('url') || process.env['NX_SCHEMA_PATH'];
   }
+  const router = useRouter();
 
   const auth = useAppSelector((state: RootState) => state?.auth);
 
@@ -28,7 +30,13 @@ export const useAxios = <TData, TVariables>(
   );
 
   return async (variables?: TVariables, config?: AxiosRequestConfig<TData>) => {
-    if (coopToken) {
+    if (
+      coopToken &&
+      !router.pathname.includes('setup') &&
+      !router.pathname.includes('login') &&
+      !router.pathname.includes('sign-up') &&
+      !router.pathname.includes('switch')
+    ) {
       const headers = {
         Authorization: `Bearer ${coopToken}`,
       };
