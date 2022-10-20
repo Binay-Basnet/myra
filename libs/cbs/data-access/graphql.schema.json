@@ -85391,6 +85391,18 @@
         "description": null,
         "fields": [
           {
+            "name": "branch",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Branch",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "contact",
             "description": null,
             "args": [],
@@ -85570,6 +85582,30 @@
                 "name": "Organization",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "profilePic",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "role",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "Roles",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -86213,7 +86249,7 @@
             "args": [],
             "type": {
               "kind": "UNION",
-              "name": "UtilityPaymentError",
+              "name": "MutationError",
               "ofType": null
             },
             "isDeprecated": false,

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import { login, setPreference, useAppDispatch, useLoginMutation } from '@coop/cbs/data-access';
 import {
+  asyncToast,
   Box,
   Button,
   Checkbox,
@@ -23,18 +24,26 @@ export const Login = () => {
 
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = (data) => {
-    mutateAsync({ data }).then((res) => {
-      if (res?.auth?.login?.recordId === null) {
-        return;
-      }
-      const accessToken = res?.auth?.login?.record?.token?.access;
-      const refreshToken = res?.auth?.login?.record?.token?.refresh;
-      const user = res?.auth?.login?.record?.data?.user;
-      dispatch(login({ user, token: accessToken }));
-      dispatch(setPreference({ preference: res?.auth?.login?.record?.data?.preference }));
-      localStorage.setItem('refreshToken', refreshToken);
-      replace('/');
+  const onSubmit = async (data) => {
+    await asyncToast({
+      id: 'login',
+      msgs: {
+        success: 'Logged in Successfully!!',
+        loading: 'Logging in!!',
+      },
+      onSuccess: (res) => {
+        if (res?.auth?.login?.recordId === null) {
+          return;
+        }
+        const accessToken = res?.auth?.login?.record?.token?.access;
+        const refreshToken = res?.auth?.login?.record?.token?.refresh;
+        const user = res?.auth?.login?.record?.data?.user;
+        dispatch(login({ user, token: accessToken }));
+        dispatch(setPreference({ preference: res?.auth?.login?.record?.data?.preference }));
+        localStorage.setItem('refreshToken', refreshToken);
+        replace('/');
+      },
+      promise: mutateAsync({ data }),
     });
   };
 

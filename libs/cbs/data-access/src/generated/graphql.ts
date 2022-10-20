@@ -9973,6 +9973,7 @@ export type UploadedDocumentData = {
 };
 
 export type User = Base & {
+  branch?: Maybe<Branch>;
   contact?: Maybe<Scalars['String']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
@@ -9985,6 +9986,8 @@ export type User = Base & {
   modifiedBy: Identity;
   objState: ObjState;
   organization: Organization;
+  profilePic?: Maybe<Scalars['String']>;
+  role?: Maybe<Roles>;
   username: Scalars['String'];
 };
 
@@ -10081,7 +10084,7 @@ export type UtilityPaymentRecord = {
 };
 
 export type UtilityPaymentResult = {
-  error?: Maybe<UtilityPaymentError>;
+  error?: Maybe<MutationError>;
   record?: Maybe<UtilityPaymentRecord>;
   transactionID?: Maybe<Scalars['ID']>;
 };
