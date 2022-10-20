@@ -58,7 +58,7 @@ export const MemberDetails = () => {
   const memberShareDetails =
     memberDetails?.data?.members?.memberOverview?.data?.overview?.statistics;
   const memberPaymentUp = memberPayment?.map((data, index) => ({
-    sn: index,
+    sn: Number(index) + 1,
     date: data?.date,
     accountName: data?.accountName,
     paymentType: data?.paymentType,

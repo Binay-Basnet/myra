@@ -393,6 +393,7 @@ export const AddWithdraw = () => {
                 mode === 0 ? t['addWithdrawProceedToPayment'] : t['addWithdrawSubmit']
               }
               mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
+              isMainButtonDisabled={mode === 0 && !accountId}
             />
           </Container>
         </Box>

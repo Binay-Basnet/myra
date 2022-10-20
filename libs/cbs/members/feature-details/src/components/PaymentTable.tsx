@@ -27,9 +27,6 @@ export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) =
       {
         header: 'Date',
         accessorKey: 'date',
-        meta: {
-          width: '20%',
-        },
       },
       {
         header: 'Account Name',
@@ -41,7 +38,6 @@ export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) =
       {
         header: 'Payment Type',
         accessorKey: 'paymentType',
-        // cell: (props) => <Tags type="chip" label={props} />,
         meta: {
           width: '30%',
         },

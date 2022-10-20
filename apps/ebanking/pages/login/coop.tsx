@@ -14,6 +14,7 @@ import { Avatar, Box, Button, Input, Text, TextFields } from '@coop/shared/ui';
 const CoopSelectPage = () => {
   const methods = useForm();
   const router = useRouter();
+
   const dispatch = useDispatch();
 
   const cooperativesList = useAppSelector((state) => state?.auth?.user?.cooperatives);
@@ -53,7 +54,7 @@ const CoopSelectPage = () => {
       }
       localStorage.setItem('coop-refreshToken', String(refreshToken));
 
-      router.replace('/');
+      router.replace('/home');
     }
   };
 

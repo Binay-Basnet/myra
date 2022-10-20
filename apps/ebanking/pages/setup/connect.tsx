@@ -2,10 +2,12 @@ import { ReactElement } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineMobile } from 'react-icons/ai';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
 import {
+  logoutCooperative,
   switchCooperative,
   useAppDispatch,
   useCheckAccountMutation,
@@ -20,6 +22,7 @@ const SetupConnectPage = () => {
   const router = useRouter();
   const { isOpen, onClose, onToggle } = useDisclosure();
   const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
 
   //   const user = useAppSelector((state) => state.auth?.user);
   const methods = useForm<{ id: string; mobileNumber: string; otp: string; pin?: number }>();
@@ -36,12 +39,17 @@ const SetupConnectPage = () => {
           pinCode: methods.getValues().pin as number,
           mobileNumber: methods.getValues().mobileNumber,
         });
+
+        dispatch(logoutCooperative());
+        queryClient.refetchQueries('getMyraMe');
+
         const tokens = coopResponse.eBanking.auth.loginToCooperative.record;
         const accessToken = tokens.token.access;
         const refreshToken = tokens.token.refresh;
 
         if (accessToken) {
           dispatch(switchCooperative({ token: accessToken, user: tokens.data }));
+          // queryClient.invalidateQueries('getMyraMe');
         }
         localStorage.setItem('coop-refreshToken', String(refreshToken));
         onToggle();
@@ -136,7 +144,8 @@ const SetupConnectPage = () => {
           </Text>
           <Button
             onClick={() => {
-              router.push('/home');
+              queryClient.resetQueries();
+              router.replace('/home');
               onClose();
             }}
           >

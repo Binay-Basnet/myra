@@ -131,10 +131,18 @@ mutation loginToCooperative($cooperativeId: ID!, $pinCode: Int, $mobileNumber: S
         }
         record {
           data {
-            cooperativeId
-            memberId
-            memberMobileNo
             myraUserId
+            cooperativeId
+            cooperativeName
+            cooperativeProvince
+            cooperativeDistrict
+            cooperativeWard
+            cooperativeLocalGovt
+            memberId
+            memberName
+            memberProfilePicId
+            memberProfilePicUrl
+            memberMobileNo
           }
           token {
             refresh
@@ -152,9 +160,17 @@ query getCoopMe {
       meCooperativeUser {
         data {
           myraUserId
-          memberMobileNo
           cooperativeId
+          cooperativeName
+          cooperativeProvince
+          cooperativeDistrict
+          cooperativeWard
+          cooperativeLocalGovt
           memberId
+          memberName
+          memberProfilePicId
+          memberProfilePicUrl
+          memberMobileNo
         }
       }
     }

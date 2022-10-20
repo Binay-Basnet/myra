@@ -14,7 +14,11 @@ import { useReplace } from '@coop/shared/utils';
 
 const url = process.env['NX_SCHEMA_PATH'] ?? '';
 
-export const useCoopInit = () => {
+interface IUseCoopInitProps {
+  isMeEnabled: boolean;
+}
+
+export const useCoopInit = ({ isMeEnabled }: IUseCoopInitProps) => {
   const [triggerQuery, setTriggerQuery] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
 
@@ -29,7 +33,8 @@ export const useCoopInit = () => {
   const getMe = useGetCoopMeQuery(
     {},
     {
-      enabled: triggerQuery,
+      enabled: isMeEnabled && triggerQuery,
+      onSuccess: () => setTriggerQuery(false),
     }
   );
 
