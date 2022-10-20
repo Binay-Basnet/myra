@@ -14,7 +14,7 @@ import {
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { FormTextArea } from '@coop/shared/form';
 import { Column, Table } from '@coop/shared/table';
-import { asyncToast, ChakraModal, PageHeader } from '@coop/shared/ui';
+import { asyncToast, Box, ChakraModal, PageHeader } from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const DEPOSIT_TAB_ITEMS = [
@@ -179,15 +179,17 @@ export const DepositProductTable = ({ addNew }: DepositTableProps) => {
         button={addNew}
         buttonTitle={t['settingsDepositProductNew']}
       />
-      <Table
-        isLoading={isLoading}
-        data={rowData}
-        columns={columns}
-        pagination={{
-          total: data?.settings?.general?.depositProduct?.list?.totalCount ?? 'Many',
-          pageInfo: data?.settings?.general?.depositProduct?.list?.pageInfo,
-        }}
-      />
+      <Box mt="60px">
+        <Table
+          isLoading={isLoading}
+          data={rowData}
+          columns={columns}
+          pagination={{
+            total: data?.settings?.general?.depositProduct?.list?.totalCount ?? 'Many',
+            pageInfo: data?.settings?.general?.depositProduct?.list?.pageInfo,
+          }}
+        />
+      </Box>
       <ChakraModal
         open={openModal}
         onClose={onCloseModal}
