@@ -53,6 +53,7 @@ export const SignUpHomePage = ({ setStatus }: ISignUpHomePage) => {
       })}
     >
       <AuthContainer
+        showGoBack
         title="Sign up to Myra"
         subtitle="Please enter your phone number below to get started."
       >

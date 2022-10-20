@@ -197,7 +197,7 @@ export const EbankingHomePage = () => {
                 <TransactionCard
                   accountName={
                     accountList?.eBanking?.account?.list?.accounts?.find(
-                      (account) => account?.id === transaction?.node?.id
+                      (account) => account?.id === transaction?.node?.accountId
                     )?.name as string
                   }
                   transaction={transaction?.node}

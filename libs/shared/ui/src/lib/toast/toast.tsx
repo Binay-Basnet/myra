@@ -44,7 +44,7 @@ type MutationError =
   | ServerError
   | ValidationError;
 
-const getError = (error: MutationError) => {
+export const getError = (error: MutationError) => {
   switch (error.__typename) {
     case 'ValidationError':
       return error.validationErrorMsg;

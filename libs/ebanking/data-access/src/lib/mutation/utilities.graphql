@@ -1,0 +1,21 @@
+mutation accountTransfer($data: EbankingAccountTransferInput) {
+  eBanking {
+    webUtilityPayments {
+      accountTransfer(data: $data) {
+        record {
+          amount
+          destinationAccount
+          remarks
+          sourceAccount
+          transactionCode
+          transactionDate
+        }
+        recordId
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

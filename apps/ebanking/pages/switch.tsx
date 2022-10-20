@@ -4,6 +4,7 @@ import { useQueryClient } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 
+import { GoBack } from '@coop/ebanking/components';
 import {
   logoutCooperative,
   switchCooperative,
@@ -11,7 +12,7 @@ import {
   useLoginToCooperativeMutation,
 } from '@coop/ebanking/data-access';
 import { EbankingHeaderLayout } from '@coop/ebanking/ui-layout';
-import { Box, Button, Input, Text, TextFields } from '@coop/shared/ui';
+import { Box, Button, PasswordInput, Text, TextFields } from '@coop/shared/ui';
 
 const Switch = () => {
   const methods = useForm();
@@ -65,27 +66,42 @@ const Switch = () => {
 
   return (
     <FormProvider {...methods}>
-      {' '}
-      <Box display="flex" flexDir="column" gap="s16">
-        <Text fontSize="r3" color="primary.500" fontWeight="600">
-          COOP Login Pin
-        </Text>
-        <TextFields variant="bodyRegular" color="gray.700">
-          Enter 4-digit pin to continue with login page
-        </TextFields>
+      <Box alignSelf="start">
+        <GoBack />
       </Box>
-      <FormProvider {...methods}>
-        <Box display="flex" flexDir="column" gap="s20">
-          <Input
-            label="Pin"
-            errorText={methods?.formState?.errors?.pin?.message as string}
-            {...methods.register('pin')}
-          />
+
+      <Box as="form" display="flex" flexDir="column" gap="s32">
+        <Box display="flex" flexDir="column" gap="s16">
+          <Text fontSize="r3" color="primary.500" fontWeight="600">
+            COOP Login Pin
+          </Text>
+          <TextFields variant="bodyRegular" color="gray.700">
+            Enter 4-digit pin to continue with login page
+          </TextFields>
         </Box>
-      </FormProvider>
-      <Button width="100%" isDisabled={!newCoopId} onClick={onSubmit} isLoading={isLoading}>
-        Continue
-      </Button>
+        <FormProvider {...methods}>
+          <Box display="flex" flexDir="column" gap="s20">
+            <PasswordInput
+              label="Pin"
+              hideLock
+              placeholder=""
+              errorText={methods?.formState?.errors?.pin?.message as string}
+              {...methods.register('pin', {
+                required: { message: 'Pin Is Required!!', value: true },
+              })}
+            />
+          </Box>
+        </FormProvider>
+        <Button
+          type="submit"
+          width="100%"
+          isDisabled={!newCoopId}
+          onClick={methods.handleSubmit(onSubmit)}
+          isLoading={isLoading}
+        >
+          Continue
+        </Button>
+      </Box>
     </FormProvider>
   );
 };

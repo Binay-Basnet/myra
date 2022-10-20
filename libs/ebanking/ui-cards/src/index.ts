@@ -9,6 +9,7 @@ export * from './lib/EbankingChip';
 export * from './lib/InfoCard';
 export * from './lib/ShareHeaderCard';
 export * from './lib/TransactionCard';
+export * from './lib/TransactionHeaderCard';
 export * from './lib/TransactionHeaderCardWithChip';
 export * from './lib/TransferModal';
 export * from './lib/UtilityHomeCard';

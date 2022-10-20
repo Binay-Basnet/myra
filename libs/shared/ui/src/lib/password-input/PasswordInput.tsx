@@ -79,10 +79,12 @@ export interface PasswordInputProps extends InputProps {
   fieldName?: string;
   validation?: RegisterOptions;
   errorText?: string;
+
+  hideLock?: boolean;
 }
 
 export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((props, ref) => {
-  const { label, register, validation, fieldName, placeholder, ...rest } = props;
+  const { label, register, validation, fieldName, placeholder, hideLock, ...rest } = props;
   const [show, setShow] = useState(false);
   const handleClick = () => {
     setShow(!show);
@@ -94,7 +96,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
       type={show ? 'text' : 'password'}
       label={label ?? 'Password'}
       placeholder={placeholder ?? 'Enter Password'}
-      leftElement={<Icon as={IoLockClosed} color="gray.500" size="sm" />}
+      leftElement={!hideLock && <Icon as={IoLockClosed} color="gray.500" size="sm" />}
       rightElement={
         <Box onClick={handleClick} cursor="pointer" display="flex" alignItems="center">
           <Icon as={show ? IoEyeOffOutline : IoEyeOutline} color="gray.500" />

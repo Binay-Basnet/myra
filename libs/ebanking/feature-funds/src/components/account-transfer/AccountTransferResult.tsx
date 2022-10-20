@@ -1,12 +1,16 @@
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import dayjs from 'dayjs';
 
 import { TransactionHeaderCardWithChip, TransferModal } from '@coop/ebanking/cards';
+import { useAccountTransferMutation, useGetAccountListQuery } from '@coop/ebanking/data-access';
+import { AccountTransferFormType } from '@coop/ebanking/funds';
 import { Box, Button, Icon, Text, TextFields } from '@coop/shared/ui';
 
 import { CardBodyContainer, CardContainer, CardContent, CardHeader } from '../CardContainer';
 
-type PaymentStatus = 'form' | 'review' | 'success' | 'failure';
+type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'loading';
 
 interface AccountTransferResultProps {
   paymentStatus: 'success' | 'failure';
@@ -18,6 +22,17 @@ export const AccountTransferResult = ({
   setPaymentStatus,
 }: AccountTransferResultProps) => {
   const router = useRouter();
+  const { data } = useAccountTransferMutation();
+  const methods = useFormContext<AccountTransferFormType>();
+
+  const { data: accountData } = useGetAccountListQuery({
+    transactionPagination: { after: '', first: 1 },
+  });
+  const accounts = accountData?.eBanking?.account?.list?.accounts?.map((account) => ({
+    label: `${account?.name} - ${account?.accountNumber}`,
+    value: account?.id as string,
+  }));
+  const successResult = data?.eBanking?.webUtilityPayments?.accountTransfer?.record;
 
   return (
     <>
@@ -48,11 +63,11 @@ export const AccountTransferResult = ({
               variant="tableHeader"
               color={paymentStatus === 'success' ? 'primary.500' : 'gray.800'}
             >
-              Rs. 365.44
+              Rs. {Number(methods?.getValues().amount).toFixed(2)}
             </TextFields>
 
             <Text fontSize="s3" fontWeight="400" color="gray.500">
-              2079-01-19 04:20 PM
+              {dayjs(successResult?.transactionDate).format('YYYY-MM-DD hh:mm A')}
             </Text>
           </Box>
         </Box>
@@ -61,11 +76,27 @@ export const AccountTransferResult = ({
           <CardBodyContainer>
             <CardHeader> Transaction Details</CardHeader>
 
-            <CardContent title="Transaction Code" subtitle="Cix3930103" />
-            <CardContent title="Source Account" subtitle="Salary Saving Account - 10101432" />
+            {paymentStatus === 'success' && (
+              <CardContent
+                title="Transaction Code"
+                subtitle={successResult?.transactionCode as string}
+              />
+            )}
+
+            <CardContent
+              title="Source Account"
+              subtitle={
+                accounts?.find((account) => account.value === methods?.getValues().sourceAccount)
+                  ?.label as string
+              }
+            />
             <CardContent
               title="Destination Account"
-              subtitle="Nari Samman Saving Account - 101432"
+              subtitle={
+                accounts?.find(
+                  (account) => account.value === methods?.getValues().destinationAccount
+                )?.label as string
+              }
             />
             <CardContent title="Remarks" subtitle="Personal Use" />
           </CardBodyContainer>
