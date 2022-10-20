@@ -194,8 +194,7 @@ export type AccountTransferListEdges = {
 };
 
 export type AccountTransferPaymentForAccountClose = {
-  depositedBy: Scalars['String'];
-  depositedDate: Scalars['String'];
+  amount: Scalars['String'];
   destination_account: Scalars['ID'];
   note?: InputMaybe<Scalars['String']>;
 };
@@ -1871,25 +1870,29 @@ export type DepositAccount = Base & {
   id: Scalars['ID'];
   installmentAmount?: Maybe<Scalars['String']>;
   interestAccured?: Maybe<Scalars['String']>;
+  interestTax?: Maybe<Scalars['String']>;
   lastTransactionDate?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   objState: ObjState;
   overDrawnBalance?: Maybe<Scalars['String']>;
+  prematurePenalty?: Maybe<Scalars['String']>;
   product: DepositProduct;
 };
 
 export type DepositAccountClose = {
   accountID: Scalars['ID'];
   accountTransfer?: InputMaybe<AccountTransferPaymentForAccountClose>;
+  adjustedInterest?: InputMaybe<Scalars['String']>;
   bankCheque?: InputMaybe<BankChequePaymentForAccountClose>;
   cash?: InputMaybe<DepositCash>;
   memberID: Scalars['ID'];
   notes?: InputMaybe<Scalars['String']>;
   otherReason?: InputMaybe<Scalars['String']>;
-  paymentMode: AccountClosePaymentMode;
+  paymentMode?: InputMaybe<AccountClosePaymentMode>;
   reason: AccountCloseReason;
+  serviceCharge?: InputMaybe<Array<InputMaybe<ServiceChargeInput>>>;
 };
 
 export type DepositAccountCloseResult = {
@@ -2160,6 +2163,7 @@ export enum DepositPaymentType {
 }
 
 export type DepositProduct = Base & {
+  accountClosingCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
   createdDate?: Maybe<Scalars['String']>;
@@ -3408,17 +3412,9 @@ export type EbankingAuthQuery = {
 };
 
 export type EbankingCooperative = {
-  cooperativeDistrict?: Maybe<Scalars['String']>;
   cooperativeId?: Maybe<Scalars['ID']>;
-  cooperativeLocalGovt?: Maybe<Scalars['String']>;
-  cooperativeName?: Maybe<Scalars['String']>;
-  cooperativeProvince?: Maybe<Scalars['String']>;
-  cooperativeWard?: Maybe<Scalars['Int']>;
   memberId?: Maybe<Scalars['String']>;
   memberMobileNo?: Maybe<Scalars['String']>;
-  memberName?: Maybe<Scalars['String']>;
-  memberProfilePicId?: Maybe<Scalars['String']>;
-  memberProfilePicUrl?: Maybe<Scalars['String']>;
   myraUserId: Scalars['ID'];
 };
 
@@ -4289,6 +4285,7 @@ export type HumanizeAuditLog = {
 };
 
 export enum Id_Type {
+  Account = 'ACCOUNT',
   Address = 'ADDRESS',
   Bank = 'BANK',
   Bankbranch = 'BANKBRANCH',
@@ -6886,6 +6883,7 @@ export type LoanAccountGuranteeResult = {
 };
 
 export type LoanAccountInput = {
+  LoanAccountName?: InputMaybe<Scalars['String']>;
   appliedLoanAmount?: InputMaybe<Scalars['String']>;
   collateralData?: InputMaybe<Array<InputMaybe<LoanAccountCollateralData>>>;
   fingerprintDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -6896,7 +6894,6 @@ export type LoanAccountInput = {
   isCeoAuthority?: InputMaybe<Scalars['Boolean']>;
   justifySanction?: InputMaybe<Scalars['String']>;
   linkedAccountId?: InputMaybe<Scalars['String']>;
-  loanAccountName?: InputMaybe<Scalars['String']>;
   loanProcessingCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
   memberId?: InputMaybe<Scalars['ID']>;
   nomineeDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -7704,16 +7701,6 @@ export type Member = Base & {
   type: KymMemberTypesEnum;
 };
 
-export type MemberAccountData = {
-  depositAccount?: Maybe<Array<Maybe<DepositAccount>>>;
-  loanAccount?: Maybe<Array<Maybe<LoanAccount>>>;
-};
-
-export type MemberAccountResult = {
-  data?: Maybe<MemberAccountData>;
-  error?: Maybe<QueryError>;
-};
-
 export type MemberActiveData = {
   cooperative?: Maybe<Scalars['Boolean']>;
   cooperativeUnion?: Maybe<Scalars['Boolean']>;
@@ -7768,12 +7755,6 @@ export enum MemberIdentityLevel {
   Vip = 'VIP',
 }
 
-export type MemberInactiveResult = {
-  error?: Maybe<MutationError>;
-  query?: Maybe<KymEntryQuery>;
-  recordId?: Maybe<Scalars['ID']>;
-};
-
 export type MemberMutation = {
   cooperative?: Maybe<KymCooperativeMutation>;
   cooperativeUnion?: Maybe<KymCoopUnionMutation>;
@@ -7781,7 +7762,6 @@ export type MemberMutation = {
   generateExcel: Scalars['String'];
   individual?: Maybe<KymIndMutation>;
   institution?: Maybe<KymInsMutation>;
-  makeInactive?: Maybe<MemberInactiveResult>;
   officialUse?: Maybe<OfficialUseResult>;
   /**  id is the ID of member  */
   translate?: Maybe<TranslateData>;
@@ -7806,10 +7786,6 @@ export type MemberMutationIndividualArgs = {
 
 export type MemberMutationInstitutionArgs = {
   id: Scalars['ID'];
-};
-
-export type MemberMutationMakeInactiveArgs = {
-  memberId: Scalars['ID'];
 };
 
 export type MemberMutationOfficialUseArgs = {
@@ -7853,7 +7829,6 @@ export type MemberQuery = {
   cooperativeUnion?: Maybe<KymCoopUnionQuery>;
   details: MemberDetailsResult;
   entry?: Maybe<KymEntryQuery>;
-  getAllAccounts?: Maybe<MemberAccountResult>;
   individual?: Maybe<KymIndQuery>;
   institution?: Maybe<KymInsQuery>;
   list: KymMemberListConnection;
@@ -7870,10 +7845,6 @@ export type MemberQueryDetailsArgs = {
 
 export type MemberQueryEntryArgs = {
   membeId: Scalars['String'];
-};
-
-export type MemberQueryGetAllAccountsArgs = {
-  memberId: Scalars['ID'];
 };
 
 export type MemberQueryIndividualArgs = {

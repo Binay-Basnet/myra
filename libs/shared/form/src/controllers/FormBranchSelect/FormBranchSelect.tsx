@@ -19,7 +19,7 @@ export const FormBranchSelect = (props: IFormBranchSelectProps) => {
 
   const [branchId, setBranchId] = useState('');
 
-  const [trigger, setTrigger] = useState(false);
+  // const [trigger, setTrigger] = useState(false);
 
   const { data: branchListQueryData, isFetching } = useGetBranchListQuery(
     {
@@ -35,7 +35,7 @@ export const FormBranchSelect = (props: IFormBranchSelectProps) => {
     },
     {
       staleTime: 0,
-      enabled: trigger,
+      // enabled: trigger,
     }
   );
 
@@ -51,7 +51,7 @@ export const FormBranchSelect = (props: IFormBranchSelectProps) => {
   useEffect(() => {
     if (branch && !branchOptions?.length) {
       setBranchId(branch);
-      setTrigger(true);
+      // setTrigger(true);
     }
   }, [branch, branchOptions]);
 
@@ -63,7 +63,7 @@ export const FormBranchSelect = (props: IFormBranchSelectProps) => {
       onInputChange={debounce((id) => {
         if (id) {
           setBranchId(id);
-          setTrigger(true);
+          // setTrigger(true);
         }
       }, 800)}
       options={branchOptions}

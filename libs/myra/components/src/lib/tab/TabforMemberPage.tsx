@@ -10,7 +10,7 @@ import { en, useTranslation } from '@coop/shared/utils';
 const TabCol = chakra(Tab, {
   baseStyle: {
     color: 'gray.600',
-    // height: '40px',
+    minHeight: '40px',
     fontSize: '14px',
     fontWeight: '500',
     lineHeight: '1.15',
