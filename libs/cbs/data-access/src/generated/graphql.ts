@@ -10417,6 +10417,9 @@ export type LoginMutation = {
             firstName: Record<'local' | 'en' | 'np', string>;
             middleName: Record<'local' | 'en' | 'np', string>;
             lastName: Record<'local' | 'en' | 'np', string>;
+            role?: Roles | null;
+            profilePic?: string | null;
+            branch?: { name?: string | null } | null;
           } | null;
           preference?: {
             language?: Language | null;
@@ -12405,6 +12408,9 @@ export type GetMeQuery = {
           email?: string | null;
           firstName: Record<'local' | 'en' | 'np', string>;
           lastName: Record<'local' | 'en' | 'np', string>;
+          role?: Roles | null;
+          profilePic?: string | null;
+          branch?: { name?: string | null } | null;
         } | null;
         preference?: {
           language?: Language | null;
@@ -12426,6 +12432,12 @@ export type GetBankListQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetBankListQuery = {
   bank: { bank?: { list?: Array<{ id: string; name?: string | null } | null> | null } | null };
+};
+
+export type GetUserBranchListQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetUserBranchListQuery = {
+  bank: { branch?: { list?: Array<{ id: string; name?: string | null } | null> | null } | null };
 };
 
 type MutationError_AuthorizationError_Fragment = {
@@ -16508,6 +16520,11 @@ export const LoginDocument = `
             firstName
             middleName
             lastName
+            role
+            profilePic
+            branch {
+              name
+            }
           }
           preference {
             language
@@ -19823,6 +19840,11 @@ export const GetMeDocument = `
           email
           firstName
           lastName
+          role
+          profilePic
+          branch {
+            name
+          }
         }
         preference {
           language
@@ -19868,6 +19890,29 @@ export const useGetBankListQuery = <TData = GetBankListQuery, TError = unknown>(
       null,
       variables
     ),
+    options
+  );
+export const GetUserBranchListDocument = `
+    query getUserBranchList {
+  bank {
+    branch {
+      list {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+export const useGetUserBranchListQuery = <TData = GetUserBranchListQuery, TError = unknown>(
+  variables?: GetUserBranchListQueryVariables,
+  options?: UseQueryOptions<GetUserBranchListQuery, TError, TData>
+) =>
+  useQuery<GetUserBranchListQuery, TError, TData>(
+    variables === undefined ? ['getUserBranchList'] : ['getUserBranchList', variables],
+    useAxios<GetUserBranchListQuery, GetUserBranchListQueryVariables>(
+      GetUserBranchListDocument
+    ).bind(null, variables),
     options
   );
 export const GetConfigDocument = `

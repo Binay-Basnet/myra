@@ -1,0 +1,10 @@
+query getUserBranchList {
+  bank {
+    branch {
+      list {
+        id
+        name
+      }
+    }
+  }
+}

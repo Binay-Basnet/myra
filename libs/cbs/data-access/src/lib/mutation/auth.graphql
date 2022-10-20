@@ -15,6 +15,11 @@ mutation login($data: LoginInput!) {
             firstName
             middleName
             lastName
+            role
+            profilePic
+            branch {
+              name
+            }
           }
           preference {
             language

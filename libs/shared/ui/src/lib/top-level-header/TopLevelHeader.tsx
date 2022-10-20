@@ -107,6 +107,7 @@ export const TopLevelHeader = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { mutateAsync } = useSetPreferenceMutation();
+
   const user = useAppSelector((state) => state?.auth?.user);
   const userId = user?.id;
 
@@ -458,7 +459,7 @@ export const TopLevelHeader = () => {
                       width="40px"
                       height="40px"
                       _hover={{ backgroundColor: 'secondary.900' }}
-                      icon={<Avatar src="/avatar.png" size="sm" />}
+                      icon={<Avatar src={user?.profilePic || ''} size="sm" />}
                       aria-label="menu"
                       variant="ghost"
                       color="white"
@@ -502,7 +503,7 @@ export const TopLevelHeader = () => {
                           borderBottom="1px solid"
                           borderColor="border.layout"
                         >
-                          <Avatar src="/avatar.png" w="s32" h="s32" />
+                          <Avatar src={user?.profilePic || ''} w="s32" h="s32" />
                           <Box
                             ml="14px"
                             display="flex"
@@ -513,7 +514,7 @@ export const TopLevelHeader = () => {
                               {user?.firstName?.local} {user?.lastName?.local}
                             </Text>
                             <Text fontWeight="Regular" fontSize="s2" color="gray.600">
-                              Teller
+                              {user?.role}
                             </Text>
                           </Box>
                         </Box>

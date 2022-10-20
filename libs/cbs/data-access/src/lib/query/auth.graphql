@@ -8,6 +8,11 @@ query getMe {
           email
           firstName
           lastName
+          role
+          profilePic
+          branch {
+            name
+          }
         }
         preference {
           language
