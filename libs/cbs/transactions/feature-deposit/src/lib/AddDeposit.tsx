@@ -595,7 +595,7 @@ export const AddDeposit = () => {
                 )
               }
               mainButtonLabel={mode === 0 ? t['addDepositProceedPayment'] : t['addDepositSubmit']}
-              isMainButtonDisabled={checkIsSubmitButtonDisabled()}
+              isMainButtonDisabled={mode === 0 ? !accountId : checkIsSubmitButtonDisabled()}
               mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
             />
           </Container>

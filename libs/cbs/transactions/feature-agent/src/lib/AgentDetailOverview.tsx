@@ -76,7 +76,7 @@ export const AgentDetailOverview = () => {
     if (accounts?.length) {
       reset({
         accounts: accounts?.map(
-          (record: { account: string | undefined; member: string | undefined }) => {
+          (record: { account: string | undefined; member: any; amount: any }) => {
             const account =
               assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.find(
                 (member) => member?.node?.account?.id === record?.account
@@ -84,7 +84,7 @@ export const AgentDetailOverview = () => {
             return {
               member: record?.member,
               account: record?.account,
-              amount: account?.node?.account?.dues?.totalDue,
+              amount: record?.amount ?? account?.node?.account?.dues?.totalDue,
             };
           }
         ),
