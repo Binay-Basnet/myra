@@ -435,23 +435,23 @@ const Dashboard = () => {
                   name: 'Age',
                   data: [
                     {
-                      x: '1-10',
+                      x: '1',
                       y: 10,
                     },
                     {
-                      x: '11-16',
+                      x: '11',
                       y: 30,
                     },
                     {
-                      x: '16-25',
+                      x: '16',
                       y: 300,
                     },
                     {
-                      x: '26-45',
+                      x: '26',
                       y: 700,
                     },
                     {
-                      x: '46-60',
+                      x: '46',
                       y: 300,
                     },
                     {
@@ -461,7 +461,7 @@ const Dashboard = () => {
                   ],
                 },
               ]}
-              type="bar"
+              type="area"
               height="400px"
               w="100%"
               options={{
@@ -469,7 +469,6 @@ const Dashboard = () => {
                   toolbar: {
                     show: false,
                   },
-                  type: 'bar',
                 },
                 colors: ['#82CA9D'],
                 legend: {

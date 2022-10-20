@@ -3401,9 +3401,17 @@ export type EbankingAuthQuery = {
 };
 
 export type EbankingCooperative = {
+  cooperativeDistrict?: Maybe<Scalars['String']>;
   cooperativeId?: Maybe<Scalars['ID']>;
+  cooperativeLocalGovt?: Maybe<Scalars['String']>;
+  cooperativeName?: Maybe<Scalars['String']>;
+  cooperativeProvince?: Maybe<Scalars['String']>;
+  cooperativeWard?: Maybe<Scalars['Int']>;
   memberId?: Maybe<Scalars['String']>;
   memberMobileNo?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['String']>;
+  memberProfilePicId?: Maybe<Scalars['String']>;
+  memberProfilePicUrl?: Maybe<Scalars['String']>;
   myraUserId: Scalars['ID'];
 };
 
@@ -6860,7 +6868,6 @@ export type LoanAccountGuranteeResult = {
 };
 
 export type LoanAccountInput = {
-  LoanAccountName?: InputMaybe<Scalars['String']>;
   appliedLoanAmount?: InputMaybe<Scalars['String']>;
   collateralData?: InputMaybe<Array<InputMaybe<LoanAccountCollateralData>>>;
   fingerprintDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -6871,6 +6878,7 @@ export type LoanAccountInput = {
   isCeoAuthority?: InputMaybe<Scalars['Boolean']>;
   justifySanction?: InputMaybe<Scalars['String']>;
   linkedAccountId?: InputMaybe<Scalars['String']>;
+  loanAccountName?: InputMaybe<Scalars['String']>;
   loanProcessingCharge?: InputMaybe<Array<InputMaybe<ServiceType>>>;
   memberId?: InputMaybe<Scalars['ID']>;
   nomineeDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -7781,6 +7789,10 @@ export type MemberMutationInstitutionArgs = {
   id: Scalars['ID'];
 };
 
+export type MemberMutationMakeInactiveArgs = {
+  memberId: Scalars['ID'];
+};
+
 export type MemberMutationOfficialUseArgs = {
   data: OfficialUseInputData;
 };
@@ -7839,6 +7851,10 @@ export type MemberQueryDetailsArgs = {
 
 export type MemberQueryEntryArgs = {
   membeId: Scalars['String'];
+};
+
+export type MemberQueryGetAllAccountsArgs = {
+  memberId: Scalars['ID'];
 };
 
 export type MemberQueryIndividualArgs = {
@@ -14374,6 +14390,55 @@ export type GetOfficialUseQuery = {
         | MutationError_ServerError_Fragment
         | MutationError_ValidationError_Fragment
         | null;
+    } | null;
+  };
+};
+
+export type GetMemberDetailsOverviewQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetMemberDetailsOverviewQuery = {
+  members: {
+    memberOverview?: {
+      data?: {
+        overview?: {
+          basicInformation?: {
+            profilePic?: string | null;
+            memberCode?: string | null;
+            memberJoined?: string | null;
+            genderId?: string | null;
+            gender?: Record<'local' | 'en' | 'np', string> | null;
+            maritalStatusId?: string | null;
+            maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
+            contactNumber?: string | null;
+            email?: string | null;
+            addressId?: string | null;
+            address?: Record<'local' | 'en' | 'np', string> | null;
+            fathersName?: string | null;
+            mothersName?: string | null;
+            grandFathersName?: string | null;
+          } | null;
+          statistics?: {
+            totalShareValue?: string | null;
+            accountBalance?: string | null;
+            loanBalance?: string | null;
+          } | null;
+          payments?: Array<{
+            date?: string | null;
+            accountName?: string | null;
+            paymentType?: string | null;
+            amount?: string | null;
+          } | null> | null;
+          recentTransactions?: Array<{
+            date?: string | null;
+            title?: string | null;
+            txnType?: string | null;
+            amount?: string | null;
+            noOfShares?: number | null;
+          } | null> | null;
+        } | null;
+      } | null;
     } | null;
   };
 };
@@ -22208,6 +22273,66 @@ export const useGetOfficialUseQuery = <TData = GetOfficialUseQuery, TError = unk
       null,
       variables
     ),
+    options
+  );
+export const GetMemberDetailsOverviewDocument = `
+    query getMemberDetailsOverview($id: ID!) {
+  members {
+    memberOverview(id: $id) {
+      data {
+        overview {
+          basicInformation {
+            profilePic
+            memberCode
+            memberJoined
+            genderId
+            gender
+            maritalStatusId
+            maritalStatus
+            contactNumber
+            email
+            addressId
+            address
+            fathersName
+            mothersName
+            grandFathersName
+          }
+          statistics {
+            totalShareValue
+            accountBalance
+            loanBalance
+          }
+          payments {
+            date
+            accountName
+            paymentType
+            amount
+          }
+          recentTransactions {
+            date
+            title
+            txnType
+            amount
+            noOfShares
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberDetailsOverviewQuery = <
+  TData = GetMemberDetailsOverviewQuery,
+  TError = unknown
+>(
+  variables: GetMemberDetailsOverviewQueryVariables,
+  options?: UseQueryOptions<GetMemberDetailsOverviewQuery, TError, TData>
+) =>
+  useQuery<GetMemberDetailsOverviewQuery, TError, TData>(
+    ['getMemberDetailsOverview', variables],
+    useAxios<GetMemberDetailsOverviewQuery, GetMemberDetailsOverviewQueryVariables>(
+      GetMemberDetailsOverviewDocument
+    ).bind(null, variables),
     options
   );
 export const GetMemberPdfDocument = `
