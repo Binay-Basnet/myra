@@ -121,16 +121,17 @@ export const ShareRegisterTable = () => {
   return (
     <>
       <TableListPageHeader heading={`${t['shareRegisterTable']} - ${featureCode?.shareRegister}`} />
-
-      <Table
-        isLoading={isFetching}
-        data={rowData ?? []}
-        columns={columns}
-        pagination={{
-          total: data?.share?.register?.totalCount ?? 'Many',
-          pageInfo: data?.share?.register?.pageInfo,
-        }}
-      />
+      <Box mt="60px">
+        <Table
+          isLoading={isFetching}
+          data={rowData ?? []}
+          columns={columns}
+          pagination={{
+            total: data?.share?.register?.totalCount ?? 'Many',
+            pageInfo: data?.share?.register?.pageInfo,
+          }}
+        />
+      </Box>
     </>
   );
 };

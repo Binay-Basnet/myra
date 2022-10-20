@@ -271,7 +271,7 @@ export const NewLoanApplication = () => {
                   )}
                   {productId && !errors && (
                     <>
-                      <FormInput name="LoanAccountName" label="Loan Account Name" />
+                      <FormInput name="loanAccountName" label="Loan Account Name" />
                       <Box w="50%">
                         <FormNumberInput
                           name="appliedLoanAmount"

@@ -17,9 +17,6 @@ const CBSSettingsValuatorPopover = ({ cell }: CellContext<ValuatorEdge, unknown>
       items={[
         {
           title: 'settingsValuatorViewProfile',
-          onClick: (row) => {
-            router.push(`/settings/general/loan/valuator/edit/${row.node?.id}`);
-          },
         },
         {
           title: 'settingsValuatorEdit',
