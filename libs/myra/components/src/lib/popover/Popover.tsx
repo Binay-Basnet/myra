@@ -28,7 +28,12 @@ export const PopoverComponent = ({ title, items, member }: IPopoverType) => {
   return (
     <Popover placement="bottom-start" initialFocusRef={initialFocusRef}>
       <PopoverTrigger>
-        <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
+        <IconButton
+          onClick={(e) => e.stopPropagation()}
+          variant="ghost"
+          aria-label="Search database"
+          icon={<BsThreeDots />}
+        />
       </PopoverTrigger>
       <PopoverContent minWidth="180px" w="180px" color="white" _focus={{ boxShadow: 'none' }}>
         <PopoverBody px="0" py="s8">

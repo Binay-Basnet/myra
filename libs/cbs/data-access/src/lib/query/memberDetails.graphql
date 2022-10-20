@@ -4,6 +4,7 @@ query getMemberDetailsOverview($id: ID!) {
       data {
         overview {
           basicInformation {
+            memberName
             profilePic
             memberCode
             memberJoined

@@ -28,12 +28,14 @@ export const MemberDetailsSidebar = () => {
         <Box display="flex" flexDirection="column" gap="s8">
           <Text fontSize="l1" fontWeight="600">
             {' '}
-            jhj
+            {memberInfo?.memberName}
           </Text>
-          <Text fontSize="r1" fontWeight="600">
-            {' '}
-            {memberInfo?.memberCode}{' '}
-          </Text>
+          {memberInfo?.memberCode && (
+            <Text fontSize="r1" fontWeight="600">
+              {' '}
+              {memberInfo?.memberCode}{' '}
+            </Text>
+          )}
           <Text fontSize="r1" fontWeight="600">
             {' '}
             Member Since : {memberInfo?.memberJoined}
