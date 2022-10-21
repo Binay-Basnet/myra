@@ -81,7 +81,7 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
   );
 
   return (
-    <Box mt="60px">
+    <Box>
       <Table
         isLoading={isLoading}
         columns={columns}

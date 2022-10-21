@@ -31,6 +31,11 @@ const myraAppn = [
     img: '/accounting.svg',
     link: '/accounting/sales/list',
   },
+  {
+    title: 'alternativeChannelsAndCrossConnectivity',
+    img: '/tnt.svg',
+    link: '/alternative-channels/mBanking/users',
+  },
 ];
 
 const moreFromMyra = [
@@ -59,11 +64,7 @@ const moreFromMyra = [
     img: '/enj.svg',
     link: '/members/list',
   },
-  {
-    title: 'alternativeChannelsAndCrossConnectivity',
-    img: '/tnt.svg',
-    link: '/alternative-channels/mBanking/users',
-  },
+
   {
     title: 'complainceManagement',
     img: '/bnty.svg',
@@ -126,7 +127,14 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
                   _hover={{ bg: 'gray.200' }}
                   onClick={() => router.push(item.link)}
                 >
-                  <Box display="flex" justifyContent="center" alignItems="center" w="s32" h="s32">
+                  <Box
+                    flexShrink={0}
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    w="s32"
+                    h="s32"
+                  >
                     <Image width="32px" height="32px" src={item.img} alt={t[item.title]} />
                   </Box>
                   <TextFields fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">

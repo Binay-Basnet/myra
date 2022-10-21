@@ -11821,7 +11821,20 @@ export type SetSettingsUserDataMutationVariables = Exact<{
 }>;
 
 export type SetSettingsUserDataMutation = {
-  settings: { myraUser?: { add?: { recordId?: string | null } | null } | null };
+  settings: {
+    myraUser?: {
+      add?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
 };
 
 export type SetPreferenceMutationVariables = Exact<{
@@ -18962,11 +18975,14 @@ export const SetSettingsUserDataDocument = `
     myraUser {
       add(id: $id, data: $data) {
         recordId
+        error {
+          ...MutationError
+        }
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useSetSettingsUserDataMutation = <TError = unknown, TContext = unknown>(
   options?: UseMutationOptions<
     SetSettingsUserDataMutation,
