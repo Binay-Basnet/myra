@@ -20,6 +20,8 @@ export type AccountTransferFormType = {
 export const AccountTransferPage = () => {
   const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>('form');
 
+  const [transactionCode, setTransactionCode] = useState<string>('');
+
   const methods = useForm<AccountTransferFormType>({});
 
   return (
@@ -40,12 +42,16 @@ export const AccountTransferPage = () => {
           <>
             {paymentStatus === 'loading' && <LoaderOverlay />}
 
-            <AccountTransferReview setPaymentStatus={setPaymentStatus} />
+            <AccountTransferReview
+              setTransactionCode={setTransactionCode}
+              setPaymentStatus={setPaymentStatus}
+            />
           </>
         )}
 
         {paymentStatus === 'success' || paymentStatus === 'failure' ? (
           <AccountTransferResult
+            transactionCode={transactionCode}
             paymentStatus={paymentStatus}
             setPaymentStatus={setPaymentStatus}
           />

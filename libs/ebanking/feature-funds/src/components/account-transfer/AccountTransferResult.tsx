@@ -14,11 +14,14 @@ type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'loading';
 
 interface AccountTransferResultProps {
   paymentStatus: 'success' | 'failure';
+
+  transactionCode: string;
   setPaymentStatus: React.Dispatch<React.SetStateAction<PaymentStatus>>;
 }
 
 export const AccountTransferResult = ({
   paymentStatus,
+  transactionCode,
   setPaymentStatus,
 }: AccountTransferResultProps) => {
   const router = useRouter();
@@ -77,10 +80,7 @@ export const AccountTransferResult = ({
             <CardHeader> Transaction Details</CardHeader>
 
             {paymentStatus === 'success' && (
-              <CardContent
-                title="Transaction Code"
-                subtitle={successResult?.transactionCode as string}
-              />
+              <CardContent title="Transaction Code" subtitle={transactionCode} />
             )}
 
             <CardContent

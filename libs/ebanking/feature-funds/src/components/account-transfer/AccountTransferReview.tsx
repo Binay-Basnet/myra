@@ -14,9 +14,13 @@ type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'loading';
 
 interface AccountTransferReviewProps {
   setPaymentStatus: React.Dispatch<React.SetStateAction<PaymentStatus>>;
+  setTransactionCode: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const AccountTransferReview = ({ setPaymentStatus }: AccountTransferReviewProps) => {
+export const AccountTransferReview = ({
+  setPaymentStatus,
+  setTransactionCode,
+}: AccountTransferReviewProps) => {
   const queryClient = useQueryClient();
   const methods = useFormContext<AccountTransferFormType>();
 
@@ -85,6 +89,10 @@ export const AccountTransferReview = ({ setPaymentStatus }: AccountTransferRevie
                 queryClient.invalidateQueries('getAccountList');
                 queryClient.invalidateQueries('getTransactionLists');
 
+                setTransactionCode(
+                  response?.eBanking?.webUtilityPayments?.accountTransfer?.record
+                    ?.transactionCode as string
+                );
                 setPaymentStatus('success');
               } else {
                 const error = response?.eBanking?.webUtilityPayments?.accountTransfer?.error;
