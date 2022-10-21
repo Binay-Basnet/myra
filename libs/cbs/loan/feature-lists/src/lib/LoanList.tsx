@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { LoanObjState, ObjState, useGetLoanListQuery } from '@coop/cbs/data-access';
-import { Box, PageHeader } from '@coop/shared/ui';
+import { PageHeader } from '@coop/shared/ui';
 import { getRouterQuery } from '@coop/shared/utils';
 
 import { LoanTable } from '../components/LoanTable';
@@ -30,14 +30,12 @@ export const LoanList = () => {
   return (
     <>
       <PageHeader heading="Loan Application List" tabItems={LOAN_LIST_TAB_ITEMS} />
-      <Box mt="60px">
-        <LoanTable
-          data={data}
-          viewLink="/loan/applications/view"
-          isLoading={isFetching}
-          type={(router.query['objState'] ?? ObjState.Approved) as LoanObjState}
-        />
-      </Box>
+      <LoanTable
+        data={data}
+        viewLink="/loan/applications/view"
+        isLoading={isFetching}
+        type={(router.query['objState'] ?? ObjState.Approved) as LoanObjState}
+      />
     </>
   );
 };

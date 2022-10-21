@@ -24,8 +24,6 @@ export const PageHeader = ({
   buttonTitle,
 }: PageHeaderProps) => (
   <Box
-    position="fixed"
-    top="110px"
     h="60px"
     bg="white"
     zIndex="10"

@@ -94,17 +94,16 @@ export const CBSAccountList = () => {
         heading={`Account List - ${featureCode?.accountList}`}
         tabItems={MEMBER_TAB_ITEMS}
       />
-      <Box mt="60px">
-        <Table
-          isLoading={isLoading}
-          data={rowData}
-          columns={columns}
-          pagination={{
-            total: data?.account?.list?.totalCount ?? 'Many',
-            pageInfo: data?.account?.list?.pageInfo,
-          }}
-        />
-      </Box>
+
+      <Table
+        isLoading={isLoading}
+        data={rowData}
+        columns={columns}
+        pagination={{
+          total: data?.account?.list?.totalCount ?? 'Many',
+          pageInfo: data?.account?.list?.pageInfo,
+        }}
+      />
     </>
   );
 };

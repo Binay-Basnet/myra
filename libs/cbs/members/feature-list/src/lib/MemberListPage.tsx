@@ -138,23 +138,22 @@ export const MemberListPage = () => {
         heading={`${t['memberLayoutMembers']} - ${featureCode?.memberList}`}
         tabItems={MEMBER_TAB_ITEMS}
       />
-      <Box mt="60px">
-        <Table
-          data={rowData}
-          getRowId={(row) => String(row?.node?.id)}
-          rowOnClick={(row) => {
-            queryClient.invalidateQueries('getMemberDetailsOverview');
-            router.push(`/members/details?id=${row?.node?.id}`);
-          }}
-          isLoading={isFetching}
-          columns={columns}
-          noDataTitle={t['member']}
-          pagination={{
-            total: data?.members?.list?.totalCount ?? 'Many',
-            pageInfo: data?.members?.list?.pageInfo,
-          }}
-        />
-      </Box>
+
+      <Table
+        data={rowData}
+        getRowId={(row) => String(row?.node?.id)}
+        rowOnClick={(row) => {
+          queryClient.invalidateQueries('getMemberDetailsOverview');
+          router.push(`/members/details?id=${row?.node?.id}`);
+        }}
+        isLoading={isFetching}
+        columns={columns}
+        noDataTitle={t['member']}
+        pagination={{
+          total: data?.members?.list?.totalCount ?? 'Many',
+          pageInfo: data?.members?.list?.pageInfo,
+        }}
+      />
     </>
   );
 };

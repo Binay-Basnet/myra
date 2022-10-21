@@ -69,9 +69,8 @@ export const ShareBalanceTable = () => {
   return (
     <>
       <TableListPageHeader heading={`${t['shareBalanceTable']} - ${featureCode?.shareBalance}`} />
-      <Box mt="60px">
-        <Table isLoading={isFetching} data={rowData ?? []} columns={columns} />
-      </Box>
+
+      <Table isLoading={isFetching} data={rowData ?? []} columns={columns} />
     </>
   );
 };

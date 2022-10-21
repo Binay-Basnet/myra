@@ -19,8 +19,6 @@ export const TableListPageHeader = ({ tabItems, heading }: ITableListPageHeader)
     borderBottom="1px solid "
     borderColor="border.layout"
     pl="s16"
-    position="fixed"
-    top="110px"
   >
     <Flex justify="flex-start" alignItems="center" h="100%">
       <Box display="flex" justifyContent="center" alignItems="center" maxH="50px">
