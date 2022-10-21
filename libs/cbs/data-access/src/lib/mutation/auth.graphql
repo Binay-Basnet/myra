@@ -29,6 +29,9 @@ mutation login($data: LoginInput!) {
           }
         }
       }
+      error {
+        ...MutationError
+      }
     }
   }
 }

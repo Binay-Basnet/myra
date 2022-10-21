@@ -133,11 +133,13 @@ export const MemberListPage = () => {
   );
 
   return (
-    <>
-      <PageHeader
-        heading={`${t['memberLayoutMembers']} - ${featureCode?.memberList}`}
-        tabItems={MEMBER_TAB_ITEMS}
-      />
+    <Box>
+      <Box>
+        <PageHeader
+          heading={`${t['memberLayoutMembers']} - ${featureCode?.memberList}`}
+          tabItems={MEMBER_TAB_ITEMS}
+        />
+      </Box>
 
       <Table
         data={rowData}
@@ -154,7 +156,7 @@ export const MemberListPage = () => {
           pageInfo: data?.members?.list?.pageInfo,
         }}
       />
-    </>
+    </Box>
   );
 };
 

@@ -10454,6 +10454,13 @@ export type LoginMutation = {
           } | null;
         };
       } | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
     } | null;
   };
 };
@@ -16560,10 +16567,13 @@ export const LoginDocument = `
           }
         }
       }
+      error {
+        ...MutationError
+      }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useLoginMutation = <TError = unknown, TContext = unknown>(
   options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>
 ) =>
