@@ -46,7 +46,10 @@ export const PopoverComponent = ({ title, items, member }: IPopoverType) => {
                     width="100%"
                     _hover={{ bg: 'gray.100' }}
                     cursor="pointer"
-                    onClick={() => item?.onClick && item?.onClick(member)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      item?.onClick && item?.onClick(member);
+                    }}
                     key={`${item.title}${Math.random()}`}
                   >
                     <Text variant="bodyRegular" color="neutralColorLight.Gray-80">

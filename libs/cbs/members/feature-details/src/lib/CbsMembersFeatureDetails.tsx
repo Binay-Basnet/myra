@@ -3,7 +3,18 @@ import { useRouter } from 'next/router';
 import { Box } from '@coop/shared/ui';
 
 import { MemberDetailsSidebar } from '../components';
-import { Account, Overview } from '../tabs';
+import {
+  Account,
+  Activity,
+  Bio,
+  Cheque,
+  Documents,
+  Overview,
+  Reports,
+  Share,
+  Tasks,
+  Transactions,
+} from '../tabs';
 
 export const MemberDetails = () => {
   const router = useRouter();
@@ -27,6 +38,14 @@ export const MemberDetails = () => {
         {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}
 
         {tabQuery === 'accounts' && <Account />}
+        {tabQuery === 'activity' && <Activity />}
+        {tabQuery === 'bio' && <Bio />}
+        {tabQuery === 'cheque' && <Cheque />}
+        {tabQuery === 'documents' && <Documents />}
+        {tabQuery === 'reports' && <Reports />}
+        {tabQuery === 'share' && <Share />}
+        {tabQuery === 'tasks' && <Tasks />}
+        {tabQuery === 'transactions' && <Transactions />}
       </Box>
     </>
   );
