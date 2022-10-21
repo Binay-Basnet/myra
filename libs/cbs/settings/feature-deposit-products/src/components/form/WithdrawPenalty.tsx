@@ -20,10 +20,6 @@ export const WithdrawPenalty = () => {
 
   return (
     <FormSection header="depositProductWithdrawPenaltySetup">
-      <FormAmountInput
-        name="withdrawPenalty.penaltyAmount"
-        label={t['depositProductPenaltyAmount']}
-      />
       <FormInput
         name="withdrawPenalty.penaltyRate"
         label={t['depositProductPenaltyRate']}
@@ -35,6 +31,11 @@ export const WithdrawPenalty = () => {
         }
         type="number"
       />
+      <FormAmountInput
+        name="withdrawPenalty.penaltyAmount"
+        label={t['depositProductPenaltyAmount']}
+      />
+
       {/* <FormSelect
         name="withdrawPenalty.penaltyLedgerMapping"
         label={t['depositProductPenaltyedgerMapping']}

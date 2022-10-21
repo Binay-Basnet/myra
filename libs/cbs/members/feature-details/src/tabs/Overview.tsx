@@ -1,4 +1,5 @@
 import { IoAddOutline } from 'react-icons/io5';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
 import { useGetMemberDetailsOverviewQuery, useGetNewIdMutation } from '@coop/cbs/data-access';
@@ -11,10 +12,12 @@ import {
   UpcomingPaymentTable,
 } from '../components';
 
+const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });
+
 const links = [
   {
     title: 'New Deposit',
-    link: '/share/share-issue',
+    link: '/transactions/deposit/add',
   },
   {
     title: 'New Withdraw',
@@ -58,6 +61,20 @@ export const Overview = () => {
   const memberPayment = memberDetails?.data?.members?.memberOverview?.data?.overview?.payments;
   const memberShareDetails =
     memberDetails?.data?.members?.memberOverview?.data?.overview?.statistics;
+  const memberGraphs =
+    memberDetails?.data?.members?.memberOverview?.data?.overview?.memberGraphs?.deposit?.data;
+
+  const dataForGraphs = memberGraphs?.map((item) => [item?.time ?? 0, Number(item?.amount)]) as [
+    number,
+    number
+  ][];
+  const memberGraphWithdraw =
+    memberDetails?.data?.members?.memberOverview?.data?.overview?.memberGraphs?.withdraw?.data;
+  const dataForGraphWithdraw = memberGraphWithdraw?.map((item) => [
+    item?.time ?? 0,
+    Number(item?.amount),
+  ]) as [number, number][];
+
   const memberPaymentUp = memberPayment?.map((data, index) => ({
     sn: Number(index) + 1,
     date: data?.date,
@@ -128,6 +145,106 @@ export const Overview = () => {
         </Grid>
       </Box>
       <MemberBasicInformation />
+      <Grid templateColumns="repeat(2,1fr)" gap="s16">
+        <Box display="flex" flexDirection="column" gap="s16" bg="white" p="s16">
+          <Text>Deposit</Text>{' '}
+          <Charts
+            series={[
+              {
+                name: 'Deposit',
+                data: dataForGraphs,
+              },
+            ]}
+            type="area"
+            height="400px"
+            w="100%"
+            options={{
+              xaxis: {
+                type: 'datetime',
+              },
+              colors: ['#82CA9D'],
+              fill: {
+                type: 'gradient',
+              },
+              legend: {
+                show: true,
+                horizontalAlign: 'right',
+                position: 'bottom',
+
+                showForSingleSeries: true,
+              },
+              // fill: {
+              //   colors: ['#82CA9D'],
+              // },
+              dataLabels: {
+                enabled: false,
+              },
+              grid: {
+                borderColor: '#cccccc',
+                strokeDashArray: 2,
+                yaxis: {
+                  lines: {
+                    show: true,
+                  },
+                },
+                xaxis: {
+                  lines: {
+                    show: true,
+                  },
+                },
+              },
+            }}
+          />
+        </Box>
+        <Box display="flex" flexDirection="column" gap="s16" bg="white" p="s16">
+          <Text>Withdraw</Text>{' '}
+          <Charts
+            series={[
+              {
+                name: 'Withdraw',
+                data: dataForGraphWithdraw,
+              },
+            ]}
+            type="area"
+            height="400px"
+            w="100%"
+            options={{
+              xaxis: {
+                type: 'datetime',
+              },
+              colors: ['#FFECEB'],
+              legend: {
+                show: true,
+                horizontalAlign: 'right',
+                position: 'bottom',
+
+                showForSingleSeries: true,
+              },
+              // fill: {
+              //   colors: ['#82CA9D'],
+              // },
+              dataLabels: {
+                enabled: false,
+              },
+              grid: {
+                borderColor: '#cccccc',
+                strokeDashArray: 2,
+                yaxis: {
+                  lines: {
+                    show: true,
+                  },
+                },
+                xaxis: {
+                  lines: {
+                    show: true,
+                  },
+                },
+              },
+            }}
+          />
+        </Box>
+      </Grid>
+
       {memberShareDetails && <MemberStatistics />}
       {memberPaymentUp && (
         <Box bg="white" display="flex" flexDirection="column" gap="s8" pb="s16" borderRadius="br2">

@@ -3230,6 +3230,8 @@ const ne: Record<string, string> = {
   shareRegisterTableReturn: 'Return',
   depositProductInactiveProduct: 'Inactive Deposit Product',
   depositProductInactiveReason: 'Reason for Inactive',
+
+  loanRepaymentDepositedBy: 'Deposited By',
 };
 
 export default ne;
