@@ -68,8 +68,9 @@ export const ShareBalanceTable = () => {
 
   return (
     <>
-      <TableListPageHeader heading={`${t['shareBalanceTable']} - ${featureCode?.shareBalance}`} />
-
+      <Box position="sticky" top="110px" zIndex={3}>
+        <TableListPageHeader heading={`${t['shareBalanceTable']} - ${featureCode?.shareBalance}`} />
+      </Box>
       <Table isLoading={isFetching} data={rowData ?? []} columns={columns} />
     </>
   );

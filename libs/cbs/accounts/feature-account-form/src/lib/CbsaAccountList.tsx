@@ -90,10 +90,12 @@ export const CBSAccountList = () => {
 
   return (
     <>
-      <PageHeader
-        heading={`Account List - ${featureCode?.accountList}`}
-        tabItems={MEMBER_TAB_ITEMS}
-      />
+      <Box position="sticky" top="110px" zIndex={3}>
+        <PageHeader
+          heading={`Account List - ${featureCode?.accountList}`}
+          tabItems={MEMBER_TAB_ITEMS}
+        />
+      </Box>
 
       <Table
         isLoading={isLoading}
