@@ -13,6 +13,7 @@ import {
   useGetAccountOpenEditDataQuery,
   useGetAccountOpenMinorListQuery,
   useGetAccountOpenProductDetailsQuery,
+  useGetDefaultAccountListQuery,
   useGetProductListQuery,
   useSetAccountDocumentDataMutation,
   useSetAccountOpenDataMutation,
@@ -205,6 +206,17 @@ export const AccountOpenNew = () => {
     { enabled: triggerQuery }
   );
 
+  const { data: defaultAccountData } = useGetDefaultAccountListQuery(
+    { memberId, productId: productID },
+    {
+      enabled: triggerQuery || triggerProductQuery,
+    }
+  );
+  const defaulDataAcc = defaultAccountData?.account?.listDefaultAccounts?.data;
+  const defaultDataOptions = defaulDataAcc?.map((item) => ({
+    label: item?.accountName as string,
+    value: item?.id as string,
+  }));
   const minorDetails = minorData?.account?.listMinors?.data;
   const minorOptions = minorDetails?.map((item) => ({
     label: item?.fullName?.local as string,
@@ -483,7 +495,11 @@ export const AccountOpenNew = () => {
                           </Text>
                         </Box>
 
-                        <FormSelect name="defaultAmountDepositAccountName" label="Account Type" />
+                        <FormSelect
+                          name="defaultAmountDepositAccountName"
+                          label="Account Type"
+                          options={defaultDataOptions}
+                        />
                       </Box>
                     )}
 

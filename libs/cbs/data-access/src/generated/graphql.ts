@@ -12320,6 +12320,19 @@ export type GetAccountOpenMinorListQuery = {
   };
 };
 
+export type GetDefaultAccountListQueryVariables = Exact<{
+  productId: Scalars['ID'];
+  memberId: Scalars['ID'];
+}>;
+
+export type GetDefaultAccountListQuery = {
+  account: {
+    listDefaultAccounts?: {
+      data?: Array<{ id: string; accountName?: string | null } | null> | null;
+    } | null;
+  };
+};
+
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never }>;
 
 export type AllAdministrationQuery = {
@@ -14529,6 +14542,16 @@ export type GetMemberDetailsOverviewQuery = {
             fathersName?: string | null;
             mothersName?: string | null;
             grandFathersName?: string | null;
+          } | null;
+          memberGraphs?: {
+            deposit?: {
+              periodType?: PeriodTypeEnum | null;
+              data?: Array<{ time?: number | null; amount?: string | null } | null> | null;
+            } | null;
+            withdraw?: {
+              periodType?: PeriodTypeEnum | null;
+              data?: Array<{ time?: number | null; amount?: string | null } | null> | null;
+            } | null;
           } | null;
           statistics?: {
             totalShareValue?: string | null;
@@ -19693,6 +19716,29 @@ export const useGetAccountOpenMinorListQuery = <
     ).bind(null, variables),
     options
   );
+export const GetDefaultAccountListDocument = `
+    query getDefaultAccountList($productId: ID!, $memberId: ID!) {
+  account {
+    listDefaultAccounts(memberId: $memberId, productId: $productId) {
+      data {
+        id
+        accountName
+      }
+    }
+  }
+}
+    `;
+export const useGetDefaultAccountListQuery = <TData = GetDefaultAccountListQuery, TError = unknown>(
+  variables: GetDefaultAccountListQueryVariables,
+  options?: UseQueryOptions<GetDefaultAccountListQuery, TError, TData>
+) =>
+  useQuery<GetDefaultAccountListQuery, TError, TData>(
+    ['getDefaultAccountList', variables],
+    useAxios<GetDefaultAccountListQuery, GetDefaultAccountListQueryVariables>(
+      GetDefaultAccountListDocument
+    ).bind(null, variables),
+    options
+  );
 export const AllAdministrationDocument = `
     query allAdministration {
   administration {
@@ -22448,6 +22494,22 @@ export const GetMemberDetailsOverviewDocument = `
             fathersName
             mothersName
             grandFathersName
+          }
+          memberGraphs {
+            deposit {
+              data {
+                time
+                amount
+              }
+              periodType
+            }
+            withdraw {
+              data {
+                time
+                amount
+              }
+              periodType
+            }
           }
           statistics {
             totalShareValue

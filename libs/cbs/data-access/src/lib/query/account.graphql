@@ -385,3 +385,14 @@ query getAccountOpenMinorList($memberId: ID!) {
     }
   }
 }
+
+query getDefaultAccountList($productId: ID!, $memberId: ID!) {
+  account {
+    listDefaultAccounts(memberId: $memberId, productId: $productId) {
+      data {
+        id
+        accountName
+      }
+    }
+  }
+}

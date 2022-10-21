@@ -20,6 +20,22 @@ query getMemberDetailsOverview($id: ID!) {
             mothersName
             grandFathersName
           }
+          memberGraphs {
+            deposit {
+              data {
+                time
+                amount
+              }
+              periodType
+            }
+            withdraw {
+              data {
+                time
+                amount
+              }
+              periodType
+            }
+          }
           statistics {
             totalShareValue
             accountBalance

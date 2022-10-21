@@ -11,6 +11,7 @@ export const MemberDetailsSidebar = () => {
   });
 
   const memberInfo = memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation;
+
   return (
     <>
       <Box
