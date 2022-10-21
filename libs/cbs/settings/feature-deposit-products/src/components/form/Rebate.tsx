@@ -56,12 +56,6 @@ export const Rebate = () => {
 
               <Grid templateColumns="repeat(3,1fr)" gap="s16">
                 <GridItem>
-                  <FormAmountInput
-                    name="rebateData.rebateAmount"
-                    label={t['depositProductRebateAmount']}
-                  />
-                </GridItem>
-                <GridItem>
                   <FormInput
                     name="rebateData.rebateRate"
                     type="number"
@@ -74,6 +68,13 @@ export const Rebate = () => {
                     }
                   />
                 </GridItem>
+                <GridItem>
+                  <FormAmountInput
+                    name="rebateData.rebateAmount"
+                    label={t['depositProductRebateAmount']}
+                  />
+                </GridItem>
+
                 <GridItem colSpan={3}>
                   <Alert status="warning">
                     <Text fontWeight="Medium" fontSize="r1">

@@ -43,10 +43,6 @@ export const PrematurePenalty = () => {
         label={t['depositProductPenaltyLedgerMapping']}
         options={coaList}
       /> */}
-      <FormAmountInput
-        name="prematurePenaltySetup.penaltyAmount"
-        label={t['depositProductPenaltyAmount']}
-      />
       <FormInput
         name="prematurePenaltySetup.penaltyRate"
         label={t['depositProductPenaltyRate']}
@@ -57,6 +53,11 @@ export const PrematurePenalty = () => {
         }
         textAlign="right"
       />
+      <FormAmountInput
+        name="prematurePenaltySetup.penaltyAmount"
+        label={t['depositProductPenaltyAmount']}
+      />
+
       <GridItem colSpan={3}>
         <Alert status="warning">
           <Text fontWeight="Medium" fontSize="r1">

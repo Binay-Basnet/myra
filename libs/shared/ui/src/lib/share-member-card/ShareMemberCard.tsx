@@ -46,6 +46,8 @@ export const ShareMemberCard = ({
   );
 
   const shareHistoryTableData = data?.share?.history;
+  const shareHistoryData =
+    shareHistoryTableData?.history && shareHistoryTableData?.history?.slice(0, 5);
 
   return (
     <Box bg="gray.0" h="100%">
@@ -108,8 +110,8 @@ export const ShareMemberCard = ({
         </Box>
 
         <Box border="1px solid" borderTop="none" borderColor="border.layout">
-          {shareHistoryTableData &&
-            shareHistoryTableData?.history?.map((item) => (
+          {shareHistoryData &&
+            shareHistoryData?.map((item) => (
               <Box
                 key={item?.id}
                 px="s12"

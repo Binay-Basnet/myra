@@ -164,8 +164,12 @@ export const LoanRepayment = () => {
       enabled: triggerLoanQuery,
     }
   );
+
+  const loanTotal =
+    loanPreview?.data?.loanAccount?.loanPreview?.data?.repaymentDetails?.totalInstallmentAmount;
   const loanData = loanPreview?.data?.loanAccount?.loanPreview?.data;
   const loanPaymentSchedule = loanData?.paymentSchedule?.installments;
+
   useEffect(() => {
     if (loanAccountId) {
       setTriggerLoanQuery(true);
@@ -219,7 +223,7 @@ export const LoanRepayment = () => {
                 )}
               </Box>
               <Box display={mode === '1' ? 'flex' : 'none'}>
-                <Payment totalDeposit={amountPaid as number} />
+                <Payment loanTotal={loanTotal as string} totalDeposit={amountPaid as number} />
               </Box>
             </form>
           </FormProvider>
