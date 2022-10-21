@@ -11,6 +11,7 @@ query getMe {
           role
           profilePic
           branch {
+            id
             name
           }
         }

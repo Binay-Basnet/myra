@@ -18,6 +18,7 @@ mutation login($data: LoginInput!) {
             role
             profilePic
             branch {
+              id
               name
             }
           }

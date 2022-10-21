@@ -4314,6 +4314,11 @@ export enum GracePeriod {
   Principal = 'PRINCIPAL',
 }
 
+export type GraphData = {
+  amount?: Maybe<Scalars['String']>;
+  time?: Maybe<Scalars['Int']>;
+};
+
 export type HumanizeAuditLog = {
   extraData?: Maybe<Array<Maybe<Scalars['String']>>>;
   narration?: Maybe<Scalars['String']>;
@@ -7794,6 +7799,11 @@ export type MemberDetailsResult = {
   data?: Maybe<Member>;
 };
 
+export type MemberGraphData = {
+  data?: Maybe<Array<Maybe<GraphData>>>;
+  periodType?: Maybe<PeriodTypeEnum>;
+};
+
 export enum MemberIdentityLevel {
   General = 'GENERAL',
   Mid = 'MID',
@@ -7860,6 +7870,11 @@ export type MemberOverviewData = {
   reports?: Maybe<Scalars['String']>;
   share?: Maybe<Scalars['String']>;
   transactions?: Maybe<Scalars['String']>;
+};
+
+export type MemberOverviewGraphs = {
+  deposit?: Maybe<MemberGraphData>;
+  withdraw?: Maybe<MemberGraphData>;
 };
 
 export type MemberOverviewResult = {
@@ -8693,6 +8708,7 @@ export enum OrganizationType {
 
 export type OverviewView = {
   basicInformation?: Maybe<MemberBasicInfoView>;
+  memberGraphs?: Maybe<MemberOverviewGraphs>;
   payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
   recentTransactions?: Maybe<Array<Maybe<MemberRecentTransactionView>>>;
   statistics?: Maybe<MemberStatisticsView>;
@@ -8765,6 +8781,16 @@ export type PenaltyTypeInput = {
   penaltyLedgerMapping?: InputMaybe<Scalars['String']>;
   penaltyRate?: InputMaybe<Scalars['Float']>;
 };
+
+export enum PeriodTypeEnum {
+  Last_7Days = 'LAST_7_DAYS',
+  Last_14Days = 'LAST_14_DAYS',
+  Last_30Days = 'LAST_30_DAYS',
+  Lifetime = 'LIFETIME',
+  ThisFiscalYearToDate = 'THIS_FISCAL_YEAR_TO_DATE',
+  Today = 'TODAY',
+  Yesterday = 'YESTERDAY',
+}
 
 export type PersonalInformation = {
   citizenship?: Maybe<Citizenship>;
@@ -10419,7 +10445,7 @@ export type LoginMutation = {
             lastName: Record<'local' | 'en' | 'np', string>;
             role?: Roles | null;
             profilePic?: string | null;
-            branch?: { name?: string | null } | null;
+            branch?: { id: string; name?: string | null } | null;
           } | null;
           preference?: {
             language?: Language | null;
@@ -12410,7 +12436,7 @@ export type GetMeQuery = {
           lastName: Record<'local' | 'en' | 'np', string>;
           role?: Roles | null;
           profilePic?: string | null;
-          branch?: { name?: string | null } | null;
+          branch?: { id: string; name?: string | null } | null;
         } | null;
         preference?: {
           language?: Language | null;
@@ -16523,6 +16549,7 @@ export const LoginDocument = `
             role
             profilePic
             branch {
+              id
               name
             }
           }
@@ -19843,6 +19870,7 @@ export const GetMeDocument = `
           role
           profilePic
           branch {
+            id
             name
           }
         }
