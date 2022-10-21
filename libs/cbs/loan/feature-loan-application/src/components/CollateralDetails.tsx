@@ -52,7 +52,6 @@ export const CollateralDetails = () => {
   });
   const productId = watch('productId');
 
-  
   // Query
   const { data: loanProductData } = useGetLoanProductDetailsDataQuery(
     { id: String(productId) },
@@ -64,6 +63,10 @@ export const CollateralDetails = () => {
   const loanProduct = loanProductData?.settings?.general?.loanProducts?.formState
     ?.data as LoanProduct;
   const collateralList = collateralListData?.settings?.general?.loan?.general?.collateralList;
+
+  if (!loanProduct?.isCollateralRequired) {
+    return null;
+  }
 
   return (
     <>

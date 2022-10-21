@@ -51,7 +51,9 @@ export const NewLoanApplication = () => {
   const queryClient = useQueryClient();
   const [showCriteria, setShowCriteria] = useState(false);
 
-  const methods = useForm<LoanAccountInput>();
+  const methods = useForm<LoanAccountInput>({
+    mode: 'onChange',
+  });
   const { watch, resetField } = methods;
 
   const memberId = watch('memberId');

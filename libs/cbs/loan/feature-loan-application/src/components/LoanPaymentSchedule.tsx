@@ -34,7 +34,7 @@ export const LoanPaymentSchedule = () => {
   const { data } = useGetLoanInstallmentsQuery(
     {
       interest: interest ?? 12,
-      productId,
+      productId: String(productId),
       tenure: Number(tenure),
       sanctionAmount: Number(sanctionAmount),
       repaymentScheme: repaymentScheme ?? LoanRepaymentScheme.Emi,
@@ -124,64 +124,72 @@ export const LoanPaymentSchedule = () => {
         </Box>
       )}
 
-      {data && data?.loanAccount?.getLoanInstallments?.data?.installments && (
-        <Table<LoanInstallment>
-          variant="report"
-          size="small"
-          isStatic
-          showFooter
-          data={data?.loanAccount.getLoanInstallments?.data?.installments as LoanInstallment[]}
-          columns={[
-            {
-              header: 'Installment No.',
-              footer: 'Total Cost of Loan',
-              accessorKey: 'installmentNo',
-              meta: {
-                Footer: {
-                  colspan: 4,
-                },
-              },
-            },
-            {
-              header: 'Principal',
-              accessorKey: 'principal',
-              meta: {
-                isNumeric: true,
-                Footer: {
-                  display: 'none',
-                },
-              },
-            },
-            {
-              header: 'Interest',
-              accessorKey: 'interest',
-              meta: {
-                isNumeric: true,
-                Footer: {
-                  display: 'none',
-                },
-              },
-            },
-            {
-              header: 'Payment',
-              accessorKey: 'payment',
-              meta: {
-                isNumeric: true,
-                Footer: {
-                  display: 'none',
-                },
-              },
-            },
-            {
-              header: 'Remaining Principal',
-              footer: data?.loanAccount.getLoanInstallments?.data?.total,
-              accessorKey: 'remainingPrincipal',
-              meta: {
-                isNumeric: true,
-              },
-            },
-          ]}
+      {data?.loanAccount?.getLoanInstallments?.error?.__typename === 'BadRequestError' ? (
+        <Alert
+          status="error"
+          title={data?.loanAccount?.getLoanInstallments?.error?.badRequestErrorMessage}
         />
+      ) : (
+        data &&
+        data?.loanAccount?.getLoanInstallments?.data?.installments && (
+          <Table<LoanInstallment>
+            variant="report"
+            size="small"
+            isStatic
+            showFooter
+            data={data?.loanAccount.getLoanInstallments?.data?.installments as LoanInstallment[]}
+            columns={[
+              {
+                header: 'Installment No.',
+                footer: 'Total Cost of Loan',
+                accessorKey: 'installmentNo',
+                meta: {
+                  Footer: {
+                    colspan: 4,
+                  },
+                },
+              },
+              {
+                header: 'Principal',
+                accessorKey: 'principal',
+                meta: {
+                  isNumeric: true,
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+              {
+                header: 'Interest',
+                accessorKey: 'interest',
+                meta: {
+                  isNumeric: true,
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+              {
+                header: 'Payment',
+                accessorKey: 'payment',
+                meta: {
+                  isNumeric: true,
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+              {
+                header: 'Remaining Principal',
+                footer: data?.loanAccount.getLoanInstallments?.data?.total,
+                accessorKey: 'remainingPrincipal',
+                meta: {
+                  isNumeric: true,
+                },
+              },
+            ]}
+          />
+        )
       )}
       {gracePeriod?.gracePeriod && gracePeriod?.installmentNo && (
         <Alert status="info" hideCloseIcon>

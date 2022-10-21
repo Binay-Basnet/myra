@@ -81,6 +81,10 @@ export const GuaranteeDetails = () => {
       ? (Number(currentBalance) * Number(guaranteePercent)) / 100
       : 1000;
 
+  if (!product?.allowGurantee) {
+    return null;
+  }
+
   return (
     <>
       <Box display="flex" flexDir="column" gap="s16">

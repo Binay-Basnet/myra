@@ -75,7 +75,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref)
             bg="white"
             color="accent.debit"
             border="1px solid"
-            borderColor="gray.300"
+            borderColor={errorText ? 'red.500' : 'gray.300'}
           />
         )}
       </InputGroup>
