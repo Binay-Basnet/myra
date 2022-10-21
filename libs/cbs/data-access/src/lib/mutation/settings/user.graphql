@@ -3,6 +3,9 @@ mutation setSettingsUserData($id: ID!, $data: MyraUserInput) {
     myraUser {
       add(id: $id, data: $data) {
         recordId
+        error {
+          ...MutationError
+        }
       }
     }
   }
