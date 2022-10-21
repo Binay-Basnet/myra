@@ -2241,6 +2241,7 @@ export type DepositProductFormStateData = {
   interest?: Maybe<InterestFormState>;
   isForMinors?: Maybe<Scalars['Boolean']>;
   isMandatorySaving?: Maybe<Scalars['Boolean']>;
+  isPrematurePenaltyApplicable?: Maybe<Scalars['Boolean']>;
   isTenureApplicable?: Maybe<Scalars['Boolean']>;
   ladderRate?: Maybe<Scalars['Boolean']>;
   ladderRateData?: Maybe<Array<Maybe<LadderRateFormState>>>;
@@ -2322,6 +2323,7 @@ export type DepositProductInput = {
   interest?: InputMaybe<InterestRate>;
   isForMinors?: InputMaybe<Scalars['Boolean']>;
   isMandatorySaving?: InputMaybe<Scalars['Boolean']>;
+  isPrematurePenaltyApplicable?: InputMaybe<Scalars['Boolean']>;
   isTenureApplicable?: InputMaybe<Scalars['Boolean']>;
   ladderRate?: InputMaybe<Scalars['Boolean']>;
   ladderRateData?: InputMaybe<Array<InputMaybe<LadderRate>>>;
@@ -3335,7 +3337,7 @@ export enum EBankingServiceStatus {
 
 export type EBankingShareQuery = {
   history?: Maybe<Array<Maybe<EbankingShareHistory>>>;
-  summary: EbankingShare;
+  summary?: Maybe<EbankingShare>;
 };
 
 export type EBankingShareQueryHistoryArgs = {
@@ -3516,7 +3518,7 @@ export type EbankingShareFilter = {
 };
 
 export type EbankingShareHistory = {
-  amount: Scalars['Float'];
+  amount: Scalars['String'];
   date: Scalars['String'];
   id: Scalars['String'];
   numberOfShares: Scalars['Int'];
@@ -7291,6 +7293,7 @@ export type LoanProduct = Base & {
   isInsuranceApplicable?: Maybe<Scalars['Boolean']>;
   isMonthlyInstallmentCompulsory?: Maybe<Scalars['Boolean']>;
   isPenaltyApplicable?: Maybe<Scalars['Boolean']>;
+  isPrematurePenaltyApplicable?: Maybe<Scalars['Boolean']>;
   isRebateApplicable?: Maybe<Scalars['Boolean']>;
   isStaffProduct?: Maybe<Scalars['Boolean']>;
   isTenureApplicable?: Maybe<Scalars['Boolean']>;
@@ -7392,6 +7395,7 @@ export type LoanProductInput = {
   isInsuranceApplicable?: InputMaybe<Scalars['Boolean']>;
   isMonthlyInstallmentCompulsory?: InputMaybe<Scalars['Boolean']>;
   isPenaltyApplicable?: InputMaybe<Scalars['Boolean']>;
+  isPrematurePenaltyApplicable?: InputMaybe<Scalars['Boolean']>;
   isRebateApplicable?: InputMaybe<Scalars['Boolean']>;
   isStaffProduct?: InputMaybe<Scalars['Boolean']>;
   isTenureApplicable?: InputMaybe<Scalars['Boolean']>;
@@ -15061,6 +15065,7 @@ export type GetLoanProductEditDataQuery = {
             allowGurantee?: boolean | null;
             maxPercentOfGurantee?: number | null;
             collateralTypes?: Array<string | null> | null;
+            isPrematurePenaltyApplicable?: boolean | null;
             productCode?: { prefix: string; initialNo: string } | null;
             penaltyOnPrincipal?: {
               dayAfterInstallmentDate?: number | null;
@@ -15532,6 +15537,7 @@ export type GetDepositProductSettingsEditDataQuery = {
             wealthBuildingProduct?: boolean | null;
             individualDocuments?: Array<IndividualRequiredDocument | null> | null;
             institutionDocuments?: Array<InstitutionRequiredDocument | null> | null;
+            isPrematurePenaltyApplicable?: boolean | null;
             productCode: { prefix: string; initialNo: string };
             depositAmount?: { minAmount?: any | null; maxAmount?: any | null } | null;
             withdrawAmountLimit?: { minAmount?: any | null; maxAmount?: any | null } | null;
@@ -23272,6 +23278,7 @@ export const GetLoanProductEditDataDocument = `
               minValue
               maxValue
             }
+            isPrematurePenaltyApplicable
             prematurePenaltySetup {
               penaltyDateType
               noOfDays
@@ -23921,6 +23928,7 @@ export const GetDepositProductSettingsEditDataDocument = `
             wealthBuildingProduct
             individualDocuments
             institutionDocuments
+            isPrematurePenaltyApplicable
             prematurePenalty {
               penaltyDateType
               noOfDays

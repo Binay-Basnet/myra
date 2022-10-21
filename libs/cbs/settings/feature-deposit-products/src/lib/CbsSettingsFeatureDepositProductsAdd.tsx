@@ -99,6 +99,7 @@ export const SettingsDepositProductsAdd = () => {
       isMandatorySaving: false,
       alternativeChannels: false,
       tenureUnit: FrequencyTenure.Day,
+      isPrematurePenaltyApplicable: false,
     },
   });
 

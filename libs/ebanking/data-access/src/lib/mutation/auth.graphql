@@ -71,7 +71,7 @@ mutation eBankingLogin($data: EbankingLoginInput!) {
 mutation checkAccount($id: ID!, $mobileNumber: String!, $pin: Int!) {
   eBanking {
     auth(type: EBANKING) {
-      checkAccount(coopId: $id, mobileNumber: $mobileNumber, pin: $pin ) {
+      checkAccount(coopId: $id, mobileNumber: $mobileNumber, pin: $pin) {
         success
         error {
           ...MutationError
@@ -125,7 +125,11 @@ mutation setNewPin($data: CooperativeConnectInput) {
 mutation loginToCooperative($cooperativeId: ID!, $pinCode: Int, $mobileNumber: String!) {
   eBanking {
     auth(type: EBANKING) {
-      loginToCooperative(cooperativeId: $cooperativeId, pinCode: $pinCode, mobileNumber: $mobileNumber) {
+      loginToCooperative(
+        cooperativeId: $cooperativeId
+        pinCode: $pinCode
+        mobileNumber: $mobileNumber
+      ) {
         error {
           ...MutationError
         }
@@ -156,7 +160,7 @@ mutation loginToCooperative($cooperativeId: ID!, $pinCode: Int, $mobileNumber: S
 
 query getCoopMe {
   eBanking {
-    auth{
+    auth {
       meCooperativeUser {
         data {
           myraUserId

@@ -20383,6 +20383,18 @@
             "deprecationReason": null
           },
           {
+            "name": "isPrematurePenaltyApplicable",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "isTenureApplicable",
             "description": null,
             "args": [],
@@ -21337,6 +21349,18 @@
           },
           {
             "name": "isMandatorySaving",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isPrematurePenaltyApplicable",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -29722,13 +29746,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "EbankingShare",
-                "ofType": null
-              }
+              "kind": "OBJECT",
+              "name": "EbankingShare",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -31189,7 +31209,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -62844,6 +62864,18 @@
             "deprecationReason": null
           },
           {
+            "name": "isPrematurePenaltyApplicable",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "isRebateApplicable",
             "description": null,
             "args": [],
@@ -64054,6 +64086,18 @@
           },
           {
             "name": "isPenaltyApplicable",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isPrematurePenaltyApplicable",
             "description": null,
             "type": {
               "kind": "SCALAR",

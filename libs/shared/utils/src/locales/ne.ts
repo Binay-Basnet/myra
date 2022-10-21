@@ -3232,6 +3232,7 @@ const ne: Record<string, string> = {
   depositProductInactiveReason: 'Reason for Inactive',
 
   loanRepaymentDepositedBy: 'Deposited By',
+  prematurePenaltyEnable: 'Premature Penalty',
 };
 
 export default ne;
