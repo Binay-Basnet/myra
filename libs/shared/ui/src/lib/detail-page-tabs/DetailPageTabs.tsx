@@ -10,7 +10,7 @@ export interface DetailPageTabsProps {
 const TabCol = chakra(Tab, {
   baseStyle: {
     color: 'gray.800',
-    height: '48px',
+    height: '40px',
     fontSize: 'r1',
     fontWeight: '400',
     width: '100%',
@@ -42,7 +42,7 @@ export const DetailPageTabs = ({ tabs }: DetailPageTabsProps) => {
     <Box p="s16">
       <Box>
         <Tabs variant="unstyled" index={selectedIndex === -1 ? 0 : selectedIndex}>
-          <Box display="flex" alignItems="center" flexDir="column" gap="s8">
+          <Box display="flex" alignItems="center" flexDir="column">
             {tabs.map((tab) => (
               <Box
                 key={tab}
