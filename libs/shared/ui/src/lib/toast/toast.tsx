@@ -61,7 +61,7 @@ export const getError = (error: MutationError) => {
   }
 };
 
-function findError(obj: Record<string, unknown> | null, key: string): MutationError[] {
+export function findError(obj: Record<string, unknown> | null, key: string): MutationError[] {
   if (_.has(obj, key) && obj) return obj[key] as MutationError[];
 
   return _.flatten(

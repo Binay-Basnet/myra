@@ -280,6 +280,8 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
           }
           overDrawnBalance
           guaranteedAmount
+          interestAccured
+          interestTax
           product {
             id
             productCode
@@ -288,6 +290,11 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
             minimumBalance
             isMandatorySaving
             withdrawRestricted
+            accountClosingCharge {
+              serviceName
+              ledgerName
+              amount
+            }
           }
           dues {
             fine

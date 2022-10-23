@@ -194,8 +194,7 @@ export type AccountTransferListEdges = {
 };
 
 export type AccountTransferPaymentForAccountClose = {
-  depositedBy: Scalars['String'];
-  depositedDate: Scalars['String'];
+  amount: Scalars['String'];
   destination_account: Scalars['ID'];
   note?: InputMaybe<Scalars['String']>;
 };
@@ -917,6 +916,11 @@ export type BulkDepositResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
   recordId?: Maybe<Scalars['ID']>;
+};
+
+export type BulkInstallmentResult = {
+  accountId?: Maybe<Scalars['String']>;
+  value?: Maybe<InstallmentResult>;
 };
 
 export type CoaFullView = {
@@ -1871,28 +1875,33 @@ export type DepositAccount = Base & {
   id: Scalars['ID'];
   installmentAmount?: Maybe<Scalars['String']>;
   interestAccured?: Maybe<Scalars['String']>;
+  interestTax?: Maybe<Scalars['String']>;
   lastTransactionDate?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   objState: ObjState;
   overDrawnBalance?: Maybe<Scalars['String']>;
+  prematurePenalty?: Maybe<Scalars['String']>;
   product: DepositProduct;
 };
 
 export type DepositAccountClose = {
   accountID: Scalars['ID'];
   accountTransfer?: InputMaybe<AccountTransferPaymentForAccountClose>;
+  adjustedInterest?: InputMaybe<Scalars['String']>;
   bankCheque?: InputMaybe<BankChequePaymentForAccountClose>;
   cash?: InputMaybe<DepositCash>;
   memberID: Scalars['ID'];
   notes?: InputMaybe<Scalars['String']>;
   otherReason?: InputMaybe<Scalars['String']>;
-  paymentMode: AccountClosePaymentMode;
+  paymentMode?: InputMaybe<AccountClosePaymentMode>;
   reason: AccountCloseReason;
+  serviceCharge?: InputMaybe<Array<InputMaybe<ServiceChargeInput>>>;
 };
 
 export type DepositAccountCloseResult = {
+  calculatedAmount?: Maybe<Scalars['String']>;
   error?: Maybe<MutationError>;
   record?: Maybe<Scalars['Any']>;
   recordId: Scalars['ID'];
@@ -2104,6 +2113,7 @@ export type DepositLoanAccountMutationForgiveInstallmentArgs = {
 export type DepositLoanAccountQuery = {
   formState?: Maybe<DepositLoanAccountFormStateResult>;
   get?: Maybe<DepositLoanAccount>;
+  getBulkInstallments?: Maybe<Array<Maybe<BulkInstallmentResult>>>;
   getInstallments?: Maybe<InstallmentResult>;
   list?: Maybe<DepositLoanAccountConnection>;
   listDefaultAccounts?: Maybe<DepositLoanAccountListResult>;
@@ -2116,6 +2126,10 @@ export type DepositLoanAccountQueryFormStateArgs = {
 
 export type DepositLoanAccountQueryGetArgs = {
   id: Scalars['ID'];
+};
+
+export type DepositLoanAccountQueryGetBulkInstallmentsArgs = {
+  ids: Array<InputMaybe<Scalars['ID']>>;
 };
 
 export type DepositLoanAccountQueryGetInstallmentsArgs = {
@@ -2150,6 +2164,7 @@ export type DepositLoanAccountResult = {
 export type DepositLoanAccountSearchFilter = {
   id?: InputMaybe<Scalars['ID']>;
   memberId?: InputMaybe<Scalars['String']>;
+  objState?: InputMaybe<ObjState>;
   query?: InputMaybe<Scalars['String']>;
 };
 
@@ -2160,6 +2175,7 @@ export enum DepositPaymentType {
 }
 
 export type DepositProduct = Base & {
+  accountClosingCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
   createdDate?: Maybe<Scalars['String']>;
@@ -2753,6 +2769,7 @@ export type EBankingAuthMutationVerifyOtpArgs = {
 };
 
 export type EBankingChequeBlockInput = {
+  accountId?: InputMaybe<Scalars['String']>;
   chequeNumber?: InputMaybe<Scalars['String']>;
   reason?: InputMaybe<Scalars['String']>;
 };
@@ -2791,8 +2808,10 @@ export type EBankingChequeQueryPastRequestsArgs = {
 };
 
 export type EBankingChequeRequestInput = {
+  accountId?: InputMaybe<Scalars['String']>;
   branch?: InputMaybe<Scalars['ID']>;
   collector?: InputMaybe<Scalars['ID']>;
+  noOfLeaves?: InputMaybe<Scalars['Int']>;
   type: EBankingChequeRequestType;
 };
 
@@ -2809,6 +2828,7 @@ export type EBankingChequeResult = {
 };
 
 export type EBankingChequeWithdrawViaCollectorInput = {
+  accountId?: InputMaybe<Scalars['String']>;
   amount?: InputMaybe<Scalars['String']>;
   branch?: InputMaybe<Scalars['ID']>;
   collector?: InputMaybe<Scalars['ID']>;
@@ -4328,6 +4348,7 @@ export type HumanizeAuditLog = {
 };
 
 export enum Id_Type {
+  Account = 'ACCOUNT',
   Address = 'ADDRESS',
   Bank = 'BANK',
   Bankbranch = 'BANKBRANCH',
@@ -8382,6 +8403,7 @@ export type NotificationFilter = {
 };
 
 export enum ObjState {
+  Active = 'ACTIVE',
   Approved = 'APPROVED',
   Draft = 'DRAFT',
   Inactive = 'INACTIVE',
@@ -10329,6 +10351,7 @@ export type SetAccountCloseDataMutation = {
   account: {
     close?: {
       recordId: string;
+      calculatedAmount?: string | null;
       error?:
         | MutationError_AuthorizationError_Fragment
         | MutationError_BadRequestError_Fragment
@@ -12200,6 +12223,8 @@ export type GetAccountTableListQuery = {
           accountExpiryDate?: string | null;
           overDrawnBalance?: string | null;
           guaranteedAmount?: string | null;
+          interestAccured?: string | null;
+          interestTax?: string | null;
           createdBy: { id: string };
           modifiedBy: { id: string };
           member?: {
@@ -12225,6 +12250,11 @@ export type GetAccountTableListQuery = {
             minimumBalance?: string | null;
             isMandatorySaving?: boolean | null;
             withdrawRestricted?: boolean | null;
+            accountClosingCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
           };
           dues?: {
             fine?: string | null;
@@ -16401,6 +16431,7 @@ export const SetAccountCloseDataDocument = `
   account {
     close(data: $data) {
       recordId
+      calculatedAmount
       error {
         ...MutationError
       }
@@ -19560,6 +19591,8 @@ export const GetAccountTableListDocument = `
           }
           overDrawnBalance
           guaranteedAmount
+          interestAccured
+          interestTax
           product {
             id
             productCode
@@ -19568,6 +19601,11 @@ export const GetAccountTableListDocument = `
             minimumBalance
             isMandatorySaving
             withdrawRestricted
+            accountClosingCharge {
+              serviceName
+              ledgerName
+              amount
+            }
           }
           dues {
             fine
