@@ -3633,5 +3633,11 @@ const en: Record<string, string> = {
 
   loanRepaymentDepositedBy: 'Deposited By',
   prematurePenaltyEnable: 'Premature Penalty',
+
+  /* Requests Start */
+
+  requests: 'Requests',
+
+  /* Requests Start */
 };
 export default en;
