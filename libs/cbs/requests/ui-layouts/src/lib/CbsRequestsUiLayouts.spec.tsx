@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import CbsRequestsUiLayouts from './CbsRequestsUiLayouts';
+import RequestListLayout from './RequestListLayout';
 
-describe('CbsRequestsUiLayouts', () => {
+describe('RequestListLayout', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<CbsRequestsUiLayouts />);
+    const { baseElement } = render(<RequestListLayout />);
     expect(baseElement).toBeTruthy();
   });
 });

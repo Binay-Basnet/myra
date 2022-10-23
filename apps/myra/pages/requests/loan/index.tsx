@@ -1,5 +1,6 @@
 import { ReactElement } from 'react';
 
+import { RequestListLayout } from '@coop/cbs/requests/layout';
 import { Box, MainLayout, WIPState } from '@coop/shared/ui';
 
 const LoanRequestPage = () => (
@@ -11,5 +12,9 @@ const LoanRequestPage = () => (
 export default LoanRequestPage;
 
 LoanRequestPage.getLayout = function getLayout(page: ReactElement) {
-  return <MainLayout>{page}</MainLayout>;
+  return (
+    <MainLayout>
+      <RequestListLayout>{page}</RequestListLayout>
+    </MainLayout>
+  );
 };

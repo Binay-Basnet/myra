@@ -1,1 +1,1 @@
-export * from './lib/CbsRequestsUiLayouts';
+export * from './lib/RequestListLayout';
