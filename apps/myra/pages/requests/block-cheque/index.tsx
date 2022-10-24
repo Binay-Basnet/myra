@@ -1,13 +1,10 @@
 import { ReactElement } from 'react';
 
 import { RequestListLayout } from '@coop/cbs/requests/layout';
-import { Box, MainLayout, WIPState } from '@coop/shared/ui';
+import { BlockChequeRequest } from '@coop/cbs/requests/lists';
+import { MainLayout } from '@coop/shared/ui';
 
-const BlockChequeRequestPage = () => (
-  <Box minH="calc(100vh - 110px)" display="flex" alignItems="center" justifyContent="center">
-    <WIPState />
-  </Box>
-);
+const BlockChequeRequestPage = () => <BlockChequeRequest />;
 
 export default BlockChequeRequestPage;
 

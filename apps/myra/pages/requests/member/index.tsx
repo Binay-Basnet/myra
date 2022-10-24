@@ -1,17 +1,14 @@
 import { ReactElement } from 'react';
 
 import { RequestListLayout } from '@coop/cbs/requests/layout';
-import { Box, MainLayout, WIPState } from '@coop/shared/ui';
+import { MemberRequestPage } from '@coop/cbs/requests/lists';
+import { MainLayout } from '@coop/shared/ui';
 
-const MemberRequestPage = () => (
-  <Box minH="calc(100vh - 110px)" display="flex" alignItems="center" justifyContent="center">
-    <WIPState />
-  </Box>
-);
+const MemberRequestNextPage = () => <MemberRequestPage />;
 
-export default MemberRequestPage;
+export default MemberRequestNextPage;
 
-MemberRequestPage.getLayout = function getLayout(page: ReactElement) {
+MemberRequestNextPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
       <RequestListLayout>{page}</RequestListLayout>
