@@ -60,7 +60,7 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   {
     title: 'transfer',
     icon: AiOutlineSend,
-    link: '/transfer',
+    link: '/transfer/vault-transfer/list',
   },
   {
     title: 'requests',

@@ -22,7 +22,7 @@ export const FormAgentSelect = ({ name, label }: IFormAgentSelectProps) => {
     },
     filter: {
       query: agentId,
-      role: Roles.Agent,
+      role: [Roles.Agent],
     },
   });
 

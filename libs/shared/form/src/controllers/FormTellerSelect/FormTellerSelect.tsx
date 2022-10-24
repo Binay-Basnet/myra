@@ -5,35 +5,26 @@ import { Roles, useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { getRouterQuery } from '@coop/shared/utils';
 
-interface IAgentSelectProps {
+interface IFormTellerSelectProps {
   name: string;
   label: string;
-  __placeholder?: string;
 }
 
 type OptionType = { label: string; value: string };
 
-export const AgentSelect = ({ name, label, __placeholder }: IAgentSelectProps) => {
-  const [agentId, setAgentId] = useState('');
-  const [trigger, setTrigger] = useState(false);
+export const FormTellerSelect = ({ name, label }: IFormTellerSelectProps) => {
+  const [tellerId, setTellerId] = useState('');
 
-  const { data: agentListQueryData, isFetching } = useGetSettingsUserListDataQuery(
-    {
-      paginate: getRouterQuery({ type: ['PAGINATION'] }),
-      filter: {
-        query: agentId,
-        role: [Roles.Agent],
-      },
+  const { data: agentListQueryData, isFetching } = useGetSettingsUserListDataQuery({
+    paginate: {
+      ...getRouterQuery({ type: ['PAGINATION'] }),
+      first: 10,
     },
-    {
-      staleTime: 0,
-      enabled: trigger,
-    }
-  );
-
-  // useEffect(() => {
-  //   setAgentId(watch(name));
-  // }, [watch(name)]);
+    filter: {
+      query: tellerId,
+      role: [Roles.Teller, Roles.HeadTeller],
+    },
+  });
 
   const agentList = agentListQueryData?.settings?.myraUser?.list?.edges;
 
@@ -53,14 +44,14 @@ export const AgentSelect = ({ name, label, __placeholder }: IAgentSelectProps) =
       name={name}
       label={label}
       isLoading={isFetching}
-      __placeholder={__placeholder}
       onInputChange={debounce((id) => {
         if (id) {
-          setAgentId(id);
-          setTrigger(true);
+          setTellerId(id);
         }
       }, 800)}
       options={agentOptions}
     />
   );
 };
+
+export default FormTellerSelect;

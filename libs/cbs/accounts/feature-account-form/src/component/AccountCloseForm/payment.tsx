@@ -5,11 +5,11 @@ import {
   AccountClosePaymentMode,
   RootState,
   useAppSelector,
-  useGetBankListQuery,
+  useGetCoaBankListQuery,
 } from '@coop/cbs/data-access';
 import { BoxContainer, ContainerWithDivider } from '@coop/cbs/transactions/ui-containers';
 import {
-  FormDatePicker,
+  FormAmountInput,
   FormEditableTable,
   FormInput,
   FormSelect,
@@ -18,6 +18,7 @@ import {
   FormTextArea,
 } from '@coop/shared/form';
 import { Box, FormAccountSelect, Grid, GridItem, Text } from '@coop/shared/ui';
+import { featureCode } from '@coop/shared/utils';
 
 const paymentModes = [
   {
@@ -59,13 +60,23 @@ type PaymentTableType = {
 };
 
 export const Payment = ({ totalDeposit }: PaymentProps) => {
-  const { watch, resetField } = useFormContext();
+  const { watch, resetField, setValue } = useFormContext();
 
   const selectedPaymentMode = watch('paymentMode');
 
   const denominations = watch('cash.denominations');
 
-  const { data: bankList } = useGetBankListQuery();
+  const { data: bank } = useGetCoaBankListQuery({
+    accountCode: featureCode.accountCode as string[],
+  });
+
+  const bankListArr = bank?.settings?.chartsOfAccount?.accountsUnder?.data;
+
+  const bankList = bankListArr?.map((item) => ({
+    label: item?.name?.local as string,
+    value: item?.id as string,
+  }));
+
   const denominationTotal =
     denominations?.reduce(
       (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
@@ -79,7 +90,10 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
 
   const totalCashPaid: number = disableDenomination ? Number(cashPaid) : Number(denominationTotal);
 
-  const returnAmount = totalCashPaid - totalDeposit;
+  const returnAmount =
+    selectedPaymentMode === AccountClosePaymentMode.Cash
+      ? totalCashPaid - Math.floor(totalDeposit)
+      : totalCashPaid - totalDeposit;
 
   // refetch data when calendar preference is updated
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
@@ -87,6 +101,12 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
   useEffect(() => {
     resetField('accountTransfer.depositedDate');
   }, [preference?.date]);
+
+  useEffect(() => {
+    setValue('accountTransfer.amount', String(totalDeposit));
+    setValue('bankCheque.amount', String(totalDeposit));
+    setValue('cash.cashPaid', String(Math.floor(totalDeposit)));
+  }, [totalDeposit]);
 
   return (
     <ContainerWithDivider borderRight="1px" borderColor="border.layout" p="s16" pb="100px">
@@ -103,14 +123,12 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
               />
             </GridItem>
 
-            <FormDatePicker name="accountTransfer.depositedDate" label="Deposited Date" />
+            <FormAmountInput name="accountTransfer.amount" label="Amount" />
 
-            <FormInput type="text" name="accountTransfer.depositedBy" label="Deposited By" />
+            {/* <FormDatePicker name="accountTransfer.depositedDate" label="Deposited Date" />
+
+            <FormInput type="text" name="accountTransfer.depositedBy" label="Deposited By" /> */}
             <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
-              {' '}
-              <Text fontWeight="500" fontSize="r1">
-                Note
-              </Text>
               <FormTextArea name="accountTransfer.note" label="Note" />
             </GridItem>
           </Grid>
@@ -118,32 +136,12 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
 
         {selectedPaymentMode === AccountClosePaymentMode?.BankCheque && (
           <Grid templateColumns="repeat(2,1fr)" gap="s20">
-            {' '}
             <GridItem colSpan={2}>
-              <FormSelect
-                name="bankCheque.bank"
-                label="Bank Name"
-                options={
-                  bankList?.bank?.bank?.list?.map((bank) => ({
-                    label: bank?.name as string,
-                    value: bank?.id as string,
-                  })) ?? []
-                }
-              />
+              <FormSelect name="bankCheque.bank" label="Bank Name" options={bankList} />
             </GridItem>
             <FormInput name="bankCheque.cheque_no" label="Cheque No" placeholder="Cheque No" />
-            <FormInput
-              name="bankCheque.amount"
-              type="number"
-              label="Amount"
-              textAlign="right"
-              placeholder="0.00"
-            />
+            <FormAmountInput name="bankCheque.amount" label="Amount" />
             <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
-              {' '}
-              <Text fontWeight="500" fontSize="r1">
-                Note
-              </Text>
               <FormTextArea name="bankCheque.note" label="Note" />
             </GridItem>
           </Grid>

@@ -23,37 +23,37 @@ interface ITransactionsSidebarLayoutProps {
 const transactionSidebarColumns = [
   {
     title: 'transferVaultTransfer',
-    link: '/transactions/deposit/list',
-    name: 'deposit',
-    addLink: '/transactions/deposit/add',
+    link: '/transfer/vault-transfer/list',
+    name: 'vault-transfer',
+    addLink: '/transfer/vault-transfer/add',
   },
   {
     title: 'transferTellerTransfer',
-    link: '/transactions/withdraw/list',
-    name: 'withdraw',
-    addLink: '/transactions/withdraw/add',
+    link: '/transfer/teller-transfer/list',
+    name: 'teller-transfer',
+    addLink: '/transfer/teller-transfer/add',
   },
   {
     title: 'transferBranchTransfer',
-    link: '/transactions/account-transfer/list',
-    name: 'account-transfer',
-    addLink: '/transactions/account-transfer/add',
+    link: '/transfer/branch-transfer',
+    name: 'branch-transfer',
+    // addLink: '/transactions/account-transfer/add',
   },
 ];
 
 const dropdownButtons = [
   {
     label: 'transferVaultTransfer',
-    link: '/transactions/deposit/add',
+    link: '/transfer/vault-transfer/add',
   },
   {
     label: 'transferTellerTransfer',
-    link: '/transactions/withdraw/add',
+    link: '/transfer/teller-transfer/add',
   },
-  {
-    label: 'transferBranchTransfer',
-    link: '/transactions/account-transfer/add',
-  },
+  // {
+  //   label: 'transferBranchTransfer',
+  //   link: '/transactions/account-transfer/add',
+  // },
 ];
 
 export const TransferLayout = ({ children }: ITransactionsSidebarLayoutProps) => {

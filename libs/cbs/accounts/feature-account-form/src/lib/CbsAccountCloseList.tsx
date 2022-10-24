@@ -7,18 +7,7 @@ import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, PageHeader, Text } from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-const MEMBER_TAB_ITEMS = [
-  {
-    title: 'memberNavActive',
-    key: ObjState.Active,
-  },
-  {
-    title: 'accountNavDormant',
-    key: ObjState.Inactive,
-  },
-];
-
-export const CBSAccountList = () => {
+export const CBSAccountCloseList = () => {
   const router = useRouter();
 
   const { t } = useTranslation();
@@ -27,7 +16,7 @@ export const CBSAccountList = () => {
     {
       paginate: getRouterQuery({ type: ['PAGINATION'], query: router.query }),
       filter: {
-        objState: (router.query['objState'] ?? ObjState.Active) as ObjState,
+        objState: ObjState.Inactive,
       },
     },
     {
@@ -102,12 +91,7 @@ export const CBSAccountList = () => {
 
   return (
     <>
-      <Box position="sticky" top="110px" zIndex={3}>
-        <PageHeader
-          heading={`Account List - ${featureCode?.accountList}`}
-          tabItems={MEMBER_TAB_ITEMS}
-        />
-      </Box>
+      <PageHeader heading={`Account Close List - ${featureCode?.accountCloseList}`} />
 
       <Table
         isLoading={isLoading}
@@ -122,4 +106,4 @@ export const CBSAccountList = () => {
   );
 };
 
-export default CBSAccountList;
+export default CBSAccountCloseList;

@@ -1,10 +1,10 @@
 import { ReactElement } from 'react';
 
-import { DepositList } from '@coop/cbs/transactions/deposit';
 import { TransferLayout } from '@coop/cbs/transactions/ui-layouts';
+import { VaultTransferList } from '@coop/cbs/transfer';
 import { MainLayout } from '@coop/shared/ui';
 
-const Transfer = () => <DepositList />;
+const Transfer = () => <VaultTransferList />;
 
 Transfer.getLayout = function getLayout(page: ReactElement) {
   return (

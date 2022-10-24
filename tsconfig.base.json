@@ -91,6 +91,7 @@
       "@coop/cbs/transactions/ui-containers": ["libs/cbs/transactions/ui-containers/src/index.ts"],
       "@coop/cbs/transactions/ui-layouts": ["libs/cbs/transactions/ui-layouts/src/index.ts"],
       "@coop/cbs/transactions/withdraw": ["libs/cbs/transactions/feature-withdraw/src/index.ts"],
+      "@coop/cbs/transfer": ["libs/cbs/transfer/src/index.ts"],
       "@coop/cbs/utils": ["libs/cbs/utils/src/index.ts"],
       "@coop/ebanking/accounts": ["libs/ebanking/feature-accounts/src/index.ts"],
       "@coop/ebanking/auth": ["libs/ebanking/feature-auth/src/index.ts"],

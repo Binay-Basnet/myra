@@ -357,6 +357,7 @@ export const NewAccountTransfer = () => {
                               ID: sourceAccount?.id,
                               currentBalance: sourceAccount?.balance ?? '0',
                               minimumBalance: sourceAccount?.product?.minimumBalance ?? '0',
+                              interestAccured: sourceAccount?.interestAccured ?? '0',
                               guaranteeBalance: sourceAccount?.guaranteedAmount ?? '0',
                               overdrawnBalance: sourceAccount?.overDrawnBalance ?? '0',
                               fine: FINE,

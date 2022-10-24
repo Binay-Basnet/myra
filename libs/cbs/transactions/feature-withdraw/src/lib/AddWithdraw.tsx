@@ -346,6 +346,7 @@ export const AddWithdraw = () => {
                               ID: selectedAccount?.id,
                               currentBalance: selectedAccount?.balance ?? '0',
                               minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
+                              interestAccured: selectedAccount?.interestAccured ?? '0',
                               guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
                               overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                               fine: selectedAccount?.dues?.fine ?? '0',

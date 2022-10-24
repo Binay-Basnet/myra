@@ -16,5 +16,6 @@ export * from './controllers/FormPasswordInput/FormPasswordInput';
 export * from './controllers/FormPhoneNumber/FormPhoneNumber';
 export * from './controllers/FormSelect/FormSelect';
 export * from './controllers/FormSwitchTab/FormSwitchTab';
+export * from './controllers/FormTellerSelect/FormTellerSelect';
 export * from './lib/controllers-temp';
 export * from './lib/shared-form';

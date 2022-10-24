@@ -63,6 +63,7 @@
     "cbs-transactions-ui-components": "libs/cbs/transactions/ui-components",
     "cbs-transactions-ui-containers": "libs/cbs/transactions/ui-containers",
     "cbs-transactions-ui-layouts": "libs/cbs/transactions/ui-layouts",
+    "cbs-transfer": "libs/cbs/transfer",
     "cbs-utils": "libs/cbs/utils",
     "ebanking": "apps/ebanking",
     "ebanking-data-access": "libs/ebanking/data-access",
