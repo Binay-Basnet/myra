@@ -147,7 +147,9 @@ export const ChequeBookRequestList = () => {
           <DetailPageMemberCard
             id={selectedRequest?.memberId as string}
             name={selectedRequest?.memberName?.local as string}
-            profilePicUrl=""
+            profilePicUrl={selectedRequest?.memberProfilePicUrl as string}
+            memberGender={selectedRequest?.memberGender}
+            memberAge={selectedRequest?.memberAge}
           />
         </Box>
         <Grid templateColumns="repeat(2, 1fr)" gap="s20" p="s16">

@@ -12,6 +12,9 @@ query getChequeBookRequests($pagination: Pagination, $filter: RequestFilter) {
             memberId
             memberName
             memberPhoneNumber
+            memberAge
+            memberGender
+            memberProfilePicUrl
             accountNumber
             accountType
             approvalStatus

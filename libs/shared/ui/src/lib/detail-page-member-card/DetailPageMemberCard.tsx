@@ -6,9 +6,17 @@ export interface DetailPageMemberCardProps {
   id: string;
   name: string;
   profilePicUrl: string;
+  memberAge?: number | null;
+  memberGender?: string | null;
 }
 
-export const DetailPageMemberCard = ({ id, name, profilePicUrl }: DetailPageMemberCardProps) => (
+export const DetailPageMemberCard = ({
+  id,
+  name,
+  profilePicUrl,
+  memberGender,
+  memberAge,
+}: DetailPageMemberCardProps) => (
   <Box h="94px" w="100%" px="s16" display="flex" alignItems="center" gap="s8">
     <Avatar src={profilePicUrl as string} size="lg" name={name} />
     <Box display="flex" flexDir="column">
@@ -18,10 +26,12 @@ export const DetailPageMemberCard = ({ id, name, profilePicUrl }: DetailPageMemb
       <Text fontSize="r1" fontWeight="400" color="gray.800">
         {id}
       </Text>
-      {/* TODO! Display age and gender here */}
-      <Text fontSize="r1" fontWeight="400" color="gray.800">
-        Male | 43
-      </Text>
+
+      {(memberGender || memberAge) && (
+        <Text fontSize="r1" fontWeight="400" color="gray.800">
+          {memberGender} | {memberAge}
+        </Text>
+      )}
     </Box>
   </Box>
 );
