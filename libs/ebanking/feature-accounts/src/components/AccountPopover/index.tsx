@@ -17,9 +17,9 @@ export const AccountPopover = ({
   selectedAccount,
   setSelectedAccount,
 }: {
-  id: string;
-  selectedAccount: Account | null;
-  setSelectedAccount: React.Dispatch<React.SetStateAction<Account | null>>;
+  id?: string;
+  selectedAccount?: Account | null;
+  setSelectedAccount?: React.Dispatch<React.SetStateAction<Account | null>>;
 }) => {
   const { data: accountList } = useGetAccountListQuery(
     {
@@ -35,14 +35,15 @@ export const AccountPopover = ({
           if (id) {
             const foundAccount = accounts?.find((account) => account?.id === id);
 
-            setSelectedAccount({
-              id: foundAccount?.id as string,
-              name: foundAccount?.name as string,
-              accountNumber: foundAccount?.accountNumber as string,
-              balance: foundAccount?.balance
-                ? (amountConverter(foundAccount?.balance) as string)
-                : '-',
-            });
+            setSelectedAccount &&
+              setSelectedAccount({
+                id: foundAccount?.id as string,
+                name: foundAccount?.name as string,
+                accountNumber: foundAccount?.accountNumber as string,
+                balance: foundAccount?.balance
+                  ? (amountConverter(foundAccount?.balance) as string)
+                  : '-',
+              });
           }
           setSelectedAccount &&
             setSelectedAccount({
