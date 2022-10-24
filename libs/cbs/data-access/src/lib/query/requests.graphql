@@ -57,11 +57,35 @@ query getWithdrawViaCollector($pagination: Pagination, $filter: RequestFilter) {
   }
 }
 
+query getLoanRequests($pagination: Pagination, $filter: RequestFilter) {
+  requests {
+    list {
+      loanRequest(filter: $filter, paginate: $pagination) {
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges {
+          node {
+            id
+            memberId
+            memberName
+            memberPhoneNumber
+            approvalStatus
+            loanAmount
+            lastModifiedDate
+            purpose
+          }
+        }
+      }
+    }
+  }
+}
 
-query getLoanRequests($pagination: Pagination, $filter: RequestFilter){
+query getBlockChequeList($pagination: Pagination, $filter: RequestFilter){
   requests{
     list{
-      loanRequest(filter: $filter, paginate: $pagination ){
+      blockCheque(filter: $filter, paginate: $pagination){
         totalCount
         pageInfo {
           ...Pagination
@@ -72,10 +96,12 @@ query getLoanRequests($pagination: Pagination, $filter: RequestFilter){
             memberId
             memberName
             memberPhoneNumber
+            accountNumber
+            accountType
             approvalStatus
-            loanAmount
-            lastModifiedDate
-            purpose
+            requestedDate
+            reason
+            chequeNumber
           }
         }
       }

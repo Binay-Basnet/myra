@@ -15083,6 +15083,36 @@ export type GetLoanRequestsQuery = {
   };
 };
 
+export type GetBlockChequeListQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<RequestFilter>;
+}>;
+
+export type GetBlockChequeListQuery = {
+  requests: {
+    list?: {
+      blockCheque?: {
+        totalCount?: number | null;
+        pageInfo?: PaginationFragment | null;
+        edges?: Array<{
+          node?: {
+            id: string;
+            memberId: string;
+            memberName: Record<'local' | 'en' | 'np', string>;
+            memberPhoneNumber: string;
+            accountNumber: string;
+            accountType: string;
+            approvalStatus: RequestStatus;
+            requestedDate: string;
+            reason?: string | null;
+            chequeNumber: string;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetGlobalSearchQueryVariables = Exact<{
   filter?: InputMaybe<SearchFilterData>;
   pagination?: InputMaybe<Pagination>;
@@ -23258,6 +23288,45 @@ export const useGetLoanRequestsQuery = <TData = GetLoanRequestsQuery, TError = u
       null,
       variables
     ),
+    options
+  );
+export const GetBlockChequeListDocument = `
+    query getBlockChequeList($pagination: Pagination, $filter: RequestFilter) {
+  requests {
+    list {
+      blockCheque(filter: $filter, paginate: $pagination) {
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges {
+          node {
+            id
+            memberId
+            memberName
+            memberPhoneNumber
+            accountNumber
+            accountType
+            approvalStatus
+            requestedDate
+            reason
+            chequeNumber
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetBlockChequeListQuery = <TData = GetBlockChequeListQuery, TError = unknown>(
+  variables?: GetBlockChequeListQueryVariables,
+  options?: UseQueryOptions<GetBlockChequeListQuery, TError, TData>
+) =>
+  useQuery<GetBlockChequeListQuery, TError, TData>(
+    variables === undefined ? ['getBlockChequeList'] : ['getBlockChequeList', variables],
+    useAxios<GetBlockChequeListQuery, GetBlockChequeListQueryVariables>(
+      GetBlockChequeListDocument
+    ).bind(null, variables),
     options
   );
 export const GetGlobalSearchDocument = `

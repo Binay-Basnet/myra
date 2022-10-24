@@ -1,48 +1,45 @@
 import React from 'react';
+import { useRouter } from 'next/router';
+import { useDisclosure } from '@chakra-ui/react';
 
+import { RequestType, useGetBlockChequeListQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Box, PageHeader, TablePopover, Text } from '@coop/shared/ui';
+import { Box, DetailCardContent, Grid, PageHeader, TablePopover, Text } from '@coop/shared/ui';
+import { getRouterQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
-
-enum ApprovalStatus {
-  Approved = 'Approved',
-  Pending = 'Pending',
-  Declined = 'Declined',
-}
-
-type TMemberRequestTable = {
-  id: string;
-  requestBy: {
-    name: string;
-    id: string;
-  };
-  account: {
-    name: string;
-    id: string;
-  };
-  approvalStatus: ApprovalStatus;
-  chequeNumber: string;
-};
+import { ApproveDeclineModal } from '../components/ApproveDeclineModal';
 
 export const BlockChequeRequest = () => {
-  const columns = React.useMemo<Column<TMemberRequestTable>[]>(
+  const router = useRouter();
+  const modalProps = useDisclosure();
+
+  const { data, isFetching } = useGetBlockChequeListQuery({
+    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+  });
+
+  const blockChequeRequests = React.useMemo(
+    () => data?.requests?.list?.blockCheque?.edges ?? [],
+    [data]
+  );
+
+  const columns = React.useMemo<Column<typeof blockChequeRequests[0]>[]>(
     () => [
       {
         header: 'ID',
-        accessorFn: (row) => row?.id,
+        accessorFn: (row) => row?.node?.id,
       },
 
       {
         header: 'Requested By',
-        accessorFn: (row) => row?.requestBy,
+        accessorFn: (row) => row?.node?.memberId,
         cell: (props) => (
           <Box display="flex" flexDir="column" gap="s4">
             <Text fontSize="r1" fontWeight={500} color="gray.800">
-              {props.row?.original?.requestBy?.name}
+              {props.row?.original?.node?.memberName?.local}
             </Text>
             <Text fontSize="r1" color="gray.600">
-              {props.row?.original?.requestBy?.id}
+              {props.row?.original?.node?.memberId}
             </Text>
           </Box>
         ),
@@ -52,14 +49,14 @@ export const BlockChequeRequest = () => {
       },
       {
         header: 'Account',
-        accessorFn: (row) => row?.account,
+        accessorFn: (row) => row?.node?.accountType,
         cell: (props) => (
           <Box display="flex" flexDir="column" gap="s4">
             <Text fontSize="r1" fontWeight={500} color="gray.800">
-              {props.row?.original?.account?.name}
+              {props.row?.original?.node?.accountType}
             </Text>
             <Text fontSize="r1" color="gray.600">
-              {props.row?.original?.account?.id}
+              {props.row?.original?.node?.accountNumber}
             </Text>
           </Box>
         ),
@@ -69,20 +66,21 @@ export const BlockChequeRequest = () => {
       },
       {
         header: 'Approval Status',
-        accessorFn: (row) => row?.approvalStatus,
-        cell: (props) => <ApprovalStatusItem status={props.row.original.approvalStatus} />,
+        accessorFn: (row) => row?.node?.approvalStatus,
+        cell: (props) => <ApprovalStatusItem status={props.row.original?.node?.approvalStatus} />,
       },
 
       {
         header: 'Cheque Number',
-        accessorFn: (row) => row?.chequeNumber,
+        accessorFn: (row) => row?.node?.chequeNumber,
       },
       {
         id: '_actions',
         header: '',
-        cell: (props) => (
-          <TablePopover items={[{ title: 'View Details' }]} node={props.row.original} />
-        ),
+        cell: (props) =>
+          props.row.original?.node ? (
+            <TablePopover items={[{ title: 'View Details' }]} node={props.row.original?.node} />
+          ) : null,
         meta: {
           width: '60px',
         },
@@ -91,6 +89,10 @@ export const BlockChequeRequest = () => {
     []
   );
 
+  const selectedRequest = blockChequeRequests?.find(
+    (request) => request?.node?.id === router.query['id']
+  )?.node;
+
   return (
     <Box display="flex" flexDir="column">
       <Box position="sticky" top="110px" zIndex={3}>
@@ -98,76 +100,52 @@ export const BlockChequeRequest = () => {
       </Box>
 
       <Table
-        data={[
-          {
-            id: '12214',
-            requestBy: {
-              name: 'Ram Krishna',
-              id: '234134940',
-            },
-            account: {
-              name: 'Saving Account',
-              id: '019384948494944',
-            },
-            approvalStatus: ApprovalStatus.Approved,
-            chequeNumber: '34580449408',
-          },
-
-          {
-            id: '12214',
-            requestBy: {
-              name: 'Ram Krishna',
-              id: '234134940',
-            },
-            account: {
-              name: 'Saving Account',
-              id: '019384948494944',
-            },
-            approvalStatus: ApprovalStatus.Approved,
-            chequeNumber: '34580449408',
-          },
-          {
-            id: '12214',
-            requestBy: {
-              name: 'Ram Krishna',
-              id: '234134940',
-            },
-            account: {
-              name: 'Saving Account',
-              id: '019384948494944',
-            },
-            approvalStatus: ApprovalStatus.Pending,
-            chequeNumber: '34580449408',
-          },
-          {
-            id: '12214',
-            requestBy: {
-              name: 'Ram Krishna',
-              id: '234134940',
-            },
-            account: {
-              name: 'Saving Account',
-              id: '019384948494944',
-            },
-            approvalStatus: ApprovalStatus.Approved,
-            chequeNumber: '34580449408',
-          },
-          {
-            id: '12214',
-            requestBy: {
-              name: 'Ram Krishna',
-              id: '234134940',
-            },
-            account: {
-              name: 'Saving Account',
-              id: '019384948494944',
-            },
-            approvalStatus: ApprovalStatus.Declined,
-            chequeNumber: '34580449408',
-          },
-        ]}
+        data={blockChequeRequests}
         columns={columns}
+        isLoading={isFetching}
+        rowOnClick={(row) => {
+          router.push(
+            {
+              query: {
+                id: row?.node?.id,
+              },
+            },
+            undefined,
+            { shallow: true }
+          );
+          modalProps.onToggle();
+        }}
+        pagination={{
+          total: data?.requests?.list?.blockCheque?.totalCount ?? 'Many',
+          pageInfo: data?.requests?.list?.blockCheque?.pageInfo,
+        }}
       />
+
+      <ApproveDeclineModal
+        requestType={RequestType.BlockCheque}
+        queryKey="getBlockChequeList"
+        approveModal={modalProps}
+      >
+        <Grid templateColumns="repeat(2, 1fr)" gap="s20" p="s16">
+          <DetailCardContent
+            title="Requested By"
+            subtitle={String(selectedRequest?.memberName?.local)}
+          >
+            <Text fontWeight="600" fontSize="r1" textTransform="capitalize" color="gray.800">
+              {selectedRequest?.memberId}
+            </Text>
+          </DetailCardContent>
+          <DetailCardContent title="Account" subtitle={String(selectedRequest?.accountType)}>
+            <Text fontWeight="600" fontSize="r1" textTransform="capitalize" color="gray.800">
+              {selectedRequest?.accountNumber}
+            </Text>
+          </DetailCardContent>
+          <DetailCardContent title="Cheque Number" subtitle={selectedRequest?.chequeNumber} />
+        </Grid>
+        <Box p="s16">
+          <DetailCardContent title="Reason" subtitle={selectedRequest?.reason} />
+        </Box>
+      </ApproveDeclineModal>
     </Box>
   );
 };

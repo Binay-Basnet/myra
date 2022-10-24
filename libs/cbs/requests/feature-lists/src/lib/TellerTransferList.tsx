@@ -1,15 +1,10 @@
 import React from 'react';
 
+import { RequestStatus } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, PageHeader, TablePopover, Text } from '@coop/shared/ui';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
-
-enum ApprovalStatus {
-  Approved = 'Approved',
-  Pending = 'Pending',
-  Declined = 'Declined',
-}
 
 type TMemberRequestTable = {
   id: string;
@@ -22,7 +17,7 @@ type TMemberRequestTable = {
     name: string;
   };
   amount?: string;
-  approvalStatus: ApprovalStatus;
+  approvalStatus: RequestStatus;
   requestedDate: string;
 };
 
@@ -114,7 +109,7 @@ export const TellerTransferList = () => {
               name: 'Sikha Poudel',
             },
             amount: '45,000.00',
-            approvalStatus: ApprovalStatus.Approved,
+            approvalStatus: RequestStatus.Approved,
             requestedDate: '2079-01-30',
           },
 
@@ -127,7 +122,7 @@ export const TellerTransferList = () => {
               name: 'Sikha Poudel',
             },
             amount: '45,000.00',
-            approvalStatus: ApprovalStatus.Approved,
+            approvalStatus: RequestStatus.Approved,
             requestedDate: '2079-01-30',
           },
           {
@@ -139,7 +134,7 @@ export const TellerTransferList = () => {
               name: 'Sikha Poudel',
             },
             amount: '45,000.00',
-            approvalStatus: ApprovalStatus.Approved,
+            approvalStatus: RequestStatus.Approved,
             requestedDate: '2079-01-30',
           },
           {
@@ -151,7 +146,7 @@ export const TellerTransferList = () => {
               name: 'Sikha Poudel',
             },
             amount: '45,000.00',
-            approvalStatus: ApprovalStatus.Approved,
+            approvalStatus: RequestStatus.Approved,
             requestedDate: '2079-01-30',
           },
         ]}

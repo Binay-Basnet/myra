@@ -1,22 +1,17 @@
 import React from 'react';
 
+import { RequestStatus } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
 import { Box, PageHeader, TablePopover } from '@coop/shared/ui';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
-
-enum ApprovalStatus {
-  Approved = 'Approved',
-  Pending = 'Pending',
-  Declined = 'Declined',
-}
 
 type TMemberRequestTable = {
   id: string;
   sourceBranch: string;
   receiverBranch: string;
 
-  approvalStatus: ApprovalStatus;
+  approvalStatus: RequestStatus;
   amount: string;
   requestedDate: string;
 };
@@ -85,7 +80,7 @@ export const BranchTransferRequstList = () => {
             sourceBranch: 'Lalitpur',
             receiverBranch: 'Kathmandu',
             amount: '24,000',
-            approvalStatus: ApprovalStatus.Approved,
+            approvalStatus: RequestStatus.Approved,
             requestedDate: '2079-01-30',
           },
 
@@ -94,7 +89,7 @@ export const BranchTransferRequstList = () => {
             sourceBranch: 'Lalitpur',
             receiverBranch: 'Kathmandu',
             amount: '24,000',
-            approvalStatus: ApprovalStatus.Approved,
+            approvalStatus: RequestStatus.Approved,
             requestedDate: '2079-01-30',
           },
           {
@@ -102,7 +97,7 @@ export const BranchTransferRequstList = () => {
             sourceBranch: 'Lalitpur',
             receiverBranch: 'Kathmandu',
             amount: '24,000',
-            approvalStatus: ApprovalStatus.Declined,
+            approvalStatus: RequestStatus.Declined,
             requestedDate: '2079-01-30',
           },
           {
@@ -110,7 +105,7 @@ export const BranchTransferRequstList = () => {
             sourceBranch: 'Lalitpur',
             receiverBranch: 'Kathmandu',
             amount: '24,000',
-            approvalStatus: ApprovalStatus.Approved,
+            approvalStatus: RequestStatus.Approved,
             requestedDate: '2079-01-30',
           },
           {
@@ -118,7 +113,7 @@ export const BranchTransferRequstList = () => {
             sourceBranch: 'Lalitpur',
             receiverBranch: 'Kathmandu',
             amount: '24,000',
-            approvalStatus: ApprovalStatus.Pending,
+            approvalStatus: RequestStatus.Pending,
             requestedDate: '2079-01-30',
           },
           {
@@ -126,7 +121,7 @@ export const BranchTransferRequstList = () => {
             sourceBranch: 'Lalitpur',
             receiverBranch: 'Kathmandu',
             amount: '24,000',
-            approvalStatus: ApprovalStatus.Approved,
+            approvalStatus: RequestStatus.Approved,
             requestedDate: '2079-01-30',
           },
         ]}
