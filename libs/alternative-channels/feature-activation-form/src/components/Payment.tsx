@@ -5,6 +5,7 @@ import { Divider } from '@chakra-ui/react';
 import {
   AlternativeChannelDepositedBy,
   AlternativeChannelPaymentMode,
+  ObjState,
   useGetCoaBankListQuery,
 } from '@coop/cbs/data-access';
 import { BoxContainer, ContainerWithDivider } from '@coop/cbs/transactions/ui-containers';
@@ -112,6 +113,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
                 name="accountTransfer.destination_account"
                 label="Destination Account"
                 memberId={memberId}
+                filterBy={ObjState.Active}
               />
             </GridItem>
             <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">

@@ -10,6 +10,7 @@ import { omit } from 'lodash';
 import {
   LoanDisbursementInput,
   LoanDisbursementMethod,
+  ObjState,
   useGetCoaBankListQuery,
   useSetDisburseLoanMutation,
 } from '@coop/cbs/data-access';
@@ -212,6 +213,7 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
                       name="accountPayment.destinationAccount"
                       label="Destination Account"
                       memberId={memberId}
+                      filterBy={ObjState.Active}
                     />
                   </GridItem>
                   <FormInput

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { LoanRepaymentMethod, useGetCoaBankListQuery } from '@coop/cbs/data-access';
+import { LoanRepaymentMethod, ObjState, useGetCoaBankListQuery } from '@coop/cbs/data-access';
 import { BoxContainer, ContainerWithDivider } from '@coop/cbs/transactions/ui-containers';
 import {
   FormEditableTable,
@@ -102,6 +102,7 @@ export const Payment = ({ totalDeposit, loanTotal }: PaymentProps) => {
                 name="account.destination_account"
                 label="Destination Account"
                 memberId={memberId}
+                filterBy={ObjState.Active}
               />
             </GridItem>
 

@@ -260,6 +260,7 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
           accountOpenedDate
           lastTransactionDate
           accountExpiryDate
+          closedAt
           member {
             id
             name

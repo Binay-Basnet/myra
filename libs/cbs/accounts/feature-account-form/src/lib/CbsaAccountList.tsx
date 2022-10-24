@@ -7,14 +7,14 @@ import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, PageHeader, Text } from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-const MEMBER_TAB_ITEMS = [
+const ACCOUNT_TAB_ITEMS = [
   {
     title: 'memberNavActive',
     key: ObjState.Active,
   },
   {
     title: 'accountNavDormant',
-    key: ObjState.Inactive,
+    key: ObjState.Dormant,
   },
 ];
 
@@ -105,7 +105,7 @@ export const CBSAccountList = () => {
       <Box position="sticky" top="110px" zIndex={3}>
         <PageHeader
           heading={`Account List - ${featureCode?.accountList}`}
-          tabItems={MEMBER_TAB_ITEMS}
+          tabItems={ACCOUNT_TAB_ITEMS}
         />
       </Box>
 

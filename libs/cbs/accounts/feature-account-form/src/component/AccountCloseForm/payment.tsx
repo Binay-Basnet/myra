@@ -3,6 +3,7 @@ import { useFormContext } from 'react-hook-form';
 
 import {
   AccountClosePaymentMode,
+  ObjState,
   RootState,
   useAppSelector,
   useGetCoaBankListQuery,
@@ -120,6 +121,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
                 name="accountTransfer.destination_account"
                 label="Destination Account"
                 memberId={memberId}
+                filterBy={ObjState.Active}
               />
             </GridItem>
 

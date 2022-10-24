@@ -11,6 +11,7 @@ import {
   DepositPaymentType,
   InstallmentState,
   NatureOfDepositProduct,
+  ObjState,
   useGetAccountTableListQuery,
   useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
@@ -366,6 +367,7 @@ export const AddDeposit = () => {
                       name="accountId"
                       label={t['addDepositSelectDepositAccount']}
                       memberId={memberId}
+                      filterBy={ObjState.Active}
                     />
                   )}
 

@@ -10,6 +10,7 @@ import {
   CashValue,
   DepositAccountClose,
   NatureOfDepositProduct,
+  ObjState,
   useGetAccountTableListQuery,
   useSetAccountCloseDataMutation,
 } from '@coop/cbs/data-access';
@@ -357,6 +358,7 @@ export const CbsAccountClose = () => {
                     name="accountID"
                     memberId={memberId}
                     label="Select Deposit Account"
+                    filterBy={ObjState.Active}
                   />
                 )}
                 {memberId && accountId && (

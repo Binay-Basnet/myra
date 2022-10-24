@@ -5,6 +5,7 @@ import omit from 'lodash/omit';
 
 import {
   NatureOfDepositProduct,
+  ObjState,
   TransferInput,
   TransferType,
   useGetAccountTableListQuery,
@@ -190,24 +191,7 @@ export const NewAccountTransfer = () => {
                           name="srcAccountId"
                           label={t['newAccountTransferSourceAccount']}
                           memberId={memberId}
-                          // options={accountListData?.account?.list?.edges?.map((account) => ({
-                          //   accountInfo: {
-                          //     accountName: account.node?.product.productName,
-                          //     accountId: account.node?.product?.id,
-                          //     accountType: account?.node?.product?.nature
-                          //       ? accountTypes[account?.node?.product?.nature]
-                          //       : '',
-                          //     balance: account?.node?.balance ?? '0',
-                          //     fine:
-                          //       account?.node?.product?.nature ===
-                          //         NatureOfDepositProduct.RecurringSaving ||
-                          //       (account?.node?.product?.nature === NatureOfDepositProduct.Saving &&
-                          //         account?.node?.product?.isMandatorySaving === true)
-                          //         ? FINE
-                          //         : '',
-                          //   },
-                          //   value: account.node?.id as string,
-                          // }))}
+                          filterBy={ObjState.Active}
                         />
                       )}
                     </BoxContainer>
@@ -225,25 +209,7 @@ export const NewAccountTransfer = () => {
                             name="destAccountId"
                             label={t['newAccountTransferReceipentAccount']}
                             memberId={memberId}
-                            // options={accountListData?.account?.list?.edges?.map((account) => ({
-                            //   accountInfo: {
-                            //     accountName: account.node?.product.productName,
-                            //     accountId: account.node?.product?.id,
-                            //     accountType: account?.node?.product?.nature
-                            //       ? accountTypes[account?.node?.product?.nature]
-                            //       : '',
-                            //     balance: account?.node?.balance ?? '0',
-                            //     fine:
-                            //       account?.node?.product?.nature ===
-                            //         NatureOfDepositProduct.RecurringSaving ||
-                            //       (account?.node?.product?.nature ===
-                            //         NatureOfDepositProduct.Saving &&
-                            //         account?.node?.product?.isMandatorySaving === true)
-                            //         ? FINE
-                            //         : '',
-                            //   },
-                            //   value: account.node?.id as string,
-                            // }))}
+                            filterBy={ObjState.Active}
                           />
                         )}
 
@@ -258,27 +224,7 @@ export const NewAccountTransfer = () => {
                               name="destAccountId"
                               label={t['newAccountTransferReceipentAccount']}
                               memberId={destMemberId}
-                              // options={destAccountListData?.account?.list?.edges?.map(
-                              //   (account) => ({
-                              //     accountInfo: {
-                              //       accountName: account.node?.product.productName,
-                              //       accountId: account.node?.product?.id,
-                              //       accountType: account?.node?.product?.nature
-                              //         ? accountTypes[account?.node?.product?.nature]
-                              //         : '',
-                              //       balance: account?.node?.balance ?? '0',
-                              //       fine:
-                              //         account?.node?.product?.nature ===
-                              //           NatureOfDepositProduct.RecurringSaving ||
-                              //         (account?.node?.product?.nature ===
-                              //           NatureOfDepositProduct.Saving &&
-                              //           account?.node?.product?.isMandatorySaving === true)
-                              //           ? FINE
-                              //           : '',
-                              //     },
-                              //     value: account.node?.id as string,
-                              //   })
-                              // )}
+                              filterBy={ObjState.Active}
                             />
                           </>
                         )}

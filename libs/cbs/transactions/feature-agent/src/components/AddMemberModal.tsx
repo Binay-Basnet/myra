@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import { AssignMembersInput, useSetAddMemberToAgentDataMutation } from '@coop/cbs/data-access';
+import {
+  AssignMembersInput,
+  ObjState,
+  useSetAddMemberToAgentDataMutation,
+} from '@coop/cbs/data-access';
 import { asyncToast, Box, ChakraModal, FormAccountSelect, FormMemberSelect } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -101,6 +105,7 @@ export const AddMemberModal = ({
               name="accountId"
               label={t['agentAssignedMembersAccount']}
               memberId={memberId}
+              filterBy={ObjState.Active}
             />
           </Box>
         </FormProvider>

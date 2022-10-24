@@ -6,6 +6,7 @@ import omit from 'lodash/omit';
 import {
   CashValue,
   NatureOfDepositProduct,
+  ObjState,
   useGetAccountTableListQuery,
   useSetWithdrawDataMutation,
   WithdrawBy,
@@ -230,6 +231,7 @@ export const AddWithdraw = () => {
                       name="accountId"
                       label={t['addWithdrawSelectWithdrawAccount']}
                       memberId={memberId}
+                      filterBy={ObjState.Active}
                     />
                   )}
 

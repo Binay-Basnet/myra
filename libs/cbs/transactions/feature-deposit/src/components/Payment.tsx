@@ -6,6 +6,7 @@ import {
   DepositedBy,
   DepositPaymentType,
   NatureOfDepositProduct,
+  ObjState,
   RootState,
   useAppSelector,
   useGetCoaBankListQuery,
@@ -238,6 +239,7 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
                 name="cheque.accId"
                 memberId={isDiffMember ? dmemberId : memberId}
                 label="Account Name"
+                filterBy={ObjState.Active}
               />
             </GridItem>
 

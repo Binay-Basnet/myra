@@ -12527,6 +12527,7 @@ export type GetAccountTableListQuery = {
           accountOpenedDate?: string | null;
           lastTransactionDate?: string | null;
           accountExpiryDate?: string | null;
+          closedAt?: string | null;
           overDrawnBalance?: string | null;
           guaranteedAmount?: string | null;
           interestAccured?: string | null;
@@ -20101,6 +20102,7 @@ export const GetAccountTableListDocument = `
           accountOpenedDate
           lastTransactionDate
           accountExpiryDate
+          closedAt
           member {
             id
             name
