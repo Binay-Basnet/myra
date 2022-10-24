@@ -13,11 +13,11 @@ export interface TextAreaInputProps extends TextareaProps {
 }
 
 export const TextAreaInput = forwardRef<HTMLInputElement, TextAreaInputProps>((props, ref) => {
-  const { labelColor, label, placeholder, id, ...rest } = props;
+  const { label, placeholder, id, ...rest } = props;
   return (
     <Flex flexDir="column" gap="s4">
       {label && (
-        <TextFields variant="formLabel" color={labelColor}>
+        <TextFields variant="formLabel" color="gray.800">
           {label ?? 'Description'}
         </TextFields>
       )}

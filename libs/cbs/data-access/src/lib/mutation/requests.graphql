@@ -1,0 +1,10 @@
+mutation approveOrDeclineRequest($data: RequestApproveOrDeclineInput, $requestType: RequestType! ) {
+  requests {
+    requestApproveOrDecline(data: $data, requestType: $requestType ){
+      error {
+        ...MutationError
+      }
+      requestId
+    }
+  }
+}

@@ -899,6 +899,11 @@ export type BranchInput = {
   wardNo?: InputMaybe<Scalars['Int']>;
 };
 
+export enum BranchPaymentMode {
+  BankCheque = 'BANK_CHEQUE',
+  Cash = 'CASH',
+}
+
 export type BranchSearchFilter = {
   filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
@@ -8318,7 +8323,7 @@ export type MyraUserResult = {
 export type MyraUserSearchFilter = {
   id?: InputMaybe<Scalars['ID']>;
   query?: InputMaybe<Scalars['String']>;
-  role?: InputMaybe<Roles>;
+  role?: InputMaybe<Array<InputMaybe<Roles>>>;
 };
 
 export type Name = {
@@ -9959,6 +9964,60 @@ export enum TaxPayerOptions {
   Member = 'MEMBER',
 }
 
+export type TellerActivityEntry = {
+  ID: Scalars['ID'];
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']>;
+  destBranch?: Maybe<Scalars['Localized']>;
+  destProfilePic?: Maybe<Scalars['String']>;
+  destProfilePicUrl?: Maybe<Scalars['String']>;
+  destTeller?: Maybe<Scalars['Localized']>;
+  srcBranch?: Maybe<Scalars['Localized']>;
+  srcProfilePic?: Maybe<Scalars['String']>;
+  srcProfilePicUrl?: Maybe<Scalars['String']>;
+  srcTeller?: Maybe<Scalars['Localized']>;
+  transferType: TellerTransferType;
+};
+
+export type TellerActivityListConnection = {
+  edges?: Maybe<Array<Maybe<TellerActivityListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type TellerActivityListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<TellerActivityEntry>;
+};
+
+export type TellerTransactionFilter = {
+  type?: InputMaybe<Array<InputMaybe<TellerTransferType>>>;
+};
+
+export type TellerTransferInput = {
+  amount?: InputMaybe<Scalars['String']>;
+  branchPaymentMode?: InputMaybe<BranchPaymentMode>;
+  denominations?: InputMaybe<Array<Denomination>>;
+  destBranch?: InputMaybe<Scalars['String']>;
+  destTellerID?: InputMaybe<Scalars['String']>;
+  srcBranch?: InputMaybe<Scalars['String']>;
+  srcTellerID?: InputMaybe<Scalars['String']>;
+  transferType: TellerTransferType;
+};
+
+export type TellerTransferResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<TransactionQuery>;
+  record?: Maybe<Scalars['ID']>;
+};
+
+export enum TellerTransferType {
+  BranchTransfer = 'BRANCH_TRANSFER',
+  CashToVault = 'CASH_TO_VAULT',
+  TellerTransfer = 'TELLER_TRANSFER',
+  VaultToCash = 'VAULT_TO_CASH',
+}
+
 export type TestDbResult = {
   name: Scalars['String'];
 };
@@ -10017,6 +10076,7 @@ export type TransactionMutation = {
   bulkDeposit: BulkDepositResult;
   deposit: DepositResult;
   endOfDay?: Maybe<Scalars['String']>;
+  tellerTransfer: TellerTransferResult;
   transfer: TransferResult;
   withdraw: WithdrawResult;
 };
@@ -10045,6 +10105,10 @@ export type TransactionMutationDepositArgs = {
   data: DepositInput;
 };
 
+export type TransactionMutationTellerTransferArgs = {
+  data: TellerTransferInput;
+};
+
 export type TransactionMutationTransferArgs = {
   data: TransferInput;
 };
@@ -10060,6 +10124,7 @@ export type TransactionQuery = {
   listAgent: AccountAgentListConnection;
   listAgentTask?: Maybe<AgentTodayListData>;
   listDeposit: AccountActivityListConnection;
+  listTellerTransaction: TellerActivityListConnection;
   listTransfer: AccountTransferListConnection;
   listWithdraw: AccountActivityListConnection;
 };
@@ -10084,6 +10149,11 @@ export type TransactionQueryListAgentTaskArgs = {
 
 export type TransactionQueryListDepositArgs = {
   filter?: InputMaybe<AccountTransactionFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type TransactionQueryListTellerTransactionArgs = {
+  filter?: InputMaybe<TellerTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -11216,6 +11286,26 @@ export type SaveNewReportMutation = {
             } | null;
           }
         | {}
+        | null;
+    } | null;
+  };
+};
+
+export type ApproveOrDeclineRequestMutationVariables = Exact<{
+  data?: InputMaybe<RequestApproveOrDeclineInput>;
+  requestType: RequestType;
+}>;
+
+export type ApproveOrDeclineRequestMutation = {
+  requests: {
+    requestApproveOrDecline?: {
+      requestId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
         | null;
     } | null;
   };
@@ -14884,6 +14974,40 @@ export type GetShareStatementQuery = {
   };
 };
 
+export type GetChequeBookRequestsQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<RequestFilter>;
+}>;
+
+export type GetChequeBookRequestsQuery = {
+  requests: {
+    list?: {
+      chequeBookRequest?: {
+        totalCount?: number | null;
+        pageInfo?: PaginationFragment | null;
+        edges?: Array<{
+          node?: {
+            id: string;
+            memberId: string;
+            memberName: Record<'local' | 'en' | 'np', string>;
+            memberPhoneNumber: string;
+            accountNumber: string;
+            accountType: string;
+            approvalStatus: RequestStatus;
+            requestedDate: string;
+            branchId?: string | null;
+            branchName?: string | null;
+            numberOfLeaves?: number | null;
+            pickUpMethod?: ChequePickUpMethod | null;
+            agentName?: string | null;
+            remarks?: string | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetGlobalSearchQueryVariables = Exact<{
   filter?: InputMaybe<SearchFilterData>;
   pagination?: InputMaybe<Pagination>;
@@ -18006,6 +18130,38 @@ export const useSaveNewReportMutation = <TError = unknown, TContext = unknown>(
   useMutation<SaveNewReportMutation, TError, SaveNewReportMutationVariables, TContext>(
     ['saveNewReport'],
     useAxios<SaveNewReportMutation, SaveNewReportMutationVariables>(SaveNewReportDocument),
+    options
+  );
+export const ApproveOrDeclineRequestDocument = `
+    mutation approveOrDeclineRequest($data: RequestApproveOrDeclineInput, $requestType: RequestType!) {
+  requests {
+    requestApproveOrDecline(data: $data, requestType: $requestType) {
+      error {
+        ...MutationError
+      }
+      requestId
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useApproveOrDeclineRequestMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ApproveOrDeclineRequestMutation,
+    TError,
+    ApproveOrDeclineRequestMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    ApproveOrDeclineRequestMutation,
+    TError,
+    ApproveOrDeclineRequestMutationVariables,
+    TContext
+  >(
+    ['approveOrDeclineRequest'],
+    useAxios<ApproveOrDeclineRequestMutation, ApproveOrDeclineRequestMutationVariables>(
+      ApproveOrDeclineRequestDocument
+    ),
     options
   );
 export const SaveAlternativeChargesDocument = `
@@ -22902,6 +23058,49 @@ export const useGetShareStatementQuery = <TData = GetShareStatementQuery, TError
     ['getShareStatement', variables],
     useAxios<GetShareStatementQuery, GetShareStatementQueryVariables>(
       GetShareStatementDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetChequeBookRequestsDocument = `
+    query getChequeBookRequests($pagination: Pagination, $filter: RequestFilter) {
+  requests {
+    list {
+      chequeBookRequest(paginate: $pagination, filter: $filter) {
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges {
+          node {
+            id
+            memberId
+            memberName
+            memberPhoneNumber
+            accountNumber
+            accountType
+            approvalStatus
+            requestedDate
+            branchId
+            branchName
+            numberOfLeaves
+            pickUpMethod
+            agentName
+            remarks
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetChequeBookRequestsQuery = <TData = GetChequeBookRequestsQuery, TError = unknown>(
+  variables?: GetChequeBookRequestsQueryVariables,
+  options?: UseQueryOptions<GetChequeBookRequestsQuery, TError, TData>
+) =>
+  useQuery<GetChequeBookRequestsQuery, TError, TData>(
+    variables === undefined ? ['getChequeBookRequests'] : ['getChequeBookRequests', variables],
+    useAxios<GetChequeBookRequestsQuery, GetChequeBookRequestsQueryVariables>(
+      GetChequeBookRequestsDocument
     ).bind(null, variables),
     options
   );

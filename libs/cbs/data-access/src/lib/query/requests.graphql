@@ -1,0 +1,30 @@
+query getChequeBookRequests($pagination: Pagination, $filter: RequestFilter){
+  requests{
+    list{
+      chequeBookRequest(paginate: $pagination, filter: $filter){
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges{
+          node{
+            id
+            memberId
+            memberName
+            memberPhoneNumber
+            accountNumber
+            accountType
+            approvalStatus
+            requestedDate
+            branchId
+            branchName
+            numberOfLeaves
+            pickUpMethod
+            agentName
+            remarks
+          }
+        }
+      }
+    }
+  }
+}
