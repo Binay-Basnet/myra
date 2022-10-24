@@ -15,6 +15,13 @@ interface IApproveDeclineModalProps {
   approveModal: ReturnType<typeof useDisclosure>;
 }
 
+const MODAL_TITLES = {
+  [RequestType.ChequeBookRequest]: 'Cheque Book Request',
+  [RequestType.BlockCheque]: 'Block Cheque Request',
+  [RequestType.WithdrawRequest]: 'Withdraw Request',
+  [RequestType.LoanRequest]: 'Loan Request',
+};
+
 export const ApproveDeclineModal = ({
   children,
   requestType,
@@ -123,7 +130,7 @@ export const ApproveDeclineModal = ({
         }}
         isSecondaryDanger
         onClose={onClose}
-        title="acUpdateUser"
+        title={MODAL_TITLES[requestType]}
         open={isOpen}
         hidePadding
       >
