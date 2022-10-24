@@ -194,8 +194,7 @@ export type AccountTransferListEdges = {
 };
 
 export type AccountTransferPaymentForAccountClose = {
-  depositedBy: Scalars['String'];
-  depositedDate: Scalars['String'];
+  amount: Scalars['String'];
   destination_account: Scalars['ID'];
   note?: InputMaybe<Scalars['String']>;
 };
@@ -778,6 +777,30 @@ export type Base = {
   objState: ObjState;
 };
 
+export type BlockChequeRequestConnection = {
+  edges?: Maybe<Array<Maybe<BlockChequeRequestEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type BlockChequeRequestEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<BlockChequeRequestList>;
+};
+
+export type BlockChequeRequestList = {
+  accountNumber: Scalars['String'];
+  accountType: Scalars['String'];
+  approvalStatus: RequestStatus;
+  chequeNumber: Scalars['String'];
+  id: Scalars['String'];
+  memberId: Scalars['String'];
+  memberName: Scalars['Localized'];
+  memberPhoneNumber: Scalars['String'];
+  reason?: Maybe<Scalars['String']>;
+  requestedDate: Scalars['String'];
+};
+
 export type Branch = {
   abbsTransaction?: Maybe<AbbsTransaction>;
   address?: Maybe<Address>;
@@ -917,6 +940,11 @@ export type BulkDepositResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
   recordId?: Maybe<Scalars['ID']>;
+};
+
+export type BulkInstallmentResult = {
+  accountId?: Maybe<Scalars['String']>;
+  value?: Maybe<InstallmentResult>;
 };
 
 export type CoaFullView = {
@@ -1063,6 +1091,34 @@ export type ChartsOfAccountSettingsQueryAccountsUnderArgs = {
   accountCode?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
+export type ChequeBookRequestConnection = {
+  edges?: Maybe<Array<Maybe<ChequeBookRequestEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type ChequeBookRequestEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<ChequeBookRequestList>;
+};
+
+export type ChequeBookRequestList = {
+  accountNumber: Scalars['String'];
+  accountType: Scalars['String'];
+  agentName?: Maybe<Scalars['String']>;
+  approvalStatus: RequestStatus;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  memberId: Scalars['String'];
+  memberName: Scalars['Localized'];
+  memberPhoneNumber: Scalars['String'];
+  numberOfLeaves?: Maybe<Scalars['Int']>;
+  pickUpMethod?: Maybe<ChequePickUpMethod>;
+  remarks?: Maybe<Scalars['String']>;
+  requestedDate: Scalars['String'];
+};
+
 export type ChequePastRequest = {
   branch?: Maybe<Branch>;
   chequeBlockNumber?: Maybe<Scalars['String']>;
@@ -1077,6 +1133,11 @@ export type ChequePastRequest = {
   withdrawAmount?: Maybe<Scalars['Amount']>;
   withdrawDate?: Maybe<Scalars['String']>;
 };
+
+export enum ChequePickUpMethod {
+  SelfPickup = 'Self_Pickup',
+  ThroughAgent = 'Through_agent',
+}
 
 export type Citizenship = {
   inNepali?: Maybe<CitizenshipInNepali>;
@@ -1871,28 +1932,33 @@ export type DepositAccount = Base & {
   id: Scalars['ID'];
   installmentAmount?: Maybe<Scalars['String']>;
   interestAccured?: Maybe<Scalars['String']>;
+  interestTax?: Maybe<Scalars['String']>;
   lastTransactionDate?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   objState: ObjState;
   overDrawnBalance?: Maybe<Scalars['String']>;
+  prematurePenalty?: Maybe<Scalars['String']>;
   product: DepositProduct;
 };
 
 export type DepositAccountClose = {
   accountID: Scalars['ID'];
   accountTransfer?: InputMaybe<AccountTransferPaymentForAccountClose>;
+  adjustedInterest?: InputMaybe<Scalars['String']>;
   bankCheque?: InputMaybe<BankChequePaymentForAccountClose>;
   cash?: InputMaybe<DepositCash>;
   memberID: Scalars['ID'];
   notes?: InputMaybe<Scalars['String']>;
   otherReason?: InputMaybe<Scalars['String']>;
-  paymentMode: AccountClosePaymentMode;
+  paymentMode?: InputMaybe<AccountClosePaymentMode>;
   reason: AccountCloseReason;
+  serviceCharge?: InputMaybe<Array<InputMaybe<ServiceChargeInput>>>;
 };
 
 export type DepositAccountCloseResult = {
+  calculatedAmount?: Maybe<Scalars['String']>;
   error?: Maybe<MutationError>;
   record?: Maybe<Scalars['Any']>;
   recordId: Scalars['ID'];
@@ -2104,6 +2170,7 @@ export type DepositLoanAccountMutationForgiveInstallmentArgs = {
 export type DepositLoanAccountQuery = {
   formState?: Maybe<DepositLoanAccountFormStateResult>;
   get?: Maybe<DepositLoanAccount>;
+  getBulkInstallments?: Maybe<Array<Maybe<BulkInstallmentResult>>>;
   getInstallments?: Maybe<InstallmentResult>;
   list?: Maybe<DepositLoanAccountConnection>;
   listDefaultAccounts?: Maybe<DepositLoanAccountListResult>;
@@ -2116,6 +2183,10 @@ export type DepositLoanAccountQueryFormStateArgs = {
 
 export type DepositLoanAccountQueryGetArgs = {
   id: Scalars['ID'];
+};
+
+export type DepositLoanAccountQueryGetBulkInstallmentsArgs = {
+  ids: Array<InputMaybe<Scalars['ID']>>;
 };
 
 export type DepositLoanAccountQueryGetInstallmentsArgs = {
@@ -2150,6 +2221,7 @@ export type DepositLoanAccountResult = {
 export type DepositLoanAccountSearchFilter = {
   id?: InputMaybe<Scalars['ID']>;
   memberId?: InputMaybe<Scalars['String']>;
+  objState?: InputMaybe<ObjState>;
   query?: InputMaybe<Scalars['String']>;
 };
 
@@ -2160,6 +2232,7 @@ export enum DepositPaymentType {
 }
 
 export type DepositProduct = Base & {
+  accountClosingCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
   createdDate?: Maybe<Scalars['String']>;
@@ -2241,6 +2314,7 @@ export type DepositProductFormStateData = {
   interest?: Maybe<InterestFormState>;
   isForMinors?: Maybe<Scalars['Boolean']>;
   isMandatorySaving?: Maybe<Scalars['Boolean']>;
+  isPrematurePenaltyApplicable?: Maybe<Scalars['Boolean']>;
   isTenureApplicable?: Maybe<Scalars['Boolean']>;
   ladderRate?: Maybe<Scalars['Boolean']>;
   ladderRateData?: Maybe<Array<Maybe<LadderRateFormState>>>;
@@ -2322,6 +2396,7 @@ export type DepositProductInput = {
   interest?: InputMaybe<InterestRate>;
   isForMinors?: InputMaybe<Scalars['Boolean']>;
   isMandatorySaving?: InputMaybe<Scalars['Boolean']>;
+  isPrematurePenaltyApplicable?: InputMaybe<Scalars['Boolean']>;
   isTenureApplicable?: InputMaybe<Scalars['Boolean']>;
   ladderRate?: InputMaybe<Scalars['Boolean']>;
   ladderRateData?: InputMaybe<Array<InputMaybe<LadderRate>>>;
@@ -2751,6 +2826,7 @@ export type EBankingAuthMutationVerifyOtpArgs = {
 };
 
 export type EBankingChequeBlockInput = {
+  accountId?: InputMaybe<Scalars['String']>;
   chequeNumber?: InputMaybe<Scalars['String']>;
   reason?: InputMaybe<Scalars['String']>;
 };
@@ -2789,8 +2865,10 @@ export type EBankingChequeQueryPastRequestsArgs = {
 };
 
 export type EBankingChequeRequestInput = {
+  accountId?: InputMaybe<Scalars['String']>;
   branch?: InputMaybe<Scalars['ID']>;
   collector?: InputMaybe<Scalars['ID']>;
+  noOfLeaves?: InputMaybe<Scalars['Int']>;
   type: EBankingChequeRequestType;
 };
 
@@ -2807,6 +2885,7 @@ export type EBankingChequeResult = {
 };
 
 export type EBankingChequeWithdrawViaCollectorInput = {
+  accountId?: InputMaybe<Scalars['String']>;
   amount?: InputMaybe<Scalars['String']>;
   branch?: InputMaybe<Scalars['ID']>;
   collector?: InputMaybe<Scalars['ID']>;
@@ -3335,7 +3414,7 @@ export enum EBankingServiceStatus {
 
 export type EBankingShareQuery = {
   history?: Maybe<Array<Maybe<EbankingShareHistory>>>;
-  summary: EbankingShare;
+  summary?: Maybe<EbankingShare>;
 };
 
 export type EBankingShareQueryHistoryArgs = {
@@ -3516,7 +3595,7 @@ export type EbankingShareFilter = {
 };
 
 export type EbankingShareHistory = {
-  amount: Scalars['Float'];
+  amount: Scalars['String'];
   date: Scalars['String'];
   id: Scalars['String'];
   numberOfShares: Scalars['Int'];
@@ -4314,6 +4393,11 @@ export enum GracePeriod {
   Principal = 'PRINCIPAL',
 }
 
+export type GraphData = {
+  amount?: Maybe<Scalars['String']>;
+  time?: Maybe<Scalars['Int']>;
+};
+
 export type HumanizeAuditLog = {
   extraData?: Maybe<Array<Maybe<Scalars['String']>>>;
   narration?: Maybe<Scalars['String']>;
@@ -4321,6 +4405,7 @@ export type HumanizeAuditLog = {
 };
 
 export enum Id_Type {
+  Account = 'ACCOUNT',
   Address = 'ADDRESS',
   Bank = 'BANK',
   Bankbranch = 'BANKBRANCH',
@@ -7286,6 +7371,7 @@ export type LoanProduct = Base & {
   isInsuranceApplicable?: Maybe<Scalars['Boolean']>;
   isMonthlyInstallmentCompulsory?: Maybe<Scalars['Boolean']>;
   isPenaltyApplicable?: Maybe<Scalars['Boolean']>;
+  isPrematurePenaltyApplicable?: Maybe<Scalars['Boolean']>;
   isRebateApplicable?: Maybe<Scalars['Boolean']>;
   isStaffProduct?: Maybe<Scalars['Boolean']>;
   isTenureApplicable?: Maybe<Scalars['Boolean']>;
@@ -7387,6 +7473,7 @@ export type LoanProductInput = {
   isInsuranceApplicable?: InputMaybe<Scalars['Boolean']>;
   isMonthlyInstallmentCompulsory?: InputMaybe<Scalars['Boolean']>;
   isPenaltyApplicable?: InputMaybe<Scalars['Boolean']>;
+  isPrematurePenaltyApplicable?: InputMaybe<Scalars['Boolean']>;
   isRebateApplicable?: InputMaybe<Scalars['Boolean']>;
   isStaffProduct?: InputMaybe<Scalars['Boolean']>;
   isTenureApplicable?: InputMaybe<Scalars['Boolean']>;
@@ -7598,6 +7685,28 @@ export enum LoanRepaymentScheme {
   Flat = 'FLAT',
 }
 
+export type LoanRequestConnection = {
+  edges?: Maybe<Array<Maybe<LoanRequestEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type LoanRequestEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<LoanRequestList>;
+};
+
+export type LoanRequestList = {
+  approvalStatus: RequestStatus;
+  id: Scalars['String'];
+  lastModifiedDate: Scalars['String'];
+  loanAmount: Scalars['String'];
+  memberId: Scalars['String'];
+  memberName: Scalars['Localized'];
+  memberPhoneNumber: Scalars['String'];
+  purpose?: Maybe<Scalars['String']>;
+};
+
 export enum LoanRequiredDocuments {
   Citizenship = 'CITIZENSHIP',
   Form = 'FORM',
@@ -7794,6 +7903,11 @@ export type MemberDetailsResult = {
   data?: Maybe<Member>;
 };
 
+export type MemberGraphData = {
+  data?: Maybe<Array<Maybe<GraphData>>>;
+  periodType?: Maybe<PeriodTypeEnum>;
+};
+
 export enum MemberIdentityLevel {
   General = 'GENERAL',
   Mid = 'MID',
@@ -7860,6 +7974,11 @@ export type MemberOverviewData = {
   reports?: Maybe<Scalars['String']>;
   share?: Maybe<Scalars['String']>;
   transactions?: Maybe<Scalars['String']>;
+};
+
+export type MemberOverviewGraphs = {
+  deposit?: Maybe<MemberGraphData>;
+  withdraw?: Maybe<MemberGraphData>;
 };
 
 export type MemberOverviewResult = {
@@ -8049,6 +8168,7 @@ export type Mutation = {
   newId: Scalars['String'];
   presignedUrl: PresignedUrlMutation;
   report: ReportMutation;
+  requests: RequestsMutation;
   seed: Scalars['Boolean'];
   settings: SettingsMutation;
   share: ShareMutation;
@@ -8363,6 +8483,7 @@ export type NotificationFilter = {
 };
 
 export enum ObjState {
+  Active = 'ACTIVE',
   Approved = 'APPROVED',
   Draft = 'DRAFT',
   Inactive = 'INACTIVE',
@@ -8693,6 +8814,7 @@ export enum OrganizationType {
 
 export type OverviewView = {
   basicInformation?: Maybe<MemberBasicInfoView>;
+  memberGraphs?: Maybe<MemberOverviewGraphs>;
   payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
   recentTransactions?: Maybe<Array<Maybe<MemberRecentTransactionView>>>;
   statistics?: Maybe<MemberStatisticsView>;
@@ -8765,6 +8887,16 @@ export type PenaltyTypeInput = {
   penaltyLedgerMapping?: InputMaybe<Scalars['String']>;
   penaltyRate?: InputMaybe<Scalars['Float']>;
 };
+
+export enum PeriodTypeEnum {
+  Last_7Days = 'LAST_7_DAYS',
+  Last_14Days = 'LAST_14_DAYS',
+  Last_30Days = 'LAST_30_DAYS',
+  Lifetime = 'LIFETIME',
+  ThisFiscalYearToDate = 'THIS_FISCAL_YEAR_TO_DATE',
+  Today = 'TODAY',
+  Yesterday = 'YESTERDAY',
+}
 
 export type PersonalInformation = {
   citizenship?: Maybe<Citizenship>;
@@ -8938,6 +9070,7 @@ export type Query = {
   members: MemberQuery;
   neosys: NeosysQuery;
   report: ReportQuery;
+  requests: RequestsQuery;
   routesAndCodes: RoutesAndCodesQuery;
   search: SearchQuery;
   settings: SettingsQuery;
@@ -9063,10 +9196,83 @@ export type ReportResult = {
   statement?: Maybe<StatementReport>;
 };
 
+export type RequestApproveOrDeclineInput = {
+  approve: Scalars['Boolean'];
+  notifyMember?: InputMaybe<Scalars['Boolean']>;
+  purposedDate?: InputMaybe<Scalars['String']>;
+  reasonForDeclination?: InputMaybe<Scalars['String']>;
+  requestId: Scalars['String'];
+};
+
+export type RequestApproveOrDeclineResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<RequestsQuery>;
+  requestId?: Maybe<Scalars['String']>;
+};
+
+export type RequestFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  requestStatus?: InputMaybe<RequestStatus>;
+  requestType?: InputMaybe<Scalars['String']>;
+};
+
 export enum RequestSource {
   Ebanking = 'EBANKING',
   MobileBanking = 'MOBILE_BANKING',
 }
+
+export enum RequestStatus {
+  Approved = 'APPROVED',
+  Declined = 'DECLINED',
+  Pending = 'PENDING',
+}
+
+export enum RequestType {
+  BlockCheque = 'BLOCK_CHEQUE',
+  ChequeBookRequest = 'CHEQUE_BOOK_REQUEST',
+  LoanRequest = 'LOAN_REQUEST',
+  WithdrawRequest = 'WITHDRAW_REQUEST',
+}
+
+export type RequestsList = {
+  blockCheque?: Maybe<BlockChequeRequestConnection>;
+  chequeBookRequest?: Maybe<ChequeBookRequestConnection>;
+  loanRequest?: Maybe<LoanRequestConnection>;
+  withdrawViaCollector?: Maybe<WithdrawViaCollectorConnection>;
+};
+
+export type RequestsListBlockChequeArgs = {
+  filter?: InputMaybe<RequestFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type RequestsListChequeBookRequestArgs = {
+  filter?: InputMaybe<RequestFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type RequestsListLoanRequestArgs = {
+  filter?: InputMaybe<RequestFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type RequestsListWithdrawViaCollectorArgs = {
+  filter?: InputMaybe<RequestFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type RequestsMutation = {
+  requestApproveOrDecline?: Maybe<RequestApproveOrDeclineResult>;
+};
+
+export type RequestsMutationRequestApproveOrDeclineArgs = {
+  data?: InputMaybe<RequestApproveOrDeclineInput>;
+  requestType: RequestType;
+};
+
+export type RequestsQuery = {
+  list?: Maybe<RequestsList>;
+};
 
 export type ResetPasswordData = {
   newPassword: Scalars['String'];
@@ -10286,6 +10492,31 @@ export type WithdrawResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type WithdrawViaCollectorConnection = {
+  edges?: Maybe<Array<Maybe<WithdrawViaCollectorEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type WithdrawViaCollectorEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<WithdrawViaCollectorList>;
+};
+
+export type WithdrawViaCollectorList = {
+  accountNumber: Scalars['String'];
+  accountType: Scalars['String'];
+  amount: Scalars['String'];
+  approvalStatus: RequestStatus;
+  collectorName: Scalars['String'];
+  id: Scalars['String'];
+  memberId: Scalars['String'];
+  memberName: Scalars['Localized'];
+  memberPhoneNumber: Scalars['String'];
+  remarks?: Maybe<Scalars['String']>;
+  requestedDate: Scalars['String'];
+};
+
 export enum WithdrawWith {
   Cheque = 'CHEQUE',
   WithdrawSlip = 'WITHDRAW_SLIP',
@@ -10417,6 +10648,9 @@ export type LoginMutation = {
             firstName: Record<'local' | 'en' | 'np', string>;
             middleName: Record<'local' | 'en' | 'np', string>;
             lastName: Record<'local' | 'en' | 'np', string>;
+            role?: Roles | null;
+            profilePic?: string | null;
+            branch?: { id: string; name?: string | null } | null;
           } | null;
           preference?: {
             language?: Language | null;
@@ -10425,6 +10659,13 @@ export type LoginMutation = {
           } | null;
         };
       } | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
     } | null;
   };
 };
@@ -11785,7 +12026,20 @@ export type SetSettingsUserDataMutationVariables = Exact<{
 }>;
 
 export type SetSettingsUserDataMutation = {
-  settings: { myraUser?: { add?: { recordId?: string | null } | null } | null };
+  settings: {
+    myraUser?: {
+      add?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
 };
 
 export type SetPreferenceMutationVariables = Exact<{
@@ -12284,6 +12538,19 @@ export type GetAccountOpenMinorListQuery = {
   };
 };
 
+export type GetDefaultAccountListQueryVariables = Exact<{
+  productId: Scalars['ID'];
+  memberId: Scalars['ID'];
+}>;
+
+export type GetDefaultAccountListQuery = {
+  account: {
+    listDefaultAccounts?: {
+      data?: Array<{ id: string; accountName?: string | null } | null> | null;
+    } | null;
+  };
+};
+
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never }>;
 
 export type AllAdministrationQuery = {
@@ -12405,6 +12672,9 @@ export type GetMeQuery = {
           email?: string | null;
           firstName: Record<'local' | 'en' | 'np', string>;
           lastName: Record<'local' | 'en' | 'np', string>;
+          role?: Roles | null;
+          profilePic?: string | null;
+          branch?: { id: string; name?: string | null } | null;
         } | null;
         preference?: {
           language?: Language | null;
@@ -12426,6 +12696,12 @@ export type GetBankListQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetBankListQuery = {
   bank: { bank?: { list?: Array<{ id: string; name?: string | null } | null> | null } | null };
+};
+
+export type GetUserBranchListQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetUserBranchListQuery = {
+  bank: { branch?: { list?: Array<{ id: string; name?: string | null } | null> | null } | null };
 };
 
 type MutationError_AuthorizationError_Fragment = {
@@ -14485,6 +14761,16 @@ export type GetMemberDetailsOverviewQuery = {
             mothersName?: string | null;
             grandFathersName?: string | null;
           } | null;
+          memberGraphs?: {
+            deposit?: {
+              periodType?: PeriodTypeEnum | null;
+              data?: Array<{ time?: number | null; amount?: string | null } | null> | null;
+            } | null;
+            withdraw?: {
+              periodType?: PeriodTypeEnum | null;
+              data?: Array<{ time?: number | null; amount?: string | null } | null> | null;
+            } | null;
+          } | null;
           statistics?: {
             totalShareValue?: string | null;
             accountBalance?: string | null;
@@ -14980,6 +15266,7 @@ export type GetLoanProductEditDataQuery = {
             allowGurantee?: boolean | null;
             maxPercentOfGurantee?: number | null;
             collateralTypes?: Array<string | null> | null;
+            isPrematurePenaltyApplicable?: boolean | null;
             productCode?: { prefix: string; initialNo: string } | null;
             penaltyOnPrincipal?: {
               dayAfterInstallmentDate?: number | null;
@@ -15451,6 +15738,7 @@ export type GetDepositProductSettingsEditDataQuery = {
             wealthBuildingProduct?: boolean | null;
             individualDocuments?: Array<IndividualRequiredDocument | null> | null;
             institutionDocuments?: Array<InstitutionRequiredDocument | null> | null;
+            isPrematurePenaltyApplicable?: boolean | null;
             productCode: { prefix: string; initialNo: string };
             depositAmount?: { minAmount?: any | null; maxAmount?: any | null } | null;
             withdrawAmountLimit?: { minAmount?: any | null; maxAmount?: any | null } | null;
@@ -16383,7 +16671,20 @@ export type SetChequeRequestDataMutationVariables = Exact<{
 
 export type SetChequeRequestDataMutation = {
   eBanking: {
-    cooperativeServices?: { cheque?: { request?: { recordID: string } | null } | null } | null;
+    cooperativeServices?: {
+      cheque?: {
+        request?: {
+          recordID: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
   };
 };
 
@@ -16932,7 +17233,7 @@ export type GetHomeServiceListQuery = {
 export type GetShareSummaryQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetShareSummaryQuery = {
-  eBanking: { share?: { summary: { totalShare: number; value: string } } | null };
+  eBanking: { share?: { summary?: { totalShare: number; value: string } | null } | null };
 };
 
 export type GetEbankingShareHistoryQueryVariables = Exact<{ [key: string]: never }>;
@@ -16944,7 +17245,7 @@ export type GetEbankingShareHistoryQuery = {
         id: string;
         title: string;
         date: string;
-        amount: number;
+        amount: string;
         transactionDirection: Transaction_Direction;
         numberOfShares: number;
       } | null> | null;
@@ -17358,6 +17659,12 @@ export const LoginDocument = `
             firstName
             middleName
             lastName
+            role
+            profilePic
+            branch {
+              id
+              name
+            }
           }
           preference {
             language
@@ -17366,10 +17673,13 @@ export const LoginDocument = `
           }
         }
       }
+      error {
+        ...MutationError
+      }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useLoginMutation = <TError = unknown, TContext = unknown>(
   options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>
 ) =>
@@ -19735,11 +20045,14 @@ export const SetSettingsUserDataDocument = `
     myraUser {
       add(id: $id, data: $data) {
         recordId
+        error {
+          ...MutationError
+        }
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useSetSettingsUserDataMutation = <TError = unknown, TContext = unknown>(
   options?: UseMutationOptions<
     SetSettingsUserDataMutation,
@@ -20489,6 +20802,29 @@ export const useGetAccountOpenMinorListQuery = <
     ).bind(null, variables),
     options
   );
+export const GetDefaultAccountListDocument = `
+    query getDefaultAccountList($productId: ID!, $memberId: ID!) {
+  account {
+    listDefaultAccounts(memberId: $memberId, productId: $productId) {
+      data {
+        id
+        accountName
+      }
+    }
+  }
+}
+    `;
+export const useGetDefaultAccountListQuery = <TData = GetDefaultAccountListQuery, TError = unknown>(
+  variables: GetDefaultAccountListQueryVariables,
+  options?: UseQueryOptions<GetDefaultAccountListQuery, TError, TData>
+) =>
+  useQuery<GetDefaultAccountListQuery, TError, TData>(
+    ['getDefaultAccountList', variables],
+    useAxios<GetDefaultAccountListQuery, GetDefaultAccountListQueryVariables>(
+      GetDefaultAccountListDocument
+    ).bind(null, variables),
+    options
+  );
 export const AllAdministrationDocument = `
     query allAdministration {
   administration {
@@ -20673,6 +21009,12 @@ export const GetMeDocument = `
           email
           firstName
           lastName
+          role
+          profilePic
+          branch {
+            id
+            name
+          }
         }
         preference {
           language
@@ -20718,6 +21060,29 @@ export const useGetBankListQuery = <TData = GetBankListQuery, TError = unknown>(
       null,
       variables
     ),
+    options
+  );
+export const GetUserBranchListDocument = `
+    query getUserBranchList {
+  bank {
+    branch {
+      list {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+export const useGetUserBranchListQuery = <TData = GetUserBranchListQuery, TError = unknown>(
+  variables?: GetUserBranchListQueryVariables,
+  options?: UseQueryOptions<GetUserBranchListQuery, TError, TData>
+) =>
+  useQuery<GetUserBranchListQuery, TError, TData>(
+    variables === undefined ? ['getUserBranchList'] : ['getUserBranchList', variables],
+    useAxios<GetUserBranchListQuery, GetUserBranchListQueryVariables>(
+      GetUserBranchListDocument
+    ).bind(null, variables),
     options
   );
 export const GetConfigDocument = `
@@ -23216,6 +23581,22 @@ export const GetMemberDetailsOverviewDocument = `
             mothersName
             grandFathersName
           }
+          memberGraphs {
+            deposit {
+              data {
+                time
+                amount
+              }
+              periodType
+            }
+            withdraw {
+              data {
+                time
+                amount
+              }
+              periodType
+            }
+          }
           statistics {
             totalShareValue
             accountBalance
@@ -23961,6 +24342,7 @@ export const GetLoanProductEditDataDocument = `
               minValue
               maxValue
             }
+            isPrematurePenaltyApplicable
             prematurePenaltySetup {
               penaltyDateType
               noOfDays
@@ -24610,6 +24992,7 @@ export const GetDepositProductSettingsEditDataDocument = `
             wealthBuildingProduct
             individualDocuments
             institutionDocuments
+            isPrematurePenaltyApplicable
             prematurePenalty {
               penaltyDateType
               noOfDays
@@ -25840,12 +26223,15 @@ export const SetChequeRequestDataDocument = `
       cheque {
         request(memberID: $memberID, data: $data) {
           recordID
+          error {
+            ...MutationError
+          }
         }
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useSetChequeRequestDataMutation = <TError = unknown, TContext = unknown>(
   options?: UseMutationOptions<
     SetChequeRequestDataMutation,

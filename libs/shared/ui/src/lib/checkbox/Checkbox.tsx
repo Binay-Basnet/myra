@@ -19,7 +19,13 @@ export const Checkbox = (props: CheckboxProps) => {
   return (
     <Box display="flex" alignItems="center" gap="s8">
       <ChakraCheckbox data-testid={name} {...rest}>
-        {label ? <TextFields variant="formInput">{label}</TextFields> : children}
+        {label ? (
+          <TextFields variant="formLabel" color="gray.800">
+            {label}
+          </TextFields>
+        ) : (
+          children
+        )}
       </ChakraCheckbox>
     </Box>
   );

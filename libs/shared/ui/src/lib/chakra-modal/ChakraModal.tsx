@@ -22,6 +22,7 @@ export interface ModalChakraProps extends Omit<ChakraModalProps, 'isOpen' | 'onC
   title?: string;
   primaryButtonLabel?: string;
   secondaryButtonLabel?: string;
+  secondaryButtonVariant?: 'ghost' | 'outline' | 'solid';
   primaryButtonHandler?: () => void;
   secondaryButtonHandler?: () => void;
   linkButtonLabel?: string;
@@ -31,11 +32,13 @@ export interface ModalChakraProps extends Omit<ChakraModalProps, 'isOpen' | 'onC
   isDisabled?: boolean;
   width?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | string;
   hasCloseBtn?: boolean;
+  hidePadding?: boolean;
 }
 
 export const ChakraModal = (props: ModalChakraProps) => {
   const {
     open,
+    secondaryButtonVariant = 'ghost',
     onClose,
     children,
     title,
@@ -50,6 +53,7 @@ export const ChakraModal = (props: ModalChakraProps) => {
     isDanger,
     width = 'xl',
     hasCloseBtn = true,
+    hidePadding = false,
     ...rest
   } = props;
 
@@ -88,7 +92,7 @@ export const ChakraModal = (props: ModalChakraProps) => {
           </ModalCloseButton>
         )}
         <ModalBody
-          p="s16"
+          p={hidePadding ? 0 : 's16'}
           borderBottom={
             primaryButtonLabel || secondaryButtonLabel || linkButtonLabel ? '1px solid' : 'none'
           }
@@ -108,8 +112,8 @@ export const ChakraModal = (props: ModalChakraProps) => {
             <Box display="flex" flexDirection="row" gap="s8" justifyContent="flex-end">
               {secondaryButtonLabel && (
                 <Button
-                  width="150px"
-                  variant="ghost"
+                  width="100px"
+                  variant={secondaryButtonVariant}
                   shade={isSecondaryDanger ? 'danger' : 'neutral'}
                   onClick={secondaryButtonHandler}
                 >
@@ -120,7 +124,7 @@ export const ChakraModal = (props: ModalChakraProps) => {
                 <Button
                   variant="solid"
                   onClick={primaryButtonHandler}
-                  width="150px"
+                  width="100px"
                   isDisabled={isDisabled}
                   shade={isDanger ? 'danger' : 'primary'}
                 >

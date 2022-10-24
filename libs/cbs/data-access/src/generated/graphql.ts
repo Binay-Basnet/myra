@@ -794,9 +794,13 @@ export type BlockChequeRequestList = {
   approvalStatus: RequestStatus;
   chequeNumber: Scalars['String'];
   id: Scalars['String'];
+  memberAge?: Maybe<Scalars['Int']>;
+  memberGender?: Maybe<Scalars['String']>;
   memberId: Scalars['String'];
   memberName: Scalars['Localized'];
   memberPhoneNumber: Scalars['String'];
+  memberProfilePicId?: Maybe<Scalars['String']>;
+  memberProfilePicUrl?: Maybe<Scalars['String']>;
   reason?: Maybe<Scalars['String']>;
   requestedDate: Scalars['String'];
 };
@@ -1115,9 +1119,13 @@ export type ChequeBookRequestList = {
   branchId?: Maybe<Scalars['String']>;
   branchName?: Maybe<Scalars['String']>;
   id: Scalars['String'];
+  memberAge?: Maybe<Scalars['Int']>;
+  memberGender?: Maybe<Scalars['String']>;
   memberId: Scalars['String'];
   memberName: Scalars['Localized'];
   memberPhoneNumber: Scalars['String'];
+  memberProfilePicId?: Maybe<Scalars['String']>;
+  memberProfilePicUrl?: Maybe<Scalars['String']>;
   numberOfLeaves?: Maybe<Scalars['Int']>;
   pickUpMethod?: Maybe<ChequePickUpMethod>;
   remarks?: Maybe<Scalars['String']>;
@@ -1930,6 +1938,7 @@ export type DepositAccount = Base & {
   accountName?: Maybe<Scalars['String']>;
   accountOpenedDate?: Maybe<Scalars['String']>;
   balance?: Maybe<Scalars['String']>;
+  closedAt?: Maybe<Scalars['String']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
   dues?: Maybe<Dues>;
@@ -7706,9 +7715,13 @@ export type LoanRequestList = {
   id: Scalars['String'];
   lastModifiedDate: Scalars['String'];
   loanAmount: Scalars['String'];
+  memberAge?: Maybe<Scalars['Int']>;
+  memberGender?: Maybe<Scalars['String']>;
   memberId: Scalars['String'];
   memberName: Scalars['Localized'];
   memberPhoneNumber: Scalars['String'];
+  memberProfilePicId?: Maybe<Scalars['String']>;
+  memberProfilePicUrl?: Maybe<Scalars['String']>;
   purpose?: Maybe<Scalars['String']>;
 };
 
@@ -8490,6 +8503,7 @@ export type NotificationFilter = {
 export enum ObjState {
   Active = 'ACTIVE',
   Approved = 'APPROVED',
+  Dormant = 'DORMANT',
   Draft = 'DRAFT',
   Inactive = 'INACTIVE',
   Validated = 'VALIDATED',
@@ -10580,9 +10594,13 @@ export type WithdrawViaCollectorList = {
   approvalStatus: RequestStatus;
   collectorName: Scalars['String'];
   id: Scalars['String'];
+  memberAge?: Maybe<Scalars['Int']>;
+  memberGender?: Maybe<Scalars['String']>;
   memberId: Scalars['String'];
   memberName: Scalars['Localized'];
   memberPhoneNumber: Scalars['String'];
+  memberProfilePicId?: Maybe<Scalars['String']>;
+  memberProfilePicUrl?: Maybe<Scalars['String']>;
   remarks?: Maybe<Scalars['String']>;
   requestedDate: Scalars['String'];
 };
@@ -11287,6 +11305,26 @@ export type SaveNewReportMutation = {
             } | null;
           }
         | {}
+        | null;
+    } | null;
+  };
+};
+
+export type ApproveOrDeclineRequestMutationVariables = Exact<{
+  data?: InputMaybe<RequestApproveOrDeclineInput>;
+  requestType: RequestType;
+}>;
+
+export type ApproveOrDeclineRequestMutation = {
+  requests: {
+    requestApproveOrDecline?: {
+      requestId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
         | null;
     } | null;
   };
@@ -14981,6 +15019,132 @@ export type GetShareStatementQuery = {
   };
 };
 
+export type GetChequeBookRequestsQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<RequestFilter>;
+}>;
+
+export type GetChequeBookRequestsQuery = {
+  requests: {
+    list?: {
+      chequeBookRequest?: {
+        totalCount?: number | null;
+        pageInfo?: PaginationFragment | null;
+        edges?: Array<{
+          node?: {
+            id: string;
+            memberId: string;
+            memberName: Record<'local' | 'en' | 'np', string>;
+            memberPhoneNumber: string;
+            memberAge?: number | null;
+            memberGender?: string | null;
+            memberProfilePicUrl?: string | null;
+            accountNumber: string;
+            accountType: string;
+            approvalStatus: RequestStatus;
+            requestedDate: string;
+            branchId?: string | null;
+            branchName?: string | null;
+            numberOfLeaves?: number | null;
+            pickUpMethod?: ChequePickUpMethod | null;
+            agentName?: string | null;
+            remarks?: string | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetWithdrawViaCollectorQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<RequestFilter>;
+}>;
+
+export type GetWithdrawViaCollectorQuery = {
+  requests: {
+    list?: {
+      withdrawViaCollector?: {
+        totalCount?: number | null;
+        pageInfo?: PaginationFragment | null;
+        edges?: Array<{
+          node?: {
+            id: string;
+            memberId: string;
+            memberName: Record<'local' | 'en' | 'np', string>;
+            memberPhoneNumber: string;
+            accountNumber: string;
+            accountType: string;
+            approvalStatus: RequestStatus;
+            requestedDate: string;
+            collectorName: string;
+            amount: string;
+            remarks?: string | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanRequestsQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<RequestFilter>;
+}>;
+
+export type GetLoanRequestsQuery = {
+  requests: {
+    list?: {
+      loanRequest?: {
+        totalCount?: number | null;
+        pageInfo?: PaginationFragment | null;
+        edges?: Array<{
+          node?: {
+            id: string;
+            memberId: string;
+            memberName: Record<'local' | 'en' | 'np', string>;
+            memberPhoneNumber: string;
+            approvalStatus: RequestStatus;
+            loanAmount: string;
+            lastModifiedDate: string;
+            purpose?: string | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetBlockChequeListQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<RequestFilter>;
+}>;
+
+export type GetBlockChequeListQuery = {
+  requests: {
+    list?: {
+      blockCheque?: {
+        totalCount?: number | null;
+        pageInfo?: PaginationFragment | null;
+        edges?: Array<{
+          node?: {
+            id: string;
+            memberId: string;
+            memberName: Record<'local' | 'en' | 'np', string>;
+            memberPhoneNumber: string;
+            accountNumber: string;
+            accountType: string;
+            approvalStatus: RequestStatus;
+            requestedDate: string;
+            reason?: string | null;
+            chequeNumber: string;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetGlobalSearchQueryVariables = Exact<{
   filter?: InputMaybe<SearchFilterData>;
   pagination?: InputMaybe<Pagination>;
@@ -18138,6 +18302,38 @@ export const useSaveNewReportMutation = <TError = unknown, TContext = unknown>(
   useMutation<SaveNewReportMutation, TError, SaveNewReportMutationVariables, TContext>(
     ['saveNewReport'],
     useAxios<SaveNewReportMutation, SaveNewReportMutationVariables>(SaveNewReportDocument),
+    options
+  );
+export const ApproveOrDeclineRequestDocument = `
+    mutation approveOrDeclineRequest($data: RequestApproveOrDeclineInput, $requestType: RequestType!) {
+  requests {
+    requestApproveOrDecline(data: $data, requestType: $requestType) {
+      error {
+        ...MutationError
+      }
+      requestId
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useApproveOrDeclineRequestMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ApproveOrDeclineRequestMutation,
+    TError,
+    ApproveOrDeclineRequestMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    ApproveOrDeclineRequestMutation,
+    TError,
+    ApproveOrDeclineRequestMutationVariables,
+    TContext
+  >(
+    ['approveOrDeclineRequest'],
+    useAxios<ApproveOrDeclineRequestMutation, ApproveOrDeclineRequestMutationVariables>(
+      ApproveOrDeclineRequestDocument
+    ),
     options
   );
 export const SaveAlternativeChargesDocument = `
@@ -23073,6 +23269,172 @@ export const useGetShareStatementQuery = <TData = GetShareStatementQuery, TError
     ['getShareStatement', variables],
     useAxios<GetShareStatementQuery, GetShareStatementQueryVariables>(
       GetShareStatementDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetChequeBookRequestsDocument = `
+    query getChequeBookRequests($pagination: Pagination, $filter: RequestFilter) {
+  requests {
+    list {
+      chequeBookRequest(paginate: $pagination, filter: $filter) {
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges {
+          node {
+            id
+            memberId
+            memberName
+            memberPhoneNumber
+            memberAge
+            memberGender
+            memberProfilePicUrl
+            accountNumber
+            accountType
+            approvalStatus
+            requestedDate
+            branchId
+            branchName
+            numberOfLeaves
+            pickUpMethod
+            agentName
+            remarks
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetChequeBookRequestsQuery = <TData = GetChequeBookRequestsQuery, TError = unknown>(
+  variables?: GetChequeBookRequestsQueryVariables,
+  options?: UseQueryOptions<GetChequeBookRequestsQuery, TError, TData>
+) =>
+  useQuery<GetChequeBookRequestsQuery, TError, TData>(
+    variables === undefined ? ['getChequeBookRequests'] : ['getChequeBookRequests', variables],
+    useAxios<GetChequeBookRequestsQuery, GetChequeBookRequestsQueryVariables>(
+      GetChequeBookRequestsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetWithdrawViaCollectorDocument = `
+    query getWithdrawViaCollector($pagination: Pagination, $filter: RequestFilter) {
+  requests {
+    list {
+      withdrawViaCollector(paginate: $pagination, filter: $filter) {
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges {
+          node {
+            id
+            memberId
+            memberName
+            memberPhoneNumber
+            accountNumber
+            accountType
+            approvalStatus
+            requestedDate
+            collectorName
+            amount
+            remarks
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetWithdrawViaCollectorQuery = <
+  TData = GetWithdrawViaCollectorQuery,
+  TError = unknown
+>(
+  variables?: GetWithdrawViaCollectorQueryVariables,
+  options?: UseQueryOptions<GetWithdrawViaCollectorQuery, TError, TData>
+) =>
+  useQuery<GetWithdrawViaCollectorQuery, TError, TData>(
+    variables === undefined ? ['getWithdrawViaCollector'] : ['getWithdrawViaCollector', variables],
+    useAxios<GetWithdrawViaCollectorQuery, GetWithdrawViaCollectorQueryVariables>(
+      GetWithdrawViaCollectorDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanRequestsDocument = `
+    query getLoanRequests($pagination: Pagination, $filter: RequestFilter) {
+  requests {
+    list {
+      loanRequest(filter: $filter, paginate: $pagination) {
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges {
+          node {
+            id
+            memberId
+            memberName
+            memberPhoneNumber
+            approvalStatus
+            loanAmount
+            lastModifiedDate
+            purpose
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetLoanRequestsQuery = <TData = GetLoanRequestsQuery, TError = unknown>(
+  variables?: GetLoanRequestsQueryVariables,
+  options?: UseQueryOptions<GetLoanRequestsQuery, TError, TData>
+) =>
+  useQuery<GetLoanRequestsQuery, TError, TData>(
+    variables === undefined ? ['getLoanRequests'] : ['getLoanRequests', variables],
+    useAxios<GetLoanRequestsQuery, GetLoanRequestsQueryVariables>(GetLoanRequestsDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetBlockChequeListDocument = `
+    query getBlockChequeList($pagination: Pagination, $filter: RequestFilter) {
+  requests {
+    list {
+      blockCheque(filter: $filter, paginate: $pagination) {
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges {
+          node {
+            id
+            memberId
+            memberName
+            memberPhoneNumber
+            accountNumber
+            accountType
+            approvalStatus
+            requestedDate
+            reason
+            chequeNumber
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetBlockChequeListQuery = <TData = GetBlockChequeListQuery, TError = unknown>(
+  variables?: GetBlockChequeListQueryVariables,
+  options?: UseQueryOptions<GetBlockChequeListQuery, TError, TData>
+) =>
+  useQuery<GetBlockChequeListQuery, TError, TData>(
+    variables === undefined ? ['getBlockChequeList'] : ['getBlockChequeList', variables],
+    useAxios<GetBlockChequeListQuery, GetBlockChequeListQueryVariables>(
+      GetBlockChequeListDocument
     ).bind(null, variables),
     options
   );
