@@ -5,19 +5,17 @@ import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
 import { RequestType, useApproveOrDeclineRequestMutation } from '@coop/cbs/data-access';
-import { FormCheckbox, FormTextArea } from '@coop/shared/form';
+import { FormCheckbox, FormDatePicker, FormTextArea } from '@coop/shared/form';
 import { asyncToast, Box, ChakraModal } from '@coop/shared/ui';
 
 interface IApproveDeclineModalProps {
-  requestType: RequestType;
   queryKey: string;
   children: React.ReactNode;
   approveModal: ReturnType<typeof useDisclosure>;
 }
 
-export const ApproveDeclineModal = ({
+export const LoanApproveOrDeclineModal = ({
   children,
-  requestType,
   queryKey,
   approveModal,
 }: IApproveDeclineModalProps) => {
@@ -28,6 +26,7 @@ export const ApproveDeclineModal = ({
     defaultValues: {
       reasonForDeclination: '',
       notifyMember: false,
+      purposedDate: '',
     },
   });
 
@@ -57,9 +56,10 @@ export const ApproveDeclineModal = ({
               data: {
                 requestId: router.query['id'] as string,
                 approve: false,
-                ...methods.getValues(),
+                reasonForDeclination: methods.getValues().reasonForDeclination,
+                notifyMember: methods.getValues().notifyMember,
               },
-              requestType,
+              requestType: RequestType.LoanRequest,
             }),
             onSuccess: () => {
               queryClient.invalidateQueries(queryKey);
@@ -67,6 +67,7 @@ export const ApproveDeclineModal = ({
               methods.reset();
               methods.setValue('reasonForDeclination', '');
               methods.setValue('notifyMember', false);
+              methods.setValue('purposedDate', '');
             },
           });
         }}
@@ -76,6 +77,7 @@ export const ApproveDeclineModal = ({
           methods.reset();
           methods.setValue('reasonForDeclination', '');
           methods.setValue('notifyMember', false);
+          methods.setValue('purposedDate', '');
         }}
         primaryButtonLabel="Done"
         secondaryButtonLabel="Undo"
@@ -91,7 +93,7 @@ export const ApproveDeclineModal = ({
 
       <ChakraModal
         width="2xl"
-        primaryButtonLabel="Approve"
+        primaryButtonLabel="Schedule"
         primaryButtonHandler={async () => {
           await asyncToast({
             id: 'approve-request',
@@ -103,15 +105,17 @@ export const ApproveDeclineModal = ({
               data: {
                 requestId: router.query['id'] as string,
                 approve: true,
+                purposedDate: methods.getValues().purposedDate,
               },
-              requestType,
+              requestType: RequestType.LoanRequest,
             }),
             onSuccess: () => {
               queryClient.invalidateQueries(queryKey);
-              onToggle();
               methods.reset();
               methods.setValue('reasonForDeclination', '');
               methods.setValue('notifyMember', false);
+              methods.setValue('purposedDate', '');
+              onToggle();
             },
           });
         }}
@@ -123,11 +127,16 @@ export const ApproveDeclineModal = ({
         }}
         isSecondaryDanger
         onClose={onClose}
-        title="acUpdateUser"
+        title="Loan Request"
         open={isOpen}
         hidePadding
       >
         {children}
+        <FormProvider {...methods}>
+          <Box p="s16">
+            <FormDatePicker label="Purposed Meeting Date" name="purposedDate" />
+          </Box>
+        </FormProvider>
       </ChakraModal>
     </>
   );

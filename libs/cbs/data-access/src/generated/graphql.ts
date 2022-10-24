@@ -794,9 +794,13 @@ export type BlockChequeRequestList = {
   approvalStatus: RequestStatus;
   chequeNumber: Scalars['String'];
   id: Scalars['String'];
+  memberAge?: Maybe<Scalars['Int']>;
+  memberGender?: Maybe<Scalars['String']>;
   memberId: Scalars['String'];
   memberName: Scalars['Localized'];
   memberPhoneNumber: Scalars['String'];
+  memberProfilePicId?: Maybe<Scalars['String']>;
+  memberProfilePicUrl?: Maybe<Scalars['String']>;
   reason?: Maybe<Scalars['String']>;
   requestedDate: Scalars['String'];
 };
@@ -1115,9 +1119,13 @@ export type ChequeBookRequestList = {
   branchId?: Maybe<Scalars['String']>;
   branchName?: Maybe<Scalars['String']>;
   id: Scalars['String'];
+  memberAge?: Maybe<Scalars['Int']>;
+  memberGender?: Maybe<Scalars['String']>;
   memberId: Scalars['String'];
   memberName: Scalars['Localized'];
   memberPhoneNumber: Scalars['String'];
+  memberProfilePicId?: Maybe<Scalars['String']>;
+  memberProfilePicUrl?: Maybe<Scalars['String']>;
   numberOfLeaves?: Maybe<Scalars['Int']>;
   pickUpMethod?: Maybe<ChequePickUpMethod>;
   remarks?: Maybe<Scalars['String']>;
@@ -7706,9 +7714,13 @@ export type LoanRequestList = {
   id: Scalars['String'];
   lastModifiedDate: Scalars['String'];
   loanAmount: Scalars['String'];
+  memberAge?: Maybe<Scalars['Int']>;
+  memberGender?: Maybe<Scalars['String']>;
   memberId: Scalars['String'];
   memberName: Scalars['Localized'];
   memberPhoneNumber: Scalars['String'];
+  memberProfilePicId?: Maybe<Scalars['String']>;
+  memberProfilePicUrl?: Maybe<Scalars['String']>;
   purpose?: Maybe<Scalars['String']>;
 };
 
@@ -10580,9 +10592,13 @@ export type WithdrawViaCollectorList = {
   approvalStatus: RequestStatus;
   collectorName: Scalars['String'];
   id: Scalars['String'];
+  memberAge?: Maybe<Scalars['Int']>;
+  memberGender?: Maybe<Scalars['String']>;
   memberId: Scalars['String'];
   memberName: Scalars['Localized'];
   memberPhoneNumber: Scalars['String'];
+  memberProfilePicId?: Maybe<Scalars['String']>;
+  memberProfilePicUrl?: Maybe<Scalars['String']>;
   remarks?: Maybe<Scalars['String']>;
   requestedDate: Scalars['String'];
 };
@@ -15032,6 +15048,34 @@ export type GetWithdrawViaCollectorQuery = {
             collectorName: string;
             amount: string;
             remarks?: string | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanRequestsQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<RequestFilter>;
+}>;
+
+export type GetLoanRequestsQuery = {
+  requests: {
+    list?: {
+      loanRequest?: {
+        totalCount?: number | null;
+        pageInfo?: PaginationFragment | null;
+        edges?: Array<{
+          node?: {
+            id: string;
+            memberId: string;
+            memberName: Record<'local' | 'en' | 'np', string>;
+            memberPhoneNumber: string;
+            approvalStatus: RequestStatus;
+            loanAmount: string;
+            lastModifiedDate: string;
+            purpose?: string | null;
           } | null;
         } | null> | null;
       } | null;
@@ -23176,6 +23220,44 @@ export const useGetWithdrawViaCollectorQuery = <
     useAxios<GetWithdrawViaCollectorQuery, GetWithdrawViaCollectorQueryVariables>(
       GetWithdrawViaCollectorDocument
     ).bind(null, variables),
+    options
+  );
+export const GetLoanRequestsDocument = `
+    query getLoanRequests($pagination: Pagination, $filter: RequestFilter) {
+  requests {
+    list {
+      loanRequest(filter: $filter, paginate: $pagination) {
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges {
+          node {
+            id
+            memberId
+            memberName
+            memberPhoneNumber
+            approvalStatus
+            loanAmount
+            lastModifiedDate
+            purpose
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetLoanRequestsQuery = <TData = GetLoanRequestsQuery, TError = unknown>(
+  variables?: GetLoanRequestsQueryVariables,
+  options?: UseQueryOptions<GetLoanRequestsQuery, TError, TData>
+) =>
+  useQuery<GetLoanRequestsQuery, TError, TData>(
+    variables === undefined ? ['getLoanRequests'] : ['getLoanRequests', variables],
+    useAxios<GetLoanRequestsQuery, GetLoanRequestsQueryVariables>(GetLoanRequestsDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetGlobalSearchDocument = `

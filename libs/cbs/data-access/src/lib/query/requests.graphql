@@ -29,16 +29,16 @@ query getChequeBookRequests($pagination: Pagination, $filter: RequestFilter) {
   }
 }
 
-query getWithdrawViaCollector($pagination: Pagination, $filter: RequestFilter){
-  requests{
-    list{
-      withdrawViaCollector(paginate: $pagination, filter: $filter){
+query getWithdrawViaCollector($pagination: Pagination, $filter: RequestFilter) {
+  requests {
+    list {
+      withdrawViaCollector(paginate: $pagination, filter: $filter) {
         totalCount
         pageInfo {
           ...Pagination
         }
-        edges{
-          node{
+        edges {
+          node {
             id
             memberId
             memberName
@@ -50,6 +50,32 @@ query getWithdrawViaCollector($pagination: Pagination, $filter: RequestFilter){
             collectorName
             amount
             remarks
+          }
+        }
+      }
+    }
+  }
+}
+
+
+query getLoanRequests($pagination: Pagination, $filter: RequestFilter){
+  requests{
+    list{
+      loanRequest(filter: $filter, paginate: $pagination ){
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges{
+          node{
+            id
+            memberId
+            memberName
+            memberPhoneNumber
+            approvalStatus
+            loanAmount
+            lastModifiedDate
+            purpose
           }
         }
       }
