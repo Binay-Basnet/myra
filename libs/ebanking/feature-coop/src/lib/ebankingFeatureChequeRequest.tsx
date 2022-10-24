@@ -1,14 +1,19 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import { AccountPopover } from '@coop/ebanking/accounts';
+import { FormAccountHeader } from '@coop/ebanking/accounts';
 import { InfoCard } from '@coop/ebanking/cards';
 import {
   EBankingChequeRequestInput,
   EBankingChequeRequestType,
   useSetChequeRequestDataMutation,
 } from '@coop/ebanking/data-access';
-import { FormAgentSelect, FormBranchSelect, FormSwitchTab } from '@coop/shared/form';
+import {
+  FormAgentSelect,
+  FormBranchSelect,
+  FormNumberInput,
+  FormSwitchTab,
+} from '@coop/shared/form';
 import { asyncToast, Box, PathBar } from '@coop/shared/ui';
 import { getLoggedInUserId } from '@coop/shared/utils';
 
@@ -37,7 +42,10 @@ export const EbankingFeatureChequeRequest = () => {
       id: 'add-new-cheque-request',
       promise: addNewChequeRequest({
         memberID,
-        data: getValues(),
+        data: {
+          ...getValues(),
+          noOfLeaves: Number(getValues().noOfLeaves),
+        },
       }),
       msgs: {
         loading: 'Adding New Cheque Request',
@@ -57,17 +65,17 @@ export const EbankingFeatureChequeRequest = () => {
           { label: 'Request Cheque', link: '/coop/cheque/request' },
         ]}
       />
-      <InfoCard
-        title="Saving Account"
-        subtitle="23,456.78"
-        btn={<AccountPopover />}
-        footerButtonLabel="Submit Request"
-        footerButtonHandler={handleSubmitRequest}
-      >
-        <FormProvider {...methods}>
+      <FormProvider {...methods}>
+        <InfoCard
+          header={<FormAccountHeader name="accountId" />}
+          footerButtonLabel="Submit Request"
+          footerButtonHandler={handleSubmitRequest}
+        >
           <form>
             <Box p="s16" display="flex" flexDirection="column" gap="s16">
               <FormSwitchTab name="type" label="Request Chequebook" options={RequestTypeOptions} />
+
+              <FormNumberInput name="noOfLeaves" label="No. Of Leaves" />
 
               {type === EBankingChequeRequestType.SelfPickup && (
                 <FormBranchSelect name="branch" label="Branch" />
@@ -78,8 +86,8 @@ export const EbankingFeatureChequeRequest = () => {
               )}
             </Box>
           </form>
-        </FormProvider>
-      </InfoCard>
+        </InfoCard>
+      </FormProvider>
     </Box>
   );
 };

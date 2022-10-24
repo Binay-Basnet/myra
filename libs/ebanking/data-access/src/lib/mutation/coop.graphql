@@ -4,6 +4,9 @@ mutation setChequeRequestData($memberID: String!, $data: EBankingChequeRequestIn
       cheque {
         request(memberID: $memberID, data: $data) {
           recordID
+          error {
+            ...MutationError
+          }
         }
       }
     }

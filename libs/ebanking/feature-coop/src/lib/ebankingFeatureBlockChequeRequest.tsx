@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import { AccountPopover } from '@coop/ebanking/accounts';
+import { FormAccountHeader } from '@coop/ebanking/accounts';
 import { InfoCard } from '@coop/ebanking/cards';
 import {
   EBankingChequeBlockInput,
@@ -47,14 +47,12 @@ export const EBankingFeatureBlockChequeRequest = () => {
           { label: 'Cheque Block Request', link: '/coop/cheque/block' },
         ]}
       />
-      <InfoCard
-        title="Saving Account"
-        subtitle="23,456.78"
-        btn={<AccountPopover />}
-        footerButtonLabel="Submit Request"
-        footerButtonHandler={handleSubmitRequest}
-      >
-        <FormProvider {...methods}>
+      <FormProvider {...methods}>
+        <InfoCard
+          header={<FormAccountHeader name="accountId" />}
+          footerButtonLabel="Submit Request"
+          footerButtonHandler={handleSubmitRequest}
+        >
           <form>
             <Box p="s16" display="flex" flexDirection="column" gap="s16">
               <Text fontSize="r1" fontWeight={500} color="neutralColorLight.gray-70">
@@ -66,8 +64,8 @@ export const EBankingFeatureBlockChequeRequest = () => {
               <FormTextArea name="reason" label="Reason" />
             </Box>
           </form>
-        </FormProvider>
-      </InfoCard>
+        </InfoCard>
+      </FormProvider>
     </Box>
   );
 };

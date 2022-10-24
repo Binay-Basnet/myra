@@ -777,6 +777,30 @@ export type Base = {
   objState: ObjState;
 };
 
+export type BlockChequeRequestConnection = {
+  edges?: Maybe<Array<Maybe<BlockChequeRequestEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type BlockChequeRequestEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<BlockChequeRequestList>;
+};
+
+export type BlockChequeRequestList = {
+  accountNumber: Scalars['String'];
+  accountType: Scalars['String'];
+  approvalStatus: RequestStatus;
+  chequeNumber: Scalars['String'];
+  id: Scalars['String'];
+  memberId: Scalars['String'];
+  memberName: Scalars['Localized'];
+  memberPhoneNumber: Scalars['String'];
+  reason?: Maybe<Scalars['String']>;
+  requestedDate: Scalars['String'];
+};
+
 export type Branch = {
   abbsTransaction?: Maybe<AbbsTransaction>;
   address?: Maybe<Address>;
@@ -1067,6 +1091,34 @@ export type ChartsOfAccountSettingsQueryAccountsUnderArgs = {
   accountCode?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
+export type ChequeBookRequestConnection = {
+  edges?: Maybe<Array<Maybe<ChequeBookRequestEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type ChequeBookRequestEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<ChequeBookRequestList>;
+};
+
+export type ChequeBookRequestList = {
+  accountNumber: Scalars['String'];
+  accountType: Scalars['String'];
+  agentName?: Maybe<Scalars['String']>;
+  approvalStatus: RequestStatus;
+  branchId?: Maybe<Scalars['String']>;
+  branchName?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  memberId: Scalars['String'];
+  memberName: Scalars['Localized'];
+  memberPhoneNumber: Scalars['String'];
+  numberOfLeaves?: Maybe<Scalars['Int']>;
+  pickUpMethod?: Maybe<ChequePickUpMethod>;
+  remarks?: Maybe<Scalars['String']>;
+  requestedDate: Scalars['String'];
+};
+
 export type ChequePastRequest = {
   branch?: Maybe<Branch>;
   chequeBlockNumber?: Maybe<Scalars['String']>;
@@ -1081,6 +1133,11 @@ export type ChequePastRequest = {
   withdrawAmount?: Maybe<Scalars['Amount']>;
   withdrawDate?: Maybe<Scalars['String']>;
 };
+
+export enum ChequePickUpMethod {
+  SelfPickup = 'Self_Pickup',
+  ThroughAgent = 'Through_agent',
+}
 
 export type Citizenship = {
   inNepali?: Maybe<CitizenshipInNepali>;
@@ -7628,6 +7685,28 @@ export enum LoanRepaymentScheme {
   Flat = 'FLAT',
 }
 
+export type LoanRequestConnection = {
+  edges?: Maybe<Array<Maybe<LoanRequestEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type LoanRequestEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<LoanRequestList>;
+};
+
+export type LoanRequestList = {
+  approvalStatus: RequestStatus;
+  id: Scalars['String'];
+  lastModifiedDate: Scalars['String'];
+  loanAmount: Scalars['String'];
+  memberId: Scalars['String'];
+  memberName: Scalars['Localized'];
+  memberPhoneNumber: Scalars['String'];
+  purpose?: Maybe<Scalars['String']>;
+};
+
 export enum LoanRequiredDocuments {
   Citizenship = 'CITIZENSHIP',
   Form = 'FORM',
@@ -8089,6 +8168,7 @@ export type Mutation = {
   newId: Scalars['String'];
   presignedUrl: PresignedUrlMutation;
   report: ReportMutation;
+  requests: RequestsMutation;
   seed: Scalars['Boolean'];
   settings: SettingsMutation;
   share: ShareMutation;
@@ -8990,6 +9070,7 @@ export type Query = {
   members: MemberQuery;
   neosys: NeosysQuery;
   report: ReportQuery;
+  requests: RequestsQuery;
   routesAndCodes: RoutesAndCodesQuery;
   search: SearchQuery;
   settings: SettingsQuery;
@@ -9115,10 +9196,83 @@ export type ReportResult = {
   statement?: Maybe<StatementReport>;
 };
 
+export type RequestApproveOrDeclineInput = {
+  approve: Scalars['Boolean'];
+  notifyMember?: InputMaybe<Scalars['Boolean']>;
+  purposedDate?: InputMaybe<Scalars['String']>;
+  reasonForDeclination?: InputMaybe<Scalars['String']>;
+  requestId: Scalars['String'];
+};
+
+export type RequestApproveOrDeclineResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<RequestsQuery>;
+  requestId?: Maybe<Scalars['String']>;
+};
+
+export type RequestFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  requestStatus?: InputMaybe<RequestStatus>;
+  requestType?: InputMaybe<Scalars['String']>;
+};
+
 export enum RequestSource {
   Ebanking = 'EBANKING',
   MobileBanking = 'MOBILE_BANKING',
 }
+
+export enum RequestStatus {
+  Approved = 'APPROVED',
+  Declined = 'DECLINED',
+  Pending = 'PENDING',
+}
+
+export enum RequestType {
+  BlockCheque = 'BLOCK_CHEQUE',
+  ChequeBookRequest = 'CHEQUE_BOOK_REQUEST',
+  LoanRequest = 'LOAN_REQUEST',
+  WithdrawRequest = 'WITHDRAW_REQUEST',
+}
+
+export type RequestsList = {
+  blockCheque?: Maybe<BlockChequeRequestConnection>;
+  chequeBookRequest?: Maybe<ChequeBookRequestConnection>;
+  loanRequest?: Maybe<LoanRequestConnection>;
+  withdrawViaCollector?: Maybe<WithdrawViaCollectorConnection>;
+};
+
+export type RequestsListBlockChequeArgs = {
+  filter?: InputMaybe<RequestFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type RequestsListChequeBookRequestArgs = {
+  filter?: InputMaybe<RequestFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type RequestsListLoanRequestArgs = {
+  filter?: InputMaybe<RequestFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type RequestsListWithdrawViaCollectorArgs = {
+  filter?: InputMaybe<RequestFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type RequestsMutation = {
+  requestApproveOrDecline?: Maybe<RequestApproveOrDeclineResult>;
+};
+
+export type RequestsMutationRequestApproveOrDeclineArgs = {
+  data?: InputMaybe<RequestApproveOrDeclineInput>;
+  requestType: RequestType;
+};
+
+export type RequestsQuery = {
+  list?: Maybe<RequestsList>;
+};
 
 export type ResetPasswordData = {
   newPassword: Scalars['String'];
@@ -10336,6 +10490,31 @@ export type WithdrawResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
   recordId?: Maybe<Scalars['ID']>;
+};
+
+export type WithdrawViaCollectorConnection = {
+  edges?: Maybe<Array<Maybe<WithdrawViaCollectorEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type WithdrawViaCollectorEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<WithdrawViaCollectorList>;
+};
+
+export type WithdrawViaCollectorList = {
+  accountNumber: Scalars['String'];
+  accountType: Scalars['String'];
+  amount: Scalars['String'];
+  approvalStatus: RequestStatus;
+  collectorName: Scalars['String'];
+  id: Scalars['String'];
+  memberId: Scalars['String'];
+  memberName: Scalars['Localized'];
+  memberPhoneNumber: Scalars['String'];
+  remarks?: Maybe<Scalars['String']>;
+  requestedDate: Scalars['String'];
 };
 
 export enum WithdrawWith {
