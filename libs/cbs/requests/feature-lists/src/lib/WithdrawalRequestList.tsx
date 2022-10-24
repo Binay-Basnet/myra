@@ -1,99 +1,96 @@
 import React from 'react';
+import { useRouter } from 'next/router';
+import { useDisclosure } from '@chakra-ui/react';
 
+import { RequestType, useGetWithdrawViaCollectorQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Box, PageHeader, TablePopover, Text } from '@coop/shared/ui';
+import { Box, DetailCardContent, Grid, PageHeader, TablePopover, Text } from '@coop/shared/ui';
+import { amountConverter, getRouterQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
-
-enum ApprovalStatus {
-  Approved = 'Approved',
-  Pending = 'Pending',
-  Declined = 'Declined',
-}
-
-type TMemberRequestTable = {
-  id: string;
-  requestBy: {
-    name: string;
-    id: string;
-  };
-  account: {
-    name: string;
-    id: string;
-  };
-  collector: string;
-  approvalStatus: ApprovalStatus;
-  requestedDate: string;
-  amount: string;
-};
+import { ApproveDeclineModal } from '../components/ApproveDeclineModal';
 
 export const WithdrawViaCollectorList = () => {
-  const columns = React.useMemo<Column<TMemberRequestTable>[]>(
+  const router = useRouter();
+  const modalProps = useDisclosure();
+
+  const { data, isFetching } = useGetWithdrawViaCollectorQuery({
+    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+  });
+
+  const withdrawalRequests = React.useMemo(
+    () => data?.requests?.list?.withdrawViaCollector?.edges ?? [],
+    [data]
+  );
+
+  const columns = React.useMemo<Column<typeof withdrawalRequests[0]>[]>(
     () => [
       {
         header: 'ID',
-        accessorFn: (row) => row?.id,
+        accessorFn: (row) => row?.node?.id,
       },
 
       {
         header: 'Requested By',
-        accessorFn: (row) => row?.requestBy,
+        accessorFn: (row) => row?.node?.memberName,
         cell: (props) => (
           <Box display="flex" flexDir="column" gap="s4">
             <Text fontSize="r1" fontWeight={500} color="gray.800">
-              {props.row?.original?.requestBy?.name}
+              {props.row?.original?.node?.memberName?.local}
             </Text>
             <Text fontSize="r1" color="gray.600">
-              {props.row?.original?.requestBy?.id}
+              {props.row?.original?.node?.memberId}
             </Text>
           </Box>
         ),
         meta: {
-          width: '40%',
+          width: '100%',
         },
       },
       {
         header: 'Account',
-        accessorFn: (row) => row?.account,
+        accessorFn: (row) => row?.node?.accountNumber,
         cell: (props) => (
           <Box display="flex" flexDir="column" gap="s4">
             <Text fontSize="r1" fontWeight={500} color="gray.800">
-              {props.row?.original?.account?.name}
+              {props.row?.original?.node?.accountType}
             </Text>
             <Text fontSize="r1" color="gray.600">
-              {props.row?.original?.account?.id}
+              {props.row?.original?.node?.accountNumber.slice(0)}
             </Text>
           </Box>
         ),
         meta: {
-          width: '40%',
+          width: '100%',
         },
       },
       {
         header: 'Approval Status',
-        accessorFn: (row) => row?.approvalStatus,
-        cell: (props) => <ApprovalStatusItem status={props.row.original.approvalStatus} />,
+        accessorFn: (row) => row?.node?.approvalStatus,
+        cell: (props) => <ApprovalStatusItem status={props.row.original?.node?.approvalStatus} />,
       },
 
       {
         header: 'Amount',
-        accessorFn: (row) => row?.amount,
+        accessorFn: (row) => row?.node?.amount,
+        cell: (props) => amountConverter(props.getValue() as string),
       },
       {
         header: 'Collector',
-        accessorFn: (row) => row?.requestedDate,
+        accessorFn: (row) => row?.node?.collectorName,
       },
 
       {
         header: 'Requested Date',
-        accessorFn: (row) => row?.requestedDate,
+        accessorFn: (row) => row?.node?.requestedDate,
       },
       {
         id: '_actions',
         header: '',
-        cell: (props) => (
-          <TablePopover items={[{ title: 'View Details' }]} node={props.row.original} />
-        ),
+        cell: (props) =>
+          props.row.original?.node ? (
+            <TablePopover items={[{ title: 'View Details' }]} node={props.row.original?.node} />
+          ) : null,
         meta: {
           width: '60px',
         },
@@ -101,6 +98,9 @@ export const WithdrawViaCollectorList = () => {
     ],
     []
   );
+  const selectedRequest = withdrawalRequests?.find(
+    (request) => request?.node?.id === router.query['id']
+  )?.node;
 
   return (
     <Box display="flex" flexDir="column">
@@ -109,86 +109,61 @@ export const WithdrawViaCollectorList = () => {
       </Box>
 
       <Table
-        data={[
-          {
-            id: '12214',
-            requestBy: {
-              name: 'Ram Krishna',
-              id: '234134940',
-            },
-            account: {
-              name: 'Saving Account',
-              id: '019384948494944',
-            },
-            amount: '34,000',
-            collector: 'Hari Mahrajan',
-            approvalStatus: ApprovalStatus.Approved,
-            requestedDate: '2079-01-30',
-          },
-
-          {
-            id: '12214',
-            requestBy: {
-              name: 'Ram Krishna',
-              id: '234134940',
-            },
-            account: {
-              name: 'Saving Account',
-              id: '019384948494944',
-            },
-            amount: '34,000',
-            collector: 'Hari Mahrajan',
-            approvalStatus: ApprovalStatus.Approved,
-            requestedDate: '2079-01-30',
-          },
-          {
-            id: '12214',
-            requestBy: {
-              name: 'Ram Krishna',
-              id: '234134940',
-            },
-            account: {
-              name: 'Saving Account',
-              id: '019384948494944',
-            },
-            amount: '34,000',
-            collector: 'Hari Mahrajan',
-            approvalStatus: ApprovalStatus.Approved,
-            requestedDate: '2079-01-30',
-          },
-          {
-            id: '12214',
-            requestBy: {
-              name: 'Ram Krishna',
-              id: '234134940',
-            },
-            account: {
-              name: 'Saving Account',
-              id: '019384948494944',
-            },
-            amount: '34,000',
-            collector: 'Hari Mahrajan',
-            approvalStatus: ApprovalStatus.Approved,
-            requestedDate: '2079-01-30',
-          },
-          {
-            id: '12214',
-            requestBy: {
-              name: 'Ram Krishna',
-              id: '234134940',
-            },
-            account: {
-              name: 'Saving Account',
-              id: '019384948494944',
-            },
-            amount: '34,000',
-            collector: 'Hari Mahrajan',
-            approvalStatus: ApprovalStatus.Approved,
-            requestedDate: '2079-01-30',
-          },
-        ]}
+        data={withdrawalRequests}
         columns={columns}
+        isLoading={isFetching}
+        rowOnClick={(row) => {
+          router.push(
+            {
+              query: {
+                id: row?.node?.id,
+              },
+            },
+            undefined,
+            { shallow: true }
+          );
+          modalProps.onToggle();
+        }}
+        pagination={{
+          total: data?.requests?.list?.withdrawViaCollector?.totalCount ?? 'Many',
+          pageInfo: data?.requests?.list?.withdrawViaCollector?.pageInfo,
+        }}
       />
+      <ApproveDeclineModal
+        approveModal={modalProps}
+        requestType={RequestType.WithdrawRequest}
+        queryKey="getWithdrawViaCollector"
+      >
+        <Box p="s16">
+          <Text fontWeight="600" fontSize="r1" textTransform="capitalize" color="gray.600">
+            Transfer Detail
+          </Text>
+        </Box>
+        <Grid templateColumns="repeat(2, 1fr)" gap="s20" p="s16">
+          <DetailCardContent
+            title="Requested By"
+            subtitle={String(selectedRequest?.memberName.local)}
+          />
+          <DetailCardContent title="Account" subtitle={String(selectedRequest?.accountType)}>
+            <Text fontWeight="600" fontSize="r1" textTransform="capitalize" color="gray.800">
+              {selectedRequest?.accountNumber}
+            </Text>
+          </DetailCardContent>
+          <DetailCardContent
+            title="Amount"
+            subtitle={amountConverter(String(selectedRequest?.amount)) as string}
+          />
+
+          <DetailCardContent title="Collector">
+            <Text fontWeight="600" fontSize="r1" textTransform="capitalize" color="primary.500">
+              {selectedRequest?.memberName?.local}
+            </Text>
+          </DetailCardContent>
+        </Grid>
+        <Box p="s16">
+          <DetailCardContent title="Remarks" subtitle={selectedRequest?.remarks} />
+        </Box>
+      </ApproveDeclineModal>
     </Box>
   );
 };

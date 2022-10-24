@@ -14,9 +14,12 @@ export const DetailCardContent = ({ title, subtitle, bg, children }: DetailCardC
     <Text fontWeight="500" fontSize="s3">
       {title ?? 'N/A'}
     </Text>
-    <Text fontWeight="600" fontSize="r1" textTransform="capitalize">
-      {subtitle ?? 'N/A'}
-    </Text>
+    {subtitle !== undefined && (
+      <Text fontWeight="600" fontSize="r1" textTransform="capitalize">
+        {subtitle ?? 'N/A'}
+      </Text>
+    )}
+
     {children}
   </Box>
 );

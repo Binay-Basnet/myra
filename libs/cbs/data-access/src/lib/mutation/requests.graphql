@@ -1,6 +1,6 @@
-mutation approveOrDeclineRequest($data: RequestApproveOrDeclineInput, $requestType: RequestType! ) {
+mutation approveOrDeclineRequest($data: RequestApproveOrDeclineInput, $requestType: RequestType!) {
   requests {
-    requestApproveOrDecline(data: $data, requestType: $requestType ){
+    requestApproveOrDecline(data: $data, requestType: $requestType) {
       error {
         ...MutationError
       }

@@ -15008,6 +15008,37 @@ export type GetChequeBookRequestsQuery = {
   };
 };
 
+export type GetWithdrawViaCollectorQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<RequestFilter>;
+}>;
+
+export type GetWithdrawViaCollectorQuery = {
+  requests: {
+    list?: {
+      withdrawViaCollector?: {
+        totalCount?: number | null;
+        pageInfo?: PaginationFragment | null;
+        edges?: Array<{
+          node?: {
+            id: string;
+            memberId: string;
+            memberName: Record<'local' | 'en' | 'np', string>;
+            memberPhoneNumber: string;
+            accountNumber: string;
+            accountType: string;
+            approvalStatus: RequestStatus;
+            requestedDate: string;
+            collectorName: string;
+            amount: string;
+            remarks?: string | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetGlobalSearchQueryVariables = Exact<{
   filter?: InputMaybe<SearchFilterData>;
   pagination?: InputMaybe<Pagination>;
@@ -23101,6 +23132,49 @@ export const useGetChequeBookRequestsQuery = <TData = GetChequeBookRequestsQuery
     variables === undefined ? ['getChequeBookRequests'] : ['getChequeBookRequests', variables],
     useAxios<GetChequeBookRequestsQuery, GetChequeBookRequestsQueryVariables>(
       GetChequeBookRequestsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetWithdrawViaCollectorDocument = `
+    query getWithdrawViaCollector($pagination: Pagination, $filter: RequestFilter) {
+  requests {
+    list {
+      withdrawViaCollector(paginate: $pagination, filter: $filter) {
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges {
+          node {
+            id
+            memberId
+            memberName
+            memberPhoneNumber
+            accountNumber
+            accountType
+            approvalStatus
+            requestedDate
+            collectorName
+            amount
+            remarks
+          }
+        }
+      }
+    }
+  }
+}
+    ${PaginationFragmentDoc}`;
+export const useGetWithdrawViaCollectorQuery = <
+  TData = GetWithdrawViaCollectorQuery,
+  TError = unknown
+>(
+  variables?: GetWithdrawViaCollectorQueryVariables,
+  options?: UseQueryOptions<GetWithdrawViaCollectorQuery, TError, TData>
+) =>
+  useQuery<GetWithdrawViaCollectorQuery, TError, TData>(
+    variables === undefined ? ['getWithdrawViaCollector'] : ['getWithdrawViaCollector', variables],
+    useAxios<GetWithdrawViaCollectorQuery, GetWithdrawViaCollectorQueryVariables>(
+      GetWithdrawViaCollectorDocument
     ).bind(null, variables),
     options
   );
