@@ -875,6 +875,11 @@ export type BranchInput = {
   wardNo?: InputMaybe<Scalars['Int']>;
 };
 
+export enum BranchPaymentMode {
+  BankCheque = 'BANK_CHEQUE',
+  Cash = 'CASH',
+}
+
 export type BranchSearchFilter = {
   filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
@@ -2769,7 +2774,6 @@ export type EBankingAuthMutationVerifyOtpArgs = {
 };
 
 export type EBankingChequeBlockInput = {
-  accountId?: InputMaybe<Scalars['String']>;
   chequeNumber?: InputMaybe<Scalars['String']>;
   reason?: InputMaybe<Scalars['String']>;
 };
@@ -2808,10 +2812,8 @@ export type EBankingChequeQueryPastRequestsArgs = {
 };
 
 export type EBankingChequeRequestInput = {
-  accountId?: InputMaybe<Scalars['String']>;
   branch?: InputMaybe<Scalars['ID']>;
   collector?: InputMaybe<Scalars['ID']>;
-  noOfLeaves?: InputMaybe<Scalars['Int']>;
   type: EBankingChequeRequestType;
 };
 
@@ -2828,7 +2830,6 @@ export type EBankingChequeResult = {
 };
 
 export type EBankingChequeWithdrawViaCollectorInput = {
-  accountId?: InputMaybe<Scalars['String']>;
   amount?: InputMaybe<Scalars['String']>;
   branch?: InputMaybe<Scalars['ID']>;
   collector?: InputMaybe<Scalars['ID']>;
@@ -8238,7 +8239,7 @@ export type MyraUserResult = {
 export type MyraUserSearchFilter = {
   id?: InputMaybe<Scalars['ID']>;
   query?: InputMaybe<Scalars['String']>;
-  role?: InputMaybe<Roles>;
+  role?: InputMaybe<Array<InputMaybe<Roles>>>;
 };
 
 export type Name = {
@@ -9805,6 +9806,60 @@ export enum TaxPayerOptions {
   Member = 'MEMBER',
 }
 
+export type TellerActivityEntry = {
+  ID: Scalars['ID'];
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']>;
+  destBranch?: Maybe<Scalars['Localized']>;
+  destProfilePic?: Maybe<Scalars['String']>;
+  destProfilePicUrl?: Maybe<Scalars['String']>;
+  destTeller?: Maybe<Scalars['Localized']>;
+  srcBranch?: Maybe<Scalars['Localized']>;
+  srcProfilePic?: Maybe<Scalars['String']>;
+  srcProfilePicUrl?: Maybe<Scalars['String']>;
+  srcTeller?: Maybe<Scalars['Localized']>;
+  transferType: TellerTransferType;
+};
+
+export type TellerActivityListConnection = {
+  edges?: Maybe<Array<Maybe<TellerActivityListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type TellerActivityListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<TellerActivityEntry>;
+};
+
+export type TellerTransactionFilter = {
+  type?: InputMaybe<TellerTransferType>;
+};
+
+export type TellerTransferInput = {
+  amount?: InputMaybe<Scalars['String']>;
+  branchPaymentMode?: InputMaybe<BranchPaymentMode>;
+  denominations?: InputMaybe<Array<Denomination>>;
+  destBranch?: InputMaybe<Scalars['String']>;
+  destTellerID?: InputMaybe<Scalars['String']>;
+  srcBranch?: InputMaybe<Scalars['String']>;
+  srcTellerID?: InputMaybe<Scalars['String']>;
+  transferType: TellerTransferType;
+};
+
+export type TellerTransferResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<TransactionQuery>;
+  record?: Maybe<Scalars['ID']>;
+};
+
+export enum TellerTransferType {
+  BranchTransfer = 'BRANCH_TRANSFER',
+  CashToVault = 'CASH_TO_VAULT',
+  TellerTransfer = 'TELLER_TRANSFER',
+  VaultToCash = 'VAULT_TO_CASH',
+}
+
 export type TestDbResult = {
   name: Scalars['String'];
 };
@@ -9863,6 +9918,7 @@ export type TransactionMutation = {
   bulkDeposit: BulkDepositResult;
   deposit: DepositResult;
   endOfDay?: Maybe<Scalars['String']>;
+  tellerTransfer: TellerTransferResult;
   transfer: TransferResult;
   withdraw: WithdrawResult;
 };
@@ -9891,6 +9947,10 @@ export type TransactionMutationDepositArgs = {
   data: DepositInput;
 };
 
+export type TransactionMutationTellerTransferArgs = {
+  data: TellerTransferInput;
+};
+
 export type TransactionMutationTransferArgs = {
   data: TransferInput;
 };
@@ -9906,6 +9966,7 @@ export type TransactionQuery = {
   listAgent: AccountAgentListConnection;
   listAgentTask?: Maybe<AgentTodayListData>;
   listDeposit: AccountActivityListConnection;
+  listTellerTransaction: TellerActivityListConnection;
   listTransfer: AccountTransferListConnection;
   listWithdraw: AccountActivityListConnection;
 };
@@ -9930,6 +9991,11 @@ export type TransactionQueryListAgentTaskArgs = {
 
 export type TransactionQueryListDepositArgs = {
   filter?: InputMaybe<AccountTransactionFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type TransactionQueryListTellerTransactionArgs = {
+  filter?: InputMaybe<TellerTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
@@ -11972,6 +12038,25 @@ export type SetAccountForgiveInstallmentDataMutation = {
 export type SetEndOfDayDataMutationVariables = Exact<{ [key: string]: never }>;
 
 export type SetEndOfDayDataMutation = { transaction: { endOfDay?: string | null } };
+
+export type SetTellerTransferDataMutationVariables = Exact<{
+  data: TellerTransferInput;
+}>;
+
+export type SetTellerTransferDataMutation = {
+  transaction: {
+    tellerTransfer: {
+      record?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
 
 export type GetAccountMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
@@ -16233,6 +16318,40 @@ export type GetEndOfDayDateDataQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetEndOfDayDateDataQuery = { transaction: { endOfDayDate: string } };
 
+export type GetTellerTransactionListDataQueryVariables = Exact<{
+  filter?: InputMaybe<TellerTransactionFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type GetTellerTransactionListDataQuery = {
+  transaction: {
+    listTellerTransaction: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          ID: string;
+          transferType: TellerTransferType;
+          srcTeller?: Record<'local' | 'en' | 'np', string> | null;
+          amount?: string | null;
+          destTeller?: Record<'local' | 'en' | 'np', string> | null;
+          date?: string | null;
+          srcProfilePic?: string | null;
+          destProfilePic?: string | null;
+          srcProfilePicUrl?: string | null;
+          destProfilePicUrl?: string | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    };
+  };
+};
+
 export const MutationErrorFragmentDoc = `
     fragment MutationError on MutationError {
   ... on BadRequestError {
@@ -19259,6 +19378,38 @@ export const useSetEndOfDayDataMutation = <TError = unknown, TContext = unknown>
   useMutation<SetEndOfDayDataMutation, TError, SetEndOfDayDataMutationVariables, TContext>(
     ['setEndOfDayData'],
     useAxios<SetEndOfDayDataMutation, SetEndOfDayDataMutationVariables>(SetEndOfDayDataDocument),
+    options
+  );
+export const SetTellerTransferDataDocument = `
+    mutation setTellerTransferData($data: TellerTransferInput!) {
+  transaction {
+    tellerTransfer(data: $data) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetTellerTransferDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetTellerTransferDataMutation,
+    TError,
+    SetTellerTransferDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetTellerTransferDataMutation,
+    TError,
+    SetTellerTransferDataMutationVariables,
+    TContext
+  >(
+    ['setTellerTransferData'],
+    useAxios<SetTellerTransferDataMutation, SetTellerTransferDataMutationVariables>(
+      SetTellerTransferDataDocument
+    ),
     options
   );
 export const GetAccountMemberListDocument = `
@@ -24857,6 +25008,52 @@ export const useGetEndOfDayDateDataQuery = <TData = GetEndOfDayDateDataQuery, TE
     variables === undefined ? ['getEndOfDayDateData'] : ['getEndOfDayDateData', variables],
     useAxios<GetEndOfDayDateDataQuery, GetEndOfDayDateDataQueryVariables>(
       GetEndOfDayDateDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetTellerTransactionListDataDocument = `
+    query getTellerTransactionListData($filter: TellerTransactionFilter, $pagination: Pagination) {
+  transaction {
+    listTellerTransaction(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          ID
+          transferType
+          srcTeller
+          amount
+          destTeller
+          date
+          srcProfilePic
+          destProfilePic
+          srcProfilePicUrl
+          destProfilePicUrl
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useGetTellerTransactionListDataQuery = <
+  TData = GetTellerTransactionListDataQuery,
+  TError = unknown
+>(
+  variables?: GetTellerTransactionListDataQueryVariables,
+  options?: UseQueryOptions<GetTellerTransactionListDataQuery, TError, TData>
+) =>
+  useQuery<GetTellerTransactionListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getTellerTransactionListData']
+      : ['getTellerTransactionListData', variables],
+    useAxios<GetTellerTransactionListDataQuery, GetTellerTransactionListDataQueryVariables>(
+      GetTellerTransactionListDataDocument
     ).bind(null, variables),
     options
   );

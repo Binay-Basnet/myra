@@ -35,3 +35,14 @@ mutation setEndOfDayData {
     endOfDay
   }
 }
+
+mutation setTellerTransferData($data: TellerTransferInput!) {
+  transaction {
+    tellerTransfer(data: $data) {
+      record
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
