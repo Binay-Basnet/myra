@@ -50,7 +50,7 @@ export const BulkDepositAccountsSummary = ({
               </Text>
             </Box>
 
-            {!!accountInfo?.fine && (
+            {!!Number(accountInfo?.fine) && (
               <Box display="flex" justifyContent="space-between">
                 <Text fontSize="s3" fontWeight={500} color="gray.600">
                   Fine
