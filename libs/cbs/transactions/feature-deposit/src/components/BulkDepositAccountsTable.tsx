@@ -96,9 +96,11 @@ export const BulkDepositAccountsTable = ({
 }: IBulkDepositAccountsTableProps) => {
   const { t } = useTranslation();
 
-  const { setValue, watch } = useFormContext<CustomBulkDepositInput>();
+  const { setValue, watch, getValues } = useFormContext<CustomBulkDepositInput>();
 
   const [installmentAccountIds, setInstallmentAccountIds] = useState<string[]>([]);
+
+  const [noOfInstallmentsArr, setNoOfInstallmentsArr] = useState<(number | string)[]>([]);
 
   const accountTypes = {
     [NatureOfDepositProduct.Saving]: t['addDepositSaving'],
@@ -155,7 +157,7 @@ export const BulkDepositAccountsTable = ({
 
         return {
           accountId: account?.node?.id as string,
-          noOfInstallments: hasInstallment ? '' : 'N/A',
+          noOfInstallments: hasInstallment ? 'Enter Installment' : 'N/A',
           amount: '',
           rebate: hasInstallment ? '' : 'N/A',
           fine: hasInstallment ? '' : 'N/A',
@@ -179,12 +181,32 @@ export const BulkDepositAccountsTable = ({
 
   useDeepCompareEffect(() => {
     if (accounts?.length) {
+      const temp: (number | string)[] = [];
+
+      let tempTotal = 0;
+
+      accounts?.forEach((account) => {
+        tempTotal += Number(account?.amount) ?? 0;
+        temp.push(account?.noOfInstallments);
+      });
+
+      setNoOfInstallmentsArr(temp);
+      setTotalDepositAmount(tempTotal);
+    }
+  }, [accounts]);
+
+  // console.log({ accounts });
+
+  useEffect(() => {
+    const { accounts: accountsArr } = getValues();
+
+    if (accountsArr?.length) {
       let sum = 0;
       let rebateSum = 0;
 
       setValue(
         'accounts',
-        accounts?.map((record) => {
+        accountsArr?.map((record) => {
           const { total, rebate, fine } = record?.hasInstallment
             ? getInstallmentSummary({
                 noOfInstallments: Number(record?.noOfInstallments ?? 0),
@@ -193,9 +215,9 @@ export const BulkDepositAccountsTable = ({
                 )?.value?.data as Installment[],
                 installmentAmount: Number(record?.installmentAmount ?? 0),
               })
-            : { total: 0, rebate: 0, fine: 0 };
+            : { total: record?.amount ?? 0, rebate: 0, fine: 0 };
 
-          sum += total + (Number(fine) ?? 0) || Number(record?.amount);
+          sum += Number(total) + (Number(fine) ?? 0) || Number(record?.amount);
 
           rebateSum += Number(rebate);
 
@@ -216,7 +238,48 @@ export const BulkDepositAccountsTable = ({
       setTotalDepositAmount(sum);
       setTotalRebate(rebateSum);
     }
-  }, [accounts]);
+  }, [JSON.stringify(noOfInstallmentsArr)]);
+
+  // useDeepCompareEffect(() => {
+  //   if (accounts?.length) {
+  //     let sum = 0;
+  //     let rebateSum = 0;
+
+  //     setValue(
+  //       'accounts',
+  //       accounts?.map((record) => {
+  //         const { total, rebate, fine } = record?.hasInstallment
+  //           ? getInstallmentSummary({
+  //               noOfInstallments: Number(record?.noOfInstallments ?? 0),
+  //               installmentList: bulkInstallmentsListData?.account?.getBulkInstallments?.find(
+  //                 (installment) => installment?.accountId === record?.accountId
+  //               )?.value?.data as Installment[],
+  //               installmentAmount: Number(record?.installmentAmount ?? 0),
+  //             })
+  //           : { total: 0, rebate: 0, fine: 0 };
+
+  //         sum += total + (Number(fine) ?? 0) || Number(record?.amount);
+
+  //         rebateSum += Number(rebate);
+
+  //         return (
+  //           record && {
+  //             accountId: record?.accountId,
+  //             noOfInstallments: record?.noOfInstallments,
+  //             amount: String(total || record?.amount),
+  //             rebate: record.hasInstallment ? String(rebate) : record?.rebate,
+  //             fine: record.hasInstallment ? String(fine) : record?.fine,
+  //             installmentAmount: record?.installmentAmount,
+  //             hasInstallment: record?.hasInstallment,
+  //           }
+  //         );
+  //       })
+  //     );
+
+  //     setTotalDepositAmount(sum);
+  //     setTotalRebate(rebateSum);
+  //   }
+  // }, [accounts]);
 
   return (
     <FormEditableTable<DepositAccountTable>
@@ -247,16 +310,9 @@ export const BulkDepositAccountsTable = ({
                 </Box>
 
                 <Box display="flex" flexDirection="column" gap="s4" alignItems="flex-end">
-                  <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
+                  <Text fontSize="s3" fontWeight={500} color="primary.500">
                     {accountInfo?.balance ?? ''}
                   </Text>
-
-                  {/* {row?.fine ??
-                    (accountInfo?.dues?.fine && (
-                      <Text fontSize="s3" fontWeight={500} color="danger.500">
-                        Fine: {row?.fine ?? accountInfo?.dues?.fine ?? ''}
-                      </Text>
-                    ))} */}
                 </Box>
               </Box>
             );
@@ -280,13 +336,13 @@ export const BulkDepositAccountsTable = ({
           accessor: 'fine',
           header: 'Fine',
           isNumeric: true,
-          accessorFn: (row) => row.fine || 'N/A',
+          accessorFn: (row) => row.fine ?? 'N/A',
         },
         {
           accessor: 'rebate',
           header: 'Rebate',
           isNumeric: true,
-          accessorFn: (row) => row.rebate || 'N/A',
+          accessorFn: (row) => row.rebate ?? 'N/A',
         },
       ]}
       // defaultData={accountListDefaultData}
