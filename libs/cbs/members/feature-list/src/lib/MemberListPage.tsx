@@ -143,13 +143,13 @@ export const MemberListPage = () => {
 
       <Table
         data={rowData}
+        columns={columns}
         getRowId={(row) => String(row?.node?.id)}
         rowOnClick={(row) => {
           queryClient.invalidateQueries('getMemberDetailsOverview');
           router.push(`/members/details?id=${row?.node?.id}`);
         }}
         isLoading={isFetching}
-        columns={columns}
         noDataTitle={t['member']}
         pagination={{
           total: data?.members?.list?.totalCount ?? 'Many',

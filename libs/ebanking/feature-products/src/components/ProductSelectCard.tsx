@@ -17,6 +17,7 @@ export const ProductSelectCard = ({ label, link }: IProductSelectCardProps) => {
       borderRadius="br2"
       border="1px"
       borderColor="border.layout"
+      _hover={{ bg: 'background.500' }}
       onClick={() => router.push(link)}
     >
       <Text fontSize="r1" color="gray.800" fontWeight="600">

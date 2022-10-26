@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
 
-import { EbankingFeatureProducts } from '@coop/ebanking/products';
+import { EbankingLoanSubType } from '@coop/ebanking/products';
 import { EbankingMainLayout } from '@coop/ebanking/ui-layout';
 
-const ProductListPage = () => <EbankingFeatureProducts />;
+const ProductListPage = () => <EbankingLoanSubType />;
 
 ProductListPage.getLayout = (page: ReactElement) => <EbankingMainLayout>{page}</EbankingMainLayout>;
 

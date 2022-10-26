@@ -83,6 +83,7 @@ const DOWNLOADS_DICT: Record<
 
 export const EbankingFeatureCoop = () => {
   const router = useRouter();
+
   const { data: chequeServices, isLoading: chequeLoading } = useGetCoopChequeServicesQuery();
   const { data: loanList, isLoading: loanLoading } = useGetCoopLoanServicesQuery();
   const { data: complaintList, isLoading: complaintLoading } = useGetCoopComplaintServicesQuery();
@@ -131,7 +132,7 @@ export const EbankingFeatureCoop = () => {
             w="100%"
             justifyContent="space-between"
             cursor="pointer"
-            onClick={() => router.push('/coop/products')}
+            onClick={() => router.push('/coop/products/loan')}
           >
             <Text fontSize="r1" fontWeight="600" color="gray.800">
               View All Products

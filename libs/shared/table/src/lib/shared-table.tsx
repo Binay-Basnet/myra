@@ -222,7 +222,6 @@ export const Table = <T extends Record<string, unknown>>({
                       as="div"
                       textOverflow="ellipsis"
                       overflow="hidden"
-                      width={cell.column.columnDef.meta?.width}
                       whiteSpace="nowrap"
                       textTransform="capitalize"
                     >

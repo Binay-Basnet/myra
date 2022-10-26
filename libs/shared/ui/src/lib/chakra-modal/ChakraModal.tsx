@@ -112,7 +112,7 @@ export const ChakraModal = (props: ModalChakraProps) => {
             <Box display="flex" flexDirection="row" gap="s8" justifyContent="flex-end">
               {secondaryButtonLabel && (
                 <Button
-                  width="100px"
+                  maxW="200px"
                   variant={secondaryButtonVariant}
                   shade={isSecondaryDanger ? 'danger' : 'neutral'}
                   onClick={secondaryButtonHandler}
@@ -124,7 +124,7 @@ export const ChakraModal = (props: ModalChakraProps) => {
                 <Button
                   variant="solid"
                   onClick={primaryButtonHandler}
-                  width="100px"
+                  maxW="200px"
                   isDisabled={isDisabled}
                   shade={isDanger ? 'danger' : 'primary'}
                 >

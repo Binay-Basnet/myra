@@ -1,12 +1,14 @@
 import { FaUsers } from 'react-icons/fa';
 import { IoCashOutline } from 'react-icons/io5';
-import Image from 'next/image';
 
-import { useGetAccountSummaryQuery } from '@coop/ebanking/data-access';
-import { Box, Grid, Icon, TextFields } from '@coop/shared/ui';
+import { useAppSelector, useGetAccountSummaryQuery } from '@coop/ebanking/data-access';
+import { Avatar, Box, Grid, Icon, TextFields } from '@coop/shared/ui';
 
 export const COOPHeaderCard = () => {
   const { data: accountSummary } = useGetAccountSummaryQuery();
+
+  const coop = useAppSelector((state) => state?.auth?.cooperative?.user);
+  const myra = useAppSelector((state) => state?.auth);
 
   return (
     <Box
@@ -19,12 +21,16 @@ export const COOPHeaderCard = () => {
       borderRadius="br2"
     >
       <Box display="flex" alignItems="center" gap="s12">
-        <Box w="s48" h="s48" position="relative">
-          <Image src="/logo1.svg" layout="fill" alt="Logo Image" />
-        </Box>
-        <TextFields variant="stickyCardHeader">
-          Namuna Saving and Credit Co-operative Limited
-        </TextFields>
+        <Avatar
+          name={coop?.cooperativeName as string}
+          w="s48"
+          h="s48"
+          src={
+            myra?.user?.cooperatives?.find((c) => c?.id === coop?.cooperativeId)?.logoUrl as string
+          }
+        />
+
+        <TextFields variant="stickyCardHeader">{coop?.cooperativeName}</TextFields>
       </Box>
 
       <Grid templateColumns="repeat(2, 1fr)" gap="s16">
