@@ -2,6 +2,20 @@ mutation setDepositData($data: DepositInput!) {
   transaction {
     deposit(data: $data) {
       recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+
+mutation setBulkDepositData($data: BulkDepositInput) {
+  transaction {
+    bulkDeposit(data: $data) {
+      recordId
+      error {
+        ...MutationError
+      }
     }
   }
 }
@@ -10,6 +24,9 @@ mutation setWithdrawData($data: WithdrawInput!) {
   transaction {
     withdraw(data: $data) {
       recordId
+      error {
+        ...MutationError
+      }
     }
   }
 }
@@ -18,6 +35,9 @@ mutation setAccountTransferData($data: TransferInput!) {
   transaction {
     transfer(data: $data) {
       recordId
+      error {
+        ...MutationError
+      }
     }
   }
 }
@@ -26,6 +46,9 @@ mutation setAccountForgiveInstallmentData($id: ID!, $installmentDates: [String!]
   account {
     forgiveInstallment(id: $id, installmentDate: $installmentDates) {
       recordId
+      error {
+        ...MutationError
+      }
     }
   }
 }

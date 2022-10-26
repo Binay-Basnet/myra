@@ -116,9 +116,11 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
   const { watch, resetField, setValue } = useFormContext();
 
   useEffect(() => {
-    setValue('cash.cashPaid', String(totalDeposit));
-    setValue('cheque.amount', String(totalDeposit));
-    setValue('bankVoucher.amount', String(totalDeposit));
+    if (totalDeposit) {
+      setValue('cash.cashPaid', String(totalDeposit));
+      setValue('cheque.amount', String(totalDeposit));
+      setValue('bankVoucher.amount', String(totalDeposit));
+    }
   }, [totalDeposit]);
 
   const memberId = watch('memberId');

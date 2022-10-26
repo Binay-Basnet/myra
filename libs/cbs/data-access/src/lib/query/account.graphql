@@ -394,6 +394,40 @@ query getAccountOpenMinorList($memberId: ID!) {
   }
 }
 
+query getInstallmentsListData($id: ID!) {
+  account {
+    getInstallments(id: $id) {
+      data {
+        dueDate
+        status
+        monthName
+        fine
+        rebate
+      }
+      error {
+        ...QueryError
+      }
+    }
+  }
+}
+
+query getBulkInstallmentsData($ids: [ID]!) {
+  account {
+    getBulkInstallments(ids: $ids) {
+      accountId
+      value {
+        data {
+          dueDate
+          status
+          monthName
+          fine
+          rebate
+        }
+      }
+    }
+  }
+}
+
 query getDefaultAccountList($productId: ID!, $memberId: ID!) {
   account {
     listDefaultAccounts(memberId: $memberId, productId: $productId) {

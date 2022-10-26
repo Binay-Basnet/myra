@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import { DepositedBy, useGetDepositListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
+import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, Text } from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
@@ -29,14 +30,9 @@ export interface DepositListProps {}
 export const DepositList = () => {
   const { t } = useTranslation();
 
-  const { data, isFetching } = useGetDepositListDataQuery(
-    {
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    },
-    {
-      staleTime: 0,
-    }
-  );
+  const { data, isFetching } = useGetDepositListDataQuery({
+    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+  });
 
   const rowData = useMemo(() => data?.transaction?.listDeposit?.edges ?? [], [data]);
 
@@ -93,19 +89,19 @@ export const DepositList = () => {
           isNumeric: true,
         },
       },
-      // {
-      //   id: '_actions',
-      //   header: '',
-      //   accessorKey: 'actions',
-      //   cell: (cell) => {
-      //     const member = cell?.row?.original?.node;
-      //     const memberData = { id: member?.ID };
-      //     return <PopoverComponent items={[]} member={memberData} />;
-      //   },
-      //   meta: {
-      //     width: '60px',
-      //   },
-      // },
+      {
+        id: '_actions',
+        header: '',
+        accessorKey: 'actions',
+        cell: (cell) => {
+          const member = cell?.row?.original?.node;
+          const memberData = { id: member?.ID };
+          return <PopoverComponent items={[]} member={memberData} />;
+        },
+        meta: {
+          width: '60px',
+        },
+      },
     ],
     [t]
   );
