@@ -34,7 +34,7 @@ export const FormSection = ({
       {header && (
         <Box p="s20" pb={0}>
           <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
-            {t[header]}
+            {t[header] ?? header}
           </Text>
         </Box>
       )}
@@ -42,7 +42,7 @@ export const FormSection = ({
       {subHeader && (
         <Box p="s20" py="s4">
           <Text fontSize="s3" fontWeight="Regular" color="neutralColorLight.Gray-70">
-            {t[subHeader]}
+            {t[subHeader] ?? subHeader}
           </Text>
         </Box>
       )}

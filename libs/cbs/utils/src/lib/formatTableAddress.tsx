@@ -18,5 +18,5 @@ export const formatTableAddress = (address: Address | undefined | null) => {
     addressArr.push(wardNo);
   }
 
-  return addressArr.join('-');
+  return addressArr.join(' - ');
 };

@@ -209,6 +209,89 @@ export type AccountTransferPaymentForAlternativeChannel = {
 
 export type AccountTypeDetailsUnion = BankChartsOfAccount | JournalChartsOfAccount;
 
+export type AccountingInvestmentAccountQueryResult = {
+  data?: Maybe<InvestmentAccount>;
+  error?: Maybe<QueryError>;
+};
+
+export type AccountingInvestmentEntryQueryResult = {
+  data?: Maybe<InvestmentEntry>;
+  error?: Maybe<QueryError>;
+};
+
+export type AccountingInvestmentMutation = {
+  addTransaction: AccountingInvestmentMutationResult;
+  upsertAccount: AccountingInvestmentMutationResult;
+  upsertEntry: AccountingInvestmentMutationResult;
+};
+
+
+export type AccountingInvestmentMutationAddTransactionArgs = {
+  data: InvestmentTransactionInput;
+};
+
+
+export type AccountingInvestmentMutationUpsertAccountArgs = {
+  data: InvestmentAccountInput;
+  id: Scalars['ID'];
+};
+
+
+export type AccountingInvestmentMutationUpsertEntryArgs = {
+  data: InvestmentEntryInput;
+  id: Scalars['ID'];
+};
+
+export type AccountingInvestmentMutationResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<AccountingInvestmentQuery>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type AccountingInvestmentQuery = {
+  accountFormState: AccountingInvestmentAccountQueryResult;
+  entryFormState: AccountingInvestmentEntryQueryResult;
+  listAccount: InvestmentAccountListConnection;
+  listEntry: InvestmentEntryListConnection;
+  listTransaction: InvestmentTransactionListConnection;
+};
+
+
+export type AccountingInvestmentQueryAccountFormStateArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type AccountingInvestmentQueryEntryFormStateArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type AccountingInvestmentQueryListAccountArgs = {
+  filter?: InputMaybe<InvestmentAccountFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+
+export type AccountingInvestmentQueryListEntryArgs = {
+  filter?: InputMaybe<InvestmentEntryFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+
+export type AccountingInvestmentQueryListTransactionArgs = {
+  filter?: InputMaybe<InvestmentTransactionFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type AccountingMutation = {
+  investment: AccountingInvestmentMutation;
+};
+
+export type AccountingQuery = {
+  investment: AccountingInvestmentQuery;
+};
+
 export type AddCoaAccountInput = {
   accountClass: Scalars['String'];
   accountCode: Scalars['String'];
@@ -3829,6 +3912,43 @@ export type ExampleQuery = {
   testDb: TestDbResult;
 };
 
+export type FdInvestment = {
+  bankACNo: Scalars['String'];
+  certificateNo: Scalars['String'];
+  fdAmount: Scalars['String'];
+  interestLedgerMapping: Scalars['String'];
+  interestNomineeBank: Scalars['String'];
+  maturityDate: Scalars['Localized'];
+  notes?: Maybe<Scalars['String']>;
+  rate: Scalars['Float'];
+  startDate: Scalars['Localized'];
+  type: FdInvestmentType;
+};
+
+export type FdInvestmentInput = {
+  bankACNo: Scalars['String'];
+  certificateNo: Scalars['String'];
+  fdAmount: Scalars['String'];
+  interestLedgerMapping: Scalars['String'];
+  interestNomineeBank: Scalars['String'];
+  maturityDate: Scalars['Localized'];
+  notes?: InputMaybe<Scalars['String']>;
+  rate: Scalars['Float'];
+  startDate: Scalars['Localized'];
+  type: FdInvestmentType;
+};
+
+export type FdInvestmentTransactionInput = {
+  amount: Scalars['String'];
+  type: FdInvestmentType;
+};
+
+export enum FdInvestmentType {
+  Type_1 = 'TYPE_1',
+  Type_2 = 'TYPE_2',
+  Type_3 = 'TYPE_3'
+}
+
 export enum File_Variant {
   Doc = 'DOC',
   Docx = 'DOCX',
@@ -4648,6 +4768,15 @@ export type Installment = {
   status: InstallmentState;
 };
 
+export enum InstallmentFrequency {
+  Daily = 'DAILY',
+  HalfYearly = 'HALF_YEARLY',
+  Monthly = 'MONTHLY',
+  Quarterly = 'QUARTERLY',
+  Weekly = 'WEEKLY',
+  Yearly = 'YEARLY'
+}
+
 export type InstallmentResult = {
   data?: Maybe<Array<Maybe<Installment>>>;
   error?: Maybe<QueryError>;
@@ -5090,6 +5219,128 @@ export type InventoryQuery = {
   unitOfMeasure?: Maybe<InvUnitOfMeasureQuery>;
   vendors?: Maybe<InvVendorsQuery>;
 };
+
+export type InvestmentAccount = {
+  address: KymAddress;
+  name: Scalars['String'];
+  type: InvestmentType;
+};
+
+export type InvestmentAccountEntry = {
+  address?: Maybe<Address>;
+  id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+  type?: Maybe<InvestmentType>;
+};
+
+export type InvestmentAccountFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  name?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<InvestmentType>;
+};
+
+export type InvestmentAccountInput = {
+  address: KymAddressInput;
+  name: Scalars['String'];
+  type: InvestmentType;
+};
+
+export type InvestmentAccountListConnection = {
+  edges?: Maybe<Array<Maybe<InvestmentAccountListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type InvestmentAccountListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<InvestmentAccountEntry>;
+};
+
+export type InvestmentEntry = {
+  accountID: Scalars['String'];
+  fd?: Maybe<FdInvestment>;
+  investmentType?: Maybe<InvestmentType>;
+  saving?: Maybe<SavingInvestment>;
+  share?: Maybe<ShareInvestment>;
+};
+
+export type InvestmentEntryEntry = {
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+  type?: Maybe<InvestmentType>;
+};
+
+export type InvestmentEntryFilter = {
+  accountId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  name?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<InvestmentType>;
+};
+
+export type InvestmentEntryInput = {
+  accountID: Scalars['String'];
+  fd?: InputMaybe<FdInvestmentInput>;
+  investmentType?: InputMaybe<InvestmentType>;
+  saving?: InputMaybe<SavingInvestmentInput>;
+  share?: InputMaybe<ShareInvestmentInput>;
+};
+
+export type InvestmentEntryListConnection = {
+  edges?: Maybe<Array<Maybe<InvestmentEntryListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type InvestmentEntryListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<InvestmentEntryEntry>;
+};
+
+export type InvestmentTransactionEntry = {
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+  type?: Maybe<InvestmentType>;
+};
+
+export type InvestmentTransactionFilter = {
+  accountId?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<InvestmentType>;
+};
+
+export type InvestmentTransactionInput = {
+  entryID: Scalars['ID'];
+  fd?: InputMaybe<FdInvestmentTransactionInput>;
+  investmentType?: InputMaybe<InvestmentType>;
+  saving?: InputMaybe<SavingInvestmentTransactionInput>;
+  share?: InputMaybe<ShareInvestmentTransactionInput>;
+};
+
+export type InvestmentTransactionListConnection = {
+  edges?: Maybe<Array<Maybe<InvestmentTransactionListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type InvestmentTransactionListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<InvestmentTransactionEntry>;
+};
+
+export enum InvestmentTransactionMethod {
+  Cash = 'CASH',
+  Cheque = 'CHEQUE'
+}
+
+export enum InvestmentType {
+  FixedDeposit = 'FIXED_DEPOSIT',
+  Saving = 'SAVING',
+  Share = 'SHARE'
+}
 
 export type JournalChartsOfAccount = {
   journalCode: Scalars['String'];
@@ -8388,6 +8639,7 @@ export type Municipality = {
 
 export type Mutation = {
   account: DepositLoanAccountMutation;
+  accounting: AccountingMutation;
   alternativeChannel?: Maybe<AlternativeChannelMutation>;
   auth: AuthMutation;
   bank: BankMutation;
@@ -9313,6 +9565,7 @@ export type QuarterlyDividendRateInput = {
 
 export type Query = {
   account: DepositLoanAccountQuery;
+  accounting: AccountingQuery;
   administration: AdministrationQuery;
   alternativeChannel: AlternativeChannelQuery;
   auditLog: AuditLogQuery;
@@ -9615,6 +9868,40 @@ export type SavingFilters = {
   transactionType?: InputMaybe<SavingTransactionType>;
 };
 
+export type SavingInvestment = {
+  frequency: InstallmentFrequency;
+  initialDepositAmount?: Maybe<Scalars['String']>;
+  installmentAmount: Scalars['String'];
+  notes?: Maybe<Scalars['String']>;
+  openDate: Scalars['Localized'];
+  rate: Scalars['Float'];
+  type: SavingInvestmentType;
+};
+
+export type SavingInvestmentInput = {
+  frequency: InstallmentFrequency;
+  initialDepositAmount?: InputMaybe<Scalars['String']>;
+  installmentAmount: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+  openDate: Scalars['Localized'];
+  rate: Scalars['Float'];
+  type: SavingInvestmentType;
+};
+
+export type SavingInvestmentTransactionInput = {
+  amount: Scalars['String'];
+  date: Scalars['Localized'];
+  notes?: InputMaybe<Scalars['String']>;
+  paymentMethod: InvestmentTransactionMethod;
+  type: SavingInvestmentType;
+};
+
+export enum SavingInvestmentType {
+  Type_1 = 'TYPE_1',
+  Type_2 = 'TYPE_2',
+  Type_3 = 'TYPE_3'
+}
+
 export enum SavingServiceType {
   Charges = 'CHARGES',
   CustomerInitiated = 'CUSTOMER_INITIATED',
@@ -9854,6 +10141,42 @@ export type ShareHistory = {
   balance?: Maybe<ShareBalance>;
   history?: Maybe<Array<Maybe<ShareRegister>>>;
 };
+
+export type ShareInvestment = {
+  certificateNo: Scalars['String'];
+  count: Scalars['Int'];
+  date: Scalars['Localized'];
+  notes?: Maybe<Scalars['String']>;
+  purchaseAmount: Scalars['String'];
+  rate: Scalars['String'];
+};
+
+export type ShareInvestmentInput = {
+  certificateNo: Scalars['String'];
+  count: Scalars['Int'];
+  date: Scalars['Localized'];
+  notes?: InputMaybe<Scalars['String']>;
+  purchaseAmount: Scalars['String'];
+  rate: Scalars['String'];
+};
+
+export type ShareInvestmentTransactionInput = {
+  bonusAmount?: InputMaybe<Scalars['String']>;
+  date: Scalars['Localized'];
+  dividendAmount?: InputMaybe<Scalars['String']>;
+  notes?: InputMaybe<Scalars['String']>;
+  sharePerKitta?: InputMaybe<Scalars['String']>;
+  shareQuantity?: InputMaybe<Scalars['Int']>;
+  shareReturnKitta?: InputMaybe<Scalars['Int']>;
+  totalAmount?: InputMaybe<Scalars['String']>;
+  totalShareReturnAmount?: InputMaybe<Scalars['String']>;
+  type: ShareInvestmentType;
+};
+
+export enum ShareInvestmentType {
+  ShareBonusDividend = 'SHARE_BONUS_DIVIDEND',
+  ShareReturn = 'SHARE_RETURN'
+}
 
 export type ShareIssueChargesInput = {
   other?: InputMaybe<Array<InputMaybe<ShareChargeInput>>>;
@@ -10900,6 +11223,29 @@ export enum WithdrawWith {
   WithdrawSlip = 'WITHDRAW_SLIP'
 }
 
+export type SetInvestmentAccountDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: InvestmentAccountInput;
+}>;
+
+
+export type SetInvestmentAccountDataMutation = { accounting: { investment: { upsertAccount: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } };
+
+export type SetInvestmentEntryDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: InvestmentEntryInput;
+}>;
+
+
+export type SetInvestmentEntryDataMutation = { accounting: { investment: { upsertEntry: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } };
+
+export type SetInvestmentTransactionDataMutationVariables = Exact<{
+  data: InvestmentTransactionInput;
+}>;
+
+
+export type SetInvestmentTransactionDataMutation = { accounting: { investment: { addTransaction: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } };
+
 export type SetAccountCloseDataMutationVariables = Exact<{
   data?: InputMaybe<DepositAccountClose>;
 }>;
@@ -11709,6 +12055,44 @@ export type GetDefaultAccountListQueryVariables = Exact<{
 
 
 export type GetDefaultAccountListQuery = { account: { listDefaultAccounts?: { data?: Array<{ id: string, accountName?: string | null } | null> | null } | null } };
+
+export type GetInvestmentAccountsListDataQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<InvestmentAccountFilter>;
+}>;
+
+
+export type GetInvestmentAccountsListDataQuery = { accounting: { investment: { listAccount: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: string | null, type?: InvestmentType | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null } } } };
+
+export type GetInvestmentAccountFormStateDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetInvestmentAccountFormStateDataQuery = { accounting: { investment: { accountFormState: { data?: { name: string, type: InvestmentType, address: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } } | null } } } };
+
+export type GetInvestmentEntriesListDataQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<InvestmentEntryFilter>;
+}>;
+
+
+export type GetInvestmentEntriesListDataQuery = { accounting: { investment: { listEntry: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: string | null, type?: InvestmentType | null, amount?: string | null, date?: Record<"local"|"en"|"np",string> | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null } } } };
+
+export type GetInvestmentEntryFormStateDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetInvestmentEntryFormStateDataQuery = { accounting: { investment: { entryFormState: { data?: { accountID: string, investmentType?: InvestmentType | null, share?: { count: number, rate: string, purchaseAmount: string, certificateNo: string, date: Record<"local"|"en"|"np",string>, notes?: string | null } | null, saving?: { type: SavingInvestmentType, installmentAmount: string, frequency: InstallmentFrequency, rate: number, openDate: Record<"local"|"en"|"np",string>, initialDepositAmount?: string | null, notes?: string | null } | null, fd?: { type: FdInvestmentType, fdAmount: string, rate: number, certificateNo: string, startDate: Record<"local"|"en"|"np",string>, maturityDate: Record<"local"|"en"|"np",string>, interestNomineeBank: string, bankACNo: string, interestLedgerMapping: string, notes?: string | null } | null } | null } } } };
+
+export type GetInvestmentTransactionsListDataQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<InvestmentTransactionFilter>;
+}>;
+
+
+export type GetInvestmentTransactionsListDataQuery = { accounting: { investment: { listTransaction: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: string | null, type?: InvestmentType | null, amount?: string | null, date?: Record<"local"|"en"|"np",string> | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null } } } };
 
 export type AllAdministrationQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -12686,6 +13070,75 @@ export const LoanProductFragmentDoc = `
   requiredDocuments
 }
     `;
+export const SetInvestmentAccountDataDocument = `
+    mutation setInvestmentAccountData($id: ID!, $data: InvestmentAccountInput!) {
+  accounting {
+    investment {
+      upsertAccount(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetInvestmentAccountDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetInvestmentAccountDataMutation, TError, SetInvestmentAccountDataMutationVariables, TContext>) =>
+    useMutation<SetInvestmentAccountDataMutation, TError, SetInvestmentAccountDataMutationVariables, TContext>(
+      ['setInvestmentAccountData'],
+      useAxios<SetInvestmentAccountDataMutation, SetInvestmentAccountDataMutationVariables>(SetInvestmentAccountDataDocument),
+      options
+    );
+export const SetInvestmentEntryDataDocument = `
+    mutation setInvestmentEntryData($id: ID!, $data: InvestmentEntryInput!) {
+  accounting {
+    investment {
+      upsertEntry(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetInvestmentEntryDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetInvestmentEntryDataMutation, TError, SetInvestmentEntryDataMutationVariables, TContext>) =>
+    useMutation<SetInvestmentEntryDataMutation, TError, SetInvestmentEntryDataMutationVariables, TContext>(
+      ['setInvestmentEntryData'],
+      useAxios<SetInvestmentEntryDataMutation, SetInvestmentEntryDataMutationVariables>(SetInvestmentEntryDataDocument),
+      options
+    );
+export const SetInvestmentTransactionDataDocument = `
+    mutation setInvestmentTransactionData($data: InvestmentTransactionInput!) {
+  accounting {
+    investment {
+      addTransaction(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetInvestmentTransactionDataMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetInvestmentTransactionDataMutation, TError, SetInvestmentTransactionDataMutationVariables, TContext>) =>
+    useMutation<SetInvestmentTransactionDataMutation, TError, SetInvestmentTransactionDataMutationVariables, TContext>(
+      ['setInvestmentTransactionData'],
+      useAxios<SetInvestmentTransactionDataMutation, SetInvestmentTransactionDataMutationVariables>(SetInvestmentTransactionDataDocument),
+      options
+    );
 export const SetAccountCloseDataDocument = `
     mutation setAccountCloseData($data: DepositAccountClose) {
   account {
@@ -15536,6 +15989,221 @@ export const useGetDefaultAccountListQuery = <
     useQuery<GetDefaultAccountListQuery, TError, TData>(
       ['getDefaultAccountList', variables],
       useAxios<GetDefaultAccountListQuery, GetDefaultAccountListQueryVariables>(GetDefaultAccountListDocument).bind(null, variables),
+      options
+    );
+export const GetInvestmentAccountsListDataDocument = `
+    query getInvestmentAccountsListData($pagination: Pagination, $filter: InvestmentAccountFilter) {
+  accounting {
+    investment {
+      listAccount(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            type
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+            }
+          }
+          cursor
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInvestmentAccountsListDataQuery = <
+      TData = GetInvestmentAccountsListDataQuery,
+      TError = unknown
+    >(
+      variables?: GetInvestmentAccountsListDataQueryVariables,
+      options?: UseQueryOptions<GetInvestmentAccountsListDataQuery, TError, TData>
+    ) =>
+    useQuery<GetInvestmentAccountsListDataQuery, TError, TData>(
+      variables === undefined ? ['getInvestmentAccountsListData'] : ['getInvestmentAccountsListData', variables],
+      useAxios<GetInvestmentAccountsListDataQuery, GetInvestmentAccountsListDataQueryVariables>(GetInvestmentAccountsListDataDocument).bind(null, variables),
+      options
+    );
+export const GetInvestmentAccountFormStateDataDocument = `
+    query getInvestmentAccountFormStateData($id: ID!) {
+  accounting {
+    investment {
+      accountFormState(id: $id) {
+        data {
+          name
+          type
+          address {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInvestmentAccountFormStateDataQuery = <
+      TData = GetInvestmentAccountFormStateDataQuery,
+      TError = unknown
+    >(
+      variables: GetInvestmentAccountFormStateDataQueryVariables,
+      options?: UseQueryOptions<GetInvestmentAccountFormStateDataQuery, TError, TData>
+    ) =>
+    useQuery<GetInvestmentAccountFormStateDataQuery, TError, TData>(
+      ['getInvestmentAccountFormStateData', variables],
+      useAxios<GetInvestmentAccountFormStateDataQuery, GetInvestmentAccountFormStateDataQueryVariables>(GetInvestmentAccountFormStateDataDocument).bind(null, variables),
+      options
+    );
+export const GetInvestmentEntriesListDataDocument = `
+    query getInvestmentEntriesListData($pagination: Pagination, $filter: InvestmentEntryFilter) {
+  accounting {
+    investment {
+      listEntry(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            type
+            amount
+            date
+          }
+          cursor
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInvestmentEntriesListDataQuery = <
+      TData = GetInvestmentEntriesListDataQuery,
+      TError = unknown
+    >(
+      variables?: GetInvestmentEntriesListDataQueryVariables,
+      options?: UseQueryOptions<GetInvestmentEntriesListDataQuery, TError, TData>
+    ) =>
+    useQuery<GetInvestmentEntriesListDataQuery, TError, TData>(
+      variables === undefined ? ['getInvestmentEntriesListData'] : ['getInvestmentEntriesListData', variables],
+      useAxios<GetInvestmentEntriesListDataQuery, GetInvestmentEntriesListDataQueryVariables>(GetInvestmentEntriesListDataDocument).bind(null, variables),
+      options
+    );
+export const GetInvestmentEntryFormStateDataDocument = `
+    query getInvestmentEntryFormStateData($id: ID!) {
+  accounting {
+    investment {
+      entryFormState(id: $id) {
+        data {
+          accountID
+          investmentType
+          share {
+            count
+            rate
+            purchaseAmount
+            certificateNo
+            date
+            notes
+          }
+          saving {
+            type
+            installmentAmount
+            frequency
+            rate
+            openDate
+            initialDepositAmount
+            notes
+          }
+          fd {
+            type
+            fdAmount
+            rate
+            certificateNo
+            startDate
+            maturityDate
+            interestNomineeBank
+            bankACNo
+            interestLedgerMapping
+            notes
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInvestmentEntryFormStateDataQuery = <
+      TData = GetInvestmentEntryFormStateDataQuery,
+      TError = unknown
+    >(
+      variables: GetInvestmentEntryFormStateDataQueryVariables,
+      options?: UseQueryOptions<GetInvestmentEntryFormStateDataQuery, TError, TData>
+    ) =>
+    useQuery<GetInvestmentEntryFormStateDataQuery, TError, TData>(
+      ['getInvestmentEntryFormStateData', variables],
+      useAxios<GetInvestmentEntryFormStateDataQuery, GetInvestmentEntryFormStateDataQueryVariables>(GetInvestmentEntryFormStateDataDocument).bind(null, variables),
+      options
+    );
+export const GetInvestmentTransactionsListDataDocument = `
+    query getInvestmentTransactionsListData($pagination: Pagination, $filter: InvestmentTransactionFilter) {
+  accounting {
+    investment {
+      listTransaction(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            type
+            amount
+            date
+          }
+          cursor
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInvestmentTransactionsListDataQuery = <
+      TData = GetInvestmentTransactionsListDataQuery,
+      TError = unknown
+    >(
+      variables?: GetInvestmentTransactionsListDataQueryVariables,
+      options?: UseQueryOptions<GetInvestmentTransactionsListDataQuery, TError, TData>
+    ) =>
+    useQuery<GetInvestmentTransactionsListDataQuery, TError, TData>(
+      variables === undefined ? ['getInvestmentTransactionsListData'] : ['getInvestmentTransactionsListData', variables],
+      useAxios<GetInvestmentTransactionsListDataQuery, GetInvestmentTransactionsListDataQueryVariables>(GetInvestmentTransactionsListDataDocument).bind(null, variables),
       options
     );
 export const AllAdministrationDocument = `

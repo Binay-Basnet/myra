@@ -40,7 +40,7 @@ export const useAddress = ({ name }: IUseAddressProps) => {
   );
 
   return {
-    provinceList: [...provinceList, { label: 'Planet 9', value: '9' }],
+    provinceList: [...provinceList],
     districtList,
     localityList,
     wardList,

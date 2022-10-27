@@ -26,6 +26,7 @@
       "@coop/ac/layouts": ["libs/alternative-channels/ui-layouts/src/index.ts"],
       "@coop/ac/lists": ["libs/alternative-channels/feature-lists/src/index.ts"],
       "@coop/accounting/accounting": ["libs/accounting/feature-accounting/src/index.ts"],
+      "@coop/accounting/investment": ["libs/accounting/feature-investment/src/index.ts"],
       "@coop/accounting/purchase": ["libs/accounting/feature-purchase/src/index.ts"],
       "@coop/accounting/sales": ["libs/accounting/feature-sales/src/index.ts"],
       "@coop/accounting/ui-components": ["libs/accounting/ui-components/src/index.ts"],
