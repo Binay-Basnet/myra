@@ -48,7 +48,7 @@ const Switch = () => {
 
     if (response) {
       dispatch(logoutCooperative());
-      queryClient.resetQueries();
+      queryClient.clear();
 
       const accessToken = response?.eBanking?.auth?.loginToCooperative?.record?.token?.access;
       const refreshToken = response?.eBanking?.auth?.loginToCooperative?.record?.token?.refresh;

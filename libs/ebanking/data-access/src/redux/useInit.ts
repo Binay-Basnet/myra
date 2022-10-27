@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useQueryClient } from 'react-query';
 
 import {
   authenticate,
@@ -15,6 +16,7 @@ const url = process.env['NX_SCHEMA_PATH'] ?? '';
 export const useInit = () => {
   const [triggerMyraQuery, setTriggerMyraQuery] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
+  const queryClient = useQueryClient();
 
   const dispatch = useAppDispatch();
   const replace = useReplace();
@@ -42,7 +44,10 @@ export const useInit = () => {
       })
       .catch(() => {
         dispatch(logout());
-        replace('/login').then(() => setIsLoading(false));
+        replace('/login').then(() => {
+          queryClient.clear();
+          setIsLoading(false);
+        });
       });
   }, [dispatch, refreshToken, replace]);
 
@@ -57,7 +62,10 @@ export const useInit = () => {
         setIsLoading(false);
       } else {
         dispatch(logout());
-        replace('/login').then(() => setIsLoading(false));
+        replace('/login').then(() => {
+          queryClient.clear();
+          setIsLoading(false);
+        });
       }
     }
   }, [dispatch, hasDataReturned, hasData, userData, replace]);

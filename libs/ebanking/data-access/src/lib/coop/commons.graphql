@@ -1,0 +1,58 @@
+fragment MutationError on MutationError {
+  ... on BadRequestError {
+    __typename
+    badRequestErrorMessage: message
+    code
+  }
+  ... on ServerError {
+    __typename
+    serverErrorMessage: message
+    code
+  }
+  ... on AuthorizationError {
+    __typename
+    authorizationErrorMsg: message
+    code
+  }
+  ... on ValidationError {
+    __typename
+    validationErrorMsg: message
+    code
+  }
+  ... on NotFoundError {
+    __typename
+    notFoundErrorMsg: message
+    code
+  }
+}
+
+fragment QueryError on QueryError {
+  ... on BadRequestError {
+    __typename
+    badRequestErrorMessage: message
+    code
+  }
+  ... on ServerError {
+    __typename
+    serverErrorMessage: message
+    code
+  }
+  ... on AuthorizationError {
+    __typename
+    authorizationErrorMsg: message
+    code
+  }
+  ... on NotFoundError {
+    __typename
+    notFoundErrorMsg: message
+    code
+  }
+}
+
+
+fragment Pagination on PageInfo {
+  startCursor
+  endCursor
+  hasNextPage
+  hasPreviousPage
+}

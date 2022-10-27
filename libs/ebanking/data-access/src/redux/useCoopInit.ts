@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 
 import {
@@ -24,6 +25,7 @@ export const useCoopInit = ({ isMeEnabled }: IUseCoopInitProps) => {
 
   const dispatch = useAppDispatch();
   const replace = useReplace();
+  const queryClient = useQueryClient();
 
   const router = useRouter();
 
@@ -59,7 +61,10 @@ export const useCoopInit = ({ isMeEnabled }: IUseCoopInitProps) => {
         })
         .catch(() => {
           dispatch(logoutCooperative());
-          replace('/login/coop').then(() => setIsLoading(false));
+          replace('/login/coop').then(() => {
+            queryClient.clear();
+            setIsLoading(false);
+          });
         });
     }
   }, [dispatch, refreshToken, replace, isMyraLoggedIn]);
@@ -75,7 +80,10 @@ export const useCoopInit = ({ isMeEnabled }: IUseCoopInitProps) => {
         setIsLoading(false);
       } else if (!isMyra) {
         dispatch(logoutCooperative());
-        replace('/login/coop').then(() => setIsLoading(false));
+        replace('/login/coop').then(() => {
+          queryClient.clear();
+          setIsLoading(false);
+        });
       }
     }
   }, [dispatch, hasDataReturned, hasData, userData, replace]);

@@ -75,6 +75,7 @@
     "ebanking-feature-funds": "libs/ebanking/feature-funds",
     "ebanking-feature-home": "libs/ebanking/feature-home",
     "ebanking-feature-products": "libs/ebanking/feature-products",
+    "ebanking-feature-settings": "libs/ebanking/feature-settings",
     "ebanking-ui-cards": "libs/ebanking/ui-cards",
     "ebanking-ui-components": "libs/ebanking/ui-components",
     "ebanking-ui-layout": "libs/ebanking/ui-layout",

@@ -24,6 +24,7 @@ mutation verifyOTP($data: EbankingOtpInput!) {
   }
 }
 
+
 mutation setPassword($data: EbankingPasswordInput!, $userId: ID!) {
   eBanking {
     auth(type: EBANKING) {
@@ -81,25 +82,6 @@ mutation checkAccount($id: ID!, $mobileNumber: String!, $pin: Int!) {
   }
 }
 
-query getCoopList {
-  eBanking {
-    neosysClientsList {
-      id
-      clientName
-      localGovernmentId
-    }
-  }
-}
-
-query getEbankingMe {
-  eBanking {
-    me {
-      id
-      name
-      contact
-    }
-  }
-}
 
 mutation setNewPin($data: CooperativeConnectInput) {
   eBanking {
@@ -152,50 +134,6 @@ mutation loginToCooperative($cooperativeId: ID!, $pinCode: Int, $mobileNumber: S
             refresh
             access
           }
-        }
-      }
-    }
-  }
-}
-
-query getCoopMe {
-  eBanking {
-    auth {
-      meCooperativeUser {
-        data {
-          myraUserId
-          cooperativeId
-          cooperativeName
-          cooperativeProvince
-          cooperativeDistrict
-          cooperativeWard
-          cooperativeLocalGovt
-          memberId
-          memberName
-          memberProfilePicId
-          memberProfilePicUrl
-          memberMobileNo
-        }
-      }
-    }
-  }
-}
-
-query getMyraMe {
-  eBanking {
-    auth {
-      meMyraUser {
-        data {
-          id
-          cooperatives {
-            id
-            name
-            logoUrl
-            mobileNo
-          }
-          name
-          mobile
-          dob
         }
       }
     }

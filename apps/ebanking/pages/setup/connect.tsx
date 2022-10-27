@@ -6,6 +6,7 @@ import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
+import { authenticate } from '@coop/cbs/data-access';
 import { GoBack } from '@coop/ebanking/components';
 import {
   logoutCooperative,
@@ -13,6 +14,7 @@ import {
   useAppDispatch,
   useCheckAccountMutation,
   useGetCoopListQuery,
+  useGetMyraMeQuery,
   useLoginToCooperativeMutation,
 } from '@coop/ebanking/data-access';
 import { EbankingHeaderLayout } from '@coop/ebanking/ui-layout';
@@ -25,11 +27,13 @@ const SetupConnectPage = () => {
   const { isOpen, onClose, onToggle } = useDisclosure();
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
+
   const { isOpen: failIsOpen, onClose: failIsOnClose, onToggle: failIsOnToggle } = useDisclosure();
 
   //   const user = useAppSelector((state) => state.auth?.user);
   const methods = useForm<{ id: string; mobileNumber: string; otp: string; pin?: number }>();
 
+  const { refetch } = useGetMyraMeQuery();
   const { data } = useGetCoopListQuery();
 
   const { mutateAsync: loginToCooperative } = useLoginToCooperativeMutation();
@@ -44,7 +48,7 @@ const SetupConnectPage = () => {
         });
 
         dispatch(logoutCooperative());
-        queryClient.refetchQueries('getMyraMe');
+        // queryClient.refetchQueries('getMyraMe');
 
         const tokens = coopResponse.eBanking.auth.loginToCooperative.record;
         const accessToken = tokens.token.access;
@@ -52,6 +56,9 @@ const SetupConnectPage = () => {
 
         if (accessToken) {
           dispatch(switchCooperative({ token: accessToken, user: tokens.data }));
+          refetch().then((res) =>
+            dispatch(authenticate({ user: res?.data?.eBanking?.auth?.meMyraUser?.data }))
+          );
           // queryClient.invalidateQueries('getMyraMe');
         }
         localStorage.setItem('coop-refreshToken', String(refreshToken));
@@ -165,8 +172,9 @@ const SetupConnectPage = () => {
           </Text>
           <Button
             onClick={() => {
-              queryClient.resetQueries();
+              queryClient.clear();
               router.replace('/home');
+
               onClose();
             }}
           >

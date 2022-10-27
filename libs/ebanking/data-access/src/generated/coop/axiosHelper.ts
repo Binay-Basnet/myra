@@ -1,72 +1,39 @@
-import { useRouter } from 'next/router';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import { EBankingTokenType } from '@coop/ebanking/data-access';
+import { EBankingTokenType, useRefreshToken } from '@coop/ebanking/data-access';
+import { getSchemaPath } from '@coop/shared/utils';
 
-import { RootState, useAppSelector } from '../redux/store';
-import { useRefreshToken } from '../redux/useRefreshToken';
+import { RootState, useAppSelector } from '../../redux/store';
 
 export const useAxios = <TData, TVariables>(
   query: string
 ): ((variables?: TVariables, config?: AxiosRequestConfig<TData>) => Promise<TData>) => {
-  let url = process.env['NX_SCHEMA_PATH'] || '';
+  const url = getSchemaPath();
 
-  if (
-    typeof window !== 'undefined' &&
-    window.localStorage.getItem('url') &&
-    process.env['NX_SCHEMA_PATH']
-  ) {
-    url = window.localStorage.getItem('url') || process.env['NX_SCHEMA_PATH'];
+  if (!url) {
+    throw new Error('Server url is missing or Server is Down !!');
   }
-  const router = useRouter();
 
-  const auth = useAppSelector((state: RootState) => state?.auth);
+  const auth = useAppSelector((state: RootState) => state?.auth?.cooperative);
 
-  const masterToken = auth?.token;
-  const coopToken = auth?.cooperative?.token;
-  const refreshToken = useRefreshToken(
-    url,
-    coopToken ? EBankingTokenType.Cooperative : EBankingTokenType.Myra
-  );
+  const coopToken = auth?.token;
+  const refreshToken = useRefreshToken(url, EBankingTokenType.Cooperative);
 
   return async (variables?: TVariables, config?: AxiosRequestConfig<TData>) => {
-    if (
-      coopToken &&
-      !router.pathname.includes('setup') &&
-      !router.pathname.includes('login') &&
-      !router.pathname.includes('sign-up') &&
-      !router.pathname.includes('switch')
-    ) {
+    if (coopToken) {
       const headers = {
         Authorization: `Bearer ${coopToken}`,
       };
+
       if (config) {
         if (config.headers) {
           config.headers = { ...config.headers, ...headers };
-        } else {
-          config.headers = { ...headers };
         }
-      } else {
-        config = {
-          headers,
-        };
+        config.headers = { ...headers };
       }
-    } else if (masterToken) {
-      const headers = {
-        Authorization: `Bearer ${masterToken}`,
-      };
-      if (config) {
-        if (config.headers) {
-          config.headers = { ...config.headers, ...headers };
-        } else {
-          config.headers = { ...headers };
-        }
-      } else {
-        config = {
-          headers,
-        };
-      }
+      config = { headers };
     }
+
     return axios
       .post<{ data: TData }>(url, { query, variables }, config)
       .then(
@@ -98,14 +65,10 @@ export const useAxios = <TData, TVariables>(
               if (config) {
                 if (config.headers) {
                   config.headers = { ...config.headers, ...headers };
-                } else {
-                  config.headers = { ...headers };
                 }
-              } else {
-                config = {
-                  headers,
-                };
+                config.headers = { ...headers };
               }
+              config = { headers };
             }
 
             return axios.post<{ data: TData }>(url, { query, variables }, config).then(
