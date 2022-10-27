@@ -12,6 +12,7 @@ export * from './controllers/FormFileInput/FormFileInput';
 export * from './controllers/FormInput/FormInput';
 export * from './controllers/FormInvestmentAccountSelect/FormInvestmentAccountSelect';
 export * from './controllers/FormInvestmentEntrySelect/FormInvestmentEntrySelect';
+export * from './controllers/FormLocalDatePicker/FormLocalDatePicker';
 export * from './controllers/FormMap/FormMap';
 export * from './controllers/FormNumberInput/FormNumberInput';
 export * from './controllers/FormPasswordInput/FormPasswordInput';

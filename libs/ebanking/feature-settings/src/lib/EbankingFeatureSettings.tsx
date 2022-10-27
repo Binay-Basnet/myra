@@ -1,6 +1,6 @@
 import { IconType } from 'react-icons';
-import { IoCheckmark } from 'react-icons/all';
 import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
+import { IoCheckmark } from 'react-icons/io5';
 import {
   MdLanguage,
   MdLogout,
@@ -27,8 +27,6 @@ import { SettingsHeader } from '../components/SettingsHeader';
 
 export const EbankingFeatureSettings = () => {
   const router = useRouter();
-
-  console.log(router.locales, router.locale);
 
   return (
     <Box display="flex" flexDir="column" gap="s16">

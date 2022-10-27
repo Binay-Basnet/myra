@@ -6,13 +6,9 @@ import omit from 'lodash/omit';
 import pickBy from 'lodash/pickBy';
 
 import {
-  DateType,
-  FdInvestmentInput,
   InstallmentFrequency,
   InvestmentEntryInput,
   InvestmentType,
-  SavingInvestmentInput,
-  ShareInvestmentInput,
   useAppSelector,
   useGetInvestmentAccountFormStateDataQuery,
   useGetInvestmentEntryFormStateDataQuery,
@@ -37,22 +33,22 @@ const investmentTypeOptions = [
   { label: 'Fixed Deposits', value: InvestmentType.FixedDeposit },
 ];
 
-type CustomShareInvestmentInput = Omit<ShareInvestmentInput, 'date'> & { date: string | undefined };
-
-type CustomSavingInvestmentInput = Omit<SavingInvestmentInput, 'openDate'> & {
-  openDate: string | undefined;
-};
-
-type CustomFDInvestmentInput = Omit<FdInvestmentInput, 'startDate' | 'maturityDate'> & {
-  startDate: string | undefined;
-  maturityDate: string | undefined;
-};
-
-type CustomInvestmentEntryInput = Omit<InvestmentEntryInput, 'share' | 'saving' | 'fd'> & {
-  share?: CustomShareInvestmentInput | undefined | null;
-  saving?: CustomSavingInvestmentInput | undefined | null;
-  fd?: CustomFDInvestmentInput | undefined | null;
-};
+// type CustomShareInvestmentInput = Omit<ShareInvestmentInput, 'date'> & { date: string | undefined };
+//
+// type CustomSavingInvestmentInput = Omit<SavingInvestmentInput, 'openDate'> & {
+//   openDate: string | undefined;
+// };
+//
+// type CustomFDInvestmentInput = Omit<FdInvestmentInput, 'startDate' | 'maturityDate'> & {
+//   startDate: string | undefined;
+//   maturityDate: string | undefined;
+// };
+//
+// type CustomInvestmentEntryInput = Omit<InvestmentEntryInput, 'share' | 'saving' | 'fd'> & {
+//   share?: CustomShareInvestmentInput | undefined | null;
+//   saving?: CustomSavingInvestmentInput | undefined | null;
+//   fd?: CustomFDInvestmentInput | undefined | null;
+// };
 
 export const AddInvestment = () => {
   const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);
@@ -63,7 +59,7 @@ export const AddInvestment = () => {
 
   const queryClient = useQueryClient();
 
-  const methods = useForm<CustomInvestmentEntryInput>({
+  const methods = useForm<InvestmentEntryInput>({
     defaultValues: { saving: { frequency: InstallmentFrequency.Daily } },
   });
 
@@ -96,19 +92,13 @@ export const AddInvestment = () => {
   useEffect(() => {
     if (router?.asPath?.includes('edit')) {
       if (formState) {
-        let filteredFormState: CustomInvestmentEntryInput;
+        let filteredFormState: InvestmentEntryInput;
 
         if (formState.investmentType === InvestmentType.Saving) {
           filteredFormState = {
             accountID: formState.accountID,
             investmentType: formState.investmentType,
-            saving: {
-              ...formState.saving,
-              openDate:
-                preferenceDate === DateType.Bs
-                  ? formState.saving?.openDate?.np
-                  : formState?.saving?.openDate?.en,
-            } as CustomSavingInvestmentInput,
+            saving: formState.saving,
           };
         }
 
@@ -116,13 +106,7 @@ export const AddInvestment = () => {
           filteredFormState = {
             accountID: formState.accountID,
             investmentType: formState.investmentType,
-            share: {
-              ...formState.share,
-              date:
-                preferenceDate === DateType.Bs
-                  ? formState.share?.date?.np
-                  : formState?.share?.date?.en,
-            } as CustomShareInvestmentInput,
+            share: formState.share,
           };
         }
 
@@ -130,17 +114,7 @@ export const AddInvestment = () => {
           filteredFormState = {
             accountID: formState.accountID,
             investmentType: formState.investmentType,
-            fd: {
-              ...formState.fd,
-              startDate:
-                preferenceDate === DateType.Bs
-                  ? formState.fd?.startDate?.np
-                  : formState?.fd?.startDate?.en,
-              maturityDate:
-                preferenceDate === DateType.Bs
-                  ? formState.fd?.maturityDate?.np
-                  : formState?.fd?.maturityDate?.en,
-            } as CustomFDInvestmentInput,
+            fd: formState.fd,
           };
         }
 
@@ -155,12 +129,12 @@ export const AddInvestment = () => {
       }
     }
 
-    if (router?.asPath?.includes('add')) {
-      setValue('saving.openDate', '');
-      setValue('share.date', '');
-      setValue('fd.startDate', '');
-      setValue('fd.maturityDate', '');
-    }
+    // if (router?.asPath?.includes('add')) {
+    //   setValue('saving.openDate', '');
+    //   setValue('share.date', '');
+    //   setValue('fd.startDate', '');
+    //   setValue('fd.maturityDate', '');
+    // }
   }, [formState, preferenceDate]);
 
   const { mutateAsync: setInvestmentEntry } = useSetInvestmentEntryDataMutation();
@@ -173,43 +147,21 @@ export const AddInvestment = () => {
     if (values.investmentType === InvestmentType.Saving) {
       filteredValues = {
         ...omit({ ...values }, ['share', 'fd']),
-        saving: {
-          ...values.saving,
-          openDate:
-            preferenceDate === DateType.Bs
-              ? { np: values.saving?.openDate, en: '', local: '' }
-              : { en: values.saving?.openDate, np: '', local: '' },
-        },
+        saving: values.saving,
       };
     }
 
     if (values.investmentType === InvestmentType.Share) {
       filteredValues = {
         ...omit({ ...values }, ['saving', 'fd']),
-        share: {
-          ...values.share,
-          date:
-            preferenceDate === DateType.Bs
-              ? { np: values.share?.date, en: '', local: '' }
-              : { en: values.share?.date, np: '', local: '' },
-        },
+        share: values.share,
       };
     }
 
     if (values.investmentType === InvestmentType.FixedDeposit) {
       filteredValues = {
         ...omit({ ...values }, ['saving', 'share']),
-        fd: {
-          ...values.fd,
-          startDate:
-            preferenceDate === DateType.Bs
-              ? { np: values.fd?.startDate, en: '', local: '' }
-              : { en: values.fd?.startDate, np: '', local: '' },
-          maturityDate:
-            preferenceDate === DateType.Bs
-              ? { np: values.fd?.maturityDate, en: '', local: '' }
-              : { en: values.fd?.maturityDate, np: '', local: '' },
-        },
+        fd: values.fd,
       };
     }
 

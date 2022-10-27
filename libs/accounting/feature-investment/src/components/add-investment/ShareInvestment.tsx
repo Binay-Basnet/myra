@@ -1,7 +1,7 @@
 import {
   FormAmountInput,
-  FormDatePicker,
   FormInput,
+  FormLocalDatePicker,
   FormNumberInput,
   FormTextArea,
 } from '@coop/shared/form';
@@ -17,7 +17,7 @@ export const ShareInvestment = () => (
 
     <FormInput name="share.certificateNo" label="Share Certificate Number" />
 
-    <FormDatePicker name="share.date" label="Purchase Date" />
+    <FormLocalDatePicker name="share.date" label="Purchase Date" />
 
     <GridItem colSpan={3}>
       <FormTextArea name="share.notes" label="Notes" rows={3} />

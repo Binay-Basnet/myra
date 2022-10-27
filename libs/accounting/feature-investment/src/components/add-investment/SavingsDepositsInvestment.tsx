@@ -1,7 +1,7 @@
 import { InstallmentFrequency, SavingInvestmentType } from '@coop/cbs/data-access';
 import {
   FormAmountInput,
-  FormDatePicker,
+  FormLocalDatePicker,
   FormNumberInput,
   FormSelect,
   FormSwitchTab,
@@ -66,7 +66,7 @@ export const SavingsDepositsInvestment = () => (
       }
     />
 
-    <FormDatePicker name="saving.openDate" label="Account Open Date" />
+    <FormLocalDatePicker name="saving.openDate" label="Account Open Date" />
 
     <FormAmountInput name="saving.initialDepositAmount" label="Initial Deposit Amount" />
 

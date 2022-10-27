@@ -2,8 +2,8 @@ import { InputGroupContainer } from '@coop/accounting/ui-components';
 import { FdInvestmentType, useGetCoaBankListQuery } from '@coop/cbs/data-access';
 import {
   FormAmountInput,
-  FormDatePicker,
   FormInput,
+  FormLocalDatePicker,
   FormNumberInput,
   FormSelect,
   FormTextArea,
@@ -47,9 +47,9 @@ export const FixedDepositInvestment = () => {
 
       <FormInput name="fd.certificateNo" label="FD Certificate Number" />
 
-      <FormDatePicker name="fd.startDate" label="FD Start Date" />
+      <FormLocalDatePicker name="fd.startDate" label="FD Start Date" />
 
-      <FormDatePicker name="fd.maturityDate" label="Maturity Date" />
+      <FormLocalDatePicker name="fd.maturityDate" label="Maturity Date" />
 
       <GridItem colSpan={3}>
         <Box display="flex" flexDirection="column" gap="s12">
