@@ -14,15 +14,15 @@ export type Scalars = {
   Int: number;
   Float: number;
   Amount: any;
-  Any: any;
-  Cursor: any;
-  Date: any;
+  Any: unknown;
+  Cursor: string;
+  Date: string;
   Email: any;
   HTML: any;
-  InvalidData: any;
-  Localized: any;
-  Map: any;
-  Time: any;
+  InvalidData: Record<string, Array<string>>;
+  Localized: Record<'local' | 'en' | 'np', string>;
+  Map: Record<string, string>;
+  Time: string;
 };
 
 export type AbbsTransaction = {
@@ -11005,7 +11005,7 @@ type MutationError_ServerError_Fragment = {
 type MutationError_ValidationError_Fragment = {
   __typename: 'ValidationError';
   code: number;
-  validationErrorMsg: any;
+  validationErrorMsg: Record<string, Array<string>>;
 };
 
 export type MutationErrorFragment =
@@ -11046,8 +11046,8 @@ export type QueryErrorFragment =
   | QueryError_ServerError_Fragment;
 
 export type PaginationFragment = {
-  startCursor?: any | null;
-  endCursor?: any | null;
+  startCursor?: string | null;
+  endCursor?: string | null;
   hasNextPage: boolean;
   hasPreviousPage: boolean;
 };
@@ -11068,7 +11068,11 @@ export type SetChequeRequestDataMutation = {
             | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
             | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
             | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
-            | { __typename: 'ValidationError'; code: number; validationErrorMsg: any }
+            | {
+                __typename: 'ValidationError';
+                code: number;
+                validationErrorMsg: Record<string, Array<string>>;
+              }
             | null;
         } | null;
       } | null;
@@ -11116,7 +11120,11 @@ export type ApplyForLoanMutation = {
             | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
             | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
             | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
-            | { __typename: 'ValidationError'; code: number; validationErrorMsg: any }
+            | {
+                __typename: 'ValidationError';
+                code: number;
+                validationErrorMsg: Record<string, Array<string>>;
+              }
             | null;
         } | null;
       } | null;
@@ -11140,7 +11148,11 @@ export type AddNewComplaintMutation = {
             | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
             | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
             | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
-            | { __typename: 'ValidationError'; code: number; validationErrorMsg: any }
+            | {
+                __typename: 'ValidationError';
+                code: number;
+                validationErrorMsg: Record<string, Array<string>>;
+              }
             | null;
         } | null;
       } | null;
@@ -11171,7 +11183,11 @@ export type AccountTransferMutation = {
           | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
           | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
           | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
-          | { __typename: 'ValidationError'; code: number; validationErrorMsg: any }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
           | null;
       } | null;
     } | null;
@@ -11209,8 +11225,8 @@ export type GetAccountListQuery = {
             };
           } | null> | null;
           pageInfo?: {
-            startCursor?: any | null;
-            endCursor?: any | null;
+            startCursor?: string | null;
+            endCursor?: string | null;
             hasNextPage: boolean;
             hasPreviousPage: boolean;
           } | null;
@@ -11249,8 +11265,8 @@ export type GetTransactionListsQuery = {
             };
           } | null> | null;
           pageInfo?: {
-            endCursor?: any | null;
-            startCursor?: any | null;
+            endCursor?: string | null;
+            startCursor?: string | null;
             hasNextPage: boolean;
             hasPreviousPage: boolean;
           } | null;
@@ -11296,8 +11312,8 @@ export type GetAccountDetailsQuery = {
               };
             } | null> | null;
             pageInfo?: {
-              startCursor?: any | null;
-              endCursor?: any | null;
+              startCursor?: string | null;
+              endCursor?: string | null;
               hasNextPage: boolean;
               hasPreviousPage: boolean;
             } | null;
@@ -11335,7 +11351,10 @@ export type GetCoopMeQuery = {
 
 export type KymFieldDataFragment = {
   id?: string | null;
-  options?: Array<{ id?: string | null; value?: any | null } | null> | null;
+  options?: Array<{
+    id?: string | null;
+    value?: Record<'local' | 'en' | 'np', string> | null;
+  } | null> | null;
 };
 
 export type GetCoopChequeServicesQueryVariables = Exact<{ [key: string]: never }>;
@@ -11791,6 +11810,49 @@ export type GetEbankingLoanProductCriteriaQuery = {
   };
 };
 
+export type GetMemberProfileQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetMemberProfileQuery = {
+  eBanking: {
+    profile?: {
+      data?: {
+        memberId?: string | null;
+        name?: Record<'local' | 'en' | 'np', string> | null;
+        dobAD?: string | null;
+        dobBS?: string | null;
+        gender?: Record<'local' | 'en' | 'np', string> | null;
+        mobileNumber?: string | null;
+        email?: string | null;
+        maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
+        temporaryAddress?: {
+          district?: Record<'local' | 'en' | 'np', string> | null;
+          houseNo?: string | null;
+          localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+          locality?: Record<'local' | 'en' | 'np', string> | null;
+          state?: Record<'local' | 'en' | 'np', string> | null;
+          wardNo?: string | null;
+          coordinates?: { latitude?: number | null; longitude?: number | null } | null;
+        } | null;
+        permanentAddress?: {
+          district?: Record<'local' | 'en' | 'np', string> | null;
+          houseNo?: string | null;
+          localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+          locality?: Record<'local' | 'en' | 'np', string> | null;
+          state?: Record<'local' | 'en' | 'np', string> | null;
+          wardNo?: string | null;
+          coordinates?: { latitude?: number | null; longitude?: number | null } | null;
+        } | null;
+        familyMembers?: Array<{
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          relationship?: Record<'local' | 'en' | 'np', string> | null;
+        } | null> | null;
+        photo?: Array<{ id?: string | null; url?: string | null } | null> | null;
+        citizenship?: Array<{ id?: string | null; url?: string | null } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetHomeServiceListQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetHomeServiceListQuery = {
@@ -11862,7 +11924,11 @@ export type SignUpMutation = {
           | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
           | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
           | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
-          | { __typename: 'ValidationError'; code: number; validationErrorMsg: any }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
           | null;
       } | null;
     } | null;
@@ -11883,7 +11949,11 @@ export type VerifyOtpMutation = {
           | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
           | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
           | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
-          | { __typename: 'ValidationError'; code: number; validationErrorMsg: any }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
           | null;
       } | null;
     } | null;
@@ -11905,7 +11975,11 @@ export type SetPasswordMutation = {
           | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
           | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
           | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
-          | { __typename: 'ValidationError'; code: number; validationErrorMsg: any }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
           | null;
       } | null;
     } | null;
@@ -11941,7 +12015,11 @@ export type EBankingLoginMutation = {
           | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
           | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
           | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
-          | { __typename: 'ValidationError'; code: number; validationErrorMsg: any }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
           | null;
       } | null;
     } | null;
@@ -11964,7 +12042,11 @@ export type CheckAccountMutation = {
           | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
           | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
           | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
-          | { __typename: 'ValidationError'; code: number; validationErrorMsg: any }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
           | null;
       } | null;
     } | null;
@@ -11990,7 +12072,11 @@ export type SetNewPinMutation = {
           | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
           | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
           | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
-          | { __typename: 'ValidationError'; code: number; validationErrorMsg: any }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
           | null;
       } | null;
     } | null;
@@ -12012,7 +12098,11 @@ export type LoginToCooperativeMutation = {
           | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
           | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
           | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
-          | { __typename: 'ValidationError'; code: number; validationErrorMsg: any }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
           | null;
         record?: {
           data?: {

@@ -13,6 +13,14 @@ generates:
       - 'typescript'
       - 'typescript-operations'
     config:
+      scalars:
+        Time: string
+        Any: unknown
+        Cursor: string
+        InvalidData: Record<string, Array<string>>
+        Map: Record<string, string>
+        Date: string
+        Localized: Record<"local"|"en"|"np",string>
       skipTypename: true
 
   libs/ebanking/data-access/src/generated/myra/graphql.ts:

@@ -239,7 +239,7 @@ export const EbankingFeatureSettings = () => {
 export default EbankingFeatureSettings;
 
 interface ISettingsButtonProps {
-  icon: IconType;
+  icon?: IconType;
   title: string;
   isExpanded: boolean;
 
@@ -264,7 +264,7 @@ export const SettingsButton = ({
     >
       <Box display="flex" alignItems="center" w="100%" justifyContent="space-between">
         <Box display="flex" alignItems="center" gap="s16" w="100%">
-          <Icon as={icon} color="primary.500" />
+          {icon && <Icon as={icon} color="primary.500" />}
           <Text fontSize="r1" color="gray.900" fontWeight={500}>
             {title}
           </Text>

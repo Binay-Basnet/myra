@@ -1189,6 +1189,71 @@ export const useGetEbankingLoanProductCriteriaQuery = <
     >(GetEbankingLoanProductCriteriaDocument).bind(null, variables),
     options
   );
+export const GetMemberProfileDocument = `
+    query getMemberProfile {
+  eBanking {
+    profile {
+      data {
+        memberId
+        name
+        dobAD
+        dobBS
+        gender
+        mobileNumber
+        email
+        temporaryAddress {
+          district
+          houseNo
+          localGovernment
+          locality
+          state
+          wardNo
+          coordinates {
+            latitude
+            longitude
+          }
+        }
+        permanentAddress {
+          district
+          houseNo
+          localGovernment
+          locality
+          state
+          wardNo
+          coordinates {
+            latitude
+            longitude
+          }
+        }
+        maritalStatus
+        familyMembers {
+          name
+          relationship
+        }
+        photo {
+          id
+          url
+        }
+        citizenship {
+          id
+          url
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberProfileQuery = <TData = Types.GetMemberProfileQuery, TError = unknown>(
+  variables?: Types.GetMemberProfileQueryVariables,
+  options?: UseQueryOptions<Types.GetMemberProfileQuery, TError, TData>
+) =>
+  useQuery<Types.GetMemberProfileQuery, TError, TData>(
+    variables === undefined ? ['getMemberProfile'] : ['getMemberProfile', variables],
+    useAxios<Types.GetMemberProfileQuery, Types.GetMemberProfileQueryVariables>(
+      GetMemberProfileDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetHomeServiceListDocument = `
     query getHomeServiceList {
   eBanking {
