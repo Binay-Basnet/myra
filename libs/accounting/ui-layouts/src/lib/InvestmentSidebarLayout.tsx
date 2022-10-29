@@ -78,7 +78,7 @@ export const InvestmentSidebarLayout = ({ children }: IInvestmentSidebarLayoutPr
                   if (item.linkId) {
                     newId
                       .mutateAsync({})
-                      .then((res) => router.push(`${item.link}/add/${res?.newId}`));
+                      .then((res) => router.push(`${item.linkId}/${res?.newId}`));
                   } else {
                     item.link && router.push(item.link);
                   }
