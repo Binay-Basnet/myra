@@ -277,10 +277,112 @@ export type AccountingInvestmentQueryListTransactionArgs = {
 
 export type AccountingMutation = {
   investment: AccountingInvestmentMutation;
+  sales: AccountingSalesMutation;
 };
 
 export type AccountingQuery = {
   investment: AccountingInvestmentQuery;
+  sales: AccountingSalesQuery;
+};
+
+export type AccountingSalesCreditNoteQueryResult = {
+  data?: Maybe<SalesCreditNote>;
+  error?: Maybe<QueryError>;
+};
+
+export type AccountingSalesCustomerPaymentQueryResult = {
+  data?: Maybe<SalesCustomerPayment>;
+  error?: Maybe<QueryError>;
+};
+
+export type AccountingSalesCustomerQueryResult = {
+  data?: Maybe<SalesCustomer>;
+  error?: Maybe<QueryError>;
+};
+
+export type AccountingSalesMutation = {
+  upsertCreditNote: AccountingSalesMutationResult;
+  upsertCustomer: AccountingSalesMutationResult;
+  upsertCustomerPayment: AccountingSalesMutationResult;
+  upsertSaleEntry: AccountingSalesMutationResult;
+};
+
+export type AccountingSalesMutationUpsertCreditNoteArgs = {
+  data: SalesCreditNoteInput;
+  id: Scalars['ID'];
+};
+
+export type AccountingSalesMutationUpsertCustomerArgs = {
+  data: SalesCustomerInput;
+  id: Scalars['ID'];
+};
+
+export type AccountingSalesMutationUpsertCustomerPaymentArgs = {
+  data: SalesCustomerPaymentInput;
+  id: Scalars['ID'];
+};
+
+export type AccountingSalesMutationUpsertSaleEntryArgs = {
+  data: SalesSaleEntryInput;
+  id: Scalars['ID'];
+};
+
+export type AccountingSalesMutationResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<AccountingSalesQuery>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
+export type AccountingSalesQuery = {
+  creditNoteFormState: AccountingSalesCreditNoteQueryResult;
+  customerFormState: AccountingSalesCustomerQueryResult;
+  customerPaymentFormState: AccountingSalesCustomerPaymentQueryResult;
+  listCreditNote: SalesCreditNoteListConnection;
+  listCustomer: SalesCustomerListConnection;
+  listCustomerPayment: SalesCustomerPaymentListConnection;
+  listSaleEntry: SalesSaleEntryListConnection;
+  saleEntryFormState: AccountingSalesSaleEntryQueryResult;
+};
+
+export type AccountingSalesQueryCreditNoteFormStateArgs = {
+  id: Scalars['ID'];
+};
+
+export type AccountingSalesQueryCustomerFormStateArgs = {
+  id: Scalars['ID'];
+};
+
+export type AccountingSalesQueryCustomerPaymentFormStateArgs = {
+  id: Scalars['ID'];
+};
+
+export type AccountingSalesQueryListCreditNoteArgs = {
+  filter?: InputMaybe<SalesCreditNoteFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type AccountingSalesQueryListCustomerArgs = {
+  filter?: InputMaybe<SalesCustomerFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type AccountingSalesQueryListCustomerPaymentArgs = {
+  filter?: InputMaybe<SalesCustomerPaymentFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type AccountingSalesQueryListSaleEntryArgs = {
+  filter?: InputMaybe<SalesSaleEntryFilter>;
+  pagination?: InputMaybe<Pagination>;
+};
+
+export type AccountingSalesQuerySaleEntryFormStateArgs = {
+  id: Scalars['ID'];
+};
+
+export type AccountingSalesSaleEntryQueryResult = {
+  data?: Maybe<SalesSaleEntry>;
+  error?: Maybe<QueryError>;
 };
 
 export type AddCoaAccountInput = {
@@ -1899,6 +2001,12 @@ export type CustomPeriodType = {
   from: Scalars['String'];
   to: Scalars['String'];
 };
+
+export enum CustomerPayment {
+  BankTransfer = 'BANK_TRANSFER',
+  Cash = 'CASH',
+  Cheque = 'CHEQUE',
+}
 
 export type DashboardData = {
   listDashboardTask?: Maybe<Array<Maybe<DashboardTask>>>;
@@ -7411,6 +7519,7 @@ export type LoanAccountQuery = {
   loanPreview?: Maybe<LoanAccountPreviewResult>;
   memberDisbursedLoanAccounts?: Maybe<Array<Maybe<LoanAccountMinimal>>>;
   paymentSchedule?: Maybe<LoanAccountPaymentScheduleResult>;
+  repaymentList?: Maybe<LoanRepaymentConnection>;
 };
 
 export type LoanAccountQueryFormStateArgs = {
@@ -7451,6 +7560,11 @@ export type LoanAccountQueryMemberDisbursedLoanAccountsArgs = {
 
 export type LoanAccountQueryPaymentScheduleArgs = {
   loanAccountId: Scalars['ID'];
+};
+
+export type LoanAccountQueryRepaymentListArgs = {
+  filter?: InputMaybe<LoanRepaymentFilter>;
+  paginate?: InputMaybe<Pagination>;
 };
 
 export type LoanAccountResult = {
@@ -7520,10 +7634,10 @@ export type LoanGeneralSettingsInput = {
 };
 
 export type LoanInstallment = {
-  dueAmount?: Maybe<Scalars['String']>;
   installmentDate: Scalars['String'];
   installmentNo: Scalars['Int'];
   interest: Scalars['String'];
+  paid: Scalars['Boolean'];
   payment: Scalars['String'];
   principal: Scalars['String'];
   remainingPrincipal: Scalars['String'];
@@ -7974,6 +8088,36 @@ export type LoanRepaymentBankVoucher = {
   bank: Scalars['ID'];
   note?: InputMaybe<Scalars['String']>;
   voucher_no: Scalars['String'];
+};
+
+export type LoanRepaymentConnection = {
+  edges?: Maybe<Array<LoanRepaymentEdge>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars['Int']>;
+};
+
+export type LoanRepaymentDetail = {
+  amount: Scalars['String'];
+  id: Scalars['String'];
+  loanAccountId: Scalars['String'];
+  loanAccountName: Scalars['String'];
+  loanProductId: Scalars['String'];
+  loanProductName: Scalars['String'];
+  memberId: Scalars['String'];
+  memberName: Scalars['Localized'];
+  memberProfilePicId?: Maybe<Scalars['String']>;
+  memberProfilePicUrl?: Maybe<Scalars['String']>;
+  paymentDate: Scalars['String'];
+};
+
+export type LoanRepaymentEdge = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<LoanRepaymentDetail>;
+};
+
+export type LoanRepaymentFilter = {
+  loanAccountId?: InputMaybe<Scalars['String']>;
+  memberId?: InputMaybe<Scalars['String']>;
 };
 
 export type LoanRepaymentInput = {
@@ -9166,6 +9310,22 @@ export type Pagination = {
   order?: InputMaybe<Order>;
 };
 
+export type PaymentAllocation = {
+  amount: Scalars['String'];
+  date: Scalars['Localized'];
+  leftToAllocate: Scalars['String'];
+  thisAllocation: Scalars['String'];
+  type: Scalars['String'];
+};
+
+export type PaymentAllocationInput = {
+  amount: Scalars['String'];
+  date: Scalars['Localized'];
+  leftToAllocate: Scalars['String'];
+  thisAllocation: Scalars['String'];
+  type: Scalars['String'];
+};
+
 export type Penalty = {
   dayAfterInstallmentDate?: Maybe<Scalars['Int']>;
   penaltyAmount?: Maybe<Scalars['Amount']>;
@@ -9669,6 +9829,226 @@ export enum Share_Transaction_Direction {
   Purchase = 'PURCHASE',
   Return = 'RETURN',
 }
+
+export type SaleProduct = {
+  amount: Scalars['String'];
+  name: Scalars['String'];
+  productDescription?: Maybe<Scalars['String']>;
+  quantity: Scalars['String'];
+  rate: Scalars['String'];
+  salesLedger?: Maybe<Scalars['String']>;
+  tax: Scalars['Float'];
+  warehousePartition?: Maybe<Scalars['String']>;
+};
+
+export type SaleProductInput = {
+  amount: Scalars['String'];
+  name: Scalars['String'];
+  productDescription?: InputMaybe<Scalars['String']>;
+  quantity: Scalars['String'];
+  rate: Scalars['String'];
+  salesLedger?: InputMaybe<Scalars['String']>;
+  tax: Scalars['Float'];
+  warehousePartition?: InputMaybe<Scalars['String']>;
+};
+
+export type SalesCreditNote = {
+  customerID: Scalars['ID'];
+  date: Scalars['Localized'];
+  invoiceReference: Scalars['String'];
+  nonTaxableTotal?: Maybe<Scalars['String']>;
+  notes?: Maybe<Scalars['String']>;
+  products: Array<SaleProduct>;
+  subTotal?: Maybe<Scalars['String']>;
+  taxableTotal?: Maybe<Scalars['String']>;
+  vat?: Maybe<Scalars['String']>;
+};
+
+export type SalesCreditNoteEntry = {
+  date?: Maybe<Scalars['Localized']>;
+  id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+  totalAmount?: Maybe<Scalars['String']>;
+};
+
+export type SalesCreditNoteFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type SalesCreditNoteInput = {
+  customerID: Scalars['ID'];
+  date: Scalars['Localized'];
+  invoiceReference: Scalars['String'];
+  nonTaxableTotal?: InputMaybe<Scalars['String']>;
+  notes?: InputMaybe<Scalars['String']>;
+  products: Array<SaleProductInput>;
+  subTotal?: InputMaybe<Scalars['String']>;
+  taxableTotal?: InputMaybe<Scalars['String']>;
+  vat?: InputMaybe<Scalars['String']>;
+};
+
+export type SalesCreditNoteListConnection = {
+  edges?: Maybe<Array<Maybe<SalesCreditNoteListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SalesCreditNoteListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<SalesCreditNoteEntry>;
+};
+
+export type SalesCustomer = {
+  address: KymAddress;
+  code: Scalars['String'];
+  creditLimit?: Maybe<Scalars['String']>;
+  creditTerms?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  openingBalance?: Maybe<Scalars['String']>;
+  pan: Scalars['String'];
+  phoneNumber: Scalars['String'];
+};
+
+export type SalesCustomerEntry = {
+  address?: Maybe<Address>;
+  email?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['String']>;
+};
+
+export type SalesCustomerFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type SalesCustomerInput = {
+  address: KymAddressInput;
+  code: Scalars['String'];
+  creditLimit?: InputMaybe<Scalars['String']>;
+  creditTerms?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  openingBalance?: InputMaybe<Scalars['String']>;
+  pan: Scalars['String'];
+  phoneNumber: Scalars['String'];
+};
+
+export type SalesCustomerListConnection = {
+  edges?: Maybe<Array<Maybe<SalesCustomerListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SalesCustomerListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<SalesCustomerEntry>;
+};
+
+export type SalesCustomerPayment = {
+  notes?: Maybe<Scalars['String']>;
+  paymentAllocation: Array<PaymentAllocation>;
+  paymentMethod: CustomerPayment;
+  paymentReferenceNo?: Maybe<Scalars['String']>;
+  receivedAccount: Scalars['String'];
+  receivedAmount: Scalars['String'];
+  receivedDate: Scalars['Localized'];
+  receivedFrom: Scalars['String'];
+  tds: Scalars['Boolean'];
+  tdsAccount?: Maybe<Scalars['String']>;
+  tdsAmount?: Maybe<Scalars['String']>;
+  tdsType?: Maybe<Scalars['String']>;
+};
+
+export type SalesCustomerPaymentEntry = {
+  date?: Maybe<Scalars['Localized']>;
+  id: Scalars['ID'];
+  paymentMode?: Maybe<CustomerPayment>;
+  receivedFrom?: Maybe<Scalars['String']>;
+  totalAmount?: Maybe<Scalars['String']>;
+};
+
+export type SalesCustomerPaymentFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type SalesCustomerPaymentInput = {
+  notes?: InputMaybe<Scalars['String']>;
+  paymentAllocation: Array<PaymentAllocationInput>;
+  paymentMethod: CustomerPayment;
+  paymentReferenceNo?: InputMaybe<Scalars['String']>;
+  receivedAccount: Scalars['String'];
+  receivedAmount: Scalars['String'];
+  receivedDate: Scalars['Localized'];
+  receivedFrom: Scalars['String'];
+  tds: Scalars['Boolean'];
+  tdsAccount?: InputMaybe<Scalars['String']>;
+  tdsAmount?: InputMaybe<Scalars['String']>;
+  tdsType?: InputMaybe<Scalars['String']>;
+};
+
+export type SalesCustomerPaymentListConnection = {
+  edges?: Maybe<Array<Maybe<SalesCustomerPaymentListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SalesCustomerPaymentListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<SalesCustomerPaymentEntry>;
+};
+
+export type SalesSaleEntry = {
+  customerID: Scalars['ID'];
+  discount?: Maybe<Scalars['String']>;
+  dueDate: Scalars['Localized'];
+  invoiceDate: Scalars['Localized'];
+  notes?: Maybe<Scalars['String']>;
+  products: Array<SaleProduct>;
+  reference: Scalars['String'];
+  subTotal?: Maybe<Scalars['String']>;
+  taxableTotal?: Maybe<Scalars['String']>;
+  vat?: Maybe<Scalars['String']>;
+};
+
+export type SalesSaleEntryEntry = {
+  date?: Maybe<Scalars['Localized']>;
+  id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+  totalAmount?: Maybe<Scalars['String']>;
+};
+
+export type SalesSaleEntryFilter = {
+  id?: InputMaybe<Scalars['ID']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type SalesSaleEntryInput = {
+  customerID: Scalars['ID'];
+  discount?: InputMaybe<Scalars['String']>;
+  dueDate: Scalars['Localized'];
+  invoiceDate: Scalars['Localized'];
+  notes?: InputMaybe<Scalars['String']>;
+  products: Array<SaleProductInput>;
+  reference: Scalars['String'];
+  subTotal?: InputMaybe<Scalars['String']>;
+  taxableTotal?: InputMaybe<Scalars['String']>;
+  vat?: InputMaybe<Scalars['String']>;
+};
+
+export type SalesSaleEntryListConnection = {
+  edges?: Maybe<Array<Maybe<SalesSaleEntryListEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type SalesSaleEntryListEdges = {
+  cursor: Scalars['Cursor'];
+  node?: Maybe<SalesSaleEntryEntry>;
+};
 
 export type SavedReportResponse = {
   name?: Maybe<Scalars['String']>;
@@ -11056,6 +11436,94 @@ export type SetInvestmentTransactionDataMutation = {
   accounting: {
     investment: {
       addTransaction: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type SetSalesCustomerDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: SalesCustomerInput;
+}>;
+
+export type SetSalesCustomerDataMutation = {
+  accounting: {
+    sales: {
+      upsertCustomer: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type SetSalesSaleEntryDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: SalesSaleEntryInput;
+}>;
+
+export type SetSalesSaleEntryDataMutation = {
+  accounting: {
+    sales: {
+      upsertSaleEntry: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type SetSalesCreditNoteDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: SalesCreditNoteInput;
+}>;
+
+export type SetSalesCreditNoteDataMutation = {
+  accounting: {
+    sales: {
+      upsertCreditNote: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
+
+export type SetSalesCustomerPaymentDataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  data: SalesCustomerPaymentInput;
+}>;
+
+export type SetSalesCustomerPaymentDataMutation = {
+  accounting: {
+    sales: {
+      upsertCustomerPayment: {
         recordId?: string | null;
         error?:
           | MutationError_AuthorizationError_Fragment
@@ -13422,6 +13890,266 @@ export type GetInvestmentTransactionsListDataQuery = {
           endCursor?: string | null;
           hasNextPage: boolean;
           hasPreviousPage: boolean;
+        } | null;
+      };
+    };
+  };
+};
+
+export type GetSalesCustomerListDataQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<SalesCustomerFilter>;
+}>;
+
+export type GetSalesCustomerListDataQuery = {
+  accounting: {
+    sales: {
+      listCustomer: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id: string;
+            name?: string | null;
+            phoneNumber?: string | null;
+            email?: string | null;
+            address?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+            } | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: {
+          startCursor?: string | null;
+          endCursor?: string | null;
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+        } | null;
+      };
+    };
+  };
+};
+
+export type GetSalesCustomerFormStateDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetSalesCustomerFormStateDataQuery = {
+  accounting: {
+    sales: {
+      customerFormState: {
+        data?: {
+          name: string;
+          code: string;
+          phoneNumber: string;
+          pan: string;
+          email?: string | null;
+          creditTerms?: string | null;
+          creditLimit?: string | null;
+          openingBalance?: string | null;
+          address: {
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          };
+        } | null;
+      };
+    };
+  };
+};
+
+export type GetSalesSaleEntryListDataQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<SalesSaleEntryFilter>;
+}>;
+
+export type GetSalesSaleEntryListDataQuery = {
+  accounting: {
+    sales: {
+      listSaleEntry: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id: string;
+            name?: string | null;
+            totalAmount?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: {
+          startCursor?: string | null;
+          endCursor?: string | null;
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+        } | null;
+      };
+    };
+  };
+};
+
+export type GetSalesSaleEntryFormStateDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetSalesSaleEntryFormStateDataQuery = {
+  accounting: {
+    sales: {
+      saleEntryFormState: {
+        data?: {
+          customerID: string;
+          reference: string;
+          invoiceDate: Record<'local' | 'en' | 'np', string>;
+          dueDate: Record<'local' | 'en' | 'np', string>;
+          notes?: string | null;
+          subTotal?: string | null;
+          discount?: string | null;
+          taxableTotal?: string | null;
+          vat?: string | null;
+          products: Array<{
+            name: string;
+            quantity: string;
+            rate: string;
+            tax: number;
+            amount: string;
+            productDescription?: string | null;
+            warehousePartition?: string | null;
+            salesLedger?: string | null;
+          }>;
+        } | null;
+      };
+    };
+  };
+};
+
+export type GetSalesCreditNoteListDataQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<SalesCreditNoteFilter>;
+}>;
+
+export type GetSalesCreditNoteListDataQuery = {
+  accounting: {
+    sales: {
+      listCreditNote: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id: string;
+            name?: string | null;
+            totalAmount?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: {
+          startCursor?: string | null;
+          endCursor?: string | null;
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+        } | null;
+      };
+    };
+  };
+};
+
+export type GetSalesCreditNoteFormStateDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetSalesCreditNoteFormStateDataQuery = {
+  accounting: {
+    sales: {
+      creditNoteFormState: {
+        data?: {
+          customerID: string;
+          invoiceReference: string;
+          date: Record<'local' | 'en' | 'np', string>;
+          notes?: string | null;
+          subTotal?: string | null;
+          nonTaxableTotal?: string | null;
+          taxableTotal?: string | null;
+          vat?: string | null;
+          products: Array<{
+            name: string;
+            quantity: string;
+            rate: string;
+            tax: number;
+            amount: string;
+            productDescription?: string | null;
+            warehousePartition?: string | null;
+            salesLedger?: string | null;
+          }>;
+        } | null;
+      };
+    };
+  };
+};
+
+export type GetSalesCustomerPaymentListDataQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<SalesCustomerPaymentFilter>;
+}>;
+
+export type GetSalesCustomerPaymentListDataQuery = {
+  accounting: {
+    sales: {
+      listCustomerPayment: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id: string;
+            receivedFrom?: string | null;
+            totalAmount?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            paymentMode?: CustomerPayment | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: {
+          startCursor?: string | null;
+          endCursor?: string | null;
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+        } | null;
+      };
+    };
+  };
+};
+
+export type GetSalesCustomerPaymentFormStateDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetSalesCustomerPaymentFormStateDataQuery = {
+  accounting: {
+    sales: {
+      customerPaymentFormState: {
+        data?: {
+          receivedFrom: string;
+          receivedAccount: string;
+          receivedAmount: string;
+          receivedDate: Record<'local' | 'en' | 'np', string>;
+          paymentMethod: CustomerPayment;
+          paymentReferenceNo?: string | null;
+          tds: boolean;
+          tdsAccount?: string | null;
+          tdsType?: string | null;
+          tdsAmount?: string | null;
+          notes?: string | null;
+          paymentAllocation: Array<{
+            type: string;
+            date: Record<'local' | 'en' | 'np', string>;
+            amount: string;
+            leftToAllocate: string;
+            thisAllocation: string;
+          }>;
         } | null;
       };
     };
@@ -17712,6 +18440,142 @@ export const useSetInvestmentTransactionDataMutation = <TError = unknown, TConte
     ),
     options
   );
+export const SetSalesCustomerDataDocument = `
+    mutation setSalesCustomerData($id: ID!, $data: SalesCustomerInput!) {
+  accounting {
+    sales {
+      upsertCustomer(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetSalesCustomerDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSalesCustomerDataMutation,
+    TError,
+    SetSalesCustomerDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSalesCustomerDataMutation,
+    TError,
+    SetSalesCustomerDataMutationVariables,
+    TContext
+  >(
+    ['setSalesCustomerData'],
+    useAxios<SetSalesCustomerDataMutation, SetSalesCustomerDataMutationVariables>(
+      SetSalesCustomerDataDocument
+    ),
+    options
+  );
+export const SetSalesSaleEntryDataDocument = `
+    mutation setSalesSaleEntryData($id: ID!, $data: SalesSaleEntryInput!) {
+  accounting {
+    sales {
+      upsertSaleEntry(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetSalesSaleEntryDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSalesSaleEntryDataMutation,
+    TError,
+    SetSalesSaleEntryDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSalesSaleEntryDataMutation,
+    TError,
+    SetSalesSaleEntryDataMutationVariables,
+    TContext
+  >(
+    ['setSalesSaleEntryData'],
+    useAxios<SetSalesSaleEntryDataMutation, SetSalesSaleEntryDataMutationVariables>(
+      SetSalesSaleEntryDataDocument
+    ),
+    options
+  );
+export const SetSalesCreditNoteDataDocument = `
+    mutation setSalesCreditNoteData($id: ID!, $data: SalesCreditNoteInput!) {
+  accounting {
+    sales {
+      upsertCreditNote(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetSalesCreditNoteDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSalesCreditNoteDataMutation,
+    TError,
+    SetSalesCreditNoteDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSalesCreditNoteDataMutation,
+    TError,
+    SetSalesCreditNoteDataMutationVariables,
+    TContext
+  >(
+    ['setSalesCreditNoteData'],
+    useAxios<SetSalesCreditNoteDataMutation, SetSalesCreditNoteDataMutationVariables>(
+      SetSalesCreditNoteDataDocument
+    ),
+    options
+  );
+export const SetSalesCustomerPaymentDataDocument = `
+    mutation setSalesCustomerPaymentData($id: ID!, $data: SalesCustomerPaymentInput!) {
+  accounting {
+    sales {
+      upsertCustomerPayment(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetSalesCustomerPaymentDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSalesCustomerPaymentDataMutation,
+    TError,
+    SetSalesCustomerPaymentDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSalesCustomerPaymentDataMutation,
+    TError,
+    SetSalesCustomerPaymentDataMutationVariables,
+    TContext
+  >(
+    ['setSalesCustomerPaymentData'],
+    useAxios<SetSalesCustomerPaymentDataMutation, SetSalesCustomerPaymentDataMutationVariables>(
+      SetSalesCustomerPaymentDataDocument
+    ),
+    options
+  );
 export const SetAccountCloseDataDocument = `
     mutation setAccountCloseData($data: DepositAccountClose) {
   account {
@@ -21484,6 +22348,362 @@ export const useGetInvestmentTransactionsListDataQuery = <
       GetInvestmentTransactionsListDataQuery,
       GetInvestmentTransactionsListDataQueryVariables
     >(GetInvestmentTransactionsListDataDocument).bind(null, variables),
+    options
+  );
+export const GetSalesCustomerListDataDocument = `
+    query getSalesCustomerListData($pagination: Pagination, $filter: SalesCustomerFilter) {
+  accounting {
+    sales {
+      listCustomer(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            phoneNumber
+            email
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+            }
+          }
+          cursor
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSalesCustomerListDataQuery = <
+  TData = GetSalesCustomerListDataQuery,
+  TError = unknown
+>(
+  variables?: GetSalesCustomerListDataQueryVariables,
+  options?: UseQueryOptions<GetSalesCustomerListDataQuery, TError, TData>
+) =>
+  useQuery<GetSalesCustomerListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSalesCustomerListData']
+      : ['getSalesCustomerListData', variables],
+    useAxios<GetSalesCustomerListDataQuery, GetSalesCustomerListDataQueryVariables>(
+      GetSalesCustomerListDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalesCustomerFormStateDataDocument = `
+    query getSalesCustomerFormStateData($id: ID!) {
+  accounting {
+    sales {
+      customerFormState(id: $id) {
+        data {
+          name
+          code
+          phoneNumber
+          pan
+          address {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          email
+          creditTerms
+          creditLimit
+          openingBalance
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSalesCustomerFormStateDataQuery = <
+  TData = GetSalesCustomerFormStateDataQuery,
+  TError = unknown
+>(
+  variables: GetSalesCustomerFormStateDataQueryVariables,
+  options?: UseQueryOptions<GetSalesCustomerFormStateDataQuery, TError, TData>
+) =>
+  useQuery<GetSalesCustomerFormStateDataQuery, TError, TData>(
+    ['getSalesCustomerFormStateData', variables],
+    useAxios<GetSalesCustomerFormStateDataQuery, GetSalesCustomerFormStateDataQueryVariables>(
+      GetSalesCustomerFormStateDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalesSaleEntryListDataDocument = `
+    query getSalesSaleEntryListData($pagination: Pagination, $filter: SalesSaleEntryFilter) {
+  accounting {
+    sales {
+      listSaleEntry(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            totalAmount
+            date
+          }
+          cursor
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSalesSaleEntryListDataQuery = <
+  TData = GetSalesSaleEntryListDataQuery,
+  TError = unknown
+>(
+  variables?: GetSalesSaleEntryListDataQueryVariables,
+  options?: UseQueryOptions<GetSalesSaleEntryListDataQuery, TError, TData>
+) =>
+  useQuery<GetSalesSaleEntryListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSalesSaleEntryListData']
+      : ['getSalesSaleEntryListData', variables],
+    useAxios<GetSalesSaleEntryListDataQuery, GetSalesSaleEntryListDataQueryVariables>(
+      GetSalesSaleEntryListDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalesSaleEntryFormStateDataDocument = `
+    query getSalesSaleEntryFormStateData($id: ID!) {
+  accounting {
+    sales {
+      saleEntryFormState(id: $id) {
+        data {
+          customerID
+          reference
+          invoiceDate
+          dueDate
+          products {
+            name
+            quantity
+            rate
+            tax
+            amount
+            productDescription
+            warehousePartition
+            salesLedger
+          }
+          notes
+          subTotal
+          discount
+          taxableTotal
+          vat
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSalesSaleEntryFormStateDataQuery = <
+  TData = GetSalesSaleEntryFormStateDataQuery,
+  TError = unknown
+>(
+  variables: GetSalesSaleEntryFormStateDataQueryVariables,
+  options?: UseQueryOptions<GetSalesSaleEntryFormStateDataQuery, TError, TData>
+) =>
+  useQuery<GetSalesSaleEntryFormStateDataQuery, TError, TData>(
+    ['getSalesSaleEntryFormStateData', variables],
+    useAxios<GetSalesSaleEntryFormStateDataQuery, GetSalesSaleEntryFormStateDataQueryVariables>(
+      GetSalesSaleEntryFormStateDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalesCreditNoteListDataDocument = `
+    query getSalesCreditNoteListData($pagination: Pagination, $filter: SalesCreditNoteFilter) {
+  accounting {
+    sales {
+      listCreditNote(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            totalAmount
+            date
+          }
+          cursor
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSalesCreditNoteListDataQuery = <
+  TData = GetSalesCreditNoteListDataQuery,
+  TError = unknown
+>(
+  variables?: GetSalesCreditNoteListDataQueryVariables,
+  options?: UseQueryOptions<GetSalesCreditNoteListDataQuery, TError, TData>
+) =>
+  useQuery<GetSalesCreditNoteListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSalesCreditNoteListData']
+      : ['getSalesCreditNoteListData', variables],
+    useAxios<GetSalesCreditNoteListDataQuery, GetSalesCreditNoteListDataQueryVariables>(
+      GetSalesCreditNoteListDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalesCreditNoteFormStateDataDocument = `
+    query getSalesCreditNoteFormStateData($id: ID!) {
+  accounting {
+    sales {
+      creditNoteFormState(id: $id) {
+        data {
+          customerID
+          invoiceReference
+          date
+          products {
+            name
+            quantity
+            rate
+            tax
+            amount
+            productDescription
+            warehousePartition
+            salesLedger
+          }
+          notes
+          subTotal
+          nonTaxableTotal
+          taxableTotal
+          vat
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSalesCreditNoteFormStateDataQuery = <
+  TData = GetSalesCreditNoteFormStateDataQuery,
+  TError = unknown
+>(
+  variables: GetSalesCreditNoteFormStateDataQueryVariables,
+  options?: UseQueryOptions<GetSalesCreditNoteFormStateDataQuery, TError, TData>
+) =>
+  useQuery<GetSalesCreditNoteFormStateDataQuery, TError, TData>(
+    ['getSalesCreditNoteFormStateData', variables],
+    useAxios<GetSalesCreditNoteFormStateDataQuery, GetSalesCreditNoteFormStateDataQueryVariables>(
+      GetSalesCreditNoteFormStateDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalesCustomerPaymentListDataDocument = `
+    query getSalesCustomerPaymentListData($pagination: Pagination, $filter: SalesCustomerPaymentFilter) {
+  accounting {
+    sales {
+      listCustomerPayment(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            receivedFrom
+            totalAmount
+            date
+            paymentMode
+          }
+          cursor
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSalesCustomerPaymentListDataQuery = <
+  TData = GetSalesCustomerPaymentListDataQuery,
+  TError = unknown
+>(
+  variables?: GetSalesCustomerPaymentListDataQueryVariables,
+  options?: UseQueryOptions<GetSalesCustomerPaymentListDataQuery, TError, TData>
+) =>
+  useQuery<GetSalesCustomerPaymentListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSalesCustomerPaymentListData']
+      : ['getSalesCustomerPaymentListData', variables],
+    useAxios<GetSalesCustomerPaymentListDataQuery, GetSalesCustomerPaymentListDataQueryVariables>(
+      GetSalesCustomerPaymentListDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSalesCustomerPaymentFormStateDataDocument = `
+    query getSalesCustomerPaymentFormStateData($id: ID!) {
+  accounting {
+    sales {
+      customerPaymentFormState(id: $id) {
+        data {
+          receivedFrom
+          receivedAccount
+          receivedAmount
+          receivedDate
+          paymentMethod
+          paymentReferenceNo
+          tds
+          tdsAccount
+          tdsType
+          tdsAmount
+          paymentAllocation {
+            type
+            date
+            amount
+            leftToAllocate
+            thisAllocation
+          }
+          notes
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSalesCustomerPaymentFormStateDataQuery = <
+  TData = GetSalesCustomerPaymentFormStateDataQuery,
+  TError = unknown
+>(
+  variables: GetSalesCustomerPaymentFormStateDataQueryVariables,
+  options?: UseQueryOptions<GetSalesCustomerPaymentFormStateDataQuery, TError, TData>
+) =>
+  useQuery<GetSalesCustomerPaymentFormStateDataQuery, TError, TData>(
+    ['getSalesCustomerPaymentFormStateData', variables],
+    useAxios<
+      GetSalesCustomerPaymentFormStateDataQuery,
+      GetSalesCustomerPaymentFormStateDataQueryVariables
+    >(GetSalesCustomerPaymentFormStateDataDocument).bind(null, variables),
     options
   );
 export const AllAdministrationDocument = `

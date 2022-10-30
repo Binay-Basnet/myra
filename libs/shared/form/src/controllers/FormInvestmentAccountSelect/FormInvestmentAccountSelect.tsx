@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 import debounce from 'lodash/debounce';
 
 import { InvestmentType, useGetInvestmentAccountsListDataQuery } from '@coop/cbs/data-access';
@@ -19,6 +20,8 @@ export const FormInvestmentAccountSelect = ({
   type,
 }: IFormInvestmentAccountSelectProps) => {
   const [searchTerm, setSearchTerm] = useState('');
+
+  const { watch } = useFormContext();
 
   const { data: accountListQueryData, isFetching } = useGetInvestmentAccountsListDataQuery(
     {
@@ -46,6 +49,11 @@ export const FormInvestmentAccountSelect = ({
     ],
     [] as OptionType[]
   );
+
+  useEffect(() => {
+    const term = watch(name);
+    setSearchTerm(term);
+  }, []);
 
   return (
     <FormSelect

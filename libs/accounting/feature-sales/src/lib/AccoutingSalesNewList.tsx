@@ -2,10 +2,14 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
-import { PopoverComponent } from '@coop/myra/components';
+import {
+  DateType,
+  RootState,
+  useAppSelector,
+  useGetSalesSaleEntryListDataQuery,
+} from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, Text } from '@coop/shared/ui';
+import { TablePopover } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -16,87 +20,57 @@ export const AccountingSalesList = () => {
 
   const router = useRouter();
 
-  const { data, isFetching } = useGetMemberListQuery({
+  const preferenceDate = useAppSelector((state: RootState) => state?.auth?.preference?.date);
+
+  const { data, isFetching } = useGetSalesSaleEntryListDataQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    filter: {
-      objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    },
   });
 
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
-
-  const popoverTitle = [
-    {
-      title: 'memberListTableViewMemberProfile',
-    },
-    {
-      title: 'memberListTableEditMember',
-    },
-    {
-      title: 'memberListTableMakeInactive',
-    },
-  ];
+  const rowData = useMemo(() => data?.accounting?.sales?.listSaleEntry?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: t['accountingSalesListInvoiceNo'],
+        header: 'Order No',
         accessorFn: (row) => row?.node?.id,
       },
       {
-        accessorFn: (row) => row?.node?.name?.local,
+        accessorFn: (row) => row?.node?.name,
         header: t['accountingSalesListCustomer'],
-        cell: (props) => (
-            <Box
-              display="flex"
-              alignItems="center"
-              cursor="pointer"
-              gap="s12"
-              onClick={() => {
-                router.push('/accounting/sales/object');
-              }}
-            >
-              <Avatar
-                name="Dan Abrahmov"
-                size="sm"
-                src="https://bit.ly/dan-abramov"
-              />
-              <Text
-                fontSize="s3"
-                textTransform="capitalize"
-                textOverflow="ellipsis"
-                overflow="hidden"
-              >
-                {props.getValue() as string}
-              </Text>
-            </Box>
-          ),
-
         meta: {
           width: '60%',
         },
       },
       {
         header: t['accountingSalesListTotalAmount'],
-        accessorFn: (row) => row?.node?.contact,
+        accessorFn: (row) => row?.node?.totalAmount,
         meta: {
           width: '30%',
         },
       },
       {
-        header: t['accountingSalesListInvoiceDate'],
-        accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
+        header: 'Date',
+        accessorFn: (row) =>
+          preferenceDate === DateType.Bs ? row?.node?.date?.np : row?.node?.date?.en ?? 'N/A',
       },
       {
         id: '_actions',
         header: '',
         accessorKey: 'actions',
-        cell: (cell) => (
-          <PopoverComponent
-            items={popoverTitle}
-            member={cell?.row?.original?.node}
-          />
-        ),
+        cell: (props) =>
+          props?.row?.original?.node && (
+            <TablePopover
+              node={props?.row?.original?.node}
+              items={[
+                {
+                  title: 'Edit',
+                  onClick: (row) => {
+                    router.push(`/accounting/sales/edit/${row['id']}`);
+                  },
+                },
+              ]}
+            />
+          ),
         meta: {
           width: '60px',
         },
@@ -107,11 +81,7 @@ export const AccountingSalesList = () => {
 
   return (
     <>
-      <AccountingPageHeader
-        heading={t['accountingSalesListSales']}
-        buttonLabel={t['accountingSalesListSaleEntry']}
-        buttonHandler={() => router.push('/accounting/sales/add')}
-      />
+      <AccountingPageHeader heading="Sales Entry" />
 
       <Table
         data={rowData}
@@ -119,12 +89,13 @@ export const AccountingSalesList = () => {
         isLoading={isFetching}
         columns={columns}
         pagination={{
-          total: data?.members?.list?.totalCount ?? 'Many',
-          pageInfo: data?.members.list.pageInfo,
+          total: data?.accounting?.sales?.listSaleEntry?.totalCount ?? 'Many',
+          pageInfo: data?.accounting?.sales?.listSaleEntry?.pageInfo,
         }}
+        noDataTitle="sales list"
       />
     </>
   );
-}
+};
 
 export default AccountingSalesList;

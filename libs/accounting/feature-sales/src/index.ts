@@ -5,4 +5,6 @@ export * from './lib/AccountingFeatureSales';
 export * from './lib/AccountingListCreditNote';
 export * from './lib/AccountingSalesCreditNote';
 export * from './lib/AccoutingSalesNewList';
+export * from './lib/AddCustomer';
+export * from './lib/CustomerList';
 export * from './lib/salesObject';

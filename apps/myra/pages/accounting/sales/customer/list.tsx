@@ -1,15 +1,15 @@
 import { ReactElement } from 'react';
 
-import { AccountingListCreditNote } from '@coop/accounting/sales';
+import { CustomerList } from '@coop/accounting/sales';
 import { AccountingLayout, SalesLayout } from '@coop/accounting/ui-layouts';
 
-const CreditNote = () => <AccountingListCreditNote />;
+const CustomerListPage = () => <CustomerList />;
 
-CreditNote.getLayout = function getLayout(page: ReactElement) {
+CustomerListPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <AccountingLayout>
       <SalesLayout>{page}</SalesLayout>
     </AccountingLayout>
   );
 };
-export default CreditNote;
+export default CustomerListPage;

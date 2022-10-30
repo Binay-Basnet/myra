@@ -3,7 +3,6 @@ import { ReactElement } from 'react';
 import { AccountingSalesList } from '@coop/accounting/sales';
 import { AccountingLayout, SalesLayout } from '@coop/accounting/ui-layouts';
 
-// TODO ( Update this page when design arrives )
 const AccountingSalesListPage = () => <AccountingSalesList />;
 
 AccountingSalesListPage.getLayout = function getLayout(page: ReactElement) {

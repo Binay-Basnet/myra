@@ -1,16 +1,15 @@
-// import debounce from 'lodash/debounce';
 import { FormTextArea } from '@coop/shared/form';
+import { FormSection, GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const CustomerPaymentBox = () => {
   const { t } = useTranslation();
 
   return (
-    <FormTextArea
-      name="note"
-      label={t['accountingCustomerPaymentAddNotes']}
-      __placeholder={t['accountingCustomerPaymentAddNote']}
-      rows={5}
-    />
+    <FormSection>
+      <GridItem colSpan={3}>
+        <FormTextArea name="notes" label={t['accountingCustomerPaymentAddNotes']} rows={5} />
+      </GridItem>
+    </FormSection>
   );
 };

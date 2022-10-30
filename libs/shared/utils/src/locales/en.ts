@@ -3639,5 +3639,9 @@ const en: Record<string, string> = {
   requests: 'Requests',
 
   /* Requests Start */
+
+  // accounting sales
+  accountingSalesSalesEntry: 'Sales Entry',
+  accountingSalesCustomers: 'Customers',
 };
 export default en;

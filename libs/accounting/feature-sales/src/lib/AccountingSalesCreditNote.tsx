@@ -1,181 +1,118 @@
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { BiSave } from 'react-icons/bi';
-import { GrClose } from 'react-icons/gr';
-import router from 'next/router';
-import { Icon } from '@chakra-ui/react';
+import { useQueryClient } from 'react-query';
+import { useRouter } from 'next/router';
+import pickBy from 'lodash/pickBy';
 
-import { DividerContainer } from '@coop/accounting/ui-components';
-import { FormEditableTable } from '@coop/shared/form';
 import {
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  IconButton,
-  Text,
-} from '@coop/shared/ui';
+  SalesCreditNoteInput,
+  useGetSalesCreditNoteFormStateDataQuery,
+  useSetSalesCreditNoteDataMutation,
+} from '@coop/cbs/data-access';
+import { asyncToast, Box, Container, FormFooter, FormHeader } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
   CreditBox,
   CreditNoteDetails,
+  ProductTable,
 } from '../components/form-components/creditNote';
 
-/* eslint-disable-next-line */
-interface CbsAccountOpenFormProps {}
-
-type SalesTable = {
-  product_id: string;
-  quantity: number;
-  account_type?: string;
-  rate: number;
-  tax: number;
-  total_amount: number;
-  product_description?: string;
-  warehouse_partition?: number;
-  sales_ledger?: string;
-};
-
-const search_options = [
-  { label: 'MI 001 - Lenovo Laptop', value: 'mi001' },
-  { label: 'MI 002 - Lenovo Laptop', value: 'mi002' },
-  { label: 'MI 003 - Lenovo Laptop', value: 'mi003' },
-  { label: 'MI 004 - Lenovo Laptop', value: 'mi004' },
-  { label: 'MI 005 - Lenovo Laptop', value: 'mi005' },
-  { label: 'MI 006 - Lenovo Laptop', value: 'mi006' },
-  { label: 'MI 007 - Lenovo Laptop', value: 'mi007' },
-  { label: 'MI 008 - Lenovo Laptop', value: 'mi008' },
-  { label: 'MI 009 - Lenovo Laptop', value: 'mi009' },
-  { label: 'MI 0010 - Lenovo Laptop', value: 'mi0010' },
-];
-
-export function CreditNoteForm() {
+export const CreditNoteForm = () => {
   const { t } = useTranslation();
-  const methods = useForm();
+
+  const router = useRouter();
+
+  const id = router?.query?.['id'];
+
+  const queryClient = useQueryClient();
+
+  const methods = useForm<SalesCreditNoteInput>();
+
+  const { getValues, reset } = methods;
+
+  const { data: formStateQueryData } = useGetSalesCreditNoteFormStateDataQuery(
+    { id: String(id) },
+    { enabled: Boolean(id && router?.asPath?.includes('edit')), staleTime: 0 }
+  );
+
+  const formState = formStateQueryData?.accounting?.sales?.creditNoteFormState?.data;
+
+  useEffect(() => {
+    if (router?.asPath?.includes('edit')) {
+      if (formState) {
+        reset({
+          ...pickBy(
+            {
+              ...formState,
+            } ?? {},
+            (v) => v !== null
+          ),
+        });
+      }
+    }
+  }, [formState]);
+
+  const { mutateAsync: setCreditNoteData } = useSetSalesCreditNoteDataMutation();
+
+  const handleSubmit = () => {
+    const values = getValues();
+
+    const filteredValues = {
+      ...values,
+      products: values.products.map((product) => ({
+        ...product,
+        quantity: String(product.quantity),
+        rate: String(product.rate),
+      })),
+    };
+
+    asyncToast({
+      id: 'save-sales-credit-note',
+      promise: setCreditNoteData({ id: String(id), data: filteredValues }),
+      msgs: {
+        loading: 'Saving credit note',
+        success: 'Credit note saved',
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries('getSalesCreditNoteListData');
+        router.push('/accounting/sales/credit-note/list');
+      },
+    });
+  };
 
   return (
     <>
-      <Container
-        minW="container.lg"
-        height="fit-content"
-        bg="gray.0"
-        pb="60px"
-        minH="calc(100vh - 170px)"
-      >
-        <Box
-          height="60px"
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          px="5"
-          borderBottom="1px solid "
-          borderColor="border.layout"
-          borderTopRadius={5}
-          bg={'gray.0'}
-          position="sticky"
-          top="110px"
-          zIndex={8}
-        >
-          <Text fontSize="r2" fontWeight="600">
-            {t['accountingCreditNoteAddNewCreditNote']}
-          </Text>
-          <IconButton
-            variant={'ghost'}
-            aria-label="close"
-            icon={<GrClose />}
-            onClick={() => router.back()}
+      <Container minW="container.xl" height="fit-content" pb="60px">
+        <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+          <FormHeader
+            title={t['accountingCreditNoteAddNewCreditNote']}
+            closeLink="/accounting/sales/credit-note/list"
           />
         </Box>
-        <FormProvider {...methods}>
-          <form>
-            <Box bg="white" p="s20">
-              <DividerContainer>
+
+        <Box bg="white">
+          <FormProvider {...methods}>
+            <form>
+              <Box minH="calc(100vh - 170px)">
                 <CreditNoteDetails />
-                {/* -------------------- TODO -----------ADD Table here */}
-                <FormEditableTable<SalesTable>
-                  name="data"
-                  columns={[
-                    {
-                      accessor: 'product_id',
-                      header: t['CreditNoteProduct'],
-                      cellWidth: 'auto',
-                      fieldType: 'search',
-                      searchOptions: search_options,
-                    },
 
-                    {
-                      accessor: 'quantity',
-                      header: t['CreditNoteQuantity'],
-                      isNumeric: true,
-                    },
-                    {
-                      accessor: 'rate',
-                      header: t['CreditNoteRate'],
-                      isNumeric: true,
-                    },
-                    {
-                      accessor: 'tax',
-                      header: t['CreditNoteTax'],
-                      isNumeric: true,
-                      fieldType: 'percentage',
-                    },
-                    {
-                      accessor: 'total_amount',
-                      header: t['CreditNoteTotalAmount'],
-                      isNumeric: true,
+                <ProductTable />
 
-                      accessorFn: (row) =>
-                        row.quantity * row.rate +
-                        (row.quantity * row.rate * row.tax) / 100,
-                    },
-                    {
-                      accessor: 'product_description',
-                      header: t['CreditNoteProductDes'],
-                      hidden: true,
-
-                      fieldType: 'textarea',
-                    },
-
-                    {
-                      accessor: 'warehouse_partition',
-                      hidden: true,
-                      header: t['CreditNoteWareHouse'],
-                    },
-                    {
-                      accessor: 'sales_ledger',
-                      hidden: true,
-                      header: t['CreditNoteSalesReturn'],
-                    },
-                  ]}
-                />
-                {/* <SalesBox /> */}
                 <CreditBox />
-              </DividerContainer>
-            </Box>
-          </form>
-        </FormProvider>
+              </Box>
+            </form>
+          </FormProvider>
+        </Box>
       </Container>
-      <Box bottom="0" position="fixed" width="100%" bg="gray.100">
-        <Container minW="container.lg" height="fit-content" p={0}>
-          <FormFooter
-            draftButton={
-              <Button type="submit" variant="ghost" shade="neutral">
-                <Icon as={BiSave} />
-                <Text
-                  alignSelf="center"
-                  fontWeight="Medium"
-                  fontSize="s2"
-                  ml="5px"
-                >
-                  {t['saveDraft']}
-                </Text>
-              </Button>
-            }
-            mainButtonLabel={t['submit']}
-            mainButtonHandler={() => alert('Submitted')}
-          />
-        </Container>
+
+      <Box position="relative" margin="0px auto">
+        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
+          <Container minW="container.xl" height="fit-content">
+            <FormFooter mainButtonLabel="Save" mainButtonHandler={handleSubmit} />
+          </Container>
+        </Box>
       </Box>
     </>
   );
-}
+};

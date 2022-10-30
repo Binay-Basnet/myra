@@ -1,11 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
-import {
-  BoxContainer,
-  InputGroupContainer,
-} from '@coop/accounting/ui-components';
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { FormAmountInput, FormInput, FormSwitchTab } from '@coop/shared/form';
+import { FormSection, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const TDS = () => {
@@ -16,44 +12,29 @@ export const TDS = () => {
   const tds = watch('tds');
 
   const booleanList = [
-    { label: t['accountingCustomerPaymentAddTDSYes'], value: 'Yes' },
-    { label: t['accountingCustomerPaymentAddTDSNo'], value: 'No' },
+    { label: t['accountingCustomerPaymentAddTDSYes'], value: true },
+    { label: t['accountingCustomerPaymentAddTDSNo'], value: false },
   ];
+
   return (
-    <BoxContainer>
-      <Box display="flex" justifyContent="space-between">
+    <FormSection>
+      <GridItem colSpan={3} display="flex" justifyContent="space-between">
         <Text fontSize="s3" fontWeight="500" color="gray.700">
           {t['accountingCustomerPaymentAddTDS']}
         </Text>
 
         <FormSwitchTab options={booleanList} name="tds" />
-      </Box>
+      </GridItem>
 
-      {tds === 'Yes' && (
-        <InputGroupContainer>
-          <FormSelect
-            name="tdsAccount"
-            label={t['accountingCustomerPaymentAddTDSAccount']}
-            __placeholder={t['accountingCustomerPaymentAddSelectTDSAccount']}
-            options={[]}
-          />
+      {tds && (
+        <>
+          <FormInput name="tdsAccount" label={t['accountingCustomerPaymentAddTDSAccount']} />
 
-          <FormSelect
-            name="tdsType"
-            label={t['accountingCustomerPaymentAddTDSType']}
-            __placeholder={t['accountingCustomerPaymentAddTDSType']}
-            options={[]}
-          />
+          <FormInput name="tdsType" label={t['accountingCustomerPaymentAddTDSType']} />
 
-          <FormInput
-            name="tdsAmount"
-            type="number"
-            label={t['accountingCustomerPaymentAddTDSAmount']}
-            textAlign={'right'}
-            __placeholder="0.00"
-          />
-        </InputGroupContainer>
+          <FormAmountInput name="tdsAmount" label={t['accountingCustomerPaymentAddTDSAmount']} />
+        </>
       )}
-    </BoxContainer>
+    </FormSection>
   );
 };

@@ -2,52 +2,38 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import {
-  DateType,
-  useAppSelector,
-  useGetSalesCreditNoteListDataQuery,
-} from '@coop/cbs/data-access';
+import { useGetSalesCustomerListDataQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
 import { TablePopover } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-/* eslint-disable-next-line */
-export interface AccountingListCreditNoteProps {}
-
-export const AccountingListCreditNote = () => {
-  const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);
-
+export const CustomerList = () => {
   const { t } = useTranslation();
 
   const router = useRouter();
 
-  const { data, isFetching } = useGetSalesCreditNoteListDataQuery({
+  const { data, isFetching } = useGetSalesCustomerListDataQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
   });
 
-  const rowData = useMemo(() => data?.accounting?.sales?.listCreditNote?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.accounting?.sales?.listCustomer?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         accessorFn: (row) => row?.node?.name,
-        header: t['accountingCreditNoteListCustomer'],
-
+        header: 'Full Name',
         meta: {
           width: '60%',
         },
       },
       {
-        header: t['accountingCreditNoteListTotalAmount'],
-        accessorFn: (row) => row?.node?.totalAmount,
-        meta: {
-          width: '30%',
-        },
+        header: 'Phone Number',
+        accessorFn: (row) => row?.node?.phoneNumber,
       },
       {
-        header: 'Date',
-        accessorFn: (row) =>
-          preferenceDate === DateType.Bs ? row?.node?.date?.np : row?.node?.date?.en ?? 'N/A',
+        header: 'Email',
+        accessorFn: (row) => row?.node?.email,
       },
       {
         id: '_actions',
@@ -56,15 +42,15 @@ export const AccountingListCreditNote = () => {
         cell: (props) =>
           props?.row?.original?.node && (
             <TablePopover
+              node={props?.row?.original?.node}
               items={[
                 {
                   title: 'Edit',
                   onClick: (row) => {
-                    router.push(`/accounting/sales/credit-note/edit/${row['id']}`);
+                    router.push(`/accounting/sales/customer/edit/${row['id']}`);
                   },
                 },
               ]}
-              node={props?.row?.original?.node}
             />
           ),
         meta: {
@@ -77,7 +63,7 @@ export const AccountingListCreditNote = () => {
 
   return (
     <>
-      <AccountingPageHeader heading={t['accountingCreditNoteListCreditNote']} />
+      <AccountingPageHeader heading="Customers" />
 
       <Table
         data={rowData}
@@ -85,13 +71,13 @@ export const AccountingListCreditNote = () => {
         isLoading={isFetching}
         columns={columns}
         pagination={{
-          total: data?.accounting?.sales?.listCreditNote?.totalCount ?? 'Many',
-          pageInfo: data?.accounting?.sales?.listCreditNote?.pageInfo,
+          total: data?.accounting?.sales?.listCustomer?.totalCount ?? 'Many',
+          pageInfo: data?.accounting?.sales?.listCustomer?.pageInfo,
         }}
-        noDataTitle="credit note list"
+        noDataTitle="customer list"
       />
     </>
   );
 };
 
-export default AccountingListCreditNote;
+export default CustomerList;

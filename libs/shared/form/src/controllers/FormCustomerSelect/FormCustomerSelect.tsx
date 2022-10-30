@@ -1,37 +1,36 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 
-import { Roles, useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
+import { useGetSalesCustomerListDataQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { getRouterQuery } from '@coop/shared/utils';
 
-interface IFormAgentSelectProps {
+interface IFormCustomerSelectProps {
   name: string;
   label: string;
 }
 
 type OptionType = { label: string; value: string };
 
-export const FormAgentSelect = ({ name, label }: IFormAgentSelectProps) => {
-  const [agentId, setAgentId] = useState('');
+export const FormCustomerSelect = ({ name, label }: IFormCustomerSelectProps) => {
+  const [searchTerm, setSearchTerm] = useState('');
 
   const { watch } = useFormContext();
 
-  const { data: agentListQueryData, isFetching } = useGetSettingsUserListDataQuery({
-    paginate: {
+  const { data: customerListQueryData, isFetching } = useGetSalesCustomerListDataQuery({
+    pagination: {
       ...getRouterQuery({ type: ['PAGINATION'] }),
       first: 10,
     },
     filter: {
-      query: agentId,
-      role: [Roles.Agent],
+      name: searchTerm,
     },
   });
 
-  const agentList = agentListQueryData?.settings?.myraUser?.list?.edges;
+  const customerList = customerListQueryData?.accounting?.sales?.listCustomer?.edges;
 
-  const agentOptions = agentList?.reduce(
+  const customerOptions = customerList?.reduce(
     (prevVal, curVal) => [
       ...prevVal,
       {
@@ -43,8 +42,8 @@ export const FormAgentSelect = ({ name, label }: IFormAgentSelectProps) => {
   );
 
   useEffect(() => {
-    const id = watch(name);
-    setAgentId(id);
+    const term = watch(name);
+    setSearchTerm(term);
   }, []);
 
   return (
@@ -54,12 +53,12 @@ export const FormAgentSelect = ({ name, label }: IFormAgentSelectProps) => {
       isLoading={isFetching}
       onInputChange={debounce((id) => {
         if (id) {
-          setAgentId(id);
+          setSearchTerm(id);
         }
       }, 800)}
-      options={agentOptions}
+      options={customerOptions}
     />
   );
 };
 
-export default FormAgentSelect;
+export default FormCustomerSelect;
