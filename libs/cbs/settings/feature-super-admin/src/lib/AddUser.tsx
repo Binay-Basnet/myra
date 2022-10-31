@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
@@ -8,7 +8,6 @@ import {
   MyraUserInput,
   Roles,
   RootState,
-  useAllAdministrationQuery,
   useAppSelector,
   useGetSettingsUserEditDataQuery,
   UserGender,
@@ -16,13 +15,13 @@ import {
 } from '@coop/cbs/data-access';
 import { GroupContainer, InputGroupContainer } from '@coop/cbs/settings/ui-containers';
 import {
+  FormAddress,
   FormBranchSelect,
   FormCheckboxGroup,
   FormDatePicker,
   FormEmailInput,
   FormFileInput,
   FormInput,
-  FormMap,
   FormPhoneNumber,
   FormSelect,
   FormSwitch,
@@ -35,7 +34,6 @@ import {
   FormHeader,
   FormSection,
   Grid,
-  GridItem,
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -89,55 +87,6 @@ export const AddUser = () => {
   const identificationValues = watch('identificationSelection');
 
   const isPermanentAndTemporaryAddressSame = watch('isTempAsPermanentAddressSame');
-  const { data } = useAllAdministrationQuery();
-
-  const province = useMemo(
-    () =>
-      data?.administration?.all?.map((d) => ({
-        label: d.name,
-        value: d.id,
-      })) ?? [],
-    [data?.administration?.all]
-  );
-
-  // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch('permanentAddress.provinceId');
-  const currentDistrictId = watch('permanentAddress.districtId');
-  const currentLocalityId = watch('permanentAddress.localGovernmentId');
-
-  const districtList = useMemo(
-    () => data?.administration.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
-    [currentProvinceId]
-  );
-
-  const localityList = useMemo(
-    () => districtList.find((d) => d.id === currentDistrictId)?.municipalities ?? [],
-    [currentDistrictId]
-  );
-
-  const wardList = useMemo(
-    () => localityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
-    [currentLocalityId]
-  );
-  // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch('temporaryAddress.provinceId');
-  const currentTemptDistrictId = watch('temporaryAddress.districtId');
-  const currentTempLocalityId = watch('temporaryAddress.localGovernmentId');
-
-  const districtTempList = useMemo(
-    () => data?.administration.all.find((d) => d.id === currentTempProvinceId)?.districts ?? [],
-    [currentTempProvinceId]
-  );
-
-  const localityTempList = useMemo(
-    () => districtTempList.find((d) => d.id === currentTemptDistrictId)?.municipalities ?? [],
-    [currentTemptDistrictId]
-  );
-
-  const wardTempList = useMemo(
-    () => localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
-    [currentTempLocalityId]
-  );
 
   const addUser = useAppSelector((state: RootState) => state?.addUser);
 
@@ -210,9 +159,7 @@ export const AddUser = () => {
     {
       id: id as string,
     },
-    {
-      enabled: !!id,
-    }
+    { enabled: Boolean(id && router?.asPath?.includes('edit')), staleTime: 0 }
   );
 
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
@@ -428,51 +375,11 @@ export const AddUser = () => {
                 </GroupContainer>
               </Box>
 
-              <FormSection id="kymAccIndPermanentAddress" header="kymIndPermanentAddress">
-                <FormSelect
-                  name="permanentAddress.provinceId"
-                  label={t['kymIndProvince']}
-                  options={province}
-                />
-                <FormSelect
-                  name="permanentAddress.districtId"
-                  label={t['kymIndDistrict']}
-                  options={districtList.map((d) => ({
-                    label: d.name,
-                    value: d.id,
-                  }))}
-                />
-                <FormSelect
-                  name="permanentAddress.localGovernmentId"
-                  label={t['kymIndLocalGovernment']}
-                  options={localityList.map((d) => ({
-                    label: d.name,
-                    value: d.id,
-                  }))}
-                />
-                <FormSelect
-                  name="permanentAddress.wardNo"
-                  label={t['kymIndWardNo']}
-                  options={wardList?.map((d) => ({
-                    label: d,
-                    value: d,
-                  }))}
-                />
-                <FormInput
-                  type="text"
-                  name="permanentAddress.locality"
-                  label={t['kymIndLocality']}
-                />
-                <FormInput
-                  type="number"
-                  name="permanentAddress.houseNo"
-                  label={t['kymIndHouseNo']}
-                />
-
-                <GridItem colSpan={2}>
-                  <FormMap name="permanentAddress.coordinates" />
-                </GridItem>
-              </FormSection>
+              <FormAddress
+                sectionId="kymAccIndPermanentAddress"
+                sectionHeader="kymIndPermanentAddress"
+                name="permanentAddress"
+              />
 
               <Box
                 id="kymAccIndTemporaryAddress"
@@ -494,49 +401,7 @@ export const AddUser = () => {
                 {!isPermanentAndTemporaryAddressSame && (
                   <Box borderBottom="1px solid" borderBottomColor="border.layout" p="s20" pt="0">
                     <Grid templateColumns="repeat(3,1fr)" gap="s20" rowGap="s16">
-                      <FormSelect
-                        name="temporaryAddress.provinceId"
-                        label={t['kymIndProvince']}
-                        options={province}
-                      />
-                      <FormSelect
-                        name="temporaryAddress.districtId"
-                        label={t['kymIndDistrict']}
-                        options={districtTempList.map((d) => ({
-                          label: d.name,
-                          value: d.id,
-                        }))}
-                      />
-                      <FormSelect
-                        name="temporaryAddress.localGovernmentId"
-                        label={t['kymIndLocalGovernment']}
-                        options={localityTempList.map((d) => ({
-                          label: d.name,
-                          value: d.id,
-                        }))}
-                      />
-                      <FormSelect
-                        name="temporaryAddress.wardNo"
-                        label={t['kymIndWardNo']}
-                        options={wardTempList.map((d) => ({
-                          label: d,
-                          value: d,
-                        }))}
-                      />
-                      <FormInput
-                        type="text"
-                        name="temporaryAddress.locality"
-                        label={t['kymIndLocality']}
-                      />
-                      <FormInput
-                        type="number"
-                        name="temporaryAddress.houseNo"
-                        label={t['kymIndHouseNo']}
-                      />
-
-                      <GridItem colSpan={2}>
-                        <FormMap name="temporaryAddress.coordinates" />
-                      </GridItem>
+                      <FormAddress name="temporaryAddress" />
                     </Grid>
                   </Box>
                 )}
