@@ -60,6 +60,7 @@ export const EbankingFeatureSettings = () => {
                     py="s16"
                     cursor="pointer"
                     _hover={{ bg: 'highlight.500' }}
+                    onClick={() => router.push('/settings/change-password')}
                   >
                     <TextFields variant="formInput">Change Login Password</TextFields>
                   </Box>
@@ -82,6 +83,7 @@ export const EbankingFeatureSettings = () => {
                     py="s16"
                     cursor="pointer"
                     _hover={{ bg: 'highlight.500' }}
+                    onClick={() => router.push('/settings/change-pin')}
                   >
                     <TextFields variant="formInput">Change COOP Login Pin</TextFields>
                   </Box>

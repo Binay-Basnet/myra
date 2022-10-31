@@ -36,7 +36,10 @@ export const useCoopInit = ({ isMeEnabled }: IUseCoopInitProps) => {
     {},
     {
       enabled: isMeEnabled && triggerQuery,
-      onSuccess: () => setTriggerQuery(false),
+      onSuccess: () => {
+        setIsLoading(false);
+        setTriggerQuery(false);
+      },
     }
   );
 

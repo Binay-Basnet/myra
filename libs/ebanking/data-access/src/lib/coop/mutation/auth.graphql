@@ -1,0 +1,25 @@
+mutation changeCoopPin($oldPin: String!, $newPin: String!){
+  eBanking {
+    auth {
+      changeCoopPin(newPin: $newPin, oldPin: $oldPin){
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation changeMyraPassword($newPassword: String!, $oldPassword: String!){
+  eBanking {
+    auth {
+      changePassword(newPassword:$newPassword, oldPassword: $oldPassword){
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

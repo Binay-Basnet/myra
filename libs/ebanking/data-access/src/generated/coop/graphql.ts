@@ -75,6 +75,69 @@ export const KymFieldDataFragmentDoc = `
   }
 }
     `;
+export const ChangeCoopPinDocument = `
+    mutation changeCoopPin($oldPin: String!, $newPin: String!) {
+  eBanking {
+    auth {
+      changeCoopPin(newPin: $newPin, oldPin: $oldPin) {
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useChangeCoopPinMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    Types.ChangeCoopPinMutation,
+    TError,
+    Types.ChangeCoopPinMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<Types.ChangeCoopPinMutation, TError, Types.ChangeCoopPinMutationVariables, TContext>(
+    ['changeCoopPin'],
+    useAxios<Types.ChangeCoopPinMutation, Types.ChangeCoopPinMutationVariables>(
+      ChangeCoopPinDocument
+    ),
+    options
+  );
+export const ChangeMyraPasswordDocument = `
+    mutation changeMyraPassword($newPassword: String!, $oldPassword: String!) {
+  eBanking {
+    auth {
+      changePassword(newPassword: $newPassword, oldPassword: $oldPassword) {
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useChangeMyraPasswordMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    Types.ChangeMyraPasswordMutation,
+    TError,
+    Types.ChangeMyraPasswordMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    Types.ChangeMyraPasswordMutation,
+    TError,
+    Types.ChangeMyraPasswordMutationVariables,
+    TContext
+  >(
+    ['changeMyraPassword'],
+    useAxios<Types.ChangeMyraPasswordMutation, Types.ChangeMyraPasswordMutationVariables>(
+      ChangeMyraPasswordDocument
+    ),
+    options
+  );
 export const SetChequeRequestDataDocument = `
     mutation setChequeRequestData($memberID: String!, $data: EBankingChequeRequestInput) {
   eBanking {

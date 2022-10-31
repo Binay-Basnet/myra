@@ -38,6 +38,7 @@ export const useInit = () => {
       .then((res) => {
         if (res) {
           setTriggerQuery(true);
+          setIsLoading(false);
         }
       })
       .catch(() => {

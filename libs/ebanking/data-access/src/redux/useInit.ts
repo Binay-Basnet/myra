@@ -25,6 +25,7 @@ export const useInit = () => {
     {},
     {
       enabled: triggerMyraQuery,
+      onSuccess: () => setIsLoading(false),
     }
   );
 
