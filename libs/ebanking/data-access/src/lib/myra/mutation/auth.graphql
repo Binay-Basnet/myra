@@ -104,7 +104,7 @@ mutation setNewPin($data: CooperativeConnectInput) {
   }
 }
 
-mutation loginToCooperative($cooperativeId: ID!, $pinCode: Int, $mobileNumber: String!) {
+mutation loginToCooperative($cooperativeId: ID!, $pinCode: String!, $mobileNumber: String!) {
   eBanking {
     auth(type: EBANKING) {
       loginToCooperative(

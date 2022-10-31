@@ -3020,7 +3020,7 @@ export type EBankingAuthMutationLoginArgs = {
 export type EBankingAuthMutationLoginToCooperativeArgs = {
   cooperativeId: Scalars['ID'];
   mobileNumber: Scalars['String'];
-  pinCode?: InputMaybe<Scalars['Int']>;
+  pinCode: Scalars['String'];
 };
 
 export type EBankingAuthMutationResendOtpArgs = {
@@ -7349,7 +7349,6 @@ export type LoanAccountEdge = {
 };
 
 export type LoanAccountFormState = {
-  LoanAccountName?: Maybe<Scalars['String']>;
   appliedLoanAmount?: Maybe<Scalars['String']>;
   collateralData?: Maybe<Array<Maybe<LoanAccountCollateral>>>;
   fingerprintDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -7360,6 +7359,7 @@ export type LoanAccountFormState = {
   isCeoAuthority?: Maybe<Scalars['Boolean']>;
   justifySanction?: Maybe<Scalars['String']>;
   linkedAccountId?: Maybe<Scalars['String']>;
+  loanAccountName?: Maybe<Scalars['String']>;
   loanProcessingCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
   memberId?: Maybe<Scalars['ID']>;
   nomineeDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -12545,7 +12545,7 @@ export type SetNewPinMutation = {
 
 export type LoginToCooperativeMutationVariables = Exact<{
   cooperativeId: Scalars['ID'];
-  pinCode?: InputMaybe<Scalars['Int']>;
+  pinCode: Scalars['String'];
   mobileNumber: Scalars['String'];
 }>;
 
