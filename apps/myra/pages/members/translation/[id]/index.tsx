@@ -238,7 +238,7 @@ const Translation = () => {
                 </Button>
               }
               mainButtonLabel={t['complete']}
-              mainButtonHandler={() => router.push(`/members/list`)}
+              mainButtonHandler={() => router.push(`/members/activation/${id}`)}
             />
           </Container>
         </Box>
