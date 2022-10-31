@@ -306,7 +306,7 @@ query getLoanApplicationDetails($id: ID!) {
         productType
         productSubType
         productId
-        LoanAccountName
+        loanAccountName
         appliedLoanAmount
         collateralData {
           collateralType
