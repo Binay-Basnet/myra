@@ -32,7 +32,7 @@ export const Login = () => {
         loading: 'Logging in!!',
       },
       onSuccess: (res) => {
-        if (res?.auth?.login?.recordId === null) {
+        if (!res?.auth?.login?.recordId) {
           return;
         }
         const accessToken = res?.auth?.login?.record?.token?.access;
