@@ -18,14 +18,14 @@ const accountColumns = [
     title: 'Chequebook Request',
     link: '/requests/cheque-book',
   },
-  {
-    title: 'Teller Transfer Request',
-    link: '/requests/teller-transfer',
-  },
-  {
-    title: 'Branch Transfer Request',
-    link: '/requests/branch-transfer',
-  },
+  // {
+  //   title: 'Teller Transfer Request',
+  //   link: '/requests/teller-transfer',
+  // },
+  // {
+  //   title: 'Branch Transfer Request',
+  //   link: '/requests/branch-transfer',
+  // },
   {
     title: 'Withdraw via Collector Request',
     link: '/requests/withdraw-via-collector',
