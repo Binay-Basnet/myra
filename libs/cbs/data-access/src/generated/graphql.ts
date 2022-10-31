@@ -7354,6 +7354,7 @@ export type LoanAccountFormState = {
   LoanAccountName?: Maybe<Scalars['String']>;
   appliedLoanAmount?: Maybe<Scalars['String']>;
   collateralData?: Maybe<Array<Maybe<LoanAccountCollateral>>>;
+  fingerprintDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
   gracePeriod?: Maybe<LoanAccountGrace>;
   gurantee_details?: Maybe<Array<Maybe<LoanAccountGurantee>>>;
   intrestRate?: Maybe<Scalars['Float']>;
@@ -7363,11 +7364,14 @@ export type LoanAccountFormState = {
   linkedAccountId?: Maybe<Scalars['String']>;
   loanProcessingCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
   memberId?: Maybe<Scalars['ID']>;
+  nomineeDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
   note?: Maybe<Scalars['String']>;
+  photoDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
   productId?: Maybe<Scalars['ID']>;
   productSubType?: Maybe<Scalars['ID']>;
   productType: Scalars['ID'];
   repaymentScheme?: Maybe<LoanRepaymentScheme>;
+  signatureDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
   tenure?: Maybe<Scalars['Int']>;
   tenureType?: Maybe<FrequencyTenure>;
   totalSanctionedAmount?: Maybe<Scalars['String']>;
@@ -9479,8 +9483,8 @@ export type PresignedUrlOutput = {
 };
 
 export type ProductCode = {
-  initialNo: Scalars['String'];
-  prefix: Scalars['String'];
+  initialNo?: InputMaybe<Scalars['String']>;
+  prefix?: InputMaybe<Scalars['String']>;
 };
 
 export type ProductCodeFormState = {
