@@ -24,7 +24,6 @@ mutation verifyOTP($data: EbankingOtpInput!) {
   }
 }
 
-
 mutation setPassword($data: EbankingPasswordInput!, $userId: ID!) {
   eBanking {
     auth(type: EBANKING) {
@@ -81,7 +80,6 @@ mutation checkAccount($id: ID!, $mobileNumber: String!, $pin: Int!) {
     }
   }
 }
-
 
 mutation setNewPin($data: CooperativeConnectInput) {
   eBanking {

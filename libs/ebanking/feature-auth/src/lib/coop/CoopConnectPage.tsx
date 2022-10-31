@@ -31,7 +31,7 @@ export const CoopConnectPage = () => {
 
     const response = await loginToCooperative({
       cooperativeId: selectedCoop,
-      pinCode: methods.getValues('pin') as number,
+      pinCode: methods.getValues('pin'),
       mobileNumber: selectedCoopPhone,
     });
 
