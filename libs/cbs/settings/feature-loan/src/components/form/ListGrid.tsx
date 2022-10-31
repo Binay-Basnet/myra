@@ -153,13 +153,13 @@ export const GridItems = () => {
           memberType?.indexOf('INDIVIDUAL') !== -1 &&
           criteria &&
           criteria.indexOf('AGE') !== -1 && (
-            <FormInput name="maxAge" label={t['loanProductMinAge']} />
+            <FormInput name="minAge" label={t['loanProductMinAge']} />
           )}
         {memberType &&
           memberType?.indexOf('INDIVIDUAL') !== -1 &&
           criteria &&
           criteria.indexOf('AGE') !== -1 && (
-            <FormInput name="minAge" label={t['loanProductMaxAge']} />
+            <FormInput name="maxAge" label={t['loanProductMaxAge']} />
           )}
         {memberType &&
           memberType?.indexOf('INDIVIDUAL') !== -1 &&
