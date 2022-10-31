@@ -478,6 +478,7 @@ query getLoanPreview($id: String!) {
             payment
             principal
             remainingPrincipal
+            paid
           }
         }
         statistics {
@@ -485,6 +486,36 @@ query getLoanPreview($id: String!) {
           totalPaidAmount
           totalPayableAmount
         }
+      }
+    }
+  }
+}
+
+query getLoanRepaymentList($paginate: Pagination, $filter: LoanRepaymentFilter) {
+  loanAccount {
+    repaymentList(paginate: $paginate, filter: $filter) {
+      totalCount
+      edges {
+        node {
+          id
+          loanAccountId
+          memberId
+          memberName
+          memberProfilePicId
+          memberProfilePicUrl
+          loanAccountName
+          loanProductId
+          loanProductName
+          amount
+          paymentDate
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
     }
   }

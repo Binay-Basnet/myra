@@ -1,46 +1,32 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
+import { useGetLoanRepaymentListQuery } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, PageHeader, Text } from '@coop/shared/ui';
-import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-const ACCOUNT_TAB_ITEMS = [
-  {
-    title: 'memberNavActive',
-    key: ObjState.Active,
-  },
-  {
-    title: 'accountNavDormant',
-    key: ObjState.Dormant,
-  },
-];
-
-export const CBSAccountList = () => {
+export const CBSLoanRepaymentList = () => {
   const router = useRouter();
 
   const { t } = useTranslation();
 
-  const { data, isLoading } = useGetAccountTableListQuery(
+  const { data, isLoading } = useGetLoanRepaymentListQuery(
     {
       paginate: getRouterQuery({ type: ['PAGINATION'], query: router.query }),
-      filter: {
-        objState: (router.query['objState'] ?? ObjState.Active) as ObjState,
-      },
     },
     {
       staleTime: 0,
     }
   );
 
-  const rowData = useMemo(() => data?.account?.list?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.loanAccount?.repaymentList?.edges ?? [], [data]);
 
   const popoverTitle = [
     {
       title: 'depositProductEdit',
-      onClick: (id: string) => router.push(`/accounts/account-open/edit/${id}`),
+      //   onClick: (id: string) => router.push(`/accounts/account-open/edit/${id}`),
     },
   ];
 
@@ -53,7 +39,7 @@ export const CBSAccountList = () => {
 
       {
         header: 'Member Name',
-        accessorFn: (row) => row?.node?.member?.name?.local,
+        accessorFn: (row) => row?.node?.memberName?.local,
         cell: (props) => (
           <Box
             display="flex"
@@ -62,9 +48,13 @@ export const CBSAccountList = () => {
             justifyContent="flex-start"
             alignItems="center"
           >
-            <Avatar name={props.row?.original?.node?.member?.name?.local} size="sm" />
+            <Avatar
+              name={props.row?.original?.node?.memberName.local}
+              size="sm"
+              src={props.row?.original?.node?.memberProfilePicUrl ?? undefined}
+            />
             <Text fontWeight="400" fontSize="r1">
-              {props.row?.original?.node?.member?.name?.local}
+              {props.row?.original?.node?.memberName?.local}
             </Text>
           </Box>
         ),
@@ -72,16 +62,20 @@ export const CBSAccountList = () => {
 
       {
         header: 'Account Name',
-        accessorFn: (row) => row?.node?.accountName,
+        accessorFn: (row) => row?.node?.loanAccountName,
       },
       {
         header: 'Product Name',
-        accessorFn: (row) => row?.node?.product?.productName,
+        accessorFn: (row) => row?.node?.loanProductName,
       },
       {
-        header: 'Account Open Date',
-        accessorFn: (row) => row?.node?.createdAt,
-        cell: (props) => <span>{props?.row?.original?.node?.createdAt.split('T')[0]} </span>,
+        header: 'Amount',
+        accessorFn: (row) => row?.node?.amount,
+      },
+      {
+        header: 'Payment Date',
+        accessorFn: (row) => row?.node?.paymentDate,
+        cell: (props) => <span>{props?.row?.original?.node?.paymentDate?.split('T')[0]} </span>,
       },
       {
         id: '_actions',
@@ -103,10 +97,7 @@ export const CBSAccountList = () => {
   return (
     <>
       <Box position="sticky" top="110px" zIndex={3}>
-        <PageHeader
-          heading={`Account List - ${featureCode?.accountList}`}
-          tabItems={ACCOUNT_TAB_ITEMS}
-        />
+        <PageHeader heading="Loan Repayment List" />
       </Box>
 
       <Table
@@ -114,8 +105,8 @@ export const CBSAccountList = () => {
         data={rowData}
         columns={columns}
         pagination={{
-          total: data?.account?.list?.totalCount ?? 'Many',
-          pageInfo: data?.account?.list?.pageInfo,
+          total: data?.loanAccount?.repaymentList?.totalCount ?? 'Many',
+          pageInfo: data?.loanAccount?.repaymentList?.pageInfo,
         }}
       />
     </>

@@ -1,25 +1,18 @@
-import { Table } from '@coop/shared/table';
+import { useMemo } from 'react';
+
+import { LoanInstallment } from '@coop/cbs/data-access';
+import { Column, Table } from '@coop/shared/table';
+import { Text } from '@coop/shared/ui';
 
 interface ILoanPaymentScheduleTableProps {
-  data: ({
-    installmentDate: string;
-    installmentNo: number;
-    interest: string;
-    payment: string;
-    principal: string;
-    remainingPrincipal: string;
-  } | null)[];
+  data: LoanInstallment[];
+
   total: string;
 }
 
-export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTableProps) => (
-  <Table
-    variant="report"
-    size="small"
-    isStatic
-    showFooter
-    data={data ?? []}
-    columns={[
+export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTableProps) => {
+  const columns = useMemo<Column<LoanInstallment>[]>(
+    () => [
       {
         header: 'S.N.',
         footer: 'Total Cost of Loan',
@@ -73,12 +66,33 @@ export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTa
 
       {
         header: 'Remaining Amount',
-        footer: total,
+
         accessorKey: 'remainingPrincipal',
         meta: {
           isNumeric: true,
         },
+        Footer: {
+          display: 'none',
+        },
       },
-    ]}
-  />
-);
+      {
+        header: 'Status',
+        footer: total,
+        accessorKey: 'paid',
+        cell: (props) => {
+          const value = props.getValue();
+
+          return (
+            <Text textAlign="center" fontSize="s3">
+              {value ? 'paid' : '-'}
+            </Text>
+          );
+        },
+      },
+    ],
+    []
+  );
+  return (
+    <Table size="small" variant="report" isStatic showFooter data={data ?? []} columns={columns} />
+  );
+};

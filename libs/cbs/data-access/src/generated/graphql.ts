@@ -15963,6 +15963,7 @@ export type GetLoanPreviewQuery = {
             payment: string;
             principal: string;
             remainingPrincipal: string;
+            paid: boolean;
           } | null> | null;
         } | null;
         statistics?: {
@@ -15970,6 +15971,41 @@ export type GetLoanPreviewQuery = {
           totalPaidAmount?: string | null;
           totalPayableAmount?: string | null;
         } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanRepaymentListQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<LoanRepaymentFilter>;
+}>;
+
+export type GetLoanRepaymentListQuery = {
+  loanAccount: {
+    repaymentList?: {
+      totalCount?: number | null;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          loanAccountId: string;
+          memberId: string;
+          memberName: Record<'local' | 'en' | 'np', string>;
+          memberProfilePicId?: string | null;
+          memberProfilePicUrl?: string | null;
+          loanAccountName: string;
+          loanProductId: string;
+          loanProductName: string;
+          amount: string;
+          paymentDate: string;
+        } | null;
+      }> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
       } | null;
     } | null;
   };
@@ -24908,6 +24944,7 @@ export const GetLoanPreviewDocument = `
             payment
             principal
             remainingPrincipal
+            paid
           }
         }
         statistics {
@@ -24930,6 +24967,48 @@ export const useGetLoanPreviewQuery = <TData = GetLoanPreviewQuery, TError = unk
       null,
       variables
     ),
+    options
+  );
+export const GetLoanRepaymentListDocument = `
+    query getLoanRepaymentList($paginate: Pagination, $filter: LoanRepaymentFilter) {
+  loanAccount {
+    repaymentList(paginate: $paginate, filter: $filter) {
+      totalCount
+      edges {
+        node {
+          id
+          loanAccountId
+          memberId
+          memberName
+          memberProfilePicId
+          memberProfilePicUrl
+          loanAccountName
+          loanProductId
+          loanProductName
+          amount
+          paymentDate
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanRepaymentListQuery = <TData = GetLoanRepaymentListQuery, TError = unknown>(
+  variables?: GetLoanRepaymentListQueryVariables,
+  options?: UseQueryOptions<GetLoanRepaymentListQuery, TError, TData>
+) =>
+  useQuery<GetLoanRepaymentListQuery, TError, TData>(
+    variables === undefined ? ['getLoanRepaymentList'] : ['getLoanRepaymentList', variables],
+    useAxios<GetLoanRepaymentListQuery, GetLoanRepaymentListQueryVariables>(
+      GetLoanRepaymentListDocument
+    ).bind(null, variables),
     options
   );
 export const GetMemberListDocument = `
