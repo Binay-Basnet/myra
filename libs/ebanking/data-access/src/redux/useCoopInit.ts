@@ -11,9 +11,9 @@ import {
   useGetCoopMeQuery,
   useRefreshToken,
 } from '@coop/ebanking/data-access';
-import { useReplace } from '@coop/shared/utils';
+import { getSchemaPath, useReplace } from '@coop/shared/utils';
 
-const url = process.env['NX_SCHEMA_PATH'] ?? '';
+const url = getSchemaPath() || '';
 
 interface IUseCoopInitProps {
   isMeEnabled: boolean;

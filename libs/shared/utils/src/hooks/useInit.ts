@@ -10,8 +10,9 @@ import {
 } from '@coop/cbs/data-access';
 
 import { useReplace } from './useReplace';
+import { getSchemaPath } from '../utilFunctions/getSchemaPath';
 
-const url = process.env['NX_SCHEMA_PATH'] ?? '';
+const url = getSchemaPath();
 
 export const useInit = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,7 +27,7 @@ export const useInit = () => {
     }
   );
 
-  const refreshToken = useRefreshToken(url);
+  const refreshToken = useRefreshToken(url ?? '');
 
   const hasDataReturned = getMe?.data?.auth;
   const userData = getMe?.data?.auth?.me?.data?.user;
@@ -38,7 +39,6 @@ export const useInit = () => {
       .then((res) => {
         if (res) {
           setTriggerQuery(true);
-          setIsLoading(false);
         }
       })
       .catch(() => {

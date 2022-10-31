@@ -9,9 +9,9 @@ import {
   useGetMyraMeQuery,
   useRefreshToken,
 } from '@coop/ebanking/data-access';
-import { useReplace } from '@coop/shared/utils';
+import { getSchemaPath, useReplace } from '@coop/shared/utils';
 
-const url = process.env['NX_SCHEMA_PATH'] ?? '';
+const url = getSchemaPath() || '';
 
 export const useInit = () => {
   const [triggerMyraQuery, setTriggerMyraQuery] = React.useState(false);

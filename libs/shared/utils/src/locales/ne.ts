@@ -3233,6 +3233,10 @@ const ne: Record<string, string> = {
 
   loanRepaymentDepositedBy: 'Deposited By',
   prematurePenaltyEnable: 'Premature Penalty',
+
+  // accounting sales
+  accountingSalesSalesEntry: 'Sales Entry',
+  accountingSalesCustomers: 'Customers',
 };
 
 export default ne;
