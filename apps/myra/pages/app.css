@@ -11,5 +11,38 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
-  padding: 0 12px;
+  /*padding: 0 12px;*/
 }
+
+
+/*:root {*/
+/*  --cl-primary: var(--myra-colors-primary-500);*/
+/*}*/
+
+
+/*.rl-nepali-datepicker-wrapper .input-wrapper {*/
+/*  height: 44px;*/
+/*  cursor: pointer;*/
+/*  border-radius: 4px;*/
+/*  align-items: center;*/
+/*  border: 1px solid;*/
+/*  border-color: var(--myra-colors-gray-300);*/
+/*  color: var(--myra-colors-gray-800);*/
+/*}*/
+
+/*.rl-nepali-datepicker-wrapper .input-wrapper .rl-nepali-datepicker-input {*/
+/*  font-size: 14px;*/
+/*  font-weight: 400;*/
+/*  line-height: 1.5;*/
+/*}*/
+
+
+/*.rl-nepali-datepicker-wrapper .input-wrapper .rl-nepali-datepicker-icon {*/
+/*  height: 16px;*/
+/*}*/
+
+/*.rl-nepali-datepicker-wrapper .rl-nepali-date-panel-wrapper {*/
+/*  border-radius: 4px;*/
+/*  overflow: hidden;*/
+/*  box-shadow: var(--myra-shadows-E1);*/
+/*}*/
