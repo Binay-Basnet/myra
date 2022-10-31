@@ -4,6 +4,7 @@ query getMemberDetailsOverview($id: ID!) {
       data {
         overview {
           basicInformation {
+            memberName
             profilePic
             memberCode
             memberJoined
@@ -18,6 +19,22 @@ query getMemberDetailsOverview($id: ID!) {
             fathersName
             mothersName
             grandFathersName
+          }
+          memberGraphs {
+            deposit {
+              data {
+                time
+                amount
+              }
+              periodType
+            }
+            withdraw {
+              data {
+                time
+                amount
+              }
+              periodType
+            }
           }
           statistics {
             totalShareValue

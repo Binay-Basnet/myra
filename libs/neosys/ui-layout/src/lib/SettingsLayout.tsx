@@ -79,15 +79,10 @@ export const SettingsLayout = ({ children }: ISettingsLayoutProps) => {
           ))}
         </Tabs>
       </Box>
-      <Box
-        width="calc(100% - 275px)"
-        left="275px"
-        overflowX="hidden"
-        position="relative"
-        minHeight="calc(100vh - 110px)"
-        bg="white"
-      >
-        {children}
+      <Box w="100%" ml="275px">
+        <Box bg="white" minHeight="calc(100vh - 110px)" width="100%">
+          {children}
+        </Box>
       </Box>
     </Box>
   );

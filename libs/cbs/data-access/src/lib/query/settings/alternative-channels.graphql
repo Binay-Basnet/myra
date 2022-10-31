@@ -49,7 +49,6 @@ query getAlternativeChannelList($filter: AlternativeChannelFilter, $paginate: Pa
   }
 }
 
-
 query getACFeeCOA {
   settings {
     chartsOfAccount {

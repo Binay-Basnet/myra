@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { LoanDisbursementMethod, useGetBankListQuery } from '@coop/cbs/data-access';
+import { LoanDisbursementMethod, ObjState, useGetBankListQuery } from '@coop/cbs/data-access';
 import { BoxContainer, ContainerWithDivider } from '@coop/cbs/transactions/ui-containers';
 import { FormInput, FormSelect, FormSwitchTab, FormTextArea } from '@coop/shared/form';
 import { Divider, FormAccountSelect, Grid, GridItem } from '@coop/shared/ui';
@@ -51,6 +51,7 @@ export const Payment = () => {
                     name="accountPayment.destinationAccount"
                     label="Destination Account"
                     memberId={memberId}
+                    filterBy={ObjState.Active}
                   />
                 </GridItem>
                 <FormInput

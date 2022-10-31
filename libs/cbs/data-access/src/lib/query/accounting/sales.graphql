@@ -1,0 +1,229 @@
+query getSalesCustomerListData($pagination: Pagination, $filter: SalesCustomerFilter) {
+  accounting {
+    sales {
+      listCustomer(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            phoneNumber
+            email
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+            }
+          }
+          cursor
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}
+
+query getSalesCustomerFormStateData($id: ID!) {
+  accounting {
+    sales {
+      customerFormState(id: $id) {
+        data {
+          name
+          code
+          phoneNumber
+          pan
+          address {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          email
+          creditTerms
+          creditLimit
+          openingBalance
+        }
+      }
+    }
+  }
+}
+
+query getSalesSaleEntryListData($pagination: Pagination, $filter: SalesSaleEntryFilter) {
+  accounting {
+    sales {
+      listSaleEntry(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            totalAmount
+            date
+          }
+          cursor
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}
+
+query getSalesSaleEntryFormStateData($id: ID!) {
+  accounting {
+    sales {
+      saleEntryFormState(id: $id) {
+        data {
+          customerID
+          reference
+          invoiceDate
+          dueDate
+          products {
+            name
+            quantity
+            rate
+            tax
+            amount
+            productDescription
+            warehousePartition
+            salesLedger
+          }
+          notes
+          subTotal
+          discount
+          taxableTotal
+          vat
+        }
+      }
+    }
+  }
+}
+
+query getSalesCreditNoteListData($pagination: Pagination, $filter: SalesCreditNoteFilter) {
+  accounting {
+    sales {
+      listCreditNote(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            totalAmount
+            date
+          }
+          cursor
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}
+
+query getSalesCreditNoteFormStateData($id: ID!) {
+  accounting {
+    sales {
+      creditNoteFormState(id: $id) {
+        data {
+          customerID
+          invoiceReference
+          date
+          products {
+            name
+            quantity
+            rate
+            tax
+            amount
+            productDescription
+            warehousePartition
+            salesLedger
+          }
+          notes
+          subTotal
+          nonTaxableTotal
+          taxableTotal
+          vat
+        }
+      }
+    }
+  }
+}
+
+query getSalesCustomerPaymentListData(
+  $pagination: Pagination
+  $filter: SalesCustomerPaymentFilter
+) {
+  accounting {
+    sales {
+      listCustomerPayment(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            receivedFrom
+            totalAmount
+            date
+            paymentMode
+          }
+          cursor
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}
+
+query getSalesCustomerPaymentFormStateData($id: ID!) {
+  accounting {
+    sales {
+      customerPaymentFormState(id: $id) {
+        data {
+          receivedFrom
+          receivedAccount
+          receivedAmount
+          receivedDate
+          paymentMethod
+          paymentReferenceNo
+          tds
+          tdsAccount
+          tdsType
+          tdsAmount
+          paymentAllocation {
+            type
+            date
+            amount
+            leftToAllocate
+            thisAllocation
+          }
+          notes
+        }
+      }
+    }
+  }
+}

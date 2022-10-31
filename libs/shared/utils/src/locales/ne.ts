@@ -3228,6 +3228,11 @@ const ne: Record<string, string> = {
   sharePurchaseTableShareDr: 'Share Return',
   shareRegisterTableIssue: 'Issue',
   shareRegisterTableReturn: 'Return',
+  depositProductInactiveProduct: 'Inactive Deposit Product',
+  depositProductInactiveReason: 'Reason for Inactive',
+
+  loanRepaymentDepositedBy: 'Deposited By',
+  prematurePenaltyEnable: 'Premature Penalty',
 };
 
 export default ne;

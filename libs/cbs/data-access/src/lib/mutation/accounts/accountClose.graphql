@@ -2,6 +2,7 @@ mutation setAccountCloseData($data: DepositAccountClose) {
   account {
     close(data: $data) {
       recordId
+      calculatedAmount
       error {
         ...MutationError
       }

@@ -1,25 +1,24 @@
-import { Table } from '@coop/shared/table';
+import React from 'react';
+
+import { Column, Table } from '@coop/shared/table';
+import { Tags } from '@coop/shared/ui';
 
 interface ILoanPaymentScheduleTableProps {
   data:
-    | ({
+    | {
         sn: number;
         date?: string | null | undefined;
         accountName?: string | null | undefined;
         paymentType?: string | null | undefined;
         amount?: string | null | undefined;
-      } | null)[]
-    | null
-    | undefined;
+      }[];
+
   //   data: MemberPaymentView[] | null | undefined;
 }
 
-export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) => (
-  <Table
-    size="report"
-    isStatic
-    data={data ?? []}
-    columns={[
+export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) => {
+  const columns = React.useMemo<Column<typeof data[0]>[]>(
+    () => [
       {
         header: 'S.N.',
         accessorKey: 'sn',
@@ -27,9 +26,6 @@ export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) =
       {
         header: 'Date',
         accessorKey: 'date',
-        meta: {
-          width: '20%',
-        },
       },
       {
         header: 'Account Name',
@@ -41,7 +37,18 @@ export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) =
       {
         header: 'Payment Type',
         accessorKey: 'paymentType',
-        // cell: (props) => <Tags type="chip" label={props} />,
+        cell: (props) => {
+          const value = props.getValue() as string;
+
+          return (
+            <Tags
+              type="chip"
+              label={value}
+              bg={value !== 'Loan' ? 'primary.100' : 'danger.100'}
+              labelColor={value !== 'Loan' ? 'primary.500' : 'danger.500'}
+            />
+          );
+        },
         meta: {
           width: '30%',
         },
@@ -53,6 +60,9 @@ export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) =
           isNumeric: true,
         },
       },
-    ]}
-  />
-);
+    ],
+    []
+  );
+
+  return <Table<typeof data[0]> size="report" isStatic data={data ?? []} columns={columns} />;
+};

@@ -1,3 +1,2 @@
-export * from './components/EmptyState';
-export * from './components/LoaderOverlay';
+export * from './components';
 export * from './lib/EbankingUiComponents';

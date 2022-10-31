@@ -1,13 +1,10 @@
 import { ReactElement } from 'react';
 
+import { EbankingFeatureSettings } from '@coop/ebanking/settings';
 import { EbankingMainLayout } from '@coop/ebanking/ui-layout';
 
-import Temp from '../temp';
+const SettingsPage = () => <EbankingFeatureSettings />;
 
-const SettingsPage = () => <Temp />;
-
-SettingsPage.getLayout = function (page: ReactElement) {
-  return <EbankingMainLayout>{page}</EbankingMainLayout>;
-};
+SettingsPage.getLayout = (page: ReactElement) => <EbankingMainLayout>{page}</EbankingMainLayout>;
 
 export default SettingsPage;

@@ -16,10 +16,11 @@ export type Maybe<T> = T | null;
 
 export type Column<TData extends Maybe<Record<string, unknown>>> = {
   accessorKey?: keyof TData | 'actions';
+  // cell?: (props1: CellContext<TData, unknown>) => JSX.Element;
 } & ColumnDef<TData>;
 
 export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
-  data: Maybe<Array<Maybe<TData>>> | TData;
+  data: Maybe<Array<Maybe<TData>>> | TData[];
   columns: Maybe<Array<Maybe<Column<Maybe<TData>>>>> | Column<TData>[];
 
   pagination?: {

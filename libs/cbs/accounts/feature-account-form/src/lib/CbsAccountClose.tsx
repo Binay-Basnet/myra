@@ -1,5 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import rhtoast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
@@ -9,10 +10,11 @@ import {
   CashValue,
   DepositAccountClose,
   NatureOfDepositProduct,
+  ObjState,
   useGetAccountTableListQuery,
   useSetAccountCloseDataMutation,
 } from '@coop/cbs/data-access';
-import { FormInput, FormRadioGroup, FormTextArea } from '@coop/shared/form';
+import { FormAmountInput, FormInput, FormRadioGroup, FormTextArea } from '@coop/shared/form';
 import {
   asyncToast,
   Box,
@@ -20,13 +22,16 @@ import {
   Container,
   DEFAULT_PAGE_SIZE,
   Divider,
+  findError,
   FormAccountSelect,
   FormFooter,
   FormHeader,
   FormMemberSelect,
+  getError,
   Grid,
   MemberCard,
   Text,
+  toast,
 } from '@coop/shared/ui';
 import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
 
@@ -75,71 +80,38 @@ const radioList = [
     value: AccountCloseReason?.Other,
   },
 ];
-const loanData = [
-  {
-    label: 'Loan Amount',
-    amount: '200',
-  },
-];
-const interestData = [
-  {
-    label: 'Interest Payable',
-    amount: '200',
-  },
-  {
-    label: 'Interest Receivable',
-    amount: '200',
-  },
-  {
-    label: 'Total Interest Tax',
-    amount: '200',
-  },
-];
-const otherChargesData = [
-  {
-    label: 'Administration Fees',
-    amount: '200',
-  },
-  {
-    label: 'Printing Fees',
-    amount: '200',
-  },
-  {
-    label: 'Closing Charge',
-    amount: '200',
-  },
-  {
-    label: 'Minimum Balance Charge',
-    amount: '200',
-  },
-];
-// const switchTabsOptions = [
-//   {
-//     label: 'Account Transfer',
-//     value: AccountClosePaymentMode?.AccountTransfer,
-//   },
-//   { label: 'Bank Cheque', value: AccountClosePaymentMode?.BankCheque },
-//   { label: 'Cash', value: AccountClosePaymentMode?.Cash },
-// ];
+
+const accountTypes = {
+  [NatureOfDepositProduct.Saving]: 'Saving Account',
+  [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
+  [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
+  [NatureOfDepositProduct.Current]: 'Current Account',
+};
+
+type CustomAccountCloseInput = Omit<AccountCloseInput, 'serviceCharge'> & {
+  serviceCharge?: Record<string, string>;
+};
 
 export const CbsAccountClose = () => {
   const { t } = useTranslation();
+
   const router = useRouter();
-  const methods = useForm<AccountCloseInput>();
+
+  const methods = useForm<CustomAccountCloseInput>({
+    defaultValues: { paymentMode: AccountClosePaymentMode.AccountTransfer },
+  });
+
+  const { watch, getValues, setValue, reset } = methods;
+
   const [mode, setMode] = useState('0');
-  const { watch, getValues } = methods;
+
   const memberId = watch('memberID');
-  const { mutateAsync } = useSetAccountCloseDataMutation();
-  // const { data: bankData } = useGetBankListQuery();
 
-  // const bankListArr = bankData?.bank?.bank?.list;
+  const { mutateAsync, mutate } = useSetAccountCloseDataMutation();
 
-  // const bankList = bankListArr?.map((item) => {
-  //   return {
-  //     label: item?.name as string,
-  //     value: item?.id as string,
-  //   };
-  // });
+  const [totalCharge, setTotalCharge] = useState<number>(0);
+
+  const [totalDeposit, setTotalDeposit] = useState<number>(0);
 
   const FINE = '0';
   const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
@@ -157,15 +129,14 @@ export const CbsAccountClose = () => {
       enabled: !!memberId,
     }
   );
-  const accountTypes = {
-    [NatureOfDepositProduct.Saving]: 'Saving Account',
-    [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
-    [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
-    [NatureOfDepositProduct.Current]: 'Current Account',
-  };
+
   const accountId = watch('accountID');
   const radioOther = watch('reason');
   const isDisableDenomination = watch('cash.disableDenomination');
+
+  useEffect(() => {
+    reset({ memberID: memberId, accountID: '', reason: undefined });
+  }, [memberId]);
 
   const cashPaid = watch('cash.cashPaid');
 
@@ -180,10 +151,15 @@ export const CbsAccountClose = () => {
     [denominations]
   );
 
-  const totalCashPaid = isDisableDenomination ? cashPaid : denominationTotal;
-  const totalDeposit = 650;
+  const selectedPaymentMode = watch('paymentMode');
 
-  const returnAmount = Number(totalCashPaid) - totalDeposit;
+  const totalCashPaid = Number(isDisableDenomination ? cashPaid : denominationTotal);
+
+  const returnAmount =
+    selectedPaymentMode === AccountClosePaymentMode.Cash
+      ? totalCashPaid - Math.floor(totalDeposit)
+      : totalCashPaid - totalDeposit;
+
   const selectedAccount = useMemo(
     () =>
       accountListData?.account?.list?.edges?.find((account) => account.node?.id === accountId)
@@ -191,10 +167,114 @@ export const CbsAccountClose = () => {
     [accountId]
   );
 
-  const mainButtonHandlermode0 = () => {
-    if (memberId) {
-      setMode('1');
+  const adjustedInterest = watch('adjustedInterest');
+
+  const netInterestPayable = useMemo(
+    () =>
+      Number(selectedAccount?.interestAccured ?? 0) -
+        Number(selectedAccount?.interestTax ?? 0) -
+        Number(adjustedInterest ?? 0) ?? 0,
+    [adjustedInterest, selectedAccount?.interestAccured, selectedAccount?.interestTax]
+  );
+
+  useEffect(() => {
+    let tempCharge = 0;
+    selectedAccount?.product?.accountClosingCharge?.forEach(({ serviceName, amount }) => {
+      setValue(`serviceCharge.${serviceName}`, amount);
+
+      tempCharge += Number(amount ?? 0);
+    });
+
+    setTotalCharge(tempCharge);
+  }, [JSON.stringify(selectedAccount)]);
+
+  const serviceCharge = watch('serviceCharge');
+
+  useEffect(() => {
+    if (serviceCharge) {
+      setTotalCharge(
+        Object.values(serviceCharge).reduce((sum, amount) => sum + Number(amount), 0) ?? 0
+      );
     }
+  }, [JSON.stringify(serviceCharge)]);
+
+  const mainButtonHandlermode0 = () => {
+    const values = getValues();
+
+    const filteredValues = {
+      ...omit({ ...values }, ['paymentMode', 'accountTransfer', 'bankCheque', 'cash']),
+      serviceCharge: values.serviceCharge
+        ? Object.keys(values.serviceCharge).map((serviceName) => ({
+            name: serviceName,
+            amount: values?.serviceCharge?.[serviceName],
+          }))
+        : [],
+    };
+
+    const toastId = toast({
+      id: 'verifying-account-close-charges-loading',
+      type: 'success',
+      state: 'loading',
+      message: 'Verifying account charges',
+    });
+
+    mutate(
+      {
+        data: filteredValues,
+      },
+      {
+        onSuccess: (response) => {
+          if (response) {
+            toastId && rhtoast.dismiss(toastId);
+            if ('error' in response) {
+              toast({
+                id: 'verifying-account-close-charges',
+                type: 'error',
+                message:
+                  (response as unknown as { error: { message: string }[] }).error[0].message ??
+                  'Something Went Wrong!!',
+              });
+            } else {
+              const errorKeys = findError(response, 'error');
+
+              if (errorKeys[0]) {
+                const error = getError(errorKeys[0]);
+
+                if (typeof error === 'string') {
+                  toast({
+                    id: 'verifying-account-close-charges-error',
+                    type: 'error',
+                    message: error,
+                  });
+                } else {
+                  // onError && onError(errorKeys[0]);
+                  toast({
+                    id: 'verifying-account-close-charges-error',
+                    type: 'error',
+                    message: 'Some fields are empty or invalid',
+                  });
+                }
+              }
+
+              if (!errorKeys[0]) {
+                // if amount to be paid is 0, close account else send to payment page
+                if (Number(response?.account?.close?.calculatedAmount)) {
+                  setTotalDeposit(Number(response?.account?.close?.calculatedAmount));
+                  setMode('1');
+                } else {
+                  toast({
+                    id: 'verifying-account-close-charges-success',
+                    type: 'success',
+                    message: 'Account closed',
+                  });
+                  router.push('/accounts/account-close');
+                }
+              }
+            }
+          }
+        },
+      }
+    );
   };
 
   const previousButtonHandler = () => {
@@ -205,7 +285,14 @@ export const CbsAccountClose = () => {
     const values = getValues();
     let filteredValues = {
       ...values,
+      serviceCharge: values.serviceCharge
+        ? Object.keys(values.serviceCharge).map((serviceName) => ({
+            name: serviceName,
+            amount: values?.serviceCharge?.[serviceName],
+          }))
+        : [],
     };
+
     if (values.paymentMode === AccountClosePaymentMode.Cash) {
       filteredValues = omit({ ...filteredValues }, ['accountTransfer', 'bankCheque']);
       filteredValues.cash = {
@@ -230,19 +317,20 @@ export const CbsAccountClose = () => {
       filteredValues = omit({ ...filteredValues }, ['bankCheque', 'cash']);
     }
     asyncToast({
-      id: 'share-settings-transfer-id',
+      id: 'account-close-final-payment',
       msgs: {
-        success: 'Account has been deleted',
-        loading: 'Deleting Account',
+        success: 'Account has been closed',
+        loading: 'Closing Account',
       },
-      onSuccess: () => router.push('/accounts/account-close/'),
       promise: mutateAsync({
         data: {
           ...(filteredValues as DepositAccountClose),
         },
       }),
+      onSuccess: () => router.push('/accounts/account-close/'),
     });
   };
+
   return (
     <Container minW="container.xl" p="0" bg="white">
       <FormProvider {...methods}>
@@ -270,6 +358,7 @@ export const CbsAccountClose = () => {
                     name="accountID"
                     memberId={memberId}
                     label="Select Deposit Account"
+                    filterBy={ObjState.Active}
                   />
                 )}
                 {memberId && accountId && (
@@ -307,47 +396,59 @@ export const CbsAccountClose = () => {
                     </Box>
                     <Box bg="background.500" borderRadius="br2" mt="s16">
                       <Box display="flex" flexDirection="column" gap="s16" p="s16">
-                        <Box display="flex" flexDirection="column" gap="s8">
-                          <Text fontWeight="600" fontSize="s3">
-                            Loan
-                          </Text>
-                          {loanData?.map(({ label, amount }) => (
+                        {selectedAccount?.guaranteedAmount && (
+                          <Box display="flex" flexDirection="column" gap="s8">
+                            <Text fontWeight="600" fontSize="s3">
+                              Loan
+                            </Text>
                             <Box
                               h="36px"
                               display="flex"
                               justifyContent="space-between"
                               alignItems="center"
-                              key={`${label}${amount}`}
                             >
                               <Text fontWeight="500" fontSize="s3">
-                                {label}
+                                Loan Amount
                               </Text>
                               <Text fontWeight="600" fontSize="r1">
-                                {amount}
+                                {selectedAccount?.guaranteedAmount}
                               </Text>
                             </Box>
-                          ))}
-                        </Box>
+                          </Box>
+                        )}
                         <Box display="flex" flexDirection="column" gap="s8">
                           <Text fontWeight="600" fontSize="s3">
                             Interest
                           </Text>
-                          {interestData?.map(({ label, amount }) => (
-                            <Box
-                              h="36px"
-                              display="flex"
-                              justifyContent="space-between"
-                              alignItems="center"
-                              key={`${label}${amount}`}
-                            >
-                              <Text fontWeight="500" fontSize="s3">
-                                {label}
-                              </Text>
-                              <Text fontWeight="600" fontSize="r1">
-                                {amount}
-                              </Text>
-                            </Box>
-                          ))}
+
+                          <Box
+                            h="36px"
+                            display="flex"
+                            justifyContent="space-between"
+                            alignItems="center"
+                          >
+                            <Text fontWeight="500" fontSize="s3">
+                              Interest Payable
+                            </Text>
+                            <Text fontWeight="600" fontSize="r1">
+                              {selectedAccount?.interestAccured ?? '0'}
+                            </Text>
+                          </Box>
+
+                          <Box
+                            h="36px"
+                            display="flex"
+                            justifyContent="space-between"
+                            alignItems="center"
+                          >
+                            <Text fontWeight="500" fontSize="s3">
+                              Total Interest Tax
+                            </Text>
+                            <Text fontWeight="600" fontSize="r1">
+                              {selectedAccount?.interestTax ?? '0'}
+                            </Text>
+                          </Box>
+
                           <Box
                             h="36px"
                             display="flex"
@@ -358,15 +459,10 @@ export const CbsAccountClose = () => {
                               Adjusted Interest
                             </Text>
                             <Box>
-                              {/* <FormInput
-                                name="adjustedInput"
-                                type={'number'}
-                                textAlign="right"
-                                size={'xs'}
-                                w="160px"
-                              /> */}
+                              <FormAmountInput size="sm" name="adjustedInterest" isDisabled />
                             </Box>
                           </Box>
+
                           <Box
                             h="36px"
                             display="flex"
@@ -374,34 +470,39 @@ export const CbsAccountClose = () => {
                             alignItems="center"
                           >
                             <Text fontWeight="500" fontSize="s3">
-                              Net Interest Payable{' '}
+                              Net Interest Payable
                             </Text>
                             <Text fontWeight="600" fontSize="r1">
-                              250.00
+                              {netInterestPayable}
                             </Text>
                           </Box>
                         </Box>
-                        <Box display="flex" flexDirection="column" gap="s8">
-                          <Text fontWeight="600" fontSize="s3">
-                            Other Charges
-                          </Text>
-                          {otherChargesData?.map(({ label, amount }) => (
-                            <Box
-                              h="36px"
-                              display="flex"
-                              justifyContent="space-between"
-                              alignItems="center"
-                              key={`${label}${amount}`}
-                            >
-                              <Text fontWeight="500" fontSize="s3">
-                                {label}
-                              </Text>
-                              <Text fontWeight="600" fontSize="r1">
-                                {amount}
-                              </Text>
-                            </Box>
-                          ))}
-                        </Box>
+                        {selectedAccount?.product?.accountClosingCharge?.length && (
+                          <Box display="flex" flexDirection="column" gap="s8">
+                            <Text fontWeight="600" fontSize="s3">
+                              Other Charges
+                            </Text>
+                            {selectedAccount.product?.accountClosingCharge?.map(
+                              ({ serviceName }) => (
+                                <Box
+                                  // h="36px"
+                                  display="flex"
+                                  justifyContent="space-between"
+                                  alignItems="center"
+                                  key={`${serviceName}`}
+                                >
+                                  <Text fontWeight="500" fontSize="s3">
+                                    {serviceName}
+                                  </Text>
+                                  <FormAmountInput
+                                    size="sm"
+                                    name={`serviceCharge.${serviceName}`}
+                                  />
+                                </Box>
+                              )
+                            )}
+                          </Box>
+                        )}
                         <Divider />
                         <Box
                           h="36px"
@@ -413,17 +514,14 @@ export const CbsAccountClose = () => {
                             Total Charges
                           </Text>
                           <Text fontWeight="600" fontSize="r1">
-                            650.00
+                            {totalCharge}
                           </Text>
                         </Box>
                       </Box>
                     </Box>
                     <Divider />
                     <Box display="flex" flexDirection="column" gap="s4" pt="s16">
-                      <Text fontWeight="600" fontSize="s3">
-                        Notes{' '}
-                      </Text>
-                      <FormTextArea name="notes" minH="180px" />
+                      <FormTextArea name="notes" label="Notes" rows={5} />
                     </Box>
                   </Box>
                 )}
@@ -437,80 +535,7 @@ export const CbsAccountClose = () => {
                 borderRight="1px solid"
                 borderColor="border.layout"
               >
-                <Payment totalDeposit={650} />
-                {/* <FormSwitchTab
-                  name={'paymentMode'}
-                  options={switchTabsOptions}
-                />
-                {accountTransferMode ===
-                  AccountClosePaymentMode?.AccountTransfer && (
-                  <Box display="flex" flexDirection={'column'} gap="s16">
-                    <FormSelect
-                      name="accountTransfer.destination_account"
-                      label="Destination Account"
-                    />
-                    <Divider />
-                    <Box
-                      display={'flex'}
-                      flexDirection="row"
-                      gap="s20"
-                      justifyContent={'space-between'}
-                    >
-                      <FormInput
-                        name="accountTransfer.depositedDate"
-                        label="Deposited Date"
-                        type={'date'}
-                      />{' '}
-                      <FormInput
-                        name="accountTransfer.depositedBy"
-                        label="Deposited By"
-                      />
-                    </Box>
-                    <Divider />
-                    <Box display={'flex'} flexDirection="column" gap="s4">
-                      <Text fontWeight={'600'} fontSize="s3">
-                        Notes{' '}
-                      </Text>
-                      <FormTextArea name="accountTransfer.name" />
-                    </Box>
-                  </Box>
-                )}
-                {accountTransferMode ===
-                  AccountClosePaymentMode?.BankCheque && (
-                  <Box display="flex" flexDirection={'column'} gap="s16">
-                    <FormSelect
-                      name="bankCheque.bank"
-                      label={t['sharePurchaseSelectBank']}
-                      placeholder={t['sharePurchaseSelectBank']}
-                      options={bankList}
-                    />
-                    <Divider />
-                    <Box
-                      display={'flex'}
-                      flexDirection="row"
-                      gap="s20"
-                      justifyContent={'space-between'}
-                    >
-                      <FormInput
-                        name="bankCheque.cheque_no"
-                        label="Cheque Number"
-                        type={'number'}
-                      />{' '}
-                      <FormInput
-                        name="bankCheque.amount"
-                        label="Amount"
-                        type="number"
-                      />
-                    </Box>
-                    <Divider />
-                    <Box display={'flex'} flexDirection="column" gap="s4">
-                      <Text fontWeight={'600'} fontSize="s3">
-                        Note
-                      </Text>
-                      <FormTextArea name="bankCheque.note" />
-                    </Box>
-                  </Box>
-                )} */}
+                <Payment totalDeposit={totalDeposit} />
               </Box>
             </Box>
             {memberId && (
@@ -518,7 +543,7 @@ export const CbsAccountClose = () => {
                 <MemberCard
                   memberDetails={{
                     name: memberDetailData?.name,
-                    avatar: 'https://bit.ly/dan-abramov',
+                    avatar: memberDetailData?.profilePicUrl ?? '',
                     memberID: memberDetailData?.id,
                     gender: memberDetailData?.gender,
                     age: memberDetailData?.age,
@@ -540,9 +565,10 @@ export const CbsAccountClose = () => {
                           type: selectedAccount?.product?.nature
                             ? accountTypes[selectedAccount?.product?.nature]
                             : '',
-                          ID: selectedAccount?.product?.id,
+                          ID: selectedAccount?.id,
                           currentBalance: selectedAccount?.balance ?? '0',
                           minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
+                          interestAccured: selectedAccount?.interestAccured ?? '0',
                           guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
                           overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                           fine: FINE,
@@ -562,8 +588,14 @@ export const CbsAccountClose = () => {
           <Box position="sticky" bottom={0}>
             {mode === '0' && (
               <FormFooter
-                mainButtonLabel="Close Account"
-                dangerButton
+                mainButtonLabel={
+                  Number(selectedAccount?.balance ?? 0) - netInterestPayable - totalCharge === 0
+                    ? 'Close Account'
+                    : 'Proceed to Payment'
+                }
+                dangerButton={
+                  !!(Number(selectedAccount?.balance ?? 0) - netInterestPayable - totalCharge === 0)
+                }
                 mainButtonHandler={mainButtonHandlermode0}
               />
             )}

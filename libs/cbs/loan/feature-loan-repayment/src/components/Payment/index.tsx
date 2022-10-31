@@ -1,6 +1,7 @@
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { LoanRepaymentMethod, useGetCoaBankListQuery } from '@coop/cbs/data-access';
+import { LoanRepaymentMethod, ObjState, useGetCoaBankListQuery } from '@coop/cbs/data-access';
 import { BoxContainer, ContainerWithDivider } from '@coop/cbs/transactions/ui-containers';
 import {
   FormEditableTable,
@@ -16,15 +17,15 @@ import { featureCode } from '@coop/shared/utils';
 const paymentModes = [
   {
     label: 'Account',
-    value: LoanRepaymentMethod?.Account,
+    value: LoanRepaymentMethod.Account,
   },
   {
     label: 'Bank Cheque',
-    value: LoanRepaymentMethod?.BankVoucher,
+    value: LoanRepaymentMethod.BankVoucher,
   },
   {
     label: 'Cash',
-    value: LoanRepaymentMethod?.Cash,
+    value: LoanRepaymentMethod.Cash,
   },
 ];
 
@@ -44,6 +45,7 @@ const denominationsOptions = [
 /* eslint-disable-next-line */
 export interface PaymentProps {
   totalDeposit: number;
+  loanTotal: string | undefined;
 }
 
 type PaymentTableType = {
@@ -52,8 +54,8 @@ type PaymentTableType = {
   amount: string;
 };
 
-export const Payment = ({ totalDeposit }: PaymentProps) => {
-  const { watch } = useFormContext();
+export const Payment = ({ totalDeposit, loanTotal }: PaymentProps) => {
+  const { watch, setValue } = useFormContext();
 
   const selectedPaymentMode = watch('paymentMethod');
 
@@ -78,11 +80,15 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
   const disableDenomination = watch('cash.disableDenomination');
 
   const cashPaid = watch('cash.cashPaid');
-  const memberId = watch('memberID');
+  const memberId = watch('memberId');
 
   const totalCashPaid: number = disableDenomination ? Number(cashPaid) : Number(denominationTotal);
 
   const returnAmount = totalCashPaid - totalDeposit;
+
+  useEffect(() => {
+    setValue('cash.cashPaid', String(Math.round(Number(loanTotal))));
+  }, [loanTotal, setValue]);
 
   return (
     <ContainerWithDivider borderRight="1px" borderColor="border.layout" p="s16" pb="100px">
@@ -96,11 +102,11 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
                 name="account.destination_account"
                 label="Destination Account"
                 memberId={memberId}
+                filterBy={ObjState.Active}
               />
             </GridItem>
 
             <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
-              {' '}
               <FormTextArea name="account.note" label="Note" />
             </GridItem>
           </Grid>
@@ -125,14 +131,12 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
               name="cheque.depositedAt"
               label="Deposited Date"
             />
-
             <FormInput
               type="text"
               name="cheque.depositedBy"
               label="Deposited By"
             /> */}
             <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
-              {' '}
               <FormTextArea name="bankVoucher.note" label="Note" />
             </GridItem>
           </Grid>
@@ -215,7 +219,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
                   Return
                 </Text>
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  {returnAmount}
+                  {returnAmount.toFixed(2)}
                 </Text>
               </Box>
 
@@ -234,6 +238,111 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
           </>
         )}
       </BoxContainer>
+      {/* {selectedPaymentMode === LoanRepaymentMethod.BankVoucher && (
+          <FormSection templateColumns={2}>
+            <GridItem colSpan={2}>
+              <FormSelect
+                name="bankVoucher.bankId"
+                label={t['sharePurchaseBankName']}
+                options={bankList}
+              />
+            </GridItem>
+
+            <GridItem colSpan={1}>
+              <FormInput
+                type="text"
+                name="bankVoucher.voucherId"
+                label={t['sharePurchaseVoucherId']}
+              />
+            </GridItem>
+
+            <GridItem colSpan={1}>
+              <FormAmountInput
+                defaultValue={loanTotal}
+                name="amount"
+                isDisabled
+                label={t['sharePurchaseAmount']}
+              />
+            </GridItem>
+
+            <GridItem colSpan={1}>
+              <FormDatePicker
+                name="bankVoucher.depositedDate"
+                label={t['sharePurchaseDepositedDate']}
+              />
+            </GridItem>
+            <GridItem colSpan={1}>
+              <FormInput name="bankVoucher.depositedBy" label={t['loanRepaymentDepositedBy']} />
+            </GridItem>
+            <GridItem colSpan={1}>
+              <FormInput name="bankVoucher.sourceOfFund" label={t['sharePurchaseSourceofFund']} />
+            </GridItem>
+            <GridItem colSpan={1}>
+              <FormFileInput name="bankVoucher.fileUpload" label={t['sharePurchaseFileUpload']} />
+            </GridItem>
+          </FormSection>
+        )}
+
+        {selectedPaymentMode === LoanRepaymentMethod.Account && (
+          <ShareAccount totalAmount={Number(loanTotal)} />
+        )}
+
+        {selectedPaymentMode === LoanRepaymentMethod.Cash && (
+          <ShareCash
+            totalAmount={Number(loanTotal)}
+            denominationTotal={denominationTotal}
+            totalCashPaid={totalCashPaid}
+            returnAmount={returnAmount}
+          />
+        )}
+
+        {selectedPaymentMode === LoanRepaymentMethod.Cash && (
+          <FormSection>
+            <GridItem colSpan={3}>
+              <Grid mt="s16" templateColumns="repeat(2,1fr)" gap="s20">
+                <GridItem colSpan={1}>
+                  <FormInput name="cash.sourceOfFund" label={t['sharePurchaseSourceofFund']} />
+                </GridItem>
+                <GridItem colSpan={1}>
+                  <FormFileInput name="cash.fileUpload" label={t['sharePurchaseFileUpload']} />
+                </GridItem>
+              </Grid>
+            </GridItem>
+          </FormSection>
+        )}
+
+        {selectedPaymentMode === LoanRepaymentMethod.BankVoucher && (
+          <FormSection>
+            <GridItem colSpan={3}>
+              <Text color="neutralColorLight.Gray-70" fontSize="s3" fontWeight="Medium" mb="s8">
+                {t['sharePurchaseNote']}
+              </Text>
+              <FormTextArea name="bankVoucher.note" />
+            </GridItem>
+          </FormSection>
+        )}
+
+        {selectedPaymentMode === LoanRepaymentMethod.Account && (
+          <FormSection>
+            <GridItem colSpan={3}>
+              <Text color="neutralColorLight.Gray-70" fontSize="s3" fontWeight="Medium" mb="s8">
+                {t['sharePurchaseNote']}
+              </Text>
+              <FormTextArea name="account.note" />
+            </GridItem>
+          </FormSection>
+        )}
+
+        {selectedPaymentMode === LoanRepaymentMethod.Cash && (
+          <FormSection>
+            <GridItem colSpan={3}>
+              <Text color="neutralColorLight.Gray-70" fontSize="s3" fontWeight="Medium" mb="s8">
+                {t['sharePurchaseNote']}
+              </Text>
+              <FormTextArea name="cash.note" />
+            </GridItem>
+          </FormSection>
+        )} */}
     </ContainerWithDivider>
   );
 };

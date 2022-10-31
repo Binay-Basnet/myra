@@ -8,18 +8,12 @@ export interface MainLayoutProps {
   children: React.ReactNode;
 }
 
-export function MainLayout(props: MainLayoutProps) {
+export const MainLayout = (props: MainLayoutProps) => {
   const { children } = props;
 
   return (
     <Box>
-      <Box
-        bgColor="primary.800"
-        position="fixed"
-        top={0}
-        width="100%"
-        zIndex={11}
-      >
+      <Box bgColor="primary.800" position="fixed" top={0} width="100%" zIndex={11}>
         <TopLevelHeader />
 
         <TabMenu />
@@ -27,6 +21,6 @@ export function MainLayout(props: MainLayoutProps) {
       <Box mt="110px">{children}</Box>
     </Box>
   );
-}
+};
 
 export default MainLayout;

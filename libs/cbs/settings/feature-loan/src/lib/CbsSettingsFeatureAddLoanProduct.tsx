@@ -121,6 +121,7 @@ export const SettingsLoanProductForm = () => {
       isRebateApplicable: false,
       tenureUnit: FrequencyTenure.Day,
       penaltyType: PenaltyType.Principal,
+      isPrematurePenaltyApplicable: false,
     },
   });
 

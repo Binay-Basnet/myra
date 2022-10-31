@@ -81,7 +81,7 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
   );
 
   return (
-    <>
+    <Box>
       <Table
         isLoading={isLoading}
         columns={columns}
@@ -137,6 +137,6 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
           />
         </Grid>
       </ChakraModal>
-    </>
+    </Box>
   );
 };

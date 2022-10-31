@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
@@ -11,6 +12,7 @@ import {
   DepositPaymentType,
   InstallmentState,
   NatureOfDepositProduct,
+  ObjState,
   useGetAccountTableListQuery,
   useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
@@ -68,6 +70,8 @@ const REBATE = '0';
 
 export const AddDeposit = () => {
   const router = useRouter();
+
+  const queryClient = useQueryClient();
 
   const { t } = useTranslation();
 
@@ -328,8 +332,11 @@ export const AddDeposit = () => {
         success: t['addDepositNewDepositAdded'],
         loading: t['addDepositAddingNewDeposit'],
       },
-      onSuccess: () => router.push('/transactions/deposit/list'),
       promise: mutateAsync({ data: filteredValues as DepositInput }),
+      onSuccess: () => {
+        queryClient.invalidateQueries('getDepositListData');
+        router.push('/transactions/deposit/list');
+      },
     });
   };
 
@@ -366,6 +373,7 @@ export const AddDeposit = () => {
                       name="accountId"
                       label={t['addDepositSelectDepositAccount']}
                       memberId={memberId}
+                      filterBy={ObjState.Active}
                     />
                   )}
 
@@ -498,7 +506,7 @@ export const AddDeposit = () => {
                           </Text>
 
                           <Text fontSize="s3" fontWeight={500} color="success.500">
-                            {`- ${rebate ?? REBATE}`}
+                            {`+ ${rebate ?? REBATE}`}
                           </Text>
                         </Box>
 
@@ -543,9 +551,10 @@ export const AddDeposit = () => {
                               type: selectedAccount?.product?.nature
                                 ? accountTypes[selectedAccount?.product?.nature]
                                 : '',
-                              ID: selectedAccount?.product?.id,
+                              ID: selectedAccount?.id,
                               currentBalance: selectedAccount?.balance ?? '0',
                               minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
+                              interestAccured: selectedAccount?.interestAccured ?? '0',
                               guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
                               overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                               fine: fine ?? FINE,
@@ -565,7 +574,7 @@ export const AddDeposit = () => {
 
               <Payment
                 mode={mode}
-                totalDeposit={Number(totalDeposit)}
+                totalDeposit={rebate ? Number(totalDeposit) - Number(rebate) : Number(totalDeposit)}
                 rebate={Number(rebate ?? 0)}
                 selectedAccount={selectedAccount as DepositAccount}
               />
@@ -595,7 +604,7 @@ export const AddDeposit = () => {
                 )
               }
               mainButtonLabel={mode === 0 ? t['addDepositProceedPayment'] : t['addDepositSubmit']}
-              isMainButtonDisabled={checkIsSubmitButtonDisabled()}
+              isMainButtonDisabled={mode === 0 ? !accountId : checkIsSubmitButtonDisabled()}
               mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
             />
           </Container>

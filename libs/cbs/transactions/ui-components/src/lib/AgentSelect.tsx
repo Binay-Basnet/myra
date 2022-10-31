@@ -22,7 +22,7 @@ export const AgentSelect = ({ name, label, __placeholder }: IAgentSelectProps) =
       paginate: getRouterQuery({ type: ['PAGINATION'] }),
       filter: {
         query: agentId,
-        role: Roles.Agent,
+        role: [Roles.Agent],
       },
     },
     {

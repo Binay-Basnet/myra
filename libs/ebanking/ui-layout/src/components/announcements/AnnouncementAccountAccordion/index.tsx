@@ -5,7 +5,9 @@ import { AnnouncementAccountCard } from '../AnnouncementAccountCard';
 import { AnnouncementsAccBtn } from '../AnnouncementsAccBtn';
 
 export const AnnouncementAccountAccordion = () => {
-  const { data: accountsList } = useGetAccountListQuery();
+  const { data: accountsList } = useGetAccountListQuery({
+    transactionPagination: { after: '', first: 10 },
+  });
 
   return (
     <Accordion allowMultiple allowToggle border="none">

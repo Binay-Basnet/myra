@@ -1,0 +1,152 @@
+query getInvestmentAccountsListData($pagination: Pagination, $filter: InvestmentAccountFilter) {
+  accounting {
+    investment {
+      listAccount(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            type
+            address {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+            }
+          }
+          cursor
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}
+
+query getInvestmentAccountFormStateData($id: ID!) {
+  accounting {
+    investment {
+      accountFormState(id: $id) {
+        data {
+          name
+          type
+          address {
+            provinceId
+            districtId
+            localGovernmentId
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getInvestmentEntriesListData($pagination: Pagination, $filter: InvestmentEntryFilter) {
+  accounting {
+    investment {
+      listEntry(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            type
+            amount
+            date
+          }
+          cursor
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}
+
+query getInvestmentEntryFormStateData($id: ID!) {
+  accounting {
+    investment {
+      entryFormState(id: $id) {
+        data {
+          accountID
+          investmentType
+          share {
+            count
+            rate
+            purchaseAmount
+            certificateNo
+            date
+            notes
+          }
+          saving {
+            type
+            installmentAmount
+            frequency
+            rate
+            openDate
+            initialDepositAmount
+            notes
+          }
+          fd {
+            type
+            fdAmount
+            rate
+            certificateNo
+            startDate
+            maturityDate
+            interestNomineeBank
+            bankACNo
+            interestLedgerMapping
+            notes
+          }
+        }
+      }
+    }
+  }
+}
+
+query getInvestmentTransactionsListData(
+  $pagination: Pagination
+  $filter: InvestmentTransactionFilter
+) {
+  accounting {
+    investment {
+      listTransaction(pagination: $pagination, filter: $filter) {
+        totalCount
+        edges {
+          node {
+            id
+            name
+            type
+            amount
+            date
+          }
+          cursor
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}

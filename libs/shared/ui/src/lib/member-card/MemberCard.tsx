@@ -47,6 +47,7 @@ export interface MemberCardProps {
         ID: string | undefined;
         currentBalance?: string | number;
         minimumBalance?: string | number;
+        interestAccured?: string | number;
         guaranteeBalance?: string | number;
         overdrawnBalance?: string | number;
         fine?: string | number;
@@ -338,6 +339,7 @@ export const MemberCard = ({
 
               {(accountInfo.currentBalance ||
                 accountInfo.minimumBalance ||
+                accountInfo.interestAccured ||
                 accountInfo.guaranteeBalance ||
                 accountInfo.overdrawnBalance ||
                 accountInfo.fine) && (
@@ -367,6 +369,16 @@ export const MemberCard = ({
                       </Text>
                       <Text fontSize="s3" fontWeight={500} color="gray.800">
                         {accountInfo.minimumBalance}
+                      </Text>
+                    </Box>
+                  )}
+                  {accountInfo.interestAccured && (
+                    <Box display="flex" justifyContent="space-between">
+                      <Text fontSize="s3" fontWeight={400} color="gray.500">
+                        Accured Interest
+                      </Text>
+                      <Text fontSize="s3" fontWeight={500} color="gray.800">
+                        {accountInfo.interestAccured}
                       </Text>
                     </Box>
                   )}

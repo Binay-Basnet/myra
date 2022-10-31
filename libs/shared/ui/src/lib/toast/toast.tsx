@@ -44,7 +44,7 @@ type MutationError =
   | ServerError
   | ValidationError;
 
-const getError = (error: MutationError) => {
+export const getError = (error: MutationError) => {
   switch (error.__typename) {
     case 'ValidationError':
       return error.validationErrorMsg;
@@ -61,7 +61,7 @@ const getError = (error: MutationError) => {
   }
 };
 
-function findError(obj: Record<string, unknown> | null, key: string): MutationError[] {
+export function findError(obj: Record<string, unknown> | null, key: string): MutationError[] {
   if (_.has(obj, key) && obj) return obj[key] as MutationError[];
 
   return _.flatten(
@@ -72,7 +72,7 @@ function findError(obj: Record<string, unknown> | null, key: string): MutationEr
 export function toast({ options, id, ...props }: ToastProps) {
   return rhToast.custom(<Toast {...props} />, {
     id,
-    duration: 2000,
+    duration: props.state === 'loading' ? Infinity : 2000,
     ...options,
   });
 }

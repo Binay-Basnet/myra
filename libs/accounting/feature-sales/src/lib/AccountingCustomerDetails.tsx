@@ -1,153 +1,133 @@
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { BiSave } from 'react-icons/bi';
-import { GrClose } from 'react-icons/gr';
-import router from 'next/router';
+import { useQueryClient } from 'react-query';
+import { useRouter } from 'next/router';
+import pickBy from 'lodash/pickBy';
 
-import { DividerContainer } from '@coop/accounting/ui-components';
-import { FormEditableTable } from '@coop/shared/form';
 import {
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  Icon,
-  IconButton,
-  Text,
-} from '@coop/shared/ui';
+  CustomerPayment,
+  SalesCustomerPaymentInput,
+  useGetSalesCustomerPaymentFormStateDataQuery,
+  useSetSalesCustomerPaymentDataMutation,
+} from '@coop/cbs/data-access';
+import { asyncToast, Box, Container, FormFooter, FormHeader } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
   CustomerDetails,
   CustomerPaymentBox,
   PaymentMode,
+  PaymentTable,
   TDS,
 } from '../components/form-components/customerPaayment';
 
-/* eslint-disable-next-line */
-interface CbsAccountOpenFormProps {}
-
-type CustomerPaymentTable = {
-  payment_type: string;
-  date: string;
-  amount: number;
-  left_to_allocate: number;
-  this_allocation: number;
-};
-
-export function CustomerPaymentForm() {
+export const CustomerPaymentForm = () => {
   const { t } = useTranslation();
-  const methods = useForm();
+
+  const router = useRouter();
+
+  const id = router?.query?.['id'];
+
+  const queryClient = useQueryClient();
+
+  const methods = useForm<SalesCustomerPaymentInput>({
+    defaultValues: { paymentMethod: CustomerPayment.BankTransfer, tds: true },
+  });
+
+  const { getValues, reset } = methods;
+
+  const { data: formStateQueryData } = useGetSalesCustomerPaymentFormStateDataQuery(
+    { id: String(id) },
+    { enabled: Boolean(id && router?.asPath?.includes('edit')), staleTime: 0 }
+  );
+
+  const formState = formStateQueryData?.accounting?.sales?.customerPaymentFormState?.data;
+
+  useEffect(() => {
+    if (router?.asPath?.includes('edit')) {
+      if (formState) {
+        reset({
+          ...pickBy(
+            {
+              ...formState,
+              paymentAllocation: formState?.paymentAllocation?.map((payment) => ({
+                ...payment,
+                date: payment.date.en || payment.date.np,
+              })),
+            } ?? {},
+            (v) => v !== null
+          ),
+        });
+      }
+    }
+  }, [formState]);
+
+  const { mutateAsync: setCustomerPaymentData } = useSetSalesCustomerPaymentDataMutation();
+
+  const handleSubmit = () => {
+    const values = getValues();
+
+    const filteredValues = {
+      ...values,
+      paymentAllocation: values.paymentAllocation.map((payment) => ({
+        ...payment,
+        date: { en: '', np: '', local: '' },
+        amount: String(payment.amount),
+        leftToAllocate: String(payment.leftToAllocate),
+        thisAllocation: String(payment.thisAllocation),
+      })),
+    };
+
+    asyncToast({
+      id: 'save-sales-customer-payment',
+      promise: setCustomerPaymentData({ id: String(id), data: filteredValues }),
+      msgs: {
+        loading: 'Saving customer payment',
+        success: 'Customer payment saved',
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries('getSalesCustomerPaymentListData');
+        router.push('/accounting/sales/customer-payment/list');
+      },
+    });
+  };
 
   return (
     <>
-      <Container
-        minW="container.lg"
-        height="fit-content"
-        pb="60px"
-        bg={'gray.0'}
-        minH="calc(100vh - 170px)"
-      >
-        <Box
-          height="60px"
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          px="5"
-          borderBottom="1px solid "
-          borderColor="border.layout"
-          borderTopRadius={5}
-          position="sticky"
-          top="110px"
-          bg={'gray.0'}
-          zIndex={12}
-        >
-          <Text fontSize="r2" fontWeight="600">
-            {t['accountingCustomerPaymentAddNewCustomerPayment']}
-          </Text>
-          <IconButton
-            variant={'ghost'}
-            aria-label="close"
-            icon={<GrClose />}
-            onClick={() => router.back()}
+      <Container minW="container.xl" height="fit-content" pb="60px">
+        <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
+          <FormHeader
+            title={t['accountingCustomerPaymentAddNewCustomerPayment']}
+            closeLink="/accounting/sales/customer-payment/list"
           />
         </Box>
-        <FormProvider {...methods}>
-          <form>
-            <Box bg="white" p="s20">
-              <DividerContainer>
+
+        <Box bg="white">
+          <FormProvider {...methods}>
+            <form>
+              <Box minH="calc(100vh - 170px)">
                 <CustomerDetails />
-                {/* -------------------- TODO -----------ADD PasymentMode herehere */}
+
                 <PaymentMode />
-                {/* <SalesBox /> */}
+
                 <TDS />
-                {/* -------------------- TODO -----------ADD  TABLE HERE*/}
-                <Box display={'flex'} flexDirection="column" gap="s8">
-                  <Text fontSize={'s3'} fontWeight="500">
-                    {t['CustomerPaymentAllocation']}
-                  </Text>
-                  <FormEditableTable<CustomerPaymentTable>
-                    name="data"
-                    columns={[
-                      {
-                        accessor: 'payment_type',
-                        header: t['CustomerPaymentType'],
-                        cellWidth: 'auto',
-                        fieldType: 'text',
-                        // searchOptions: search_options,
-                      },
 
-                      {
-                        accessor: 'date',
-                        header: t['CustomerPaymentDate'],
-                        // isNumeric: true,
-                        fieldType: 'date',
-                      },
+                <PaymentTable />
 
-                      {
-                        accessor: 'amount',
-                        header: t['CustomerPaymentAmount'],
-                        isNumeric: true,
-                      },
-                      {
-                        accessor: 'left_to_allocate',
-                        header: t['CustomerPaymentLeftTo'],
-                        isNumeric: true,
-                      },
-                      {
-                        accessor: 'this_allocation',
-                        header: t['CustomerPaymentThis'],
-                        isNumeric: true,
-                      },
-                    ]}
-                  />
-                </Box>
                 <CustomerPaymentBox />
-              </DividerContainer>
-            </Box>
-          </form>
-        </FormProvider>
+              </Box>
+            </form>
+          </FormProvider>
+        </Box>
       </Container>
-      <Box bottom="0" position="fixed" width="100%" bg="gray.100">
-        <Container minW="container.lg" height="fit-content">
-          <FormFooter
-            draftButton={
-              <Button type="submit" variant="ghost" shade="neutral">
-                <Icon as={BiSave} />
-                <Text
-                  alignSelf="center"
-                  fontWeight="Medium"
-                  fontSize="s2"
-                  ml="5px"
-                >
-                  {t['saveDraft']}
-                </Text>
-              </Button>
-            }
-            mainButtonLabel={t['submit']}
-            mainButtonHandler={() => alert('Submitted')}
-          />
-        </Container>
+
+      <Box position="relative" margin="0px auto">
+        <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
+          <Container minW="container.xl" height="fit-content">
+            <FormFooter mainButtonLabel="Save" mainButtonHandler={handleSubmit} />
+          </Container>
+        </Box>
       </Box>
     </>
   );
-}
+};

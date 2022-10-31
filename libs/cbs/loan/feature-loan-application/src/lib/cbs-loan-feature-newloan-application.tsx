@@ -51,7 +51,9 @@ export const NewLoanApplication = () => {
   const queryClient = useQueryClient();
   const [showCriteria, setShowCriteria] = useState(false);
 
-  const methods = useForm<LoanAccountInput>();
+  const methods = useForm<LoanAccountInput>({
+    mode: 'onChange',
+  });
   const { watch, resetField } = methods;
 
   const memberId = watch('memberId');
@@ -271,7 +273,7 @@ export const NewLoanApplication = () => {
                   )}
                   {productId && !errors && (
                     <>
-                      <FormInput name="LoanAccountName" label="Loan Account Name" />
+                      <FormInput name="loanAccountName" label="Loan Account Name" />
                       <Box w="50%">
                         <FormNumberInput
                           name="appliedLoanAmount"

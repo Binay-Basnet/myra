@@ -1,13 +1,22 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { useGetAccountTableListQuery } from '@coop/cbs/data-access';
+import { ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, PageHeader, Text } from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-import { MEMBER_TAB_ITEMS } from '../component/form/utils/memberTabItems';
+const ACCOUNT_TAB_ITEMS = [
+  {
+    title: 'memberNavActive',
+    key: ObjState.Active,
+  },
+  {
+    title: 'accountNavDormant',
+    key: ObjState.Dormant,
+  },
+];
 
 export const CBSAccountList = () => {
   const router = useRouter();
@@ -17,6 +26,9 @@ export const CBSAccountList = () => {
   const { data, isLoading } = useGetAccountTableListQuery(
     {
       paginate: getRouterQuery({ type: ['PAGINATION'], query: router.query }),
+      filter: {
+        objState: (router.query['objState'] ?? ObjState.Active) as ObjState,
+      },
     },
     {
       staleTime: 0,
@@ -90,10 +102,12 @@ export const CBSAccountList = () => {
 
   return (
     <>
-      <PageHeader
-        heading={`Account List - ${featureCode?.accountList}`}
-        tabItems={MEMBER_TAB_ITEMS}
-      />
+      <Box position="sticky" top="110px" zIndex={3}>
+        <PageHeader
+          heading={`Account List - ${featureCode?.accountList}`}
+          tabItems={ACCOUNT_TAB_ITEMS}
+        />
+      </Box>
 
       <Table
         isLoading={isLoading}

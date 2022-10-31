@@ -1,0 +1,15 @@
+query getUtilityList {
+  eBanking {
+    utilityPayments {
+      id
+      name
+      enabled
+      icon
+      service_id
+    }
+  }
+}
+
+mutation getNewId($idType: ID_TYPE) {
+  newId(idType: $idType)
+}

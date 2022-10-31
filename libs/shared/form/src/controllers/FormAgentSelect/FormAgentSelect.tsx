@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { debounce } from 'lodash';
 
 import { Roles, useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
@@ -15,6 +16,8 @@ type OptionType = { label: string; value: string };
 export const FormAgentSelect = ({ name, label }: IFormAgentSelectProps) => {
   const [agentId, setAgentId] = useState('');
 
+  const { watch } = useFormContext();
+
   const { data: agentListQueryData, isFetching } = useGetSettingsUserListDataQuery({
     paginate: {
       ...getRouterQuery({ type: ['PAGINATION'] }),
@@ -22,7 +25,7 @@ export const FormAgentSelect = ({ name, label }: IFormAgentSelectProps) => {
     },
     filter: {
       query: agentId,
-      role: Roles.Agent,
+      role: [Roles.Agent],
     },
   });
 
@@ -38,6 +41,11 @@ export const FormAgentSelect = ({ name, label }: IFormAgentSelectProps) => {
     ],
     [] as OptionType[]
   );
+
+  useEffect(() => {
+    const id = watch(name);
+    setAgentId(id);
+  }, []);
 
   return (
     <FormSelect

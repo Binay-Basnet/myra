@@ -25,6 +25,9 @@ const nextConfig = {
       },
     ];
   },
+  images: {
+    domains: ['images.unsplash.com', 'cdn.raralabs.live'],
+  },
 
   i18n: {
     locales: ['en', 'ne'],

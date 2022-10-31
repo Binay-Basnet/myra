@@ -57,12 +57,16 @@ export const ShareHeader = () => {
             <TextFields color="primary.200" variant="tableHeader">
               Total Valuation
             </TextFields>
-            <TextFields variant="stickyCardHeader">
-              Rs.{' '}
-              {Number(shareSummary?.eBanking?.share?.summary?.value).toLocaleString('en-IN', {
-                maximumFractionDigits: 0,
-              }) ?? 'N/A'}
-            </TextFields>
+            {shareSummary?.eBanking?.share?.summary?.value ? (
+              <TextFields variant="stickyCardHeader">
+                Rs.{' '}
+                {Number(shareSummary?.eBanking?.share?.summary?.value)?.toLocaleString('en-IN', {
+                  maximumFractionDigits: 0,
+                }) ?? 'N/A'}
+              </TextFields>
+            ) : (
+              <TextFields variant="stickyCardHeader">N/A </TextFields>
+            )}
           </Box>
         </Box>
       </Grid>

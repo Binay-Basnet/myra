@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { useGetAccountTransferListDataQuery } from '@coop/cbs/data-access';
+import { TransferType, useGetAccountTransferListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
@@ -17,6 +17,11 @@ import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils'
 //     key: 'SUBMITTED',
 //   },
 // ];
+
+const transferType = {
+  [TransferType.Self]: 'Self Transfer',
+  [TransferType.Member]: 'Member to Member',
+};
 
 /* eslint-disable-next-line */
 export interface AccountTransferListProps {}
@@ -46,36 +51,9 @@ export const AccountTransferList = () => {
         header: t['accountTransferListTransactionId'],
         accessorFn: (row) => row?.node?.ID,
       },
-      // {
-      //   accessorFn: (row) => row?.node?.name?.local,
-      //   header: 'Name',
-      //   cell: (props) => {
-      //     return (
-      //       <Box display="flex" alignItems="center" gap="s12">
-      //         <Avatar
-      //           name="Dan Abrahmov"
-      //           size="sm"
-      //           src="https://bit.ly/dan-abramov"
-      //         />
-      //         <Text
-      //           fontSize="s3"
-      //           textTransform="capitalize"
-      //           textOverflow="ellipsis"
-      //           overflow="hidden"
-      //         >
-      //           {props.getValue() as string}
-      //         </Text>
-      //       </Box>
-      //     );
-      //   },
-
-      //   meta: {
-      //     width: '40%',
-      //   },
-      // },
       {
         header: t['accountTransferListTransactionType'],
-        accessorFn: (row) => row?.node?.transferType,
+        accessorFn: (row) => (row?.node?.transferType ? transferType[row?.node?.transferType] : ''),
         meta: {
           width: '40%',
         },

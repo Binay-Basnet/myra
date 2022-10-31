@@ -30,6 +30,7 @@ const accountColumns = [
   {
     title: 'Loan Repayment',
     link: '/loan/repayments',
+    addLink: '/loan/repayments/add',
   },
   {
     title: 'Loan Products',
@@ -44,7 +45,7 @@ const addButtoncolumns = [
   },
   {
     title: 'Loan Repayment',
-    link: '/loan/repayments',
+    link: '/loan/repayments/add',
   },
 ];
 export const LoanListLayout = ({ children }: IAccountPageLayoutProps) => {

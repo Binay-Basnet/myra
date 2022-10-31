@@ -1,3 +1,4 @@
+export * from './lib/coop/CoopConnectPage';
 export * from './lib/DetailsPage';
 export * from './lib/LoginPage';
 export * from './lib/OTPPage';

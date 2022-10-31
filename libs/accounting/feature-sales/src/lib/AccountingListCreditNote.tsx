@@ -2,69 +2,36 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
-import { PopoverComponent } from '@coop/myra/components';
+import {
+  DateType,
+  useAppSelector,
+  useGetSalesCreditNoteListDataQuery,
+} from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, Text } from '@coop/shared/ui';
+import { TablePopover } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AccountingListCreditNoteProps {}
 
-export function AccountingListCreditNote() {
+export const AccountingListCreditNote = () => {
+  const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);
+
   const { t } = useTranslation();
 
   const router = useRouter();
 
-  const { data, isFetching } = useGetMemberListQuery({
+  const { data, isFetching } = useGetSalesCreditNoteListDataQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    filter: {
-      objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    },
   });
 
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
-
-  const popoverTitle = [
-    {
-      title: 'memberListTableViewMemberProfile',
-    },
-    {
-      title: 'memberListTableEditMember',
-    },
-    {
-      title: 'memberListTableMakeInactive',
-    },
-  ];
+  const rowData = useMemo(() => data?.accounting?.sales?.listCreditNote?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: t['accountingCreditNoteListNoteNo'],
-        accessorFn: (row) => row?.node?.id,
-      },
-      {
-        accessorFn: (row) => row?.node?.name?.local,
+        accessorFn: (row) => row?.node?.name,
         header: t['accountingCreditNoteListCustomer'],
-        cell: (props) => {
-          return (
-            <Box display="flex" alignItems="center" gap="s12">
-              <Avatar
-                name="Dan Abrahmov"
-                size="sm"
-                src="https://bit.ly/dan-abramov"
-              />
-              <Text
-                fontSize="s3"
-                textTransform="capitalize"
-                textOverflow="ellipsis"
-                overflow="hidden"
-              >
-                {props.getValue() as string}
-              </Text>
-            </Box>
-          );
-        },
 
         meta: {
           width: '60%',
@@ -72,25 +39,34 @@ export function AccountingListCreditNote() {
       },
       {
         header: t['accountingCreditNoteListTotalAmount'],
-        accessorFn: (row) => row?.node?.contact,
+        accessorFn: (row) => row?.node?.totalAmount,
         meta: {
           width: '30%',
         },
       },
       {
-        header: t['accountingCreditNoteListInvoiceDate'],
-        accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
+        header: 'Date',
+        accessorFn: (row) =>
+          preferenceDate === DateType.Bs ? row?.node?.date?.np : row?.node?.date?.en ?? 'N/A',
       },
       {
         id: '_actions',
         header: '',
         accessorKey: 'actions',
-        cell: (cell) => (
-          <PopoverComponent
-            items={popoverTitle}
-            member={cell?.row?.original?.node}
-          />
-        ),
+        cell: (props) =>
+          props?.row?.original?.node && (
+            <TablePopover
+              items={[
+                {
+                  title: 'Edit',
+                  onClick: (row) => {
+                    router.push(`/accounting/sales/credit-note/edit/${row['id']}`);
+                  },
+                },
+              ]}
+              node={props?.row?.original?.node}
+            />
+          ),
         meta: {
           width: '60px',
         },
@@ -101,25 +77,21 @@ export function AccountingListCreditNote() {
 
   return (
     <>
-      <AccountingPageHeader
-        heading={t['accountingCreditNoteListCreditNote']}
-        buttonLabel={t['accountingCreditNoteListNewCreditNote']}
-        buttonHandler={() => router.push('/accounting/sales/credit-note/add')}
-      />
+      <AccountingPageHeader heading={t['accountingCreditNoteListCreditNote']} />
 
       <Table
-        // rowClick={(id) => alert(id)}
         data={rowData}
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
         columns={columns}
         pagination={{
-          total: data?.members?.list?.totalCount ?? 'Many',
-          pageInfo: data?.members.list.pageInfo,
+          total: data?.accounting?.sales?.listCreditNote?.totalCount ?? 'Many',
+          pageInfo: data?.accounting?.sales?.listCreditNote?.pageInfo,
         }}
+        noDataTitle="credit note list"
       />
     </>
   );
-}
+};
 
 export default AccountingListCreditNote;

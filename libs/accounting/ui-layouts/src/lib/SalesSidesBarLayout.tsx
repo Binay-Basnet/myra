@@ -1,18 +1,16 @@
 import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import { AddIcon } from '@chakra-ui/icons';
 
+import { useGetNewIdMutation } from '@coop/cbs/data-access';
 import { TabColumn } from '@coop/myra/components';
 import {
+  AddButtonList,
   Box,
   Button,
   Divider,
   Icon,
-  Popover,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
+  PopOverComponentForButtonList,
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -23,22 +21,51 @@ interface ISalesLayoutProps {
 
 const inventoryColumns = [
   {
-    title: 'salesList',
+    title: 'accountingSalesSalesEntry',
     link: '/accounting/sales/list',
+    addLinkId: '/accounting/sales',
   },
   {
     title: 'creditNote',
     link: '/accounting/sales/credit-note/list',
+    addLinkId: '/accounting/sales/credit-note',
   },
   {
     title: 'customerPayment',
     link: '/accounting/sales/customer-payment/list',
+    addLinkId: '/accounting/sales/customer-payment',
+  },
+  {
+    title: 'accountingSalesCustomers',
+    link: '/accounting/sales/customer/list',
+    addLinkId: '/accounting/sales/customer',
   },
 ];
 
 export const SalesLayout = ({ children }: ISalesLayoutProps) => {
   const router = useRouter();
   const { t } = useTranslation();
+
+  const newId = useGetNewIdMutation();
+
+  const dropdownButtons: { label: string; link?: string; linkId?: string }[] = [
+    {
+      label: t['accountingSalesSalesEntry'],
+      linkId: '/accounting/sales/add',
+    },
+    {
+      label: t['creditNote'],
+      linkId: '/accounting/sales/credit-note/add',
+    },
+    {
+      label: t['customerPayment'],
+      linkId: '/accounting/sales/customer-payment/add',
+    },
+    {
+      label: t['accountingSalesCustomers'],
+      linkId: '/accounting/sales/customers/add',
+    },
+  ];
 
   return (
     <Box display="flex">
@@ -47,95 +74,26 @@ export const SalesLayout = ({ children }: ISalesLayoutProps) => {
           {t['accountingsales']}
         </Text>
         <Divider my="s16" />
-        <Popover placement="bottom-start" gutter={3}>
-          <PopoverTrigger>
-            <Button
-              width="full"
-              size="lg"
-              justifyContent="start"
-              leftIcon={<AddIcon h="11px" />}
-            >
-              {t['accountingPurchaseSidebarCreate']}
-            </Button>
-          </PopoverTrigger>
 
-          <PopoverContent
-            // bg="gray.0"
-            p={0}
-            w="225px"
-            _focus={{ boxShadow: 'none' }}
-          >
-            <PopoverBody p={0}>
-              <Box>
-                <Box
-                  px="s16"
-                  py="s10"
-                  width="100%"
-                  display="flex"
-                  alignItems="center"
-                  _hover={{ bg: 'gray.100' }}
-                  cursor="pointer"
-                  onClick={() => router.push('/accounting/sales/add')}
-                >
-                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
-                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                    {t['salesList']}
-                  </Text>
-                </Box>
-
-                <Box
-                  px="s16"
-                  py="s10"
-                  width="100%"
-                  _hover={{ bg: 'gray.100' }}
-                  cursor="pointer"
-                  display="flex"
-                  alignItems="center"
-                  onClick={() =>
-                    router.push('/accounting/sales/credit-note/add')
+        <PopOverComponentForButtonList buttonLabel={t['accountingPurchaseSidebarCreate']}>
+          {dropdownButtons.map((item) => (
+            <Box key={item.link}>
+              <AddButtonList
+                label={t[item.label] ?? item.label}
+                onClick={() => {
+                  if (item.linkId) {
+                    newId
+                      .mutateAsync({})
+                      .then((res) => router.push(`${item.linkId}/${res?.newId}`));
+                  } else {
+                    item.link && router.push(item.link);
                   }
-                >
-                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
-                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                    {t['creditNote']}
-                  </Text>
-                </Box>
+                }}
+              />
+            </Box>
+          ))}
+        </PopOverComponentForButtonList>
 
-                <Box
-                  px="s16"
-                  py="s10"
-                  width="100%"
-                  display="flex"
-                  alignItems="center"
-                  _hover={{ bg: 'gray.100' }}
-                  cursor="pointer"
-                  onClick={() =>
-                    router.push('/accounting/sales/customer-payment/add')
-                  }
-                >
-                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
-                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                    {t['customerPayment']}
-                  </Text>
-                </Box>
-
-                {/* <Button
-                  width="full"
-                  size="lg"
-                  justifyContent="start"
-                  borderRadius={'none'}
-                  leftIcon={<AddIcon h="11px" />}
-                  variant="ghost"
-                  onClick={() =>
-                    router.push('/accounting/sales/customer-payment/add')
-                  }
-                >
-                  {t['customerPayment']}
-                </Button> */}
-              </Box>
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
         <Divider my="s16" />
         <TabColumn list={inventoryColumns} />
         <Divider my="s16" />
@@ -146,9 +104,7 @@ export const SalesLayout = ({ children }: ISalesLayoutProps) => {
           height="s48"
           width="full"
           justifyContent="start"
-          leftIcon={
-            <Icon as={AiOutlineSetting} size="md" color="primary.500" />
-          }
+          leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
         >
           {t['accountingSalesSettings']}
         </Button>

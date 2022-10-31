@@ -1,0 +1,277 @@
+query getEbankingDepositProducts($filter: NatureOfDepositProduct!) {
+  eBanking {
+    products {
+      depositProductList(filter: $filter) {
+        data {
+          id
+          productName
+        }
+      }
+    }
+  }
+}
+query getEbankingDepositProduct($id: ID!) {
+  eBanking {
+    products {
+      getDepositProduct(id: $id) {
+        data {
+          id
+          productName
+          nature
+          description
+          productCode {
+            initialNo
+            prefix
+          }
+          typeOfMember
+          criteria
+          minAge
+          maxAge
+          genderId
+          maritalStatusId
+          educationQualification
+          ethnicity
+          occupation
+          foreignEmployment
+          natureOfBusinessInstitution
+          natureOFBusinessCoop
+          cooperativeType
+          transactionAllowed
+          noOftransactionAllowed
+          depositAmount {
+            avgAmount
+            maxAmount
+            minAmount
+          }
+          withdrawAmountLimit {
+            minAmount
+            maxAmount
+            avgAmount
+          }
+          fixedDepositAmountLimit {
+            minAmount
+            maxAmount
+            avgAmount
+          }
+          depositFrequency
+          penalty
+          penaltyData {
+            dayAfterInstallmentDate
+            penaltyAmount
+            penaltyLedgerMapping
+            penaltyRate
+          }
+          rebate
+          rebateData {
+            dayBeforeInstallmentDate
+            noOfInstallment
+            rebateAmount
+            rebateLedgerMapping
+            rebateRate
+          }
+          isTenureApplicable
+          tenureUnit
+          minTenureUnitNumber
+          maxTenureUnitNumber
+          balanceLimit {
+            avgAmount
+            maxAmount
+            minAmount
+          }
+          interest {
+            additionalRate
+            boardAuthority
+            ceoAuthority
+            defaultRate
+            interestMethod
+            maxRate
+            minRate
+          }
+          ladderRate
+          ladderRateData {
+            amount
+            rate
+            type
+          }
+          postingFrequency
+          maxPostingFreqDifference
+          accountType
+          serviceCharge {
+            amount
+            ledgerName
+            serviceName
+          }
+          accountCloseCharge {
+            serviceName
+            amount
+            ledgerName
+          }
+          dormantSetup {
+            condition
+            duration
+          }
+          autoOpen
+          allowLoan
+          percentageOfDeposit
+          alternativeChannels
+          alternativeChannelCharge {
+            ledgerName
+            amount
+            serviceName
+          }
+          atmFacility
+          atmCharge {
+            ledgerName
+            amount
+            serviceName
+          }
+          isForMinors
+          chequeIssue
+          chequeCharge {
+            ledgerName
+            amount
+            serviceName
+          }
+          supportMultiple
+          staffProduct
+          withdrawRestricted
+          specifyWithdrawRestriction
+          wealthBuildingProduct
+          isMandatorySaving
+          individualDocuments
+          institutionDocuments
+          isPrematurePenaltyApplicable
+          prematurePenalty {
+            penaltyRate
+            penaltyLedgerMapping
+            penaltyAmount
+            penaltyDateType
+          }
+          withdrawPenalty {
+            penaltyAmount
+            penaltyLedgerMapping
+            penaltyRate
+          }
+          ledgerMapping {
+            interestAccuredDaily
+            interestIncome
+            principal
+          }
+        }
+      }
+    }
+  }
+}
+
+query getEbankingDepositProductCriteria($id: ID!) {
+  eBanking {
+    products {
+      getDepositProductCriteria(productId: $id) {
+        data {
+          minAge
+          maxAge
+          gender
+          maritalStatus
+          occupation
+          educationQualification
+          ethnicity
+          foreignEmployment
+          institutionType
+          cooperativeUnion
+          cooperativeType
+        }
+      }
+    }
+  }
+}
+
+query getEbankingLoanProductTypeList {
+  eBanking {
+    products {
+      loanProductTypes {
+        id
+        productType
+        description
+      }
+    }
+  }
+}
+query getEbankingLoanProductSubType {
+  eBanking {
+    products {
+      loanProductSubTypes {
+        id
+        productSubType
+        productTypeID
+      }
+    }
+  }
+}
+query getEbankingLoanProducts($id: ID!) {
+  eBanking {
+    products {
+      loanProductList(productSubTypeId: $id) {
+        data {
+          id
+          productName
+        }
+      }
+    }
+  }
+}
+query getEbankingLoanProduct($id: ID!) {
+  eBanking {
+    products {
+      getLoanProduct(id: $id) {
+        data {
+          id
+          productName
+          productType
+          productSubType
+          productNature
+          description
+          typeOfMember
+          minAge
+          maxAge
+          isStaffProduct
+          isInsuranceApplicable
+          isTenureApplicable
+          isMonthlyInstallmentCompulsory
+          isPenaltyApplicable
+          isRebateApplicable
+          isCollateralRequired
+          allowPartialInstallment
+          supportMultipleAccounts
+          minTenureUnitNumber
+          maxTenureUnitNumber
+          interest {
+            minRate
+            maxRate
+            defaultRate
+          }
+        }
+      }
+    }
+  }
+}
+query getEbankingLoanProductCriteria($id: ID!) {
+  eBanking {
+    products {
+      getLoanProductCriteria(productId: $id) {
+        data {
+          minAge
+          maxAge
+          gender
+          ethnicity
+          educationQualification
+          maritalStatus
+          foreignEmployment
+          occupation
+          institutionType
+          cooperativeType
+          cooperativeUnion
+        }
+      }
+    }
+  }
+}

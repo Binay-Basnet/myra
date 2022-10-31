@@ -1,37 +1,35 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
 import {
+  BulkDepositInput,
   CashValue,
   DepositedBy,
-  DepositInput,
   DepositPaymentType,
-  NatureOfDepositProduct,
-  useGetAccountTableListQuery,
-  useSetDepositDataMutation,
+  useSetBulkDepositDataMutation,
 } from '@coop/cbs/data-access';
-import { FormEditableTable } from '@coop/shared/form';
 import {
+  asyncToast,
   Box,
   Button,
   Container,
-  DEFAULT_PAGE_SIZE,
   FormFooter,
   FormHeader,
   FormMemberSelect,
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+import { useGetIndividualMemberDetails } from '@coop/shared/utils';
 
-import { Payment } from '../components';
+import { BulkDepositAccountsSummary, BulkDepositAccountsTable, Payment } from '../components';
 
 /* eslint-disable-next-line */
 export interface AddBulkDepositProps {}
 
-type DepositFormInput = Omit<DepositInput, 'cash'> & {
+type CustomBulkDepositInput = Omit<BulkDepositInput, 'cash'> & {
   cash?:
     | {
         cashPaid: string;
@@ -42,23 +40,6 @@ type DepositFormInput = Omit<DepositInput, 'cash'> & {
       }
     | undefined
     | null;
-  accounts: {
-    accountId: string;
-    noOfInstallments: string;
-    amount: string;
-    rebate: string;
-  }[];
-};
-
-type DepositAccountTable = {
-  accountId: string;
-  noOfInstallments: string;
-  amount: string;
-  rebate: string;
-  accountName: string;
-  accountType: string;
-  accountBalance: string;
-  accountFine: string;
 };
 
 const cashOptions: Record<string, string> = {
@@ -74,21 +55,16 @@ const cashOptions: Record<string, string> = {
   '1': CashValue.Cash_1,
 };
 
-const REBATE = '0';
-
 export const AddBulkDeposit = () => {
-  const { t } = useTranslation();
-
   const router = useRouter();
 
-  const accountTypes = {
-    [NatureOfDepositProduct.Saving]: t['addDepositSaving'],
-    [NatureOfDepositProduct.RecurringSaving]: t['addDepositRecurringSavingAccount'],
-    [NatureOfDepositProduct.TermSavingOrFd]: t['addDepositTermSavingAccount'],
-    [NatureOfDepositProduct.Current]: t['addDepositCurrent'],
-  };
+  const queryClient = useQueryClient();
 
-  const methods = useForm<DepositFormInput>({
+  const [totalDepositAmount, setTotalDepositAmount] = useState<number>(0);
+
+  const [totalRebate, setTotalRebate] = useState<number>(0);
+
+  const methods = useForm<CustomBulkDepositInput>({
     defaultValues: {
       payment_type: DepositPaymentType.Cash,
       cash: { disableDenomination: false },
@@ -96,100 +72,16 @@ export const AddBulkDeposit = () => {
     },
   });
 
-  const { watch, reset, getValues } = methods;
-
-  // const { data } = useGetMemberIndividualDataQuery(
-  //   {
-  //     id: memberId,
-  //   },
-  //   {
-  //     enabled: !!memberId,
-  //   }
-  // );
-
-  // const memberData = data?.members?.details?.data;
+  const { watch, getValues } = methods;
 
   const memberId = watch('memberId');
 
   const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
-    useGetIndividualMemberDetails({ memberId });
-
-  const { data: accountListData } = useGetAccountTableListQuery(
-    {
-      paginate: {
-        first: DEFAULT_PAGE_SIZE,
-        after: '',
-      },
-      filter: { memberId },
-    },
-    {
-      staleTime: 0,
-      enabled: !!memberId,
-    }
-  );
-
-  const accountListDefaultData = useMemo(
-    () =>
-      accountListData?.account?.list?.edges?.map((account) => ({
-        accountId: account?.node?.id as string,
-        noOfInstallments:
-          account?.node?.product?.nature === NatureOfDepositProduct.RecurringSaving ? '' : 'N/A',
-        amount: '',
-        rebate: '',
-        accountName: account?.node?.product?.productName ?? '',
-        accountType: account?.node?.product?.nature
-          ? accountTypes[account?.node?.product?.nature]
-          : '',
-        accountBalance: account?.node?.balance ?? '',
-        accountFine: account?.node?.dues?.fine ?? '',
-      })) ?? [],
-    [accountListData]
-  );
-
-  const accountListSearchOptions = useMemo(
-    () =>
-      accountListData?.account?.list?.edges?.map((account) => ({
-        label: account?.node?.product?.productName as string,
-        value: account?.node?.id as string,
-      })) ?? [],
-    [accountListData]
-  );
-
-  useEffect(() => {
-    reset({ memberId, accountId: '', voucherId: '', amount: '' });
-  }, [memberId]);
-
-  const accountId = watch('accountId');
-
-  const selectedAccount = useMemo(
-    () =>
-      accountListData?.account?.list?.edges?.find((account) => account.node?.id === accountId)
-        ?.node,
-    [accountId]
-  );
-
-  const FINE = useMemo(() => selectedAccount?.dues?.fine ?? '0', [selectedAccount]);
-
-  // const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    useGetIndividualMemberDetails({ memberId: String(memberId) });
 
   const [mode, setMode] = useState<number>(0); // 0: form 1: payment
 
-  // const handleModalOpen = () => {
-  //   setIsModalOpen(true);
-  // };
-
-  // const handleModalClose = () => {
-  //   setIsModalOpen(false);
-  // };
-
-  const amountToBeDeposited = watch('amount') ?? 0;
-
-  const totalDeposit = useMemo(
-    () => (amountToBeDeposited ? Number(amountToBeDeposited) + Number(FINE) - Number(REBATE) : 0),
-    [amountToBeDeposited]
-  );
-
-  const { mutateAsync } = useSetDepositDataMutation();
+  const { mutateAsync } = useSetBulkDepositDataMutation();
 
   const disableDenomination = watch('cash.disableDenomination');
 
@@ -208,14 +100,22 @@ export const AddBulkDeposit = () => {
 
   const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
 
-  const returnAmount = Number(totalCashPaid) - totalDeposit;
+  const returnAmount = Number(totalCashPaid) - totalDepositAmount;
 
   const handleSubmit = () => {
     const values = getValues();
     let filteredValues = {
-      ...values,
-      fine: FINE,
-      rebate: REBATE,
+      ...omit({ ...values }, ['accounts']),
+      accounts: accounts?.map(
+        (record) =>
+          record && {
+            accountId: record.accountId,
+            noOfInstallments: Number(record.noOfInstallments),
+            amount: String(record.amount),
+            fine: record.fine,
+            rebate: record.rebate,
+          }
+      ),
     };
 
     if (values['payment_type'] === DepositPaymentType.Cash) {
@@ -242,51 +142,28 @@ export const AddBulkDeposit = () => {
       filteredValues = omit({ ...filteredValues }, ['bankVoucher', 'cash']);
     }
 
-    mutateAsync({ data: filteredValues as DepositInput }).then((res) => {
-      if (res?.transaction?.deposit?.recordId) {
+    asyncToast({
+      id: 'add-bulk-deposit-transaction',
+      msgs: {
+        loading: 'Adding bulk deposit',
+        success: 'Bulk deposit added',
+      },
+      promise: mutateAsync({ data: filteredValues as BulkDepositInput }),
+      onSuccess: () => {
+        queryClient.invalidateQueries('getDepositListData');
         router.push('/transactions/deposit/list');
-      }
+      },
     });
   };
 
   const accounts = watch('accounts');
-
-  const accountInfoData = useMemo(
-    () =>
-      accounts?.map(({ accountId: item, amount }) => {
-        const filteredAccount = accountListData?.account?.list?.edges?.find(
-          (accountData) => accountData.node?.id === item
-        )?.node;
-
-        return {
-          accountName: filteredAccount?.product?.productName,
-          amount,
-          fine: filteredAccount?.dues?.fine,
-          rebate: '0',
-        };
-      }),
-    [accounts]
-  );
-
-  const totalDepositAmount = useMemo(() => {
-    let total = 0;
-    accounts?.forEach(({ accountId: item, amount }) => {
-      const filteredAccount = accountListData?.account?.list?.edges?.find(
-        (accountData) => accountData.node?.id === item
-      )?.node;
-
-      total = Number(amount) - (Number(filteredAccount?.dues?.fine) || 0);
-    });
-
-    return total;
-  }, [accounts]);
 
   return (
     <>
       <Container minW="container.xl" height="fit-content">
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
-            title="New Deposit"
+            title="New Bulk Deposit"
             closeLink="/transactions/deposit/list"
             buttonLabel="Add Deposit"
             buttonHandler={() => router.push('/transactions/deposit/add')}
@@ -327,26 +204,6 @@ export const AddBulkDeposit = () => {
                       signaturePath={memberSignatureUrl}
                       showSignaturePreview={false}
                       citizenshipPath={memberCitizenshipUrl}
-                      accountInfo={
-                        selectedAccount
-                          ? {
-                              name: selectedAccount?.product?.productName,
-                              type: selectedAccount?.product?.nature
-                                ? accountTypes[selectedAccount?.product?.nature]
-                                : '',
-                              ID: selectedAccount?.product?.id,
-                              currentBalance: selectedAccount?.balance ?? '0',
-                              minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
-                              guaranteeBalance: selectedAccount?.guaranteedAmount ?? '',
-                              overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
-                              fine: FINE,
-                              // branch: 'Kumaripati',
-                              openDate: selectedAccount?.accountOpenedDate ?? 'N/A',
-                              expiryDate: selectedAccount?.accountExpiryDate ?? 'N/A',
-                              lastTransactionDate: selectedAccount?.lastTransactionDate ?? 'N/A',
-                            }
-                          : null
-                      }
                       viewProfileHandler={() => null}
                       viewAccountTransactionsHandler={() => null}
                       cardBg="neutralColorLight.Gray-10"
@@ -354,149 +211,24 @@ export const AddBulkDeposit = () => {
                   )}
 
                   {memberId && (
-                    <FormEditableTable<DepositAccountTable>
-                      name="accounts"
-                      columns={[
-                        {
-                          accessor: 'accountId',
-                          header: 'Accounts',
-                          cellWidth: 'auto',
-                          fieldType: 'search',
-                          searchOptions: accountListSearchOptions,
-                          cell: (row) => (
-                            <Box display="flex" justifyContent="space-between" p="s12" width="100%">
-                              <Box display="flex" flexDirection="column" gap="s4">
-                                <Text
-                                  fontSize="r1"
-                                  fontWeight={500}
-                                  color="neutralColorLight.Gray-80"
-                                >
-                                  {row?.accountName}
-                                </Text>
-                                <Text
-                                  fontSize="s3"
-                                  fontWeight={500}
-                                  color="neutralColorLight.Gray-60"
-                                >
-                                  {row?.accountId}
-                                </Text>
-                                <Text
-                                  fontSize="s3"
-                                  fontWeight={400}
-                                  color="neutralColorLight.Gray-60"
-                                >
-                                  {row?.accountType}
-                                </Text>
-                              </Box>
-
-                              <Box
-                                display="flex"
-                                flexDirection="column"
-                                gap="s4"
-                                alignItems="flex-end"
-                              >
-                                <Text
-                                  fontSize="s3"
-                                  fontWeight={500}
-                                  color="neutralColorLight.Gray-80"
-                                >
-                                  {row?.accountBalance}
-                                </Text>
-
-                                {row?.accountFine && (
-                                  <Text fontSize="s3" fontWeight={500} color="danger.500">
-                                    Fine: {row?.accountFine}
-                                  </Text>
-                                )}
-                              </Box>
-                            </Box>
-                          ),
-                        },
-                        {
-                          accessor: 'noOfInstallments',
-                          header: 'No of Installments',
-                          isNumeric: true,
-                        },
-                        {
-                          accessor: 'amount',
-                          header: 'Amount',
-                          isNumeric: true,
-                          // accessorFn: (row) =>
-                          //   row.quantity
-                          //     ? Number(row.value) * Number(row.quantity)
-                          //     : '0',
-                        },
-                        {
-                          accessor: 'rebate',
-                          header: 'Rebate',
-                          isNumeric: true,
-                          accessorFn: (row) => row.rebate || 'N/A',
-                        },
-                      ]}
-                      defaultData={accountListDefaultData}
-                      searchPlaceholder="Search for a/c name or number"
-                      // canDeleteRow={false}
-                      // canAddRow={false}
+                    <BulkDepositAccountsTable
+                      memberId={memberId}
+                      setTotalDepositAmount={setTotalDepositAmount}
+                      setTotalRebate={setTotalRebate}
                     />
                   )}
 
-                  {accountInfoData?.length && (
-                    <Box
-                      bg="background.500"
-                      p="s16"
-                      display="flex"
-                      flexDirection="column"
-                      gap="s10"
-                    >
-                      {accountInfoData?.map((accountInfo) => (
-                        <Box display="flex" flexDirection="column" gap="s10">
-                          <Box display="flex" justifyContent="space-between">
-                            <Text fontSize="s3" fontWeight={500} color="gray.600">
-                              {accountInfo?.accountName}
-                            </Text>
-                            <Text fontSize="s3" fontWeight={500} color="gray.800">
-                              {accountInfo?.amount}
-                            </Text>
-                          </Box>
-
-                          {accountInfo?.fine && (
-                            <Box display="flex" justifyContent="space-between">
-                              <Text fontSize="s3" fontWeight={500} color="gray.600">
-                                Fine
-                              </Text>
-                              <Text fontSize="s3" fontWeight={500} color="danger.500">
-                                {`+ ${accountInfo?.fine}`}
-                              </Text>
-                            </Box>
-                          )}
-
-                          {accountInfo?.rebate && (
-                            <Box display="flex" justifyContent="space-between">
-                              <Text fontSize="s3" fontWeight={500} color="gray.600">
-                                Rebate
-                              </Text>
-                              <Text fontSize="s3" fontWeight={500} color="success.500">
-                                {`- ${accountInfo?.rebate}`}
-                              </Text>
-                            </Box>
-                          )}
-                        </Box>
-                      ))}
-
-                      <Box display="flex" justifyContent="space-between">
-                        <Text fontSize="s3" fontWeight={500} color="gray.600">
-                          Total Deposit
-                        </Text>
-                        <Text fontSize="s3" fontWeight={500} color="gray.800">
-                          {totalDepositAmount}
-                        </Text>
-                      </Box>
-                    </Box>
+                  {accounts?.length && (
+                    <BulkDepositAccountsSummary
+                      memberId={memberId}
+                      totalDepositAmount={totalDepositAmount}
+                      totalRebate={totalRebate}
+                    />
                   )}
                 </Box>
               </Box>
 
-              <Payment mode={mode} totalDeposit={Number(totalDeposit)} rebate={0} />
+              <Payment mode={mode} totalDeposit={totalDepositAmount} rebate={0} />
             </form>
           </FormProvider>
         </Box>
@@ -513,7 +245,7 @@ export const AddBulkDeposit = () => {
                       Total Deposit Amount
                     </Text>
                     <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
-                      {totalDepositAmount ?? '---'}
+                      {totalDepositAmount + totalRebate ?? '---'}
                     </Text>
                   </Box>
                 ) : (
@@ -528,8 +260,6 @@ export const AddBulkDeposit = () => {
           </Container>
         </Box>
       </Box>
-
-      {/* <InstallmentModel isOpen={isModalOpen} onClose={handleModalClose} /> */}
     </>
   );
 };

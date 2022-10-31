@@ -62,7 +62,11 @@ export const AgentTransactionList = () => {
         header: 'Market Representative Name',
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
-            <Avatar name={props.getValue() as string} size="sm" src="" />
+            <Avatar
+              name={props.getValue() as string}
+              size="sm"
+              src={props?.row?.original?.node?.profilePicUrl ?? ''}
+            />
             <Text
               fontSize="s3"
               textTransform="capitalize"

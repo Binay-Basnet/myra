@@ -19,6 +19,7 @@ export const OTPPage = ({ setStatus }: IOTPPageProps) => {
     register,
     handleSubmit,
     setError,
+    reset,
     formState: { errors },
   } = useFormContext<{ otp: string; mobileNo: string }>();
 
@@ -43,6 +44,11 @@ export const OTPPage = ({ setStatus }: IOTPPageProps) => {
       })}
     >
       <AuthContainer
+        showGoBack
+        goBackHandler={() => {
+          reset();
+          setStatus(SignUpStatus.INITIAL);
+        }}
         title="Verify your mobile number"
         subtitle="Enter the OTP sent to your registered mobile number to continue with sign up."
       >

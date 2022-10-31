@@ -4,6 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import {
   DepositedBy,
   DepositPaymentType,
+  ObjState,
   RootState,
   useAppSelector,
   useGetCoaBankListQuery,
@@ -232,6 +233,7 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
                 name="openingPayment.cheque.accId"
                 memberId={isDiffMember ? dmemberId : memberId}
                 label="Account Name"
+                filterBy={ObjState.Active}
               />
             </GridItem>
 

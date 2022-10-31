@@ -10,9 +10,10 @@ import { en, useTranslation } from '@coop/shared/utils';
 const TabCol = chakra(Tab, {
   baseStyle: {
     color: 'gray.600',
-    height: '40px',
+    minHeight: '40px',
     fontSize: '14px',
     fontWeight: '500',
+    lineHeight: '1.15',
     width: '100%',
     display: 'flex',
     justifyContent: 'flex-start',
@@ -55,10 +56,16 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
       index={list.findIndex((value) => router.asPath.includes(value.link)) ?? 0}
     >
       {list.map((item) => (
-        <Box display="flex" flexDirection="row" justifyContent="space-between" key={item.link}>
+        <Box
+          display="flex"
+          flexDirection="row"
+          justifyContent="space-between"
+          alignItems="center"
+          key={item.link}
+        >
           <Link href={item.link}>
             <TabCol>
-              <Text noOfLines={1} align="left" title={t[item.title as keyof typeof en]}>
+              <Text align="left" title={t[item.title as keyof typeof en]}>
                 {t[item.title as keyof typeof en] ?? item.title}
               </Text>
             </TabCol>

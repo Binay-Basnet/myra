@@ -120,8 +120,11 @@ export const ShareRegisterTable = () => {
 
   return (
     <>
-      <TableListPageHeader heading={`${t['shareRegisterTable']} - ${featureCode?.shareRegister}`} />
-
+      <Box position="sticky" top="110px" zIndex={3}>
+        <TableListPageHeader
+          heading={`${t['shareRegisterTable']} - ${featureCode?.shareRegister}`}
+        />
+      </Box>
       <Table
         isLoading={isFetching}
         data={rowData ?? []}

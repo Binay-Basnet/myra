@@ -3,7 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
-import { AccountPopover } from '@coop/ebanking/accounts';
+import { FormAccountHeader } from '@coop/ebanking/accounts';
 import { ChequeRequestCard, InfoCard } from '@coop/ebanking/cards';
 import { EmptyState } from '@coop/ebanking/components';
 import {
@@ -120,32 +120,32 @@ export const EBankingFeatureAllChequeRequests = () => {
           </Popover>
         }
       />
-      <InfoCard title="Saving Account" subtitle="23,456.78" btn={<AccountPopover />}>
-        <Box p="s16" display="flex" flexDirection="column" gap="s16">
-          <FormProvider {...methods}>
+      <FormProvider {...methods}>
+        <InfoCard header={<FormAccountHeader name="accountId" />}>
+          <Box p="s16" display="flex" flexDirection="column" gap="s16">
             <form>
               <FormSwitchTab name="status" label="Cheque History" options={ChequeStatusOptions} />
             </form>
-          </FormProvider>
 
-          <VStack
-            width="100%"
-            bg="white"
-            spacing="0"
-            alignItems="start"
-            divider={<Divider borderBottom="1px" borderBottomColor="border.layout" />}
-            borderRadius="br2"
-          >
-            {chequeData?.length === 0 || !chequeData ? (
-              <Box w="100%" display="flex" justifyContent="center" py="s32">
-                <EmptyState title="No Cheque History" />
-              </Box>
-            ) : (
-              chequeData?.map((request) => request && <ChequeRequestCard requestInfo={request} />)
-            )}
-          </VStack>
-        </Box>
-      </InfoCard>
+            <VStack
+              width="100%"
+              bg="white"
+              spacing="0"
+              alignItems="start"
+              divider={<Divider borderBottom="1px" borderBottomColor="border.layout" />}
+              borderRadius="br2"
+            >
+              {chequeData?.length === 0 || !chequeData ? (
+                <Box w="100%" display="flex" justifyContent="center" py="s32">
+                  <EmptyState title="No Cheque History" />
+                </Box>
+              ) : (
+                chequeData?.map((request) => request && <ChequeRequestCard requestInfo={request} />)
+              )}
+            </VStack>
+          </Box>
+        </InfoCard>
+      </FormProvider>
     </Box>
   );
 };

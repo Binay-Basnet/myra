@@ -21,7 +21,8 @@ export const EbankingSidebarNavItem = ({ item, isActive }: IEbankingSidebarNavIt
   <Link href={item.link}>
     <Box
       tabIndex={0}
-      p="s16"
+      px="s16"
+      h="48px"
       cursor="pointer"
       display="flex"
       alignItems="center"

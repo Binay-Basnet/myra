@@ -6,6 +6,7 @@ import {
   AiOutlineStar,
 } from 'react-icons/ai';
 import { BsBook, BsFacebook, BsHeart, BsInstagram, BsTwitter } from 'react-icons/bs';
+import { CgShortcut } from 'react-icons/cg';
 import { TbMessageDots } from 'react-icons/tb';
 
 import {
@@ -239,7 +240,7 @@ export const FloatingShortcutButton = () => {
           // bg="gray.0"
           p={0}
           _focus={{ boxShadow: 'none' }}
-          width="200px"
+          width="250px"
         >
           <PopoverBody p={0}>
             <Box display="flex" flexDirection="column" gap="s16" px="s12" py="s16">
@@ -247,40 +248,10 @@ export const FloatingShortcutButton = () => {
                 <Icon as={BsBook} />
                 <Text fontSize="s3" fontWeight="500" color="gray.600">
                   {' '}
-                  Help & support guide
+                  Support guide
                 </Text>
               </Box>
-              <Box display="flex" flexDirection="row" gap="s8" cursor="pointer" alignItems="center">
-                <Icon as={TbMessageDots} />
-                <Text fontSize="s3" fontWeight="500" color="gray.600">
-                  {' '}
-                  Send us a message
-                </Text>
-              </Box>
-              <Box display="flex" flexDirection="row" gap="s8" cursor="pointer" alignItems="center">
-                <Icon as={BsHeart} />
-                <Text fontSize="s3" fontWeight="500" color="gray.600">
-                  {' '}
-                  Give Feedback
-                </Text>
-              </Box>
-              <Box
-                display="flex"
-                flexDirection="row"
-                justifyContent="space-between"
-                cursor="pointer"
-                onClick={handleModalOpen}
-                alignItems="center"
-              >
-                <Text fontSize="s3" fontWeight="700" color="gray.600">
-                  {' '}
-                  Keyboard shortcuts
-                </Text>
-                <Text fontSize="s3" fontWeight="500" color="gray.600">
-                  {' '}
-                  Alt + l
-                </Text>
-              </Box>
+
               <Box
                 display="flex"
                 flexDirection="row"
@@ -289,16 +260,57 @@ export const FloatingShortcutButton = () => {
                 onClick={handleWhatsNewModalOpen}
                 alignItems="center"
               >
-                <Text fontSize="s3" fontWeight="500" cursor="pointer" color="gray.600">
+                <Box
+                  display="flex"
+                  flexDirection="row"
+                  gap="s8"
+                  cursor="pointer"
+                  alignItems="center"
+                >
+                  <Icon as={AiOutlineStar} />
+                  <Text fontSize="s3" fontWeight="500" cursor="pointer" color="gray.600">
+                    {' '}
+                    What&apos;s New?
+                  </Text>
+                </Box>
+              </Box>
+
+              <Box
+                display="flex"
+                flexDirection="row"
+                justifyContent="space-between"
+                cursor="pointer"
+                onClick={handleModalOpen}
+                alignItems="center"
+              >
+                <Box display="flex" gap="s8">
+                  <Icon as={CgShortcut} />
+                  <Text fontSize="s3" fontWeight="500" cursor="pointer" color="gray.600">
+                    {' '}
+                    Keyboard shortcuts
+                  </Text>
+                </Box>
+                <Text fontSize="s3" fontWeight="500" color="gray.600">
                   {' '}
-                  What&apos;s New?
+                  Alt + l
                 </Text>
               </Box>
 
-              <Text fontSize="s3" fontWeight="500" cursor="pointer" color="gray.600">
-                {' '}
-                Terms & Privacy
-              </Text>
+              <Box display="flex" flexDirection="row" gap="s8" cursor="pointer" alignItems="center">
+                <Icon as={BsHeart} />
+                <Text fontSize="s3" fontWeight="500" color="gray.600">
+                  {' '}
+                  Give Feedback
+                </Text>
+              </Box>
+
+              <Box display="flex" flexDirection="row" gap="s8" cursor="pointer" alignItems="center">
+                <Icon as={TbMessageDots} />
+                <Text fontSize="s3" fontWeight="500" color="gray.600">
+                  {' '}
+                  Send us a message
+                </Text>
+              </Box>
             </Box>
           </PopoverBody>
         </PopoverContent>

@@ -260,6 +260,7 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
           accountOpenedDate
           lastTransactionDate
           accountExpiryDate
+          closedAt
           member {
             id
             name
@@ -280,6 +281,8 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
           }
           overDrawnBalance
           guaranteedAmount
+          interestAccured
+          interestTax
           product {
             id
             productCode
@@ -288,6 +291,11 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
             minimumBalance
             isMandatorySaving
             withdrawRestricted
+            accountClosingCharge {
+              serviceName
+              ledgerName
+              amount
+            }
           }
           dues {
             fine
@@ -381,6 +389,51 @@ query getAccountOpenMinorList($memberId: ID!) {
       data {
         fullName
         familyMemberId
+      }
+    }
+  }
+}
+
+query getInstallmentsListData($id: ID!) {
+  account {
+    getInstallments(id: $id) {
+      data {
+        dueDate
+        status
+        monthName
+        fine
+        rebate
+      }
+      error {
+        ...QueryError
+      }
+    }
+  }
+}
+
+query getBulkInstallmentsData($ids: [ID]!) {
+  account {
+    getBulkInstallments(ids: $ids) {
+      accountId
+      value {
+        data {
+          dueDate
+          status
+          monthName
+          fine
+          rebate
+        }
+      }
+    }
+  }
+}
+
+query getDefaultAccountList($productId: ID!, $memberId: ID!) {
+  account {
+    listDefaultAccounts(memberId: $memberId, productId: $productId) {
+      data {
+        id
+        accountName
       }
     }
   }

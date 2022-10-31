@@ -77,25 +77,37 @@ query getAccountTransferListData($filter: AccountTransactionFilter, $pagination:
   }
 }
 
-query getInstallmentsListData($id: ID!) {
-  account {
-    getInstallments(id: $id) {
-      data {
-        dueDate
-        status
-        monthName
-        fine
-        rebate
-      }
-      error {
-        ...QueryError
-      }
-    }
-  }
-}
-
 query getEndOfDayDateData {
   transaction {
     endOfDayDate
+  }
+}
+
+query getTellerTransactionListData($filter: TellerTransactionFilter, $pagination: Pagination) {
+  transaction {
+    listTellerTransaction(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          ID
+          transferType
+          srcTeller
+          amount
+          destTeller
+          date
+          srcProfilePic
+          destProfilePic
+          srcProfilePicUrl
+          destProfilePicUrl
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
   }
 }

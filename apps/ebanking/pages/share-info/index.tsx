@@ -12,7 +12,7 @@ const ShareInfoPage = () => {
       <ShareHeader />
       <Divider />
       <Box bg="white" borderRadius="br2">
-        {data?.eBanking?.share?.history.map((share) => (
+        {data?.eBanking?.share?.history?.map((share) => (
           <Box
             p="s20"
             key={share.id}

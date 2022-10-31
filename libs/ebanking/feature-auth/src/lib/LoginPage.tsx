@@ -20,7 +20,7 @@ export const LoginPage = () => {
     });
 
     if (response?.eBanking?.auth?.login?.recordId === null) {
-      toast({ id: 'login-error', type: 'error', message: 'Username or Password is invalid' });
+      toast({ id: 'login-error', type: 'error', message: 'Invalid Credentials' });
       return;
     }
 
@@ -28,7 +28,7 @@ export const LoginPage = () => {
       toast({
         id: 'login-error',
         type: 'error',
-        message: 'Username or Password is invalid',
+        message: 'Invalid Credentials',
       });
       return;
     }
@@ -72,7 +72,7 @@ export const LoginPage = () => {
           <Box display="flex" alignItems="center" justifyContent="space-between">
             <Checkbox label="Remember Password" />
             <Box fontStyle="italic" color="primary.500" fontSize="s2" cursor="pointer">
-              Forget Password?
+              Forgot Password?
             </Box>
           </Box>
         </Box>

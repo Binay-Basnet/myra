@@ -3,7 +3,7 @@ import { AiOutlineSend } from 'react-icons/ai';
 import { BsArrowLeftRight, BsFileText } from 'react-icons/bs';
 import { ImStack } from 'react-icons/im';
 import { IoIosList } from 'react-icons/io';
-import { IoCubeOutline, IoPerson } from 'react-icons/io5';
+import { IoCubeOutline, IoMailUnread, IoPerson } from 'react-icons/io5';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
@@ -22,6 +22,7 @@ const NAVBAR_TAB_OBJECT: Record<string, number> = {
   loan: 4,
   reports: 5,
   transfer: 6,
+  requests: 7,
 };
 
 const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
@@ -59,11 +60,15 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   {
     title: 'transfer',
     icon: AiOutlineSend,
-    link: '/transfer',
+    link: '/transfer/vault-transfer/list',
+  },
+  {
+    title: 'requests',
+    icon: IoMailUnread,
+    link: '/requests/member',
   },
 ];
 
-// ! TODO create theme and tests
 export const TabMenu = () => {
   const router = useRouter();
   const { t } = useTranslation();

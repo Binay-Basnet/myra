@@ -1,0 +1,24 @@
+query getCoopMe {
+  eBanking {
+    auth {
+      meCooperativeUser {
+        data {
+          myraUserId
+          cooperativeId
+          cooperativeName
+          cooperativeProvince
+          cooperativeDistrict
+          cooperativeWard
+          cooperativeLocalGovt
+          memberId
+          memberName
+          memberProfilePicId
+          memberProfilePicUrl
+          memberMobileNo
+        }
+      }
+    }
+  }
+}
+
+

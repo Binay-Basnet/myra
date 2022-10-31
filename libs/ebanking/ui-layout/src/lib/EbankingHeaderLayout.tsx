@@ -1,7 +1,8 @@
-import { BiBell } from 'react-icons/bi';
 import Image from 'next/image';
 
-import { Avatar, Box, Button, Icon, IconButton } from '@coop/shared/ui';
+import { Box } from '@coop/shared/ui';
+
+import { HeaderRightSection } from '../components/EbankingHeader';
 
 interface IEbankingHeaderLayoutProps {
   children: React.ReactNode;
@@ -14,7 +15,6 @@ export const EbankingHeaderLayout = ({ children }: IEbankingHeaderLayoutProps) =
       position="sticky"
       bg="primary.600"
       h="60px"
-      px="s16"
       w="100%"
       top="0"
       zIndex="20"
@@ -22,22 +22,11 @@ export const EbankingHeaderLayout = ({ children }: IEbankingHeaderLayoutProps) =
       alignItems="center"
       justifyContent="space-between"
     >
-      <Box position="relative" h="s32" w="285px">
+      <Box position="relative" h="s32" w="285px" ml="s16">
         <Image src="/img.png" alt="logo" layout="fill" />{' '}
       </Box>
-      <Box w="250px" display="flex" justifyContent="end" gap="s16">
-        <IconButton
-          icon={<Icon size="md" as={BiBell} />}
-          aria-label="help"
-          variant="ghost"
-          color="white"
-          borderRadius="br1"
-          _hover={{ backgroundColor: 'secondary.900' }}
-        />
-        <Button w="40px" h="40px" variant="ghost" _hover={{ backgroundColor: 'secondary.900' }}>
-          <Avatar src="/avatar.png" size="sm" />
-        </Button>
-      </Box>
+
+      <HeaderRightSection />
     </Box>
     <Box
       w="100%"

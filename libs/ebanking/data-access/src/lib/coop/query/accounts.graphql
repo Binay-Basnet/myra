@@ -1,0 +1,122 @@
+query getAccountList($transactionPagination: Pagination) {
+  eBanking {
+    account {
+      list {
+        accounts {
+          id
+          name
+          productName
+          accountNumber
+          isDefault
+          balance
+          interestRate
+        }
+        recentTransactions(paginate: $transactionPagination) {
+          edges {
+            cursor
+            node {
+              id
+              accountId
+              name
+              date
+              month
+              transactionDirection
+              amount
+            }
+          }
+          pageInfo {
+            ...Pagination
+          }
+        }
+      }
+    }
+  }
+}
+
+query getAccountSummary {
+  eBanking {
+    account {
+      summary {
+        totalSaving
+        totalLoan
+      }
+    }
+  }
+}
+
+query getTransactionLists($filter: EbankingTransactionFilter, $pagination: Pagination) {
+  eBanking {
+    account {
+      list {
+        accounts {
+          id
+          name
+          accountNumber
+        }
+        recentTransactions(filter: $filter, paginate: $pagination) {
+          edges {
+            node {
+              id
+              accountId
+              name
+              date
+              month
+              transactionDirection
+              amount
+            }
+          }
+          pageInfo {
+            endCursor
+            startCursor
+            hasNextPage
+            hasPreviousPage
+          }
+        }
+      }
+    }
+  }
+}
+
+query getAccountDetails($id: ID!, $transactionPagination: Pagination) {
+  eBanking {
+    account {
+      get(id: $id) {
+        data {
+          id
+          productId
+          name
+          accountNumber
+          isDefault
+          balance
+          interestRate
+          accountType
+          accountSubType
+          interestBooked
+          interestEarned
+          subscribedDate
+          history {
+            id
+            balance
+            date
+          }
+          transactions(paginate: $transactionPagination) {
+            edges {
+              node {
+                id
+                accountId
+                name
+                date
+                month
+                transactionDirection
+                amount
+              }
+            }
+            pageInfo {
+              ...Pagination
+            }
+          }
+        }
+      }
+    }
+  }
+}

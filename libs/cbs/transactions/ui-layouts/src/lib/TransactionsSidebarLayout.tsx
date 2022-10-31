@@ -44,19 +44,19 @@ const transactionSidebarColumns = [
     title: 'transactionsSidebarLoanPayment',
     link: '/transactions/loan-payment/list',
     name: 'loan-payment',
-    addLink: '/transactions/loan-payment/add',
-  },
-  {
-    title: 'transactionsSidebarAgentList',
-    link: '/transactions/agent/list',
-    name: 'agent-list',
-    // addLink: '/transactions/agent/add',
+    addLink: '/loan/repayments/add',
   },
   {
     title: 'transactionsSidebarAgentTransaction',
     link: '/transactions/agent-transaction/list',
     name: 'agent-transaction',
     addLink: '/transactions/agent-transaction/add',
+  },
+  {
+    title: 'transactionsSidebarAgentList',
+    link: '/transactions/agent/list',
+    name: 'agent-list',
+    // addLink: '/transactions/agent/add',
   },
 ];
 
@@ -75,7 +75,7 @@ const dropdownButtons = [
   },
   {
     label: 'transactionSidebarNewLoanPayment',
-    link: '/transactions/loan-payment/add',
+    link: '/loan/repayments/add',
   },
   // {
   //   label: 'New Agent',

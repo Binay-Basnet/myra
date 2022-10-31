@@ -1,4 +1,8 @@
-import { NatureOfDepositProduct, useGetAccountTableListQuery } from '@coop/cbs/data-access';
+import {
+  NatureOfDepositProduct,
+  ObjState,
+  useGetAccountTableListQuery,
+} from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
 import { Option } from './CustomSelect';
@@ -9,9 +13,16 @@ interface IAccountSelectProps {
   label?: string;
   memberId: string;
   placeholder?: string;
+  filterBy?: ObjState;
 }
 
-export const FormAccountSelect = ({ name, label, memberId, placeholder }: IAccountSelectProps) => {
+export const FormAccountSelect = ({
+  name,
+  label,
+  memberId,
+  placeholder,
+  filterBy,
+}: IAccountSelectProps) => {
   const { t } = useTranslation();
   const { data: accountListData, isFetching } = useGetAccountTableListQuery(
     {
@@ -19,7 +30,7 @@ export const FormAccountSelect = ({ name, label, memberId, placeholder }: IAccou
         first: -1,
         after: '',
       },
-      filter: { memberId },
+      filter: { memberId, objState: filterBy ?? null },
     },
     {
       staleTime: 0,

@@ -3,7 +3,7 @@ import { FormProvider, useFieldArray, useForm, useFormContext } from 'react-hook
 import { AiOutlinePlus } from 'react-icons/ai';
 import { omit } from 'lodash';
 
-import { useGetAccountTableListQuery } from '@coop/cbs/data-access';
+import { ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
 import { FormNumberInput } from '@coop/shared/form';
 import {
   Box,
@@ -81,6 +81,10 @@ export const GuaranteeDetails = () => {
       ? (Number(currentBalance) * Number(guaranteePercent)) / 100
       : 1000;
 
+  if (!product?.allowGurantee) {
+    return null;
+  }
+
   return (
     <>
       <Box display="flex" flexDir="column" gap="s16">
@@ -134,7 +138,12 @@ export const GuaranteeDetails = () => {
         <FormProvider {...methods}>
           <Box display="flex" flexDir="column" gap="s16">
             <FormMemberSelect name="memberId" label="Select Member" />
-            <FormAccountSelect memberId={memberId} name="accountId" label="Select Account" />
+            <FormAccountSelect
+              memberId={memberId}
+              name="accountId"
+              label="Select Account"
+              filterBy={ObjState.Active}
+            />
             <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" gap="s16">
               <FormNumberInput
                 name="maxGuranteeAmountLimit"

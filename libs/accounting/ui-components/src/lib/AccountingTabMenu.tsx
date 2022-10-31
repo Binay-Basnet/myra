@@ -16,13 +16,13 @@ export interface AccountingTabMenuProps {}
 const NAVBAR_TAB_OBJECT: Record<string, number> = {
   '/sales': 0,
   '/purchase': 1,
-  '/accounting': 2,
   '/loan': 3,
   '/investment': 4,
+  '/accounting': 2,
 };
 
 // ! TODO create theme and tests
-export function AccountingTabMenu() {
+export const AccountingTabMenu = () => {
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -57,9 +57,8 @@ export function AccountingTabMenu() {
 
   const currentIndex =
     NAVBAR_TAB_OBJECT[
-      Object.keys(NAVBAR_TAB_OBJECT).find((string) =>
-        router?.pathname.includes(string)
-      ) ?? '/dashboard'
+      Object.keys(NAVBAR_TAB_OBJECT).find((string) => router?.pathname.includes(string)) ??
+        '/dashboard'
     ];
 
   return (
@@ -70,17 +69,12 @@ export function AccountingTabMenu() {
       pb="5px"
       background="secondary.700"
       alignItems="center"
-      justifyContent={'flex-start'}
+      justifyContent="flex-start"
       display="flex"
       gap="s8"
     >
       <Box w="200px">
-        <Text
-          fontWeight={'600'}
-          fontSize="16px"
-          color={'gray.0'}
-          letterSpacing="wide"
-        >
+        <Text fontWeight="600" fontSize="16px" color="gray.0" letterSpacing="wide">
           {t['accountingAccountingTabMenuAccounting']}
         </Text>
       </Box>
@@ -89,7 +83,7 @@ export function AccountingTabMenu() {
           {demotabs.map(({ title, icon, link }, index) => {
             const isActive = index === currentIndex;
             return (
-              <Link href={link} key={index}>
+              <Link href={link} key={link}>
                 <Tab
                   _focus={{}}
                   px="s16"
@@ -104,11 +98,7 @@ export function AccountingTabMenu() {
                     borderRadius: 'br2',
                   }}
                 >
-                  <Icon
-                    as={icon}
-                    size={'md'}
-                    color={isActive ? 'primary.500' : 'primary.300'}
-                  />
+                  <Icon as={icon} size="md" color={isActive ? 'primary.500' : 'primary.300'} />
 
                   <Text
                     fontSize="r1"
@@ -126,6 +116,6 @@ export function AccountingTabMenu() {
       </Tabs>
     </Box>
   );
-}
+};
 
 export default AccountingTabMenu;

@@ -1,0 +1,51 @@
+mutation setSalesCustomerData($id: ID!, $data: SalesCustomerInput!) {
+  accounting {
+    sales {
+      upsertCustomer(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation setSalesSaleEntryData($id: ID!, $data: SalesSaleEntryInput!) {
+  accounting {
+    sales {
+      upsertSaleEntry(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation setSalesCreditNoteData($id: ID!, $data: SalesCreditNoteInput!) {
+  accounting {
+    sales {
+      upsertCreditNote(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation setSalesCustomerPaymentData($id: ID!, $data: SalesCustomerPaymentInput!) {
+  accounting {
+    sales {
+      upsertCustomerPayment(id: $id, data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

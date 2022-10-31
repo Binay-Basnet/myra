@@ -1,0 +1,113 @@
+query getChequeBookRequests($pagination: Pagination, $filter: RequestFilter) {
+  requests {
+    list {
+      chequeBookRequest(paginate: $pagination, filter: $filter) {
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges {
+          node {
+            id
+            memberId
+            memberName
+            memberPhoneNumber
+            memberAge
+            memberGender
+            memberProfilePicUrl
+            accountNumber
+            accountType
+            approvalStatus
+            requestedDate
+            branchId
+            branchName
+            numberOfLeaves
+            pickUpMethod
+            agentName
+            remarks
+          }
+        }
+      }
+    }
+  }
+}
+
+query getWithdrawViaCollector($pagination: Pagination, $filter: RequestFilter) {
+  requests {
+    list {
+      withdrawViaCollector(paginate: $pagination, filter: $filter) {
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges {
+          node {
+            id
+            memberId
+            memberName
+            memberPhoneNumber
+            accountNumber
+            accountType
+            approvalStatus
+            requestedDate
+            collectorName
+            amount
+            remarks
+          }
+        }
+      }
+    }
+  }
+}
+
+query getLoanRequests($pagination: Pagination, $filter: RequestFilter) {
+  requests {
+    list {
+      loanRequest(filter: $filter, paginate: $pagination) {
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges {
+          node {
+            id
+            memberId
+            memberName
+            memberPhoneNumber
+            approvalStatus
+            loanAmount
+            lastModifiedDate
+            purpose
+          }
+        }
+      }
+    }
+  }
+}
+
+query getBlockChequeList($pagination: Pagination, $filter: RequestFilter){
+  requests{
+    list{
+      blockCheque(filter: $filter, paginate: $pagination){
+        totalCount
+        pageInfo {
+          ...Pagination
+        }
+        edges{
+          node{
+            id
+            memberId
+            memberName
+            memberPhoneNumber
+            accountNumber
+            accountType
+            approvalStatus
+            requestedDate
+            reason
+            chequeNumber
+          }
+        }
+      }
+    }
+  }
+}

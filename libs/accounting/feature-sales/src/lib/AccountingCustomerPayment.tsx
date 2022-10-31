@@ -2,40 +2,34 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
-import { PopoverComponent } from '@coop/myra/components';
+import {
+  CustomerPayment,
+  DateType,
+  useAppSelector,
+  useGetSalesCustomerPaymentListDataQuery,
+} from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, Text } from '@coop/shared/ui';
+import { TablePopover } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-/* eslint-disable-next-line */
-export interface AccountingCustomerPaymentProps {}
+const PayementMode = {
+  [CustomerPayment.BankTransfer]: 'Bank Transfer',
+  [CustomerPayment.Cash]: 'Cash',
+  [CustomerPayment.Cheque]: 'Cheque',
+};
 
 export const AccountingCustomerPayment = () => {
+  const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);
+
   const { t } = useTranslation();
 
   const router = useRouter();
 
-  const { data, isFetching } = useGetMemberListQuery({
+  const { data, isFetching } = useGetSalesCustomerPaymentListDataQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    filter: {
-      objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    },
   });
 
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
-
-  const popoverTitle = [
-    {
-      title: 'memberListTableViewMemberProfile',
-    },
-    {
-      title: 'memberListTableEditMember',
-    },
-    {
-      title: 'memberListTableMakeInactive',
-    },
-  ];
+  const rowData = useMemo(() => data?.accounting?.sales?.listCustomerPayment?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -44,66 +38,46 @@ export const AccountingCustomerPayment = () => {
         accessorFn: (row) => row?.node?.id,
       },
       {
-        accessorFn: (row) => row?.node?.name?.local,
-        header: t['accountingCustomerPaymentListCustomer'],
-        cell: (props) => (
-            <Box display="flex" alignItems="center" gap="s12">
-              <Avatar
-                name="Dan Abrahmov"
-                size="sm"
-                src="https://bit.ly/dan-abramov"
-              />
-              <Text
-                fontSize="s3"
-                textTransform="capitalize"
-                textOverflow="ellipsis"
-                overflow="hidden"
-              >
-                {props.getValue() as string}
-              </Text>
-            </Box>
-          ),
-
-        meta: {
-          width: '40%',
-        },
-      },
-      {
-        header: t['accountingCustomerPaymentListReceivedFrom'],
-        accessorFn: (row) => row?.node?.contact,
-        meta: {
-          width: '10%',
-        },
-      },
-
-      {
-        header: t['accountingCustomerPaymentListTotalAmount'],
-        accessorFn: (row) => row?.node?.contact,
+        accessorFn: (row) => row?.node?.receivedFrom,
+        header: 'Recieved From',
         meta: {
           width: '30%',
         },
       },
       {
+        header: t['accountingCustomerPaymentListTotalAmount'],
+        accessorFn: (row) => row?.node?.totalAmount,
+      },
+      {
         header: t['accountingCustomerPaymentListDate'],
-        accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
+        accessorFn: (row) =>
+          preferenceDate === DateType.Bs ? row?.node?.date?.np : row?.node?.date?.en ?? 'N/A',
       },
       {
         header: t['accountingCustomerPaymentListPaymentMode'],
-        accessorFn: (row) => row?.node?.contact,
-        meta: {
-          width: '10%',
-        },
+        accessorFn: (row) => (row?.node?.paymentMode ? PayementMode[row?.node?.paymentMode] : ''),
+        // meta: {
+        //   width: '10%',
+        // },
       },
       {
         id: '_actions',
         header: '',
         accessorKey: 'actions',
-        cell: (cell) => (
-          <PopoverComponent
-            items={popoverTitle}
-            member={cell?.row?.original?.node}
-          />
-        ),
+        cell: (props) =>
+          props?.row?.original?.node && (
+            <TablePopover
+              items={[
+                {
+                  title: 'Edit',
+                  onClick: (row) => {
+                    router.push(`/accounting/sales/customer-payment/edit/${row['id']}`);
+                  },
+                },
+              ]}
+              node={props?.row?.original?.node}
+            />
+          ),
         meta: {
           width: '60px',
         },
@@ -114,27 +88,21 @@ export const AccountingCustomerPayment = () => {
 
   return (
     <>
-      <AccountingPageHeader
-        heading={t['accountingCustomerPaymentListCustomerPayment']}
-        buttonLabel={t['accountingCustomerPaymentListNewCustomerPayment']}
-        buttonHandler={() =>
-          router.push('/accounting/sales/customer-payment/add')
-        }
-      />
+      <AccountingPageHeader heading={t['accountingCustomerPaymentListCustomerPayment']} />
 
       <Table
-        // rowClick={(id) => alert(id)}
         data={rowData}
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
         columns={columns}
         pagination={{
-          total: data?.members?.list?.totalCount ?? 'Many',
-          pageInfo: data?.members.list.pageInfo,
+          total: data?.accounting?.sales?.listCustomerPayment?.totalCount ?? 'Many',
+          pageInfo: data?.accounting?.sales?.listCustomerPayment?.pageInfo,
         }}
+        noDataTitle="customer payment list"
       />
     </>
   );
-}
+};
 
 export default AccountingCustomerPayment;

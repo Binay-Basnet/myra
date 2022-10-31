@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import { useGetAccountTableListQuery } from '@coop/cbs/data-access';
+import { ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
 import { FormAmountInput } from '@coop/shared/form';
 import {
   Alert,
@@ -49,6 +49,7 @@ export const Account = ({ totalAmount }: AmountType) => {
           name="account.accountId"
           memberId={memberId}
           label={t['sharePurchaseSelectAccount']}
+          filterBy={ObjState.Active}
         />
         {availableBalance && availableBalance?.length > 0 && (
           <Box mt="s8">

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 
 import {
@@ -14,12 +15,17 @@ import { useReplace } from '@coop/shared/utils';
 
 const url = process.env['NX_SCHEMA_PATH'] ?? '';
 
-export const useCoopInit = () => {
+interface IUseCoopInitProps {
+  isMeEnabled: boolean;
+}
+
+export const useCoopInit = ({ isMeEnabled }: IUseCoopInitProps) => {
   const [triggerQuery, setTriggerQuery] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
 
   const dispatch = useAppDispatch();
   const replace = useReplace();
+  const queryClient = useQueryClient();
 
   const router = useRouter();
 
@@ -29,7 +35,11 @@ export const useCoopInit = () => {
   const getMe = useGetCoopMeQuery(
     {},
     {
-      enabled: triggerQuery,
+      enabled: isMeEnabled && triggerQuery,
+      onSuccess: () => {
+        setIsLoading(false);
+        setTriggerQuery(false);
+      },
     }
   );
 
@@ -54,7 +64,10 @@ export const useCoopInit = () => {
         })
         .catch(() => {
           dispatch(logoutCooperative());
-          replace('/login/coop').then(() => setIsLoading(false));
+          replace('/login/coop').then(() => {
+            queryClient.clear();
+            setIsLoading(false);
+          });
         });
     }
   }, [dispatch, refreshToken, replace, isMyraLoggedIn]);
@@ -70,7 +83,10 @@ export const useCoopInit = () => {
         setIsLoading(false);
       } else if (!isMyra) {
         dispatch(logoutCooperative());
-        replace('/login/coop').then(() => setIsLoading(false));
+        replace('/login/coop').then(() => {
+          queryClient.clear();
+          setIsLoading(false);
+        });
       }
     }
   }, [dispatch, hasDataReturned, hasData, userData, replace]);

@@ -1,15 +1,15 @@
 import { ReactElement } from 'react';
 
-import { AccountingLayout } from '@coop/accounting/ui-layouts';
-import { Box, WIPState } from '@coop/shared/ui';
+import { InvestmentList } from '@coop/accounting/investment';
+import { AccountingLayout, InvestmentSidebarLayout } from '@coop/accounting/ui-layouts';
 
-const InvestmentList = () => (
-    <Box display="flex" justifyContent="center" alignItems="center">
-      <WIPState />
-    </Box>
+const InvestmentListPage = () => <InvestmentList />;
+
+InvestmentListPage.getLayout = function getLayout(page: ReactElement) {
+  return (
+    <AccountingLayout>
+      <InvestmentSidebarLayout>{page}</InvestmentSidebarLayout>
+    </AccountingLayout>
   );
-
-InvestmentList.getLayout = function getLayout(page: ReactElement) {
-  return <AccountingLayout>{page}</AccountingLayout>;
 };
-export default InvestmentList;
+export default InvestmentListPage;

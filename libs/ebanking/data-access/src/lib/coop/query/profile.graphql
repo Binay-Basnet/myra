@@ -1,0 +1,52 @@
+query getMemberProfile {
+  eBanking {
+    profile {
+      data {
+        memberId
+        name
+        dobAD
+        dobBS
+        gender
+        mobileNumber
+        email
+        temporaryAddress {
+          district
+          houseNo
+          localGovernment
+          locality
+          state
+          wardNo
+          coordinates {
+            latitude
+            longitude
+          }
+        }
+        permanentAddress {
+          district
+          houseNo
+          localGovernment
+          locality
+          state
+          wardNo
+          coordinates {
+            latitude
+            longitude
+          }
+        }
+        maritalStatus
+        familyMembers {
+          name
+          relationship
+        }
+        photo {
+          id
+          url
+        }
+        citizenship {
+          id
+          url
+        }
+      }
+    }
+  }
+}

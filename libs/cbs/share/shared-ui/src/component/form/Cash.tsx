@@ -42,7 +42,6 @@ export const Cash = ({
 
   const cashPaid = watch('cash.cashPaid');
   const disableDenomination = watch('cash.disableDenomination');
-
   const cashReturn = cashPaid - totalAmount;
 
   return (
@@ -127,8 +126,8 @@ export const Cash = ({
               gap="s8"
             >
               <Text>{denominationTotal}</Text>
-              <Text>{totalCashPaid ? returnAmount : 0}</Text>
-              <Text>{totalAmount || 0}</Text>
+              <Text>{totalCashPaid ? returnAmount.toFixed(2) : 0}</Text>
+              <Text>{totalAmount.toFixed(2) || 0}</Text>
             </Box>
           </Box>
         </GridItem>
@@ -167,8 +166,8 @@ export const Cash = ({
               gap="s8"
             >
               <Text>{cashPaid || 0}</Text>
-              <Text>{cashReturn || 0}</Text>
-              <Text>{totalAmount || 0}</Text>
+              <Text>{cashReturn.toFixed(2) || 0}</Text>
+              <Text>{totalAmount.toFixed(2) || 0}</Text>
             </Box>
           </Box>
         </GridItem>

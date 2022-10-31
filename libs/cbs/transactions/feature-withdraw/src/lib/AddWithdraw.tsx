@@ -6,6 +6,7 @@ import omit from 'lodash/omit';
 import {
   CashValue,
   NatureOfDepositProduct,
+  ObjState,
   useGetAccountTableListQuery,
   useSetWithdrawDataMutation,
   WithdrawBy,
@@ -230,6 +231,7 @@ export const AddWithdraw = () => {
                       name="accountId"
                       label={t['addWithdrawSelectWithdrawAccount']}
                       memberId={memberId}
+                      filterBy={ObjState.Active}
                     />
                   )}
 
@@ -343,9 +345,10 @@ export const AddWithdraw = () => {
                               type: selectedAccount?.product?.nature
                                 ? accountTypes[selectedAccount?.product?.nature]
                                 : '',
-                              ID: selectedAccount?.product?.id,
+                              ID: selectedAccount?.id,
                               currentBalance: selectedAccount?.balance ?? '0',
                               minimumBalance: selectedAccount?.product?.minimumBalance ?? '0',
+                              interestAccured: selectedAccount?.interestAccured ?? '0',
                               guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
                               overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
                               fine: selectedAccount?.dues?.fine ?? '0',
@@ -393,6 +396,7 @@ export const AddWithdraw = () => {
                 mode === 0 ? t['addWithdrawProceedToPayment'] : t['addWithdrawSubmit']
               }
               mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
+              isMainButtonDisabled={mode === 0 && !accountId}
             />
           </Container>
         </Box>

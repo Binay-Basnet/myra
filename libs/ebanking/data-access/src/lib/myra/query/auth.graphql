@@ -1,0 +1,30 @@
+query getMyraMe {
+  eBanking {
+    auth {
+      meMyraUser {
+        data {
+          id
+          cooperatives {
+            id
+            name
+            logoUrl
+            mobileNo
+          }
+          name
+          mobile
+          dob
+        }
+      }
+    }
+  }
+}
+
+query getCoopList {
+  eBanking {
+    neosysClientsList {
+      id
+      clientName
+      localGovernmentId
+    }
+  }
+}

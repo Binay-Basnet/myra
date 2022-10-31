@@ -5,7 +5,15 @@ import { BiArrowBack } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 
 import { useAppSelector, useResetPasswordMutation } from '@coop/cbs/data-access';
-import { Box, Button, ChangePasswordLayout, Icon, PasswordInput, Text } from '@coop/shared/ui';
+import {
+  asyncToast,
+  Box,
+  Button,
+  ChangePasswordLayout,
+  Icon,
+  PasswordInput,
+  Text,
+} from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const Container = ({ children }) => {
@@ -48,7 +56,7 @@ const errorText = (type) => {
     default:
       return (
         <Text fontSize="s2" color="red">
-          Password must have 1 lowercase, 1 uppercase and 1 special character
+          Password must have 1 lowercase, 1 uppercase, 1 number and 1 special character
         </Text>
       );
   }
@@ -68,9 +76,19 @@ const ChangePassword = () => {
   const { mutateAsync } = useResetPasswordMutation();
   const userId = useAppSelector((state) => state?.auth?.user?.id);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (data?.password === data?.cpassword) {
-      mutateAsync({ userId, newPassword: data?.password }).then(() => setSuccess(true));
+      await asyncToast({
+        id: 'change-passworrd',
+        msgs: {
+          success: 'Password changed in Successfully!!',
+          loading: 'changing password!!',
+        },
+        onSuccess: () => {
+          setSuccess(true);
+        },
+        promise: mutateAsync({ userId, newPassword: data?.password }),
+      });
     } else {
       toast('Password did not match');
     }

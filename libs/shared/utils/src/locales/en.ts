@@ -2976,7 +2976,7 @@ const en: Record<string, string> = {
   transactionsSidebarDeposit: 'Deposit',
   transactionsSidebarWithdraw: 'Withdraw',
   transactionsSidebarAccountTransfer: 'Account Transfer',
-  transactionsSidebarLoanPayment: 'Loan Payment',
+  transactionsSidebarLoanPayment: 'Loan Repayment',
   transactionsSidebarAgentList: 'Market Representative List',
   transactionsSidebarAgentTransaction: 'Market Representative Transaction',
   depositProductMinimumRate: 'Minimum Rate',
@@ -3293,7 +3293,7 @@ const en: Record<string, string> = {
   transactionSidebarNewDeposit: 'New Deposit',
   transactionSidebarNewWithdraw: 'New Withdraw',
   transactionSidebarNewAccountTransfer: 'New Account Transfer',
-  transactionSidebarNewLoanPayment: 'New Loan Payment',
+  transactionSidebarNewLoanPayment: 'New Loan Repayment',
   transactionSidebarNewMarketRepresentativeTransaction: 'New Market Representative Transaction',
 
   // deposit list
@@ -3628,5 +3628,20 @@ const en: Record<string, string> = {
   sharePurchaseTableShareDr: 'Share Return',
   shareRegisterTableIssue: 'Issue',
   shareRegisterTableReturn: 'Return',
+  depositProductInactiveProduct: 'Inactive Deposit Product',
+  depositProductInactiveReason: 'Reason for Inactive',
+
+  loanRepaymentDepositedBy: 'Deposited By',
+  prematurePenaltyEnable: 'Premature Penalty',
+
+  /* Requests Start */
+
+  requests: 'Requests',
+
+  /* Requests Start */
+
+  // accounting sales
+  accountingSalesSalesEntry: 'Sales Entry',
+  accountingSalesCustomers: 'Customers',
 };
 export default en;

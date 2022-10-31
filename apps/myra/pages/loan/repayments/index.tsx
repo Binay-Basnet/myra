@@ -1,9 +1,12 @@
 import { ReactElement } from 'react';
 
-import { LoanRepayment } from '@coop/cbs/loan/repayment';
-import { MainLayout } from '@coop/shared/ui';
+import { Box, MainLayout, WIPState } from '@coop/shared/ui';
 
-const LoanRepayments = () => <LoanRepayment />;
+const LoanRepayments = () => (
+  <Box display="flex" justifyContent="center" alignItems="center" pt="s32">
+    <WIPState />
+  </Box>
+);
 
 export default LoanRepayments;
 
