@@ -92,6 +92,7 @@ export const useCoopUnionAccountOperator = ({ methods, accountOpId }: IUseCoopUn
           ...accountOperatorDetail?.temporaryAddress,
           locality: accountOperatorDetail?.temporaryAddress?.locality?.local,
         },
+        trainingAttended: accountOperatorDetail?.trainingAttended ?? [],
       });
     }
   }, [editLoading, accountOperatorDetail]);
