@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { omit } from 'lodash';
 
@@ -69,6 +70,8 @@ type ShareReturnFormType = Omit<SharePurchaseInput, 'selectAllShares'> & {
 export const SharePurchaseForm = () => {
   const { t } = useTranslation();
 
+  const queryClient = useQueryClient();
+
   const [totalAmount, setTotalAmount] = useState(0);
   const [mode, setMode] = useState('shareInfo');
 
@@ -83,6 +86,8 @@ export const SharePurchaseForm = () => {
   const { watch, getValues } = methods;
 
   const router = useRouter();
+  const redirectPath = router.query['redirect'];
+  const redirectMemberId = router.query['memberId'];
 
   const memberId = watch('memberId');
   const noOfShares = watch('shareCount');
@@ -174,7 +179,14 @@ export const SharePurchaseForm = () => {
         success: 'Share Purchased',
         loading: 'Purchasing Share',
       },
-      onSuccess: () => router.push('/share/register'),
+      onSuccess: () => {
+        if (redirectPath) {
+          queryClient.invalidateQueries('getMemberCheck');
+          router.push(String(redirectPath));
+        } else {
+          router.push('/share/register');
+        }
+      },
       promise: mutateAsync({ data: updatedValues }),
     });
   };
@@ -199,6 +211,10 @@ export const SharePurchaseForm = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, extraFee, noOfShares, JSON.stringify(chargeList), JSON.stringify(extraFee)]);
+
+  useEffect(() => {
+    methods.setValue('memberId', String(redirectMemberId));
+  }, [redirectMemberId]);
 
   return (
     <>

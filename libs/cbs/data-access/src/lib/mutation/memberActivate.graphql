@@ -1,0 +1,12 @@
+mutation payMembership($data: MembershipPaymentInput, $memberId: ID!) {
+  members {
+    activateMember {
+      membershipPayment(data: $data, memberId: $memberId) {
+        error {
+          ...MutationError
+        }
+        recordId
+      }
+    }
+  }
+}

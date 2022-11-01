@@ -1,0 +1,43 @@
+query getMembershipFee($memberID: ID!) {
+  members {
+    activateMember {
+      getMembershipFee(memberID: $memberID) {
+        error {
+          ...QueryError
+        }
+        data {
+          charge
+        }
+      }
+    }
+  }
+}
+
+query getMemberCheck($memberID: ID!) {
+  members {
+    activateMember {
+      memberActivateChecks(memberId: $memberID) {
+        isFeePaid
+        isShareIssued
+      }
+    }
+  }
+}
+
+
+query getMemberAccounts($memberId: ID!){
+  members {
+    getAllAccounts(memberId: $memberId){
+      data {
+        depositAccount {
+          id
+          accountName
+        }
+        loanAccount {
+          id
+          LoanAccountName
+        }
+      }
+    }
+  }
+}
