@@ -90,7 +90,7 @@ export const SwitchTabs = ({
 
   const group = getRootProps();
 
-  const checkedIndex = options.findIndex((r) => r.value === checkedValue);
+  const checkedIndex = options.findIndex((r) => String(r.value) === String(checkedValue));
 
   useEffect(() => {
     if (value !== undefined) {

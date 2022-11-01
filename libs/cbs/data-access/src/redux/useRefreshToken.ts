@@ -3,12 +3,13 @@ import { useDispatch } from 'react-redux';
 import { NextRouter, useRouter } from 'next/router';
 import axios from 'axios';
 
-import { logout, saveToken } from './slices/auth-slice';
+import { saveToken } from './slices/auth-slice';
 
 interface IToken {
   access: string;
   refresh: string;
 }
+
 interface RefreshTokenResponse {
   data: {
     auth: {
@@ -89,10 +90,6 @@ export const useRefreshToken = (url: string) => {
         }
         replace('/login');
         throw new Error('Credentials are Expired!!');
-      })
-      .catch(() => {
-        replace('/login');
-        dispatch(logout());
       });
   }, [dispatch, replace, url]);
 

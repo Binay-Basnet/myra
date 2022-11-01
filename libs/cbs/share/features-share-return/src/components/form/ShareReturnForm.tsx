@@ -90,6 +90,16 @@ export const ShareReturnForm = () => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [mode, setMode] = useState('shareInfo');
 
+  const { data: chargesData, isLoading } = useGetShareChargesQuery(
+    {
+      transactionType: Share_Transaction_Direction?.Return,
+      shareCount: noOfShares,
+    },
+    { enabled: !!noOfShares }
+  );
+
+  const chargeList = chargesData?.share?.charges;
+
   const denominationTotal =
     denominations?.reduce(
       (accumulator: number, curr: { amount?: string }) => accumulator + Number(curr.amount),
@@ -124,6 +134,7 @@ export const ShareReturnForm = () => {
       ...omit(values, ['selectAllShares', 'accountAmount']),
       totalAmount: totalAmount.toString(),
       noOfReturnedShares: Number(values['noOfReturnedShares']),
+      extraFee: chargeList !== null ? values?.extraFee : null,
       memberId,
     };
 
@@ -179,16 +190,6 @@ export const ShareReturnForm = () => {
       }
     }
   }, [allShares, balanceData, getValues, reset]);
-
-  const { data: chargesData, isLoading } = useGetShareChargesQuery(
-    {
-      transactionType: Share_Transaction_Direction?.Return,
-      shareCount: noOfShares,
-    },
-    { enabled: !!noOfShares }
-  );
-
-  const chargeList = chargesData?.share?.charges;
 
   useEffect(() => {
     let temp = 0;

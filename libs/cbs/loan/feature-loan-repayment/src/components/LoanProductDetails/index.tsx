@@ -151,23 +151,27 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
               {loanData?.repaymentDetails?.remainingPrincipal}{' '}
             </Text>
           </Box>
-          <Box display="flex" justifyContent="space-between">
+          {loanData?.repaymentDetails?.remainingInterest && (
+            <Box display="flex" justifyContent="space-between">
+              <Text fontWeight="400" fontSize="s3">
+                Remaining Interest Amount{' '}
+              </Text>
+              <Text fontWeight="600" fontSize="s3">
+                {loanData?.repaymentDetails?.remainingInterest}
+              </Text>
+            </Box>
+          )}
+        </Box>
+        {loanData?.repaymentDetails?.remainingTotal && (
+          <Box display="flex" justifyContent="space-between" p="s16" bg="border.layout">
             <Text fontWeight="400" fontSize="s3">
-              Remaining Interest Amount{' '}
+              Total Remaining Amount
             </Text>
             <Text fontWeight="600" fontSize="s3">
-              {loanData?.repaymentDetails?.remainingInterest}
+              {loanData?.repaymentDetails?.remainingTotal}
             </Text>
           </Box>
-        </Box>
-        <Box display="flex" justifyContent="space-between" p="s16" bg="border.layout">
-          <Text fontWeight="400" fontSize="s3">
-            Total Remaining Amount
-          </Text>
-          <Text fontWeight="600" fontSize="s3">
-            {loanData?.repaymentDetails?.remainingTotal}
-          </Text>
-        </Box>
+        )}
       </Box>
     </Box>
   );

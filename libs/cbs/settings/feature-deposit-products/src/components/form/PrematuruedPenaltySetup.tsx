@@ -1,27 +1,24 @@
-import { useFormContext } from 'react-hook-form';
-
 import { PrematurePenaltyDateType } from '@coop/cbs/data-access';
 import { BoxContainer } from '@coop/shared/components';
-import { FormAmountInput, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Alert, Box, FormSection, Grid, GridItem, Text, TextFields } from '@coop/shared/ui';
+import { FormAmountInput, FormInput, FormSelect } from '@coop/shared/form';
+import { Alert, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const PrematuredPenalty = () => {
   const { t } = useTranslation();
-  const { watch } = useFormContext();
 
-  const prematurePenaltyEnable = watch('isPrematurePenaltyApplicable');
+  // const prematurePenaltyEnable = watch('isPrematurePenaltyApplicable');
 
-  const enableSwitch = [
-    {
-      label: t['enable'],
-      value: true,
-    },
-    {
-      label: t['disable'],
-      value: false,
-    },
-  ];
+  // const enableSwitch = [
+  //   {
+  //     label: t['enable'],
+  //     value: true,
+  //   },
+  //   {
+  //     label: t['disable'],
+  //     value: false,
+  //   },
+  // ];
 
   const penaltyDataType = [
     {
@@ -51,11 +48,42 @@ export const PrematuredPenalty = () => {
     <FormSection header="depositProductPrematuredPenaltySetup">
       <GridItem colSpan={3}>
         <BoxContainer>
-          <Box display="flex" justifyContent="space-between">
+          {/* <Box display="flex" justifyContent="space-between">
             <TextFields>{t['prematurePenaltyEnable']}</TextFields>
             <FormSwitchTab name="isPrematurePenaltyApplicable" options={enableSwitch} />
-          </Box>
-          {prematurePenaltyEnable && (
+          </Box> */}
+
+          <Grid templateColumns="repeat(3,1fr)" gap="s16">
+            <FormSelect
+              name="prematurePenalty.penaltyDateType"
+              label={t['depositProductPenaltyDateType']}
+              options={penaltyDataType}
+            />
+            <FormInput name="prematurePenalty.noOfDays" label={t['depositProductNumberofDays']} />
+
+            <FormInput
+              name="prematurePenalty.penaltyRate"
+              label={t['depositProductPenaltyRate']}
+              rightElement={
+                <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+                  %
+                </Text>
+              }
+              textAlign="right"
+            />
+            <FormAmountInput
+              name="prematurePenalty.penaltyAmount"
+              label={t['depositProductPenaltyAmount']}
+            />
+            <GridItem colSpan={3}>
+              <Alert status="warning">
+                <Text fontWeight="Medium" fontSize="r1">
+                  {t['penaltyAlert']}
+                </Text>
+              </Alert>
+            </GridItem>
+          </Grid>
+          {/* {prematurePenaltyEnable && (
             <Grid templateColumns="repeat(3,1fr)" gap="s16">
               <FormSelect
                 name="prematurePenalty.penaltyDateType"
@@ -63,11 +91,7 @@ export const PrematuredPenalty = () => {
                 options={penaltyDataType}
               />
               <FormInput name="prematurePenalty.noOfDays" label={t['depositProductNumberofDays']} />
-              {/* <FormSelect
-        name="prematurePenalty.penaltyLedgerMapping"
-        label={t['depositProductPenaltyLedgerMapping']}
-        options={coaList}
-      /> */}
+             
               <FormInput
                 name="prematurePenalty.penaltyRate"
                 label={t['depositProductPenaltyRate']}
@@ -90,7 +114,7 @@ export const PrematuredPenalty = () => {
                 </Alert>
               </GridItem>
             </Grid>
-          )}
+          )} */}
         </BoxContainer>
       </GridItem>
     </FormSection>

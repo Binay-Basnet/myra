@@ -922,6 +922,14 @@ export type BankDeleteResult = {
   recordId: Scalars['ID'];
 };
 
+export type BankDepositData = {
+  amount: Scalars['String'];
+  bankId: Scalars['String'];
+  depositedBy: PaymentDepositedBy;
+  depositedDate: Scalars['String'];
+  voucherId: Scalars['String'];
+};
+
 export type BankGetResult = {
   data?: Maybe<Bank>;
   error?: Maybe<QueryError>;
@@ -1183,6 +1191,14 @@ export type CoaView = {
   under?: Maybe<Scalars['ID']>;
 };
 
+export type CashDepositData = {
+  cash: Scalars['String'];
+  denominations?: InputMaybe<Array<InputMaybe<Denomination>>>;
+  disableDenomination: Scalars['Boolean'];
+  returned_amount: Scalars['String'];
+  total: Scalars['String'];
+};
+
 export enum CashValue {
   Cash_1 = 'CASH_1',
   Cash_2 = 'CASH_2',
@@ -1309,6 +1325,16 @@ export type ChequeBookRequestList = {
   pickUpMethod?: Maybe<ChequePickUpMethod>;
   remarks?: Maybe<Scalars['String']>;
   requestedDate: Scalars['String'];
+};
+
+export type ChequeDepositData = {
+  accountId: Scalars['String'];
+  agentID?: InputMaybe<Scalars['ID']>;
+  amount: Scalars['String'];
+  chequeNo: Scalars['String'];
+  depositedBy: DepositedBy;
+  isDifferentMember?: InputMaybe<Scalars['Boolean']>;
+  memberId?: InputMaybe<Scalars['String']>;
 };
 
 export type ChequePastRequest = {
@@ -3022,7 +3048,7 @@ export type EBankingAuthMutationLoginArgs = {
 export type EBankingAuthMutationLoginToCooperativeArgs = {
   cooperativeId: Scalars['ID'];
   mobileNumber: Scalars['String'];
-  pinCode?: InputMaybe<Scalars['Int']>;
+  pinCode: Scalars['String'];
 };
 
 export type EBankingAuthMutationResendOtpArgs = {
@@ -7351,9 +7377,9 @@ export type LoanAccountEdge = {
 };
 
 export type LoanAccountFormState = {
-  LoanAccountName?: Maybe<Scalars['String']>;
   appliedLoanAmount?: Maybe<Scalars['String']>;
   collateralData?: Maybe<Array<Maybe<LoanAccountCollateral>>>;
+  fingerprintDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
   gracePeriod?: Maybe<LoanAccountGrace>;
   gurantee_details?: Maybe<Array<Maybe<LoanAccountGurantee>>>;
   intrestRate?: Maybe<Scalars['Float']>;
@@ -7361,13 +7387,17 @@ export type LoanAccountFormState = {
   isCeoAuthority?: Maybe<Scalars['Boolean']>;
   justifySanction?: Maybe<Scalars['String']>;
   linkedAccountId?: Maybe<Scalars['String']>;
+  loanAccountName?: Maybe<Scalars['String']>;
   loanProcessingCharge?: Maybe<Array<Maybe<ServiceTypeFormState>>>;
   memberId?: Maybe<Scalars['ID']>;
+  nomineeDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
   note?: Maybe<Scalars['String']>;
+  photoDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
   productId?: Maybe<Scalars['ID']>;
   productSubType?: Maybe<Scalars['ID']>;
   productType: Scalars['ID'];
   repaymentScheme?: Maybe<LoanRepaymentScheme>;
+  signatureDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
   tenure?: Maybe<Scalars['Int']>;
   tenureType?: Maybe<FrequencyTenure>;
   totalSanctionedAmount?: Maybe<Scalars['String']>;
@@ -7763,6 +7793,7 @@ export type LoanPreviewLoanDetails = {
 
 export type LoanPreviewRepaymentDetails = {
   lastPaymentDate?: Maybe<Scalars['String']>;
+  nextInstallmentNo?: Maybe<Scalars['Int']>;
   remainingInstallments?: Maybe<Array<Maybe<LoanPreviewInstallment>>>;
   remainingInterest?: Maybe<Scalars['String']>;
   remainingPrincipal?: Maybe<Scalars['String']>;
@@ -7882,6 +7913,17 @@ export type LoanProductEdge = {
   node: LoanProduct;
 };
 
+export type LoanProductInactiveData = {
+  id: Scalars['ID'];
+  remarks: Scalars['String'];
+};
+
+export type LoanProductInactiveResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<LoanProductsQuery>;
+  recordId: Scalars['ID'];
+};
+
 export type LoanProductInput = {
   allowGurantee?: InputMaybe<Scalars['Boolean']>;
   allowPartialInstallment?: InputMaybe<Scalars['Boolean']>;
@@ -7977,6 +8019,7 @@ export type LoanProductMinimal = {
 
 export type LoanProductSearchFilter = {
   id?: InputMaybe<Scalars['ID']>;
+  objState?: InputMaybe<DepositProductStatus>;
   query?: InputMaybe<Scalars['String']>;
 };
 
@@ -8050,7 +8093,12 @@ export type LoanProductTypeInput = {
 };
 
 export type LoanProductsMutation = {
+  makeInactive?: Maybe<LoanProductInactiveResult>;
   upsert?: Maybe<LoanProductsResult>;
+};
+
+export type LoanProductsMutationMakeInactiveArgs = {
+  data?: InputMaybe<LoanProductInactiveData>;
 };
 
 export type LoanProductsMutationUpsertArgs = {
@@ -8318,9 +8366,35 @@ export type MemberAccountData = {
   loanAccount?: Maybe<Array<Maybe<LoanAccount>>>;
 };
 
+export type MemberAccountMinView = {
+  accountName?: Maybe<Scalars['String']>;
+  accountNumber?: Maybe<Scalars['String']>;
+  interestRate?: Maybe<Scalars['String']>;
+  productName?: Maybe<Scalars['String']>;
+  productType?: Maybe<Scalars['String']>;
+  totalBalance?: Maybe<Scalars['String']>;
+};
+
 export type MemberAccountResult = {
   data?: Maybe<MemberAccountData>;
   error?: Maybe<QueryError>;
+};
+
+export type MemberActivateMutation = {
+  membershipPayment?: Maybe<MembershipPaymentResult>;
+};
+
+export type MemberActivateMutationMembershipPaymentArgs = {
+  data?: InputMaybe<MembershipPaymentInput>;
+  memberId: Scalars['ID'];
+};
+
+export type MemberActivateQuery = {
+  getMembershipFee?: Maybe<MembershipFeeQueryResult>;
+};
+
+export type MemberActivateQueryGetMembershipFeeArgs = {
+  memberID: Scalars['ID'];
 };
 
 export type MemberActiveData = {
@@ -8394,6 +8468,7 @@ export type MemberInactiveResult = {
 };
 
 export type MemberMutation = {
+  activateMember?: Maybe<MemberActivateMutation>;
   cooperative?: Maybe<KymCooperativeMutation>;
   cooperativeUnion?: Maybe<KymCoopUnionMutation>;
   entry: KymEntryMutation;
@@ -8440,12 +8515,18 @@ export type MemberMutationTranslateArgs = {
   memberId: Scalars['ID'];
 };
 
+export type MemberOverviewAccountsView = {
+  accounts?: Maybe<Array<Maybe<MemberAccountMinView>>>;
+  payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
+};
+
 export type MemberOverviewData = {
-  accounts?: Maybe<Scalars['String']>;
+  accounts?: Maybe<MemberOverviewAccountsView>;
   bio?: Maybe<Scalars['String']>;
+  loan?: Maybe<MemberOverviewLoanView>;
   overview?: Maybe<OverviewView>;
-  reports?: Maybe<Scalars['String']>;
-  share?: Maybe<Scalars['String']>;
+  reports?: Maybe<MemberOverviewReportView>;
+  share?: Maybe<MemberOverviewShareView>;
   transactions?: Maybe<Scalars['String']>;
 };
 
@@ -8454,15 +8535,32 @@ export type MemberOverviewGraphs = {
   withdraw?: Maybe<MemberGraphData>;
 };
 
+export type MemberOverviewLoanView = {
+  accounts?: Maybe<Array<Maybe<MemberAccountMinView>>>;
+  payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
+};
+
+export type MemberOverviewReportView = {
+  list?: Maybe<Array<Maybe<MemberReportView>>>;
+};
+
 export type MemberOverviewResult = {
   data?: Maybe<MemberOverviewData>;
   error?: Maybe<QueryError>;
+};
+
+export type MemberOverviewShareView = {
+  balanceDetails?: Maybe<ShareRegisterConnection>;
+  registerDetails?: Maybe<Array<Maybe<ShareRegisterDetails>>>;
+  shareInfo?: Maybe<ShareInfoView>;
 };
 
 export type MemberPaymentView = {
   accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['String']>;
+  installmentNo?: Maybe<Scalars['String']>;
+  interestRate?: Maybe<Scalars['String']>;
   paymentType?: Maybe<Scalars['String']>;
 };
 
@@ -8473,6 +8571,7 @@ export type MemberProfile =
   | KymInsFormStateQuery;
 
 export type MemberQuery = {
+  activateMember?: Maybe<MemberActivateQuery>;
   cooperative?: Maybe<KymCooperativeQuery>;
   cooperativeUnion?: Maybe<KymCoopUnionQuery>;
   details: MemberDetailsResult;
@@ -8539,6 +8638,12 @@ export enum MemberRecentTransactionViewTxnType {
   Debit = 'DEBIT',
 }
 
+export type MemberReportView = {
+  category?: Maybe<Scalars['String']>;
+  code?: Maybe<Scalars['String']>;
+  reportName?: Maybe<Scalars['String']>;
+};
+
 export type MemberRiskData = {
   generalRisk?: Maybe<Scalars['Int']>;
   highRisk?: Maybe<Scalars['Int']>;
@@ -8565,6 +8670,36 @@ export type MemberStatisticsView = {
 export type MemberTypeResult = {
   data?: Maybe<Array<Maybe<KymMemberTypes>>>;
   error?: Maybe<QueryError>;
+};
+
+export type MembershipFeeQueryResult = {
+  data?: Maybe<MemberChargeData>;
+  error?: Maybe<QueryError>;
+};
+
+export type MembershipPaymentInput = {
+  amount?: InputMaybe<Scalars['String']>;
+  bankDeposit?: InputMaybe<BankDepositData>;
+  cashData?: InputMaybe<CashDepositData>;
+  chequeData?: InputMaybe<ChequeDepositData>;
+  depositedBy?: InputMaybe<DepositedBy>;
+  doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  otherName?: InputMaybe<Scalars['String']>;
+  other_doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  paymentMode: DepositPaymentType;
+  remark?: InputMaybe<Scalars['String']>;
+  sourceFund?: InputMaybe<Scalars['String']>;
+};
+
+export type MembershipPaymentRecord = {
+  id: Scalars['ID'];
+};
+
+export type MembershipPaymentResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<MemberQuery>;
+  record?: Maybe<MembershipPaymentRecord>;
+  recordId?: Maybe<Scalars['ID']>;
 };
 
 export type MonthlyDividendRate = {
@@ -9326,6 +9461,11 @@ export type PaymentAllocationInput = {
   type: Scalars['String'];
 };
 
+export enum PaymentDepositedBy {
+  Other = 'OTHER',
+  Self = 'SELF',
+}
+
 export type Penalty = {
   dayAfterInstallmentDate?: Maybe<Scalars['Int']>;
   penaltyAmount?: Maybe<Scalars['Amount']>;
@@ -9479,8 +9619,8 @@ export type PresignedUrlOutput = {
 };
 
 export type ProductCode = {
-  initialNo: Scalars['String'];
-  prefix: Scalars['String'];
+  initialNo?: InputMaybe<Scalars['String']>;
+  prefix?: InputMaybe<Scalars['String']>;
 };
 
 export type ProductCodeFormState = {
@@ -10341,6 +10481,13 @@ export type ShareHistory = {
   history?: Maybe<Array<Maybe<ShareRegister>>>;
 };
 
+export type ShareInfoView = {
+  issuedCount?: Maybe<Scalars['String']>;
+  returnedCount?: Maybe<Scalars['String']>;
+  totalBalance?: Maybe<Scalars['String']>;
+  totalCount?: Maybe<Scalars['String']>;
+};
+
 export type ShareInvestment = {
   certificateNo: Scalars['String'];
   count: Scalars['Int'];
@@ -10482,6 +10629,14 @@ export type ShareRegisterConnection = {
   edges: Array<ShareRegisterEdge>;
   pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
+};
+
+export type ShareRegisterDetails = {
+  date?: Maybe<Scalars['String']>;
+  noOfShares?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['String']>;
+  txnAmount?: Maybe<Scalars['String']>;
+  txnType?: Maybe<ShareTransactionType>;
 };
 
 export type ShareRegisterEdge = {
@@ -15687,7 +15842,7 @@ export type GetLoanApplicationDetailsQuery = {
         productType: string;
         productSubType?: string | null;
         productId?: string | null;
-        LoanAccountName?: string | null;
+        loanAccountName?: string | null;
         appliedLoanAmount?: string | null;
         linkedAccountId?: string | null;
         totalValuation?: string | null;
@@ -15841,6 +15996,7 @@ export type GetLoanPreviewQuery = {
           remainingInterest?: string | null;
           remainingTotal?: string | null;
           totalInstallmentAmount?: string | null;
+          nextInstallmentNo?: number | null;
           remainingInstallments?: Array<{
             installmentNo?: number | null;
             principal?: string | null;
@@ -15862,6 +16018,7 @@ export type GetLoanPreviewQuery = {
             payment: string;
             principal: string;
             remainingPrincipal: string;
+            paid: boolean;
           } | null> | null;
         } | null;
         statistics?: {
@@ -15869,6 +16026,41 @@ export type GetLoanPreviewQuery = {
           totalPaidAmount?: string | null;
           totalPayableAmount?: string | null;
         } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanRepaymentListQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<LoanRepaymentFilter>;
+}>;
+
+export type GetLoanRepaymentListQuery = {
+  loanAccount: {
+    repaymentList?: {
+      totalCount?: number | null;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          loanAccountId: string;
+          memberId: string;
+          memberName: Record<'local' | 'en' | 'np', string>;
+          memberProfilePicId?: string | null;
+          memberProfilePicUrl?: string | null;
+          loanAccountName: string;
+          loanProductId: string;
+          loanProductName: string;
+          amount: string;
+          paymentDate: string;
+        } | null;
+      }> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
       } | null;
     } | null;
   };
@@ -16348,6 +16540,24 @@ export type GetMemberDetailsOverviewQuery = {
   members: {
     memberOverview?: {
       data?: {
+        accounts?: {
+          accounts?: Array<{
+            accountName?: string | null;
+            accountNumber?: string | null;
+            totalBalance?: string | null;
+            productName?: string | null;
+            productType?: string | null;
+            interestRate?: string | null;
+          } | null> | null;
+          payments?: Array<{
+            date?: string | null;
+            accountName?: string | null;
+            paymentType?: string | null;
+            amount?: string | null;
+            installmentNo?: string | null;
+            interestRate?: string | null;
+          } | null> | null;
+        } | null;
         overview?: {
           basicInformation?: {
             memberName?: string | null;
@@ -24609,7 +24819,7 @@ export const GetLoanApplicationDetailsDocument = `
         productType
         productSubType
         productId
-        LoanAccountName
+        loanAccountName
         appliedLoanAmount
         collateralData {
           collateralType
@@ -24790,6 +25000,7 @@ export const GetLoanPreviewDocument = `
             interestAmount
           }
           totalInstallmentAmount
+          nextInstallmentNo
         }
         member {
           name
@@ -24807,6 +25018,7 @@ export const GetLoanPreviewDocument = `
             payment
             principal
             remainingPrincipal
+            paid
           }
         }
         statistics {
@@ -24829,6 +25041,48 @@ export const useGetLoanPreviewQuery = <TData = GetLoanPreviewQuery, TError = unk
       null,
       variables
     ),
+    options
+  );
+export const GetLoanRepaymentListDocument = `
+    query getLoanRepaymentList($paginate: Pagination, $filter: LoanRepaymentFilter) {
+  loanAccount {
+    repaymentList(paginate: $paginate, filter: $filter) {
+      totalCount
+      edges {
+        node {
+          id
+          loanAccountId
+          memberId
+          memberName
+          memberProfilePicId
+          memberProfilePicUrl
+          loanAccountName
+          loanProductId
+          loanProductName
+          amount
+          paymentDate
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanRepaymentListQuery = <TData = GetLoanRepaymentListQuery, TError = unknown>(
+  variables?: GetLoanRepaymentListQueryVariables,
+  options?: UseQueryOptions<GetLoanRepaymentListQuery, TError, TData>
+) =>
+  useQuery<GetLoanRepaymentListQuery, TError, TData>(
+    variables === undefined ? ['getLoanRepaymentList'] : ['getLoanRepaymentList', variables],
+    useAxios<GetLoanRepaymentListQuery, GetLoanRepaymentListQueryVariables>(
+      GetLoanRepaymentListDocument
+    ).bind(null, variables),
     options
   );
 export const GetMemberListDocument = `
@@ -25444,6 +25698,24 @@ export const GetMemberDetailsOverviewDocument = `
   members {
     memberOverview(id: $id) {
       data {
+        accounts {
+          accounts {
+            accountName
+            accountNumber
+            totalBalance
+            productName
+            productType
+            interestRate
+          }
+          payments {
+            date
+            accountName
+            paymentType
+            amount
+            installmentNo
+            interestRate
+          }
+        }
         overview {
           basicInformation {
             memberName

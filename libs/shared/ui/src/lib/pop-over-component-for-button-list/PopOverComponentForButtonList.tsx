@@ -27,7 +27,7 @@ export const PopOverComponentForButtonList = ({
         // bg="gray.0"
         p={0}
         w="225px"
-        _focus={{ boxShadow: 'none' }}
+        _focus={{ boxShadow: 'E1' }}
       >
         <PopoverBody p={0}>
           <Box display="flex" flexDirection="column" gap="s4">

@@ -91,6 +91,16 @@ export const SharePurchaseForm = () => {
   const disableDenomination = watch('cash.disableDenomination');
   const extraFee = watch('extraFee');
 
+  const { data: chargesData, isLoading } = useGetShareChargesQuery(
+    {
+      transactionType: Share_Transaction_Direction?.Purchase,
+      shareCount: noOfShares,
+    },
+    { enabled: !!noOfShares }
+  );
+
+  const chargeList = chargesData?.share?.charges;
+
   const denominationTotal =
     denominations?.reduce(
       (accumulator: number, curr: { amount?: string }) => accumulator + Number(curr.amount),
@@ -116,6 +126,7 @@ export const SharePurchaseForm = () => {
       ...omit(values, ['amount', 'accountAmount', 'accountId']),
       totalAmount: totalAmount.toString(),
       shareCount: Number(values['shareCount']),
+      extraFee: chargeList !== null ? values?.extraFee : null,
       memberId,
     };
 
@@ -167,16 +178,6 @@ export const SharePurchaseForm = () => {
       promise: mutateAsync({ data: updatedValues }),
     });
   };
-
-  const { data: chargesData, isLoading } = useGetShareChargesQuery(
-    {
-      transactionType: Share_Transaction_Direction?.Purchase,
-      shareCount: noOfShares,
-    },
-    { enabled: !!noOfShares }
-  );
-
-  const chargeList = chargesData?.share?.charges;
 
   useEffect(() => {
     let temp = 0;

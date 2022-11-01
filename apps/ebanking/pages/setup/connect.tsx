@@ -43,7 +43,7 @@ const SetupConnectPage = () => {
       if (response?.eBanking?.auth?.checkAccount?.success) {
         const coopResponse = await loginToCooperative({
           cooperativeId: methods.getValues().id,
-          pinCode: methods.getValues().pin as number,
+          pinCode: String(methods.getValues().pin),
           mobileNumber: methods.getValues().mobileNumber,
         });
 

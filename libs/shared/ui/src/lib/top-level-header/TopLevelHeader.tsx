@@ -34,7 +34,6 @@ import {
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
-  Select,
   ShortcutTab,
   SwitchTabs,
   Text,
@@ -520,7 +519,7 @@ export const TopLevelHeader = () => {
                         </Box>
 
                         <Box p="s8" borderBottom="1px solid " borderColor="border.layout">
-                          <Select
+                          {/* <Select
                             label="Branch"
                             __placeholder="Lalitpur"
                             options={[
@@ -537,7 +536,15 @@ export const TopLevelHeader = () => {
                                 value: 'option-3',
                               },
                             ]}
-                          />
+                          /> */}
+                          <Box>
+                            <Text fontSize="s3" color="black" fontWeight="medium">
+                              Branch
+                            </Text>
+                            <Text fontWeight="Regular" fontSize="s3" color="black">
+                              {user?.branch?.name || 'Lalitpur'}
+                            </Text>
+                          </Box>
                         </Box>
 
                         <Box

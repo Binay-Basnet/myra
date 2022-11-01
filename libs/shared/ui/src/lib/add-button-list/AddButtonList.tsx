@@ -19,7 +19,7 @@ export const AddButtonList = ({ onClick, label }: AddButtonListProps) => (
     onClick={onClick}
   >
     <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
-    <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
+    <Text fontSize="r1" fontWeight="400">
       {label}
     </Text>
   </Box>

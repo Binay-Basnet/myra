@@ -33,7 +33,7 @@ const Switch = () => {
 
     const response = await loginToCooperative({
       cooperativeId: newCoopId,
-      pinCode: methods.getValues('pin') as number,
+      pinCode: methods.getValues('pin'),
       mobileNumber: selectedCoopPhone,
     });
 

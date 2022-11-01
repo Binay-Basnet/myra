@@ -25,7 +25,7 @@ export const CBSAccountList = () => {
 
   const { data, isLoading } = useGetAccountTableListQuery(
     {
-      paginate: getRouterQuery({ type: ['PAGINATION'], query: router.query }),
+      paginate: getRouterQuery({ type: ['PAGINATION'] }),
       filter: {
         objState: (router.query['objState'] ?? ObjState.Active) as ObjState,
       },
@@ -121,5 +121,3 @@ export const CBSAccountList = () => {
     </>
   );
 };
-
-export default CBSAccountList;

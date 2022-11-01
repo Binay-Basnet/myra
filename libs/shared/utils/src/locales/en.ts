@@ -3643,5 +3643,9 @@ const en: Record<string, string> = {
   // accounting sales
   accountingSalesSalesEntry: 'Sales Entry',
   accountingSalesCustomers: 'Customers',
+
+  // loan application
+  LoanApplicationView: 'View Loan Application',
 };
+
 export default en;

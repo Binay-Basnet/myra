@@ -84,6 +84,7 @@ export const useCoopUnionBod = ({ methods, directorId }: IUseCoopUnionBodProps) 
     if (directorDetail) {
       reset({
         ...omit(directorDetail, ['id', 'cooperativeUnionId']),
+        trainingAttended: directorDetail.trainingAttended ?? [],
         permanentAddress: {
           ...directorDetail?.permanentAddress,
           locality: directorDetail?.permanentAddress?.locality?.local,

@@ -257,7 +257,7 @@ export const useSetNewPinMutation = <TError = unknown, TContext = unknown>(
     options
   );
 export const LoginToCooperativeDocument = `
-    mutation loginToCooperative($cooperativeId: ID!, $pinCode: Int, $mobileNumber: String!) {
+    mutation loginToCooperative($cooperativeId: ID!, $pinCode: String!, $mobileNumber: String!) {
   eBanking {
     auth(type: EBANKING) {
       loginToCooperative(

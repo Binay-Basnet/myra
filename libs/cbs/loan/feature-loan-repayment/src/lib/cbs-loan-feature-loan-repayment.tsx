@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { useDisclosure } from '@chakra-ui/react';
 import omit from 'lodash/omit';
 
 import {
   CashValue,
+  LoanInstallment,
   LoanRepaymentInput,
   LoanRepaymentMethod,
   useGetLoanPreviewQuery,
@@ -16,12 +18,14 @@ import {
   asyncToast,
   Box,
   Button,
+  ChakraModal,
   Container,
   FormFooter,
   FormHeader,
   FormMemberSelect,
   Grid,
   MemberCard,
+  Text,
 } from '@coop/shared/ui';
 import { useGetIndividualMemberDetails } from '@coop/shared/utils';
 
@@ -54,6 +58,8 @@ const cashOptions: Record<string, string> = {
 
 export const LoanRepayment = () => {
   const [triggerQuery, setTriggerQuery] = useState(false);
+  const { isOpen, onClose, onToggle } = useDisclosure();
+
   const [triggerLoanQuery, setTriggerLoanQuery] = useState(false);
   const { mutateAsync } = useSetLoanRepaymentMutation();
 
@@ -168,7 +174,19 @@ export const LoanRepayment = () => {
   const loanTotal =
     loanPreview?.data?.loanAccount?.loanPreview?.data?.repaymentDetails?.totalInstallmentAmount;
   const loanData = loanPreview?.data?.loanAccount?.loanPreview?.data;
-  const loanPaymentSchedule = loanData?.paymentSchedule?.installments;
+  const loanTry = loanData?.paymentSchedule?.installments;
+  const nextInstallmentNumber = loanData?.repaymentDetails?.nextInstallmentNo as number;
+  const loanPaymentSchedule =
+    loanTry?.map((value, index) => ({
+      installmentDate: value?.installmentDate,
+      installmentNo: value?.installmentNo,
+      interest: value?.interest,
+      payment: value?.payment,
+      principal: value?.principal,
+      remainingPrincipal: value?.remainingPrincipal,
+      paid: nextInstallmentNumber > index + 1,
+    })) || [];
+  const loanPaymentScheduleSplice = loanPaymentSchedule?.slice(0, 11) || [];
 
   useEffect(() => {
     if (loanAccountId) {
@@ -207,12 +225,33 @@ export const LoanRepayment = () => {
                     options={loanAccountOptions}
                   />
                 )}
-                {memberId && loanAccountId && loanPaymentSchedule && (
+                {memberId && loanAccountId && loanPaymentScheduleSplice && loanPaymentSchedule && (
                   <Box display="flex" flexDirection="column" gap="s16" w="100%">
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                      <Text fontSize="r1" fontWeight="600">
+                        Loan Payment Schedule
+                      </Text>
+                      <Button variant="ghost" onClick={onToggle}>
+                        View full schedule{' '}
+                      </Button>
+                    </Box>
                     <LoanPaymentScheduleTable
-                      data={loanPaymentSchedule}
+                      data={loanPaymentScheduleSplice as LoanInstallment[]}
                       total={loanData?.paymentSchedule?.total as string}
                     />
+                    <ChakraModal
+                      onClose={onClose}
+                      open={isOpen}
+                      title="Payment Schedule"
+                      scrollBehavior="inside"
+                      blockScrollOnMount
+                      width="3xl"
+                    >
+                      <LoanPaymentScheduleTable
+                        data={loanPaymentSchedule as LoanInstallment[]}
+                        total={loanData?.paymentSchedule?.total as string}
+                      />
+                    </ChakraModal>
                     <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
                       <FormInput name="amountPaid" label="Amount to Pay" textAlign="right" />
                     </Grid>

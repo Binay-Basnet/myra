@@ -198,16 +198,31 @@ export const SettingsDepositProductsAdd = () => {
       accountCloseCharge: accountCloseChargeList,
       chequeCharge: chequeChargeList,
       atmCharge: atmChargeList,
+      isTenureApplicable:
+        depositNature === NatureOfDepositProduct.RecurringSaving ||
+        depositNature === NatureOfDepositProduct.TermSavingOrFd
+          ? true
+          : values?.isTenureApplicable,
       specifyWithdrawRestriction: withdrawRestricted ? values?.specifyWithdrawRestriction : null,
       transactionAllowed:
         depositNature !== NatureOfDepositProduct.TermSavingOrFd && values?.transactionAllowed
           ? values?.transactionAllowed
           : null,
-      tenureUnit: values?.tenureUnit && isTenureApplicable ? values?.tenureUnit : null,
+      tenureUnit:
+        depositNature === NatureOfDepositProduct.RecurringSaving ||
+        depositNature === NatureOfDepositProduct.TermSavingOrFd
+          ? values?.tenureUnit ?? null
+          : null,
       maxTenureUnitNumber:
-        values?.maxTenureUnitNumber && isTenureApplicable ? values?.maxTenureUnitNumber : null,
+        depositNature === NatureOfDepositProduct.RecurringSaving ||
+        depositNature === NatureOfDepositProduct.TermSavingOrFd
+          ? values?.maxTenureUnitNumber ?? null
+          : null,
       minTenureUnitNumber:
-        values?.minTenureUnitNumber && isTenureApplicable ? values?.minTenureUnitNumber : null,
+        depositNature === NatureOfDepositProduct.RecurringSaving ||
+        depositNature === NatureOfDepositProduct.TermSavingOrFd
+          ? values?.minTenureUnitNumber ?? null
+          : null,
       depositFrequency:
         depositNature === NatureOfDepositProduct.RecurringSaving || isMandatorySaving
           ? values?.depositFrequency
@@ -258,6 +273,11 @@ export const SettingsDepositProductsAdd = () => {
         maxAmount: values?.balanceLimit?.maxAmount ?? null,
         minAmount: values?.balanceLimit?.minAmount ?? null,
       },
+      isPrematurePenaltyApplicable:
+        depositNature === NatureOfDepositProduct.RecurringSaving ||
+        depositNature === NatureOfDepositProduct.TermSavingOrFd
+          ? true
+          : values?.isPrematurePenaltyApplicable,
       prematurePenalty:
         depositNature === NatureOfDepositProduct.RecurringSaving ||
         depositNature === NatureOfDepositProduct.TermSavingOrFd
