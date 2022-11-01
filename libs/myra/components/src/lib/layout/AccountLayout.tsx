@@ -25,6 +25,7 @@ const accountColumns = [
     title: 'accountList',
     link: '/accounts/list',
     addLinkId: '/accounts/account-open',
+    idType: Id_Type?.Account,
   },
   {
     title: 'accountDepositProduct',
@@ -34,6 +35,7 @@ const accountColumns = [
     title: 'accountClose',
     link: '/accounts/account-close',
     addLinkId: '/accounts/account-close',
+    idType: Id_Type?.Account,
   },
 ];
 
