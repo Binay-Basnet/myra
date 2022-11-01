@@ -307,7 +307,7 @@ export const TopLevelHeader = () => {
                         display="flex"
                         justifyContent="center"
                         w="100%"
-                        onClick={() => router.push('day-close')}
+                        onClick={() => router.push('/day-close')}
                         disabled={closingDate !== currentDate}
                       >
                         Close Day
