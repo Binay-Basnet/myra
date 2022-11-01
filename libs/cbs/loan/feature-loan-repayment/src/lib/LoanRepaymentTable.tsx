@@ -25,8 +25,8 @@ export const CBSLoanRepaymentList = () => {
 
   const popoverTitle = [
     {
-      title: 'depositProductEdit',
-      //   onClick: (id: string) => router.push(`/accounts/account-open/edit/${id}`),
+      title: 'LoanApplicationView',
+      onClick: (id: string) => router.push(`/loan/accounts/view?id=${id}`),
     },
   ];
 
@@ -83,7 +83,7 @@ export const CBSLoanRepaymentList = () => {
         cell: (props) => (
           <ActionPopoverComponent
             items={popoverTitle}
-            id={props?.row?.original?.node?.id as string}
+            id={props?.row?.original?.node?.loanAccountId as string}
           />
         ),
         meta: {

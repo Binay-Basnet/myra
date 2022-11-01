@@ -2,6 +2,24 @@ query getMemberDetailsOverview($id: ID!) {
   members {
     memberOverview(id: $id) {
       data {
+        accounts {
+          accounts {
+            accountName
+            accountNumber
+            totalBalance
+            productName
+            productType
+            interestRate
+          }
+          payments {
+            date
+            accountName
+            paymentType
+            amount
+            installmentNo
+            interestRate
+          }
+        }
         overview {
           basicInformation {
             memberName

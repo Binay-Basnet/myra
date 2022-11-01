@@ -83,8 +83,13 @@ export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTa
           const value = props.getValue();
 
           return (
-            <Text textAlign="center" fontSize="s3">
-              {value ? 'paid' : '-'}
+            <Text
+              textAlign="center"
+              fontSize="r1"
+              fontWeight="500"
+              color={value ? 'primary.500' : 'gray.600'}
+            >
+              {value ? 'Paid' : '-'}
             </Text>
           );
         },

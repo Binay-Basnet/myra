@@ -7793,6 +7793,7 @@ export type LoanPreviewLoanDetails = {
 
 export type LoanPreviewRepaymentDetails = {
   lastPaymentDate?: Maybe<Scalars['String']>;
+  nextInstallmentNo?: Maybe<Scalars['Int']>;
   remainingInstallments?: Maybe<Array<Maybe<LoanPreviewInstallment>>>;
   remainingInterest?: Maybe<Scalars['String']>;
   remainingPrincipal?: Maybe<Scalars['String']>;
@@ -8365,6 +8366,15 @@ export type MemberAccountData = {
   loanAccount?: Maybe<Array<Maybe<LoanAccount>>>;
 };
 
+export type MemberAccountMinView = {
+  accountName?: Maybe<Scalars['String']>;
+  accountNumber?: Maybe<Scalars['String']>;
+  interestRate?: Maybe<Scalars['String']>;
+  productName?: Maybe<Scalars['String']>;
+  productType?: Maybe<Scalars['String']>;
+  totalBalance?: Maybe<Scalars['String']>;
+};
+
 export type MemberAccountResult = {
   data?: Maybe<MemberAccountData>;
   error?: Maybe<QueryError>;
@@ -8505,12 +8515,18 @@ export type MemberMutationTranslateArgs = {
   memberId: Scalars['ID'];
 };
 
+export type MemberOverviewAccountsView = {
+  accounts?: Maybe<Array<Maybe<MemberAccountMinView>>>;
+  payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
+};
+
 export type MemberOverviewData = {
-  accounts?: Maybe<Scalars['String']>;
+  accounts?: Maybe<MemberOverviewAccountsView>;
   bio?: Maybe<Scalars['String']>;
+  loan?: Maybe<MemberOverviewLoanView>;
   overview?: Maybe<OverviewView>;
-  reports?: Maybe<Scalars['String']>;
-  share?: Maybe<Scalars['String']>;
+  reports?: Maybe<MemberOverviewReportView>;
+  share?: Maybe<MemberOverviewShareView>;
   transactions?: Maybe<Scalars['String']>;
 };
 
@@ -8519,15 +8535,32 @@ export type MemberOverviewGraphs = {
   withdraw?: Maybe<MemberGraphData>;
 };
 
+export type MemberOverviewLoanView = {
+  accounts?: Maybe<Array<Maybe<MemberAccountMinView>>>;
+  payments?: Maybe<Array<Maybe<MemberPaymentView>>>;
+};
+
+export type MemberOverviewReportView = {
+  list?: Maybe<Array<Maybe<MemberReportView>>>;
+};
+
 export type MemberOverviewResult = {
   data?: Maybe<MemberOverviewData>;
   error?: Maybe<QueryError>;
+};
+
+export type MemberOverviewShareView = {
+  balanceDetails?: Maybe<ShareRegisterConnection>;
+  registerDetails?: Maybe<Array<Maybe<ShareRegisterDetails>>>;
+  shareInfo?: Maybe<ShareInfoView>;
 };
 
 export type MemberPaymentView = {
   accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['String']>;
+  installmentNo?: Maybe<Scalars['String']>;
+  interestRate?: Maybe<Scalars['String']>;
   paymentType?: Maybe<Scalars['String']>;
 };
 
@@ -8604,6 +8637,12 @@ export enum MemberRecentTransactionViewTxnType {
   Credit = 'CREDIT',
   Debit = 'DEBIT',
 }
+
+export type MemberReportView = {
+  category?: Maybe<Scalars['String']>;
+  code?: Maybe<Scalars['String']>;
+  reportName?: Maybe<Scalars['String']>;
+};
 
 export type MemberRiskData = {
   generalRisk?: Maybe<Scalars['Int']>;
@@ -10442,6 +10481,13 @@ export type ShareHistory = {
   history?: Maybe<Array<Maybe<ShareRegister>>>;
 };
 
+export type ShareInfoView = {
+  issuedCount?: Maybe<Scalars['String']>;
+  returnedCount?: Maybe<Scalars['String']>;
+  totalBalance?: Maybe<Scalars['String']>;
+  totalCount?: Maybe<Scalars['String']>;
+};
+
 export type ShareInvestment = {
   certificateNo: Scalars['String'];
   count: Scalars['Int'];
@@ -10583,6 +10629,14 @@ export type ShareRegisterConnection = {
   edges: Array<ShareRegisterEdge>;
   pageInfo?: Maybe<PageInfo>;
   totalCount: Scalars['Int'];
+};
+
+export type ShareRegisterDetails = {
+  date?: Maybe<Scalars['String']>;
+  noOfShares?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['String']>;
+  txnAmount?: Maybe<Scalars['String']>;
+  txnType?: Maybe<ShareTransactionType>;
 };
 
 export type ShareRegisterEdge = {
@@ -15942,6 +15996,7 @@ export type GetLoanPreviewQuery = {
           remainingInterest?: string | null;
           remainingTotal?: string | null;
           totalInstallmentAmount?: string | null;
+          nextInstallmentNo?: number | null;
           remainingInstallments?: Array<{
             installmentNo?: number | null;
             principal?: string | null;
@@ -16485,6 +16540,24 @@ export type GetMemberDetailsOverviewQuery = {
   members: {
     memberOverview?: {
       data?: {
+        accounts?: {
+          accounts?: Array<{
+            accountName?: string | null;
+            accountNumber?: string | null;
+            totalBalance?: string | null;
+            productName?: string | null;
+            productType?: string | null;
+            interestRate?: string | null;
+          } | null> | null;
+          payments?: Array<{
+            date?: string | null;
+            accountName?: string | null;
+            paymentType?: string | null;
+            amount?: string | null;
+            installmentNo?: string | null;
+            interestRate?: string | null;
+          } | null> | null;
+        } | null;
         overview?: {
           basicInformation?: {
             memberName?: string | null;
@@ -24927,6 +25000,7 @@ export const GetLoanPreviewDocument = `
             interestAmount
           }
           totalInstallmentAmount
+          nextInstallmentNo
         }
         member {
           name
@@ -25624,6 +25698,24 @@ export const GetMemberDetailsOverviewDocument = `
   members {
     memberOverview(id: $id) {
       data {
+        accounts {
+          accounts {
+            accountName
+            accountNumber
+            totalBalance
+            productName
+            productType
+            interestRate
+          }
+          payments {
+            date
+            accountName
+            paymentType
+            amount
+            installmentNo
+            interestRate
+          }
+        }
         overview {
           basicInformation {
             memberName

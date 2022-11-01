@@ -174,8 +174,19 @@ export const LoanRepayment = () => {
   const loanTotal =
     loanPreview?.data?.loanAccount?.loanPreview?.data?.repaymentDetails?.totalInstallmentAmount;
   const loanData = loanPreview?.data?.loanAccount?.loanPreview?.data;
-  const loanPaymentSchedule = loanData?.paymentSchedule?.installments ?? [];
-  const loanPaymentScheduleSplice = loanData?.paymentSchedule?.installments?.slice(0, 11);
+  const loanTry = loanData?.paymentSchedule?.installments;
+  const nextInstallmentNumber = loanData?.repaymentDetails?.nextInstallmentNo as number;
+  const loanPaymentSchedule =
+    loanTry?.map((value, index) => ({
+      installmentDate: value?.installmentDate,
+      installmentNo: value?.installmentNo,
+      interest: value?.interest,
+      payment: value?.payment,
+      principal: value?.principal,
+      remainingPrincipal: value?.remainingPrincipal,
+      paid: nextInstallmentNumber > index + 1,
+    })) || [];
+  const loanPaymentScheduleSplice = loanPaymentSchedule?.slice(0, 11) || [];
 
   useEffect(() => {
     if (loanAccountId) {
