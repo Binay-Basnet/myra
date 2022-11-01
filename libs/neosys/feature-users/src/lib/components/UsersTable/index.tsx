@@ -35,18 +35,12 @@ export const UsersTable = () => {
         disableSortBy: false,
         disableFilters: false,
 
-        Cell: ({ value }) => {
-          return (
-            <Flex alignItems="center" gap="2">
-              <Avatar
-                name="Dan Abrahmov"
-                size="sm"
-                src="https://bit.ly/dan-abramov"
-              />
-              <span>{value}</span>
-            </Flex>
-          );
-        },
+        Cell: ({ value }) => (
+          <Flex alignItems="center" gap="2">
+            <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
+            <span>{value}</span>
+          </Flex>
+        ),
       },
 
       {
@@ -54,13 +48,11 @@ export const UsersTable = () => {
         accessor: 'node.address.locality.local',
         width: '20%',
 
-        Cell: ({ value, row }) => {
-          return (
-            <span>
-              {value}, {row?.original?.node?.address?.locality?.local}
-            </span>
-          );
-        },
+        Cell: ({ value, row }) => (
+          <span>
+            {value}, {row?.original?.node?.address?.locality?.local}
+          </span>
+        ),
       },
       {
         Header: 'Phone Number',
@@ -68,9 +60,7 @@ export const UsersTable = () => {
         disableSortBy: false,
         disableFilters: false,
 
-        Cell: ({ value }) => {
-          return <span>{value}</span>;
-        },
+        Cell: ({ value }) => <span>{value}</span>,
       },
       {
         Header: '',
@@ -108,10 +98,10 @@ export const UsersTable = () => {
         isLoading={isFetching}
         data={rowData}
         columns={columns}
-        sort={true}
-        disableSortAll={true}
-        filter={true}
-        disableFilterAll={true}
+        sort
+        disableSortAll
+        filter
+        disableFilterAll
         searchPlaceholder="Search Users"
         // pagination={{
         //   total: 1200,

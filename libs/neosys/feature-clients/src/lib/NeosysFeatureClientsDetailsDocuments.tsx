@@ -9,9 +9,7 @@ import { ClientDetailHeader } from './components';
 /* eslint-disable-next-line */
 export interface NeosysFeatureClientsDetailsDocumentsProps {}
 
-export function NeosysFeatureClientsDetailsDocuments(
-  props: NeosysFeatureClientsDetailsDocumentsProps
-) {
+export const NeosysFeatureClientsDetailsDocuments = () => {
   const { t } = useTranslation();
 
   const documentsList = [
@@ -45,8 +43,8 @@ export function NeosysFeatureClientsDetailsDocuments(
       />
 
       <Grid p="s16" gap="s16" templateColumns="repeat(2, 1fr)">
-        {documentsList.map(({ title, img }, index) => (
-          <NeosysDocumentCard title={title} img={img} key={index} />
+        {documentsList.map(({ title, img }) => (
+          <NeosysDocumentCard title={title} img={img} key={title} />
         ))}
         {/* <Box
           display="flex"
@@ -135,6 +133,6 @@ export function NeosysFeatureClientsDetailsDocuments(
       </Grid>
     </Box>
   );
-}
+};
 
 export default NeosysFeatureClientsDetailsDocuments;

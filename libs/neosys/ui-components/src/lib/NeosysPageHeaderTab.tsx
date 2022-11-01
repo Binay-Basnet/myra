@@ -34,29 +34,25 @@ export const NeosysPageHeaderTab = ({
   const router = useRouter();
   const { t } = useTranslation();
 
-  const currentIndex = list.findIndex(
-    (value) => router.query['objState'] === value.key
-  );
+  const currentIndex = list.findIndex((value) => router.query['objState'] === value.key);
 
   return (
     <Tabs variant="unstyled" index={currentIndex === -1 ? 0 : currentIndex}>
       <TabList>
-        {list.map((item, index) => {
-          return (
-            <TabElement
-              onClick={() =>
-                router.push({
-                  query: {
-                    objState: item.key,
-                  },
-                })
-              }
-              key={`${item}${index}`}
-            >
-              {t[item.title as keyof typeof en]}
-            </TabElement>
-          );
-        })}
+        {list.map((item) => (
+          <TabElement
+            onClick={() =>
+              router.push({
+                query: {
+                  objState: item.key,
+                },
+              })
+            }
+            key={item?.key}
+          >
+            {t[item.title as keyof typeof en]}
+          </TabElement>
+        ))}
       </TabList>
     </Tabs>
   );

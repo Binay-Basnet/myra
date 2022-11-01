@@ -19,7 +19,7 @@ const NAVBAR_TAB_OBJECT: Record<string, number> = {
   '/settings': 3,
 };
 
-export function TabMenu(props: TabMenuProps) {
+export const TabMenu = () => {
   const router = useRouter();
 
   const { t } = useTranslation();
@@ -50,9 +50,7 @@ export function TabMenu(props: TabMenuProps) {
   const currentIndex =
     NAVBAR_TAB_OBJECT[
       Object.keys(NAVBAR_TAB_OBJECT).find((string) =>
-        string.length === 1
-          ? router?.pathname === string
-          : router?.pathname.includes(string)
+        string.length === 1 ? router?.pathname === string : router?.pathname.includes(string)
       ) ?? '/'
     ];
 
@@ -60,14 +58,12 @@ export function TabMenu(props: TabMenuProps) {
     <Box height="50px" px="s16" py="s4" alignItems="center" display="flex">
       <Tabs index={currentIndex} size="md" height="100%" variant="enclosed">
         <TabList border="none" height="100%">
-          {demotabs.map(({ title, icon, link }, index) => {
+          {demotabs.map(({ title, icon, link }) => {
             const isActive =
-              link.length === 1
-                ? router?.pathname === link
-                : router?.pathname.includes(link);
+              link.length === 1 ? router?.pathname === link : router?.pathname.includes(link);
 
             return (
-              <Link href={link} key={index}>
+              <Link href={link} key={link}>
                 <Tab
                   _focus={{}}
                   px="s24"
@@ -82,11 +78,7 @@ export function TabMenu(props: TabMenuProps) {
                     borderRadius: 'br2',
                   }}
                 >
-                  <Icon
-                    as={icon}
-                    size={'md'}
-                    color={isActive ? 'primary.500' : 'primary.300'}
-                  />
+                  <Icon as={icon} size="md" color={isActive ? 'primary.500' : 'primary.300'} />
 
                   <Text
                     fontSize="r1"
@@ -104,6 +96,6 @@ export function TabMenu(props: TabMenuProps) {
       </Tabs>
     </Box>
   );
-}
+};
 
 export default TabMenu;

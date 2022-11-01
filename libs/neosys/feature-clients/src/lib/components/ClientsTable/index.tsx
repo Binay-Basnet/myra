@@ -32,18 +32,12 @@ export const ClientsTable = () => {
         disableSortBy: false,
         disableFilters: false,
 
-        Cell: ({ value }) => {
-          return (
-            <Flex alignItems="center" gap="2">
-              <Avatar
-                name="Dan Abrahmov"
-                size="sm"
-                src="https://bit.ly/dan-abramov"
-              />
-              <span>{value}</span>
-            </Flex>
-          );
-        },
+        Cell: ({ value }) => (
+          <Flex alignItems="center" gap="2">
+            <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
+            <span>{value}</span>
+          </Flex>
+        ),
       },
 
       {
@@ -51,13 +45,11 @@ export const ClientsTable = () => {
         accessor: 'node.address.locality.local',
         width: '20%',
 
-        Cell: ({ value, row }) => {
-          return (
-            <span>
-              {value}, {row?.original?.node?.address?.locality?.local}
-            </span>
-          );
-        },
+        Cell: ({ value, row }) => (
+          <span>
+            {value}, {row?.original?.node?.address?.locality?.local}
+          </span>
+        ),
       },
       {
         Header: t['memberListDateJoined'],
@@ -65,30 +57,31 @@ export const ClientsTable = () => {
         disableSortBy: false,
         disableFilters: false,
 
-        Cell: ({ value }) => {
-          return <span>{format(new Date(value), 'yyyy-mm-dd')}</span>;
-        },
+        Cell: ({ value }) => <span>{format(new Date(value), 'yyyy-mm-dd')}</span>,
       },
       {
         Header: '',
         accessor: 'actions',
-        Cell: (cell) => (
-          <PopoverComponent
-            items={[
-              {
-                title: 'neoClientTableViewClientProfile',
-                onClick: (client) => router.push(`/clients/${client?.id}`),
-              },
-              {
-                title: 'neoClientTableEditClient',
-              },
-              {
-                title: 'neoClientTableMakeInactive',
-              },
-            ]}
-            member={cell?.row?.original?.node}
-          />
-        ),
+        Cell: (cell) => {
+          const { row } = cell;
+          return (
+            <PopoverComponent
+              items={[
+                {
+                  title: 'neoClientTableViewClientProfile',
+                  onClick: (client) => router.push(`/clients/${client?.id}`),
+                },
+                {
+                  title: 'neoClientTableEditClient',
+                },
+                {
+                  title: 'neoClientTableMakeInactive',
+                },
+              ]}
+              member={row?.original?.node}
+            />
+          );
+        },
         disableFilters: true,
       },
     ],
@@ -115,19 +108,16 @@ export const ClientsTable = () => {
 
   return (
     <>
-      <NeosysTableListPageHeader
-        heading={t['neoClientTableList']}
-        tabItems={memberRows}
-      />
+      <NeosysTableListPageHeader heading={t['neoClientTableList']} tabItems={memberRows} />
 
       <Table
         isLoading={isFetching}
         data={rowData}
         columns={columns}
-        sort={true}
-        disableSortAll={true}
-        filter={true}
-        disableFilterAll={true}
+        sort
+        disableSortAll
+        filter
+        disableFilterAll
         searchPlaceholder={t['neoClientTableSearch']}
       />
     </>
