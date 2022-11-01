@@ -2178,6 +2178,7 @@ const ne: Record<string, string> = {
   depositProductPrefix: 'Prefix',
   depositProductEnterPrefix: 'Enter Prefix',
   depositProductIntitialNumber: 'Intitial Number',
+  depositProductNumberOfDigit: 'Number of Digits',
   depositProductReseteveryfiscalyear: 'Reset every fiscal year',
   depositProductTypeofmember: 'Type of member',
   depositProductCriteria: 'Criteria',
