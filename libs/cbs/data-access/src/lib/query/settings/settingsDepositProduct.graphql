@@ -55,6 +55,7 @@ query getDepositProductSettingsEditData($id: ID!) {
             productCode {
               prefix
               initialNo
+              noOfDigits
             }
             description
             typeOfMember
