@@ -8380,6 +8380,11 @@ export type MemberAccountResult = {
   error?: Maybe<QueryError>;
 };
 
+export type MemberActivateCheck = {
+  isFeePaid: Scalars['Boolean'];
+  isShareIssued: Scalars['Boolean'];
+};
+
 export type MemberActivateMutation = {
   membershipPayment?: Maybe<MembershipPaymentResult>;
 };
@@ -8390,11 +8395,22 @@ export type MemberActivateMutationMembershipPaymentArgs = {
 };
 
 export type MemberActivateQuery = {
+  accountUpdateCheck: Scalars['Boolean'];
   getMembershipFee?: Maybe<MembershipFeeQueryResult>;
+  memberActivateChecks?: Maybe<MemberActivateCheck>;
+};
+
+export type MemberActivateQueryAccountUpdateCheckArgs = {
+  accountId: Scalars['ID'];
+  memberId: Scalars['ID'];
 };
 
 export type MemberActivateQueryGetMembershipFeeArgs = {
   memberID: Scalars['ID'];
+};
+
+export type MemberActivateQueryMemberActivateChecksArgs = {
+  memberId: Scalars['ID'];
 };
 
 export type MemberActiveData = {
