@@ -23,7 +23,6 @@ import {
   Box,
   Button,
   Container,
-  DEFAULT_PAGE_SIZE,
   Divider,
   FormAccountSelect,
   FormFooter,
@@ -100,10 +99,10 @@ export const AddDeposit = () => {
   const { data: accountListData } = useGetAccountTableListQuery(
     {
       paginate: {
-        first: DEFAULT_PAGE_SIZE,
+        first: -1,
         after: '',
       },
-      filter: { memberId },
+      filter: { memberId, objState: ObjState.Active },
     },
     {
       staleTime: 0,
