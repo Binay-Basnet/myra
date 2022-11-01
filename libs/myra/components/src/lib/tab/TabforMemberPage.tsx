@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, chakra, Tab, Tabs, Text } from '@chakra-ui/react';
 
-import { useGetNewIdMutation } from '@coop/cbs/data-access';
+import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { Icon, IconButton } from '@coop/shared/ui';
 import { en, useTranslation } from '@coop/shared/utils';
 
@@ -35,6 +35,7 @@ interface ITabColumnProps {
     link: string;
     name?: string | undefined;
     addLinkId?: string;
+    idType?: Id_Type;
     addLink?: string;
     modalOpen?: () => void;
   }[];
@@ -80,7 +81,7 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
               icon={<Icon as={IoAdd} />}
               onClick={() =>
                 newId
-                  .mutateAsync({})
+                  .mutateAsync({ idType: item?.idType })
                   .then((res) => router.push(`${item.addLinkId}/add/${res?.newId}`))
               }
             />

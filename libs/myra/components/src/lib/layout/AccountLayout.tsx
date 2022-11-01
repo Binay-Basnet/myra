@@ -2,7 +2,7 @@ import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
-import { useGetNewIdMutation } from '@coop/cbs/data-access';
+import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
 import {
   AddButtonList,
   Box,
@@ -25,6 +25,7 @@ const accountColumns = [
     title: 'accountList',
     link: '/accounts/list',
     addLinkId: '/accounts/account-open',
+    idType: Id_Type?.Account,
   },
   {
     title: 'accountDepositProduct',
@@ -34,6 +35,7 @@ const accountColumns = [
     title: 'accountClose',
     link: '/accounts/account-close',
     addLinkId: '/accounts/account-close',
+    idType: Id_Type?.Account,
   },
 ];
 
@@ -50,7 +52,7 @@ const addButtoncolumns = [
 export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
   const { t } = useTranslation();
   const router = useRouter();
-  const newId = useGetNewIdMutation();
+  const newId = useGetNewIdMutation({});
 
   return (
     <Box display="flex">
@@ -84,7 +86,7 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
                   label={t[item.title]}
                   onClick={() =>
                     newId
-                      .mutateAsync({})
+                      .mutateAsync({ idType: Id_Type.Account })
                       .then((res) => router.push(`${item.link}/add/${res?.newId}`))
                   }
                 />

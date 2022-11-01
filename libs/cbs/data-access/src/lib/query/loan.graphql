@@ -460,6 +460,7 @@ query getLoanPreview($id: String!) {
             interestAmount
           }
           totalInstallmentAmount
+          nextInstallmentNo
         }
         member {
           name

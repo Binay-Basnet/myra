@@ -2,7 +2,11 @@ import { IoAddOutline } from 'react-icons/io5';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
-import { useGetMemberDetailsOverviewQuery, useGetNewIdMutation } from '@coop/cbs/data-access';
+import {
+  Id_Type,
+  useGetMemberDetailsOverviewQuery,
+  useGetNewIdMutation,
+} from '@coop/cbs/data-access';
 import { Box, Grid, Icon, Text } from '@coop/shared/ui';
 
 import {
@@ -109,7 +113,7 @@ export const Overview = () => {
                   cursor="pointer"
                   onClick={() =>
                     newId
-                      .mutateAsync({})
+                      .mutateAsync({ idType: Id_Type.Account })
                       .then((res) => router.push(`${item.link}/add/${res?.newId}`))
                   }
                 >
