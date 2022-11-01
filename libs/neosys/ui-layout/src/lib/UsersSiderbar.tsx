@@ -71,15 +71,13 @@ export const UsersSiderbar = ({ children }: IUsersSidebarProps) => {
         <Divider my="s16" />
 
         <Tabs variant="unstyled" index={currentIndex}>
-          {tabLinks.map(({ title, to }, index) => {
-            return (
-              <Link href={to}>
-                <TabCol key={`${title}${index}`}>
-                  <Text>{title}</Text>
-                </TabCol>
-              </Link>
-            );
-          })}
+          {tabLinks.map(({ title, to }) => (
+            <Link href={to}>
+              <TabCol key={to}>
+                <Text>{title}</Text>
+              </TabCol>
+            </Link>
+          ))}
         </Tabs>
 
         {/* <Button

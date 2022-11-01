@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { chakra } from '@chakra-ui/react';
-import { Tab, Tabs } from '@chakra-ui/react';
+import { chakra, Tab, Tabs } from '@chakra-ui/react';
 
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -31,7 +30,7 @@ export interface GlobalAppSettingsLayoutProps {
   children: React.ReactNode;
 }
 
-export function GlobalAppSettingsLayout(props: GlobalAppSettingsLayoutProps) {
+export const GlobalAppSettingsLayout = (props: GlobalAppSettingsLayoutProps) => {
   const { children } = props;
 
   const router = useRouter();
@@ -97,15 +96,13 @@ export function GlobalAppSettingsLayout(props: GlobalAppSettingsLayoutProps) {
       </Box>
       <Box width="300px" position="fixed" px="s8" py="s16">
         <Tabs variant="unstyled" index={currentIndex}>
-          {tabLinks.map(({ title, to }, index) => {
-            return (
-              <Link href={to}>
-                <TabCol key={`${title}${index}`}>
-                  <Text>{title}</Text>
-                </TabCol>
-              </Link>
-            );
-          })}
+          {tabLinks.map(({ title, to }) => (
+            <Link href={to}>
+              <TabCol key={to}>
+                <Text>{title}</Text>
+              </TabCol>
+            </Link>
+          ))}
         </Tabs>
       </Box>
       <Box
@@ -119,6 +116,6 @@ export function GlobalAppSettingsLayout(props: GlobalAppSettingsLayoutProps) {
       </Box>
     </Box>
   );
-}
+};
 
 export default GlobalAppSettingsLayout;

@@ -7,13 +7,8 @@ interface IGroupContainer extends BoxProps {
   children: React.ReactNode;
 }
 
-export const GroupContainer = ({
-  children,
-  ...otherProps
-}: IGroupContainer) => {
-  return (
-    <Box display="flex" flexDirection="column" gap="s32" {...otherProps}>
-      {children}
-    </Box>
-  );
-};
+export const GroupContainer = ({ children, ...otherProps }: IGroupContainer) => (
+  <Box display="flex" flexDirection="column" gap="s32" {...otherProps}>
+    {children}
+  </Box>
+);

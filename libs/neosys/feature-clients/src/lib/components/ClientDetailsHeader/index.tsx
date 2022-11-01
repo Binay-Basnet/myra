@@ -8,22 +8,14 @@ export interface ClientDetailHeaderProps {
   button: ReactNode;
 }
 
-export function ClientDetailHeader({ title, button }: ClientDetailHeaderProps) {
-  return (
-    <Box
-      height="50px"
-      display="flex"
-      justifyContent="space-between"
-      alignItems="center"
-      p="s16"
-    >
-      <Text fontSize="r1" fontWeight={600}>
-        {title}
-      </Text>
+export const ClientDetailHeader = ({ title, button }: ClientDetailHeaderProps) => (
+  <Box height="50px" display="flex" justifyContent="space-between" alignItems="center" p="s16">
+    <Text fontSize="r1" fontWeight={600}>
+      {title}
+    </Text>
 
-      {button}
-    </Box>
-  );
-}
+    {button}
+  </Box>
+);
 
 export default ClientDetailHeader;

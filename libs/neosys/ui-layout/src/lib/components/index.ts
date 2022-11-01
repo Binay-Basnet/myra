@@ -1,2 +1,2 @@
 export * from './TabMenu';
-export * from './TopLevelHeader/';
+export * from './TopLevelHeader';

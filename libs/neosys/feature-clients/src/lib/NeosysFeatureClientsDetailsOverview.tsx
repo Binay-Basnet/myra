@@ -9,9 +9,7 @@ import { ClientDetailHeader } from './components';
 /* eslint-disable-next-line */
 export interface NeosysFeatureClientsDetailsOverviewProps {}
 
-export function NeosysFeatureClientsDetailsOverview(
-  props: NeosysFeatureClientsDetailsOverviewProps
-) {
+export const NeosysFeatureClientsDetailsOverview = () => {
   const { t } = useTranslation();
 
   const documentsList = [
@@ -67,9 +65,7 @@ export function NeosysFeatureClientsDetailsOverview(
           </Box>
 
           <Box display="flex">
-            <Text flexBasis="35%">
-              {t['neoClientDetailOverviewContactNumber']}
-            </Text>
+            <Text flexBasis="35%">{t['neoClientDetailOverviewContactNumber']}</Text>
             <Text flexGrow={1}>Ram Nepal</Text>
           </Box>
 
@@ -96,13 +92,13 @@ export function NeosysFeatureClientsDetailsOverview(
         />
 
         <Box p="s16" display="flex" flexDirection="column" gap="s16">
-          {documentsList.map(({ title, img }, index) => (
-            <NeosysDocumentCard title={title} img={img} key={index} />
+          {documentsList.map(({ title, img }) => (
+            <NeosysDocumentCard title={title} img={img} key={title} />
           ))}
         </Box>
       </Box>
     </Box>
   );
-}
+};
 
 export default NeosysFeatureClientsDetailsOverview;

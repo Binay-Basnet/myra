@@ -52,17 +52,9 @@ const TransactionDetails = [
 
   'institutionTransactionProfile',
 ];
-const monthlyTurnover = [
-  'Less than 20 Lakhs',
-  'Less than 50 Lakhs',
-  'Above 50 Lakhs',
-];
+const monthlyTurnover = ['Less than 20 Lakhs', 'Less than 50 Lakhs', 'Above 50 Lakhs'];
 const monthlyTransactions = ['Less than 10', 'Less than 25', 'Above 25'];
-const sisterConcern = [
-  'sisterConcernDetails',
-  'sisterConcernButton',
-  'sisterConcernsDetails',
-];
+const sisterConcern = ['sisterConcernDetails', 'sisterConcernButton', 'sisterConcernsDetails'];
 
 const BankAccDetails = ['bank', 'accountNumber', 'accountName'];
 const directorDetails = [
@@ -84,11 +76,7 @@ const accountOperator = [
   'accountOperatorClose',
   'AccountOperatorInstitution',
 ];
-const accountInstruction = [
-  'accountType',
-  'specialInstruction',
-  'isCompanyStampCompulsory',
-];
+const accountInstruction = ['accountType', 'specialInstruction', 'isCompanyStampCompulsory'];
 const accontDecleration = [
   'accountHolderName',
   'accountHolderPhone',
@@ -210,5 +198,5 @@ export const getKymSectionInstitution = (id: string) => {
     };
   }
 
-  return;
+  return null;
 };

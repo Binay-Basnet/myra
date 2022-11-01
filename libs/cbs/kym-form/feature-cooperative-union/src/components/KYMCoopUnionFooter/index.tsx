@@ -43,7 +43,7 @@ export const KYMCoopUnionFooter = () => {
             </Box>
           }
           draftButton={
-            <Button type="submit" variant="ghost">
+            <Button type="submit" variant="ghost" onClick={() => router.push('/members/list')}>
               <Icon as={BiSave} color="primary.500" />
               <Text
                 alignSelf="center"

@@ -16,7 +16,6 @@ import {
   useAppDispatch,
   useAppSelector,
   useGetEndOfDayDateDataQuery,
-  useSetEndOfDayDataMutation,
   useSetPreferenceMutation,
 } from '@coop/cbs/data-access';
 import {
@@ -42,6 +41,15 @@ import {
 import { useTranslation } from '@coop/shared/utils';
 
 import SearchBar from '../search-bar/SearchBar';
+
+enum GetRoleSlug {
+  AGENT = 'Agent',
+  BRANCH_MANAGER = 'Branch Manager',
+  HEAD_TELLER = 'Head Teller',
+  SUPERADMIN = 'Super Admin',
+  TELLER = 'Teller',
+  USER = 'User',
+}
 
 /* eslint-disable-next-line */
 export interface TopLevelHeaderProps {
@@ -177,11 +185,9 @@ export const TopLevelHeader = () => {
     },
   };
 
-  const { data: endOfDayData, refetch: refetchEndOfDay } = useGetEndOfDayDateDataQuery();
+  const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
 
   const closingDate = endOfDayData?.transaction?.endOfDayDate;
-
-  const { mutateAsync: closeDay } = useSetEndOfDayDataMutation();
 
   return (
     <GlobalHotKeys keyMap={keyMap} handlers={handlers}>
@@ -301,17 +307,7 @@ export const TopLevelHeader = () => {
                         display="flex"
                         justifyContent="center"
                         w="100%"
-                        onClick={() => {
-                          asyncToast({
-                            id: 'set-close-day',
-                            promise: closeDay({}),
-                            msgs: {
-                              loading: 'Closing the Day',
-                              success: 'Day Closed',
-                            },
-                            onSuccess: () => refetchEndOfDay(),
-                          });
-                        }}
+                        onClick={() => router.push('/day-close')}
                         disabled={closingDate !== currentDate}
                       >
                         Close Day
@@ -513,7 +509,7 @@ export const TopLevelHeader = () => {
                               {user?.firstName?.local} {user?.lastName?.local}
                             </Text>
                             <Text fontWeight="Regular" fontSize="s2" color="gray.600">
-                              {user?.role}
+                              {GetRoleSlug[user?.role || 'USER']}
                             </Text>
                           </Box>
                         </Box>

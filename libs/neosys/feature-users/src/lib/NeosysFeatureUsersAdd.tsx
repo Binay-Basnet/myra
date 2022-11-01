@@ -2,15 +2,7 @@ import { BiSave } from 'react-icons/bi';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import {
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  Icon,
-  IconButton,
-  Text,
-} from '@coop/shared/ui';
+import { Box, Button, Container, FormFooter, Icon, IconButton, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { NeosysUsersForm } from '../form/NeosysUsersForm';
@@ -18,7 +10,7 @@ import { NeosysUsersForm } from '../form/NeosysUsersForm';
 /* eslint-disable-next-line */
 export interface NeosysFeatureUsersAddProps {}
 
-export function NeosysFeatureUsersAdd() {
+export const NeosysFeatureUsersAdd = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -30,7 +22,7 @@ export function NeosysFeatureUsersAdd() {
             height="60px"
             display="flex"
             justifyContent="space-between"
-            alignItems={'center'}
+            alignItems="center"
             px="5"
             background="white"
             borderBottom="1px solid "
@@ -40,7 +32,7 @@ export function NeosysFeatureUsersAdd() {
               {t['neoUsersNewUser']}
             </Text>
             <IconButton
-              variant={'ghost'}
+              variant="ghost"
               aria-label="close"
               icon={<IoCloseOutline />}
               onClick={() => router.back()}
@@ -85,4 +77,4 @@ export function NeosysFeatureUsersAdd() {
       </Box>
     </>
   );
-}
+};

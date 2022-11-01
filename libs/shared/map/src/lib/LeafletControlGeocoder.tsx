@@ -5,9 +5,9 @@ import Geocoder from 'leaflet-control-geocoder';
 import 'leaflet-control-geocoder/dist/Control.Geocoder.css';
 import 'leaflet-control-geocoder/dist/Control.Geocoder.js';
 
-export default function LeafletControlGeocoder(props: {
+const LeafletControlGeocoder = (props: {
   setPosition: (prop: { latitude: number; longitude: number }) => void;
-}) {
+}) => {
   const { setPosition } = props;
   const map = useMap();
 
@@ -34,4 +34,6 @@ export default function LeafletControlGeocoder(props: {
   }, []);
 
   return null;
-}
+};
+
+export default LeafletControlGeocoder;

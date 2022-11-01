@@ -102,11 +102,7 @@ const familyDetails = [
   'fullName',
   'familyDetailsDateOfBirth',
 ];
-const COOPmembership = [
-  'purposeId',
-  'memberIdentityLevel',
-  'kymAccIndMainPurposeofBecomingMember',
-];
+const COOPmembership = ['purposeId', 'memberIdentityLevel', 'kymAccIndMainPurposeofBecomingMember'];
 const anotherCoop = [
   'isMemberOfAnotherCooperative',
   'nameAddressCooperative',
@@ -148,10 +144,7 @@ const declerationNextToKin = [
   'localKinContact',
   'localKinAddress',
 ];
-const politicalExposure = [
-  'isPoliticallyExposed',
-  'politicallyExposedDetails`',
-];
+const politicalExposure = ['isPoliticallyExposed', 'politicallyExposedDetails`'];
 const benificialOwner = [
   'hasBeneficialOwner',
   'beneficialFullName',
@@ -159,10 +152,7 @@ const benificialOwner = [
   'beneficialFullName',
 ];
 const convicted = ['isConvicted', 'convictedDetails'];
-const foreign = [
-  'hasForeignResidentialPermit',
-  'foreignResidentialPermitTypeId',
-];
+const foreign = ['hasForeignResidentialPermit', 'foreignResidentialPermitTypeId'];
 
 export const getKymSection = (id: string) => {
   if (basicInfo.includes(id)) {
@@ -289,15 +279,11 @@ export const getKymSection = (id: string) => {
       subSection: 'kymAccIndConvictedNonconvictedStatus',
     };
   }
-  if (
-    foreign.includes(id.split('-')[0]) ||
-    foreign.includes(id.split('.')[0])
-  ) {
+  if (foreign.includes(id.split('-')[0]) || foreign.includes(id.split('.')[0])) {
     return {
       section: 'declaration',
       subSection: 'kymAccIndResidentialpermitofforeigncountry',
     };
   }
-
-  return;
+  return null;
 };

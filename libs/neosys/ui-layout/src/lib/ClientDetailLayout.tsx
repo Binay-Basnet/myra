@@ -2,8 +2,7 @@ import { useMemo } from 'react';
 import { AiOutlineRight } from 'react-icons/ai';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { chakra, Image } from '@chakra-ui/react';
-import { Tab, Tabs } from '@chakra-ui/react';
+import { chakra, Image, Tab, Tabs } from '@chakra-ui/react';
 
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -32,7 +31,7 @@ export interface ClientDetailLayoutProps {
   children: React.ReactNode;
 }
 
-export function ClientDetailLayout(props: ClientDetailLayoutProps) {
+export const ClientDetailLayout = (props: ClientDetailLayoutProps) => {
   const { children } = props;
 
   const router = useRouter();
@@ -96,19 +95,9 @@ export function ClientDetailLayout(props: ClientDetailLayoutProps) {
         </Text>
       </Box>
       <Box width="300px" position="fixed">
-        <Box
-          display="flex"
-          gap="s16"
-          borderBottom="1px solid"
-          borderColor="border.layout"
-          p="s16"
-        >
+        <Box display="flex" gap="s16" borderBottom="1px solid" borderColor="border.layout" p="s16">
           <Box boxSize="60px">
-            <Image
-              src="/client-avatar.png"
-              alt="Dan Abramov"
-              borderRadius="s4"
-            />
+            <Image src="/client-avatar.png" alt="Dan Abramov" borderRadius="s4" />
           </Box>
 
           <Box display="flex" flexDirection="column" gap="s4">
@@ -125,15 +114,13 @@ export function ClientDetailLayout(props: ClientDetailLayoutProps) {
         <Box>
           <Box px="s16" py="s24">
             <Tabs variant="unstyled" index={currentIndex}>
-              {tabLinks.map(({ title, to }, index) => {
-                return (
-                  <Link href={to} key={index}>
-                    <TabCol key={`${title}${index}`}>
-                      <Text>{title}</Text>
-                    </TabCol>
-                  </Link>
-                );
-              })}
+              {tabLinks.map(({ title, to }) => (
+                <Link href={to} key={to}>
+                  <TabCol>
+                    <Text>{title}</Text>
+                  </TabCol>
+                </Link>
+              ))}
             </Tabs>
           </Box>
         </Box>
@@ -149,6 +136,6 @@ export function ClientDetailLayout(props: ClientDetailLayoutProps) {
       </Box>
     </Box>
   );
-}
+};
 
 export default ClientDetailLayout;
