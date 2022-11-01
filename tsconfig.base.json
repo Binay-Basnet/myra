@@ -34,6 +34,7 @@
       "@coop/accouting/loan": ["libs/accounting/feature-loan/src/index.ts"],
       "@coop/cbs/accounts/account-form": ["libs/cbs/accounts/feature-account-form/src/index.ts"],
       "@coop/cbs/audit-log": ["libs/cbs/settings/feature-audit-log/src/index.ts"],
+      "@coop/cbs/close-day": ["libs/cbs/close-day/src/index.ts"],
       "@coop/cbs/data-access": ["libs/cbs/data-access/src/index.ts"],
       "@coop/cbs/kym-form/cooperative": ["libs/cbs/kym-form/feature-cooperative/src/index.ts"],
       "@coop/cbs/kym-form/cooperative-union": [

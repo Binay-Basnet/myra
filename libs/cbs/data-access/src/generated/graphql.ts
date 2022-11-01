@@ -208,6 +208,11 @@ export type AccountTransferPaymentForAlternativeChannel = {
 
 export type AccountTypeDetailsUnion = BankChartsOfAccount | JournalChartsOfAccount;
 
+export enum AccountTypeFilter {
+  Deposit = 'DEPOSIT',
+  Loan = 'LOAN',
+}
+
 export type AccountingInvestmentAccountQueryResult = {
   data?: Maybe<InvestmentAccount>;
   error?: Maybe<QueryError>;
@@ -8477,6 +8482,21 @@ export enum MemberIdentityLevel {
   Vip = 'VIP',
 }
 
+export type MemberInactivateQuery = {
+  accountCloseCheck: Scalars['Boolean'];
+  shareReturnCheck: Scalars['Boolean'];
+};
+
+export type MemberInactivateQueryAccountCloseCheckArgs = {
+  accountId: Scalars['ID'];
+  accounttype: AccountTypeFilter;
+  memberId: Scalars['ID'];
+};
+
+export type MemberInactivateQueryShareReturnCheckArgs = {
+  memberId: Scalars['ID'];
+};
+
 export type MemberInactiveResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<KymEntryQuery>;
@@ -8593,6 +8613,7 @@ export type MemberQuery = {
   details: MemberDetailsResult;
   entry?: Maybe<KymEntryQuery>;
   getAllAccounts?: Maybe<MemberAccountResult>;
+  inactivateMember?: Maybe<MemberInactivateQuery>;
   individual?: Maybe<KymIndQuery>;
   institution?: Maybe<KymInsQuery>;
   list: KymMemberListConnection;

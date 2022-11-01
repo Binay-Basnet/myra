@@ -3240,6 +3240,30 @@ const ne: Record<string, string> = {
   // accounting sales
   accountingSalesSalesEntry: 'Sales Entry',
   accountingSalesCustomers: 'Customers',
+
+  // day close
+  dayClose: 'Day Closing',
+  dayCloseInOrder: 'In order to perform the day end, following steps must be complete',
+  dayCloseCloseDay: 'Close Day',
+  dayCloseCheck: 'Check',
+  dayCloseDailyInterestBooking: 'Daily Interest Booking',
+  dayCloseInterestBooking:
+    'Interest booking should be done for all the accounts before closing the day.',
+  dayCloseCheckFrequency: 'Check Frequency and Post Interest',
+  dayCloseImplementthedayend:
+    'Implement the day end only after checking if the interest is posted when its frequency is met.',
+  dayCloseTransactionDateProgress: 'Transaction Date Progress',
+  dayCloseChecktransactiondate:
+    'Check if the transaction date holds true for all the transactions.',
+  dayCloseCheckMaturity: 'Check Maturity',
+  dayCloseCheckAccount:
+    'Check if the account period is matured or not before implementing the day end.',
+  dayCloseCashVault: 'Cash in Vault',
+  dayCloseCheckCashVault:
+    'Check if the cash in vault at the start of day balances with the cash in vault at the end after all transactions have been completed.',
+  dayCloseReload: 'Reload',
+  dayCloseReinitiateDayEnd: 'Reinitiate Day End',
+  dayCloseIgnoreErrors: 'Ignore all the errors and continue to close the day.',
 };
 
 export default ne;

@@ -9,6 +9,7 @@ export interface FormFooterProps {
   statusHandler?: () => void;
   draftButton?: React.ReactNode;
   mainButtonLabel?: string;
+  isDisabled?: boolean;
   isMainButtonDisabled?: boolean;
   dangerButton?: boolean;
   mainButtonHandler?: () => void;
@@ -22,6 +23,7 @@ export const FormFooter = ({
   mainButtonHandler,
   isMainButtonDisabled,
   statusHandler,
+  isDisabled,
 }: FormFooterProps) => {
   const { t } = useTranslation();
   return (
@@ -44,6 +46,7 @@ export const FormFooter = ({
 
         <Button
           width="160px"
+          disabled={isDisabled}
           isDisabled={isMainButtonDisabled}
           onClick={mainButtonHandler}
           shade={dangerButton ? 'danger' : 'primary'}
