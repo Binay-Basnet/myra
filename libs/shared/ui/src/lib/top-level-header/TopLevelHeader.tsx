@@ -43,6 +43,15 @@ import { useTranslation } from '@coop/shared/utils';
 
 import SearchBar from '../search-bar/SearchBar';
 
+const getRoles = {
+  AGENT: 'Agent',
+  BRANCH_MANAGER: 'Branch Manager',
+  HEAD_TELLER: 'Head Teller',
+  SUPERADMIN: 'Super Admin',
+  TELLER: 'Teller',
+  USER: 'User',
+};
+
 /* eslint-disable-next-line */
 export interface TopLevelHeaderProps {
   imageSrc?: string;
@@ -513,7 +522,7 @@ export const TopLevelHeader = () => {
                               {user?.firstName?.local} {user?.lastName?.local}
                             </Text>
                             <Text fontWeight="Regular" fontSize="s2" color="gray.600">
-                              {user?.role}
+                              {getRoles[user?.role || 'USER']}
                             </Text>
                           </Box>
                         </Box>
