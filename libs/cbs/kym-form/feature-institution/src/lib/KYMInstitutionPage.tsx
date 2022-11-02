@@ -2,7 +2,6 @@ import React from 'react';
 import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 
-import { useGetKymFormStatusInstitutionQuery } from '@coop/cbs/data-access';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { AccorrdianAddInstitution } from '@coop/myra/components';
 import { Box, Button, Container, FormFooter, FormHeader, Icon, Text } from '@coop/shared/ui';
@@ -32,9 +31,9 @@ export const KYMInstitutionPage = () => {
   }>();
   const router = useRouter();
   const id = String(router?.query?.['id']);
-  const kymFormStatusQuery = useGetKymFormStatusInstitutionQuery({ id });
-  const kymFormStatus =
-    kymFormStatusQuery?.data?.members?.institution?.formState?.data?.sectionStatus;
+  // const kymFormStatusQuery = useGetKymFormStatusInstitutionQuery({ id });
+  // const kymFormStatus =
+  //   kymFormStatusQuery?.data?.members?.institution?.formState?.data?.sectionStatus;
 
   return (
     <>
@@ -57,10 +56,7 @@ export const KYMInstitutionPage = () => {
             bg="gray.0"
             zIndex={2}
           >
-            <AccorrdianAddInstitution
-              formStatus={kymFormStatus}
-              kymCurrentSection={kymCurrentSection}
-            />
+            <AccorrdianAddInstitution kymCurrentSection={kymCurrentSection} />
           </Box>
 
           <Box zIndex={1} background="gray.0" ml="320" pb="120px">

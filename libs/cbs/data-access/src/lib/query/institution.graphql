@@ -4,26 +4,32 @@ query getKymFormStatusInstitution($id: ID!) {
       formState(id: $id) {
         data {
           sectionStatus {
-            information {
-              completed
-              error
+            id
+            errors
+            sectionStatus {
+              errors
+              incomplete
             }
-            transaction {
-              completed
-              error
-            }
-            directorDetails {
-              completed
-              error
-            }
-            account {
-              completed
-              error
-            }
-            declaration {
-              completed
-              error
-            }
+            #            information {
+            #              completed
+            #              error
+            #            }
+            #            transaction {
+            #              completed
+            #              error
+            #            }
+            #            directorDetails {
+            #              completed
+            #              error
+            #            }
+            #            account {
+            #              completed
+            #              error
+            #            }
+            #            declaration {
+            #              completed
+            #              error
+            #            }
           }
         }
       }
@@ -53,19 +59,27 @@ query getInstitutionKymEditData($id: ID!) {
               declaration: name
             }
           }
+          #          sectionStatus {
+          #            information {
+          #              completed
+          #              error
+          #            }
+          #            transaction {
+          #              completed
+          #              error
+          #            }
+          #            directorDetails {
+          #              completed
+          #              error
+          #            }
+          #          }
           sectionStatus {
-            information {
-              completed
-              error
+            sectionStatus {
+              incomplete
+              errors
             }
-            transaction {
-              completed
-              error
-            }
-            directorDetails {
-              completed
-              error
-            }
+            errors
+            id
           }
           formData {
             institutionName

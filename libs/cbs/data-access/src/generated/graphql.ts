@@ -7040,8 +7040,8 @@ export type KymInsFormStateQuery = {
 
 export type KymInsFormStatus = {
   formData?: Maybe<KymInsFormData>;
-  lastUpdated: KymInsAddLus;
-  sectionStatus?: Maybe<KymInsAddSectionStatus>;
+  lastUpdated?: Maybe<KymInsAddLus>;
+  sectionStatus?: Maybe<KymFormStatus>;
 };
 
 export type KymInsInformationLus = {
@@ -7103,16 +7103,19 @@ export type KymInsInput = {
 export type KymInsListAccountOperatorsQuery = {
   data?: Maybe<Array<Maybe<AccountOperatorDetailsFormState>>>;
   error?: Maybe<QueryError>;
+  sectionStatus?: Maybe<Array<Maybe<KymFormStatus>>>;
 };
 
 export type KymInsListDirectorsQuery = {
   data?: Maybe<Array<Maybe<DirectorDetailsFormState>>>;
   error?: Maybe<QueryError>;
+  sectionStatus?: Maybe<Array<Maybe<KymFormStatus>>>;
 };
 
 export type KymInsListSisterConcernQuery = {
   data?: Maybe<Array<Maybe<SisterConcernDetailsFormState>>>;
   error?: Maybe<QueryError>;
+  sectionStatus?: Maybe<Array<Maybe<KymFormStatus>>>;
 };
 
 export type KymInsMutation = {
@@ -7126,11 +7129,19 @@ export type KymInsMutationAddArgs = {
   data: KymInsInput;
 };
 
+export type KymInsOverallFormStatus = {
+  accountOperatorDetails?: Maybe<Array<Maybe<KymFormStatus>>>;
+  directorDetails?: Maybe<Array<Maybe<KymFormStatus>>>;
+  institutionDetails?: Maybe<KymFormStatus>;
+  sisterConcernDetails?: Maybe<Array<Maybe<KymFormStatus>>>;
+};
+
 export type KymInsQuery = {
   formState?: Maybe<KymInsFormStateQuery>;
   listAccountOperators?: Maybe<KymInsListAccountOperatorsQuery>;
   listDirectors?: Maybe<KymInsListDirectorsQuery>;
   listSisterConcerns?: Maybe<KymInsListSisterConcernQuery>;
+  overallFormStatus?: Maybe<KymInsOverallFormStatus>;
 };
 
 export type KymInsQueryFormStateArgs = {
@@ -7146,6 +7157,10 @@ export type KymInsQueryListDirectorsArgs = {
 };
 
 export type KymInsQueryListSisterConcernsArgs = {
+  id: Scalars['ID'];
+};
+
+export type KymInsQueryOverallFormStatusArgs = {
   id: Scalars['ID'];
 };
 
@@ -8437,6 +8452,7 @@ export type MemberAccountResult = {
 };
 
 export type MemberActivateCheck = {
+  isAccountUpdated: Scalars['Boolean'];
   isFeePaid: Scalars['Boolean'];
   isShareIssued: Scalars['Boolean'];
 };
@@ -8690,6 +8706,10 @@ export type MemberQueryGetAllAccountsArgs = {
 export type MemberQueryIndividualArgs = {
   hasPressedNext?: InputMaybe<Scalars['Boolean']>;
   id: Scalars['String'];
+};
+
+export type MemberQueryInstitutionArgs = {
+  includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type MemberQueryListArgs = {
@@ -15322,25 +15342,11 @@ export type GetKymFormStatusInstitutionQuery = {
       formState?: {
         data?: {
           sectionStatus?: {
-            information?: {
-              completed?: Array<KymInsInformationSection | null> | null;
-              error?: Array<KymInsInformationSection | null> | null;
-            } | null;
-            transaction?: {
-              completed?: Array<KymInsTransactionSection | null> | null;
-              error?: Array<KymInsTransactionSection | null> | null;
-            } | null;
-            directorDetails?: {
-              completed?: Array<KymInsDirectorDetailsSection | null> | null;
-              error?: Array<KymInsDirectorDetailsSection | null> | null;
-            } | null;
-            account?: {
-              completed?: Array<KymInsAccountSection | null> | null;
-              error?: Array<KymInsAccountSection | null> | null;
-            } | null;
-            declaration?: {
-              completed?: Array<KymInsDeclarationSection | null> | null;
-              error?: Array<KymInsDeclarationSection | null> | null;
+            id?: string | null;
+            errors?: Record<string, Array<string>> | null;
+            sectionStatus?: {
+              errors?: Array<string> | null;
+              incomplete?: Array<string> | null;
             } | null;
           } | null;
         } | null;
@@ -15358,24 +15364,19 @@ export type GetInstitutionKymEditDataQuery = {
     institution?: {
       formState?: {
         data?: {
-          lastUpdated:
+          lastUpdated?:
             | { account: KymInsAccountSection }
             | { declaration: KymInsDeclarationSection }
             | { directorDetails: KymInsDirectorDetailsSection }
             | { information: KymInsInformationSection }
-            | { transaction: KymInsTransactionSection };
+            | { transaction: KymInsTransactionSection }
+            | null;
           sectionStatus?: {
-            information?: {
-              completed?: Array<KymInsInformationSection | null> | null;
-              error?: Array<KymInsInformationSection | null> | null;
-            } | null;
-            transaction?: {
-              completed?: Array<KymInsTransactionSection | null> | null;
-              error?: Array<KymInsTransactionSection | null> | null;
-            } | null;
-            directorDetails?: {
-              completed?: Array<KymInsDirectorDetailsSection | null> | null;
-              error?: Array<KymInsDirectorDetailsSection | null> | null;
+            errors?: Record<string, Array<string>> | null;
+            id?: string | null;
+            sectionStatus?: {
+              incomplete?: Array<string> | null;
+              errors?: Array<string> | null;
             } | null;
           } | null;
           formData?: {
@@ -24207,25 +24208,11 @@ export const GetKymFormStatusInstitutionDocument = `
       formState(id: $id) {
         data {
           sectionStatus {
-            information {
-              completed
-              error
-            }
-            transaction {
-              completed
-              error
-            }
-            directorDetails {
-              completed
-              error
-            }
-            account {
-              completed
-              error
-            }
-            declaration {
-              completed
-              error
+            id
+            errors
+            sectionStatus {
+              errors
+              incomplete
             }
           }
         }
@@ -24272,18 +24259,12 @@ export const GetInstitutionKymEditDataDocument = `
             }
           }
           sectionStatus {
-            information {
-              completed
-              error
+            sectionStatus {
+              incomplete
+              errors
             }
-            transaction {
-              completed
-              error
-            }
-            directorDetails {
-              completed
-              error
-            }
+            errors
+            id
           }
           formData {
             institutionName
