@@ -29,7 +29,7 @@ export const LoanDetails = () => {
           { label: 'Home', link: '/home' },
           {
             label: 'Products',
-            link: '/coop/products',
+            link: '/coop/products/loan',
           },
           {
             label: product?.productName ?? '',
