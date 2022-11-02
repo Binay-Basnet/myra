@@ -43,7 +43,7 @@ import { useTranslation } from '@coop/shared/utils';
 import SearchBar from '../search-bar/SearchBar';
 
 enum GetRoleSlug {
-  AGENT = 'Agent',
+  AGENT = 'Market Representative',
   BRANCH_MANAGER = 'Branch Manager',
   HEAD_TELLER = 'Head Teller',
   SUPERADMIN = 'Super Admin',

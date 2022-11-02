@@ -1,5 +1,6 @@
 import { MouseEventHandler, useState } from 'react';
 import { AiFillBank, AiOutlineSetting } from 'react-icons/ai';
+import { HiDocumentReport } from 'react-icons/hi';
 import { IoMdPerson } from 'react-icons/io';
 import { IconType } from 'react-icons/lib';
 import { MdCorporateFare } from 'react-icons/md';
@@ -10,7 +11,7 @@ import { Grid } from '@chakra-ui/react';
 
 import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { TabColumn } from '@coop/myra/components';
-import { Box, Button, Divider, GridItem, Icon, Modal, Text } from '@coop/shared/ui';
+import { Box, Button, Divider, GridItem, Icon, Modal, SettingsButton, Text } from '@coop/shared/ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 interface IMemberPageLayout {
@@ -21,6 +22,36 @@ const memberColumns = [
   {
     title: 'memberList',
     link: '/members/list',
+  },
+];
+
+const settingsColumn = [
+  {
+    label: 'memberLayoutMemberSettings',
+    navigate: '/settings/general/members',
+  },
+  {
+    label: 'memberLayoutKymSettings',
+    navigate: '/settings/general/members/kym-individual',
+  },
+];
+
+const reportColumn = [
+  {
+    label: 'memberLayoutMemberClassification',
+    navigate: '/settings/general/members',
+  },
+  {
+    label: 'memberLayoutMemberLedger',
+    navigate: '/settings/general/members/kym-individual',
+  },
+  {
+    label: 'memberLayoutInactiveMember',
+    navigate: '/settings/general/members/kym-individual',
+  },
+  {
+    label: 'memberLayoutKymStatusReport',
+    navigate: '/settings/general/members/kym-individual',
   },
 ];
 
@@ -208,17 +239,16 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
           <Divider my="s16" />
           <TabColumn list={memberColumns} />
           <Divider my="s16" />
-          <Button
-            onClick={() => router.push('/settings/general/members')}
-            variant="ghost"
-            color="#37474F"
-            height="s48"
-            width="full"
-            justifyContent="start"
-            leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
-          >
-            {t['memberLayoutMemberSettings']}
-          </Button>
+          {settingsColumn.map((item) => (
+            <SettingsButton
+              icon={AiOutlineSetting}
+              buttonLabel={t[item?.label]}
+              onClick={() => router.push(item?.navigate)}
+            />
+          ))}
+          {reportColumn.map((item) => (
+            <SettingsButton icon={HiDocumentReport} buttonLabel={t[item?.label]} />
+          ))}
         </Box>
       </Box>
       <Box w="100%" ml="260px">
