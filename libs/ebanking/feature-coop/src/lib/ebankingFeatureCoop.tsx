@@ -118,6 +118,7 @@ export const EbankingFeatureCoop = () => {
             w="100%"
             justifyContent="space-between"
             cursor="pointer"
+            onClick={() => router.push('/settings/profile')}
           >
             <Text fontSize="r1" fontWeight="600" color="gray.800">
               My KYM Details

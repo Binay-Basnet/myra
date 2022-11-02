@@ -56,7 +56,7 @@ export const EbankingFeatureProducts = () => {
           { label: 'Home', link: '/home' },
           {
             label: 'Products',
-            link: '/coop/products',
+            link: router.asPath,
           },
         ]}
       />

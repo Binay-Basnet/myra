@@ -1,5 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import { FormAccountHeader } from '@coop/ebanking/accounts';
 import { InfoCard } from '@coop/ebanking/cards';
@@ -11,18 +13,25 @@ import { FormInput, FormTextArea } from '@coop/shared/form';
 import { asyncToast, Box, PathBar, Text } from '@coop/shared/ui';
 import { getLoggedInUserId } from '@coop/shared/utils';
 
+const formSchema = yup.object({
+  chequeNumber: yup.string().required('This field is required.'),
+  reason: yup.string().required('This field is required.'),
+});
+
 export const EBankingFeatureBlockChequeRequest = () => {
   const router = useRouter();
 
-  const methods = useForm<EBankingChequeBlockInput>();
+  const methods = useForm<EBankingChequeBlockInput>({
+    resolver: yupResolver(formSchema),
+  });
 
-  const { getValues } = methods;
+  const { getValues, handleSubmit } = methods;
 
   const { mutateAsync: addNewWithdrawViaCollectorRequest } = useSetBlockChequeRequestDataMutation();
 
   const memberID = getLoggedInUserId();
 
-  const handleSubmitRequest = () => {
+  const handleSubmitRequest = handleSubmit(() => {
     asyncToast({
       id: 'add-new-block-cheque-request',
       promise: addNewWithdrawViaCollectorRequest({
@@ -37,7 +46,7 @@ export const EBankingFeatureBlockChequeRequest = () => {
         router.push('/coop');
       },
     });
-  };
+  });
 
   return (
     <Box display="flex" flexDirection="column" gap="s16">
@@ -55,7 +64,7 @@ export const EBankingFeatureBlockChequeRequest = () => {
         >
           <form>
             <Box p="s16" display="flex" flexDirection="column" gap="s16">
-              <Text fontSize="r1" fontWeight={500} color="neutralColorLight.gray-70">
+              <Text fontSize="r1" fontWeight={500} color="gray.800">
                 Request to block cheque
               </Text>
 

@@ -1,0 +1,9 @@
+mutation setDefaultAccount($accountId: String!) {
+  eBanking {
+    account {
+      setDefaultAccount(accountId: $accountId) {
+        recordId
+      }
+    }
+  }
+}

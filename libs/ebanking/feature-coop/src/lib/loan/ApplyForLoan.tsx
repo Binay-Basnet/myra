@@ -1,6 +1,8 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import { AccountPopover } from '@coop/ebanking/accounts';
 import { InfoCard } from '@coop/ebanking/cards';
@@ -9,17 +11,25 @@ import { FormBranchSelect, FormInput, FormTextArea } from '@coop/shared/form';
 import { asyncToast, Box, PathBar } from '@coop/shared/ui';
 import { getLoggedInUserId } from '@coop/shared/utils';
 
+const formSchema = yup.object({
+  branch: yup.string().required('This field is required.'),
+  amount: yup.string().required('This field is required.'),
+  purpose: yup.string().required('This field is required.'),
+});
+
 export const ApplyForLoan = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const methods = useForm();
+  const methods = useForm({
+    resolver: yupResolver(formSchema),
+  });
 
   const memberId = getLoggedInUserId();
 
   const { mutateAsync: applyForLoan } = useApplyForLoanMutation();
 
-  const handleSubmitApplication = async () => {
+  const handleSubmitApplication = methods.handleSubmit(async () => {
     await asyncToast({
       id: 'add-new-cheque-request',
       promise: applyForLoan({
@@ -35,7 +45,7 @@ export const ApplyForLoan = () => {
         router.push('/coop');
       },
     });
-  };
+  });
 
   return (
     <Box display="flex" flexDirection="column" gap="s16">

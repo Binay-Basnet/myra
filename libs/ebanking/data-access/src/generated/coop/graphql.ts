@@ -75,6 +75,37 @@ export const KymFieldDataFragmentDoc = `
   }
 }
     `;
+export const SetDefaultAccountDocument = `
+    mutation setDefaultAccount($accountId: String!) {
+  eBanking {
+    account {
+      setDefaultAccount(accountId: $accountId) {
+        recordId
+      }
+    }
+  }
+}
+    `;
+export const useSetDefaultAccountMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    Types.SetDefaultAccountMutation,
+    TError,
+    Types.SetDefaultAccountMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    Types.SetDefaultAccountMutation,
+    TError,
+    Types.SetDefaultAccountMutationVariables,
+    TContext
+  >(
+    ['setDefaultAccount'],
+    useAxios<Types.SetDefaultAccountMutation, Types.SetDefaultAccountMutationVariables>(
+      SetDefaultAccountDocument
+    ),
+    options
+  );
 export const ChangeCoopPinDocument = `
     mutation changeCoopPin($oldPin: String!, $newPin: String!) {
   eBanking {
@@ -530,6 +561,7 @@ export const GetCoopMeDocument = `
     auth {
       meCooperativeUser {
         data {
+          defaultAccount
           myraUserId
           cooperativeId
           cooperativeName

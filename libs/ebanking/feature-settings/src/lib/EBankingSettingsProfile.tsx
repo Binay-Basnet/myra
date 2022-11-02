@@ -54,7 +54,7 @@ export const EBankingSettingsProfile = () => {
                         </>
                       }
                     />
-                    <DetailCardContent title="Date of birth" subtitle={profile?.gender?.local} />
+                    <DetailCardContent title="Gender" subtitle={profile?.gender?.local} />
                   </AccordionPanel>
                 </>
               )}
@@ -77,7 +77,11 @@ export const EBankingSettingsProfile = () => {
                     gap="s16"
                   >
                     <DetailCardContent title="Mobile Number" subtitle={profile?.mobileNumber} />
-                    <DetailCardContent title="Email Address" subtitle={profile?.email} />
+                    <DetailCardContent title="Email Address">
+                      <Text fontWeight="600" fontSize="r1" color="gray.900">
+                        {profile?.email}{' '}
+                      </Text>
+                    </DetailCardContent>
                   </AccordionPanel>
                 </>
               )}

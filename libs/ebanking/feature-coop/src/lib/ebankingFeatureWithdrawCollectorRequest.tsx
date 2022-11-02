@@ -1,5 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import { FormAccountHeader } from '@coop/ebanking/accounts';
 import { InfoCard } from '@coop/ebanking/cards';
@@ -7,23 +9,32 @@ import {
   EBankingChequeWithdrawViaCollectorInput,
   useSetWithdrawViaCollectorRequestDataMutation,
 } from '@coop/ebanking/data-access';
-import { FormAgentSelect, FormBranchSelect, FormInput } from '@coop/shared/form';
+import { FormAgentSelect, FormBranchSelect, FormInput, FormTextArea } from '@coop/shared/form';
 import { asyncToast, Box, PathBar, Text } from '@coop/shared/ui';
 import { getLoggedInUserId } from '@coop/shared/utils';
+
+const formSchema = yup.object({
+  branch: yup.string().required('This field is required.'),
+  collector: yup.string().required('This field is required.'),
+  date: yup.string().required('This field is required.'),
+  amount: yup.string().required('This field is required.'),
+});
 
 export const EbankingFeaureWithdrawCollectorRequest = () => {
   const router = useRouter();
 
-  const methods = useForm<EBankingChequeWithdrawViaCollectorInput>();
+  const methods = useForm<EBankingChequeWithdrawViaCollectorInput>({
+    resolver: yupResolver(formSchema),
+  });
 
-  const { getValues } = methods;
+  const { getValues, handleSubmit } = methods;
 
   const { mutateAsync: addNewWithdrawViaCollectorRequest } =
     useSetWithdrawViaCollectorRequestDataMutation();
 
   const memberID = getLoggedInUserId();
 
-  const handleSubmitRequest = () => {
+  const handleSubmitRequest = handleSubmit(() => {
     asyncToast({
       id: 'add-new-withdraw-request',
       promise: addNewWithdrawViaCollectorRequest({
@@ -38,7 +49,7 @@ export const EbankingFeaureWithdrawCollectorRequest = () => {
         router.push('/coop');
       },
     });
-  };
+  });
 
   return (
     <Box display="flex" flexDirection="column" gap="s16">
@@ -56,7 +67,7 @@ export const EbankingFeaureWithdrawCollectorRequest = () => {
         >
           <form>
             <Box p="s16" display="flex" flexDirection="column" gap="s16">
-              <Text fontSize="r1" fontWeight={500} color="neutralColorLight.gray-70">
+              <Text fontSize="r1" fontWeight={500} color="gray.800">
                 Request to withdraw via collector
               </Text>
 
@@ -67,6 +78,7 @@ export const EbankingFeaureWithdrawCollectorRequest = () => {
               <FormInput type="date" name="date" label="Date" />
 
               <FormInput type="number" name="amount" label="Amount" />
+              <FormTextArea name="note" label="Note" />
             </Box>
           </form>
         </InfoCard>

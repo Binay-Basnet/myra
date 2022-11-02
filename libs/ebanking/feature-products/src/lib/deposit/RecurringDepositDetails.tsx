@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import {
   DepositProductCriteria,
   DepositProductFormStateData,
@@ -28,6 +30,7 @@ interface IRecurringDepositDetailsProps {
 }
 
 export const RecurringDepositDetails = ({ product, criteria }: IRecurringDepositDetailsProps) => {
+  const router = useRouter();
   const limits = [
     {
       name: 'Balance',
@@ -86,11 +89,11 @@ export const RecurringDepositDetails = ({ product, criteria }: IRecurringDeposit
           { label: 'Home', link: '/home' },
           {
             label: 'Products',
-            link: '/coop/products',
+            link: '/coop/products/deposit',
           },
           {
             label: product?.productName ?? '',
-            link: '/coop/products',
+            link: router.asPath,
           },
         ]}
       />

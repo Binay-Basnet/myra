@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 
 import { InfoCard } from '@coop/ebanking/cards';
-import { useGetAccountListQuery } from '@coop/ebanking/data-access';
+import { useAppSelector, useGetAccountListQuery } from '@coop/ebanking/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
 import { Box, Button, GridItem, Icon } from '@coop/shared/ui';
 
@@ -14,10 +14,13 @@ interface AccountTransferFormProps {
 }
 
 export const AccountTransferForm = ({ setPaymentStatus }: AccountTransferFormProps) => {
+  const user = useAppSelector((state) => state.auth.cooperative.user);
   const { data } = useGetAccountListQuery({ transactionPagination: { after: '', first: 1 } });
 
   const accounts = data?.eBanking?.account?.list?.accounts?.map((account) => ({
-    label: `${account?.name} - ${account?.accountNumber}`,
+    label: `${account?.name} - ${account?.accountNumber} ${
+      user?.defaultAccount === account?.id ? '( Default Account )' : ''
+    }`,
     value: account?.id as string,
   }));
 

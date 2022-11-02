@@ -103,6 +103,13 @@ export const authSlice = createSlice({
       state.cooperative.isLogged = false;
       state.cooperative.user = null;
     },
+
+    updateDefaultAccountInCoop: (state, action: PayloadAction<string>) => {
+      state.cooperative.user = {
+        ...state.cooperative.user,
+        defaultAccount: action.payload,
+      };
+    },
   },
 });
 
@@ -116,6 +123,7 @@ export const {
   authenticateCooperative,
   logoutCooperative,
   setCurrentToken,
+  updateDefaultAccountInCoop,
 } = authSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type

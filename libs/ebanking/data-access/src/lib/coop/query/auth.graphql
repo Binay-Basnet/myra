@@ -3,6 +3,7 @@ query getCoopMe {
     auth {
       meCooperativeUser {
         data {
+          defaultAccount
           myraUserId
           cooperativeId
           cooperativeName
@@ -20,5 +21,3 @@ query getCoopMe {
     }
   }
 }
-
-

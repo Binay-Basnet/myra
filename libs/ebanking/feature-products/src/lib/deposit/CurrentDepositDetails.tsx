@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import {
   DepositProductCriteria,
   DepositProductFormStateData,
@@ -27,6 +29,7 @@ interface ICurrentDepositDetails {
 }
 
 export const CurrentDepositDetails = ({ product, criteria }: ICurrentDepositDetails) => {
+  const router = useRouter();
   const limits = [
     {
       name: 'Balance',
@@ -85,11 +88,11 @@ export const CurrentDepositDetails = ({ product, criteria }: ICurrentDepositDeta
           { label: 'Home', link: '/home' },
           {
             label: 'Products',
-            link: '/coop/products',
+            link: '/coop/products/deposit',
           },
           {
             label: product?.productName ?? '',
-            link: '/coop/products',
+            link: router.asPath,
           },
         ]}
       />
