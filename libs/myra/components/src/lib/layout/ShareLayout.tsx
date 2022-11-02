@@ -1,14 +1,14 @@
 import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
+import { CgLoadbarDoc } from 'react-icons/cg';
 import { useRouter } from 'next/router';
 
 import {
   AddButtonList,
   Box,
-  Button,
   Divider,
-  Icon,
   PopOverComponentForButtonList,
+  SettingsButton,
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -27,6 +27,32 @@ const shareColumns = [
   {
     title: 'shareRegister',
     link: '/share/register',
+  },
+];
+
+const settingsColumn = [
+  {
+    label: 'shareLayoutShareSettings',
+    navigate: '/settings/general/share',
+  },
+  {
+    label: 'shareLayoutShareSettings',
+    navigate: '/share/balance',
+  },
+];
+
+const reportColumn = [
+  {
+    label: 'shareLayoutRegisterReport',
+    navigate: '/settings/general/members',
+  },
+  {
+    label: 'shareLayoutStateReport',
+    navigate: '/settings/general/members/kym-individual',
+  },
+  {
+    label: 'shareLayoutTransactionReport',
+    navigate: '/settings/general/members/kym-individual',
   },
 ];
 
@@ -65,17 +91,16 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
           <Divider my="s16" />
           <TabColumn list={shareColumns} />
           <Divider my="s16" />
-          <Button
-            onClick={() => router.push('/settings/general/share')}
-            variant="ghost"
-            color="#37474F"
-            height="s48"
-            width="full"
-            justifyContent="start"
-            leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
-          >
-            {t['shareLayoutShareSettings']}
-          </Button>
+          {settingsColumn.map((item) => (
+            <SettingsButton
+              icon={AiOutlineSetting}
+              buttonLabel={t[item?.label]}
+              onClick={() => router.push(item?.navigate)}
+            />
+          ))}
+          {reportColumn.map((item) => (
+            <SettingsButton icon={CgLoadbarDoc} buttonLabel={t[item?.label]} />
+          ))}
         </Box>
       </Box>
       <Box w="100%" ml="260px">

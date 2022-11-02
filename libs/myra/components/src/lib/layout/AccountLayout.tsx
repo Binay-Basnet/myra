@@ -1,15 +1,15 @@
 import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
+import { CgLoadbarDoc } from 'react-icons/cg';
 import { useRouter } from 'next/router';
 
 import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
 import {
   AddButtonList,
   Box,
-  Button,
   Divider,
-  Icon,
   PopOverComponentForButtonList,
+  SettingsButton,
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -49,6 +49,32 @@ const addButtoncolumns = [
     link: '/accounts/account-close',
   },
 ];
+
+const settingsColumn = [
+  {
+    label: 'savingsDepositSettings',
+    navigate: '/settings/general/deposit/tds',
+  },
+  {
+    label: 'savingsProductSettings',
+    navigate: '/settings/general/loan',
+  },
+];
+
+const reportColumn = [
+  {
+    label: 'savingsDepositStatementReport',
+    navigate: '/settings/general/members',
+  },
+  {
+    label: 'savingsIntrestTaxReport',
+    navigate: '/settings/general/members/kym-individual',
+  },
+  {
+    label: 'savingsIntrestStatement',
+    navigate: '/settings/general/members/kym-individual',
+  },
+];
 export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
   const { t } = useTranslation();
   const router = useRouter();
@@ -59,7 +85,7 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
       <Box width="260px" flexShrink={0} position="fixed">
         <Box height="60px" py="s12" px="s16">
           <Text fontSize="l1" fontWeight="600" color="gray.800">
-            {t['accountLayout']}
+            {t['savings']}
           </Text>
         </Box>
         <Box p="s16">
@@ -96,17 +122,16 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
           <Divider my="s16" />
           <TabColumn list={accountColumns} />
           <Divider my="s16" />
-          <Button
-            onClick={() => router.push('/settings/general/charts-of-accounts')}
-            variant="ghost"
-            color="#37474F"
-            height="s48"
-            width="full"
-            justifyContent="start"
-            leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
-          >
-            {t['accountLayoutAccountSettings']}
-          </Button>
+          {settingsColumn.map((item) => (
+            <SettingsButton
+              icon={AiOutlineSetting}
+              buttonLabel={t[item?.label]}
+              onClick={() => router.push(item?.navigate)}
+            />
+          ))}
+          {reportColumn.map((item) => (
+            <SettingsButton icon={CgLoadbarDoc} buttonLabel={t[item?.label]} />
+          ))}
         </Box>
       </Box>
       <Box w="100%" ml="260px">

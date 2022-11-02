@@ -1,17 +1,18 @@
 import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
+import { CgLoadbarDoc } from 'react-icons/cg';
 import { useRouter } from 'next/router';
 
 import { TabColumn } from '@coop/myra/components';
 import {
   AddButtonList,
   Box,
-  Button,
   Divider,
-  Icon,
   PopOverComponentForButtonList,
+  SettingsButton,
   Text,
 } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
 interface IAccountPageLayoutProps {
   children: React.ReactNode;
@@ -48,8 +49,32 @@ const addButtoncolumns = [
     link: '/loan/repayments/add',
   },
 ];
+
+const settingsColumn = [
+  {
+    label: 'loanLayoutSettings',
+    navigate: '/settings/general/loan',
+  },
+  {
+    label: 'loanLayoutProductsSettings',
+    navigate: '/settings/general/loan-products',
+  },
+];
+
+const reportColumn = [
+  {
+    label: 'loanLayoutStatementReport',
+    navigate: '/settings/general/members',
+  },
+  {
+    label: 'loanLayoutAgeingReport',
+    navigate: '/settings/general/members/kym-individual',
+  },
+];
+
 export const LoanListLayout = ({ children }: IAccountPageLayoutProps) => {
   const router = useRouter();
+  const { t } = useTranslation();
 
   return (
     <Box display="flex">
@@ -82,17 +107,16 @@ export const LoanListLayout = ({ children }: IAccountPageLayoutProps) => {
           <Divider my="s16" />
           <TabColumn list={accountColumns} />
           <Divider my="s16" />
-          <Button
-            onClick={() => router.push('/settings/general/loan')}
-            variant="ghost"
-            color="#37474F"
-            height="s48"
-            width="full"
-            justifyContent="start"
-            leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
-          >
-            Loan Settings
-          </Button>
+          {settingsColumn.map((item) => (
+            <SettingsButton
+              icon={AiOutlineSetting}
+              buttonLabel={t[item?.label]}
+              onClick={() => router.push(item?.navigate)}
+            />
+          ))}
+          {reportColumn.map((item) => (
+            <SettingsButton icon={CgLoadbarDoc} buttonLabel={t[item?.label]} />
+          ))}
         </Box>
       </Box>
       <Box

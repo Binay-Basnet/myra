@@ -214,6 +214,12 @@ const ne: Record<string, string> = {
   shareLayoutSharePurchase: 'शेयर खरिद',
   shareLayoutShareReturn: 'शेयर फिर्ता',
   shareLayoutShareSettings: 'शेयर सेटिङ',
+  shareLayoutShareDistribution: 'Share Distribution',
+
+  shareLayoutRegisterReport: 'Share Register Report',
+  shareLayoutStateReport: 'Share Statement Report',
+  shareLayoutTransactionReport: 'Share Transaction Report',
+
   accountLayout: 'खाता',
   accountLayoutNewAccount: 'नयाँ खाता',
   accountLayoutAccountSettings: 'खाता सेटिङ',
@@ -2925,6 +2931,14 @@ const ne: Record<string, string> = {
   transactionSidebarNewLoanPayment: 'New Loan Payment',
   transactionSidebarNewMarketRepresentativeTransaction: 'New Market Representative Transaction',
 
+  transactionLayoutBalanceSheet: 'Balance Sheet',
+  transactionLayoutIncomeStatement: 'Income Statement',
+  transactionLayoutCashFlowStament: 'Cash Flow Statement',
+  transactionLayoutChangeOfEquity: 'Change of Equity',
+  transactionLayoutAppropriationOfProfit: 'Appropriation of Profit',
+  transactionLayoutBankGLBalance: 'Bank GL Balance',
+  transactionLayoutBankGLStatement: 'Bank GL Statement',
+
   // deposit list
   depositListDeposit: 'Deposit',
   depositListTransactionId: 'Transaction ID',
@@ -3161,6 +3175,12 @@ const ne: Record<string, string> = {
   loanLayoutTopButton: 'New Loan',
   loanProductRebateRate: 'Rebate Rate',
 
+  loanLayoutSettings: 'Loan Settings',
+  loanLayoutProductsSettings: 'Loan Product Settings',
+
+  loanLayoutStatementReport: 'Loan Statement Report',
+  loanLayoutAgeingReport: 'Loan Ageing Report',
+
   // account deposit product
   accountDepositProduct: 'Deposit Product',
 
@@ -3171,6 +3191,9 @@ const ne: Record<string, string> = {
   transferVaultTransfer: 'Vault Transfer',
   transferTellerTransfer: 'Teller Transfer',
   transferBranchTransfer: 'Branch Transfer',
+
+  transferVaultBalanceReport: 'Vault Balance Report',
+  transferTellerReport: 'Teller Report',
 
   memberSettingsNewMemberCharges: 'New Member Charges',
   memberSettingsDifferentCharges: 'Different charges for different member type.',
@@ -3231,6 +3254,7 @@ const ne: Record<string, string> = {
 
   /* Account Open */
   accountNavDormant: 'Dormant',
+  accountSubmitted: 'Submitted',
   sharePurchaseTableShareDr: 'Share Return',
   shareRegisterTableIssue: 'Issue',
   shareRegisterTableReturn: 'Return',
@@ -3269,6 +3293,16 @@ const ne: Record<string, string> = {
   dayCloseReload: 'Reload',
   dayCloseReinitiateDayEnd: 'Reinitiate Day End',
   dayCloseIgnoreErrors: 'Ignore all the errors and continue to close the day.',
+
+  // savings
+  savings: 'Savings',
+
+  savingsDepositSettings: 'Deposit Settings',
+  savingsProductSettings: 'Saving Products Settings',
+
+  savingsDepositStatementReport: 'Saving / Deposit Statement',
+  savingsIntrestTaxReport: 'Intrest Tax Report',
+  savingsIntrestStatement: 'Intrest Statement (Individual)',
 };
 
 export default ne;

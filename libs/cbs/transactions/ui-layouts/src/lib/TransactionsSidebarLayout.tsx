@@ -1,5 +1,5 @@
 import React from 'react';
-import { AiOutlineSetting } from 'react-icons/ai';
+import { CgLoadbarDoc } from 'react-icons/cg';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
@@ -13,6 +13,7 @@ import {
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
+  SettingsButton,
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -87,6 +88,37 @@ const dropdownButtons = [
   },
 ];
 
+const reportColumn = [
+  {
+    label: 'transactionLayoutBalanceSheet',
+    navigate: '/settings/general/members',
+  },
+  {
+    label: 'transactionLayoutIncomeStatement',
+    navigate: '/settings/general/members/kym-individual',
+  },
+  {
+    label: 'transactionLayoutCashFlowStament',
+    navigate: '/settings/general/members/kym-individual',
+  },
+  {
+    label: 'transactionLayoutChangeOfEquity',
+    navigate: '/settings/general/members/kym-individual',
+  },
+  {
+    label: 'transactionLayoutAppropriationOfProfit',
+    navigate: '/settings/general/members/kym-individual',
+  },
+  {
+    label: 'transactionLayoutBankGLBalance',
+    navigate: '/settings/general/members/kym-individual',
+  },
+  {
+    label: 'transactionLayoutBankGLStatement',
+    navigate: '/settings/general/members/kym-individual',
+  },
+];
+
 export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayoutProps) => {
   const router = useRouter();
 
@@ -145,16 +177,9 @@ export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayo
 
           <TabColumn list={transactionSidebarColumns} />
           <Divider my="s16" />
-          <Button
-            variant="ghost"
-            color="#37474F"
-            height="s48"
-            width="full"
-            justifyContent="start"
-            leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
-          >
-            {t['transactionSidebarTransactionSettings']}
-          </Button>
+          {reportColumn.map((item) => (
+            <SettingsButton icon={CgLoadbarDoc} buttonLabel={t[item?.label]} />
+          ))}
         </Box>
       </Box>
       <Box

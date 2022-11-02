@@ -37,7 +37,7 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
     link: '/share/balance',
   },
   {
-    title: 'accounts',
+    title: 'savings',
     icon: ImStack,
     link: '/accounts/list',
   },

@@ -1,4 +1,5 @@
 import React from 'react';
+import { CgLoadbarDoc } from 'react-icons/cg';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
@@ -12,6 +13,7 @@ import {
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
+  SettingsButton,
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -54,6 +56,17 @@ const dropdownButtons = [
   //   label: 'transferBranchTransfer',
   //   link: '/transactions/account-transfer/add',
   // },
+];
+
+const reportColumn = [
+  {
+    label: 'transferVaultBalanceReport',
+    navigate: '/settings/general/members',
+  },
+  {
+    label: 'transferTellerReport',
+    navigate: '/settings/general/members/kym-individual',
+  },
 ];
 
 export const TransferLayout = ({ children }: ITransactionsSidebarLayoutProps) => {
@@ -114,6 +127,9 @@ export const TransferLayout = ({ children }: ITransactionsSidebarLayoutProps) =>
 
           <TabColumn list={transactionSidebarColumns} />
           <Divider my="s16" />
+          {reportColumn.map((item) => (
+            <SettingsButton icon={CgLoadbarDoc} buttonLabel={t[item?.label]} />
+          ))}
         </Box>
       </Box>
       <Box

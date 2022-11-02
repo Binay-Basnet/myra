@@ -35,6 +35,8 @@ export type AbbsTransaction = {
 
 export type AccountActivityEntry = {
   ID: Scalars['ID'];
+  accountId?: Maybe<Scalars['String']>;
+  agentId?: Maybe<Scalars['String']>;
   agentName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['String']>;
@@ -94,6 +96,11 @@ export type AccountConnection = {
   edges: Array<AccountEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
+};
+
+export type AccountDetailsQueryResult = {
+  data?: Maybe<MemberAccountDetails>;
+  error?: Maybe<QueryError>;
 };
 
 export type AccountEdge = {
@@ -204,6 +211,28 @@ export type AccountTransferPaymentForAccountClose = {
 export type AccountTransferPaymentForAlternativeChannel = {
   destination_account: Scalars['ID'];
   note?: InputMaybe<Scalars['String']>;
+};
+
+export type AccountTransferView = {
+  destinationAccount?: Maybe<DepositLoanAccount>;
+  glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
+  id: Scalars['ID'];
+  member?: Maybe<Member>;
+  objState?: Maybe<ObjState>;
+  recipientMember?: Maybe<Member>;
+  sourceAccount?: Maybe<DepositLoanAccount>;
+  teller?: Maybe<Scalars['String']>;
+  transactionBranch?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['String']>;
+  transferAmount?: Maybe<Scalars['String']>;
+  transferType?: Maybe<Scalars['String']>;
+  withdrawnBy?: Maybe<Scalars['String']>;
+  withdrawnSlipNo?: Maybe<Scalars['String']>;
+};
+
+export type AccountTransferViewResult = {
+  data?: Maybe<AccountTransferView>;
+  error?: Maybe<QueryError>;
 };
 
 export type AccountTypeDetailsUnion = BankChartsOfAccount | JournalChartsOfAccount;
@@ -388,6 +417,12 @@ export type AccountingSalesQuerySaleEntryFormStateArgs = {
 export type AccountingSalesSaleEntryQueryResult = {
   data?: Maybe<SalesSaleEntry>;
   error?: Maybe<QueryError>;
+};
+
+export type AccountsTransactionFilter = {
+  accountIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  date?: InputMaybe<LocalizedDateFilter>;
+  memberIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 export type AddCoaAccountInput = {
@@ -2399,6 +2434,7 @@ export type DepositLoanAccountMutationForgiveInstallmentArgs = {
 };
 
 export type DepositLoanAccountQuery = {
+  accountDetails?: Maybe<AccountDetailsQueryResult>;
   formState?: Maybe<DepositLoanAccountFormStateResult>;
   get?: Maybe<DepositLoanAccount>;
   getBulkInstallments?: Maybe<Array<Maybe<BulkInstallmentResult>>>;
@@ -2406,6 +2442,11 @@ export type DepositLoanAccountQuery = {
   list?: Maybe<DepositLoanAccountConnection>;
   listDefaultAccounts?: Maybe<DepositLoanAccountListResult>;
   listMinors?: Maybe<KymIndFamilyMemberQueryResult>;
+  listTransactions?: Maybe<EbankingTransactionConnection>;
+};
+
+export type DepositLoanAccountQueryAccountDetailsArgs = {
+  id: Scalars['ID'];
 };
 
 export type DepositLoanAccountQueryFormStateArgs = {
@@ -2440,6 +2481,11 @@ export type DepositLoanAccountQueryListDefaultAccountsArgs = {
 
 export type DepositLoanAccountQueryListMinorsArgs = {
   memberId: Scalars['ID'];
+};
+
+export type DepositLoanAccountQueryListTransactionsArgs = {
+  filter: AccountsTransactionFilter;
+  paginate: Pagination;
 };
 
 export type DepositLoanAccountResult = {
@@ -3948,9 +3994,10 @@ export type EbankingSignUpResult = {
 export type EbankingTransaction = {
   accountId?: Maybe<Scalars['String']>;
   amount: Scalars['String'];
-  date: Scalars['String'];
+  currentBalance: Scalars['String'];
+  date: Scalars['Localized'];
   id: Scalars['String'];
-  month: Months;
+  month: Scalars['Localized'];
   name: Scalars['String'];
   transactionDirection: EbankingTransactionDirection;
 };
@@ -3958,6 +4005,7 @@ export type EbankingTransaction = {
 export type EbankingTransactionConnection = {
   edges?: Maybe<Array<Maybe<EbankingTransactionEdge>>>;
   pageInfo?: Maybe<PageInfo>;
+  summary?: Maybe<TransactionListSummary>;
   totalCount?: Maybe<Scalars['Int']>;
 };
 
@@ -4864,10 +4912,10 @@ export enum IndividualRequiredDocument {
 }
 
 export type Installment = {
-  dueDate: Scalars['String'];
-  dueDateAD?: Maybe<Scalars['String']>;
+  dueDate: Scalars['Localized'];
   fine?: Maybe<Scalars['String']>;
-  monthName?: Maybe<Scalars['String']>;
+  monthName: Scalars['Localized'];
+  number: Scalars['Int'];
   rebate?: Maybe<Scalars['String']>;
   status: InstallmentState;
 };
@@ -8370,6 +8418,11 @@ export type LocalizationExample = {
   name?: Maybe<Scalars['Localized']>;
 };
 
+export type LocalizedDateFilter = {
+  from: Scalars['Localized'];
+  to: Scalars['Localized'];
+};
+
 export type LocationCoordinate = {
   latitude?: Maybe<Scalars['Float']>;
   longitude?: Maybe<Scalars['Float']>;
@@ -8435,6 +8488,34 @@ export type Member = Base & {
 export type MemberAccountData = {
   depositAccount?: Maybe<Array<Maybe<DepositAccount>>>;
   loanAccount?: Maybe<Array<Maybe<LoanAccount>>>;
+};
+
+export type MemberAccountDetails = {
+  accountBalance?: Maybe<Scalars['String']>;
+  accountBranch?: Maybe<Scalars['String']>;
+  accountId?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  accountOpenDate?: Maybe<Scalars['Localized']>;
+  accountType?: Maybe<NatureOfDepositProduct>;
+  allowLoan?: Maybe<Scalars['Boolean']>;
+  allowPartialInstallment?: Maybe<Scalars['Boolean']>;
+  alternativeChannel?: Maybe<Scalars['Boolean']>;
+  atmFacility?: Maybe<Scalars['Boolean']>;
+  autoOpen?: Maybe<Scalars['Boolean']>;
+  chequeIssue?: Maybe<Scalars['Boolean']>;
+  guaranteedAmount?: Maybe<Scalars['String']>;
+  installmentAmount?: Maybe<Scalars['String']>;
+  insurance?: Maybe<Scalars['Boolean']>;
+  interestAccrued?: Maybe<Scalars['String']>;
+  interestEarned?: Maybe<Scalars['String']>;
+  isForMinors?: Maybe<Scalars['Boolean']>;
+  member?: Maybe<Member>;
+  monthlyInterestCompulsory?: Maybe<Scalars['Boolean']>;
+  productName?: Maybe<Scalars['String']>;
+  staffProduct?: Maybe<Scalars['Boolean']>;
+  supportMultiple?: Maybe<Scalars['Boolean']>;
+  totalDepositBalance?: Maybe<Scalars['String']>;
+  withdrawRestricted?: Maybe<Scalars['Boolean']>;
 };
 
 export type MemberAccountMinView = {
@@ -9205,6 +9286,7 @@ export enum ObjState {
   Dormant = 'DORMANT',
   Draft = 'DRAFT',
   Inactive = 'INACTIVE',
+  Submitted = 'SUBMITTED',
   Validated = 'VALIDATED',
 }
 
@@ -11117,6 +11199,12 @@ export type TransactionFilter = {
   type?: InputMaybe<TranslateInput>;
 };
 
+export type TransactionListSummary = {
+  averageBalance?: Maybe<Scalars['String']>;
+  totalDeposit?: Maybe<Scalars['String']>;
+  totalWithdraw?: Maybe<Scalars['String']>;
+};
+
 export enum TransactionMode {
   Ebanking = 'EBANKING',
   Mobile = 'MOBILE',
@@ -11181,6 +11269,7 @@ export type TransactionQuery = {
   listTellerTransaction: TellerActivityListConnection;
   listTransfer: AccountTransferListConnection;
   listWithdraw: AccountActivityListConnection;
+  viewAccountTransfer?: Maybe<AccountTransferViewResult>;
   viewDeposit?: Maybe<DepositTransactionViewResult>;
   viewWithdraw?: Maybe<WithdrawTransactionViewResult>;
 };
@@ -11221,6 +11310,10 @@ export type TransactionQueryListTransferArgs = {
 export type TransactionQueryListWithdrawArgs = {
   filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type TransactionQueryViewAccountTransferArgs = {
+  transactionId: Scalars['ID'];
 };
 
 export type TransactionQueryViewDepositArgs = {
@@ -13998,9 +14091,9 @@ export type GetInstallmentsListDataQuery = {
   account: {
     getInstallments?: {
       data?: Array<{
-        dueDate: string;
+        dueDate: Record<'local' | 'en' | 'np', string>;
         status: InstallmentState;
-        monthName?: string | null;
+        monthName: Record<'local' | 'en' | 'np', string>;
         fine?: string | null;
         rebate?: string | null;
       } | null> | null;
@@ -14024,9 +14117,9 @@ export type GetBulkInstallmentsDataQuery = {
       accountId?: string | null;
       value?: {
         data?: Array<{
-          dueDate: string;
+          dueDate: Record<'local' | 'en' | 'np', string>;
           status: InstallmentState;
-          monthName?: string | null;
+          monthName: Record<'local' | 'en' | 'np', string>;
           fine?: string | null;
           rebate?: string | null;
         } | null> | null;
@@ -17420,7 +17513,7 @@ export type GetLoanProductEditDataQuery = {
             maxPercentOfGurantee?: number | null;
             collateralTypes?: Array<string | null> | null;
             isPrematurePenaltyApplicable?: boolean | null;
-            productCode?: { prefix: string; initialNo: string } | null;
+            productCode?: { prefix: string; initialNo: string; noOfDigits?: number | null } | null;
             penaltyOnPrincipal?: {
               dayAfterInstallmentDate?: number | null;
               penaltyRate?: number | null;
@@ -26887,6 +26980,7 @@ export const GetLoanProductEditDataDocument = `
             productCode {
               prefix
               initialNo
+              noOfDigits
             }
             description
             typeOfMember

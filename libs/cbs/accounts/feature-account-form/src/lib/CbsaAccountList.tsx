@@ -16,6 +16,10 @@ const ACCOUNT_TAB_ITEMS = [
     title: 'accountNavDormant',
     key: ObjState.Dormant,
   },
+  {
+    title: 'accountSubmitted',
+    key: ObjState.Dormant,
+  },
 ];
 
 export const CBSAccountList = () => {
