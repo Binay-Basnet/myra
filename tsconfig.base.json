@@ -33,6 +33,8 @@
       "@coop/accounting/ui-layouts": ["libs/accounting/ui-layouts/src/index.ts"],
       "@coop/accouting/loan": ["libs/accounting/feature-loan/src/index.ts"],
       "@coop/cbs/accounts/account-form": ["libs/cbs/accounts/feature-account-form/src/index.ts"],
+      "@coop/cbs/accounts/ui-components": ["libs/cbs/accounts/ui-components/src/index.ts"],
+      "@coop/cbs/accounts/ui-layouts": ["libs/cbs/accounts/ui-layouts/src/index.ts"],
       "@coop/cbs/audit-log": ["libs/cbs/settings/feature-audit-log/src/index.ts"],
       "@coop/cbs/close-day": ["libs/cbs/close-day/src/index.ts"],
       "@coop/cbs/data-access": ["libs/cbs/data-access/src/index.ts"],

@@ -21,6 +21,7 @@ export * from './lib/detail-card-content/DetailCardContent';
 export * from './lib/detail-page-content-card/DetailPageContentCard';
 export * from './lib/detail-page-header/DetailPageHeader';
 export * from './lib/detail-page-member-card/DetailPageMemberCard';
+export * from './lib/detail-page-quick-links/DetailPageQuickLinks';
 export * from './lib/detail-page-tabs/DetailPageTabs';
 export * from './lib/details-card/DetailsCard';
 export * from './lib/divider/Divider';

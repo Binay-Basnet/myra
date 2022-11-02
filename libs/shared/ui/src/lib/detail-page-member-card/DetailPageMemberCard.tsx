@@ -23,7 +23,7 @@ export const DetailPageMemberCard = ({
       <Text fontSize="r1" fontWeight="500" color="primary.500" textTransform="capitalize">
         {name}
       </Text>
-      <Text fontSize="r1" fontWeight="400" color="gray.800">
+      <Text fontSize="r1" fontWeight="400" color="gray.800" wordBreak="break-all">
         {id}
       </Text>
 

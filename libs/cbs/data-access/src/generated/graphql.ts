@@ -14085,12 +14085,17 @@ export type GetAccountOpenMinorListQuery = {
 
 export type GetInstallmentsListDataQueryVariables = Exact<{
   id: Scalars['ID'];
+  from?: InputMaybe<Scalars['String']>;
+  to?: InputMaybe<Scalars['String']>;
+  fromN?: InputMaybe<Scalars['Int']>;
+  toN?: InputMaybe<Scalars['Int']>;
 }>;
 
 export type GetInstallmentsListDataQuery = {
   account: {
     getInstallments?: {
       data?: Array<{
+        number: number;
         dueDate: Record<'local' | 'en' | 'np', string>;
         status: InstallmentState;
         monthName: Record<'local' | 'en' | 'np', string>;
@@ -14137,6 +14142,76 @@ export type GetDefaultAccountListQuery = {
   account: {
     listDefaultAccounts?: {
       data?: Array<{ id: string; accountName?: string | null } | null> | null;
+    } | null;
+  };
+};
+
+export type GetAccountDetailsDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetAccountDetailsDataQuery = {
+  account: {
+    accountDetails?: {
+      data?: {
+        accountId?: string | null;
+        installmentAmount?: string | null;
+        accountName?: string | null;
+        productName?: string | null;
+        accountOpenDate?: Record<'local' | 'en' | 'np', string> | null;
+        accountType?: NatureOfDepositProduct | null;
+        accountBalance?: string | null;
+        totalDepositBalance?: string | null;
+        interestAccrued?: string | null;
+        interestEarned?: string | null;
+        guaranteedAmount?: string | null;
+        accountBranch?: string | null;
+        alternativeChannel?: boolean | null;
+        allowLoan?: boolean | null;
+        withdrawRestricted?: boolean | null;
+        supportMultiple?: boolean | null;
+        staffProduct?: boolean | null;
+        atmFacility?: boolean | null;
+        chequeIssue?: boolean | null;
+        allowPartialInstallment?: boolean | null;
+        monthlyInterestCompulsory?: boolean | null;
+        isForMinors?: boolean | null;
+        autoOpen?: boolean | null;
+        member?: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          profilePicUrl?: string | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAccountTransactionListsQueryVariables = Exact<{
+  filter: AccountsTransactionFilter;
+  pagination: Pagination;
+}>;
+
+export type GetAccountTransactionListsQuery = {
+  account: {
+    listTransactions?: {
+      edges?: Array<{
+        node: {
+          id: string;
+          accountId?: string | null;
+          name: string;
+          date: Record<'local' | 'en' | 'np', string>;
+          month: Record<'local' | 'en' | 'np', string>;
+          transactionDirection: EbankingTransactionDirection;
+          amount: string;
+        };
+      } | null> | null;
+      pageInfo?: {
+        endCursor?: string | null;
+        startCursor?: string | null;
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+      } | null;
     } | null;
   };
 };
@@ -16800,7 +16875,11 @@ export type GetMemberCheckQueryVariables = Exact<{
 export type GetMemberCheckQuery = {
   members: {
     activateMember?: {
-      memberActivateChecks?: { isFeePaid: boolean; isShareIssued: boolean } | null;
+      memberActivateChecks?: {
+        isFeePaid: boolean;
+        isShareIssued: boolean;
+        isAccountUpdated: boolean;
+      } | null;
     } | null;
   };
 };
@@ -22573,10 +22652,11 @@ export const useGetAccountOpenMinorListQuery = <
     options
   );
 export const GetInstallmentsListDataDocument = `
-    query getInstallmentsListData($id: ID!) {
+    query getInstallmentsListData($id: ID!, $from: String, $to: String, $fromN: Int, $toN: Int) {
   account {
-    getInstallments(id: $id) {
+    getInstallments(id: $id, from: $from, to: $to, fromN: $fromN, toN: $toN) {
       data {
+        number
         dueDate
         status
         monthName
@@ -22656,6 +22736,94 @@ export const useGetDefaultAccountListQuery = <TData = GetDefaultAccountListQuery
     ['getDefaultAccountList', variables],
     useAxios<GetDefaultAccountListQuery, GetDefaultAccountListQueryVariables>(
       GetDefaultAccountListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountDetailsDataDocument = `
+    query getAccountDetailsData($id: ID!) {
+  account {
+    accountDetails(id: $id) {
+      data {
+        accountId
+        member {
+          id
+          name
+          profilePicUrl
+        }
+        installmentAmount
+        accountName
+        productName
+        accountOpenDate
+        accountType
+        accountBalance
+        totalDepositBalance
+        interestAccrued
+        interestEarned
+        guaranteedAmount
+        accountBranch
+        alternativeChannel
+        allowLoan
+        withdrawRestricted
+        supportMultiple
+        staffProduct
+        atmFacility
+        chequeIssue
+        allowPartialInstallment
+        monthlyInterestCompulsory
+        isForMinors
+        autoOpen
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountDetailsDataQuery = <TData = GetAccountDetailsDataQuery, TError = unknown>(
+  variables: GetAccountDetailsDataQueryVariables,
+  options?: UseQueryOptions<GetAccountDetailsDataQuery, TError, TData>
+) =>
+  useQuery<GetAccountDetailsDataQuery, TError, TData>(
+    ['getAccountDetailsData', variables],
+    useAxios<GetAccountDetailsDataQuery, GetAccountDetailsDataQueryVariables>(
+      GetAccountDetailsDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountTransactionListsDocument = `
+    query getAccountTransactionLists($filter: AccountsTransactionFilter!, $pagination: Pagination!) {
+  account {
+    listTransactions(filter: $filter, paginate: $pagination) {
+      edges {
+        node {
+          id
+          accountId
+          name
+          date
+          month
+          transactionDirection
+          amount
+        }
+      }
+      pageInfo {
+        endCursor
+        startCursor
+        hasNextPage
+        hasPreviousPage
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountTransactionListsQuery = <
+  TData = GetAccountTransactionListsQuery,
+  TError = unknown
+>(
+  variables: GetAccountTransactionListsQueryVariables,
+  options?: UseQueryOptions<GetAccountTransactionListsQuery, TError, TData>
+) =>
+  useQuery<GetAccountTransactionListsQuery, TError, TData>(
+    ['getAccountTransactionLists', variables],
+    useAxios<GetAccountTransactionListsQuery, GetAccountTransactionListsQueryVariables>(
+      GetAccountTransactionListsDocument
     ).bind(null, variables),
     options
   );
@@ -26040,6 +26208,7 @@ export const GetMemberCheckDocument = `
       memberActivateChecks(memberId: $memberID) {
         isFeePaid
         isShareIssued
+        isAccountUpdated
       }
     }
   }

@@ -10,7 +10,7 @@ export interface DetailPageHeaderProps {
   title: string;
   member: {
     name: string;
-    profilePicUrl?: string;
+    profilePicUrl?: string | undefined | null;
   };
   closeLink?: string;
 }
@@ -35,7 +35,7 @@ export const DetailPageHeader = ({ title, member, closeLink }: DetailPageHeaderP
           {title}
         </Text>
         <Icon as={IoChevronForwardOutline} size="md" />
-        <Avatar name={member.name} src={member.profilePicUrl as string} size="sm" />
+        <Avatar name={member.name} src={member.profilePicUrl ?? ''} size="sm" />
         <Text fontSize="r2" fontWeight="500" color="gray.700">
           {member.name}
         </Text>

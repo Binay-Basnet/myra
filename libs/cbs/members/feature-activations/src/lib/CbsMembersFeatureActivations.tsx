@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import { AiFillCheckCircle, AiOutlinePlus } from 'react-icons/ai';
 import { IoCheckmarkDone } from 'react-icons/io5';
 import { useQueryClient } from 'react-query';
@@ -20,17 +20,19 @@ export const CbsMembersFeatureActivate = () => {
   const queryClient = useQueryClient();
   const id = router.query['id'] as string;
   const [mode, setMode] = useState<'details' | 'payment'>('details');
-
-  const [hasAccountUpdated, setHasAccountUpdated] = useState(false);
+  const [skipAccounts, setSkipAccounts] = useState(false);
 
   const { data } = useGetMemberCheckQuery({ memberID: id }, { enabled: !!id });
-  const { data: memberAccountsData } = useGetMemberAccountsQuery(
-    { memberId: id },
-    { enabled: !!id }
-  );
 
   const hasPaidMemberFee = data?.members?.activateMember?.memberActivateChecks?.isFeePaid;
   const hasShareIssued = data?.members?.activateMember?.memberActivateChecks?.isShareIssued;
+  const hasAccountUpdated = data?.members?.activateMember?.memberActivateChecks?.isAccountUpdated;
+
+  const { data: memberAccountsData } = useGetMemberAccountsQuery(
+    { memberId: id },
+    { enabled: !!id && !!hasShareIssued }
+  );
+
   const accounts = memberAccountsData?.members?.getAllAccounts?.data?.depositAccount;
 
   return (
@@ -172,14 +174,14 @@ export const CbsMembersFeatureActivate = () => {
                       borderColor="border.layout"
                       borderRadius="br2"
                     >
-                      {accounts?.map((account) => (
-                        <AccountRow setHasAccountUpdated={setHasAccountUpdated} account={account} />
+                      {accounts?.map((account, index) => (
+                        <AccountRow index={index + 1} account={account} />
                       ))}
                     </VStack>
 
-                    {!hasAccountUpdated ? (
+                    {!skipAccounts || hasAccountUpdated ? (
                       <Box>
-                        <Button variant="ghost" onClick={() => setHasAccountUpdated(true)}>
+                        <Button variant="ghost" onClick={() => setSkipAccounts(true)}>
                           Skip for now
                         </Button>
                       </Box>
@@ -197,19 +199,7 @@ export const CbsMembersFeatureActivate = () => {
                       </Box>
                     )}
                   </Box>
-                ) : (
-                  <Box display="flex" gap="s4">
-                    <Icon color="primary.500" as={IoCheckmarkDone} />
-                    <Text
-                      fontSize="s3"
-                      fontWeight="SemiBold"
-                      color="neutralColorLight.Gray-70"
-                      lineHeight="150%"
-                    >
-                      Completed
-                    </Text>
-                  </Box>
-                )}
+                ) : null}
               </Box>
             </Box>
             {/**
@@ -281,10 +271,10 @@ interface AccountRowProps {
     };
   } | null;
 
-  setHasAccountUpdated: Dispatch<SetStateAction<boolean>>;
+  index: number;
 }
 
-export const AccountRow = ({ account, setHasAccountUpdated }: AccountRowProps) => {
+export const AccountRow = ({ account, index }: AccountRowProps) => {
   const showAlert =
     (account?.product?.isMandatorySaving &&
       account?.product?.nature === NatureOfDepositProduct.RecurringSaving) ||
@@ -296,8 +286,8 @@ export const AccountRow = ({ account, setHasAccountUpdated }: AccountRowProps) =
   const { data } = useGetAccountCheckQuery(
     { accountId: String(account?.id), memberId },
     {
+      staleTime: 0,
       enabled: !!memberId && !!account?.id,
-      onSuccess: () => setHasAccountUpdated(true),
     }
   );
 
@@ -306,7 +296,7 @@ export const AccountRow = ({ account, setHasAccountUpdated }: AccountRowProps) =
   return (
     <Box minH="s60" w="100%" display="flex">
       <Box w="6%" h="100%" display="flex" alignItems="center" justifyContent="center">
-        1
+        {index}
       </Box>
       <Box px="s8" w="80%" h="100%" display="flex" alignItems="center">
         <Box display="flex" flexDir="column" gap="s16" py="s16">

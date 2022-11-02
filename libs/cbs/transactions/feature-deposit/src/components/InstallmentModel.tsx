@@ -10,9 +10,11 @@ import {
 } from '@chakra-ui/react';
 
 import {
+  DateType,
   DepositAccount,
   InstallmentState,
   NatureOfDepositProduct,
+  useAppSelector,
   useGetInstallmentsListDataQuery,
   useSetAccountForgiveInstallmentDataMutation,
 } from '@coop/cbs/data-access';
@@ -34,6 +36,8 @@ export const InstallmentModel = ({
   productType,
   selectedAccount,
 }: IInstallmentModelProps) => {
+  const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);
+
   const { t } = useTranslation();
 
   const [forgivenList, setForgivenList] = useState<string[]>([]);
@@ -48,6 +52,15 @@ export const InstallmentModel = ({
             selectedAccount?.product?.isMandatorySaving))
       ),
     }
+  );
+
+  const installmentList = installmentsListQueryData?.account?.getInstallments?.data?.map(
+    (installment) => ({
+      ...installment,
+      dueDate: preferenceDate === DateType.Bs ? installment?.dueDate?.np : installment?.dueDate?.en,
+      monthName:
+        preferenceDate === DateType.Bs ? installment?.monthName?.np : installment?.monthName?.en,
+    })
   );
 
   const { mutateAsync: setForgiveInstallment } = useSetAccountForgiveInstallmentDataMutation();
@@ -110,7 +123,7 @@ export const InstallmentModel = ({
         <ModalCloseButton />
         <ModalBody p="s16" maxHeight="60vh" overflowY="scroll">
           <Box borderRadius="br2" px="s12" py="s8" display="flex" flexDirection="column" gap="s16">
-            {installmentsListQueryData?.account?.getInstallments?.data?.map((installment) => (
+            {installmentList?.map((installment) => (
               <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Box display="flex" flexDirection="column">
                   <Text fontSize="r1" fontWeight={500} color="neutralColorLight.Gray-80">

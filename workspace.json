@@ -19,6 +19,8 @@
     "alternative-channels-feature-lists": "libs/alternative-channels/feature-lists",
     "alternative-channels-ui-layouts": "libs/alternative-channels/ui-layouts",
     "cbs-accounts-feature-account-form": "libs/cbs/accounts/feature-account-form",
+    "cbs-accounts-ui-components": "libs/cbs/accounts/ui-components",
+    "cbs-accounts-ui-layouts": "libs/cbs/accounts/ui-layouts",
     "cbs-close-day": "libs/cbs/close-day",
     "cbs-data-access": "libs/cbs/data-access",
     "cbs-kym-form-feature-cooperative": "libs/cbs/kym-form/feature-cooperative",
