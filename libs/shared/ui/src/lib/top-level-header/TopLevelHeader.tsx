@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { GlobalHotKeys } from 'react-hotkeys';
-import { BsArrowRight } from 'react-icons/bs';
+import { AiOutlineSetting } from 'react-icons/ai';
 import { CgMenuGridO } from 'react-icons/cg';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -36,7 +36,6 @@ import {
   ShortcutTab,
   SwitchTabs,
   Text,
-  TextFields,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -85,11 +84,11 @@ const AppSwitcherIconWrapper = (props: {
   return (
     <Box
       display="flex"
-      flexDirection="column"
+      flexDirection="row"
       textAlign="center"
       alignItems="center"
-      gap="s8"
-      p="s8"
+      gap="s16"
+      p="s12"
       cursor="pointer"
       borderRadius="br2"
       _hover={{ bg: 'primary.0' }}
@@ -103,7 +102,13 @@ const AppSwitcherIconWrapper = (props: {
 const AppSwitcherText = (props: { children: React.ReactNode }) => {
   const { children } = props;
   return (
-    <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-60" lineHeight="125%">
+    <Text
+      textAlign="left"
+      fontSize="r1"
+      fontWeight="Medium"
+      color="neutralColorLight.Gray-60"
+      lineHeight="125%"
+    >
       {children}
     </Text>
   );
@@ -318,18 +323,18 @@ export const TopLevelHeader = () => {
               )}
             </Popover>
 
-            {/* <IconButton
-              ml="s16"
+            <FloatingShortcutButton />
+            <IconButton
               width="40px"
               height="40px"
-              icon={<Icon size="md" as={BiBell} />}
+              icon={<Icon size="md" as={AiOutlineSetting} />}
               aria-label="help"
               variant="ghost"
               color="white"
               borderRadius="br1"
               _hover={{ backgroundColor: 'secondary.900' }}
-            /> */}
-            <FloatingShortcutButton />
+              onClick={() => router.push('/settings/general/audit-log')}
+            />
 
             <Popover placement="bottom-end" gutter={3}>
               {() => (
@@ -352,8 +357,8 @@ export const TopLevelHeader = () => {
                     bg="gray.0"
                     w="370px"
                     h="auto"
-                    px="s12"
-                    py="s24"
+                    px="s16"
+                    py="s16"
                     border="none"
                     boxShadow="0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)"
                     outline="none"
@@ -364,15 +369,15 @@ export const TopLevelHeader = () => {
                     zIndex="10"
                   >
                     <PopoverBody p={0}>
-                      <Box display="grid" gridTemplateColumns="repeat(3,1fr)" gap="s8">
+                      <Box display="flex-column" gridTemplateColumns="repeat(3,1fr)" gap="s8">
                         <AppSwitcherIconWrapper onClick={() => router.push('/members/list')}>
-                          <Image width={48} height={48} src="/cbs.svg" alt="Core Banking System" />
+                          <Image width={32} height={32} src="/cbs.svg" alt="Core Banking System" />
                           <AppSwitcherText>{t['corebankingSystems']}</AppSwitcherText>
                         </AppSwitcherIconWrapper>
                         <AppSwitcherIconWrapper onClick={() => router.push('/inventory/register')}>
                           <Image
-                            width={48}
-                            height={48}
+                            width={32}
+                            height={32}
                             src="/inventory.svg"
                             alt="Inventory System"
                           />
@@ -380,8 +385,8 @@ export const TopLevelHeader = () => {
                         </AppSwitcherIconWrapper>
                         <AppSwitcherIconWrapper onClick={() => router.push('/members/list')}>
                           <Image
-                            height={48}
-                            width={48}
+                            height={32}
+                            width={32}
                             src="/memberandshare.svg"
                             alt="Fixed Asset Management"
                           />
@@ -391,8 +396,8 @@ export const TopLevelHeader = () => {
                           onClick={() => router.push('/accounting/sales/list')}
                         >
                           <Image
-                            width={48}
-                            height={48}
+                            width={32}
+                            height={32}
                             src="/accounting.svg"
                             alt="Accounting System"
                           />
@@ -402,30 +407,30 @@ export const TopLevelHeader = () => {
                         <AppSwitcherIconWrapper
                           onClick={() => router.push('/alternative-channels/mBanking/users')}
                         >
-                          <Image width={48} height={48} src="/tnt.svg" alt="Alternativer channel" />
+                          <Image width={32} height={32} src="/tnt.svg" alt="Alternativer channel" />
                           <AppSwitcherText>
                             {t['alternativeChannelsAndCrossConnectivity']}
                           </AppSwitcherText>
                         </AppSwitcherIconWrapper>
                       </Box>
-                      <Divider mt="s24" mb="s24" />
+                      <Divider my="s8" />
                       <Box>
-                        <Box display="grid" gridTemplateColumns="repeat(3,1fr)">
+                        <Box display="flex" gridTemplateColumns="repeat(3,1fr)">
                           <Box
                             display="flex"
-                            flexDirection="column"
+                            flexDirection="row"
                             textAlign="center"
                             alignItems="center"
-                            gap="s8"
+                            gap="s16"
                             p="s8"
                             cursor="pointer"
                             borderRadius="br2"
                             _hover={{ bg: 'primary.0' }}
                             onClick={() => router.push('/settings/general/audit-log')}
                           >
-                            <Image width={48} height={48} src="/settings.svg" alt="Settings" />
+                            <Image width={32} height={32} src="/settings.svg" alt="Settings" />
                             <Text
-                              fontSize="s3"
+                              fontSize="r1"
                               fontWeight="Medium"
                               color="neutralColorLight.Gray-60"
                               lineHeight="125%"
@@ -433,11 +438,6 @@ export const TopLevelHeader = () => {
                               {t['settings']}
                             </Text>
                           </Box>
-                        </Box>
-
-                        <Box display="flex" justifyContent="flex-end" gap="s4" mt="s16">
-                          <TextFields variant="link">{t['exploreAllApplications']}</TextFields>
-                          <Icon size="sm" as={BsArrowRight} color="primary.500" />
                         </Box>
                       </Box>
                     </PopoverBody>
