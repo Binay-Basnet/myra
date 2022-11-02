@@ -17,7 +17,7 @@ const ACCOUNT_TAB_ITEMS = [
   },
   {
     title: 'accountSubmitted',
-    key: ObjState.Dormant,
+    key: ObjState.Submitted,
   },
 ];
 
