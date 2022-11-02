@@ -16707,7 +16707,11 @@ export type GetMemberCheckQueryVariables = Exact<{
 export type GetMemberCheckQuery = {
   members: {
     activateMember?: {
-      memberActivateChecks?: { isFeePaid: boolean; isShareIssued: boolean } | null;
+      memberActivateChecks?: {
+        isFeePaid: boolean;
+        isShareIssued: boolean;
+        isAccountUpdated: boolean;
+      } | null;
     } | null;
   };
 };
@@ -17420,7 +17424,7 @@ export type GetLoanProductEditDataQuery = {
             maxPercentOfGurantee?: number | null;
             collateralTypes?: Array<string | null> | null;
             isPrematurePenaltyApplicable?: boolean | null;
-            productCode?: { prefix: string; initialNo: string } | null;
+            productCode?: { prefix: string; initialNo: string; noOfDigits?: number | null } | null;
             penaltyOnPrincipal?: {
               dayAfterInstallmentDate?: number | null;
               penaltyRate?: number | null;
@@ -25947,6 +25951,7 @@ export const GetMemberCheckDocument = `
       memberActivateChecks(memberId: $memberID) {
         isFeePaid
         isShareIssued
+        isAccountUpdated
       }
     }
   }
@@ -26887,6 +26892,7 @@ export const GetLoanProductEditDataDocument = `
             productCode {
               prefix
               initialNo
+              noOfDigits
             }
             description
             typeOfMember

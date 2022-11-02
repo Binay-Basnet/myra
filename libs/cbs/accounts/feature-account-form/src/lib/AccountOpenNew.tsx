@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
@@ -102,6 +103,7 @@ const cashOptions: Record<string, string> = {
 };
 
 export const AccountOpenNew = () => {
+  const queryClient = useQueryClient();
   const [mode, setMode] = useState('0');
 
   const [totalCharge, setTotalCharge] = useState<number>(0);
@@ -371,6 +373,7 @@ export const AccountOpenNew = () => {
       onSuccess: () => {
         if (redirectPath) {
           router.push(String(redirectPath));
+          queryClient.invalidateQueries('getAccountCheck');
         } else {
           router.push('/accounts/list');
         }
