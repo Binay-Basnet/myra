@@ -15,11 +15,9 @@ export const MemberStatistics = () => {
       {memberShareDetails?.totalShareValue && (
         <Box bg="white" px="s16" pt="s20" pb="s12" borderRadius="br2">
           <Text fontSize="s3" fontWeight="500">
-            {' '}
-            Total Share Value{' '}
+            Total Share Value
           </Text>
           <Text fontSize="r3" fontWeight="600">
-            {' '}
             {memberShareDetails?.totalShareValue}
           </Text>
         </Box>
@@ -27,11 +25,9 @@ export const MemberStatistics = () => {
       {memberShareDetails?.accountBalance && (
         <Box bg="white" px="s16" pt="s20" pb="s12" borderRadius="br2">
           <Text fontSize="s3" fontWeight="500">
-            {' '}
             Overall Account Balance
           </Text>
           <Text fontSize="r3" fontWeight="600">
-            {' '}
             {memberShareDetails?.accountBalance}
           </Text>
         </Box>
@@ -39,11 +35,9 @@ export const MemberStatistics = () => {
       {memberShareDetails?.accountBalance && (
         <Box bg="white" px="s16" pt="s20" pb="s12" borderRadius="br2">
           <Text fontSize="s3" fontWeight="500">
-            {' '}
-            Total Loan Amount{' '}
+            Total Loan Amount
           </Text>
           <Text fontSize="r3" fontWeight="600">
-            {' '}
             {memberShareDetails?.loanBalance}
           </Text>
         </Box>

@@ -394,10 +394,11 @@ query getAccountOpenMinorList($memberId: ID!) {
   }
 }
 
-query getInstallmentsListData($id: ID!) {
+query getInstallmentsListData($id: ID!, $from: String, $to: String, $fromN: Int, $toN: Int) {
   account {
-    getInstallments(id: $id) {
+    getInstallments(id: $id, from: $from, to: $to, fromN: $fromN, toN: $toN) {
       data {
+        number
         dueDate
         status
         monthName
@@ -434,6 +435,67 @@ query getDefaultAccountList($productId: ID!, $memberId: ID!) {
       data {
         id
         accountName
+      }
+    }
+  }
+}
+
+query getAccountDetailsData($id: ID!) {
+  account {
+    accountDetails(id: $id) {
+      data {
+        accountId
+        member {
+          id
+          name
+          profilePicUrl
+        }
+        installmentAmount
+        accountName
+        productName
+        accountOpenDate
+        accountType
+        accountBalance
+        totalDepositBalance
+        interestAccrued
+        interestEarned
+        guaranteedAmount
+        accountBranch
+        alternativeChannel
+        allowLoan
+        withdrawRestricted
+        supportMultiple
+        staffProduct
+        atmFacility
+        chequeIssue
+        allowPartialInstallment
+        monthlyInterestCompulsory
+        isForMinors
+        autoOpen
+      }
+    }
+  }
+}
+
+query getAccountTransactionLists($filter: AccountsTransactionFilter!, $pagination: Pagination!) {
+  account {
+    listTransactions(filter: $filter, paginate: $pagination) {
+      edges {
+        node {
+          id
+          accountId
+          name
+          date
+          month
+          transactionDirection
+          amount
+        }
+      }
+      pageInfo {
+        endCursor
+        startCursor
+        hasNextPage
+        hasPreviousPage
       }
     }
   }

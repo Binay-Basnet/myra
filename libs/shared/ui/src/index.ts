@@ -1,3 +1,4 @@
+export * from './lib/detail-page-quick-links/DetailPageQuickLinks';
 export * from './lib/accordion/Accordion';
 export * from './lib/account-input/AccountInput';
 export * from './lib/add-button-list/AddButtonList';
