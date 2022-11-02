@@ -22,6 +22,8 @@ export const LoanApproveOrDeclineModal = ({
   const queryClient = useQueryClient();
 
   const router = useRouter();
+  const status = router.query['status'] === 'true';
+
   const methods = useForm({
     defaultValues: {
       reasonForDeclination: '',
@@ -93,7 +95,7 @@ export const LoanApproveOrDeclineModal = ({
 
       <ChakraModal
         width="2xl"
-        primaryButtonLabel="Schedule"
+        primaryButtonLabel={status ? 'Schedule' : undefined}
         primaryButtonHandler={async () => {
           await asyncToast({
             id: 'approve-request',
@@ -119,7 +121,7 @@ export const LoanApproveOrDeclineModal = ({
             },
           });
         }}
-        secondaryButtonLabel="Decline"
+        secondaryButtonLabel={status ? 'Decline' : undefined}
         secondaryButtonVariant="outline"
         secondaryButtonHandler={() => {
           onToggle();
@@ -132,6 +134,7 @@ export const LoanApproveOrDeclineModal = ({
         hidePadding
       >
         {children}
+
         <FormProvider {...methods}>
           <Box p="s16">
             <FormDatePicker label="Purposed Meeting Date" name="purposedDate" />

@@ -48,6 +48,8 @@ export const ApproveDeclineModal = ({
     onToggle: declineIsOnToggle,
   } = useDisclosure();
 
+  const status = router.query['status'] === 'true';
+
   return (
     <>
       <ChakraModal
@@ -98,7 +100,7 @@ export const ApproveDeclineModal = ({
 
       <ChakraModal
         width="2xl"
-        primaryButtonLabel="Approve"
+        primaryButtonLabel={status ? 'Approve' : undefined}
         primaryButtonHandler={async () => {
           await asyncToast({
             id: 'approve-request',
@@ -122,7 +124,7 @@ export const ApproveDeclineModal = ({
             },
           });
         }}
-        secondaryButtonLabel="Decline"
+        secondaryButtonLabel={status ? 'Decline' : undefined}
         secondaryButtonVariant="outline"
         secondaryButtonHandler={() => {
           onToggle();

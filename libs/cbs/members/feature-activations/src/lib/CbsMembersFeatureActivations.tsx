@@ -1,18 +1,27 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { AiFillCheckCircle, AiOutlinePlus } from 'react-icons/ai';
 import { IoCheckmarkDone } from 'react-icons/io5';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { Box } from '@chakra-ui/react';
 
-import { useGetMemberAccountsQuery, useGetMemberCheckQuery } from '@coop/cbs/data-access';
+import {
+  NatureOfDepositProduct,
+  useGetAccountCheckQuery,
+  useGetMemberAccountsQuery,
+  useGetMemberCheckQuery,
+} from '@coop/cbs/data-access';
 import { Alert, Button, Container, Divider, FormFooter, Icon, Text, VStack } from '@coop/shared/ui';
 
 import { MembershipPayment } from '../components/MembershipPayment';
 
 export const CbsMembersFeatureActivate = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const id = router.query['id'] as string;
   const [mode, setMode] = useState<'details' | 'payment'>('details');
+
+  const [hasAccountUpdated, setHasAccountUpdated] = useState(false);
 
   const { data } = useGetMemberCheckQuery({ memberID: id }, { enabled: !!id });
   const { data: memberAccountsData } = useGetMemberAccountsQuery(
@@ -22,8 +31,7 @@ export const CbsMembersFeatureActivate = () => {
 
   const hasPaidMemberFee = data?.members?.activateMember?.memberActivateChecks?.isFeePaid;
   const hasShareIssued = data?.members?.activateMember?.memberActivateChecks?.isShareIssued;
-
-  console.log(memberAccountsData);
+  const accounts = memberAccountsData?.members?.getAllAccounts?.data?.depositAccount;
 
   return (
     <>
@@ -37,7 +45,7 @@ export const CbsMembersFeatureActivate = () => {
         bg="white"
         minH="calc(100vh - 110px)"
       >
-        <Box p="s16" display="flex" flexDir="column" gap="s32">
+        <Box minH="calc(100vh - 170px)" p="s16" display="flex" flexDir="column" gap="s32">
           <Box
             display="flex"
             bg="background.500"
@@ -137,8 +145,12 @@ export const CbsMembersFeatureActivate = () => {
               </Box>
             </Box>
             <Divider />
+
             <Box display="flex" gap="s16">
-              <NumberStatus active={false} number={3} />
+              <NumberStatus
+                active={!!hasShareIssued && !!hasPaidMemberFee && !hasAccountUpdated}
+                number={3}
+              />
               <Box w="100%" display="flex" flexDir="column" gap="s16">
                 <Box display="flex" flexDir="column" gap="s4">
                   <Text fontSize="r1" fontWeight="600" color="gray.800">
@@ -150,116 +162,85 @@ export const CbsMembersFeatureActivate = () => {
                   </Text>
                 </Box>
 
-                <Box w="100%" display="flex" flexDir="column" gap="s8">
-                  <VStack
-                    divider={<Divider />}
-                    spacing={0}
-                    alignItems="normal"
-                    border="1px"
-                    borderColor="border.layout"
-                    borderRadius="br2"
-                  >
-                    <Box minH="s60" w="100%" display="flex">
-                      <Box
-                        w="6%"
-                        h="100%"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                      >
-                        1
-                      </Box>
-                      <Box px="s8" w="80%" h="100%" display="flex" alignItems="center">
-                        <Box display="flex" flexDir="column" gap="s16" py="s16">
-                          <Box display="flex" flexDir="column" lineHeight="20px">
-                            <Text fontSize="r1" color="gray.800">
-                              Sahakari Bikash Khata
-                            </Text>
-                            <Text fontSize="r1" color="gray.500">
-                              Reccuring Saving Account
-                            </Text>
-                          </Box>
-                          <Alert
-                            hideCloseIcon
-                            status="warning"
-                            title="Update deposit frequency and deposit amount for this account."
-                          />
-                        </Box>
-                      </Box>
-                      <Box
-                        px="s8"
-                        w="20%"
-                        h="100%"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="end"
-                      >
-                        <Button variant="ghost">Update Details</Button>
-                      </Box>
-                    </Box>
-                    <Box h="s60" display="flex">
-                      <Box
-                        w="6%"
-                        h="100%"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                      >
-                        2
-                      </Box>
-                      <Box px="s8" w="80%" h="100%" display="flex" alignItems="center">
-                        <Box display="flex" flexDir="column" lineHeight="20px">
-                          <Text fontSize="r1" color="gray.800">
-                            Regular Savings Account
-                          </Text>
-                          <Text fontSize="r1" color="gray.500">
-                            Saving Account
-                          </Text>
-                        </Box>
-                      </Box>
-                      <Box
-                        px="s8"
-                        w="20%"
-                        h="100%"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="end"
-                      >
-                        <Button variant="ghost">Update Details</Button>
-                      </Box>
-                    </Box>
-                  </VStack>
+                {accounts && accounts?.length !== 0 ? (
+                  <Box w="100%" display="flex" flexDir="column" gap="s8">
+                    <VStack
+                      divider={<Divider />}
+                      spacing={0}
+                      alignItems="normal"
+                      border="1px"
+                      borderColor="border.layout"
+                      borderRadius="br2"
+                    >
+                      {accounts?.map((account) => (
+                        <AccountRow setHasAccountUpdated={setHasAccountUpdated} account={account} />
+                      ))}
+                    </VStack>
 
-                  <Box>
-                    <Button variant="ghost">Skip for now</Button>
+                    {!hasAccountUpdated ? (
+                      <Box>
+                        <Button variant="ghost" onClick={() => setHasAccountUpdated(true)}>
+                          Skip for now
+                        </Button>
+                      </Box>
+                    ) : (
+                      <Box display="flex" gap="s4" py="s16">
+                        <Icon color="primary.500" as={IoCheckmarkDone} />
+                        <Text
+                          fontSize="s3"
+                          fontWeight="SemiBold"
+                          color="neutralColorLight.Gray-70"
+                          lineHeight="150%"
+                        >
+                          Completed
+                        </Text>
+                      </Box>
+                    )}
                   </Box>
-                </Box>
+                ) : (
+                  <Box display="flex" gap="s4">
+                    <Icon color="primary.500" as={IoCheckmarkDone} />
+                    <Text
+                      fontSize="s3"
+                      fontWeight="SemiBold"
+                      color="neutralColorLight.Gray-70"
+                      lineHeight="150%"
+                    >
+                      Completed
+                    </Text>
+                  </Box>
+                )}
               </Box>
             </Box>
-            <Divider />
-            <Box display="flex" gap="s16">
-              <NumberStatus active={false} number={4} />
-              <Box display="flex" flexDir="column" gap="s16">
-                <Box display="flex" flexDir="column" gap="s4">
-                  <Text fontSize="r1" fontWeight="600" color="gray.800">
-                    Add Nepali Transaltion
-                  </Text>
-                  <Text fontSize="r1" color="gray.800">
-                    Nepali translation makes it easy for reporting and viewing data in Nepali
-                  </Text>
-                </Box>
-                <Box display="flex" alignItems="center" gap="s8">
-                  <Button variant="outline">Add Translation</Button>
-                  <Button variant="ghost">Skip for now</Button>
-                </Box>
-              </Box>
-            </Box>
+            {/**
+             *  <Divider />
+             *             <Box display="flex" gap="s16">
+             *               <NumberStatus active={false} number={4} />
+             *               <Box display="flex" flexDir="column" gap="s16">
+             *                 <Box display="flex" flexDir="column" gap="s4">
+             *                   <Text fontSize="r1" fontWeight="600" color="gray.800">
+             *                     Add Nepali Transaltion
+             *                   </Text>
+             *                   <Text fontSize="r1" color="gray.800">
+             *                     Nepali translation makes it easy for reporting and viewing data in Nepali
+             *                   </Text>
+             *                 </Box>
+             *                 <Box display="flex" alignItems="center" gap="s8">
+             *                   <Button variant="outline">Add Translation</Button>
+             *                   <Button variant="ghost">Skip for now</Button>
+             *                 </Box>
+             *               </Box>
+             *             </Box>
+             * */}
           </Box>
         </Box>
         <Box position="sticky" bottom={0} zIndex="11">
           <FormFooter
             mainButtonLabel="Done"
-            mainButtonHandler={() => router.push('/members/list')}
+            mainButtonHandler={() => {
+              queryClient.invalidateQueries('getMemberList');
+              router.push('/members/list');
+            }}
           />
         </Box>
       </Container>
@@ -288,3 +269,89 @@ export const NumberStatus = ({ number, active }: INumberStatusProps) => (
     {number}
   </Box>
 );
+
+interface AccountRowProps {
+  account: {
+    id: string;
+    accountName?: string | null | undefined;
+    product: {
+      nature: NatureOfDepositProduct;
+      isMandatorySaving?: boolean | null | undefined;
+      productName: string;
+    };
+  } | null;
+
+  setHasAccountUpdated: Dispatch<SetStateAction<boolean>>;
+}
+
+export const AccountRow = ({ account, setHasAccountUpdated }: AccountRowProps) => {
+  const showAlert =
+    (account?.product?.isMandatorySaving &&
+      account?.product?.nature === NatureOfDepositProduct.RecurringSaving) ||
+    account?.product?.nature === NatureOfDepositProduct.Saving;
+
+  const router = useRouter();
+  const memberId = router.query['id'] as string;
+
+  const { data } = useGetAccountCheckQuery(
+    { accountId: String(account?.id), memberId },
+    {
+      enabled: !!memberId && !!account?.id,
+      onSuccess: () => setHasAccountUpdated(true),
+    }
+  );
+
+  const hasFilledDetails = data?.members?.activateMember?.accountUpdateCheck;
+
+  return (
+    <Box minH="s60" w="100%" display="flex">
+      <Box w="6%" h="100%" display="flex" alignItems="center" justifyContent="center">
+        1
+      </Box>
+      <Box px="s8" w="80%" h="100%" display="flex" alignItems="center">
+        <Box display="flex" flexDir="column" gap="s16" py="s16">
+          <Box display="flex" flexDir="column" lineHeight="20px" textTransform="capitalize">
+            <Text fontSize="r1" color="gray.800">
+              {account?.accountName}
+            </Text>
+            <Text fontSize="r1" color="gray.500">
+              {account?.product?.productName}
+            </Text>
+          </Box>
+
+          {showAlert && (
+            <Alert
+              hideCloseIcon
+              status="warning"
+              title="Update deposit frequency and deposit amount for this account."
+            />
+          )}
+        </Box>
+      </Box>
+
+      <Box px="s16" w="20%" h="100%" display="flex" alignItems="center" justifyContent="end">
+        {hasFilledDetails ? (
+          <Box display="flex" gap="s4">
+            <Icon color="primary.500" as={IoCheckmarkDone} />
+            <Text
+              fontSize="s3"
+              fontWeight="SemiBold"
+              color="neutralColorLight.Gray-70"
+              lineHeight="150%"
+            >
+              Details Updated
+            </Text>
+          </Box>
+        ) : (
+          <Box
+            onClick={() =>
+              router.push(`/accounts/account-open/edit/${account?.id}?redirect=${router.asPath}`)
+            }
+          >
+            <Button variant="ghost">Update Details</Button>
+          </Box>
+        )}
+      </Box>
+    </Box>
+  );
+};

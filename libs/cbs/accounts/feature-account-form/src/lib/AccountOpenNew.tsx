@@ -134,6 +134,8 @@ export const AccountOpenNew = () => {
   const { getValues, watch, reset } = methods;
   const memberId = watch('memberId');
   const router = useRouter();
+  const redirectPath = router.query['redirect'];
+
   const id = String(router?.query?.['id']);
   const { mutateAsync } = useSetAccountOpenDataMutation();
   const { mutate: mutateDocs } = useSetAccountDocumentDataMutation();
@@ -366,7 +368,13 @@ export const AccountOpenNew = () => {
         success: 'New Account Opened',
         loading: 'Opening new Account',
       },
-      onSuccess: () => router.push('/accounts/list'),
+      onSuccess: () => {
+        if (redirectPath) {
+          router.push(String(redirectPath));
+        } else {
+          router.push('/accounts/list');
+        }
+      },
       promise: mutateAsync({ id, data: updatedData as DepositLoanAccountInput }),
       onError: (error) => {
         if (error.__typename === 'ValidationError') {

@@ -105,7 +105,7 @@ export const useCoopUnionCentralRep = ({ methods }: IUseCoopUnionCentralRep) => 
       if (crDetail) {
         reset({
           ...omit(
-            pickBy(crDetail, (v) => v !== null),
+            pickBy(crDetail, (v) => v !== undefined && v !== null),
             ['id']
           ),
         });

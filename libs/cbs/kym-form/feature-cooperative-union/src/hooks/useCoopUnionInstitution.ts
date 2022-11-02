@@ -108,11 +108,11 @@ export const useCoopUnionInstitution = ({ methods }: IUseCoopUnionInstProps) => 
       if (filteredData) {
         dispatch(setFormDirty(true));
         reset({
-          ...pickBy(filteredData ?? {}, (v) => v !== null),
+          ...pickBy(filteredData ?? {}, (v) => v !== undefined && v !== null),
         });
       }
     }
-  }, [editLoading, editValues]);
+  }, [editLoading]);
 
   // Call The Mutation To Add Data on Each Form Change
   useEffect(() => {

@@ -104,33 +104,34 @@ export const useIndividual = ({ methods }: IIndividualHookProps) => {
   });
 
   // Get Back The Initial Data when page reloads or user edits
-  useDeepCompareEffect(() => {
+  useEffect(() => {
     if (editValues) {
       const filteredData = getIndividualData(editValues);
       if (filteredData) {
         dispatch(setIndividualFormDirty(true));
+
         reset({
           ...pickBy(
             {
               ...filteredData,
               nationalityId: nationalityFields?.form?.options?.predefined?.data?.[0]?.id,
             } ?? {},
-            (v) => v !== null
+            (v) => v !== undefined && v !== null
           ),
         });
       }
     }
-  }, [editLoading, editValues]);
+  }, [editLoading]);
 
   useEffect(() => {
-    const subscription = watch(
+    const { unsubscribe } = watch(
       debounce(async (data) => {
         if (id) {
           await mutateAsync({ id, data });
         }
       }, 800)
     );
-    return () => subscription.unsubscribe();
+    return () => unsubscribe();
   }, [watch, id]);
 
   // refetch data when calendar preference is updated

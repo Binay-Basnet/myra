@@ -4,6 +4,7 @@ import { useDisclosure } from '@chakra-ui/react';
 
 import {
   ChequePickUpMethod,
+  RequestStatus,
   RequestType,
   useGetChequeBookRequestsQuery,
 } from '@coop/cbs/data-access';
@@ -125,6 +126,7 @@ export const ChequeBookRequestList = () => {
             {
               query: {
                 id: row?.node?.id,
+                status: row?.node?.approvalStatus === RequestStatus.Pending,
               },
             },
             undefined,
@@ -153,7 +155,7 @@ export const ChequeBookRequestList = () => {
           />
         </Box>
         <Grid templateColumns="repeat(2, 1fr)" gap="s20" p="s16">
-          <DetailCardContent title="Account Type" subtitle={selectedRequest?.accountType} />
+          <DetailCardContent title="Account Name" subtitle={selectedRequest?.accountType} />
           <DetailCardContent title="Account Number" subtitle={selectedRequest?.accountNumber} />
           <DetailCardContent title="Branch" subtitle={selectedRequest?.branchName} />
           <DetailCardContent

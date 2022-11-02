@@ -2,7 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
-import { RequestType, useGetWithdrawViaCollectorQuery } from '@coop/cbs/data-access';
+import { RequestStatus, RequestType, useGetWithdrawViaCollectorQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
 import { Box, DetailCardContent, Grid, PageHeader, TablePopover, Text } from '@coop/shared/ui';
 import { amountConverter, getRouterQuery } from '@coop/shared/utils';
@@ -117,6 +117,7 @@ export const WithdrawViaCollectorList = () => {
             {
               query: {
                 id: row?.node?.id,
+                status: row?.node?.approvalStatus === RequestStatus.Pending,
               },
             },
             undefined,

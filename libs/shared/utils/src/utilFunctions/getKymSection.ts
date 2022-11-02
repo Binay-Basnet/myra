@@ -285,5 +285,5 @@ export const getKymSection = (id: string) => {
       subSection: 'kymAccIndResidentialpermitofforeigncountry',
     };
   }
-  return null;
+  return undefined;
 };

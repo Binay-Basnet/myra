@@ -24,14 +24,26 @@ query getMemberCheck($memberID: ID!) {
   }
 }
 
-
-query getMemberAccounts($memberId: ID!){
+query getAccountCheck($memberId: ID!, $accountId: ID!) {
   members {
-    getAllAccounts(memberId: $memberId){
+    activateMember {
+      accountUpdateCheck(memberId: $memberId, accountId: $accountId)
+    }
+  }
+}
+
+query getMemberAccounts($memberId: ID!) {
+  members {
+    getAllAccounts(memberId: $memberId) {
       data {
         depositAccount {
           id
           accountName
+          product {
+            nature
+            isMandatorySaving
+            productName
+          }
         }
         loanAccount {
           id
