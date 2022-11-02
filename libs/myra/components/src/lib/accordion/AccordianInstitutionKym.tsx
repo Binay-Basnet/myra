@@ -1,7 +1,6 @@
 import React from 'react';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
-import { KymInsAddSectionStatus } from '@coop/cbs/data-access';
 import { Box, Collapse, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -44,7 +43,6 @@ const AccountOperations: string[] = [
 ];
 
 interface AccordianProps {
-  formStatus?: KymInsAddSectionStatus | null;
   kymCurrentSection?: {
     section: string;
     subSection: string;
