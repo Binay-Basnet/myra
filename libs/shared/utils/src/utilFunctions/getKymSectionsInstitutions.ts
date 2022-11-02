@@ -198,5 +198,5 @@ export const getKymSectionInstitution = (id: string) => {
     };
   }
 
-  return null;
+  return undefined;
 };

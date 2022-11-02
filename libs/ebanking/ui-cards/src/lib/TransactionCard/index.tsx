@@ -44,7 +44,7 @@ export const TransactionCard = ({ transaction, accountName }: ITransactionCardPr
         {Number(transaction.amount).toFixed(2)}
       </TextFields>
       <TextFields variant="formHelper" color="gray.500">
-        {transaction.date}
+        {transaction.date.en}
       </TextFields>
     </Box>
   </Box>
