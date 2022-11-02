@@ -55,7 +55,7 @@ export const ApproveDeclineModal = ({
       <ChakraModal
         open={declineIsOpen}
         onClose={declineIsOnClose}
-        primaryButtonHandler={async () => {
+        primaryButtonHandler={methods.handleSubmit(async () => {
           await asyncToast({
             id: 'decline-request',
             msgs: {
@@ -78,7 +78,7 @@ export const ApproveDeclineModal = ({
               methods.setValue('notifyMember', false);
             },
           });
-        }}
+        })}
         secondaryButtonHandler={() => {
           onToggle();
           declineIsOnToggle();
@@ -92,7 +92,12 @@ export const ApproveDeclineModal = ({
       >
         <FormProvider {...methods}>
           <Box display="flex" flexDir="column" gap="s8">
-            <FormTextArea h="100px" name="reasonForDeclination" label="Reason for Declination" />
+            <FormTextArea
+              rules={{ required: { value: true, message: 'This field is required' } }}
+              h="100px"
+              name="reasonForDeclination"
+              label="Reason for Declination"
+            />
             <FormCheckbox name="notifyMember" label="Notify Member" />
           </Box>
         </FormProvider>

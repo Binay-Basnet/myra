@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import { DepositProductCriteria, DepositProductFormStateData } from '@coop/ebanking/data-access';
 import { Box, DetailsCard, PathBar } from '@coop/shared/ui';
 
@@ -22,6 +24,7 @@ interface IRecurringDepositDetailsProps {
 }
 
 export const TermSavingDetails = ({ product, criteria }: IRecurringDepositDetailsProps) => {
+  const router = useRouter();
   const limits = [
     {
       name: 'Balance',
@@ -74,11 +77,11 @@ export const TermSavingDetails = ({ product, criteria }: IRecurringDepositDetail
           { label: 'Home', link: '/home' },
           {
             label: 'Products',
-            link: '/coop/products',
+            link: '/coop/products/deposit',
           },
           {
             label: product?.productName ?? '',
-            link: '/coop/products',
+            link: router.asPath,
           },
         ]}
       />

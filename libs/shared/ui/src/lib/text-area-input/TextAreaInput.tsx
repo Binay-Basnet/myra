@@ -10,10 +10,11 @@ export interface TextAreaInputProps extends TextareaProps {
   __placeholder?: string;
   placeholder?: string;
   id?: string;
+  errorText?: string;
 }
 
 export const TextAreaInput = forwardRef<HTMLInputElement, TextAreaInputProps>((props, ref) => {
-  const { label, placeholder, id, ...rest } = props;
+  const { label, placeholder, errorText, id, ...rest } = props;
   return (
     <Flex flexDir="column" gap="s4">
       {label && (
@@ -23,13 +24,21 @@ export const TextAreaInput = forwardRef<HTMLInputElement, TextAreaInputProps>((p
       )}
 
       <Textarea
+        borderColor={errorText ? 'danger.500' : 'gray.300'}
         variant="outline"
+        maxH="200px"
         __placeholder={placeholder ?? 'Add description here'}
         id={id}
         size="sm"
         ref={ref as unknown as ForwardedRef<HTMLTextAreaElement>}
         {...rest}
       />
+
+      {errorText && (
+        <TextFields variant="formHelper" color="danger.500">
+          {errorText}
+        </TextFields>
+      )}
     </Flex>
   );
 });

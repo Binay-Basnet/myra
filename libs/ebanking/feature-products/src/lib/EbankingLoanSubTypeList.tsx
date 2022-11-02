@@ -24,7 +24,7 @@ export const EbankingLoanSubType = () => {
           { label: 'Home', link: '/home' },
           {
             label: 'Products',
-            link: '/coop/products',
+            link: '/coop/products/loan',
           },
         ]}
       />

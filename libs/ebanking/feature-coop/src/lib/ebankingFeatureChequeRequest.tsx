@@ -1,5 +1,8 @@
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import { FormAccountHeader } from '@coop/ebanking/accounts';
 import { InfoCard } from '@coop/ebanking/cards';
@@ -11,8 +14,9 @@ import {
 import {
   FormAgentSelect,
   FormBranchSelect,
-  FormNumberInput,
+  FormSelect,
   FormSwitchTab,
+  FormTextArea,
 } from '@coop/shared/form';
 import { asyncToast, Box, PathBar } from '@coop/shared/ui';
 import { getLoggedInUserId } from '@coop/shared/utils';
@@ -22,14 +26,28 @@ const RequestTypeOptions = [
   { label: 'Through agent', value: EBankingChequeRequestType.ThroughAgent },
 ];
 
+const formSchema = yup.object({
+  type: yup.string(),
+  branch: yup.string().when('type', {
+    is: 'Self_Pickup',
+    then: yup.string().required('This field is Required'),
+  }),
+  collector: yup.string().when('type', {
+    is: 'Through_agent',
+    then: yup.string().required('This field is Required'),
+  }),
+  noOfLeaves: yup.string().required('This field is Required'),
+});
+
 export const EbankingFeatureChequeRequest = () => {
   const router = useRouter();
 
   const methods = useForm<EBankingChequeRequestInput>({
     defaultValues: { type: EBankingChequeRequestType.SelfPickup },
+    resolver: yupResolver(formSchema),
   });
 
-  const { watch, getValues } = methods;
+  const { watch, getValues, handleSubmit, reset } = methods;
 
   const type = watch('type');
 
@@ -37,7 +55,7 @@ export const EbankingFeatureChequeRequest = () => {
 
   const memberID = getLoggedInUserId();
 
-  const handleSubmitRequest = async () => {
+  const handleSubmitRequest = handleSubmit(async () => {
     await asyncToast({
       id: 'add-new-cheque-request',
       promise: addNewChequeRequest({
@@ -55,7 +73,11 @@ export const EbankingFeatureChequeRequest = () => {
         router.push('/coop');
       },
     });
-  };
+  });
+
+  useEffect(() => {
+    methods.clearErrors();
+  }, [type, reset]);
 
   return (
     <Box display="flex" flexDirection="column" gap="s16">
@@ -75,15 +97,27 @@ export const EbankingFeatureChequeRequest = () => {
             <Box p="s16" display="flex" flexDirection="column" gap="s16">
               <FormSwitchTab name="type" label="Request Chequebook" options={RequestTypeOptions} />
 
-              <FormNumberInput name="noOfLeaves" label="No. Of Leaves" />
+              <FormSelect
+                options={[
+                  { label: '10', value: 10 },
+                  { label: '20', value: 20 },
+                  { label: '50', value: 50 },
+                  {
+                    label: '100',
+                    value: 100,
+                  },
+                ]}
+                name="noOfLeaves"
+                label="No. Of Leaves"
+              />
 
-              {type === EBankingChequeRequestType.SelfPickup && (
+              {type === EBankingChequeRequestType.SelfPickup ? (
                 <FormBranchSelect name="branch" label="Branch" />
-              )}
-
-              {type === EBankingChequeRequestType.ThroughAgent && (
+              ) : (
                 <FormAgentSelect label="Collector" name="collector" />
               )}
+
+              <FormTextArea name="note" label="Note" />
             </Box>
           </form>
         </InfoCard>

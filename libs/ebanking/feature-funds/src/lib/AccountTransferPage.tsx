@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { LoaderOverlay } from '@coop/ebanking/components';
+import { useAppSelector } from '@coop/ebanking/data-access';
 import { Box, PathBar } from '@coop/shared/ui';
 
 import { AccountTransferForm } from '../components/account-transfer/AccountTransfer';
@@ -18,11 +19,24 @@ export type AccountTransferFormType = {
 };
 
 export const AccountTransferPage = () => {
+  const sourceAccount = useAppSelector(
+    (state) => state?.auth?.cooperative?.user?.defaultAccount
+  ) as string;
   const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>('form');
 
   const [transactionCode, setTransactionCode] = useState<string>('');
 
-  const methods = useForm<AccountTransferFormType>({});
+  const methods = useForm<AccountTransferFormType>({
+    defaultValues: {
+      sourceAccount,
+    },
+  });
+
+  useEffect(() => {
+    if (sourceAccount) {
+      methods.reset({ sourceAccount });
+    }
+  }, [sourceAccount]);
 
   return (
     <FormProvider {...methods}>

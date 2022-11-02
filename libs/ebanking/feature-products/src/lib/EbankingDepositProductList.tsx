@@ -43,7 +43,7 @@ export const EbankingDepositProductList = () => {
           { label: 'Home', link: '/home' },
           {
             label: 'Products',
-            link: '/coop/products',
+            link: '/coop/products/deposit',
           },
         ]}
       />

@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import { DepositProductCriteria, DepositProductFormStateData } from '@coop/ebanking/data-access';
 import { Box, DetailsCard, PathBar } from '@coop/shared/ui';
 
@@ -24,6 +26,7 @@ interface ISavingDetailsProps {
 }
 
 export const SavingDetails = ({ product, criteria }: ISavingDetailsProps) => {
+  const router = useRouter();
   const limits = [
     {
       name: 'Balance',
@@ -76,11 +79,11 @@ export const SavingDetails = ({ product, criteria }: ISavingDetailsProps) => {
           { label: 'Home', link: '/home' },
           {
             label: 'Products',
-            link: '/coop/products',
+            link: '/coop/products/deposit',
           },
           {
             label: product?.productName ?? '',
-            link: '/coop/products',
+            link: router.asPath,
           },
         ]}
       />

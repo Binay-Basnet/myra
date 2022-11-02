@@ -66,6 +66,7 @@ export * from './lib/radio-group/RadioGroup';
 export * from './lib/search-bar/SearchBar';
 export * from './lib/select/Select';
 export * from './lib/select-popout/SelectPopout';
+export * from './lib/settings-button/SettingsButton';
 export * from './lib/settings-footer/SettingsFooter';
 export * from './lib/share-member-card/ShareMemberCard';
 export * from './lib/shortcut-tab/ShortcutTab';
