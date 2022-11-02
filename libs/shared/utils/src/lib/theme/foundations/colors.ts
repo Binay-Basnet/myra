@@ -97,7 +97,7 @@ const colors = {
 
   success: {
     0: '#F5F9F7',
-    100: '#FFECEB',
+    100: '#F5F9F7',
     200: '#C2DBCA',
     300: '#80B496',
     400: '#3D8F5F',

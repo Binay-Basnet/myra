@@ -80,6 +80,7 @@ export const DepositProductTable = ({ addNew }: DepositTableProps) => {
       },
     },
   ];
+
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
