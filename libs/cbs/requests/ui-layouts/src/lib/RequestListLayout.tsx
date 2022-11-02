@@ -1,5 +1,5 @@
 import React from 'react';
-import { AiOutlinePlus, AiOutlineSetting } from 'react-icons/ai';
+import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
 import { TabColumn } from '@coop/myra/components';
@@ -66,18 +66,6 @@ export const RequestListLayout = ({ children }: IAccountPageLayoutProps) => {
 
           <Divider my="s16" />
           <TabColumn list={accountColumns} />
-          <Divider my="s16" />
-          <Button
-            onClick={() => router.push('/settings/general/loan')}
-            variant="ghost"
-            color="#37474F"
-            height="s48"
-            width="full"
-            justifyContent="start"
-            leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
-          >
-            Request Settings
-          </Button>
         </Box>
       </Box>
       <Box

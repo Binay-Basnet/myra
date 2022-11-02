@@ -2,9 +2,8 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
-import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, PageHeader, Text } from '@coop/shared/ui';
+import { Avatar, Box, PageHeader, TablePopover, Text } from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const ACCOUNT_TAB_ITEMS = [
@@ -14,6 +13,10 @@ const ACCOUNT_TAB_ITEMS = [
   },
   {
     title: 'accountNavDormant',
+    key: ObjState.Dormant,
+  },
+  {
+    title: 'accountSubmitted',
     key: ObjState.Dormant,
   },
 ];
@@ -37,17 +40,10 @@ export const CBSAccountList = () => {
 
   const rowData = useMemo(() => data?.account?.list?.edges ?? [], [data]);
 
-  const popoverTitle = [
-    {
-      title: 'depositProductEdit',
-      onClick: (id: string) => router.push(`/accounts/account-open/edit/${id}`),
-    },
-  ];
-
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Member Id',
+        header: 'Account Id',
         accessorFn: (row) => row?.node?.id,
       },
 
@@ -86,12 +82,22 @@ export const CBSAccountList = () => {
       {
         id: '_actions',
         header: '',
-        cell: (props) => (
-          <ActionPopoverComponent
-            items={popoverTitle}
-            id={props?.row?.original?.node?.id as string}
-          />
-        ),
+        cell: (props) =>
+          props?.row?.original?.node && (
+            <TablePopover
+              items={[
+                {
+                  title: 'View Details',
+                  onClick: (row) => router.push(`/accounts/details/${row['id']}`),
+                },
+                {
+                  title: 'depositProductEdit',
+                  onClick: (row) => router.push(`/accounts/account-open/edit/${row['id']}`),
+                },
+              ]}
+              node={props?.row?.original?.node}
+            />
+          ),
         meta: {
           width: '50px',
         },

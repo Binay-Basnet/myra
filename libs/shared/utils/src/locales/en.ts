@@ -266,6 +266,11 @@ const en: Record<string, string> = {
   shareLayoutSelectShareType: 'Select Share Type',
   shareLayoutShareReturn: 'Share Return',
   shareLayoutShareSettings: 'Share Settings',
+  shareLayoutShareDistribution: 'Share Distribution',
+
+  shareLayoutRegisterReport: 'Share Register Report',
+  shareLayoutStateReport: 'Share Statement Report',
+  shareLayoutTransactionReport: 'Share Transaction Report',
 
   // account layout
   accountLayout: 'Account',
@@ -3303,6 +3308,14 @@ const en: Record<string, string> = {
   transactionSidebarNewLoanPayment: 'New Loan Repayment',
   transactionSidebarNewMarketRepresentativeTransaction: 'New Market Representative Transaction',
 
+  transactionLayoutBalanceSheet: 'Balance Sheet',
+  transactionLayoutIncomeStatement: 'Income Statement',
+  transactionLayoutCashFlowStament: 'Cash Flow Statement',
+  transactionLayoutChangeOfEquity: 'Change of Equity',
+  transactionLayoutAppropriationOfProfit: 'Appropriation of Profit',
+  transactionLayoutBankGLBalance: 'Bank GL Balance',
+  transactionLayoutBankGLStatement: 'Bank GL Statement',
+
   // deposit list
   depositListDeposit: 'Deposit',
   depositListTransactionId: 'Transaction ID',
@@ -3562,6 +3575,12 @@ const en: Record<string, string> = {
   loanLayoutTopButton: 'New Loan',
   loanProductRebateRate: 'Rebate Rate',
 
+  loanLayoutSettings: 'Loan Settings',
+  loanLayoutProductsSettings: 'Loan Product Settings',
+
+  loanLayoutStatementReport: 'Loan Statement Report',
+  loanLayoutAgeingReport: 'Loan Ageing Report',
+
   // account deposit product
   accountDepositProduct: 'Deposit Product',
 
@@ -3572,6 +3591,9 @@ const en: Record<string, string> = {
   transferVaultTransfer: 'Vault Transfer',
   transferTellerTransfer: 'Teller Transfer',
   transferBranchTransfer: 'Branch Transfer',
+
+  transferVaultBalanceReport: 'Vault Balance Report',
+  transferTellerReport: 'Teller Report',
 
   memberSettingsNewMemberCharges: 'New Member Charges',
   memberSettingsDifferentCharges: 'Different charges for different member type.',
@@ -3632,6 +3654,7 @@ const en: Record<string, string> = {
 
   /* Account Open */
   accountNavDormant: 'Dormant',
+  accountSubmitted: 'Submitted',
   sharePurchaseTableShareDr: 'Share Return',
   shareRegisterTableIssue: 'Issue',
   shareRegisterTableReturn: 'Return',
@@ -3680,6 +3703,16 @@ const en: Record<string, string> = {
   dayCloseCompleted: 'Completed',
   dayCloseOngoing: 'Ongoing',
   dayCloseNotCompleted: 'Not Completed',
+
+  // savings
+  savings: 'Savings',
+
+  savingsDepositSettings: 'Deposit Settings',
+  savingsProductSettings: 'Saving Products Settings',
+
+  savingsDepositStatementReport: 'Saving / Deposit Statement',
+  savingsIntrestTaxReport: 'Intrest Tax Report',
+  savingsIntrestStatement: 'Intrest Statement (Individual)',
 };
 
 export default en;

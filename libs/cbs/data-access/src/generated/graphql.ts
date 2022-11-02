@@ -35,6 +35,8 @@ export type AbbsTransaction = {
 
 export type AccountActivityEntry = {
   ID: Scalars['ID'];
+  accountId?: Maybe<Scalars['String']>;
+  agentId?: Maybe<Scalars['String']>;
   agentName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['String']>;
@@ -94,6 +96,11 @@ export type AccountConnection = {
   edges: Array<AccountEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int'];
+};
+
+export type AccountDetailsQueryResult = {
+  data?: Maybe<MemberAccountDetails>;
+  error?: Maybe<QueryError>;
 };
 
 export type AccountEdge = {
@@ -204,6 +211,28 @@ export type AccountTransferPaymentForAccountClose = {
 export type AccountTransferPaymentForAlternativeChannel = {
   destination_account: Scalars['ID'];
   note?: InputMaybe<Scalars['String']>;
+};
+
+export type AccountTransferView = {
+  destinationAccount?: Maybe<DepositLoanAccount>;
+  glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
+  id: Scalars['ID'];
+  member?: Maybe<Member>;
+  objState?: Maybe<ObjState>;
+  recipientMember?: Maybe<Member>;
+  sourceAccount?: Maybe<DepositLoanAccount>;
+  teller?: Maybe<Scalars['String']>;
+  transactionBranch?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['String']>;
+  transferAmount?: Maybe<Scalars['String']>;
+  transferType?: Maybe<Scalars['String']>;
+  withdrawnBy?: Maybe<Scalars['String']>;
+  withdrawnSlipNo?: Maybe<Scalars['String']>;
+};
+
+export type AccountTransferViewResult = {
+  data?: Maybe<AccountTransferView>;
+  error?: Maybe<QueryError>;
 };
 
 export type AccountTypeDetailsUnion = BankChartsOfAccount | JournalChartsOfAccount;
@@ -388,6 +417,12 @@ export type AccountingSalesQuerySaleEntryFormStateArgs = {
 export type AccountingSalesSaleEntryQueryResult = {
   data?: Maybe<SalesSaleEntry>;
   error?: Maybe<QueryError>;
+};
+
+export type AccountsTransactionFilter = {
+  accountIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  date?: InputMaybe<LocalizedDateFilter>;
+  memberIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 export type AddCoaAccountInput = {
@@ -2399,6 +2434,7 @@ export type DepositLoanAccountMutationForgiveInstallmentArgs = {
 };
 
 export type DepositLoanAccountQuery = {
+  accountDetails?: Maybe<AccountDetailsQueryResult>;
   formState?: Maybe<DepositLoanAccountFormStateResult>;
   get?: Maybe<DepositLoanAccount>;
   getBulkInstallments?: Maybe<Array<Maybe<BulkInstallmentResult>>>;
@@ -2406,6 +2442,11 @@ export type DepositLoanAccountQuery = {
   list?: Maybe<DepositLoanAccountConnection>;
   listDefaultAccounts?: Maybe<DepositLoanAccountListResult>;
   listMinors?: Maybe<KymIndFamilyMemberQueryResult>;
+  listTransactions?: Maybe<EbankingTransactionConnection>;
+};
+
+export type DepositLoanAccountQueryAccountDetailsArgs = {
+  id: Scalars['ID'];
 };
 
 export type DepositLoanAccountQueryFormStateArgs = {
@@ -2440,6 +2481,11 @@ export type DepositLoanAccountQueryListDefaultAccountsArgs = {
 
 export type DepositLoanAccountQueryListMinorsArgs = {
   memberId: Scalars['ID'];
+};
+
+export type DepositLoanAccountQueryListTransactionsArgs = {
+  filter: AccountsTransactionFilter;
+  paginate: Pagination;
 };
 
 export type DepositLoanAccountResult = {
@@ -3948,9 +3994,10 @@ export type EbankingSignUpResult = {
 export type EbankingTransaction = {
   accountId?: Maybe<Scalars['String']>;
   amount: Scalars['String'];
-  date: Scalars['String'];
+  currentBalance: Scalars['String'];
+  date: Scalars['Localized'];
   id: Scalars['String'];
-  month: Months;
+  month: Scalars['Localized'];
   name: Scalars['String'];
   transactionDirection: EbankingTransactionDirection;
 };
@@ -3958,6 +4005,7 @@ export type EbankingTransaction = {
 export type EbankingTransactionConnection = {
   edges?: Maybe<Array<Maybe<EbankingTransactionEdge>>>;
   pageInfo?: Maybe<PageInfo>;
+  summary?: Maybe<TransactionListSummary>;
   totalCount?: Maybe<Scalars['Int']>;
 };
 
@@ -4864,10 +4912,10 @@ export enum IndividualRequiredDocument {
 }
 
 export type Installment = {
-  dueDate: Scalars['String'];
-  dueDateAD?: Maybe<Scalars['String']>;
+  dueDate: Scalars['Localized'];
   fine?: Maybe<Scalars['String']>;
-  monthName?: Maybe<Scalars['String']>;
+  monthName: Scalars['Localized'];
+  number: Scalars['Int'];
   rebate?: Maybe<Scalars['String']>;
   status: InstallmentState;
 };
@@ -8370,6 +8418,11 @@ export type LocalizationExample = {
   name?: Maybe<Scalars['Localized']>;
 };
 
+export type LocalizedDateFilter = {
+  from: Scalars['Localized'];
+  to: Scalars['Localized'];
+};
+
 export type LocationCoordinate = {
   latitude?: Maybe<Scalars['Float']>;
   longitude?: Maybe<Scalars['Float']>;
@@ -8435,6 +8488,34 @@ export type Member = Base & {
 export type MemberAccountData = {
   depositAccount?: Maybe<Array<Maybe<DepositAccount>>>;
   loanAccount?: Maybe<Array<Maybe<LoanAccount>>>;
+};
+
+export type MemberAccountDetails = {
+  accountBalance?: Maybe<Scalars['String']>;
+  accountBranch?: Maybe<Scalars['String']>;
+  accountId?: Maybe<Scalars['String']>;
+  accountName?: Maybe<Scalars['String']>;
+  accountOpenDate?: Maybe<Scalars['Localized']>;
+  accountType?: Maybe<NatureOfDepositProduct>;
+  allowLoan?: Maybe<Scalars['Boolean']>;
+  allowPartialInstallment?: Maybe<Scalars['Boolean']>;
+  alternativeChannel?: Maybe<Scalars['Boolean']>;
+  atmFacility?: Maybe<Scalars['Boolean']>;
+  autoOpen?: Maybe<Scalars['Boolean']>;
+  chequeIssue?: Maybe<Scalars['Boolean']>;
+  guaranteedAmount?: Maybe<Scalars['String']>;
+  installmentAmount?: Maybe<Scalars['String']>;
+  insurance?: Maybe<Scalars['Boolean']>;
+  interestAccrued?: Maybe<Scalars['String']>;
+  interestEarned?: Maybe<Scalars['String']>;
+  isForMinors?: Maybe<Scalars['Boolean']>;
+  member?: Maybe<Member>;
+  monthlyInterestCompulsory?: Maybe<Scalars['Boolean']>;
+  productName?: Maybe<Scalars['String']>;
+  staffProduct?: Maybe<Scalars['Boolean']>;
+  supportMultiple?: Maybe<Scalars['Boolean']>;
+  totalDepositBalance?: Maybe<Scalars['String']>;
+  withdrawRestricted?: Maybe<Scalars['Boolean']>;
 };
 
 export type MemberAccountMinView = {
@@ -9205,6 +9286,7 @@ export enum ObjState {
   Dormant = 'DORMANT',
   Draft = 'DRAFT',
   Inactive = 'INACTIVE',
+  Submitted = 'SUBMITTED',
   Validated = 'VALIDATED',
 }
 
@@ -11117,6 +11199,12 @@ export type TransactionFilter = {
   type?: InputMaybe<TranslateInput>;
 };
 
+export type TransactionListSummary = {
+  averageBalance?: Maybe<Scalars['String']>;
+  totalDeposit?: Maybe<Scalars['String']>;
+  totalWithdraw?: Maybe<Scalars['String']>;
+};
+
 export enum TransactionMode {
   Ebanking = 'EBANKING',
   Mobile = 'MOBILE',
@@ -11181,6 +11269,7 @@ export type TransactionQuery = {
   listTellerTransaction: TellerActivityListConnection;
   listTransfer: AccountTransferListConnection;
   listWithdraw: AccountActivityListConnection;
+  viewAccountTransfer?: Maybe<AccountTransferViewResult>;
   viewDeposit?: Maybe<DepositTransactionViewResult>;
   viewWithdraw?: Maybe<WithdrawTransactionViewResult>;
 };
@@ -11221,6 +11310,10 @@ export type TransactionQueryListTransferArgs = {
 export type TransactionQueryListWithdrawArgs = {
   filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type TransactionQueryViewAccountTransferArgs = {
+  transactionId: Scalars['ID'];
 };
 
 export type TransactionQueryViewDepositArgs = {
@@ -13992,15 +14085,20 @@ export type GetAccountOpenMinorListQuery = {
 
 export type GetInstallmentsListDataQueryVariables = Exact<{
   id: Scalars['ID'];
+  from?: InputMaybe<Scalars['String']>;
+  to?: InputMaybe<Scalars['String']>;
+  fromN?: InputMaybe<Scalars['Int']>;
+  toN?: InputMaybe<Scalars['Int']>;
 }>;
 
 export type GetInstallmentsListDataQuery = {
   account: {
     getInstallments?: {
       data?: Array<{
-        dueDate: string;
+        number: number;
+        dueDate: Record<'local' | 'en' | 'np', string>;
         status: InstallmentState;
-        monthName?: string | null;
+        monthName: Record<'local' | 'en' | 'np', string>;
         fine?: string | null;
         rebate?: string | null;
       } | null> | null;
@@ -14024,9 +14122,9 @@ export type GetBulkInstallmentsDataQuery = {
       accountId?: string | null;
       value?: {
         data?: Array<{
-          dueDate: string;
+          dueDate: Record<'local' | 'en' | 'np', string>;
           status: InstallmentState;
-          monthName?: string | null;
+          monthName: Record<'local' | 'en' | 'np', string>;
           fine?: string | null;
           rebate?: string | null;
         } | null> | null;
@@ -14044,6 +14142,76 @@ export type GetDefaultAccountListQuery = {
   account: {
     listDefaultAccounts?: {
       data?: Array<{ id: string; accountName?: string | null } | null> | null;
+    } | null;
+  };
+};
+
+export type GetAccountDetailsDataQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetAccountDetailsDataQuery = {
+  account: {
+    accountDetails?: {
+      data?: {
+        accountId?: string | null;
+        installmentAmount?: string | null;
+        accountName?: string | null;
+        productName?: string | null;
+        accountOpenDate?: Record<'local' | 'en' | 'np', string> | null;
+        accountType?: NatureOfDepositProduct | null;
+        accountBalance?: string | null;
+        totalDepositBalance?: string | null;
+        interestAccrued?: string | null;
+        interestEarned?: string | null;
+        guaranteedAmount?: string | null;
+        accountBranch?: string | null;
+        alternativeChannel?: boolean | null;
+        allowLoan?: boolean | null;
+        withdrawRestricted?: boolean | null;
+        supportMultiple?: boolean | null;
+        staffProduct?: boolean | null;
+        atmFacility?: boolean | null;
+        chequeIssue?: boolean | null;
+        allowPartialInstallment?: boolean | null;
+        monthlyInterestCompulsory?: boolean | null;
+        isForMinors?: boolean | null;
+        autoOpen?: boolean | null;
+        member?: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          profilePicUrl?: string | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAccountTransactionListsQueryVariables = Exact<{
+  filter: AccountsTransactionFilter;
+  pagination: Pagination;
+}>;
+
+export type GetAccountTransactionListsQuery = {
+  account: {
+    listTransactions?: {
+      edges?: Array<{
+        node: {
+          id: string;
+          accountId?: string | null;
+          name: string;
+          date: Record<'local' | 'en' | 'np', string>;
+          month: Record<'local' | 'en' | 'np', string>;
+          transactionDirection: EbankingTransactionDirection;
+          amount: string;
+        };
+      } | null> | null;
+      pageInfo?: {
+        endCursor?: string | null;
+        startCursor?: string | null;
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+      } | null;
     } | null;
   };
 };
@@ -22484,10 +22652,11 @@ export const useGetAccountOpenMinorListQuery = <
     options
   );
 export const GetInstallmentsListDataDocument = `
-    query getInstallmentsListData($id: ID!) {
+    query getInstallmentsListData($id: ID!, $from: String, $to: String, $fromN: Int, $toN: Int) {
   account {
-    getInstallments(id: $id) {
+    getInstallments(id: $id, from: $from, to: $to, fromN: $fromN, toN: $toN) {
       data {
+        number
         dueDate
         status
         monthName
@@ -22567,6 +22736,94 @@ export const useGetDefaultAccountListQuery = <TData = GetDefaultAccountListQuery
     ['getDefaultAccountList', variables],
     useAxios<GetDefaultAccountListQuery, GetDefaultAccountListQueryVariables>(
       GetDefaultAccountListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountDetailsDataDocument = `
+    query getAccountDetailsData($id: ID!) {
+  account {
+    accountDetails(id: $id) {
+      data {
+        accountId
+        member {
+          id
+          name
+          profilePicUrl
+        }
+        installmentAmount
+        accountName
+        productName
+        accountOpenDate
+        accountType
+        accountBalance
+        totalDepositBalance
+        interestAccrued
+        interestEarned
+        guaranteedAmount
+        accountBranch
+        alternativeChannel
+        allowLoan
+        withdrawRestricted
+        supportMultiple
+        staffProduct
+        atmFacility
+        chequeIssue
+        allowPartialInstallment
+        monthlyInterestCompulsory
+        isForMinors
+        autoOpen
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountDetailsDataQuery = <TData = GetAccountDetailsDataQuery, TError = unknown>(
+  variables: GetAccountDetailsDataQueryVariables,
+  options?: UseQueryOptions<GetAccountDetailsDataQuery, TError, TData>
+) =>
+  useQuery<GetAccountDetailsDataQuery, TError, TData>(
+    ['getAccountDetailsData', variables],
+    useAxios<GetAccountDetailsDataQuery, GetAccountDetailsDataQueryVariables>(
+      GetAccountDetailsDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountTransactionListsDocument = `
+    query getAccountTransactionLists($filter: AccountsTransactionFilter!, $pagination: Pagination!) {
+  account {
+    listTransactions(filter: $filter, paginate: $pagination) {
+      edges {
+        node {
+          id
+          accountId
+          name
+          date
+          month
+          transactionDirection
+          amount
+        }
+      }
+      pageInfo {
+        endCursor
+        startCursor
+        hasNextPage
+        hasPreviousPage
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountTransactionListsQuery = <
+  TData = GetAccountTransactionListsQuery,
+  TError = unknown
+>(
+  variables: GetAccountTransactionListsQueryVariables,
+  options?: UseQueryOptions<GetAccountTransactionListsQuery, TError, TData>
+) =>
+  useQuery<GetAccountTransactionListsQuery, TError, TData>(
+    ['getAccountTransactionLists', variables],
+    useAxios<GetAccountTransactionListsQuery, GetAccountTransactionListsQueryVariables>(
+      GetAccountTransactionListsDocument
     ).bind(null, variables),
     options
   );

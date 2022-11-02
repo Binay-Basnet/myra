@@ -1,6 +1,6 @@
 import { MouseEventHandler, useState } from 'react';
 import { AiFillBank, AiOutlineSetting } from 'react-icons/ai';
-import { HiDocumentReport } from 'react-icons/hi';
+import { CgLoadbarDoc } from 'react-icons/cg';
 import { IoMdPerson } from 'react-icons/io';
 import { IconType } from 'react-icons/lib';
 import { MdCorporateFare } from 'react-icons/md';
@@ -247,7 +247,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
             />
           ))}
           {reportColumn.map((item) => (
-            <SettingsButton icon={HiDocumentReport} buttonLabel={t[item?.label]} />
+            <SettingsButton icon={CgLoadbarDoc} buttonLabel={t[item?.label]} />
           ))}
         </Box>
       </Box>
