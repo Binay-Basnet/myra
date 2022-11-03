@@ -13023,7 +13023,7 @@ export type GetAccountDetailsDataQueryVariables = Exact<{
 }>;
 
 
-export type GetAccountDetailsDataQuery = { account: { accountDetails?: { data?: { accountId?: string | null, installmentAmount?: string | null, accountName?: string | null, productName?: string | null, accountOpenDate?: Record<"local"|"en"|"np",string> | null, accountType?: NatureOfDepositProduct | null, accountBalance?: string | null, totalDepositBalance?: string | null, interestAccrued?: string | null, interestEarned?: string | null, guaranteedAmount?: string | null, accountBranch?: string | null, alternativeChannel?: boolean | null, allowLoan?: boolean | null, withdrawRestricted?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, allowPartialInstallment?: boolean | null, monthlyInterestCompulsory?: boolean | null, isForMinors?: boolean | null, autoOpen?: boolean | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null } | null } | null } | null } };
+export type GetAccountDetailsDataQuery = { account: { accountDetails?: { data?: { accountId?: string | null, installmentAmount?: string | null, accountName?: string | null, productName?: string | null, accountOpenDate?: Record<"local"|"en"|"np",string> | null, accountType?: NatureOfDepositProduct | null, accountBalance?: string | null, totalDepositBalance?: string | null, interestAccrued?: string | null, interestEarned?: string | null, guaranteedAmount?: string | null, accountBranch?: string | null, alternativeChannel?: boolean | null, allowLoan?: boolean | null, withdrawRestricted?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, allowPartialInstallment?: boolean | null, monthlyInterestCompulsory?: boolean | null, isForMinors?: boolean | null, autoOpen?: boolean | null, isMandatory?: boolean | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null } | null } | null } | null } };
 
 export type GetAccountTransactionListsQueryVariables = Exact<{
   filter: AccountsTransactionFilter;
@@ -13031,7 +13031,7 @@ export type GetAccountTransactionListsQueryVariables = Exact<{
 }>;
 
 
-export type GetAccountTransactionListsQuery = { account: { listTransactions?: { edges?: Array<{ node: { id: string, accountId?: string | null, name: string, date: Record<"local"|"en"|"np",string>, month: Record<"local"|"en"|"np",string>, transactionDirection: EbankingTransactionDirection, amount: string } } | null> | null, pageInfo?: { endCursor?: string | null, startCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null } | null } };
+export type GetAccountTransactionListsQuery = { account: { listTransactions?: { edges?: Array<{ node: { id: string, accountId?: string | null, name: string, date: Record<"local"|"en"|"np",string>, month: Record<"local"|"en"|"np",string>, transactionDirection: EbankingTransactionDirection, amount: string, currentBalance: string } } | null> | null, pageInfo?: { endCursor?: string | null, startCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null, summary?: { totalDeposit?: string | null, totalWithdraw?: string | null, averageBalance?: string | null } | null } | null } };
 
 export type GetInvestmentAccountsListDataQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
@@ -17238,6 +17238,7 @@ export const GetAccountDetailsDataDocument = `
         monthlyInterestCompulsory
         isForMinors
         autoOpen
+        isMandatory
       }
     }
   }
@@ -17268,6 +17269,7 @@ export const GetAccountTransactionListsDocument = `
           month
           transactionDirection
           amount
+          currentBalance
         }
       }
       pageInfo {
@@ -17275,6 +17277,11 @@ export const GetAccountTransactionListsDocument = `
         startCursor
         hasNextPage
         hasPreviousPage
+      }
+      summary {
+        totalDeposit
+        totalWithdraw
+        averageBalance
       }
     }
   }
