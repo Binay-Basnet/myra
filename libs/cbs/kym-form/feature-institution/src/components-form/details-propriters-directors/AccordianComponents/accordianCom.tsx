@@ -64,7 +64,7 @@ export const DirectorTopPart = ({ setKymCurrentSection, directorId }: IAddDirect
           dateOfMembership: familyMemberDetail?.dateOfMembership,
           highestQualification: familyMemberDetail?.highestQualification,
           mobileNo: familyMemberDetail?.mobileNo,
-          email: familyMemberDetail?.emailAddress,
+          email: familyMemberDetail?.email,
           citizenshipNo: familyMemberDetail?.citizenshipNo,
           panNo: familyMemberDetail?.panNo,
           isHeadOfOrganization: familyMemberDetail?.isHeadOfOrganization,
