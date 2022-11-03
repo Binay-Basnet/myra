@@ -20,6 +20,97 @@ query getMemberDetailsOverview($id: ID!) {
             interestRate
           }
         }
+        share {
+          shareInfo {
+            totalCount
+            issuedCount
+            returnedCount
+            totalBalance
+          }
+          registerDetails {
+            date
+            title
+            txnAmount
+            txnType
+            noOfShares
+          }
+          balanceDetails {
+            totalCount
+            edges {
+              node {
+                id
+                memberId
+                member {
+                  id
+                  objState
+                  createdAt
+                  modifiedAt
+                  code
+                  type
+                  name
+
+                  contact
+                  dateJoined
+                  profilePic
+                  signaturepic
+                  profilePicUrl
+                  signaturePicUrl
+                }
+                status
+                transactionDate
+                transactionDirection
+                credit
+                debit
+                startNumber
+                endNumber
+                balance
+                shareAmount
+                extraFee {
+                  name
+                  value
+                }
+                totalAmount
+                paymentMode
+                bankId
+                voucherNumber
+                accountId
+              }
+              cursor
+            }
+            pageInfo {
+              hasNextPage
+              hasPreviousPage
+              startCursor
+              endCursor
+            }
+          }
+        }
+        loan {
+          accounts {
+            accountName
+            accountNumber
+            totalBalance
+            productName
+            productType
+            interestRate
+          }
+          payments {
+            date
+            accountName
+            paymentType
+            amount
+            installmentNo
+            interestRate
+          }
+        }
+        reports {
+          list {
+            code
+            reportName
+            category
+          }
+        }
+        bio
         overview {
           basicInformation {
             memberName
@@ -73,6 +164,40 @@ query getMemberDetailsOverview($id: ID!) {
             noOfShares
           }
         }
+      }
+    }
+  }
+}
+
+query getMemberDetailsShareBalance($id: ID!) {
+  share {
+    history(memberId: $id) {
+      history {
+        id
+        memberId
+        member {
+          id
+          objState
+          createdAt
+        }
+        status
+        transactionDate
+        transactionDirection
+        credit
+        debit
+        startNumber
+        endNumber
+        balance
+        shareAmount
+        extraFee {
+          name
+          value
+        }
+        totalAmount
+        paymentMode
+        bankId
+        voucherNumber
+        accountId
       }
     }
   }

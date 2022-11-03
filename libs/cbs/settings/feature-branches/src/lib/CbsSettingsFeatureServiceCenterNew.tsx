@@ -15,6 +15,7 @@ import {
 import { ContainerWithDivider, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormDatePicker, FormInput, FormMap, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
+  asyncToast,
   Box,
   Container,
   FormFooter,
@@ -30,7 +31,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
 
   const { t } = useTranslation();
 
-  const methods = useForm({});
+  const methods = useForm<BranchInput>({});
 
   const { getValues, watch, reset, resetField } = methods;
 
@@ -40,7 +41,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
 
   const { data } = useAllAdministrationQuery();
 
-  const { mutate } = useSetBranchDataMutation();
+  const { mutateAsync: setBranchData } = useSetBranchDataMutation();
 
   const province = useMemo(
     () =>
@@ -113,18 +114,24 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
   ];
 
   const submitForm = () => {
-    const values = getValues();
-
-    const updatedValues = {
-      ...values,
-    };
-    mutate(
-      {
+    asyncToast({
+      id: 'settings-save-service-center',
+      msgs: { loading: 'Saving service center', success: 'Service center saved' },
+      promise: setBranchData({
         id,
-        data: updatedValues as BranchInput,
+        data: getValues(),
+      }),
+      onSuccess: () => router.push('/settings/general/service-center'),
+      onError: (error) => {
+        if (error.__typename === 'ValidationError') {
+          Object.keys(error.validationErrorMsg).map((key) =>
+            methods.setError(key as keyof BranchInput, {
+              message: error.validationErrorMsg[key][0] as string,
+            })
+          );
+        }
       },
-      { onSuccess: () => router.push('/settings/general/service-center') }
-    );
+    });
   };
 
   const { data: editValues, refetch } = useGetBranchEditDataQuery({
@@ -136,7 +143,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
       const editValueData = editValues?.settings?.general?.branch?.formState?.data;
       if (editValueData) {
         reset({
-          ...editValueData,
+          ...(editValueData as BranchInput),
         });
       }
     }

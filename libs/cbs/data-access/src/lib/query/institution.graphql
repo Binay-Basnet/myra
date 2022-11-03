@@ -61,7 +61,7 @@ query getKYMOverallFormStatus($id: ID!, $hasPressedNext: Boolean){
 
 query getInstitutionKymEditData($id: ID!, $hasPressedNext: Boolean) {
   members {
-    institution(includeRequiredErrors: $hasPressedNext ) {
+    institution(includeRequiredErrors: $hasPressedNext) {
       formState(id: $id) {
         data {
           lastUpdated {

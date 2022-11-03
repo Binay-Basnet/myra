@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import {
-  LoanProductInstallment,
-  useGetLoanPreviewQuery,
-  useGetLoanProductDetailsDataQuery,
-} from '@coop/cbs/data-access';
+import { LoanProductInstallment, useGetLoanPreviewQuery } from '@coop/cbs/data-access';
 import { Box, Text } from '@coop/shared/ui';
 
 interface IProductProps {
@@ -26,9 +22,7 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
       setTriggerQuery(true);
     }
   }, [loanAccountId]);
-  const productId = loanData?.productId as string;
-  const productDetails = useGetLoanProductDetailsDataQuery({ id: productId });
-  const productData = productDetails?.data?.settings?.general?.loanProducts?.formState?.data;
+  const loanGeneralInfo = loanData?.generalInformation;
   return (
     <Box display="flex" flexDirection="column" gap="s16">
       {' '}
@@ -36,14 +30,14 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
         <Box w="100%" p="s16" display="flex" flexDirection="column" gap="s4" bg="gray.100">
           <Box display="flex" flexDirection="column" gap="s4">
             <Text fontWeight="500" fontSize="r1" color="#006837">
-              {productData?.productName}
+              {loanGeneralInfo?.loanProduct}
             </Text>
             <Text fontWeight="500" fontSize="s3">
-              {productData?.productSubType}
+              {loanGeneralInfo?.loanSubType}
             </Text>
           </Box>
           <Text fontWeight="Medium" fontSize="s3">
-            {productData?.productCode?.prefix}-{productData?.productCode?.initialNo}
+            {loanGeneralInfo?.productCode}
           </Text>
           <Text fontWeight="Medium" fontSize="s3">
             Interest Rate : <b>{loanData?.loanDetails?.interestRate}%</b>
@@ -102,7 +96,7 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
               Interest Method
             </Text>
             <Text fontSize="s3" fontWeight="600">
-              {productData?.interestMethod}
+              {loanData?.loanDetails?.interestMethod}
             </Text>
           </Box>
           <Box display="flex" flexDirection="column" gap="s4">
@@ -110,7 +104,7 @@ export const LoanProductCard = ({ loanAccountId }: IProductProps) => {
               Loan Repayment Scheme
             </Text>
             <Text fontSize="s3" fontWeight="600">
-              {productData?.repaymentScheme}
+              {loanData?.loanDetails?.loanRepaymentScheme}
             </Text>
           </Box>
           <Box display="flex" flexDirection="column" gap="s4">

@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { Avatar } from '@chakra-ui/react';
 
 import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
 import { Box, DetailPageTabs, Text } from '@coop/shared/ui';
@@ -13,7 +13,7 @@ export const MemberDetailsSidebar = () => {
   const memberInfo = memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation;
 
   return (
-    <>
+    <Box bg="white">
       <Box
         borderBottom="1px"
         borderBottomColor="border.layout"
@@ -22,10 +22,14 @@ export const MemberDetailsSidebar = () => {
         gap="s16"
         p="s16"
       >
-        {' '}
-        <Box position="relative" h="284px">
-          <Image src={memberInfo?.profilePic ?? ''} layout="fill" alt="logo" />
-        </Box>
+        <Avatar
+          h="284px"
+          w="284px"
+          borderRadius="br2"
+          src={memberInfo?.profilePic ?? ''}
+          name={memberInfo?.memberName as string}
+        />
+
         <Box display="flex" flexDirection="column" gap="s8">
           <Text fontSize="l1" fontWeight="600">
             {' '}
@@ -58,6 +62,6 @@ export const MemberDetailsSidebar = () => {
           'Tasks',
         ]}
       />
-    </>
+    </Box>
   );
 };

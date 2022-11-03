@@ -3,7 +3,7 @@ import { AiOutlineSend } from 'react-icons/ai';
 import { BsArrowLeftRight, BsFileText } from 'react-icons/bs';
 import { ImStack } from 'react-icons/im';
 import { IoIosList } from 'react-icons/io';
-import { IoCubeOutline, IoMailUnread, IoPerson } from 'react-icons/io5';
+import { IoCubeOutline, IoMailUnreadOutline, IoPerson } from 'react-icons/io5';
 import { TbMailForward } from 'react-icons/tb';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -66,7 +66,7 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   },
   {
     title: 'requests',
-    icon: IoMailUnread,
+    icon: IoMailUnreadOutline,
     link: '/requests/member',
   },
   {
