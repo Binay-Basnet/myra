@@ -255,7 +255,7 @@ export const TopLevelHeader = () => {
             /> */}
             <SearchBar />
           </Box>
-          <Box flex={1} display="flex" justifyContent="flex-end" alignItems="center">
+          <Box gap="s8" flex={1} display="flex" justifyContent="flex-end" alignItems="center">
             <Popover placement="bottom-end" arrowPadding={0} gutter={3}>
               {({ isOpen }) => (
                 <>
@@ -325,9 +325,7 @@ export const TopLevelHeader = () => {
 
             <FloatingShortcutButton />
             <IconButton
-              width="40px"
-              height="40px"
-              icon={<Icon size="md" as={AiOutlineSetting} />}
+              icon={<Icon size="lg" as={AiOutlineSetting} />}
               aria-label="help"
               variant="ghost"
               color="white"
@@ -415,30 +413,12 @@ export const TopLevelHeader = () => {
                       </Box>
                       <Divider my="s8" />
                       <Box>
-                        <Box display="flex" gridTemplateColumns="repeat(3,1fr)">
-                          <Box
-                            display="flex"
-                            flexDirection="row"
-                            textAlign="center"
-                            alignItems="center"
-                            gap="s16"
-                            p="s8"
-                            cursor="pointer"
-                            borderRadius="br2"
-                            _hover={{ bg: 'primary.0' }}
-                            onClick={() => router.push('/settings/general/audit-log')}
-                          >
-                            <Image width={32} height={32} src="/settings.svg" alt="Settings" />
-                            <Text
-                              fontSize="r1"
-                              fontWeight="Medium"
-                              color="neutralColorLight.Gray-60"
-                              lineHeight="125%"
-                            >
-                              {t['settings']}
-                            </Text>
-                          </Box>
-                        </Box>
+                        <AppSwitcherIconWrapper
+                          onClick={() => router.push('/settings/general/audit-log')}
+                        >
+                          <Image width={32} height={32} src="/settings.svg" alt="Settings" />
+                          <AppSwitcherText>{t['settings']}</AppSwitcherText>
+                        </AppSwitcherIconWrapper>
                       </Box>
                     </PopoverBody>
                   </PopoverContent>
