@@ -96132,7 +96132,7 @@
             "deprecationReason": null
           },
           {
-            "name": "phoneNo",
+            "name": "phone",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -96202,7 +96202,7 @@
             "deprecationReason": null
           },
           {
-            "name": "phoneNo",
+            "name": "phone",
             "description": null,
             "args": [],
             "type": {
@@ -96261,7 +96261,7 @@
             "deprecationReason": null
           },
           {
-            "name": "phoneNo",
+            "name": "phone",
             "description": null,
             "args": [],
             "type": {

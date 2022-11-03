@@ -19,7 +19,7 @@ query getKymFormStatusInstitution($id: ID!) {
 
 query getInstitutionKymEditData($id: ID!, $hasPressedNext: Boolean) {
   members {
-    institution(includeRequiredErrors: $hasPressedNext ) {
+    institution(includeRequiredErrors: $hasPressedNext) {
       formState(id: $id) {
         data {
           lastUpdated {
@@ -144,7 +144,7 @@ query getInstitutionSisterDetailsEditList($id: ID!, $includeRequiredErrors: Bool
           name
           natureOfBusiness
           address
-          phoneNo
+          phone
         }
         sectionStatus {
           sectionStatus {

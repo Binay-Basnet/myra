@@ -1,7 +1,12 @@
-import { Box, WIPState } from '@coop/shared/ui';
+import { Text } from '@coop/shared/ui';
+
+import { ReportTable } from '../components';
 
 export const Reports = () => (
-  <Box h="calc(100vh - 110px)">
-    <WIPState />
-  </Box>
+  <>
+    <Text fontSize="r3" fontWeight="600">
+      Reports
+    </Text>
+    <ReportTable />
+  </>
 );

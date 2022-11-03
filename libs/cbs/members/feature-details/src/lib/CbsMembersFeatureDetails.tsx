@@ -4,14 +4,14 @@ import { Box } from '@coop/shared/ui';
 
 import { MemberDetailsSidebar } from '../components';
 import {
-  Account,
+  Accounts,
   Activity,
   Bio,
   Cheque,
   Documents,
+  MemberShareInfo,
   Overview,
   Reports,
-  Share,
   Tasks,
   Transactions,
 } from '../tabs';
@@ -34,16 +34,23 @@ export const MemberDetails = () => {
       >
         <MemberDetailsSidebar />
       </Box>
-      <Box display="flex" p="s16" flexDir="column" gap="s32" ml="320px" bg="border.layout">
+      <Box
+        display="flex"
+        p="s16"
+        flexDir="column"
+        ml="320px"
+        gap="s32"
+        bg="border.layout"
+        minH="calc(100vh - 110px)"
+      >
         {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}
-
-        {tabQuery === 'accounts' && <Account />}
+        {tabQuery === 'accounts' && <Accounts />}
         {tabQuery === 'activity' && <Activity />}
         {tabQuery === 'bio' && <Bio />}
         {tabQuery === 'cheque' && <Cheque />}
         {tabQuery === 'documents' && <Documents />}
         {tabQuery === 'reports' && <Reports />}
-        {tabQuery === 'share' && <Share />}
+        {tabQuery === 'share' && <MemberShareInfo />}
         {tabQuery === 'tasks' && <Tasks />}
         {tabQuery === 'transactions' && <Transactions />}
       </Box>
