@@ -52,16 +52,14 @@ export const TransactionProfileInstitution = (props: IProps) => {
             type="number"
             name="annualTurnover"
             label={t['kymInsAnnualTurnover']}
-            textAlign={'right'}
-            __placeholder="0.00"
+            textAlign="right"
           />
           <FormInput
             id="institutionTransactionProfile"
             type="number"
             name="initialDepositAmount"
             label={t['kymInsInitialDepositAmount']}
-            textAlign={'right'}
-            __placeholder="0.00"
+            textAlign="right"
           />
           <GridItem colSpan={3}>
             <Grid templateColumns="repeat(2, 1fr)">
@@ -70,7 +68,7 @@ export const TransactionProfileInstitution = (props: IProps) => {
                 label={t['kymInsExpectedMonthlyTurnover']}
                 options={getOption(monthlyTurnover)}
                 orientation="vertical"
-                gap={'s8'}
+                gap="s8"
               />
 
               <FormRadioGroup
@@ -78,7 +76,7 @@ export const TransactionProfileInstitution = (props: IProps) => {
                 label={t['kymInsExpectedMonthlyTransaction']}
                 options={getOption(monthlyTransaction)}
                 orientation="vertical"
-                gap={'s8'}
+                gap="s8"
               />
             </Grid>
           </GridItem>

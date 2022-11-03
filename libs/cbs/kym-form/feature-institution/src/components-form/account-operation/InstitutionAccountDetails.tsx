@@ -1,24 +1,19 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
-import debounce from 'lodash/debounce';
 
 import {
-  useAllAdministrationQuery,
+  RootState,
+  useAppSelector,
   useDeleteAccountOperatorInstitutionMutation,
   useGetInsAccountOperatorEditListQuery,
   useGetNewIdMutation,
-  useSetAddAccountOperatorInstitutionMutation,
 } from '@coop/cbs/data-access';
-import {
-  DynamicBoxGroupContainer,
-  InputGroupContainer,
-  SectionContainer,
-} from '@coop/cbs/kym-form/ui-containers';
-import { FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
+import { DynamicBoxGroupContainer, SectionContainer } from '@coop/cbs/kym-form/ui-containers';
+import { FormAddress, FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -32,170 +27,58 @@ import {
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { BottomDocument } from './components/BottomComponents';
+import { useAccountOperator } from '../hooks/useAccountOperation';
 
 interface IAddDirector {
   removeDirector: (directorId: string) => void;
-  setKymCurrentSection: (section?: {
-    section: string;
-    subSection: string;
-  }) => void;
+  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
   accountId: string;
 }
 
-const AddAccountDetails = ({
-  removeDirector,
-  setKymCurrentSection,
-  accountId,
-}: IAddDirector) => {
+const AddAccountDetails = ({ removeDirector, setKymCurrentSection, accountId }: IAddDirector) => {
   const { t } = useTranslation();
   const methods = useForm();
-  const { watch, reset } = methods;
+  const { watch } = methods;
 
-  const router = useRouter();
-
-  const id = String(router?.query?.['id']);
-  const { data: editValues } = useGetInsAccountOperatorEditListQuery({
-    id: id,
-  });
-  const { mutate } = useSetAddAccountOperatorInstitutionMutation();
-  useEffect(() => {
-    if (editValues) {
-      const editValueData =
-        editValues?.members?.institution?.listAccountOperators?.data;
-
-      const familyMemberDetail = editValueData?.find(
-        (data) => data?.id === accountId
-      );
-
-      if (familyMemberDetail) {
-        reset({
-          name: familyMemberDetail?.name,
-          contact: familyMemberDetail?.contact,
-          email: familyMemberDetail?.email,
-          permanentAddress: {
-            ...familyMemberDetail?.permanenetAddress,
-            locality: familyMemberDetail?.permanenetAddress?.locality?.local,
-          },
-          isTemporaryAndPermanentAddressSame:
-            familyMemberDetail?.isTemporaryAndPermanentAddressSame,
-          temporaryAddress: {
-            ...familyMemberDetail?.temporaryAddress,
-            locality: familyMemberDetail?.temporaryAddress?.locality?.local,
-          },
-          designation: familyMemberDetail?.designation,
-          panNo: familyMemberDetail?.panNo,
-        });
-      }
-    }
-  }, [editValues]);
-
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        mutate({ id, acc: accountId, data: { ...data } });
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
-  const { data } = useAllAdministrationQuery();
+  useAccountOperator({ methods, accountOpId: accountId });
 
   const [isOpen, setIsOpen] = React.useState(true);
 
-  const province = useMemo(() => {
-    return (
-      data?.administration?.all?.map((d) => ({
-        label: d.name,
-        value: d.id,
-      })) ?? []
-    );
-  }, [data?.administration?.all]);
-
-  // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch('permanentAddress.provinceId');
-  const currentDistrictId = watch('permanentAddress.districtId');
-  const currentLocalityId = watch('permanentAddress.localGovernmentId');
-
-  const districtList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
-        ?.districts ?? [],
-    [currentProvinceId]
-  );
-
-  const localityList = useMemo(
-    () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
-    [currentDistrictId]
-  );
-  const wardList = useMemo(
-    () => localityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
-    [currentLocalityId]
-  );
-
-  // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch('temporaryAddress.provinceId');
-  const currentTemptDistrictId = watch('temporaryAddress.districtId');
-  const currentTempLocalityId = watch('temporaryAddress.localGovernmentId');
-
-  const districtTempList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentTempProvinceId)
-        ?.districts ?? [],
-    [currentTempProvinceId]
-  );
-
-  const localityTempList = useMemo(
-    () =>
-      districtTempList.find((d) => d.id === currentTemptDistrictId)
-        ?.municipalities ?? [],
-    [currentTemptDistrictId]
-  );
-  const wardTempList = useMemo(
-    () =>
-      localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
-    [currentTempLocalityId]
-  );
-  const isPermanentAndTemporaryAddressSame = watch(
-    'isTemporaryAndPermanentAddressSame'
-  );
-
-  // const resetDirectorForm = () => {
-  //   const values = getValues();
-
-  //   values['accountOperatorsDetails'][index] = {};
-
-  //   reset({ accountOperatorsDetails: values['accountOperatorsDetails'] });
-  // };
+  const isPermanentAndTemporaryAddressSame = watch('isTemporaryAndPermanentAddressSame');
 
   return (
     <>
-      <Box display="flex" alignItems="center">
+      <Box
+        display="flex"
+        alignItems="center"
+        borderRadius="br2"
+        borderBottomRadius={isOpen ? '0' : 'br2'}
+        overflow="hidden"
+      >
         <Box
           flex={1}
-          px={'s16'}
+          px="s16"
           h="60px"
           bg="gray.200"
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          cursor={'pointer'}
+          cursor="pointer"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <Text fontSize="r1">{'Account Operator'}</Text>
+          <Text fontSize="r1">Account Operator</Text>
           <Box>
             {isOpen ? (
               <IconButton
                 size="xs"
-                variant={'ghost'}
+                variant="ghost"
                 aria-label="close"
                 icon={<Icon as={IoChevronUpOutline} />}
               />
             ) : (
               <IconButton
                 size="xs"
-                variant={'ghost'}
+                variant="ghost"
                 aria-label="close"
                 icon={<Icon as={IoChevronDownOutline} />}
               />
@@ -205,7 +88,7 @@ const AddAccountDetails = ({
         {!isOpen && (
           <IconButton
             size="sm"
-            variant={'ghost'}
+            variant="ghost"
             aria-label="close"
             icon={<CloseIcon />}
             ml="s16"
@@ -216,15 +99,13 @@ const AddAccountDetails = ({
         )}
       </Box>
 
-      <Collapse in={isOpen} style={{ marginTop: '0px' }}>
+      <Collapse in={isOpen} style={{ marginTop: '0px', borderRadius: 'br2', overflow: 'hidden' }}>
         <SectionContainer
           mt="0"
           pt="s16"
-          border={'1px solid'}
+          border="1px solid"
           borderColor="border.layout"
-          borderRadius={'4px'}
-          gap="s32"
-          px="s20"
+          borderBottom="0px"
           pb="s20"
         >
           {' '}
@@ -235,182 +116,62 @@ const AddAccountDetails = ({
                 setKymCurrentSection(kymSection);
               }}
             >
-              <Box display={'flex'} flexDirection="column" gap="s48">
-                <InputGroupContainer>
+              <Box display="flex" flexDirection="column">
+                <FormSection>
                   <FormInput
                     id="AccountOperatorInstitution"
                     type="text"
-                    name={'name'}
+                    name="name"
                     label={t['kymInsFullName']}
-                    __placeholder={t['kymInsEnterFullName']}
                   />
                   <FormInput
                     id="AccountOperatorInstitution"
                     type="text"
-                    name={'contact'}
+                    name="contact"
                     label={t['kymInsContactNo']}
-                    __placeholder={t['kymInsContactNo__placeholder']}
                   />
                   <FormInput
                     id="AccountOperatorInstitution"
                     type="text"
-                    name={'email'}
+                    name="email"
                     label={t['kymInsEmail']}
-                    __placeholder={t['kymInsEnterEmailAddress']}
                   />
-                </InputGroupContainer>
+                </FormSection>
 
-                <Text fontSize="r1" fontWeight="SemiBold">
-                  {t['kymInsPermanentAddress']}
-                </Text>
-                <InputGroupContainer>
-                  <FormSelect
-                    id="AccountOperatorInstitution"
-                    name={'permanentAddress.provinceId'}
-                    label={t['kymInsState']}
-                    __placeholder={t['kymInsSelectState']}
-                    options={province}
-                  />
-                  <FormSelect
-                    id="AccountOperatorInstitution"
-                    name={'permanentAddress.districtId'}
-                    label={t['kymInsDistrict']}
-                    __placeholder={t['kymInsSelectDistrict']}
-                    options={districtList.map((d) => ({
-                      label: d.name,
-                      value: d.id,
-                    }))}
-                  />
-                  <FormSelect
-                    id="AccountOperatorInstitution"
-                    name={'permanentAddress.localGovernmentId'}
-                    label={t['kymInsVDCMunicipality']}
-                    __placeholder={t['kymInsSelectVDCMunicipality']}
-                    options={localityList.map((d) => ({
-                      label: d.name,
-                      value: d.id,
-                    }))}
-                  />
-                  <FormSelect
-                    id="AccountOperatorInstitution"
-                    name={'permanentAddress.wardNo'}
-                    label={t['kymInsWardNo']}
-                    __placeholder={t['kymInsEnterWardNo']}
-                    options={wardList?.map((d) => ({
-                      label: d,
-                      value: d,
-                    }))}
-                  />
-                  <FormInput
-                    id="AccountOperatorInstitution"
-                    type="text"
-                    name={'permanentAddress.locality'}
-                    label={t['kymInsLocality']}
-                    __placeholder={t['kymInsEnterLocality']}
-                  />
-                  <FormInput
-                    type="text"
-                    name={'permanentAddress.houseNo'}
-                    label={t['kymInsHouseNo']}
-                    __placeholder={t['kymInsEnterHouseNo']}
-                  />
-                </InputGroupContainer>
-
-                <Box>
-                  <FormMap
-                    name={'permanentAddress.coordinates'}
-                    id="AccountOperatorInstitution"
-                  />
-                </Box>
+                <FormSection header="kymInsPermanentAddress">
+                  <FormAddress name="permanentAddress" />
+                </FormSection>
 
                 <Box
                   id="Temporary Address"
-                  gap="s32"
-                  display={'flex'}
+                  pt="s20"
+                  display="flex"
                   flexDirection="column"
-                  scrollMarginTop={'200px'}
+                  scrollMarginTop="200px"
                 >
-                  <Text fontSize="r1" fontWeight="SemiBold">
-                    {t['kymInsTemporaryAddress']}
-                  </Text>
+                  <Box display="flex" flexDirection="column" gap="s16" px="s20">
+                    <Text fontSize="r1" fontWeight="SemiBold">
+                      {t['kymInsTemporaryAddress']}
+                    </Text>
 
-                  <FormSwitch
-                    id="AccountOperatorInstitution"
-                    name={'isTemporaryAndPermanentAddressSame'}
-                    label={t['kymInsTemporaryAddressPermanent']}
-                  />
+                    <FormSwitch
+                      id="AccountOperatorInstitution"
+                      name="isTemporaryAndPermanentAddressSame"
+                      label={t['kymInsTemporaryAddressPermanent']}
+                    />
+                  </Box>
 
-                  {!isPermanentAndTemporaryAddressSame && (
-                    <>
-                      <InputGroupContainer>
-                        <FormSelect
-                          id="AccountOperatorInstitution"
-                          name={'temporaryAddress.provinceId'}
-                          label={t['kymInsState']}
-                          __placeholder={t['kymInsSelectState']}
-                          options={province}
-                        />
-                        <FormSelect
-                          id="AccountOperatorInstitution"
-                          name={'temporaryAddress.districtId'}
-                          label={t['kymInsDistrict']}
-                          __placeholder={t['kymInsSelectDistrict']}
-                          options={districtTempList.map((d) => ({
-                            label: d.name,
-                            value: d.id,
-                          }))}
-                        />
-                        <FormSelect
-                          id="AccountOperatorInstitution"
-                          name={'temporaryAddress.localGovernmentId'}
-                          label={t['kymInsVDCMunicipality']}
-                          __placeholder={t['kymInsSelectVDCMunicipality']}
-                          options={localityTempList.map((d) => ({
-                            label: d.name,
-                            value: d.id,
-                          }))}
-                        />
-                        <FormSelect
-                          id="AccountOperatorInstitution"
-                          name={'temporaryAddress.wardNo'}
-                          label={t['kymInsWardNo']}
-                          options={wardTempList?.map((d) => ({
-                            label: d,
-                            value: d,
-                          }))}
-                        />
-                        <FormInput
-                          id="AccountOperatorInstitution"
-                          type="text"
-                          name={'temporaryAddress.locality'}
-                          label={t['kymInsLocality']}
-                          __placeholder={t['kymInsEnterLocality']}
-                        />
-                        <FormInput
-                          id="AccountOperatorInstitution"
-                          type="text"
-                          name={'temporaryAddress.houseNo'}
-                          label={t['kymInsHouseNo']}
-                          __placeholder={t['kymInsEnterHouseNo']}
-                        />
-                      </InputGroupContainer>
-                      <FormMap
-                        name={'temporaryAddress.coordinates'}
-                        id="AccountOperatorInstitution"
-                      />
-                    </>
-                  )}
+                  <FormSection>
+                    {!isPermanentAndTemporaryAddressSame && (
+                      <FormAddress sectionId="AccountOperatorInstitution" name="temporaryAddress" />
+                    )}
+                  </FormSection>
                 </Box>
               </Box>
             </form>
           </FormProvider>
           <Box>
-            <Box
-              display={'flex'}
-              flexDirection="row"
-              justifyContent={'flex-start'}
-              gap="s16"
-            >
+            <Box display="flex" flexDirection="row" justifyContent="flex-start" gap="s16">
               <FormProvider {...methods}>
                 <form
                   onFocus={(e) => {
@@ -419,43 +180,31 @@ const AddAccountDetails = ({
                   }}
                 >
                   <Box
-                    display={'flex'}
-                    flexDirection="row"
-                    justifyContent={'space-between'}
-                    gap="s16"
+                    px="s20"
+                    py="s16"
+                    display="grid"
+                    gridTemplateColumns="repeat(3, 1fr)"
+                    gap="s20"
                   >
                     <FormSelect
                       id="AccountOperatorInstitution"
-                      name={'designation'}
+                      name="designation"
                       label={t['kymInsDesignation']}
-                      __placeholder={t['kymInsSelectposition']}
                       options={[
-                        { value: 'precident', label: 'President' },
-                        { value: 'viceprecident', label: 'Vice-President' },
-                        { value: 'secretary', label: 'Secretary' },
-                        { value: 'treasurer', label: 'Treasurer' },
+                        { value: 'President', label: 'President' },
+                        { value: 'Vice President', label: 'Vice-President' },
+                        { value: 'Secretary', label: 'Secretary' },
+                        { value: 'Treasurer', label: 'Treasurer' },
                       ]}
                     />
-                    <FormInput
-                      name="panNo"
-                      __placeholder={t['kymInsPanNo__placeholder']}
-                      label={t['kymInsPanNo']}
+                    <FormInput name="panNo" label={t['kymInsPanNo']} />
+                    <BottomDocument
+                      accountId={accountId}
+                      setKymCurrentSection={setKymCurrentSection}
                     />
                   </Box>
                 </form>
               </FormProvider>
-              {/* <Box display="flex" flexDirection={'column'} gap="s4">
-                <Text fontSize={'s3'} fontWeight="500">
-                  {t['kymInsSpecimenSignature']}
-                </Text>
-                <Box w="124px" display="flex" flexDirection={'column'} gap="s4">
-                  <FormFileInput name={"specimenSignature"} />
-                </Box>
-              </Box> */}
-              <BottomDocument
-                accountId={accountId}
-                setKymCurrentSection={setKymCurrentSection}
-              />
             </Box>
           </Box>
         </SectionContainer>
@@ -463,15 +212,16 @@ const AddAccountDetails = ({
         <Box
           display="flex"
           justifyContent="flex-end"
+          borderTopColor="none"
           border="1px solid"
           borderColor="border.layout"
-          alignItems={'center'}
+          alignItems="center"
           h="60px"
           px="s20"
+          borderBottomRadius="br2"
         >
           <Button
             id="accountOperatorClose"
-            variant="outline"
             shade="danger"
             leftIcon={<AiOutlineDelete height="11px" />}
             onClick={() => {
@@ -490,16 +240,14 @@ interface IProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
 
-export const InstitutionKYMAccountDetail = (props: IProps) => {
+export const InstitutionKYMAccountDetail = ({ setSection }: IProps) => {
   const { t } = useTranslation();
-
-  const { setSection } = props;
-
   const router = useRouter();
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'] as string;
+
   const [accOperatorIds, setAccOperatorIds] = useState<string[]>([]);
 
-  const { data: editValues } = useGetInsAccountOperatorEditListQuery(
+  const { data: editValues, refetch: refetchEdit } = useGetInsAccountOperatorEditListQuery(
     {
       id: String(id),
     },
@@ -508,38 +256,38 @@ export const InstitutionKYMAccountDetail = (props: IProps) => {
 
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.institution?.listAccountOperators?.data;
+      const editValueData = editValues?.members?.institution?.listAccountOperators?.data;
 
       setAccOperatorIds(
         editValueData?.reduce(
-          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          (prevVal, curVal) => (curVal?.id ? [...prevVal, curVal.id] : prevVal),
           [] as string[]
         ) ?? []
       );
     }
   }, [editValues]);
+
+  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
+
+  useEffect(() => {
+    refetchEdit();
+  }, [preference?.date]);
+
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {
       setAccOperatorIds([...accOperatorIds, res.newId]);
     },
   });
+
   const { mutate: deleteMutate } = useDeleteAccountOperatorInstitutionMutation({
     onSuccess: (res) => {
-      const deletedId = String(
-        res?.members?.institution?.accountOperator?.Delete?.recordId
-      );
-
+      const deletedId = String(res?.members?.institution?.accountOperator?.Delete?.recordId);
       const tempAccountOperatorIds = [...accOperatorIds];
-
-      tempAccountOperatorIds.splice(
-        tempAccountOperatorIds.indexOf(deletedId),
-        1
-      );
-
+      tempAccountOperatorIds.splice(tempAccountOperatorIds.indexOf(deletedId), 1);
       setAccOperatorIds([...tempAccountOperatorIds]);
     },
   });
+
   const addAccountOperator = () => {
     newIdMutate({});
   };
@@ -548,23 +296,18 @@ export const InstitutionKYMAccountDetail = (props: IProps) => {
     deleteMutate({ insId: id, acc: accOperatorId });
   };
   return (
-    <FormSection
-      id="kymInsDetailsofAccountOperators"
-      header="kymInsDetailsofAccountOperators"
-    >
+    <FormSection id="kymInsDetailsofAccountOperators" header="kymInsDetailsofAccountOperators">
       <GridItem colSpan={3}>
         <DynamicBoxGroupContainer>
-          {accOperatorIds.map((id) => {
-            return (
-              <Box key={id} display="flex" flexDirection={'column'}>
-                <AddAccountDetails
-                  setKymCurrentSection={setSection}
-                  removeDirector={removeAccountOperator}
-                  accountId={id}
-                />
-              </Box>
-            );
-          })}
+          {accOperatorIds.map((accOperatorId) => (
+            <Box key={accOperatorId} display="flex" flexDirection="column">
+              <AddAccountDetails
+                setKymCurrentSection={setSection}
+                removeDirector={removeAccountOperator}
+                accountId={accOperatorId}
+              />
+            </Box>
+          ))}
           <Button
             id="accountOperatorDetailsButton"
             alignSelf="start"

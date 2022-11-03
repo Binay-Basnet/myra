@@ -472,6 +472,7 @@ query getAccountDetailsData($id: ID!) {
         monthlyInterestCompulsory
         isForMinors
         autoOpen
+        isMandatory
       }
     }
   }
@@ -489,6 +490,7 @@ query getAccountTransactionLists($filter: AccountsTransactionFilter!, $paginatio
           month
           transactionDirection
           amount
+          currentBalance
         }
       }
       pageInfo {
@@ -496,6 +498,11 @@ query getAccountTransactionLists($filter: AccountsTransactionFilter!, $paginatio
         startCursor
         hasNextPage
         hasPreviousPage
+      }
+      summary {
+        totalDeposit
+        totalWithdraw
+        averageBalance
       }
     }
   }

@@ -66,11 +66,18 @@ export const useIndividual = ({ methods }: IIndividualHookProps) => {
   const hasPressedNext = useAppSelector((state) => state.individual.hasPressedNext);
 
   const id = router.query['id'] as string;
-  const { watch, reset, setError, clearErrors } = methods;
+  const { watch, reset, setError, clearErrors, setValue } = methods;
 
-  const { data: nationalityFields } = useGetIndividualKymOptionsQuery({
-    searchTerm: FormFieldSearchTerm.Nationality,
-  });
+  const { data: nationalityFields } = useGetIndividualKymOptionsQuery(
+    {
+      searchTerm: FormFieldSearchTerm.Nationality,
+    },
+    {
+      onSuccess: (res) => {
+        setValue('nationalityId', res?.form?.options?.predefined?.data?.[0]?.id);
+      },
+    }
+  );
 
   const {
     data: editValues,
@@ -109,6 +116,8 @@ export const useIndividual = ({ methods }: IIndividualHookProps) => {
       const filteredData = getIndividualData(editValues);
       if (filteredData) {
         dispatch(setIndividualFormDirty(true));
+
+        // console.log({ nationalityFields });
 
         reset({
           ...pickBy(

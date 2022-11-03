@@ -1,7 +1,19 @@
 import { EbankingTransactionDirection } from '@coop/cbs/data-access';
 import { Box, Text } from '@coop/shared/ui';
 
-export const TransactionCard = ({ transactionItem }) => (
+interface ITransactionCardProps {
+  transactionItem: {
+    date: string | undefined;
+    month: string | undefined;
+    id?: string | undefined;
+    accountId?: string | null | undefined;
+    name?: string | undefined;
+    transactionDirection?: EbankingTransactionDirection | undefined;
+    amount?: string | undefined;
+  };
+}
+
+export const TransactionCard = ({ transactionItem }: ITransactionCardProps) => (
   <Box
     h="80px"
     display="flex"

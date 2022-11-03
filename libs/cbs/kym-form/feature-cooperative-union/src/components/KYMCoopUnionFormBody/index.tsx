@@ -14,6 +14,7 @@ export const KymCoopUnionFormBody = () => {
   const [kymCurrentSection, setKymCurrentSection] = useState<KYMSection>();
 
   const setSection = useCallback((section: KYMSection) => setKymCurrentSection(section), []);
+
   return (
     <Container minW="container.xl" height="fit-content">
       <Box>
@@ -28,10 +29,10 @@ export const KymCoopUnionFormBody = () => {
           bg="gray.0"
           zIndex={2}
         >
-          <AccorrdianAddCOOPUnion kymCurrentSection={kymCurrentSection} />
+          <AccorrdianAddCOOPUnion kymCurrentSection={kymCurrentSection}/>
         </Box>
 
-        <KYMCoopUnionForm setKymCurrentSection={setSection} />
+        <KYMCoopUnionForm setKymCurrentSection={setSection}/>
       </Box>
     </Container>
   );

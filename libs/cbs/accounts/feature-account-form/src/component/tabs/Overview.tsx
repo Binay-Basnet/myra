@@ -1,8 +1,11 @@
-import { DetailPageQuickLinks, Text } from '@coop/shared/ui';
+import { NatureOfDepositProduct } from '@coop/cbs/data-access';
+import { DetailPageQuickLinks } from '@coop/shared/ui';
 import { useAccountDetails } from '@coop/shared/utils';
 
 import {
   AccountStatistics,
+  BalanceChart,
+  DetailPageTabHeader,
   GeneralInfoCard,
   RecentTransactions,
   UpcomingInstallments,
@@ -66,41 +69,8 @@ export const Overview = () => {
   ];
 
   return (
-    // const router = useRouter();
-    // const memberDetails = useGetMemberDetailsOverviewQuery({
-    //   id: router.query['id'] as string,
-    // });
-
-    // const memberPayment = memberDetails?.data?.members?.memberOverview?.data?.overview?.payments;
-    // const memberShareDetails =
-    //   memberDetails?.data?.members?.memberOverview?.data?.overview?.statistics;
-    // const memberGraphs =
-    //   memberDetails?.data?.members?.memberOverview?.data?.overview?.memberGraphs?.deposit?.data;
-
-    // const dataForGraphs = memberGraphs?.map((item) => [item?.time ?? 0, Number(item?.amount)]) as [
-    //   number,
-    //   number
-    // ][];
-    // const memberGraphWithdraw =
-    //   memberDetails?.data?.members?.memberOverview?.data?.overview?.memberGraphs?.withdraw?.data;
-    // const dataForGraphWithdraw = memberGraphWithdraw?.map((item) => [
-    //   item?.time ?? 0,
-    //   Number(item?.amount),
-    // ]) as [number, number][];
-
-    // const memberPaymentUp = memberPayment?.map((data, index) => ({
-    //   sn: Number(index) + 1,
-    //   date: data?.date,
-    //   accountName: data?.accountName,
-    //   paymentType: data?.paymentType,
-    //   amount: data?.amount,
-    // }));
-    // const newId = useGetNewIdMutation();
-
     <>
-      <Text fontSize="r3" fontWeight="600">
-        Overview
-      </Text>
+      <DetailPageTabHeader heading="Overview" />
 
       <DetailPageQuickLinks links={links} />
 
@@ -108,9 +78,13 @@ export const Overview = () => {
 
       <GeneralInfoCard title="General Information" items={generalInfos} />
 
+      <BalanceChart />
+
       <RecentTransactions />
 
-      <UpcomingInstallments />
+      {(accountDetails?.accountType === NatureOfDepositProduct.RecurringSaving ||
+        (accountDetails?.accountType === NatureOfDepositProduct.Saving &&
+          accountDetails?.isMandatory)) && <UpcomingInstallments />}
 
       <GeneralInfoCard title="Additional Features" items={additionalFeatures} />
 

@@ -1,16 +1,8 @@
-import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { useAllAdministrationQuery } from '@coop/cbs/data-access';
-import { KymInsInput } from '@coop/cbs/data-access';
-import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import {
-  FormCheckbox,
-  FormInput,
-  FormMap,
-  FormSelect,
-} from '@coop/shared/form';
-import { Box, FormSection, GridItem, TextFields } from '@coop/shared/ui';
+import { KymInsInput, useAllAdministrationQuery } from '@coop/cbs/data-access';
+import { FormAddress, FormCheckbox, FormInput } from '@coop/shared/form';
+import { Box, FormSection, TextFields } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useInstitution } from '../hooks/useInstitution';
@@ -31,38 +23,6 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
 
   useInstitution({ methods });
 
-  const province = useMemo(() => {
-    return (
-      data?.administration?.all?.map((d) => ({
-        label: d.name,
-        value: d.id,
-      })) ?? []
-    );
-  }, [data?.administration?.all]);
-
-  const currentProvinceId = watch('accountHolderAddress.provinceId');
-  const currentDistrictId = watch('accountHolderAddress.districtId');
-  const currentLocalityId = watch('accountHolderAddress.localGovernmentId');
-
-  const districtList = useMemo(
-    () =>
-      data?.administration.all.find((d) => d.id === currentProvinceId)
-        ?.districts ?? [],
-    [currentProvinceId]
-  );
-
-  const localityList = useMemo(
-    () =>
-      districtList.find((d) => d.id === currentDistrictId)?.municipalities ??
-      [],
-    [currentDistrictId]
-  );
-
-  const wardList = useMemo(
-    () => localityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
-    [currentLocalityId]
-  );
-
   return (
     <FormProvider {...methods}>
       <form
@@ -71,94 +31,19 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <FormSection
-          id="kymInsAccountHolderDeclaration"
-          header="kymInAccountHolderDeclarations"
-        >
-          <FormInput
-            name="accountHolderName"
-            label={t['kymInsAccountHolderName']}
-            __placeholder={t['kymInsEnterAccountHolderName']}
-          />
-          <FormInput
-            name="accountHolderPhone"
-            label={t['kymInsPhone']}
-            __placeholder={t['kymInsEnterPhoneNumber']}
-          />
-          <FormInput
-            name="accountHolderEmail"
-            label={t['kymInsEmail']}
-            __placeholder={t['kymInsEnterEmailAddress']}
-          />
+        <FormSection id="kymInsAccountHolderDeclaration" header="kymInAccountHolderDeclarations">
+          <FormInput name="accountHolderName" label={t['kymInsAccountHolderName']} />
+          <FormInput name="accountHolderPhone" label={t['kymInsPhone']} />
+          <FormInput name="accountHolderEmail" label={t['kymInsEmail']} />
         </FormSection>
 
-        <FormSection header="kymInsAddress">
-          {' '}
-          <FormSelect
-            id="accountHolderAddress"
-            name={`accountHolderAddress.provinceId`}
-            label={t['kymInsState']}
-            __placeholder={t['kymInsSelectState']}
-            options={province}
-          />
-          <FormSelect
-            id="accountHolderAddress"
-            name="accountHolderAddress.districtId"
-            label={t['kymInsDistrict']}
-            __placeholder={t['kymInsSelectDistrict']}
-            options={districtList.map((d) => ({
-              label: d.name,
-              value: d.id,
-            }))}
-          />
-          <FormSelect
-            id="accountHolderAddress"
-            name="accountHolderAddress.localGovernmentId"
-            label={t['kymInsVDCMunicipality']}
-            __placeholder={t['kymInsSelectVDCMunicipality']}
-            options={localityList.map((d) => ({
-              label: d.name,
-              value: d.id,
-            }))}
-          />
-          <FormSelect
-            id="accountHolderAddress"
-            name="accountHolderAddress.wardNo"
-            label={t['kymInsWardNo']}
-            __placeholder={t['kymInsEnterWardNo']}
-            options={wardList?.map((d) => ({
-              label: d,
-              value: d,
-            }))}
-          />
-          <FormInput
-            id="accountHolderAddress"
-            type="text"
-            name="accountHolderAddress.locality"
-            label={t['kymInsLocality']}
-            __placeholder={t['kymInsEnterLocality']}
-          />
-          <FormInput
-            id="accountHolderAddress"
-            type="text"
-            name="accountHolderAddress.houseNo"
-            label={t['kymInsHouseNo']}
-            __placeholder={t['kymInsEnterHouseNo']}
-          />
-          <GridItem colSpan={2}>
-            <FormMap
-              name="accountHolderAddress.coordinates"
-              id="accountHolderAddress"
-            />
-          </GridItem>
-        </FormSection>
-
+        <FormAddress
+          name="accountHolderName"
+          sectionHeader="kymInAccountHolderDeclarations"
+          sectionId="kymInsAccountHolderDeclaration"
+        />
         <Box p="s20" display="flex" gap="s16" alignItems="center">
-          <FormCheckbox
-            id="weAgree"
-            name="declarationAgreement"
-            fontSize="s3"
-          />
+          <FormCheckbox id="weAgree" name="declarationAgreement" fontSize="s3" />
           <TextFields variant="formInput" mt="-6px">
             I/We agree to the&nbsp;
             <TextFields as="span" variant="link">
@@ -166,25 +51,6 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
             </TextFields>
           </TextFields>
         </Box>
-
-        <GroupContainer scrollMarginTop={'200px'}>
-          {/* <Grid templateColumns={'repeat(2, 1fr)'} gap="s32">
-            <Box w="124px">
-              <FormFileInput
-                name="accountHolderSignature"
-                label={t['kymInsSignature']}
-                size="md"
-              />
-            </Box>
-            <Box w="124px">
-              <FormFileInput
-                name="accountHolderStamp"
-                label={t['kymInsStamp']}
-                size="md"
-              />
-            </Box>
-          </Grid> */}
-        </GroupContainer>
       </form>
     </FormProvider>
   );

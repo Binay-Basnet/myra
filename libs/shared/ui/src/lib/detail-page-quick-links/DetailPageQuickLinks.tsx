@@ -13,7 +13,7 @@ export const DetailPageQuickLinks = ({ links }: DetailPageQuickLinksProps) => {
   const router = useRouter();
 
   return (
-    <Box display="flex" flexDirection="column" gap="s16">
+    <Box display="flex" flexDirection="column" gap="s8" pb="s16">
       <Text fontWeight="600" fontSize="r1">
         Quick Links
       </Text>

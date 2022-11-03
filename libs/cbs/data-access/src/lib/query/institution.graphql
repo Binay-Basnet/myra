@@ -10,26 +10,6 @@ query getKymFormStatusInstitution($id: ID!) {
               errors
               incomplete
             }
-            #            information {
-            #              completed
-            #              error
-            #            }
-            #            transaction {
-            #              completed
-            #              error
-            #            }
-            #            directorDetails {
-            #              completed
-            #              error
-            #            }
-            #            account {
-            #              completed
-            #              error
-            #            }
-            #            declaration {
-            #              completed
-            #              error
-            #            }
           }
         }
       }
@@ -37,9 +17,9 @@ query getKymFormStatusInstitution($id: ID!) {
   }
 }
 
-query getInstitutionKymEditData($id: ID!) {
+query getInstitutionKymEditData($id: ID!, $hasPressedNext: Boolean) {
   members {
-    institution {
+    institution(includeRequiredErrors: $hasPressedNext ) {
       formState(id: $id) {
         data {
           lastUpdated {
@@ -59,20 +39,6 @@ query getInstitutionKymEditData($id: ID!) {
               declaration: name
             }
           }
-          #          sectionStatus {
-          #            information {
-          #              completed
-          #              error
-          #            }
-          #            transaction {
-          #              completed
-          #              error
-          #            }
-          #            directorDetails {
-          #              completed
-          #              error
-          #            }
-          #          }
           sectionStatus {
             sectionStatus {
               incomplete
@@ -169,9 +135,9 @@ query getInstitutionKymEditData($id: ID!) {
   }
 }
 
-query getInstitutionSisterDetailsEditList($id: ID!) {
+query getInstitutionSisterDetailsEditList($id: ID!, $includeRequiredErrors: Boolean) {
   members {
-    institution {
+    institution(includeRequiredErrors: $includeRequiredErrors) {
       listSisterConcerns(id: $id) {
         data {
           id
@@ -179,6 +145,14 @@ query getInstitutionSisterDetailsEditList($id: ID!) {
           natureOfBusiness
           address
           phoneNo
+        }
+        sectionStatus {
+          sectionStatus {
+            errors
+            incomplete
+          }
+          id
+          errors
         }
       }
     }
@@ -239,16 +213,16 @@ query getInsBoardDirectorEditList($id: ID!) {
   }
 }
 
-query getInsAccountOperatorEditList($id: ID!) {
+query getInsAccountOperatorEditList($id: ID!, $hasRequiredErrors: Boolean) {
   members {
-    institution {
+    institution(includeRequiredErrors: $hasRequiredErrors) {
       listAccountOperators(id: $id) {
         data {
           id
           name
           contact
           email
-          permanenetAddress {
+          permanentAddress {
             provinceId
             districtId
             localGovernmentId
@@ -275,6 +249,14 @@ query getInsAccountOperatorEditList($id: ID!) {
           }
           designation
           panNo
+        }
+        sectionStatus {
+          sectionStatus {
+            errors
+            incomplete
+          }
+          id
+          errors
         }
       }
     }
