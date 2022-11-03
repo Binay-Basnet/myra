@@ -1,9 +1,9 @@
 import React from 'react';
+import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { Avatar, Box } from '@chakra-ui/react';
 
-import { TextFields, TopLevelHeader } from '@coop/shared/ui';
+import { Avatar, Box, Collapse, Icon, TextFields, TopLevelHeader } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export interface HomePageLayoutProps {
@@ -78,9 +78,11 @@ const moreFromMyra = [
 ];
 
 export const HomePageLayout = (props: HomePageLayoutProps) => {
+  const [isOpen, setIsOpen] = React.useState(false);
   const { t } = useTranslation();
   const { children } = props;
   const router = useRouter();
+
   return (
     <Box>
       <Box position="fixed" top={0} width="100%" zIndex={11}>
@@ -145,52 +147,69 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
             </Box>
           </Box>
           <Box display="flex" flexDir="column" gap="s16">
-            <TextFields
-              px="s16"
-              fontSize="s3"
-              color="gray.600"
-              fontWeight="600"
-              textTransform="uppercase"
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              cursor="pointer"
+              onClick={() => setIsOpen(!isOpen)}
             >
-              {t['moreFromMyra']}
-            </TextFields>
-
-            <Box display="flex" alignItems="center" flexDir="column">
-              {moreFromMyra.map((item) => (
-                <Box
-                  key={item?.link}
-                  w="100%"
-                  px="s16"
-                  py="s8"
-                  display="flex"
-                  borderRadius="br2"
-                  gap="s16"
-                  alignItems="center"
-                  cursor="pointer"
-                  _hover={{ bg: 'gray.200', filter: 'none' }}
-                  onClick={() => router.push(item.link)}
-                  filter="grayscale(100%)"
-                >
-                  <Box
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    w="s32"
-                    borderRadius="50%"
-                  >
-                    <Avatar
-                      width="s32"
-                      height="s32"
-                      src={item.img}
-                      // alt="corebanking"
-                    />
-                  </Box>
-                  <TextFields fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">
-                    {t[item.title]}
-                  </TextFields>
-                </Box>
-              ))}
+              <TextFields
+                px="s16"
+                fontSize="s3"
+                color="gray.600"
+                fontWeight="600"
+                textTransform="uppercase"
+              >
+                {t['moreFromMyra']}
+              </TextFields>
+              {isOpen ? (
+                <Icon size="sm" as={IoIosArrowDown} />
+              ) : (
+                <Icon size="sm" as={IoIosArrowForward} />
+              )}
             </Box>
+            <Collapse in={isOpen} style={{ marginTop: '0px' }}>
+              <Box display="flex" alignItems="center" flexDir="column">
+                {moreFromMyra.map((item) => (
+                  <Box
+                    key={item?.link}
+                    w="100%"
+                    px="s16"
+                    py="s8"
+                    display="flex"
+                    borderRadius="br2"
+                    gap="s16"
+                    alignItems="center"
+                    cursor="pointer"
+                    _hover={{ bg: 'gray.200', filter: 'none' }}
+                    onClick={() => router.push(item.link)}
+                    filter="grayscale(100%)"
+                  >
+                    <Box
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      w="s32"
+                      borderRadius="50%"
+                    >
+                      <Avatar
+                        width="s32"
+                        height="s32"
+                        src={item.img}
+                        // alt="corebanking"
+                      />
+                    </Box>
+                    <TextFields
+                      fontSize="r1"
+                      fontWeight="Regular"
+                      color="neutralColorLight.Gray-80"
+                    >
+                      {t[item.title]}
+                    </TextFields>
+                  </Box>
+                ))}
+              </Box>
+            </Collapse>
           </Box>
         </Box>
 
