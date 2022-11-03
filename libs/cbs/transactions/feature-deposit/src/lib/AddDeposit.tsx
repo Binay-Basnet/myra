@@ -6,6 +6,7 @@ import omit from 'lodash/omit';
 
 import {
   CashValue,
+  DateType,
   DepositAccount,
   DepositedBy,
   DepositInput,
@@ -13,6 +14,7 @@ import {
   InstallmentState,
   NatureOfDepositProduct,
   ObjState,
+  useAppSelector,
   useGetAccountTableListQuery,
   useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
@@ -68,6 +70,8 @@ const cashOptions: Record<string, string> = {
 const REBATE = '0';
 
 export const AddDeposit = () => {
+  const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);
+
   const router = useRouter();
 
   const queryClient = useQueryClient();
@@ -243,12 +247,18 @@ export const AddDeposit = () => {
     );
 
     return {
-      firstMonth: pendingInstallments[0]?.monthName,
-      lastMonth: pendingInstallments[pendingInstallments.length - 1]?.monthName,
+      firstMonth:
+        preferenceDate === DateType.Bs
+          ? pendingInstallments[0]?.monthName?.np
+          : pendingInstallments[0]?.monthName?.en,
+      lastMonth:
+        preferenceDate === DateType.Bs
+          ? pendingInstallments[pendingInstallments.length - 1]?.monthName?.np
+          : pendingInstallments[pendingInstallments.length - 1]?.monthName?.en,
       fine: String(tempFine),
       rebate: String(tempRebate),
     };
-  }, [noOfInstallments, installmentsListQueryData]);
+  }, [noOfInstallments, installmentsListQueryData, preferenceDate]);
 
   amountToBeDeposited = useMemo(() => {
     if (noOfInstallments && selectedAccount?.installmentAmount) {

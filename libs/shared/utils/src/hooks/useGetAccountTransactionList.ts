@@ -16,7 +16,7 @@ export const useGetAccountTransactionList = ({ accountId }: IUseGetAccountTransa
   const { data: transactionListQueryData } = useGetAccountTransactionListsQuery(
     {
       filter: { accountIds: [accountId as string] },
-      pagination: { ...getRouterQuery({ type: ['PAGINATION'] }) },
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
     },
     {
       enabled: !!accountId,

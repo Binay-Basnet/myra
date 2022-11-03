@@ -117,6 +117,8 @@ export const useIndividual = ({ methods }: IIndividualHookProps) => {
       if (filteredData) {
         dispatch(setIndividualFormDirty(true));
 
+        // console.log({ nationalityFields });
+
         reset({
           ...pickBy(
             {
