@@ -223,6 +223,8 @@ export type AccountTransferView = {
   recipientMember?: Maybe<Member>;
   sourceAccount?: Maybe<DepositLoanAccount>;
   teller?: Maybe<Scalars['String']>;
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
   transactionBranch?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['String']>;
   transferAmount?: Maybe<Scalars['String']>;
@@ -559,6 +561,7 @@ export type AgentTodayListResult = {
 export type AgentTransactionView = {
   assignedMember?: Maybe<Array<Maybe<AssignedMemberView>>>;
   status: Scalars['String'];
+  totalAmount?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['String']>;
   transactionId: Scalars['ID'];
 };
@@ -1131,7 +1134,7 @@ export type BranchInput = {
   abbsStatus?: InputMaybe<Scalars['Boolean']>;
   branchCode?: InputMaybe<Scalars['String']>;
   branchStatus?: InputMaybe<Scalars['Boolean']>;
-  category: BranchCategory;
+  category?: InputMaybe<BranchCategory>;
   districtId?: InputMaybe<Scalars['Int']>;
   email?: InputMaybe<Scalars['String']>;
   estDate?: InputMaybe<Scalars['String']>;
@@ -2885,6 +2888,8 @@ export type DepositTransactionView = {
   sourceOfFund?: Maybe<Scalars['String']>;
   status?: Maybe<ObjState>;
   teller?: Maybe<Scalars['String']>;
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
   totalDepositedAmount?: Maybe<Scalars['String']>;
   transactionBranch?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['String']>;
@@ -2914,7 +2919,7 @@ export type DirectorDetailsFormState = {
   citizenshipNo?: Maybe<Scalars['String']>;
   dateOfMembership?: Maybe<Scalars['String']>;
   designation?: Maybe<Scalars['String']>;
-  emailAddress?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
   firmDetails?: Maybe<AffiliatedDirectorDetailsFormState>;
   highestQualification?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -2934,7 +2939,7 @@ export type DirectorDetailsType = {
   dateOfMembership?: Maybe<Scalars['String']>;
   designation?: Maybe<Scalars['String']>;
   documentPhotograph?: Maybe<Scalars['String']>;
-  emailAddress?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
   highestQualification?: Maybe<Scalars['String']>;
   isAffiliatedWithOtherFirms?: Maybe<Scalars['Boolean']>;
   isHeadOfOrganization?: Maybe<Scalars['Boolean']>;
@@ -3158,6 +3163,7 @@ export type EBankingAuthMutationLoginToCooperativeArgs = {
 
 export type EBankingAuthMutationResendOtpArgs = {
   mobile: Scalars['String'];
+  otpFor: OtpFor;
 };
 
 export type EBankingAuthMutationSetNewPinArgs = {
@@ -3953,8 +3959,8 @@ export type EbankingMemberProfileData = {
 };
 
 export type EbankingOtpInput = {
-  mobile?: InputMaybe<Scalars['String']>;
-  otp?: InputMaybe<Scalars['Int']>;
+  mobile: Scalars['String'];
+  otp: Scalars['String'];
 };
 
 export type EbankingOtpResult = {
@@ -9687,6 +9693,11 @@ export enum OrganizationType {
   ProvinceUnion = 'PROVINCE_UNION',
 }
 
+export enum OtpFor {
+  ResetPassword = 'RESET_PASSWORD',
+  SignUp = 'SIGN_UP',
+}
+
 export type OverviewView = {
   basicInformation?: Maybe<MemberBasicInfoView>;
   memberGraphs?: Maybe<MemberOverviewGraphs>;
@@ -11819,6 +11830,8 @@ export type WithdrawTransactionView = {
   paymentMode?: Maybe<Scalars['String']>;
   status?: Maybe<ObjState>;
   teller?: Maybe<Scalars['String']>;
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
   totalWithdrawnAmount?: Maybe<Scalars['String']>;
   transactionBranch?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['String']>;
@@ -15762,7 +15775,7 @@ export type GetInsBoardDirectorEditListQuery = {
           dateOfMembership?: string | null;
           highestQualification?: string | null;
           mobileNo?: string | null;
-          emailAddress?: string | null;
+          email?: string | null;
           citizenshipNo?: string | null;
           panNo?: string | null;
           isHeadOfOrganization?: boolean | null;
@@ -25062,7 +25075,7 @@ export const GetInsBoardDirectorEditListDocument = `
           dateOfMembership
           highestQualification
           mobileNo
-          emailAddress
+          email
           citizenshipNo
           panNo
           isHeadOfOrganization

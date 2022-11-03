@@ -195,7 +195,7 @@ query getInsBoardDirectorEditList($id: ID!) {
           dateOfMembership
           highestQualification
           mobileNo
-          emailAddress
+          email
           citizenshipNo
           panNo
           isHeadOfOrganization
