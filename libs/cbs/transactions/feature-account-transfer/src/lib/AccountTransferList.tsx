@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { TransferType, useGetAccountTransferListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
-import { PopoverComponent } from '@coop/myra/components';
+import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
@@ -28,8 +28,17 @@ export interface AccountTransferListProps {}
 
 export const AccountTransferList = () => {
   const { t } = useTranslation();
-
   const router = useRouter();
+
+  const popoverTitle = [
+    {
+      title: 'transDetailViewDetail',
+      onClick: (id: string) => {
+        router.push(`/transactions/account-transfer/view?id=${id}`);
+      },
+    },
+  ];
+
   const { data, isFetching } = useGetAccountTransferListDataQuery(
     {
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
@@ -78,10 +87,11 @@ export const AccountTransferList = () => {
       {
         id: '_actions',
         header: '',
-        accessorKey: 'actions',
-        cell: () => <PopoverComponent items={[]} />,
+        cell: (props) => (
+          <ActionPopoverComponent items={popoverTitle} id={props?.row?.original?.node?.ID ?? ''} />
+        ),
         meta: {
-          width: '60px',
+          width: '50px',
         },
       },
     ],

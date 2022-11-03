@@ -88,6 +88,9 @@
         "libs/cbs/transactions/feature-agent-transaction/src/index.ts"
       ],
       "@coop/cbs/transactions/deposit": ["libs/cbs/transactions/feature-deposit/src/index.ts"],
+      "@coop/cbs/transactions/feature-detail-page": [
+        "libs/cbs/transactions/feature-detail-page/src/index.ts"
+      ],
       "@coop/cbs/transactions/loan-payment": [
         "libs/cbs/transactions/feature-loan-payment/src/index.ts"
       ],

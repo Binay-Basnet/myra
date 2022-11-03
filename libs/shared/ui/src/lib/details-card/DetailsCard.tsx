@@ -33,11 +33,11 @@ export const DetailsCard = ({
     <Box px="s16" h="60px" display="flex" alignItems="center">
       <Box w="100%" display="flex" alignItems="center" justifyContent="space-between">
         <Box display="flex" flexDir="column">
-          <Text fontSize="r1" fontWeight="600">
-            {title}{' '}
+          <Text fontSize="r1" fontWeight="SemiBold">
+            {title}
           </Text>
           {subTitle && (
-            <Text fontSize="s2" fontWeight="400">
+            <Text fontSize="s2" fontWeight="Regular">
               {subTitle}
             </Text>
           )}

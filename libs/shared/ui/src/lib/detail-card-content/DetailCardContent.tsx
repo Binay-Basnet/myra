@@ -1,15 +1,22 @@
 import React from 'react';
 
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Tags, Text } from '@coop/shared/ui';
 
 export interface DetailCardContentProps {
   title?: string | null;
   subtitle?: React.ReactNode | null;
   bg?: string;
   children?: React.ReactNode;
+  status?: boolean;
 }
 
-export const DetailCardContent = ({ title, subtitle, bg, children }: DetailCardContentProps) => (
+export const DetailCardContent = ({
+  title,
+  subtitle,
+  bg,
+  status,
+  children,
+}: DetailCardContentProps) => (
   <Box display="flex" flexDirection="column" gap="s4" bg={bg}>
     <Text fontWeight="500" fontSize="s3" color="gray.700">
       {title ?? 'N/A'}
@@ -18,6 +25,11 @@ export const DetailCardContent = ({ title, subtitle, bg, children }: DetailCardC
       <Text fontWeight="600" fontSize="r1" color="gray.900" textTransform="capitalize">
         {subtitle ?? 'N/A'}
       </Text>
+    )}
+    {status && (
+      <Box w="100px">
+        <Tags type="chip" label="Complete" tagColor="primary.100" labelColor="success.500" />
+      </Box>
     )}
 
     {children}
