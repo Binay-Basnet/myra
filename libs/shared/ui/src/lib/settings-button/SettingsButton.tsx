@@ -22,6 +22,9 @@ export const SettingsButton = (props: SettingsButtonProps) => {
       width="full"
       justifyContent="start"
       leftIcon={<Icon as={icon} size="md" color="primary.500" />}
+      whiteSpace="break-spaces"
+      lineHeight={1.5}
+      textAlign="left"
     >
       {buttonLabel}
     </Button>

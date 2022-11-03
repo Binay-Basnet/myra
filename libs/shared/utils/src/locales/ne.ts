@@ -193,12 +193,17 @@ const ne: Record<string, string> = {
   memberLayout: 'सदस्य',
   memberLayoutMembers: 'सदस्य',
   memberLayoutNewMember: 'नयाँ सदस्य',
+
   memberLayoutMemberSettings: 'सदस्य सेटिङ',
   memberLayoutKymSettings: 'Kym Settings',
-  memberLayoutMemberClassification: 'Member Classification',
-  memberLayoutMemberLedger: 'Member Ledger',
-  memberLayoutInactiveMember: 'Inactive Member',
+
+  memberLayoutMemberClassification: 'Member Classification Report',
+  memberLayoutMemberLedger: 'Member Ledger Report',
+  memberLayoutIndividualReport: 'Individual Member Register Report',
+  memberLayoutActiveInactiveMemberReport: 'Active / Inactive Member Report',
+  memberLayoutInactiveMemberReport: 'Inactive Members Report',
   memberLayoutKymStatusReport: 'KYM Status Report',
+
   memberLayoutSelectMemberType: 'सदस्य प्रकार छान्नुहोस',
   memberLayoutIndividual: 'व्यक्तिगत',
   memberLayoutCreateKYMFormForIndividualMembers: '',
@@ -217,7 +222,7 @@ const ne: Record<string, string> = {
   shareLayoutShareDistribution: 'Share Distribution',
 
   shareLayoutRegisterReport: 'Share Register Report',
-  shareLayoutStateReport: 'Share Statement Report',
+  shareLayoutStateReport: 'Share Statement(Individual) Report',
   shareLayoutTransactionReport: 'Share Transaction Report',
 
   accountLayout: 'खाता',
@@ -3300,9 +3305,9 @@ const ne: Record<string, string> = {
   savingsDepositSettings: 'Deposit Settings',
   savingsProductSettings: 'Saving Products Settings',
 
-  savingsDepositStatementReport: 'Saving / Deposit Statement',
+  savingsDepositStatementReport: 'Saving / Deposit Statement Report',
   savingsIntrestTaxReport: 'Intrest Tax Report',
-  savingsIntrestStatement: 'Intrest Statement (Individual)',
+  savingsIntrestStatement: 'Intrest Statement (Individual) Report',
 };
 
 export default ne;

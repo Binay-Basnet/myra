@@ -46,7 +46,15 @@ const reportColumn = [
     navigate: '/settings/general/members/kym-individual',
   },
   {
-    label: 'memberLayoutInactiveMember',
+    label: 'memberLayoutIndividualReport',
+    navigate: '/settings/general/members/kym-individual',
+  },
+  {
+    label: 'memberLayoutActiveInactiveMemberReport',
+    navigate: '/settings/general/members/kym-individual',
+  },
+  {
+    label: 'memberLayoutInactiveMemberReport',
     navigate: '/settings/general/members/kym-individual',
   },
   {

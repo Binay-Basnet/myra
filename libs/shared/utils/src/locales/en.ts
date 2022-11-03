@@ -244,12 +244,17 @@ const en: Record<string, string> = {
   memberLayout: 'Member',
   memberLayoutMembers: 'Members',
   memberLayoutNewMember: 'New Member',
+
   memberLayoutMemberSettings: 'Member Settings',
   memberLayoutKymSettings: 'Kym Settings',
-  memberLayoutMemberClassification: 'Member Classification',
-  memberLayoutMemberLedger: 'Member Ledger',
-  memberLayoutInactiveMember: 'Inactive Member',
+
+  memberLayoutMemberClassification: 'Member Classification Report',
+  memberLayoutMemberLedger: 'Member Ledger Report',
+  memberLayoutIndividualReport: 'Individual Member Register Report',
+  memberLayoutActiveInactiveMemberReport: 'Active / Inactive Member Report',
+  memberLayoutInactiveMemberReport: 'Inactive Members Report',
   memberLayoutKymStatusReport: 'KYM Status Report',
+
   memberLayoutSelectMemberType: 'Select Member Type',
   memberLayoutIndividual: 'Individual',
   memberLayoutCreateKYMFormForIndividualMembers: 'Create KYM form for Individual Members',
@@ -269,7 +274,7 @@ const en: Record<string, string> = {
   shareLayoutShareDistribution: 'Share Distribution',
 
   shareLayoutRegisterReport: 'Share Register Report',
-  shareLayoutStateReport: 'Share Statement Report',
+  shareLayoutStateReport: 'Share Statement (Individual) Report',
   shareLayoutTransactionReport: 'Share Transaction Report',
 
   // account layout
@@ -3710,9 +3715,9 @@ const en: Record<string, string> = {
   savingsDepositSettings: 'Deposit Settings',
   savingsProductSettings: 'Saving Products Settings',
 
-  savingsDepositStatementReport: 'Saving / Deposit Statement',
+  savingsDepositStatementReport: 'Saving / Deposit Statement Report',
   savingsIntrestTaxReport: 'Intrest Tax Report',
-  savingsIntrestStatement: 'Intrest Statement (Individual)',
+  savingsIntrestStatement: 'Intrest Statement (Individual) Report',
 };
 
 export default en;
