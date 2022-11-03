@@ -555,6 +555,18 @@ export type AgentTodayListResult = {
   record?: Maybe<Array<Maybe<AgentTodayList>>>;
 };
 
+export type AgentTransactionView = {
+  assignedMember?: Maybe<Array<Maybe<AssignedMemberView>>>;
+  status: Scalars['String'];
+  transactionDate?: Maybe<Scalars['String']>;
+  transactionId: Scalars['ID'];
+};
+
+export type AgentTransactionViewResult = {
+  data?: Maybe<AgentTransactionView>;
+  error?: Maybe<QueryError>;
+};
+
 export enum AllModules {
   AccountingSystem = 'ACCOUNTING_SYSTEM',
   AlternativeChannels = 'ALTERNATIVE_CHANNELS',
@@ -742,6 +754,12 @@ export type AssignedMemberListFiler = {
   agentId?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
   query?: InputMaybe<Scalars['String']>;
+};
+
+export type AssignedMemberView = {
+  account?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  member?: Maybe<Scalars['String']>;
 };
 
 export type AssignedMembersListConnection = {
@@ -11333,6 +11351,7 @@ export type TransactionQuery = {
   listTransfer: AccountTransferListConnection;
   listWithdraw: AccountActivityListConnection;
   viewAccountTransfer?: Maybe<AccountTransferViewResult>;
+  viewAgentList?: Maybe<AgentTransactionViewResult>;
   viewDeposit?: Maybe<DepositTransactionViewResult>;
   viewWithdraw?: Maybe<WithdrawTransactionViewResult>;
 };
@@ -11377,6 +11396,11 @@ export type TransactionQueryListWithdrawArgs = {
 
 export type TransactionQueryViewAccountTransferArgs = {
   transactionId: Scalars['ID'];
+};
+
+export type TransactionQueryViewAgentListArgs = {
+  agentId: Scalars['ID'];
+  date: Scalars['String'];
 };
 
 export type TransactionQueryViewDepositArgs = {
@@ -18799,6 +18823,125 @@ export type GetTellerTransactionListDataQuery = {
         endCursor?: string | null;
       } | null;
     };
+  };
+};
+
+export type TransactionDepositDetailQueryVariables = Exact<{
+  transactionId: Scalars['ID'];
+}>;
+
+export type TransactionDepositDetailQuery = {
+  transaction: {
+    viewDeposit?: {
+      data?: {
+        id: string;
+        transactionDate?: string | null;
+        accountName?: string | null;
+        voucherId?: string | null;
+        amount?: string | null;
+        fine?: string | null;
+        rebate?: string | null;
+        totalDepositedAmount?: string | null;
+        status?: ObjState | null;
+        paymentMode?: string | null;
+        sourceOfFund?: string | null;
+        depositedBy?: string | null;
+        transactionBranch?: string | null;
+        teller?: string | null;
+        member?: {
+          id: string;
+          objState: ObjState;
+          code: string;
+          type: KymMemberTypesEnum;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          contact?: string | null;
+          profilePic?: string | null;
+          profilePicUrl?: string | null;
+        } | null;
+        glTransaction?: Array<{
+          account: string;
+          debit?: string | null;
+          credit?: string | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type TransactionWithdrawDetailQueryVariables = Exact<{
+  transactionId: Scalars['ID'];
+}>;
+
+export type TransactionWithdrawDetailQuery = {
+  transaction: {
+    viewWithdraw?: {
+      data?: {
+        id: string;
+        transactionDate?: string | null;
+        accountName?: string | null;
+        chequeNo?: string | null;
+        withdrawAmount?: string | null;
+        fine?: string | null;
+        totalWithdrawnAmount?: string | null;
+        status?: ObjState | null;
+        paymentMode?: string | null;
+        withdrawnBy?: string | null;
+        marketRepId?: string | null;
+        marketRepName?: string | null;
+        transactionBranch?: string | null;
+        teller?: string | null;
+        member?: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          profilePic?: string | null;
+          profilePicUrl?: string | null;
+        } | null;
+        glTransaction?: Array<{
+          account: string;
+          debit?: string | null;
+          credit?: string | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type TransactionAccountTransferDetailQueryVariables = Exact<{
+  transactionId: Scalars['ID'];
+}>;
+
+export type TransactionAccountTransferDetailQuery = {
+  transaction: {
+    viewAccountTransfer?: {
+      data?: {
+        id: string;
+        transactionDate?: string | null;
+        transferAmount?: string | null;
+        transferType?: string | null;
+        withdrawnBy?: string | null;
+        withdrawnSlipNo?: string | null;
+        transactionBranch?: string | null;
+        objState?: ObjState | null;
+        teller?: string | null;
+        member?: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          profilePic?: string | null;
+          profilePicUrl?: string | null;
+        } | null;
+        sourceAccount?: { id: string; accountName?: string | null } | null;
+        destinationAccount?: { id: string; accountName?: string | null } | null;
+        recipientMember?: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
+        glTransaction?: Array<{
+          account: string;
+          debit?: string | null;
+          credit?: string | null;
+        } | null> | null;
+      } | null;
+    } | null;
   };
 };
 
@@ -28869,6 +29012,165 @@ export const useGetTellerTransactionListDataQuery = <
       : ['getTellerTransactionListData', variables],
     useAxios<GetTellerTransactionListDataQuery, GetTellerTransactionListDataQueryVariables>(
       GetTellerTransactionListDataDocument
+    ).bind(null, variables),
+    options
+  );
+export const TransactionDepositDetailDocument = `
+    query transactionDepositDetail($transactionId: ID!) {
+  transaction {
+    viewDeposit(transactionId: $transactionId) {
+      data {
+        id
+        member {
+          id
+          objState
+          code
+          type
+          name
+          contact
+          profilePic
+          profilePicUrl
+        }
+        transactionDate
+        accountName
+        voucherId
+        amount
+        fine
+        rebate
+        totalDepositedAmount
+        status
+        paymentMode
+        sourceOfFund
+        depositedBy
+        transactionBranch
+        teller
+        glTransaction {
+          account
+          debit
+          credit
+        }
+      }
+    }
+  }
+}
+    `;
+export const useTransactionDepositDetailQuery = <
+  TData = TransactionDepositDetailQuery,
+  TError = unknown
+>(
+  variables: TransactionDepositDetailQueryVariables,
+  options?: UseQueryOptions<TransactionDepositDetailQuery, TError, TData>
+) =>
+  useQuery<TransactionDepositDetailQuery, TError, TData>(
+    ['transactionDepositDetail', variables],
+    useAxios<TransactionDepositDetailQuery, TransactionDepositDetailQueryVariables>(
+      TransactionDepositDetailDocument
+    ).bind(null, variables),
+    options
+  );
+export const TransactionWithdrawDetailDocument = `
+    query transactionWithdrawDetail($transactionId: ID!) {
+  transaction {
+    viewWithdraw(transactionId: $transactionId) {
+      data {
+        id
+        member {
+          id
+          name
+          profilePic
+          profilePicUrl
+        }
+        transactionDate
+        accountName
+        chequeNo
+        withdrawAmount
+        fine
+        totalWithdrawnAmount
+        status
+        paymentMode
+        withdrawnBy
+        marketRepId
+        marketRepName
+        transactionBranch
+        teller
+        glTransaction {
+          account
+          debit
+          credit
+        }
+      }
+    }
+  }
+}
+    `;
+export const useTransactionWithdrawDetailQuery = <
+  TData = TransactionWithdrawDetailQuery,
+  TError = unknown
+>(
+  variables: TransactionWithdrawDetailQueryVariables,
+  options?: UseQueryOptions<TransactionWithdrawDetailQuery, TError, TData>
+) =>
+  useQuery<TransactionWithdrawDetailQuery, TError, TData>(
+    ['transactionWithdrawDetail', variables],
+    useAxios<TransactionWithdrawDetailQuery, TransactionWithdrawDetailQueryVariables>(
+      TransactionWithdrawDetailDocument
+    ).bind(null, variables),
+    options
+  );
+export const TransactionAccountTransferDetailDocument = `
+    query transactionAccountTransferDetail($transactionId: ID!) {
+  transaction {
+    viewAccountTransfer(transactionId: $transactionId) {
+      data {
+        id
+        member {
+          id
+          name
+          profilePic
+          profilePicUrl
+        }
+        transactionDate
+        transferAmount
+        sourceAccount {
+          id
+          accountName
+        }
+        destinationAccount {
+          id
+          accountName
+        }
+        transferType
+        recipientMember {
+          id
+          name
+        }
+        withdrawnBy
+        withdrawnSlipNo
+        transactionBranch
+        objState
+        transactionBranch
+        teller
+        glTransaction {
+          account
+          debit
+          credit
+        }
+      }
+    }
+  }
+}
+    `;
+export const useTransactionAccountTransferDetailQuery = <
+  TData = TransactionAccountTransferDetailQuery,
+  TError = unknown
+>(
+  variables: TransactionAccountTransferDetailQueryVariables,
+  options?: UseQueryOptions<TransactionAccountTransferDetailQuery, TError, TData>
+) =>
+  useQuery<TransactionAccountTransferDetailQuery, TError, TData>(
+    ['transactionAccountTransferDetail', variables],
+    useAxios<TransactionAccountTransferDetailQuery, TransactionAccountTransferDetailQueryVariables>(
+      TransactionAccountTransferDetailDocument
     ).bind(null, variables),
     options
   );

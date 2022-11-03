@@ -22,13 +22,31 @@ interface IAccountPageLayoutProps {
 
 const accountColumns = [
   {
+    title: 'transactionsSidebarDeposit',
+    link: '/accounts/deposit/list',
+    name: 'deposit',
+    addLink: '/accounts/deposit/add',
+  },
+  {
+    title: 'transactionsSidebarWithdraw',
+    link: '/accounts/withdraw/list',
+    name: 'withdraw',
+    addLink: '/accounts/withdraw/add',
+  },
+  {
+    title: 'transactionsSidebarAccountTransfer',
+    link: '/accounts/account-transfer/list',
+    name: 'account-transfer',
+    addLink: '/accounts/account-transfer/add',
+  },
+  {
     title: 'accountList',
     link: '/accounts/list',
     addLinkId: '/accounts/account-open',
     idType: Id_Type?.Account,
   },
   {
-    title: 'accountDepositProduct',
+    title: 'savingProducts',
     link: '/accounts/products',
   },
   {
@@ -57,7 +75,7 @@ const settingsColumn = [
   },
   {
     label: 'savingsProductSettings',
-    navigate: '/settings/general/loan',
+    navigate: '/settings/general/deposit-products',
   },
 ];
 

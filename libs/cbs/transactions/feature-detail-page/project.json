@@ -1,0 +1,24 @@
+{
+  "name": "cbs-transactions-feature-detail-page",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/cbs/transactions/feature-detail-page/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/cbs/transactions/feature-detail-page/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/cbs/transactions/feature-detail-page/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

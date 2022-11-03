@@ -240,11 +240,20 @@ export const FloatingShortcutButton = () => {
           // bg="gray.0"
           p={0}
           _focus={{ boxShadow: 'none' }}
-          width="250px"
+          width="300px"
         >
-          <PopoverBody p={0}>
-            <Box display="flex" flexDirection="column" gap="s16" px="s12" py="s16">
-              <Box display="flex" flexDirection="row" gap="s8" cursor="pointer" alignItems="center">
+          <PopoverBody boxShadow="E1" p={0}>
+            <Box display="flex" flexDirection="column" gap="" px="s8" py="s8">
+              <Box
+                h="40px"
+                _hover={{ backgroundColor: 'highlight.500', borderRadius: 'br2' }}
+                display="flex"
+                flexDirection="row"
+                gap="s8"
+                px="s8"
+                cursor="pointer"
+                alignItems="center"
+              >
                 <Icon as={BsBook} />
                 <Text fontSize="s3" fontWeight="500" color="gray.600">
                   {' '}
@@ -254,6 +263,9 @@ export const FloatingShortcutButton = () => {
 
               <Box
                 display="flex"
+                h="40px"
+                px="s8"
+                _hover={{ backgroundColor: 'highlight.500', borderRadius: 'br2' }}
                 flexDirection="row"
                 justifyContent="space-between"
                 cursor="pointer"
@@ -278,6 +290,9 @@ export const FloatingShortcutButton = () => {
               <Box
                 display="flex"
                 flexDirection="row"
+                h="40px"
+                px="s8"
+                _hover={{ backgroundColor: 'highlight.500', borderRadius: 'br2' }}
                 justifyContent="space-between"
                 cursor="pointer"
                 onClick={handleModalOpen}
@@ -296,7 +311,16 @@ export const FloatingShortcutButton = () => {
                 </Text>
               </Box>
 
-              <Box display="flex" flexDirection="row" gap="s8" cursor="pointer" alignItems="center">
+              <Box
+                display="flex"
+                px="s8"
+                h="40px"
+                flexDirection="row"
+                gap="s8"
+                cursor="pointer"
+                alignItems="center"
+                _hover={{ backgroundColor: 'highlight.500', borderRadius: 'br2' }}
+              >
                 <Icon as={BsHeart} />
                 <Text fontSize="s3" fontWeight="500" color="gray.600">
                   {' '}
@@ -304,7 +328,16 @@ export const FloatingShortcutButton = () => {
                 </Text>
               </Box>
 
-              <Box display="flex" flexDirection="row" gap="s8" cursor="pointer" alignItems="center">
+              <Box
+                h="40px"
+                px="s8"
+                display="flex"
+                flexDirection="row"
+                gap="s8"
+                cursor="pointer"
+                alignItems="center"
+                _hover={{ backgroundColor: 'highlight.500', borderRadius: 'br2' }}
+              >
                 <Icon as={TbMessageDots} />
                 <Text fontSize="s3" fontWeight="500" color="gray.600">
                   {' '}

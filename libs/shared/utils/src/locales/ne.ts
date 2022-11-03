@@ -176,7 +176,7 @@ const ne: Record<string, string> = {
   accountNavSubmitted: 'पेश गरिएको',
   accountNavDraft: 'मस्यौदा',
   accountList: 'खाता सूची',
-  accountClose: 'खाता बन्द',
+  accountClose: 'बन्द खाता ',
   accountReport: 'खाता प्रतिवेदन',
   inventoryItems: 'सामान',
   inventoryItemGroup: 'सामान समूह',
@@ -2688,6 +2688,7 @@ const ne: Record<string, string> = {
   transactionsSidebarAccountTransfer: 'Account Transfer',
   transactionsSidebarLoanPayment: 'Loan Payment',
   transactionsSidebarAgentList: 'Market Representative List',
+  transactionsSidebarJournelVoucher: 'Journel Voucher',
   transactionsSidebarAgentTransaction: 'Market Representative Transaction',
 
   depositProductMinimumRate: 'Minimum Rate',
@@ -3299,6 +3300,38 @@ const ne: Record<string, string> = {
   dayCloseReinitiateDayEnd: 'Reinitiate Day End',
   dayCloseIgnoreErrors: 'Ignore all the errors and continue to close the day.',
 
+  // transaction detail
+  transDetailTransactionsList: 'Transactions List',
+  transDetailOverview: 'Overview',
+  transDetailTransactionDetails: 'Transaction Details',
+  transDetailPaymentDetails: 'Payment Details',
+  transDetailOtherDetails: 'Other Details',
+  transDetailGLTransactions: 'GL Transactions',
+  transDetailTransactionID: 'Transaction ID',
+  transDetailTransactionDate: 'Transaction Date',
+  transDetailAccount: 'Account',
+  transDetailVoucherID: 'Voucher ID',
+  transDetailAmountDeposited: 'Amount to be Deposited',
+  transDetailFine: 'Fine',
+  transDetailRebate: 'Rebate',
+  transDetailTotalDepositAmount: 'Total Deposit Amount',
+  transDetailStatus: 'Status',
+  transDetailPaymentMode: 'Payment Mode',
+  transDetailSourcefund: 'Source of fund',
+  transDetailDepositedBy: 'Deposited By',
+  transDetailTransactionBranch: 'Transaction Branch',
+  transDetailTeller: 'Teller',
+  transDetailDebit: 'Debit',
+  transDetailCredit: 'Credit',
+  transDetailTotal: 'Total',
+  transDetailPrintPdf: 'Print Pdf',
+  transDetailName: 'Name',
+  transDetailId: 'ID',
+  transDetailViewDetail: 'View Detail',
+  transDetailDeposit: 'Deposit',
+
+  loanProductMaxInstallmentPrincipal: 'Maximum Installment Number for Principal',
+  loanProductMaxInstallmentInterest: 'Maximum Installment Number for Interest',
   // savings
   savings: 'Savings',
 
@@ -3308,6 +3341,13 @@ const ne: Record<string, string> = {
   savingsDepositStatementReport: 'Saving / Deposit Statement Report',
   savingsIntrestTaxReport: 'Intrest Tax Report',
   savingsIntrestStatement: 'Intrest Statement (Individual) Report',
+  savingProducts: 'Saving Products',
+
+  // withdraw slip
+  withdrawSlip: 'Withdraw Slip',
+  withdrawSlipBook: 'Withdraw Slip Book',
+  withdrawSlipRequests: 'Withdraw Slip Requests',
+  withdrawSlipBlockRequests: 'Block Withdraw Slip Request',
 };
 
 export default ne;

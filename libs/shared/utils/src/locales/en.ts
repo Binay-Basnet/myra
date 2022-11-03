@@ -213,7 +213,7 @@ const en: Record<string, string> = {
   accountNavDraft: 'Draft',
 
   accountList: 'Account List',
-  accountClose: 'Account Close',
+  accountClose: 'Closed Accounts',
   accountReport: 'Account Reports',
 
   // Inventory Page TODO ( Update Translations )
@@ -2995,6 +2995,7 @@ const en: Record<string, string> = {
   transactionsSidebarAccountTransfer: 'Account Transfer',
   transactionsSidebarLoanPayment: 'Loan Repayment',
   transactionsSidebarAgentList: 'Market Representative List',
+  transactionsSidebarJournelVoucher: 'Journel Voucher',
   transactionsSidebarAgentTransaction: 'Market Representative Transaction',
   depositProductMinimumRate: 'Minimum Rate',
   // Report page
@@ -3709,6 +3710,58 @@ const en: Record<string, string> = {
   dayCloseOngoing: 'Ongoing',
   dayCloseNotCompleted: 'Not Completed',
 
+  // transaction detail
+  transDetailTransactionsList: 'Transactions List',
+  transDetailOverview: 'Overview',
+  transDetailTransactionDetails: 'Transaction Details',
+  transDetailPaymentDetails: 'Payment Details',
+  transDetailOtherDetails: 'Other Details',
+  transDetailGLTransactions: 'GL Transactions',
+  transDetailTransactionID: 'Transaction ID',
+  transDetailTransactionDate: 'Transaction Date',
+  transDetailAccount: 'Account',
+  transDetailVoucherID: 'Voucher ID',
+  transDetailAmountDeposited: 'Amount to be Deposited',
+  transDetailFine: 'Fine',
+  transDetailRebate: 'Rebate',
+  transDetailTotalDepositAmount: 'Total Deposit Amount',
+  transDetailStatus: 'Status',
+  transDetailPaymentMode: 'Payment Mode',
+  transDetailSourcefund: 'Source of fund',
+  transDetailDepositedBy: 'Deposited By',
+  transDetailTransactionBranch: 'Transaction Branch',
+  transDetailTeller: 'Teller',
+  transDetailDebit: 'Debit',
+  transDetailCredit: 'Credit',
+  transDetailTotal: 'Total',
+  transDetailPrintPdf: 'Print Pdf',
+  transDetailMarketRepresentativeDetails: 'Market Representative Details',
+  transDetailName: 'Name',
+  transDetailId: 'ID',
+  transDetailWithdrawBy: 'Withdraw By',
+  transDetailChequeNo: 'Cheque No',
+  transDetailWithdrawAmount: 'Withdraw Amount',
+  transDetailTotalWithdrawAmount: 'Total Withdraw Amount',
+  transDetailAmount: 'Amount',
+  transDetailDepositedDate: 'Deposited Date',
+  transDetailWithdrawnBy: 'Withdrawn By',
+  transDetailSourceAccount: 'Source Account',
+  transDetailTransferType: 'Transfer Type',
+  transDetailReceipentMember: 'Receipent Member',
+  transDetailReceipentAccount: 'Receipent Account',
+  transDetailWithdrawSlipNo: 'Withdraw Slip No',
+  transDetailTransferAmount: 'Transfer Amount',
+  transDetailLoanRepaymentDetails: 'Loan Repayment Details',
+  transDetailLoanRepaymentID: 'Loan Repayment ID',
+  transDetailInstallmentNo: 'Installment No. ',
+  transDetailInstallmentAmount: 'Installment Amount',
+  transDetailTotalRepaymentAmount: 'Total Repayment Amount',
+  transDetailInstallmentDetails: 'Installment Details',
+  transDetailViewDetail: 'View Detail',
+  transDetailDeposit: 'Deposit',
+
+  loanProductMaxInstallmentPrincipal: 'Maximum Installment Number for Principal',
+  loanProductMaxInstallmentInterest: 'Maximum Installment Number for Interest',
   // savings
   savings: 'Savings',
 
@@ -3718,6 +3771,13 @@ const en: Record<string, string> = {
   savingsDepositStatementReport: 'Saving / Deposit Statement Report',
   savingsIntrestTaxReport: 'Intrest Tax Report',
   savingsIntrestStatement: 'Intrest Statement (Individual) Report',
+  savingProducts: 'Saving Products',
+
+  // withdraw slip
+  withdrawSlip: 'Withdraw Slip',
+  withdrawSlipBook: 'Withdraw Slip Book',
+  withdrawSlipRequests: 'Withdraw Slip Requests',
+  withdrawSlipBlockRequests: 'Block Withdraw Slip Request',
 };
 
 export default en;

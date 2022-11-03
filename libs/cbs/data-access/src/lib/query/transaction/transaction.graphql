@@ -111,3 +111,118 @@ query getTellerTransactionListData($filter: TellerTransactionFilter, $pagination
     }
   }
 }
+
+query transactionDepositDetail($transactionId: ID!) {
+  transaction {
+    viewDeposit(transactionId: $transactionId) {
+      data {
+        id
+        member {
+          id
+          objState
+          code
+          type
+          name
+          contact
+          profilePic
+          profilePicUrl
+        }
+        transactionDate
+        accountName
+        voucherId
+        amount
+        fine
+        rebate
+        totalDepositedAmount
+        status
+        paymentMode
+        sourceOfFund
+        depositedBy
+        transactionBranch
+        teller
+        glTransaction {
+          account
+          debit
+          credit
+        }
+      }
+    }
+  }
+}
+
+query transactionWithdrawDetail($transactionId: ID!) {
+  transaction {
+    viewWithdraw(transactionId: $transactionId) {
+      data {
+        id
+        member {
+          id
+          name
+          profilePic
+          profilePicUrl
+        }
+        transactionDate
+        accountName
+        chequeNo
+        withdrawAmount
+        fine
+        totalWithdrawnAmount
+        status
+        paymentMode
+        withdrawnBy
+        marketRepId
+        marketRepName
+        transactionBranch
+        teller
+        glTransaction {
+          account
+          debit
+          credit
+        }
+      }
+    }
+  }
+}
+
+query transactionAccountTransferDetail($transactionId: ID!) {
+  transaction {
+    viewAccountTransfer(transactionId: $transactionId) {
+      data {
+        id
+        member {
+          id
+          name
+          profilePic
+          profilePicUrl
+        }
+        transactionDate
+        transferAmount
+        sourceAccount {
+          id
+          accountName
+        }
+        destinationAccount {
+          id
+          accountName
+        }
+        transferType
+        recipientMember {
+          id
+          name
+        }
+        #transactionData
+        withdrawnBy
+        withdrawnSlipNo
+        transactionBranch
+        objState
+        transactionBranch
+        teller
+        glTransaction {
+          account
+          debit
+          credit
+        }
+      }
+    }
+  }
+}

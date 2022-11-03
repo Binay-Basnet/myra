@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { DepositedBy, useGetDepositListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
-import { PopoverComponent } from '@coop/myra/components';
+import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, Text } from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
@@ -29,6 +30,16 @@ export interface DepositListProps {}
 
 export const DepositList = () => {
   const { t } = useTranslation();
+  const router = useRouter();
+
+  const popoverTitle = [
+    {
+      title: 'transDetailViewDetail',
+      onClick: (id: string) => {
+        router.push(`/transactions/deposit/view?id=${id}`);
+      },
+    },
+  ];
 
   const { data, isFetching } = useGetDepositListDataQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
@@ -92,14 +103,11 @@ export const DepositList = () => {
       {
         id: '_actions',
         header: '',
-        accessorKey: 'actions',
-        cell: (cell) => {
-          const member = cell?.row?.original?.node;
-          const memberData = { id: member?.ID };
-          return <PopoverComponent items={[]} member={memberData} />;
-        },
+        cell: (props) => (
+          <ActionPopoverComponent items={popoverTitle} id={props?.row?.original?.node?.ID ?? ''} />
+        ),
         meta: {
-          width: '60px',
+          width: '50px',
         },
       },
     ],

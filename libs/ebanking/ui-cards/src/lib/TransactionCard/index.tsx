@@ -2,7 +2,7 @@ import { EbankingTransaction, EbankingTransactionDirection } from '@coop/ebankin
 import { Box, Icon, TextFields } from '@coop/shared/ui';
 
 interface ITransactionCardProps {
-  transaction: EbankingTransaction;
+  transaction: Partial<EbankingTransaction>;
   accountName: string;
 }
 
@@ -44,7 +44,7 @@ export const TransactionCard = ({ transaction, accountName }: ITransactionCardPr
         {Number(transaction.amount).toFixed(2)}
       </TextFields>
       <TextFields variant="formHelper" color="gray.500">
-        {transaction.date}
+        {transaction?.date?.en}
       </TextFields>
     </Box>
   </Box>

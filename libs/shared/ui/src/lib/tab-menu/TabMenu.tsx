@@ -4,6 +4,7 @@ import { BsArrowLeftRight, BsFileText } from 'react-icons/bs';
 import { ImStack } from 'react-icons/im';
 import { IoIosList } from 'react-icons/io';
 import { IoCubeOutline, IoMailUnread, IoPerson } from 'react-icons/io5';
+import { TbMailForward } from 'react-icons/tb';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
@@ -23,6 +24,7 @@ const NAVBAR_TAB_OBJECT: Record<string, number> = {
   reports: 5,
   transfer: 6,
   requests: 7,
+  withdraw: 8,
 };
 
 const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
@@ -66,6 +68,11 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
     title: 'requests',
     icon: IoMailUnread,
     link: '/requests/member',
+  },
+  {
+    title: 'withdrawSlip',
+    icon: TbMailForward,
+    link: '/withdraw',
   },
 ];
 
