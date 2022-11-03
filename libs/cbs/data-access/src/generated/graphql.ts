@@ -3857,6 +3857,11 @@ export type EbankingChangePasswordResult = {
   success: Scalars['Boolean'];
 };
 
+export type EbankingCheckAccountResult = {
+  error?: Maybe<MutationError>;
+  verified: Scalars['Boolean'];
+};
+
 export type EbankingCooperative = {
   cooperativeDistrict?: Maybe<Scalars['String']>;
   cooperativeId?: Maybe<Scalars['ID']>;
@@ -3946,6 +3951,49 @@ export type EbankingPasswordResult = {
   error?: Maybe<MutationError>;
   record?: Maybe<EbankingUser>;
   recordId?: Maybe<Scalars['ID']>;
+};
+
+export type EbankingSendMoneyInput = {
+  amount?: InputMaybe<Scalars['String']>;
+  purposeOfTransaction?: InputMaybe<PurposeOfTransaction>;
+  recipientAccountNumber?: InputMaybe<Scalars['String']>;
+  recipientMobileNumber?: InputMaybe<Scalars['String']>;
+  recipientName?: InputMaybe<Scalars['String']>;
+  remarks?: InputMaybe<Scalars['String']>;
+  sourceAccount?: InputMaybe<Scalars['String']>;
+};
+
+export type EbankingSendMoneyMutation = {
+  check?: Maybe<EbankingCheckAccountResult>;
+  proceed?: Maybe<EbankingSendMoneyResult>;
+};
+
+export type EbankingSendMoneyMutationCheckArgs = {
+  data?: InputMaybe<EbankingSendMoneyInput>;
+};
+
+export type EbankingSendMoneyMutationProceedArgs = {
+  data?: InputMaybe<EbankingSendMoneyInput>;
+  transactionPin: Scalars['String'];
+};
+
+export type EbankingSendMoneyRecord = {
+  amount: Scalars['String'];
+  purposeOfTransaction?: Maybe<PurposeOfTransaction>;
+  recipientAccountNumber: Scalars['String'];
+  recipientMobileNumber: Scalars['String'];
+  recipientName: Scalars['String'];
+  remarks?: Maybe<Scalars['String']>;
+  sourceAccount: Scalars['ID'];
+  transactionCode: Scalars['String'];
+  transactionDate: Scalars['String'];
+};
+
+export type EbankingSendMoneyResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<EbankingSendMoneyRecord>;
+  recordId?: Maybe<Scalars['String']>;
+  success: Scalars['Boolean'];
 };
 
 export enum EbankingServiceRequestType {
@@ -4053,6 +4101,7 @@ export type EbankingUserResult = {
 
 export type EbankingWebUtilityPaymentsMutation = {
   accountTransfer?: Maybe<EbankingAccountTransferResult>;
+  sendMoney?: Maybe<EbankingSendMoneyMutation>;
 };
 
 export type EbankingWebUtilityPaymentsMutationAccountTransferArgs = {
@@ -4890,6 +4939,11 @@ export enum IdetificationType {
   Passport = 'PASSPORT',
   VoterCard = 'VOTER_CARD',
 }
+
+export type InactivateMemberCheck = {
+  isAccountClosed: Scalars['Boolean'];
+  isShareReturned: Scalars['Boolean'];
+};
 
 export type IncompleteSection = {
   incomplete?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -8632,7 +8686,7 @@ export enum MemberIdentityLevel {
 
 export type MemberInactivateQuery = {
   accountCloseCheck: Scalars['Boolean'];
-  shareReturnCheck: Scalars['Boolean'];
+  inactivateCheck?: Maybe<InactivateMemberCheck>;
 };
 
 export type MemberInactivateQueryAccountCloseCheckArgs = {
@@ -8641,7 +8695,7 @@ export type MemberInactivateQueryAccountCloseCheckArgs = {
   memberId: Scalars['ID'];
 };
 
-export type MemberInactivateQueryShareReturnCheckArgs = {
+export type MemberInactivateQueryInactivateCheckArgs = {
   memberId: Scalars['ID'];
 };
 
@@ -9872,6 +9926,13 @@ export type Province = {
   name: Scalars['String'];
   nameNp: Scalars['String'];
 };
+
+export enum PurposeOfTransaction {
+  BillSharing = 'BILL_SHARING',
+  FamilyExpenses = 'FAMILY_EXPENSES',
+  LendOrBorrow = 'LEND_OR_BORROW',
+  PersonalUse = 'PERSONAL_USE',
+}
 
 export type QuarterlyDividendRate = {
   firstQuarter?: Maybe<Scalars['Float']>;

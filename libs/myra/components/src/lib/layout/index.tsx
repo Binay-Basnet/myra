@@ -8,3 +8,4 @@ export * from './inventoryLayout/UnitsLayout';
 export * from './inventoryLayout/WarehouseLayout';
 export * from './LoanLayout';
 export * from './ShareLayout';
+export * from './WithdrawSlipLayout';

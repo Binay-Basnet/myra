@@ -213,7 +213,7 @@ const en: Record<string, string> = {
   accountNavDraft: 'Draft',
 
   accountList: 'Account List',
-  accountClose: 'Account Close',
+  accountClose: 'Closed Accounts',
   accountReport: 'Account Reports',
 
   // Inventory Page TODO ( Update Translations )
@@ -2990,6 +2990,7 @@ const en: Record<string, string> = {
   transactionsSidebarAccountTransfer: 'Account Transfer',
   transactionsSidebarLoanPayment: 'Loan Repayment',
   transactionsSidebarAgentList: 'Market Representative List',
+  transactionsSidebarJournelVoucher: 'Journel Voucher',
   transactionsSidebarAgentTransaction: 'Market Representative Transaction',
   depositProductMinimumRate: 'Minimum Rate',
   // Report page
@@ -3713,6 +3714,13 @@ const en: Record<string, string> = {
   savingsDepositStatementReport: 'Saving / Deposit Statement',
   savingsIntrestTaxReport: 'Intrest Tax Report',
   savingsIntrestStatement: 'Intrest Statement (Individual)',
+  savingProducts: 'Saving Products',
+
+  // withdraw slip
+  withdrawSlip: 'Withdraw Slip',
+  withdrawSlipBook: 'Withdraw Slip Book',
+  withdrawSlipRequests: 'Withdraw Slip Requests',
+  withdrawSlipBlockRequests: 'Block Withdraw Slip Request',
 };
 
 export default en;

@@ -176,7 +176,7 @@ const ne: Record<string, string> = {
   accountNavSubmitted: 'पेश गरिएको',
   accountNavDraft: 'मस्यौदा',
   accountList: 'खाता सूची',
-  accountClose: 'खाता बन्द',
+  accountClose: 'बन्द खाता ',
   accountReport: 'खाता प्रतिवेदन',
   inventoryItems: 'सामान',
   inventoryItemGroup: 'सामान समूह',
@@ -2683,6 +2683,7 @@ const ne: Record<string, string> = {
   transactionsSidebarAccountTransfer: 'Account Transfer',
   transactionsSidebarLoanPayment: 'Loan Payment',
   transactionsSidebarAgentList: 'Market Representative List',
+  transactionsSidebarJournelVoucher: 'Journel Voucher',
   transactionsSidebarAgentTransaction: 'Market Representative Transaction',
 
   depositProductMinimumRate: 'Minimum Rate',
@@ -3303,6 +3304,13 @@ const ne: Record<string, string> = {
   savingsDepositStatementReport: 'Saving / Deposit Statement',
   savingsIntrestTaxReport: 'Intrest Tax Report',
   savingsIntrestStatement: 'Intrest Statement (Individual)',
+  savingProducts: 'Saving Products',
+
+  // withdraw slip
+  withdrawSlip: 'Withdraw Slip',
+  withdrawSlipBook: 'Withdraw Slip Book',
+  withdrawSlipRequests: 'Withdraw Slip Requests',
+  withdrawSlipBlockRequests: 'Block Withdraw Slip Request',
 };
 
 export default ne;

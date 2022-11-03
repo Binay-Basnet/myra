@@ -59,6 +59,12 @@ const transactionSidebarColumns = [
     name: 'agent-list',
     // addLink: '/transactions/agent/add',
   },
+  {
+    title: 'transactionsSidebarJournelVoucher',
+    link: '/transactions/deposit/list',
+    name: 'journel-voucher',
+    addLink: '/transactions/deposit/add',
+  },
 ];
 
 const dropdownButtons = [
