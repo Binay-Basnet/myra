@@ -4,7 +4,6 @@ import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
-import debounce from 'lodash/debounce';
 
 import {
   KymInsDirectorInput,
@@ -13,7 +12,6 @@ import {
   useDeleteDirectorInstitutionMutation,
   useGetInsBoardDirectorEditListQuery,
   useGetNewIdMutation,
-  useSetAddDirectorInstitutionMutation,
 } from '@coop/cbs/data-access';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import {
@@ -30,6 +28,7 @@ import {
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { DirectorsWithAffliation, DirectorTopPart, DocumentComponent } from './AccordianComponents';
+import { useDirector } from '../hooks/useDirector';
 
 interface IAddDirector {
   removeDirector: (directorId: string) => void;
@@ -42,24 +41,7 @@ const AddDirector = ({ removeDirector, setKymCurrentSection, directorId, index }
   const { t } = useTranslation();
   const methods = useForm();
 
-  const { watch } = methods;
-
-  const router = useRouter();
-
-  const id = String(router?.query?.['id']);
-
-  const { mutate } = useSetAddDirectorInstitutionMutation();
-
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        mutate({ id, dir: directorId, data: { ...data } });
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
-
+  useDirector({ directorId, methods });
   const [isOpen, setIsOpen] = React.useState(true);
 
   return (
@@ -122,10 +104,9 @@ const AddDirector = ({ removeDirector, setKymCurrentSection, directorId, index }
             mt="0"
             border="1px solid"
             borderColor="border.layout"
+            borderBottom={0}
             borderRadius="4px"
-            gap="s32"
-            px="s20"
-            pb="s20"
+            borderBottomRadius={0}
           >
             <DirectorTopPart
               removeDirector={removeDirector}
@@ -144,6 +125,7 @@ const AddDirector = ({ removeDirector, setKymCurrentSection, directorId, index }
             display="flex"
             justifyContent="flex-end"
             border="1px solid"
+            borderTop="none"
             borderColor="border.layout"
             alignItems="center"
             h="60px"
@@ -188,7 +170,7 @@ export const BoardDirectorInfo = (props: IProps) => {
   const { setSection } = props;
 
   const router = useRouter();
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'] as string;
 
   const [directorIds, setDirectorIds] = useState<string[]>([]);
 
@@ -204,7 +186,7 @@ export const BoardDirectorInfo = (props: IProps) => {
 
       setDirectorIds(
         editValueData?.reduce(
-          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
+          (prevVal, curVal) => (curVal?.id ? [...prevVal, curVal.id] : prevVal),
           [] as string[]
         ) ?? []
       );
@@ -223,14 +205,12 @@ export const BoardDirectorInfo = (props: IProps) => {
       setDirectorIds([...directorIds, res.newId]);
     },
   });
+
   const { mutate: deleteMutate } = useDeleteDirectorInstitutionMutation({
     onSuccess: (res) => {
       const deletedId = String(res?.members?.institution?.director?.Delete?.recordId);
-
       const tempDirectorIds = [...directorIds];
-
       tempDirectorIds.splice(tempDirectorIds.indexOf(deletedId), 1);
-
       setDirectorIds([...tempDirectorIds]);
     },
   });

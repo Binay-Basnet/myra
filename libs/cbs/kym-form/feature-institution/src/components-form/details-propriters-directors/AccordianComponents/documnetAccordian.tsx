@@ -1,5 +1,5 @@
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
-import { Grid } from '@coop/shared/ui';
+import { FormSection } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 interface IProps {
@@ -11,21 +11,21 @@ export const DocumentComponent = ({ setSection, directorId }: IProps) => {
   const { t } = useTranslation();
 
   return (
-    <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
+    <FormSection templateColumns={2}>
       <KYMDocumentField
         mutationId={directorId}
         setKymCurrentSection={setSection}
         getKymSection={getKymSectionInstitution}
         label={t['kymInsPhotograph']}
-        name={`photograph`}
+        name="photograph"
       />
       <KYMDocumentField
         mutationId={directorId}
         setKymCurrentSection={setSection}
         getKymSection={getKymSectionInstitution}
         label={t['kymInsPhotographOfIdentityProofDocument']}
-        name={`documentPhotograph`}
+        name="documentPhotograph"
       />
-    </Grid>
+    </FormSection>
   );
 };

@@ -31,7 +31,7 @@ const AddDirector = ({ index, removeDirector }: IAddDirector) => {
         aria-label="close"
         alignSelf="flex-end"
       />
-      <Grid templateColumns={'repeat(2, 1fr)'} gap="s20">
+      <Grid templateColumns="repeat(2, 1fr)" gap="s20">
         <FormInput
           type="text"
           bg="white"
@@ -64,7 +64,7 @@ const AddDirector = ({ index, removeDirector }: IAddDirector) => {
         />
         <FormInput
           type="number"
-          textAlign={'right'}
+          textAlign="right"
           bg="white"
           name={`detailsOfDirectorsWithAffiliation.${index}.yearlyIncome`}
           label={t['kymInsYearlyIncome']}
@@ -84,26 +84,18 @@ export const InstitutionKYMDirectorWithAffiliation = () => {
   } = useFieldArray({ name: 'detailsOfDirectorsWithAffiliation' });
 
   return (
-    <GroupContainer
-      id="kymInsDetailsofdirectorsaffiliatedwithotherFirms"
-      scrollMarginTop={'200px'}
-    >
+    <GroupContainer id="kymInsDetailsofdirectorsaffiliatedwithotherFirms" scrollMarginTop="200px">
       <Text fontSize="r1" fontWeight="SemiBold">
         {t['kymInsDetailsofdirectorsaffiliatedwithotherFirms']}
       </Text>
 
       <div>
         <DynamicBoxGroupContainer>
-          {directorFields.map((item, index) => {
-            return (
-              <Box key={item.id}>
-                <AddDirector
-                  index={index}
-                  removeDirector={() => directorRemove(index)}
-                />
-              </Box>
-            );
-          })}
+          {directorFields.map((item, index) => (
+            <Box key={item.id}>
+              <AddDirector index={index} removeDirector={() => directorRemove(index)} />
+            </Box>
+          ))}
           <Button
             id="newDetailButton"
             alignSelf="start"

@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // Define a type for the slice state
 interface InstitutionSlice {
@@ -19,6 +19,12 @@ interface InstitutionSlice {
       errors?: Record<string, string[]>;
     }[];
   };
+  directorDetails: {
+    director: {
+      directorId?: string;
+      errors?: Record<string, string[]>;
+    }[];
+  };
 }
 
 // Define the initial state using that type
@@ -31,7 +37,10 @@ const initialState: () => InstitutionSlice = () => ({
   },
   sister: [{ errors: {} }],
   accountOperator: {
-    operator: [{ errors: {}, incomplete: {} }],
+    operator: [{ errors: {} }],
+  },
+  directorDetails: {
+    director: [{ errors: {} }],
   },
 });
 
@@ -75,6 +84,17 @@ export const institutionSlice = createSlice({
     ) => {
       state.accountOperator.operator = action.payload;
     },
+    addInstitutionDirectorError: (
+      state,
+      action: PayloadAction<
+        {
+          directorId: string;
+          errors?: Record<string, string[]>;
+        }[]
+      >
+    ) => {
+      state.directorDetails.director = action.payload;
+    },
 
     resetInstitution: () => initialState(),
   },
@@ -86,6 +106,7 @@ export const {
   addInstitutionAccountError,
   setInstitutionFormDirty,
   setInstitutionHasPressedNext,
+  addInstitutionDirectorError,
   resetInstitution,
 } = institutionSlice.actions;
 

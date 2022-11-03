@@ -1,6 +1,6 @@
-query getKymFormStatusInstitution($id: ID!) {
+query getKymFormStatusInstitution($id: ID!, $hasPressedNext: Boolean) {
   members {
-    institution {
+    institution(includeRequiredErrors: $hasPressedNext) {
       formState(id: $id) {
         data {
           sectionStatus {
@@ -10,6 +10,48 @@ query getKymFormStatusInstitution($id: ID!) {
               errors
               incomplete
             }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+query getKYMOverallFormStatus($id: ID!, $hasPressedNext: Boolean){
+  members {
+    institution(includeRequiredErrors: $hasPressedNext){
+      overallFormStatus(id: $id){
+        accountOperatorDetails {
+          id
+          errors
+          sectionStatus {
+            errors
+            incomplete
+          }
+        }
+        directorDetails {
+          id
+          errors
+          sectionStatus {
+            errors
+            incomplete
+          }
+        }
+        institutionDetails {
+          id
+          errors
+          sectionStatus {
+            errors
+            incomplete
+          }
+        }
+        sisterConcernDetails {
+          id
+          errors
+          sectionStatus {
+            errors
+            incomplete
           }
         }
       }
@@ -144,7 +186,7 @@ query getInstitutionSisterDetailsEditList($id: ID!, $includeRequiredErrors: Bool
           name
           natureOfBusiness
           address
-          phoneNo
+          phone
         }
         sectionStatus {
           sectionStatus {
@@ -159,10 +201,19 @@ query getInstitutionSisterDetailsEditList($id: ID!, $includeRequiredErrors: Bool
   }
 }
 
-query getInsBoardDirectorEditList($id: ID!) {
+query getInsBoardDirectorEditList($id: ID!, $hasRequiredErrors: Boolean) {
   members {
-    institution {
+    institution(includeRequiredErrors: $hasRequiredErrors) {
+
       listDirectors(id: $id) {
+        sectionStatus {
+          sectionStatus {
+            errors
+            incomplete
+          }
+          id
+          errors
+        }
         data {
           id
           name
@@ -195,7 +246,7 @@ query getInsBoardDirectorEditList($id: ID!) {
           dateOfMembership
           highestQualification
           mobileNo
-          emailAddress
+          email
           citizenshipNo
           panNo
           isHeadOfOrganization

@@ -6,27 +6,27 @@ import debounce from 'lodash/debounce';
 import omit from 'lodash/omit';
 
 import {
-  addInstitutionAccountError,
+  addInstitutionDirectorError,
   addInstitutionError,
   CoopUnionPersonnelInput,
   RootState,
   useAppDispatch,
   useAppSelector,
-  useGetInsAccountOperatorEditListQuery,
-  useSetAddAccountOperatorInstitutionMutation,
+  useGetInsBoardDirectorEditListQuery,
+  useSetAddDirectorInstitutionMutation,
 } from '@coop/cbs/data-access';
 
 interface IUseCoopUnionBodProps {
   methods: UseFormReturn<CoopUnionPersonnelInput>;
-  accountOpId: string;
+  directorId: string;
 }
 
-export const useAccountOperator = ({ methods, accountOpId }: IUseCoopUnionBodProps) => {
+export const useDirector = ({ methods, directorId }: IUseCoopUnionBodProps) => {
   const router = useRouter();
   const id = router.query['id'] as string;
   const dispatch = useAppDispatch();
 
-  const bodErrors = useAppSelector((state) => state.institution.accountOperator.operator);
+  const bodErrors = useAppSelector((state) => state.institution.directorDetails.director);
   const hasPressedNext = useAppSelector((state) => state.institution.hasPressedNext);
 
   const { watch, reset, setError, clearErrors } = methods;
@@ -35,21 +35,22 @@ export const useAccountOperator = ({ methods, accountOpId }: IUseCoopUnionBodPro
     data: editValues,
     refetch: refetchEdit,
     isLoading: editLoading,
-  } = useGetInsAccountOperatorEditListQuery(
+  } = useGetInsBoardDirectorEditListQuery(
     { id, hasRequiredErrors: hasPressedNext },
     {
       enabled: !!id,
+      staleTime: 0,
       onSuccess: (response) => {
-        const errorArr = response?.members?.institution?.listAccountOperators?.sectionStatus;
+        const errorArr = response?.members?.institution?.listDirectors?.sectionStatus;
 
         // Add Error If New Error Is Detected
         if (errorArr) {
           const errors = errorArr.map((errorObj, index) => ({
-            operatorId: String(index),
+            directorId: String(index),
             errors: errorObj?.errors ?? {},
           }));
 
-          dispatch(addInstitutionAccountError(errors));
+          dispatch(addInstitutionDirectorError(errors));
         } else {
           dispatch(addInstitutionError({}));
         }
@@ -57,12 +58,12 @@ export const useAccountOperator = ({ methods, accountOpId }: IUseCoopUnionBodPro
     }
   );
 
-  const accountOperatorDetail = editValues?.members?.institution?.listAccountOperators?.data?.find(
-    (accountOperator) => accountOperator?.id === accountOpId
+  const directorDetail = editValues?.members?.institution?.listDirectors?.data?.find(
+    (director) => director?.id === directorId
   );
 
   // Mutation To Set Data
-  const { mutateAsync: setData } = useSetAddAccountOperatorInstitutionMutation({
+  const { mutateAsync: setData } = useSetAddDirectorInstitutionMutation({
     onSuccess: async () => {
       await refetchEdit();
     },
@@ -77,20 +78,20 @@ export const useAccountOperator = ({ methods, accountOpId }: IUseCoopUnionBodPro
 
   // Get Back The Initial Data when page reloads or user edits
   useEffect(() => {
-    if (accountOperatorDetail) {
+    if (directorDetail) {
       reset({
-        ...omit(accountOperatorDetail, ['id']),
+        ...omit(directorDetail, ['id']),
         permanentAddress: {
-          ...accountOperatorDetail?.permanentAddress,
-          locality: accountOperatorDetail?.permanentAddress?.locality?.local,
+          ...directorDetail?.permanentAddress,
+          locality: directorDetail?.permanentAddress?.locality?.local,
         },
         temporaryAddress: {
-          ...accountOperatorDetail?.temporaryAddress,
-          locality: accountOperatorDetail?.temporaryAddress?.locality?.local,
+          ...directorDetail?.temporaryAddress,
+          locality: directorDetail?.temporaryAddress?.locality?.local,
         },
       });
     }
-  }, [editLoading, editValues]);
+  }, [editLoading]);
 
   // Call The Mutation To Add Data on Each Form Change
   useEffect(() => {
@@ -99,7 +100,7 @@ export const useAccountOperator = ({ methods, accountOpId }: IUseCoopUnionBodPro
         if (id) {
           await setData({
             id,
-            acc: accountOpId,
+            dir: directorId,
             data,
           });
         }
@@ -107,7 +108,7 @@ export const useAccountOperator = ({ methods, accountOpId }: IUseCoopUnionBodPro
     );
 
     return () => subscription.unsubscribe();
-  }, [watch, accountOperatorDetail]);
+  }, [watch, directorDetail]);
 
   // Trigger Validations When Change In Redux Error Object is Detected
   useDeepCompareEffect(() => {
@@ -115,11 +116,11 @@ export const useAccountOperator = ({ methods, accountOpId }: IUseCoopUnionBodPro
     clearErrors();
 
     bodErrors.forEach((error) => {
-      const foundIndex = editValues?.members?.institution?.listAccountOperators?.data?.findIndex(
-        (accountOperator) => accountOperator?.id === accountOpId
+      const foundIndex = editValues?.members?.institution?.listDirectors?.data?.findIndex(
+        (director) => director?.id === directorId
       );
 
-      if (error.operatorId === String(foundIndex)) {
+      if (error.directorId === String(foundIndex)) {
         Object.entries(error.errors ?? {}).forEach((value) => {
           setError(value[0] as keyof CoopUnionPersonnelInput, {
             type: value[1][0].includes('required') ? 'required' : 'value',

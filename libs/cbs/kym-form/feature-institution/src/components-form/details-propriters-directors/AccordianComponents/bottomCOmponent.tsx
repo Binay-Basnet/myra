@@ -1,73 +1,25 @@
-import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
-import debounce from 'lodash/debounce';
 
-import {
-  RootState,
-  useAppSelector,
-  useGetInsBoardDirectorEditListQuery,
-  useSetAddDirectorInstitutionMutation,
-} from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSwitch } from '@coop/shared/form';
-import { Box, Grid } from '@coop/shared/ui';
+import { Box, FormSection, Grid } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
+
+import { useDirector } from '../../hooks/useDirector';
 
 interface IAddDirector {
   removeDirector: (directorId: string) => void;
   setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
   directorId: string;
 }
+
 export const DirectorsWithAffliation = ({ setKymCurrentSection, directorId }: IAddDirector) => {
   const { t } = useTranslation();
   const methods = useForm();
 
-  const { watch, reset } = methods;
+  useDirector({ directorId, methods });
 
-  const router = useRouter();
-
-  const id = String(router?.query?.['id']);
-
-  const { mutate } = useSetAddDirectorInstitutionMutation();
-  const { data: editValues, refetch: refetchEdit } = useGetInsBoardDirectorEditListQuery({
-    id,
-  });
-  useEffect(() => {
-    if (editValues) {
-      const editValueData = editValues?.members?.institution?.listDirectors?.data;
-
-      const familyMemberDetail = editValueData?.find((data) => data?.id === directorId);
-
-      if (familyMemberDetail) {
-        reset({
-          isAffiliatedWithOtherFirms: familyMemberDetail?.isAffiliatedWithOtherFirms,
-          firmDetails: {
-            ...familyMemberDetail?.firmDetails,
-          },
-        });
-      }
-    }
-  }, [editValues]);
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    refetchEdit();
-  }, [preference?.date]);
-
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        mutate({ id, dir: directorId, data: { ...data } });
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
-
-  const isAffiliated = watch(`isAffiliatedWithOtherFirms`);
+  const isAffiliated = methods.watch(`isAffiliatedWithOtherFirms`);
 
   return (
     <FormProvider {...methods}>
@@ -77,14 +29,14 @@ export const DirectorsWithAffliation = ({ setKymCurrentSection, directorId }: IA
           setKymCurrentSection(kymSection);
         }}
       >
-        <Box display="flex" flexDirection="column" gap="s16">
+        <FormSection flexLayout>
           <FormSwitch
             id="DirectorInstitutionAffiliationId"
             name="isAffiliatedWithOtherFirms"
             label={t['kymInsIsaffiliatedwithotherfirms']}
           />
           {isAffiliated && (
-            <Box>
+            <Box pt="s20">
               <Grid templateColumns="repeat(2, 1fr)" gap="s20">
                 <FormInput
                   id="DirectorInstitutionAffiliationId"
@@ -132,7 +84,7 @@ export const DirectorsWithAffliation = ({ setKymCurrentSection, directorId }: IA
               </InputGroupContainer>
             </Box>
           )}
-        </Box>
+        </FormSection>
       </form>
     </FormProvider>
   );

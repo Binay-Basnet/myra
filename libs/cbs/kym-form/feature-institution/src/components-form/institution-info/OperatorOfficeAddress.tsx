@@ -15,8 +15,6 @@ export const OperatorOfficeAddress = ({ setSection }: IProps) => {
 
   useInstitution({ methods });
 
-  console.log(methods.watch());
-
   return (
     <FormProvider {...methods}>
       <form

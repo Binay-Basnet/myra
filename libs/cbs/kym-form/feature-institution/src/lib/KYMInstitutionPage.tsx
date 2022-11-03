@@ -1,10 +1,19 @@
 import React, { useCallback } from 'react';
 import { BiSave } from 'react-icons/bi';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 
+import {
+  addAccountError,
+  addInstitutionDirectorError,
+  addInstitutionError,
+  addSisterError,
+  setInstitutionHasPressedNext,
+  useGetKymOverallFormStatusQuery,
+} from '@coop/cbs/data-access';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { AccorrdianAddInstitution } from '@coop/myra/components';
-import { Box, Button, Container, FormFooter, FormHeader, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, Container, FormFooter, FormHeader, Icon, Text, toast } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
@@ -29,12 +38,20 @@ export const KYMInstitutionPage = () => {
     section: string;
     subSection: string;
   }>();
+  const dispatch = useDispatch();
   const router = useRouter();
   const id = String(router?.query?.['id']);
 
   const setSection = useCallback(
     (section?: { section: string; subSection: string }) => setKymCurrentSection(section),
     []
+  );
+
+  const { refetch } = useGetKymOverallFormStatusQuery(
+    { id, hasPressedNext: true },
+    {
+      enabled: false,
+    }
   );
 
   // const kymFormStatusQuery = useGetKymFormStatusInstitutionQuery({ id });
@@ -140,7 +157,62 @@ export const KYMInstitutionPage = () => {
               </Button>
             }
             mainButtonLabel={t['next']}
-            mainButtonHandler={() => router.push(`/members/translation/${id}`)}
+            mainButtonHandler={async () => {
+              const response = await refetch();
+
+              const sectionStatus = response?.data?.members?.institution?.overallFormStatus;
+
+              const basicErrors = sectionStatus?.institutionDetails?.errors;
+              const accountDetailsErrors = sectionStatus?.accountOperatorDetails?.map(
+                (accountOperator, index) => ({
+                  operatorId: String(index),
+                  errors: accountOperator?.errors ?? {},
+                })
+              );
+
+              const directorDetailsErrors = sectionStatus?.accountOperatorDetails?.map(
+                (director, index) => ({
+                  directorId: String(index),
+                  errors: director?.errors ?? {},
+                })
+              );
+              const sisterErrors = sectionStatus?.accountOperatorDetails?.map((sister, index) => ({
+                sisterId: String(index),
+                errors: sister?.errors ?? {},
+              }));
+
+              if (basicErrors) {
+                dispatch(addInstitutionError(basicErrors));
+              }
+              if (accountDetailsErrors) {
+                dispatch(addAccountError(accountDetailsErrors));
+              }
+
+              if (sisterErrors) {
+                dispatch(addSisterError(sisterErrors));
+              }
+              if (directorDetailsErrors) {
+                dispatch(addInstitutionDirectorError(directorDetailsErrors));
+              }
+
+              if (response) {
+                dispatch(setInstitutionHasPressedNext(true));
+                if (
+                  !sectionStatus?.institutionDetails?.errors &&
+                  sectionStatus?.accountOperatorDetails?.some((a) => !a?.errors) &&
+                  sectionStatus?.sisterConcernDetails?.some((a) => !a?.errors) &&
+                  sectionStatus?.directorDetails?.some((a) => !a?.errors)
+                ) {
+                  router.push(`/members/translation/${router.query['id']}`);
+                } else {
+                  toast({
+                    id: 'validation-error',
+                    message: 'Some fields are empty or have error',
+                    type: 'error',
+                  });
+                }
+              }
+            }}
           />
         </Container>
       </Box>
