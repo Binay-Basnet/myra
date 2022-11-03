@@ -18,13 +18,7 @@ export const BankAccountDetailsInstitution = (props: IProps) => {
   });
   const { setSection } = props;
 
-  const { data: BankList } = useGetBankListQuery();
-
-  type optionType = { label: string; value: string };
-
-  const Options = BankList?.bank?.bank?.list?.reduce((prevVal, curVal) => {
-    return [...prevVal, { label: curVal?.name, value: curVal?.id }];
-  }, [] as optionType[]);
+  const { data: bankList } = useGetBankListQuery();
 
   useInstitution({ methods });
   return (
@@ -35,29 +29,18 @@ export const BankAccountDetailsInstitution = (props: IProps) => {
           setSection(kymSection);
         }}
       >
-        <FormSection
-          id="kymInsBankAccountDetails"
-          header="kymInsBankAccountDetails"
-        >
+        <FormSection id="kymInsBankAccountDetails" header="kymInsBankAccountDetails">
           <FormSelect
             name="bank"
             label={t['kymInsNameofBank']}
-            __placeholder={t['kymInsSelectBank']}
-            options={Options}
+            options={bankList?.bank?.bank?.list?.map((bank) => ({
+              label: String(bank?.name),
+              value: String(bank?.id),
+            }))}
           />
-          <FormInput
-            type="text"
-            name="accountNumber"
-            label={t['kymInsAccountNumber']}
-            __placeholder={t['kymInsEnterAccountNumber']}
-          />
+          <FormInput type="text" name="accountNumber" label={t['kymInsAccountNumber']} />
 
-          <FormInput
-            type="text"
-            name="accountName"
-            label={t['kymInsAccountName']}
-            __placeholder={t['kymInsEnterAccountName']}
-          />
+          <FormInput type="text" name="accountName" label={t['kymInsAccountName']} />
         </FormSection>
       </form>
     </FormProvider>

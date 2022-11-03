@@ -1,6 +1,6 @@
 const InstitutionalInfo = [
   'institutionName',
-  'institutionType',
+  'institutionTypeId',
   'natureOfBusiness',
   'registrationDate',
   'vatOrPanNo',

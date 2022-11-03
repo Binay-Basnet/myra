@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 
@@ -31,6 +31,12 @@ export const KYMInstitutionPage = () => {
   }>();
   const router = useRouter();
   const id = String(router?.query?.['id']);
+
+  const setSection = useCallback(
+    (section?: { section: string; subSection: string }) => setKymCurrentSection(section),
+    []
+  );
+
   // const kymFormStatusQuery = useGetKymFormStatusInstitutionQuery({ id });
   // const kymFormStatus =
   //   kymFormStatusQuery?.data?.members?.institution?.formState?.data?.sectionStatus;
@@ -64,27 +70,27 @@ export const KYMInstitutionPage = () => {
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymIns1InformationofInstitution']}
               </Text>
-              <BasicDetailsInstitution setSection={setKymCurrentSection} />
-              <RegisteredDetailsInstitution setSection={setKymCurrentSection} />
-              <OperatorOfficeAddress setSection={setKymCurrentSection} />
-              <BranchOfficeAddress setSection={setKymCurrentSection} />
-              <ContactDetailsInstitution setSection={setKymCurrentSection} />
-              <BankAccountDetailsInstitution setSection={setKymCurrentSection} />
-              <InstitutionKYMSisterConcernDetails setSection={setKymCurrentSection} />
+              <BasicDetailsInstitution setSection={setSection} />
+              <RegisteredDetailsInstitution setSection={setSection} />
+              <OperatorOfficeAddress setSection={setSection} />
+              <BranchOfficeAddress setSection={setSection} />
+              <ContactDetailsInstitution setSection={setSection} />
+              <BankAccountDetailsInstitution setSection={setSection} />
+              <InstitutionKYMSisterConcernDetails setSection={setSection} />
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymIns2TransactionProfile']}
               </Text>
-              <TransactionProfileInstitution setSection={setKymCurrentSection} />
+              <TransactionProfileInstitution setSection={setSection} />
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymIns3DetailsofProprietorpartnersDirectors']}
               </Text>
-              <BoardDirectorInfo setSection={setKymCurrentSection} />
+              <BoardDirectorInfo setSection={setSection} />
               {/* <InstitutionKYMDirectorWithAffiliation /> */}
             </SectionContainer>
 
@@ -92,15 +98,15 @@ export const KYMInstitutionPage = () => {
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymIns4AccountOperations']}
               </Text>
-              <InstitutionKYMAccountDetail setSection={setKymCurrentSection} />
-              <AccountOperationInstitution setSection={setKymCurrentSection} />
+              <InstitutionKYMAccountDetail setSection={setSection} />
+              <AccountOperationInstitution setSection={setSection} />
             </SectionContainer>
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymIns5Declaration']}
               </Text>
-              <DocumentDeclarationInstitution setSection={setKymCurrentSection} />
-              <AccountHolderDeclarationInstitution setSection={setKymCurrentSection} />
+              <DocumentDeclarationInstitution setSection={setSection} />
+              <AccountHolderDeclarationInstitution setSection={setSection} />
             </SectionContainer>
           </Box>
         </Box>

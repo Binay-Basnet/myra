@@ -1,9 +1,9 @@
-import { Controller, Path, useFormContext } from 'react-hook-form';
-import { UseControllerProps } from 'react-hook-form/dist/types/controller';
-import { DatePicker } from '@raralabs/react-patro';
+import {Controller, Path, useFormContext} from 'react-hook-form';
+import {UseControllerProps} from 'react-hook-form/dist/types/controller';
+import {DatePicker} from '@raralabs/react-patro';
 
-import { RootState, useAppSelector } from '@coop/cbs/data-access';
-import { Box, InputProps, TextFields } from '@coop/shared/ui';
+import {RootState, useAppSelector} from '@coop/cbs/data-access';
+import {Box, InputProps, TextFields} from '@coop/shared/ui';
 
 // import './FormDatePicker.css';
 
@@ -41,7 +41,7 @@ export const FormDatePicker = <T,>({ name, label, ...rest }: IFormDatePickerProp
             id={name}
             calendarType={preference?.date ?? 'AD'}
             key={`${preference?.date}-${value}`}
-            dateFormat="yyyy-mm-dd"
+            dateFormat="YYYY-MM-DD"
             errorText={errors[name]?.message as string}
             onChange={(...args: (number | Date)[]) => {
               if (args[3]) {

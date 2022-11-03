@@ -3,17 +3,14 @@ import { GetInstitutionKymOptionsQuery } from '@coop/cbs/data-access';
 export const getOption = (
   data?: GetInstitutionKymOptionsQuery,
   labelFormatter?: (label: string) => string
-) => {
-  return data?.form?.options?.predefined?.data?.reduce((newArr, option) => {
+) =>
+  data?.form?.options?.predefined?.data?.reduce((newArr, option) => {
     if (option?.name.local && option?.id) {
       newArr.push({
-        label: labelFormatter
-          ? labelFormatter(option.name.local)
-          : option.name.local,
+        label: labelFormatter ? labelFormatter(option.name.local) : option.name.local,
         value: option.id,
       });
     }
 
     return newArr;
   }, [] as { label: string; value: string }[]);
-};
