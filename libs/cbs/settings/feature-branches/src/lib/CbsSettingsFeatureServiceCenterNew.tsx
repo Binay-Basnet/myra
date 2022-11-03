@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import {
   BranchCategory,
+  BranchInput,
   RootState,
   useAllAdministrationQuery,
   useAppSelector,
@@ -120,7 +121,7 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
     mutate(
       {
         id,
-        data: updatedValues,
+        data: updatedValues as BranchInput,
       },
       { onSuccess: () => router.push('/settings/general/service-center') }
     );

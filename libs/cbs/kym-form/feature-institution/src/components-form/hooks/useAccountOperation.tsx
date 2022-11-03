@@ -81,8 +81,8 @@ export const useAccountOperator = ({ methods, accountOpId }: IUseCoopUnionBodPro
       reset({
         ...omit(accountOperatorDetail, ['id']),
         permanentAddress: {
-          ...accountOperatorDetail?.permanenetAddress,
-          locality: accountOperatorDetail?.permanenetAddress?.locality?.local,
+          ...accountOperatorDetail?.permanentAddress,
+          locality: accountOperatorDetail?.permanentAddress?.locality?.local,
         },
         temporaryAddress: {
           ...accountOperatorDetail?.temporaryAddress,
