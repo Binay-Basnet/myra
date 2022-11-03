@@ -2688,7 +2688,7 @@ const ne: Record<string, string> = {
   transactionsSidebarAccountTransfer: 'Account Transfer',
   transactionsSidebarLoanPayment: 'Loan Payment',
   transactionsSidebarAgentList: 'Market Representative List',
-  transactionsSidebarJournelVoucher: 'Journel Voucher',
+  transactionsSidebarJournalVoucher: 'Journal Voucher',
   transactionsSidebarAgentTransaction: 'Market Representative Transaction',
 
   depositProductMinimumRate: 'Minimum Rate',

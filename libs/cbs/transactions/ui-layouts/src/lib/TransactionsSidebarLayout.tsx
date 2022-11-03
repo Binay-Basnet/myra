@@ -60,7 +60,7 @@ const transactionSidebarColumns = [
     // addLink: '/transactions/agent/add',
   },
   {
-    title: 'transactionsSidebarJournelVoucher',
+    title: 'transactionsSidebarJournalVoucher',
     link: '/transactions/deposit/list',
     name: 'journel-voucher',
     addLink: '/transactions/deposit/add',
