@@ -20,11 +20,11 @@ mutation accountTransfer($data: EbankingAccountTransferInput) {
   }
 }
 
-mutation checkForSendMoney($data: EbankingSendMoneyInput){
+mutation checkForSendMoney($data: EbankingSendMoneyInput) {
   eBanking {
     webUtilityPayments {
       sendMoney {
-        check(data: $data){
+        check(data: $data) {
           error {
             ...MutationError
           }
@@ -35,12 +35,11 @@ mutation checkForSendMoney($data: EbankingSendMoneyInput){
   }
 }
 
-
-mutation completeSendMoney($data: EbankingSendMoneyInput, $transactionPin: String!){
+mutation completeSendMoney($data: EbankingSendMoneyInput, $transactionPin: String!) {
   eBanking {
     webUtilityPayments {
       sendMoney {
-        proceed(data: $data, transactionPin: $transactionPin ){
+        proceed(data: $data, transactionPin: $transactionPin) {
           error {
             ...MutationError
           }

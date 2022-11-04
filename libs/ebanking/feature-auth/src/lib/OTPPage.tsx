@@ -40,7 +40,7 @@ export const OTPPage = ({ setStatus }: IOTPPageProps) => {
   return (
     <form
       onSubmit={handleSubmit(async (data) => {
-        await mutateAsync({ data: { otp: Number(data.otp), mobile: data.mobileNo } });
+        await mutateAsync({ data: { otp: data.otp, mobile: data.mobileNo } });
       })}
     >
       <AuthContainer
