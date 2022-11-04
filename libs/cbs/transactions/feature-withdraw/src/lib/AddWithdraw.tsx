@@ -132,7 +132,7 @@ export const AddWithdraw = () => {
   const availableSlipListOptions = useMemo(
     () =>
       availableSlipsListQueryData?.withdrawSlip?.listAvailableSlips?.data?.map((withdrawSlip) => ({
-        label: withdrawSlip?.slipNumber as string,
+        label: String(withdrawSlip?.slipNumber).padStart(10, '0'),
         value: withdrawSlip?.slipNumber as string,
       })) ?? [],
     [availableSlipsListQueryData]
