@@ -213,7 +213,7 @@ const en: Record<string, string> = {
   accountNavDraft: 'Draft',
 
   accountList: 'Account List',
-  accountClose: 'Closed Accounts',
+  accountClose: 'Close Account',
   accountReport: 'Account Reports',
 
   // Inventory Page TODO ( Update Translations )
