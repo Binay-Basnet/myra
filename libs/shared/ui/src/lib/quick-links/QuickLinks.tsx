@@ -39,9 +39,9 @@ export const QuickLinks = ({
     border="1px solid"
     borderColor="border.layout"
   >
-    <Box display="flex" alignItems="center" gap="s12">
+    <Box display="flex" alignItems="center" gap="s8">
       {editLinks && <Icon as={GRID2X3} size="lg" />}
-      <Icon as={icon} size="lg" />
+      <Icon color="gray.600" as={icon} size="md" />
       <Box display="flex" flexDirection="column">
         <Text lineHeight="125%" fontWeight="Regular" fontSize="s3" color="gray.800">
           {text}
