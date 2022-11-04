@@ -3,13 +3,12 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
-import { AccountPopover } from '@coop/ebanking/accounts';
 import { InfoCard } from '@coop/ebanking/cards';
 import { EmptyState } from '@coop/ebanking/components';
 import { EBankingServiceStatus, useGetLoanHistoryQuery } from '@coop/ebanking/data-access';
 import { FormSwitchTab } from '@coop/shared/form';
-import { Box, Button, Divider, PathBar, Tags, Text, VStack } from '@coop/shared/ui';
-import { getLoggedInUserId } from '@coop/shared/utils';
+import { Box, Button, Divider, PathBar, Text, VStack } from '@coop/shared/ui';
+import { amountConverter, getLoggedInUserId } from '@coop/shared/utils';
 
 const LoanStatusOptions = [
   { label: 'Active', value: EBankingServiceStatus.Active },
@@ -53,7 +52,7 @@ export const LoanApplicationsAll = () => {
           </Button>
         }
       />
-      <InfoCard title="Loan History" btn={<AccountPopover />}>
+      <InfoCard title="Loan History">
         <Box p="s16" display="flex" flexDirection="column" gap="s16">
           <FormProvider {...methods}>
             <form>
@@ -64,6 +63,7 @@ export const LoanApplicationsAll = () => {
           <VStack
             width="100%"
             bg="white"
+            pt="s16"
             spacing="0"
             alignItems="start"
             gap="s16"
@@ -73,26 +73,31 @@ export const LoanApplicationsAll = () => {
               loanHistory.map((loan) => (
                 <Box display="flex" alignItems="center" w="100%" justifyContent="space-between">
                   <Box display="flex" flexDir="column" gap="s4">
-                    <Box>
-                      <Tags
-                        type="chip"
-                        bgColor="#F9CA2433"
-                        fontSize="s2"
-                        color="accent.0"
-                        label={loan?.activeLoanStatus as string}
-                      />
-                    </Box>
+                    {/* <Box> */}
+                    {/*  <Tags */}
+                    {/*    type="chip" */}
+                    {/*    bgColor="#F9CA2433" */}
+                    {/*    fontSize="s2" */}
+                    {/*    color="accent.0" */}
+                    {/*    label={loan?.activeLoanStatus as string} */}
+                    {/*  /> */}
+                    {/* </Box> */}
 
-                    <Text color="gray.900" fontSize="r1">
-                      Loan for education
-                    </Text>
+                    {/* <Text color="gray.900" fontSize="r1"> */}
+                    {/*  {loan?.type} */}
+                    {/* </Text> */}
 
-                    <Text color="gray.600" fontSize="s3">
-                      Lagankhel Branch
+                    <Text
+                      color="gray.600"
+                      fontWeight="600"
+                      textTransform="capitalize"
+                      fontSize="s3"
+                    >
+                      {loan?.branch?.name} Branch
                     </Text>
                   </Box>
                   <Text fontSize="r1" fontWeight="600" color="gray.800">
-                    {loan?.amount}
+                    {amountConverter(loan?.amount)}
                   </Text>
                 </Box>
               ))

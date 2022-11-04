@@ -1,19 +1,8 @@
-import {
-  IoCashOutline,
-  IoCashSharp,
-  IoCube,
-  IoCubeOutline,
-  IoDocumentText,
-  IoDocumentTextOutline,
-  IoWaterOutline,
-  IoWaterSharp,
-} from 'react-icons/io5';
+import { IoCube, IoCubeOutline, IoDocumentText, IoDocumentTextOutline } from 'react-icons/io5';
 import {
   MdCalendarViewDay,
-  MdCollectionsBookmark,
   MdHome,
   MdOutlineCalendarViewDay,
-  MdOutlineCollectionsBookmark,
   MdOutlineHome,
   MdOutlineSettings,
   MdWorkspacesFilled,
@@ -36,30 +25,30 @@ export const SIDEBAR_NAV_ITEMS = [
       inactive: MdOutlineCalendarViewDay,
     },
   },
-  {
-    label: 'Utility Payments',
-    link: '/utility-payments',
-    icon: {
-      active: IoWaterSharp,
-      inactive: IoWaterOutline,
-    },
-  },
-  {
-    label: 'Saved Payment',
-    link: '/saved-payments',
-    icon: {
-      active: MdOutlineCollectionsBookmark,
-      inactive: MdCollectionsBookmark,
-    },
-  },
-  {
-    label: 'Scheduled Payments',
-    link: '/scheduled-payments',
-    icon: {
-      active: IoCashSharp,
-      inactive: IoCashOutline,
-    },
-  },
+  // {
+  //   label: 'Utility Payments',
+  //   link: '/utility-payments',
+  //   icon: {
+  //     active: IoWaterSharp,
+  //     inactive: IoWaterOutline,
+  //   },
+  // },
+  // {
+  //   label: 'Saved Payment',
+  //   link: '/saved-payments',
+  //   icon: {
+  //     active: MdOutlineCollectionsBookmark,
+  //     inactive: MdCollectionsBookmark,
+  //   },
+  // },
+  // {
+  //   label: 'Scheduled Payments',
+  //   link: '/scheduled-payments',
+  //   icon: {
+  //     active: IoCashSharp,
+  //     inactive: IoCashOutline,
+  //   },
+  // },
   {
     label: 'COOP',
     link: '/coop',

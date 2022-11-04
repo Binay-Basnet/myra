@@ -1,33 +1,29 @@
 import { Fragment } from 'react';
 import { useRouter } from 'next/router';
-import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
-import { Skeleton, useDisclosure } from '@chakra-ui/react';
+import { ChevronRightIcon } from '@chakra-ui/icons';
+import { Skeleton } from '@chakra-ui/react';
 
-import { AccountCard, InfoCard, TransactionCard, UtilityHomeCard } from '@coop/ebanking/cards';
+import { AccountCard, InfoCard, TransactionCard } from '@coop/ebanking/cards';
 import { EmptyState } from '@coop/ebanking/components';
-import {
-  useGetAccountListQuery,
-  useGetHomeServiceListQuery,
-  useGetUtilityListQuery,
-} from '@coop/ebanking/data-access';
-import { Box, Button, Collapse, Divider, Grid, GridItem, Icon, Text } from '@coop/shared/ui';
+import { useGetAccountListQuery, useGetHomeServiceListQuery } from '@coop/ebanking/data-access';
+import { Box, Button, Divider, Grid, GridItem, Icon, Text } from '@coop/shared/ui';
 
-import { SERVICE_ICON_DICT, SERVICE_LINK_DICT, UTILITY_ICON_DICT } from '../constants/SERVICE_ICON';
+import { SERVICE_ICON_DICT, SERVICE_LINK_DICT } from '../constants/SERVICE_ICON';
 
 export const EbankingHomePage = () => {
   const router = useRouter();
-  const { isOpen, onToggle } = useDisclosure();
+  // const { isOpen, onToggle } = useDisclosure();
 
   const { data: servicesList, isLoading } = useGetHomeServiceListQuery();
-  const { data: utilityList } = useGetUtilityListQuery();
+  // const { data: utilityList } = useGetUtilityListQuery();
   const { data: accountList, isLoading: accountsLoading } = useGetAccountListQuery({
     transactionPagination: { first: 10, after: '' },
   });
 
-  const utilityPayments = [
-    ...(utilityList?.eBanking?.utilityPayments ?? []),
-    ...(utilityList?.eBanking?.utilityPayments ?? []),
-  ];
+  // const utilityPayments = [
+  //   ...(utilityList?.eBanking?.utilityPayments ?? []),
+  //   ...(utilityList?.eBanking?.utilityPayments ?? []),
+  // ];
 
   const transactions = accountList?.eBanking?.account?.list?.recentTransactions?.edges;
 
@@ -78,14 +74,15 @@ export const EbankingHomePage = () => {
         </Grid>
       </Box>
       <Divider />
-      <Box display="flex" flexDir="column" gap="s8">
-        <Text fontSize="r1" color="gray.700" fontWeight="600">
-          Utility Payments
-        </Text>
+      {/**
+       <Box display="flex" flexDir="column" gap="s8">
+       <Text fontSize="r1" color="gray.700" fontWeight="600">
+       Utility Payments
+       </Text>
 
-        <Box bg="white" borderRadius="br2" boxShadow="E0" overflow="hidden">
-          <Grid templateColumns="repeat(5, 1fr)" p="s16" rowGap="s16" columnGap="s16">
-            {utilityPayments.slice(0, 10).map((utilityPayment) => (
+       <Box bg="white" borderRadius="br2" boxShadow="E0" overflow="hidden">
+       <Grid templateColumns="repeat(5, 1fr)" p="s16" rowGap="s16" columnGap="s16">
+       {utilityPayments.slice(0, 10).map((utilityPayment) => (
               <UtilityHomeCard
                 icon={
                   utilityPayment?.service_id
@@ -95,10 +92,10 @@ export const EbankingHomePage = () => {
                 label={utilityPayment?.name ?? 'N/A'}
               />
             ))}
-          </Grid>
-          <Collapse in={isOpen} animateOpacity>
-            <Grid templateColumns="repeat(5, 1fr)" p="s16" rowGap="s16" columnGap="s16">
-              {utilityPayments.slice(10, utilityPayments.length).map((utilityPayment) => (
+       </Grid>
+       <Collapse in={isOpen} animateOpacity>
+       <Grid templateColumns="repeat(5, 1fr)" p="s16" rowGap="s16" columnGap="s16">
+       {utilityPayments.slice(10, utilityPayments.length).map((utilityPayment) => (
                 <UtilityHomeCard
                   icon={
                     utilityPayment?.service_id
@@ -108,9 +105,9 @@ export const EbankingHomePage = () => {
                   label={utilityPayment?.name ?? 'N/A'}
                 />
               ))}
-            </Grid>
-          </Collapse>
-          {utilityPayments.length > 10 && (
+       </Grid>
+       </Collapse>
+       {utilityPayments.length > 10 && (
             <Box
               h="50px"
               display="flex"
@@ -133,9 +130,11 @@ export const EbankingHomePage = () => {
               </Button>
             </Box>
           )}
-        </Box>
-      </Box>
-      <Divider />
+       </Box>
+       </Box>
+       <Divider />
+       * */}
+
       <Box display="flex" flexDir="column" gap="s8">
         <Box display="flex" alignItems="center" justifyContent="space-between" gap="s8">
           <Text fontSize="r1" color="gray.700" fontWeight="600">

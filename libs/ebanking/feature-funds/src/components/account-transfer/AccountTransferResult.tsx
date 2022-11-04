@@ -42,7 +42,7 @@ export const AccountTransferResult = ({
       <TransferModal status={paymentStatus} />
       <Box display="flex" flexDir="column" bg="white" borderRadius="br2" overflow="hidden">
         <TransactionHeaderCardWithChip
-          chipText={paymentStatus === 'failure' ? 'Payment Failed' : 'Payment Successful'}
+          chipText={paymentStatus === 'failure' ? 'Transfer Failed' : 'Transfer Successful'}
           isSuccess={paymentStatus === 'success'}
         />
         <Box

@@ -4,6 +4,7 @@ import { ShareHeader } from '@coop/ebanking/cards';
 import { Transaction_Direction, useGetEbankingShareHistoryQuery } from '@coop/ebanking/data-access';
 import { EbankingMainLayout } from '@coop/ebanking/ui-layout';
 import { Box, Divider, Text } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
 const ShareInfoPage = () => {
   const { data } = useGetEbankingShareHistoryQuery();
@@ -59,7 +60,7 @@ const ShareInfoPage = () => {
               </Box>
 
               <Text fontSize="r1" fontWeight="600" color="gray.800">
-                {share.amount}
+                {amountConverter(share.amount)}
               </Text>
             </Box>
           </Box>

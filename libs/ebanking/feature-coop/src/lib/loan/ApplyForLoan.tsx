@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { AccountPopover } from '@coop/ebanking/accounts';
 import { InfoCard } from '@coop/ebanking/cards';
 import { useApplyForLoanMutation } from '@coop/ebanking/data-access';
 import { FormBranchSelect, FormInput, FormTextArea } from '@coop/shared/form';
@@ -57,7 +56,6 @@ export const ApplyForLoan = () => {
       />
       <InfoCard
         title="New Loan Application"
-        btn={<AccountPopover />}
         footerButtonLabel="Submit Application"
         footerButtonHandler={handleSubmitApplication}
       >
