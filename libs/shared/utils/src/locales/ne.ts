@@ -3341,8 +3341,8 @@ const ne: Record<string, string> = {
   savingsProductSettings: 'Saving Products Settings',
 
   savingsDepositStatementReport: 'Saving / Deposit Statement Report',
-  savingsIntrestTaxReport: 'Intrest Tax Report',
-  savingsIntrestStatement: 'Intrest Statement (Individual) Report',
+  savingsIntrestTaxReport: 'Interest Tax Report',
+  savingsIntrestStatement: 'Interest Statement (Individual) Report',
   savingProducts: 'Saving Products',
 
   // withdraw slip
