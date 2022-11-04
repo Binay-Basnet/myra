@@ -12,6 +12,7 @@ query getDepositListData($filter: AccountTransactionFilter, $pagination: Paginat
           processedBy
           date
           agentName
+          agentId
           profilePicUrl
         }
         cursor
@@ -145,6 +146,8 @@ query transactionDepositDetail($transactionId: ID!) {
           debit
           credit
         }
+        totalDebit
+        totalCredit
       }
     }
   }
@@ -179,6 +182,8 @@ query transactionWithdrawDetail($transactionId: ID!) {
           debit
           credit
         }
+        totalDebit
+        totalCredit
       }
     }
   }
@@ -222,6 +227,80 @@ query transactionAccountTransferDetail($transactionId: ID!) {
           debit
           credit
         }
+        totalDebit
+        totalCredit
+      }
+    }
+  }
+}
+
+query agentTransactionDetail($agentId: ID!, $date: String!) {
+  transaction {
+    viewAgentList(agentId: $agentId, date: $date) {
+      data {
+        transactionId
+        transactionDate
+        status
+        totalAmount
+        assignedMember {
+          member
+          account
+          amount
+        }
+      }
+    }
+  }
+}
+
+query getAgentDetail($id: ID!) {
+  transaction {
+    agentDetail(id: $id) {
+      data {
+        id
+        name
+        branch
+        totalMembers
+        profilePicUrl
+      }
+    }
+  }
+}
+
+query loanRepaymentDetail($paymentId: ID!) {
+  transaction {
+    viewLoanRepayment(paymentId: $paymentId) {
+      data {
+        repaymentId
+        member {
+          id
+          name
+          profilePicUrl
+        }
+        loanSubType
+        loanAccountId
+        loanAccountName
+        repaymentDate
+        installmentNo
+        installmentAmount
+        fine
+        totalRepaymentAmount
+        objState
+        installmentDetails {
+          installmentNo
+          payment
+          principalAmount
+          interestAmount
+        }
+        paymentMode
+        transactionBranch
+        teller
+        glTransaction {
+          account
+          debit
+          credit
+        }
+        totalDebit
+        totalCredit
       }
     }
   }

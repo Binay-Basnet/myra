@@ -1,4 +1,6 @@
+export * from './AssignedMemberList';
 export * from './GlTransaction';
+export * from './InstallmentDetails';
 export * from './LoanRepaymentDetails';
 export * from './MarketRepresentative';
 export * from './MemberInfo';

@@ -1,10 +1,34 @@
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { LoanRepaymentDetails } from '../component';
+import {
+  GlTransaction,
+  InstallmentDetails,
+  LoanRepaymentDetails,
+  OtherDetails,
+  PaymentDetails,
+  SideBar,
+} from '../component';
+import { useTransactionDetailHooks } from '../hooks/useTransactionDetailHooks';
 
 export const LoanRepaymentDetailPage = () => {
   const { t } = useTranslation();
+  const { loanRepaymentDetailData } = useTransactionDetailHooks();
+  const loanRepaymentData = loanRepaymentDetailData?.installmentDetails;
+  const glTransData = loanRepaymentDetailData?.glTransaction;
+
+  const summary = {
+    memberId: loanRepaymentDetailData?.member?.id,
+    name: loanRepaymentDetailData?.member?.name?.local,
+    profilePic: loanRepaymentDetailData?.member?.profilePicUrl,
+    transactionId: loanRepaymentDetailData?.member?.id,
+    loanAccountName: loanRepaymentDetailData?.loanAccountName,
+    loanSubtype: loanRepaymentDetailData?.loanSubType,
+    loanAccId: loanRepaymentDetailData?.loanAccountId,
+    repaymentDate: loanRepaymentDetailData?.repaymentDate,
+    //  interestRate: loanRepaymentDetailData?.transactionDate,
+  };
+
   return (
     <>
       <Box
@@ -15,7 +39,7 @@ export const LoanRepaymentDetailPage = () => {
         borderRight="1px"
         borderRightColor="border.layout"
       >
-        {/* <SideBar /> */}
+        <SideBar summary={summary} detailPage="loanRepayment" />
       </Box>
 
       <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
@@ -23,8 +47,17 @@ export const LoanRepaymentDetailPage = () => {
           {t['transDetailOverview']}
         </Text>
         <LoanRepaymentDetails />
-        {/* <OtherDetails />
-        <GlTransaction /> */}
+        <InstallmentDetails data={loanRepaymentData ?? []} />
+        <PaymentDetails detailPage="loanRepayment" />
+        <OtherDetails
+          branch={loanRepaymentDetailData?.transactionBranch as string}
+          teller={loanRepaymentDetailData?.teller as string}
+        />
+        <GlTransaction
+          data={glTransData ?? []}
+          totalCredit={loanRepaymentDetailData?.totalCredit as string}
+          totalDebit={loanRepaymentDetailData?.totalDebit as string}
+        />
       </Box>
     </>
   );

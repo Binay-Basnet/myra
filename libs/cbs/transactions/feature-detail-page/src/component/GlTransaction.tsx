@@ -14,9 +14,11 @@ type GlTransactionDetailProps = {
       } | null)[]
     | null
     | undefined;
+  totalDebit: string;
+  totalCredit: string;
 };
 
-export const GlTransaction = ({ data }: GlTransactionDetailProps) => {
+export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDetailProps) => {
   const { t } = useTranslation();
 
   const rowData = useMemo(() => data ?? [], [data]);
@@ -25,6 +27,7 @@ export const GlTransaction = ({ data }: GlTransactionDetailProps) => {
     () => [
       {
         header: t['transDetailAccount'],
+        footer: t['transDetailTotal'],
         accessorFn: (row) => row?.account,
         meta: {
           width: '500px',
@@ -32,14 +35,16 @@ export const GlTransaction = ({ data }: GlTransactionDetailProps) => {
       },
       {
         header: t['transDetailDebit'],
+        footer: totalDebit,
         accessorFn: (row) => row?.debit,
       },
       {
         header: t['transDetailCredit'],
+        footer: totalCredit,
         accessorFn: (row) => row?.credit,
       },
     ],
-    []
+    [totalDebit, totalCredit]
   );
   return (
     <DetailsCard
@@ -51,7 +56,7 @@ export const GlTransaction = ({ data }: GlTransactionDetailProps) => {
         </Button>
       }
     >
-      <Table isStatic isLoading={false} data={rowData ?? []} columns={columns} />
+      <Table showFooter isStatic isLoading={false} data={rowData ?? []} columns={columns} />
     </DetailsCard>
   );
 };

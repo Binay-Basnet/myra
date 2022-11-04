@@ -3,9 +3,8 @@ import { useRouter } from 'next/router';
 
 import { useGetWithdrawListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
-import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, Text } from '@coop/shared/ui';
+import { Avatar, Box, TablePopover, Text } from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const tabList = [
@@ -30,18 +29,14 @@ export const WithdrawList = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const popoverTitle = [
+  const { data, isFetching } = useGetWithdrawListDataQuery(
     {
-      title: 'transDetailViewDetail',
-      onClick: (id: string) => {
-        router.push(`/transactions/withdraw/view?id=${id}`);
-      },
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
     },
-  ];
-
-  const { data, isFetching } = useGetWithdrawListDataQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-  });
+    {
+      staleTime: 0,
+    }
+  );
 
   const rowData = useMemo(() => data?.transaction?.listWithdraw?.edges ?? [], [data]);
 
@@ -96,9 +91,20 @@ export const WithdrawList = () => {
       {
         id: '_actions',
         header: '',
-        cell: (props) => (
-          <ActionPopoverComponent items={popoverTitle} id={props?.row?.original?.node?.ID ?? ''} />
-        ),
+        cell: (props) =>
+          props?.row?.original?.node && (
+            <TablePopover
+              node={props?.row?.original?.node}
+              items={[
+                {
+                  title: t['transDetailViewDetail'],
+                  onClick: (row) => {
+                    router.push(`/transactions/withdraw/view?id=${row?.ID}`);
+                  },
+                },
+              ]}
+            />
+          ),
         meta: {
           width: '50px',
         },

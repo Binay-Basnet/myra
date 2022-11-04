@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 
 import { TransferType, useGetAccountTransferListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
-import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
+import { TablePopover } from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [
@@ -29,15 +29,6 @@ export interface AccountTransferListProps {}
 export const AccountTransferList = () => {
   const { t } = useTranslation();
   const router = useRouter();
-
-  const popoverTitle = [
-    {
-      title: 'transDetailViewDetail',
-      onClick: (id: string) => {
-        router.push(`/transactions/account-transfer/view?id=${id}`);
-      },
-    },
-  ];
 
   const { data, isFetching } = useGetAccountTransferListDataQuery(
     {
@@ -87,9 +78,20 @@ export const AccountTransferList = () => {
       {
         id: '_actions',
         header: '',
-        cell: (props) => (
-          <ActionPopoverComponent items={popoverTitle} id={props?.row?.original?.node?.ID ?? ''} />
-        ),
+        cell: (props) =>
+          props?.row?.original?.node && (
+            <TablePopover
+              node={props?.row?.original?.node}
+              items={[
+                {
+                  title: t['transDetailViewDetail'],
+                  onClick: (row) => {
+                    router.push(`/transactions/account-transfer/view?id=${row?.ID}`);
+                  },
+                },
+              ]}
+            />
+          ),
         meta: {
           width: '50px',
         },

@@ -104,7 +104,6 @@ export const useSisterConcernInstitution = ({
   useEffect(() => {
     const subscription = watch(
       debounce(async (data) => {
-        console.log(data);
         if (id) {
           await setData({
             id,

@@ -14,9 +14,12 @@ export const AccountTransferDetailPage = () => {
     profilePic: accountTransferDetailData?.member?.profilePicUrl,
     transactionId: accountTransferDetailData?.id,
     transactionDate: accountTransferDetailData?.transactionDate,
-    paymentMode: accountTransferDetailData?.transferType,
+    paymentMode: accountTransferDetailData?.withdrawnBy,
     amount: accountTransferDetailData?.transferAmount,
-    method: accountTransferDetailData?.withdrawnBy,
+    method: accountTransferDetailData?.transferType,
+    sourceAccount: accountTransferDetailData?.sourceAccount?.accountName,
+    destinationName: accountTransferDetailData?.recipientMember?.name?.local,
+    destinationAccount: accountTransferDetailData?.destinationAccount?.accountName,
   };
   return (
     <>
@@ -28,7 +31,7 @@ export const AccountTransferDetailPage = () => {
         borderRight="1px"
         borderRightColor="border.layout"
       >
-        <SideBar summary={summary} />
+        <SideBar detailPage="accountTransfer" summary={summary} />
       </Box>
 
       <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
@@ -36,8 +39,15 @@ export const AccountTransferDetailPage = () => {
           {t['transDetailOverview']}
         </Text>
         <TransactionDetails detailPage="accountTransfer" />
-        <OtherDetails detailPage="accountTransfer" />
-        <GlTransaction data={tableData} />
+        <OtherDetails
+          branch={accountTransferDetailData?.transactionBranch as string}
+          teller={accountTransferDetailData?.teller as string}
+        />
+        <GlTransaction
+          totalDebit={accountTransferDetailData?.totalDebit as string}
+          totalCredit={accountTransferDetailData?.totalCredit as string}
+          data={tableData}
+        />
       </Box>
     </>
   );

@@ -2,9 +2,8 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { useGetLoanRepaymentListQuery } from '@coop/cbs/data-access';
-import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, PageHeader, Text } from '@coop/shared/ui';
+import { Avatar, Box, PageHeader, TablePopover, Text } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const CBSLoanRepaymentList = () => {
@@ -22,13 +21,6 @@ export const CBSLoanRepaymentList = () => {
   );
 
   const rowData = useMemo(() => data?.loanAccount?.repaymentList?.edges ?? [], [data]);
-
-  const popoverTitle = [
-    {
-      title: 'LoanApplicationView',
-      onClick: (id: string) => router.push(`/loan/accounts/view?id=${id}`),
-    },
-  ];
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -80,12 +72,26 @@ export const CBSLoanRepaymentList = () => {
       {
         id: '_actions',
         header: '',
-        cell: (props) => (
-          <ActionPopoverComponent
-            items={popoverTitle}
-            id={props?.row?.original?.node?.loanAccountId as string}
-          />
-        ),
+        cell: (props) =>
+          props?.row?.original?.node && (
+            <TablePopover
+              node={props?.row?.original?.node}
+              items={[
+                {
+                  title: t['transDetailViewDetail'],
+                  onClick: (row) => {
+                    router.push(`/transactions/loan-payment/view?id=${row?.id}`);
+                  },
+                },
+                {
+                  title: t['LoanApplicationView'],
+                  onClick: (row) => {
+                    router.push(`/loan/accounts/view?id=${row?.id}`);
+                  },
+                },
+              ]}
+            />
+          ),
         meta: {
           width: '50px',
         },

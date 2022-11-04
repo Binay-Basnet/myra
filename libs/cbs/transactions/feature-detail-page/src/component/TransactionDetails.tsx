@@ -5,14 +5,18 @@ import { useTranslation } from '@coop/shared/utils';
 import { useTransactionDetailHooks } from '../hooks/useTransactionDetailHooks';
 
 type TransactionDetailProps = {
-  detailPage: 'deposit' | 'withdraw' | 'accountTransfer';
+  detailPage: 'deposit' | 'withdraw' | 'accountTransfer' | 'agentTransaction';
 };
 
 export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
   const { t } = useTranslation();
 
-  const { depositDetailData, withdrawDetailData, accountTransferDetailData } =
-    useTransactionDetailHooks();
+  const {
+    depositDetailData,
+    withdrawDetailData,
+    accountTransferDetailData,
+    agentTransactionDetailData,
+  } = useTransactionDetailHooks();
 
   return (
     <DetailsCard title={t['transDetailTransactionDetails']}>
@@ -127,6 +131,23 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           {accountTransferDetailData?.objState === ObjState?.Active && (
             <DetailCardContent title={t['transDetailStatus']} status />
           )}
+        </>
+      )}
+      {detailPage === 'agentTransaction' && (
+        <>
+          <DetailCardContent
+            title={t['transDetailTransactionID']}
+            subtitle={agentTransactionDetailData?.transactionId}
+          />
+          <DetailCardContent
+            title={t['transDetailTransactionDate']}
+            subtitle={agentTransactionDetailData?.transactionDate}
+          />
+          <DetailCardContent
+            title={t['transDetailStatus']}
+            status
+            subtitle={agentTransactionDetailData?.status}
+          />
         </>
       )}
     </DetailsCard>

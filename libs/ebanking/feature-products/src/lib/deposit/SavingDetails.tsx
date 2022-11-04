@@ -23,7 +23,7 @@ interface ISavingDetailsProps {
   criteria: DepositProductCriteria;
 }
 
-export const SavingDetails = ({product, criteria}: ISavingDetailsProps) => {
+export const SavingDetails = ({ product, criteria }: ISavingDetailsProps) => {
   const router = useRouter();
   const limits = [
     {
@@ -74,7 +74,7 @@ export const SavingDetails = ({product, criteria}: ISavingDetailsProps) => {
     <Box display="flex" flexDirection="column" gap="s16">
       <PathBar
         paths={[
-          {label: 'Home', link: '/home'},
+          { label: 'Home', link: '/home' },
           {
             label: 'Products',
             link: '/coop/products/deposit',
@@ -86,7 +86,7 @@ export const SavingDetails = ({product, criteria}: ISavingDetailsProps) => {
         ]}
       />
 
-      <ProductDescription description={product?.description}/>
+      <ProductDescription description={product?.description} />
       <ProductGeneralInformation
         generalInformation={{
           productCode: product?.productCode,
@@ -96,18 +96,17 @@ export const SavingDetails = ({product, criteria}: ISavingDetailsProps) => {
           nature: product?.nature,
         }}
       />
-      <ProductCriteria criteria={criteria}/>
+      <ProductCriteria criteria={criteria} />
       <ProductDocuments
         individualDocuments={product?.individualDocuments}
         institutionDocuments={product?.institutionDocuments}
       />
-      <ProductServiceCharge serviceCharge={product?.serviceCharge}/>
-      <AccountCloseCharge accountCloseCharge={product?.accountCloseCharge}/>
-      <ProductLimits limits={limits}/>
-      <ProductInterestRate interestRate={product?.interest}/>
-      <ProductPrematurePenalty prematurePenalty={product?.prematurePenalty}/>
-      <ProductPenaltyWithdrawSetup withDrawData={product?.withdrawPenalty}/>
-
+      <ProductServiceCharge serviceCharge={product?.serviceCharge} />
+      <AccountCloseCharge accountCloseCharge={product?.accountCloseCharge} />
+      <ProductLimits limits={limits} />
+      <ProductInterestRate interestRate={product?.interest} />
+      <ProductPrematurePenalty prematurePenalty={product?.prematurePenalty} />
+      <ProductPenaltyWithdrawSetup withDrawData={product?.withdrawPenalty} />
 
       <ProductTenure
         tenureUnit={product?.tenureUnit}
@@ -115,10 +114,9 @@ export const SavingDetails = ({product, criteria}: ISavingDetailsProps) => {
         minTenure={product?.minTenureUnitNumber}
       />
 
-
       <DetailsCard title="Others " hideBorder hasTable>
         <Box display="flex" flexDir="column" gap="s32">
-          <ProductFeatures features={otherFeatures}/>
+          <ProductFeatures features={otherFeatures} />
         </Box>
       </DetailsCard>
     </Box>

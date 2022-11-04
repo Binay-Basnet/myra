@@ -26,7 +26,7 @@ interface IRecurringDepositDetailsProps {
   criteria: DepositProductCriteria;
 }
 
-export const TermSavingDetails = ({product, criteria}: IRecurringDepositDetailsProps) => {
+export const TermSavingDetails = ({ product, criteria }: IRecurringDepositDetailsProps) => {
   const router = useRouter();
   const limits = [
     {
@@ -71,8 +71,6 @@ export const TermSavingDetails = ({product, criteria}: IRecurringDepositDetailsP
       feature: 'Does this product allow Alternative Channel',
       status: product?.alternativeChannels ? 'yes' : 'no',
     },
-
-
   ];
 
   const charges = [
@@ -85,7 +83,7 @@ export const TermSavingDetails = ({product, criteria}: IRecurringDepositDetailsP
     <Box display="flex" flexDirection="column" gap="s16">
       <PathBar
         paths={[
-          {label: 'Home', link: '/home'},
+          { label: 'Home', link: '/home' },
           {
             label: 'Products',
             link: '/coop/products/deposit',
@@ -97,7 +95,7 @@ export const TermSavingDetails = ({product, criteria}: IRecurringDepositDetailsP
         ]}
       />
 
-      <ProductDescription description={product?.description}/>
+      <ProductDescription description={product?.description} />
       <ProductGeneralInformation
         generalInformation={{
           productCode: product?.productCode,
@@ -107,23 +105,21 @@ export const TermSavingDetails = ({product, criteria}: IRecurringDepositDetailsP
           nature: product?.nature,
         }}
       />
-      <ProductCriteria criteria={criteria}/>
+      <ProductCriteria criteria={criteria} />
       <ProductDocuments
         individualDocuments={product?.individualDocuments}
         institutionDocuments={product?.institutionDocuments}
       />
-      <ProductServiceCharge serviceCharge={product?.serviceCharge}/>
-      <AccountCloseCharge accountCloseCharge={product?.accountCloseCharge}/>
-      <ProductLimits limits={limits}/>
-      <ProductInterestRate interestRate={product?.interest}/>
-      <ProductDormantSetup dormantSetup={product?.dormantSetup}/>
-
+      <ProductServiceCharge serviceCharge={product?.serviceCharge} />
+      <AccountCloseCharge accountCloseCharge={product?.accountCloseCharge} />
+      <ProductLimits limits={limits} />
+      <ProductInterestRate interestRate={product?.interest} />
+      <ProductDormantSetup dormantSetup={product?.dormantSetup} />
 
       <DetailsCard title="Others " hideBorder hasTable>
         <Box display="flex" flexDir="column" gap="s32">
-          <ProductFeatures features={otherFeatures}/>
-          <ProductCharges charges={charges}/>
-
+          <ProductFeatures features={otherFeatures} />
+          <ProductCharges charges={charges} />
         </Box>
       </DetailsCard>
     </Box>

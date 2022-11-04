@@ -1,52 +1,18 @@
 import { DetailCardContent, DetailsCard } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { useTransactionDetailHooks } from '../hooks/useTransactionDetailHooks';
-
 type OtherDetailProps = {
-  detailPage: 'deposit' | 'withdraw' | 'accountTransfer';
+  branch: string;
+  teller: string;
 };
 
-export const OtherDetails = ({ detailPage }: OtherDetailProps) => {
+export const OtherDetails = ({ branch, teller }: OtherDetailProps) => {
   const { t } = useTranslation();
-
-  const { depositDetailData, withdrawDetailData, accountTransferDetailData } =
-    useTransactionDetailHooks();
 
   return (
     <DetailsCard title={t['transDetailOtherDetails']}>
-      {detailPage === 'deposit' && (
-        <>
-          <DetailCardContent
-            title={t['transDetailTransactionBranch']}
-            subtitle={depositDetailData?.transactionBranch}
-          />
-          <DetailCardContent title={t['transDetailTeller']} subtitle={depositDetailData?.teller} />
-        </>
-      )}
-
-      {detailPage === 'withdraw' && (
-        <>
-          <DetailCardContent
-            title={t['transDetailTransactionBranch']}
-            subtitle={withdrawDetailData?.transactionBranch}
-          />
-          <DetailCardContent title={t['transDetailTeller']} subtitle={withdrawDetailData?.teller} />
-        </>
-      )}
-
-      {detailPage === 'accountTransfer' && (
-        <>
-          <DetailCardContent
-            title={t['transDetailTransactionBranch']}
-            subtitle={accountTransferDetailData?.transactionBranch}
-          />
-          <DetailCardContent
-            title={t['transDetailTeller']}
-            subtitle={accountTransferDetailData?.teller}
-          />
-        </>
-      )}
+      <DetailCardContent title={t['transDetailTransactionBranch']} subtitle={branch} />
+      <DetailCardContent title={t['transDetailTeller']} subtitle={teller} />
     </DetailsCard>
   );
 };

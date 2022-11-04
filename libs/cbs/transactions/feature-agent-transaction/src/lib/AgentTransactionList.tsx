@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 import { useGetDepositListDataQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, PageHeader, Text } from '@coop/shared/ui';
+import { Avatar, Box, PageHeader, TablePopover, Text } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const MEMBER_TAB_ITEMS = [
@@ -22,8 +23,7 @@ const MEMBER_TAB_ITEMS = [
 
 export const AgentTransactionList = () => {
   const { t } = useTranslation();
-
-  // const router = useRouter();
+  const router = useRouter();
 
   // const { data, isFetching } = useGetMemberListQuery({
   //   pagination: getRouterQuery({ type: ['PAGINATION'] }),
@@ -86,27 +86,29 @@ export const AgentTransactionList = () => {
         header: 'Amount',
         accessorFn: (row) => row?.node?.amount,
       },
-      // {
-      //   id: '_actions',
-      //   header: '',
-      //   accessorKey: 'actions',
-      //   cell: (cell) => (
-      //     <ActionPopoverComponent
-      //       items={[
-      //         {
-      //           title: 'transactionsAgentListViewDetail',
-      //           onClick: () => {
-      //             router.push(`/transactions/agent/${cell?.row?.original?.node?.ID}/overview`);
-      //           },
-      //         },
-      //       ]}
-      //       id={cell?.row?.original?.node?.ID as string}
-      //     />
-      //   ),
-      //   meta: {
-      //     width: '60px',
-      //   },
-      // },
+      {
+        id: '_actions',
+        header: '',
+        cell: (props) =>
+          props?.row?.original?.node && (
+            <TablePopover
+              node={props?.row?.original?.node}
+              items={[
+                {
+                  title: t['transDetailViewDetail'],
+                  onClick: (row) => {
+                    router.push(
+                      `/transactions/agent-transaction/view?id=${row?.agentId}&date=${row?.date}`
+                    );
+                  },
+                },
+              ]}
+            />
+          ),
+        meta: {
+          width: '50px',
+        },
+      },
     ],
     [t]
   );

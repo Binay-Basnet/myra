@@ -5,13 +5,14 @@ import { useTranslation } from '@coop/shared/utils';
 import { useTransactionDetailHooks } from '../hooks/useTransactionDetailHooks';
 
 type PaymentDetailProps = {
-  detailPage: 'deposit' | 'withdraw' | 'accountTransfer';
+  detailPage: 'deposit' | 'withdraw' | 'accountTransfer' | 'agentTransaction' | 'loanRepayment';
 };
 
 export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
   const { t } = useTranslation();
 
-  const { depositDetailData, withdrawDetailData } = useTransactionDetailHooks();
+  const { depositDetailData, withdrawDetailData, loanRepaymentDetailData } =
+    useTransactionDetailHooks();
 
   return (
     <DetailsCard title={t['transDetailPaymentDetails']}>
@@ -66,6 +67,19 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
           <DetailCardContent
             title={t['transDetailWithdrawnBy']}
             subtitle={withdrawDetailData?.withdrawnBy}
+          />
+        </>
+      )}
+
+      {detailPage === 'loanRepayment' && (
+        <>
+          <DetailCardContent
+            title={t['transDetailPaymentMode']}
+            subtitle={loanRepaymentDetailData?.paymentMode}
+          />
+          <DetailCardContent
+            title={t['transDetailAmount']}
+            subtitle={loanRepaymentDetailData?.totalRepaymentAmount}
           />
         </>
       )}

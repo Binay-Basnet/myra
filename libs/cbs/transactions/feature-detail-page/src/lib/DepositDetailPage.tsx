@@ -16,6 +16,7 @@ export const DepositDetailPage = () => {
   const tableData = depositDetailData?.glTransaction;
 
   const summary = {
+    memberId: depositDetailData?.member?.id,
     name: depositDetailData?.member?.name?.local,
     profilePic: depositDetailData?.member?.profilePicUrl,
     transactionId: depositDetailData?.id,
@@ -34,7 +35,7 @@ export const DepositDetailPage = () => {
         borderRight="1px"
         borderRightColor="border.layout"
       >
-        <SideBar summary={summary} />
+        <SideBar detailPage="deposit" summary={summary} />
       </Box>
 
       <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
@@ -43,8 +44,15 @@ export const DepositDetailPage = () => {
         </Text>
         <TransactionDetails detailPage="deposit" />
         <PaymentDetails detailPage="deposit" />
-        <OtherDetails detailPage="deposit" />
-        <GlTransaction data={tableData ?? []} />
+        <OtherDetails
+          branch={depositDetailData?.transactionBranch as string}
+          teller={depositDetailData?.teller as string}
+        />
+        <GlTransaction
+          totalDebit={depositDetailData?.totalDebit as string}
+          totalCredit={depositDetailData?.totalCredit as string}
+          data={tableData ?? []}
+        />
       </Box>
     </>
   );

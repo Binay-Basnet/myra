@@ -18,6 +18,7 @@ export const WithdrawDetailPage = () => {
   const tableData = withdrawDetailData?.glTransaction;
 
   const summary = {
+    memberId: withdrawDetailData?.member?.id,
     name: withdrawDetailData?.member?.name?.local,
     profilePic: withdrawDetailData?.member?.profilePicUrl,
     transactionId: withdrawDetailData?.id,
@@ -36,7 +37,7 @@ export const WithdrawDetailPage = () => {
         borderRight="1px"
         borderRightColor="border.layout"
       >
-        <SideBar summary={summary} />
+        <SideBar detailPage="withdraw" summary={summary} />
       </Box>
 
       <Box ml="320px" p="s16" display="flex" flexDir="column" gap="s16">
@@ -47,8 +48,15 @@ export const WithdrawDetailPage = () => {
         <PaymentDetails detailPage="withdraw" />
         {withdrawDetailData?.paymentMode === DepositPaymentType?.Cheque && <MarketRepresentative />}
 
-        <OtherDetails detailPage="withdraw" />
-        <GlTransaction data={tableData ?? []} />
+        <OtherDetails
+          branch={withdrawDetailData?.transactionBranch as string}
+          teller={withdrawDetailData?.teller as string}
+        />
+        <GlTransaction
+          totalDebit={withdrawDetailData?.totalDebit as string}
+          totalCredit={withdrawDetailData?.totalCredit as string}
+          data={tableData ?? []}
+        />
       </Box>
     </>
   );
