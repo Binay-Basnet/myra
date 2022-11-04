@@ -2909,6 +2909,8 @@ const ne: Record<string, string> = {
   loanProductloanLedgerMapping: 'Rebate Ledger Mapping',
   loanProductNatureBusinessIns: 'Institutions Type',
   depositProductNatureofBusinessCoopUnion: 'Cooperatives Union Type',
+  loanProductMakeInactive: 'Make inactive',
+  loanProductMakeInactiveTitle: 'Make loan Product inactive',
 
   // share settings
 

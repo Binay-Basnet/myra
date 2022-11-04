@@ -18,3 +18,15 @@ mutation setLoanProduct($id: ID!, $data: LoanProductInput) {
     }
   }
 }
+
+mutation setLoanProductInactive($data: LoanProductInactiveData) {
+  settings {
+    general {
+      loanProducts {
+        makeInactive(data: $data) {
+          recordId
+        }
+      }
+    }
+  }
+}
