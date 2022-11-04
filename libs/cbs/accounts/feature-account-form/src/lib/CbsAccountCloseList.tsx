@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
-import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, PageHeader, Text } from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
@@ -26,12 +25,12 @@ export const CBSAccountCloseList = () => {
 
   const rowData = useMemo(() => data?.account?.list?.edges ?? [], [data]);
 
-  const popoverTitle = [
-    {
-      title: 'depositProductEdit',
-      onClick: (id: string) => router.push(`/accounts/account-open/edit/${id}`),
-    },
-  ];
+  // const popoverTitle = [
+  //   {
+  //     title: 'depositProductEdit',
+  //     onClick: (id: string) => router.push(`/accounts/account-open/edit/${id}`),
+  //   },
+  // ];
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -72,19 +71,19 @@ export const CBSAccountCloseList = () => {
         accessorFn: (row) => row?.node?.createdAt,
         cell: (props) => <span>{props?.row?.original?.node?.closedAt?.split('T')[0]} </span>,
       },
-      {
-        id: '_actions',
-        header: '',
-        cell: (props) => (
-          <ActionPopoverComponent
-            items={popoverTitle}
-            id={props?.row?.original?.node?.id as string}
-          />
-        ),
-        meta: {
-          width: '50px',
-        },
-      },
+      // {
+      //   id: '_actions',
+      //   header: '',
+      //   cell: (props) => (
+      //     <ActionPopoverComponent
+      //       items={popoverTitle}
+      //       id={props?.row?.original?.node?.id as string}
+      //     />
+      //   ),
+      //   meta: {
+      //     width: '50px',
+      //   },
+      // },
     ],
     [t]
   );
