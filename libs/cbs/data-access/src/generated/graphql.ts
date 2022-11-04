@@ -245,6 +245,22 @@ export enum AccountTypeFilter {
   Loan = 'LOAN',
 }
 
+export type AccountWithdrawSlipMutationResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<WithdrawSlipQuery>;
+  recordId: Scalars['ID'];
+};
+
+export type AccountWithdrawSlipQueryResult = {
+  data?: Maybe<Array<Maybe<SlipEntry>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type AccountWithdrawSlipRangeQueryResult = {
+  error?: Maybe<QueryError>;
+  range?: Maybe<SlipRange>;
+};
+
 export type AccountingInvestmentAccountQueryResult = {
   data?: Maybe<InvestmentAccount>;
   error?: Maybe<QueryError>;
@@ -8647,9 +8663,12 @@ export type MemberAccountDetails = {
 export type MemberAccountMinView = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
+  interestBooked?: Maybe<Scalars['String']>;
+  interestEarned?: Maybe<Scalars['String']>;
   interestRate?: Maybe<Scalars['String']>;
   productName?: Maybe<Scalars['String']>;
   productType?: Maybe<Scalars['String']>;
+  subscriptionDate?: Maybe<Scalars['String']>;
   totalBalance?: Maybe<Scalars['String']>;
 };
 
@@ -9097,6 +9116,7 @@ export type Mutation = {
   share: ShareMutation;
   transaction: TransactionMutation;
   user: UserMutation;
+  withdrawSlip: WithdrawSlipMutation;
 };
 
 export type MutationNewIdArgs = {
@@ -10050,6 +10070,7 @@ export type Query = {
   share: ShareQuery;
   transaction: TransactionQuery;
   user: UserQuery;
+  withdrawSlip: WithdrawSlipQuery;
 };
 
 export type QueryError = AuthorizationError | BadRequestError | NotFoundError | ServerError;
@@ -11202,6 +11223,28 @@ export type SisterConcernDetailsType = {
   phone?: Maybe<Scalars['String']>;
 };
 
+export type SlipEntry = {
+  date?: Maybe<Scalars['Localized']>;
+  slipNumber: Scalars['String'];
+  state: SlipState;
+};
+
+export type SlipRange = {
+  from: Scalars['String'];
+  to: Scalars['String'];
+};
+
+export type SlipRangeInput = {
+  from: Scalars['Int'];
+  to: Scalars['Int'];
+};
+
+export enum SlipState {
+  Cancelled = 'CANCELLED',
+  Issued = 'ISSUED',
+  Used = 'USED',
+}
+
 export type StatementReport = SavingStatementReport | ShareStatementReport;
 
 export type StatementReportInput = {
@@ -11865,6 +11908,40 @@ export type WithdrawResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
   recordId?: Maybe<Scalars['ID']>;
+};
+
+export type WithdrawSlipMutation = {
+  cancelSlip?: Maybe<AccountWithdrawSlipMutationResult>;
+  issueNew?: Maybe<AccountWithdrawSlipMutationResult>;
+};
+
+export type WithdrawSlipMutationCancelSlipArgs = {
+  accountId: Scalars['ID'];
+  slipNumber?: InputMaybe<Scalars['Int']>;
+  slipRange?: InputMaybe<SlipRangeInput>;
+};
+
+export type WithdrawSlipMutationIssueNewArgs = {
+  accountId: Scalars['ID'];
+  count: Scalars['Int'];
+};
+
+export type WithdrawSlipQuery = {
+  getAvailableRange?: Maybe<AccountWithdrawSlipRangeQueryResult>;
+  listAvailableSlips?: Maybe<AccountWithdrawSlipQueryResult>;
+  listPastSlips?: Maybe<AccountWithdrawSlipQueryResult>;
+};
+
+export type WithdrawSlipQueryGetAvailableRangeArgs = {
+  count: Scalars['Int'];
+};
+
+export type WithdrawSlipQueryListAvailableSlipsArgs = {
+  accountId: Scalars['ID'];
+};
+
+export type WithdrawSlipQueryListPastSlipsArgs = {
+  accountId: Scalars['ID'];
 };
 
 export type WithdrawTransactionView = {

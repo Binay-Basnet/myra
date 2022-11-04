@@ -211,35 +211,37 @@ export const HeaderRightSection = () => {
             >
               <PopoverBody p="0">
                 <Box display="flex" flexDirection="column">
-                  <Box
-                    px="s12"
-                    py="s16"
-                    display="flex"
-                    flexDirection="row"
-                    alignItems="center"
-                    borderBottom="1px solid"
-                    borderColor="border.layout"
-                  >
-                    <Avatar
-                      src={coopUser?.user?.memberProfilePicUrl as string}
-                      name={coopUser?.user?.memberName as string}
-                      w="s32"
-                      h="s32"
-                    />
+                  {coopUser?.token && (
                     <Box
-                      ml="14px"
+                      px="s12"
+                      py="s16"
                       display="flex"
-                      flexDirection="column"
-                      justifyContent="space-between"
+                      flexDirection="row"
+                      alignItems="center"
+                      borderBottom="1px solid"
+                      borderColor="border.layout"
                     >
-                      <Text fontWeight="SemiBold" fontSize="s2" color="primary.500">
-                        {coopUser?.user?.memberName}
-                      </Text>
-                      <Text fontWeight="Regular" fontSize="s2" color="gray.600">
-                        {user?.id?.slice(0, 19)}
-                      </Text>
+                      <Avatar
+                        src={coopUser?.user?.memberProfilePicUrl as string}
+                        name={coopUser?.user?.memberName as string}
+                        w="s32"
+                        h="s32"
+                      />
+                      <Box
+                        ml="14px"
+                        display="flex"
+                        flexDirection="column"
+                        justifyContent="space-between"
+                      >
+                        <Text fontWeight="SemiBold" fontSize="s2" color="primary.500">
+                          {coopUser?.user?.memberName}
+                        </Text>
+                        <Text fontWeight="Regular" fontSize="s2" color="gray.600">
+                          {user?.id?.slice(0, 19)}
+                        </Text>
+                      </Box>
                     </Box>
-                  </Box>
+                  )}
 
                   <Box
                     display="flex"

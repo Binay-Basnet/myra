@@ -137,6 +137,7 @@ export const CoopConnectPage = () => {
                   <Box display="flex" flexDir="column" gap="s20">
                     <Input
                       label="Pin"
+                      type="password"
                       errorText={methods?.formState?.errors?.['pin']?.message as string}
                       {...methods.register('pin')}
                     />

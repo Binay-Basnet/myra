@@ -8,6 +8,7 @@ import {
   EbankingServiceRequestType,
 } from '@coop/ebanking/data-access';
 import { Box, Icon, Text } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
 const iconDict = {
   [EbankingServiceRequestType.ChequeRequest]: RiBook3Fill,
@@ -46,7 +47,7 @@ const getChequeRequestInfo = (requestInfo: RequestInfo) => {
       break;
     }
     case EbankingServiceRequestType.ChequeBlockRequest:
-      info = 'Cheque block request';
+      info = requestInfo?.chequeBlockReason as string;
       break;
     default:
       info = '';
@@ -89,7 +90,7 @@ export const ChequeRequestCard = ({ requestInfo }: IChequeRequestCardProps) => {
       width="100%"
       pt="s16"
       pb="s8"
-      pr="s40"
+      pr="s16"
     >
       <Box display="flex" alignItems="flex-start" gap="s12">
         {typeOfRequest && (
@@ -119,8 +120,8 @@ export const ChequeRequestCard = ({ requestInfo }: IChequeRequestCardProps) => {
       </Box>
       <Box display="flex" flexDirection="column">
         {withdrawAmount && (
-          <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-80">
-            {withdrawAmount}
+          <Text fontSize="r1" textAlign="right" fontWeight={600} color="neutralColorLight.Gray-80">
+            {amountConverter(withdrawAmount)}
           </Text>
         )}
         {createdDate && (

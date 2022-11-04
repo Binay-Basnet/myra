@@ -3693,6 +3693,15 @@ export type EBankingKymSectionMutationProfessionalInformationArgs = {
   data?: InputMaybe<EBankingKymProfessionalInformationInput>;
 };
 
+export type EBankingLoanAccountQuery = {
+  get?: Maybe<EbankingAccountResult>;
+  list?: Maybe<AccountMinimalResult>;
+};
+
+export type EBankingLoanAccountQueryGetArgs = {
+  id: Scalars['ID'];
+};
+
 export type EBankingLoanHistory = {
   activeLoanStatus?: Maybe<EBankingActiveLoanStatus>;
   amount?: Maybe<Scalars['Amount']>;
@@ -3748,6 +3757,7 @@ export type EBankingQuery = {
   cooperativeServices?: Maybe<EBankingCooperativeServiceQuery>;
   home: EBankingCombined;
   kym?: Maybe<EBankingKymQuery>;
+  loanAccount?: Maybe<EBankingLoanAccountQuery>;
   me?: Maybe<Member>;
   neosysClientsList?: Maybe<Array<Maybe<NeosysClientMinimalInfo>>>;
   notification?: Maybe<EBankingNotificationQuery>;
@@ -3812,6 +3822,7 @@ export type EbankingAccount = {
   isDefault: Scalars['Boolean'];
   name: Scalars['String'];
   productId?: Maybe<Scalars['String']>;
+  repaymentScheme?: Maybe<Scalars['String']>;
   subscribedDate: Scalars['String'];
   transactions?: Maybe<EbankingTransactionConnection>;
 };
@@ -8408,7 +8419,9 @@ export type LoanRepaymentView = {
   installmentAmount?: Maybe<Scalars['String']>;
   installmentDetails?: Maybe<Array<Maybe<InstallmentDetailsView>>>;
   installmentNo?: Maybe<Scalars['String']>;
-  loanProduct?: Maybe<LoanProduct>;
+  loanAccountId?: Maybe<Scalars['String']>;
+  loanAccountName?: Maybe<Scalars['String']>;
+  loanSubType?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
   objState: Scalars['String'];
   paymentMode?: Maybe<Scalars['String']>;

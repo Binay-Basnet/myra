@@ -160,6 +160,8 @@ export const SendMoneyReview = ({ setPaymentStatus }: SendMoneyReviewProps) => {
 
                 if (response.eBanking.webUtilityPayments?.sendMoney?.proceed?.recordId) {
                   setHasTransactionPassword(false);
+                  queryClient.invalidateQueries('getAccountList');
+                  queryClient.invalidateQueries('getTransactionLists');
 
                   setPaymentStatus('success');
                   reset();
