@@ -1,6 +1,10 @@
 import { useRouter } from 'next/router';
 
-import { DepositProductCriteria, DepositProductFormStateData } from '@coop/ebanking/data-access';
+import {
+  DepositProductCriteria,
+  DepositProductFormStateData,
+  ServiceTypeFormState,
+} from '@coop/ebanking/data-access';
 import { Box, DetailsCard, PathBar } from '@coop/shared/ui';
 
 import {
@@ -67,7 +71,15 @@ export const TermSavingDetails = ({product, criteria}: IRecurringDepositDetailsP
       feature: 'Does this product allow Alternative Channel',
       status: product?.alternativeChannels ? 'yes' : 'no',
     },
+
+
   ];
+
+  const charges = [
+    ...(product?.chequeCharge ?? []),
+    ...(product?.atmCharge ?? []),
+    ...(product.alternativeChannelCharge ?? []),
+  ] as ServiceTypeFormState[];
 
   return (
     <Box display="flex" flexDirection="column" gap="s16">
