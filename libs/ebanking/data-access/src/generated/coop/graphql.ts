@@ -381,6 +381,89 @@ export const useAccountTransferMutation = <TError = unknown, TContext = unknown>
     ),
     options
   );
+export const CheckForSendMoneyDocument = `
+    mutation checkForSendMoney($data: EbankingSendMoneyInput) {
+  eBanking {
+    webUtilityPayments {
+      sendMoney {
+        check(data: $data) {
+          error {
+            ...MutationError
+          }
+          verified
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useCheckForSendMoneyMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    Types.CheckForSendMoneyMutation,
+    TError,
+    Types.CheckForSendMoneyMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    Types.CheckForSendMoneyMutation,
+    TError,
+    Types.CheckForSendMoneyMutationVariables,
+    TContext
+  >(
+    ['checkForSendMoney'],
+    useAxios<Types.CheckForSendMoneyMutation, Types.CheckForSendMoneyMutationVariables>(
+      CheckForSendMoneyDocument
+    ),
+    options
+  );
+export const CompleteSendMoneyDocument = `
+    mutation completeSendMoney($data: EbankingSendMoneyInput, $transactionPin: String!) {
+  eBanking {
+    webUtilityPayments {
+      sendMoney {
+        proceed(data: $data, transactionPin: $transactionPin) {
+          error {
+            ...MutationError
+          }
+          recordId
+          record {
+            amount
+            purposeOfTransaction
+            recipientAccountNumber
+            recipientMobileNumber
+            recipientName
+            remarks
+            sourceAccount
+            transactionCode
+            transactionDate
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useCompleteSendMoneyMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    Types.CompleteSendMoneyMutation,
+    TError,
+    Types.CompleteSendMoneyMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    Types.CompleteSendMoneyMutation,
+    TError,
+    Types.CompleteSendMoneyMutationVariables,
+    TContext
+  >(
+    ['completeSendMoney'],
+    useAxios<Types.CompleteSendMoneyMutation, Types.CompleteSendMoneyMutationVariables>(
+      CompleteSendMoneyDocument
+    ),
+    options
+  );
 export const GetAccountListDocument = `
     query getAccountList($transactionPagination: Pagination) {
   eBanking {

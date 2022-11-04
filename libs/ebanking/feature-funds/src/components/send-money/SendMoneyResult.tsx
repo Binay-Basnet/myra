@@ -1,12 +1,21 @@
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
+import dayjs from 'dayjs';
 
 import { TransactionHeaderCardWithChip, TransferModal } from '@coop/ebanking/cards';
+import {
+  EbankingSendMoneyInput,
+  EbankingSendMoneyRecord,
+  useGetAccountListQuery,
+} from '@coop/ebanking/data-access';
 import { Box, Button, Grid, Icon, Text, TextFields } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
 import { CardBodyContainer, CardContainer, CardContent, CardHeader } from '../CardContainer';
 
-type PaymentStatus = 'form' | 'review' | 'success' | 'failure';
+type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'loading';
 
 interface SendMoneyResultProps {
   paymentStatus: 'success' | 'failure';
@@ -15,6 +24,24 @@ interface SendMoneyResultProps {
 
 export const SendMoneyResult = ({ paymentStatus, setPaymentStatus }: SendMoneyResultProps) => {
   const router = useRouter();
+
+  const queryClient = useQueryClient();
+
+  const successResponse = queryClient?.getQueryData(
+    'send-money-success'
+  ) as EbankingSendMoneyRecord;
+
+  const { getValues } = useFormContext<EbankingSendMoneyInput>();
+
+  const { data: accountData } = useGetAccountListQuery({
+    transactionPagination: { after: '', first: 1 },
+  });
+
+  const sourceAccount = accountData?.eBanking?.account?.list?.accounts?.find(
+    (account) => account?.id === getValues()?.sourceAccount
+  );
+
+  // const { getValues } = useFormContext<EbankingSendMoneyInput>();
 
   return (
     <>
@@ -45,11 +72,11 @@ export const SendMoneyResult = ({ paymentStatus, setPaymentStatus }: SendMoneyRe
               variant="tableHeader"
               color={paymentStatus === 'success' ? 'primary.500' : 'gray.800'}
             >
-              Rs. 365.44
+              Rs. {amountConverter(successResponse?.amount as string)}
             </TextFields>
 
             <Text fontSize="s3" fontWeight="400" color="gray.500">
-              2079-01-19 04:20 PM
+              {dayjs(successResponse?.transactionDate).format('YYYY-MM-DD hh:mm A')}
             </Text>
           </Box>
         </Box>
@@ -57,18 +84,42 @@ export const SendMoneyResult = ({ paymentStatus, setPaymentStatus }: SendMoneyRe
         <CardContainer>
           <CardBodyContainer>
             <CardHeader>Transaction Details</CardHeader>
-            <CardContent title="Source Account" subtitle="Salary Saving Account - 10101432" />
+            <CardContent
+              title="Source Account"
+              subtitle={`${sourceAccount?.name} - ${sourceAccount?.id}`}
+            />{' '}
             <Grid templateColumns="repeat(3, 1fr)" gap="s16">
-              <CardContent title="Recipient Name" subtitle="Madan Bahadur KC" />
-              <CardContent title="Mobile Number" subtitle="9847814919" />
-              <CardContent title="Account Number" subtitle="10233903930" />
-              <CardContent title="Purpose" subtitle="Personal Use" />
-              <CardContent title="Remarks" subtitle="Remaining Payment for monitor" />
+              {successResponse?.transactionCode && (
+                <CardContent title="Transaction Code" subtitle={successResponse?.transactionCode} />
+              )}
+
+              <CardContent title="Recipient Name" subtitle={getValues()?.recipientName as string} />
+              <CardContent
+                title="Mobile Number"
+                subtitle={getValues()?.recipientMobileNumber as string}
+              />
+              <CardContent
+                title="Account Number"
+                subtitle={getValues()?.recipientAccountNumber as string}
+              />
+              <CardContent
+                title="Purpose"
+                subtitle={
+                  getValues()?.purposeOfTransaction?.toLowerCase().replace('_', ' ') as string
+                }
+              />
+              <CardContent title="Remarks" subtitle={getValues()?.remarks as string} />
             </Grid>
           </CardBodyContainer>
           {paymentStatus === 'failure' ? (
             <Box display="flex" gap="s16">
-              <Button w="100px" shade="danger">
+              <Button
+                w="100px"
+                shade="danger"
+                onClick={() => {
+                  setPaymentStatus('form');
+                }}
+              >
                 Retry
               </Button>
               <Button

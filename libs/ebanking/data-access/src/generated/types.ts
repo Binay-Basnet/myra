@@ -150,7 +150,7 @@ export type AccountOperatorDetailsFormState = {
   isTemporaryAndPermanentAddressSame?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;
   panNo?: Maybe<Scalars['String']>;
-  permanenetAddress?: Maybe<KymAddress>;
+  permanentAddress?: Maybe<KymAddress>;
   temporaryAddress?: Maybe<KymAddress>;
 };
 
@@ -161,7 +161,7 @@ export type AccountOperatorDetailsType = {
   isTemporaryAndPermanentAddressSame?: Maybe<Scalars['Boolean']>;
   name?: Maybe<Scalars['String']>;
   panNo?: Maybe<Scalars['String']>;
-  permanenetAddress?: Maybe<KymAddress>;
+  permanentAddress?: Maybe<KymAddress>;
   specimenSignature?: Maybe<Scalars['String']>;
   temporaryAddress?: Maybe<KymAddress>;
 };
@@ -175,6 +175,7 @@ export type AccountTransactionFilter = {
   depositedBy?: InputMaybe<Scalars['String']>;
   from?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
+  memberId?: InputMaybe<Scalars['String']>;
   query?: InputMaybe<Scalars['String']>;
   to?: InputMaybe<Scalars['String']>;
 };
@@ -220,6 +221,8 @@ export type AccountTransferView = {
   recipientMember?: Maybe<Member>;
   sourceAccount?: Maybe<DepositLoanAccount>;
   teller?: Maybe<Scalars['String']>;
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
   transactionBranch?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['String']>;
   transferAmount?: Maybe<Scalars['String']>;
@@ -553,6 +556,19 @@ export type AgentTodayListResult = {
   record?: Maybe<Array<Maybe<AgentTodayList>>>;
 };
 
+export type AgentTransactionView = {
+  assignedMember?: Maybe<Array<Maybe<AssignedMemberView>>>;
+  status: Scalars['String'];
+  totalAmount?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['String']>;
+  transactionId: Scalars['ID'];
+};
+
+export type AgentTransactionViewResult = {
+  data?: Maybe<AgentTransactionView>;
+  error?: Maybe<QueryError>;
+};
+
 export enum AllModules {
   AccountingSystem = 'ACCOUNTING_SYSTEM',
   AlternativeChannels = 'ALTERNATIVE_CHANNELS',
@@ -740,6 +756,12 @@ export type AssignedMemberListFiler = {
   agentId?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
   query?: InputMaybe<Scalars['String']>;
+};
+
+export type AssignedMemberView = {
+  account?: Maybe<Scalars['String']>;
+  amount?: Maybe<Scalars['String']>;
+  member?: Maybe<Scalars['String']>;
 };
 
 export type AssignedMembersListConnection = {
@@ -2341,6 +2363,7 @@ export type DepositLoanAccount = Base & {
   id: Scalars['ID'];
   initialDepositAmount?: Maybe<Scalars['Amount']>;
   installmentAmount?: Maybe<Scalars['String']>;
+  interestDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
   interestRate?: Maybe<Scalars['Float']>;
   memberId: Scalars['ID'];
   minor?: Maybe<Scalars['String']>;
@@ -2394,6 +2417,7 @@ export type DepositLoanAccountInput = {
   eBanking?: InputMaybe<Scalars['Boolean']>;
   initialDepositAmount?: InputMaybe<Scalars['Amount']>;
   installmentAmount?: InputMaybe<Scalars['String']>;
+  interestDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   interestRate?: InputMaybe<Scalars['Float']>;
   memberId: Scalars['ID'];
   minor?: InputMaybe<Scalars['String']>;
@@ -2862,6 +2886,8 @@ export type DepositTransactionView = {
   sourceOfFund?: Maybe<Scalars['String']>;
   status?: Maybe<ObjState>;
   teller?: Maybe<Scalars['String']>;
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
   totalDepositedAmount?: Maybe<Scalars['String']>;
   transactionBranch?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['String']>;
@@ -2891,7 +2917,7 @@ export type DirectorDetailsFormState = {
   citizenshipNo?: Maybe<Scalars['String']>;
   dateOfMembership?: Maybe<Scalars['String']>;
   designation?: Maybe<Scalars['String']>;
-  emailAddress?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
   firmDetails?: Maybe<AffiliatedDirectorDetailsFormState>;
   highestQualification?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -2911,7 +2937,7 @@ export type DirectorDetailsType = {
   dateOfMembership?: Maybe<Scalars['String']>;
   designation?: Maybe<Scalars['String']>;
   documentPhotograph?: Maybe<Scalars['String']>;
-  emailAddress?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
   highestQualification?: Maybe<Scalars['String']>;
   isAffiliatedWithOtherFirms?: Maybe<Scalars['Boolean']>;
   isHeadOfOrganization?: Maybe<Scalars['Boolean']>;
@@ -2919,7 +2945,7 @@ export type DirectorDetailsType = {
   mobileNo?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   panNo?: Maybe<Scalars['String']>;
-  permanenetAddress?: Maybe<KymAddress>;
+  permanentAddress?: Maybe<KymAddress>;
   photograph?: Maybe<Scalars['String']>;
   temporaryAddress?: Maybe<KymAddress>;
 };
@@ -3135,6 +3161,7 @@ export type EBankingAuthMutationLoginToCooperativeArgs = {
 
 export type EBankingAuthMutationResendOtpArgs = {
   mobile: Scalars['String'];
+  otpFor: OtpFor;
 };
 
 export type EBankingAuthMutationSetNewPinArgs = {
@@ -3855,6 +3882,11 @@ export type EbankingChangePasswordResult = {
   success: Scalars['Boolean'];
 };
 
+export type EbankingCheckAccountResult = {
+  error?: Maybe<MutationError>;
+  verified: Scalars['Boolean'];
+};
+
 export type EbankingCooperative = {
   cooperativeDistrict?: Maybe<Scalars['String']>;
   cooperativeId?: Maybe<Scalars['ID']>;
@@ -3925,8 +3957,8 @@ export type EbankingMemberProfileData = {
 };
 
 export type EbankingOtpInput = {
-  mobile?: InputMaybe<Scalars['String']>;
-  otp?: InputMaybe<Scalars['Int']>;
+  mobile: Scalars['String'];
+  otp: Scalars['String'];
 };
 
 export type EbankingOtpResult = {
@@ -3944,6 +3976,49 @@ export type EbankingPasswordResult = {
   error?: Maybe<MutationError>;
   record?: Maybe<EbankingUser>;
   recordId?: Maybe<Scalars['ID']>;
+};
+
+export type EbankingSendMoneyInput = {
+  amount?: InputMaybe<Scalars['String']>;
+  purposeOfTransaction?: InputMaybe<PurposeOfTransaction>;
+  recipientAccountNumber?: InputMaybe<Scalars['String']>;
+  recipientMobileNumber?: InputMaybe<Scalars['String']>;
+  recipientName?: InputMaybe<Scalars['String']>;
+  remarks?: InputMaybe<Scalars['String']>;
+  sourceAccount?: InputMaybe<Scalars['String']>;
+};
+
+export type EbankingSendMoneyMutation = {
+  check?: Maybe<EbankingCheckAccountResult>;
+  proceed?: Maybe<EbankingSendMoneyResult>;
+};
+
+export type EbankingSendMoneyMutationCheckArgs = {
+  data?: InputMaybe<EbankingSendMoneyInput>;
+};
+
+export type EbankingSendMoneyMutationProceedArgs = {
+  data?: InputMaybe<EbankingSendMoneyInput>;
+  transactionPin: Scalars['String'];
+};
+
+export type EbankingSendMoneyRecord = {
+  amount: Scalars['String'];
+  purposeOfTransaction?: Maybe<PurposeOfTransaction>;
+  recipientAccountNumber: Scalars['String'];
+  recipientMobileNumber: Scalars['String'];
+  recipientName: Scalars['String'];
+  remarks?: Maybe<Scalars['String']>;
+  sourceAccount: Scalars['ID'];
+  transactionCode: Scalars['String'];
+  transactionDate: Scalars['String'];
+};
+
+export type EbankingSendMoneyResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<EbankingSendMoneyRecord>;
+  recordId?: Maybe<Scalars['String']>;
+  success: Scalars['Boolean'];
 };
 
 export enum EbankingServiceRequestType {
@@ -4051,6 +4126,7 @@ export type EbankingUserResult = {
 
 export type EbankingWebUtilityPaymentsMutation = {
   accountTransfer?: Maybe<EbankingAccountTransferResult>;
+  sendMoney?: Maybe<EbankingSendMoneyMutation>;
 };
 
 export type EbankingWebUtilityPaymentsMutationAccountTransferArgs = {
@@ -4889,6 +4965,11 @@ export enum IdetificationType {
   VoterCard = 'VOTER_CARD',
 }
 
+export type InactivateMemberCheck = {
+  isAccountClosed: Scalars['Boolean'];
+  isShareReturned: Scalars['Boolean'];
+};
+
 export type IncompleteSection = {
   incomplete?: Maybe<Array<Maybe<Scalars['String']>>>;
   sectionName?: Maybe<Scalars['String']>;
@@ -4916,6 +4997,13 @@ export type Installment = {
   number: Scalars['Int'];
   rebate?: Maybe<Scalars['String']>;
   status: InstallmentState;
+};
+
+export type InstallmentDetailsView = {
+  installmentNo?: Maybe<Scalars['Int']>;
+  interestAmount?: Maybe<Scalars['String']>;
+  payment?: Maybe<Scalars['String']>;
+  principalAmount?: Maybe<Scalars['String']>;
 };
 
 export enum InstallmentFrequency {
@@ -8314,6 +8402,30 @@ export enum LoanRepaymentScheme {
   Flat = 'FLAT',
 }
 
+export type LoanRepaymentView = {
+  fine?: Maybe<Scalars['String']>;
+  glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
+  installmentAmount?: Maybe<Scalars['String']>;
+  installmentDetails?: Maybe<Array<Maybe<InstallmentDetailsView>>>;
+  installmentNo?: Maybe<Scalars['String']>;
+  loanProduct?: Maybe<LoanProduct>;
+  member?: Maybe<Member>;
+  objState: Scalars['String'];
+  paymentMode?: Maybe<Scalars['String']>;
+  repaymentDate?: Maybe<Scalars['String']>;
+  repaymentId: Scalars['ID'];
+  teller?: Maybe<Scalars['String']>;
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
+  totalRepaymentAmount?: Maybe<Scalars['String']>;
+  transactionBranch?: Maybe<Scalars['String']>;
+};
+
+export type LoanRepaymentViewResult = {
+  data?: Maybe<LoanRepaymentView>;
+  error?: Maybe<QueryError>;
+};
+
 export type LoanRequestConnection = {
   edges?: Maybe<Array<Maybe<LoanRequestEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -8507,6 +8619,7 @@ export type MemberAccountDetails = {
   interestAccrued?: Maybe<Scalars['String']>;
   interestEarned?: Maybe<Scalars['String']>;
   isForMinors?: Maybe<Scalars['Boolean']>;
+  isMandatory?: Maybe<Scalars['Boolean']>;
   member?: Maybe<Member>;
   monthlyInterestCompulsory?: Maybe<Scalars['Boolean']>;
   productName?: Maybe<Scalars['String']>;
@@ -8630,7 +8743,7 @@ export enum MemberIdentityLevel {
 
 export type MemberInactivateQuery = {
   accountCloseCheck: Scalars['Boolean'];
-  shareReturnCheck: Scalars['Boolean'];
+  inactivateCheck?: Maybe<InactivateMemberCheck>;
 };
 
 export type MemberInactivateQueryAccountCloseCheckArgs = {
@@ -8639,7 +8752,7 @@ export type MemberInactivateQueryAccountCloseCheckArgs = {
   memberId: Scalars['ID'];
 };
 
-export type MemberInactivateQueryShareReturnCheckArgs = {
+export type MemberInactivateQueryInactivateCheckArgs = {
   memberId: Scalars['ID'];
 };
 
@@ -8709,7 +8822,6 @@ export type MemberOverviewData = {
   overview?: Maybe<OverviewView>;
   reports?: Maybe<MemberOverviewReportView>;
   share?: Maybe<MemberOverviewShareView>;
-  transactions?: Maybe<Scalars['String']>;
 };
 
 export type MemberOverviewGraphs = {
@@ -9610,6 +9722,11 @@ export enum OrganizationType {
   ProvinceUnion = 'PROVINCE_UNION',
 }
 
+export enum OtpFor {
+  ResetPassword = 'RESET_PASSWORD',
+  SignUp = 'SIGN_UP',
+}
+
 export type OverviewView = {
   basicInformation?: Maybe<MemberBasicInfoView>;
   memberGraphs?: Maybe<MemberOverviewGraphs>;
@@ -9870,6 +9987,13 @@ export type Province = {
   name: Scalars['String'];
   nameNp: Scalars['String'];
 };
+
+export enum PurposeOfTransaction {
+  BillSharing = 'BILL_SHARING',
+  FamilyExpenses = 'FAMILY_EXPENSES',
+  LendOrBorrow = 'LEND_OR_BORROW',
+  PersonalUse = 'PERSONAL_USE',
+}
 
 export type QuarterlyDividendRate = {
   firstQuarter?: Maybe<Scalars['Float']>;
@@ -11045,7 +11169,7 @@ export type SisterConcernDetails = {
   address?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   natureOfBusiness?: InputMaybe<Scalars['String']>;
-  phoneNo?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
 };
 
 export type SisterConcernDetailsFormState = {
@@ -11053,14 +11177,14 @@ export type SisterConcernDetailsFormState = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   natureOfBusiness?: Maybe<Scalars['String']>;
-  phoneNo?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
 };
 
 export type SisterConcernDetailsType = {
   address?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   natureOfBusiness?: Maybe<Scalars['String']>;
-  phoneNo?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
 };
 
 export type StatementReport = SavingStatementReport | ShareStatementReport;
@@ -11268,7 +11392,9 @@ export type TransactionQuery = {
   listTransfer: AccountTransferListConnection;
   listWithdraw: AccountActivityListConnection;
   viewAccountTransfer?: Maybe<AccountTransferViewResult>;
+  viewAgentList?: Maybe<AgentTransactionViewResult>;
   viewDeposit?: Maybe<DepositTransactionViewResult>;
+  viewLoanRepayment?: Maybe<LoanRepaymentViewResult>;
   viewWithdraw?: Maybe<WithdrawTransactionViewResult>;
 };
 
@@ -11314,8 +11440,17 @@ export type TransactionQueryViewAccountTransferArgs = {
   transactionId: Scalars['ID'];
 };
 
+export type TransactionQueryViewAgentListArgs = {
+  agentId: Scalars['ID'];
+  date: Scalars['String'];
+};
+
 export type TransactionQueryViewDepositArgs = {
   transactionId: Scalars['ID'];
+};
+
+export type TransactionQueryViewLoanRepaymentArgs = {
+  paymentId: Scalars['ID'];
 };
 
 export type TransactionQueryViewWithdrawArgs = {
@@ -11729,6 +11864,8 @@ export type WithdrawTransactionView = {
   paymentMode?: Maybe<Scalars['String']>;
   status?: Maybe<ObjState>;
   teller?: Maybe<Scalars['String']>;
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
   totalWithdrawnAmount?: Maybe<Scalars['String']>;
   transactionBranch?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['String']>;
@@ -12046,6 +12183,72 @@ export type AccountTransferMutation = {
               validationErrorMsg: Record<string, Array<string>>;
             }
           | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type CheckForSendMoneyMutationVariables = Exact<{
+  data?: InputMaybe<EbankingSendMoneyInput>;
+}>;
+
+export type CheckForSendMoneyMutation = {
+  eBanking: {
+    webUtilityPayments?: {
+      sendMoney?: {
+        check?: {
+          verified: boolean;
+          error?:
+            | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+            | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+            | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+            | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+            | {
+                __typename: 'ValidationError';
+                code: number;
+                validationErrorMsg: Record<string, Array<string>>;
+              }
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type CompleteSendMoneyMutationVariables = Exact<{
+  data?: InputMaybe<EbankingSendMoneyInput>;
+  transactionPin: Scalars['String'];
+}>;
+
+export type CompleteSendMoneyMutation = {
+  eBanking: {
+    webUtilityPayments?: {
+      sendMoney?: {
+        proceed?: {
+          recordId?: string | null;
+          error?:
+            | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+            | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+            | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+            | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+            | {
+                __typename: 'ValidationError';
+                code: number;
+                validationErrorMsg: Record<string, Array<string>>;
+              }
+            | null;
+          record?: {
+            amount: string;
+            purposeOfTransaction?: PurposeOfTransaction | null;
+            recipientAccountNumber: string;
+            recipientMobileNumber: string;
+            recipientName: string;
+            remarks?: string | null;
+            sourceAccount: string;
+            transactionCode: string;
+            transactionDate: string;
+          } | null;
+        } | null;
       } | null;
     } | null;
   };

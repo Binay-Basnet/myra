@@ -19,3 +19,45 @@ mutation accountTransfer($data: EbankingAccountTransferInput) {
     }
   }
 }
+
+mutation checkForSendMoney($data: EbankingSendMoneyInput){
+  eBanking {
+    webUtilityPayments {
+      sendMoney {
+        check(data: $data){
+          error {
+            ...MutationError
+          }
+          verified
+        }
+      }
+    }
+  }
+}
+
+
+mutation completeSendMoney($data: EbankingSendMoneyInput, $transactionPin: String!){
+  eBanking {
+    webUtilityPayments {
+      sendMoney {
+        proceed(data: $data, transactionPin: $transactionPin ){
+          error {
+            ...MutationError
+          }
+          recordId
+          record {
+            amount
+            purposeOfTransaction
+            recipientAccountNumber
+            recipientMobileNumber
+            recipientName
+            remarks
+            sourceAccount
+            transactionCode
+            transactionDate
+          }
+        }
+      }
+    }
+  }
+}
