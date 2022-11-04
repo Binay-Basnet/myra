@@ -5,9 +5,9 @@ import { useAccountDetails } from '@coop/shared/utils';
 import {
   AccountStatistics,
   BalanceChart,
-  DetailPageTabHeader,
   GeneralInfoCard,
   RecentTransactions,
+  TabHeader,
   UpcomingInstallments,
 } from '../details';
 // import {
@@ -34,6 +34,13 @@ const links = [
   },
 ];
 
+const accountTypes = {
+  [NatureOfDepositProduct.Saving]: 'Saving Account',
+  [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
+  [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
+  [NatureOfDepositProduct.Current]: 'Current Account',
+};
+
 export const Overview = () => {
   const { accountDetails } = useAccountDetails();
 
@@ -44,7 +51,10 @@ export const Overview = () => {
       label: 'Account Open Date',
       value: accountDetails?.accountOpenDate,
     },
-    { label: 'Default Amount Deposit Account Type', value: accountDetails?.accountType },
+    {
+      label: 'Default Amount Deposit Account Type',
+      value: accountDetails?.accountType ? accountTypes[accountDetails?.accountType] : '',
+    },
     { label: 'Interest Accrued', value: accountDetails?.interestAccrued ?? '0' },
     { label: 'Interest Earned', value: accountDetails?.interestEarned ?? '0' },
     { label: 'Guarantee Amount', value: accountDetails?.guaranteedAmount ?? '0' },
@@ -70,7 +80,7 @@ export const Overview = () => {
 
   return (
     <>
-      <DetailPageTabHeader heading="Overview" />
+      <TabHeader heading="Overview" />
 
       <DetailPageQuickLinks links={links} />
 

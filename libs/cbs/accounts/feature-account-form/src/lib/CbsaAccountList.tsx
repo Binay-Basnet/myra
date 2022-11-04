@@ -26,7 +26,7 @@ export const CBSAccountList = () => {
 
   const { t } = useTranslation();
 
-  const { data, isLoading } = useGetAccountTableListQuery(
+  const { data, isFetching } = useGetAccountTableListQuery(
     {
       paginate: getRouterQuery({ type: ['PAGINATION'] }),
       filter: {
@@ -116,9 +116,12 @@ export const CBSAccountList = () => {
       </Box>
 
       <Table
-        isLoading={isLoading}
+        isLoading={isFetching}
         data={rowData}
         columns={columns}
+        rowOnClick={(row) => {
+          router.push(`/accounts/details/${row?.node?.id}`);
+        }}
         pagination={{
           total: data?.account?.list?.totalCount ?? 'Many',
           pageInfo: data?.account?.list?.pageInfo,

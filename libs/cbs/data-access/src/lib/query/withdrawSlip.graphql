@@ -1,0 +1,34 @@
+query getPastSlipsList($accountId: ID!) {
+  withdrawSlip {
+    listPastSlips(accountId: $accountId) {
+      data {
+        slipNumber
+        state
+        date
+      }
+    }
+  }
+}
+
+query getAvailableSlipsList($accountId: ID!) {
+  withdrawSlip {
+    listAvailableSlips(accountId: $accountId) {
+      data {
+        slipNumber
+        state
+        date
+      }
+    }
+  }
+}
+
+query getAvailableRange($count: Int!) {
+  withdrawSlip {
+    getAvailableRange(count: $count) {
+      range {
+        from
+        to
+      }
+    }
+  }
+}

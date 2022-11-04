@@ -19,7 +19,7 @@ import {
   useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
-import { FormInput } from '@coop/shared/form';
+import { FormAmountInput, FormInput } from '@coop/shared/form';
 import {
   asyncToast,
   Box,
@@ -343,6 +343,10 @@ export const AddDeposit = () => {
       },
       promise: mutateAsync({ data: filteredValues as DepositInput }),
       onSuccess: () => {
+        if (values.payment_type === DepositPaymentType.Cheque) {
+          queryClient.invalidateQueries('getAvailableSlipsList');
+          queryClient.invalidateQueries('getPastSlipsList');
+        }
         queryClient.invalidateQueries('getDepositListData');
         router.push('/transactions/deposit/list');
       },
@@ -425,10 +429,8 @@ export const AddDeposit = () => {
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
                           <FormInput name="voucherId" label={t['addDepositVoucherId']} />
 
-                          <FormInput
+                          <FormAmountInput
                             name="amount"
-                            textAlign="right"
-                            type="number"
                             min={0}
                             label={t['addDepositAmountToBeDeposited']}
                           />
@@ -455,7 +457,10 @@ export const AddDeposit = () => {
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
                           <FormInput name="voucherId" label={t['addDepositVoucherId']} />
 
-                          <FormInput name="amount" label={t['addDepositAmountToBeDeposited']} />
+                          <FormAmountInput
+                            name="amount"
+                            label={t['addDepositAmountToBeDeposited']}
+                          />
                         </Grid>
 
                         <Box display="flex" flexDirection="column" gap="s4">

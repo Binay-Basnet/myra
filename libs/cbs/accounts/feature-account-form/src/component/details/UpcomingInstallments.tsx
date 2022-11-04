@@ -38,6 +38,7 @@ export const UpcomingInstallments = () => {
         isStatic
         showFooter
         data={data}
+        noDataTitle="upcoming payment"
         columns={[
           {
             header: 'Installment No.',
