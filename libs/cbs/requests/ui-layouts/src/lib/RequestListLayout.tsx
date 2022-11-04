@@ -12,10 +12,10 @@ const accountColumns = [
     title: 'Member Request',
     link: '/requests/member',
   },
-  {
-    title: 'Chequebook Request',
-    link: '/requests/cheque-book',
-  },
+  // {
+  //   title: 'Chequebook Request',
+  //   link: '/requests/cheque-book',
+  // },
   // {
   //   title: 'Teller Transfer Request',
   //   link: '/requests/teller-transfer',
@@ -33,10 +33,10 @@ const accountColumns = [
     link: '/requests/loan',
   },
 
-  {
-    title: 'Block Cheque Request',
-    link: '/requests/block-cheque',
-  },
+  // {
+  //   title: 'Block Cheque Request',
+  //   link: '/requests/block-cheque',
+  // },
 ];
 
 export const RequestListLayout = ({ children }: IAccountPageLayoutProps) => (

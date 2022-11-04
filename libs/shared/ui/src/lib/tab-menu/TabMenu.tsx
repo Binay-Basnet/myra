@@ -19,12 +19,13 @@ const NAVBAR_TAB_OBJECT: Record<string, number> = {
   members: 0,
   share: 1,
   accounts: 2,
-  transactions: 3,
-  loan: 4,
-  reports: 5,
-  transfer: 6,
-  requests: 7,
-  withdraw: 8,
+  loan: 3,
+  transactions: 4,
+  transfer: 5,
+
+  requests: 6,
+  withdraw: 7,
+  reports: 8,
 };
 
 const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
@@ -45,25 +46,22 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   },
 
   {
-    title: 'transactions',
-    icon: IoIosList,
-    link: '/transactions/deposit/list',
-  },
-  {
     title: 'loan',
     icon: BsArrowLeftRight,
     link: '/loan/applications',
   },
+
   {
-    title: 'reports',
-    icon: BsFileText,
-    link: '/reports/cbs/share-report',
+    title: 'transactions',
+    icon: IoIosList,
+    link: '/transactions/deposit/list',
   },
   {
     title: 'transfer',
     icon: AiOutlineSend,
     link: '/transfer/vault-transfer/list',
   },
+
   {
     title: 'requests',
     icon: IoMailUnreadOutline,
@@ -73,6 +71,11 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
     title: 'withdrawSlip',
     icon: TbMailForward,
     link: '/withdraw',
+  },
+  {
+    title: 'reports',
+    icon: BsFileText,
+    link: '/reports/cbs/share-report',
   },
 ];
 

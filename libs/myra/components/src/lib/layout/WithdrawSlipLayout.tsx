@@ -16,12 +16,12 @@ const shareColumns = [
     link: '/share/balance',
   },
   {
-    title: 'withdrawSlipRequests',
-    link: '/share/register',
+    title: 'Withdraw Slip Requests',
+    link: '/withdraw/cheque-book',
   },
   {
-    title: 'withdrawSlipBlockRequests',
-    link: '/share/register',
+    title: 'Blocked Withdraw Slip',
+    link: '/withdraw/block-cheque',
   },
 ];
 
