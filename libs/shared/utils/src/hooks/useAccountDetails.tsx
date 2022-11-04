@@ -1,18 +1,6 @@
 import { useRouter } from 'next/router';
 
-import {
-  DateType,
-  NatureOfDepositProduct,
-  useAppSelector,
-  useGetAccountDetailsDataQuery,
-} from '@coop/cbs/data-access';
-
-const accountTypes = {
-  [NatureOfDepositProduct.Saving]: 'Saving Account',
-  [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
-  [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
-  [NatureOfDepositProduct.Current]: 'Current Account',
-};
+import { DateType, useAppSelector, useGetAccountDetailsDataQuery } from '@coop/cbs/data-access';
 
 export const useAccountDetails = () => {
   const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);
@@ -35,7 +23,6 @@ export const useAccountDetails = () => {
         preferenceDate === DateType.Bs
           ? accountData?.accountOpenDate?.np
           : accountData?.accountOpenDate?.en,
-      accountType: accountData?.accountType ? accountTypes[accountData?.accountType] : '',
     },
   };
 };

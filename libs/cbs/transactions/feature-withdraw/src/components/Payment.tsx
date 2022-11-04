@@ -15,6 +15,7 @@ import {
 } from '@coop/cbs/transactions/ui-containers';
 import {
   FormAgentSelect,
+  FormAmountInput,
   FormEditableTable,
   FormFileInput,
   FormInput,
@@ -157,24 +158,14 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
 
             <FormInput name="bankCheque.chequeNo" label={t['withdrawPaymentChequeNo']} />
 
-            <FormInput
-              name="bankCheque.amount"
-              type="number"
-              label={t['withdrawPaymentAmount']}
-              textAlign="right"
-            />
+            <FormAmountInput name="bankCheque.amount" label={t['withdrawPaymentAmount']} />
           </InputGroupContainer>
         )}
 
         {selectedPaymentMode === WithdrawPaymentType.Cash && (
           <>
             <InputGroupContainer>
-              <FormInput
-                name="cash.cashPaid"
-                type="number"
-                label={t['withdrawPaymentCash']}
-                textAlign="right"
-              />
+              <FormAmountInput name="cash.cashPaid" label={t['withdrawPaymentCash']} />
             </InputGroupContainer>
 
             <FormSwitch

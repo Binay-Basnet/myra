@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import {
@@ -9,6 +9,7 @@ import {
   ObjState,
   RootState,
   useAppSelector,
+  useGetAvailableSlipsListQuery,
   useGetCoaBankListQuery,
 } from '@coop/cbs/data-access';
 import {
@@ -18,6 +19,7 @@ import {
 } from '@coop/cbs/transactions/ui-containers';
 import {
   FormAgentSelect,
+  FormAmountInput,
   FormCheckbox,
   FormDatePicker,
   FormEditableTable,
@@ -89,7 +91,7 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
       value: DepositPaymentType.Cash,
     },
     {
-      label: t['depositPaymentCheque'],
+      label: 'Withdraw Slip',
       value: DepositPaymentType.Cheque,
     },
     {
@@ -169,6 +171,22 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
   // refetch data when calendar preference is updated
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
 
+  const chequeAccountId = watch('cheque.accId');
+
+  const { data: availableSlipsListQueryData } = useGetAvailableSlipsListQuery(
+    { accountId: chequeAccountId },
+    { enabled: !!chequeAccountId }
+  );
+
+  const availableSlipListOptions = useMemo(
+    () =>
+      availableSlipsListQueryData?.withdrawSlip?.listAvailableSlips?.data?.map((withdrawSlip) => ({
+        label: withdrawSlip?.slipNumber as string,
+        value: withdrawSlip?.slipNumber as string,
+      })) ?? [],
+    [availableSlipsListQueryData]
+  );
+
   useEffect(() => {
     resetField('bankVoucher.depositedAt');
     resetField('cheque.depositedAt');
@@ -201,12 +219,7 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
 
             <FormInput name="bankVoucher.voucherId" label={t['addDepositVoucherId']} />
 
-            <FormInput
-              name="bankVoucher.amount"
-              type="number"
-              label={t['depositPaymentAmount']}
-              textAlign="right"
-            />
+            <FormAmountInput name="bankVoucher.amount" label={t['depositPaymentAmount']} />
 
             <FormDatePicker
               name="bankVoucher.depositedAt"
@@ -245,26 +258,20 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
               />
             </GridItem>
 
-            <FormInput name="cheque.chequeNo" label={t['depositePaymentChequeNo']} />
-
-            <FormInput
-              name="cheque.amount"
-              type="number"
-              label={t['depositPaymentAmount']}
-              textAlign="right"
+            <FormSelect
+              name="cheque.chequeNo"
+              label="Withdraw Slip No."
+              options={availableSlipListOptions}
             />
+
+            <FormAmountInput name="cheque.amount" label={t['depositPaymentAmount']} />
           </InputGroupContainer>
         )}
 
         {selectedPaymentMode === DepositPaymentType.Cash && (
           <>
             <InputGroupContainer>
-              <FormInput
-                name="cash.cashPaid"
-                type="number"
-                label={t['depositPaymentCash']}
-                textAlign="right"
-              />
+              <FormAmountInput name="cash.cashPaid" label={t['depositPaymentCash']} />
             </InputGroupContainer>
 
             <FormSwitch

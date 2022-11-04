@@ -4,7 +4,7 @@ import { AccountDetailsPathBar } from '@coop/cbs/accounts/ui-components';
 import { AccountDetailsSidebar } from '@coop/cbs/accounts/ui-layouts';
 import { Box, WIPState } from '@coop/shared/ui';
 
-import { Overview, Transactions } from '../component';
+import { Overview, Transactions, WithdrawSlip } from '../component';
 
 export const AccountDetails = () => {
   const router = useRouter();
@@ -24,16 +24,27 @@ export const AccountDetails = () => {
       >
         <AccountDetailsSidebar />
       </Box>
-      <Box display="flex" p="s16" flexDir="column" gap="s16" ml="320px" bg="border.layout">
+      <Box
+        display="flex"
+        p="s16"
+        flexDir="column"
+        gap="s16"
+        ml="320px"
+        bg="border.layout"
+        minH="calc(100vh - 170px)"
+      >
         {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}
 
         {tabQuery === 'transactions' && <Transactions />}
 
-        {tabQuery && !['undefined', 'overview', 'transactions'].includes(tabQuery) && (
-          <Box h="calc(100vh - 110px)">
-            <WIPState />
-          </Box>
-        )}
+        {tabQuery === 'withdraw slip' && <WithdrawSlip />}
+
+        {tabQuery &&
+          !['undefined', 'overview', 'transactions', 'withdraw slip'].includes(tabQuery) && (
+            <Box h="calc(100vh - 110px)">
+              <WIPState />
+            </Box>
+          )}
 
         {/* {tabQuery === 'accounts' && <Account />}
         {tabQuery === 'activity' && <Activity />}

@@ -1,0 +1,10 @@
+mutation setIssueNewSlip($accountId: ID!, $count: Int!) {
+  withdrawSlip {
+    issueNew(accountId: $accountId, count: $count) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

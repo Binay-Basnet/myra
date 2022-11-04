@@ -4,7 +4,7 @@ import { AddIcon } from '@chakra-ui/icons';
 import { Button, DetailsCard } from '@coop/shared/ui';
 import { useAccountDetails, useGetAccountTransactionList } from '@coop/shared/utils';
 
-import { DetailPageTabHeader, TransactionCard } from '../details';
+import { TabHeader, TransactionCard } from '../details';
 
 export const Transactions = () => {
   const router = useRouter();
@@ -17,7 +17,7 @@ export const Transactions = () => {
 
   return (
     <>
-      <DetailPageTabHeader
+      <TabHeader
         heading="Transaction"
         headerButton={
           <Button

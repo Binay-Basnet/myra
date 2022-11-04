@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
@@ -8,6 +9,7 @@ import {
   NatureOfDepositProduct,
   ObjState,
   useGetAccountTableListQuery,
+  useGetAvailableSlipsListQuery,
   useSetWithdrawDataMutation,
   WithdrawBy,
   WithdrawInput,
@@ -15,7 +17,7 @@ import {
   WithdrawWith,
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
-import { FormInput, FormSwitchTab } from '@coop/shared/form';
+import { FormAmountInput, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
   Alert,
   asyncToast,
@@ -66,6 +68,8 @@ const cashOptions: Record<string, string> = {
 const FINE = '0';
 
 export const AddWithdraw = () => {
+  const queryClient = useQueryClient();
+
   const { t } = useTranslation();
 
   const accountTypes = {
@@ -76,8 +80,8 @@ export const AddWithdraw = () => {
   };
 
   const withdrawTypes = [
-    { label: t['addWithdrawCheque'], value: WithdrawWith.Cheque },
-    { label: t['addWithdrawWithdrawSlip'], value: WithdrawWith.WithdrawSlip },
+    { label: t['addWithdrawWithdrawSlip'], value: WithdrawWith.Cheque },
+    { label: 'Counter Slip', value: WithdrawWith.WithdrawSlip },
   ];
 
   const router = useRouter();
@@ -119,6 +123,20 @@ export const AddWithdraw = () => {
   );
 
   const accountId = watch('accountId');
+
+  const { data: availableSlipsListQueryData } = useGetAvailableSlipsListQuery(
+    { accountId },
+    { enabled: !!accountId }
+  );
+
+  const availableSlipListOptions = useMemo(
+    () =>
+      availableSlipsListQueryData?.withdrawSlip?.listAvailableSlips?.data?.map((withdrawSlip) => ({
+        label: withdrawSlip?.slipNumber as string,
+        value: withdrawSlip?.slipNumber as string,
+      })) ?? [],
+    [availableSlipsListQueryData]
+  );
 
   const selectedAccount = useMemo(
     () =>
@@ -179,7 +197,14 @@ export const AddWithdraw = () => {
           success: t['addWithdrawNewWithdrawAdded'],
           loading: t['addWithdrawAddingNewWithdraw'],
         },
-        onSuccess: () => router.push('/transactions/withdraw/list'),
+        onSuccess: () => {
+          if (values.withdrawWith === WithdrawWith.Cheque) {
+            queryClient.invalidateQueries('getAvailableSlipsList');
+            queryClient.invalidateQueries('getPastSlipsList');
+          }
+          queryClient.invalidateQueries('getWithdrawListData');
+          router.push('/transactions/withdraw/list');
+        },
         promise: mutateAsync({ data: filteredValues as WithdrawInput }),
       });
     }
@@ -193,7 +218,14 @@ export const AddWithdraw = () => {
           success: t['addWithdrawNewWithdrawAdded'],
           loading: t['addWithdrawAddingNewWithdraw'],
         },
-        onSuccess: () => router.push('/transactions/withdraw/list'),
+        onSuccess: () => {
+          if (values.withdrawWith === WithdrawWith.Cheque) {
+            queryClient.invalidateQueries('getAvailableSlipsList');
+            queryClient.invalidateQueries('getPastSlipsList');
+          }
+          queryClient.invalidateQueries('getWithdrawListData');
+          router.push('/transactions/withdraw/list');
+        },
         promise: mutateAsync({ data: filteredValues as WithdrawInput }),
       });
     }
@@ -253,7 +285,11 @@ export const AddWithdraw = () => {
 
                   {memberId && accountId && withdrawn === WithdrawWith.Cheque && (
                     <InputGroupContainer>
-                      <FormInput name="chequeNo" label={t['addWithdrawChequeNo']} />
+                      <FormSelect
+                        name="chequeNo"
+                        label="Withdraw Slip No"
+                        options={availableSlipListOptions}
+                      />
                     </InputGroupContainer>
                   )}
 
@@ -264,14 +300,7 @@ export const AddWithdraw = () => {
                   )}
 
                   {memberId && accountId && (
-                    <FormInput
-                      type="number"
-                      min={0}
-                      name="amount"
-                      label={t['addWithdrawWithdrawAmount']}
-                      textAlign="right"
-                      __placeholder="0.0"
-                    />
+                    <FormAmountInput min={0} name="amount" label={t['addWithdrawWithdrawAmount']} />
                   )}
 
                   {memberId && accountId && (
