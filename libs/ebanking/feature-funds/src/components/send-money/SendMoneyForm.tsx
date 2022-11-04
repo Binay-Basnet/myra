@@ -1,56 +1,63 @@
-import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import React, { useEffect } from 'react';
+import { FormProvider, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 
 import { InfoCard } from '@coop/ebanking/cards';
+import {
+  EbankingSendMoneyInput,
+  PurposeOfTransaction,
+  useCheckForSendMoneyMutation,
+  useGetAccountListQuery,
+} from '@coop/ebanking/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Button, GridItem, Icon } from '@coop/shared/ui';
-
-type AccountTransferFormType = {
-  source_account: string;
-  destination_account: string;
-  amount: string;
-  remarks: string;
-};
-
-const accounts = [
-  {
-    label: 'Salary Saving Account - 10390390 ( Default Account )',
-    value: '1',
-  },
-  {
-    label: 'Current Account - 3904430',
-    value: '2',
-  },
-];
+import { Box, Button, GridItem, Icon, toast } from '@coop/shared/ui';
 
 const purposes = [
   {
     label: 'Personal Use',
-    value: 'personal_use',
+    value: PurposeOfTransaction.PersonalUse,
   },
   {
-    label: 'Work Use',
-    value: 'work_use',
+    label: 'Family Expenses',
+    value: PurposeOfTransaction.FamilyExpenses,
+  },
+  {
+    label: 'Bill Sharing',
+    value: PurposeOfTransaction.BillSharing,
+  },
+  {
+    label: 'Lend or Borrow',
+    value: PurposeOfTransaction.LendOrBorrow,
   },
 ];
 
-type PaymentStatus = 'form' | 'review' | 'success' | 'failure';
+type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'loading';
 
 interface SendMoneyProps {
   setPaymentStatus: React.Dispatch<React.SetStateAction<PaymentStatus>>;
 }
 
 export const SendMoneyForm = ({ setPaymentStatus }: SendMoneyProps) => {
-  const methods = useForm<AccountTransferFormType>({
-    defaultValues: {
-      source_account: '1',
-    },
+  const { data: accountData } = useGetAccountListQuery({
+    transactionPagination: { after: '', first: 1 },
   });
+
+  const { mutateAsync: checkData } = useCheckForSendMoneyMutation();
+
+  const accountOptions = accountData?.eBanking?.account?.list?.accounts?.map((account) => ({
+    label: `${account?.name} - ${account?.id} ${account?.isDefault ? '( Default )' : ''}`,
+    value: account?.id as string,
+  }));
+
+  const methods = useFormContext<EbankingSendMoneyInput>();
+
+  useEffect(() => {
+    methods.reset({});
+  }, []);
 
   return (
     <InfoCard
-      title={'Send Money'}
+      title="Send Money"
       btn={
         <Button variant="ghost" gap="s4">
           <Icon as={AiOutlinePlus} color="priamry.500" />
@@ -60,43 +67,54 @@ export const SendMoneyForm = ({ setPaymentStatus }: SendMoneyProps) => {
     >
       <FormProvider {...methods}>
         <form
-          onSubmit={methods.handleSubmit((data) => {
-            if (+data.amount < 1000) {
-              methods.setError('amount', { message: 'Insufficient Amount.' });
-              return;
+          onSubmit={methods.handleSubmit(async (data) => {
+            const response = await checkData({ data });
+
+            if (response?.eBanking?.webUtilityPayments?.sendMoney?.check?.verified) {
+              setPaymentStatus('review');
+            } else {
+              const error = response?.eBanking?.webUtilityPayments?.sendMoney?.check?.error;
+
+              const badRequestError =
+                error?.__typename === 'BadRequestError' ? error?.badRequestErrorMessage : '';
+
+              if (badRequestError) {
+                toast({
+                  id: 'error',
+                  type: 'error',
+                  message: badRequestError as string,
+                });
+              } else {
+                toast({
+                  id: 'error',
+                  type: 'error',
+                  message: 'Something went wrong!!',
+                });
+              }
             }
-            setPaymentStatus('review');
           })}
         >
           <Box p="s16" display="flex" flexDir="column" gap="s32">
             <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" gap="s16">
               <GridItem colSpan={2}>
-                <FormSelect
-                  name="source_account"
-                  label="Source Account"
-                  __placeholder="Select Source Account"
-                  options={accounts}
-                />
+                <FormSelect name="sourceAccount" label="Source Account" options={accountOptions} />
               </GridItem>
 
               <FormInput
-                name="recipient name"
+                name="recipientName"
                 label="Recipient Name"
-                __placeholder="Enter recipient full name"
                 rules={{ required: 'Name is Required.' }}
               />
 
               <FormInput
-                name="recipient_mobile_number"
+                name="recipientMobileNumber"
                 label="Recipient Mobile Number"
-                __placeholder="Enter Recipient Mobile Number"
                 rules={{ required: 'Mobile Number is Required.' }}
               />
 
               <FormInput
-                name="recipient_account_number"
+                name="recipientAccountNumber"
                 label="Recipient Account Number"
-                __placeholder="Enter Account Number"
                 rules={{ required: 'Account Number is Required.' }}
               />
 
@@ -104,20 +122,17 @@ export const SendMoneyForm = ({ setPaymentStatus }: SendMoneyProps) => {
                 name="amount"
                 type="number"
                 label="Amount"
-                __placeholder="0.00"
                 rules={{ required: 'Transaction Amount is Required.' }}
               />
               <FormSelect
-                name="purpose"
+                name="purposeOfTransaction"
                 label="Purpose"
-                __placeholder="Select Purpose of transaction"
                 options={purposes}
                 rules={{ required: 'Purpose is Required.' }}
               />
               <FormInput
                 name="remarks"
                 label="Remarks"
-                __placeholder="Enter Remarks"
                 rules={{ required: 'Remarks is Required.' }}
               />
             </Box>

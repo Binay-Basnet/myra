@@ -11719,11 +11719,9 @@ export type TransactionQueryViewDepositArgs = {
   transactionId: Scalars['ID'];
 };
 
-
 export type TransactionQueryViewLoanRepaymentArgs = {
   paymentId: Scalars['ID'];
 };
-
 
 export type TransactionQueryViewWithdrawArgs = {
   transactionId: Scalars['ID'];

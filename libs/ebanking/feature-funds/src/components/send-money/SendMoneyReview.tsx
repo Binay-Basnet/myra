@@ -1,21 +1,49 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
+import { useQueryClient } from 'react-query';
+import { useRouter } from 'next/router';
 
 import { InfoCard } from '@coop/ebanking/cards';
-import { Box, Button, Grid, Icon, PasswordInput, Text } from '@coop/shared/ui';
+import {
+  EbankingSendMoneyInput,
+  useCompleteSendMoneyMutation,
+  useGetAccountListQuery,
+} from '@coop/ebanking/data-access';
+import { Box, Button, Grid, Icon, PasswordInput, Text, toast } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
 import { CardBodyContainer, CardContainer, CardContent, CardHeader } from '../CardContainer';
 
-type PaymentStatus = 'form' | 'review' | 'success' | 'failure';
+type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'loading';
 
 interface SendMoneyReviewProps {
   setPaymentStatus: React.Dispatch<React.SetStateAction<PaymentStatus>>;
 }
 
 export const SendMoneyReview = ({ setPaymentStatus }: SendMoneyReviewProps) => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const [hasTransactionPassword, setHasTransactionPassword] = useState(false);
-  const { register, reset } = useForm();
+  const { mutateAsync: completeSendMoney } = useCompleteSendMoneyMutation({
+    onSuccess: (response) => {
+      queryClient.setQueryData(
+        'send-money-success',
+        response?.eBanking?.webUtilityPayments?.sendMoney?.proceed?.record
+      );
+    },
+  });
+  const { getValues } = useFormContext<EbankingSendMoneyInput>();
+
+  const { register, reset, getValues: getTransactionPin } = useForm<{ transactionPin: string }>();
+
+  const { data: accountData } = useGetAccountListQuery({
+    transactionPagination: { after: '', first: 1 },
+  });
+
+  const sourceAccount = accountData?.eBanking?.account?.list?.accounts?.find(
+    (account) => account?.id === getValues()?.sourceAccount
+  );
 
   return (
     <>
@@ -31,19 +59,36 @@ export const SendMoneyReview = ({ setPaymentStatus }: SendMoneyReviewProps) => {
         <CardContainer>
           <CardBodyContainer>
             <CardHeader>Payee Details</CardHeader>
-            <CardContent title="Source Account" subtitle="Salary Saving Account - 10101432" />
+            <CardContent
+              title="Source Account"
+              subtitle={`${sourceAccount?.name} - ${sourceAccount?.id}`}
+            />
             <Grid templateColumns="repeat(3, 1fr)" gap="s16">
-              <CardContent title="Recipient Name" subtitle="Madan Bahadur KC" />
-              <CardContent title="Mobile Number" subtitle="9847814919" />
-              <CardContent title="Account Number" subtitle="10233903930" />
-              <CardContent title="Purpose" subtitle="Personal Use" />
-              <CardContent title="Remarks" subtitle="Remaining Payment for monitor" />
+              <CardContent title="Recipient Name" subtitle={getValues().recipientName as string} />
+              <CardContent
+                title="Mobile Number"
+                subtitle={getValues().recipientMobileNumber as string}
+              />
+              <CardContent
+                title="Account Number"
+                subtitle={getValues().recipientAccountNumber as string}
+              />
+              <CardContent
+                title="Purpose"
+                subtitle={
+                  getValues().purposeOfTransaction?.toLowerCase().replace('_', ' ') as string
+                }
+              />
+              <CardContent title="Remarks" subtitle={getValues().remarks as string} />
             </Grid>
           </CardBodyContainer>
           <CardBodyContainer>
             <CardHeader>Payment Details</CardHeader>
 
-            <CardContent title="Transaction Amount" subtitle="42,120.59" />
+            <CardContent
+              title="Transaction Amount"
+              subtitle={amountConverter(getValues().amount as string) as string}
+            />
           </CardBodyContainer>
           {!hasTransactionPassword && (
             <Box display="flex" gap="s16">
@@ -72,24 +117,55 @@ export const SendMoneyReview = ({ setPaymentStatus }: SendMoneyReviewProps) => {
       </InfoCard>
 
       {hasTransactionPassword ? (
-        <Box as="form" bg="white" p="s16" display="flex" flexDir="column" gap="s32">
+        <Box bg="white" p="s16" display="flex" flexDir="column" gap="s32">
           <Box display="flex" w="50%" flexDir="column" gap="s4">
-            <PasswordInput {...register('password')} />
-            <Text fontWeight="500" fontSize="s3" color="success.400">
-              Forget your password ?
+            <PasswordInput label="Pin" {...register('transactionPin')} />
+            <Text
+              fontWeight="500"
+              fontSize="s3"
+              color="success.400"
+              onClick={() => router.push('/settings')}
+            >
+              Forget your pin ?
             </Text>
           </Box>
           <Box display="flex" gap="s16">
             <Button
-              type="submit"
               w="100px"
-              onClick={() => {
-                setHasTransactionPassword(false);
-                reset();
+              type="button"
+              onClick={async (e) => {
+                e.preventDefault();
+                setPaymentStatus('loading');
 
-                if (Math.floor(Math.random() * 100) % 2 === 0) {
+                const response = await completeSendMoney({
+                  data: getValues(),
+                  transactionPin: getTransactionPin().transactionPin,
+                });
+
+                const errors = response?.eBanking?.webUtilityPayments?.sendMoney?.proceed?.error;
+
+                if (
+                  errors?.__typename === 'BadRequestError' &&
+                  errors?.badRequestErrorMessage.toLowerCase().includes('pin')
+                ) {
+                  toast({
+                    id: 'error-text',
+                    type: 'error',
+                    message: 'Invalid Pin',
+                  });
+                  setPaymentStatus('review');
+
+                  return;
+                }
+
+                if (response.eBanking.webUtilityPayments?.sendMoney?.proceed?.recordId) {
+                  setHasTransactionPassword(false);
+
                   setPaymentStatus('success');
+                  reset();
                 } else {
+                  setHasTransactionPassword(false);
+
                   setPaymentStatus('failure');
                 }
               }}

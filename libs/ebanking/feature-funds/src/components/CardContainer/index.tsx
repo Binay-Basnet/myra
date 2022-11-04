@@ -34,6 +34,8 @@ export const CardContent = ({ title, subtitle }: CardContentProps) => (
     <Text color="gray.800" fontSize="s3" fontWeight="600">
       {title}
     </Text>
-    <TextFields variant="formInput">{subtitle}</TextFields>
+    <TextFields variant="formInput" textTransform="capitalize">
+      {subtitle}
+    </TextFields>
   </Box>
 );
