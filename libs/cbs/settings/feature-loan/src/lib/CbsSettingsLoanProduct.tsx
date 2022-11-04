@@ -1,15 +1,19 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import {
   DepositProductStatus,
   Id_Type,
+  LoanProductInactiveData,
   useGetLoanProductListQuery,
   useGetNewIdMutation,
+  useSetLoanProductInactiveMutation,
 } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
+import { FormTextArea } from '@coop/shared/form';
 import { Column, Table } from '@coop/shared/table';
-import { Box, DEFAULT_PAGE_SIZE, PageHeader, Text } from '@coop/shared/ui';
+import { asyncToast, Box, ChakraModal, DEFAULT_PAGE_SIZE, PageHeader, Text } from '@coop/shared/ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 const LOAN_TAB_ITEMS = [
@@ -52,10 +56,21 @@ export const SettingsLoanProduct = () => {
 
 export const LoanProductTable = ({ showActionButton }: { showActionButton?: boolean }) => {
   const router = useRouter();
+  const [ID, setID] = useState('');
+  const [openModal, setOpenModal] = useState(false);
+  const { mutateAsync } = useSetLoanProductInactiveMutation();
+  const onOpenModal = () => {
+    setOpenModal(true);
+  };
+  const onCloseModal = () => {
+    setOpenModal(false);
+  };
+  const methods = useForm<LoanProductInactiveData>();
+  const { resetField } = methods;
 
   const { t } = useTranslation();
 
-  const { data, isLoading } = useGetLoanProductListQuery(
+  const { data, isLoading, refetch } = useGetLoanProductListQuery(
     router.query['before']
       ? {
           paginate: {
@@ -86,8 +101,11 @@ export const LoanProductTable = ({ showActionButton }: { showActionButton?: bool
 
   const popoverTitle = [
     {
-      title: 'edit',
-      onClick: (id: string) => router.push(`/settings/general/loan-products/edit/${id}`),
+      title: 'loanProductMakeInactive',
+      onClick: (id: string) => {
+        onOpenModal();
+        setID(id);
+      },
     },
   ];
 
@@ -159,15 +177,65 @@ export const LoanProductTable = ({ showActionButton }: { showActionButton?: bool
     [t, router, popoverTitle]
   );
 
+  const makeInactive = useCallback(async () => {
+    await asyncToast({
+      id: 'inactive-id',
+      msgs: {
+        success: 'Loan product has been made inactive',
+        loading: 'making loan product inactive',
+      },
+      onSuccess: () => {
+        refetch();
+        onCloseModal();
+        resetField('remarks');
+      },
+      promise: mutateAsync({
+        data: {
+          id: ID,
+          remarks: methods.getValues()['remarks'],
+        },
+      }),
+      // onError: (error) => {
+      //   if (error.__typename === 'ValidationError') {
+      //     Object.keys(error.validationErrorMsg).map((key) =>
+      //       methods.setError(key as keyof DepositProductInput, {
+      //         message: error.validationErrorMsg[key][0] as string,
+      //       })
+      //     );
+      //   }
+      // },
+    });
+  }, [ID, mutateAsync]);
+
+  const onCancel = () => {
+    resetField('remarks');
+  };
+
   return (
-    <Table
-      isLoading={isLoading}
-      data={rowData}
-      columns={columns}
-      pagination={{
-        total: data?.settings?.general?.loanProducts?.list?.totalCount ?? 'Many',
-        pageInfo: data?.settings?.general?.loanProducts?.list?.pageInfo,
-      }}
-    />
+    <>
+      <Table
+        isLoading={isLoading}
+        data={rowData}
+        columns={columns}
+        pagination={{
+          total: data?.settings?.general?.loanProducts?.list?.totalCount ?? 'Many',
+          pageInfo: data?.settings?.general?.loanProducts?.list?.pageInfo,
+        }}
+      />
+      <ChakraModal
+        open={openModal}
+        onClose={onCloseModal}
+        title="loanProductMakeInactiveTitle"
+        primaryButtonLabel="submit"
+        secondaryButtonLabel="cancel"
+        width="600px"
+        primaryButtonHandler={makeInactive}
+        secondaryButtonHandler={onCancel}
+      >
+        <FormProvider {...methods}>
+          <FormTextArea name="remarks" label={t['depositProductInactiveReason']} />
+        </FormProvider>
+      </ChakraModal>
+    </>
   );
 };
