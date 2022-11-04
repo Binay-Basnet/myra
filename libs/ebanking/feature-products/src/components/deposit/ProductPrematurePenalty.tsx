@@ -33,14 +33,6 @@ export const ProductPrematurePenalty = ({ prematurePenalty }: IProductPrematureP
         cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
       },
       {
-        header: 'Penalty Ledger Mapping',
-        accessorKey: 'penaltyLedgerMapping',
-        meta: {
-          width: '25%',
-        },
-        cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
-      },
-      {
         header: 'Penalty Rs.',
         accessorKey: 'penaltyAmount',
         cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),

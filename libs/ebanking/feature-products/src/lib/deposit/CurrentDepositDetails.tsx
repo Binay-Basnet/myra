@@ -18,7 +18,6 @@ import {
   ProductGeneralInformation,
   ProductLimits,
   ProductPenalty,
-  ProductPrematurePenalty,
   ProductRebate,
   ProductServiceCharge,
 } from '../../components/deposit';
@@ -114,11 +113,11 @@ export const CurrentDepositDetails = ({ product, criteria }: ICurrentDepositDeta
       />
       <ProductServiceCharge serviceCharge={product?.serviceCharge} />
       <AccountCloseCharge accountCloseCharge={product?.accountCloseCharge} />
+      <ProductLimits limits={limits} />
+
       <ProductRebate rebateData={product?.rebateData} />
       <ProductPenalty penaltyData={product?.penaltyData} />
-      <ProductPrematurePenalty prematurePenalty={product?.prematurePenalty} />
 
-      <ProductLimits limits={limits} />
       <ProductDormantSetup dormantSetup={product?.dormantSetup} />
 
       <DetailsCard title="Others " hideBorder hasTable>

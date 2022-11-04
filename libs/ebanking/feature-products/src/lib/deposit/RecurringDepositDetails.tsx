@@ -16,6 +16,7 @@ import {
   ProductFeatures,
   ProductGeneralInformation,
   ProductLimits,
+  ProductPenalty,
   ProductPrematurePenalty,
   ProductRebate,
   ProductServiceCharge,
@@ -29,7 +30,7 @@ interface IRecurringDepositDetailsProps {
   criteria: DepositProductCriteria;
 }
 
-export const RecurringDepositDetails = ({ product, criteria }: IRecurringDepositDetailsProps) => {
+export const RecurringDepositDetails = ({product, criteria}: IRecurringDepositDetailsProps) => {
   const router = useRouter();
   const limits = [
     {
@@ -86,7 +87,7 @@ export const RecurringDepositDetails = ({ product, criteria }: IRecurringDeposit
     <Box display="flex" flexDirection="column" gap="s16">
       <PathBar
         paths={[
-          { label: 'Home', link: '/home' },
+          {label: 'Home', link: '/home'},
           {
             label: 'Products',
             link: '/coop/products/deposit',
@@ -98,7 +99,7 @@ export const RecurringDepositDetails = ({ product, criteria }: IRecurringDeposit
         ]}
       />
 
-      <ProductDescription description={product?.description} />
+      <ProductDescription description={product?.description}/>
       <ProductGeneralInformation
         generalInformation={{
           productCode: product?.productCode,
@@ -108,29 +109,31 @@ export const RecurringDepositDetails = ({ product, criteria }: IRecurringDeposit
           nature: product?.nature,
         }}
       />
-      <ProductCriteria criteria={criteria} />
+      <ProductCriteria criteria={criteria}/>
       <ProductDocuments
         individualDocuments={product?.individualDocuments}
         institutionDocuments={product?.institutionDocuments}
       />
-      <ProductServiceCharge serviceCharge={product?.serviceCharge} />
-      <AccountCloseCharge accountCloseCharge={product?.accountCloseCharge} />
-      <ProductLimits limits={limits} />
-      <ProductInterestRate interestRate={product?.interest} />
-
-      <ProductPrematurePenalty prematurePenalty={product?.prematurePenalty} />
-      <ProductPenaltyWithdrawSetup withDrawData={product?.withdrawPenalty} />
-      <ProductRebate rebateData={product?.rebateData} />
+      <ProductServiceCharge serviceCharge={product?.serviceCharge}/>
+      <AccountCloseCharge accountCloseCharge={product?.accountCloseCharge}/>
+      <ProductLimits limits={limits}/>
+      <ProductInterestRate interestRate={product?.interest}/>
+      <ProductPenalty penaltyData={product?.penaltyData}/>
+      <ProductRebate rebateData={product?.rebateData}/>
       <ProductTenure
         tenureUnit={product?.tenureUnit}
         maxTenure={product?.maxTenureUnitNumber}
         minTenure={product?.minTenureUnitNumber}
       />
 
+      <ProductPrematurePenalty prematurePenalty={product?.prematurePenalty}/>
+      <ProductPenaltyWithdrawSetup withDrawData={product?.withdrawPenalty}/>
+
+
       <DetailsCard title="Others " hideBorder hasTable>
         <Box display="flex" flexDir="column" gap="s32">
-          <ProductFeatures features={otherFeatures} />
-          <ProductCharges charges={charges} />
+          <ProductFeatures features={otherFeatures}/>
+          <ProductCharges charges={charges}/>
         </Box>
       </DetailsCard>
     </Box>
