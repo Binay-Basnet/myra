@@ -31,15 +31,6 @@ export const ProductPenaltyWithdrawSetup = ({
           width: '33%',
         },
       },
-      {
-        header: 'Penalty Ledger Mapping',
-        accessorKey: 'penaltyLedgerMapping',
-        cell: (props) => (props.getValue() ? `${props.getValue()}  %` : 'N/A'),
-        meta: {
-          isNumeric: true,
-          width: '33%',
-        },
-      },
     ],
     []
   );

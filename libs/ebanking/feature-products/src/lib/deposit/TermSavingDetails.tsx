@@ -5,25 +5,24 @@ import { Box, DetailsCard, PathBar } from '@coop/shared/ui';
 
 import {
   AccountCloseCharge,
+  ProductCharges,
   ProductCriteria,
   ProductDescription,
   ProductDocuments,
+  ProductDormantSetup,
   ProductFeatures,
   ProductGeneralInformation,
   ProductLimits,
-  ProductPrematurePenalty,
   ProductServiceCharge,
 } from '../../components/deposit';
 import { ProductInterestRate } from '../../components/deposit/ProductInterestRate';
-import { ProductTenure } from '../../components/deposit/ProductTenure';
-import { ProductPenaltyWithdrawSetup } from '../../components/deposit/ProductWithdrawPenalty';
 
 interface IRecurringDepositDetailsProps {
   product: DepositProductFormStateData;
   criteria: DepositProductCriteria;
 }
 
-export const TermSavingDetails = ({ product, criteria }: IRecurringDepositDetailsProps) => {
+export const TermSavingDetails = ({product, criteria}: IRecurringDepositDetailsProps) => {
   const router = useRouter();
   const limits = [
     {
@@ -74,7 +73,7 @@ export const TermSavingDetails = ({ product, criteria }: IRecurringDepositDetail
     <Box display="flex" flexDirection="column" gap="s16">
       <PathBar
         paths={[
-          { label: 'Home', link: '/home' },
+          {label: 'Home', link: '/home'},
           {
             label: 'Products',
             link: '/coop/products/deposit',
@@ -86,7 +85,7 @@ export const TermSavingDetails = ({ product, criteria }: IRecurringDepositDetail
         ]}
       />
 
-      <ProductDescription description={product?.description} />
+      <ProductDescription description={product?.description}/>
       <ProductGeneralInformation
         generalInformation={{
           productCode: product?.productCode,
@@ -96,27 +95,23 @@ export const TermSavingDetails = ({ product, criteria }: IRecurringDepositDetail
           nature: product?.nature,
         }}
       />
-      <ProductCriteria criteria={criteria} />
+      <ProductCriteria criteria={criteria}/>
       <ProductDocuments
         individualDocuments={product?.individualDocuments}
         institutionDocuments={product?.institutionDocuments}
       />
-      <ProductServiceCharge serviceCharge={product?.serviceCharge} />
-      <AccountCloseCharge accountCloseCharge={product?.accountCloseCharge} />
-      <ProductLimits limits={limits} />
-      <ProductInterestRate interestRate={product?.interest} />
+      <ProductServiceCharge serviceCharge={product?.serviceCharge}/>
+      <AccountCloseCharge accountCloseCharge={product?.accountCloseCharge}/>
+      <ProductLimits limits={limits}/>
+      <ProductInterestRate interestRate={product?.interest}/>
+      <ProductDormantSetup dormantSetup={product?.dormantSetup}/>
 
-      <ProductPrematurePenalty prematurePenalty={product?.prematurePenalty} />
-      <ProductPenaltyWithdrawSetup withDrawData={product?.withdrawPenalty} />
-      <ProductTenure
-        tenureUnit={product?.tenureUnit}
-        maxTenure={product?.maxTenureUnitNumber}
-        minTenure={product?.minTenureUnitNumber}
-      />
 
       <DetailsCard title="Others " hideBorder hasTable>
         <Box display="flex" flexDir="column" gap="s32">
-          <ProductFeatures features={otherFeatures} />
+          <ProductFeatures features={otherFeatures}/>
+          <ProductCharges charges={charges}/>
+
         </Box>
       </DetailsCard>
     </Box>
