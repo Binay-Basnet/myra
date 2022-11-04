@@ -23,7 +23,7 @@ export const PastWithdrawSlipList = () => {
   const pastSlipsList = useMemo(
     () =>
       pastSlipsListQueryData?.withdrawSlip?.listPastSlips?.data?.map((withdrawSlip) => ({
-        slipNumber: withdrawSlip?.slipNumber,
+        slipNumber: String(withdrawSlip?.slipNumber).padStart(10, '0'),
         state: withdrawSlip?.state,
         date: preferenceDate === DateType.Bs ? withdrawSlip?.date?.np : withdrawSlip?.date?.en,
       })) ?? [],
