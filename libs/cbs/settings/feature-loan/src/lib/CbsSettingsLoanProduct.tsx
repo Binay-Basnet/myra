@@ -1,12 +1,27 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
-import { AddIcon } from '@chakra-ui/icons';
 
-import { Id_Type, useGetLoanProductListQuery, useGetNewIdMutation } from '@coop/cbs/data-access';
+import {
+  DepositProductStatus,
+  Id_Type,
+  useGetLoanProductListQuery,
+  useGetNewIdMutation,
+} from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Box, Button, DEFAULT_PAGE_SIZE, Text } from '@coop/shared/ui';
+import { Box, DEFAULT_PAGE_SIZE, PageHeader, Text } from '@coop/shared/ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
+
+const LOAN_TAB_ITEMS = [
+  {
+    title: 'depositProductActive',
+    key: DepositProductStatus.Active,
+  },
+  {
+    title: 'depositProductInactive',
+    key: DepositProductStatus.Inactive,
+  },
+];
 
 export const SettingsLoanProduct = () => {
   const router = useRouter();
@@ -14,26 +29,21 @@ export const SettingsLoanProduct = () => {
   const { t } = useTranslation();
 
   const newId = useGetNewIdMutation();
+  const onSubmit = () => {
+    newId
+      .mutateAsync({ idType: Id_Type.Loanproduct })
+      .then((res) => router.push(`/settings/general/loan-products/add/${res?.newId}`));
+  };
 
   return (
     <>
-      <Box borderBottom="1px solid " borderColor="border.layout" p="8px 16px">
-        <Box display="flex" justifyContent="space-between" alignItems="center" h="100%">
-          <Text fontSize="r2" fontWeight="600" color="gray.800">
-            {`${t['loanProductsLoanProducts']} - ${featureCode?.settingsLoanProduct}`}
-          </Text>
-          <Button
-            leftIcon={<AddIcon h="11px" />}
-            onClick={() =>
-              newId
-                .mutateAsync({ idType: Id_Type.Loanproduct })
-                .then((res) => router.push(`/settings/general/loan-products/add/${res?.newId}`))
-            }
-          >
-            {t['loanProductsNewLoanProduct']}
-          </Button>
-        </Box>
-      </Box>
+      <PageHeader
+        heading={`${t['loanProductsLoanProducts']} - ${featureCode?.settingsLoanProduct}`}
+        tabItems={LOAN_TAB_ITEMS}
+        onClick={onSubmit}
+        button
+        buttonTitle={t['loanProductsNewLoanProduct']}
+      />
 
       <LoanProductTable showActionButton />
     </>
@@ -52,11 +62,19 @@ export const LoanProductTable = ({ showActionButton }: { showActionButton?: bool
             last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
             before: router.query['before'] as string,
           },
+          filter: {
+            objState: (router.query['objState'] ??
+              DepositProductStatus.Active) as DepositProductStatus,
+          },
         }
       : {
           paginate: {
             first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
             after: (router.query['after'] ?? '') as string,
+          },
+          filter: {
+            objState: (router.query['objState'] ??
+              DepositProductStatus.Active) as DepositProductStatus,
           },
         },
     {
