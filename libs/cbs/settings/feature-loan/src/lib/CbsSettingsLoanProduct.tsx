@@ -35,12 +35,12 @@ export const SettingsLoanProduct = () => {
         </Box>
       </Box>
 
-      <LoanProductTable />
+      <LoanProductTable showActionButton />
     </>
   );
 };
 
-export const LoanProductTable = () => {
+export const LoanProductTable = ({ showActionButton }: { showActionButton?: boolean }) => {
   const router = useRouter();
 
   const { t } = useTranslation();
@@ -126,9 +126,13 @@ export const LoanProductTable = () => {
       {
         id: '_actions',
         header: '',
-        cell: (props) => (
-          <ActionPopoverComponent items={popoverTitle} id={props?.row?.original?.node?.id} />
-        ),
+        cell: (props) => {
+          if (showActionButton)
+            return (
+              <ActionPopoverComponent items={popoverTitle} id={props?.row?.original?.node?.id} />
+            );
+          return null;
+        },
         meta: {
           width: '50px',
         },

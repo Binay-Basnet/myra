@@ -224,10 +224,7 @@ export const FloatingShortcutButton = () => {
       <Popover placement="top-start" gutter={3}>
         <PopoverTrigger>
           <IconButton
-            ml="s16"
-            width="40px"
-            height="40px"
-            icon={<Icon size="md" as={AiOutlineQuestionCircle} />}
+            icon={<Icon size="lg" as={AiOutlineQuestionCircle} />}
             aria-label="help"
             variant="ghost"
             color="white"

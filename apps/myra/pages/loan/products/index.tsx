@@ -7,7 +7,7 @@ import { MainLayout, TableListPageHeader } from '@coop/shared/ui';
 const LoanRepayments = () => (
   <>
     <TableListPageHeader heading="Loan Products" />
-    <LoanProductTable />
+    <LoanProductTable showActionButton={false} />
   </>
 );
 
