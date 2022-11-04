@@ -18,7 +18,7 @@ import { Flex, HStack, Img, Spacer } from '@chakra-ui/react';
 
 import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { HomePageLayout } from '@coop/myra/components';
-import { Box, Button, ChakraModal, Grid, GridItem, QuickLinks, Text } from '@coop/shared/ui';
+import { Box, ChakraModal, Grid, GridItem, QuickLinks, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });
@@ -108,25 +108,31 @@ const Dashboard = () => {
   };
 
   return (
-    <Box height="fit-content" p="0" pb="55px">
+    <Box width="100%" height="fit-content" p="0" pb="55px">
       <Box display="flex" flexDir="column" gap="s8">
         <Box display="flex" justifyContent="space-between">
           <Text fontSize="s3" color="gray.600" fontWeight="SemiBold" textTransform="uppercase">
             {t.quickLinks}
           </Text>
-          <Button
+          <Text
             pb="0"
-            variant="link"
-            shade="neutral"
+            fontSize="s3"
+            fontWeight="semibold"
+            textTransform="uppercase"
+            _hover={{
+              textDecor: 'underline',
+              cursor: 'pointer',
+            }}
+            color="gray.600"
             onClick={() => {
               onOpenModal();
             }}
           >
             {t.editLinks}
-          </Button>
+          </Text>
         </Box>
 
-        <Grid templateColumns="repeat(3,1fr)" columnGap="s16" rowGap="s8">
+        <Grid templateColumns="repeat(3,1fr)" columnGap="s16" rowGap="s16">
           {quickLinksList?.map((item) => (
             <GridItem key={item?.text}>
               <QuickLinks

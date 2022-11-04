@@ -88,21 +88,67 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
       <Box position="fixed" top={0} width="100%" zIndex={11}>
         <TopLevelHeader />
       </Box>
+      <Box
+        display="flex"
+        width="300px"
+        position="fixed"
+        flexDirection="column"
+        justifyContent="flex-start"
+        height="calc(100vh - 60px)"
+        px="s16"
+        py="s32"
+        gap="s32"
+        overflowY="auto"
+      >
+        {' '}
+        <Box display="flex" flexDir="column" gap="s16">
+          <TextFields
+            px="s16"
+            fontSize="s3"
+            color="gray.600"
+            fontWeight="600"
+            textTransform="uppercase"
+          >
+            {t['yourMyraApplication']}
+          </TextFields>
 
-      <Box display="flex">
-        <Box
-          position="fixed"
-          display="flex"
-          flexDirection="column"
-          justifyContent="flex-start"
-          width="300px"
-          height="calc(100% - 60px)"
-          p="s16"
-          gap="s32"
-          pt="90px"
-          overflowY="auto"
-        >
-          <Box display="flex" flexDir="column" gap="s16">
+          <Box display="flex" alignItems="center" flexDir="column">
+            {myraAppn.map((item) => (
+              <Box
+                key={item?.link}
+                w="100%"
+                px="s16"
+                py="s8"
+                display="flex"
+                borderRadius="br2"
+                gap="s16"
+                minH="48px"
+                maxH="56px"
+                alignItems="center"
+                cursor="pointer"
+                _hover={{ bg: 'gray.200' }}
+                onClick={() => router.push(item.link)}
+              >
+                <Box flexShrink={0} display="flex" justifyContent="center" alignItems="center">
+                  <Image width="32px" height="32px" src={item.img} alt={t[item.title]} />
+                </Box>
+                <TextFields fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">
+                  {t[item.title]}
+                </TextFields>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+        <Box display="flex" flexDir="column" gap="s8">
+          <Box
+            display="flex"
+            h="32px"
+            pr="s16"
+            alignItems="center"
+            justifyContent="space-between"
+            cursor="pointer"
+            onClick={() => setIsOpen(!isOpen)}
+          >
             <TextFields
               px="s16"
               fontSize="s3"
@@ -110,11 +156,17 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
               fontWeight="600"
               textTransform="uppercase"
             >
-              {t['yourMyraApplication']}
+              {t['moreFromMyra']}
             </TextFields>
-
+            {isOpen ? (
+              <Icon size="sm" as={IoIosArrowDown} />
+            ) : (
+              <Icon size="sm" as={IoIosArrowForward} />
+            )}
+          </Box>
+          <Collapse in={isOpen} style={{ marginTop: '0px' }}>
             <Box display="flex" alignItems="center" flexDir="column">
-              {myraAppn.map((item) => (
+              {moreFromMyra.map((item) => (
                 <Box
                   key={item?.link}
                   w="100%"
@@ -124,20 +176,26 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
                   borderRadius="br2"
                   gap="s16"
                   minH="48px"
+                  maxH="56px"
                   alignItems="center"
                   cursor="pointer"
-                  _hover={{ bg: 'gray.200' }}
+                  _hover={{ bg: 'gray.200', filter: 'none' }}
                   onClick={() => router.push(item.link)}
+                  filter="grayscale(100%)"
                 >
                   <Box
-                    flexShrink={0}
                     display="flex"
                     justifyContent="center"
                     alignItems="center"
                     w="s32"
-                    h="s32"
+                    borderRadius="50%"
                   >
-                    <Image width="32px" height="32px" src={item.img} alt={t[item.title]} />
+                    <Avatar
+                      width="s32"
+                      height="s32"
+                      src={item.img}
+                      // alt="corebanking"
+                    />
                   </Box>
                   <TextFields fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">
                     {t[item.title]}
@@ -145,81 +203,21 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
                 </Box>
               ))}
             </Box>
-          </Box>
-          <Box display="flex" flexDir="column" gap="s16">
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              cursor="pointer"
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              <TextFields
-                px="s16"
-                fontSize="s3"
-                color="gray.600"
-                fontWeight="600"
-                textTransform="uppercase"
-              >
-                {t['moreFromMyra']}
-              </TextFields>
-              {isOpen ? (
-                <Icon size="sm" as={IoIosArrowDown} />
-              ) : (
-                <Icon size="sm" as={IoIosArrowForward} />
-              )}
-            </Box>
-            <Collapse in={isOpen} style={{ marginTop: '0px' }}>
-              <Box display="flex" alignItems="center" flexDir="column">
-                {moreFromMyra.map((item) => (
-                  <Box
-                    key={item?.link}
-                    w="100%"
-                    px="s16"
-                    py="s8"
-                    display="flex"
-                    borderRadius="br2"
-                    gap="s16"
-                    alignItems="center"
-                    cursor="pointer"
-                    _hover={{ bg: 'gray.200', filter: 'none' }}
-                    onClick={() => router.push(item.link)}
-                    filter="grayscale(100%)"
-                  >
-                    <Box
-                      display="flex"
-                      justifyContent="center"
-                      alignItems="center"
-                      w="s32"
-                      borderRadius="50%"
-                    >
-                      <Avatar
-                        width="s32"
-                        height="s32"
-                        src={item.img}
-                        // alt="corebanking"
-                      />
-                    </Box>
-                    <TextFields
-                      fontSize="r1"
-                      fontWeight="Regular"
-                      color="neutralColorLight.Gray-80"
-                    >
-                      {t[item.title]}
-                    </TextFields>
-                  </Box>
-                ))}
-              </Box>
-            </Collapse>
-          </Box>
+          </Collapse>
         </Box>
+      </Box>
 
-        <Box width="calc(100% - 300px)" display="flex">
-          <Box flex={0.8} p="s32" overflowX="hidden" position="relative" pt="90px" left="300px">
-            <Box minHeight="100vh">{children}</Box>
-          </Box>
-
-          <Box flex={0.2} />
-        </Box>
+      <Box
+        display="flex"
+        justifyContent="center"
+        p="s32"
+        ml="300px"
+        mr="300px"
+        overflowX="hidden"
+        position="relative"
+        mt="60px"
+      >
+        {children}
       </Box>
     </Box>
   );
