@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { Skeleton } from '@chakra-ui/react';
 
 import { AccountCard, AccountHeaderCard } from '@coop/ebanking/cards';
-import { useGetAccountListQuery } from '@coop/ebanking/data-access';
+import { AccountMinimal, useGetAccountListQuery } from '@coop/ebanking/data-access';
 import { Box, Divider, Grid } from '@coop/shared/ui';
 
 export const EbankingAccountsPage = () => {
@@ -26,13 +26,7 @@ export const EbankingAccountsPage = () => {
         {accountList?.eBanking?.account?.list?.accounts?.map((account) => (
           <Fragment key={account?.id}>
             <AccountCard
-              account={{
-                id: account?.id,
-                name: account?.name,
-                balance: account?.balance,
-                accountNumber: account?.accountNumber,
-                interestRate: account?.interestRate,
-              }}
+              account={account as AccountMinimal}
               isDefault={Boolean(account?.isDefault)}
             />
           </Fragment>

@@ -86,7 +86,7 @@ export const AccountPopover = ({
                 ({accountList?.eBanking?.account?.list?.accounts?.length ?? 0})
               </Text>
             </Box>
-            <Box maxH="400px" overflowY="scroll">
+            <Box maxH="400px" overflowY="auto">
               {accountList?.eBanking?.account?.list?.accounts?.map((account) => (
                 <Box
                   key={account?.id}

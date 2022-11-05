@@ -9,7 +9,6 @@ query getShareBalanceList($pagination: Pagination) {
         endCursor
       }
       edges {
-
         node {
           member {
             id

@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 
 import { AccountLargeCard, InfoCard, TransactionCard } from '@coop/ebanking/cards';
 import { EmptyState } from '@coop/ebanking/components';
-import { useGetAccountDetailsQuery } from '@coop/ebanking/data-access';
+import { EbankingAccount, useGetAccountDetailsQuery } from '@coop/ebanking/data-access';
 import { Box, Button, Divider, Grid, Icon, PathBar } from '@coop/shared/ui';
 
 import { AccountDetail } from '../components/AccountDetail';
@@ -37,18 +37,10 @@ export const EbankingAccountDetailPage = () => {
             link: router.asPath,
           },
         ]}
-        button={<AccountPopover />}
+        button={<AccountPopover selectedAccount={account} />}
       />
       {account ? (
-        <AccountLargeCard
-          isDefault={account?.isDefault}
-          account={{
-            accountNumber: account.accountNumber,
-            name: account.name,
-            amount: Number(account.balance),
-            interestRate: account.interestRate,
-          }}
-        />
+        <AccountLargeCard isDefault={account?.isDefault} account={account as EbankingAccount} />
       ) : (
         <Skeleton isLoaded={!isLoading} h="172px" />
       )}
@@ -61,7 +53,7 @@ export const EbankingAccountDetailPage = () => {
             <Grid templateColumns="repeat(3, 1fr)" gap="s16" p="s16">
               <AccountDetail title="Account Holder Name " value="Krishna Thapa" />
               <AccountDetail title="Account Number " value={account.accountNumber} />
-              <AccountDetail title="Account Type " value={account.name} />
+              <AccountDetail title="Account Type " value={account.accountSubType} />
               <AccountDetail title="Interest Rate" value={`${account.interestRate.toFixed(2)}%`} />
               <AccountDetail
                 title="Interest Booked"
