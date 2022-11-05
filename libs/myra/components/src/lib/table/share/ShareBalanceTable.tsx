@@ -16,7 +16,7 @@ export const ShareBalanceTable = () => {
     refetch();
   }, [router]);
 
-  const rowData = useMemo(() => data?.share.balance?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.share?.balance?.edges ?? [], [data]);
 
   const popoverTitle = ['shareRegisterTableViewMemberProfile'];
 
