@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { omit } from 'lodash';
 
@@ -76,6 +77,9 @@ export const ShareReturnForm = () => {
   const { watch, getValues, reset } = methods;
 
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const redirectPath = router.query['redirect'];
+  const redirectMemberId = router.query['memberId'];
 
   const { mutateAsync } = useAddShareReturnMutation();
 
@@ -170,7 +174,14 @@ export const ShareReturnForm = () => {
         success: 'Share Returned',
         loading: 'Returning Share',
       },
-      onSuccess: () => router.push('/share/register'),
+      onSuccess: () => {
+        if (redirectPath) {
+          queryClient.invalidateQueries('getMemberInactiveCheck');
+          router.push(String(redirectPath));
+        } else {
+          router.push('/share/register');
+        }
+      },
       promise: mutateAsync({ data: updatedValues }),
     });
   };
@@ -211,6 +222,10 @@ export const ShareReturnForm = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, extraFee, noOfShares, JSON.stringify(chargeList), JSON.stringify(extraFee)]);
+
+  useEffect(() => {
+    methods.setValue('memberId', String(redirectMemberId));
+  }, [redirectMemberId]);
 
   return (
     <>

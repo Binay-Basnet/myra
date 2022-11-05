@@ -10,3 +10,12 @@ mutation payMembership($data: MembershipPaymentInput, $memberId: ID!) {
     }
   }
 }
+
+
+mutation inactivateMember($memberId: ID!) {
+  members {
+    makeInactive(memberId: $memberId) {
+      recordId
+    }
+  }
+}

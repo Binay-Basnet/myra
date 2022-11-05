@@ -22,7 +22,7 @@ export const CbsMembersFeatureActivate = () => {
   const [mode, setMode] = useState<'details' | 'payment'>('details');
   const [skipAccounts, setSkipAccounts] = useState(false);
 
-  const { data } = useGetMemberCheckQuery({ memberID: id }, { enabled: !!id });
+  const { data } = useGetMemberCheckQuery({ memberID: id }, { enabled: !!id, staleTime: 0 });
 
   const hasPaidMemberFee = data?.members?.activateMember?.memberActivateChecks?.isFeePaid;
   const hasShareIssued = data?.members?.activateMember?.memberActivateChecks?.isShareIssued;
@@ -179,13 +179,7 @@ export const CbsMembersFeatureActivate = () => {
                       ))}
                     </VStack>
 
-                    {!skipAccounts || hasAccountUpdated ? (
-                      <Box>
-                        <Button variant="ghost" onClick={() => setSkipAccounts(true)}>
-                          Skip for now
-                        </Button>
-                      </Box>
-                    ) : (
+                    {hasAccountUpdated || skipAccounts ? (
                       <Box display="flex" gap="s4" py="s16">
                         <Icon color="primary.500" as={IoCheckmarkDone} />
                         <Text
@@ -196,6 +190,12 @@ export const CbsMembersFeatureActivate = () => {
                         >
                           Completed
                         </Text>
+                      </Box>
+                    ) : (
+                      <Box>
+                        <Button variant="ghost" onClick={() => setSkipAccounts(true)}>
+                          Skip for now
+                        </Button>
                       </Box>
                     )}
                   </Box>

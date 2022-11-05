@@ -4,9 +4,8 @@ import { useRouter } from 'next/router';
 
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { formatTableAddress } from '@coop/cbs/utils';
-import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, PageHeader, Text } from '@coop/shared/ui';
+import { Avatar, Box, PageHeader, TablePopover, Text } from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 import { MEMBER_TAB_ITEMS } from '../constants/MEMBER_TAB_ITEMS';
@@ -97,33 +96,32 @@ export const MemberListPage = () => {
         id: '_actions',
         header: '',
         accessorKey: 'actions',
-        cell: (cell) => {
-          const member = cell?.row?.original?.node;
-          const memberData = { id: member?.id, type: member?.type };
-          return (
-            <PopoverComponent
+        cell: (cell) =>
+          cell.row.original?.node ? (
+            <TablePopover
+              node={cell.row.original?.node}
               items={[
                 {
-                  title: 'memberListTableViewMemberProfile',
+                  title: t['memberListTableViewMemberProfile'],
+                  onClick: (node) => router.push(`/members/details?id=${node?.id}`),
                 },
                 {
-                  title: 'memberListTableEditMember',
-                  onClick: (memberRow) => {
+                  title: t['memberListTableEditMember'],
+                  onClick: (node) => {
                     router.push(
-                      `/members/${memberTypeSlug[memberRow?.type || 'INDIVIDUAL']}/edit/${
-                        memberRow?.id
-                      }`
+                      `/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit/${node?.id}`
                     );
                   },
                 },
                 {
-                  title: 'memberListTableMakeInactive',
+                  title: t['memberListTableMakeInactive'],
+                  onClick: (node) => {
+                    router.push(`/members/inactivation/${node?.id}`);
+                  },
                 },
               ]}
-              member={memberData}
             />
-          );
-        },
+          ) : null,
         meta: {
           width: '60px',
         },

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import rhtoast from 'react-hot-toast';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
@@ -93,8 +94,11 @@ type CustomAccountCloseInput = Omit<AccountCloseInput, 'serviceCharge'> & {
 
 export const CbsAccountClose = () => {
   const { t } = useTranslation();
-
+  const queryClient = useQueryClient();
   const router = useRouter();
+  const redirectPath = router.query['redirect'];
+  const id = String(router?.query?.['memberId']);
+  const redirectAccountId = String(router?.query?.['accountId']);
 
   const methods = useForm<CustomAccountCloseInput>({
     defaultValues: { paymentMode: AccountClosePaymentMode.AccountTransfer },
@@ -266,7 +270,13 @@ export const CbsAccountClose = () => {
                     type: 'success',
                     message: 'Account closed',
                   });
-                  router.push('/accounts/account-close');
+
+                  if (redirectPath) {
+                    router.push(String(redirectPath));
+                    queryClient.invalidateQueries('getAccountInactiveCheck');
+                  } else {
+                    router.push('/accounts/account-close');
+                  }
                 }
               }
             }
@@ -326,9 +336,28 @@ export const CbsAccountClose = () => {
           ...(filteredValues as DepositAccountClose),
         },
       }),
-      onSuccess: () => router.push('/accounts/account-close/'),
+      onSuccess: () => {
+        if (redirectPath) {
+          router.push(String(redirectPath));
+          queryClient.invalidateQueries('getAccountInactiveCheck');
+        } else {
+          router.push('/accounts/account-close');
+        }
+      },
     });
   };
+
+  useEffect(() => {
+    if (id) {
+      methods.setValue('memberID', String(id));
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (memberId) {
+      methods.setValue('accountID', String(redirectAccountId));
+    }
+  }, [redirectAccountId, memberId]);
 
   return (
     <Container minW="container.xl" p="0" bg="white">

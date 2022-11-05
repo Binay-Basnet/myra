@@ -10736,6 +10736,7 @@ export type SettingsQuery = {
 export type ShareBalance = {
   amount: Scalars['Int'];
   count: Scalars['Int'];
+  id?: Maybe<Scalars['ID']>;
   member: Member;
   memberId?: Maybe<Scalars['ID']>;
 };
@@ -12738,6 +12739,14 @@ export type PayMembershipMutation = {
       } | null;
     } | null;
   };
+};
+
+export type InactivateMemberMutationVariables = Exact<{
+  memberId: Scalars['ID'];
+}>;
+
+export type InactivateMemberMutation = {
+  members: { makeInactive?: { recordId?: string | null } | null };
 };
 
 export type SetInstitutionDataMutationVariables = Exact<{
@@ -17249,8 +17258,34 @@ export type GetMemberAccountsQuery = {
             productName: string;
           };
         } | null> | null;
-        loanAccount?: Array<{ id: string; LoanAccountName?: string | null } | null> | null;
+        loanAccount?: Array<{
+          id: string;
+          accountName?: string | null;
+          product: { productName: string };
+        } | null> | null;
       } | null;
+    } | null;
+  };
+};
+
+export type GetAccountInactiveCheckQueryVariables = Exact<{
+  memberId: Scalars['ID'];
+  accountId: Scalars['ID'];
+  accountType: AccountTypeFilter;
+}>;
+
+export type GetAccountInactiveCheckQuery = {
+  members: { inactivateMember?: { accountCloseCheck: boolean } | null };
+};
+
+export type GetMemberInactiveCheckQueryVariables = Exact<{
+  memberId: Scalars['ID'];
+}>;
+
+export type GetMemberInactiveCheckQuery = {
+  members: {
+    inactivateMember?: {
+      inactivateCheck?: { isAccountClosed: boolean; isShareReturned: boolean } | null;
     } | null;
   };
 };
@@ -21007,6 +21042,28 @@ export const usePayMembershipMutation = <TError = unknown, TContext = unknown>(
   useMutation<PayMembershipMutation, TError, PayMembershipMutationVariables, TContext>(
     ['payMembership'],
     useAxios<PayMembershipMutation, PayMembershipMutationVariables>(PayMembershipDocument),
+    options
+  );
+export const InactivateMemberDocument = `
+    mutation inactivateMember($memberId: ID!) {
+  members {
+    makeInactive(memberId: $memberId) {
+      recordId
+    }
+  }
+}
+    `;
+export const useInactivateMemberMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    InactivateMemberMutation,
+    TError,
+    InactivateMemberMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<InactivateMemberMutation, TError, InactivateMemberMutationVariables, TContext>(
+    ['inactivateMember'],
+    useAxios<InactivateMemberMutation, InactivateMemberMutationVariables>(InactivateMemberDocument),
     options
   );
 export const SetInstitutionDataDocument = `
@@ -27116,7 +27173,10 @@ export const GetMemberAccountsDocument = `
         }
         loanAccount {
           id
-          LoanAccountName
+          accountName: LoanAccountName
+          product {
+            productName
+          }
         }
       }
     }
@@ -27131,6 +27191,59 @@ export const useGetMemberAccountsQuery = <TData = GetMemberAccountsQuery, TError
     ['getMemberAccounts', variables],
     useAxios<GetMemberAccountsQuery, GetMemberAccountsQueryVariables>(
       GetMemberAccountsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountInactiveCheckDocument = `
+    query getAccountInactiveCheck($memberId: ID!, $accountId: ID!, $accountType: AccountTypeFilter!) {
+  members {
+    inactivateMember {
+      accountCloseCheck(
+        memberId: $memberId
+        accountId: $accountId
+        accounttype: $accountType
+      )
+    }
+  }
+}
+    `;
+export const useGetAccountInactiveCheckQuery = <
+  TData = GetAccountInactiveCheckQuery,
+  TError = unknown
+>(
+  variables: GetAccountInactiveCheckQueryVariables,
+  options?: UseQueryOptions<GetAccountInactiveCheckQuery, TError, TData>
+) =>
+  useQuery<GetAccountInactiveCheckQuery, TError, TData>(
+    ['getAccountInactiveCheck', variables],
+    useAxios<GetAccountInactiveCheckQuery, GetAccountInactiveCheckQueryVariables>(
+      GetAccountInactiveCheckDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberInactiveCheckDocument = `
+    query getMemberInactiveCheck($memberId: ID!) {
+  members {
+    inactivateMember {
+      inactivateCheck(memberId: $memberId) {
+        isAccountClosed
+        isShareReturned
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberInactiveCheckQuery = <
+  TData = GetMemberInactiveCheckQuery,
+  TError = unknown
+>(
+  variables: GetMemberInactiveCheckQueryVariables,
+  options?: UseQueryOptions<GetMemberInactiveCheckQuery, TError, TData>
+) =>
+  useQuery<GetMemberInactiveCheckQuery, TError, TData>(
+    ['getMemberInactiveCheck', variables],
+    useAxios<GetMemberInactiveCheckQuery, GetMemberInactiveCheckQueryVariables>(
+      GetMemberInactiveCheckDocument
     ).bind(null, variables),
     options
   );

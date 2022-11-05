@@ -48,8 +48,31 @@ query getMemberAccounts($memberId: ID!) {
         }
         loanAccount {
           id
-          LoanAccountName
+          accountName: LoanAccountName
+          product {
+            productName
+          }
         }
+      }
+    }
+  }
+}
+
+query getAccountInactiveCheck($memberId: ID!, $accountId: ID!, $accountType: AccountTypeFilter!) {
+  members {
+    inactivateMember {
+      accountCloseCheck(memberId: $memberId, accountId: $accountId, accounttype: $accountType)
+    }
+  }
+}
+
+
+query getMemberInactiveCheck($memberId: ID!){
+  members {
+    inactivateMember {
+      inactivateCheck(memberId: $memberId){
+        isAccountClosed
+        isShareReturned
       }
     }
   }
