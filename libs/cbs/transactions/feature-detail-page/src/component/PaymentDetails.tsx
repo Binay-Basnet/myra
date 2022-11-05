@@ -1,4 +1,3 @@
-import { DepositPaymentType } from '@coop/cbs/data-access';
 import { DetailCardContent, DetailsCard } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -33,7 +32,7 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
         </>
       )}
 
-      {detailPage === 'withdraw' && withdrawDetailData?.paymentMode === DepositPaymentType?.Cash && (
+      {detailPage === 'withdraw' && withdrawDetailData?.paymentMode === 'Cash' && (
         <>
           <DetailCardContent
             title={t['transDetailPaymentMode']}
@@ -50,7 +49,7 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
         </>
       )}
 
-      {detailPage === 'withdraw' && withdrawDetailData?.paymentMode === DepositPaymentType?.Cheque && (
+      {detailPage === 'withdraw' && withdrawDetailData?.paymentMode === 'Cheque' && (
         <>
           <DetailCardContent
             title={t['transDetailPaymentMode']}
