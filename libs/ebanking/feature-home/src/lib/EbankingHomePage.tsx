@@ -5,7 +5,11 @@ import { Skeleton } from '@chakra-ui/react';
 
 import { AccountCard, InfoCard, TransactionCard } from '@coop/ebanking/cards';
 import { EmptyState } from '@coop/ebanking/components';
-import { useGetAccountListQuery, useGetHomeServiceListQuery } from '@coop/ebanking/data-access';
+import {
+  AccountMinimal,
+  useGetAccountListQuery,
+  useGetHomeServiceListQuery,
+} from '@coop/ebanking/data-access';
 import { Box, Button, Divider, Grid, GridItem, Icon, Text } from '@coop/shared/ui';
 
 import { SERVICE_ICON_DICT, SERVICE_LINK_DICT } from '../constants/SERVICE_ICON';
@@ -161,13 +165,7 @@ export const EbankingHomePage = () => {
           {accountList?.eBanking?.account?.list?.accounts?.slice(0, 2).map((account) => (
             <Fragment key={account?.id}>
               <AccountCard
-                account={{
-                  id: account?.id,
-                  name: account?.name,
-                  balance: account?.balance,
-                  accountNumber: account?.accountNumber,
-                  interestRate: account?.interestRate,
-                }}
+                account={account as AccountMinimal}
                 isDefault={Boolean(account?.isDefault)}
               />
             </Fragment>
