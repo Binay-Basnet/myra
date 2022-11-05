@@ -5,10 +5,12 @@ import { useGetShareBalanceListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box } from '@coop/shared/ui';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const ShareBalanceTable = () => {
-  const { data, isFetching, refetch } = useGetShareBalanceListQuery();
+  const { data, isFetching, refetch } = useGetShareBalanceListQuery({
+    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+  });
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -71,7 +73,15 @@ export const ShareBalanceTable = () => {
       <Box position="sticky" top="110px" zIndex={3}>
         <TableListPageHeader heading={`${t['shareBalanceTable']} - ${featureCode?.shareBalance}`} />
       </Box>
-      <Table isLoading={isFetching} data={rowData ?? []} columns={columns} />
+      <Table
+        isLoading={isFetching}
+        data={rowData ?? []}
+        columns={columns}
+        pagination={{
+          total: data?.share?.balance?.totalCount as number,
+          pageInfo: data?.share?.balance?.pageInfo,
+        }}
+      />
     </>
   );
 };

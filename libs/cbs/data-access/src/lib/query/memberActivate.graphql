@@ -66,11 +66,10 @@ query getAccountInactiveCheck($memberId: ID!, $accountId: ID!, $accountType: Acc
   }
 }
 
-
-query getMemberInactiveCheck($memberId: ID!){
+query getMemberInactiveCheck($memberId: ID!) {
   members {
     inactivateMember {
-      inactivateCheck(memberId: $memberId){
+      inactivateCheck(memberId: $memberId) {
         isAccountClosed
         isShareReturned
       }

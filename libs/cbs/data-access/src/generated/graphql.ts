@@ -18990,11 +18990,20 @@ export type GetChartOfAccountsQuery = {
   };
 };
 
-export type GetShareBalanceListQueryVariables = Exact<{ [key: string]: never }>;
+export type GetShareBalanceListQueryVariables = Exact<{
+  pagination?: InputMaybe<Pagination>;
+}>;
 
 export type GetShareBalanceListQuery = {
   share: {
     balance?: {
+      totalCount: number;
+      pageInfo: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      };
       edges: Array<{
         node: {
           count: number;
@@ -29579,9 +29588,16 @@ export const useGetChartOfAccountsQuery = <TData = GetChartOfAccountsQuery, TErr
     options
   );
 export const GetShareBalanceListDocument = `
-    query getShareBalanceList {
+    query getShareBalanceList($pagination: Pagination) {
   share {
-    balance {
+    balance(pagination: $pagination) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
       edges {
         node {
           member {

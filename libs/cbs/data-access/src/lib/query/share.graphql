@@ -1,7 +1,15 @@
-query getShareBalanceList {
+query getShareBalanceList($pagination: Pagination) {
   share {
-    balance {
+    balance(pagination: $pagination) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
       edges {
+
         node {
           member {
             id
