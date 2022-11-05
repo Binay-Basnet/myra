@@ -36,7 +36,7 @@ const settingsColumn = [
     navigate: '/settings/general/share',
   },
   {
-    label: 'shareLayoutShareSettings',
+    label: 'shareLayoutShareDistribution',
     navigate: '/share/balance',
   },
 ];

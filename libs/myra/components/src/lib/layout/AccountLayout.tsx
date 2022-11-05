@@ -22,6 +22,12 @@ interface IAccountPageLayoutProps {
 
 const accountColumns = [
   {
+    title: 'accountList',
+    link: '/accounts/list',
+    addLinkId: '/accounts/account-open',
+    idType: Id_Type?.Account,
+  },
+  {
     title: 'transactionsSidebarDeposit',
     link: '/accounts/deposit/list',
     name: 'deposit',
@@ -38,12 +44,6 @@ const accountColumns = [
     link: '/accounts/account-transfer/list',
     name: 'account-transfer',
     addLink: '/accounts/account-transfer/add',
-  },
-  {
-    title: 'accountList',
-    link: '/accounts/list',
-    addLinkId: '/accounts/account-open',
-    idType: Id_Type?.Account,
   },
   {
     title: 'savingProducts',

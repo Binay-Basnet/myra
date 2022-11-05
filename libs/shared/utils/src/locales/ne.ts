@@ -2689,7 +2689,7 @@ const ne: Record<string, string> = {
   transactionsSidebarLoanPayment: 'Loan Payment',
   transactionsSidebarAgentList: 'Market Representative List',
   transactionsSidebarJournalVoucher: 'Journal Voucher',
-  transactionsSidebarAgentTransaction: 'Market Representative Transaction',
+  transactionsSidebarAgentTransaction: 'Market Representative Transactions',
 
   depositProductMinimumRate: 'Minimum Rate',
   // Report page
@@ -2931,7 +2931,7 @@ const ne: Record<string, string> = {
 
   // transaction sidebar layout
   transactionSidebarTransaction: 'Transactions',
-  transactionSidebarNewTransaction: 'New Transaction',
+  transactionSidebarNewTransaction: 'New',
   transactionSidebarTransactionSettings: 'Transaction Settings',
   transactionSidebarNewDeposit: 'New Deposit',
   transactionSidebarNewWithdraw: 'New Withdraw',
@@ -3180,7 +3180,7 @@ const ne: Record<string, string> = {
   rebateAlert:
     'If both rebate amount and rebate rate is filled, the total rebate is the total sum of the two.',
   loanProductpenaltyRate: 'Penalty Rate',
-  loanLayoutTopButton: 'New Loan',
+  loanLayoutTopButton: 'New',
   loanProductRebateRate: 'Rebate Rate',
 
   loanLayoutSettings: 'Loan Settings',

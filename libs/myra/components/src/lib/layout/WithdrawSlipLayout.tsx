@@ -13,14 +13,14 @@ interface IMemberPageLayout {
 const shareColumns = [
   {
     title: 'withdrawSlipBook',
-    link: '/share/balance',
+    link: '/withdraw/block-cheque',
   },
   {
-    title: 'Withdraw Slip Requests',
+    title: 'withdrawSlipRequests',
     link: '/withdraw/cheque-book',
   },
   {
-    title: 'Blocked Withdraw Slip',
+    title: 'withdrawSlipBlockRequests',
     link: '/withdraw/block-cheque',
   },
 ];

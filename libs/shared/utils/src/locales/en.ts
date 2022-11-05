@@ -85,7 +85,7 @@ const en: Record<string, string> = {
   // member page
   members: 'Members',
   membersAddNewMembers: 'Add New Members',
-  memberList: 'Member List',
+  memberList: 'Members',
   balanceReport: 'Member Reports',
   memberDetails: 'Member Details',
   memberSettings: 'Member Settings',
@@ -212,7 +212,7 @@ const en: Record<string, string> = {
   accountNavSubmitted: 'Submitted',
   accountNavDraft: 'Draft',
 
-  accountList: 'Account List',
+  accountList: 'Saving Accounts',
   accountClose: 'Close Account',
   accountReport: 'Account Reports',
 
@@ -267,7 +267,7 @@ const en: Record<string, string> = {
 
   // share layout
   shareLayout: 'Share',
-  shareLayoutNewShare: 'New Share',
+  shareLayoutNewShare: 'New',
   shareLayoutSelectShareType: 'Select Share Type',
   shareLayoutShareReturn: 'Share Return',
   shareLayoutShareSettings: 'Share Settings',
@@ -279,7 +279,7 @@ const en: Record<string, string> = {
 
   // account layout
   accountLayout: 'Account',
-  accountLayoutNewAccount: 'New Account',
+  accountLayoutNewAccount: 'New',
   accountLayoutAccountSettings: 'Account Settings',
 
   // TABLES
@@ -2996,7 +2996,7 @@ const en: Record<string, string> = {
   transactionsSidebarLoanPayment: 'Loan Repayment',
   transactionsSidebarAgentList: 'Market Representative List',
   transactionsSidebarJournalVoucher: 'Journal Voucher',
-  transactionsSidebarAgentTransaction: 'Market Representative Transaction',
+  transactionsSidebarAgentTransaction: 'Market Representative Transactions',
   depositProductMinimumRate: 'Minimum Rate',
   // Report page
   reportsHeading: 'Reports',
@@ -3309,7 +3309,7 @@ const en: Record<string, string> = {
 
   // transaction sidebar layout
   transactionSidebarTransaction: 'Transactions',
-  transactionSidebarNewTransaction: 'New Transaction',
+  transactionSidebarNewTransaction: 'New',
   transactionSidebarTransactionSettings: 'Transaction Settings',
   transactionSidebarNewDeposit: 'New Deposit',
   transactionSidebarNewWithdraw: 'New Withdraw',
@@ -3581,7 +3581,7 @@ const en: Record<string, string> = {
   rebateAlert:
     'If both rebate amount and rebate rate is filled, the total rebate is the total sum of the two.',
   loanProductpenaltyRate: 'Penalty Rate',
-  loanLayoutTopButton: 'New Loan',
+  loanLayoutTopButton: 'New',
   loanProductRebateRate: 'Rebate Rate',
 
   loanLayoutSettings: 'Loan Settings',
@@ -3791,9 +3791,9 @@ const en: Record<string, string> = {
 
   // withdraw slip
   withdrawSlip: 'Withdraw Slip',
-  withdrawSlipBook: 'Withdraw Slip Book',
+  withdrawSlipBook: 'Withdraw Slip',
   withdrawSlipRequests: 'Withdraw Slip Requests',
-  withdrawSlipBlockRequests: 'Block Withdraw Slip Request',
+  withdrawSlipBlockRequests: 'Block Withdraw Slip',
 };
 
 export default en;

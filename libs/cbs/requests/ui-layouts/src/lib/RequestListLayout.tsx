@@ -25,7 +25,7 @@ const accountColumns = [
   //   link: '/requests/branch-transfer',
   // },
   {
-    title: 'Withdraw via Collector Request',
+    title: 'Withdraw Request',
     link: '/requests/withdraw-via-collector',
   },
   {
