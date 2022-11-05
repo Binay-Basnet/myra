@@ -8,6 +8,7 @@ import {
 import { BsBook, BsFacebook, BsHeart, BsInstagram, BsTwitter } from 'react-icons/bs';
 import { CgShortcut } from 'react-icons/cg';
 import { TbMessageDots } from 'react-icons/tb';
+import isEmpty from 'lodash/isEmpty';
 
 import {
   Box,
@@ -39,36 +40,43 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Loan declined and table details',
-      'Loan details pages are designed.',
-      'Loan disbursement form and table data details.',
-      'Loan repayment form and table data details.',
-      'Audit log UI layout and filters.',
-      'Change password UIand functions.',
+      'Accounting App - Investment Section',
+      'Accounting App - Sales Section ',
+      'CBS - Transfers',
+      'CBS - Requests',
+      'Addition in menu and its left navigation',
+      'Savings- Close Account',
+      'Bulk Deposit',
+      'Loan Repayment',
+      'Account Detail Page ( Overview, Transaction, Withdraw Slip)',
+      'Member Detail Page (Overview, Accounts, Share, Bio)',
+      'Transaction Detail Page (Overview) of Deposit, Withdraw',
+      'Alternative Channel',
+      'Settings-User-Teller Creation',
     ],
   },
   bugsSquashed: {
     title: 'Bug Squashed',
     data: [
-      'Transactions fixes related to amount  populate, validation in payment mode.',
-      'Loan product product changes and fixes are done.',
-      'User role names are populated in user role details.',
-      'Submit Text changed in different sections of pages, share register table details',
-      'Agent details are fixed up.',
-      'Notfound pages are fixed.',
+      // 'Transactions fixes related to amount  populate, validation in payment mode.',
+      // 'Loan product product changes and fixes are done.',
+      // 'User role names are populated in user role details.',
+      // 'Submit Text changed in different sections of pages, share register table details',
+      // 'Agent details are fixed up.',
+      // 'Notfound pages are fixed.',
     ],
   },
   knownBugs: {
     title: 'Known Bugs',
     data: [
-      'Date calendar in Nepali to be implemented, Drop down list might not be relevant.',
-      'Multiple upload on edit is not applicable, Some input contains zero value as default.',
-      'Every table has a search field that needs to be implemented.',
-      'Validation shows, alerts, and toast messages still need to be implemented.',
-      'Nepali translations are still yet to be completed and fixed.',
-      'Save drafts are not implemented, More than 100 shares cannot be purchased as well as returned.',
-      'Validation in the audit log and many other pages are remaining.',
-      'Preview page of kym form needs to be implemented. ',
+      // 'Date calendar in Nepali to be implemented, Drop down list might not be relevant.',
+      // 'Multiple upload on edit is not applicable, Some input contains zero value as default.',
+      // 'Every table has a search field that needs to be implemented.',
+      // 'Validation shows, alerts, and toast messages still need to be implemented.',
+      // 'Nepali translations are still yet to be completed and fixed.',
+      // 'Save drafts are not implemented, More than 100 shares cannot be purchased as well as returned.',
+      // 'Validation in the audit log and many other pages are remaining.',
+      // 'Preview page of kym form needs to be implemented. ',
     ],
   },
 };
@@ -107,8 +115,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.3</Text>
-          <Text fontSize="s3">October 17, 2022</Text>
+          <Text fontSize="r2">Version 2</Text>
+          <Text fontSize="s3">November 5, 2022</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>
@@ -125,37 +133,41 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
             ))}
           </UnorderedList>
         </Box>
-        <Box>
-          <Box display="flex" alignItems="center" gap={2}>
-            <AiOutlineBug size={18} />
-            <Text fontSize="r2" fontWeight="medium">
-              {whatsNewData?.bugsSquashed?.title}
-            </Text>
-          </Box>
+        {!isEmpty(whatsNewData.bugsSquashed.data) && (
+          <Box>
+            <Box display="flex" alignItems="center" gap={2}>
+              <AiOutlineBug size={18} />
+              <Text fontSize="r2" fontWeight="medium">
+                {whatsNewData?.bugsSquashed?.title}
+              </Text>
+            </Box>
 
-          <UnorderedList>
-            {whatsNewData.bugsSquashed.data.map((item) => (
-              <ListItem key={item} fontSize="s3">
-                {item}
-              </ListItem>
-            ))}
-          </UnorderedList>
-        </Box>
-        <Box>
-          <Box display="flex" alignItems="center" gap={2}>
-            <AiOutlineExclamation size={18} />
-            <Text fontSize="r2" fontWeight="medium">
-              Known Bugs
-            </Text>
+            <UnorderedList>
+              {whatsNewData.bugsSquashed.data.map((item) => (
+                <ListItem key={item} fontSize="s3">
+                  {item}
+                </ListItem>
+              ))}
+            </UnorderedList>
           </Box>
-          <UnorderedList>
-            {whatsNewData?.knownBugs?.data.map((item) => (
-              <ListItem key={item} fontSize="s3">
-                {item}
-              </ListItem>
-            ))}
-          </UnorderedList>
-        </Box>
+        )}
+        {!isEmpty(whatsNewData?.knownBugs?.data) && (
+          <Box>
+            <Box display="flex" alignItems="center" gap={2}>
+              <AiOutlineExclamation size={18} />
+              <Text fontSize="r2" fontWeight="medium">
+                Known Bugs
+              </Text>
+            </Box>
+            <UnorderedList>
+              {whatsNewData?.knownBugs?.data.map((item) => (
+                <ListItem key={item} fontSize="s3">
+                  {item}
+                </ListItem>
+              ))}
+            </UnorderedList>
+          </Box>
+        )}
       </Box>
       <Divider />
     </Modal>
