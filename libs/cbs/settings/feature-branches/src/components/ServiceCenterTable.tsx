@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 
 import { Id_Type, useGetBranchListQuery, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
-import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
+import { TablePopover } from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const SettingsServiceCenterTable = () => {
@@ -25,13 +25,6 @@ export const SettingsServiceCenterTable = () => {
   );
 
   const rowData = useMemo(() => data?.settings?.general?.branch?.list?.edges ?? [], [data]);
-
-  const popoverTitle = [
-    {
-      title: 'depositProductEdit',
-      onClick: (id: string) => router.push(`/settings/general/service-center/edit/${id}`),
-    },
-  ];
 
   // TODO (Update this, API HAS BEEN CHANGED)
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -74,9 +67,14 @@ export const SettingsServiceCenterTable = () => {
         id: '_actions',
         header: '',
         cell: (props) => (
-          <ActionPopoverComponent
-            items={popoverTitle}
-            id={props?.row?.original?.node?.id as string}
+          <TablePopover
+            node={props?.row?.original?.node}
+            items={[
+              {
+                title: t['depositProductEdit'],
+                onClick: (node) => router.push(`/settings/general/service-center/edit/${node?.id}`),
+              },
+            ]}
           />
         ),
         meta: {

@@ -1,21 +1,11 @@
 /* eslint-disable-next-line */
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import { useTranslation } from '@coop/shared/utils';
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  FormFooter,
-  FormHeader,
-  Icon,
-  Text,
-  TextFields,
-} from '@coop/shared/ui';
-import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
-import { BiSave } from 'react-icons/bi';
-import { AccordionKymCoopForm } from '@coop/myra/components';
+import React, {useState} from 'react';
+import {useRouter} from 'next/router';
+import {useTranslation} from '@coop/shared/utils';
+import {Box, Button, Checkbox, Container, FormFooter, FormHeader, Icon, Text, TextFields,} from '@coop/shared/ui';
+import {SectionContainer} from '@coop/cbs/kym-form/ui-containers';
+import {BiSave} from 'react-icons/bi';
+import {AccordionKymCoopForm} from '@coop/cbs/kym-form/formElements';
 import {
   KymAccountHolderDeclaration,
   KymCoopAccountOperatorDetail,
@@ -35,7 +25,7 @@ import {
 } from '../components/form';
 
 export const KYMCooperativePage = () => {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   const [kymCurrentSection, setKymCurrentSection] = useState<{
     section: string;
     subSection: string;
@@ -48,7 +38,7 @@ export const KYMCooperativePage = () => {
     <>
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.xl" height="fit-content">
-          <FormHeader title={t['membersFormAddNewMembers']} closeLink="/members/list" />
+          <FormHeader title={t['membersFormAddNewMembers']} closeLink="/members/list"/>
         </Container>
       </Box>
 
@@ -64,7 +54,7 @@ export const KYMCooperativePage = () => {
             minHeight="100%"
             bg="gray.0"
           >
-            <AccordionKymCoopForm kymCurrentSection={kymCurrentSection} />
+            <AccordionKymCoopForm kymCurrentSection={kymCurrentSection}/>
           </Box>
 
           <Box background="gray.0" ml="320" pb="120px">
@@ -72,49 +62,49 @@ export const KYMCooperativePage = () => {
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymCoop1InformationofOrganization']}
               </Text>
-              <KymCoopBasicInfo setSection={setKymCurrentSection} />
-              <KymCoopRegdAddress setSection={setKymCurrentSection} />
-              <KymCoopOpAddress setSection={setKymCurrentSection} />
-              <KymCoopContactDetails setSection={setKymCurrentSection} />
-              <KymCoopCurrentMembers setSection={setKymCurrentSection} />
-              <KymCoopDate setSection={setKymCurrentSection} />
-              <KymCoopRepresentative setSection={setKymCurrentSection} />
-              <KymCoopAddCoopDetails setSection={setKymCurrentSection} />
-              <KymCoopNoEmployee setSection={setKymCurrentSection} />
+              <KymCoopBasicInfo setSection={setKymCurrentSection}/>
+              <KymCoopRegdAddress setSection={setKymCurrentSection}/>
+              <KymCoopOpAddress setSection={setKymCurrentSection}/>
+              <KymCoopContactDetails setSection={setKymCurrentSection}/>
+              <KymCoopCurrentMembers setSection={setKymCurrentSection}/>
+              <KymCoopDate setSection={setKymCurrentSection}/>
+              <KymCoopRepresentative setSection={setKymCurrentSection}/>
+              <KymCoopAddCoopDetails setSection={setKymCurrentSection}/>
+              <KymCoopNoEmployee setSection={setKymCurrentSection}/>
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymCoop2EconomicDetails']}
               </Text>
-              <KymEquityLiabilities setSection={setKymCurrentSection} />
-              <KymCoopAssets setSection={setKymCurrentSection} />
+              <KymEquityLiabilities setSection={setKymCurrentSection}/>
+              <KymCoopAssets setSection={setKymCurrentSection}/>
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymCoop3DetailsofBoardDirectors']}
               </Text>
-              <KymCoopBoardDirectorDetail setSection={setKymCurrentSection} />
+              <KymCoopBoardDirectorDetail setSection={setKymCurrentSection}/>
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymCoop4DetailsofAccountOperators']}
               </Text>
-              <KymCoopAccountOperatorDetail setSection={setKymCurrentSection} />
+              <KymCoopAccountOperatorDetail setSection={setKymCurrentSection}/>
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymCoop5Declaration']}
               </Text>
-              <KymAccountHolderDeclaration setSection={setKymCurrentSection} />
-              <KymCoopDocumentDeclarationForm setSection={setKymCurrentSection} />
+              <KymAccountHolderDeclaration setSection={setKymCurrentSection}/>
+              <KymCoopDocumentDeclarationForm setSection={setKymCurrentSection}/>
             </SectionContainer>
 
             <Box p="s20" display="flex" gap="s16" alignItems="start">
-              <Checkbox fontSize="s3" />
+              <Checkbox fontSize="s3"/>
               <TextFields variant="formInput" mt="-6px">
                 I/We agree to the&nbsp;
                 <TextFields as="span" variant="link">
@@ -141,7 +131,7 @@ export const KYMCooperativePage = () => {
             }
             draftButton={
               <Button type="submit" variant="ghost" onClick={() => router.push('/members/list')}>
-                <Icon as={BiSave} color="primary.500" />
+                <Icon as={BiSave} color="primary.500"/>
                 <Text
                   alignSelf="center"
                   color="primary.500"

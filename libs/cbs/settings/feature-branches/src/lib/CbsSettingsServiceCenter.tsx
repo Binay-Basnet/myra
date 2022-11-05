@@ -1,4 +1,4 @@
-import { SettingsServiceCenterTable } from '@coop/myra/components';
+import { SettingsServiceCenterTable } from '../components/ServiceCenterTable';
 
 export const CbsSettingsServiceCenter = () => <SettingsServiceCenterTable />;
 

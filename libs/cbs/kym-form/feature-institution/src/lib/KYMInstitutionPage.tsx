@@ -11,8 +11,8 @@ import {
   setInstitutionHasPressedNext,
   useGetKymOverallFormStatusQuery,
 } from '@coop/cbs/data-access';
+import { AccorrdianAddInstitution } from '@coop/cbs/kym-form/formElements';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
-import { AccorrdianAddInstitution } from '@coop/myra/components';
 import { Box, Button, Container, FormFooter, FormHeader, Icon, Text, toast } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 

@@ -18,7 +18,7 @@ export interface TablePopoverProps<T extends Record<string, unknown>> {
     onClick?: (node: T) => void;
   }[];
 
-  node: T;
+  node: T | undefined | null;
 }
 
 export const TablePopover = <T extends Record<string, unknown>>({
@@ -27,6 +27,10 @@ export const TablePopover = <T extends Record<string, unknown>>({
 }: TablePopoverProps<T>) => {
   const initialFocusRef = useRef<HTMLButtonElement | null>(null);
   const { t } = useTranslation();
+
+  if (!node) {
+    return null;
+  }
 
   return (
     <Popover placement="bottom-start" initialFocusRef={initialFocusRef}>

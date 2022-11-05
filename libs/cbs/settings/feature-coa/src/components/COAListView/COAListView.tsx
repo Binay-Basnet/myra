@@ -4,9 +4,7 @@ import { useGetCoaListQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
 import { useTranslation } from '@coop/shared/utils';
 
-import { ActionPopoverComponent } from '../../../actionPopover/ActionPopover';
-
-export const CoaAccountListTable = () => {
+export const COAListView = () => {
   const { t } = useTranslation();
 
   const { data, isFetching } = useGetCoaListQuery({
@@ -19,13 +17,6 @@ export const CoaAccountListTable = () => {
     () => data?.settings?.general?.chartsOfAccount?.accounts?.data ?? [],
     [data]
   );
-
-  const popoverTitle = [
-    {
-      title: 'depositProductEdit',
-      onClick: () => null,
-    },
-  ];
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -49,13 +40,6 @@ export const CoaAccountListTable = () => {
       {
         header: t['settingsCoaTableAccountParentGroup'],
         accessorFn: (row) => row?.id,
-      },
-
-      {
-        id: '_actions',
-        header: '',
-        accessorKey: 'actions',
-        cell: (props) => <ActionPopoverComponent items={popoverTitle} id={props?.row?.id} />,
       },
     ],
     [t]

@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { AccorrdianAddCOOPUnion } from '@coop/myra/components';
+import { AccorrdianAddCOOPUnion } from '@coop/cbs/kym-form/formElements';
 import { Box, Container } from '@coop/shared/ui';
 
 import { KYMCoopUnionForm } from '../KYMCoopUnionForm';
@@ -29,10 +29,10 @@ export const KymCoopUnionFormBody = () => {
           bg="gray.0"
           zIndex={2}
         >
-          <AccorrdianAddCOOPUnion kymCurrentSection={kymCurrentSection}/>
+          <AccorrdianAddCOOPUnion kymCurrentSection={kymCurrentSection} />
         </Box>
 
-        <KYMCoopUnionForm setKymCurrentSection={setSection}/>
+        <KYMCoopUnionForm setKymCurrentSection={setSection} />
       </Box>
     </Container>
   );

@@ -1,12 +1,11 @@
 import { useRouter } from 'next/router';
 
-import { COAFullView } from '@coop/cbs/settings/coa';
+import { COAFullView, COAListView } from '@coop/cbs/settings/coa';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
   SettingsPageHeader,
 } from '@coop/cbs/settings/ui-layout';
-import { AccountList } from '@coop/myra/components';
 import { Box } from '@coop/shared/ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
@@ -35,7 +34,7 @@ const ChartsOfAccounts = () => {
       />
       <Box>
         {(router.query['objState'] === 'full-view' || !router.query['objState']) && <COAFullView />}
-        {router.query['objState'] === 'account-list' && <AccountList />}
+        {router.query['objState'] === 'account-list' && <COAListView />}
       </Box>
     </Box>
   );
