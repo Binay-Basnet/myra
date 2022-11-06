@@ -1,9 +1,11 @@
+import dayjs from 'dayjs';
+
 import { Member } from '@coop/cbs/data-access';
 import { formatAddress } from '@coop/cbs/utils';
 import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
 
 interface ReportMemberProps {
-  member: Partial<Member>;
+  member: Partial<Member> | undefined | null;
 }
 
 export const ReportMember = ({ member }: ReportMemberProps) => (
@@ -62,7 +64,7 @@ export const ReportMember = ({ member }: ReportMemberProps) => (
                 2727
               </Text>
               <Text fontSize="r1" color="gray.700" fontWeight="500">
-                {member?.dateJoined}
+                {dayjs(member?.dateJoined).format('YYYY-MM-DD')}
               </Text>
             </Box>
           </GridItem>

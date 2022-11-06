@@ -32,7 +32,7 @@ interface ReportFilterType {
 
 export interface PathBarProps {
   paths: Path[];
-  filters: ReportFilterType;
+  filters: ReportFilterType | null;
 }
 
 export const ReportHeader = ({ paths, filters }: PathBarProps) => {
@@ -133,18 +133,21 @@ export const ReportHeader = ({ paths, filters }: PathBarProps) => {
             onClick={async () => {
               const callApi = async () => {
                 const idResponse = await getNewId({});
-                return saveReport({
-                  data: {
-                    id: idResponse.newId,
+                if (filters) {
+                  return saveReport({
                     data: {
-                      memberId: filters.memberId,
-                      periodType: filters.predefinedPeriod,
-                      filter: filters.type,
+                      id: idResponse.newId,
+                      data: {
+                        memberId: filters.memberId,
+                        periodType: filters.predefinedPeriod,
+                        filter: filters.type,
+                      },
+                      name: getValues()['name'],
+                      reportType: 'Share Report',
                     },
-                    name: getValues()['name'],
-                    reportType: 'Share Report',
-                  },
-                });
+                  });
+                }
+                return {};
               };
 
               await asyncToast({

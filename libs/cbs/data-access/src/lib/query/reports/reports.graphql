@@ -37,3 +37,40 @@ query getSavedReport($reportId: ID!) {
     }
   }
 }
+
+query getSavingStatement($data: SavingStatementReportSettings!){
+  report {
+    savingStatementReport(data: $data){
+      memberId
+      member {
+        id
+        name
+        address {
+          wardNo
+          state
+          district
+          houseNo
+          localGovernment
+        }
+        dateJoined
+      }
+      statement {
+        ... on SavingStatementReport {
+          savingStatement {
+            date
+            balanceAmount
+            depositCr
+            chequeOrVoucherNo
+            particular
+            withdrawDr
+          }
+          totals {
+            totalBalance
+            totalWithdraw
+            totalDeposit
+          }
+        }
+      }
+    }
+  }
+}

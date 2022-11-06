@@ -15,6 +15,9 @@ export const ShareReportList = () => (
       <ReportLinkText link="/reports/cbs/share-report/new">
         102 - Share Register - {featureCode?.shareRegister}
       </ReportLinkText>
+      <ReportLinkText link="/reports/cbs/saving-report/new">
+        102 - Saving Statement - {featureCode?.shareRegister}
+      </ReportLinkText>
       <ReportLinkText link="/reports/cbs/share-report/new">
         302 - Share Transaction Report
       </ReportLinkText>

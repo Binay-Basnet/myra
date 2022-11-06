@@ -13810,6 +13810,13 @@ export type GetSavedReportQueryVariables = Exact<{
 
 export type GetSavedReportQuery = { report: { getReport?: { name?: string | null, settings?: { filter?: ShareTransactionType | null, memberId: string, periodType: ReportPeriodType, customPeriod?: { from: string, to: string } | null } | null } | null } };
 
+export type GetSavingStatementQueryVariables = Exact<{
+  data: SavingStatementReportSettings;
+}>;
+
+
+export type GetSavingStatementQuery = { report: { savingStatementReport?: { memberId?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, dateJoined?: string | null, address?: { wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, localGovernment?: Record<"local"|"en"|"np",string> | null } | null } | null, statement?: { savingStatement?: Array<{ date: string, balanceAmount: number, depositCr: number, chequeOrVoucherNo: string, particular: string, withdrawDr: number } | null> | null, totals?: { totalBalance: number, totalWithdraw: number, totalDeposit: number } | null } | {} | null } | null } };
+
 export type GetShareStatementQueryVariables = Exact<{
   data: ShareStatementReportSettings;
 }>;
@@ -21420,6 +21427,56 @@ export const useGetSavedReportQuery = <
     useQuery<GetSavedReportQuery, TError, TData>(
       ['getSavedReport', variables],
       useAxios<GetSavedReportQuery, GetSavedReportQueryVariables>(GetSavedReportDocument).bind(null, variables),
+      options
+    );
+export const GetSavingStatementDocument = `
+    query getSavingStatement($data: SavingStatementReportSettings!) {
+  report {
+    savingStatementReport(data: $data) {
+      memberId
+      member {
+        id
+        name
+        address {
+          wardNo
+          state
+          district
+          houseNo
+          localGovernment
+        }
+        dateJoined
+      }
+      statement {
+        ... on SavingStatementReport {
+          savingStatement {
+            date
+            balanceAmount
+            depositCr
+            chequeOrVoucherNo
+            particular
+            withdrawDr
+          }
+          totals {
+            totalBalance
+            totalWithdraw
+            totalDeposit
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSavingStatementQuery = <
+      TData = GetSavingStatementQuery,
+      TError = unknown
+    >(
+      variables: GetSavingStatementQueryVariables,
+      options?: UseQueryOptions<GetSavingStatementQuery, TError, TData>
+    ) =>
+    useQuery<GetSavingStatementQuery, TError, TData>(
+      ['getSavingStatement', variables],
+      useAxios<GetSavingStatementQuery, GetSavingStatementQueryVariables>(GetSavingStatementDocument).bind(null, variables),
       options
     );
 export const GetShareStatementDocument = `

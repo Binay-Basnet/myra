@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 import Image from 'next/image';
 import dayjs from 'dayjs';
 
-import { ReportPeriodType, ShareTransactionType } from '@coop/cbs/data-access';
+import { ReportPeriodType } from '@coop/cbs/data-access';
 import { Box, Text } from '@coop/shared/ui';
 
 import { getPeriodDate } from '../utils/getPeriodDate';
@@ -10,11 +10,10 @@ import { getPeriodDate } from '../utils/getPeriodDate';
 type ReportFilter = {
   memberId: string;
   predefinedPeriod: ReportPeriodType;
-  period: {
-    from: string;
-    to: string;
+  period?: {
+    from?: string;
+    to?: string;
   };
-  type: ShareTransactionType;
 };
 
 interface ReportOrganizationProps {
