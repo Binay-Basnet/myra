@@ -17,7 +17,7 @@ export enum Report {
   KYM_STATUS_REPORT = 'Kym Status Report',
 
   SHARE_REGISTER = 'Share Register',
-  SHARE_STATEMENT = 'Share Statement',
+  SHARE_STATEMENT = 'Share Statement Report',
   SHARE_TRANSACTION_REPORT = 'Share Transaction Report',
   SHARE_CONSOLIDATED_REPORT = 'Share Consolidated Report',
   SHARE_CERTIFICATE_PRINT = 'Share Certificate Print',

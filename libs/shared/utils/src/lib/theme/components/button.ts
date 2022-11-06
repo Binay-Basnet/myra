@@ -180,7 +180,7 @@ const variants = {
 
 const sizes: Record<string, SystemStyleObject> = {
   lg: {
-    h: 12,
+    h: '44px',
     minW: 12,
     fontSize: 'r1',
     px: 3,

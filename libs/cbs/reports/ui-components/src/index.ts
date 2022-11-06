@@ -1,3 +1,4 @@
+export * from './components';
 export * from './lib/ReportFilter';
 export * from './lib/ReportHeader';
 export * from './lib/ReportInputs';

@@ -2,25 +2,17 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { IoFilterOutline } from 'react-icons/io5';
 
-import { ReportPeriodType, ShareTransactionType } from '@coop/cbs/data-access';
+import {
+  ReportPeriodType,
+  ShareStatementReportSettings,
+  ShareTransactionType,
+} from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { Box, Button, FormMemberSelect, GridItem, Icon } from '@coop/shared/ui';
 
-type ReportFilter = {
-  memberId: string;
-  predefinedPeriod: ReportPeriodType;
-
-  period?: {
-    from: string;
-    to: string;
-  };
-  type: ShareTransactionType;
-};
-
 interface ReportInputsProps {
-  // filter: ReportFilter;
   hasShownFilter: boolean;
-  setFilter: React.Dispatch<React.SetStateAction<ReportFilter>>;
+  setFilter: React.Dispatch<React.SetStateAction<ShareStatementReportSettings | null>>;
   setHasShownFilter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -47,7 +39,7 @@ export const ReportInputs = ({
         </GridItem>
         <GridItem colSpan={1}>
           <FormSelect
-            name="period"
+            name="periodType"
             hasRadioOption
             options={[
               { label: 'Today', value: ReportPeriodType.Today },
@@ -87,27 +79,28 @@ export const ReportInputs = ({
 
       <Box display="flex" gap="s16">
         <Button
-          isDisabled={!methods.watch()['memberId'] || !methods.watch()['period']}
+          size="lg"
+          isDisabled={!methods.watch()['memberId'] || !methods.watch()['periodType']}
           onClick={methods.handleSubmit((data) => {
-            if (!data['memberId'] || !data['period']) return;
+            if (!data['memberId'] || !data['periodType']) return;
 
             if (data['period'] === ReportPeriodType.CustomPeriod) {
               setFilter({
                 memberId: data['memberId'],
-                predefinedPeriod: data['period'],
+                periodType: data['periodType'],
                 // TODO CHANGE THIS LATER
-                period: {
+                customPeriod: {
                   from: '2002-01-20',
                   to: '2080-01-10',
                 },
-                type: data['transaction_type'] ?? ShareTransactionType.All,
+                filter: data['transaction_type'] ?? ShareTransactionType.All,
               });
             }
 
             setFilter({
               memberId: data['memberId'],
-              predefinedPeriod: data['period'],
-              type: data['transaction_type'] ?? ShareTransactionType.All,
+              periodType: data['periodType'],
+              filter: data['transaction_type'] ?? ShareTransactionType.All,
             });
           })}
         >
@@ -115,12 +108,13 @@ export const ReportInputs = ({
         </Button>
 
         {hasShownFilter ? (
-          <Button gap="s4" onClick={() => setHasShownFilter((prev) => !prev)}>
+          <Button size="lg" gap="s4" onClick={() => setHasShownFilter((prev) => !prev)}>
             <Icon as={IoFilterOutline} />
             Hide Filter
           </Button>
         ) : (
           <Button
+            size="lg"
             variant="outline"
             shade="neutral"
             gap="s4"

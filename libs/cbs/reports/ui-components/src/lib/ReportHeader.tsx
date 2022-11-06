@@ -1,5 +1,5 @@
 import { Fragment, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useFormContext } from 'react-hook-form';
 import { BsPinAngle } from 'react-icons/bs';
 import { GrClose } from 'react-icons/gr';
 import { IoChevronForward, IoSaveOutline } from 'react-icons/io5';
@@ -8,8 +8,7 @@ import { useRouter } from 'next/router';
 import { IconButton } from '@chakra-ui/react';
 
 import {
-  ReportPeriodType,
-  ShareTransactionType,
+  ShareStatementReportSettings,
   useGetNewIdMutation,
   useSaveNewReportMutation,
 } from '@coop/cbs/data-access';
@@ -20,24 +19,16 @@ type Path = {
   label: string;
 };
 
-interface ReportFilterType {
-  memberId: string;
-  predefinedPeriod: ReportPeriodType;
-  period: {
-    from: string;
-    to: string;
-  };
-  type: ShareTransactionType;
-}
-
 export interface PathBarProps {
   paths: Path[];
-  filters: ReportFilterType | null;
+  hasSave: boolean;
 }
 
-export const ReportHeader = ({ paths, filters }: PathBarProps) => {
+export const ReportHeader = ({ paths, hasSave }: PathBarProps) => {
   const router = useRouter();
-  const { register, getValues } = useForm();
+  const { getValues: filters } = useFormContext<ShareStatementReportSettings>();
+
+  const { register, getValues } = useForm<{ name: string }>();
   const { mutateAsync: saveReport } = useSaveNewReportMutation();
   const { mutateAsync: getNewId } = useGetNewIdMutation();
   const queryClient = useQueryClient();
@@ -104,9 +95,7 @@ export const ReportHeader = ({ paths, filters }: PathBarProps) => {
           shade="neutral"
           gap="s8"
           onClick={onOpenModal}
-          isDisabled={
-            router.query['action'] !== 'new' || !filters?.memberId || !filters?.predefinedPeriod
-          }
+          isDisabled={router.query['action'] !== 'new' || !hasSave}
         >
           <Icon as={IoSaveOutline} />
           Save Report
@@ -138,9 +127,9 @@ export const ReportHeader = ({ paths, filters }: PathBarProps) => {
                     data: {
                       id: idResponse.newId,
                       data: {
-                        memberId: filters.memberId,
-                        periodType: filters.predefinedPeriod,
-                        filter: filters.type,
+                        memberId: filters().memberId,
+                        periodType: filters().periodType,
+                        filter: filters().filter,
                       },
                       name: getValues()['name'],
                       reportType: 'Share Report',
