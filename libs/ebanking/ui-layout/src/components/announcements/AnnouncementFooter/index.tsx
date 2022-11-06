@@ -16,7 +16,11 @@ export const AnnouncementFooter = () => (
 
     <Box px="s16" fontSize="s3" color="gray.600">
       <Text>For Support:</Text>
-      <Text color="primary.500">www.myraerp.com</Text>
+      <Text color="primary.500" _hover={{ textDecoration: 'underline' }}>
+        <a href="https://www.myraerp.com" target="_blank" rel="noreferrer">
+          www.myraerp.com
+        </a>
+      </Text>
     </Box>
   </>
 );

@@ -1,26 +1,24 @@
-import React from 'react';
 import { IoCheckmark, IoRepeat } from 'react-icons/io5';
+import { useQueryClient } from 'react-query';
 
-import { useGetAccountListQuery } from '@coop/ebanking/data-access';
+import {
+  updateDefaultAccountInCoop,
+  useAppDispatch,
+  useAppSelector,
+  useGetAccountListQuery,
+  useSetDefaultAccountMutation,
+} from '@coop/ebanking/data-access';
 import { Box, Button, Icon, Popover, PopoverContent, PopoverTrigger, Text } from '@coop/shared/ui';
-import { amountConverter } from '@coop/shared/utils';
 
-type Account = {
-  id: string;
-  accountNumber: string;
-  name: string;
-  balance: string;
-};
+export const DefaultAccountPopover = () => {
+  const defaultAccount = useAppSelector((state) => state?.auth?.cooperative?.user?.defaultAccount);
+  const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
 
-export const AccountPopover = ({
-  id,
-  selectedAccount,
-  setSelectedAccount,
-}: {
-  id?: string;
-  selectedAccount?: Account | null;
-  setSelectedAccount?: React.Dispatch<React.SetStateAction<Account | null>>;
-}) => {
+  const { mutateAsync: setDefaultAccount } = useSetDefaultAccountMutation({
+    onSuccess: () => queryClient.invalidateQueries('getAccountList'),
+  });
+
   const { data: accountList } = useGetAccountListQuery(
     {
       transactionPagination: { first: 1, after: '' },
@@ -28,35 +26,11 @@ export const AccountPopover = ({
     {
       refetchOnMount: true,
       staleTime: 0,
-      onSuccess: (response) => {
-        if (!selectedAccount) {
-          const accounts = response?.eBanking?.account?.list?.accounts;
-
-          if (id) {
-            const foundAccount = accounts?.find((account) => account?.id === id);
-
-            setSelectedAccount &&
-              setSelectedAccount({
-                id: foundAccount?.id as string,
-                name: foundAccount?.name as string,
-                accountNumber: foundAccount?.accountNumber as string,
-                balance: foundAccount?.balance
-                  ? (amountConverter(foundAccount?.balance) as string)
-                  : '-',
-              });
-          }
-          setSelectedAccount &&
-            setSelectedAccount({
-              id: accounts?.[0]?.id as string,
-              name: accounts?.[0]?.name as string,
-              accountNumber: accounts?.[0]?.accountNumber as string,
-              balance: accounts?.[0]?.balance
-                ? (amountConverter(accounts?.[0]?.balance) as string)
-                : '-',
-            });
-        }
-      },
     }
+  );
+
+  const accountDetails = accountList?.eBanking?.account?.list?.accounts?.find(
+    (account) => account?.id === defaultAccount
   );
 
   return (
@@ -66,7 +40,9 @@ export const AccountPopover = ({
           <PopoverTrigger>
             <Button variant="ghost" gap="s4">
               <Icon as={IoRepeat} color="primary.500" />
-              Switch Account
+              <Text color="gray.800" fontSize="r1" fontWeight="500">
+                {accountDetails?.name ?? 'Change Account'}
+              </Text>
             </Button>
           </PopoverTrigger>
           <PopoverContent _focus={{}} boxShadow="E0" borderRadius="br1">
@@ -96,19 +72,15 @@ export const AccountPopover = ({
                   display="flex"
                   alignItems="center"
                   justifyContent="space-between"
-                  onClick={() => {
-                    setSelectedAccount &&
-                      setSelectedAccount({
-                        id: account?.id as string,
-                        balance: account?.balance
-                          ? (amountConverter(account?.balance) as string)
-                          : '-',
-                        name: account?.name as string,
-                        accountNumber: account?.accountNumber as string,
-                      });
+                  onClick={async () => {
+                    const response = await setDefaultAccount({ accountId: account?.id as string });
+                    const data = response?.eBanking?.account?.setDefaultAccount?.recordId;
+                    if (data) {
+                      dispatch(updateDefaultAccountInCoop(data));
+                    }
                     onClose();
                   }}
-                  bg={selectedAccount?.id === account?.id ? 'gray.100' : 'white'}
+                  bg={defaultAccount === account?.id ? 'gray.100' : 'white'}
                   _hover={{ bg: 'gray.100' }}
                 >
                   <Box display="flex" flexDir="column" gap="s4">
@@ -120,7 +92,7 @@ export const AccountPopover = ({
                     </Text>
                   </Box>
 
-                  {selectedAccount?.id === account?.id && (
+                  {defaultAccount === account?.id && (
                     <Icon as={IoCheckmark} color="primary.500" gap="s4" />
                   )}
                 </Box>

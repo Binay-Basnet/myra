@@ -8,6 +8,7 @@ import { EmptyState } from '@coop/ebanking/components';
 import {
   AccountMinimal,
   useGetAccountListQuery,
+  useGetEbankingLoanAccountsQuery,
   useGetHomeServiceListQuery,
 } from '@coop/ebanking/data-access';
 import { Box, Button, Divider, Grid, GridItem, Icon, Text } from '@coop/shared/ui';
@@ -23,6 +24,11 @@ export const EbankingHomePage = () => {
   const { data: accountList, isLoading: accountsLoading } = useGetAccountListQuery({
     transactionPagination: { first: 10, after: '' },
   });
+  const accounts = accountList?.eBanking?.account?.list?.accounts;
+
+  const { data: loanAccountList, isLoading: loanAccountsLoading } =
+    useGetEbankingLoanAccountsQuery();
+  const loanAccounts = loanAccountList?.eBanking?.loanAccount?.list?.accounts;
 
   // const utilityPayments = [
   //   ...(utilityList?.eBanking?.utilityPayments ?? []),
@@ -142,7 +148,7 @@ export const EbankingHomePage = () => {
       <Box display="flex" flexDir="column" gap="s8">
         <Box display="flex" alignItems="center" justifyContent="space-between" gap="s8">
           <Text fontSize="r1" color="gray.700" fontWeight="600">
-            Accounts
+            Saving Accounts ({accounts?.length})
           </Text>
           <Button
             py="0"
@@ -162,9 +168,45 @@ export const EbankingHomePage = () => {
               <Skeleton h="144px" />
             </>
           )}
-          {accountList?.eBanking?.account?.list?.accounts?.slice(0, 2).map((account) => (
+          {accounts?.slice(0, 2).map((account) => (
             <Fragment key={account?.id}>
               <AccountCard
+                account={account as AccountMinimal}
+                isDefault={Boolean(account?.isDefault)}
+              />
+            </Fragment>
+          ))}
+        </Grid>
+      </Box>
+      <Divider />
+
+      <Box display="flex" flexDir="column" gap="s8">
+        <Box display="flex" alignItems="center" justifyContent="space-between" gap="s8">
+          <Text fontSize="r1" color="gray.700" fontWeight="600">
+            Loan Accounts ({loanAccounts?.length})
+          </Text>
+          <Button
+            py="0"
+            variant="link"
+            h="auto"
+            minH="none"
+            onClick={() => router.push('/accounts')}
+          >
+            See all
+            <Icon as={ChevronRightIcon} color="primary.500" />
+          </Button>
+        </Box>
+        <Grid templateColumns="repeat(2, 1fr)" gap="s16">
+          {loanAccountsLoading && (
+            <>
+              <Skeleton h="144px" />
+              <Skeleton h="144px" />
+            </>
+          )}
+          {loanAccounts?.slice(0, 2).map((account) => (
+            <Fragment key={account?.id}>
+              <AccountCard
+                isLoan
                 account={account as AccountMinimal}
                 isDefault={Boolean(account?.isDefault)}
               />

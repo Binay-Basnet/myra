@@ -120,3 +120,67 @@ query getAccountDetails($id: ID!, $transactionPagination: Pagination) {
     }
   }
 }
+
+
+query getEbankingLoanAccounts{
+  eBanking {
+    loanAccount {
+      list {
+        accounts {
+          id
+          name
+          productName
+          accountNumber
+          isDefault
+          balance
+          interestRate
+        }
+      }
+    }
+  }
+}
+
+
+query getEbankLoanAccountDetails($id: ID!, $transactionPagination: Pagination) {
+  eBanking {
+    loanAccount{
+      get(id: $id) {
+        data {
+          id
+          productId
+          name
+          accountNumber
+          isDefault
+          balance
+          interestRate
+          accountType
+          accountSubType
+          interestBooked
+          interestEarned
+          subscribedDate
+          history {
+            id
+            balance
+            date
+          }
+          transactions(paginate: $transactionPagination) {
+            edges {
+              node {
+                id
+                accountId
+                name
+                date
+                month
+                transactionDirection
+                amount
+              }
+            }
+            pageInfo {
+              ...Pagination
+            }
+          }
+        }
+      }
+    }
+  }
+}

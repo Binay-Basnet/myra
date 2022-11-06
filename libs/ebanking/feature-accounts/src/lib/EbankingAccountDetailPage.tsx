@@ -7,25 +7,57 @@ import dayjs from 'dayjs';
 
 import { AccountLargeCard, InfoCard, TransactionCard } from '@coop/ebanking/cards';
 import { EmptyState } from '@coop/ebanking/components';
-import { EbankingAccount, useGetAccountDetailsQuery } from '@coop/ebanking/data-access';
+import {
+  EbankingAccount,
+  useGetAccountDetailsQuery,
+  useGetEbankLoanAccountDetailsQuery,
+} from '@coop/ebanking/data-access';
 import { Box, Button, Divider, Grid, Icon, PathBar } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
 import { AccountDetail } from '../components/AccountDetail';
 import { AccountPopover } from '../components/AccountPopover';
 
 export const EbankingAccountDetailPage = () => {
   const router = useRouter();
+  const isLoan = router.query['loan'];
 
   const { data: accountDetails, isLoading } = useGetAccountDetailsQuery(
     {
       id: String(router.query['id']),
       transactionPagination: { first: 10, after: '' },
     },
-    { enabled: typeof router.query['id'] === 'string' }
+    { enabled: typeof router.query['id'] === 'string' && !isLoan }
   );
 
   const account = accountDetails?.eBanking?.account?.get?.data;
-  const transactions = accountDetails?.eBanking?.account?.get?.data?.transactions?.edges;
+
+  const { data: loanAccountDetails, isLoading: loanIsLoading } = useGetEbankLoanAccountDetailsQuery(
+    {
+      id: String(router.query['id']),
+      transactionPagination: { first: 10, after: '' },
+    },
+    { enabled: typeof router.query['id'] === 'string' && !!isLoan }
+  );
+
+  const loanAccount = loanAccountDetails?.eBanking?.loanAccount?.get?.data;
+
+  if (isLoan) {
+    return <AccountDetails isLoading={loanIsLoading} account={loanAccount as EbankingAccount} />;
+  }
+
+  return <AccountDetails isLoading={isLoading} account={account as EbankingAccount} />;
+};
+
+interface IAccountDetailsProps {
+  isLoading: boolean;
+  account: EbankingAccount | undefined | null;
+}
+
+export const AccountDetails = ({ account, isLoading }: IAccountDetailsProps) => {
+  const router = useRouter();
+
+  const transactions = account?.transactions?.edges;
 
   return (
     <Box display="flex" flexDir="column" gap="s16">
@@ -57,16 +89,13 @@ export const EbankingAccountDetailPage = () => {
               <AccountDetail title="Interest Rate" value={`${account.interestRate.toFixed(2)}%`} />
               <AccountDetail
                 title="Interest Booked"
-                value={account.interestRate.toLocaleString('en-IN')}
+                value={amountConverter(account.interestRate)}
               />
               <AccountDetail
                 title="Interest Earned"
-                value={account.interestEarned.toLocaleString('en-IN')}
+                value={amountConverter(account.interestEarned)}
               />
-              <AccountDetail
-                title="Total Balance"
-                value={Number(account.balance).toLocaleString('en-IN')}
-              />
+              <AccountDetail title="Total Balance" value={amountConverter(account.balance)} />
               <AccountDetail
                 title="Subscribed Date"
                 value={dayjs(account.subscribedDate).format('DD MMM YYYY [at] hh:mm A')}

@@ -13,7 +13,7 @@ interface ITransactionCardProps {
   };
 }
 
-export const TransactionCard = ({ transactionItem }: ITransactionCardProps) => (
+export const TransactionCard = ({transactionItem}: ITransactionCardProps) => (
   <Box
     h="80px"
     display="flex"

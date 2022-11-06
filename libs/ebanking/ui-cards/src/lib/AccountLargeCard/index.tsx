@@ -142,8 +142,8 @@ export const AccountLargeCard = ({ isDefault, account }: IAccountCardProps) => {
         <TextFields variant="formHelper" color="gray.700">
           {account?.accountSubType}
         </TextFields>
-        <TextFields variant="formHelper" color="gray.500">
-          {account?.accountSubType}
+        <TextFields variant="formHelper" color="gray.500" textTransform="capitalize">
+          {account?.accountType.toLowerCase()}
         </TextFields>
       </Box>
 

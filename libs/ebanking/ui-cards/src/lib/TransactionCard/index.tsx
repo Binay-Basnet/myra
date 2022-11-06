@@ -1,5 +1,6 @@
 import { EbankingTransaction, EbankingTransactionDirection } from '@coop/ebanking/data-access';
 import { Box, Icon, TextFields } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
 interface ITransactionCardProps {
   transaction: Partial<EbankingTransaction>;
@@ -23,8 +24,8 @@ export const TransactionCard = ({ transaction, accountName }: ITransactionCardPr
       )}
 
       <Box display="flex" flexDir="column" gap="s4">
-        <TextFields variant="navItems" color="gray.800">
-          {transaction.name}
+        <TextFields variant="navItems" color="gray.800" textTransform="capitalize">
+          {transaction.name?.toLowerCase()}
         </TextFields>
         <TextFields variant="formHelper" color="gray.500" textTransform="capitalize">
           {accountName}
@@ -41,7 +42,7 @@ export const TransactionCard = ({ transaction, accountName }: ITransactionCardPr
         }
       >
         {transaction.transactionDirection === EbankingTransactionDirection.Outgoing ? '-' : '+'}
-        {Number(transaction.amount).toFixed(2)}
+        {amountConverter(transaction.amount as string)}
       </TextFields>
       <TextFields variant="formHelper" color="gray.500">
         {transaction?.date?.en}

@@ -26,10 +26,11 @@ import {
 
 interface IAccountCardProps {
   isDefault: boolean;
+  isLoan?: boolean;
   account: AccountMinimal;
 }
 
-export const AccountCard = ({ isDefault, account }: IAccountCardProps) => {
+export const AccountCard = ({ isDefault, account, isLoan }: IAccountCardProps) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [checked, setChecked] = useState(isDefault);
@@ -49,7 +50,11 @@ export const AccountCard = ({ isDefault, account }: IAccountCardProps) => {
           flexDir="column"
           cursor="pointer"
           onClick={() => {
-            router.push(`/accounts/${account.id}?name=${account.name}`);
+            if (isLoan) {
+              router.push(`/accounts/${account.id}?name=${account.name}&loan=true`);
+            } else {
+              router.push(`/accounts/${account.id}?name=${account.name}`);
+            }
           }}
         >
           <TextFields variant="tableHeader" color="primary.500">

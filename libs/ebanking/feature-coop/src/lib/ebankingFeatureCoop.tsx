@@ -1,24 +1,25 @@
-import { IconType } from 'react-icons';
-import { BsCash } from 'react-icons/bs';
-import { FiBook } from 'react-icons/fi';
-import { ImBlocked } from 'react-icons/im';
-import { IoCashOutline } from 'react-icons/io5';
-import { SiFormstack } from 'react-icons/si';
-import { TbCalendarTime } from 'react-icons/tb';
+import {IconType} from 'react-icons';
+import {BsCash} from 'react-icons/bs';
+import {FiBook} from 'react-icons/fi';
+import {ImBlocked} from 'react-icons/im';
+import {IoCashOutline} from 'react-icons/io5';
+import {SiFormstack} from 'react-icons/si';
+import {TbCalendarTime} from 'react-icons/tb';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { ChevronRightIcon } from '@chakra-ui/icons';
-import { Skeleton } from '@chakra-ui/react';
+import {useRouter} from 'next/router';
+import {ChevronRightIcon} from '@chakra-ui/icons';
+import {Skeleton} from '@chakra-ui/react';
 
-import { AccountPopover } from '@coop/ebanking/accounts';
-import { CoopCard, CoopDownloadCard, COOPHeaderCard, InfoCard } from '@coop/ebanking/cards';
+import {DefaultAccountPopover} from '@coop/ebanking/accounts';
+import {CoopCard, CoopDownloadCard, COOPHeaderCard, InfoCard} from '@coop/ebanking/cards';
 import {
+  useAppSelector,
   useGetCoopChequeServicesQuery,
   useGetCoopComplaintServicesQuery,
   useGetCoopDownloadsQuery,
   useGetCoopLoanServicesQuery,
 } from '@coop/ebanking/data-access';
-import { Box, Button, Divider, Grid, Icon, Text, VStack } from '@coop/shared/ui';
+import {Box, Button, Divider, Grid, Icon, Text, VStack} from '@coop/shared/ui';
 
 /* eslint-disable-next-line */
 export interface EbankingFeatureCoopProps {}
@@ -83,6 +84,7 @@ const DOWNLOADS_DICT: Record<
 
 export const EbankingFeatureCoop = () => {
   const router = useRouter();
+  const coopMe = useAppSelector((state) => state.auth.cooperative.user);
 
   const { data: chequeServices, isLoading: chequeLoading } = useGetCoopChequeServicesQuery();
   const { data: loanList, isLoading: loanLoading } = useGetCoopLoanServicesQuery();
@@ -145,7 +147,7 @@ export const EbankingFeatureCoop = () => {
             <Text fontSize="r1" fontWeight="600" color="gray.800">
               Default Account
             </Text>
-            <AccountPopover />
+            <DefaultAccountPopover />
           </Box>
         </VStack>
       </Box>
