@@ -1,11 +1,11 @@
+import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { AccordionPanel } from '@chakra-ui/react';
 
 import {
-  ReportPeriodType,
-  SavingAmountRange,
   SavingServiceType,
+  SavingStatementReportSettings,
   SavingTransactionType,
 } from '@coop/cbs/data-access';
 import { FormCheckboxGroup, FormRadioGroup } from '@coop/shared/form';
@@ -19,28 +19,13 @@ import {
   Text,
 } from '@coop/shared/ui';
 
-type IReportFilter = {
-  memberId: string;
-  accountId: string;
-  periodType: ReportPeriodType;
-  customPeriod?: {
-    from: string;
-    to: string;
-  };
-  filter?: {
-    transactionType: SavingTransactionType;
-    service: SavingServiceType;
-    amountRange: SavingAmountRange;
-  };
-};
-
 interface ReportFilterProps {
   hasShownFilter: boolean;
-  setTriggerQuery: (value: boolean) => void;
+  setFilter: React.Dispatch<React.SetStateAction<SavingStatementReportSettings | null>>;
 }
 
-export const SavingReportFilters = ({ hasShownFilter, setTriggerQuery }: ReportFilterProps) => {
-  const methods = useFormContext();
+export const SavingReportFilters = ({ hasShownFilter, setFilter }: ReportFilterProps) => {
+  const methods = useFormContext<SavingStatementReportSettings>();
 
   return hasShownFilter ? (
     <Box
@@ -197,7 +182,17 @@ export const SavingReportFilters = ({ hasShownFilter, setTriggerQuery }: ReportF
       >
         <Button
           onClick={() => {
-            setTriggerQuery(true);
+            setFilter((prev) =>
+              prev
+                ? {
+                    ...prev,
+                    filter: {
+                      ...methods.getValues()['filter'],
+                      service: SavingServiceType.Charges,
+                    },
+                  }
+                : null
+            );
           }}
         >
           Apply Filter
@@ -206,11 +201,22 @@ export const SavingReportFilters = ({ hasShownFilter, setTriggerQuery }: ReportF
           variant="ghost"
           shade="neutral"
           onClick={() => {
+            setFilter((prev) =>
+              prev
+                ? {
+                    ...prev,
+                    filter: {
+                      service: SavingServiceType.Charges,
+                      transactionType: SavingTransactionType.All,
+                    },
+                  }
+                : null
+            );
             methods.reset({
               ...methods.getValues(),
               filter: {
-                ...methods.getValues()['filter'],
-                service: methods?.getValues()?.['service']?.[0],
+                service: SavingServiceType.Charges,
+                transactionType: SavingTransactionType.All,
               },
             });
           }}

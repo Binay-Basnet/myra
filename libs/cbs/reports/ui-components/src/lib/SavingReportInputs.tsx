@@ -2,23 +2,27 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { IoFilterOutline } from 'react-icons/io5';
 
-import { ReportPeriodType } from '@coop/cbs/data-access';
+import {
+  ReportPeriodType,
+  SavingServiceType,
+  SavingStatementReportSettings,
+  SavingTransactionType,
+} from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { Box, Button, FormAccountSelect, FormMemberSelect, GridItem, Icon } from '@coop/shared/ui';
 
 interface ReportInputsProps {
-  // filter: ReportFilter;
-  setTriggerQuery: React.Dispatch<React.SetStateAction<boolean>>;
   hasShownFilter: boolean;
+  setFilter: React.Dispatch<React.SetStateAction<SavingStatementReportSettings | null>>;
   setHasShownFilter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const SavingReportInputs = ({
   hasShownFilter,
   setHasShownFilter,
-  setTriggerQuery,
+  setFilter,
 }: ReportInputsProps) => {
-  const methods = useFormContext();
+  const methods = useFormContext<SavingStatementReportSettings>();
 
   const memberId = methods.watch('memberId');
 
@@ -81,30 +85,36 @@ export const SavingReportInputs = ({
 
       <Box display="flex" gap="s16">
         <Button
+          size="lg"
           isDisabled={!methods.watch()['memberId'] || !methods.watch()['periodType']}
           onClick={methods.handleSubmit((data) => {
-            setTriggerQuery(true);
-            if (!data['memberId'] || !data['period']) return;
+            if (!data['memberId'] || !data['periodType']) return;
 
-            if (data['period'] === ReportPeriodType.CustomPeriod) {
-              methods.reset({
-                ...methods.getValues(),
+            if (data['periodType'] === ReportPeriodType.CustomPeriod) {
+              setFilter({
                 memberId: data['memberId'],
+                periodType: data['periodType'],
                 accountId: data['accountId'],
-                periodType: data['period'],
+                // TODO CHANGE THIS LATER
                 customPeriod: {
                   from: '2002-01-20',
                   to: '2080-01-10',
                 },
+                filter: {
+                  transactionType: data.filter?.transactionType ?? SavingTransactionType.All,
+                  service: data.filter?.service ?? SavingServiceType.Charges,
+                },
               });
             }
 
-            methods.reset({
-              ...methods.getValues(),
-
+            setFilter({
               memberId: data['memberId'],
-              periodType: data['period'],
+              periodType: data['periodType'],
               accountId: data['accountId'],
+              filter: {
+                transactionType: data.filter?.transactionType ?? SavingTransactionType.All,
+                service: data.filter?.service ?? SavingServiceType.Charges,
+              },
             });
           })}
         >
@@ -112,12 +122,13 @@ export const SavingReportInputs = ({
         </Button>
 
         {hasShownFilter ? (
-          <Button gap="s4" onClick={() => setHasShownFilter((prev) => !prev)}>
+          <Button size="lg" gap="s4" onClick={() => setHasShownFilter((prev) => !prev)}>
             <Icon as={IoFilterOutline} />
             Hide Filter
           </Button>
         ) : (
           <Button
+            size="lg"
             variant="outline"
             shade="neutral"
             gap="s4"
