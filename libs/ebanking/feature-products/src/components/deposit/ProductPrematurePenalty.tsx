@@ -3,6 +3,7 @@ import React from 'react';
 import { Maybe, PrematurePenaltyFormState } from '@coop/ebanking/data-access';
 import { Column, Table } from '@coop/shared/table';
 import { DetailsCard } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
 interface IProductPrematurePenaltyProps {
   prematurePenalty: Maybe<PrematurePenaltyFormState> | undefined;
@@ -35,7 +36,7 @@ export const ProductPrematurePenalty = ({ prematurePenalty }: IProductPrematureP
       {
         header: 'Penalty Rs.',
         accessorKey: 'penaltyAmount',
-        cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
+        cell: (props) => (props.getValue() ? amountConverter(props.getValue() as string) : 'N/A'),
         meta: {
           isNumeric: true,
 

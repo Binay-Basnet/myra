@@ -225,6 +225,11 @@ query getEbankingLoanProduct($id: ID!) {
       getLoanProduct(id: $id) {
         data {
           id
+          productCode {
+            initialNo
+            noOfDigits
+            prefix
+          }
           productName
           productType
           productSubType
@@ -233,6 +238,11 @@ query getEbankingLoanProduct($id: ID!) {
           typeOfMember
           minAge
           maxAge
+          requiredDocuments
+          interestMethod
+          repaymentScheme
+          installmentFrequency
+
           isStaffProduct
           isInsuranceApplicable
           isTenureApplicable
@@ -240,14 +250,73 @@ query getEbankingLoanProduct($id: ID!) {
           isPenaltyApplicable
           isRebateApplicable
           isCollateralRequired
+          updateInterest
+          waiveInterest
+          allowGurantee
+          loanScheduleChangeOverride
           allowPartialInstallment
           supportMultipleAccounts
           minTenureUnitNumber
           maxTenureUnitNumber
+
+          maxLoanAmount
+          minimumLoanAmount
+
+          insuranceType {
+            amount
+            type
+            rate
+          }
+
+          penaltyOnInstallment {
+            dayAfterInstallmentDate
+            penaltyRate
+            penaltyAmount
+          }
+
+          maxGraceDurationUnit
+          maxGraceDurationUnitNumber
+          minGraceDurationUnit
+          minGraceDurationUnitNumber
+
+          penaltyOnInterest {
+            dayAfterInstallmentDate
+            penaltyRate
+            penaltyAmount
+          }
+          penaltyOnPrincipal {
+            dayAfterInstallmentDate
+            penaltyRate
+            penaltyAmount
+          }
+          prematurePenaltySetup {
+            penaltyDateType
+            noOfDays
+            penaltyRate
+            penaltyAmount
+          }
+          tenureUnit
+          maxTenureUnitNumber
+          minTenureUnitNumber
+
+          loanProcessingCharge {
+            serviceName
+            amount
+          }
+
+
+
+          rebate {
+            dayBeforeInstallmentDate
+            rebateAmount
+            rebateRate
+          }
           interest {
             minRate
             maxRate
             defaultRate
+            ceoAuthority
+            boardAuthority
           }
         }
       }
