@@ -1,26 +1,10 @@
+import { ShareStatement, TotalReport } from '@coop/cbs/data-access';
 import { Table } from '@coop/shared/table';
 import { Box } from '@coop/shared/ui';
 
-type ShareReport = {
-  's.no.'?: number;
-  date: string;
-  particular: string;
-  noOfShares: number;
-  returnAmountDr: number;
-  purchaseAmountCr: number;
-  balanceSheet: number;
-};
-
-type ShareReportTotal = {
-  totalShares?: number;
-  totalDr?: number;
-  totalCr?: number;
-  totalBalanceSheet?: number;
-};
-
 interface ShareReportTableProps {
-  shareReport: ShareReport[];
-  shareTotal: ShareReportTotal;
+  shareReport?: ShareStatement[] | null;
+  shareTotal?: TotalReport | null;
 }
 
 export const ShareReportTable = ({ shareReport, shareTotal }: ShareReportTableProps) => (
@@ -52,7 +36,7 @@ export const ShareReportTable = ({ shareReport, shareTotal }: ShareReportTablePr
         {
           header: 'Date',
           accessorKey: 'date',
-          cell: ({ cell }) => cell.row.original.date.split(' ')[0],
+          cell: (props: { getValue: () => unknown }) => String(props?.getValue())?.split(' ')[0],
           meta: {
             Footer: {
               display: 'none',
@@ -71,7 +55,7 @@ export const ShareReportTable = ({ shareReport, shareTotal }: ShareReportTablePr
         },
         {
           header: 'No of Share',
-          footer: () => shareTotal.totalShares,
+          footer: () => shareTotal?.totalShares,
           accessorKey: 'noOfShares',
           meta: {
             isNumeric: true,
@@ -80,7 +64,7 @@ export const ShareReportTable = ({ shareReport, shareTotal }: ShareReportTablePr
         {
           header: 'Return Amount (Dr.)',
           accessorKey: 'returnAmountDr',
-          footer: () => shareTotal.totalDr,
+          footer: () => shareTotal?.totalDr,
           meta: {
             isNumeric: true,
           },
@@ -88,7 +72,7 @@ export const ShareReportTable = ({ shareReport, shareTotal }: ShareReportTablePr
         {
           header: 'Purchase Amount (Cr.)',
           accessorKey: 'purchaseAmountCr',
-          footer: () => shareTotal.totalCr,
+          footer: () => shareTotal?.totalCr,
 
           meta: {
             isNumeric: true,
@@ -97,7 +81,7 @@ export const ShareReportTable = ({ shareReport, shareTotal }: ShareReportTablePr
         {
           header: 'Balance Sheet',
           accessorKey: 'balanceSheet',
-          footer: () => shareTotal.totalBalanceSheet,
+          footer: () => shareTotal?.totalBalanceSheet,
 
           meta: {
             isNumeric: true,

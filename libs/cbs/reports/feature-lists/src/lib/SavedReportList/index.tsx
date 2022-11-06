@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { useGetAllSavedReportsQuery } from '@coop/cbs/data-access';
@@ -45,9 +45,7 @@ export const SavedReportList = () => {
       {
         header: 'Saved By',
         accessorFn: (row) => row?.node?.savedBy,
-        cell: ({ getValue }) => (
-          <Box textTransform="capitalize">{getValue() as string}</Box>
-        ),
+        cell: ({ getValue }) => <Box textTransform="capitalize">{getValue() as string}</Box>,
       },
       {
         header: 'Last Modified Date',
@@ -64,7 +62,7 @@ export const SavedReportList = () => {
                 title: 'View Report',
                 onClick: () =>
                   router.push(
-                    `/reports/cbs/share-report/edit?id=${props?.cell?.row?.original?.node?.id}`
+                    `/reports/cbs/share/statement/edit?id=${props?.cell?.row?.original?.node?.id}`
                   ),
               },
             ]}
@@ -85,6 +83,7 @@ export const SavedReportList = () => {
         data={reportList}
         isLoading={isFetching}
         columns={columns}
+        rowOnClick={(row) => router.push(`/reports/cbs/share/statement/edit?id=${row?.node?.id}`)}
         pagination={{
           total: reportListData?.report.listReports.totalCount ?? 'Many',
           pageInfo: reportListData?.report.listReports.pageInfo,

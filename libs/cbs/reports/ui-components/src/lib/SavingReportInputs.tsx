@@ -4,24 +4,27 @@ import { IoFilterOutline } from 'react-icons/io5';
 
 import {
   ReportPeriodType,
-  ShareStatementReportSettings,
-  ShareTransactionType,
+  SavingServiceType,
+  SavingStatementReportSettings,
+  SavingTransactionType,
 } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { Box, Button, FormMemberSelect, GridItem, Icon } from '@coop/shared/ui';
+import { Box, Button, FormAccountSelect, FormMemberSelect, GridItem, Icon } from '@coop/shared/ui';
 
 interface ReportInputsProps {
   hasShownFilter: boolean;
-  setFilter: React.Dispatch<React.SetStateAction<ShareStatementReportSettings | null>>;
+  setFilter: React.Dispatch<React.SetStateAction<SavingStatementReportSettings | null>>;
   setHasShownFilter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const ReportInputs = ({
+export const SavingReportInputs = ({
   hasShownFilter,
-  setFilter,
   setHasShownFilter,
+  setFilter,
 }: ReportInputsProps) => {
-  const methods = useFormContext();
+  const methods = useFormContext<SavingStatementReportSettings>();
+
+  const memberId = methods.watch('memberId');
 
   return (
     <Box
@@ -34,8 +37,11 @@ export const ReportInputs = ({
       py="s16"
     >
       <Box as="form" display="grid" width="100%" gridTemplateColumns="repeat(4, 1fr)" gap="s20">
-        <GridItem colSpan={3}>
+        <GridItem colSpan={2}>
           <FormMemberSelect name="memberId" label="Member Search" />
+        </GridItem>
+        <GridItem colSpan={1}>
+          <FormAccountSelect name="accountId" memberId={memberId} label="Select Account" />
         </GridItem>
         <GridItem colSpan={1}>
           <FormSelect
@@ -84,23 +90,31 @@ export const ReportInputs = ({
           onClick={methods.handleSubmit((data) => {
             if (!data['memberId'] || !data['periodType']) return;
 
-            if (data['period'] === ReportPeriodType.CustomPeriod) {
+            if (data['periodType'] === ReportPeriodType.CustomPeriod) {
               setFilter({
                 memberId: data['memberId'],
                 periodType: data['periodType'],
+                accountId: data['accountId'],
                 // TODO CHANGE THIS LATER
                 customPeriod: {
                   from: '2002-01-20',
                   to: '2080-01-10',
                 },
-                filter: data['transaction_type'] ?? ShareTransactionType.All,
+                filter: {
+                  transactionType: data.filter?.transactionType ?? SavingTransactionType.All,
+                  service: data.filter?.service ?? SavingServiceType.Charges,
+                },
               });
             }
 
             setFilter({
               memberId: data['memberId'],
               periodType: data['periodType'],
-              filter: data['transaction_type'] ?? ShareTransactionType.All,
+              accountId: data['accountId'],
+              filter: {
+                transactionType: data.filter?.transactionType ?? SavingTransactionType.All,
+                service: data.filter?.service ?? SavingServiceType.Charges,
+              },
             });
           })}
         >

@@ -1,12 +1,12 @@
 import { ReactElement } from 'react';
 
 import { ReportMainLayout, ReportsCbsLayout } from '@coop/cbs/reports/layout';
-import { LoanReportList } from '@coop/cbs/reports/list';
+import { OrganizationReportList } from '@coop/cbs/reports/list';
 import { MainLayout } from '@coop/shared/ui';
 
-const LoanReports = () => <LoanReportList />;
+const OrganizationReportListPage = () => <OrganizationReportList />;
 
-LoanReports.getLayout = function getLayout(page: ReactElement) {
+OrganizationReportListPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
       <ReportMainLayout>
@@ -15,4 +15,4 @@ LoanReports.getLayout = function getLayout(page: ReactElement) {
     </MainLayout>
   );
 };
-export default LoanReports;
+export default OrganizationReportListPage;

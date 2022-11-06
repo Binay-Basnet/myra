@@ -9,11 +9,11 @@ import { featureCode } from '@coop/shared/utils';
 const REPORTS_INNER_TAB_LINKS = [
   {
     title: 'Organization Profile / Report',
-    to: '/reports/cbs/organization-reports',
+    to: '/reports/cbs/organizations',
   },
   {
     title: 'Share Report',
-    to: '/reports/cbs/share-report',
+    to: '/reports/cbs/share',
   },
   {
     title: 'Member Report',
@@ -21,7 +21,7 @@ const REPORTS_INNER_TAB_LINKS = [
   },
   {
     title: 'Deposit Report',
-    to: '/reports/cbs/deposit-report',
+    to: '/reports/cbs/savings',
   },
   {
     title: 'Loan Report',

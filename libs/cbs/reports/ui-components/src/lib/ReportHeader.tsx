@@ -1,57 +1,34 @@
 import { Fragment, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { BsThreeDots } from 'react-icons/bs';
-import { IoSaveOutline, IoStarOutline } from 'react-icons/io5';
+import { useForm, useFormContext } from 'react-hook-form';
+import { BsPinAngle } from 'react-icons/bs';
+import { GrClose } from 'react-icons/gr';
+import { IoChevronForward, IoSaveOutline } from 'react-icons/io5';
 import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
-import { ChevronLeftIcon } from '@chakra-ui/icons';
-import { Popover } from '@chakra-ui/react';
+import { IconButton } from '@chakra-ui/react';
 
 import {
-  ReportPeriodType,
-  ShareTransactionType,
+  ShareStatementReportSettings,
   useGetNewIdMutation,
   useSaveNewReportMutation,
 } from '@coop/cbs/data-access';
-import {
-  asyncToast,
-  Box,
-  Button,
-  Grid,
-  GridItem,
-  Icon,
-  Input,
-  Modal,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
-  Text,
-  TextFields,
-} from '@coop/shared/ui';
+import { asyncToast, Box, Button, Icon, Input, Modal, TextFields } from '@coop/shared/ui';
 
 type Path = {
   link?: string;
   label: string;
 };
 
-interface ReportFilterType {
-  memberId: string;
-  predefinedPeriod: ReportPeriodType;
-  period: {
-    from: string;
-    to: string;
-  };
-  type: ShareTransactionType;
-}
-
 export interface PathBarProps {
   paths: Path[];
-  filters: ReportFilterType;
+  hasSave: boolean;
 }
 
-export const ReportHeader = ({ paths, filters }: PathBarProps) => {
+export const ReportHeader = ({ paths, hasSave }: PathBarProps) => {
   const router = useRouter();
-  const { register, getValues } = useForm();
+  const { getValues: filters } = useFormContext<ShareStatementReportSettings>();
+
+  const { register, getValues } = useForm<{ name: string }>();
   const { mutateAsync: saveReport } = useSaveNewReportMutation();
   const { mutateAsync: getNewId } = useGetNewIdMutation();
   const queryClient = useQueryClient();
@@ -76,17 +53,7 @@ export const ReportHeader = ({ paths, filters }: PathBarProps) => {
       borderBottom="1px"
       borderColor="border.layout"
     >
-      <Box display="flex" alignItems="center" gap="s8">
-        <Button variant="ghost" color="gray.800" p="0">
-          <Icon
-            as={ChevronLeftIcon}
-            size="xl"
-            onClick={() => {
-              router.back();
-            }}
-          />
-        </Button>
-
+      <Box display="flex" alignItems="center" gap="s24">
         <Box display="flex" alignItems="center" gap="s8">
           {paths.map((path, index) => (
             <Fragment key={path?.label}>
@@ -102,57 +69,74 @@ export const ReportHeader = ({ paths, filters }: PathBarProps) => {
                 {path.label}
               </TextFields>
               {paths.length !== index + 1 && (
-                <Text fontSize="r3" mt="-3px" color="gray.800" fontWeight="500">
-                  /
-                </Text>
+                <Icon
+                  as={IoChevronForward}
+                  size="lg"
+                  color="gray.600"
+                  onClick={() => {
+                    router.back();
+                  }}
+                />
               )}
             </Fragment>
           ))}
-          <Icon as={IoStarOutline} color="gray.700" pr="" />
         </Box>
+        <Icon as={BsPinAngle} color="gray.700" pr="" />
       </Box>
 
       <Box display="flex" alignItems="center" gap="s16">
+        <Button variant="ghost" shade="neutral" gap="s8">
+          <Icon as={ExportIcon} />
+          Export
+        </Button>
+
         <Button
           variant="ghost"
+          shade="neutral"
           gap="s8"
           onClick={onOpenModal}
-          isDisabled={
-            router.query['action'] !== 'new' || !filters?.memberId || !filters?.predefinedPeriod
-          }
+          isDisabled={router.query['action'] !== 'new' || !hasSave}
         >
           <Icon as={IoSaveOutline} />
           Save Report
         </Button>
 
-        <ReportOptions />
+        <IconButton
+          variant="ghost"
+          aria-label="close"
+          color="gray.700"
+          height="40px"
+          icon={<Icon as={GrClose} size="md" />}
+          onClick={() => {
+            router.back();
+          }}
+        />
       </Box>
 
       <Modal open={openModal} isCentered onClose={onCloseModal} title="Save Report">
         <Box pb="s12" borderBottom="1px" borderBottomColor="border.layout">
-          <Input
-            __placeholder="Untitled Report"
-            label="Give your untitled report a name"
-            {...register('name')}
-          />
+          <Input label="Give your untitled report a name" {...register('name')} />
         </Box>
         <Box pt="s12" pb="s8">
           <Button
             onClick={async () => {
               const callApi = async () => {
                 const idResponse = await getNewId({});
-                return saveReport({
-                  data: {
-                    id: idResponse.newId,
+                if (filters) {
+                  return saveReport({
                     data: {
-                      memberId: filters.memberId,
-                      periodType: filters.predefinedPeriod,
-                      filter: filters.type,
+                      id: idResponse.newId,
+                      data: {
+                        memberId: filters().memberId,
+                        periodType: filters().periodType,
+                        filter: filters().filter,
+                      },
+                      name: getValues()['name'],
+                      reportType: 'Share Report',
                     },
-                    name: getValues()['name'],
-                    reportType: 'Share Report',
-                  },
-                });
+                  });
+                }
+                return {};
               };
 
               await asyncToast({
@@ -195,33 +179,4 @@ const ExportIcon = () => (
       strokeLinejoin="round"
     />
   </svg>
-);
-
-export const ReportOptions = () => (
-  <Popover placement="bottom-start">
-    <PopoverTrigger>
-      <Button variant="ghost" gap="s8">
-        <Icon as={BsThreeDots} />
-        Options
-      </Button>
-    </PopoverTrigger>
-    <PopoverContent minWidth="180px" w="180px" color="white" _focus={{ boxShadow: 'none' }}>
-      <PopoverBody px="0" py="0">
-        <Grid>
-          <GridItem px="s16" py="s12" _hover={{ bg: 'gray.100' }} cursor="pointer">
-            <Box display="flex" alignItems="center" gap="s8" color="neutralColorLight.Gray-80">
-              <Icon as={ExportIcon} size="md" transform="rotate(180deg)" />
-              <TextFields variant="bodyRegular">Export</TextFields>
-            </Box>
-          </GridItem>
-          <GridItem px="s16" py="s12" _hover={{ bg: 'gray.100' }} cursor="pointer">
-            <Box display="flex" alignItems="center" gap="s8" color="neutralColorLight.Gray-80">
-              <Icon as={IoStarOutline} size="md" transform="rotate(180deg)" />
-              <TextFields variant="bodyRegular">Bookmark</TextFields>
-            </Box>
-          </GridItem>
-        </Grid>
-      </PopoverBody>
-    </PopoverContent>
-  </Popover>
 );

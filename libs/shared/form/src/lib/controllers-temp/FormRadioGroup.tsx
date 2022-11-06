@@ -27,7 +27,7 @@ export const FormRadioGroup = ({ name, label, ...rest }: IFormSelectProps) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         <Box display="flex" flexDirection="column" gap="s16">
-          <TextFields variant="formLabel">{label}</TextFields>
+          {label && <TextFields variant="formLabel">{label}</TextFields>}
           <RadioGroup {...rest} value={value} onChange={onChange} name={name} id={name} />
           {error ? (
             <TextFields variant="formHelper" color="danger.500">

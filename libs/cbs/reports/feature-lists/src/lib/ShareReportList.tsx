@@ -6,28 +6,21 @@ import { Table } from '@coop/shared/table';
 import { Box, Text } from '@coop/shared/ui';
 import { featureCode } from '@coop/shared/utils';
 
+import { ReportGroup, REPORTS } from '../constants/REPORTS';
+
 export const ShareReportList = () => (
   <Box display="flex" flexDir="column" p="s16" gap="s16">
     <Text fontSize="r3" color="gray.800" fontWeight="600" py="s16">
       Share Report
     </Text>
-    <Box display="flex" flexDir="column" gap="s16">
-      <ReportLinkText link="/reports/cbs/share-report/new">
-        102 - Share Register - {featureCode?.shareRegister}
+    {REPORTS[ReportGroup.SHARE].map((report) => (
+      <ReportLinkText
+        key={report.id}
+        link={report.link ? `/reports/cbs/share/${report.link}/new` : undefined}
+      >
+        {report.id} - {report.report} - {featureCode?.shareRegister}
       </ReportLinkText>
-      <ReportLinkText link="/reports/cbs/share-report/new">
-        302 - Share Transaction Report
-      </ReportLinkText>
-      <ReportLinkText link="/reports/cbs/share-report/new">
-        120 - Share Consolidated Report
-      </ReportLinkText>
-      <ReportLinkText link="/reports/cbs/share-report/new">
-        300 - Share Bonus Distribution Report
-      </ReportLinkText>
-      <ReportLinkText link="/reports/cbs/share-report/new">
-        145 - Share Certificate Print
-      </ReportLinkText>
-    </Box>
+    ))}
   </Box>
 );
 
@@ -110,7 +103,7 @@ export const ShareReportTable = () => (
 
 interface ReportLinkTextProps {
   children: React.ReactNode;
-  link: string;
+  link?: string;
 }
 
 export const ReportLinkText = ({ children, link }: ReportLinkTextProps) => {

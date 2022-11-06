@@ -13,7 +13,7 @@ interface IMemberPageLayout {
 const reportColumns = [
   {
     title: 'reportsCbsReports',
-    link: '/reports/cbs/share-report',
+    link: '/reports/cbs/organizations',
   },
   {
     title: 'reportsSavedReports',

@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { AccordionPanel } from '@chakra-ui/react';
 
-import { ShareTransactionType } from '@coop/cbs/data-access';
+import { ShareStatementReportSettings, ShareTransactionType } from '@coop/cbs/data-access';
 import { FormRadioGroup } from '@coop/shared/form';
 import {
   Accordion,
@@ -15,18 +15,9 @@ import {
   Text,
 } from '@coop/shared/ui';
 
-type IReportFilter = {
-  memberId: string;
-  period: {
-    from: string;
-    to: string;
-  };
-  type: ShareTransactionType;
-};
-
 interface ReportFilterProps {
   hasShownFilter: boolean;
-  setFilter: React.Dispatch<React.SetStateAction<IReportFilter>>;
+  setFilter: React.Dispatch<React.SetStateAction<ShareStatementReportSettings | null>>;
 }
 
 export const ReportFilter = ({ hasShownFilter, setFilter }: ReportFilterProps) => {
@@ -86,9 +77,9 @@ export const ReportFilter = ({ hasShownFilter, setFilter }: ReportFilterProps) =
                     flexShrink={0}
                   />
                 </AccordionButton>
-                <AccordionPanel p="0">
+                <AccordionPanel mt="s16" p={0}>
                   <FormRadioGroup
-                    name="transaction_type"
+                    name="filter"
                     options={[
                       { label: 'All', value: ShareTransactionType.All },
                       { label: 'Issue', value: ShareTransactionType.Issue },
@@ -114,10 +105,14 @@ export const ReportFilter = ({ hasShownFilter, setFilter }: ReportFilterProps) =
       >
         <Button
           onClick={() => {
-            setFilter((prev) => ({
-              ...prev,
-              type: methods.getValues()['transaction_type'],
-            }));
+            setFilter((prev) =>
+              prev
+                ? {
+                    ...prev,
+                    filter: methods.getValues()['filter'],
+                  }
+                : null
+            );
           }}
         >
           Apply Filter
@@ -126,13 +121,17 @@ export const ReportFilter = ({ hasShownFilter, setFilter }: ReportFilterProps) =
           variant="ghost"
           shade="neutral"
           onClick={() => {
-            setFilter((prev) => ({
-              ...prev,
-              type: ShareTransactionType.All,
-            }));
+            setFilter((prev) =>
+              prev
+                ? {
+                    ...prev,
+                    filter: ShareTransactionType.All,
+                  }
+                : null
+            );
             methods.reset({
               ...methods.getValues(),
-              transaction_type: ShareTransactionType.All,
+              filter: ShareTransactionType.All,
             });
           }}
         >
