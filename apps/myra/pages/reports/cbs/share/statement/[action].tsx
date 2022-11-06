@@ -89,8 +89,8 @@ const NewShareStatementReport = () => {
         <ReportHeader
           filters={filter}
           paths={[
-            { label: 'All Reports', link: '/reports/cbs/share-report' },
-            { label: 'Share Statement', link: '/reports/cbs/share-report' },
+            { label: 'All Reports', link: '/reports/cbs/share' },
+            { label: 'Share Statement', link: '/reports/cbs/share' },
             {
               label:
                 router.query['action'] !== 'new' ? savedData?.report.getReport?.name : 'New Report',

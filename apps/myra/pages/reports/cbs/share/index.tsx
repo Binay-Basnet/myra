@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { useRouter } from 'next/router';
 
 import { ReportMainLayout, ReportsCbsLayout } from '@coop/cbs/reports/layout';
@@ -8,15 +8,11 @@ import { MainLayout } from '@coop/shared/ui';
 const ShareReport = () => {
   const router = useRouter();
 
-  return (
-    <>
-      {router.query['objState'] !== 'table-view' ? (
-        <ShareReportList />
-      ) : (
-        <ShareReportTable />
-      )}
-    </>
-  );
+  if (router.query['objState'] !== 'table-view') {
+    return <ShareReportList />;
+  }
+
+  return <ShareReportTable />;
 };
 
 ShareReport.getLayout = function getLayout(page: ReactElement) {

@@ -1,9 +1,10 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 import { ReportMainLayout, ReportsCbsLayout } from '@coop/cbs/reports/layout';
+import { MemberReportList } from '@coop/cbs/reports/list';
 import { MainLayout } from '@coop/shared/ui';
 
-const MemberReports = () => <>Member Reports</>;
+const MemberReports = () => <MemberReportList />;
 
 MemberReports.getLayout = function getLayout(page: ReactElement) {
   return (

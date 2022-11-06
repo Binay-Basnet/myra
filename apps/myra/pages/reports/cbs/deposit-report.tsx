@@ -1,9 +1,10 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 import { ReportMainLayout, ReportsCbsLayout } from '@coop/cbs/reports/layout';
+import { SavingReportList } from '@coop/cbs/reports/list';
 import { MainLayout } from '@coop/shared/ui';
 
-const DepositReports = () => <>Deposit Reports</>;
+const DepositReports = () => <SavingReportList />;
 
 DepositReports.getLayout = function getLayout(page: ReactElement) {
   return (

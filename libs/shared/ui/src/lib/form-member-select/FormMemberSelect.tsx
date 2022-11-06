@@ -30,6 +30,8 @@ export const FormMemberSelect = ({
   const [IDMember, setIDMember] = useState('');
   const { watch } = useFormContext();
 
+  const memberId = watch(name);
+
   const { data: memberList, isFetching } = useGetMemberListQuery(
     {
       pagination: {
@@ -72,9 +74,8 @@ export const FormMemberSelect = ({
     }, [] as Option[]) ?? [];
 
   useEffect(() => {
-    const id = watch(name);
-    setIDMember(id);
-  }, []);
+    setIDMember(memberId);
+  }, [memberId]);
 
   return (
     <FormCustomSelect
