@@ -4827,12 +4827,14 @@ export type GeneralBranchSettingsQueryListArgs = {
 
 export type GeneralMemberData = {
   charge?: Maybe<Array<Maybe<MemberChargeData>>>;
+  memberCode?: Maybe<MemberCode>;
   memberType?: Maybe<MemberActiveData>;
   risk?: Maybe<MemberRiskData>;
 };
 
 export type GeneralMemberInput = {
   charge?: InputMaybe<Array<InputMaybe<MemberChargeInput>>>;
+  memberCode?: InputMaybe<MemberCodeInput>;
   memberType?: InputMaybe<MemberActiveInput>;
   risk?: InputMaybe<MemberRiskInput>;
 };
@@ -8772,6 +8774,18 @@ export type MemberClassificationReportData = {
 export type MemberClassificationReportResult = {
   data?: Maybe<MemberClassificationReportData>;
   error?: Maybe<QueryError>;
+};
+
+export type MemberCode = {
+  initialNo: Scalars['String'];
+  noOfDigits?: Maybe<Scalars['Int']>;
+  prefix?: Maybe<Scalars['String']>;
+};
+
+export type MemberCodeInput = {
+  initialNo: Scalars['String'];
+  noOfDigits: Scalars['Int'];
+  prefix: Scalars['String'];
 };
 
 export type MemberDetailsResult = {
@@ -16260,6 +16274,7 @@ export type LoanProductFragment = {
   isMonthlyInstallmentCompulsory?: boolean | null;
   isPenaltyApplicable?: boolean | null;
   penaltyDayAfterInstallmentDate?: number | null;
+  penaltyType?: PenaltyType | null;
   penaltyRate?: number | null;
   penaltyAmount?: any | null;
   principalMaxGraceNumber?: number | null;
@@ -19639,6 +19654,7 @@ export const LoanProductFragmentDoc = `
   isMonthlyInstallmentCompulsory
   isPenaltyApplicable
   penaltyDayAfterInstallmentDate
+  penaltyType
   penaltyRate
   penaltyAmount
   principalMaxGraceNumber
