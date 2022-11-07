@@ -2363,8 +2363,6 @@ export type DepositLoanAccount = Base & {
   accountName?: Maybe<Scalars['String']>;
   agentId?: Maybe<Scalars['ID']>;
   atmFacility?: Maybe<Scalars['Boolean']>;
-  boardAuthority?: Maybe<Scalars['Boolean']>;
-  ceoAuthority?: Maybe<Scalars['Boolean']>;
   chequeFacility?: Maybe<Scalars['Boolean']>;
   createdAt: Scalars['Time'];
   createdBy: Identity;
@@ -2381,7 +2379,8 @@ export type DepositLoanAccount = Base & {
   id: Scalars['ID'];
   initialDepositAmount?: Maybe<Scalars['Amount']>;
   installmentAmount?: Maybe<Scalars['String']>;
-  interestDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
+  interestAuthority?: Maybe<InterestAuthority>;
+  interestDoc?: Maybe<Array<Maybe<PictureData>>>;
   interestRate?: Maybe<Scalars['Float']>;
   memberId: Scalars['ID'];
   minor?: Maybe<Scalars['String']>;
@@ -2421,8 +2420,6 @@ export type DepositLoanAccountInput = {
   accountName?: InputMaybe<Scalars['String']>;
   agentId?: InputMaybe<Scalars['ID']>;
   atmFacility?: InputMaybe<Scalars['Boolean']>;
-  boardAuthority?: InputMaybe<Scalars['Boolean']>;
-  ceoAuthority?: InputMaybe<Scalars['Boolean']>;
   chequeFacility?: InputMaybe<Scalars['Boolean']>;
   defaultAmountDepositAccountName?: InputMaybe<Scalars['String']>;
   depositFrequencyDay?: InputMaybe<Scalars['Int']>;
@@ -2435,6 +2432,7 @@ export type DepositLoanAccountInput = {
   eBanking?: InputMaybe<Scalars['Boolean']>;
   initialDepositAmount?: InputMaybe<Scalars['Amount']>;
   installmentAmount?: InputMaybe<Scalars['String']>;
+  interestAuthority?: InputMaybe<InterestAuthority>;
   interestDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   interestRate?: InputMaybe<Scalars['Float']>;
   memberId: Scalars['ID'];
@@ -5144,6 +5142,11 @@ export type InsuranceType = {
   rate?: InputMaybe<Scalars['Float']>;
   type?: InputMaybe<Scalars['String']>;
 };
+
+export enum InterestAuthority {
+  Board = 'BOARD',
+  Ceo = 'CEO',
+}
 
 export type InterestFormState = {
   additionalRate?: Maybe<Scalars['Float']>;
@@ -10736,7 +10739,6 @@ export type SettingsQuery = {
 export type ShareBalance = {
   amount: Scalars['Int'];
   count: Scalars['Int'];
-  id?: Maybe<Scalars['ID']>;
   member: Member;
   memberId?: Maybe<Scalars['ID']>;
 };
@@ -14153,8 +14155,6 @@ export type GetAccountOpenEditDataQuery = {
         initialDepositAmount?: any | null;
         defaultAmountDepositAccountName?: string | null;
         interestRate?: number | null;
-        ceoAuthority?: boolean | null;
-        boardAuthority?: boolean | null;
         installmentAmount?: string | null;
         depositFrequencyWeekly?: Week | null;
         depositFrequencyMonthly?: WeeklyFrequency | null;
@@ -14169,6 +14169,7 @@ export type GetAccountOpenEditDataQuery = {
         smsBanking?: boolean | null;
         chequeFacility?: boolean | null;
         agentId?: string | null;
+        interestDoc?: Array<{ identifier?: string | null; url?: string | null } | null> | null;
         serviceCharge?: Array<{ name: string; amount?: any | null } | null> | null;
       } | null;
     } | null;
@@ -23244,12 +23245,14 @@ export const GetAccountOpenEditDataDocument = `
         accountName
         minor
         tenure
+        interestDoc {
+          identifier
+          url
+        }
         tenureNumber
         initialDepositAmount
         defaultAmountDepositAccountName
         interestRate
-        ceoAuthority
-        boardAuthority
         installmentAmount
         depositFrequencyWeekly
         depositFrequencyMonthly

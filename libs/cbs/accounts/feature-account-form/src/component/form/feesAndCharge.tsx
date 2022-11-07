@@ -67,19 +67,19 @@ export const FeesAndCharge = ({ setTotalCharge }: IFeesAndCharge) => {
       shouldFocus: true,
     },
     {
-      name: 'Sms banking',
+      name: 'Sms',
       amount: altCharges?.find((d) => d?.serviceName === 'Sms banking')?.amount,
       isEnabled: isSmsBankingEnabled || false,
       shouldFocus: true,
     },
     {
-      name: 'Cheque issue charge',
+      name: 'cheque',
       amount: chequeCharge?.find((d) => d?.serviceName === 'Cheque issue charge')?.amount,
       isEnabled: isChequeEnabled || false,
       shouldFocus: true,
     },
     {
-      name: 'Atm charge',
+      name: 'atm',
       amount: aTMCharge?.find((d) => d?.serviceName === 'Atm charge')?.amount,
       isEnabled: isATMenabled || false,
       shouldFocus: true,
@@ -101,7 +101,7 @@ export const FeesAndCharge = ({ setTotalCharge }: IFeesAndCharge) => {
       if (alreadyExists && charge.isEnabled) return;
       if (charge.isEnabled) {
         append(
-          { name: charge.name, amount: charge.amount },
+          { name: charge.name as string, amount: charge.amount },
           {
             shouldFocus: charge.shouldFocus,
           }
