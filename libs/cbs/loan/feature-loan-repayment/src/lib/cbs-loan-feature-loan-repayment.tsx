@@ -7,6 +7,8 @@ import omit from 'lodash/omit';
 import {
   CashValue,
   LoanInstallment,
+  LoanRepaymentAccountMode,
+  LoanRepaymentBankVoucher,
   LoanRepaymentInput,
   LoanRepaymentMethod,
   useGetLoanPreviewQuery,
@@ -67,7 +69,11 @@ export const LoanRepayment = () => {
 
   const [mode, setMode] = useState('0');
 
-  const methods = useForm<LoanRepaymentInputType>();
+  const methods = useForm<LoanRepaymentInputType>({
+    defaultValues: {
+      paymentMethod: LoanRepaymentMethod?.Account,
+    },
+  });
 
   const { getValues, watch } = methods;
   const memberId = watch('memberId');
@@ -142,11 +148,19 @@ export const LoanRepayment = () => {
     }
 
     if (values.paymentMethod === LoanRepaymentMethod.BankVoucher) {
-      filteredValues = omit({ ...filteredValues }, ['account', 'cash']);
+      filteredValues = {
+        ...omit({ ...filteredValues }, ['account', 'cash']),
+        bankVoucher: omit({ ...filteredValues.bankVoucher }, [
+          'amount',
+        ]) as LoanRepaymentBankVoucher,
+      };
     }
 
     if (values.paymentMethod === LoanRepaymentMethod.Account) {
-      filteredValues = omit({ ...filteredValues }, ['bankVoucher', 'cash']);
+      filteredValues = {
+        ...omit({ ...filteredValues }, ['bankVoucher', 'cash']),
+        account: omit({ ...filteredValues.account }, ['amount']) as LoanRepaymentAccountMode,
+      };
     }
     asyncToast({
       id: 'share-settings-transfer-id',

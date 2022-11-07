@@ -70,11 +70,11 @@ export const Interest = () => {
               rules={{
                 max: {
                   value: maxValue,
-                  message: 'Tenure is invalid',
+                  message: 'Interest Rate is invalid',
                 },
                 min: {
                   value: defaultRate,
-                  message: 'Tenure is invalid',
+                  message: 'Interest Rate is invalid',
                 },
               }}
               rightElement={

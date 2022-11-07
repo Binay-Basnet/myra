@@ -14255,6 +14255,8 @@ export type GetAccountTableListQuery = {
           member?: {
             id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
+            profilePicUrl?: string | null;
+            profilePic?: string | null;
             contact?: string | null;
             dateJoined?: string | null;
             address?: {
@@ -16272,6 +16274,7 @@ export type LoanProductFragment = {
   isMonthlyInstallmentCompulsory?: boolean | null;
   isPenaltyApplicable?: boolean | null;
   penaltyDayAfterInstallmentDate?: number | null;
+  penaltyType?: PenaltyType | null;
   penaltyRate?: number | null;
   penaltyAmount?: any | null;
   principalMaxGraceNumber?: number | null;
@@ -19702,6 +19705,7 @@ export const LoanProductFragmentDoc = `
   isMonthlyInstallmentCompulsory
   isPenaltyApplicable
   penaltyDayAfterInstallmentDate
+  penaltyType
   penaltyRate
   penaltyAmount
   principalMaxGraceNumber
@@ -23365,6 +23369,8 @@ export const GetAccountTableListDocument = `
           member {
             id
             name
+            profilePicUrl
+            profilePic
             address {
               state
               district
