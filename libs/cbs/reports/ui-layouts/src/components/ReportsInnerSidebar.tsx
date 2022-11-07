@@ -20,7 +20,7 @@ const REPORTS_INNER_TAB_LINKS = [
     to: '/reports/cbs/member-report',
   },
   {
-    title: 'Deposit Report',
+    title: 'Savings Report',
     to: '/reports/cbs/savings',
   },
   {
@@ -28,28 +28,25 @@ const REPORTS_INNER_TAB_LINKS = [
     to: '/reports/cbs/loan-report',
   },
   {
-    title: 'Account Report',
-    to: '/reports/cbs/account-report',
+    title: 'Transaction Report',
+    to: '/reports/cbs/transaction-report',
+  },
+  {
+    title: 'Mobile Banking Reports',
+    to: '/reports/cbs/mobile-report',
   },
 
   {
-    title: 'Service Center Report',
-    to: '/reports/cbs/service-center-report',
+    title: 'ATM Reports',
+    to: '/reports/cbs/atm-report',
   },
-
   {
-    title: 'Employee Report',
-    to: '/reports/cbs/employee-report',
+    title: 'Branchless Banking Reports',
+    to: '/reports/cbs/branch-less-report',
   },
-
   {
-    title: 'Inventory Report',
-    to: '/reports/cbs/inventory-report',
-  },
-
-  {
-    title: 'Notification',
-    to: '/reports/cbs/notification',
+    title: 'Branch Report',
+    to: '/reports/cbs/branch-report',
   },
 ];
 
@@ -71,7 +68,7 @@ export const ReportsInnerSidebar = () => {
             </Box>
           }
           // to={'/reports/cbs/favorites'}
-          to="/reports/cbs/share-report"
+          to="/reports/cbs/share"
         />
       </Tabs>
       <Divider my="s4" />
