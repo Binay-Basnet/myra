@@ -22,9 +22,9 @@ export const useLoanProductDetails = ({ productId }: IUseLoanProductDetailsProps
   );
   const loanProduct = useMemo(
     () => ({
-      product: loanProductDetails?.settings.general?.loanProducts?.formState?.data as LoanProduct,
+      product: loanProductDetails?.settings?.general?.loanProducts?.formState?.data as LoanProduct,
     }),
-    [loanProductDetails?.settings.general?.loanProducts?.formState?.data]
+    [loanProductDetails?.settings?.general?.loanProducts?.formState?.data]
   );
 
   return { loanProduct };

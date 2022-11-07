@@ -13,8 +13,8 @@ import {
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { FormTextArea } from '@coop/shared/form';
 import { Column, Table } from '@coop/shared/table';
-import { asyncToast, Box, ChakraModal, DEFAULT_PAGE_SIZE, PageHeader, Text } from '@coop/shared/ui';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import { asyncToast, Box, ChakraModal, PageHeader, Text } from '@coop/shared/ui';
+import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const LOAN_TAB_ITEMS = [
   {
@@ -74,8 +74,8 @@ export const LoanProductTable = ({ showActionButton }: { showActionButton?: bool
     router.query['before']
       ? {
           paginate: {
-            last: Number(router.query['last'] ?? DEFAULT_PAGE_SIZE),
-            before: router.query['before'] as string,
+            ...getRouterQuery({ type: ['PAGINATION'], query: router.query }),
+            order: null,
           },
           filter: {
             objState: (router.query['objState'] ??
@@ -84,8 +84,8 @@ export const LoanProductTable = ({ showActionButton }: { showActionButton?: bool
         }
       : {
           paginate: {
-            first: Number(router.query['first'] ?? DEFAULT_PAGE_SIZE),
-            after: (router.query['after'] ?? '') as string,
+            ...getRouterQuery({ type: ['PAGINATION'], query: router.query }),
+            order: null,
           },
           filter: {
             objState: (router.query['objState'] ??

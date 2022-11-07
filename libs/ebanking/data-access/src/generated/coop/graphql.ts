@@ -1416,25 +1416,12 @@ export const GetEbankingLoanProductDocument = `
             type
             rate
           }
-          penaltyOnInstallment {
-            dayAfterInstallmentDate
-            penaltyRate
-            penaltyAmount
-          }
-          maxGraceDurationUnit
-          maxGraceDurationUnitNumber
-          minGraceDurationUnit
-          minGraceDurationUnitNumber
-          penaltyOnInterest {
-            dayAfterInstallmentDate
-            penaltyRate
-            penaltyAmount
-          }
-          penaltyOnPrincipal {
-            dayAfterInstallmentDate
-            penaltyRate
-            penaltyAmount
-          }
+          principalMaxGraceNumber
+          interestMaxGraceNumber
+          penaltyType
+          penaltyDayAfterInstallmentDate
+          penaltyRate
+          penaltyAmount
           prematurePenaltySetup {
             penaltyDateType
             noOfDays

@@ -8058,6 +8058,7 @@ export type LoanProduct = Base & {
   installmentFrequency?: Maybe<LoanProductInstallment>;
   insuranceType?: Maybe<Insurance>;
   interest?: Maybe<InterestRateType>;
+  interestMaxGraceNumber?: Maybe<Scalars['Int']>;
   interestMethod?: Maybe<LoanInterestMethod>;
   isCollateralRequired?: Maybe<Scalars['Boolean']>;
   isInsuranceApplicable?: Maybe<Scalars['Boolean']>;
@@ -8072,14 +8073,10 @@ export type LoanProduct = Base & {
   loanScheduleChangeOverride?: Maybe<Scalars['Boolean']>;
   maritalStatusId?: Maybe<Array<Maybe<Scalars['ID']>>>;
   maxAge?: Maybe<Scalars['Int']>;
-  maxGraceDurationUnit?: Maybe<FrequencyTenure>;
-  maxGraceDurationUnitNumber?: Maybe<Scalars['Int']>;
   maxLoanAmount?: Maybe<Scalars['Amount']>;
   maxPercentOfGurantee?: Maybe<Scalars['Float']>;
   maxTenureUnitNumber?: Maybe<Scalars['Int']>;
   minAge?: Maybe<Scalars['Int']>;
-  minGraceDurationUnit?: Maybe<FrequencyTenure>;
-  minGraceDurationUnitNumber?: Maybe<Scalars['Int']>;
   minTenureUnitNumber?: Maybe<Scalars['Int']>;
   minimumLoanAmount?: Maybe<Scalars['Amount']>;
   modifiedAt: Scalars['Time'];
@@ -8088,12 +8085,13 @@ export type LoanProduct = Base & {
   natureOfBusinessInstitution?: Maybe<Array<Maybe<Scalars['ID']>>>;
   objState: ObjState;
   occupation?: Maybe<Array<Maybe<Scalars['ID']>>>;
-  penaltyOnInstallment?: Maybe<Penalty>;
-  penaltyOnInterest?: Maybe<Penalty>;
-  penaltyOnPrincipal?: Maybe<Penalty>;
+  penaltyAmount?: Maybe<Scalars['Amount']>;
+  penaltyDayAfterInstallmentDate?: Maybe<Scalars['Int']>;
+  penaltyRate?: Maybe<Scalars['Float']>;
   penaltyType?: Maybe<PenaltyType>;
   postingFrequency?: Maybe<LoanProductInstallment>;
   prematurePenaltySetup?: Maybe<PrematurePenaltyFormState>;
+  principalMaxGraceNumber?: Maybe<Scalars['Int']>;
   productCode?: Maybe<ProductCodeType>;
   productCodeString?: Maybe<Scalars['String']>;
   productName: Scalars['String'];
@@ -8171,6 +8169,7 @@ export type LoanProductInput = {
   installmentFrequency?: InputMaybe<LoanProductInstallment>;
   insuranceType?: InputMaybe<InsuranceType>;
   interest?: InputMaybe<InterestRate>;
+  interestMaxGraceNumber?: InputMaybe<Scalars['Int']>;
   interestMethod?: InputMaybe<LoanInterestMethod>;
   isCollateralRequired?: InputMaybe<Scalars['Boolean']>;
   isInsuranceApplicable?: InputMaybe<Scalars['Boolean']>;
@@ -8185,25 +8184,22 @@ export type LoanProductInput = {
   loanScheduleChangeOverride?: InputMaybe<Scalars['Boolean']>;
   maritalStatusId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   maxAge?: InputMaybe<Scalars['Int']>;
-  maxGraceDurationUnit?: InputMaybe<FrequencyTenure>;
-  maxGraceDurationUnitNumber?: InputMaybe<Scalars['Int']>;
   maxLoanAmount?: InputMaybe<Scalars['Amount']>;
   maxPercentOfGurantee?: InputMaybe<Scalars['Float']>;
   maxTenureUnitNumber?: InputMaybe<Scalars['Int']>;
   minAge?: InputMaybe<Scalars['Int']>;
-  minGraceDurationUnit?: InputMaybe<FrequencyTenure>;
-  minGraceDurationUnitNumber?: InputMaybe<Scalars['Int']>;
   minTenureUnitNumber?: InputMaybe<Scalars['Int']>;
   minimumLoanAmount?: InputMaybe<Scalars['Amount']>;
   natureOFBusinessCoop?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   natureOfBusinessInstitution?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   occupation?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  penaltyOnInstallment?: InputMaybe<PenaltyTypeInput>;
-  penaltyOnInterest?: InputMaybe<PenaltyTypeInput>;
-  penaltyOnPrincipal?: InputMaybe<PenaltyTypeInput>;
+  penaltyAmount?: InputMaybe<Scalars['Amount']>;
+  penaltyDayAfterInstallmentDate?: InputMaybe<Scalars['Int']>;
+  penaltyRate?: InputMaybe<Scalars['Float']>;
   penaltyType?: InputMaybe<PenaltyType>;
   postingFrequency?: InputMaybe<LoanProductInstallment>;
   prematurePenaltySetup?: InputMaybe<PrematurePenalty>;
+  principalMaxGraceNumber?: InputMaybe<Scalars['Int']>;
   productCode?: InputMaybe<ProductCode>;
   productName?: InputMaybe<Scalars['String']>;
   productNature?: InputMaybe<NatureOfLoanProduct>;
@@ -9845,9 +9841,8 @@ export type PenaltyRebateResult = {
 };
 
 export enum PenaltyType {
-  Installment = 'INSTALLMENT',
-  Interest = 'INTEREST',
-  Principal = 'PRINCIPAL',
+  PenalInterest = 'PenalInterest',
+  RemainingPrincipal = 'RemainingPrincipal',
 }
 
 export type PenaltyTypeInput = {
@@ -13003,31 +12998,18 @@ export type GetEbankingLoanProductQuery = {
           maxTenureUnitNumber?: number | null;
           maxLoanAmount?: any | null;
           minimumLoanAmount?: any | null;
-          maxGraceDurationUnit?: FrequencyTenure | null;
-          maxGraceDurationUnitNumber?: number | null;
-          minGraceDurationUnit?: FrequencyTenure | null;
-          minGraceDurationUnitNumber?: number | null;
+          principalMaxGraceNumber?: number | null;
+          interestMaxGraceNumber?: number | null;
+          penaltyType?: PenaltyType | null;
+          penaltyDayAfterInstallmentDate?: number | null;
+          penaltyRate?: number | null;
+          penaltyAmount?: any | null;
           tenureUnit?: FrequencyTenure | null;
           productCode?: { initialNo: string; noOfDigits?: number | null; prefix: string } | null;
           insuranceType?: {
             amount?: any | null;
             type?: string | null;
             rate?: number | null;
-          } | null;
-          penaltyOnInstallment?: {
-            dayAfterInstallmentDate?: number | null;
-            penaltyRate?: number | null;
-            penaltyAmount?: any | null;
-          } | null;
-          penaltyOnInterest?: {
-            dayAfterInstallmentDate?: number | null;
-            penaltyRate?: number | null;
-            penaltyAmount?: any | null;
-          } | null;
-          penaltyOnPrincipal?: {
-            dayAfterInstallmentDate?: number | null;
-            penaltyRate?: number | null;
-            penaltyAmount?: any | null;
           } | null;
           prematurePenaltySetup?: {
             penaltyDateType?: PrematurePenaltyDateType | null;

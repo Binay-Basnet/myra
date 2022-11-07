@@ -194,16 +194,10 @@ export const LoanDetails = () => {
       <ProductPenalty
         penaltyData={[
           {
-            name: 'Principal',
-            ...product?.penaltyOnPrincipal,
-          },
-          {
-            name: 'Installment',
-            ...product?.penaltyOnInstallment,
-          },
-          {
-            name: 'Interest',
-            ...product?.penaltyOnInterest,
+            name: product?.penaltyType as string,
+            penaltyAmount: product?.penaltyAmount,
+            penaltyRate: product?.penaltyRate,
+            dayAfterInstallmentDate: product?.penaltyDayAfterInstallmentDate,
           },
         ]}
       />
@@ -245,16 +239,10 @@ export const LoanDetails = () => {
       <DetailsCard hideBorder title="Loan Repayment Start Grace Duration">
         <Box ml="s20" as="ul" fontSize="r1" textTransform="capitalize">
           <li>
-            Grace period on Principal:{' '}
-            <b>
-              {product?.minGraceDurationUnit ?? 0} {product?.minGraceDurationUnit?.toLowerCase()}
-            </b>
+            Grace period on Principal: <b>{product?.principalMaxGraceNumber ?? 0}</b>
           </li>
           <li>
-            Grace period on Interest:{' '}
-            <b>
-              {product?.maxGraceDurationUnit ?? 0} {product?.maxGraceDurationUnit?.toLowerCase()}
-            </b>
+            Grace period on Interest: <b>{product?.interestMaxGraceNumber ?? 0}</b>
           </li>
         </Box>
       </DetailsCard>

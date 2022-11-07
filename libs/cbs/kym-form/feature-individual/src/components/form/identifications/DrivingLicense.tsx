@@ -148,7 +148,7 @@ export const DrivingLicense = ({ setKymCurrentSection }: IDrivingLicenseProps) =
 
             <FormInput type="text" name="place" label={t['kymIndDrivingLicenseIssuePlace']} />
 
-            <FormDatePicker name="date" label={t['kymIndDrivingLicenseIssueDate']} />
+            <FormDatePicker name="date" label={t['kymIndDrivingLicenseIssueDate']} maxToday />
           </FormSection>
         </form>
       </FormProvider>

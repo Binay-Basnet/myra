@@ -4,6 +4,11 @@ export enum ReportGroup {
   SHARE = 'Share',
   SAVINGS = 'Savings',
   LOAN = 'loan',
+  MOBILE_BANKING = 'Mobile Banking',
+  TRANSACTION_REPORT = 'Transaction Reports',
+  BRANCHLESS_BANKING = 'Branchless Banking',
+  ATM = 'ATM',
+  BRANCH = 'Branch',
 }
 
 export enum Report {
@@ -29,6 +34,13 @@ export enum Report {
   DEPOSIT_INTEREST_REPORT = 'Interest Report',
   DEPOSIT_MIS_ANALYSIS_REPORT = 'Deposit MIS/Analysis Report, Dimensional Report',
   FD_PRE_MATURE_REPORT = 'FD Pre-mature/mature Report',
+  DORMANT_AC_REPORT = 'Dormant AC Report',
+  SAVE_CUSTOMIZE_REPORT_FORMAT = 'Save Customize report format',
+  AML_REPORTING = 'AML Reporting',
+  TARGET_VS_ACHIEVEMENT_REPORT = 'Target vs Achievement Report',
+  PROGRESS_REPORT_WITH_CHART = 'Progress Report with Chart',
+  CHEQUE_WITHDRAW_RECORD = 'Cheque/Withdraw Record',
+  BALANCE_CERTIFICATE = 'Balance Certificate (Deposit)',
 
   LOAN_INDIVIDUAL_STATEMENT = 'Loan Individual Statement',
   LOAN_CONSOLIDATED_REPORT = 'Loan Consolidated Report',
@@ -36,6 +48,41 @@ export enum Report {
   LOAN_DAILY_TRANSACTION_REPORT = 'Loan Daily Transaction Report',
   LOAN_INTEREST_REPORT = 'Interest Report',
   LOAN_MIS_ANALYSIS_REPORT = 'Loan MIS/Analysis Report',
+  LOAN_COLLATERAL_VALUATION_REPORT = 'Collateral Valuation Report',
+  LOAN_WRITE_OFF_REPORT = 'Loan write off report',
+  LOAN_PRE_INFORM_REPORT = 'Loan pre-inform report',
+  LOAN_APPROVAL_REPORT_REJECT = 'Loan Approval Report / Reject Report',
+  LOAN_FOLLOWUP_REPORT = 'Loan Followup report',
+  LOAN_SAVE_CUSTOMIZATION = 'Save Customize Loan report format',
+  MEMBER_LOAN_INFORMATION_SYSTEM = 'Member Loan Information System (MLIB) Setup',
+  CIB_CIC_MEMBER_LOAN_INFORMATION = 'CIB/CIC/Member loan information system(MLIB) Setup',
+  LOAN_UTILIZATION_INSPECTION = 'Loan utilization inspection(eg. above 5 Lakh)',
+
+  TRANSACTION_BALANCE_SHEET = 'Balance Sheet',
+  TRANSACTION_INCOME_STATEMENT = 'Income Statement',
+  TRANSACTION_CASH_FLOW_STATEMENT = 'Cash Flow Statement',
+  TRANSACTION_CHANGE_OF_EQUITY = 'Change of Equity',
+  TRANSACTION_APPROPRIATE_OF_PROFIT = 'Appropriation of Profit',
+  TRANSACTION_BANK_GL_BALANCE = 'Bank GL Balance',
+  TRANSACTION_BANK_GL_REPORT = 'Bank GL Statement',
+
+  MB_DAILY_TRANSACTION_REPORT = 'Daily Transaction Report',
+  MB_USER_REPORT = 'Mobile Banking User Report',
+  MB_RENEWABLE_LIST = 'Renewable List/Expiry List',
+  MB_RECONCILIATION_REPORT = 'Reconciliation Report (Member AC vs Transaction)',
+  MB_FEE_AND_COMMISSION_REPORT = 'Fee and commission report',
+
+  ATM_DAILY_TRANSACTION_REPORT = 'Daily Transaction Report',
+  ATM_USER_REPORT = 'ATM User Report',
+  ATM_RENEWABLE_LIST = 'Renewable List/Expiry List',
+  ATM_RECONCILIATION_REPORT = 'Reconciliation Report (Member AC vs Transaction)',
+  ATM_FEE_AND_COMMISSION_REPORT = 'Fee and commission report',
+
+  BB_USERWISE_TRANSACTION_REPORT = 'Userwise Transaction Report',
+  BB_PROGRESS_REPORT = 'Progress Report',
+
+  BRANCH_WISE_FINANCIAL_REPORT = 'Branchwise financial Report',
+  BRANCH_WISE_TARGET_VS_ACHIEVEMENT = 'Branchwise Target vs Achievement',
 }
 
 export const REPORTS = {
@@ -126,6 +173,34 @@ export const REPORTS = {
       id: '5.6',
       report: Report.FD_PRE_MATURE_REPORT,
     },
+    {
+      id: '5.7',
+      report: Report.DORMANT_AC_REPORT,
+    },
+    {
+      id: '5.8',
+      report: Report.SAVE_CUSTOMIZE_REPORT_FORMAT,
+    },
+    {
+      id: '5.9',
+      report: Report.AML_REPORTING,
+    },
+    {
+      id: '5.10',
+      report: Report.TARGET_VS_ACHIEVEMENT_REPORT,
+    },
+    {
+      id: '5.11',
+      report: Report.PROGRESS_REPORT_WITH_CHART,
+    },
+    {
+      id: '5.12',
+      report: Report.CHEQUE_WITHDRAW_RECORD,
+    },
+    {
+      id: '5.13',
+      report: Report.BALANCE_CERTIFICATE,
+    },
   ],
 
   [ReportGroup.LOAN]: [
@@ -152,6 +227,140 @@ export const REPORTS = {
     {
       id: '6.6',
       report: Report.LOAN_MIS_ANALYSIS_REPORT,
+    },
+    {
+      id: '6.7',
+      report: Report.LOAN_COLLATERAL_VALUATION_REPORT,
+    },
+    {
+      id: '6.8',
+      report: Report.LOAN_WRITE_OFF_REPORT,
+    },
+    {
+      id: '6.9',
+      report: Report.LOAN_PRE_INFORM_REPORT,
+    },
+    {
+      id: '6.10',
+      report: Report.LOAN_APPROVAL_REPORT_REJECT,
+    },
+    {
+      id: '6.11',
+      report: Report.LOAN_FOLLOWUP_REPORT,
+    },
+    {
+      id: '6.12',
+      report: Report.LOAN_SAVE_CUSTOMIZATION,
+    },
+    {
+      id: '6.13',
+      report: Report.MEMBER_LOAN_INFORMATION_SYSTEM,
+    },
+    {
+      id: '6.14',
+      report: Report.CIB_CIC_MEMBER_LOAN_INFORMATION,
+    },
+    {
+      id: '6.15',
+      report: Report.LOAN_UTILIZATION_INSPECTION,
+    },
+  ],
+
+  [ReportGroup.MOBILE_BANKING]: [
+    {
+      id: '4.1',
+      report: Report.MB_DAILY_TRANSACTION_REPORT,
+    },
+    {
+      id: '4.2',
+      report: Report.MB_USER_REPORT,
+    },
+    {
+      id: '4.3',
+      report: Report.MB_RENEWABLE_LIST,
+    },
+    {
+      id: '4.4',
+      report: Report.MB_RECONCILIATION_REPORT,
+    },
+    {
+      id: '4.5',
+      report: Report.MB_FEE_AND_COMMISSION_REPORT,
+    },
+  ],
+
+  [ReportGroup.ATM]: [
+    {
+      id: '4b.1',
+      report: Report.ATM_DAILY_TRANSACTION_REPORT,
+    },
+    {
+      id: '4b.2',
+      report: Report.ATM_USER_REPORT,
+    },
+    {
+      id: '4b.3',
+      report: Report.ATM_RENEWABLE_LIST,
+    },
+    {
+      id: '4b.4',
+      report: Report.ATM_RECONCILIATION_REPORT,
+    },
+    {
+      id: '4b.5',
+      report: Report.ATM_FEE_AND_COMMISSION_REPORT,
+    },
+  ],
+
+  [ReportGroup.TRANSACTION_REPORT]: [
+    {
+      id: '7.1',
+      report: Report.TRANSACTION_BALANCE_SHEET,
+    },
+    {
+      id: '7.2',
+      report: Report.TRANSACTION_INCOME_STATEMENT,
+    },
+    {
+      id: '7.3',
+      report: Report.TRANSACTION_CASH_FLOW_STATEMENT,
+    },
+    {
+      id: '7.4',
+      report: Report.TRANSACTION_CHANGE_OF_EQUITY,
+    },
+    {
+      id: '7.5',
+      report: Report.TRANSACTION_APPROPRIATE_OF_PROFIT,
+    },
+    {
+      id: '7.6',
+      report: Report.TRANSACTION_BANK_GL_BALANCE,
+    },
+    {
+      id: '7.7',
+      report: Report.TRANSACTION_BANK_GL_REPORT,
+    },
+  ],
+  [ReportGroup.BRANCHLESS_BANKING]: [
+    {
+      id: '4c.1',
+      report: Report.BB_USERWISE_TRANSACTION_REPORT,
+    },
+    {
+      id: '4c.2',
+      report: Report.BB_PROGRESS_REPORT,
+    },
+  ],
+
+  [ReportGroup.BRANCH]: [
+    {
+      id: '8',
+      report: Report.BRANCH_WISE_FINANCIAL_REPORT,
+    },
+    {
+      id: '8',
+      report: Report.BRANCH_WISE_TARGET_VS_ACHIEVEMENT,
     },
   ],
 };

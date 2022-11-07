@@ -61,7 +61,7 @@ export const MemberKYMBasicInfo = ({ setKymCurrentSection }: IMemberKYMBasicInfo
             isLoading={genderLoading}
             options={getFieldOption(genderFields)}
           />
-          <FormDatePicker name="dateOfBirth" label={t['kymIndDateofBirthBS']} />
+          <FormDatePicker name="dateOfBirth" label={t['kymIndDateofBirthBS']} maxToday />
           <FormSelect
             name="ethnicityId"
             label={t['kymIndEthnicity']}

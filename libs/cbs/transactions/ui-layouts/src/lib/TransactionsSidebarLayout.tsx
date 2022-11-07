@@ -45,7 +45,7 @@ const transactionSidebarColumns = [
     title: 'transactionsSidebarLoanPayment',
     link: '/transactions/loan-payment/list',
     name: 'loan-payment',
-    addLink: '/loan/repayments/add',
+    addLink: '/transactions/loan-payment/add',
   },
   {
     title: 'transactionsSidebarAgentTransaction',

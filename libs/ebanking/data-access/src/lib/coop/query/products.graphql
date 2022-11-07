@@ -268,27 +268,13 @@ query getEbankingLoanProduct($id: ID!) {
             rate
           }
 
-          penaltyOnInstallment {
-            dayAfterInstallmentDate
-            penaltyRate
-            penaltyAmount
-          }
+          principalMaxGraceNumber
+          interestMaxGraceNumber
+          penaltyType
+          penaltyDayAfterInstallmentDate
+          penaltyRate
+          penaltyAmount
 
-          maxGraceDurationUnit
-          maxGraceDurationUnitNumber
-          minGraceDurationUnit
-          minGraceDurationUnitNumber
-
-          penaltyOnInterest {
-            dayAfterInstallmentDate
-            penaltyRate
-            penaltyAmount
-          }
-          penaltyOnPrincipal {
-            dayAfterInstallmentDate
-            penaltyRate
-            penaltyAmount
-          }
           prematurePenaltySetup {
             penaltyDateType
             noOfDays

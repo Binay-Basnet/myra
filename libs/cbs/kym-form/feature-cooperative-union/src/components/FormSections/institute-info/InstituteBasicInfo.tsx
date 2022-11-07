@@ -55,7 +55,7 @@ export const InstituteBasicInfo = ({ setSection }: IInstituteBasicInfoProps) => 
             label={t['kymCoopUnionNatureOfBusiness']}
           />
 
-          <FormDatePicker name="regdDate" label={t['kymCoopUnionRegistrationDate']} />
+          <FormDatePicker name="regdDate" label={t['kymCoopUnionRegistrationDate']} maxToday />
           <FormInput type="number" name="vatOrPan" label={t['kymCoopUnionVATPanNo']} />
 
           <FormInput type="text" name="noOfBranches" label={t['serviceCenterNoOfServiceCenter']} />
