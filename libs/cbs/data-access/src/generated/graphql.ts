@@ -8754,6 +8754,26 @@ export type MemberChargeInput = {
   memberType: KymMemberTypesEnum;
 };
 
+export type MemberClassificationReportAddressData = {
+  district?: Maybe<Array<Maybe<ReportEntry>>>;
+  province?: Maybe<Array<Maybe<ReportEntry>>>;
+};
+
+export type MemberClassificationReportData = {
+  address?: Maybe<MemberClassificationReportAddressData>;
+  age?: Maybe<Array<Maybe<ReportEntry>>>;
+  education?: Maybe<Array<Maybe<ReportEntry>>>;
+  gender?: Maybe<Array<Maybe<ReportEntry>>>;
+  income?: Maybe<Array<Maybe<ReportEntry>>>;
+  memberCategory?: Maybe<Array<Maybe<ReportEntry>>>;
+  occupation?: Maybe<Array<Maybe<ReportEntry>>>;
+};
+
+export type MemberClassificationReportResult = {
+  data?: Maybe<MemberClassificationReportData>;
+  error?: Maybe<QueryError>;
+};
+
 export type MemberDetailsResult = {
   data?: Maybe<Member>;
 };
@@ -10121,6 +10141,12 @@ export type ReportDetail = {
   savedBy: Scalars['String'];
 };
 
+export type ReportEntry = {
+  entryName?: Maybe<Scalars['String']>;
+  inNumber?: Maybe<Scalars['Int']>;
+  inPercent?: Maybe<Scalars['String']>;
+};
+
 export type ReportListConnection = {
   edges?: Maybe<Array<Maybe<ReportListEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -10160,6 +10186,7 @@ export enum ReportPeriodType {
 export type ReportQuery = {
   getReport?: Maybe<SavedReportResponse>;
   listReports: ReportListConnection;
+  memberClassificationReport: MemberClassificationReportResult;
   savingStatementReport?: Maybe<ReportResult>;
   shareStatementReport?: Maybe<ReportResult>;
 };
@@ -10172,6 +10199,11 @@ export type ReportQueryListReportsArgs = {
   filter?: InputMaybe<ReportListFilter>;
   organizationId?: InputMaybe<Scalars['ID']>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type ReportQueryMemberClassificationReportArgs = {
+  date?: InputMaybe<LocalizedDateFilter>;
+  period?: InputMaybe<ReportPeriodType>;
 };
 
 export type ReportQuerySavingStatementReportArgs = {
@@ -10734,6 +10766,7 @@ export type SettingsQuery = {
 export type ShareBalance = {
   amount: Scalars['Int'];
   count: Scalars['Int'];
+  id?: Maybe<Scalars['ID']>;
   member: Member;
   memberId?: Maybe<Scalars['ID']>;
 };
@@ -14208,6 +14241,8 @@ export type GetAccountTableListQuery = {
           member?: {
             id: string;
             name?: Record<'local' | 'en' | 'np', string> | null;
+            profilePicUrl?: string | null;
+            profilePic?: string | null;
             contact?: string | null;
             dateJoined?: string | null;
             address?: {
@@ -23267,6 +23302,8 @@ export const GetAccountTableListDocument = `
           member {
             id
             name
+            profilePicUrl
+            profilePic
             address {
               state
               district
