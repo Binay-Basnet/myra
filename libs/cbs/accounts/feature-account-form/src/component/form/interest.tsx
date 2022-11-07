@@ -1,12 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useGetAccountOpenProductDetailsQuery } from '@coop/cbs/data-access';
+import { InterestAuthority, useGetAccountOpenProductDetailsQuery } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormCheckbox, FormInput } from '@coop/shared/form';
+import { FormFileInput, FormInput, FormRadioGroup } from '@coop/shared/form';
 import { Alert, Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
+const radioGroupdata = [
+  {
+    label: 'Ceo Authority',
+    value: InterestAuthority?.Ceo,
+  },
+  {
+    label: 'Board Authority',
+    value: InterestAuthority?.Board,
+  },
+];
 export const Interest = () => {
   const { t } = useTranslation();
   const [triggerQuery, setTriggerQuery] = useState(false);
@@ -28,18 +38,21 @@ export const Interest = () => {
     }
   }, [products]);
 
-  const ceoInterest = watch('ceoAuthority');
-  const BoardInterest = watch('boardAuthority');
+  const interestAuth = watch('interestAuthority');
 
-  const valueInput =
-    Number(ProductData?.interest?.defaultRate) +
-    (ceoInterest ? Number(ProductData?.interest?.ceoAuthority) : 0) +
-    (BoardInterest ? Number(ProductData?.interest?.boardAuthority) : 0);
+  const defaultRate = Number(ProductData?.interest?.defaultRate);
+  // useEffect(() => {
+  //   setValue('interestRate', valueInput);
+  // }, [valueInput, setValue]);
 
   useEffect(() => {
-    setValue('interestRate', valueInput);
-  }, [valueInput, setValue]);
+    setValue('interestRate', defaultRate);
+  }, [defaultRate]);
 
+  const maxValue =
+    interestAuth === InterestAuthority.Board
+      ? Number(ProductData?.interest?.boardAuthority) + Number(ProductData?.interest?.defaultRate)
+      : Number(ProductData?.interest?.ceoAuthority) + Number(ProductData?.interest?.defaultRate);
   return (
     <Box display="flex" flexDirection="column" gap="s16">
       <Box display="flex" flexDirection="column" w="100%" background="neutralColorLight.Gray-0">
@@ -53,8 +66,17 @@ export const Interest = () => {
               type="number"
               label={t['accountOpenInterestRate']}
               textAlign="right"
-              isDisabled
-              value={valueInput}
+              isDisabled={!interestAuth}
+              rules={{
+                max: {
+                  value: maxValue,
+                  message: 'Tenure is invalid',
+                },
+                min: {
+                  value: defaultRate,
+                  message: 'Tenure is invalid',
+                },
+              }}
               rightElement={
                 <Text fontWeight="Medium" fontSize="r1" color="primary.500">
                   %
@@ -62,13 +84,22 @@ export const Interest = () => {
               }
             />
           </InputGroupContainer>
-          <InputGroupContainer>
-            <Box display="flex" flexDirection="row" justifyContent="space-between">
-              <FormCheckbox name="ceoAuthority" label={t['accountOpenCEOAuthority']} />
-              <FormCheckbox name="boardAuthority" label={t['accountOpenBoardAuthority']} />
-            </Box>
-          </InputGroupContainer>
 
+          <Box display="flex" flexDirection="row" justifyContent="space-between">
+            <FormRadioGroup name="interestAuthority" options={radioGroupdata} direction="row" />
+          </Box>
+          {interestAuth && (
+            <Box display="flex" flexDirection="column" gap="s8">
+              <Text fontWeight="500" fontSize="s3">
+                {' '}
+                Authority Document
+              </Text>
+              <Box w="125px">
+                {' '}
+                <FormFileInput name="interestDoc" size="md" />{' '}
+              </Box>
+            </Box>
+          )}
           <Alert status="info" title="Rates">
             <Box display="flex" flexDirection="column" gap="s4">
               <Text fontWeight="400" fontSize="r1">
@@ -76,6 +107,12 @@ export const Interest = () => {
                 <b>
                   {ProductData?.interest?.minRate} %- {ProductData?.interest?.maxRate} %{' '}
                 </b>
+              </Text>
+              <Text fontWeight="400" fontSize="r1">
+                Ceo Authority <b>{ProductData?.interest?.ceoAuthority} %</b>
+              </Text>
+              <Text fontWeight="400" fontSize="r1">
+                Board Authority <b>{ProductData?.interest?.boardAuthority} %</b>
               </Text>
               {ProductData?.ladderRate && (
                 <Box display="flex" flexDirection="row" gap="s4">
