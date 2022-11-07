@@ -224,7 +224,7 @@ export const AccountOpenNew = () => {
   const minorDetails = minorData?.account?.listMinors?.data;
   const minorOptions = minorDetails?.map((item) => ({
     label: item?.fullName?.local as string,
-    value: item?.familyMemberId as string,
+    value: item?.id as string,
   }));
 
   const proceedToPaymentHandler = () => {

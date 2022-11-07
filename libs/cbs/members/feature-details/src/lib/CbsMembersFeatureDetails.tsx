@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import { Box } from '@coop/shared/ui';
 
-import { MemberDetailsSidebar } from '../components';
+import { MemberDetailsPathBar, MemberDetailsSidebar } from '../components';
 import {
   Accounts,
   Activity,
@@ -23,7 +23,7 @@ export const MemberDetails = () => {
 
   return (
     <>
-      {' '}
+      <MemberDetailsPathBar title="Member List" />
       <Box
         w="320px"
         position="fixed"

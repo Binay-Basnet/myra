@@ -1,10 +1,9 @@
 import { IoAddOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
 import { Box, Grid, Icon, Text } from '@coop/shared/ui';
 
-import { AccountList, UpcomingPaymentTable } from '../components';
+import { TransactionTable } from '../components';
 
 const links = [
   {
@@ -22,18 +21,6 @@ const links = [
 ];
 export const Transactions = () => {
   const router = useRouter();
-  const memberDetails = useGetMemberDetailsOverviewQuery({
-    id: router.query['id'] as string,
-  });
-
-  const memberPayment = memberDetails?.data?.members?.memberOverview?.data?.overview?.payments;
-  const memberPaymentUp = memberPayment?.map((data, index) => ({
-    sn: Number(index) + 1,
-    date: data?.date,
-    accountName: data?.accountName,
-    paymentType: data?.paymentType,
-    amount: data?.amount,
-  }));
 
   return (
     <>
@@ -69,20 +56,7 @@ export const Transactions = () => {
           ))}
         </Grid>
       </Box>
-      <AccountList />
-      {memberPaymentUp && (
-        <Box bg="white" display="flex" flexDirection="column" gap="s8" pb="s16" borderRadius="br2">
-          <Box display="flex" justifyContent="space-between" p="s16">
-            <Text fontSize="r1" fontWeight="600">
-              {' '}
-              Upcoming Payments
-            </Text>
-          </Box>
-          <Box>
-            <UpcomingPaymentTable data={memberPaymentUp} />
-          </Box>
-        </Box>
-      )}
+      <TransactionTable />
     </>
   );
 };
