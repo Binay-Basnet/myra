@@ -143,6 +143,7 @@ const AddFamilyMember = ({
               name="dateOfBirth"
               id="familyDetailsDateOfBirth"
               label={t['kymIndDateofBirthBS']}
+              maxToday
             />
           </InputGroupContainer>
         </form>

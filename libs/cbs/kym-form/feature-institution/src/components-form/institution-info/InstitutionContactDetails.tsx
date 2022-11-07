@@ -29,14 +29,13 @@ export const ContactDetailsInstitution = (props: IProps) => {
         }}
       >
         <FormSection id="kymInsContactDetails" header="kymInsContactDetails">
-          {' '}
           <FormPhoneNumber name="phone" label={t['kymInsPhone']} />
           <FormInput type="number" name="fax" label={t['kymInsFax']} />
           <FormEmailInput name="email" label={t['kymInsEmail']} />
           <FormInput type="text" name="website" label={t['kymInsWebsiteLinkany']} />
           <FormInput type="number" name="postBoxNo" label={t['kymInsPostBoxNo']} />
           <FormInput type="number" name="numberOfEmployee" label={t['kymInsNumberofEmployees']} />
-          <FormDatePicker name="dateOfLastAGM" label={t['kymInsAGMDetailsDate']} />
+          <FormDatePicker name="dateOfLastAGM" label={t['kymInsAGMDetailsDate']} maxToday />
         </FormSection>
       </form>
     </FormProvider>

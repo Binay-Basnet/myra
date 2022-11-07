@@ -11,6 +11,7 @@ import {
   LocaleSwitcher,
   PasswordInput,
   Text,
+  TextFields,
   TextInput,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -90,7 +91,14 @@ export const Login = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Box display="flex" flexDir="column" gap={5}>
               <Box>
-                <TextInput {...register('username')} autoFocus />
+                <TextFields variant="formLabel" color="gray.700">
+                  {t['loginEmail']}
+                </TextFields>
+                <TextInput
+                  placeholder={t['loginEmailPlaceholder']}
+                  {...register('username')}
+                  autoFocus
+                />
               </Box>
               <Box>
                 <PasswordInput

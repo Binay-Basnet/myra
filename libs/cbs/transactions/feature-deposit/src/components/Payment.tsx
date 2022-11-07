@@ -224,6 +224,7 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
             <FormDatePicker
               name="bankVoucher.depositedAt"
               label={t['depositPaymentDepositedDate']}
+              maxToday
             />
 
             <FormInput

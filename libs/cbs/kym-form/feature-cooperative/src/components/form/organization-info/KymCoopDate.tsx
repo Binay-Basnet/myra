@@ -28,9 +28,9 @@ export const KymCoopDate = (props: IProps) => {
         }}
       >
         <FormSection id="kymCoopAccCooperativeDate">
-          <FormDatePicker name="lastAuditDate" label={t['kymCoopLastAuditDate']} />
+          <FormDatePicker name="lastAuditDate" label={t['kymCoopLastAuditDate']} maxToday />
 
-          <FormDatePicker name="lastAgmDate" label={t['kymCoopLastAGMDate']} />
+          <FormDatePicker name="lastAgmDate" label={t['kymCoopLastAGMDate']} maxToday />
         </FormSection>
       </form>
     </FormProvider>
