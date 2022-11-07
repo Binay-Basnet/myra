@@ -16,6 +16,7 @@ import {
 } from '@coop/cbs/transactions/ui-containers';
 import {
   FormAgentSelect,
+  FormAmountInput,
   FormCheckbox,
   FormDatePicker,
   FormEditableTable,
@@ -193,16 +194,15 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
               label={t['addDepositVoucherId']}
             />
 
-            <FormInput
+            <FormAmountInput
               name="openingPayment.bankVoucher.amount"
-              type="number"
               label={t['depositPaymentAmount']}
-              textAlign="right"
             />
 
             <FormDatePicker
               name="openingPayment.bankVoucher.depositedAt"
               label={t['depositPaymentDepositedDate']}
+              maxToday
             />
 
             <FormInput
@@ -239,11 +239,9 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
 
             <FormInput name="openingPayment.cheque.chequeNo" label={t['depositePaymentChequeNo']} />
 
-            <FormInput
+            <FormAmountInput
               name="openingPayment.cheque.amount"
-              type="number"
               label={t['depositPaymentAmount']}
-              textAlign="right"
             />
           </InputGroupContainer>
         )}
@@ -251,11 +249,9 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
         {selectedPaymentMode === DepositPaymentType.Cash && (
           <>
             <InputGroupContainer>
-              <FormInput
+              <FormAmountInput
                 name="openingPayment.cash.cashPaid"
-                type="number"
                 label={t['depositPaymentCash']}
-                textAlign="right"
               />
             </InputGroupContainer>
 

@@ -1,19 +1,20 @@
-import {Controller, Path, useFormContext} from 'react-hook-form';
-import {UseControllerProps} from 'react-hook-form/dist/types/controller';
-import {DatePicker} from '@raralabs/react-patro';
+import { Controller, Path, useFormContext } from 'react-hook-form';
+import { UseControllerProps } from 'react-hook-form/dist/types/controller';
+import { DatePicker } from '@raralabs/react-patro';
+import format from 'date-fns/format';
+import NepaliDate from 'nepali-date-converter';
 
-import {RootState, useAppSelector} from '@coop/cbs/data-access';
-import {Box, InputProps, TextFields} from '@coop/shared/ui';
-
-// import './FormDatePicker.css';
+import { DateType, RootState, useAppSelector } from '@coop/cbs/data-access';
+import { Box, InputProps, TextFields } from '@coop/shared/ui';
 
 interface IFormDatePickerProps<T> extends InputProps {
   name: Path<T> | string;
   label?: string;
   rules?: UseControllerProps['rules'];
+  maxToday?: boolean;
 }
 
-export const FormDatePicker = <T,>({ name, label, ...rest }: IFormDatePickerProps<T>) => {
+export const FormDatePicker = <T,>({ name, label, maxToday, ...rest }: IFormDatePickerProps<T>) => {
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
 
   const methods = useFormContext();
@@ -53,6 +54,13 @@ export const FormDatePicker = <T,>({ name, label, ...rest }: IFormDatePickerProp
             }}
             value={value ?? ''}
             className="form-datepicker"
+            maxDate={
+              maxToday
+                ? preference?.date === DateType.Bs
+                  ? new NepaliDate(new Date()).format('YYYY-MM-DD')
+                  : format(new Date(), 'yyyy-MM-dd')
+                : null
+            }
             {...rest}
             {...fieldProps}
           />
