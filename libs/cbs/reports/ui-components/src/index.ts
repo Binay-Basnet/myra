@@ -1,4 +1,5 @@
 export * from './components';
+export * from './lib/MemberClassificationInputs';
 export * from './lib/ReportFilter';
 export * from './lib/ReportHeader';
 export * from './lib/ReportInputs';

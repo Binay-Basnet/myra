@@ -222,6 +222,7 @@ export const Table = <T extends Record<string, unknown>>({
                       as="div"
                       textOverflow="ellipsis"
                       overflow="hidden"
+                      color="gray.800"
                       whiteSpace="nowrap"
                       textTransform="capitalize"
                     >

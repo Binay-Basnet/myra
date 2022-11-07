@@ -4827,12 +4827,14 @@ export type GeneralBranchSettingsQueryListArgs = {
 
 export type GeneralMemberData = {
   charge?: Maybe<Array<Maybe<MemberChargeData>>>;
+  memberCode?: Maybe<MemberCode>;
   memberType?: Maybe<MemberActiveData>;
   risk?: Maybe<MemberRiskData>;
 };
 
 export type GeneralMemberInput = {
   charge?: InputMaybe<Array<InputMaybe<MemberChargeInput>>>;
+  memberCode?: InputMaybe<MemberCodeInput>;
   memberType?: InputMaybe<MemberActiveInput>;
   risk?: InputMaybe<MemberRiskInput>;
 };
@@ -8772,6 +8774,18 @@ export type MemberClassificationReportData = {
 export type MemberClassificationReportResult = {
   data?: Maybe<MemberClassificationReportData>;
   error?: Maybe<QueryError>;
+};
+
+export type MemberCode = {
+  initialNo: Scalars['String'];
+  noOfDigits?: Maybe<Scalars['Int']>;
+  prefix?: Maybe<Scalars['String']>;
+};
+
+export type MemberCodeInput = {
+  initialNo: Scalars['String'];
+  noOfDigits: Scalars['Int'];
+  prefix: Scalars['String'];
 };
 
 export type MemberDetailsResult = {
@@ -17581,6 +17595,57 @@ export type GetSavingStatementQuery = {
         | {}
         | null;
     } | null;
+  };
+};
+
+export type GetMemberClassificationReportQueryVariables = Exact<{
+  period?: InputMaybe<ReportPeriodType>;
+}>;
+
+export type GetMemberClassificationReportQuery = {
+  report: {
+    memberClassificationReport: {
+      data?: {
+        gender?: Array<{
+          entryName?: string | null;
+          inNumber?: number | null;
+          inPercent?: string | null;
+        } | null> | null;
+        age?: Array<{
+          entryName?: string | null;
+          inNumber?: number | null;
+          inPercent?: string | null;
+        } | null> | null;
+        occupation?: Array<{
+          entryName?: string | null;
+          inNumber?: number | null;
+          inPercent?: string | null;
+        } | null> | null;
+        education?: Array<{
+          entryName?: string | null;
+          inNumber?: number | null;
+          inPercent?: string | null;
+        } | null> | null;
+        memberCategory?: Array<{
+          entryName?: string | null;
+          inNumber?: number | null;
+          inPercent?: string | null;
+        } | null> | null;
+        income?: Array<{ entryName?: string | null; inPercent?: string | null } | null> | null;
+        address?: {
+          province?: Array<{
+            entryName?: string | null;
+            inNumber?: number | null;
+            inPercent?: string | null;
+          } | null> | null;
+          district?: Array<{
+            entryName?: string | null;
+            inNumber?: number | null;
+            inPercent?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    };
   };
 };
 
@@ -27640,6 +27705,74 @@ export const useGetSavingStatementQuery = <TData = GetSavingStatementQuery, TErr
     ['getSavingStatement', variables],
     useAxios<GetSavingStatementQuery, GetSavingStatementQueryVariables>(
       GetSavingStatementDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberClassificationReportDocument = `
+    query getMemberClassificationReport($period: ReportPeriodType) {
+  report {
+    memberClassificationReport(period: $period) {
+      data {
+        gender {
+          entryName
+          inNumber
+          inPercent
+        }
+        age {
+          entryName
+          inNumber
+          inPercent
+        }
+        occupation {
+          entryName
+          inNumber
+          inPercent
+        }
+        education {
+          entryName
+          inNumber
+          inPercent
+        }
+        memberCategory {
+          entryName
+          inNumber
+          inPercent
+        }
+        income {
+          entryName
+          inPercent
+          inPercent
+        }
+        address {
+          province {
+            entryName
+            inNumber
+            inPercent
+          }
+          district {
+            entryName
+            inNumber
+            inPercent
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberClassificationReportQuery = <
+  TData = GetMemberClassificationReportQuery,
+  TError = unknown
+>(
+  variables?: GetMemberClassificationReportQueryVariables,
+  options?: UseQueryOptions<GetMemberClassificationReportQuery, TError, TData>
+) =>
+  useQuery<GetMemberClassificationReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getMemberClassificationReport']
+      : ['getMemberClassificationReport', variables],
+    useAxios<GetMemberClassificationReportQuery, GetMemberClassificationReportQueryVariables>(
+      GetMemberClassificationReportDocument
     ).bind(null, variables),
     options
   );
