@@ -3795,6 +3795,9 @@ const en: Record<string, string> = {
   withdrawSlipBook: 'Withdraw Slip',
   withdrawSlipRequests: 'Withdraw Slip Requests',
   withdrawSlipBlockRequests: 'Block Withdraw Slip',
+
+  loanProductRemainingPrincipal: 'Remaining Principal',
+  loanProductPenalInterest: 'Penal Interest',
 };
 
 export default en;

@@ -3364,6 +3364,9 @@ const ne: Record<string, string> = {
   withdrawSlipBook: 'Withdraw Slip Book',
   withdrawSlipRequests: 'Withdraw Slip Requests',
   withdrawSlipBlockRequests: 'Block Withdraw Slip Request',
+
+  loanProductRemainingPrincipal: 'Remaining Principal',
+  loanProductPenalInterest: 'Penal Interest',
 };
 
 export default ne;

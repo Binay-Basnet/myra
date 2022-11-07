@@ -38,24 +38,11 @@ fragment LoanProduct on LoanProduct {
   allowPartialInstallment
   isMonthlyInstallmentCompulsory
   isPenaltyApplicable
-  penaltyOnPrincipal {
-    dayAfterInstallmentDate
-    penaltyRate
-    penaltyAmount
-    penaltyLedgerMapping
-  }
-  penaltyOnInterest {
-    dayAfterInstallmentDate
-    penaltyRate
-    penaltyAmount
-    penaltyLedgerMapping
-  }
-  penaltyOnInstallment {
-    dayAfterInstallmentDate
-    penaltyRate
-    penaltyAmount
-    penaltyLedgerMapping
-  }
+  penaltyDayAfterInstallmentDate
+  penaltyRate
+  penaltyAmount
+  principalMaxGraceNumber
+  interestMaxGraceNumber
   isRebateApplicable
   rebate {
     dayBeforeInstallmentDate
@@ -63,10 +50,6 @@ fragment LoanProduct on LoanProduct {
     rebateAmount
     rebateLedgerMapping
   }
-  minGraceDurationUnit
-  minGraceDurationUnitNumber
-  maxGraceDurationUnit
-  maxGraceDurationUnitNumber
   interest {
     minRate
     maxRate

@@ -8,12 +8,12 @@ export const LoanRepayment = () => {
   return (
     <FormSection header="loanProductLoanRepaymentStartGraceDuration">
       <FormInput
-        name="minGraceDurationUnitNumber"
+        name="principalMaxGraceNumber"
         textAlign="right"
         label={t['loanProductMaxInstallmentPrincipal']}
       />
       <FormInput
-        name="maxGraceDurationUnitNumber"
+        name="interestMaxGraceNumber"
         textAlign="right"
         label={t['loanProductMaxInstallmentInterest']}
       />

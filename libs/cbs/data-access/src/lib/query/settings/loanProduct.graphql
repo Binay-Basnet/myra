@@ -97,24 +97,9 @@ query getLoanProductEditData($id: ID!) {
             interestMethod
             isPenaltyApplicable
             penaltyType
-            penaltyOnPrincipal {
-              dayAfterInstallmentDate
-              penaltyRate
-              penaltyAmount
-              penaltyLedgerMapping
-            }
-            penaltyOnInterest {
-              dayAfterInstallmentDate
-              penaltyRate
-              penaltyAmount
-              penaltyLedgerMapping
-            }
-            penaltyOnInstallment {
-              dayAfterInstallmentDate
-              penaltyRate
-              penaltyAmount
-              penaltyLedgerMapping
-            }
+            penaltyDayAfterInstallmentDate
+            penaltyRate
+            penaltyAmount
             isRebateApplicable
             rebate {
               dayBeforeInstallmentDate
@@ -122,10 +107,8 @@ query getLoanProductEditData($id: ID!) {
               rebateAmount
               rebateLedgerMapping
             }
-            minGraceDurationUnit
-            minGraceDurationUnitNumber
-            maxGraceDurationUnit
-            maxGraceDurationUnitNumber
+            principalMaxGraceNumber
+            interestMaxGraceNumber
             interest {
               minRate
               maxRate

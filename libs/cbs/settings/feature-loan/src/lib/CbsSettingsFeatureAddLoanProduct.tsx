@@ -107,8 +107,6 @@ export const SettingsLoanProductForm = () => {
       isPenaltyApplicable: false,
       allowPartialInstallment: false,
       isMonthlyInstallmentCompulsory: false,
-      minGraceDurationUnit: FrequencyTenure.Day,
-      maxGraceDurationUnit: FrequencyTenure.Day,
       isStaffProduct: false,
       supportMultipleAccounts: false,
       loanScheduleChangeOverride: false,
@@ -120,7 +118,7 @@ export const SettingsLoanProductForm = () => {
       installmentFrequency: LoanProductInstallment.Daily,
       isRebateApplicable: false,
       tenureUnit: FrequencyTenure.Day,
-      penaltyType: PenaltyType.Principal,
+      penaltyType: PenaltyType.RemainingPrincipal,
       isPrematurePenaltyApplicable: false,
     },
   });
@@ -299,8 +297,6 @@ export const SettingsLoanProductForm = () => {
       tenureUnit: values?.tenureUnit ? values?.tenureUnit : null,
       maxTenureUnitNumber: values?.maxTenureUnitNumber ? values?.maxTenureUnitNumber : null,
       minTenureUnitNumber: values?.minTenureUnitNumber ? values?.minTenureUnitNumber : null,
-      minGraceDurationUnit: values?.minGraceDurationUnit ? values?.minGraceDurationUnit : null,
-      maxGraceDurationUnit: values?.maxGraceDurationUnit ? values?.maxGraceDurationUnit : null,
       maxLoanAmount: values?.maxLoanAmount ?? null,
       minimumLoanAmount: values?.minimumLoanAmount ?? null,
       installmentFrequency: values?.installmentFrequency ?? null,
@@ -311,30 +307,13 @@ export const SettingsLoanProductForm = () => {
         ...values?.rebate,
         rebateAmount: values?.rebate?.rebateAmount ?? null,
       },
-      penaltyOnPrincipal: {
-        penaltyRate: isPenaltyApplicable ? values?.penaltyOnPrincipal?.penaltyRate : null,
-        dayAfterInstallmentDate: isPenaltyApplicable
-          ? values?.penaltyOnPrincipal?.dayAfterInstallmentDate
-          : null,
-        penaltyAmount: isPenaltyApplicable ? values?.penaltyOnPrincipal?.penaltyAmount : null,
-        // penaltyLedgerMapping: isPenaltyApplicable ? values?.penaltyOnPrincipal?.penaltyLedgerMapping : null,
-      },
-      penaltyOnInterest: {
-        penaltyRate: isPenaltyApplicable ? values?.penaltyOnInterest?.penaltyRate : null,
-        dayAfterInstallmentDate: isPenaltyApplicable
-          ? values?.penaltyOnInterest?.dayAfterInstallmentDate
-          : null,
-        penaltyAmount: isPenaltyApplicable ? values?.penaltyOnInterest?.penaltyAmount : null,
-        // penaltyLedgerMapping: isPenaltyApplicable ? values?.penaltyOnInterest?.penaltyLedgerMapping : null,
-      },
-      penaltyOnInstallment: {
-        penaltyRate: isPenaltyApplicable ? values?.penaltyOnInstallment?.penaltyRate : null,
-        dayAfterInstallmentDate: isPenaltyApplicable
-          ? values?.penaltyOnInstallment?.dayAfterInstallmentDate
-          : null,
-        penaltyAmount: isPenaltyApplicable ? values?.penaltyOnInstallment?.penaltyAmount : null,
-        // penaltyLedgerMapping: isPenaltyApplicable ? values?.penaltyOnInstallment?.penaltyLedgerMapping : null,
-      },
+      principalMaxGraceNumber: values?.principalMaxGraceNumber ?? null,
+      interestMaxGraceNumber: values?.interestMaxGraceNumber ?? null,
+      penaltyRate: isPenaltyApplicable ? values?.penaltyRate : null,
+      penaltyDayAfterInstallmentDate: isPenaltyApplicable
+        ? values?.penaltyDayAfterInstallmentDate
+        : null,
+      penaltyAmount: isPenaltyApplicable ? values?.penaltyAmount : null,
       prematurePenaltySetup: {
         noOfDays: values?.prematurePenaltySetup?.noOfDays ?? null,
         penaltyAmount: values?.prematurePenaltySetup?.penaltyAmount ?? null,
