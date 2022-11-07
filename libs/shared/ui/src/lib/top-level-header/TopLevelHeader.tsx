@@ -331,7 +331,7 @@ export const TopLevelHeader = () => {
               color="white"
               borderRadius="br1"
               _hover={{ backgroundColor: 'secondary.900' }}
-              onClick={() => router.push('/settings/general/audit-log')}
+              onClick={() => router.push('/settings/general/organization')}
             />
 
             <Popover placement="bottom-end" gutter={3}>
@@ -414,7 +414,7 @@ export const TopLevelHeader = () => {
                       <Divider my="s8" />
                       <Box>
                         <AppSwitcherIconWrapper
-                          onClick={() => router.push('/settings/general/audit-log')}
+                          onClick={() => router.push('/settings/general/organization')}
                         >
                           <Image width={32} height={32} src="/settings.svg" alt="Settings" />
                           <AppSwitcherText>{t['settings']}</AppSwitcherText>
