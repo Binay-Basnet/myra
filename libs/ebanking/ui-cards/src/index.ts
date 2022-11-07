@@ -1,6 +1,7 @@
 export * from './lib/AccountCard';
 export * from './lib/AccountHeaderCard/AccountHeaderCard';
 export * from './lib/AccountLargeCard';
+export * from './lib/AccountQRModal';
 export * from './lib/ChequeRequestCard';
 export * from './lib/coop/CoopCard';
 export * from './lib/coop/CoopDownloadCard';

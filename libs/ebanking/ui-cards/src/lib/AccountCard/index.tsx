@@ -3,11 +3,13 @@ import { BsThreeDots } from 'react-icons/bs';
 import { IoCopyOutline, IoQrCodeOutline } from 'react-icons/io5';
 import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
+import { useDisclosure } from '@chakra-ui/react';
 
 import {
   AccountMinimal,
   updateDefaultAccountInCoop,
   useAppDispatch,
+  useAppSelector,
   useSetDefaultAccountMutation,
 } from '@coop/ebanking/data-access';
 import {
@@ -24,6 +26,8 @@ import {
   TextFields,
 } from '@coop/shared/ui';
 
+import { AccountQRModal } from '../AccountQRModal';
+
 interface IAccountCardProps {
   isDefault: boolean;
   isLoan?: boolean;
@@ -33,8 +37,10 @@ interface IAccountCardProps {
 export const AccountCard = ({ isDefault, account, isLoan }: IAccountCardProps) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const { onClose: modalOnClose, isOpen, onToggle } = useDisclosure();
   const [checked, setChecked] = useState(isDefault);
   const queryClient = useQueryClient();
+  const coopUser = useAppSelector((state) => state.auth.cooperative.user);
 
   const { mutateAsync: setDefaultAccount } = useSetDefaultAccountMutation();
 
@@ -80,6 +86,17 @@ export const AccountCard = ({ isDefault, account, isLoan }: IAccountCardProps) =
             color="gray.500"
             _hover={{ color: 'gray.800' }}
             cursor="pointer"
+            onClick={onToggle}
+          />
+
+          <AccountQRModal
+            account={{
+              name: account.name,
+              accountNo: account.accountNumber,
+              phoneNo: coopUser?.memberMobileNo ?? 'N/A',
+            }}
+            open={isOpen}
+            onClose={modalOnClose}
           />
 
           <Popover placement="bottom-end">

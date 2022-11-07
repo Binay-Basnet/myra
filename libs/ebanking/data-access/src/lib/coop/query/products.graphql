@@ -304,8 +304,6 @@ query getEbankingLoanProduct($id: ID!) {
             amount
           }
 
-
-
           rebate {
             dayBeforeInstallmentDate
             rebateAmount
