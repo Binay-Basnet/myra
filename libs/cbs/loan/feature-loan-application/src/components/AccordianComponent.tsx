@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { AccordionPanel } from '@chakra-ui/react';
 
-import { useGetLoanProductDetailsDataQuery } from '@coop/cbs/data-access';
+import { PenaltyType, useGetLoanProductDetailsDataQuery } from '@coop/cbs/data-access';
 import { Accordion, AccordionButton, AccordionItem, Box, Icon, Text } from '@coop/shared/ui';
 
 import { CriteriaCard } from './CriteriaCard';
@@ -19,14 +19,10 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
       enabled: triggerQuery,
     }
   );
-  const penaltyOnInstallmentData =
-    poductDetails?.data?.settings?.general?.loanProducts?.formState?.data?.penaltyOnInstallment;
   const rebateData = poductDetails?.data?.settings?.general?.loanProducts?.formState?.data?.rebate;
-  const penaltyOnInterestData =
-    poductDetails?.data?.settings?.general?.loanProducts?.formState?.data?.penaltyOnInterest;
-  const penaltyOnPrincipalData =
-    poductDetails?.data?.settings?.general?.loanProducts?.formState?.data?.penaltyOnPrincipal;
-
+  const penaltyType =
+    poductDetails?.data?.settings?.general?.loanProducts?.formState?.data?.penaltyType;
+  const formstateData = poductDetails?.data?.settings?.general?.loanProducts?.formState?.data;
   useEffect(() => {
     if (productId) {
       setTriggerQuery(true);
@@ -65,6 +61,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
             </>
           )}
         </AccordionItem>
+
         <AccordionItem>
           {({ isExpanded }) => (
             <>
@@ -78,7 +75,9 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                 h="40px"
               >
                 <Text color="gray.800" fontWeight="500" fontSize="r1">
-                  Penalty on Principal{' '}
+                  {penaltyType === PenaltyType?.RemainingPrincipal
+                    ? 'Penalty on Remaining Principal'
+                    : 'Penalty on Penal Interest'}
                 </Text>
                 <Icon
                   as={isExpanded ? ChevronDownIcon : ChevronRightIcon}
@@ -96,7 +95,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                         </Text>
 
                         <Text fontWeight="600" fontSize="s3">
-                          {penaltyOnPrincipalData?.dayAfterInstallmentDate}
+                          {formstateData?.penaltyDayAfterInstallmentDate}
                         </Text>
                       </Box>
                     </li>
@@ -107,7 +106,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                         </Text>
 
                         <Text fontWeight="600" fontSize="s3">
-                          {penaltyOnPrincipalData?.penaltyRate} %
+                          {formstateData?.penaltyRate} %
                         </Text>
                       </Box>
                     </li>
@@ -118,7 +117,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
                         </Text>
 
                         <Text fontWeight="600" fontSize="s3">
-                          {penaltyOnPrincipalData?.penaltyAmount}
+                          {formstateData?.penaltyAmount}
                         </Text>
                       </Box>
                     </li>
@@ -128,132 +127,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
             </>
           )}
         </AccordionItem>
-        <AccordionItem>
-          {({ isExpanded }) => (
-            <>
-              <AccordionButton
-                border="none"
-                p="s16"
-                bg="white"
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-                h="40px"
-              >
-                <Text color="gray.800" fontWeight="500" fontSize="r1">
-                  Penalty on Interest
-                </Text>
-                <Icon
-                  as={isExpanded ? ChevronDownIcon : ChevronRightIcon}
-                  color="gray.800"
-                  flexShrink={0}
-                />
-              </AccordionButton>
-              <AccordionPanel p="s16">
-                <Box px="s20">
-                  <ul>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Days from end date
-                        </Text>
 
-                        <Text fontWeight="600" fontSize="s3">
-                          {penaltyOnInterestData?.dayAfterInstallmentDate}
-                        </Text>
-                      </Box>
-                    </li>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Penalty Rate
-                        </Text>
-
-                        <Text fontWeight="600" fontSize="s3">
-                          {penaltyOnInterestData?.penaltyRate} %
-                        </Text>
-                      </Box>
-                    </li>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Penalty Amount
-                        </Text>
-
-                        <Text fontWeight="600" fontSize="s3">
-                          {penaltyOnInterestData?.penaltyAmount}
-                        </Text>
-                      </Box>
-                    </li>
-                  </ul>
-                </Box>
-              </AccordionPanel>
-            </>
-          )}
-        </AccordionItem>
-        <AccordionItem>
-          {({ isExpanded }) => (
-            <>
-              <AccordionButton
-                border="none"
-                p="s16"
-                bg="white"
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-                h="40px"
-              >
-                <Text color="gray.800" fontWeight="500" fontSize="r1">
-                  Penalty on Installment
-                </Text>
-                <Icon
-                  as={isExpanded ? ChevronDownIcon : ChevronRightIcon}
-                  color="gray.800"
-                  flexShrink={0}
-                />
-              </AccordionButton>
-              <AccordionPanel p="s16">
-                <Box px="s20">
-                  <ul>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Days from end date
-                        </Text>
-
-                        <Text fontWeight="600" fontSize="s3">
-                          {penaltyOnInstallmentData?.dayAfterInstallmentDate}
-                        </Text>
-                      </Box>
-                    </li>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Penalty Rate
-                        </Text>
-
-                        <Text fontWeight="600" fontSize="s3">
-                          {penaltyOnInstallmentData?.penaltyRate} %
-                        </Text>
-                      </Box>
-                    </li>
-                    <li>
-                      <Box display="flex" flexDirection="row" gap="s4" flexWrap="wrap">
-                        <Text fontWeight="400" fontSize="s3">
-                          Penalty Amount
-                        </Text>
-
-                        <Text fontWeight="600" fontSize="s3">
-                          {penaltyOnInstallmentData?.penaltyAmount}
-                        </Text>
-                      </Box>
-                    </li>
-                  </ul>
-                </Box>
-              </AccordionPanel>
-            </>
-          )}
-        </AccordionItem>
         <AccordionItem>
           {({ isExpanded }) => (
             <>

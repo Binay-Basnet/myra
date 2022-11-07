@@ -267,6 +267,8 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
           member {
             id
             name
+            profilePicUrl
+            profilePic
             address {
               state
               district

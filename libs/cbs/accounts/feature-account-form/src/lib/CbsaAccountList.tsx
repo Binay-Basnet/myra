@@ -58,7 +58,11 @@ export const CBSAccountList = () => {
             justifyContent="flex-start"
             alignItems="center"
           >
-            <Avatar name={props.row?.original?.node?.member?.name?.local} size="sm" />
+            <Avatar
+              src={props?.row?.original?.node?.member?.profilePicUrl as string}
+              name={props.row?.original?.node?.member?.name?.local}
+              size="sm"
+            />
             <Text fontWeight="400" fontSize="r1">
               {props.row?.original?.node?.member?.name?.local}
             </Text>

@@ -87,7 +87,7 @@ export const Payment = ({ totalDeposit, loanTotal }: PaymentProps) => {
   const returnAmount = totalCashPaid - totalDeposit;
 
   useEffect(() => {
-    setValue('cash.cashPaid', String(Math.round(Number(loanTotal))));
+    setValue('cash.cashPaid', String(Math.ceil(Number(loanTotal))));
   }, [loanTotal, setValue]);
 
   return (
@@ -105,6 +105,7 @@ export const Payment = ({ totalDeposit, loanTotal }: PaymentProps) => {
                 filterBy={ObjState.Active}
               />
             </GridItem>
+            <FormInput name="account.amount" value={loanTotal} isDisabled label="Amount" />
 
             <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
               <FormTextArea name="account.note" label="Note" />
@@ -119,6 +120,7 @@ export const Payment = ({ totalDeposit, loanTotal }: PaymentProps) => {
               <FormSelect name="bankVoucher.bank" label="Bank Name" options={bankList} />
             </GridItem>
             <FormInput name="bankVoucher.voucher_no" label="Voucher Number" />
+            <FormInput name="bankVoucher.amount" value={loanTotal} isDisabled label="Amount" />
             {/* <FormInput
               name="amount"
               type="number"

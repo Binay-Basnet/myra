@@ -39,6 +39,7 @@ fragment LoanProduct on LoanProduct {
   isMonthlyInstallmentCompulsory
   isPenaltyApplicable
   penaltyDayAfterInstallmentDate
+  penaltyType
   penaltyRate
   penaltyAmount
   principalMaxGraceNumber
