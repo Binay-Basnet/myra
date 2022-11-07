@@ -537,8 +537,8 @@ const en: Record<string, string> = {
   settingsSideBarChartsOfAccounts: 'Charts of Accounts',
   settingsSideBarMembers: 'Members',
   settingsSideBarShare: 'Share',
-  settingsSideBarDeposit: 'Deposit',
-  settingsSideBarDepositProducts: 'Deposit Products',
+  settingsSideBarDeposit: 'Savings',
+  settingsSideBarDepositProducts: 'Savings Products',
   settingsSideBarLoan: 'Loan',
   settingsSideBarLoanProducts: 'Loan Products',
 
