@@ -387,6 +387,7 @@ query getAccountOpenMinorList($memberId: ID!) {
   account {
     listMinors(memberId: $memberId) {
       data {
+        id
         fullName
         familyMemberId
       }
