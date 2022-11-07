@@ -2709,6 +2709,7 @@ const ne: Record<string, string> = {
   loginSubTitle: 'सहकारीलाई सुविधासँग जोड्ने एक सरल, सुरक्षित र साझा डिजिटल प्ल्याट्फर्म ।',
   loginHeader: 'मिरामा स्वागत छ।',
   loginEmail: 'इमेल',
+  loginEmailPlaceholder: 'Enter Email',
   loginPassword: 'पासवर्ड',
   loginKeepSignedIn: 'मेरो अकाउन्ट खुल्लै राख्नुहोस्।',
   loginForgotPassword: 'पासवर्ड विर्सनुभयो?',
