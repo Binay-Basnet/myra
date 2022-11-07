@@ -174,11 +174,13 @@ export const CbsSettingsFeatureValuatorAdd = () => {
                       <FormDatePicker
                         name="renewalDate"
                         label={t['settingsGeneralValuatorFormValuatorLatestRenewalDate']}
+                        maxToday
                       />
 
                       <FormDatePicker
                         name="contractDate"
                         label={t['settingsGeneralValuatorFormValuatorSaccosContractDate']}
+                        maxToday
                       />
 
                       <FormInput

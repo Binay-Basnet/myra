@@ -17,14 +17,14 @@ interface IProps {
 }
 
 export const BasicDetailsInstitution = (props: IProps) => {
-  const {t} = useTranslation();
-  const {setSection} = props;
+  const { t } = useTranslation();
+  const { setSection } = props;
 
   const methods = useForm<KymInsInput>();
 
-  useInstitution({methods});
+  useInstitution({ methods });
 
-  const {data: organizationFields, isLoading: OrganizationLoading} =
+  const { data: organizationFields, isLoading: OrganizationLoading } =
     useGetInstitutionKymOptionsQuery({
       searchTerm: FormFieldSearchTerm.OrganizationType,
     });
@@ -39,7 +39,7 @@ export const BasicDetailsInstitution = (props: IProps) => {
       >
         <FormSection id="kymInsBasicInformation" header="kymInsBasicInformation">
           <GridItem colSpan={2}>
-            <FormInput type="text" name="institutionName" label={t['kymInsNameofInstitution']}/>
+            <FormInput type="text" name="institutionName" label={t['kymInsNameofInstitution']} />
           </GridItem>
           <FormSelect
             name="institutionTypeId"
@@ -47,10 +47,10 @@ export const BasicDetailsInstitution = (props: IProps) => {
             options={getOption(organizationFields)}
             isLoading={OrganizationLoading}
           />
-          <FormInput type="text" name="natureOfBusiness" label={t['kymInsNatureofBusiness']}/>
-          <FormDatePicker name="registrationDate" label={t['kymInsRegistrationDate']}/>
-          <FormInput type="number" name="vatOrPanNo" label={t['kymInsVATPanNo']}/>
-          <FormInput type="text" name="noOfBranches" label={t['serviceCenterNoOfServiceCenter']}/>
+          <FormInput type="text" name="natureOfBusiness" label={t['kymInsNatureofBusiness']} />
+          <FormDatePicker name="registrationDate" label={t['kymInsRegistrationDate']} maxToday />
+          <FormInput type="number" name="vatOrPanNo" label={t['kymInsVATPanNo']} />
+          <FormInput type="text" name="noOfBranches" label={t['serviceCenterNoOfServiceCenter']} />
         </FormSection>
       </form>
     </FormProvider>

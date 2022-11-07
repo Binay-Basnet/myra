@@ -145,7 +145,7 @@ export const Citizenship = ({ setKymCurrentSection }: ICitizenshipProps) => {
 
             <FormInput type="text" name="place" label={t['kynIndCitizenshipIssuePlace']} />
 
-            <FormDatePicker name="date" label={t['kynIndCitizenshipIssueDate']} />
+            <FormDatePicker name="date" label={t['kynIndCitizenshipIssueDate']} maxToday />
           </FormSection>
         </form>
       </FormProvider>
