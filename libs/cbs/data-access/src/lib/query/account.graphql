@@ -197,12 +197,15 @@ query getAccountOpenEditData($id: ID!) {
         accountName
         minor
         tenure
+        interestDoc {
+          identifier
+          url
+        }
         tenureNumber
         initialDepositAmount
         defaultAmountDepositAccountName
         interestRate
-        ceoAuthority
-        boardAuthority
+
         installmentAmount
         depositFrequencyWeekly
         depositFrequencyMonthly

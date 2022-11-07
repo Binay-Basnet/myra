@@ -125,6 +125,8 @@ export const AccountOpenNew = () => {
   // const [mode, setMode] = useState<number>(0); // 0: form, 1: payment
 
   const methods = useForm<CustomDepositLoanAccountInput>({
+    mode: 'onChange',
+
     defaultValues: {
       openingPayment: {
         payment_type: DepositPaymentType.Cash,
@@ -408,7 +410,7 @@ export const AccountOpenNew = () => {
       const editValueData = editValues?.account?.formState?.data;
       if (editValueData) {
         reset({
-          ...editValueData,
+          ...(editValueData as CustomDepositLoanAccountInput),
         });
       }
     }
@@ -522,13 +524,6 @@ export const AccountOpenNew = () => {
                           Other Services
                         </Text>
                         <Box display="flex" flexDirection="column" gap="s8">
-                          {ProductData?.alternativeChannels && (
-                            <Box display="flex" flexDirection="column" gap="s8">
-                              <FormCheckbox name="mobileBanking" label="Mobile Banking" />
-                              <FormCheckbox name="eBanking" label="eBanking" />
-                              <FormCheckbox name="smsBanking" label="SMS-Banking" />
-                            </Box>
-                          )}
                           {ProductData?.atmFacility && (
                             <FormCheckbox name="atmFacility" label="ATM Facility" />
                           )}

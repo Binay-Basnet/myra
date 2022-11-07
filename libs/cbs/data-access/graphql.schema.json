@@ -20986,30 +20986,6 @@
             "deprecationReason": null
           },
           {
-            "name": "boardAuthority",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ceoAuthority",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "chequeFacility",
             "description": null,
             "args": [],
@@ -21214,6 +21190,18 @@
             "deprecationReason": null
           },
           {
+            "name": "interestAuthority",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "InterestAuthority",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "interestDoc",
             "description": null,
             "args": [],
@@ -21221,8 +21209,8 @@
               "kind": "LIST",
               "name": null,
               "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
+                "kind": "OBJECT",
+                "name": "PictureData",
                 "ofType": null
               }
             },
@@ -21620,30 +21608,6 @@
             "deprecationReason": null
           },
           {
-            "name": "boardAuthority",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ceoAuthority",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "chequeFacility",
             "description": null,
             "type": {
@@ -21781,6 +21745,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "interestAuthority",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "InterestAuthority",
               "ofType": null
             },
             "defaultValue": null,
@@ -44186,6 +44162,29 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "InterestAuthority",
+        "description": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "BOARD",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CEO",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {
@@ -69513,6 +69512,18 @@
             "deprecationReason": null
           },
           {
+            "name": "interestMaxGraceNumber",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "interestMethod",
             "description": null,
             "args": [],
@@ -69689,30 +69700,6 @@
             "deprecationReason": null
           },
           {
-            "name": "maxGraceDurationUnit",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "ENUM",
-              "name": "FrequencyTenure",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "maxGraceDurationUnitNumber",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "maxLoanAmount",
             "description": null,
             "args": [],
@@ -69750,30 +69737,6 @@
           },
           {
             "name": "minAge",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "minGraceDurationUnit",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "ENUM",
-              "name": "FrequencyTenure",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "minGraceDurationUnitNumber",
             "description": null,
             "args": [],
             "type": {
@@ -69905,36 +69868,36 @@
             "deprecationReason": null
           },
           {
-            "name": "penaltyOnInstallment",
+            "name": "penaltyAmount",
             "description": null,
             "args": [],
             "type": {
-              "kind": "OBJECT",
-              "name": "Penalty",
+              "kind": "SCALAR",
+              "name": "Amount",
               "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "penaltyOnInterest",
+            "name": "penaltyDayAfterInstallmentDate",
             "description": null,
             "args": [],
             "type": {
-              "kind": "OBJECT",
-              "name": "Penalty",
+              "kind": "SCALAR",
+              "name": "Int",
               "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "penaltyOnPrincipal",
+            "name": "penaltyRate",
             "description": null,
             "args": [],
             "type": {
-              "kind": "OBJECT",
-              "name": "Penalty",
+              "kind": "SCALAR",
+              "name": "Float",
               "ofType": null
             },
             "isDeprecated": false,
@@ -69971,6 +69934,18 @@
             "type": {
               "kind": "OBJECT",
               "name": "PrematurePenaltyFormState",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "principalMaxGraceNumber",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
               "ofType": null
             },
             "isDeprecated": false,
@@ -70840,6 +70815,18 @@
             "deprecationReason": null
           },
           {
+            "name": "interestMaxGraceNumber",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "interestMethod",
             "description": null,
             "type": {
@@ -71016,30 +71003,6 @@
             "deprecationReason": null
           },
           {
-            "name": "maxGraceDurationUnit",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "FrequencyTenure",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "maxGraceDurationUnitNumber",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "maxLoanAmount",
             "description": null,
             "type": {
@@ -71077,30 +71040,6 @@
           },
           {
             "name": "minAge",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "minGraceDurationUnit",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "FrequencyTenure",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "minGraceDurationUnitNumber",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -71184,11 +71123,11 @@
             "deprecationReason": null
           },
           {
-            "name": "penaltyOnInstallment",
+            "name": "penaltyAmount",
             "description": null,
             "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "PenaltyTypeInput",
+              "kind": "SCALAR",
+              "name": "Amount",
               "ofType": null
             },
             "defaultValue": null,
@@ -71196,11 +71135,11 @@
             "deprecationReason": null
           },
           {
-            "name": "penaltyOnInterest",
+            "name": "penaltyDayAfterInstallmentDate",
             "description": null,
             "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "PenaltyTypeInput",
+              "kind": "SCALAR",
+              "name": "Int",
               "ofType": null
             },
             "defaultValue": null,
@@ -71208,11 +71147,11 @@
             "deprecationReason": null
           },
           {
-            "name": "penaltyOnPrincipal",
+            "name": "penaltyRate",
             "description": null,
             "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "PenaltyTypeInput",
+              "kind": "SCALAR",
+              "name": "Float",
               "ofType": null
             },
             "defaultValue": null,
@@ -71249,6 +71188,18 @@
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "PrematurePenalty",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "principalMaxGraceNumber",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
               "ofType": null
             },
             "defaultValue": null,
@@ -85189,19 +85140,13 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "INSTALLMENT",
+            "name": "PenalInterest",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "INTEREST",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "PRINCIPAL",
+            "name": "RemainingPrincipal",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -92778,18 +92723,6 @@
                 "name": "Int",
                 "ofType": null
               }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "id",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "ID",
-              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
