@@ -202,7 +202,7 @@ export const Table = <T extends Record<string, unknown>>({
             {table.getRowModel().rows.map((row) => (
               <Tr
                 key={row.id}
-                _hover={isStatic ? {} : { bg: 'background.500' }}
+                _hover={isStatic ? {} : { bg: 'highlight.500' }}
                 bg={row.getIsSelected() ? 'primary.0' : 'white'}
                 cursor={rowOnClick ? 'pointer' : 'default'}
                 onClick={(e) => {
