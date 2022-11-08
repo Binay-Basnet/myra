@@ -550,7 +550,7 @@ const en: Record<string, string> = {
   settingsTabMenuSubscriptions: 'Subscriptions',
 
   // settings deposit
-  settingsDeposit: 'Deposit Settings',
+  settingsDeposit: 'Savings Settings',
   settingsDepositTds: 'TDS',
   settingsDepositIROSetup: 'IRO Setup',
   settingsDepositTdsAgainst: 'TDS against Interest mapping',
@@ -565,7 +565,7 @@ const en: Record<string, string> = {
   settingsDepositIroName: 'IRO Name',
   settingsDepositIroAddress: 'IRO Address',
   settingsDepositIroCode: 'IRO Code',
-  settingsDepositProducts: 'Deposit Products',
+  settingsDepositProducts: 'Saving Settings Products',
   settingsDepositProductNew: 'New Deposit Product',
 
   // settings LOAN
