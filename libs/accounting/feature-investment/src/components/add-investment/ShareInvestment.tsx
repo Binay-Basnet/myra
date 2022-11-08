@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
+
 import {
   FormAmountInput,
   FormInput,
@@ -7,20 +10,33 @@ import {
 } from '@coop/shared/form';
 import { FormSection, GridItem } from '@coop/shared/ui';
 
-export const ShareInvestment = () => (
-  <FormSection header="Share">
-    <FormNumberInput name="share.count" label="Purchase Share Count" />
+export const ShareInvestment = () => {
+  const methods = useFormContext();
 
-    <FormNumberInput name="share.rate" label="Rate Per Share" />
+  const { watch, setValue } = methods;
 
-    <FormAmountInput name="share.purchaseAmount" label="Total Purchase Amount" />
+  const shareCount = watch('share.count');
+  const shareRate = watch('share.rate');
 
-    <FormInput name="share.certificateNo" label="Share Certificate Number" />
+  useEffect(() => {
+    setValue('share.purchaseAmount', Number(shareCount ?? 0) * Number(shareRate ?? 0));
+  }, [shareCount, shareRate]);
 
-    <FormLocalDatePicker name="share.date" label="Purchase Date" />
+  return (
+    <FormSection header="Share">
+      <FormNumberInput name="share.count" label="Purchase Share Count" />
 
-    <GridItem colSpan={3}>
-      <FormTextArea name="share.notes" label="Notes" rows={3} />
-    </GridItem>
-  </FormSection>
-);
+      <FormNumberInput name="share.rate" label="Rate Per Share" />
+
+      <FormAmountInput name="share.purchaseAmount" label="Total Purchase Amount" isDisabled />
+
+      <FormInput name="share.certificateNo" label="Share Certificate Number" />
+
+      <FormLocalDatePicker name="share.date" label="Purchase Date" />
+
+      <GridItem colSpan={3}>
+        <FormTextArea name="share.notes" label="Notes" rows={3} />
+      </GridItem>
+    </FormSection>
+  );
+};

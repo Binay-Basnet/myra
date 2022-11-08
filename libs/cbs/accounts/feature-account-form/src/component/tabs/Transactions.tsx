@@ -31,7 +31,21 @@ export const Transactions = () => {
         }
       />
 
-      <DetailsCard title="Recent Transactions" bg="white" hasTable>
+      <DetailsCard
+        title="Recent Transactions"
+        bg="white"
+        hasTable
+        // leftBtn={
+        //   <Button
+        //     variant="ghost"
+        //     onClick={() =>
+        //       router.push(`/accounts/details/${accountDetails?.accountId}?tab=transactions`)
+        //     }
+        //   >
+        //     View all transactions
+        //   </Button>
+        // }
+      >
         {transactionList?.map((item) => item && <TransactionCard transactionItem={item} />)}
       </DetailsCard>
     </>

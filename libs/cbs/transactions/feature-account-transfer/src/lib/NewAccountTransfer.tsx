@@ -295,7 +295,7 @@ export const NewAccountTransfer = () => {
                       accountInfo={
                         sourceAccount
                           ? {
-                              name: sourceAccount?.product?.productName,
+                              name: sourceAccount?.accountName as string,
                               type: sourceAccount?.product?.nature
                                 ? accountTypes[sourceAccount?.product?.nature]
                                 : '',
@@ -310,6 +310,7 @@ export const NewAccountTransfer = () => {
                               openDate: sourceAccount?.accountOpenedDate ?? 'N/A',
                               expiryDate: sourceAccount?.accountExpiryDate ?? 'N/A',
                               lastTransactionDate: sourceAccount?.lastTransactionDate ?? 'N/A',
+                              productName: sourceAccount?.product?.productName,
                             }
                           : null
                       }

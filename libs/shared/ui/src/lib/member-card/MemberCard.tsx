@@ -1,7 +1,10 @@
 import { useState } from 'react';
+// IoCopyOutline;
+import { IoQrCodeOutline } from 'react-icons/io5';
 import {
   Box,
   Grid,
+  Icon,
   Image,
   Modal,
   ModalBody,
@@ -14,7 +17,10 @@ import {
   PopoverContent,
   PopoverTrigger,
   Text,
+  useDisclosure,
 } from '@chakra-ui/react';
+
+import { AccountQRModal } from '@coop/shared/ui';
 
 import { Avatar } from '../avatar/Avatar';
 import { Button } from '../button/Button';
@@ -55,6 +61,7 @@ export interface MemberCardProps {
         openDate?: string;
         expiryDate?: string;
         lastTransactionDate?: string;
+        productName: string;
       }
     | undefined
     | null;
@@ -80,6 +87,8 @@ export const MemberCard = ({
 
   const [modalImage, setModalImage] = useState<string>('');
   const [modalTitle, setModalTitle] = useState<string>('');
+
+  const { onClose: modalOnClose, isOpen, onToggle } = useDisclosure();
 
   const handleModalOpen = (imgPath: string, title: string) => {
     setModalImage(imgPath);
@@ -131,7 +140,9 @@ export const MemberCard = ({
               name={memberDetails.name ?? 'Member'}
               size="lg"
               src={memberDetails.avatar}
-              onClick={() => handleModalOpen(memberDetails.avatar, memberDetails.name ?? 'Member')}
+              onClick={() =>
+                handleModalOpen(memberDetails.avatar as string, memberDetails.name ?? 'Member')
+              }
               cursor="pointer"
             />
             <Box>
@@ -156,7 +167,10 @@ export const MemberCard = ({
                           size="lg"
                           src={memberDetails.avatar}
                           onClick={() =>
-                            handleModalOpen(memberDetails.avatar, memberDetails.name ?? 'Member')
+                            handleModalOpen(
+                              memberDetails.avatar as string,
+                              memberDetails.name ?? 'Member'
+                            )
                           }
                           cursor="pointer"
                         />
@@ -324,16 +338,35 @@ export const MemberCard = ({
                 p="s16"
                 display="flex"
                 flexDirection="column"
-                gap="s4"
+                gap="s8"
               >
-                <Text fontSize="r1" fontWeight={500} color="primary.500">
-                  {accountInfo.name}
-                </Text>
-                <Text fontSize="s3" fontWeight={400} color="gray.800">
+                <Box display="flex" flexDirection="column" gap="s4">
+                  <Box display="flex" flexDirection="column">
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                      <Text fontSize="r1" fontWeight={600} color="primary.500">
+                        {accountInfo.name}
+                      </Text>
+
+                      <Icon
+                        as={IoQrCodeOutline}
+                        color="gray.500"
+                        _hover={{ color: 'gray.800' }}
+                        cursor="pointer"
+                        onClick={onToggle}
+                      />
+                    </Box>
+                    <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-50">
+                      {accountInfo.ID}
+                    </Text>
+                  </Box>
+
+                  <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
+                    {accountInfo.productName}
+                  </Text>
+                </Box>
+
+                <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-50">
                   {accountInfo.type}
-                </Text>
-                <Text fontSize="s3" fontWeight={400} color="gray.800">
-                  {accountInfo.ID}
                 </Text>
               </Box>
 
@@ -354,57 +387,57 @@ export const MemberCard = ({
                 >
                   {accountInfo.currentBalance && (
                     <Box display="flex" justifyContent="space-between">
-                      <Text fontSize="s3" fontWeight={400} color="gray.500">
+                      <Text fontSize="s3" fontWeight={400} color="neutralColorLight.700">
                         Current Balance
                       </Text>
-                      <Text fontSize="s3" fontWeight={500} color="gray.800">
+                      <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
                         {accountInfo.currentBalance}
                       </Text>
                     </Box>
                   )}
                   {accountInfo.minimumBalance && (
                     <Box display="flex" justifyContent="space-between">
-                      <Text fontSize="s3" fontWeight={400} color="gray.500">
+                      <Text fontSize="s3" fontWeight={400} color="neutralColorLight.700">
                         Minimum Balance
                       </Text>
-                      <Text fontSize="s3" fontWeight={500} color="gray.800">
+                      <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
                         {accountInfo.minimumBalance}
                       </Text>
                     </Box>
                   )}
                   {accountInfo.interestAccured && (
                     <Box display="flex" justifyContent="space-between">
-                      <Text fontSize="s3" fontWeight={400} color="gray.500">
+                      <Text fontSize="s3" fontWeight={400} color="neutralColorLight.700">
                         Accured Interest
                       </Text>
-                      <Text fontSize="s3" fontWeight={500} color="gray.800">
+                      <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
                         {accountInfo.interestAccured}
                       </Text>
                     </Box>
                   )}
                   {accountInfo.guaranteeBalance && (
                     <Box display="flex" justifyContent="space-between">
-                      <Text fontSize="s3" fontWeight={400} color="gray.500">
+                      <Text fontSize="s3" fontWeight={400} color="neutralColorLight.700">
                         Guarantee Balance
                       </Text>
-                      <Text fontSize="s3" fontWeight={500} color="gray.800">
+                      <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
                         {accountInfo.guaranteeBalance}
                       </Text>
                     </Box>
                   )}
                   {accountInfo.overdrawnBalance && (
                     <Box display="flex" justifyContent="space-between">
-                      <Text fontSize="s3" fontWeight={400} color="gray.500">
+                      <Text fontSize="s3" fontWeight={400} color="neutralColorLight.700">
                         Overdrawn Balance
                       </Text>
-                      <Text fontSize="s3" fontWeight={500} color="gray.800">
+                      <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
                         {accountInfo.overdrawnBalance}
                       </Text>
                     </Box>
                   )}
                   {accountInfo.fine && (
                     <Box display="flex" justifyContent="space-between">
-                      <Text fontSize="s3" fontWeight={400} color="gray.500">
+                      <Text fontSize="s3" fontWeight={400} color="neutralColorLight.700">
                         Fine
                       </Text>
                       <Text fontSize="s3" fontWeight={500} color="danger.500">
@@ -430,40 +463,40 @@ export const MemberCard = ({
                 >
                   {accountInfo.branch && (
                     <Box display="flex" justifyContent="space-between">
-                      <Text fontSize="s3" fontWeight={400} color="gray.500">
+                      <Text fontSize="s3" fontWeight={400} color="neutralColorLight.700">
                         Account Service Center
                       </Text>
-                      <Text fontSize="s3" fontWeight={500} color="gray.800">
+                      <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
                         {accountInfo.branch}
                       </Text>
                     </Box>
                   )}
                   {accountInfo.openDate && (
                     <Box display="flex" justifyContent="space-between">
-                      <Text fontSize="s3" fontWeight={400} color="gray.500">
+                      <Text fontSize="s3" fontWeight={400} color="neutralColorLight.700">
                         Account Open Date
                       </Text>
-                      <Text fontSize="s3" fontWeight={500} color="gray.800">
+                      <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
                         {accountInfo.openDate}
                       </Text>
                     </Box>
                   )}
                   {accountInfo.expiryDate && (
                     <Box display="flex" justifyContent="space-between">
-                      <Text fontSize="s3" fontWeight={400} color="gray.500">
+                      <Text fontSize="s3" fontWeight={400} color="neutralColorLight.700">
                         Account Expiry Date
                       </Text>
-                      <Text fontSize="s3" fontWeight={500} color="gray.800">
+                      <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
                         {accountInfo.expiryDate}
                       </Text>
                     </Box>
                   )}
                   {accountInfo.lastTransactionDate && (
                     <Box display="flex" justifyContent="space-between">
-                      <Text fontSize="s3" fontWeight={400} color="gray.500">
+                      <Text fontSize="s3" fontWeight={400} color="neutralColorLight.700">
                         Last Transaction Date
                       </Text>
-                      <Text fontSize="s3" fontWeight={500} color="gray.800">
+                      <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
                         {accountInfo.lastTransactionDate}
                       </Text>
                     </Box>
@@ -495,6 +528,17 @@ export const MemberCard = ({
           </ModalBody>
         </ModalContent>
       </Modal>
+
+      <AccountQRModal
+        account={{
+          name: memberDetails?.name as string,
+          accountNo: accountInfo?.ID as string,
+          phoneNo: memberDetails?.phoneNo ?? 'N/A',
+          accountName: accountInfo?.name as string,
+        }}
+        open={isOpen}
+        onClose={modalOnClose}
+      />
     </>
   );
 };

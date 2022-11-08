@@ -30,7 +30,7 @@ export const AccountDetails = () => {
         flexDir="column"
         gap="s16"
         ml="320px"
-        bg="border.layout"
+        bg="background.500"
         minH="calc(100vh - 170px)"
       >
         {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}

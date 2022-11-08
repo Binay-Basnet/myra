@@ -455,6 +455,7 @@ query getAccountDetailsData($id: ID!) {
           id
           name
           profilePicUrl
+          contact
         }
         installmentAmount
         accountName
