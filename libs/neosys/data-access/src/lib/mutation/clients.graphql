@@ -11,10 +11,10 @@ mutation addNewClient($data: OrganizationClientInput) {
   }
 }
 
-mutation createDB($saccosID: ID!){
+mutation createDB($saccosID: ID!) {
   neosys {
     client {
-      createDB(saccosId: $saccosID){
+      createDB(saccosId: $saccosID) {
         recordId
       }
     }
