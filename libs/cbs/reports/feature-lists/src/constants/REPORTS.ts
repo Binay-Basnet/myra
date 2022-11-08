@@ -213,6 +213,7 @@ export const REPORTS = {
     {
       id: '6.1',
       report: Report.LOAN_INDIVIDUAL_STATEMENT,
+      link: 'statement',
     },
     {
       id: '6.2',

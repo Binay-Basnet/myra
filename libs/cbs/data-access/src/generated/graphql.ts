@@ -2779,8 +2779,14 @@ export type DepositProductSearchFilter = {
 };
 
 export type DepositProductSettingsMutation = {
+  activateProduct?: Maybe<ProductActivateResult>;
   add?: Maybe<DepositProductResult>;
   makeInactive?: Maybe<DepositProductInactiveResult>;
+};
+
+export type DepositProductSettingsMutationActivateProductArgs = {
+  productId: Scalars['ID'];
+  productType: AccountTypeFilter;
 };
 
 export type DepositProductSettingsMutationAddArgs = {
@@ -7499,6 +7505,16 @@ export type Level2HelloArgs = {
   data: ExampleInput;
 };
 
+export type LoanAccReportDetails = {
+  accountNo?: Maybe<Scalars['String']>;
+  approvedAmount?: Maybe<Scalars['String']>;
+  installment?: Maybe<Scalars['Int']>;
+  interestRate?: Maybe<Scalars['Float']>;
+  issuedDate?: Maybe<Scalars['String']>;
+  loanSubtype?: Maybe<Scalars['String']>;
+  loanType?: Maybe<Scalars['String']>;
+};
+
 export type LoanAccount = {
   LoanAccountName?: Maybe<Scalars['String']>;
   appliedLoanAmount: Scalars['String'];
@@ -7882,6 +7898,12 @@ export type LoanDisbursementResult = {
   query?: Maybe<LoanAccountQuery>;
   record?: Maybe<LoanAccount>;
   recordId?: Maybe<Scalars['ID']>;
+};
+
+export type LoanFilters = {
+  amountRange?: InputMaybe<SavingAmountRange>;
+  service?: InputMaybe<SavingServiceType>;
+  transactionType?: InputMaybe<SavingTransactionType>;
 };
 
 export type LoanGeneralSettings = {
@@ -8556,6 +8578,30 @@ export type LoanSettingsResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type LoanStatement = {
+  date?: Maybe<Scalars['String']>;
+  disbursePrinciple?: Maybe<Scalars['String']>;
+  discount?: Maybe<Scalars['String']>;
+  finePaid?: Maybe<Scalars['String']>;
+  interestPaid?: Maybe<Scalars['String']>;
+  paidPrinciple?: Maybe<Scalars['String']>;
+  particular?: Maybe<Scalars['String']>;
+  remainingPrinciple?: Maybe<Scalars['String']>;
+  txnId?: Maybe<Scalars['String']>;
+};
+
+export type LoanStatementReport = {
+  loanAccDetails?: Maybe<LoanAccReportDetails>;
+  loanStatement?: Maybe<Array<Maybe<LoanStatement>>>;
+};
+
+export type LoanStatementReportSettings = {
+  customPeriod?: InputMaybe<CustomPeriodInput>;
+  loanAccountId: Scalars['ID'];
+  memberId: Scalars['ID'];
+  periodType: ReportPeriodType;
+};
+
 export type LocalizationExample = {
   name?: Maybe<Scalars['Localized']>;
 };
@@ -8777,15 +8823,15 @@ export type MemberClassificationReportResult = {
 };
 
 export type MemberCode = {
-  initialNo: Scalars['String'];
+  initialNo?: Maybe<Scalars['String']>;
   noOfDigits?: Maybe<Scalars['Int']>;
   prefix?: Maybe<Scalars['String']>;
 };
 
 export type MemberCodeInput = {
-  initialNo: Scalars['String'];
-  noOfDigits: Scalars['Int'];
-  prefix: Scalars['String'];
+  initialNo?: InputMaybe<Scalars['String']>;
+  noOfDigits?: InputMaybe<Scalars['Int']>;
+  prefix?: InputMaybe<Scalars['String']>;
 };
 
 export type MemberDetailsResult = {
@@ -9990,6 +10036,11 @@ export type PresignedUrlOutput = {
   putUrl?: Maybe<Scalars['String']>;
 };
 
+export type ProductActivateResult = {
+  error?: Maybe<MutationError>;
+  recordId: Scalars['ID'];
+};
+
 export type ProductCode = {
   initialNo?: InputMaybe<Scalars['String']>;
   noOfDigits?: InputMaybe<Scalars['Int']>;
@@ -10200,6 +10251,7 @@ export enum ReportPeriodType {
 export type ReportQuery = {
   getReport?: Maybe<SavedReportResponse>;
   listReports: ReportListConnection;
+  loanStatementReport?: Maybe<ReportResult>;
   memberClassificationReport: MemberClassificationReportResult;
   savingStatementReport?: Maybe<ReportResult>;
   shareStatementReport?: Maybe<ReportResult>;
@@ -10213,6 +10265,10 @@ export type ReportQueryListReportsArgs = {
   filter?: InputMaybe<ReportListFilter>;
   organizationId?: InputMaybe<Scalars['ID']>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type ReportQueryLoanStatementReportArgs = {
+  data: LoanStatementReportSettings;
 };
 
 export type ReportQueryMemberClassificationReportArgs = {
@@ -10229,6 +10285,7 @@ export type ReportQueryShareStatementReportArgs = {
 };
 
 export type ReportResult = {
+  error?: Maybe<QueryError>;
   member?: Maybe<Member>;
   memberId?: Maybe<Scalars['ID']>;
   statement?: Maybe<StatementReport>;
@@ -11290,7 +11347,7 @@ export enum SlipState {
   Used = 'USED',
 }
 
-export type StatementReport = SavingStatementReport | ShareStatementReport;
+export type StatementReport = LoanStatementReport | SavingStatementReport | ShareStatementReport;
 
 export type StatementReportInput = {
   data?: InputMaybe<ShareStatementReportSettings>;
@@ -17649,6 +17706,44 @@ export type GetMemberClassificationReportQuery = {
         } | null;
       } | null;
     };
+  };
+};
+
+export type GetLoanStatementReportQueryVariables = Exact<{
+  data: LoanStatementReportSettings;
+}>;
+
+export type GetLoanStatementReportQuery = {
+  report: {
+    loanStatementReport?: {
+      memberId?: string | null;
+      member?: { name?: Record<'local' | 'en' | 'np', string> | null } | null;
+      statement?:
+        | {
+            loanAccDetails?: {
+              accountNo?: string | null;
+              approvedAmount?: string | null;
+              interestRate?: number | null;
+              loanType?: string | null;
+              loanSubtype?: string | null;
+              issuedDate?: string | null;
+              installment?: number | null;
+            } | null;
+            loanStatement?: Array<{
+              date?: string | null;
+              particular?: string | null;
+              txnId?: string | null;
+              disbursePrinciple?: string | null;
+              paidPrinciple?: string | null;
+              interestPaid?: string | null;
+              finePaid?: string | null;
+              discount?: string | null;
+              remainingPrinciple?: string | null;
+            } | null> | null;
+          }
+        | {}
+        | null;
+    } | null;
   };
 };
 
@@ -27779,6 +27874,56 @@ export const useGetMemberClassificationReportQuery = <
       : ['getMemberClassificationReport', variables],
     useAxios<GetMemberClassificationReportQuery, GetMemberClassificationReportQueryVariables>(
       GetMemberClassificationReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanStatementReportDocument = `
+    query getLoanStatementReport($data: LoanStatementReportSettings!) {
+  report {
+    loanStatementReport(data: $data) {
+      memberId
+      member {
+        name
+      }
+      statement {
+        ... on LoanStatementReport {
+          loanAccDetails {
+            accountNo
+            approvedAmount
+            interestRate
+            loanType
+            loanSubtype
+            issuedDate
+            installment
+          }
+          loanStatement {
+            date
+            particular
+            txnId
+            disbursePrinciple
+            paidPrinciple
+            interestPaid
+            finePaid
+            discount
+            remainingPrinciple
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanStatementReportQuery = <
+  TData = GetLoanStatementReportQuery,
+  TError = unknown
+>(
+  variables: GetLoanStatementReportQueryVariables,
+  options?: UseQueryOptions<GetLoanStatementReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanStatementReportQuery, TError, TData>(
+    ['getLoanStatementReport', variables],
+    useAxios<GetLoanStatementReportQuery, GetLoanStatementReportQueryVariables>(
+      GetLoanStatementReportDocument
     ).bind(null, variables),
     options
   );
