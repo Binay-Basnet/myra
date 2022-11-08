@@ -565,7 +565,7 @@ const en: Record<string, string> = {
   settingsDepositIroName: 'IRO Name',
   settingsDepositIroAddress: 'IRO Address',
   settingsDepositIroCode: 'IRO Code',
-  settingsDepositProducts: 'Saving Settings Products',
+  settingsDepositProducts: 'Saving Products',
   settingsDepositProductNew: 'New Deposit Product',
 
   // settings LOAN
