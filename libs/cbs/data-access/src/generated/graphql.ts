@@ -228,7 +228,7 @@ export type AccountTransferView = {
   transactionBranch?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['String']>;
   transferAmount?: Maybe<Scalars['String']>;
-  transferType?: Maybe<Scalars['String']>;
+  transferType?: Maybe<TransferType>;
   withdrawnBy?: Maybe<Scalars['String']>;
   withdrawnSlipNo?: Maybe<Scalars['String']>;
 };
@@ -2787,6 +2787,7 @@ export type DepositProductSettingsMutation = {
 export type DepositProductSettingsMutationActivateProductArgs = {
   productId: Scalars['ID'];
   productType: AccountTypeFilter;
+  remarks: Scalars['String'];
 };
 
 export type DepositProductSettingsMutationAddArgs = {
@@ -2898,12 +2899,12 @@ export type DepositTdsResult = {
 export type DepositTransactionView = {
   accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
-  depositedBy?: Maybe<Scalars['String']>;
+  depositedBy?: Maybe<DepositedBy>;
   fine?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id: Scalars['ID'];
   member?: Maybe<Member>;
-  paymentMode?: Maybe<Scalars['String']>;
+  paymentMode?: Maybe<DepositPaymentType>;
   rebate?: Maybe<Scalars['String']>;
   sourceOfFund?: Maybe<Scalars['String']>;
   status?: Maybe<ObjState>;
@@ -12055,7 +12056,7 @@ export type WithdrawTransactionView = {
   marketRepId?: Maybe<Scalars['String']>;
   marketRepName?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
-  paymentMode?: Maybe<Scalars['String']>;
+  paymentMode?: Maybe<WithdrawPaymentType>;
   status?: Maybe<ObjState>;
   teller?: Maybe<Scalars['String']>;
   totalCredit?: Maybe<Scalars['String']>;
@@ -12064,7 +12065,8 @@ export type WithdrawTransactionView = {
   transactionBranch?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['String']>;
   withdrawAmount?: Maybe<Scalars['String']>;
-  withdrawnBy?: Maybe<Scalars['String']>;
+  withdrawWith?: Maybe<WithdrawWith>;
+  withdrawnBy?: Maybe<WithdrawBy>;
 };
 
 export type WithdrawTransactionViewResult = {
@@ -19366,9 +19368,9 @@ export type TransactionDepositDetailQuery = {
         rebate?: string | null;
         totalDepositedAmount?: string | null;
         status?: ObjState | null;
-        paymentMode?: string | null;
+        paymentMode?: DepositPaymentType | null;
         sourceOfFund?: string | null;
-        depositedBy?: string | null;
+        depositedBy?: DepositedBy | null;
         transactionBranch?: string | null;
         teller?: string | null;
         totalDebit?: string | null;
@@ -19409,8 +19411,8 @@ export type TransactionWithdrawDetailQuery = {
         fine?: string | null;
         totalWithdrawnAmount?: string | null;
         status?: ObjState | null;
-        paymentMode?: string | null;
-        withdrawnBy?: string | null;
+        paymentMode?: WithdrawPaymentType | null;
+        withdrawnBy?: WithdrawBy | null;
         marketRepId?: string | null;
         marketRepName?: string | null;
         transactionBranch?: string | null;
@@ -19444,7 +19446,7 @@ export type TransactionAccountTransferDetailQuery = {
         id: string;
         transactionDate?: string | null;
         transferAmount?: string | null;
-        transferType?: string | null;
+        transferType?: TransferType | null;
         withdrawnBy?: string | null;
         withdrawnSlipNo?: string | null;
         transactionBranch?: string | null;
