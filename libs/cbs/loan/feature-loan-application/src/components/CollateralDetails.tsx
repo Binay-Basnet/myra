@@ -37,7 +37,9 @@ export const CollateralDetails = () => {
   const [isModal, setIsModal] = useState(false);
 
   // useForm for Inner Modal Form
-  const methods = useForm<CollateralDetailsType>();
+  const methods = useForm<CollateralDetailsType>({
+    mode: 'all',
+  });
   const collateralType = methods.watch('collateralType');
   const editIndex = methods.getValues()?.index;
 
@@ -95,14 +97,14 @@ export const CollateralDetails = () => {
         title="Add Collateral"
         onClose={() => setIsModal(false)}
         primaryButtonLabel="save"
-        primaryButtonHandler={() => {
+        primaryButtonHandler={methods.handleSubmit(() => {
           if (editIndex !== undefined) {
             update(editIndex, methods.getValues());
           } else {
             append(methods.getValues());
           }
           setIsModal(false);
-        }}
+        })}
         isSecondaryDanger
         isDisabled={!collateralType}
         secondaryButtonLabel={editIndex !== undefined ? 'Delete' : undefined}
