@@ -12,7 +12,7 @@ interface ITableListPageHeader {
 
 export const TableListPageHeader = ({ tabItems, heading }: ITableListPageHeader) => (
   <Box
-    h="60px"
+    h="50px"
     bg="white"
     zIndex="10"
     w="100%"

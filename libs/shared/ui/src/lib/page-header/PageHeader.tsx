@@ -24,7 +24,7 @@ export const PageHeader = ({
   buttonTitle,
 }: PageHeaderProps) => (
   <Box
-    h="60px"
+    h="50px"
     bg="white"
     zIndex="10"
     w="100%"
@@ -33,7 +33,7 @@ export const PageHeader = ({
     pl="s16"
   >
     <Box display="flex" justifyContent="space-between" alignItems="center">
-      <Box display="flex" alignItems="center" h="60px">
+      <Box display="flex" alignItems="center" h="50px">
         <Box display="flex" justifyContent="center" alignItems="center">
           <Text fontSize="r2" fontWeight="SemiBold" color="gray.800">
             {heading}

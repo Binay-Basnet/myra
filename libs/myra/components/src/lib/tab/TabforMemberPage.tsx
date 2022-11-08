@@ -11,9 +11,10 @@ const TabCol = chakra(Tab, {
   baseStyle: {
     color: 'gray.600',
     minHeight: '40px',
+    maxHeight: '56px',
     fontSize: '14px',
     fontWeight: '500',
-    lineHeight: '1.15',
+
     width: '100%',
     display: 'flex',
     justifyContent: 'flex-start',

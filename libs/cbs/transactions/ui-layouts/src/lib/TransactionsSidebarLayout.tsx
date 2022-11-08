@@ -133,7 +133,7 @@ export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayo
   return (
     <Box>
       <Box width="260px" position="fixed">
-        <Box height="60px" py="s12" px="s16">
+        <Box height="50px" alignItems="center" display="flex" py="s12" px="s16">
           <Text fontSize="l1" fontWeight="600" color="gray.800">
             {t['transactionSidebarTransaction']}
           </Text>

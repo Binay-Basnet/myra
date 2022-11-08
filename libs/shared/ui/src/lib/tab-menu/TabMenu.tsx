@@ -99,11 +99,11 @@ export const TabMenu = () => {
       alignItems="center"
       display="flex"
     >
-      {/* <Box w="240px">
+      <Box w="244px">
         <Text fontWeight="SemiBold" fontSize="s16" color="gray.0" letterSpacing="wide">
           {t['corebankingSystems']}
         </Text>
-      </Box> */}
+      </Box>
       <Tabs index={currentIndex} size="md" height="100%" variant="enclosed">
         <TabList border="none" height="100%" display="flex" gap="s8">
           {demotabs.map(({ title, icon, link }) => {

@@ -67,7 +67,10 @@ const calendarList = [
 const keyMap = {
   inputFocus: ['ctrl+/'],
   appSwitcher: 'alt+o',
-  showHelpOptions: ['alt+l'],
+
+  settingShortcut: ['ctrl+shift+,'],
+  showHelpOptions: ['alt+i'],
+  showProfile: ['alt+p'],
 
   // up: ["i"],
   // shiftUp: ["shift+i"],
@@ -172,7 +175,9 @@ export const TopLevelHeader = () => {
   };
   const inputRef = useRef<HTMLInputElement>(null);
   const appSwitcherRef = useRef<HTMLButtonElement>(null);
-  const helpIconRef = useRef<HTMLButtonElement>(null);
+  const settingShortcut = useRef<HTMLButtonElement>(null);
+  const showHelpOptions = useRef<HTMLButtonElement>(null);
+  const showProfile = useRef<HTMLButtonElement>(null);
   const handlers = {
     inputFocus() {
       inputRef.current?.focus();
@@ -184,8 +189,18 @@ export const TopLevelHeader = () => {
       }
     },
     showHelpOptions() {
-      if (helpIconRef.current) {
-        helpIconRef.current?.click();
+      if (showHelpOptions.current) {
+        showHelpOptions.current?.click();
+      }
+    },
+    settingShortcut() {
+      if (settingShortcut.current) {
+        settingShortcut.current?.click();
+      }
+    },
+    showProfile() {
+      if (showProfile.current) {
+        showProfile.current?.click();
       }
     },
   };
@@ -324,6 +339,7 @@ export const TopLevelHeader = () => {
             </Popover>
 
             <FloatingShortcutButton />
+
             <IconButton
               icon={<Icon size="lg" as={AiOutlineSetting} />}
               aria-label="help"
@@ -331,7 +347,8 @@ export const TopLevelHeader = () => {
               color="white"
               borderRadius="br1"
               _hover={{ backgroundColor: 'secondary.900' }}
-              onClick={() => router.push('/settings/general/organization')}
+              onClick={() => router.push('/settings/general/audit-log')}
+              ref={settingShortcut}
             />
 
             <Popover placement="bottom-end" gutter={3}>
@@ -414,7 +431,7 @@ export const TopLevelHeader = () => {
                       <Divider my="s8" />
                       <Box>
                         <AppSwitcherIconWrapper
-                          onClick={() => router.push('/settings/general/organization')}
+                          onClick={() => router.push('/settings/general/audit-log')}
                         >
                           <Image width={32} height={32} src="/settings.svg" alt="Settings" />
                           <AppSwitcherText>{t['settings']}</AppSwitcherText>
@@ -439,7 +456,7 @@ export const TopLevelHeader = () => {
                       variant="ghost"
                       color="white"
                       borderRadius="br1"
-                      ref={appSwitcherRef}
+                      ref={showProfile}
                     />
                     {/* <Box
                       w="40px"

@@ -42,7 +42,7 @@ const accountColumns = [
 export const RequestListLayout = ({ children }: IAccountPageLayoutProps) => (
   <Box display="flex">
     <Box width="260px" flexShrink={0} position="fixed">
-      <Box height="60px" py="s12" px="s16">
+      <Box height="50px" alignItems="center" display="flex" py="s12" px="s16">
         <Text fontSize="l1" fontWeight="600" color="gray.800">
           Request
         </Text>

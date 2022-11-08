@@ -25,8 +25,8 @@ export const ReportMainLayout = ({ children }: IMemberPageLayout) => {
   return (
     <Box display="flex">
       <Box width="260px" flexShrink={0} position="fixed" zIndex={1}>
-        <Box height="60px" py="s12" px="s16">
-          <Text fontSize="l1" pb="s16" fontWeight="600" color="gray.800">
+        <Box height="50px" alignItems="center" display="flex" px="s16">
+          <Text fontSize="l1" fontWeight="600" color="gray.800">
             {t['reportsHeading']}
           </Text>
         </Box>
