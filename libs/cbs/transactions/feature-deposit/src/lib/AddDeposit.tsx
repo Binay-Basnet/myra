@@ -426,7 +426,7 @@ export const AddDeposit = () => {
                   {accountId &&
                     selectedAccount?.product?.nature === NatureOfDepositProduct.TermSavingOrFd && (
                       <>
-                        <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
+                        <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-start">
                           <FormInput name="voucherId" label={t['addDepositVoucherId']} />
 
                           <FormAmountInput
@@ -454,7 +454,7 @@ export const AddDeposit = () => {
                       (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
                         !selectedAccount?.product?.isMandatorySaving)) && (
                       <>
-                        <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
+                        <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-start">
                           <FormInput name="voucherId" label={t['addDepositVoucherId']} />
 
                           <FormAmountInput
@@ -561,7 +561,7 @@ export const AddDeposit = () => {
                       accountInfo={
                         selectedAccount
                           ? {
-                              name: selectedAccount?.product?.productName,
+                              name: selectedAccount?.accountName as string,
                               type: selectedAccount?.product?.nature
                                 ? accountTypes[selectedAccount?.product?.nature]
                                 : '',
@@ -576,6 +576,7 @@ export const AddDeposit = () => {
                               openDate: selectedAccount?.accountOpenedDate ?? 'N/A',
                               expiryDate: selectedAccount?.accountExpiryDate ?? 'N/A',
                               lastTransactionDate: selectedAccount?.lastTransactionDate ?? 'N/A',
+                              productName: selectedAccount?.product?.productName,
                             }
                           : null
                       }

@@ -55,13 +55,14 @@ export const FormAccountSelect = ({
           label: `${curVal?.node?.product?.productName} (ID:${curVal?.node?.id})`,
           value: curVal?.node?.id as string,
           accountInfo: {
-            accountName: curVal?.node?.product?.productName,
+            accountName: curVal?.node?.accountName,
             accountId: curVal?.node?.id,
             accountType: curVal?.node?.product?.nature
               ? accountTypes[curVal?.node?.product?.nature]
               : '',
             balance: curVal?.node?.balance as string,
             fine: curVal?.node?.dues?.fine as string,
+            productName: curVal?.node?.product?.productName,
           },
         },
       ],

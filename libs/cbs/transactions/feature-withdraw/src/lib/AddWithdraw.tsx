@@ -369,7 +369,7 @@ export const AddWithdraw = () => {
                       accountInfo={
                         selectedAccount
                           ? {
-                              name: selectedAccount?.product?.productName,
+                              name: selectedAccount?.accountName as string,
                               type: selectedAccount?.product?.nature
                                 ? accountTypes[selectedAccount?.product?.nature]
                                 : '',
@@ -384,6 +384,7 @@ export const AddWithdraw = () => {
                               openDate: selectedAccount?.accountOpenedDate ?? 'N/A',
                               expiryDate: selectedAccount?.accountExpiryDate ?? 'N/A',
                               lastTransactionDate: selectedAccount?.lastTransactionDate ?? 'N/A',
+                              productName: selectedAccount?.product?.productName,
                             }
                           : null
                       }

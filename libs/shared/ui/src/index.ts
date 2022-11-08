@@ -1,5 +1,6 @@
 export * from './lib/accordion/Accordion';
 export * from './lib/account-input/AccountInput';
+export * from './lib/account-qrmodal/AccountQRModal';
 export * from './lib/add-button-list/AddButtonList';
 export * from './lib/alert/Alert';
 export * from './lib/amount-input/AmountInput';

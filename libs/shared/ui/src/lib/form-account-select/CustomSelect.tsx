@@ -21,6 +21,7 @@ export interface Option {
     accountType?: string;
     balance?: string;
     fine?: string;
+    productName: string;
   };
 }
 

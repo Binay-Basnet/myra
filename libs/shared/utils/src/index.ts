@@ -16,6 +16,7 @@ export * from './lib/theme';
 export * from './locales';
 export * from './utilFunctions/amountConverter';
 export * from './utilFunctions/amountToWordsConverter';
+export * from './utilFunctions/copyToClipboard';
 export * from './utilFunctions/getKymCoopSection';
 export * from './utilFunctions/getKymSection';
 export * from './utilFunctions/getKymSectionsCoopUnion';
