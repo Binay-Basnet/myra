@@ -3,12 +3,14 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import {
+  AccountTypeFilter,
   DepositProductStatus,
   Id_Type,
   LoanProductInactiveData,
   useGetLoanProductListQuery,
   useGetNewIdMutation,
   useSetLoanProductInactiveMutation,
+  useSetProductActiveMutation,
 } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { FormTextArea } from '@coop/shared/form';
@@ -49,16 +51,18 @@ export const SettingsLoanProduct = () => {
         buttonTitle={t['loanProductsNewLoanProduct']}
       />
 
-      <LoanProductTable showActionButton />
+      <LoanProductTable showSettingsAction />
     </>
   );
 };
 
-export const LoanProductTable = ({ showActionButton }: { showActionButton?: boolean }) => {
+export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: boolean }) => {
   const router = useRouter();
+  const isInactive = router?.query['objState'] === DepositProductStatus.Inactive;
   const [ID, setID] = useState('');
   const [openModal, setOpenModal] = useState(false);
-  const { mutateAsync } = useSetLoanProductInactiveMutation();
+  const { mutateAsync: setInactiveMutateAsync } = useSetLoanProductInactiveMutation();
+  const { mutateAsync: setActiveMutateAsync } = useSetProductActiveMutation();
   const onOpenModal = () => {
     setOpenModal(true);
   };
@@ -99,13 +103,29 @@ export const LoanProductTable = ({ showActionButton }: { showActionButton?: bool
 
   const rowData = useMemo(() => data?.settings?.general?.loanProducts?.list?.edges ?? [], [data]);
 
-  const popoverTitle = [
+  const popoverActiveTitle = [
+    {
+      title: 'loanProductMakeActive',
+      onClick: (id: string) => {
+        onOpenModal();
+        setID(id);
+      },
+    },
+  ];
+
+  const popoverInactiveTitle = [
     {
       title: 'loanProductMakeInactive',
       onClick: (id: string) => {
         onOpenModal();
         setID(id);
       },
+    },
+  ];
+
+  const popoverTitle = [
+    {
+      title: 'loanProductViewDetails',
     },
   ];
 
@@ -163,11 +183,25 @@ export const LoanProductTable = ({ showActionButton }: { showActionButton?: bool
         id: '_actions',
         header: '',
         cell: (props) => {
-          if (showActionButton)
+          if (showSettingsAction) {
+            if (isInactive) {
+              return (
+                <ActionPopoverComponent
+                  items={popoverActiveTitle}
+                  id={props?.row?.original?.node?.id}
+                />
+              );
+            }
             return (
-              <ActionPopoverComponent items={popoverTitle} id={props?.row?.original?.node?.id} />
+              <ActionPopoverComponent
+                items={popoverInactiveTitle}
+                id={props?.row?.original?.node?.id}
+              />
             );
-          return null;
+          }
+          return (
+            <ActionPopoverComponent items={popoverTitle} id={props?.row?.original?.node?.id} />
+          );
         },
         meta: {
           width: '50px',
@@ -189,28 +223,38 @@ export const LoanProductTable = ({ showActionButton }: { showActionButton?: bool
         onCloseModal();
         resetField('remarks');
       },
-      promise: mutateAsync({
+      promise: setInactiveMutateAsync({
         data: {
           id: ID,
           remarks: methods.getValues()['remarks'],
         },
       }),
-      // onError: (error) => {
-      //   if (error.__typename === 'ValidationError') {
-      //     Object.keys(error.validationErrorMsg).map((key) =>
-      //       methods.setError(key as keyof DepositProductInput, {
-      //         message: error.validationErrorMsg[key][0] as string,
-      //       })
-      //     );
-      //   }
-      // },
     });
-  }, [ID, mutateAsync]);
+  }, [ID, setInactiveMutateAsync]);
+
+  const makeActive = useCallback(async () => {
+    await asyncToast({
+      id: 'active-id',
+      msgs: {
+        success: 'Loan product has been made active',
+        loading: 'making loan product active',
+      },
+      onSuccess: () => {
+        refetch();
+        onCloseModal();
+        resetField('remarks');
+      },
+      promise: setActiveMutateAsync({
+        productId: ID,
+        productType: AccountTypeFilter?.Loan,
+        remarks: methods.getValues()['remarks'],
+      }),
+    });
+  }, [ID, setActiveMutateAsync]);
 
   const onCancel = () => {
     resetField('remarks');
   };
-
   return (
     <>
       <Table
@@ -225,15 +269,18 @@ export const LoanProductTable = ({ showActionButton }: { showActionButton?: bool
       <ChakraModal
         open={openModal}
         onClose={onCloseModal}
-        title="loanProductMakeInactiveTitle"
+        title={isInactive ? 'loanProductMakeActiveTitle' : 'loanProductMakeInactiveTitle'}
         primaryButtonLabel="submit"
         secondaryButtonLabel="cancel"
         width="600px"
-        primaryButtonHandler={makeInactive}
+        primaryButtonHandler={isInactive ? makeActive : makeInactive}
         secondaryButtonHandler={onCancel}
       >
         <FormProvider {...methods}>
-          <FormTextArea name="remarks" label={t['depositProductInactiveReason']} />
+          <FormTextArea
+            name="remarks"
+            label={isInactive ? t['depositProductActiveReason'] : t['depositProductInactiveReason']}
+          />
         </FormProvider>
       </ChakraModal>
     </>

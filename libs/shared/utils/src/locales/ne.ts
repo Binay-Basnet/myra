@@ -2911,7 +2911,10 @@ const ne: Record<string, string> = {
   loanProductNatureBusinessIns: 'Institutions Type',
   depositProductNatureofBusinessCoopUnion: 'Cooperatives Union Type',
   loanProductMakeInactive: 'Make inactive',
+  loanProductMakeActive: 'Make active',
+  loanProductViewDetails: 'View Details',
   loanProductMakeInactiveTitle: 'Make loan Product inactive',
+  loanProductMakeActiveTitle: 'Make loan Product Active',
 
   // share settings
 
@@ -3269,6 +3272,7 @@ const ne: Record<string, string> = {
   shareRegisterTableReturn: 'Return',
   depositProductInactiveProduct: 'Inactive Deposit Product',
   depositProductInactiveReason: 'Reason for Inactive',
+  depositProductActiveReason: 'Reason for Active',
 
   loanRepaymentDepositedBy: 'Deposited By',
   prematurePenaltyEnable: 'Premature Penalty',
