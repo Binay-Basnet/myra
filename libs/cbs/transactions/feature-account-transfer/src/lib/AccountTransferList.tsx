@@ -114,6 +114,7 @@ export const AccountTransferList = () => {
         getRowId={(row) => String(row?.node?.ID)}
         isLoading={isFetching}
         columns={columns}
+        rowOnClick={(row) => router.push(`/transactions/account-transfer/view?id=${row?.node?.ID}`)}
         pagination={{
           total: data?.transaction?.listTransfer?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listTransfer?.pageInfo,

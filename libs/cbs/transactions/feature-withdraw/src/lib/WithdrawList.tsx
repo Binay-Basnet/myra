@@ -125,6 +125,7 @@ export const WithdrawList = () => {
         getRowId={(row) => String(row?.node?.ID)}
         isLoading={isFetching}
         columns={columns}
+        rowOnClick={(row) => router.push(`/transactions/withdraw/view?id=${row?.node?.ID}`)}
         pagination={{
           total: data?.transaction?.listWithdraw?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listWithdraw?.pageInfo,

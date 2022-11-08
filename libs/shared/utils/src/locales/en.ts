@@ -3798,6 +3798,16 @@ const en: Record<string, string> = {
 
   loanProductRemainingPrincipal: 'Remaining Principal',
   loanProductPenalInterest: 'Penal Interest',
+
+  memberSettingsMemberCodeManagement: 'Member Code Management',
+  memberSettingsConfigure: 'Configure Member ID generation.',
+  memberSettingsName: 'Name',
+  memberSettingsPrefix: 'Prefix',
+  memberSettingsNoofDigit: 'No of Digit',
+  memberSettingsInitialNumber: 'Initial Number',
+  memberSettingsMemberID: 'Member ID',
+  memberSettingsCorePreview: 'Core Preview',
+  memberSettingsSetup: 'Setup',
 };
 
 export default en;

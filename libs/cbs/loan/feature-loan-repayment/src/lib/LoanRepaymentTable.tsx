@@ -110,6 +110,7 @@ export const CBSLoanRepaymentList = () => {
         isLoading={isLoading}
         data={rowData}
         columns={columns}
+        rowOnClick={(row) => router.push(`/transactions/loan-payment/view?id=${row?.node?.id}`)}
         pagination={{
           total: data?.loanAccount?.repaymentList?.totalCount ?? 'Many',
           pageInfo: data?.loanAccount?.repaymentList?.pageInfo,

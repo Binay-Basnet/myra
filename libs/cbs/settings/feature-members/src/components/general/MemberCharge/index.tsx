@@ -56,7 +56,7 @@ export const NewMemberCharge = () => {
             {t['memberSettingsNewMemberCharges']}
           </Text>
 
-          <Text fontSize="s3" color="gray.600" fontWeight="SemiBold" lineHeight="16.25px">
+          <Text fontSize="s2" color="gray.600" fontWeight="Regular" lineHeight="16.25px">
             {t['memberSettingsDifferentCharges']}
           </Text>
         </Box>

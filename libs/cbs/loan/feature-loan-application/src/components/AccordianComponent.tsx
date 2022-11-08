@@ -21,7 +21,7 @@ export const AccordianComponent = ({ productId }: IcomponentProps) => {
   );
   const rebateData = poductDetails?.data?.settings?.general?.loanProducts?.formState?.data?.rebate;
   const penaltyType =
-    poductDetails?.data?.settings?.general?.loanProducts?.formState?.data?.penaltyType;
+    poductDetails?.data?.settings?.general?.loanProducts?.formState?.data?.penalty;
   const formstateData = poductDetails?.data?.settings?.general?.loanProducts?.formState?.data;
   useEffect(() => {
     if (productId) {

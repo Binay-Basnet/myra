@@ -122,6 +122,9 @@ export const AgentTransactionList = () => {
         getRowId={(row) => String(row?.node?.ID)}
         isLoading={isFetching}
         columns={columns}
+        rowOnClick={(row) =>
+          `/transactions/agent-transaction/view?id=${row?.node?.agentId}&date=${row?.node?.date}`
+        }
         noDataTitle="Market Representative Transaction"
         pagination={{
           total: data?.transaction?.listDeposit?.totalCount ?? 'Many',

@@ -127,6 +127,7 @@ export const DepositList = () => {
         getRowId={(row) => String(row?.node?.ID)}
         isLoading={isFetching}
         columns={columns}
+        rowOnClick={(row) => router.push(`/transactions/deposit/view?id=${row?.node?.ID}`)}
         pagination={{
           total: data?.transaction?.listDeposit?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listDeposit?.pageInfo,

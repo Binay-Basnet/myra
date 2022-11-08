@@ -9,6 +9,7 @@ import { asyncToast, Box, SettingsFooter, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { NewMemberCharge } from '../components/general/MemberCharge';
+import { MemberCodeManagement } from '../components/general/MemberCodeManagement';
 import { MemberRiskLevel } from '../components/general/MemberRiskLevel';
 import { TypeOfMember } from '../components/general/TypeOfMember';
 
@@ -83,6 +84,7 @@ export const CbsSettingsFeatureMembers = () => {
             <TypeOfMember />
             <MemberRiskLevel />
             <NewMemberCharge />
+            <MemberCodeManagement />
           </FormProvider>
         </Box>
       </Box>
