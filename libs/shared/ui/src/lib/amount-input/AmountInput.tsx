@@ -21,7 +21,14 @@ export const AmountInput = (props: AmountInputProps) => {
         </TextFields>
       )}
       <InputGroup display="flex" flexDirection="column">
-        <Input variant="outline" value={value} type="number" textAlign="right" {...rest} />
+        <Input
+          onWheel={(e) => e.currentTarget.blur()}
+          variant="outline"
+          value={value}
+          type="number"
+          textAlign="right"
+          {...rest}
+        />
       </InputGroup>
 
       {(() => {
