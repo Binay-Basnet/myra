@@ -1,6 +1,7 @@
 import { useState } from 'react';
 // IoCopyOutline;
 import { IoQrCodeOutline } from 'react-icons/io5';
+import { useRouter } from 'next/router';
 import {
   Box,
   Grid,
@@ -65,8 +66,6 @@ export interface MemberCardProps {
       }
     | undefined
     | null;
-  viewProfileHandler: () => void;
-  viewAccountTransactionsHandler: () => void;
   cardBg?: string;
 }
 
@@ -79,10 +78,10 @@ export const MemberCard = ({
   showSignaturePreview = true,
   citizenshipPath,
   accountInfo,
-  viewProfileHandler,
-  viewAccountTransactionsHandler,
   cardBg = 'white',
 }: MemberCardProps) => {
+  const router = useRouter();
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const [modalImage, setModalImage] = useState<string>('');
@@ -158,7 +157,7 @@ export const MemberCard = ({
                     {memberDetails.name}
                   </Text>
                 </PopoverTrigger>
-                <PopoverContent w="610px">
+                <PopoverContent w="610px" boxShadow="E2">
                   <PopoverBody p={0}>
                     <Box p="s16" display="flex" flexDirection="column" gap="s8">
                       <Box display="flex" gap="s8">
@@ -263,7 +262,13 @@ export const MemberCard = ({
                       </Grid>
 
                       <Box display="flex" gap="s8">
-                        <Button onClick={viewProfileHandler}>View Profile</Button>
+                        <Button
+                          onClick={() =>
+                            router.push(`/members/details?id=${memberDetails?.memberID}`)
+                          }
+                        >
+                          View Profile
+                        </Button>
 
                         {signaturePath && (
                           <Button
@@ -505,7 +510,12 @@ export const MemberCard = ({
               )}
 
               <Box px="s16" py="s8">
-                <Button variant="ghost" onClick={viewAccountTransactionsHandler}>
+                <Button
+                  variant="ghost"
+                  onClick={() =>
+                    router.push(`/accounts/details/${accountInfo?.ID}?tab=transactions`)
+                  }
+                >
                   View Account Transactions
                 </Button>
               </Box>

@@ -590,8 +590,6 @@ export const AccountOpenNew = () => {
                 signaturePath={memberSignatureUrl}
                 showSignaturePreview={false}
                 citizenshipPath={memberCitizenshipUrl}
-                viewProfileHandler={() => null}
-                viewAccountTransactionsHandler={() => null}
               />
             </Box>
             <Box p="s16">{productID && <ProductCard productId={productID} />}</Box>

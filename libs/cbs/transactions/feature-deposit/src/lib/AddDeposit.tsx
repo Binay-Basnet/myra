@@ -580,8 +580,6 @@ export const AddDeposit = () => {
                             }
                           : null
                       }
-                      viewProfileHandler={() => null}
-                      viewAccountTransactionsHandler={() => null}
                     />
                   </Box>
                 )}

@@ -314,8 +314,6 @@ export const NewAccountTransfer = () => {
                             }
                           : null
                       }
-                      viewProfileHandler={() => null}
-                      viewAccountTransactionsHandler={() => null}
                     />
 
                     {destMemberId && (
@@ -339,8 +337,6 @@ export const NewAccountTransfer = () => {
                           signaturePath={destMemberSignatureUrl}
                           showSignaturePreview={false}
                           citizenshipPath={destMemberCitizenshipUrl}
-                          viewProfileHandler={() => null}
-                          viewAccountTransactionsHandler={() => null}
                         />
                       </Box>
                     )}

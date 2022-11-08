@@ -86,7 +86,7 @@ export const CBSLoanRepaymentList = () => {
                 {
                   title: t['LoanApplicationView'],
                   onClick: (row) => {
-                    router.push(`/loan/accounts/view?id=${row?.id}`);
+                    router.push(`/loan/accounts/view?id=${row?.loanAccountId}`);
                   },
                 },
               ]}

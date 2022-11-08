@@ -204,8 +204,6 @@ export const AddBulkDeposit = () => {
                       signaturePath={memberSignatureUrl}
                       showSignaturePreview={false}
                       citizenshipPath={memberCitizenshipUrl}
-                      viewProfileHandler={() => null}
-                      viewAccountTransactionsHandler={() => null}
                       cardBg="neutralColorLight.Gray-10"
                     />
                   )}
