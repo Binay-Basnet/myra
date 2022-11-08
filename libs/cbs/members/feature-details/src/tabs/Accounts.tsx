@@ -41,7 +41,7 @@ export const Accounts = () => {
       <Text fontSize="r3" fontWeight="600">
         Accounts
       </Text>
-      <Box display="flex" flexDirection="column" gap="s16">
+      <Box display="flex" flexDirection="column" gap="s16" pb="s16">
         <Text fontWeight="600" fontSize="r1">
           Quick Links
         </Text>

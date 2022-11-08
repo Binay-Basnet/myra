@@ -35,7 +35,7 @@ export const Bio = () => {
       <Text fontSize="r3" fontWeight="600">
         Bio{' '}
       </Text>
-      <Box display="flex" flexDirection="column" gap="s16">
+      <Box display="flex" flexDirection="column" gap="s16" pb="s16">
         <Text fontWeight="600" fontSize="r1">
           Quick Links
         </Text>
