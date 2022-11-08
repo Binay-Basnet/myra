@@ -39,8 +39,8 @@ export const MemberDetails = () => {
         p="s16"
         flexDir="column"
         ml="320px"
-        gap="s32"
-        bg="border.layout"
+        gap="s16"
+        bg="background.500"
         minH="calc(100vh - 110px)"
       >
         {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}

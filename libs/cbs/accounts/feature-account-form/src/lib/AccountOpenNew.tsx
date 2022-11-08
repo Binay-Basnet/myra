@@ -541,7 +541,7 @@ export const AccountOpenNew = () => {
                       />
                     </Grid>
                     {/* <Agent /> */}
-                    <Grid templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
+                    <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
                       <FormAgentSelect name="agentId" label="Market Representative" />
                     </Grid>
                     <FeesAndCharge setTotalCharge={setTotalCharge} />
