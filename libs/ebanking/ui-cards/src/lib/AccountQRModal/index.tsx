@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-import { exportComponentAsPNG } from 'react-component-export-image';
 import { BsDownload } from 'react-icons/bs';
 import { IoShareSocialSharp } from 'react-icons/io5';
 import { QRCodeSVG } from 'qrcode.react';
@@ -18,6 +17,8 @@ interface IAccountQRModalProps {
 
 export const AccountQRModal = ({ open, onClose, account }: IAccountQRModalProps) => {
   const ref = useRef(null);
+
+  if (typeof window === 'undefined') return null;
 
   return (
     <ChakraModal open={open} title="My QR Code" onClose={onClose}>
@@ -50,7 +51,9 @@ export const AccountQRModal = ({ open, onClose, account }: IAccountQRModalProps)
 
         <Box display="flex" gap="s16" alignItems="center">
           <Button
-            onClick={() =>
+            onClick={async () => {
+              const { exportComponentAsPNG } = await import('react-component-export-image');
+
               exportComponentAsPNG(ref, {
                 fileName: 'qr.png',
                 html2CanvasOptions: {
@@ -60,8 +63,8 @@ export const AccountQRModal = ({ open, onClose, account }: IAccountQRModalProps)
                   height: 800,
                   backgroundColor: 'white',
                 },
-              })
-            }
+              });
+            }}
             variant="ghost"
             w="120px"
             leftIcon={<Icon as={BsDownload} color="primary.500" />}

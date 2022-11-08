@@ -19,6 +19,7 @@ export enum Report {
   MEMBER_REPORTS = 'Member Reports',
   MEMBER_REGISTER_REPORT = 'Member Register Report',
   MEMBER_ACTIVATIONS = 'Active/Inactive Member',
+  MEMBER_CLASSIFICATION_REPORT = 'Member Classification Reports',
   KYM_STATUS_REPORT = 'Kym Status Report',
 
   SHARE_REGISTER = 'Share Register',
@@ -116,6 +117,11 @@ export const REPORTS = {
     {
       id: '2.5',
       report: Report.KYM_STATUS_REPORT,
+    },
+    {
+      id: '2.6',
+      report: Report.MEMBER_CLASSIFICATION_REPORT,
+      link: 'classification',
     },
   ],
 

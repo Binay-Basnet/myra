@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { Share_Transaction_Direction, useGetShareChargesQuery } from '@coop/cbs/data-access';
@@ -17,7 +18,7 @@ export const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
 
   const noOfShares = watch('shareCount');
 
-  const { data: chargesData } = useGetShareChargesQuery(
+  const { data: chargesData, refetch } = useGetShareChargesQuery(
     {
       transactionType: Share_Transaction_Direction?.Purchase,
       shareCount: noOfShares,
@@ -26,6 +27,10 @@ export const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
   );
 
   const chargeList = chargesData?.share?.charges;
+
+  useEffect(() => {
+    refetch();
+  }, [noOfShares, refetch]);
 
   return (
     <Box display="flex" flexDirection="column" pb="s24" background="white" borderTopRadius={5}>

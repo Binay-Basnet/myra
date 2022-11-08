@@ -537,8 +537,8 @@ const en: Record<string, string> = {
   settingsSideBarChartsOfAccounts: 'Charts of Accounts',
   settingsSideBarMembers: 'Members',
   settingsSideBarShare: 'Share',
-  settingsSideBarDeposit: 'Deposit',
-  settingsSideBarDepositProducts: 'Deposit Products',
+  settingsSideBarDeposit: 'Savings',
+  settingsSideBarDepositProducts: 'Savings Products',
   settingsSideBarLoan: 'Loan',
   settingsSideBarLoanProducts: 'Loan Products',
 
@@ -3019,6 +3019,7 @@ const en: Record<string, string> = {
   loginSubTitle: 'A simple, secure and shared digital platform that connects SACCOS to technology.',
   loginHeader: 'Welcome to Myra!',
   loginEmail: 'Email',
+  loginEmailPlaceholder: 'Enter Email',
   loginPassword: 'Password',
   loginKeepSignedIn: 'Keep me signed in',
   loginForgotPassword: 'Forgot Password',
@@ -3794,6 +3795,9 @@ const en: Record<string, string> = {
   withdrawSlipBook: 'Withdraw Slip',
   withdrawSlipRequests: 'Withdraw Slip Requests',
   withdrawSlipBlockRequests: 'Block Withdraw Slip',
+
+  loanProductRemainingPrincipal: 'Remaining Principal',
+  loanProductPenalInterest: 'Penal Interest',
 };
 
 export default en;

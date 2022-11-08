@@ -74,3 +74,55 @@ query getSavingStatement($data: SavingStatementReportSettings!){
     }
   }
 }
+
+
+query getMemberClassificationReport($period: ReportPeriodType) {
+  report {
+    memberClassificationReport(period: $period) {
+      data {
+        gender {
+          entryName
+          inNumber
+          inPercent
+        }
+        age {
+          entryName
+          inNumber
+          inPercent
+        }
+        occupation {
+          entryName
+          inNumber
+          inPercent
+        }
+        education {
+          entryName
+          inNumber
+          inPercent
+        }
+        memberCategory {
+          entryName
+          inNumber
+          inPercent
+        }
+        income {
+          entryName
+          inPercent
+          inPercent
+        }
+        address {
+          province {
+            entryName
+            inNumber
+            inPercent
+          }
+          district {
+            entryName
+            inNumber
+            inPercent
+          }
+        }
+      }
+    }
+  }
+}

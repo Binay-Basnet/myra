@@ -1,5 +1,6 @@
 import { Box, Text } from '@chakra-ui/react';
 
+import { Divider } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { VerticalSideBarForSettings } from '../components/VerticalSideBarForSettings';
@@ -9,18 +10,33 @@ type TabList = {
   to: string;
 };
 
-const tabList: TabList[] = [
+const orgTabList: TabList[] = [
   {
-    title: 'settingsAlternativeChannel',
-    to: '/settings/general/alternative-channels/charges',
+    title: 'settingsSideBarOrganization',
+    to: '/settings/general/organization',
+  },
+  {
+    title: 'serviceCenterSettings',
+    to: '/settings/general/service-center',
+  },
+  {
+    title: 'settingsSideBarChartsOfAccounts',
+    to: '/settings/general/charts-of-accounts',
   },
   {
     title: 'settingsAuditLog',
     to: '/settings/general/audit-log',
   },
+];
+
+const tabList: TabList[] = [
   {
-    title: 'settingsSideBarChartsOfAccounts',
-    to: '/settings/general/charts-of-accounts',
+    title: 'settingsSideBarMembers',
+    to: '/settings/general/members',
+  },
+  {
+    title: 'settingsSideBarShare',
+    to: '/settings/general/share',
   },
   {
     title: 'settingsSideBarDeposit',
@@ -34,26 +50,17 @@ const tabList: TabList[] = [
     title: 'settingsSideBarLoan',
     to: '/settings/general/loan',
   },
+
   {
     title: 'settingsSideBarLoanProducts',
     to: '/settings/general/loan-products',
   },
+];
 
+const otherTabList: TabList[] = [
   {
-    title: 'settingsSideBarMembers',
-    to: '/settings/general/members',
-  },
-  {
-    title: 'settingsSideBarOrganization',
-    to: '/settings/general/organization',
-  },
-  {
-    title: 'serviceCenterSettings',
-    to: '/settings/general/service-center',
-  },
-  {
-    title: 'settingsSideBarShare',
-    to: '/settings/general/share',
+    title: 'settingsAlternativeChannel',
+    to: '/settings/general/alternative-channels/charges',
   },
 ];
 
@@ -76,7 +83,11 @@ export const SettingSideBar = () => {
         </Text>
       </Box>
       <Box p="s16">
+        <VerticalSideBarForSettings tablinks={orgTabList} />
+        <Divider my="s16" />
         <VerticalSideBarForSettings tablinks={tabList} />
+        <Divider my="s16" />
+        <VerticalSideBarForSettings tablinks={otherTabList} />
       </Box>
     </Box>
   );

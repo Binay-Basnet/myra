@@ -76,6 +76,15 @@ const variantReport: PartsStyleFunction<typeof parts> = (props) => {
   const { colorScheme: c } = props;
 
   return {
+    tfoot: {
+      th: {
+        bg: 'white',
+        color: mode('gray.800', 'gray.400')(props),
+        border: '1px',
+        borderColor: mode(`border.element`, `${c}.700`)(props),
+        ...numericStyles,
+      },
+    },
     th: {
       bg: 'gray.100',
       color: mode('gray.800', 'gray.400')(props),

@@ -197,12 +197,15 @@ query getAccountOpenEditData($id: ID!) {
         accountName
         minor
         tenure
+        interestDoc {
+          identifier
+          url
+        }
         tenureNumber
         initialDepositAmount
         defaultAmountDepositAccountName
         interestRate
-        ceoAuthority
-        boardAuthority
+
         installmentAmount
         depositFrequencyWeekly
         depositFrequencyMonthly
@@ -264,6 +267,8 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
           member {
             id
             name
+            profilePicUrl
+            profilePic
             address {
               state
               district

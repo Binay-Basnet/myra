@@ -110,7 +110,7 @@ export const Navbarfordaashboard = () => {
             borderRadius="br1"
             _hover={{ backgroundColor: 'secondary.900' }}
           />
-          <Link href="/settings/general/audit-log">
+          <Link href="/settings/general/organization">
             <IconButton
               _hover={{ backgroundColor: 'secondary.900' }}
               icon={<Icon size="md" as={AiOutlineSetting} />}

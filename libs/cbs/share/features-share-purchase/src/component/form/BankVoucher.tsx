@@ -57,7 +57,11 @@ export const BankVoucher = ({ totalAmount }: PurchaseProps) => {
       </GridItem>
 
       <GridItem colSpan={1}>
-        <FormDatePicker name="bankVoucher.depositedDate" label={t['sharePurchaseDepositedDate']} />
+        <FormDatePicker
+          name="bankVoucher.depositedDate"
+          label={t['sharePurchaseDepositedDate']}
+          maxToday
+        />
       </GridItem>
     </FormSection>
   );

@@ -1,9 +1,7 @@
 import React from 'react';
-import { AiOutlineSetting } from 'react-icons/ai';
-import { useRouter } from 'next/router';
 
 import { TabColumn } from '@coop/myra/components';
-import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
+import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IMemberPageLayout {
@@ -22,7 +20,6 @@ const reportColumns = [
 ];
 
 export const ReportMainLayout = ({ children }: IMemberPageLayout) => {
-  const router = useRouter();
   const { t } = useTranslation();
 
   return (
@@ -35,18 +32,6 @@ export const ReportMainLayout = ({ children }: IMemberPageLayout) => {
         </Box>
         <Box p="s16">
           <TabColumn list={reportColumns} />
-          <Divider my="s16" />
-          <Button
-            onClick={() => router.push('/settings/general/share')}
-            variant="ghost"
-            color="#37474F"
-            height="s48"
-            width="full"
-            justifyContent="start"
-            leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
-          >
-            {t['reportsSettings']}
-          </Button>
         </Box>
       </Box>
       <Box width="100%" ml="260px" bg="white" minHeight="calc(100vh - 110px)">

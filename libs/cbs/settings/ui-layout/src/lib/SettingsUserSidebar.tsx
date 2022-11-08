@@ -24,6 +24,9 @@ const tabList: TabList[] = [
     title: 'settingsUserSidebarOtherUsers',
     to: '/settings/users/other-users',
   },
+];
+
+const otherTabList: TabList[] = [
   {
     title: 'settingsUserSidebarRoleReferences',
     to: '/settings/users/role-references',
@@ -50,5 +53,7 @@ export const SettingsUserSideBar = () => (
     </Text>
     <Divider borderColor="border.layout" />
     <VerticalSideBarForSettings tablinks={tabList} />
+    <Divider borderColor="border.layout" />
+    <VerticalSideBarForSettings tablinks={otherTabList} />
   </Box>
 );

@@ -31,7 +31,7 @@ export const KymCoopBasicInfo = (props: IProps) => {
           <FormInput type="number" name="regdNumber" label={t['kymCoopRegisrationNo']} />
 
           <FormInput type="text" name="regdOffice" label={t['kymCoopRegistrationoffice']} />
-          <FormDatePicker name="regdDate" label={t['kymCoopRegistrationDate']} />
+          <FormDatePicker name="regdDate" label={t['kymCoopRegistrationDate']} maxToday />
         </FormSection>
       </form>
     </FormProvider>
