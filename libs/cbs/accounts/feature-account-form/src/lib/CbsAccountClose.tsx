@@ -381,7 +381,7 @@ export const CbsAccountClose = () => {
               >
                 <FormMemberSelect name="memberID" label="Member" />
 
-                {memberId && (
+                {memberId && memberId !== 'undefined' && (
                   <FormAccountSelect
                     name="accountID"
                     memberId={memberId}
@@ -389,7 +389,7 @@ export const CbsAccountClose = () => {
                     filterBy={ObjState.Active}
                   />
                 )}
-                {memberId && accountId && (
+                {memberId && memberId !== 'undefined' && accountId && accountId !== 'undefined' && (
                   <Box>
                     {' '}
                     <Divider />
@@ -566,7 +566,7 @@ export const CbsAccountClose = () => {
                 <Payment totalDeposit={totalDeposit} />
               </Box>
             </Box>
-            {memberId && (
+            {memberId && memberId !== 'undefined' && (
               <Box position="sticky" top="170px" right="0" maxH="500px">
                 <MemberCard
                   memberDetails={{
