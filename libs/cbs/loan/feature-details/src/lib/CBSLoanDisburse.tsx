@@ -292,8 +292,6 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
                 signaturePath={memberSignatureUrl}
                 showSignaturePreview={false}
                 citizenshipPath={memberCitizenshipUrl}
-                viewProfileHandler={() => null}
-                viewAccountTransactionsHandler={() => null}
               />
               <Box p="s16" display="flex" flexDirection="column" gap="s16">
                 <LoanProductCard productId={productId} />
