@@ -76,6 +76,8 @@ export const AddUser = () => {
 
   const id = router?.query?.['id'];
 
+  const isEdit = router?.asPath?.includes('edit');
+
   const { t } = useTranslation();
 
   const methods = useForm<UserFormInput>();
@@ -217,7 +219,10 @@ export const AddUser = () => {
     <>
       <Container minW="container.xl" height="fit-content">
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
-          <FormHeader title="Add User" closeLink="/settings/users/super-admin" />
+          <FormHeader
+            title={isEdit ? 'Edit User' : 'Add User'}
+            closeLink="/settings/users/super-admin"
+          />
         </Box>
 
         <Box bg="white" pb="120px">
@@ -236,7 +241,7 @@ export const AddUser = () => {
 
                 <FormEmailInput name="email" label="Email" />
 
-                <FormSelect name="role" label="Role" options={roleOptions} />
+                <FormSelect name="role" label="Role" options={roleOptions} isDisabled={isEdit} />
 
                 <FormBranchSelect
                   name="branch"
