@@ -369,7 +369,7 @@ export const FloatingShortcutButton = () => {
         }
         modalContentProps={{ minW: '60vw' }}
       >
-        <Grid templateColumns="repeat(2, 1fr)" rowGap="s48" columnGap="80px" mx="-s8" py="s8">
+        <Grid templateColumns="repeat(2, 1fr)" rowGap="s48" columnGap="80px" py="s8">
           {helpOptions.map(({ title, shortcuts }) => (
             <Box display="flex" flexDirection="column" gap="s16" key={title}>
               <Text fontSize="r2" fontWeight={500} color="black">
