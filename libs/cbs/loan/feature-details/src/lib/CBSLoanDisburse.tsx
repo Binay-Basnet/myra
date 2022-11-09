@@ -126,7 +126,11 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
   const queryClient = useQueryClient();
 
   const router = useRouter();
-  const methods = useForm<LoanDisbursementInput>();
+  const methods = useForm<LoanDisbursementInput>({
+    defaultValues: {
+      method: LoanDisbursementMethod?.Account,
+    },
+  });
   const { watch, getValues } = methods;
 
   const selectedPaymentMode = watch('method');
@@ -187,6 +191,9 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
     useGetIndividualMemberDetails({ memberId });
 
   const productId = loanPreview?.productId as string;
+  const totalDisbursedAmount =
+    Number(loanPreview?.loanDetails?.totalSanctionedAmount) -
+    Number(loanPreview?.loanDetails?.totalProcessingChargesValuation);
 
   return (
     <Container minW="container.xl" p="0" bg="white">
@@ -222,6 +229,8 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
                     label="Amount"
                     textAlign="right"
                     placeholder="0.00"
+                    isDisabled
+                    value={totalDisbursedAmount}
                   />
                   <Divider />
                   <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
@@ -250,6 +259,8 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
                     name="amount"
                     type="number"
                     label="Amount"
+                    isDisabled
+                    value={totalDisbursedAmount}
                     textAlign="right"
                     placeholder="0.00"
                   />
@@ -281,8 +292,6 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
                 signaturePath={memberSignatureUrl}
                 showSignaturePreview={false}
                 citizenshipPath={memberCitizenshipUrl}
-                viewProfileHandler={() => null}
-                viewAccountTransactionsHandler={() => null}
               />
               <Box p="s16" display="flex" flexDirection="column" gap="s16">
                 <LoanProductCard productId={productId} />

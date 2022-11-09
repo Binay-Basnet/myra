@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { LoanAccountInput } from '@coop/cbs/data-access';
@@ -6,7 +5,7 @@ import { FormNumberInput, FormTextArea } from '@coop/shared/form';
 import { Box, Button, Divider, Text, TextFields } from '@coop/shared/ui';
 
 export const LoanAmountDetails = () => {
-  const { watch, setError, clearErrors } = useFormContext<LoanAccountInput>();
+  const { watch, getValues } = useFormContext<LoanAccountInput>();
   const totalLoanApplied = watch('appliedLoanAmount');
 
   const collaterals = watch('collateralData');
@@ -19,15 +18,15 @@ export const LoanAmountDetails = () => {
   const guaranteeSum =
     guarantee?.reduce((acc, curr) => Number(curr?.guranteeAmount ?? 0) + acc, 0) ?? 0;
 
-  useEffect(() => {
-    if (Number(totalLoanApplied) < Number(totalSanctionedAmount)) {
-      setError('totalSanctionedAmount', {
-        message: 'Sanctioned amount should be less than applied amount.',
-      });
-    } else {
-      clearErrors('totalSanctionedAmount');
-    }
-  }, [totalSanctionedAmount, totalLoanApplied]);
+  // useEffect(() => {
+  //   if (Number(totalLoanApplied) < Number(totalSanctionedAmount)) {
+  //     setError('totalSanctionedAmount', {
+  //       message: 'Sanctioned amount should be less than applied amount.',
+  //     });
+  //   } else {
+  //     clearErrors('totalSanctionedAmount');
+  //   }
+  // }, [totalSanctionedAmount, totalLoanApplied]);
 
   return (
     <Box display="flex" flexDir="column" gap="s16">
@@ -63,7 +62,19 @@ export const LoanAmountDetails = () => {
           <Box display="flex" alignItems="center" justifyContent="space-between">
             <TextFields variant="formLabel">Total Sanctioned Loan Amount</TextFields>
             <Box>
-              <FormNumberInput name="totalSanctionedAmount" size="sm" />
+              <FormNumberInput
+                rules={{
+                  validate: {
+                    required: (value) => {
+                      if (value && Number(getValues()?.['appliedLoanAmount']) < Number(value))
+                        return 'Sanctioned amount should be less than applied amount.';
+                      return true;
+                    },
+                  },
+                }}
+                name="totalSanctionedAmount"
+                size="sm"
+              />
             </Box>
           </Box>
         </Box>

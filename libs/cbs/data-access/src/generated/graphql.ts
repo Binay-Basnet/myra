@@ -229,7 +229,7 @@ export type AccountTransferView = {
   transactionBranch?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['String']>;
   transferAmount?: Maybe<Scalars['String']>;
-  transferType?: Maybe<Scalars['String']>;
+  transferType?: Maybe<TransferType>;
   withdrawnBy?: Maybe<Scalars['String']>;
   withdrawnSlipNo?: Maybe<Scalars['String']>;
 };
@@ -1404,6 +1404,7 @@ export type ChartsOfAccountSettingsQuery = {
   accountsUnder?: Maybe<CoaMinimalResult>;
   class?: Maybe<ChartsOfAccountClassResult>;
   fullView: CoaFullView;
+  search?: Maybe<CoaMinimalResult>;
 };
 
 
@@ -1414,6 +1415,11 @@ export type ChartsOfAccountSettingsQueryAccountsArgs = {
 
 export type ChartsOfAccountSettingsQueryAccountsUnderArgs = {
   accountCode?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+export type ChartsOfAccountSettingsQuerySearchArgs = {
+  name: Scalars['String'];
 };
 
 export type ChequeBookRequestConnection = {
@@ -2159,6 +2165,11 @@ export enum CustomerPayment {
   Cheque = 'CHEQUE'
 }
 
+export type DbCreateResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type DashboardData = {
   listDashboardTask?: Maybe<Array<Maybe<DashboardTask>>>;
   listTodayTrend?: Maybe<Array<Maybe<TodayTrend>>>;
@@ -2848,6 +2859,7 @@ export type DepositProductSettingsMutation = {
 export type DepositProductSettingsMutationActivateProductArgs = {
   productId: Scalars['ID'];
   productType: AccountTypeFilter;
+  remarks: Scalars['String'];
 };
 
 
@@ -2969,12 +2981,12 @@ export type DepositTdsResult = {
 export type DepositTransactionView = {
   accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
-  depositedBy?: Maybe<Scalars['String']>;
+  depositedBy?: Maybe<DepositedBy>;
   fine?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id: Scalars['ID'];
   member?: Maybe<Member>;
-  paymentMode?: Maybe<Scalars['String']>;
+  paymentMode?: Maybe<DepositPaymentType>;
   rebate?: Maybe<Scalars['String']>;
   sourceOfFund?: Maybe<Scalars['String']>;
   status?: Maybe<ObjState>;
@@ -3223,6 +3235,7 @@ export type EBankingAuthMutation = {
   loginToCooperative?: Maybe<EbankingCooperativeLoginResult>;
   requestSource?: Maybe<RequestSource>;
   resendOtp?: Maybe<EbankingOtpResult>;
+  resetPassword?: Maybe<EbankingChangePasswordResult>;
   setNewPin?: Maybe<EbankingUserResult>;
   setPassword?: Maybe<EbankingPasswordResult>;
   signUp?: Maybe<EbankingSignUpResult>;
@@ -3270,6 +3283,12 @@ export type EBankingAuthMutationLoginToCooperativeArgs = {
 export type EBankingAuthMutationResendOtpArgs = {
   mobile: Scalars['String'];
   otpFor: OtpFor;
+};
+
+
+export type EBankingAuthMutationResetPasswordArgs = {
+  mobileNo: Scalars['String'];
+  newPassword: Scalars['String'];
 };
 
 
@@ -4935,6 +4954,11 @@ export enum FrequencyTenure {
   Year = 'YEAR'
 }
 
+export type GenderLedgerReportResult = {
+  data?: Maybe<Array<Maybe<GeneralLedgerReportEntry>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type GeneralBranchSettingsMutation = {
   add: BranchAddResult;
 };
@@ -4960,6 +4984,15 @@ export type GeneralBranchSettingsQueryFormStateArgs = {
 export type GeneralBranchSettingsQueryListArgs = {
   filter?: InputMaybe<BranchSearchFilter>;
   paginate?: InputMaybe<Pagination>;
+};
+
+export type GeneralLedgerReportEntry = {
+  account?: Maybe<Scalars['String']>;
+  balance?: Maybe<Scalars['String']>;
+  credit?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  debit?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
 };
 
 export type GeneralMemberData = {
@@ -9017,15 +9050,15 @@ export type MemberClassificationReportResult = {
 };
 
 export type MemberCode = {
-  initialNo: Scalars['String'];
+  initialNo?: Maybe<Scalars['String']>;
   noOfDigits?: Maybe<Scalars['Int']>;
   prefix?: Maybe<Scalars['String']>;
 };
 
 export type MemberCodeInput = {
-  initialNo: Scalars['String'];
-  noOfDigits: Scalars['Int'];
-  prefix: Scalars['String'];
+  initialNo?: InputMaybe<Scalars['String']>;
+  noOfDigits?: InputMaybe<Scalars['Int']>;
+  prefix?: InputMaybe<Scalars['String']>;
 };
 
 export type MemberDetailsResult = {
@@ -9616,6 +9649,7 @@ export type NeosysClientFilter = {
 export type NeosysClientMinimalInfo = {
   clientName?: Maybe<Scalars['String']>;
   dateJoined?: Maybe<Scalars['String']>;
+  dbCreated?: Maybe<Scalars['Boolean']>;
   districtId?: Maybe<Scalars['String']>;
   houseNo?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -9627,11 +9661,17 @@ export type NeosysClientMinimalInfo = {
 
 export type NeosysClientMutation = {
   add?: Maybe<OrganizationClientAddResult>;
+  createDB?: Maybe<DbCreateResult>;
 };
 
 
 export type NeosysClientMutationAddArgs = {
   data?: InputMaybe<OrganizationClientInput>;
+};
+
+
+export type NeosysClientMutationCreateDbArgs = {
+  saccosId: Scalars['ID'];
 };
 
 export type NeosysClientQuery = {
@@ -10474,12 +10514,20 @@ export enum ReportPeriodType {
 }
 
 export type ReportQuery = {
+  generalLedgerReport: GenderLedgerReportResult;
   getReport?: Maybe<SavedReportResponse>;
   listReports: ReportListConnection;
   loanStatementReport?: Maybe<ReportResult>;
   memberClassificationReport: MemberClassificationReportResult;
   savingStatementReport?: Maybe<ReportResult>;
   shareStatementReport?: Maybe<ReportResult>;
+};
+
+
+export type ReportQueryGeneralLedgerReportArgs = {
+  date?: InputMaybe<LocalizedDateFilter>;
+  ledgerId: Scalars['ID'];
+  period?: InputMaybe<ReportPeriodType>;
 };
 
 
@@ -12341,7 +12389,7 @@ export type WithdrawTransactionView = {
   marketRepId?: Maybe<Scalars['String']>;
   marketRepName?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
-  paymentMode?: Maybe<Scalars['String']>;
+  paymentMode?: Maybe<WithdrawPaymentType>;
   status?: Maybe<ObjState>;
   teller?: Maybe<Scalars['String']>;
   totalCredit?: Maybe<Scalars['String']>;
@@ -12350,7 +12398,8 @@ export type WithdrawTransactionView = {
   transactionBranch?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['String']>;
   withdrawAmount?: Maybe<Scalars['String']>;
-  withdrawnBy?: Maybe<Scalars['String']>;
+  withdrawWith?: Maybe<WithdrawWith>;
+  withdrawnBy?: Maybe<WithdrawBy>;
 };
 
 export type WithdrawTransactionViewResult = {
@@ -12918,6 +12967,15 @@ export type SetLoanProductInactiveMutationVariables = Exact<{
 
 
 export type SetLoanProductInactiveMutation = { settings: { general?: { loanProducts?: { makeInactive?: { recordId: string } | null } | null } | null } };
+
+export type SetProductActiveMutationVariables = Exact<{
+  productId: Scalars['ID'];
+  productType: AccountTypeFilter;
+  remarks: Scalars['String'];
+}>;
+
+
+export type SetProductActiveMutation = { settings: { general?: { depositProduct?: { activateProduct?: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
 
 export type SetLoanGeneralSettingsMutationVariables = Exact<{
   emi?: InputMaybe<Scalars['Boolean']>;
@@ -13928,6 +13986,13 @@ export type GetMemberClassificationReportQueryVariables = Exact<{
 
 export type GetMemberClassificationReportQuery = { report: { memberClassificationReport: { data?: { gender?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, age?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, occupation?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, education?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, memberCategory?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, income?: Array<{ entryName?: string | null, inPercent?: string | null } | null> | null, address?: { province?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, district?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null } | null } | null } } };
 
+export type GetLoanStatementReportQueryVariables = Exact<{
+  data: LoanStatementReportSettings;
+}>;
+
+
+export type GetLoanStatementReportQuery = { report: { loanStatementReport?: { memberId?: string | null, member?: { name?: Record<"local"|"en"|"np",string> | null } | null, statement?: { loanAccDetails?: { accountNo?: string | null, approvedAmount?: string | null, interestRate?: number | null, loanType?: string | null, loanSubtype?: string | null, issuedDate?: string | null, installment?: number | null } | null, loanStatement?: Array<{ date?: string | null, particular?: string | null, txnId?: string | null, disbursePrinciple?: string | null, paidPrinciple?: string | null, interestPaid?: string | null, finePaid?: string | null, discount?: string | null, remainingPrinciple?: string | null } | null> | null } | {} | null } | null } };
+
 export type GetShareStatementQueryVariables = Exact<{
   data: ShareStatementReportSettings;
 }>;
@@ -14084,7 +14149,7 @@ export type GetLoanProductTypeQuery = { settings: { general?: { loan?: { product
 export type GetGeneralMemberSettingsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetGeneralMemberSettingsDataQuery = { settings: { general?: { KYM?: { general?: { generalMember?: { record?: { memberType?: { individual?: boolean | null, institution?: boolean | null, cooperative?: boolean | null, cooperativeUnion?: boolean | null } | null, risk?: { generalRisk?: number | null, mediumRisk?: number | null, highRisk?: number | null } | null, charge?: Array<{ memberType: KymMemberTypesEnum, ledgerId: string, charge: number } | null> | null } | null } | null } | null } | null } | null } };
+export type GetGeneralMemberSettingsDataQuery = { settings: { general?: { KYM?: { general?: { generalMember?: { record?: { memberType?: { individual?: boolean | null, institution?: boolean | null, cooperative?: boolean | null, cooperativeUnion?: boolean | null } | null, risk?: { generalRisk?: number | null, mediumRisk?: number | null, highRisk?: number | null } | null, charge?: Array<{ memberType: KymMemberTypesEnum, ledgerId: string, charge: number } | null> | null, memberCode?: { prefix?: string | null, noOfDigits?: number | null, initialNo?: string | null } | null } | null } | null } | null } | null } | null } };
 
 export type GetPreDefinedFieldsQueryVariables = Exact<{
   filter: PredefinedElementFilter;
@@ -14281,21 +14346,21 @@ export type TransactionDepositDetailQueryVariables = Exact<{
 }>;
 
 
-export type TransactionDepositDetailQuery = { transaction: { viewDeposit?: { data?: { id: string, transactionDate?: string | null, accountName?: string | null, voucherId?: string | null, amount?: string | null, fine?: string | null, rebate?: string | null, totalDepositedAmount?: string | null, status?: ObjState | null, paymentMode?: string | null, sourceOfFund?: string | null, depositedBy?: string | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, objState: ObjState, code: string, type: KymMemberTypesEnum, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, profilePic?: string | null, profilePicUrl?: string | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
+export type TransactionDepositDetailQuery = { transaction: { viewDeposit?: { data?: { id: string, transactionDate?: string | null, accountName?: string | null, voucherId?: string | null, amount?: string | null, fine?: string | null, rebate?: string | null, totalDepositedAmount?: string | null, status?: ObjState | null, paymentMode?: DepositPaymentType | null, sourceOfFund?: string | null, depositedBy?: DepositedBy | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, objState: ObjState, code: string, type: KymMemberTypesEnum, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, profilePic?: string | null, profilePicUrl?: string | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
 
 export type TransactionWithdrawDetailQueryVariables = Exact<{
   transactionId: Scalars['ID'];
 }>;
 
 
-export type TransactionWithdrawDetailQuery = { transaction: { viewWithdraw?: { data?: { id: string, transactionDate?: string | null, accountName?: string | null, chequeNo?: string | null, withdrawAmount?: string | null, fine?: string | null, totalWithdrawnAmount?: string | null, status?: ObjState | null, paymentMode?: string | null, withdrawnBy?: string | null, marketRepId?: string | null, marketRepName?: string | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
+export type TransactionWithdrawDetailQuery = { transaction: { viewWithdraw?: { data?: { id: string, transactionDate?: string | null, accountName?: string | null, chequeNo?: string | null, withdrawAmount?: string | null, withdrawWith?: WithdrawWith | null, fine?: string | null, totalWithdrawnAmount?: string | null, status?: ObjState | null, paymentMode?: WithdrawPaymentType | null, withdrawnBy?: WithdrawBy | null, marketRepId?: string | null, marketRepName?: string | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
 
 export type TransactionAccountTransferDetailQueryVariables = Exact<{
   transactionId: Scalars['ID'];
 }>;
 
 
-export type TransactionAccountTransferDetailQuery = { transaction: { viewAccountTransfer?: { data?: { id: string, transactionDate?: string | null, transferAmount?: string | null, transferType?: string | null, withdrawnBy?: string | null, withdrawnSlipNo?: string | null, transactionBranch?: string | null, objState?: ObjState | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null, sourceAccount?: { id: string, accountName?: string | null } | null, destinationAccount?: { id: string, accountName?: string | null } | null, recipientMember?: { id: string, name?: Record<"local"|"en"|"np",string> | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
+export type TransactionAccountTransferDetailQuery = { transaction: { viewAccountTransfer?: { data?: { id: string, transactionDate?: string | null, transferAmount?: string | null, transferType?: TransferType | null, withdrawnBy?: string | null, withdrawnSlipNo?: string | null, transactionBranch?: string | null, objState?: ObjState | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null, sourceAccount?: { id: string, accountName?: string | null } | null, destinationAccount?: { id: string, accountName?: string | null } | null, recipientMember?: { id: string, name?: Record<"local"|"en"|"np",string> | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
 
 export type AgentTransactionDetailQueryVariables = Exact<{
   agentId: Scalars['ID'];
@@ -16062,6 +16127,35 @@ export const useSetLoanProductInactiveMutation = <
     useMutation<SetLoanProductInactiveMutation, TError, SetLoanProductInactiveMutationVariables, TContext>(
       ['setLoanProductInactive'],
       useAxios<SetLoanProductInactiveMutation, SetLoanProductInactiveMutationVariables>(SetLoanProductInactiveDocument),
+      options
+    );
+export const SetProductActiveDocument = `
+    mutation setProductActive($productId: ID!, $productType: AccountTypeFilter!, $remarks: String!) {
+  settings {
+    general {
+      depositProduct {
+        activateProduct(
+          productId: $productId
+          productType: $productType
+          remarks: $remarks
+        ) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetProductActiveMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetProductActiveMutation, TError, SetProductActiveMutationVariables, TContext>) =>
+    useMutation<SetProductActiveMutation, TError, SetProductActiveMutationVariables, TContext>(
+      ['setProductActive'],
+      useAxios<SetProductActiveMutation, SetProductActiveMutationVariables>(SetProductActiveDocument),
       options
     );
 export const SetLoanGeneralSettingsDocument = `
@@ -21644,6 +21738,54 @@ export const useGetMemberClassificationReportQuery = <
       useAxios<GetMemberClassificationReportQuery, GetMemberClassificationReportQueryVariables>(GetMemberClassificationReportDocument).bind(null, variables),
       options
     );
+export const GetLoanStatementReportDocument = `
+    query getLoanStatementReport($data: LoanStatementReportSettings!) {
+  report {
+    loanStatementReport(data: $data) {
+      memberId
+      member {
+        name
+      }
+      statement {
+        ... on LoanStatementReport {
+          loanAccDetails {
+            accountNo
+            approvedAmount
+            interestRate
+            loanType
+            loanSubtype
+            issuedDate
+            installment
+          }
+          loanStatement {
+            date
+            particular
+            txnId
+            disbursePrinciple
+            paidPrinciple
+            interestPaid
+            finePaid
+            discount
+            remainingPrinciple
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanStatementReportQuery = <
+      TData = GetLoanStatementReportQuery,
+      TError = unknown
+    >(
+      variables: GetLoanStatementReportQueryVariables,
+      options?: UseQueryOptions<GetLoanStatementReportQuery, TError, TData>
+    ) =>
+    useQuery<GetLoanStatementReportQuery, TError, TData>(
+      ['getLoanStatementReport', variables],
+      useAxios<GetLoanStatementReportQuery, GetLoanStatementReportQueryVariables>(GetLoanStatementReportDocument).bind(null, variables),
+      options
+    );
 export const GetShareStatementDocument = `
     query getShareStatement($data: ShareStatementReportSettings!) {
   report {
@@ -22624,6 +22766,11 @@ export const GetGeneralMemberSettingsDataDocument = `
                 memberType
                 ledgerId
                 charge
+              }
+              memberCode {
+                prefix
+                noOfDigits
+                initialNo
               }
             }
           }
@@ -24006,6 +24153,7 @@ export const TransactionWithdrawDetailDocument = `
         accountName
         chequeNo
         withdrawAmount
+        withdrawWith
         fine
         totalWithdrawnAmount
         status

@@ -541,7 +541,7 @@ export const AccountOpenNew = () => {
                       />
                     </Grid>
                     {/* <Agent /> */}
-                    <Grid templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
+                    <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
                       <FormAgentSelect name="agentId" label="Market Representative" />
                     </Grid>
                     <FeesAndCharge setTotalCharge={setTotalCharge} />
@@ -590,8 +590,6 @@ export const AccountOpenNew = () => {
                 signaturePath={memberSignatureUrl}
                 showSignaturePreview={false}
                 citizenshipPath={memberCitizenshipUrl}
-                viewProfileHandler={() => null}
-                viewAccountTransactionsHandler={() => null}
               />
             </Box>
             <Box p="s16">{productID && <ProductCard productId={productID} />}</Box>

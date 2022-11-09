@@ -9,7 +9,10 @@ export const LoanReportList = () => (
       Loan Report
     </Text>
     {REPORTS[ReportGroup.LOAN].map((report) => (
-      <ReportLinkText key={report.id}>
+      <ReportLinkText
+        key={report.id}
+        link={report.link ? `/reports/cbs/loan/${report.link}/new` : undefined}
+      >
         {report.id} - {report.report}
       </ReportLinkText>
     ))}

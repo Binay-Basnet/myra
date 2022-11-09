@@ -565,7 +565,7 @@ const en: Record<string, string> = {
   settingsDepositIroName: 'IRO Name',
   settingsDepositIroAddress: 'IRO Address',
   settingsDepositIroCode: 'IRO Code',
-  settingsDepositProducts: 'Saving Settings Products',
+  settingsDepositProducts: 'Saving Products',
   settingsDepositProductNew: 'New Deposit Product',
 
   // settings LOAN
@@ -3289,7 +3289,10 @@ const en: Record<string, string> = {
   loanProductNatureBusinessIns: 'Institutions Type',
   depositProductNatureofBusinessCoopUnion: 'Cooperatives Union Type',
   loanProductMakeInactive: 'Make inactive',
+  loanProductMakeActive: 'Make active',
+  loanProductViewDetails: 'View Details',
   loanProductMakeInactiveTitle: 'Make loan Product inactive',
+  loanProductMakeActiveTitle: 'Make loan Product Active',
 
   // share settings
 
@@ -3669,7 +3672,10 @@ const en: Record<string, string> = {
   shareRegisterTableIssue: 'Issue',
   shareRegisterTableReturn: 'Return',
   depositProductInactiveProduct: 'Inactive Deposit Product',
+  depositProductActiveProduct: 'Make Deposit Product Active',
+
   depositProductInactiveReason: 'Reason for Inactive',
+  depositProductActiveReason: 'Reason for Active',
 
   loanRepaymentDepositedBy: 'Deposited By',
   prematurePenaltyEnable: 'Premature Penalty',
@@ -3808,6 +3814,8 @@ const en: Record<string, string> = {
   memberSettingsMemberID: 'Member ID',
   memberSettingsCorePreview: 'Core Preview',
   memberSettingsSetup: 'Setup',
+
+  memberSettingssCorePreview: 'Core Preview',
 };
 
 export default en;

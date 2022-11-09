@@ -25,7 +25,7 @@ const REPORTS_INNER_TAB_LINKS = [
   },
   {
     title: 'Loan Report',
-    to: '/reports/cbs/loan-report',
+    to: '/reports/cbs/loan',
   },
   {
     title: 'Transaction Report',

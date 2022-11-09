@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import {
@@ -34,7 +35,7 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
 
   const balanceData = shareHistoryTableData?.share?.history?.balance;
 
-  const { data: chargesData } = useGetShareChargesQuery({
+  const { data: chargesData, refetch } = useGetShareChargesQuery({
     transactionType: Share_Transaction_Direction?.Return,
     shareCount: noOfShares,
   });
@@ -50,6 +51,10 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
     }
     return 0;
   };
+
+  useEffect(() => {
+    refetch();
+  }, [noOfShares, refetch]);
 
   return (
     <Box display="flex" flexDirection="column" pb="28px" background="gray.0">

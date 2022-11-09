@@ -323,8 +323,6 @@ export const NewLoanApplication = () => {
                 signaturePath={memberSignatureUrl}
                 showSignaturePreview={false}
                 citizenshipPath={memberCitizenshipUrl}
-                viewProfileHandler={() => null}
-                viewAccountTransactionsHandler={() => null}
               />
             </Box>
 

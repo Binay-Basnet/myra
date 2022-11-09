@@ -1,4 +1,7 @@
 export * from './components';
+export * from './lib/LoanReportInputs';
+export * from './lib/LoanReportMember';
+export * from './lib/LoanStatementReportTable';
 export * from './lib/MemberClassificationInputs';
 export * from './lib/ReportFilter';
 export * from './lib/ReportHeader';

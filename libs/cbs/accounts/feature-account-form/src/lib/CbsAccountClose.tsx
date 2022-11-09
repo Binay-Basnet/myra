@@ -608,8 +608,6 @@ export const CbsAccountClose = () => {
                         }
                       : null
                   }
-                  viewProfileHandler={() => null}
-                  viewAccountTransactionsHandler={() => null}
                 />
               </Box>
             )}

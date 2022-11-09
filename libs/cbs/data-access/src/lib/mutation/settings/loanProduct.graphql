@@ -30,3 +30,18 @@ mutation setLoanProductInactive($data: LoanProductInactiveData) {
     }
   }
 }
+
+mutation setProductActive($productId: ID!, $productType: AccountTypeFilter!, $remarks: String!) {
+  settings {
+    general {
+      depositProduct {
+        activateProduct(productId: $productId, productType: $productType, remarks: $remarks) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

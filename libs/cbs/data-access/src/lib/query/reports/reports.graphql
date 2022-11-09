@@ -126,3 +126,38 @@ query getMemberClassificationReport($period: ReportPeriodType) {
     }
   }
 }
+
+query getLoanStatementReport($data: LoanStatementReportSettings!) {
+  report {
+    loanStatementReport(data: $data) {
+      memberId
+      member {
+        name
+      }
+      statement {
+        ... on LoanStatementReport {
+          loanAccDetails {
+            accountNo
+            approvedAmount
+            interestRate
+            loanType
+            loanSubtype
+            issuedDate
+            installment
+          }
+          loanStatement {
+            date
+            particular
+            txnId
+            disbursePrinciple
+            paidPrinciple
+            interestPaid
+            finePaid
+            discount
+            remainingPrinciple
+          }
+        }
+      }
+    }
+  }
+}

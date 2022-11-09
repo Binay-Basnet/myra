@@ -388,8 +388,6 @@ export const AddWithdraw = () => {
                             }
                           : null
                       }
-                      viewProfileHandler={() => null}
-                      viewAccountTransactionsHandler={() => null}
                     />
                   </Box>
                 )}

@@ -301,8 +301,6 @@ export const LoanRepayment = () => {
                 signaturePath={memberSignatureUrl}
                 showSignaturePreview={false}
                 citizenshipPath={memberCitizenshipUrl}
-                viewProfileHandler={() => null}
-                viewAccountTransactionsHandler={() => null}
               />
             </Box>
             {loanAccountId && (
