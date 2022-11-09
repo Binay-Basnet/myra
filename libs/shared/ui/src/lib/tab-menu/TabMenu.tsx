@@ -1,16 +1,16 @@
-import { IconType } from 'react-icons';
-import { AiOutlineSend } from 'react-icons/ai';
-import { BsArrowLeftRight, BsFileText } from 'react-icons/bs';
-import { ImStack } from 'react-icons/im';
-import { IoIosList } from 'react-icons/io';
-import { IoCubeOutline, IoMailUnreadOutline, IoPerson } from 'react-icons/io5';
-import { TbMailForward } from 'react-icons/tb';
+import {IconType} from 'react-icons';
+import {AiOutlineSend} from 'react-icons/ai';
+import {BsArrowLeftRight, BsFileText} from 'react-icons/bs';
+import {ImStack} from 'react-icons/im';
+import {IoIosList} from 'react-icons/io';
+import {IoCubeOutline, IoMailUnreadOutline, IoPerson} from 'react-icons/io5';
+import {TbMailForward} from 'react-icons/tb';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
+import {useRouter} from 'next/router';
+import {Box, Tab, TabList, Tabs, Text} from '@chakra-ui/react';
 
-import { Icon } from '@coop/shared/ui';
-import { en, useTranslation } from '@coop/shared/utils';
+import {Icon} from '@coop/shared/ui';
+import {en, useTranslation} from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface TabMenuProps {}

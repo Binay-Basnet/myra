@@ -1,4 +1,5 @@
 {
+  "name": "cbs-settings-feature-super-admin",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/settings/feature-super-admin/src",
   "projectType": "library",

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { AiOutlineDown, AiOutlineRight, AiOutlineUp } from 'react-icons/ai';
 import { FaRegEdit } from 'react-icons/fa';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 
 import { TabColumn } from '@coop/myra/components';
 import { Box, Collapse, Grid, GridItem, Icon, Text } from '@coop/shared/ui';
@@ -214,46 +214,21 @@ export const ProfileFeature = () => {
             <Text>Ajit Nepal</Text>
           </GridItem>
 
-          <GridItem
-            p="s16"
-            bg="gray.0"
-            rowSpan={6}
-            colSpan={1}
-            borderRadius="br3"
-            w="300px"
-          >
+          <GridItem p="s16" bg="gray.0" rowSpan={6} colSpan={1} borderRadius="br3" w="300px">
             <Box>
               <Box display="flex" justifyContent="center" borderRadius="br3">
-                <Image
-                  height={268}
-                  width={268}
-                  src={'/passport.jpg'}
-                  alt="chart"
-                />
+                <Image height={268} width={268} src="/passport.jpg" alt="chart" />
               </Box>
               <Box mt="s24" ml="s8">
-                <Text
-                  fontSize="s3"
-                  fontWeight="Medium"
-                  color="neutralColorLight.Gray-70"
-                >
+                <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-70">
                   ID: 23524364456
                 </Text>
 
-                <Text
-                  fontSize="r3"
-                  fontWeight="SemiBold"
-                  color="neutralColorLight.Gray-80"
-                >
+                <Text fontSize="r3" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
                   Ajit Nepal
                 </Text>
 
-                <Text
-                  mt="s8"
-                  fontSize="s3"
-                  fontWeight="Regular"
-                  color="neutralColorLight.Gray-60"
-                >
+                <Text mt="s8" fontSize="s3" fontWeight="Regular" color="neutralColorLight.Gray-60">
                   Member since 2077/03/45
                 </Text>
               </Box>
@@ -277,16 +252,8 @@ export const ProfileFeature = () => {
                 >
                   <Collapse startingHeight={350} in={openCollapse}>
                     <Box p="s16">
-                      <Box
-                        mb="s32"
-                        display="flex"
-                        justifyContent="space-between"
-                      >
-                        <Text
-                          fontWeight="SemiBold"
-                          fontSize="r1"
-                          color="neutralColorLight.Gray-80"
-                        >
+                      <Box mb="s32" display="flex" justifyContent="space-between">
+                        <Text fontWeight="SemiBold" fontSize="r1" color="neutralColorLight.Gray-80">
                           Personal Information
                         </Text>
                         <Box as="button">
@@ -300,7 +267,7 @@ export const ProfileFeature = () => {
                           <Grid templateColumns="repeat(2,1fr)">
                             {personalInfoDetails.map((item, index) => (
                               <>
-                                <GridItem key={index}>
+                                <GridItem key={item.label}>
                                   <Text
                                     color="neutralColorLight.Gray-80"
                                     fontWeight="Regular"
@@ -327,32 +294,14 @@ export const ProfileFeature = () => {
                   </Collapse>
                   <Box mb="s16" mt="s16" onClick={handleToggle} as="button">
                     {!openCollapse ? (
-                      <Text
-                        color="primary.500"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                      >
+                      <Text color="primary.500" fontWeight="Medium" fontSize="s3">
                         See More
-                        <Icon
-                          ml="5px"
-                          size="sm"
-                          color="primary.500"
-                          as={AiOutlineDown}
-                        />
+                        <Icon ml="5px" size="sm" color="primary.500" as={AiOutlineDown} />
                       </Text>
                     ) : (
-                      <Text
-                        color="primary.500"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                      >
+                      <Text color="primary.500" fontWeight="Medium" fontSize="s3">
                         See Less
-                        <Icon
-                          ml="5px"
-                          size="sm"
-                          color="primary.500"
-                          as={AiOutlineUp}
-                        />
+                        <Icon ml="5px" size="sm" color="primary.500" as={AiOutlineUp} />
                       </Text>
                     )}
                   </Box>
@@ -362,11 +311,7 @@ export const ProfileFeature = () => {
               <GridItem colSpan={1}>
                 <Box w="350px" h="100%" bg="gray.0" p="s16" borderRadius="br3">
                   <Box mb="s16" display="flex" justifyContent="space-between">
-                    <Text
-                      fontWeight="SemiBold"
-                      fontSize="r1"
-                      color="neutralColorLight.Gray-80"
-                    >
+                    <Text fontWeight="SemiBold" fontSize="r1" color="neutralColorLight.Gray-80">
                       Documents
                     </Text>
                     <Box as="button">
@@ -374,18 +319,9 @@ export const ProfileFeature = () => {
                       Edit
                     </Box>
                   </Box>
-                  <Box
-                    display="flex"
-                    flexDirection="column"
-                    justifyContent="space-between"
-                    gap={4}
-                  >
+                  <Box display="flex" flexDirection="column" justifyContent="space-between" gap={4}>
                     {documentDetails.map((item, index) => (
-                      <DocumentCard
-                        key={index}
-                        img={item.img}
-                        title={item.title}
-                      />
+                      <DocumentCard key={index} img={item.img} title={item.title} />
                     ))}
                   </Box>
                 </Box>
@@ -395,11 +331,7 @@ export const ProfileFeature = () => {
 
           <GridItem p="s16" bg="gray.0" colSpan={9} borderRadius="br3">
             <Box>
-              <Text
-                fontWeight="SemiBold"
-                fontSize="r1"
-                color="neutralColorLight.Gray-80"
-              >
+              <Text fontWeight="SemiBold" fontSize="r1" color="neutralColorLight.Gray-80">
                 Saving Account
               </Text>
               <Grid mt="s16" gap={3} templateColumns="repeat(2,1fr)">
@@ -412,19 +344,9 @@ export const ProfileFeature = () => {
             </Box>
           </GridItem>
 
-          <GridItem
-            p="s16"
-            bg="gray.0"
-            rowSpan={4}
-            colSpan={9}
-            borderRadius="br3"
-          >
+          <GridItem p="s16" bg="gray.0" rowSpan={4} colSpan={9} borderRadius="br3">
             <Box>
-              <Text
-                fontWeight="SemiBold"
-                fontSize="r1"
-                color="neutralColorLight.Gray-80"
-              >
+              <Text fontWeight="SemiBold" fontSize="r1" color="neutralColorLight.Gray-80">
                 Loan Account
               </Text>
               {loanAccountDetails ? (

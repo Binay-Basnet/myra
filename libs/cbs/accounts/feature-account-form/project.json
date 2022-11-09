@@ -1,4 +1,5 @@
 {
+  "name": "cbs-accounts-feature-account-form",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/accounts/feature-account-form/src",
   "projectType": "library",

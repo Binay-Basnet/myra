@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 
 import { Box, Icon, Modal, Text } from '@coop/shared/ui';
 

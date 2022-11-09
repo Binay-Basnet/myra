@@ -1,4 +1,5 @@
 {
+  "name": "cbs-loan-feature-loan-application",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/loan/feature-newloan-application/src",
   "projectType": "library",

@@ -1,4 +1,5 @@
 {
+  "name": "neosys-feature-users",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/neosys/feature-users/src",
   "projectType": "library",

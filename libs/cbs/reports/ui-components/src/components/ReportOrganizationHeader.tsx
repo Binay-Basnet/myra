@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from "next/legacy/image";
 
 import { Report } from '@coop/cbs/reports/list';
 import { Box, Text } from '@coop/shared/ui';

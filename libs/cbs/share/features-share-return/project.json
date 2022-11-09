@@ -1,4 +1,5 @@
 {
+  "name": "cbs-share-features-share-return",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/share/features-share-return/src",
   "projectType": "library",

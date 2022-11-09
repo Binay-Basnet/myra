@@ -65,7 +65,7 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
           alignItems="center"
           key={item.link}
         >
-          <Link href={item.link}>
+          <Link href={item.link} style={{ width: '100%' }}>
             <TabCol>
               <Text align="left" title={t[item.title as keyof typeof en]}>
                 {t[item.title as keyof typeof en] ?? item.title}

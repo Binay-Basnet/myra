@@ -1,4 +1,5 @@
 {
+  "name": "accounting-feature-loan",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/accounting/feature-loan/src",
   "projectType": "library",

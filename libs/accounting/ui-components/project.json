@@ -1,4 +1,5 @@
 {
+  "name": "accounting-ui-components",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/accounting/ui-components/src",
   "projectType": "library",

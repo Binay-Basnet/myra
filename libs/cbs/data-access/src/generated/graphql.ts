@@ -132,6 +132,7 @@ export type AccountMinimalResult = {
   accountIds?: Maybe<Array<Maybe<Scalars['String']>>>;
   accounts?: Maybe<Array<Maybe<AccountMinimal>>>;
   recentTransactions?: Maybe<EbankingTransactionConnection>;
+  totalBalance?: Maybe<Scalars['String']>;
 };
 
 
@@ -1612,6 +1613,11 @@ export type CoopRelatedTrainingType = {
   dateOfTraining?: Maybe<Scalars['String']>;
   subjectOfTraining?: Maybe<Scalars['String']>;
   trainingOrganization?: Maybe<Scalars['String']>;
+};
+
+export type CoopStatistics = {
+  totalBranches: Scalars['Int'];
+  totalMembers: Scalars['Int'];
 };
 
 export type CoopUnionAccountOperatorDetailsResult = {
@@ -3469,6 +3475,7 @@ export type EBankingCooperativeServiceOption = {
 export type EBankingCooperativeServiceQuery = {
   cheque?: Maybe<EBankingChequeQuery>;
   complaint?: Maybe<EBankingComplaintQuery>;
+  coopStatistics?: Maybe<CoopStatistics>;
   downloads?: Maybe<EBankingDownloadsQuery>;
   loan?: Maybe<EBankingLoanQuery>;
   organizationInfo: Organization;

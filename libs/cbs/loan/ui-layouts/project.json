@@ -1,4 +1,5 @@
 {
+  "name": "cbs-loan-ui-layouts",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/loan/ui-layouts/src",
   "projectType": "library",

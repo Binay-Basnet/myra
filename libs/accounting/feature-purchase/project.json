@@ -1,4 +1,5 @@
 {
+  "name": "accounting-feature-purchase",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/accounting/feature-purchase/src",
   "projectType": "library",

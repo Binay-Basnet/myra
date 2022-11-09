@@ -1,4 +1,5 @@
 {
+  "name": "cbs-members-feature-profile",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/members/feature-profile/src",
   "projectType": "library",

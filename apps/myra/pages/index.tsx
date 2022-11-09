@@ -12,7 +12,7 @@ import { FiSettings } from 'react-icons/fi';
 import { IoMdPersonAdd } from 'react-icons/io';
 import { RiNewspaperLine } from 'react-icons/ri';
 import dynamic from 'next/dynamic';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { useRouter } from 'next/router';
 import { Flex, HStack, Img, Spacer } from '@chakra-ui/react';
 
