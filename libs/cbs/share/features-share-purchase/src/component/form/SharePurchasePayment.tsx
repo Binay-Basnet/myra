@@ -16,15 +16,6 @@ type PurchaseProps = {
   returnAmount: number;
 };
 
-// const sourceOfFundsList = [
-//   'Personal Savings',
-//   'Share Sales',
-//   'Dividends',
-//   'Property Sales',
-//   'Inheritances',
-//   'Compensation',
-// ];
-
 export const SharePurchasePayment = ({
   totalAmount,
   denominationTotal,
@@ -39,12 +30,12 @@ export const SharePurchasePayment = ({
   const paymentModes = watch('paymentMode');
 
   const accountList = [
+    { label: t['sharePurchaseCash'], value: SharePaymentMode.Cash },
     {
       label: t['sharePurchaseBankVoucher'],
       value: SharePaymentMode.BankVoucherOrCheque,
     },
     { label: t['sharePurchaseAccount'], value: SharePaymentMode.Account },
-    { label: t['sharePurchaseCash'], value: SharePaymentMode.Cash },
   ];
 
   const depositedByList = [

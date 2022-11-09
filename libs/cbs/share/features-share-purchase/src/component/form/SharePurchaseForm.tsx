@@ -77,7 +77,7 @@ export const SharePurchaseForm = () => {
 
   const methods = useForm<ShareReturnFormType>({
     defaultValues: {
-      paymentMode: SharePaymentMode.BankVoucherOrCheque,
+      paymentMode: SharePaymentMode.Cash,
       bankVoucher: {
         depositedBy: ShareVoucherDepositedBy.Self,
       },
@@ -252,7 +252,7 @@ export const SharePurchaseForm = () => {
                       <FormSection>
                         <GridItem colSpan={2}>
                           <FormMemberSelect
-                            allMembers
+                            allMembers={false}
                             name="memberId"
                             label={t['sharePurchaseSelectMember']}
                           />
@@ -305,6 +305,7 @@ export const SharePurchaseForm = () => {
               <SharePaymentFooter
                 previousButtonHandler={previousButtonHandler}
                 handleSubmit={handleSubmit}
+                isDisabled={Number(denominationTotal) !== Number(cashPaid)}
               />
             )}
           </Container>

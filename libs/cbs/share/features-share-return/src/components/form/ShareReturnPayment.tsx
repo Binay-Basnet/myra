@@ -29,12 +29,12 @@ export const ShareReturnPayment = ({
   const paymentModes = watch('paymentMode');
 
   const accountList = [
+    { label: t['shareReturnCash'], value: SharePaymentMode.Cash },
     {
       label: t['shareReturnBankCheque'],
       value: SharePaymentMode.BankVoucherOrCheque,
     },
     { label: t['shareReturnAccount'], value: SharePaymentMode.Account },
-    { label: t['shareReturnCash'], value: SharePaymentMode.Cash },
   ];
 
   useEffect(() => {

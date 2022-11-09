@@ -51,34 +51,39 @@ export const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
                   {amountConverter(noOfShares * 100)}
                 </Text>
               </GridItem>
-
               {chargeList &&
                 chargeList?.map((item, index) => {
                   register(`extraFee.${index}.Id`, {
                     value: item?.id,
                   });
-
                   register(`extraFee.${index}.value`, {
                     value: item?.charge,
                   });
                   return (
-                    <GridItem display="flex" justifyContent="space-between">
-                      <Text
-                        color="neutralLightColor.Gray-60"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                        display="flex"
-                        alignItems="center"
-                      >
-                        {item?.name}
-                      </Text>
-                      <Box width="300px">
-                        <FormNumberInput
-                          name={`extraFee.${index}.value`}
-                          defaultValue={item?.charge}
-                        />
-                      </Box>
-                    </GridItem>
+                    <div key={item.id}>
+                      <GridItem display="flex" justifyContent="space-between">
+                        <Text
+                          color="neutralLightColor.Gray-60"
+                          fontWeight="Medium"
+                          fontSize="s3"
+                          display="flex"
+                          alignItems="center"
+                        >
+                          {item?.name}
+                        </Text>
+                        <Box width="300px">
+                          <FormNumberInput
+                            // {...register(`extraFee.${index}.value`, {
+                            //   value: item?.charge,
+                            // })}
+                            key={item.charge}
+                            name={`extraFee.${index}.value`}
+                            defaultValue={Number(item?.charge)}
+                          />
+                          {/* <Text> {item?.charge} </Text> */}
+                        </Box>
+                      </GridItem>
+                    </div>
                   );
                 })}
 

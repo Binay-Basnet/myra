@@ -6,9 +6,14 @@ import { useTranslation } from '@coop/shared/utils';
 type FooterProps = {
   previousButtonHandler: () => void;
   handleSubmit: () => void;
+  isDisabled?: boolean;
 };
 
-export const SharePaymentFooter = ({ previousButtonHandler, handleSubmit }: FooterProps) => {
+export const SharePaymentFooter = ({
+  previousButtonHandler,
+  handleSubmit,
+  isDisabled,
+}: FooterProps) => {
   const { t } = useTranslation();
 
   return (
@@ -24,6 +29,7 @@ export const SharePaymentFooter = ({ previousButtonHandler, handleSubmit }: Foot
       }
       mainButtonLabel={t['shareConfirmPayment']}
       mainButtonHandler={handleSubmit}
+      isMainButtonDisabled={isDisabled}
     />
   );
 };
