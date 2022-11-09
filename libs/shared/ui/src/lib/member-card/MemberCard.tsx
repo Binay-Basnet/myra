@@ -1,7 +1,7 @@
-import {useState} from 'react';
+import { useState } from 'react';
 // IoCopyOutline;
-import {IoQrCodeOutline} from 'react-icons/io5';
-import {useRouter} from 'next/router';
+import { IoQrCodeOutline } from 'react-icons/io5';
+import { useRouter } from 'next/router';
 import {
   Box,
   Grid,
@@ -21,10 +21,10 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
-import {AccountQRModal} from '@coop/shared/ui';
+import { AccountQRModal } from '@coop/shared/ui';
 
-import {Avatar} from '../avatar/Avatar';
-import {Button} from '../button/Button';
+import { Avatar } from '../avatar/Avatar';
+import { Button } from '../button/Button';
 
 /* eslint-disable-next-line */
 export interface MemberCardProps {

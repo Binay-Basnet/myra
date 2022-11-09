@@ -35,15 +35,26 @@ export const InstallmentData = ({ loanAccountId }: IProps) => {
               {data?.principal}{' '}
             </Text>
           </Box>
-
-          <Box display="flex" justifyContent="space-between">
-            <Text fontWeight="400" fontSize="s3">
-              Interest Amount{' '}
-            </Text>
-            <Text fontWeight="600" fontSize="s3">
-              {data?.interestAmount}{' '}
-            </Text>
-          </Box>
+          {data?.interestAmount && data.interestAmount !== '0' && (
+            <Box display="flex" justifyContent="space-between">
+              <Text fontWeight="400" fontSize="s3">
+                Interest Amount{' '}
+              </Text>
+              <Text fontWeight="600" fontSize="s3">
+                {data?.interestAmount}{' '}
+              </Text>
+            </Box>
+          )}
+          {data?.fine && data.fine !== '0' && (
+            <Box display="flex" justifyContent="space-between">
+              <Text fontWeight="400" fontSize="s3">
+                Fine{' '}
+              </Text>
+              <Text fontWeight="600" fontSize="s3">
+                {data?.fine}{' '}
+              </Text>
+            </Box>
+          )}
           <Divider />
           <Box display="flex" justifyContent="space-between">
             <Text fontWeight="600" fontSize="s3">
