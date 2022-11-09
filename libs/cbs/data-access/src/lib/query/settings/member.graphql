@@ -21,6 +21,11 @@ query getGeneralMemberSettingsData {
                 ledgerId
                 charge
               }
+              memberCode {
+                prefix
+                noOfDigits
+                initialNo
+              }
             }
           }
         }

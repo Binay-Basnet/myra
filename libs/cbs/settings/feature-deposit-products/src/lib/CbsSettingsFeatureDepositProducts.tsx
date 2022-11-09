@@ -3,6 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import {
+  AccountTypeFilter,
   DepositProductInactiveData,
   DepositProductStatus,
   Id_Type,
@@ -10,11 +11,12 @@ import {
   useGetDepositProductSettingsListQuery,
   useGetNewIdMutation,
   useSetDepositProductInactiveMutation,
+  useSetProductActiveMutation,
 } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { FormTextArea } from '@coop/shared/form';
 import { Column, Table } from '@coop/shared/table';
-import { asyncToast, Box, ChakraModal, PageHeader } from '@coop/shared/ui';
+import { asyncToast, ChakraModal, PageHeader } from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const DEPOSIT_TAB_ITEMS = [
@@ -29,17 +31,41 @@ const DEPOSIT_TAB_ITEMS = [
 ];
 
 type DepositTableProps = {
-  addNew: boolean;
+  addNew?: boolean;
+  showSettingsAction?: boolean;
 };
 
-export const SettingsDepositProducts = () => <DepositProductTable addNew />;
-
-export const DepositProductTable = ({ addNew }: DepositTableProps) => {
+export const SettingsDepositProducts = () => {
   const router = useRouter();
-  const { t } = useTranslation();
   const newId = useGetNewIdMutation();
+  const { t } = useTranslation();
 
-  const { mutateAsync } = useSetDepositProductInactiveMutation();
+  const onSubmit = () => {
+    newId
+      .mutateAsync({ idType: Id_Type.Depositproduct })
+      .then((res) => router.push(`/settings/general/deposit-products/add/${res?.newId}`));
+  };
+  return (
+    <>
+      <PageHeader
+        heading={`${t['settingsDepositProducts']} - ${featureCode?.settingsDepositProduct}`}
+        tabItems={DEPOSIT_TAB_ITEMS}
+        onClick={onSubmit}
+        button
+        buttonTitle={t['settingsDepositProductNew']}
+      />
+      <DepositProductTable addNew showSettingsAction />
+    </>
+  );
+};
+
+export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) => {
+  const router = useRouter();
+  const isInactive = router?.query['objState'] === DepositProductStatus.Inactive;
+  const { t } = useTranslation();
+
+  const { mutateAsync: setInactiveMutateAsync } = useSetDepositProductInactiveMutation();
+  const { mutateAsync: setActiveMutateAsync } = useSetProductActiveMutation();
 
   const [ID, setID] = useState('');
   const [openModal, setOpenModal] = useState(false);
@@ -71,13 +97,29 @@ export const DepositProductTable = ({ addNew }: DepositTableProps) => {
   );
   const rowData = useMemo(() => data?.settings?.general?.depositProduct?.list?.edges ?? [], [data]);
 
-  const popoverTitle = [
+  const popoverActiveTitle = [
     {
-      title: 'depositProductInactive',
+      title: 'loanProductMakeActive',
       onClick: (id: string) => {
         onOpenModal();
         setID(id);
       },
+    },
+  ];
+
+  const popoverInactiveTitle = [
+    {
+      title: 'loanProductMakeInactive',
+      onClick: (id: string) => {
+        onOpenModal();
+        setID(id);
+      },
+    },
+  ];
+
+  const popoverTitle = [
+    {
+      title: 'loanProductViewDetails',
     },
   ];
 
@@ -120,22 +162,35 @@ export const DepositProductTable = ({ addNew }: DepositTableProps) => {
       {
         id: '_actions',
         header: '',
-        cell: (props) => (
-          <ActionPopoverComponent items={popoverTitle} id={props?.row?.original?.node?.id} />
-        ),
+        cell: (props) => {
+          if (showSettingsAction) {
+            // console.log('hello', isInactive);
+            if (isInactive) {
+              return (
+                <ActionPopoverComponent
+                  items={popoverActiveTitle}
+                  id={props?.row?.original?.node?.id}
+                />
+              );
+            }
+            return (
+              <ActionPopoverComponent
+                items={popoverInactiveTitle}
+                id={props?.row?.original?.node?.id}
+              />
+            );
+          }
+          return (
+            <ActionPopoverComponent items={popoverTitle} id={props?.row?.original?.node?.id} />
+          );
+        },
         meta: {
           width: '50px',
         },
       },
     ],
-    [t]
+    [t, router, popoverTitle]
   );
-
-  const onSubmit = () => {
-    newId
-      .mutateAsync({ idType: Id_Type.Depositproduct })
-      .then((res) => router.push(`/settings/general/deposit-products/add/${res?.newId}`));
-  };
 
   const makeInactive = useCallback(async () => {
     await asyncToast({
@@ -149,7 +204,7 @@ export const DepositProductTable = ({ addNew }: DepositTableProps) => {
         onCloseModal();
         resetField('remarks');
       },
-      promise: mutateAsync({
+      promise: setInactiveMutateAsync({
         data: {
           id: ID,
           remarks: methods.getValues()['remarks'],
@@ -165,7 +220,36 @@ export const DepositProductTable = ({ addNew }: DepositTableProps) => {
       //   }
       // },
     });
-  }, [ID, mutateAsync]);
+  }, [ID, setInactiveMutateAsync]);
+
+  const makeActive = useCallback(async () => {
+    await asyncToast({
+      id: 'inactive-id',
+      msgs: {
+        success: 'Deposit Product made Active',
+        loading: 'making loan product active',
+      },
+      onSuccess: () => {
+        refetch();
+        onCloseModal();
+        resetField('remarks');
+      },
+      promise: setActiveMutateAsync({
+        productId: ID,
+        productType: AccountTypeFilter?.Deposit,
+        remarks: methods.getValues()['remarks'],
+      }),
+      // onError: (error) => {
+      //   if (error.__typename === 'ValidationError') {
+      //     Object.keys(error.validationErrorMsg).map((key) =>
+      //       methods.setError(key as keyof DepositProductInput, {
+      //         message: error.validationErrorMsg[key][0] as string,
+      //       })
+      //     );
+      //   }
+      // },
+    });
+  }, [ID, setActiveMutateAsync]);
 
   const onCancel = () => {
     resetField('remarks');
@@ -173,15 +257,6 @@ export const DepositProductTable = ({ addNew }: DepositTableProps) => {
 
   return (
     <>
-      <Box position="sticky" top="110px" zIndex={3}>
-        <PageHeader
-          heading={`${t['settingsDepositProducts']} - ${featureCode?.settingsDepositProduct}`}
-          tabItems={DEPOSIT_TAB_ITEMS}
-          onClick={onSubmit}
-          button={addNew}
-          buttonTitle={t['settingsDepositProductNew']}
-        />
-      </Box>
       <Table
         isLoading={isLoading}
         data={rowData}
@@ -194,15 +269,18 @@ export const DepositProductTable = ({ addNew }: DepositTableProps) => {
       <ChakraModal
         open={openModal}
         onClose={onCloseModal}
-        title="depositProductInactiveProduct"
+        title={isInactive ? 'depositProductActiveProduct' : 'depositProductInactiveProduct'}
         primaryButtonLabel="submit"
         secondaryButtonLabel="cancel"
         width="600px"
-        primaryButtonHandler={makeInactive}
+        primaryButtonHandler={isInactive ? makeActive : makeInactive}
         secondaryButtonHandler={onCancel}
       >
         <FormProvider {...methods}>
-          <FormTextArea name="remarks" label={t['depositProductInactiveReason']} />
+          <FormTextArea
+            name="remarks"
+            label={isInactive ? t['depositProductActiveReason'] : t['depositProductInactiveReason']}
+          />
         </FormProvider>
       </ChakraModal>
     </>

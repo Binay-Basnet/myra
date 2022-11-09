@@ -228,7 +228,7 @@ export type AccountTransferView = {
   transactionBranch?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['String']>;
   transferAmount?: Maybe<Scalars['String']>;
-  transferType?: Maybe<Scalars['String']>;
+  transferType?: Maybe<TransferType>;
   withdrawnBy?: Maybe<Scalars['String']>;
   withdrawnSlipNo?: Maybe<Scalars['String']>;
 };
@@ -1363,6 +1363,7 @@ export type ChartsOfAccountSettingsQuery = {
   accountsUnder?: Maybe<CoaMinimalResult>;
   class?: Maybe<ChartsOfAccountClassResult>;
   fullView: CoaFullView;
+  search?: Maybe<CoaMinimalResult>;
 };
 
 export type ChartsOfAccountSettingsQueryAccountsArgs = {
@@ -1371,6 +1372,10 @@ export type ChartsOfAccountSettingsQueryAccountsArgs = {
 
 export type ChartsOfAccountSettingsQueryAccountsUnderArgs = {
   accountCode?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type ChartsOfAccountSettingsQuerySearchArgs = {
+  name: Scalars['String'];
 };
 
 export type ChequeBookRequestConnection = {
@@ -2113,6 +2118,11 @@ export enum CustomerPayment {
   Cheque = 'CHEQUE',
 }
 
+export type DbCreateResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type DashboardData = {
   listDashboardTask?: Maybe<Array<Maybe<DashboardTask>>>;
   listTodayTrend?: Maybe<Array<Maybe<TodayTrend>>>;
@@ -2779,8 +2789,15 @@ export type DepositProductSearchFilter = {
 };
 
 export type DepositProductSettingsMutation = {
+  activateProduct?: Maybe<ProductActivateResult>;
   add?: Maybe<DepositProductResult>;
   makeInactive?: Maybe<DepositProductInactiveResult>;
+};
+
+export type DepositProductSettingsMutationActivateProductArgs = {
+  productId: Scalars['ID'];
+  productType: AccountTypeFilter;
+  remarks: Scalars['String'];
 };
 
 export type DepositProductSettingsMutationAddArgs = {
@@ -2892,12 +2909,12 @@ export type DepositTdsResult = {
 export type DepositTransactionView = {
   accountName?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
-  depositedBy?: Maybe<Scalars['String']>;
+  depositedBy?: Maybe<DepositedBy>;
   fine?: Maybe<Scalars['String']>;
   glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
   id: Scalars['ID'];
   member?: Maybe<Member>;
-  paymentMode?: Maybe<Scalars['String']>;
+  paymentMode?: Maybe<DepositPaymentType>;
   rebate?: Maybe<Scalars['String']>;
   sourceOfFund?: Maybe<Scalars['String']>;
   status?: Maybe<ObjState>;
@@ -4801,6 +4818,11 @@ export enum FrequencyTenure {
   Year = 'YEAR',
 }
 
+export type GenderLedgerReportResult = {
+  data?: Maybe<Array<Maybe<GeneralLedgerReportEntry>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type GeneralBranchSettingsMutation = {
   add: BranchAddResult;
 };
@@ -4825,14 +4847,25 @@ export type GeneralBranchSettingsQueryListArgs = {
   paginate?: InputMaybe<Pagination>;
 };
 
+export type GeneralLedgerReportEntry = {
+  account?: Maybe<Scalars['String']>;
+  balance?: Maybe<Scalars['String']>;
+  credit?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  debit?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+};
+
 export type GeneralMemberData = {
   charge?: Maybe<Array<Maybe<MemberChargeData>>>;
+  memberCode?: Maybe<MemberCode>;
   memberType?: Maybe<MemberActiveData>;
   risk?: Maybe<MemberRiskData>;
 };
 
 export type GeneralMemberInput = {
   charge?: InputMaybe<Array<InputMaybe<MemberChargeInput>>>;
+  memberCode?: InputMaybe<MemberCodeInput>;
   memberType?: InputMaybe<MemberActiveInput>;
   risk?: InputMaybe<MemberRiskInput>;
 };
@@ -7497,6 +7530,16 @@ export type Level2HelloArgs = {
   data: ExampleInput;
 };
 
+export type LoanAccReportDetails = {
+  accountNo?: Maybe<Scalars['String']>;
+  approvedAmount?: Maybe<Scalars['String']>;
+  installment?: Maybe<Scalars['Int']>;
+  interestRate?: Maybe<Scalars['Float']>;
+  issuedDate?: Maybe<Scalars['String']>;
+  loanSubtype?: Maybe<Scalars['String']>;
+  loanType?: Maybe<Scalars['String']>;
+};
+
 export type LoanAccount = {
   LoanAccountName?: Maybe<Scalars['String']>;
   appliedLoanAmount: Scalars['String'];
@@ -7880,6 +7923,12 @@ export type LoanDisbursementResult = {
   query?: Maybe<LoanAccountQuery>;
   record?: Maybe<LoanAccount>;
   recordId?: Maybe<Scalars['ID']>;
+};
+
+export type LoanFilters = {
+  amountRange?: InputMaybe<SavingAmountRange>;
+  service?: InputMaybe<SavingServiceType>;
+  transactionType?: InputMaybe<SavingTransactionType>;
 };
 
 export type LoanGeneralSettings = {
@@ -8554,6 +8603,30 @@ export type LoanSettingsResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type LoanStatement = {
+  date?: Maybe<Scalars['String']>;
+  disbursePrinciple?: Maybe<Scalars['String']>;
+  discount?: Maybe<Scalars['String']>;
+  finePaid?: Maybe<Scalars['String']>;
+  interestPaid?: Maybe<Scalars['String']>;
+  paidPrinciple?: Maybe<Scalars['String']>;
+  particular?: Maybe<Scalars['String']>;
+  remainingPrinciple?: Maybe<Scalars['String']>;
+  txnId?: Maybe<Scalars['String']>;
+};
+
+export type LoanStatementReport = {
+  loanAccDetails?: Maybe<LoanAccReportDetails>;
+  loanStatement?: Maybe<Array<Maybe<LoanStatement>>>;
+};
+
+export type LoanStatementReportSettings = {
+  customPeriod?: InputMaybe<CustomPeriodInput>;
+  loanAccountId: Scalars['ID'];
+  memberId: Scalars['ID'];
+  periodType: ReportPeriodType;
+};
+
 export type LocalizationExample = {
   name?: Maybe<Scalars['Localized']>;
 };
@@ -8772,6 +8845,18 @@ export type MemberClassificationReportData = {
 export type MemberClassificationReportResult = {
   data?: Maybe<MemberClassificationReportData>;
   error?: Maybe<QueryError>;
+};
+
+export type MemberCode = {
+  initialNo?: Maybe<Scalars['String']>;
+  noOfDigits?: Maybe<Scalars['Int']>;
+  prefix?: Maybe<Scalars['String']>;
+};
+
+export type MemberCodeInput = {
+  initialNo?: InputMaybe<Scalars['String']>;
+  noOfDigits?: InputMaybe<Scalars['Int']>;
+  prefix?: InputMaybe<Scalars['String']>;
 };
 
 export type MemberDetailsResult = {
@@ -9345,6 +9430,7 @@ export type NeosysClientFilter = {
 export type NeosysClientMinimalInfo = {
   clientName?: Maybe<Scalars['String']>;
   dateJoined?: Maybe<Scalars['String']>;
+  dbCreated?: Maybe<Scalars['Boolean']>;
   districtId?: Maybe<Scalars['String']>;
   houseNo?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
@@ -9356,10 +9442,15 @@ export type NeosysClientMinimalInfo = {
 
 export type NeosysClientMutation = {
   add?: Maybe<OrganizationClientAddResult>;
+  createDB?: Maybe<DbCreateResult>;
 };
 
 export type NeosysClientMutationAddArgs = {
   data?: InputMaybe<OrganizationClientInput>;
+};
+
+export type NeosysClientMutationCreateDbArgs = {
+  saccosId: Scalars['ID'];
 };
 
 export type NeosysClientQuery = {
@@ -9976,6 +10067,11 @@ export type PresignedUrlOutput = {
   putUrl?: Maybe<Scalars['String']>;
 };
 
+export type ProductActivateResult = {
+  error?: Maybe<MutationError>;
+  recordId: Scalars['ID'];
+};
+
 export type ProductCode = {
   initialNo?: InputMaybe<Scalars['String']>;
   noOfDigits?: InputMaybe<Scalars['Int']>;
@@ -10184,11 +10280,19 @@ export enum ReportPeriodType {
 }
 
 export type ReportQuery = {
+  generalLedgerReport: GenderLedgerReportResult;
   getReport?: Maybe<SavedReportResponse>;
   listReports: ReportListConnection;
+  loanStatementReport?: Maybe<ReportResult>;
   memberClassificationReport: MemberClassificationReportResult;
   savingStatementReport?: Maybe<ReportResult>;
   shareStatementReport?: Maybe<ReportResult>;
+};
+
+export type ReportQueryGeneralLedgerReportArgs = {
+  date?: InputMaybe<LocalizedDateFilter>;
+  ledgerId: Scalars['ID'];
+  period?: InputMaybe<ReportPeriodType>;
 };
 
 export type ReportQueryGetReportArgs = {
@@ -10199,6 +10303,10 @@ export type ReportQueryListReportsArgs = {
   filter?: InputMaybe<ReportListFilter>;
   organizationId?: InputMaybe<Scalars['ID']>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type ReportQueryLoanStatementReportArgs = {
+  data: LoanStatementReportSettings;
 };
 
 export type ReportQueryMemberClassificationReportArgs = {
@@ -10215,6 +10323,7 @@ export type ReportQueryShareStatementReportArgs = {
 };
 
 export type ReportResult = {
+  error?: Maybe<QueryError>;
   member?: Maybe<Member>;
   memberId?: Maybe<Scalars['ID']>;
   statement?: Maybe<StatementReport>;
@@ -11276,7 +11385,7 @@ export enum SlipState {
   Used = 'USED',
 }
 
-export type StatementReport = SavingStatementReport | ShareStatementReport;
+export type StatementReport = LoanStatementReport | SavingStatementReport | ShareStatementReport;
 
 export type StatementReportInput = {
   data?: InputMaybe<ShareStatementReportSettings>;
@@ -11984,7 +12093,7 @@ export type WithdrawTransactionView = {
   marketRepId?: Maybe<Scalars['String']>;
   marketRepName?: Maybe<Scalars['String']>;
   member?: Maybe<Member>;
-  paymentMode?: Maybe<Scalars['String']>;
+  paymentMode?: Maybe<WithdrawPaymentType>;
   status?: Maybe<ObjState>;
   teller?: Maybe<Scalars['String']>;
   totalCredit?: Maybe<Scalars['String']>;
@@ -11993,7 +12102,8 @@ export type WithdrawTransactionView = {
   transactionBranch?: Maybe<Scalars['String']>;
   transactionDate?: Maybe<Scalars['String']>;
   withdrawAmount?: Maybe<Scalars['String']>;
-  withdrawnBy?: Maybe<Scalars['String']>;
+  withdrawWith?: Maybe<WithdrawWith>;
+  withdrawnBy?: Maybe<WithdrawBy>;
 };
 
 export type WithdrawTransactionViewResult = {
@@ -12100,6 +12210,14 @@ export type AddNewClientMutation = {
       } | null;
     } | null;
   };
+};
+
+export type CreateDbMutationVariables = Exact<{
+  saccosID: Scalars['ID'];
+}>;
+
+export type CreateDbMutation = {
+  neosys: { client?: { createDB?: { recordId?: string | null } | null } | null };
 };
 
 export type GetMeQueryVariables = Exact<{ [key: string]: never }>;
@@ -12375,6 +12493,25 @@ export const useAddNewClientMutation = <TError = unknown, TContext = unknown>(
   useMutation<AddNewClientMutation, TError, AddNewClientMutationVariables, TContext>(
     ['addNewClient'],
     useAxios<AddNewClientMutation, AddNewClientMutationVariables>(AddNewClientDocument),
+    options
+  );
+export const CreateDbDocument = `
+    mutation createDB($saccosID: ID!) {
+  neosys {
+    client {
+      createDB(saccosId: $saccosID) {
+        recordId
+      }
+    }
+  }
+}
+    `;
+export const useCreateDbMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<CreateDbMutation, TError, CreateDbMutationVariables, TContext>
+) =>
+  useMutation<CreateDbMutation, TError, CreateDbMutationVariables, TContext>(
+    ['createDB'],
+    useAxios<CreateDbMutation, CreateDbMutationVariables>(CreateDbDocument),
     options
   );
 export const GetMeDocument = `

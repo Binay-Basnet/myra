@@ -17,11 +17,6 @@ const myraAppn = [
     link: '/members/list',
   },
   {
-    title: 'inventoryManagement',
-    img: '/inventory.svg',
-    link: '/inventory/register',
-  },
-  {
     title: 'memberAndShareManagement',
     img: '/memberandshare.svg',
     link: '/members/list',
@@ -36,24 +31,14 @@ const myraAppn = [
     img: '/tnt.svg',
     link: '/alternative-channels/mBanking/users',
   },
+  {
+    title: 'inventoryManagement',
+    img: '/inventory.svg',
+    link: '/inventory/register',
+  },
 ];
 
-const moreFromMyra = [
-  {
-    title: 'assetsAndInventoryManagement',
-    img: '/tern.svg',
-    link: '/members/list',
-  },
-  {
-    title: 'fixedAssetManagement',
-    img: '/zcl.svg',
-    link: '/members/list',
-  },
-  {
-    title: 'hrTrainingAndCapacityManagement',
-    img: '/btcd.svg',
-    link: '/members/list',
-  },
+const notSubscribed = [
   {
     title: 'mobileApp',
     img: '/fct.svg',
@@ -70,9 +55,28 @@ const moreFromMyra = [
     img: '/bnty.svg',
     link: '/members/list',
   },
+];
+
+const comingSoon = [
   {
     title: 'businessProcessManagement',
     img: '/rvn.svg',
+    link: '/members/list',
+  },
+  {
+    title: 'assetsAndInventoryManagement',
+    img: '/tern.svg',
+    link: '/members/list',
+  },
+  {
+    title: 'fixedAssetManagement',
+    img: '/zcl.svg',
+    link: '/members/list',
+  },
+
+  {
+    title: 'hrTrainingAndCapacityManagement',
+    img: '/btcd.svg',
     link: '/members/list',
   },
 ];
@@ -165,43 +169,109 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
             )}
           </Box>
           <Collapse in={isOpen} style={{ marginTop: '0px' }}>
-            <Box display="flex" alignItems="center" flexDir="column">
-              {moreFromMyra.map((item) => (
-                <Box
-                  key={item?.link}
-                  w="100%"
+            <Box gap="s32" py="s8" display="flex" alignItems="center" flexDir="column">
+              <Box width="100%">
+                <TextFields
                   px="s16"
-                  py="s8"
-                  display="flex"
-                  borderRadius="br2"
-                  gap="s16"
-                  minH="48px"
-                  maxH="56px"
-                  alignItems="center"
-                  cursor="pointer"
-                  _hover={{ bg: 'gray.200', filter: 'none' }}
-                  onClick={() => router.push(item.link)}
-                  filter="grayscale(100%)"
+                  fontSize="r1"
+                  fontWeight="Medium"
+                  marginBottom="s16"
+                  color="neutralColorLight.Gray-60"
                 >
+                  Not Subscribed
+                </TextFields>
+                {notSubscribed.map((ns) => (
                   <Box
+                    key={ns?.link}
+                    w="100%"
+                    px="s16"
+                    py="s8"
                     display="flex"
-                    justifyContent="center"
+                    borderRadius="br2"
+                    gap="s16"
+                    minH="48px"
+                    maxH="56px"
                     alignItems="center"
-                    w="s32"
-                    borderRadius="50%"
+                    cursor="pointer"
+                    _hover={{ bg: 'gray.200', filter: 'none' }}
+                    onClick={() => router.push(ns.link)}
+                    filter="grayscale(100%)"
                   >
-                    <Avatar
-                      width="s32"
-                      height="s32"
-                      src={item.img}
-                      // alt="corebanking"
-                    />
+                    <Box
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      w="s32"
+                      borderRadius="50%"
+                    >
+                      <Avatar
+                        width="s32"
+                        height="s32"
+                        src={ns.img}
+                        // alt="corebanking"
+                      />
+                    </Box>
+                    <TextFields
+                      fontSize="r1"
+                      fontWeight="Regular"
+                      color="neutralColorLight.Gray-80"
+                    >
+                      {t[ns.title]}
+                    </TextFields>
                   </Box>
-                  <TextFields fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">
-                    {t[item.title]}
-                  </TextFields>
-                </Box>
-              ))}
+                ))}
+              </Box>
+              <Box width="100%">
+                <TextFields
+                  px="s16"
+                  fontSize="r1"
+                  fontWeight="Medium"
+                  marginBottom="s16"
+                  color="neutralColorLight.Gray-60"
+                >
+                  Coming Soon
+                </TextFields>
+                {comingSoon.map((ns) => (
+                  <Box
+                    key={ns?.link}
+                    w="100%"
+                    px="s16"
+                    py="s8"
+                    display="flex"
+                    borderRadius="br2"
+                    gap="s16"
+                    minH="48px"
+                    maxH="56px"
+                    alignItems="center"
+                    cursor="pointer"
+                    _hover={{ bg: 'gray.200', filter: 'none' }}
+                    onClick={() => router.push(ns.link)}
+                    filter="grayscale(100%)"
+                  >
+                    <Box
+                      display="flex"
+                      justifyContent="center"
+                      alignItems="center"
+                      w="s32"
+                      borderRadius="50%"
+                    >
+                      <Avatar
+                        width="s32"
+                        height="s32"
+                        src={ns.img}
+                        // alt="corebanking"
+                      />
+                    </Box>
+                    <TextFields
+                      fontSize="r1"
+                      fontWeight="Regular"
+                      color="neutralColorLight.Gray-80"
+                    >
+                      {t[ns.title]}
+                    </TextFields>
+                  </Box>
+                ))}
+              </Box>
             </Box>
           </Collapse>
         </Box>
