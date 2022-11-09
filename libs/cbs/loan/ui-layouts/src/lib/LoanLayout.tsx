@@ -77,8 +77,18 @@ export const LoanListLayout = ({ children }: IAccountPageLayoutProps) => {
   const { t } = useTranslation();
 
   return (
-    <Box display="flex">
-      <Box width="260px" flexShrink={0} position="fixed">
+    <Box minH="calc(100vh - 110px)">
+      <Box
+        sx={{
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        }}
+        width="260px"
+        height="100%"
+        overflowY="auto"
+        position="fixed"
+      >
         <Box height="50px" alignItems="center" display="flex" py="s12" px="s16">
           <Text fontSize="l1" fontWeight="600" color="gray.800">
             Loan

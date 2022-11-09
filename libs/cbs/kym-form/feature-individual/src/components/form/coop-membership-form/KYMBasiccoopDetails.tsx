@@ -1,27 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { AiOutlineSearch } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import { isEqual } from 'lodash';
 import debounce from 'lodash/debounce';
 
 import {
   FormFieldSearchTerm,
-  Id_Type,
-  useDeleteMemberFamilyDetailsMutation,
   useGetIndividualKymEditDataQuery,
-  useGetIndividualKymFamilyMembersListQuery,
   useGetIndividualKymOptionsQuery,
-  useGetMemberListQuery,
-  useGetNewIdMutation,
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
-import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, Button, FormMemberSelect, FormSection, GridItem, Icon } from '@coop/shared/ui';
-import { getKymSection, getRouterQuery, isDeepEmpty, useTranslation } from '@coop/shared/utils';
+import { Box, FormMemberSelect, FormSection, GridItem } from '@coop/shared/ui';
+import { getKymSection, useTranslation } from '@coop/shared/utils';
 
-import { FamilyMember } from './FamilyMember';
+import { KYMBasiccoopDetailsFamilyMember } from './KYMBasiccoopDetailsFamilyMember';
 import { getFieldOption } from '../../../utils/getFieldOption';
 
 const booleanList = [
@@ -34,228 +26,6 @@ const booleanList = [
     value: false,
   },
 ];
-
-interface IKYMBasiccoopDetailsFamilyMemberProps {
-  setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
-}
-
-const KYMBasiccoopDetailsFamilyMember = ({
-  setKymCurrentSection,
-}: IKYMBasiccoopDetailsFamilyMemberProps) => {
-  // const [showFamilyDetailCard, setShowFamilyDetailCard] = useState(false);
-  const [selectedFamilyMember, setSelectedFamilyMember] = useState('');
-
-  const { t } = useTranslation();
-
-  const router = useRouter();
-
-  const id = router?.query?.['id'];
-
-  const methods = useForm();
-
-  const { watch, reset } = methods;
-
-  const formMethods = useForm({
-    // defaultValues: {
-    //   isFamilyAMember: false,
-    //   isMemberOfAnotherCooperative: false,
-    // },
-  });
-
-  const { reset: formReset } = formMethods;
-
-  // const { data: familyRelationShipData, isLoading: familyRelationshipLoading } =
-  //   useGetIndividualKymOptionsQuery({
-  //     searchTerm: FormFieldSearchTerm.Relationship,
-  //   });
-
-  const isFamilyAMember = watch('isFamilyAMember');
-
-  const { data: editValues } = useGetIndividualKymEditDataQuery(
-    {
-      id: String(id),
-    },
-    { enabled: !!id }
-  );
-
-  useEffect(() => {
-    if (editValues) {
-      const editValueData = editValues?.members?.individual?.formState?.data?.formData;
-
-      reset({
-        isFamilyAMember: editValueData?.isFamilyAMember,
-      });
-    }
-  }, [editValues]);
-
-  const { mutate } = useSetMemberDataMutation();
-
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        const editValueData = editValues?.members?.individual?.formState?.data?.formData;
-        if (id && !isDeepEmpty(data) && !isEqual(data, editValueData)) {
-          mutate({ id: String(id), data });
-        }
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
-
-  const { data: memberListData } = useGetMemberListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-  });
-
-  const memberSelectOption = memberListData?.members?.list?.edges?.map((item) => ({
-    value: item?.node?.id ?? '',
-    label: `${item?.node?.id ?? ''}-${item?.node?.name?.local ?? ''}`,
-  }));
-
-  // const selectedMemberDetails = memberListData?.members?.list?.edges?.filter(
-  //   (item) => item?.node?.id === selectedFamilyMember
-  // );
-
-  const [familyMemberMutationIds, setFamilyMemberMutationIds] = useState<string[]>([]);
-
-  const [familyMemberIds, setFamilyMemberIds] = useState<string[]>([]);
-
-  const { data: familyMemberListQueryData, refetch } = useGetIndividualKymFamilyMembersListQuery(
-    {
-      id: String(id),
-    },
-    { enabled: !!id }
-  );
-
-  useEffect(() => {
-    if (familyMemberListQueryData) {
-      const editValueData =
-        familyMemberListQueryData?.members?.individual?.listFamilyMember?.data?.filter(
-          (familyMember) => !!familyMember?.familyMemberId
-        );
-
-      setFamilyMemberMutationIds(
-        editValueData?.reduce(
-          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
-          [] as string[]
-        ) ?? []
-      );
-
-      setFamilyMemberIds(
-        editValueData?.reduce(
-          (prevVal, curVal) => (curVal ? [...prevVal, curVal.familyMemberId as string] : prevVal),
-          [] as string[]
-        ) ?? []
-      );
-    }
-  }, [familyMemberListQueryData]);
-
-  const { mutate: newIDMutate } = useGetNewIdMutation({
-    onSuccess: (res) => {
-      setFamilyMemberMutationIds([...familyMemberMutationIds, res.newId]);
-      formReset({ memberName: '', memberId: '' });
-    },
-  });
-
-  const { mutate: deleteMutate } = useDeleteMemberFamilyDetailsMutation({
-    onSuccess: (res) => {
-      // refetch();
-      const deletedId = String(res?.members?.individual?.familyMember?.delete?.recordId);
-
-      const tempFamilyMemberMutationIds = [...familyMemberMutationIds];
-
-      tempFamilyMemberMutationIds.splice(tempFamilyMemberMutationIds.indexOf(deletedId), 1);
-
-      setFamilyMemberMutationIds([...tempFamilyMemberMutationIds]);
-
-      const tempFamilyMemberIds = [...familyMemberIds];
-
-      setFamilyMemberIds([...familyMemberIds.splice(tempFamilyMemberIds.indexOf(deletedId), 1)]);
-    },
-  });
-
-  const appendFamilyMember = () => {
-    setFamilyMemberIds([...familyMemberIds, selectedFamilyMember]);
-    newIDMutate({ idType: Id_Type.Kymindividualfamilymembers });
-  };
-
-  const removeFamilyMember = (mutationId: string) => {
-    deleteMutate({ memberId: String(id), id: mutationId });
-  };
-
-  useEffect(() => {
-    if (id) {
-      refetch();
-    }
-  }, [id]);
-
-  return (
-    <FormSection id="kymAccIndFamilyMemberinthisinstitution">
-      <GridItem colSpan={3}>
-        <FormProvider {...methods}>
-          <form
-            onFocus={(e) => {
-              const kymSection = getKymSection(e.target.id);
-              setKymCurrentSection(kymSection);
-            }}
-          >
-            <FormSwitchTab
-              label={t['kynIndFamilyMemberinthisinstitution']}
-              options={booleanList}
-              name="isFamilyAMember"
-              id="familyMemberInThisInstitution"
-            />
-          </form>
-        </FormProvider>
-      </GridItem>
-
-      {isFamilyAMember && (
-        <GridItem colSpan={3}>
-          {familyMemberMutationIds.map((mutationId, index) => (
-            <FamilyMember
-              mutationId={mutationId}
-              familyMemberId={familyMemberIds[index]}
-              memberId={id as string}
-              removeFamilyMember={removeFamilyMember}
-            />
-          ))}
-
-          <FormProvider {...formMethods}>
-            <form>
-              <InputGroupContainer>
-                <FormInput
-                  name="memberName"
-                  mt={1}
-                  type="text"
-                  flexGrow="1"
-                  id="familyMemberInThisCooperative.0.memberId"
-                  __placeholder={t['kynIndFirstName']}
-                  bg="white"
-                />
-                <FormSelect
-                  name="memberId"
-                  __placeholder={t['kynIndEnterMemberID']}
-                  options={memberSelectOption}
-                  onChange={(e: { label: string; value: string }) =>
-                    setSelectedFamilyMember(e.value)
-                  }
-                />
-                <Button
-                  id="findmemberButton"
-                  variant="outline"
-                  leftIcon={<Icon size="md" as={AiOutlineSearch} />}
-                  onClick={() => appendFamilyMember()}
-                >
-                  {t['kynIndFindMember']}
-                </Button>
-              </InputGroupContainer>
-            </form>
-          </FormProvider>
-        </GridItem>
-      )}
-    </FormSection>
-  );
-};
 
 interface IKYMBasiccoopDetailsBasicProps {
   setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
