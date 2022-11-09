@@ -68,7 +68,7 @@ const keyMap = {
   inputFocus: ['ctrl+/'],
   appSwitcher: 'alt+o',
 
-  settingShortcut: ['ctrl+shift+,'],
+  settingShortcut: ['ctrl+shift+alt+s'],
   showHelpOptions: ['alt+i'],
   showProfile: ['alt+p'],
 
@@ -347,7 +347,7 @@ export const TopLevelHeader = () => {
               color="white"
               borderRadius="br1"
               _hover={{ backgroundColor: 'secondary.900' }}
-              onClick={() => router.push('/settings/general/audit-log')}
+              onClick={() => router.push('/settings/general/organization')}
               ref={settingShortcut}
             />
 

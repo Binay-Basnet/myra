@@ -114,7 +114,7 @@ export const CBSAccountList = () => {
     <>
       <Box position="sticky" top="110px" zIndex={3}>
         <PageHeader
-          heading={`Account List - ${featureCode?.accountList}`}
+          heading={`Saving Accounts - ${featureCode?.accountList}`}
           tabItems={ACCOUNT_TAB_ITEMS}
         />
       </Box>
