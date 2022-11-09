@@ -3355,7 +3355,7 @@ const ne: Record<string, string> = {
   // savings
   savings: 'Savings',
 
-  savingsDepositSettings: 'Deposit Settings',
+  savingsDepositSettings: 'Saving Settings',
   savingsProductSettings: 'Saving Products Settings',
 
   savingsDepositStatementReport: 'Saving / Deposit Statement Report',
