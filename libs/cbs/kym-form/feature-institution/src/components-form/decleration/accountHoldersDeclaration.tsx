@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { KymInsInput, useAllAdministrationQuery } from '@coop/cbs/data-access';
+import { KymInsInput } from '@coop/cbs/data-access';
 import { FormAddress, FormCheckbox, FormInput } from '@coop/shared/form';
 import { Box, FormSection, TextFields } from '@coop/shared/ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
@@ -14,12 +14,10 @@ interface IProps {
 export const AccountHolderDeclarationInstitution = (props: IProps) => {
   const { t } = useTranslation();
 
-  const { data } = useAllAdministrationQuery();
   const methods = useForm<KymInsInput>({
     defaultValues: {},
   });
   const { setSection } = props;
-  const { watch } = methods;
 
   useInstitution({ methods });
 
@@ -38,7 +36,7 @@ export const AccountHolderDeclarationInstitution = (props: IProps) => {
         </FormSection>
 
         <FormAddress
-          name="accountHolderName"
+          name="accountHolderAddress"
           sectionHeader="kymInAccountHolderDeclarations"
           sectionId="kymInsAccountHolderDeclaration"
         />

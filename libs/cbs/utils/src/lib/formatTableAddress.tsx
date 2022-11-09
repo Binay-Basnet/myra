@@ -1,6 +1,6 @@
 import { Address } from '@coop/cbs/data-access';
 
-export const formatTableAddress = (address: Address | undefined | null) => {
+export const formatTableAddress = (address: Partial<Address> | undefined | null) => {
   if (!address?.localGovernment?.local && !address?.wardNo) {
     return '-';
   }

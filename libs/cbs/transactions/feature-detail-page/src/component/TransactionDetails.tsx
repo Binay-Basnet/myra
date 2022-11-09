@@ -1,4 +1,4 @@
-import { ObjState } from '@coop/cbs/data-access';
+import { ObjState, TransferType } from '@coop/cbs/data-access';
 import { DetailCardContent, DetailsCard } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -69,7 +69,7 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailWithdrawBy']}
-            subtitle={withdrawDetailData?.withdrawnBy}
+            subtitle={withdrawDetailData?.withdrawWith}
           />
           <DetailCardContent
             title={t['transDetailChequeNo']}
@@ -98,7 +98,7 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailTransactionDate']}
-            subtitle={accountTransferDetailData?.id}
+            subtitle={accountTransferDetailData?.transactionDate}
           />
           <DetailCardContent
             title={t['transDetailSourceAccount']}
@@ -106,7 +106,11 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailTransferType']}
-            subtitle={accountTransferDetailData?.transferType}
+            subtitle={
+              accountTransferDetailData?.transferType === TransferType.Member
+                ? t['transDetailMembertoMember']
+                : t['transDetailSelf']
+            }
           />
           <DetailCardContent
             title={t['transDetailReceipentMember']}
@@ -114,7 +118,7 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailReceipentAccount']}
-            subtitle={accountTransferDetailData?.id}
+            subtitle={accountTransferDetailData?.destinationAccount?.id}
           />
           <DetailCardContent
             title={t['transDetailWithdrawBy']}
@@ -143,11 +147,7 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
             title={t['transDetailTransactionDate']}
             subtitle={agentTransactionDetailData?.transactionDate}
           />
-          <DetailCardContent
-            title={t['transDetailStatus']}
-            status
-            subtitle={agentTransactionDetailData?.status}
-          />
+          <DetailCardContent title={t['transDetailStatus']} status />
         </>
       )}
     </DetailsCard>

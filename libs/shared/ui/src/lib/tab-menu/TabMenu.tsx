@@ -95,12 +95,13 @@ export const TabMenu = () => {
       px="s16"
       pt="s4"
       pb="5px"
+      gap="32px"
       background="secondary.700"
       alignItems="center"
       display="flex"
     >
-      <Box w="244px">
-        <Text fontWeight="SemiBold" fontSize="s16" color="gray.0" letterSpacing="wide">
+      <Box>
+        <Text fontWeight="SemiBold" fontSize="s16" color="gray.0">
           {t['corebankingSystems']}
         </Text>
       </Box>

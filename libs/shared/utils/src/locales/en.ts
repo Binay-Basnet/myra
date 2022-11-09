@@ -3672,6 +3672,8 @@ const en: Record<string, string> = {
   shareRegisterTableIssue: 'Issue',
   shareRegisterTableReturn: 'Return',
   depositProductInactiveProduct: 'Inactive Deposit Product',
+  depositProductActiveProduct: 'Make Deposit Product Active',
+
   depositProductInactiveReason: 'Reason for Inactive',
   depositProductActiveReason: 'Reason for Active',
 
@@ -3812,6 +3814,8 @@ const en: Record<string, string> = {
   memberSettingsMemberID: 'Member ID',
   memberSettingsCorePreview: 'Core Preview',
   memberSettingsSetup: 'Setup',
+
+  memberSettingssCorePreview: 'Core Preview',
 };
 
 export default en;

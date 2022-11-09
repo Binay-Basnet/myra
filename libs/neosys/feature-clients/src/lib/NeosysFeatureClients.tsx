@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 
-import { useGetClientsListQuery } from '@coop/neosys-admin/data-access';
+import { useCreateDbMutation, useGetClientsListQuery } from '@coop/neosys-admin/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, PageHeader, TablePopover, Text } from '@coop/shared/ui';
+import { asyncToast, Avatar, Box, PageHeader, TablePopover, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const CLIENTS_TAB_ITEMS = [
@@ -23,6 +23,7 @@ export const CLIENTS_TAB_ITEMS = [
 
 export const ClientsListPage = () => {
   const { t } = useTranslation();
+  const { mutateAsync } = useCreateDbMutation();
 
   // const router = useRouter();
   const { data, isFetching } = useGetClientsListQuery();
@@ -63,7 +64,9 @@ export const ClientsListPage = () => {
       {
         header: t['memberListTableAddress'],
         accessorFn: (row) =>
-          `${row?.provinceId}, ${row?.districtId}, ${row?.houseNo}, ${row?.localGovernmentId}, $`,
+          `${row?.provinceId}, ${row?.districtId ?? ''}, ${row?.houseNo ?? ''}, ${
+            row?.localGovernmentId
+          },`,
         meta: {
           width: '300px',
         },
@@ -83,13 +86,17 @@ export const ClientsListPage = () => {
               node={cell.row.original}
               items={[
                 {
-                  title: 'neoClientTableViewClientProfile',
-                },
-                {
-                  title: 'neoClientTableEditClient',
-                },
-                {
-                  title: 'neoClientTableMakeInactive',
+                  title: 'Create Database',
+                  onClick: async (node) => {
+                    await asyncToast({
+                      id: 'create-db',
+                      msgs: {
+                        success: 'Db Created Successfully',
+                        loading: 'Creating New DB for this Saccos',
+                      },
+                      promise: mutateAsync({ saccosID: node.id as string }),
+                    });
+                  },
                 },
               ]}
             />

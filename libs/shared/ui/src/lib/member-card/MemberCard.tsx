@@ -413,7 +413,7 @@ export const MemberCard = ({
                   {accountInfo.interestAccured && (
                     <Box display="flex" justifyContent="space-between">
                       <Text fontSize="s3" fontWeight={400} color="neutralColorLight.700">
-                        Accured Interest
+                        Accrued Interest
                       </Text>
                       <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
                         {accountInfo.interestAccured}

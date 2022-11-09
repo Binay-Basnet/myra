@@ -61,7 +61,7 @@ export const ShareRegisterTable = () => {
             <Avatar
               name={props.getValue() as string}
               size="sm"
-              src={props?.row?.original?.node?.member?.profilePic ?? ' '}
+              src={props?.row?.original?.node?.member?.profilePicUrl ?? ' '}
             />
             <span>{props.getValue() as string}</span>
           </Box>

@@ -22,7 +22,7 @@ export const CbsCloseDay = () => {
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.lg" height="fit-content" p="0">
-            <FormFooter isDisabled mainButtonLabel={t['dayCloseCloseDay']} />
+            <FormFooter mainButtonLabel={t['dayCloseCloseDay']} />
           </Container>
         </Box>
       </Box>
