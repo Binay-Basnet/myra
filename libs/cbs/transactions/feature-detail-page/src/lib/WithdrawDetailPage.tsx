@@ -1,4 +1,4 @@
-import { DepositPaymentType } from '@coop/cbs/data-access';
+import { WithdrawPaymentType } from '@coop/cbs/data-access';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -46,7 +46,9 @@ export const WithdrawDetailPage = () => {
         </Text>
         <TransactionDetails detailPage="withdraw" />
         <PaymentDetails detailPage="withdraw" />
-        {withdrawDetailData?.paymentMode === DepositPaymentType?.Cheque && <MarketRepresentative />}
+        {withdrawDetailData?.paymentMode === WithdrawPaymentType?.BankCheque && (
+          <MarketRepresentative />
+        )}
 
         <OtherDetails
           branch={withdrawDetailData?.transactionBranch as string}

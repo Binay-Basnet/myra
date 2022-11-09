@@ -164,7 +164,7 @@ export const CbsMemberFeatureInactivations = () => {
             });
           }}
           dangerButton
-          isDisabled={!isAllAccountsClosed || !isShareReturned}
+          isMainButtonDisabled={!isAllAccountsClosed || !isShareReturned}
         />
       </Box>
     </Container>

@@ -3812,6 +3812,8 @@ const en: Record<string, string> = {
   memberSettingsMemberID: 'Member ID',
   memberSettingsCorePreview: 'Core Preview',
   memberSettingsSetup: 'Setup',
+
+  memberSettingssCorePreview: 'Core Preview',
 };
 
 export default en;

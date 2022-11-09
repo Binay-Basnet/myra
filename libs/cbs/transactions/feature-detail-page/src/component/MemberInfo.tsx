@@ -22,7 +22,7 @@ export const MemberInfo = ({
   destinationAccount,
 }: MemberInfoProps) => (
   <Box borderBottom="1px" borderBottomColor="border.layout">
-    <Box h="60px" w="100%" px="s16" display="flex" alignItems="center" gap="s8">
+    <Box h="s64" w="100%" px="s16" display="flex" alignItems="center" gap="s8">
       {detailPage !== 'accountTransfer' && <Avatar src={profilePic} size="md" name="test" />}
       {detailPage === 'accountTransfer' ? (
         <Box display="flex" alignItems="center" gap="s12">

@@ -14142,7 +14142,7 @@ export type GetLoanProductTypeQuery = { settings: { general?: { loan?: { product
 export type GetGeneralMemberSettingsDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetGeneralMemberSettingsDataQuery = { settings: { general?: { KYM?: { general?: { generalMember?: { record?: { memberType?: { individual?: boolean | null, institution?: boolean | null, cooperative?: boolean | null, cooperativeUnion?: boolean | null } | null, risk?: { generalRisk?: number | null, mediumRisk?: number | null, highRisk?: number | null } | null, charge?: Array<{ memberType: KymMemberTypesEnum, ledgerId: string, charge: number } | null> | null } | null } | null } | null } | null } | null } };
+export type GetGeneralMemberSettingsDataQuery = { settings: { general?: { KYM?: { general?: { generalMember?: { record?: { memberType?: { individual?: boolean | null, institution?: boolean | null, cooperative?: boolean | null, cooperativeUnion?: boolean | null } | null, risk?: { generalRisk?: number | null, mediumRisk?: number | null, highRisk?: number | null } | null, charge?: Array<{ memberType: KymMemberTypesEnum, ledgerId: string, charge: number } | null> | null, memberCode?: { prefix?: string | null, noOfDigits?: number | null, initialNo?: string | null } | null } | null } | null } | null } | null } | null } };
 
 export type GetPreDefinedFieldsQueryVariables = Exact<{
   filter: PredefinedElementFilter;
@@ -14346,7 +14346,7 @@ export type TransactionWithdrawDetailQueryVariables = Exact<{
 }>;
 
 
-export type TransactionWithdrawDetailQuery = { transaction: { viewWithdraw?: { data?: { id: string, transactionDate?: string | null, accountName?: string | null, chequeNo?: string | null, withdrawAmount?: string | null, fine?: string | null, totalWithdrawnAmount?: string | null, status?: ObjState | null, paymentMode?: WithdrawPaymentType | null, withdrawnBy?: WithdrawBy | null, marketRepId?: string | null, marketRepName?: string | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
+export type TransactionWithdrawDetailQuery = { transaction: { viewWithdraw?: { data?: { id: string, transactionDate?: string | null, accountName?: string | null, chequeNo?: string | null, withdrawAmount?: string | null, withdrawWith?: WithdrawWith | null, fine?: string | null, totalWithdrawnAmount?: string | null, status?: ObjState | null, paymentMode?: WithdrawPaymentType | null, withdrawnBy?: WithdrawBy | null, marketRepId?: string | null, marketRepName?: string | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
 
 export type TransactionAccountTransferDetailQueryVariables = Exact<{
   transactionId: Scalars['ID'];
@@ -22760,6 +22760,11 @@ export const GetGeneralMemberSettingsDataDocument = `
                 ledgerId
                 charge
               }
+              memberCode {
+                prefix
+                noOfDigits
+                initialNo
+              }
             }
           }
         }
@@ -24141,6 +24146,7 @@ export const TransactionWithdrawDetailDocument = `
         accountName
         chequeNo
         withdrawAmount
+        withdrawWith
         fine
         totalWithdrawnAmount
         status

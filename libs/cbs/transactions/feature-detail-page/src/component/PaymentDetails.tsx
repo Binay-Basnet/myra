@@ -1,3 +1,4 @@
+import { WithdrawPaymentType } from '@coop/cbs/data-access';
 import { DetailCardContent, DetailsCard } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -32,7 +33,7 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
         </>
       )}
 
-      {detailPage === 'withdraw' && withdrawDetailData?.paymentMode === 'Cash' && (
+      {detailPage === 'withdraw' && withdrawDetailData?.paymentMode === WithdrawPaymentType?.Cash && (
         <>
           <DetailCardContent
             title={t['transDetailPaymentMode']}
@@ -49,26 +50,27 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
         </>
       )}
 
-      {detailPage === 'withdraw' && withdrawDetailData?.paymentMode === 'Cheque' && (
-        <>
-          <DetailCardContent
-            title={t['transDetailPaymentMode']}
-            subtitle={withdrawDetailData?.paymentMode}
-          />
-          <DetailCardContent
-            title={t['transDetailChequeNo']}
-            subtitle={withdrawDetailData?.chequeNo}
-          />
-          <DetailCardContent
-            title={t['transDetailAmount']}
-            subtitle={withdrawDetailData?.withdrawAmount}
-          />
-          <DetailCardContent
-            title={t['transDetailWithdrawnBy']}
-            subtitle={withdrawDetailData?.withdrawnBy}
-          />
-        </>
-      )}
+      {detailPage === 'withdraw' &&
+        withdrawDetailData?.paymentMode === WithdrawPaymentType?.BankCheque && (
+          <>
+            <DetailCardContent
+              title={t['transDetailPaymentMode']}
+              subtitle={withdrawDetailData?.paymentMode}
+            />
+            <DetailCardContent
+              title={t['transDetailChequeNo']}
+              subtitle={withdrawDetailData?.chequeNo}
+            />
+            <DetailCardContent
+              title={t['transDetailAmount']}
+              subtitle={withdrawDetailData?.withdrawAmount}
+            />
+            <DetailCardContent
+              title={t['transDetailWithdrawnBy']}
+              subtitle={withdrawDetailData?.withdrawnBy}
+            />
+          </>
+        )}
 
       {detailPage === 'loanRepayment' && (
         <>

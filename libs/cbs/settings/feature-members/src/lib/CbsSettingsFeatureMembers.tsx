@@ -33,6 +33,11 @@ export const CbsSettingsFeatureMembers = () => {
         mediumRisk: values['risk']?.mediumRisk ? Number(values['risk']?.mediumRisk) : null,
         highRisk: values['risk']?.highRisk ? Number(values['risk']?.highRisk) : null,
       },
+      memberCode: {
+        prefix: values?.['memberCode']?.prefix,
+        noOfDigits: Number(values?.['memberCode']?.noOfDigits),
+        initialNo: values?.['memberCode']?.initialNo,
+      },
     };
 
     asyncToast({
