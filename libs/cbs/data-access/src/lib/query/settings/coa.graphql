@@ -54,7 +54,7 @@ query searchCOA($coaName: String!) {
   settings {
     general {
       chartsOfAccount {
-        search(name: $coaName){
+        search(name: $coaName) {
           data {
             id
             name

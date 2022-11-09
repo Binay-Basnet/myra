@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { FormSection, GridItem } from '@coop/shared/ui';
@@ -46,34 +45,34 @@ const AddressGroup = ({ name }: IAddressGroupProps) => {
   const { t } = useTranslation();
   const {
     formState: { errors },
-    watch,
-    setValue,
+    // watch,
+    // setValue,
   } = useFormContext<AddressFormType<typeof name>>();
 
   const { provinceList, districtList, localityList, wardList } = useAddress({
     name,
   });
 
-  const provinceId = watch(`${name}.provinceId`);
+  // const provinceId = watch(`${name}.provinceId`);
 
-  const districtId = watch(`${name}.districtId`);
+  // const districtId = watch(`${name}.districtId`);
 
-  const localGovernmentId = watch(`${name}.localGovernmentId`);
+  // const localGovernmentId = watch(`${name}.localGovernmentId`);
 
-  useEffect(() => {
-    setValue(`${name}.districtId`, null);
-    setValue(`${name}.localGovernmentId`, null);
-    setValue(`${name}.wardNo`, null);
-  }, [provinceId]);
+  // useEffect(() => {
+  //   setValue(`${name}.districtId`, null);
+  //   setValue(`${name}.localGovernmentId`, null);
+  //   setValue(`${name}.wardNo`, null);
+  // }, [provinceId]);
 
-  useEffect(() => {
-    setValue(`${name}.localGovernmentId`, null);
-    setValue(`${name}.wardNo`, null);
-  }, [districtId]);
+  // useEffect(() => {
+  //   setValue(`${name}.localGovernmentId`, null);
+  //   setValue(`${name}.wardNo`, null);
+  // }, [districtId]);
 
-  useEffect(() => {
-    setValue(`${name}.wardNo`, null);
-  }, [localGovernmentId]);
+  // useEffect(() => {
+  //   setValue(`${name}.wardNo`, null);
+  // }, [localGovernmentId]);
 
   return (
     <>

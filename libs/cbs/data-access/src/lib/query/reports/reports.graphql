@@ -38,9 +38,9 @@ query getSavedReport($reportId: ID!) {
   }
 }
 
-query getSavingStatement($data: SavingStatementReportSettings!){
+query getSavingStatement($data: SavingStatementReportSettings!) {
   report {
-    savingStatementReport(data: $data){
+    savingStatementReport(data: $data) {
       memberId
       member {
         id
@@ -74,7 +74,6 @@ query getSavingStatement($data: SavingStatementReportSettings!){
     }
   }
 }
-
 
 query getMemberClassificationReport($period: ReportPeriodType) {
   report {
@@ -162,9 +161,9 @@ query getLoanStatementReport($data: LoanStatementReportSettings!) {
   }
 }
 
-query getLedgerReport($ledgerId: ID!, $period: ReportPeriodType, $date: LocalizedDateFilter){
+query getLedgerReport($ledgerId: ID!, $period: ReportPeriodType, $date: LocalizedDateFilter) {
   report {
-    generalLedgerReport(date: $date, ledgerId: $ledgerId, period: $period){
+    generalLedgerReport(date: $date, ledgerId: $ledgerId, period: $period) {
       data {
         id
         date

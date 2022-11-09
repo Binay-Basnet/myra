@@ -41,7 +41,7 @@ export const MemberListPage = () => {
       {
         id: 'id',
         header: t['memberListTableMemberID'],
-        accessorFn: (row) => row?.node?.id,
+        accessorFn: (row) => row?.node?.code,
         // enableSorting: true,
       },
       {

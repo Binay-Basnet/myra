@@ -288,7 +288,7 @@ const en: Record<string, string> = {
   memberListTableViewMemberProfile: 'View Member Profile',
   memberListTableEditMember: 'Edit Member',
   memberListTableMakeInactive: 'Make Inactive',
-  memberListTableMemberID: 'Member ID',
+  memberListTableMemberID: 'Member Code',
   memberListTableName: 'Name',
   memberListTableAddress: 'Address',
   memberListTablePhoneNo: 'Phone No.',
