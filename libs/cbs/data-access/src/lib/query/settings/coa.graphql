@@ -49,3 +49,19 @@ query getCOABankList($accountCode: [String]) {
     }
   }
 }
+
+query searchCOA($coaName: String!) {
+  settings {
+    general {
+      chartsOfAccount {
+        search(name: $coaName) {
+          data {
+            id
+            name
+            accountCode
+          }
+        }
+      }
+    }
+  }
+}

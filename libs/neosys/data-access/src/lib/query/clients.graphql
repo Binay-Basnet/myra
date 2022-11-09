@@ -11,6 +11,7 @@ query getClientsList {
         houseNo
         wardNo
         dateJoined
+        dbCreated
       }
     }
   }

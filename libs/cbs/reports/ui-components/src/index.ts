@@ -1,4 +1,6 @@
 export * from './components';
+export * from './lib/LedgerReportInputs';
+export * from './lib/LedgerReportTable';
 export * from './lib/LoanReportInputs';
 export * from './lib/LoanReportMember';
 export * from './lib/LoanStatementReportTable';

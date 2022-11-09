@@ -1,5 +1,7 @@
 export enum ReportGroup {
   ORGANIZATIONS = 'Organizations',
+  OTHERS = 'Others',
+
   MEMBERS = 'Members',
   SHARE = 'Share',
   SAVINGS = 'Savings',
@@ -12,6 +14,8 @@ export enum ReportGroup {
 }
 
 export enum Report {
+  GENERAL_LEDGER_REPORT = 'General Ledger Report',
+
   ORGANIZATION_PROFILE = 'Organization Profile',
   BOARD_OF_DIRECTOR_DETAIL_REGISTER = 'Board Of Directors Detail Register',
 
@@ -368,6 +372,14 @@ export const REPORTS = {
     {
       id: '8',
       report: Report.BRANCH_WISE_TARGET_VS_ACHIEVEMENT,
+    },
+  ],
+
+  [ReportGroup.OTHERS]: [
+    {
+      id: '9',
+      report: Report.GENERAL_LEDGER_REPORT,
+      link: 'ledger',
     },
   ],
 };

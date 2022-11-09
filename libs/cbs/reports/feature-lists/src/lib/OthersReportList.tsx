@@ -3,17 +3,17 @@ import { Box, Text } from '@coop/shared/ui';
 
 import { ReportGroup, REPORTS } from '../constants/REPORTS';
 
-export const OrganizationReportList = () => (
+export const OthersReportList = () => (
   <Box display="flex" flexDir="column" p="s16" gap="s16">
     <Text fontSize="r3" color="gray.800" fontWeight="600" py="s16">
-      Organization Report
+      Other Reports
     </Text>
-    {REPORTS[ReportGroup.ORGANIZATIONS].map((report) => (
+    {REPORTS[ReportGroup.OTHERS].map((report) => (
       <ReportLinkText
         key={report.id}
-        link={report.link ? `/reports/cbs/organization/${report.link}/new` : undefined}
+        link={report.link ? `/reports/cbs/others/${report.link}/new` : undefined}
       >
-        {report.id} - {report.report}
+        {report.report}
       </ReportLinkText>
     ))}
   </Box>

@@ -13993,6 +13993,15 @@ export type GetLoanStatementReportQueryVariables = Exact<{
 
 export type GetLoanStatementReportQuery = { report: { loanStatementReport?: { memberId?: string | null, member?: { name?: Record<"local"|"en"|"np",string> | null } | null, statement?: { loanAccDetails?: { accountNo?: string | null, approvedAmount?: string | null, interestRate?: number | null, loanType?: string | null, loanSubtype?: string | null, issuedDate?: string | null, installment?: number | null } | null, loanStatement?: Array<{ date?: string | null, particular?: string | null, txnId?: string | null, disbursePrinciple?: string | null, paidPrinciple?: string | null, interestPaid?: string | null, finePaid?: string | null, discount?: string | null, remainingPrinciple?: string | null } | null> | null } | {} | null } | null } };
 
+export type GetLedgerReportQueryVariables = Exact<{
+  ledgerId: Scalars['ID'];
+  period?: InputMaybe<ReportPeriodType>;
+  date?: InputMaybe<LocalizedDateFilter>;
+}>;
+
+
+export type GetLedgerReportQuery = { report: { generalLedgerReport: { data?: Array<{ id?: string | null, date?: Record<"local"|"en"|"np",string> | null, account?: string | null, balance?: string | null, credit?: string | null, debit?: string | null } | null> | null } } };
+
 export type GetShareStatementQueryVariables = Exact<{
   data: ShareStatementReportSettings;
 }>;
@@ -14103,6 +14112,13 @@ export type GetCoaBankListQueryVariables = Exact<{
 
 
 export type GetCoaBankListQuery = { settings: { chartsOfAccount?: { accountsUnder?: { data?: Array<{ id: string, accountCode: string, name: Record<"local"|"en"|"np",string> } | null> | null } | null } | null } };
+
+export type SearchCoaQueryVariables = Exact<{
+  coaName: Scalars['String'];
+}>;
+
+
+export type SearchCoaQuery = { settings: { general?: { chartsOfAccount?: { search?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, accountCode: string } | null> | null } | null } | null } | null } };
 
 export type GetLoanProductListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
@@ -21786,6 +21802,34 @@ export const useGetLoanStatementReportQuery = <
       useAxios<GetLoanStatementReportQuery, GetLoanStatementReportQueryVariables>(GetLoanStatementReportDocument).bind(null, variables),
       options
     );
+export const GetLedgerReportDocument = `
+    query getLedgerReport($ledgerId: ID!, $period: ReportPeriodType, $date: LocalizedDateFilter) {
+  report {
+    generalLedgerReport(date: $date, ledgerId: $ledgerId, period: $period) {
+      data {
+        id
+        date
+        account
+        balance
+        credit
+        debit
+      }
+    }
+  }
+}
+    `;
+export const useGetLedgerReportQuery = <
+      TData = GetLedgerReportQuery,
+      TError = unknown
+    >(
+      variables: GetLedgerReportQueryVariables,
+      options?: UseQueryOptions<GetLedgerReportQuery, TError, TData>
+    ) =>
+    useQuery<GetLedgerReportQuery, TError, TData>(
+      ['getLedgerReport', variables],
+      useAxios<GetLedgerReportQuery, GetLedgerReportQueryVariables>(GetLedgerReportDocument).bind(null, variables),
+      options
+    );
 export const GetShareStatementDocument = `
     query getShareStatement($data: ShareStatementReportSettings!) {
   report {
@@ -22388,6 +22432,35 @@ export const useGetCoaBankListQuery = <
     useQuery<GetCoaBankListQuery, TError, TData>(
       variables === undefined ? ['getCOABankList'] : ['getCOABankList', variables],
       useAxios<GetCoaBankListQuery, GetCoaBankListQueryVariables>(GetCoaBankListDocument).bind(null, variables),
+      options
+    );
+export const SearchCoaDocument = `
+    query searchCOA($coaName: String!) {
+  settings {
+    general {
+      chartsOfAccount {
+        search(name: $coaName) {
+          data {
+            id
+            name
+            accountCode
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useSearchCoaQuery = <
+      TData = SearchCoaQuery,
+      TError = unknown
+    >(
+      variables: SearchCoaQueryVariables,
+      options?: UseQueryOptions<SearchCoaQuery, TError, TData>
+    ) =>
+    useQuery<SearchCoaQuery, TError, TData>(
+      ['searchCOA', variables],
+      useAxios<SearchCoaQuery, SearchCoaQueryVariables>(SearchCoaDocument).bind(null, variables),
       options
     );
 export const GetLoanProductListDocument = `

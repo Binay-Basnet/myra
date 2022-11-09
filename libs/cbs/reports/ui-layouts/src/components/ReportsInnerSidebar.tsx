@@ -48,6 +48,10 @@ const REPORTS_INNER_TAB_LINKS = [
     title: 'Branch Report',
     to: '/reports/cbs/branch-report',
   },
+  {
+    title: 'Others Report',
+    to: '/reports/cbs/others',
+  },
 ];
 
 export const ReportsInnerSidebar = () => {
