@@ -71,7 +71,13 @@ export const LoginPage = () => {
           </Box>
           <Box display="flex" alignItems="center" justifyContent="space-between">
             <Checkbox label="Remember Password" />
-            <Box fontStyle="italic" color="primary.500" fontSize="s2" cursor="pointer">
+            <Box
+              fontStyle="italic"
+              color="primary.500"
+              fontSize="s2"
+              cursor="pointer"
+              onClick={() => router.push('/forget-password')}
+            >
               Forgot Password?
             </Box>
           </Box>

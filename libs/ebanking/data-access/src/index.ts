@@ -5,6 +5,8 @@ export {
   useGetCoopListQuery,
   useGetMyraMeQuery,
   useLoginToCooperativeMutation,
+  useResendOtpMutation,
+  useResetPasswordMutation,
   useSetNewPinMutation,
   useSetPasswordMutation,
   useSignUpMutation,
