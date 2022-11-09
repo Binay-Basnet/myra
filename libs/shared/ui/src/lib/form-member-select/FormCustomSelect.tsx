@@ -1,14 +1,6 @@
 import { useEffect } from 'react';
-import {
-  Control,
-  Controller,
-  FieldValues,
-  useFormContext,
-} from 'react-hook-form';
-import {
-  ControllerRenderProps,
-  UseControllerProps,
-} from 'react-hook-form/dist/types/controller';
+import { Control, Controller, FieldValues, useFormContext } from 'react-hook-form';
+import { ControllerRenderProps, UseControllerProps } from 'react-hook-form/dist/types/controller';
 
 // import { Select, SelectProps } from '@coop/shared/ui';
 import { Option, Select, SelectProps } from './CustomSelect';
@@ -33,9 +25,7 @@ export const FormCustomSelect = <T,>(props: IFormCustomSelectProps<T>) => {
       control={formControl}
       rules={rest.rules}
       name={name}
-      render={({ field }) => {
-        return <FormControl field={field} errors={errors} {...props} />;
-      }}
+      render={({ field }) => <FormControl field={field} errors={errors} {...props} />}
     />
   );
 };
@@ -57,8 +47,7 @@ const FormControl = <T,>({
   const filteredValue = rest.isMulti
     ? options?.filter(
         (option) =>
-          value?.some((v: Option) => v?.value === option.value) ||
-          value?.includes(option?.value)
+          value?.some((v: Option) => v?.value === option.value) || value?.includes(option?.value)
       )
     : [];
 
