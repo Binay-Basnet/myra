@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiFillCheckCircle } from 'react-icons/ai';
 import { IoChevronBackOutline } from 'react-icons/io5';
@@ -131,7 +131,7 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
       method: LoanDisbursementMethod?.Account,
     },
   });
-  const { watch, getValues } = methods;
+  const { watch, getValues, setValue } = methods;
 
   const selectedPaymentMode = watch('method');
   const { mutateAsync } = useSetDisburseLoanMutation();
@@ -195,6 +195,13 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
     Number(loanPreview?.loanDetails?.totalSanctionedAmount) -
     Number(loanPreview?.loanDetails?.totalProcessingChargesValuation);
 
+  const totalDisbursedAmountUnknown = totalDisbursedAmount as unknown;
+  const totalDisbursedAmountString = String(totalDisbursedAmountUnknown);
+
+  useEffect(() => {
+    setValue('amount', totalDisbursedAmountString);
+  }, [totalDisbursedAmountString]);
+
   return (
     <Container minW="container.xl" p="0" bg="white">
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
@@ -225,12 +232,10 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
                   </GridItem>
                   <FormInput
                     name="amount"
-                    type="number"
                     label="Amount"
                     textAlign="right"
                     placeholder="0.00"
                     isDisabled
-                    value={totalDisbursedAmount}
                   />
                   <Divider />
                   <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
@@ -257,10 +262,8 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
                   />
                   <FormInput
                     name="amount"
-                    type="number"
                     label="Amount"
                     isDisabled
-                    value={totalDisbursedAmount}
                     textAlign="right"
                     placeholder="0.00"
                   />
