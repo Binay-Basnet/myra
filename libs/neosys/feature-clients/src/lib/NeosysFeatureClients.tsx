@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { useCreateDbMutation, useGetClientsListQuery } from '@coop/neosys-admin/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { asyncToast, Avatar, Box, PageHeader, TablePopover, Text } from '@coop/shared/ui';
+import { asyncToast, Avatar, Box, PageHeader, TablePopover, Text, toast } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const CLIENTS_TAB_ITEMS = [
@@ -88,14 +88,22 @@ export const ClientsListPage = () => {
                 {
                   title: 'Create Database',
                   onClick: async (node) => {
-                    await asyncToast({
-                      id: 'create-db',
-                      msgs: {
-                        success: 'Db Created Successfully',
-                        loading: 'Creating New DB for this Saccos',
-                      },
-                      promise: mutateAsync({ saccosID: node.id as string }),
-                    });
+                    if (node.dbCreated) {
+                      toast({
+                        id: 'create-db',
+                        type: 'error',
+                        message: 'Database has already been created!!',
+                      });
+                    } else {
+                      await asyncToast({
+                        id: 'create-db',
+                        msgs: {
+                          success: 'Db Created Successfully',
+                          loading: 'Creating New DB for this Saccos',
+                        },
+                        promise: mutateAsync({ saccosID: node.id as string }),
+                      });
+                    }
                   },
                 },
               ]}
