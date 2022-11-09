@@ -80,8 +80,8 @@ export const AddWithdraw = () => {
   };
 
   const withdrawTypes = [
-    { label: t['addWithdrawWithdrawSlip'], value: WithdrawWith.Cheque },
-    { label: 'Counter Slip', value: WithdrawWith.WithdrawSlip },
+    { label: t['addWithdrawWithdrawSlip'], value: WithdrawWith.WithdrawSlip },
+    { label: 'Counter Slip', value: WithdrawWith.CounterSlip },
   ];
 
   const router = useRouter();
@@ -91,7 +91,7 @@ export const AddWithdraw = () => {
       payment_type: WithdrawPaymentType.Cash,
       cash: { disableDenomination: false },
       withdrawnBy: WithdrawBy.Self,
-      withdrawWith: WithdrawWith.Cheque,
+      withdrawWith: WithdrawWith.WithdrawSlip,
     },
   });
 
@@ -198,7 +198,7 @@ export const AddWithdraw = () => {
           loading: t['addWithdrawAddingNewWithdraw'],
         },
         onSuccess: () => {
-          if (values.withdrawWith === WithdrawWith.Cheque) {
+          if (values.withdrawWith === WithdrawWith.WithdrawSlip) {
             queryClient.invalidateQueries('getAvailableSlipsList');
             queryClient.invalidateQueries('getPastSlipsList');
           }
@@ -209,7 +209,7 @@ export const AddWithdraw = () => {
       });
     }
 
-    if (values.payment_type === WithdrawPaymentType.BankCheque) {
+    if (values.payment_type === WithdrawPaymentType.Cheque) {
       filteredValues = omit({ ...values }, ['cash', 'file', 'withdrawBy']);
 
       asyncToast({
@@ -219,7 +219,7 @@ export const AddWithdraw = () => {
           loading: t['addWithdrawAddingNewWithdraw'],
         },
         onSuccess: () => {
-          if (values.withdrawWith === WithdrawWith.Cheque) {
+          if (values.withdrawWith === WithdrawWith.WithdrawSlip) {
             queryClient.invalidateQueries('getAvailableSlipsList');
             queryClient.invalidateQueries('getPastSlipsList');
           }
@@ -283,19 +283,19 @@ export const AddWithdraw = () => {
                     />
                   )}
 
-                  {memberId && accountId && withdrawn === WithdrawWith.Cheque && (
+                  {memberId && accountId && withdrawn === WithdrawWith.WithdrawSlip && (
                     <InputGroupContainer>
                       <FormSelect
-                        name="chequeNo"
+                        name="withdrawSlipNo"
                         label="Withdraw Slip No"
                         options={availableSlipListOptions}
                       />
                     </InputGroupContainer>
                   )}
 
-                  {memberId && accountId && withdrawn === WithdrawWith.WithdrawSlip && (
+                  {memberId && accountId && withdrawn === WithdrawWith.CounterSlip && (
                     <InputGroupContainer>
-                      <FormInput name="withdrawSlipNo" label={t['addWithdrawWithdrawSlipNo']} />
+                      <FormInput name="counterSlipNo" label="Counter Slip No" />
                     </InputGroupContainer>
                   )}
 

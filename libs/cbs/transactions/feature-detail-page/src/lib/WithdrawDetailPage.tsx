@@ -46,7 +46,7 @@ export const WithdrawDetailPage = () => {
         </Text>
         <TransactionDetails detailPage="withdraw" />
         <PaymentDetails detailPage="withdraw" />
-        {withdrawDetailData?.paymentMode === WithdrawPaymentType?.BankCheque && (
+        {withdrawDetailData?.paymentMode === WithdrawPaymentType?.Cheque && (
           <MarketRepresentative />
         )}
 

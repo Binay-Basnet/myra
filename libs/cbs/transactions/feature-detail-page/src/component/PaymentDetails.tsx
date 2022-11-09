@@ -51,7 +51,7 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
       )}
 
       {detailPage === 'withdraw' &&
-        withdrawDetailData?.paymentMode === WithdrawPaymentType?.BankCheque && (
+        withdrawDetailData?.paymentMode === WithdrawPaymentType?.Cheque && (
           <>
             <DetailCardContent
               title={t['transDetailPaymentMode']}

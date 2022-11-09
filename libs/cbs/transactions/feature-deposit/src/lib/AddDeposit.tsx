@@ -168,7 +168,7 @@ export const AddDeposit = () => {
 
   const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
 
-  const chequeAmount = watch('cheque.amount');
+  const withdrawSlipAmount = watch('withdrawSlip.amount');
 
   const bankVoucherAmount = watch('bankVoucher.amount');
 
@@ -195,8 +195,8 @@ export const AddDeposit = () => {
     }
 
     if (
-      selectedPaymentMode === DepositPaymentType.Cheque &&
-      Number(chequeAmount ?? 0) < Number(totalDeposit)
+      selectedPaymentMode === DepositPaymentType.WithdrawSlip &&
+      Number(withdrawSlipAmount ?? 0) < Number(totalDeposit)
     ) {
       return true;
     }
@@ -290,7 +290,7 @@ export const AddDeposit = () => {
     };
 
     if (values.payment_type === DepositPaymentType.Cash) {
-      filteredValues = omit({ ...filteredValues }, ['cheque', 'bankVoucher']);
+      filteredValues = omit({ ...filteredValues }, ['withdrawSlip', 'bankVoucher']);
       filteredValues.cash = {
         ...values.cash,
         cashPaid: values.cash?.cashPaid as string,
@@ -306,10 +306,10 @@ export const AddDeposit = () => {
     }
 
     if (values.payment_type === DepositPaymentType.BankVoucher) {
-      filteredValues = omit({ ...filteredValues }, ['cheque', 'cash']);
+      filteredValues = omit({ ...filteredValues }, ['withdrawSlip', 'cash']);
     }
 
-    if (values.payment_type === DepositPaymentType.Cheque) {
+    if (values.payment_type === DepositPaymentType.WithdrawSlip) {
       filteredValues = omit({ ...filteredValues }, ['bankVoucher', 'cash']);
     }
 
@@ -329,8 +329,8 @@ export const AddDeposit = () => {
           filteredValues.amount = filteredValues?.bankVoucher?.amount;
         }
 
-        if (values.payment_type === DepositPaymentType.Cheque) {
-          filteredValues.amount = filteredValues?.cheque?.amount;
+        if (values.payment_type === DepositPaymentType.WithdrawSlip) {
+          filteredValues.amount = filteredValues?.withdrawSlip?.amount;
         }
       }
     }
@@ -343,7 +343,7 @@ export const AddDeposit = () => {
       },
       promise: mutateAsync({ data: filteredValues as DepositInput }),
       onSuccess: () => {
-        if (values.payment_type === DepositPaymentType.Cheque) {
+        if (values.payment_type === DepositPaymentType.WithdrawSlip) {
           queryClient.invalidateQueries('getAvailableSlipsList');
           queryClient.invalidateQueries('getPastSlipsList');
         }

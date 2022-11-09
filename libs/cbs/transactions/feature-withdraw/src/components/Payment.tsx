@@ -70,8 +70,8 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
       value: WithdrawPaymentType.Cash,
     },
     {
-      label: t['withdrawPaymentBankCheque'],
-      value: WithdrawPaymentType.BankCheque,
+      label: 'Cheque',
+      value: WithdrawPaymentType.Cheque,
     },
   ];
 
@@ -90,7 +90,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
 
   useEffect(() => {
     setValue('cash.cashPaid', String(totalWithdraw));
-    setValue('bankCheque.amount', String(totalWithdraw));
+    setValue('cheque.amount', String(totalWithdraw));
   }, [totalWithdraw]);
 
   const { data: bank } = useGetCoaBankListQuery({
@@ -128,7 +128,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
 
   useEffect(() => {
-    resetField('bankCheque.depositedAt');
+    resetField('cheque.depositedAt');
   }, [preference?.date]);
 
   return (
@@ -146,19 +146,19 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
           name="payment_type"
         />
 
-        {selectedPaymentMode === WithdrawPaymentType.BankCheque && (
+        {selectedPaymentMode === WithdrawPaymentType.Cheque && (
           <InputGroupContainer>
             <GridItem colSpan={2}>
               <FormSelect
-                name="bankCheque.bankId"
+                name="cheque.bankId"
                 label={t['withdrawPaymentBankName']}
                 options={bankList}
               />
             </GridItem>
 
-            <FormInput name="bankCheque.chequeNo" label={t['withdrawPaymentChequeNo']} />
+            <FormInput name="cheque.chequeNo" label={t['withdrawPaymentChequeNo']} />
 
-            <FormAmountInput name="bankCheque.amount" label={t['withdrawPaymentAmount']} />
+            <FormAmountInput name="cheque.amount" label={t['withdrawPaymentAmount']} />
           </InputGroupContainer>
         )}
 
