@@ -161,3 +161,18 @@ query getLoanStatementReport($data: LoanStatementReportSettings!) {
     }
   }
 }
+
+query getLedgerReport($ledgerId: ID!, $period: ReportPeriodType, $date: LocalizedDateFilter){
+  report {
+    generalLedgerReport(date: $date, ledgerId: $ledgerId, period: $period){
+      data {
+        id
+        date
+        account
+        balance
+        credit
+        debit
+      }
+    }
+  }
+}

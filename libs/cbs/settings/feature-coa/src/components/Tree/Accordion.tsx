@@ -10,6 +10,7 @@ const AccordionContext = createContext<{
 interface IAccordionProps {
   children: React.ReactNode;
 }
+
 const Accordion = (props: IAccordionProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { children } = props;
@@ -34,6 +35,7 @@ export const useAccordion = () => {
 interface IAccordionSummaryProps {
   children: React.ReactNode;
 }
+
 const AccordionSummary = ({ children }: IAccordionSummaryProps) => {
   const { onClick } = useAccordion();
 
@@ -47,13 +49,14 @@ const AccordionSummary = ({ children }: IAccordionSummaryProps) => {
 interface IAccordionDetailsProps {
   children: React.ReactNode;
 }
+
 const AccordionDetails = ({ children }: IAccordionDetailsProps) => {
   const { isOpen } = useAccordion();
   return (
     <Box
       borderLeft="1px"
       ml="4px"
-      maxH={isOpen ? 999 : 0}
+      maxH={isOpen ? '100%' : 0}
       transition="0.5s all ease"
       overflow="hidden"
       borderColor="gray.500"
