@@ -16,16 +16,16 @@ import { featureCode } from '@coop/shared/utils';
 
 const paymentModes = [
   {
+    label: 'Cash',
+    value: LoanRepaymentMethod.Cash,
+  },
+  {
     label: 'Account',
     value: LoanRepaymentMethod.Account,
   },
   {
     label: 'Bank Cheque',
     value: LoanRepaymentMethod.BankVoucher,
-  },
-  {
-    label: 'Cash',
-    value: LoanRepaymentMethod.Cash,
   },
 ];
 

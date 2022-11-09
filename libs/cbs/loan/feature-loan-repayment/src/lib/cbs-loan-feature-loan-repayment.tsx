@@ -71,7 +71,7 @@ export const LoanRepayment = () => {
 
   const methods = useForm<LoanRepaymentInputType>({
     defaultValues: {
-      paymentMethod: LoanRepaymentMethod?.Account,
+      paymentMethod: LoanRepaymentMethod?.Cash,
     },
   });
 
@@ -317,6 +317,7 @@ export const LoanRepayment = () => {
             <FormFooter
               mainButtonLabel="Proceed to Payment"
               mainButtonHandler={proceedButtonHandler}
+              isMainButtonDisabled={!amountPaid}
             />
           )}
           {mode === '1' && (
