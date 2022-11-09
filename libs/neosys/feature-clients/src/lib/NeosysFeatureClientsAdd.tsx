@@ -69,7 +69,7 @@ export const NeosysFeatureClientsAdd = () => {
 
       <Box position="sticky" bottom={0} zIndex="11">
         <FormFooter
-          status="Form details saved to draft 09:41 AM"
+          status=""
           mainButtonLabel="Submit"
           mainButtonHandler={async () => {
             const formValues = methods.getValues();

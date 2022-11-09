@@ -27,7 +27,7 @@ export const ShareInfoFooter = ({
                 </Text>
               </Text>
             ) : (
-              'Form details saved to draft 09:41 AM'
+              ''
             )}
           </Text>
         </Box>
