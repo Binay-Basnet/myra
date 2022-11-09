@@ -1,8 +1,5 @@
 import { SettingsDepositProducts } from '@coop/cbs/settings/deposit-products';
-import {
-  SettingsGeneralLayout,
-  SettingsLayout,
-} from '@coop/cbs/settings/ui-layout';
+import { SettingsGeneralLayout, SettingsLayout } from '@coop/cbs/settings/ui-layout';
 
 const DepositProducts = () => <SettingsDepositProducts />;
 

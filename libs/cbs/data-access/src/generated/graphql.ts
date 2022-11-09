@@ -3235,6 +3235,7 @@ export type EBankingAuthMutation = {
   loginToCooperative?: Maybe<EbankingCooperativeLoginResult>;
   requestSource?: Maybe<RequestSource>;
   resendOtp?: Maybe<EbankingOtpResult>;
+  resetPassword?: Maybe<EbankingChangePasswordResult>;
   setNewPin?: Maybe<EbankingUserResult>;
   setPassword?: Maybe<EbankingPasswordResult>;
   signUp?: Maybe<EbankingSignUpResult>;
@@ -3282,6 +3283,12 @@ export type EBankingAuthMutationLoginToCooperativeArgs = {
 export type EBankingAuthMutationResendOtpArgs = {
   mobile: Scalars['String'];
   otpFor: OtpFor;
+};
+
+
+export type EBankingAuthMutationResetPasswordArgs = {
+  mobileNo: Scalars['String'];
+  newPassword: Scalars['String'];
 };
 
 
