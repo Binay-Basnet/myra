@@ -17,6 +17,7 @@ export interface Option {
   value: string;
   memberInfo?: {
     image?: string;
+    code?: string;
     memberName?: string;
     memberId?: string;
     gender?: string;
@@ -45,45 +46,35 @@ export const Select = ({
   options,
   value,
   ...rest
-}: SelectProps) => {
-  return (
-    <Flex direction="column" gap="s4">
-      <TextFields variant="formLabel" color="gray.700">
-        {label}
+}: SelectProps) => (
+  <Flex direction="column" gap="s4">
+    <TextFields variant="formLabel" color="gray.700">
+      {label}
+    </TextFields>
+    <ChakraSelect<Option, boolean, GroupBase<Option>>
+      options={options}
+      value={value}
+      controlShouldRenderValue={!isMulti}
+      closeMenuOnSelect={!isMulti}
+      isMulti={isMulti}
+      hideSelectedOptions={false}
+      isClearable={false}
+      chakraStyles={chakraDefaultStyles as ChakraStylesConfig<Option, boolean, GroupBase<Option>>}
+      components={
+        customComponents as Partial<SelectComponentsConfig<Option, boolean, GroupBase<Option>>>
+      }
+      {...rest}
+    />
+    {errorText ? (
+      <TextFields variant="formHelper" color="danger.500">
+        {errorText}
       </TextFields>
-      <ChakraSelect<Option, boolean, GroupBase<Option>>
-        options={options}
-        value={value}
-        controlShouldRenderValue={!isMulti}
-        closeMenuOnSelect={!isMulti}
-        isMulti={isMulti}
-        hideSelectedOptions={false}
-        isClearable={false}
-        chakraStyles={
-          chakraDefaultStyles as ChakraStylesConfig<
-            Option,
-            boolean,
-            GroupBase<Option>
-          >
-        }
-        components={
-          customComponents as Partial<
-            SelectComponentsConfig<Option, boolean, GroupBase<Option>>
-          >
-        }
-        {...rest}
-      />
-      {errorText ? (
-        <TextFields variant="formHelper" color="danger.500">
-          {errorText}
-        </TextFields>
-      ) : helperText ? (
-        <TextFields variant="formHelper" color="gray.700">
-          {helperText}
-        </TextFields>
-      ) : null}
-    </Flex>
-  );
-}
+    ) : helperText ? (
+      <TextFields variant="formHelper" color="gray.700">
+        {helperText}
+      </TextFields>
+    ) : null}
+  </Flex>
+);
 
 export default Select;

@@ -63,6 +63,7 @@ export const FormMemberSelect = ({
           memberInfo: {
             address: curVal?.node?.address?.district?.local,
             memberId: curVal?.node?.id,
+            code: curVal?.node?.code,
             memberName: curVal?.node?.name?.local,
             age: profileData?.data?.formData?.basicInformation?.age,
             gender: profileData?.data?.formData?.basicInformation?.gender?.local,
