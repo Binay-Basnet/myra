@@ -79,7 +79,7 @@ export const LedgerReport = () => {
               if (ledgerReport && ledgerReport.length !== 0) {
                 return (
                   <Box display="flex" flexDir="column" w="100%">
-                    <ReportOrganizationHeader reportType={Report.SAVING_STATEMENT} />
+                    <ReportOrganizationHeader reportType={Report.GENERAL_LEDGER_REPORT} />
                     <ReportOrganization statementDate={filter?.period} />
                     <Box px="s32">
                       <Divider />
