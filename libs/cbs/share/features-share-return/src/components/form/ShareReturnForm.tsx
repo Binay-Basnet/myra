@@ -90,6 +90,7 @@ export const ShareReturnForm = () => {
   const cashPaid = watch('cash.cashPaid');
   const disableDenomination = watch('cash.disableDenomination');
   const extraFee = watch('extraFee');
+  const paymentModes = watch('paymentMode');
 
   const [totalAmount, setTotalAmount] = useState(0);
   const [mode, setMode] = useState('shareInfo');
@@ -315,7 +316,11 @@ export const ShareReturnForm = () => {
               <SharePaymentFooter
                 previousButtonHandler={previousButtonHandler}
                 handleSubmit={handleSubmit}
-                isDisabled={Number(denominationTotal) !== Number(cashPaid)}
+                isDisabled={
+                  paymentModes === SharePaymentMode.Cash && !disableDenomination
+                    ? Number(denominationTotal) !== Number(cashPaid)
+                    : false
+                }
               />
             )}
           </Container>

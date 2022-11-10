@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useDeepCompareEffect } from 'react-use';
 
 import {
   Share_Transaction_Direction,
@@ -18,7 +19,7 @@ type IReturnInfo = {
 export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
   const { t } = useTranslation();
   const methods = useFormContext();
-  const { watch, register } = methods;
+  const { watch, register, setValue } = methods;
 
   const memberId = watch('memberId');
   const noOfShares = watch('noOfReturnedShares');
@@ -55,6 +56,15 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
   useEffect(() => {
     refetch();
   }, [noOfShares, refetch]);
+
+  useDeepCompareEffect(() => {
+    if (chargeList) {
+      chargeList.forEach((charge, index) => {
+        setValue(`extraFee.${index}.Id`, charge?.id);
+        setValue(`extraFee.${index}.value`, Number(charge?.charge));
+      });
+    }
+  }, [chargeList]);
 
   return (
     <Box display="flex" flexDirection="column" pb="28px" background="gray.0">
