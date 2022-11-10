@@ -84,7 +84,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
 
   useEffect(() => {
     setValue('cash.cashPaid', String(totalWithdraw));
-    setValue('cheque.amount', String(totalWithdraw));
+    setValue('bankCheque.amount', String(totalWithdraw));
   }, [totalWithdraw]);
 
   const { data: bank } = useGetCoaBankListQuery({
