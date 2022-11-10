@@ -17,7 +17,7 @@ export const LoanAccountList = () => {
   });
   return (
     <>
-      <PageHeader heading="Loan Account List" />
+      <PageHeader heading="Loan Account" />
       <LoanTable
         data={data}
         isLoading={isFetching}

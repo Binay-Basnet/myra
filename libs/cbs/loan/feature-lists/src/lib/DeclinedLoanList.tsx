@@ -17,7 +17,7 @@ export const DeclinedLoanList = () => {
   });
   return (
     <>
-      <PageHeader heading="Declined Loan List" />
+      <PageHeader heading="Declined Loan" />
       <LoanTable
         data={data}
         isLoading={isFetching}

@@ -6,7 +6,7 @@ import { MainLayout } from '@coop/shared/ui';
 
 const LoanDetailsPage = () => (
   <>
-    <LoanDetailsHeader title="Loan Application List" />
+    <LoanDetailsHeader title="Loan Application" />
     <CBSLoanDetails />
   </>
 );
