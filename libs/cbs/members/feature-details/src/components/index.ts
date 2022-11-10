@@ -1,6 +1,7 @@
 export * from './Accounts';
 export * from './BasicDetails';
 export * from './Bio';
+export * from './loan';
 export * from './MemberDetailsPathbar';
 export * from './MemberDetailsSidebar';
 export * from './PaymentTable';

@@ -83,7 +83,7 @@ export const EbankingAccountsPage = () => {
       </Box>
 
       <Grid templateColumns="repeat(2, 1fr)" gap="s16">
-        {isLoading && (
+        {loanAccountLoading && (
           <>
             <Skeleton h="144px" />
             <Skeleton h="144px" />

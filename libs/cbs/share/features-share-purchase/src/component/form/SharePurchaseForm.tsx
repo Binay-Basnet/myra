@@ -93,8 +93,9 @@ export const SharePurchaseForm = () => {
   const noOfShares = watch('shareCount');
   const denominations = watch('cash.denominations');
   const cashPaid = watch('cash.cashPaid');
-  const disableDenomination = watch('cash.disableDenomination');
   const extraFee = watch('extraFee');
+  const paymentModes = watch('paymentMode');
+  const disableDenomination = watch('cash.disableDenomination');
 
   const { data: chargesData, isLoading } = useGetShareChargesQuery(
     {
@@ -305,7 +306,11 @@ export const SharePurchaseForm = () => {
               <SharePaymentFooter
                 previousButtonHandler={previousButtonHandler}
                 handleSubmit={handleSubmit}
-                isDisabled={Number(denominationTotal) !== Number(cashPaid)}
+                isDisabled={
+                  paymentModes === SharePaymentMode.Cash && !disableDenomination
+                    ? Number(denominationTotal) !== Number(cashPaid)
+                    : false
+                }
               />
             )}
           </Container>

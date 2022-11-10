@@ -9,7 +9,7 @@ import {
   useAppSelector,
   useLoginToCooperativeMutation,
 } from '@coop/ebanking/data-access';
-import { Avatar, Box, Button, Input, Text, TextFields } from '@coop/shared/ui';
+import { Avatar, Box, Button, Input, Text, TextFields, toast } from '@coop/shared/ui';
 
 export const CoopConnectPage = () => {
   const methods = useForm();
@@ -44,7 +44,7 @@ export const CoopConnectPage = () => {
       return;
     }
 
-    if (response) {
+    if (response && response?.eBanking?.auth?.loginToCooperative?.record) {
       const accessToken = response?.eBanking?.auth?.loginToCooperative?.record?.token?.access;
       const refreshToken = response?.eBanking?.auth?.loginToCooperative?.record?.token?.refresh;
       const user = response?.eBanking?.auth?.loginToCooperative?.record?.data;
@@ -55,6 +55,12 @@ export const CoopConnectPage = () => {
       localStorage.setItem('coop-refreshToken', String(refreshToken));
 
       router.replace('/home');
+    } else {
+      toast({
+        id: 'error',
+        type: 'error',
+        message: 'Something went wrong. Please try again later',
+      });
     }
   };
 

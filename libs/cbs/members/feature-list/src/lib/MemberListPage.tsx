@@ -1,11 +1,20 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
+import { ObjState, useDeleteDraftMutation, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { formatTableAddress } from '@coop/cbs/utils';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, PageHeader, TablePopover, Text } from '@coop/shared/ui';
+import {
+  asyncToast,
+  Avatar,
+  Box,
+  ChakraModal,
+  PageHeader,
+  TablePopover,
+  Text,
+} from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 import { MEMBER_TAB_ITEMS } from '../constants/MEMBER_TAB_ITEMS';
@@ -19,9 +28,22 @@ const memberTypeSlug = {
 
 export const MemberListPage = () => {
   const { t } = useTranslation();
+  const [ID, setID] = useState('');
+  const [openModal, setOpenModal] = useState(false);
+  const { mutateAsync } = useDeleteDraftMutation();
+
+  const onOpenModal = () => {
+    setOpenModal(true);
+  };
+  const onCloseModal = () => {
+    setOpenModal(false);
+  };
+  const methods = useForm();
+
   const queryClient = useQueryClient();
 
   const router = useRouter();
+  const isDraft = router?.query['objState'] === 'DRAFT';
 
   const { data, isFetching, refetch } = useGetMemberListQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
@@ -40,8 +62,8 @@ export const MemberListPage = () => {
     () => [
       {
         id: 'id',
-        header: t['memberListTableMemberID'],
-        accessorFn: (row) => row?.node?.code,
+        header: isDraft ? t['memberListTableMemberId'] : t['memberListTableMemberCode'],
+        accessorFn: (row) => (isDraft ? row?.node?.id : row?.node?.code),
         // enableSorting: true,
       },
       {
@@ -100,26 +122,60 @@ export const MemberListPage = () => {
           cell.row.original?.node ? (
             <TablePopover
               node={cell.row.original?.node}
-              items={[
-                {
-                  title: t['memberListTableViewMemberProfile'],
-                  onClick: (node) => router.push(`/members/details?id=${node?.id}`),
-                },
-                {
-                  title: t['memberListTableEditMember'],
-                  onClick: (node) => {
-                    router.push(
-                      `/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit/${node?.id}`
-                    );
-                  },
-                },
-                {
-                  title: t['memberListTableMakeInactive'],
-                  onClick: (node) => {
-                    router.push(`/members/inactivation/${node?.id}`);
-                  },
-                },
-              ]}
+              items={
+                isDraft
+                  ? [
+                      {
+                        title: t['memberListTableViewMemberProfile'],
+                        onClick: (node) => router.push(`/members/details?id=${node?.id}`),
+                      },
+                      {
+                        title: t['memberListTableEditMember'],
+                        onClick: (node) => {
+                          router.push(
+                            `/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit/${
+                              node?.id
+                            }`
+                          );
+                        },
+                      },
+                      {
+                        title: t['memberListTableMakeInactive'],
+                        onClick: (node) => {
+                          router.push(`/members/inactivation/${node?.id}`);
+                        },
+                      },
+                      {
+                        title: t['memberDeleteMember'],
+                        onClick: (node) => {
+                          onOpenModal();
+                          setID(node?.id);
+                        },
+                      },
+                    ]
+                  : [
+                      {
+                        title: t['memberListTableViewMemberProfile'],
+                        onClick: (node) => router.push(`/members/details?id=${node?.id}`),
+                      },
+                      {
+                        title: t['memberListTableEditMember'],
+                        onClick: (node) => {
+                          router.push(
+                            `/members/${memberTypeSlug[node?.type || 'INDIVIDUAL']}/edit/${
+                              node?.id
+                            }`
+                          );
+                        },
+                      },
+                      {
+                        title: t['memberListTableMakeInactive'],
+                        onClick: (node) => {
+                          router.push(`/members/inactivation/${node?.id}`);
+                        },
+                      },
+                    ]
+              }
             />
           ) : null,
         meta: {
@@ -127,8 +183,26 @@ export const MemberListPage = () => {
         },
       },
     ],
-    [t]
+    [t, isDraft]
   );
+
+  const deleteMember = useCallback(async () => {
+    await asyncToast({
+      id: 'inactive-id',
+      msgs: {
+        success: 'Deleted member successfully',
+        loading: 'Deleting member',
+      },
+      onSuccess: () => {
+        refetch();
+        onCloseModal();
+      },
+      promise: mutateAsync({
+        memberId: ID,
+      }),
+    });
+  }, [ID, mutateAsync]);
+  const onCancel = () => {};
 
   return (
     <>
@@ -154,6 +228,17 @@ export const MemberListPage = () => {
           pageInfo: data?.members?.list?.pageInfo,
         }}
       />
+      <ChakraModal
+        open={openModal}
+        onClose={onCloseModal}
+        primaryButtonLabel="yes"
+        secondaryButtonLabel="cancel"
+        width="600px"
+        primaryButtonHandler={deleteMember}
+        secondaryButtonHandler={onCancel}
+      >
+        {t['memberDeleteConfirm']}
+      </ChakraModal>
     </>
   );
 };

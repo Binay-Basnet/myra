@@ -28,7 +28,7 @@ export const TransactionCard = ({ transactionItem }: ITransactionCardProps) => (
         {transactionItem?.name}
       </Text>
       <Text fontSize="s3" fontWeight="400">
-        {transactionItem?.date?.local}
+        {transactionItem?.date?.en}
       </Text>
     </Box>
     <Box>

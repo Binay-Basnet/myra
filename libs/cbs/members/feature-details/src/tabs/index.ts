@@ -3,6 +3,7 @@ export * from './Activity';
 export * from './Bio';
 export * from './Cheque';
 export * from './Documents';
+export * from './Loan';
 export * from './Overview';
 export * from './Reports';
 export * from './Share';

@@ -1,10 +1,17 @@
 import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
 
-import { useGetAccountSummaryQuery } from '@coop/ebanking/data-access';
+import {
+  useGetAccountListQuery,
+  useGetEbankingLoanAccountsQuery,
+} from '@coop/ebanking/data-access';
 import { Box, Grid, Icon, TextFields } from '@coop/shared/ui';
 
 export const AccountHeaderCard = () => {
-  const { data: accountSummary } = useGetAccountSummaryQuery();
+  const { data: accountList } = useGetAccountListQuery({
+    transactionPagination: { first: 10, after: '' },
+  });
+
+  const { data: loanAccountList } = useGetEbankingLoanAccountsQuery({});
 
   return (
     <Box
@@ -36,10 +43,9 @@ export const AccountHeaderCard = () => {
               Total Saving
             </TextFields>
             <TextFields variant="stickyCardHeader">
-              {accountSummary?.eBanking?.account?.summary?.totalSaving.toLocaleString(
-                'en-IN',
-                { maximumFractionDigits: 0 }
-              ) ?? 'N/A'}
+              {Number(accountList?.eBanking?.account?.list?.totalBalance)?.toLocaleString('en-IN', {
+                maximumFractionDigits: 2,
+              }) ?? 'N/A'}
             </TextFields>
           </Box>
         </Box>
@@ -60,9 +66,11 @@ export const AccountHeaderCard = () => {
               Total Loan
             </TextFields>
             <TextFields variant="stickyCardHeader">
-              {accountSummary?.eBanking?.account?.summary?.totalLoan.toLocaleString(
+              {Number(loanAccountList?.eBanking?.loanAccount?.list?.totalBalance)?.toLocaleString(
                 'en-IN',
-                { maximumFractionDigits: 0 }
+                {
+                  maximumFractionDigits: 2,
+                }
               ) ?? 'N/A'}
             </TextFields>
           </Box>

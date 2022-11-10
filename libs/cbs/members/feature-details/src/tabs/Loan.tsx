@@ -1,31 +1,31 @@
-import { IoAddOutline } from 'react-icons/io5';
+import { IoAddOutline, IoList } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
 import { Box, Grid, Icon, Text } from '@coop/shared/ui';
 
-import { TransactionTable } from '../components';
+import { LoanAccountList, LoanPaymentTable } from '../components';
 
 const links = [
   {
-    title: 'New Deposit',
-    link: '/transactions/deposit/add',
+    title: 'New Loan Application',
+    link: '/loan/apply',
   },
   {
-    title: 'New Withdraw',
-    link: '/transactions/withdraw/add',
+    title: 'Loan Repayment',
+    link: '/loan/repayments/add',
   },
   {
-    title: 'Transfer',
-    link: '/accounts/account-transfer/add',
+    title: 'Payment Schedules',
+    link: '/loan',
   },
 ];
-export const Transactions = () => {
-  const router = useRouter();
 
+export const Loan = () => {
+  const router = useRouter();
   return (
     <>
       <Text fontSize="r3" fontWeight="600">
-        Transactions
+        Loan{' '}
       </Text>
       <Box display="flex" flexDirection="column" gap="s16" pb="s16">
         <Text fontWeight="600" fontSize="r1">
@@ -46,7 +46,7 @@ export const Transactions = () => {
                 cursor="pointer"
                 onClick={() => router.push(`${item.link}`)}
               >
-                <Icon as={IoAddOutline} />
+                <Icon as={item.title !== 'Share Register' ? IoAddOutline : IoList} />
 
                 <Text fontWeight="500" fontSize="s3">
                   {item.title}
@@ -56,7 +56,8 @@ export const Transactions = () => {
           ))}
         </Grid>
       </Box>
-      <TransactionTable />
+      <LoanAccountList />
+      <LoanPaymentTable />
     </>
   );
 };
