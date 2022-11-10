@@ -34,12 +34,12 @@ const links = [
   },
 ];
 
-const accountTypes = {
-  [NatureOfDepositProduct.Saving]: 'Saving Account',
-  [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
-  [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
-  [NatureOfDepositProduct.Current]: 'Current Account',
-};
+// const accountTypes = {
+//   [NatureOfDepositProduct.Saving]: 'Saving Account',
+//   [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
+//   [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
+//   [NatureOfDepositProduct.Current]: 'Current Account',
+// };
 
 export const Overview = () => {
   const { accountDetails } = useAccountDetails();
@@ -51,12 +51,29 @@ export const Overview = () => {
       label: 'Account Open Date',
       value: accountDetails?.accountOpenDate,
     },
+    // {
+    //   label: 'Default Amount Deposit Account Type',
+    //   value:
+    //     accountDetails?.accountType === NatureOfDepositProduct.RecurringSaving ||
+    //     (accountDetails?.accountType === NatureOfDepositProduct?.Current &&
+    //       accountDetails?.isMandatory)
+    //       ? accountTypes[accountDetails?.accountType]
+    //       : '',
+    // },
     {
-      label: 'Default Amount Deposit Account Type',
-      value: accountDetails?.accountType ? accountTypes[accountDetails?.accountType] : '',
+      label: 'Interest Accrued',
+      value:
+        accountDetails?.accountType === NatureOfDepositProduct.Current
+          ? null
+          : accountDetails?.interestAccrued ?? '0',
     },
-    { label: 'Interest Accrued', value: accountDetails?.interestAccrued ?? '0' },
-    { label: 'Interest Earned', value: accountDetails?.interestEarned ?? '0' },
+    {
+      label: 'Interest Earned',
+      value:
+        accountDetails?.accountType === NatureOfDepositProduct.Current
+          ? null
+          : accountDetails?.interestEarned ?? '0',
+    },
     { label: 'Guarantee Amount', value: accountDetails?.guaranteedAmount ?? '0' },
   ];
 
