@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 
@@ -38,7 +37,6 @@ export const MemberListPage = () => {
   const onCloseModal = () => {
     setOpenModal(false);
   };
-  const methods = useForm();
 
   const queryClient = useQueryClient();
 
