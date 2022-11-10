@@ -51,7 +51,7 @@ export const MemberDetailsSidebar = () => {
       <DetailPageTabs
         tabs={[
           'Overview',
-          'Accounts',
+          'Saving Accounts',
           'Share',
           'Reports',
           'Loan',

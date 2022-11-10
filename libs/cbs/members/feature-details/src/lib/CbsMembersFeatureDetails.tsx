@@ -45,7 +45,7 @@ export const MemberDetails = () => {
         minH="calc(100vh - 110px)"
       >
         {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}
-        {tabQuery === 'accounts' && <Accounts />}
+        {tabQuery === 'saving accounts' && <Accounts />}
         {tabQuery === 'activity' && <Activity />}
         {tabQuery === 'loan' && <Loan />}
         {tabQuery === 'bio' && <Bio />}

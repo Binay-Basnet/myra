@@ -132,6 +132,7 @@ export type AccountMinimalResult = {
   accountIds?: Maybe<Array<Maybe<Scalars['String']>>>;
   accounts?: Maybe<Array<Maybe<AccountMinimal>>>;
   recentTransactions?: Maybe<EbankingTransactionConnection>;
+  totalBalance?: Maybe<Scalars['String']>;
 };
 
 export type AccountMinimalResultRecentTransactionsArgs = {
@@ -1191,7 +1192,6 @@ export type BulkDepositInput = {
   agentId?: InputMaybe<Scalars['String']>;
   bankVoucher?: InputMaybe<DepositBankVoucher>;
   cash?: InputMaybe<DepositCash>;
-  cheque?: InputMaybe<DepositCheque>;
   depositedBy: DepositedBy;
   doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   memberId: Scalars['String'];
@@ -1200,6 +1200,7 @@ export type BulkDepositInput = {
   other_name?: InputMaybe<Scalars['String']>;
   payment_type: DepositPaymentType;
   sourceOfFund?: InputMaybe<Scalars['String']>;
+  withdrawSlip?: InputMaybe<WithdrawSlip>;
 };
 
 export type BulkDepositInstanceInput = {
@@ -1416,16 +1417,6 @@ export type ChequeBookRequestList = {
   requestedDate: Scalars['String'];
 };
 
-export type ChequeDepositData = {
-  accountId: Scalars['String'];
-  agentID?: InputMaybe<Scalars['ID']>;
-  amount: Scalars['String'];
-  chequeNo: Scalars['String'];
-  depositedBy: DepositedBy;
-  isDifferentMember?: InputMaybe<Scalars['Boolean']>;
-  memberId?: InputMaybe<Scalars['String']>;
-};
-
 export type ChequePastRequest = {
   branch?: Maybe<Branch>;
   chequeBlockNumber?: Maybe<Scalars['String']>;
@@ -1566,6 +1557,11 @@ export type CoopRelatedTrainingType = {
   dateOfTraining?: Maybe<Scalars['String']>;
   subjectOfTraining?: Maybe<Scalars['String']>;
   trainingOrganization?: Maybe<Scalars['String']>;
+};
+
+export type CoopStatistics = {
+  totalBranches: Scalars['Int'];
+  totalMembers: Scalars['Int'];
 };
 
 export type CoopUnionAccountOperatorDetailsResult = {
@@ -2308,14 +2304,6 @@ export type DepositCash = {
   total: Scalars['String'];
 };
 
-export type DepositCheque = {
-  accId: Scalars['String'];
-  amount: Scalars['String'];
-  chequeNo: Scalars['String'];
-  isDifferentMember?: InputMaybe<Scalars['Boolean']>;
-  memberId?: InputMaybe<Scalars['String']>;
-};
-
 export enum DepositFrequency {
   HalfYearly = 'HALF_YEARLY',
   Monthly = 'MONTHLY',
@@ -2329,7 +2317,6 @@ export type DepositInput = {
   amount?: InputMaybe<Scalars['String']>;
   bankVoucher?: InputMaybe<DepositBankVoucher>;
   cash?: InputMaybe<DepositCash>;
-  cheque?: InputMaybe<DepositCheque>;
   depositedBy: DepositedBy;
   doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   fine?: InputMaybe<Scalars['String']>;
@@ -2342,6 +2329,7 @@ export type DepositInput = {
   rebate?: InputMaybe<Scalars['String']>;
   sourceOfFund?: InputMaybe<Scalars['String']>;
   voucherId?: InputMaybe<Scalars['String']>;
+  withdrawSlip?: InputMaybe<WithdrawSlip>;
 };
 
 export type DepositIro = {
@@ -2559,7 +2547,7 @@ export type DepositLoanAccountSearchFilter = {
 export enum DepositPaymentType {
   BankVoucher = 'BANK_VOUCHER',
   Cash = 'CASH',
-  Cheque = 'CHEQUE',
+  WithdrawSlip = 'WITHDRAW_SLIP',
 }
 
 export type DepositProduct = Base & {
@@ -3371,6 +3359,7 @@ export type EBankingCooperativeServiceOption = {
 export type EBankingCooperativeServiceQuery = {
   cheque?: Maybe<EBankingChequeQuery>;
   complaint?: Maybe<EBankingComplaintQuery>;
+  coopStatistics?: Maybe<CoopStatistics>;
   downloads?: Maybe<EBankingDownloadsQuery>;
   loan?: Maybe<EBankingLoanQuery>;
   organizationInfo: Organization;
@@ -7680,9 +7669,9 @@ export type LoanAccountFormState = {
   fingerprintDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
   gracePeriod?: Maybe<LoanAccountGrace>;
   gurantee_details?: Maybe<Array<Maybe<LoanAccountGurantee>>>;
+  interestAuthority?: Maybe<InterestAuthority>;
+  interestDoc?: Maybe<Array<Maybe<PictureData>>>;
   intrestRate?: Maybe<Scalars['Float']>;
-  isBoardAuthority?: Maybe<Scalars['Boolean']>;
-  isCeoAuthority?: Maybe<Scalars['Boolean']>;
   justifySanction?: Maybe<Scalars['String']>;
   linkedAccountId?: Maybe<Scalars['String']>;
   loanAccountName?: Maybe<Scalars['String']>;
@@ -7759,9 +7748,9 @@ export type LoanAccountInput = {
   fingerprintDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   gracePeriod?: InputMaybe<LoanAccountGraceInput>;
   gurantee_details?: InputMaybe<Array<InputMaybe<LoanAccountGuranteeInput>>>;
+  interestAuthority?: InputMaybe<InterestAuthority>;
+  interestDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   intrestRate?: InputMaybe<Scalars['Float']>;
-  isBoardAuthority?: InputMaybe<Scalars['Boolean']>;
-  isCeoAuthority?: InputMaybe<Scalars['Boolean']>;
   justifySanction?: InputMaybe<Scalars['String']>;
   linkedAccountId?: InputMaybe<Scalars['String']>;
   loanAccountName?: InputMaybe<Scalars['String']>;
@@ -8848,6 +8837,14 @@ export type MemberChargeInput = {
   memberType: KymMemberTypesEnum;
 };
 
+export type MemberChequeDetails = {
+  accountName?: Maybe<Scalars['String']>;
+  cancelled?: Maybe<Scalars['Int']>;
+  issued?: Maybe<Scalars['Int']>;
+  left?: Maybe<Scalars['Int']>;
+  used?: Maybe<Scalars['Int']>;
+};
+
 export type MemberClassificationReportAddressData = {
   district?: Maybe<Array<Maybe<ReportEntry>>>;
   province?: Maybe<Array<Maybe<ReportEntry>>>;
@@ -8992,6 +8989,7 @@ export type MemberOverviewAccountsView = {
 export type MemberOverviewData = {
   accounts?: Maybe<MemberOverviewAccountsView>;
   bio?: Maybe<Scalars['String']>;
+  cheques?: Maybe<Array<Maybe<MemberChequeDetails>>>;
   loan?: Maybe<MemberOverviewLoanView>;
   overview?: Maybe<OverviewView>;
   reports?: Maybe<MemberOverviewReportView>;
@@ -9154,7 +9152,6 @@ export type MembershipPaymentInput = {
   amount?: InputMaybe<Scalars['String']>;
   bankDeposit?: InputMaybe<BankDepositData>;
   cashData?: InputMaybe<CashDepositData>;
-  chequeData?: InputMaybe<ChequeDepositData>;
   depositedBy?: InputMaybe<DepositedBy>;
   doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   otherName?: InputMaybe<Scalars['String']>;
@@ -9162,6 +9159,7 @@ export type MembershipPaymentInput = {
   paymentMode: DepositPaymentType;
   remark?: InputMaybe<Scalars['String']>;
   sourceFund?: InputMaybe<Scalars['String']>;
+  withdrawSlipData?: InputMaybe<WithdrawSlipDepositData>;
 };
 
 export type MembershipPaymentRecord = {
@@ -11706,7 +11704,7 @@ export type TransferData = {
 
 export type TransferInput = {
   amount: Scalars['String'];
-  chequeNo?: InputMaybe<Scalars['String']>;
+  counterSlipNo?: InputMaybe<Scalars['String']>;
   destAccountId: Scalars['String'];
   memberId: Scalars['String'];
   notes?: InputMaybe<Scalars['String']>;
@@ -12049,7 +12047,7 @@ export type WithdrawInput = {
   amount: Scalars['String'];
   bankCheque?: InputMaybe<WithdrawBankCheque>;
   cash?: InputMaybe<DepositCash>;
-  chequeNo?: InputMaybe<Scalars['String']>;
+  counterSlipNo?: InputMaybe<Scalars['String']>;
   doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   fine?: InputMaybe<Scalars['String']>;
   memberId: Scalars['String'];
@@ -12065,7 +12063,6 @@ export type WithdrawInput = {
 export enum WithdrawPaymentType {
   BankCheque = 'BANK_CHEQUE',
   Cash = 'CASH',
-  WithdrawSlip = 'WITHDRAW_SLIP',
 }
 
 export type WithdrawPenalty = {
@@ -12084,6 +12081,24 @@ export type WithdrawResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
   recordId?: Maybe<Scalars['ID']>;
+};
+
+export type WithdrawSlip = {
+  accId: Scalars['String'];
+  amount: Scalars['String'];
+  isDifferentMember?: InputMaybe<Scalars['Boolean']>;
+  memberId?: InputMaybe<Scalars['String']>;
+  withdrawSlipNo: Scalars['String'];
+};
+
+export type WithdrawSlipDepositData = {
+  accountId: Scalars['String'];
+  agentID?: InputMaybe<Scalars['ID']>;
+  amount: Scalars['String'];
+  depositedBy: DepositedBy;
+  isDifferentMember?: InputMaybe<Scalars['Boolean']>;
+  memberId?: InputMaybe<Scalars['String']>;
+  withdrawSlipNo: Scalars['String'];
 };
 
 export type WithdrawSlipMutation = {
@@ -12177,7 +12192,7 @@ export type WithdrawViaCollectorList = {
 };
 
 export enum WithdrawWith {
-  Cheque = 'CHEQUE',
+  CounterSlip = 'COUNTER_SLIP',
   WithdrawSlip = 'WITHDRAW_SLIP',
 }
 
@@ -16700,8 +16715,7 @@ export type GetLoanApplicationDetailsQuery = {
         totalValuation?: string | null;
         totalSanctionedAmount?: string | null;
         justifySanction?: string | null;
-        isCeoAuthority?: boolean | null;
-        isBoardAuthority?: boolean | null;
+        interestAuthority?: InterestAuthority | null;
         intrestRate?: number | null;
         tenure?: number | null;
         tenureType?: FrequencyTenure | null;
@@ -16751,6 +16765,7 @@ export type GetLoanApplicationDetailsQuery = {
           principalGracePeriod?: number | null;
           interestGracePeriod?: number | null;
         } | null;
+        interestDoc?: Array<{ identifier?: string | null; url?: string | null } | null> | null;
         loanProcessingCharge?: Array<{
           amount?: any | null;
           ledgerName?: string | null;
@@ -26598,8 +26613,11 @@ export const GetLoanApplicationDetailsDocument = `
         totalValuation
         totalSanctionedAmount
         justifySanction
-        isCeoAuthority
-        isBoardAuthority
+        interestAuthority
+        interestDoc {
+          identifier
+          url
+        }
         intrestRate
         tenure
         tenureType

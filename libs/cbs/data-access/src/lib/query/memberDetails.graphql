@@ -167,6 +167,13 @@ query getMemberDetailsOverview($id: ID!) {
             noOfShares
           }
         }
+        # cheques {
+        #   accountName
+        #   issued
+        #   used
+        #   left
+        #   cancelled
+        # }
       }
     }
   }
