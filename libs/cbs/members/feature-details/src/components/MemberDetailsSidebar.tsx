@@ -54,6 +54,7 @@ export const MemberDetailsSidebar = () => {
           'Accounts',
           'Share',
           'Reports',
+          'Loan',
           'Bio',
           'Transactions',
           'Activity',

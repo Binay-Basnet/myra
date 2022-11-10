@@ -1221,6 +1221,11 @@ export type BulkInstallmentResult = {
   value?: Maybe<InstallmentResult>;
 };
 
+export enum CoaCategory {
+  SystemDefined = 'SYSTEM_DEFINED',
+  UserDefined = 'USER_DEFINED',
+}
+
 export type CoaFullView = {
   data?: Maybe<Array<Maybe<CoaView>>>;
   error?: Maybe<QueryError>;
@@ -1250,6 +1255,7 @@ export type CoaView = {
   accountTypeDetails?: Maybe<AccountTypeDetailsUnion>;
   allowFreeEntry: Scalars['Boolean'];
   allowTransaction: Scalars['Boolean'];
+  category?: Maybe<CoaCategory>;
   createdAt: Scalars['Time'];
   creatorId: Scalars['ID'];
   currency: Scalars['String'];
@@ -4272,6 +4278,12 @@ export type FamilyDetailsInNepali = {
   grandMotherName?: Maybe<Scalars['String']>;
   motherName?: Maybe<Scalars['String']>;
   spouseName?: Maybe<Scalars['String']>;
+};
+
+export type FamilyMemberDetails = {
+  dob?: Maybe<Scalars['String']>;
+  fullName?: Maybe<Scalars['String']>;
+  relationship?: Maybe<Scalars['String']>;
 };
 
 export type FieldDetailsQueryResult = {
@@ -8807,11 +8819,14 @@ export type MemberBasicInfoView = {
   address?: Maybe<Scalars['Localized']>;
   addressId?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
+  documents?: Maybe<Array<Maybe<MemberDocumentDetails>>>;
   email?: Maybe<Scalars['String']>;
+  familyMembers?: Maybe<Array<Maybe<FamilyMemberDetails>>>;
   fathersName?: Maybe<Scalars['String']>;
   gender?: Maybe<Scalars['Localized']>;
   genderId?: Maybe<Scalars['String']>;
   grandFathersName?: Maybe<Scalars['String']>;
+  isStaff?: Maybe<Scalars['Boolean']>;
   maritalStatus?: Maybe<Scalars['Localized']>;
   maritalStatusId?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
@@ -8865,8 +8880,18 @@ export type MemberCodeInput = {
   prefix?: InputMaybe<Scalars['String']>;
 };
 
+export type MemberDeleteDraftResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type MemberDetailsResult = {
   data?: Maybe<Member>;
+};
+
+export type MemberDocumentDetails = {
+  key?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
 };
 
 export type MemberFamilyDetails = {
@@ -8910,6 +8935,7 @@ export type MemberMutation = {
   activateMember?: Maybe<MemberActivateMutation>;
   cooperative?: Maybe<KymCooperativeMutation>;
   cooperativeUnion?: Maybe<KymCoopUnionMutation>;
+  deleteDraft?: Maybe<MemberDeleteDraftResult>;
   entry: KymEntryMutation;
   generateExcel: Scalars['String'];
   individual?: Maybe<KymIndMutation>;
@@ -8922,6 +8948,10 @@ export type MemberMutation = {
 
 export type MemberMutationCooperativeArgs = {
   id: Scalars['ID'];
+};
+
+export type MemberMutationDeleteDraftArgs = {
+  memberId: Scalars['ID'];
 };
 
 export type MemberMutationEntryArgs = {
@@ -17544,6 +17574,9 @@ export type GetMemberDetailsOverviewQuery = {
             productName?: string | null;
             productType?: string | null;
             interestRate?: string | null;
+            subscriptionDate?: string | null;
+            interestEarned?: string | null;
+            interestBooked?: string | null;
           } | null> | null;
           payments?: Array<{
             date?: string | null;
@@ -27648,6 +27681,9 @@ export const GetMemberDetailsOverviewDocument = `
             productName
             productType
             interestRate
+            subscriptionDate
+            interestEarned
+            interestBooked
           }
           payments {
             date

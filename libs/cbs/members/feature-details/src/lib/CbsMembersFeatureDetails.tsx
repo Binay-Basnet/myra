@@ -9,6 +9,7 @@ import {
   Bio,
   Cheque,
   Documents,
+  Loan,
   MemberShareInfo,
   Overview,
   Reports,
@@ -27,7 +28,7 @@ export const MemberDetails = () => {
       <Box
         w="320px"
         position="fixed"
-        h="calc(100vh - 110px)"
+        h="calc(100vh - 160px)"
         borderRight="1px"
         borderRightColor="border.layout"
         overflowY="auto"
@@ -46,6 +47,7 @@ export const MemberDetails = () => {
         {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}
         {tabQuery === 'accounts' && <Accounts />}
         {tabQuery === 'activity' && <Activity />}
+        {tabQuery === 'loan' && <Loan />}
         {tabQuery === 'bio' && <Bio />}
         {tabQuery === 'cheque' && <Cheque />}
         {tabQuery === 'documents' && <Documents />}

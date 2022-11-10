@@ -5,9 +5,9 @@ import { useRouter } from 'next/router';
 import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
 import { Box, Button, DetailsCard, Icon, Text } from '@coop/shared/ui';
 
-import { UpcomingPaymentTable } from './AccountTable';
+import { UpcomingPaymentTable } from './LoanAccountTable';
 
-export const AccountList = () => {
+export const LoanAccountList = () => {
   const router = useRouter();
   const [showGrid, setShowGrid] = useState(true);
   const handleClick = () => {
@@ -16,10 +16,9 @@ export const AccountList = () => {
   const memberDetails = useGetMemberDetailsOverviewQuery({
     id: router.query['id'] as string,
   });
-  const memberAccountDetails =
-    memberDetails?.data?.members?.memberOverview?.data?.accounts?.accounts;
+  const memberAccountDetails = memberDetails?.data?.members?.memberOverview?.data?.loan?.accounts;
   const memberLength = memberAccountDetails?.length;
-  const title = `Saving Accounts List(${memberLength})`;
+  const title = `Loan Accounts List(${memberLength})`;
   const memberListData =
     memberAccountDetails?.map((data, index) => ({
       sn: Number(index) + 1,
@@ -34,7 +33,7 @@ export const AccountList = () => {
       {showGrid && (
         <DetailsCard
           bg="white"
-          title={memberLength ? title : 'Saving Accounts List (0)'}
+          title={memberLength ? title : 'Loan Accounts List (0)'}
           leftBtn={
             <Button
               variant="ghost"
@@ -89,7 +88,7 @@ export const AccountList = () => {
         <DetailsCard
           hasTable
           bg="white"
-          title={memberLength ? title : 'Saving Accounts List (0)'}
+          title={memberLength ? title : 'Loan Accounts List (0)'}
           leftBtn={
             <Button
               variant="ghost"
