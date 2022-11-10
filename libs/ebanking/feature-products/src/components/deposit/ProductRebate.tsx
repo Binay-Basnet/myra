@@ -54,7 +54,7 @@ export const ProductRebate = ({ rebateData }: IProductRebateProps) => {
   if (!rebateData || Object.keys(rebateData).length === 0) return null;
 
   return (
-    <DetailsCard title="Rebate" hideBorder hasTable>
+    <DetailsCard title="Rebate" hasTable>
       <Table variant="report" size="report" isStatic data={rebateDataArray} columns={columns} />
     </DetailsCard>
   );

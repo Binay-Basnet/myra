@@ -2,7 +2,7 @@ import { DepositProductCriteria } from '@coop/ebanking/data-access';
 import { Box, DetailsCard } from '@coop/shared/ui';
 
 export const ProductCriteria = ({ criteria }: { criteria: DepositProductCriteria }) => (
-  <DetailsCard hideBorder title="Criteria">
+  <DetailsCard title="Criteria">
     <Box px="s16" fontSize="r1">
       <ul>
         <li>

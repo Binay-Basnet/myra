@@ -9,7 +9,7 @@ interface DetailsCardProps {
   children?: React.ReactNode;
   hasTable?: boolean;
   bg?: string;
-  hideBorder?: boolean;
+
   hasThreeRows?: boolean;
   leftBtn?: React.ReactNode;
 }
@@ -21,15 +21,10 @@ export const DetailsCard = ({
   hasTable,
   bg,
   hasThreeRows,
-  hideBorder,
+
   leftBtn = null,
 }: DetailsCardProps) => (
-  <Box
-    border={hideBorder ? undefined : '1px solid'}
-    borderColor="border.layout"
-    borderRadius="br2"
-    bg={bg ?? 'white'}
-  >
+  <Box borderRadius="br2" bg={bg ?? 'white'}>
     <Box px="s16" h="60px" display="flex" alignItems="center">
       <Box w="100%" display="flex" alignItems="center" justifyContent="space-between">
         <Box display="flex" flexDir="column">

@@ -49,7 +49,7 @@ export const ProductDormantSetup = ({ dormantSetup }: IProductDormantSetup) => {
   if (dormantSetupWithIndex?.length !== 0) return null;
 
   return (
-    <DetailsCard title="Dormant Setup" hideBorder hasTable>
+    <DetailsCard title="Dormant Setup" hasTable>
       <Table
         variant="report"
         size="report"

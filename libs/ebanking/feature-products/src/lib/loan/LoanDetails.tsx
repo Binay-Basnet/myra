@@ -88,13 +88,13 @@ export const LoanDetails = () => {
         ]}
       />
 
-      <DetailsCard hideBorder hasTable title="About">
+      <DetailsCard hasTable title="About">
         <Text fontSize="r1" color="gray.900">
           {product?.description}
         </Text>
       </DetailsCard>
 
-      <DetailsCard hideBorder title="General Information">
+      <DetailsCard title="General Information">
         <DetailCardContent title="Product Name" subtitle={product?.productName} />
 
         <DetailCardContent
@@ -142,7 +142,7 @@ export const LoanDetails = () => {
       {criteria && <ProductCriteria criteria={criteria} />}
 
       {product?.requiredDocuments && product?.requiredDocuments.length !== 0 && (
-        <DetailsCard title="Required Documents" hideBorder>
+        <DetailsCard title="Required Documents">
           <Box ml="s20" as="ul" fontSize="r1" textTransform="capitalize">
             {product?.requiredDocuments?.map((document) => (
               <li key={document}>{document?.toLowerCase().replace(/_/g, ' ')}</li>
@@ -208,7 +208,7 @@ export const LoanDetails = () => {
         minTenure={product?.minTenureUnitNumber}
       />
 
-      <DetailsCard title="Loan Processing Charges" hideBorder hasTable>
+      <DetailsCard title="Loan Processing Charges" hasTable>
         <Table
           data={product?.loanProcessingCharge ?? []}
           isStatic
@@ -236,7 +236,7 @@ export const LoanDetails = () => {
         />
       </DetailsCard>
 
-      <DetailsCard hideBorder title="Loan Repayment Start Grace Duration">
+      <DetailsCard title="Loan Repayment Start Grace Duration">
         <Box ml="s20" as="ul" fontSize="r1" textTransform="capitalize">
           <li>
             Grace period on Principal: <b>{product?.principalMaxGraceNumber ?? 0}</b>
@@ -246,11 +246,11 @@ export const LoanDetails = () => {
           </li>
         </Box>
       </DetailsCard>
-      <DetailsCard title="Others " hideBorder hasTable>
+      <DetailsCard title="Others " hasTable>
         <ProductFeatures features={otherFeatures} />
       </DetailsCard>
       {product?.insuranceType?.type && (
-        <DetailsCard title="Insurance" hideBorder hasTable>
+        <DetailsCard title="Insurance" hasTable>
           <Table
             data={[
               {
@@ -344,7 +344,7 @@ export const ProductPenalty = ({ penaltyData }: IProductPenalty) => {
   );
 
   return (
-    <DetailsCard title="Penalty" hideBorder hasTable>
+    <DetailsCard title="Penalty" hasTable>
       <Table variant="report" size="report" isStatic data={penaltyData} columns={columns} />
     </DetailsCard>
   );

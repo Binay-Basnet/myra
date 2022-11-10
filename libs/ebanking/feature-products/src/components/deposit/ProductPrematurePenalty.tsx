@@ -59,7 +59,7 @@ export const ProductPrematurePenalty = ({ prematurePenalty }: IProductPrematureP
   if (!prematurePenalty || Object.keys(prematurePenalty).length === 0) return null;
 
   return (
-    <DetailsCard title="Premature Penalty Setup" hideBorder hasTable>
+    <DetailsCard title="Premature Penalty Setup" hasTable>
       <Table
         variant="report"
         size="report"

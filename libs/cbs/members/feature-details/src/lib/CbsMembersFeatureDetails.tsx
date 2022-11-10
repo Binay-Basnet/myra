@@ -28,10 +28,13 @@ export const MemberDetails = () => {
       <Box
         w="320px"
         position="fixed"
-        h="calc(100vh - 160px)"
-        borderRight="1px"
-        borderRightColor="border.layout"
+        h="calc(100vh - 110px)"
         overflowY="auto"
+        sx={{
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        }}
       >
         <MemberDetailsSidebar />
       </Box>

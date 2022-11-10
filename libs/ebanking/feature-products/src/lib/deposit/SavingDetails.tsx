@@ -114,7 +114,7 @@ export const SavingDetails = ({ product, criteria }: ISavingDetailsProps) => {
         minTenure={product?.minTenureUnitNumber}
       />
 
-      <DetailsCard title="Others " hideBorder hasTable>
+      <DetailsCard title="Others " hasTable>
         <Box display="flex" flexDir="column" gap="s32">
           <ProductFeatures features={otherFeatures} />
         </Box>

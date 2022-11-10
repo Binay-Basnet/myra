@@ -23,8 +23,8 @@ export const MemberDetailsSidebar = () => {
         p="s16"
       >
         <Avatar
-          h="284px"
-          w="284px"
+          h="288px"
+          w="288px"
           borderRadius="br2"
           src={memberInfo?.profilePic ?? ''}
           name={memberInfo?.memberName as string}

@@ -38,7 +38,7 @@ export const ProductPenaltyWithdrawSetup = ({
   if (!withDrawData || Object.keys(withDrawData).length === 0) return null;
 
   return (
-    <DetailsCard title="Withdraw Penalty Setup" hideBorder hasTable>
+    <DetailsCard title="Withdraw Penalty Setup" hasTable>
       <Table variant="report" size="report" isStatic data={withDrawDataArray} columns={columns} />
     </DetailsCard>
   );

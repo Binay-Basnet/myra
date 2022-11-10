@@ -18,7 +18,7 @@ export const ProductDocuments = ({
   if (individualDocuments?.length === 0 && institutionDocuments?.length === 0) return null;
 
   return (
-    <DetailsCard title="Required Documents" hideBorder>
+    <DetailsCard title="Required Documents">
       {individualDocuments?.length !== 0 && (
         <Box display="flex" flexDir="column" gap="s4" fontSize="r1" textTransform="capitalize">
           <Text color="gray.800" fontWeight="500">
