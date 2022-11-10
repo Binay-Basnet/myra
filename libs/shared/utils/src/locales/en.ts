@@ -288,11 +288,14 @@ const en: Record<string, string> = {
   memberListTableViewMemberProfile: 'View Member Profile',
   memberListTableEditMember: 'Edit Member',
   memberListTableMakeInactive: 'Make Inactive',
-  memberListTableMemberID: 'Member Code',
+  memberListTableMemberId: 'Member Id',
+  memberListTableMemberCode: 'Member Code',
   memberListTableName: 'Name',
   memberListTableAddress: 'Address',
   memberListTablePhoneNo: 'Phone No.',
   memberListDateJoined: 'Date Joined',
+  memberDeleteMember: 'Delete member',
+  memberDeleteConfirm: 'Are you sure you want to delete this member?',
 
   // share balance table
   shareBalanceTable: 'Share Balance',
