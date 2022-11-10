@@ -29,7 +29,7 @@ export const LoanList = () => {
 
   return (
     <>
-      <PageHeader heading="Loan Application List" tabItems={LOAN_LIST_TAB_ITEMS} />
+      <PageHeader heading="Loan Application" tabItems={LOAN_LIST_TAB_ITEMS} />
       <LoanTable
         data={data}
         viewLink="/loan/applications/view"
