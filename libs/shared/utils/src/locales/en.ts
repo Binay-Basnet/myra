@@ -213,7 +213,7 @@ const en: Record<string, string> = {
   accountNavDraft: 'Draft',
 
   accountList: 'Saving Accounts',
-  accountClose: 'Close Account',
+  accountClose: 'Closed Accounts',
   accountReport: 'Account Reports',
 
   // Inventory Page TODO ( Update Translations )
@@ -3451,7 +3451,7 @@ const en: Record<string, string> = {
   accountTransferListTransactionId: 'Transaction ID',
   accountTransferListTransactionType: 'Transaction Type',
   accountTransferListAmount: 'Amount',
-  accountTransferListAccountTransferList: 'Account Transfer List',
+  accountTransferListAccountTransferList: 'Account Transfer',
   accountTransferListNewAccountTransfer: 'New Account Transfer',
   accountTransferListSearch: 'Search',
 

@@ -59,7 +59,7 @@ const getNewAccountCode = (coaFullViewData: FullViewData[], under: string) => {
   const accountCodeArray = accountCode.split('.');
   const lastCode = accountCodeArray.pop();
 
-  return `${accountCodeArray.join('.')}.${Number(lastCode[0]) + 1}`;
+  return `${accountCodeArray.join('.')}.${Number(lastCode) + 1}`;
 };
 
 const AddNewAccount = () => {
