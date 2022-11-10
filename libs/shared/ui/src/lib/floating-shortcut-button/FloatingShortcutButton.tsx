@@ -53,6 +53,7 @@ const whatsNewData = {
       'Transaction Detail Page (Overview) of Deposit, Withdraw',
       'Alternative Channel',
       'Settings-User-Teller Creation',
+      'Reports - Share Statement, Loan Statement, Genral Ledger, Member Classification & Saving Report',
     ],
   },
   bugsSquashed: {
@@ -124,7 +125,7 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 2.1</Text>
+          <Text fontSize="r2">Version 1.0.5</Text>
           <Text fontSize="s3">November 10, 2022</Text>
         </Box>
         <Box>
