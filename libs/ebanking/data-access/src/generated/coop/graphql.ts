@@ -469,6 +469,7 @@ export const GetAccountListDocument = `
   eBanking {
     account {
       list {
+        totalBalance
         accounts {
           id
           name
@@ -643,6 +644,7 @@ export const GetEbankingLoanAccountsDocument = `
   eBanking {
     loanAccount {
       list {
+        totalBalance
         accounts {
           id
           name
@@ -762,6 +764,30 @@ export const useGetCoopMeQuery = <TData = Types.GetCoopMeQuery, TError = unknown
   useQuery<Types.GetCoopMeQuery, TError, TData>(
     variables === undefined ? ['getCoopMe'] : ['getCoopMe', variables],
     useAxios<Types.GetCoopMeQuery, Types.GetCoopMeQueryVariables>(GetCoopMeDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetCoopStatsDocument = `
+    query getCoopStats {
+  eBanking {
+    cooperativeServices {
+      coopStatistics {
+        totalBranches
+        totalMembers
+      }
+    }
+  }
+}
+    `;
+export const useGetCoopStatsQuery = <TData = Types.GetCoopStatsQuery, TError = unknown>(
+  variables?: Types.GetCoopStatsQueryVariables,
+  options?: UseQueryOptions<Types.GetCoopStatsQuery, TError, TData>
+) =>
+  useQuery<Types.GetCoopStatsQuery, TError, TData>(
+    variables === undefined ? ['getCoopStats'] : ['getCoopStats', variables],
+    useAxios<Types.GetCoopStatsQuery, Types.GetCoopStatsQueryVariables>(GetCoopStatsDocument).bind(
       null,
       variables
     ),
