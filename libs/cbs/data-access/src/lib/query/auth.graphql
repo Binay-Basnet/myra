@@ -36,7 +36,6 @@ query getMe {
               regdNo
               panOrVat
             }
-
           }
         }
         preference {

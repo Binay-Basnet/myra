@@ -43,9 +43,7 @@ mutation login($data: LoginInput!) {
                 regdNo
                 panOrVat
               }
-
             }
-
           }
           preference {
             language

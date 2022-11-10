@@ -1,13 +1,8 @@
-import { useState } from 'react';
-import {
-  AiOutlineBug,
-  AiOutlineExclamation,
-  AiOutlineQuestionCircle,
-  AiOutlineStar,
-} from 'react-icons/ai';
-import { BsBook, BsFacebook, BsHeart, BsInstagram, BsTwitter } from 'react-icons/bs';
-import { CgShortcut } from 'react-icons/cg';
-import { TbMessageDots } from 'react-icons/tb';
+import {useState} from 'react';
+import {AiOutlineBug, AiOutlineExclamation, AiOutlineQuestionCircle, AiOutlineStar,} from 'react-icons/ai';
+import {BsBook, BsFacebook, BsHeart, BsInstagram, BsTwitter} from 'react-icons/bs';
+import {CgShortcut} from 'react-icons/cg';
+import {TbMessageDots} from 'react-icons/tb';
 import isEmpty from 'lodash/isEmpty';
 
 import {
@@ -26,7 +21,7 @@ import {
   Text,
   UnorderedList,
 } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import {useTranslation} from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface FloatingShortcutButtonProps {}
@@ -125,7 +120,7 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0</Text>
+          <Text fontSize="r2">Version 1.0.5</Text>
           <Text fontSize="s3">November 10, 2022</Text>
         </Box>
         <Box>
