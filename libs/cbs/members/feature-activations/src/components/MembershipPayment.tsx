@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
@@ -11,6 +11,7 @@ import {
   MembershipPaymentInput,
   ObjState,
   PaymentDepositedBy,
+  useGetAvailableSlipsListQuery,
   useGetCoaBankListQuery,
   useGetMembershipFeeQuery,
   usePayMembershipMutation,
@@ -176,6 +177,22 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
     value: item?.id as string,
   }));
 
+  const withdrawSlipAccountId = watch('withdrawSlipData.accountId');
+
+  const { data: availableSlipsListQueryData } = useGetAvailableSlipsListQuery(
+    { accountId: withdrawSlipAccountId },
+    { enabled: !!withdrawSlipAccountId }
+  );
+
+  const availableSlipListOptions = useMemo(
+    () =>
+      availableSlipsListQueryData?.withdrawSlip?.listAvailableSlips?.data?.map((withdrawSlip) => ({
+        label: String(withdrawSlip?.slipNumber).padStart(10, '0'),
+        value: withdrawSlip?.slipNumber as string,
+      })) ?? [],
+    [availableSlipsListQueryData]
+  );
+
   useEffect(() => {
     if (totalAmount) {
       methods.setValue('bankDeposit.amount', String(totalAmount));
@@ -258,7 +275,7 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
               <GridItem colSpan={3} px="s20">
                 <FormCheckbox
                   name="withdrawSlipData.isDifferentMember"
-                  label="Cheque is from different member"
+                  label="Withdraw slip is from different member"
                 />
               </GridItem>
 
@@ -278,7 +295,11 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
                   />
                 </GridItem>
 
-                <FormInput name="withdrawSlipData.withdrawSlipNo" label="Withdraw Slip No" />
+                <FormSelect
+                  name="withdrawSlipData.withdrawSlipNo"
+                  label="Withdraw Slip No"
+                  options={availableSlipListOptions}
+                />
 
                 <FormInput
                   name="withdrawSlipData.amount"

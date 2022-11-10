@@ -19,7 +19,13 @@ import {
   ContainerWithDivider,
   InputGroupContainer,
 } from '@coop/cbs/transactions/ui-containers';
-import { FormInput, FormSelect, FormSwitchTab, FormTextArea } from '@coop/shared/form';
+import {
+  FormAmountInput,
+  FormInput,
+  FormSelect,
+  FormSwitchTab,
+  FormTextArea,
+} from '@coop/shared/form';
 import {
   asyncToast,
   Box,
@@ -283,12 +289,9 @@ export const NewAccountTransfer = () => {
                     {srcAccountId && transferType && (
                       <BoxContainer>
                         <InputGroupContainer>
-                          <FormInput
-                            type="number"
-                            min={0}
+                          <FormAmountInput
                             name="amount"
                             label={t['newAccountTransferTransferAmount']}
-                            textAlign="right"
                           />
                         </InputGroupContainer>
 

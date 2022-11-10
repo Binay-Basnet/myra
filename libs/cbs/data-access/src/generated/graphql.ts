@@ -8723,6 +8723,7 @@ export type MemberAccountDetails = {
   atmFacility?: Maybe<Scalars['Boolean']>;
   autoOpen?: Maybe<Scalars['Boolean']>;
   chequeIssue?: Maybe<Scalars['Boolean']>;
+  defaultAccountType?: Maybe<DefaultAccountType>;
   guaranteedAmount?: Maybe<Scalars['String']>;
   installmentAmount?: Maybe<Scalars['String']>;
   insurance?: Maybe<Scalars['Boolean']>;
@@ -14652,6 +14653,7 @@ export type GetAccountDetailsDataQuery = {
         productName?: string | null;
         accountOpenDate?: Record<'local' | 'en' | 'np', string> | null;
         accountType?: NatureOfDepositProduct | null;
+        defaultAccountType?: DefaultAccountType | null;
         accountBalance?: string | null;
         totalDepositBalance?: string | null;
         interestAccrued?: string | null;
@@ -24003,6 +24005,7 @@ export const GetAccountDetailsDataDocument = `
         productName
         accountOpenDate
         accountType
+        defaultAccountType
         accountBalance
         totalDepositBalance
         interestAccrued

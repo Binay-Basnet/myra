@@ -75466,6 +75466,18 @@
             "deprecationReason": null
           },
           {
+            "name": "defaultAccountType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "DefaultAccountType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "guaranteedAmount",
             "description": null,
             "args": [],

@@ -462,6 +462,7 @@ query getAccountDetailsData($id: ID!) {
         productName
         accountOpenDate
         accountType
+        defaultAccountType
         accountBalance
         totalDepositBalance
         interestAccrued

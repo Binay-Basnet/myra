@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import {
@@ -7,6 +7,7 @@ import {
   ObjState,
   RootState,
   useAppSelector,
+  useGetAvailableSlipsListQuery,
   useGetCoaBankListQuery,
 } from '@coop/cbs/data-access';
 import {
@@ -143,6 +144,22 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
     value: item?.id as string,
   }));
 
+  const withdrawSlipAccountId = watch('openingPayment.withdrawSlip.accId');
+
+  const { data: availableSlipsListQueryData } = useGetAvailableSlipsListQuery(
+    { accountId: withdrawSlipAccountId },
+    { enabled: !!withdrawSlipAccountId }
+  );
+
+  const availableSlipListOptions = useMemo(
+    () =>
+      availableSlipsListQueryData?.withdrawSlip?.listAvailableSlips?.data?.map((withdrawSlip) => ({
+        label: String(withdrawSlip?.slipNumber).padStart(10, '0'),
+        value: withdrawSlip?.slipNumber as string,
+      })) ?? [],
+    [availableSlipsListQueryData]
+  );
+
   const denominationTotal =
     denominations?.reduce(
       (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
@@ -218,7 +235,7 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
             <GridItem colSpan={3}>
               <FormCheckbox
                 name="openingPayment.withdrawSlip.isDifferentMember"
-                label="Withdraw sip is from different member"
+                label="Withdraw slip is from different member"
               />
             </GridItem>
 
@@ -237,7 +254,11 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
               />
             </GridItem>
 
-            <FormInput name="openingPayment.withdrawSlip.withdrawSlipNo" label="Withdraw Slip No" />
+            <FormSelect
+              name="openingPayment.withdrawSlip.withdrawSlipNo"
+              label="Withdraw Slip No"
+              options={availableSlipListOptions}
+            />
 
             <FormAmountInput
               name="openingPayment.withdrawSlip.amount"
