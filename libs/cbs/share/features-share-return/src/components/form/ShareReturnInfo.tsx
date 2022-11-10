@@ -19,7 +19,7 @@ type IReturnInfo = {
 export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
   const { t } = useTranslation();
   const methods = useFormContext();
-  const { watch, register, setValue } = methods;
+  const { watch, register, setValue, resetField } = methods;
 
   const memberId = watch('memberId');
   const noOfShares = watch('noOfReturnedShares');
@@ -59,9 +59,10 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
 
   useDeepCompareEffect(() => {
     if (chargeList) {
+      resetField('extraFee');
       chargeList.forEach((charge, index) => {
         setValue(`extraFee.${index}.Id`, charge?.id);
-        setValue(`extraFee.${index}.value`, Number(charge?.charge));
+        setValue(`extraFee.${index}.value`, charge?.charge);
       });
     }
   }, [chargeList]);
@@ -138,10 +139,7 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
                       {item?.name}
                     </Text>
                     <Box width="300px">
-                      <FormNumberInput
-                        name={`extraFee.${index}.value`}
-                        defaultValue={Number(item?.charge)}
-                      />
+                      <FormNumberInput name={`extraFee.${index}.value`} />
                     </Box>
                   </GridItem>
                 );

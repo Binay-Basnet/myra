@@ -16,6 +16,7 @@ import {
   useAppDispatch,
   useAppSelector,
   useGetEndOfDayDateDataQuery,
+  useSetEndOfDayDataMutation,
   useSetPreferenceMutation,
 } from '@coop/cbs/data-access';
 import {
@@ -205,9 +206,23 @@ export const TopLevelHeader = () => {
     },
   };
 
-  const { data: endOfDayData } = useGetEndOfDayDateDataQuery();
+  const { data: endOfDayData, refetch: refetchEndOfDay } = useGetEndOfDayDateDataQuery();
 
   const closingDate = endOfDayData?.transaction?.endOfDayDate;
+
+  const { mutateAsync: closeDay } = useSetEndOfDayDataMutation();
+
+  const closeDayFxn = () => {
+    asyncToast({
+      id: 'set-close-day',
+      promise: closeDay({}),
+      msgs: {
+        loading: 'Closing the Day',
+        success: 'Day Closed',
+      },
+      onSuccess: () => refetchEndOfDay(),
+    });
+  };
 
   return (
     <GlobalHotKeys keyMap={keyMap} handlers={handlers}>
@@ -327,7 +342,8 @@ export const TopLevelHeader = () => {
                         display="flex"
                         justifyContent="center"
                         w="100%"
-                        onClick={() => router.push('/day-close')}
+                        // onClick={() => router.push('/day-close')}
+                        onClick={closeDayFxn}
                         disabled={closingDate !== currentDate}
                       >
                         Close Day

@@ -15,7 +15,7 @@ type IPurchaseInfo = {
 export const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
   const { t } = useTranslation();
   const methods = useFormContext();
-  const { watch, register, setValue } = methods;
+  const { watch, register, setValue, resetField } = methods;
 
   const noOfShares = watch('shareCount');
 
@@ -35,12 +35,13 @@ export const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
 
   useDeepCompareEffect(() => {
     if (chargeList) {
+      resetField('extraFee');
       chargeList.forEach((charge, index) => {
         setValue(`extraFee.${index}.Id`, charge?.id);
-        setValue(`extraFee.${index}.value`, Number(charge?.charge));
+        setValue(`extraFee.${index}.value`, charge?.charge);
       });
     }
-  }, [chargeList]);
+  }, [noOfShares, chargeList]);
 
   return (
     <Box display="flex" flexDirection="column" pb="s24" background="white" borderTopRadius={5}>
@@ -82,10 +83,7 @@ export const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
                         {item?.name}
                       </Text>
                       <Box width="300px">
-                        <FormNumberInput
-                          name={`extraFee.${index}.value`}
-                          defaultValue={Number(item?.charge)}
-                        />
+                        <FormNumberInput name={`extraFee.${index}.value`} />
                       </Box>
                     </GridItem>
                   );

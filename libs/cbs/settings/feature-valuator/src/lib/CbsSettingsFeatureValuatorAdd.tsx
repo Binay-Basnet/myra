@@ -8,6 +8,7 @@ import {
   useAppSelector,
   useGetValuatorQuery,
   useSetValuatorMutation,
+  ValuatorInput,
   ValuatorType,
 } from '@coop/cbs/data-access';
 import { ContainerWithDivider, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
@@ -66,6 +67,15 @@ export const CbsSettingsFeatureValuatorAdd = () => {
         queryClient.invalidateQueries('getValuatorList');
         queryClient.invalidateQueries('getValuator');
         router.push('/settings/general/loan/valuator');
+      },
+      onError: (error) => {
+        if (error.__typename === 'ValidationError') {
+          Object.keys(error.validationErrorMsg).map((key) =>
+            methods.setError(key as keyof ValuatorInput, {
+              message: error.validationErrorMsg[key][0] as string,
+            })
+          );
+        }
       },
     });
   };

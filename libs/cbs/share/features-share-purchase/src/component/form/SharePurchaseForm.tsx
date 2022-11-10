@@ -204,7 +204,6 @@ export const SharePurchaseForm = () => {
           temp += Number(charge?.charge);
         });
       }
-
       setTotalAmount(temp + noOfShares * 100);
     } else {
       setTotalAmount(noOfShares * 100);
