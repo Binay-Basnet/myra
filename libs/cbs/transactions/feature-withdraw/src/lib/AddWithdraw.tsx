@@ -209,7 +209,7 @@ export const AddWithdraw = () => {
       });
     }
 
-    if (values.payment_type === WithdrawPaymentType.Cheque) {
+    if (values.payment_type === WithdrawPaymentType.BankCheque) {
       filteredValues = omit({ ...values }, ['cash', 'file', 'withdrawBy']);
 
       asyncToast({

@@ -1,13 +1,7 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import {
-  RootState,
-  useAppSelector,
-  useGetCoaBankListQuery,
-  WithdrawBy,
-  WithdrawPaymentType,
-} from '@coop/cbs/data-access';
+import { useGetCoaBankListQuery, WithdrawBy, WithdrawPaymentType } from '@coop/cbs/data-access';
 import {
   BoxContainer,
   ContainerWithDivider,
@@ -70,8 +64,8 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
       value: WithdrawPaymentType.Cash,
     },
     {
-      label: 'Cheque',
-      value: WithdrawPaymentType.Cheque,
+      label: 'Bank Cheque',
+      value: WithdrawPaymentType.BankCheque,
     },
   ];
 
@@ -86,7 +80,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
     },
   ];
 
-  const { watch, resetField, setValue } = useFormContext();
+  const { watch, setValue } = useFormContext();
 
   useEffect(() => {
     setValue('cash.cashPaid', String(totalWithdraw));
@@ -124,13 +118,6 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
 
   const returnAmount = Number(totalCashPaid) - Number(totalWithdraw);
 
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    resetField('cheque.depositedAt');
-  }, [preference?.date]);
-
   return (
     <ContainerWithDivider
       borderRight="1px"
@@ -146,19 +133,19 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
           name="payment_type"
         />
 
-        {selectedPaymentMode === WithdrawPaymentType.Cheque && (
+        {selectedPaymentMode === WithdrawPaymentType.BankCheque && (
           <InputGroupContainer>
             <GridItem colSpan={2}>
               <FormSelect
-                name="cheque.bankId"
+                name="bankCheque.bankId"
                 label={t['withdrawPaymentBankName']}
                 options={bankList}
               />
             </GridItem>
 
-            <FormInput name="cheque.chequeNo" label={t['withdrawPaymentChequeNo']} />
+            <FormInput name="bankCheque.chequeNo" label={t['withdrawPaymentChequeNo']} />
 
-            <FormAmountInput name="cheque.amount" label={t['withdrawPaymentAmount']} />
+            <FormAmountInput name="bankCheque.amount" label={t['withdrawPaymentAmount']} />
           </InputGroupContainer>
         )}
 

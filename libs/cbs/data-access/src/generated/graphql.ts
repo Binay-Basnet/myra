@@ -132,6 +132,7 @@ export type AccountMinimalResult = {
   accountIds?: Maybe<Array<Maybe<Scalars['String']>>>;
   accounts?: Maybe<Array<Maybe<AccountMinimal>>>;
   recentTransactions?: Maybe<EbankingTransactionConnection>;
+  totalBalance?: Maybe<Scalars['String']>;
 };
 
 
@@ -1260,6 +1261,11 @@ export type BulkInstallmentResult = {
   value?: Maybe<InstallmentResult>;
 };
 
+export enum CoaCategory {
+  SystemDefined = 'SYSTEM_DEFINED',
+  UserDefined = 'USER_DEFINED'
+}
+
 export type CoaFullView = {
   data?: Maybe<Array<Maybe<CoaView>>>;
   error?: Maybe<QueryError>;
@@ -1289,6 +1295,7 @@ export type CoaView = {
   accountTypeDetails?: Maybe<AccountTypeDetailsUnion>;
   allowFreeEntry: Scalars['Boolean'];
   allowTransaction: Scalars['Boolean'];
+  category?: Maybe<CoaCategory>;
   createdAt: Scalars['Time'];
   creatorId: Scalars['ID'];
   currency: Scalars['String'];
@@ -1596,6 +1603,11 @@ export type CoopRelatedTrainingType = {
   dateOfTraining?: Maybe<Scalars['String']>;
   subjectOfTraining?: Maybe<Scalars['String']>;
   trainingOrganization?: Maybe<Scalars['String']>;
+};
+
+export type CoopStatistics = {
+  totalBranches: Scalars['Int'];
+  totalMembers: Scalars['Int'];
 };
 
 export type CoopUnionAccountOperatorDetailsResult = {
@@ -3445,6 +3457,7 @@ export type EBankingCooperativeServiceOption = {
 export type EBankingCooperativeServiceQuery = {
   cheque?: Maybe<EBankingChequeQuery>;
   complaint?: Maybe<EBankingComplaintQuery>;
+  coopStatistics?: Maybe<CoopStatistics>;
   downloads?: Maybe<EBankingDownloadsQuery>;
   loan?: Maybe<EBankingLoanQuery>;
   organizationInfo: Organization;
@@ -4364,6 +4377,12 @@ export type FamilyDetailsInNepali = {
   grandMotherName?: Maybe<Scalars['String']>;
   motherName?: Maybe<Scalars['String']>;
   spouseName?: Maybe<Scalars['String']>;
+};
+
+export type FamilyMemberDetails = {
+  dob?: Maybe<Scalars['String']>;
+  fullName?: Maybe<Scalars['String']>;
+  relationship?: Maybe<Scalars['String']>;
 };
 
 export type FieldDetailsQueryResult = {
@@ -8985,11 +9004,14 @@ export type MemberBasicInfoView = {
   address?: Maybe<Scalars['Localized']>;
   addressId?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
+  documents?: Maybe<Array<Maybe<MemberDocumentDetails>>>;
   email?: Maybe<Scalars['String']>;
+  familyMembers?: Maybe<Array<Maybe<FamilyMemberDetails>>>;
   fathersName?: Maybe<Scalars['String']>;
   gender?: Maybe<Scalars['Localized']>;
   genderId?: Maybe<Scalars['String']>;
   grandFathersName?: Maybe<Scalars['String']>;
+  isStaff?: Maybe<Scalars['Boolean']>;
   maritalStatus?: Maybe<Scalars['Localized']>;
   maritalStatusId?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
@@ -9043,8 +9065,18 @@ export type MemberCodeInput = {
   prefix?: InputMaybe<Scalars['String']>;
 };
 
+export type MemberDeleteDraftResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type MemberDetailsResult = {
   data?: Maybe<Member>;
+};
+
+export type MemberDocumentDetails = {
+  key?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
 };
 
 export type MemberFamilyDetails = {
@@ -9090,6 +9122,7 @@ export type MemberMutation = {
   activateMember?: Maybe<MemberActivateMutation>;
   cooperative?: Maybe<KymCooperativeMutation>;
   cooperativeUnion?: Maybe<KymCoopUnionMutation>;
+  deleteDraft?: Maybe<MemberDeleteDraftResult>;
   entry: KymEntryMutation;
   generateExcel: Scalars['String'];
   individual?: Maybe<KymIndMutation>;
@@ -9103,6 +9136,11 @@ export type MemberMutation = {
 
 export type MemberMutationCooperativeArgs = {
   id: Scalars['ID'];
+};
+
+
+export type MemberMutationDeleteDraftArgs = {
+  memberId: Scalars['ID'];
 };
 
 
@@ -12284,8 +12322,8 @@ export type WithdrawInput = {
   accountId: Scalars['String'];
   agentId?: InputMaybe<Scalars['String']>;
   amount: Scalars['String'];
+  bankCheque?: InputMaybe<WithdrawBankCheque>;
   cash?: InputMaybe<DepositCash>;
-  cheque?: InputMaybe<WithdrawBankCheque>;
   counterSlipNo?: InputMaybe<Scalars['String']>;
   doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   fine?: InputMaybe<Scalars['String']>;
@@ -12300,8 +12338,8 @@ export type WithdrawInput = {
 };
 
 export enum WithdrawPaymentType {
-  Cash = 'CASH',
-  Cheque = 'CHEQUE'
+  BankCheque = 'BANK_CHEQUE',
+  Cash = 'CASH'
 }
 
 export type WithdrawPenalty = {
