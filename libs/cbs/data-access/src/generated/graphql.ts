@@ -7669,9 +7669,9 @@ export type LoanAccountFormState = {
   fingerprintDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
   gracePeriod?: Maybe<LoanAccountGrace>;
   gurantee_details?: Maybe<Array<Maybe<LoanAccountGurantee>>>;
+  interestAuthority?: Maybe<InterestAuthority>;
+  interestDoc?: Maybe<Array<Maybe<PictureData>>>;
   intrestRate?: Maybe<Scalars['Float']>;
-  isBoardAuthority?: Maybe<Scalars['Boolean']>;
-  isCeoAuthority?: Maybe<Scalars['Boolean']>;
   justifySanction?: Maybe<Scalars['String']>;
   linkedAccountId?: Maybe<Scalars['String']>;
   loanAccountName?: Maybe<Scalars['String']>;
@@ -7748,9 +7748,9 @@ export type LoanAccountInput = {
   fingerprintDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   gracePeriod?: InputMaybe<LoanAccountGraceInput>;
   gurantee_details?: InputMaybe<Array<InputMaybe<LoanAccountGuranteeInput>>>;
+  interestAuthority?: InputMaybe<InterestAuthority>;
+  interestDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   intrestRate?: InputMaybe<Scalars['Float']>;
-  isBoardAuthority?: InputMaybe<Scalars['Boolean']>;
-  isCeoAuthority?: InputMaybe<Scalars['Boolean']>;
   justifySanction?: InputMaybe<Scalars['String']>;
   linkedAccountId?: InputMaybe<Scalars['String']>;
   loanAccountName?: InputMaybe<Scalars['String']>;
@@ -8837,6 +8837,14 @@ export type MemberChargeInput = {
   memberType: KymMemberTypesEnum;
 };
 
+export type MemberChequeDetails = {
+  accountName?: Maybe<Scalars['String']>;
+  cancelled?: Maybe<Scalars['Int']>;
+  issued?: Maybe<Scalars['Int']>;
+  left?: Maybe<Scalars['Int']>;
+  used?: Maybe<Scalars['Int']>;
+};
+
 export type MemberClassificationReportAddressData = {
   district?: Maybe<Array<Maybe<ReportEntry>>>;
   province?: Maybe<Array<Maybe<ReportEntry>>>;
@@ -8981,6 +8989,7 @@ export type MemberOverviewAccountsView = {
 export type MemberOverviewData = {
   accounts?: Maybe<MemberOverviewAccountsView>;
   bio?: Maybe<Scalars['String']>;
+  cheques?: Maybe<Array<Maybe<MemberChequeDetails>>>;
   loan?: Maybe<MemberOverviewLoanView>;
   overview?: Maybe<OverviewView>;
   reports?: Maybe<MemberOverviewReportView>;
@@ -16714,8 +16723,7 @@ export type GetLoanApplicationDetailsQuery = {
         totalValuation?: string | null;
         totalSanctionedAmount?: string | null;
         justifySanction?: string | null;
-        isCeoAuthority?: boolean | null;
-        isBoardAuthority?: boolean | null;
+        interestAuthority?: InterestAuthority | null;
         intrestRate?: number | null;
         tenure?: number | null;
         tenureType?: FrequencyTenure | null;
@@ -16765,6 +16773,7 @@ export type GetLoanApplicationDetailsQuery = {
           principalGracePeriod?: number | null;
           interestGracePeriod?: number | null;
         } | null;
+        interestDoc?: Array<{ identifier?: string | null; url?: string | null } | null> | null;
         loanProcessingCharge?: Array<{
           amount?: any | null;
           ledgerName?: string | null;
@@ -17588,6 +17597,9 @@ export type GetMemberDetailsOverviewQuery = {
             productName?: string | null;
             productType?: string | null;
             interestRate?: string | null;
+            subscriptionDate?: string | null;
+            interestEarned?: string | null;
+            interestBooked?: string | null;
           } | null> | null;
           payments?: Array<{
             date?: string | null;
@@ -26672,8 +26684,11 @@ export const GetLoanApplicationDetailsDocument = `
         totalValuation
         totalSanctionedAmount
         justifySanction
-        isCeoAuthority
-        isBoardAuthority
+        interestAuthority
+        interestDoc {
+          identifier
+          url
+        }
         intrestRate
         tenure
         tenureType
@@ -27755,6 +27770,9 @@ export const GetMemberDetailsOverviewDocument = `
             productName
             productType
             interestRate
+            subscriptionDate
+            interestEarned
+            interestBooked
           }
           payments {
             date

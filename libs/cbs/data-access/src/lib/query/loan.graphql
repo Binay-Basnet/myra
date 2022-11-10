@@ -340,8 +340,11 @@ query getLoanApplicationDetails($id: ID!) {
         totalValuation
         totalSanctionedAmount
         justifySanction
-        isCeoAuthority
-        isBoardAuthority
+        interestAuthority
+        interestDoc {
+          identifier
+          url
+        }
         intrestRate
         tenure
         tenureType
