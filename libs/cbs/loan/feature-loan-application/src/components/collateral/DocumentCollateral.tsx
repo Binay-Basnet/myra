@@ -33,7 +33,7 @@ export const DocumentCollateral = () => {
         <FormInput
           type="number"
           name="valuationPercent"
-          label="Validation Percentage"
+          label="Valuation Percentage"
           rules={{
             max: {
               value: Number(maxValue),

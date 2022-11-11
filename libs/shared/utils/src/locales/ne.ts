@@ -231,6 +231,7 @@ const ne: Record<string, string> = {
   memberListTableViewMemberProfile: 'सदस्य विवरण हेर्नुहोस',
   memberListTableEditMember: 'सदस्य सम्पादन गर्नुहोस्',
   memberListTableMakeInactive: 'निष्क्रिय गर्नुहोस्',
+  memberListTableMakeActive: 'Make Active',
   memberListTableMemberId: 'सदस्य नं',
   memberListTableMemberCode: 'सदस्य नं',
   memberListTableName: 'नाम',

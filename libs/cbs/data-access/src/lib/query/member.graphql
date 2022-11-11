@@ -95,6 +95,7 @@ query getMemberIndividualData($id: ID!) {
     details(id: $id) {
       data {
         id
+        code
         name
         profilePicUrl
         profilePic
@@ -379,6 +380,7 @@ query getMemberDetails($id: ID!) {
             member {
               id
               name
+              code
             }
             count
             amount

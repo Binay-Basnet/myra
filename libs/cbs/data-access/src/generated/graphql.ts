@@ -13892,7 +13892,7 @@ export type GetMemberIndividualDataQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null, profilePic?: string | null, contact?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { id?: string | null, institutionInformation?: { data?: { nameOfInstitutionEn?: string | null, nameOfInstitutionNp?: string | null } | null } | null } | { data?: { formData?: { nameOfOrganization?: string | null, regdNumber?: number | null, regdDate?: string | null } | null } | null } | { data?: { formData?: { maritalStatus?: Record<"local"|"en"|"np",string> | null, maritalStatusId?: string | null, basicInformation?: { dateOfBirth?: string | null, age?: number | null, gender?: Record<"local"|"en"|"np",string> | null } | null, contactDetails?: { email?: string | null } | null } | null } | null } | { data?: { formData?: { institutionName?: string | null, institutionTypeId?: string | null, natureOfBusiness?: string | null } | null } | null } | null } | null } } };
+export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null, profilePic?: string | null, contact?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { id?: string | null, institutionInformation?: { data?: { nameOfInstitutionEn?: string | null, nameOfInstitutionNp?: string | null } | null } | null } | { data?: { formData?: { nameOfOrganization?: string | null, regdNumber?: number | null, regdDate?: string | null } | null } | null } | { data?: { formData?: { maritalStatus?: Record<"local"|"en"|"np",string> | null, maritalStatusId?: string | null, basicInformation?: { dateOfBirth?: string | null, age?: number | null, gender?: Record<"local"|"en"|"np",string> | null } | null, contactDetails?: { email?: string | null } | null } | null } | null } | { data?: { formData?: { institutionName?: string | null, institutionTypeId?: string | null, natureOfBusiness?: string | null } | null } | null } | null } | null } } };
 
 export type GetIndividualKymEditDataQueryVariables = Exact<{
   id: Scalars['String'];
@@ -13944,7 +13944,7 @@ export type GetMemberDetailsQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberDetailsQuery = { members: { details: { data?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, contact?: string | null, profilePicUrl?: string | null, signaturePicUrl?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null } | null, share?: { summary?: { memberId?: string | null, count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null } } | null } | null, profile?: { data?: { formData?: { basicInformation?: { gender?: Record<"local"|"en"|"np",string> | null, dateOfBirth?: string | null, age?: number | null } | null } | null } | null } | {} | null } | null } } };
+export type GetMemberDetailsQuery = { members: { details: { data?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, contact?: string | null, profilePicUrl?: string | null, signaturePicUrl?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null } | null, share?: { summary?: { memberId?: string | null, count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string } } | null } | null, profile?: { data?: { formData?: { basicInformation?: { gender?: Record<"local"|"en"|"np",string> | null, dateOfBirth?: string | null, age?: number | null } | null } | null } | null } | {} | null } | null } } };
 
 export type GetOfficialUseQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -14003,7 +14003,7 @@ export type GetMemberDetailsOverviewQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberDetailsOverviewQuery = { members: { memberOverview?: { data?: { bio?: string | null, accounts?: { accounts?: Array<{ accountName?: string | null, accountNumber?: string | null, totalBalance?: string | null, productName?: string | null, productType?: string | null, interestRate?: string | null } | null> | null, payments?: Array<{ date?: string | null, accountName?: string | null, paymentType?: string | null, amount?: string | null, installmentNo?: string | null, interestRate?: string | null } | null> | null } | null, share?: { shareInfo?: { totalCount?: string | null, issuedCount?: string | null, returnedCount?: string | null, totalBalance?: string | null } | null, registerDetails?: Array<{ date?: string | null, title?: string | null, txnAmount?: string | null, txnType?: ShareTransactionType | null, noOfShares?: number | null } | null> | null, balanceDetails?: { totalCount: number, edges: Array<{ cursor: string, node: { id?: string | null, memberId?: string | null, status?: Share_Status | null, transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, balance?: number | null, shareAmount?: number | null, totalAmount?: number | null, paymentMode?: SharePaymentMode | null, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, member?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, code: string, type: KymMemberTypesEnum, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, dateJoined?: string | null, profilePic?: string | null, signaturepic?: string | null, profilePicUrl?: string | null, signaturePicUrl?: string | null } | null, extraFee?: Array<{ name: string, value: number } | null> | null } }>, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } | null } | null, loan?: { accounts?: Array<{ accountName?: string | null, accountNumber?: string | null, totalBalance?: string | null, productName?: string | null, productType?: string | null, interestRate?: string | null, subscriptionDate?: string | null, interestEarned?: string | null, interestBooked?: string | null } | null> | null, payments?: Array<{ date?: string | null, accountName?: string | null, paymentType?: string | null, amount?: string | null, installmentNo?: string | null, interestRate?: string | null } | null> | null } | null, reports?: { list?: Array<{ code?: string | null, reportName?: string | null, category?: string | null } | null> | null } | null, overview?: { basicInformation?: { memberName?: string | null, profilePic?: string | null, memberCode?: string | null, memberJoined?: string | null, genderId?: string | null, gender?: Record<"local"|"en"|"np",string> | null, maritalStatusId?: string | null, maritalStatus?: Record<"local"|"en"|"np",string> | null, contactNumber?: string | null, email?: string | null, addressId?: string | null, address?: Record<"local"|"en"|"np",string> | null, fathersName?: string | null, mothersName?: string | null, grandFathersName?: string | null } | null, memberGraphs?: { deposit?: { periodType?: PeriodTypeEnum | null, data?: Array<{ time?: number | null, amount?: string | null } | null> | null } | null, withdraw?: { periodType?: PeriodTypeEnum | null, data?: Array<{ time?: number | null, amount?: string | null } | null> | null } | null } | null, statistics?: { totalShareValue?: string | null, accountBalance?: string | null, loanBalance?: string | null } | null, payments?: Array<{ date?: string | null, accountName?: string | null, paymentType?: string | null, amount?: string | null } | null> | null, recentTransactions?: Array<{ date?: string | null, title?: string | null, txnType?: MemberRecentTransactionViewTxnType | null, amount?: string | null, noOfShares?: number | null } | null> | null } | null } | null } | null } };
+export type GetMemberDetailsOverviewQuery = { members: { memberOverview?: { data?: { bio?: string | null, accounts?: { accounts?: Array<{ accountName?: string | null, accountNumber?: string | null, totalBalance?: string | null, productName?: string | null, productType?: string | null, interestRate?: string | null } | null> | null, payments?: Array<{ date?: string | null, accountName?: string | null, paymentType?: string | null, amount?: string | null, installmentNo?: string | null, interestRate?: string | null } | null> | null } | null, share?: { shareInfo?: { totalCount?: string | null, issuedCount?: string | null, returnedCount?: string | null, totalBalance?: string | null } | null, registerDetails?: Array<{ date?: string | null, title?: string | null, txnAmount?: string | null, txnType?: ShareTransactionType | null, noOfShares?: number | null } | null> | null, balanceDetails?: { totalCount: number, edges: Array<{ cursor: string, node: { id?: string | null, memberId?: string | null, status?: Share_Status | null, transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, balance?: number | null, shareAmount?: number | null, totalAmount?: number | null, paymentMode?: SharePaymentMode | null, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, member?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, code: string, type: KymMemberTypesEnum, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, dateJoined?: string | null, profilePic?: string | null, signaturepic?: string | null, profilePicUrl?: string | null, signaturePicUrl?: string | null } | null, extraFee?: Array<{ name: string, value: number } | null> | null } }>, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } | null } | null, loan?: { accounts?: Array<{ accountName?: string | null, accountNumber?: string | null, totalBalance?: string | null, productName?: string | null, productType?: string | null, interestRate?: string | null, subscriptionDate?: string | null, interestEarned?: string | null, interestBooked?: string | null } | null> | null, payments?: Array<{ date?: string | null, accountName?: string | null, paymentType?: string | null, amount?: string | null, installmentNo?: string | null, interestRate?: string | null } | null> | null } | null, reports?: { list?: Array<{ code?: string | null, reportName?: string | null, category?: string | null } | null> | null } | null, overview?: { basicInformation?: { memberName?: string | null, profilePic?: string | null, memberCode?: string | null, memberJoined?: string | null, genderId?: string | null, gender?: Record<"local"|"en"|"np",string> | null, isStaff?: boolean | null, maritalStatusId?: string | null, maritalStatus?: Record<"local"|"en"|"np",string> | null, contactNumber?: string | null, email?: string | null, addressId?: string | null, address?: Record<"local"|"en"|"np",string> | null, fathersName?: string | null, mothersName?: string | null, grandFathersName?: string | null } | null, memberGraphs?: { deposit?: { periodType?: PeriodTypeEnum | null, data?: Array<{ time?: number | null, amount?: string | null } | null> | null } | null, withdraw?: { periodType?: PeriodTypeEnum | null, data?: Array<{ time?: number | null, amount?: string | null } | null> | null } | null } | null, statistics?: { totalShareValue?: string | null, accountBalance?: string | null, loanBalance?: string | null } | null, payments?: Array<{ date?: string | null, accountName?: string | null, paymentType?: string | null, amount?: string | null } | null> | null, recentTransactions?: Array<{ date?: string | null, title?: string | null, txnType?: MemberRecentTransactionViewTxnType | null, amount?: string | null, noOfShares?: number | null } | null> | null } | null, cheques?: Array<{ accountName?: string | null, issued?: number | null, used?: number | null, left?: number | null, cancelled?: number | null } | null> | null } | null } | null } };
 
 export type GetMemberDetailsShareBalanceQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -14356,7 +14356,7 @@ export type GetShareBalanceListQueryVariables = Exact<{
 }>;
 
 
-export type GetShareBalanceListQuery = { share: { balance?: { totalCount: number, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ node: { count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } } }> } | null } };
+export type GetShareBalanceListQuery = { share: { balance?: { totalCount: number, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ node: { count: number, amount: number, member: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } } }> } | null } };
 
 export type GetShareRegisterListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
@@ -14364,14 +14364,14 @@ export type GetShareRegisterListQueryVariables = Exact<{
 }>;
 
 
-export type GetShareRegisterListQuery = { share: { register?: { totalCount: number, edges: Array<{ cursor: string, node: { transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, balance?: number | null, startNumber: number, shareAmount?: number | null, endNumber: number, credit?: number | null, debit?: number | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null } }>, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } | null } };
+export type GetShareRegisterListQuery = { share: { register?: { totalCount: number, edges: Array<{ cursor: string, node: { transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, balance?: number | null, startNumber: number, shareAmount?: number | null, endNumber: number, credit?: number | null, debit?: number | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null } }>, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } | null } };
 
 export type GetShareHistoryQueryVariables = Exact<{
   memberId: Scalars['ID'];
 }>;
 
 
-export type GetShareHistoryQuery = { share: { history?: { history?: Array<{ id?: string | null, status?: Share_Status | null, transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, balance?: number | null, shareAmount?: number | null, totalAmount?: number | null, paymentMode?: SharePaymentMode | null, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null } | null, extraFee?: Array<{ name: string, value: number } | null> | null } | null> | null, balance?: { count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null } } | null } | null } };
+export type GetShareHistoryQuery = { share: { history?: { history?: Array<{ id?: string | null, status?: Share_Status | null, transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, balance?: number | null, shareAmount?: number | null, totalAmount?: number | null, paymentMode?: SharePaymentMode | null, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string } | null, extraFee?: Array<{ name: string, value: number } | null> | null } | null> | null, balance?: { count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null } } | null } | null } };
 
 export type GetShareChargesQueryVariables = Exact<{
   transactionType: Share_Transaction_Direction;
@@ -20873,6 +20873,7 @@ export const GetMemberIndividualDataDocument = `
     details(id: $id) {
       data {
         id
+        code
         name
         profilePicUrl
         profilePic
@@ -21248,6 +21249,7 @@ export const GetMemberDetailsDocument = `
             member {
               id
               name
+              code
             }
             count
             amount
@@ -21603,6 +21605,7 @@ export const GetMemberDetailsOverviewDocument = `
             memberJoined
             genderId
             gender
+            isStaff
             maritalStatusId
             maritalStatus
             contactNumber
@@ -21647,6 +21650,13 @@ export const GetMemberDetailsOverviewDocument = `
             amount
             noOfShares
           }
+        }
+        cheques {
+          accountName
+          issued
+          used
+          left
+          cancelled
         }
       }
     }
@@ -23992,6 +24002,7 @@ export const GetShareBalanceListDocument = `
         node {
           member {
             id
+            code
             name
             profilePic
             profilePicUrl
@@ -24026,6 +24037,7 @@ export const GetShareRegisterListDocument = `
           transactionDirection
           member {
             id
+            code
             name
             profilePic
             profilePicUrl
@@ -24071,6 +24083,7 @@ export const GetShareHistoryDocument = `
         member {
           id
           name
+          code
         }
         status
         transactionDate

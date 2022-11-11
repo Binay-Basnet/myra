@@ -173,7 +173,6 @@ export const MemberCard = ({
                           }
                           cursor="pointer"
                         />
-
                         <Box>
                           <Text fontSize="r1" fontWeight="500" color="primary.500">
                             {memberDetails.name ?? '-'}
