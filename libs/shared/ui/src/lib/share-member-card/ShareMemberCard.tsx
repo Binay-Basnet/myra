@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import { Share_Transaction_Direction, useGetShareHistoryQuery } from '@coop/cbs/data-access';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
@@ -8,6 +10,7 @@ import Text from '../text/Text';
 
 type MemberType = {
   name?: string | undefined | null;
+  code?: string | null;
   id?: string | undefined | null;
   gender?: string | undefined | null;
   age?: string | number | undefined | null;
@@ -34,6 +37,7 @@ export const ShareMemberCard = ({
   mode,
   memberDetailData,
 }: ShareMemberCardProps) => {
+  const router = useRouter();
   const { t } = useTranslation();
 
   const { data } = useGetShareHistoryQuery(
@@ -69,7 +73,7 @@ export const ShareMemberCard = ({
             {memberDetailData?.name}
           </Text>
           <Text fontWeight="Regular" fontSize="r1" color="neutralColorLight.Gray-80">
-            {memberDetailData?.id}
+            {memberDetailData?.code}
           </Text>
           <Text fontWeight="Regular" fontSize="r1" color="neutralColorLight.Gray-80">
             {memberDetailData?.gender} | {memberDetailData?.age}
@@ -140,7 +144,12 @@ export const ShareMemberCard = ({
             ))}
 
           <Box px="s12" py="s8" display="flex" justifyContent="space-between">
-            <Button variant="ghost">{t['viewAll']}</Button>
+            <Button
+              onClick={() => router.push(`/members/details?id=${memberId}&tab=share`)}
+              variant="ghost"
+            >
+              {t['viewAll']}
+            </Button>
           </Box>
         </Box>
 

@@ -61,9 +61,9 @@ const transactionSidebarColumns = [
   },
   {
     title: 'transactionsSidebarJournalVoucher',
-    link: '/transactions/deposit/list',
+    link: '/transactions/journal-vouchers/add',
     name: 'journal-voucher',
-    addLink: '/transactions/deposit/add',
+    addLink: '/transactions/journal-vouchers/add',
   },
 ];
 
@@ -199,7 +199,7 @@ export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayo
         </Box>
       </Box>
       <Box
-        bg="white"
+        bg="background.500"
         width="calc(100% - 260px)"
         position="relative"
         left="260px"

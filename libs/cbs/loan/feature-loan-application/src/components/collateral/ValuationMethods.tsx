@@ -49,7 +49,7 @@ export const ValuationMethods = () => {
       <Box>
         <FormInput
           name="valuationPercent"
-          label="Validation Percentage"
+          label="Valuation Percentage"
           rules={{
             max: {
               value: Number(maxValue),

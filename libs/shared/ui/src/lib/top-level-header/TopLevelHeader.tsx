@@ -213,15 +213,24 @@ export const TopLevelHeader = () => {
   const { mutateAsync: closeDay } = useSetEndOfDayDataMutation();
 
   const closeDayFxn = () => {
-    asyncToast({
-      id: 'set-close-day',
-      promise: closeDay({}),
-      msgs: {
-        loading: 'Closing the Day',
-        success: 'Day Closed',
-      },
-      onSuccess: () => refetchEndOfDay(),
-    });
+    closeDay({});
+
+    refetchEndOfDay();
+
+    router.push('/day-close');
+
+    // asyncToast({
+    //   id: 'set-close-day',
+    //   promise: closeDay({}),
+    //   msgs: {
+    //     loading: 'Closing the Day',
+    //     success: 'Day close initiated',
+    //   },
+    //   onSuccess: () => {
+    //     refetchEndOfDay();
+    //     router.push('/day-close');
+    //   },
+    // });
   };
 
   return (
@@ -245,7 +254,12 @@ export const TopLevelHeader = () => {
             cursor="pointer"
             _hover={{ backgroundColor: 'secondary.900' }}
           >
-            <Image height={32} width={32} src="/neosystest.png" alt="logo" />
+            <Avatar
+              h="s32"
+              w="s32"
+              src={user?.organization?.basicDetails?.logo as string}
+              name={user?.organization?.basicDetails?.name as string}
+            />
 
             <Box
               maxH="100%"
@@ -257,10 +271,10 @@ export const TopLevelHeader = () => {
               gap="s2"
             >
               <Text fontSize="s3" fontWeight="bold" color="white" noOfLines={1} lineHeight="130%">
-                Neosys Saving and Credit Cooperative
+                {user?.organization?.basicDetails?.name}
               </Text>
               <Text fontSize="s3" color="white" p={0} lineHeight="100%">
-                Lalitpur
+                {user?.organization?.address?.district?.local}
               </Text>
             </Box>
           </Box>

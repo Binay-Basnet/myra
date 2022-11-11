@@ -39,27 +39,22 @@ const settingsColumn = [
 const reportColumn = [
   {
     label: 'memberLayoutMemberClassification',
-    navigate: '/settings/general/members',
+    navigate: '/reports/cbs/members/classification/new',
   },
   {
     label: 'memberLayoutMemberLedger',
-    navigate: '/settings/general/members/kym-individual',
   },
   {
     label: 'memberLayoutIndividualReport',
-    navigate: '/settings/general/members/kym-individual',
   },
   {
     label: 'memberLayoutActiveInactiveMemberReport',
-    navigate: '/settings/general/members/kym-individual',
   },
   {
     label: 'memberLayoutInactiveMemberReport',
-    navigate: '/settings/general/members/kym-individual',
   },
   {
     label: 'memberLayoutKymStatusReport',
-    navigate: '/settings/general/members/kym-individual',
   },
 ];
 
@@ -255,7 +250,11 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
             />
           ))}
           {reportColumn.map((item) => (
-            <SettingsButton icon={CgLoadbarDoc} buttonLabel={t[item?.label]} />
+            <SettingsButton
+              onClick={() => item?.navigate && router.push(item?.navigate)}
+              icon={CgLoadbarDoc}
+              buttonLabel={t[item?.label]}
+            />
           ))}
         </Box>
       </Box>

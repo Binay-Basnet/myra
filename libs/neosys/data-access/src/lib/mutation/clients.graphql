@@ -16,6 +16,10 @@ mutation createDB($saccosID: ID!) {
     client {
       createDB(saccosId: $saccosID) {
         recordId
+
+        error {
+          ...MutationError
+        }
       }
     }
   }

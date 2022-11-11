@@ -122,6 +122,7 @@ query getMemberDetailsOverview($id: ID!) {
             memberJoined
             genderId
             gender
+            isStaff
             maritalStatusId
             maritalStatus
             contactNumber
@@ -167,13 +168,13 @@ query getMemberDetailsOverview($id: ID!) {
             noOfShares
           }
         }
-        # cheques {
-        #   accountName
-        #   issued
-        #   used
-        #   left
-        #   cancelled
-        # }
+        cheques {
+          accountName
+          issued
+          used
+          left
+          cancelled
+        }
       }
     }
   }

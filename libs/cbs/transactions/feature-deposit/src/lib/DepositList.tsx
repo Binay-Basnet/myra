@@ -7,16 +7,16 @@ import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, TablePopover, Text } from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-const tabList = [
-  {
-    title: 'memberNavActive',
-    key: 'ACTIVE',
-  },
-  {
-    title: 'memberNavInactive',
-    key: 'SUBMITTED',
-  },
-];
+// const tabList = [
+//   {
+//     title: 'memberNavActive',
+//     key: 'ACTIVE',
+//   },
+//   {
+//     title: 'memberNavInactive',
+//     key: 'SUBMITTED',
+//   },
+// ];
 
 const depositedBy = {
   [DepositedBy.Agent]: 'Market Representative',
@@ -119,7 +119,7 @@ export const DepositList = () => {
     <>
       <TransactionPageHeader
         heading={`${t['depositListDeposit']} - ${featureCode?.depositList}`}
-        tabItems={tabList}
+        // tabItems={tabList}
       />
 
       <Table

@@ -8,6 +8,7 @@ import {
 import { BsBook, BsFacebook, BsHeart, BsInstagram, BsTwitter } from 'react-icons/bs';
 import { CgShortcut } from 'react-icons/cg';
 import { TbMessageDots } from 'react-icons/tb';
+import { useRouter } from 'next/router';
 import isEmpty from 'lodash/isEmpty';
 
 import {
@@ -126,7 +127,7 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
           <Text fontSize="r2">Version 1.0.5</Text>
-          <Text fontSize="s3">November 10, 2022</Text>
+          <Text fontSize="s3">November 11, 2022</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>
@@ -186,6 +187,7 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
 
 export const FloatingShortcutButton = () => {
   const { t } = useTranslation();
+  const router = useRouter();
   const helpOptions = [
     {
       title: t['shortcutsModalGeneral'],
@@ -272,6 +274,7 @@ export const FloatingShortcutButton = () => {
                 px="s8"
                 cursor="pointer"
                 alignItems="center"
+                onClick={() => router.push('https://docs.migration.myraerp.com/')}
               >
                 <Icon as={BsBook} />
                 <Text fontSize="s3" fontWeight="500" color="gray.600">

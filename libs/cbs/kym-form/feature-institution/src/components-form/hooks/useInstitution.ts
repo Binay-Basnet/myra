@@ -5,6 +5,7 @@ import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 import { pickBy } from 'lodash';
 import debounce from 'lodash/debounce';
+import omit from 'lodash/omit';
 
 import {
   addInstitutionError,
@@ -118,7 +119,10 @@ export const useInstitution = ({ methods }: IInstitutionHookProps) => {
         if (id) {
           await mutateAsync({
             id,
-            data: { ...data, accountType: data?.accountType === '' ? null : data?.accountType },
+            data: {
+              ...omit({ ...data }, 'declarationAgreement'),
+              accountType: data?.accountType === '' ? null : data?.accountType,
+            },
           });
         }
       }, 800)

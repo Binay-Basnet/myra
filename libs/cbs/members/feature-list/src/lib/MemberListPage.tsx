@@ -42,6 +42,7 @@ export const MemberListPage = () => {
 
   const router = useRouter();
   const isDraft = router?.query['objState'] === 'DRAFT';
+  const isSubmitted = router?.query['objState'] === 'VALIDATED';
 
   const { data, isFetching, refetch } = useGetMemberListQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
@@ -138,12 +139,6 @@ export const MemberListPage = () => {
                         },
                       },
                       {
-                        title: t['memberListTableMakeInactive'],
-                        onClick: (node) => {
-                          router.push(`/members/inactivation/${node?.id}`);
-                        },
-                      },
-                      {
                         title: t['memberDeleteMember'],
                         onClick: (node) => {
                           onOpenModal();
@@ -167,9 +162,13 @@ export const MemberListPage = () => {
                         },
                       },
                       {
-                        title: t['memberListTableMakeInactive'],
+                        title: isSubmitted
+                          ? t['memberListTableMakeActive']
+                          : t['memberListTableMakeInactive'],
                         onClick: (node) => {
-                          router.push(`/members/inactivation/${node?.id}`);
+                          isSubmitted
+                            ? router.push(`/members/activation/${node?.id}`)
+                            : router.push(`/members/inactivation/${node?.id}`);
                         },
                       },
                     ]
@@ -181,7 +180,7 @@ export const MemberListPage = () => {
         },
       },
     ],
-    [t, isDraft]
+    [t, isDraft, isSubmitted]
   );
 
   const deleteMember = useCallback(async () => {

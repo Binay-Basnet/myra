@@ -111,15 +111,20 @@ export const ReportLinkText = ({ children, link }: ReportLinkTextProps) => {
 
   return (
     <Text
+      w="100%"
       fontSize="r1"
-      cursor="pointer"
+      cursor={link ? 'pointer' : 'default'}
       color="gray.600"
       fontWeight="500"
       onClick={() => link && router.push(link)}
-      _hover={{
-        textDecoration: 'underline',
-        color: 'primary.500',
-      }}
+      _hover={
+        link
+          ? {
+              textDecoration: 'underline',
+              color: 'primary.500',
+            }
+          : {}
+      }
     >
       {children}
     </Text>

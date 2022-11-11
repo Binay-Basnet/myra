@@ -22,7 +22,7 @@ export type Scalars = {
   Email: any;
   HTML: any;
   InvalidData: Record<string, Array<string>>;
-  Localized: Record<"local"|"en"|"np",string>;
+  Localized: Record<'local' | 'en' | 'np', string>;
   Map: Record<string, string>;
   Time: string;
 };
@@ -38,6 +38,8 @@ export type AccountActivityEntry = {
   accountId?: Maybe<Scalars['String']>;
   agentId?: Maybe<Scalars['String']>;
   agentName?: Maybe<Scalars['String']>;
+  agentPic?: Maybe<Scalars['String']>;
+  agentPicUrl?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['Localized']>;
@@ -82,14 +84,14 @@ export type AccountAgentListEdges = {
 export enum AccountClosePaymentMode {
   AccountTransfer = 'ACCOUNT_TRANSFER',
   BankCheque = 'BANK_CHEQUE',
-  Cash = 'CASH'
+  Cash = 'CASH',
 }
 
 export enum AccountCloseReason {
   Death = 'DEATH',
   Migration = 'MIGRATION',
   Other = 'OTHER',
-  PersonalReason = 'PERSONAL_REASON'
+  PersonalReason = 'PERSONAL_REASON',
 }
 
 export type AccountConnection = {
@@ -132,8 +134,8 @@ export type AccountMinimalResult = {
   accountIds?: Maybe<Array<Maybe<Scalars['String']>>>;
   accounts?: Maybe<Array<Maybe<AccountMinimal>>>;
   recentTransactions?: Maybe<EbankingTransactionConnection>;
+  totalBalance?: Maybe<Scalars['String']>;
 };
-
 
 export type AccountMinimalResultRecentTransactionsArgs = {
   filter?: InputMaybe<EbankingTransactionFilter>;
@@ -142,7 +144,7 @@ export type AccountMinimalResultRecentTransactionsArgs = {
 
 export enum AccountOperationType {
   Joint = 'JOINT',
-  Single = 'SINGLE'
+  Single = 'SINGLE',
 }
 
 export type AccountOperatorDetailsFormState = {
@@ -243,7 +245,7 @@ export type AccountTypeDetailsUnion = BankChartsOfAccount | JournalChartsOfAccou
 
 export enum AccountTypeFilter {
   Deposit = 'DEPOSIT',
-  Loan = 'LOAN'
+  Loan = 'LOAN',
 }
 
 export type AccountWithdrawSlipMutationResult = {
@@ -278,17 +280,14 @@ export type AccountingInvestmentMutation = {
   upsertEntry: AccountingInvestmentMutationResult;
 };
 
-
 export type AccountingInvestmentMutationAddTransactionArgs = {
   data: InvestmentTransactionInput;
 };
-
 
 export type AccountingInvestmentMutationUpsertAccountArgs = {
   data: InvestmentAccountInput;
   id: Scalars['ID'];
 };
-
 
 export type AccountingInvestmentMutationUpsertEntryArgs = {
   data: InvestmentEntryInput;
@@ -309,28 +308,23 @@ export type AccountingInvestmentQuery = {
   listTransaction: InvestmentTransactionListConnection;
 };
 
-
 export type AccountingInvestmentQueryAccountFormStateArgs = {
   id: Scalars['ID'];
 };
 
-
 export type AccountingInvestmentQueryEntryFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type AccountingInvestmentQueryListAccountArgs = {
   filter?: InputMaybe<InvestmentAccountFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type AccountingInvestmentQueryListEntryArgs = {
   filter?: InputMaybe<InvestmentEntryFilter>;
   pagination?: InputMaybe<Pagination>;
 };
-
 
 export type AccountingInvestmentQueryListTransactionArgs = {
   filter?: InputMaybe<InvestmentTransactionFilter>;
@@ -369,24 +363,20 @@ export type AccountingSalesMutation = {
   upsertSaleEntry: AccountingSalesMutationResult;
 };
 
-
 export type AccountingSalesMutationUpsertCreditNoteArgs = {
   data: SalesCreditNoteInput;
   id: Scalars['ID'];
 };
-
 
 export type AccountingSalesMutationUpsertCustomerArgs = {
   data: SalesCustomerInput;
   id: Scalars['ID'];
 };
 
-
 export type AccountingSalesMutationUpsertCustomerPaymentArgs = {
   data: SalesCustomerPaymentInput;
   id: Scalars['ID'];
 };
-
 
 export type AccountingSalesMutationUpsertSaleEntryArgs = {
   data: SalesSaleEntryInput;
@@ -410,45 +400,37 @@ export type AccountingSalesQuery = {
   saleEntryFormState: AccountingSalesSaleEntryQueryResult;
 };
 
-
 export type AccountingSalesQueryCreditNoteFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type AccountingSalesQueryCustomerFormStateArgs = {
   id: Scalars['ID'];
 };
 
-
 export type AccountingSalesQueryCustomerPaymentFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type AccountingSalesQueryListCreditNoteArgs = {
   filter?: InputMaybe<SalesCreditNoteFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type AccountingSalesQueryListCustomerArgs = {
   filter?: InputMaybe<SalesCustomerFilter>;
   pagination?: InputMaybe<Pagination>;
 };
-
 
 export type AccountingSalesQueryListCustomerPaymentArgs = {
   filter?: InputMaybe<SalesCustomerPaymentFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type AccountingSalesQueryListSaleEntryArgs = {
   filter?: InputMaybe<SalesSaleEntryFilter>;
   pagination?: InputMaybe<Pagination>;
 };
-
 
 export type AccountingSalesQuerySaleEntryFormStateArgs = {
   id: Scalars['ID'];
@@ -518,17 +500,14 @@ export type AdministrationQuery = {
   wards: Array<Scalars['Int']>;
 };
 
-
 export type AdministrationQueryDistrictsArgs = {
   provinceId?: InputMaybe<Scalars['Int']>;
 };
-
 
 export type AdministrationQueryMunicipalitiesArgs = {
   districtId?: InputMaybe<Scalars['Int']>;
   provinceId?: InputMaybe<Scalars['Int']>;
 };
-
 
 export type AdministrationQueryWardsArgs = {
   districtId: Scalars['Int'];
@@ -624,7 +603,7 @@ export enum AllModules {
   HrManagement = 'HR_MANAGEMENT',
   InventoryManagement = 'INVENTORY_MANAGEMENT',
   MemberAndShareManagement = 'MEMBER_AND_SHARE_MANAGEMENT',
-  QualityAssuranceForNefscun = 'QUALITY_ASSURANCE_FOR_NEFSCUN'
+  QualityAssuranceForNefscun = 'QUALITY_ASSURANCE_FOR_NEFSCUN',
 }
 
 export type AlternativeChannelActivation = {
@@ -670,7 +649,7 @@ export type AlternativeChannelConnection = {
 
 export enum AlternativeChannelDepositedBy {
   Others = 'OTHERS',
-  Self = 'SELF'
+  Self = 'SELF',
 }
 
 export type AlternativeChannelEdge = {
@@ -693,7 +672,6 @@ export type AlternativeChannelMutation = {
   serviceActivation?: Maybe<AlternativeChannelServiceActivationResult>;
 };
 
-
 export type AlternativeChannelMutationServiceActivationArgs = {
   data?: InputMaybe<AlternativeChannelServiceActivationInput>;
 };
@@ -701,7 +679,7 @@ export type AlternativeChannelMutationServiceActivationArgs = {
 export enum AlternativeChannelPaymentMode {
   Account = 'ACCOUNT',
   BankVoucher = 'BANK_VOUCHER',
-  Cash = 'CASH'
+  Cash = 'CASH',
 }
 
 export type AlternativeChannelQuery = {
@@ -709,12 +687,10 @@ export type AlternativeChannelQuery = {
   memberActivations?: Maybe<AlternativeChannelMemberActivations>;
 };
 
-
 export type AlternativeChannelQueryListArgs = {
   filter?: InputMaybe<AlternativeChannelFilter>;
   paginate?: InputMaybe<Pagination>;
 };
-
 
 export type AlternativeChannelQueryMemberActivationsArgs = {
   memberId: Scalars['String'];
@@ -742,13 +718,12 @@ export type AlternativeChannelServiceActivationResult = {
 export enum AlternativeChannelServiceType {
   Ebanking = 'EBANKING',
   MobileBanking = 'MOBILE_BANKING',
-  SmsBanking = 'SMS_BANKING'
+  SmsBanking = 'SMS_BANKING',
 }
 
 export type AlternativeChannelSettingsMutation = {
   feesAndCharges?: Maybe<AlternativeChannelChargesResult>;
 };
-
 
 export type AlternativeChannelSettingsMutationFeesAndChargesArgs = {
   data?: InputMaybe<Array<InputMaybe<AlternativeChannelChargesInput>>>;
@@ -760,7 +735,7 @@ export type AlternativeChannelSettingsQuery = {
 
 export enum AlternativeChannelStatus {
   Active = 'ACTIVE',
-  Inactive = 'INACTIVE'
+  Inactive = 'INACTIVE',
 }
 
 export type AmountLimit = {
@@ -777,7 +752,7 @@ export type AmountLimitFormState = {
 
 export enum Arrange {
   Asc = 'ASC',
-  Desc = 'DESC'
+  Desc = 'DESC',
 }
 
 export type AssignMembersInput = {
@@ -844,11 +819,9 @@ export type AuthMutation = {
   token?: Maybe<AuthTokenResult>;
 };
 
-
 export type AuthMutationLoginArgs = {
   data: LoginInput;
 };
-
 
 export type AuthMutationTokenArgs = {
   refreshToken: Scalars['String'];
@@ -943,12 +916,10 @@ export type BankBranchMutation = {
   delete: BankBranchDeleteResult;
 };
 
-
 export type BankBranchMutationAddArgs = {
   data?: InputMaybe<BankBranchInput>;
   id: Scalars['ID'];
 };
-
 
 export type BankBranchMutationDeleteArgs = {
   id: Scalars['ID'];
@@ -961,16 +932,13 @@ export type BankBranchQuery = {
   list?: Maybe<Array<Maybe<BankBranch>>>;
 };
 
-
 export type BankBranchQueryGetArgs = {
   id: Scalars['ID'];
 };
 
-
 export type BankBranchQueryGetBranchesArgs = {
   bankId: Scalars['ID'];
 };
-
 
 export type BankBranchQueryListArgs = {
   filter?: InputMaybe<BankBranchSearchFilter>;
@@ -1007,12 +975,10 @@ export type BankDataMutation = {
   delete: BankDeleteResult;
 };
 
-
 export type BankDataMutationAddArgs = {
   data?: InputMaybe<BankInput>;
   id: Scalars['ID'];
 };
-
 
 export type BankDataMutationDeleteArgs = {
   id: Scalars['ID'];
@@ -1023,11 +989,9 @@ export type BankDataQuery = {
   list?: Maybe<Array<Maybe<Bank>>>;
 };
 
-
 export type BankDataQueryGetArgs = {
   id: Scalars['ID'];
 };
-
 
 export type BankDataQueryListArgs = {
   filter?: InputMaybe<BankSearchFilter>;
@@ -1138,7 +1102,7 @@ export enum BranchCategory {
   ContactOffice = 'CONTACT_OFFICE',
   HeadOffice = 'HEAD_OFFICE',
   RegionalOffice = 'REGIONAL_OFFICE',
-  ServiceCenter = 'SERVICE_CENTER'
+  ServiceCenter = 'SERVICE_CENTER',
 }
 
 export type BranchConnection = {
@@ -1209,7 +1173,7 @@ export type BranchInput = {
 
 export enum BranchPaymentMode {
   BankCheque = 'BANK_CHEQUE',
-  Cash = 'CASH'
+  Cash = 'CASH',
 }
 
 export type BranchSearchFilter = {
@@ -1222,7 +1186,7 @@ export enum BuildingType {
   Commercial = 'COMMERCIAL',
   Industrial = 'INDUSTRIAL',
   Institutional = 'INSTITUTIONAL',
-  Residential = 'RESIDENTIAL'
+  Residential = 'RESIDENTIAL',
 }
 
 export type BulkDepositInput = {
@@ -1230,7 +1194,6 @@ export type BulkDepositInput = {
   agentId?: InputMaybe<Scalars['String']>;
   bankVoucher?: InputMaybe<DepositBankVoucher>;
   cash?: InputMaybe<DepositCash>;
-  cheque?: InputMaybe<DepositCheque>;
   depositedBy: DepositedBy;
   doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   memberId: Scalars['String'];
@@ -1239,6 +1202,7 @@ export type BulkDepositInput = {
   other_name?: InputMaybe<Scalars['String']>;
   payment_type: DepositPaymentType;
   sourceOfFund?: InputMaybe<Scalars['String']>;
+  withdrawSlip?: InputMaybe<WithdrawSlip>;
 };
 
 export type BulkDepositInstanceInput = {
@@ -1260,6 +1224,11 @@ export type BulkInstallmentResult = {
   value?: Maybe<InstallmentResult>;
 };
 
+export enum CoaCategory {
+  SystemDefined = 'SYSTEM_DEFINED',
+  UserDefined = 'USER_DEFINED',
+}
+
 export type CoaFullView = {
   data?: Maybe<Array<Maybe<CoaView>>>;
   error?: Maybe<QueryError>;
@@ -1279,7 +1248,7 @@ export type CoaMinimalResult = {
 export enum CoaTypesOfAccount {
   Bank = 'BANK',
   Cash = 'CASH',
-  Journal = 'JOURNAL'
+  Journal = 'JOURNAL',
 }
 
 export type CoaView = {
@@ -1289,6 +1258,7 @@ export type CoaView = {
   accountTypeDetails?: Maybe<AccountTypeDetailsUnion>;
   allowFreeEntry: Scalars['Boolean'];
   allowTransaction: Scalars['Boolean'];
+  category?: Maybe<CoaCategory>;
   createdAt: Scalars['Time'];
   creatorId: Scalars['ID'];
   currency: Scalars['String'];
@@ -1326,7 +1296,7 @@ export enum CashValue {
   Cash_50 = 'CASH_50',
   Cash_100 = 'CASH_100',
   Cash_500 = 'CASH_500',
-  Cash_1000 = 'CASH_1000'
+  Cash_1000 = 'CASH_1000',
 }
 
 export type ChartsOfAccount = Base & {
@@ -1380,11 +1350,9 @@ export type ChartsOfAccountMutation = {
   delete: AddChartsOfAccountResult;
 };
 
-
 export type ChartsOfAccountMutationAddArgs = {
   data: AddCoaAccountInput;
 };
-
 
 export type ChartsOfAccountMutationDeleteArgs = {
   id: Scalars['ID'];
@@ -1407,16 +1375,13 @@ export type ChartsOfAccountSettingsQuery = {
   search?: Maybe<CoaMinimalResult>;
 };
 
-
 export type ChartsOfAccountSettingsQueryAccountsArgs = {
   filter: ChartsOfAccountFilter;
 };
 
-
 export type ChartsOfAccountSettingsQueryAccountsUnderArgs = {
   accountCode?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
-
 
 export type ChartsOfAccountSettingsQuerySearchArgs = {
   name: Scalars['String'];
@@ -1454,16 +1419,6 @@ export type ChequeBookRequestList = {
   requestedDate: Scalars['String'];
 };
 
-export type ChequeDepositData = {
-  accountId: Scalars['String'];
-  agentID?: InputMaybe<Scalars['ID']>;
-  amount: Scalars['String'];
-  chequeNo: Scalars['String'];
-  depositedBy: DepositedBy;
-  isDifferentMember?: InputMaybe<Scalars['Boolean']>;
-  memberId?: InputMaybe<Scalars['String']>;
-};
-
 export type ChequePastRequest = {
   branch?: Maybe<Branch>;
   chequeBlockNumber?: Maybe<Scalars['String']>;
@@ -1482,7 +1437,7 @@ export type ChequePastRequest = {
 
 export enum ChequePickUpMethod {
   SelfPickup = 'Self_Pickup',
-  ThroughAgent = 'Through_agent'
+  ThroughAgent = 'Through_agent',
 }
 
 export type Citizenship = {
@@ -1502,7 +1457,7 @@ export enum Collateral {
   Land = 'LAND',
   LandAndBuilding = 'LAND_AND_BUILDING',
   Others = 'OTHERS',
-  Vehicle = 'VEHICLE'
+  Vehicle = 'VEHICLE',
 }
 
 export type CollateralFormState = {
@@ -1543,7 +1498,7 @@ export type CollateralListInputData = {
 export enum ComparatorType {
   EqualTo = 'EqualTo',
   GreaterThan = 'GreaterThan',
-  LessThan = 'LessThan'
+  LessThan = 'LessThan',
 }
 
 export type Condition = {
@@ -1559,11 +1514,9 @@ export type ConfigQuery = {
   country?: Maybe<Country>;
 };
 
-
 export type ConfigQueryBankArgs = {
   id: Scalars['ID'];
 };
-
 
 export type ConfigQueryCountryArgs = {
   code: Scalars['String'];
@@ -1575,7 +1528,7 @@ export enum ConstructionType {
   LightGaugeSteelFrame = 'LIGHT_GAUGE_STEEL_FRAME',
   PreEngineered = 'PRE_ENGINEERED',
   SteelFrame = 'STEEL_FRAME',
-  WoodFrame = 'WOOD_FRAME'
+  WoodFrame = 'WOOD_FRAME',
 }
 
 export type Contact = {
@@ -1606,6 +1559,11 @@ export type CoopRelatedTrainingType = {
   dateOfTraining?: Maybe<Scalars['String']>;
   subjectOfTraining?: Maybe<Scalars['String']>;
   trainingOrganization?: Maybe<Scalars['String']>;
+};
+
+export type CoopStatistics = {
+  totalBranches: Scalars['Int'];
+  totalMembers: Scalars['Int'];
 };
 
 export type CoopUnionAccountOperatorDetailsResult = {
@@ -1811,7 +1769,7 @@ export enum CoopUnionSection {
   Declaration = 'DECLARATION',
   EconomicDetails = 'ECONOMIC_DETAILS',
   InstitutionInformation = 'INSTITUTION_INFORMATION',
-  MemberDetails = 'MEMBER_DETAILS'
+  MemberDetails = 'MEMBER_DETAILS',
 }
 
 export type CooperativeAccountOperatorDetails = {
@@ -2100,7 +2058,7 @@ export type CooperativeUnionMember = {
 export enum CooperativeUnionPersonnelSection {
   AccountOperators = 'ACCOUNT_OPERATORS',
   CentralRepresentative = 'CENTRAL_REPRESENTATIVE',
-  Directors = 'DIRECTORS'
+  Directors = 'DIRECTORS',
 }
 
 export type Coordinate = {
@@ -2128,7 +2086,7 @@ export enum CriteriaSection {
   MaritalStatus = 'MARITAL_STATUS',
   NatureOfBusinessCoopunion = 'NATURE_OF_BUSINESS_COOPUNION',
   NatureOfBusinessInstitutions = 'NATURE_OF_BUSINESS_INSTITUTIONS',
-  OccupationDetails = 'OCCUPATION_DETAILS'
+  OccupationDetails = 'OCCUPATION_DETAILS',
 }
 
 export type CustomFormListQueryResult = {
@@ -2139,7 +2097,6 @@ export type CustomFormListQueryResult = {
 export type CustomFormQuery = {
   list: CustomFormListQueryResult;
 };
-
 
 export type CustomFormQueryListArgs = {
   filter: CustomListFilter;
@@ -2162,7 +2119,7 @@ export type CustomPeriodType = {
 export enum CustomerPayment {
   BankTransfer = 'BANK_TRANSFER',
   Cash = 'CASH',
-  Cheque = 'CHEQUE'
+  Cheque = 'CHEQUE',
 }
 
 export type DbCreateResult = {
@@ -2198,7 +2155,7 @@ export enum DashboardTodayType {
   Deposits = 'DEPOSITS',
   Loan = 'LOAN',
   Transaction = 'TRANSACTION',
-  Withdraws = 'WITHDRAWS'
+  Withdraws = 'WITHDRAWS',
 }
 
 export type DateFilter = {
@@ -2208,7 +2165,7 @@ export type DateFilter = {
 
 export enum DateType {
   Ad = 'AD',
-  Bs = 'BS'
+  Bs = 'BS',
 }
 
 export type Declaration = Base & {
@@ -2226,7 +2183,7 @@ export enum DeclarationFor {
   KymCoop = 'KYM_COOP',
   KymCoopUnion = 'KYM_COOP_UNION',
   KymIndividual = 'KYM_INDIVIDUAL',
-  KymInstitution = 'KYM_INSTITUTION'
+  KymInstitution = 'KYM_INSTITUTION',
 }
 
 export type DeclarationGetResult = {
@@ -2244,7 +2201,6 @@ export type DeclarationMutation = {
   update: DeclarationUpdateResult;
 };
 
-
 export type DeclarationMutationUpdateArgs = {
   data: DeclarationInput;
 };
@@ -2252,7 +2208,6 @@ export type DeclarationMutationUpdateArgs = {
 export type DeclarationQuery = {
   get?: Maybe<DeclarationGetResult>;
 };
-
 
 export type DeclarationQueryGetArgs = {
   for?: InputMaybe<DeclarationFor>;
@@ -2274,7 +2229,7 @@ export type DeclarationUpdateResult = {
 
 export enum DefaultAccountType {
   Current = 'CURRENT',
-  Saving = 'SAVING'
+  Saving = 'SAVING',
 }
 
 export type Denomination = {
@@ -2351,19 +2306,11 @@ export type DepositCash = {
   total: Scalars['String'];
 };
 
-export type DepositCheque = {
-  accId: Scalars['String'];
-  amount: Scalars['String'];
-  chequeNo: Scalars['String'];
-  isDifferentMember?: InputMaybe<Scalars['Boolean']>;
-  memberId?: InputMaybe<Scalars['String']>;
-};
-
 export enum DepositFrequency {
   HalfYearly = 'HALF_YEARLY',
   Monthly = 'MONTHLY',
   Quarterly = 'QUARTERLY',
-  Yearly = 'YEARLY'
+  Yearly = 'YEARLY',
 }
 
 export type DepositInput = {
@@ -2372,7 +2319,6 @@ export type DepositInput = {
   amount?: InputMaybe<Scalars['String']>;
   bankVoucher?: InputMaybe<DepositBankVoucher>;
   cash?: InputMaybe<DepositCash>;
-  cheque?: InputMaybe<DepositCheque>;
   depositedBy: DepositedBy;
   doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   fine?: InputMaybe<Scalars['String']>;
@@ -2385,6 +2331,7 @@ export type DepositInput = {
   rebate?: InputMaybe<Scalars['String']>;
   sourceOfFund?: InputMaybe<Scalars['String']>;
   voucherId?: InputMaybe<Scalars['String']>;
+  withdrawSlip?: InputMaybe<WithdrawSlip>;
 };
 
 export type DepositIro = {
@@ -2516,17 +2463,14 @@ export type DepositLoanAccountMutation = {
   forgiveInstallment?: Maybe<DepositAccountInstallmentResult>;
 };
 
-
 export type DepositLoanAccountMutationAddArgs = {
   data?: InputMaybe<DepositLoanAccountInput>;
   id: Scalars['ID'];
 };
 
-
 export type DepositLoanAccountMutationCloseArgs = {
   data?: InputMaybe<DepositAccountClose>;
 };
-
 
 export type DepositLoanAccountMutationForgiveInstallmentArgs = {
   id: Scalars['ID'];
@@ -2545,26 +2489,21 @@ export type DepositLoanAccountQuery = {
   listTransactions?: Maybe<EbankingTransactionConnection>;
 };
 
-
 export type DepositLoanAccountQueryAccountDetailsArgs = {
   id: Scalars['ID'];
 };
-
 
 export type DepositLoanAccountQueryFormStateArgs = {
   id: Scalars['ID'];
 };
 
-
 export type DepositLoanAccountQueryGetArgs = {
   id: Scalars['ID'];
 };
 
-
 export type DepositLoanAccountQueryGetBulkInstallmentsArgs = {
   ids: Array<InputMaybe<Scalars['ID']>>;
 };
-
 
 export type DepositLoanAccountQueryGetInstallmentsArgs = {
   from?: InputMaybe<Scalars['String']>;
@@ -2574,23 +2513,19 @@ export type DepositLoanAccountQueryGetInstallmentsArgs = {
   toN?: InputMaybe<Scalars['Int']>;
 };
 
-
 export type DepositLoanAccountQueryListArgs = {
   filter?: InputMaybe<DepositLoanAccountSearchFilter>;
   paginate?: InputMaybe<Pagination>;
 };
-
 
 export type DepositLoanAccountQueryListDefaultAccountsArgs = {
   memberId: Scalars['ID'];
   productId: Scalars['ID'];
 };
 
-
 export type DepositLoanAccountQueryListMinorsArgs = {
   memberId: Scalars['ID'];
 };
-
 
 export type DepositLoanAccountQueryListTransactionsArgs = {
   filter: AccountsTransactionFilter;
@@ -2614,7 +2549,7 @@ export type DepositLoanAccountSearchFilter = {
 export enum DepositPaymentType {
   BankVoucher = 'BANK_VOUCHER',
   Cash = 'CASH',
-  Cheque = 'CHEQUE'
+  WithdrawSlip = 'WITHDRAW_SLIP',
 }
 
 export type DepositProduct = Base & {
@@ -2855,19 +2790,16 @@ export type DepositProductSettingsMutation = {
   makeInactive?: Maybe<DepositProductInactiveResult>;
 };
 
-
 export type DepositProductSettingsMutationActivateProductArgs = {
   productId: Scalars['ID'];
   productType: AccountTypeFilter;
   remarks: Scalars['String'];
 };
 
-
 export type DepositProductSettingsMutationAddArgs = {
   data?: InputMaybe<DepositProductInput>;
   id: Scalars['ID'];
 };
-
 
 export type DepositProductSettingsMutationMakeInactiveArgs = {
   data?: InputMaybe<DepositProductInactiveData>;
@@ -2882,31 +2814,25 @@ export type DepositProductSettingsQuery = {
   list?: Maybe<DepositProductConnection>;
 };
 
-
 export type DepositProductSettingsQueryFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type DepositProductSettingsQueryGetArgs = {
   id: Scalars['ID'];
 };
 
-
 export type DepositProductSettingsQueryGetPenaltyRebateInfoArgs = {
   productId: Scalars['ID'];
 };
-
 
 export type DepositProductSettingsQueryGetProductCriteriaArgs = {
   productId: Scalars['ID'];
 };
 
-
 export type DepositProductSettingsQueryGetProductListArgs = {
   memberId: Scalars['ID'];
 };
-
 
 export type DepositProductSettingsQueryListArgs = {
   filter?: InputMaybe<DepositProductSearchFilter>;
@@ -2915,7 +2841,7 @@ export type DepositProductSettingsQueryListArgs = {
 
 export enum DepositProductStatus {
   Active = 'ACTIVE',
-  Inactive = 'INACTIVE'
+  Inactive = 'INACTIVE',
 }
 
 export type DepositResult = {
@@ -2929,11 +2855,9 @@ export type DepositSettingsMutation = {
   tdsSetup?: Maybe<DepositTdsResult>;
 };
 
-
 export type DepositSettingsMutationIroSetupArgs = {
   data?: InputMaybe<DepositIroInput>;
 };
-
 
 export type DepositSettingsMutationTdsSetupArgs = {
   data?: InputMaybe<DepositTdsInput>;
@@ -3007,7 +2931,7 @@ export type DepositTransactionViewResult = {
 export enum DepositedBy {
   Agent = 'AGENT',
   Other = 'OTHER',
-  Self = 'SELF'
+  Self = 'SELF',
 }
 
 export type DirectorAffiliatedFirms = {
@@ -3065,7 +2989,7 @@ export type District = {
 export enum DividendDistributionCondition {
   Daily = 'DAILY',
   Monthly = 'MONTHLY',
-  Quarterly = 'QUARTERLY'
+  Quarterly = 'QUARTERLY',
 }
 
 export type DividendRate = {
@@ -3081,7 +3005,7 @@ export type DividendRateInput = {
 export enum DividendTransferTreatment {
   AccountTransfer = 'ACCOUNT_TRANSFER',
   BookPayable = 'BOOK_PAYABLE',
-  ShareAndAccount = 'SHARE_AND_ACCOUNT'
+  ShareAndAccount = 'SHARE_AND_ACCOUNT',
 }
 
 export type Document = {
@@ -3099,13 +3023,11 @@ export type DocumentMutation = {
   Subscription: SubscriptionMutation;
 };
 
-
 export type DocumentMutationKymUpsertArgs = {
   fieldId: Scalars['String'];
   identifiers: Array<Scalars['String']>;
   memberId: Scalars['String'];
 };
-
 
 export type DocumentMutationSubscriptionArgs = {
   subscriptionId: Scalars['String'];
@@ -3122,11 +3044,9 @@ export type DocumentQuery = {
   listSubscriptionDocuments: DocumentResult;
 };
 
-
 export type DocumentQueryListKymDocumentsArgs = {
   memberId: Scalars['String'];
 };
-
 
 export type DocumentQueryListSubscriptionDocumentsArgs = {
   subscriptionId: Scalars['String'];
@@ -3157,7 +3077,6 @@ export type EBankingAccountMutation = {
   setDefaultAccount?: Maybe<EbankingSetDefaultAccountResult>;
 };
 
-
 export type EBankingAccountMutationSetDefaultAccountArgs = {
   accountId: Scalars['String'];
 };
@@ -3168,7 +3087,6 @@ export type EBankingAccountQuery = {
   summary?: Maybe<AccountSummary>;
 };
 
-
 export type EBankingAccountQueryGetArgs = {
   id: Scalars['ID'];
 };
@@ -3176,13 +3094,12 @@ export type EBankingAccountQueryGetArgs = {
 export enum EBankingActiveLoanStatus {
   Pending = 'Pending',
   Processing = 'Processing',
-  Scheduled = 'Scheduled'
+  Scheduled = 'Scheduled',
 }
 
 export type EBankingAnnouncementQuery = {
   list: Array<Maybe<EBankingAppAnnouncement>>;
 };
-
 
 export type EBankingAnnouncementQueryListArgs = {
   filter?: InputMaybe<NotificationFilter>;
@@ -3207,7 +3124,6 @@ export type EBankingAppNotification = {
 export type EBankingAppNotificationQuery = {
   list: Array<Maybe<EBankingAppNotification>>;
 };
-
 
 export type EBankingAppNotificationQueryListArgs = {
   filter?: InputMaybe<NotificationFilter>;
@@ -3242,18 +3158,15 @@ export type EBankingAuthMutation = {
   verifyOtp?: Maybe<EbankingOtpResult>;
 };
 
-
 export type EBankingAuthMutationChangeCoopPinArgs = {
   newPin: Scalars['String'];
   oldPin: Scalars['String'];
 };
 
-
 export type EBankingAuthMutationChangePasswordArgs = {
   newPassword: Scalars['String'];
   oldPassword: Scalars['String'];
 };
-
 
 export type EBankingAuthMutationCheckAccountArgs = {
   coopId: Scalars['ID'];
@@ -3261,17 +3174,14 @@ export type EBankingAuthMutationCheckAccountArgs = {
   pin: Scalars['Int'];
 };
 
-
 export type EBankingAuthMutationGetNewTokenArgs = {
   refreshToken: Scalars['String'];
   tokenFor: EBankingTokenType;
 };
 
-
 export type EBankingAuthMutationLoginArgs = {
   data: EbankingLoginInput;
 };
-
 
 export type EBankingAuthMutationLoginToCooperativeArgs = {
   cooperativeId: Scalars['ID'];
@@ -3279,34 +3189,28 @@ export type EBankingAuthMutationLoginToCooperativeArgs = {
   pinCode: Scalars['String'];
 };
 
-
 export type EBankingAuthMutationResendOtpArgs = {
   mobile: Scalars['String'];
   otpFor: OtpFor;
 };
-
 
 export type EBankingAuthMutationResetPasswordArgs = {
   mobileNo: Scalars['String'];
   newPassword: Scalars['String'];
 };
 
-
 export type EBankingAuthMutationSetNewPinArgs = {
   data?: InputMaybe<CooperativeConnectInput>;
 };
-
 
 export type EBankingAuthMutationSetPasswordArgs = {
   data: EbankingPasswordInput;
   userID: Scalars['ID'];
 };
 
-
 export type EBankingAuthMutationSignUpArgs = {
   mobileNo: Scalars['String'];
 };
-
 
 export type EBankingAuthMutationVerifyOtpArgs = {
   data: EbankingOtpInput;
@@ -3324,18 +3228,15 @@ export type EBankingChequeMutation = {
   withdrawViaCollector?: Maybe<EBankingChequeResult>;
 };
 
-
 export type EBankingChequeMutationBlockArgs = {
   data?: InputMaybe<EBankingChequeBlockInput>;
   memberID: Scalars['String'];
 };
 
-
 export type EBankingChequeMutationRequestArgs = {
   data?: InputMaybe<EBankingChequeRequestInput>;
   memberID: Scalars['String'];
 };
-
 
 export type EBankingChequeMutationWithdrawViaCollectorArgs = {
   data?: InputMaybe<EBankingChequeWithdrawViaCollectorInput>;
@@ -3348,7 +3249,6 @@ export type EBankingChequeQuery = {
   options: Array<EBankingCooperativeServiceOption>;
   pastRequests?: Maybe<Array<Maybe<ChequePastRequest>>>;
 };
-
 
 export type EBankingChequeQueryPastRequestsArgs = {
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
@@ -3366,7 +3266,7 @@ export type EBankingChequeRequestInput = {
 
 export enum EBankingChequeRequestType {
   SelfPickup = 'Self_Pickup',
-  ThroughAgent = 'Through_agent'
+  ThroughAgent = 'Through_agent',
 }
 
 export type EBankingChequeResult = {
@@ -3414,7 +3314,6 @@ export type EBankingComplaintMutation = {
   register?: Maybe<EBankingComplaintRegisterResult>;
 };
 
-
 export type EBankingComplaintMutationRegisterArgs = {
   data?: InputMaybe<EBankingRegisterComplaintInput>;
   memberID: Scalars['String'];
@@ -3424,7 +3323,6 @@ export type EBankingComplaintQuery = {
   history?: Maybe<EBankingComplaintHistoryData>;
   options: Array<EBankingCooperativeServiceOption>;
 };
-
 
 export type EBankingComplaintQueryHistoryArgs = {
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
@@ -3463,11 +3361,11 @@ export type EBankingCooperativeServiceOption = {
 export type EBankingCooperativeServiceQuery = {
   cheque?: Maybe<EBankingChequeQuery>;
   complaint?: Maybe<EBankingComplaintQuery>;
+  coopStatistics?: Maybe<CoopStatistics>;
   downloads?: Maybe<EBankingDownloadsQuery>;
   loan?: Maybe<EBankingLoanQuery>;
   organizationInfo: Organization;
 };
-
 
 export type EBankingCooperativeServiceQueryOrganizationInfoArgs = {
   id: Scalars['ID'];
@@ -3491,7 +3389,6 @@ export type EBankingDownloadsQuery = {
   options: Array<EBankingCooperativeServiceOption>;
 };
 
-
 export type EBankingDownloadsQueryFilesArgs = {
   filter?: InputMaybe<EBankingDownloadsFilter>;
 };
@@ -3501,7 +3398,11 @@ export type EBankingKymAddFormStatus = {
   sectionStatus?: Maybe<EBankingKymAddSectionStatus>;
 };
 
-export type EBankingKymAddLus = EBankingKymCooperativeLus | EBankingKymDeclarationLus | EBankingKymPersonalLus | EBankingKymProfessionalLus;
+export type EBankingKymAddLus =
+  | EBankingKymCooperativeLus
+  | EBankingKymDeclarationLus
+  | EBankingKymPersonalLus
+  | EBankingKymProfessionalLus;
 
 export type EBankingKymAddLastUpdated = {
   cooperativeMembership?: Maybe<EBankingKymCooperativeMemberStatus>;
@@ -3524,7 +3425,7 @@ export type EBankingKymCooperativeLus = {
 export enum EBankingKymCooperativeMemberSection {
   BackgroundInformation = 'BACKGROUND_INFORMATION',
   EstimatedTransactions = 'ESTIMATED_TRANSACTIONS',
-  FinancialTransactionDetails = 'FINANCIAL_TRANSACTION_DETAILS'
+  FinancialTransactionDetails = 'FINANCIAL_TRANSACTION_DETAILS',
 }
 
 export type EBankingKymCooperativeMemberStatus = {
@@ -3537,7 +3438,9 @@ export type EBankingKymCooperativeMembership = {
   estimatedAnnualLoanAmount?: Maybe<Scalars['Float']>;
   estimatedAnnualTransactionAmount?: Maybe<Scalars['Float']>;
   estimatedAnnualTransactionFrequencyId?: Maybe<Scalars['ID']>;
-  familyMemberInThisCooperative?: Maybe<Array<Maybe<KymFamilyMemberDetailsInThisCooperativeFormState>>>;
+  familyMemberInThisCooperative?: Maybe<
+    Array<Maybe<KymFamilyMemberDetailsInThisCooperativeFormState>>
+  >;
   isMemberOfAnotherCooperative?: Maybe<Scalars['Boolean']>;
   loan?: Maybe<Scalars['Float']>;
   memberNumberInAnotherCooperative?: Maybe<Scalars['String']>;
@@ -3553,7 +3456,9 @@ export type EBankingKymCooperativeMembershipInput = {
   estimatedAnnualLoanAmount?: InputMaybe<Scalars['Float']>;
   estimatedAnnualTransactionAmount?: InputMaybe<Scalars['Float']>;
   estimatedAnnualTransactionFrequencyId?: InputMaybe<Scalars['ID']>;
-  familyMemberInThisCooperative?: InputMaybe<Array<InputMaybe<KymFamilyMemberDetailsInThisCooperative>>>;
+  familyMemberInThisCooperative?: InputMaybe<
+    Array<InputMaybe<KymFamilyMemberDetailsInThisCooperative>>
+  >;
   isMemberOfAnotherCooperative?: InputMaybe<Scalars['Boolean']>;
   loan?: InputMaybe<Scalars['Float']>;
   memberNumberInAnotherCooperative?: InputMaybe<Scalars['String']>;
@@ -3615,7 +3520,7 @@ export type EBankingKymDeclarationResult = {
 };
 
 export enum EBankingKymDeclarationSection {
-  DeclarationInformation = 'DECLARATION_INFORMATION'
+  DeclarationInformation = 'DECLARATION_INFORMATION',
 }
 
 export type EBankingKymDeclarationStatus = {
@@ -3651,11 +3556,9 @@ export type EBankingKymMutation = {
   newKymId: Scalars['ID'];
 };
 
-
 export type EBankingKymMutationAddArgs = {
   id: Scalars['ID'];
 };
-
 
 export type EBankingKymMutationNewKymIdArgs = {
   cooperativeId: Scalars['ID'];
@@ -3750,7 +3653,7 @@ export enum EBankingKymPersonalSection {
   BasicInformation = 'BASIC_INFORMATION',
   ContactDetails = 'CONTACT_DETAILS',
   FamilyDetails = 'FAMILY_DETAILS',
-  IdentificationDetails = 'IDENTIFICATION_DETAILS'
+  IdentificationDetails = 'IDENTIFICATION_DETAILS',
 }
 
 export type EBankingKymPersonalStatus = {
@@ -3787,7 +3690,7 @@ export enum EBankingKymProfessionalSection {
   IncomeSource = 'INCOME_SOURCE',
   MainProfession = 'MAIN_PROFESSION',
   Profession = 'PROFESSION',
-  SpouseOccupation = 'SPOUSE_OCCUPATION'
+  SpouseOccupation = 'SPOUSE_OCCUPATION',
 }
 
 export type EBankingKymProfessionalStatus = {
@@ -3798,7 +3701,6 @@ export type EBankingKymProfessionalStatus = {
 export type EBankingKymQuery = {
   formState: EBankingKymFormStateQuery;
 };
-
 
 export type EBankingKymQueryFormStateArgs = {
   id: Scalars['ID'];
@@ -3811,21 +3713,17 @@ export type EBankingKymSectionMutation = {
   professionalInformation?: Maybe<EBankingKymProfessionalInformationResult>;
 };
 
-
 export type EBankingKymSectionMutationCooperativeMembershipArgs = {
   data?: InputMaybe<EBankingKymCooperativeMembershipInput>;
 };
-
 
 export type EBankingKymSectionMutationDeclarationArgs = {
   data?: InputMaybe<EBankingKymDeclarationInput>;
 };
 
-
 export type EBankingKymSectionMutationPersonalInformationArgs = {
   data?: InputMaybe<EBankingKymPersonalInformationInput>;
 };
-
 
 export type EBankingKymSectionMutationProfessionalInformationArgs = {
   data?: InputMaybe<EBankingKymProfessionalInformationInput>;
@@ -3835,7 +3733,6 @@ export type EBankingLoanAccountQuery = {
   get?: Maybe<EbankingAccountResult>;
   list?: Maybe<AccountMinimalResult>;
 };
-
 
 export type EBankingLoanAccountQueryGetArgs = {
   id: Scalars['ID'];
@@ -3857,7 +3754,6 @@ export type EBankingLoanMutation = {
   apply?: Maybe<EBankingApplyLoanResult>;
 };
 
-
 export type EBankingLoanMutationApplyArgs = {
   data?: InputMaybe<EBankingApplyLoanInput>;
   memberID: Scalars['String'];
@@ -3867,7 +3763,6 @@ export type EBankingLoanQuery = {
   history?: Maybe<EbankingLoanHistoryData>;
   options: Array<EBankingCooperativeServiceOption>;
 };
-
 
 export type EBankingLoanQueryHistoryArgs = {
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
@@ -3882,7 +3777,6 @@ export type EBankingMutation = {
   utilityPayment: UtilityPayemntMutation;
   webUtilityPayments?: Maybe<EbankingWebUtilityPaymentsMutation>;
 };
-
 
 export type EBankingMutationAuthArgs = {
   type?: InputMaybe<RequestSource>;
@@ -3921,7 +3815,7 @@ export type EBankingRegisterComplaintInput = {
 export enum EBankingServiceStatus {
   Active = 'Active',
   Completed = 'Completed',
-  Declined = 'Declined'
+  Declined = 'Declined',
 }
 
 export type EBankingShareQuery = {
@@ -3929,14 +3823,13 @@ export type EBankingShareQuery = {
   summary?: Maybe<EbankingShare>;
 };
 
-
 export type EBankingShareQueryHistoryArgs = {
   filter?: InputMaybe<EbankingShareFilter>;
 };
 
 export enum EBankingTokenType {
   Cooperative = 'COOPERATIVE',
-  Myra = 'MYRA'
+  Myra = 'MYRA',
 }
 
 export type EBankingTransactionQuery = {
@@ -3944,11 +3837,9 @@ export type EBankingTransactionQuery = {
   recent?: Maybe<EbankingTransactionConnection>;
 };
 
-
 export type EBankingTransactionQueryMonthlyArgs = {
   filter?: InputMaybe<Filter>;
 };
-
 
 export type EBankingTransactionQueryRecentArgs = {
   paginate?: InputMaybe<Pagination>;
@@ -3971,7 +3862,6 @@ export type EbankingAccount = {
   subscribedDate: Scalars['String'];
   transactions?: Maybe<EbankingTransactionConnection>;
 };
-
 
 export type EbankingAccountTransactionsArgs = {
   filter?: InputMaybe<EbankingTransactionFilter>;
@@ -4019,7 +3909,7 @@ export type EbankingAccountTransferResult = {
 
 export enum EbankingAccountType {
   Loan = 'LOAN',
-  Saving = 'SAVING'
+  Saving = 'SAVING',
 }
 
 export type EbankingAuthQuery = {
@@ -4150,11 +4040,9 @@ export type EbankingSendMoneyMutation = {
   proceed?: Maybe<EbankingSendMoneyResult>;
 };
 
-
 export type EbankingSendMoneyMutationCheckArgs = {
   data?: InputMaybe<EbankingSendMoneyInput>;
 };
-
 
 export type EbankingSendMoneyMutationProceedArgs = {
   data?: InputMaybe<EbankingSendMoneyInput>;
@@ -4183,7 +4071,7 @@ export type EbankingSendMoneyResult = {
 export enum EbankingServiceRequestType {
   ChequeBlockRequest = 'CHEQUE_BLOCK_REQUEST',
   ChequeRequest = 'CHEQUE_REQUEST',
-  WithdrawViaCollector = 'WITHDRAW_VIA_COLLECTOR'
+  WithdrawViaCollector = 'WITHDRAW_VIA_COLLECTOR',
 }
 
 export type EbankingSetDefaultAccountResult = {
@@ -4243,12 +4131,12 @@ export type EbankingTransactionConnection = {
 
 export enum EbankingTransactionCrOrDr {
   Credit = 'CREDIT',
-  Debit = 'DEBIT'
+  Debit = 'DEBIT',
 }
 
 export enum EbankingTransactionDirection {
   Incoming = 'INCOMING',
-  Outgoing = 'OUTGOING'
+  Outgoing = 'OUTGOING',
 }
 
 export type EbankingTransactionEdge = {
@@ -4266,7 +4154,7 @@ export enum EbankingTransactionType {
   Deposit = 'DEPOSIT',
   SharePurchase = 'SHARE_PURCHASE',
   Transfer = 'TRANSFER',
-  Withdraw = 'WITHDRAW'
+  Withdraw = 'WITHDRAW',
 }
 
 export type EbankingUser = {
@@ -4287,7 +4175,6 @@ export type EbankingWebUtilityPaymentsMutation = {
   accountTransfer?: Maybe<EbankingAccountTransferResult>;
   sendMoney?: Maybe<EbankingSendMoneyMutation>;
 };
-
 
 export type EbankingWebUtilityPaymentsMutationAccountTransferArgs = {
   data?: InputMaybe<EbankingAccountTransferInput>;
@@ -4349,7 +4236,7 @@ export type FdInvestmentTransactionInput = {
 export enum FdInvestmentType {
   Type_1 = 'TYPE_1',
   Type_2 = 'TYPE_2',
-  Type_3 = 'TYPE_3'
+  Type_3 = 'TYPE_3',
 }
 
 export enum File_Variant {
@@ -4359,12 +4246,12 @@ export enum File_Variant {
   Jpg = 'JPG',
   Other = 'OTHER',
   Pdf = 'PDF',
-  Png = 'PNG'
+  Png = 'PNG',
 }
 
 export enum Filter_Mode {
   And = 'AND',
-  Or = 'OR'
+  Or = 'OR',
 }
 
 export type FamilyDetails = {
@@ -4384,6 +4271,12 @@ export type FamilyDetailsInNepali = {
   spouseName?: Maybe<Scalars['String']>;
 };
 
+export type FamilyMemberDetails = {
+  dob?: Maybe<Scalars['String']>;
+  fullName?: Maybe<Scalars['String']>;
+  relationship?: Maybe<Scalars['String']>;
+};
+
 export type FieldDetailsQueryResult = {
   data?: Maybe<FormField>;
   error?: Maybe<QueryError>;
@@ -4397,7 +4290,7 @@ export enum FormCategory {
   KymCoop = 'KYM_COOP',
   KymCoopUnion = 'KYM_COOP_UNION',
   KymIndividual = 'KYM_INDIVIDUAL',
-  KymInstitution = 'KYM_INSTITUTION'
+  KymInstitution = 'KYM_INSTITUTION',
 }
 
 export type FormDynamicFieldsFilter = {
@@ -4470,29 +4363,24 @@ export type FormFieldMutation = {
   upsert: FormFieldMutationResult;
 };
 
-
 export type FormFieldMutationConditionArgs = {
   dependsOn: Array<InputMaybe<Scalars['ID']>>;
   fieldId: Scalars['ID'];
 };
 
-
 export type FormFieldMutationDeleteArgs = {
   id: Scalars['ID'];
 };
-
 
 export type FormFieldMutationMoveArgs = {
   id: Scalars['ID'];
   to: Scalars['Int'];
 };
 
-
 export type FormFieldMutationUpdateArgs = {
   data: FormFieldUpdateInput;
   id: Scalars['ID'];
 };
-
 
 export type FormFieldMutationUpsertArgs = {
   data: FormFieldUpsertInput;
@@ -4508,7 +4396,6 @@ export type FormFieldMutationResult = {
 export type FormFieldQuery = {
   details: FieldDetailsQueryResult;
 };
-
 
 export type FormFieldQueryDetailsArgs = {
   id: Scalars['ID'];
@@ -4539,7 +4426,7 @@ export enum FormFieldSearchTerm {
   OrganizationType = 'ORGANIZATION_TYPE',
   Purpose = 'PURPOSE',
   Relationship = 'RELATIONSHIP',
-  Religion = 'RELIGION'
+  Religion = 'RELIGION',
 }
 
 export enum FormFieldType {
@@ -4565,7 +4452,7 @@ export enum FormFieldType {
   /**  These are for SINGLE_SELECT, MULTI_SELECT  */
   SingleSelect = 'SINGLE_SELECT',
   TextInput = 'TEXT_INPUT',
-  Url = 'URL'
+  Url = 'URL',
 }
 
 export type FormFieldUpdateInput = {
@@ -4617,23 +4504,19 @@ export type FormOptionMutation = {
   upsert: FormOptionResult;
 };
 
-
 export type FormOptionMutationDeleteArgs = {
   id: Scalars['ID'];
 };
-
 
 export type FormOptionMutationMoveArgs = {
   id: Scalars['ID'];
   to: Scalars['Int'];
 };
 
-
 export type FormOptionMutationUpdateArgs = {
   data: FormOptionUpdateInput;
   id: Scalars['ID'];
 };
-
 
 export type FormOptionMutationUpsertArgs = {
   data: FormOptionUpsertInput;
@@ -4673,11 +4556,9 @@ export type FormOptionsQuery = {
   predefined?: Maybe<FormOptionsQueryResult>;
 };
 
-
 export type FormOptionsQueryGetArgs = {
   filter: FormOptionsGetFilter;
 };
-
 
 export type FormOptionsQueryPredefinedArgs = {
   filter: FormOptionsPredefinedFilter;
@@ -4692,7 +4573,6 @@ export type FormQuery = {
   dynamicFields?: Maybe<FormFieldQueryResult>;
   options: FormOptionsQuery;
 };
-
 
 export type FormQueryDynamicFieldsArgs = {
   filter: FormOptionsPredefinedFilter;
@@ -4761,7 +4641,7 @@ export enum FormSearchTerm {
   Representative = 'REPRESENTATIVE',
   SisterConcernDetails = 'SISTER_CONCERN_DETAILS',
   TransactionDetails = 'TRANSACTION_DETAILS',
-  VoterId = 'VOTER_ID'
+  VoterId = 'VOTER_ID',
 }
 
 export type FormSection = Base & {
@@ -4805,23 +4685,19 @@ export type FormSectionMutation = {
   upsert: FormSectionMutationResult;
 };
 
-
 export type FormSectionMutationDeleteArgs = {
   id: Scalars['ID'];
 };
-
 
 export type FormSectionMutationSubSectionArgs = {
   data?: InputMaybe<FormSectionInput>;
   sectionId: Scalars['ID'];
 };
 
-
 export type FormSectionMutationUpdateArgs = {
   data: FormSectionUpdateInput;
   id: Scalars['ID'];
 };
-
 
 export type FormSectionMutationUpsertArgs = {
   data: FormSectionUpsertInput;
@@ -4836,7 +4712,6 @@ export type FormSectionMutationResult = {
 export type FormSectionQuery = {
   details: SectionDetailsQueryResult;
 };
-
 
 export type FormSectionQueryDetailsArgs = {
   id: Scalars['ID'];
@@ -4886,13 +4761,13 @@ export enum FormSectionSearchTerm {
   Representative = 'REPRESENTATIVE',
   SisterConcernDetails = 'SISTER_CONCERN_DETAILS',
   TransactionDetails = 'TRANSACTION_DETAILS',
-  VoterId = 'VOTER_ID'
+  VoterId = 'VOTER_ID',
 }
 
 export enum FormSectionType {
   Group = 'GROUP',
   Input = 'INPUT',
-  Upload = 'UPLOAD'
+  Upload = 'UPLOAD',
 }
 
 export type FormSectionUpdateInput = {
@@ -4915,11 +4790,9 @@ export type FormSettingMutation = {
   section: FormSectionMutation;
 };
 
-
 export type FormSettingMutationDeleteArgs = {
   id: Scalars['ID'];
 };
-
 
 export type FormSettingMutationMaxSizeArgs = {
   id: Scalars['ID'];
@@ -4937,21 +4810,21 @@ export enum Frequency {
   Daily = 'DAILY',
   Monthly = 'MONTHLY',
   Weekly = 'WEEKLY',
-  Yearly = 'YEARLY'
+  Yearly = 'YEARLY',
 }
 
 export enum FrequencyDay {
   First = 'FIRST',
   Last = 'LAST',
   Second = 'SECOND',
-  Third = 'THIRD'
+  Third = 'THIRD',
 }
 
 export enum FrequencyTenure {
   Day = 'DAY',
   Month = 'MONTH',
   Week = 'WEEK',
-  Year = 'YEAR'
+  Year = 'YEAR',
 }
 
 export type GenderLedgerReportResult = {
@@ -4962,7 +4835,6 @@ export type GenderLedgerReportResult = {
 export type GeneralBranchSettingsMutation = {
   add: BranchAddResult;
 };
-
 
 export type GeneralBranchSettingsMutationAddArgs = {
   data?: InputMaybe<BranchInput>;
@@ -4975,11 +4847,9 @@ export type GeneralBranchSettingsQuery = {
   mine?: Maybe<Branch>;
 };
 
-
 export type GeneralBranchSettingsQueryFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type GeneralBranchSettingsQueryListArgs = {
   filter?: InputMaybe<BranchSearchFilter>;
@@ -5053,7 +4923,7 @@ export enum GlobalPageAppName {
   AccountingSystem = 'ACCOUNTING_SYSTEM',
   CoreBankingSystem = 'CORE_BANKING_SYSTEM',
   InventoryMgmt = 'INVENTORY_MGMT',
-  Settings = 'SETTINGS'
+  Settings = 'SETTINGS',
 }
 
 export enum GlobalPageMenuName {
@@ -5062,7 +4932,7 @@ export enum GlobalPageMenuName {
   Member = 'MEMBER',
   Reports = 'REPORTS',
   Share = 'SHARE',
-  Transactions = 'TRANSACTIONS'
+  Transactions = 'TRANSACTIONS',
 }
 
 export enum GlobalPagesIconType {
@@ -5070,7 +4940,7 @@ export enum GlobalPagesIconType {
   List = 'LIST',
   Profile = 'PROFILE',
   Reports = 'REPORTS',
-  Settings = 'SETTINGS'
+  Settings = 'SETTINGS',
 }
 
 export type GlobalPagesResultNode = {
@@ -5085,7 +4955,7 @@ export type GlobalPagesResultNode = {
 
 export enum GracePeriod {
   Interest = 'INTEREST',
-  Principal = 'PRINCIPAL'
+  Principal = 'PRINCIPAL',
 }
 
 export type GraphData = {
@@ -5146,7 +5016,7 @@ export enum Id_Type {
   Sharenumbers = 'SHARENUMBERS',
   Shareregister = 'SHAREREGISTER',
   User = 'USER',
-  Userpreference = 'USERPREFERENCE'
+  Userpreference = 'USERPREFERENCE',
 }
 
 export type Identity = {
@@ -5161,7 +5031,7 @@ export enum IdetificationType {
   DrivingLicense = 'DRIVING_LICENSE',
   NationalId = 'NATIONAL_ID',
   Passport = 'PASSPORT',
-  VoterCard = 'VOTER_CARD'
+  VoterCard = 'VOTER_CARD',
 }
 
 export type InactivateMemberCheck = {
@@ -5186,7 +5056,7 @@ export enum IndividualRequiredDocument {
   Form = 'FORM',
   NomineeDocument = 'NOMINEE_DOCUMENT',
   Photo = 'PHOTO',
-  Signature = 'SIGNATURE'
+  Signature = 'SIGNATURE',
 }
 
 export type Installment = {
@@ -5211,7 +5081,7 @@ export enum InstallmentFrequency {
   Monthly = 'MONTHLY',
   Quarterly = 'QUARTERLY',
   Weekly = 'WEEKLY',
-  Yearly = 'YEARLY'
+  Yearly = 'YEARLY',
 }
 
 export type InstallmentResult = {
@@ -5223,7 +5093,7 @@ export enum InstallmentState {
   Cancelled = 'CANCELLED',
   Overdue = 'OVERDUE',
   Paid = 'PAID',
-  Pending = 'PENDING'
+  Pending = 'PENDING',
 }
 
 export type InstitutionAccountOperatoionsDetails = {
@@ -5247,7 +5117,7 @@ export type InstitutionDeclaration = {
 export enum InstitutionExpectedMonthlyTransaction {
   Above_25Lakhs = 'ABOVE_25_LAKHS',
   LessThan_10Lakhs = 'LESS_THAN_10_LAKHS',
-  LessThan_25Lakhs = 'LESS_THAN_25_LAKHS'
+  LessThan_25Lakhs = 'LESS_THAN_25_LAKHS',
 }
 
 export type InstitutionMember = {
@@ -5292,7 +5162,7 @@ export enum InstitutionRequiredDocument {
   Decision = 'DECISION',
   Registered = 'REGISTERED',
   Signature = 'SIGNATURE',
-  TaxClearance = 'TAX_CLEARANCE'
+  TaxClearance = 'TAX_CLEARANCE',
 }
 
 export type InstitutionTransactionProfile = {
@@ -5317,7 +5187,7 @@ export type InsuranceType = {
 
 export enum InterestAuthority {
   Board = 'BOARD',
-  Ceo = 'CEO'
+  Ceo = 'CEO',
 }
 
 export type InterestFormState = {
@@ -5332,7 +5202,7 @@ export type InterestFormState = {
 
 export enum InterestMethod {
   Diminishing = 'DIMINISHING',
-  Flat = 'FLAT'
+  Flat = 'FLAT',
 }
 
 export type InterestRate = {
@@ -5433,7 +5303,6 @@ export type InvItemsGroupMutation = {
   add: InvItemsGroupAddResult;
 };
 
-
 export type InvItemsGroupMutationAddArgs = {
   data: InvItemsGroupInput;
 };
@@ -5443,11 +5312,9 @@ export type InvItemsGroupQuery = {
   list?: Maybe<InvItemsGroupConnection>;
 };
 
-
 export type InvItemsGroupQueryGetArgs = {
   id: Scalars['ID'];
 };
-
 
 export type InvItemsGroupQueryListArgs = {
   filter?: InputMaybe<InvItemsGroupDataFilter>;
@@ -5473,7 +5340,6 @@ export type InvItemsMutation = {
   add: InvItemsAddResult;
 };
 
-
 export type InvItemsMutationAddArgs = {
   data: InvItemsInput;
 };
@@ -5484,16 +5350,13 @@ export type InvItemsQuery = {
   list?: Maybe<InvItemsConnection>;
 };
 
-
 export type InvItemsQueryGetArgs = {
   id: Scalars['ID'];
 };
 
-
 export type InvItemsQueryGetNewItemCodeArgs = {
   type?: InputMaybe<Scalars['String']>;
 };
-
 
 export type InvItemsQueryListArgs = {
   filter?: InputMaybe<InvItemsDataFilter>;
@@ -5547,7 +5410,6 @@ export type InvUnitOfMeasureMutation = {
   add: InvUnitOfMeasureAddResult;
 };
 
-
 export type InvUnitOfMeasureMutationAddArgs = {
   data: InvUnitOfMeasureInput;
 };
@@ -5557,11 +5419,9 @@ export type InvUnitOfMeasureQuery = {
   list?: Maybe<InvUnitOfMeasureConnection>;
 };
 
-
 export type InvUnitOfMeasureQueryGetArgs = {
   id: Scalars['ID'];
 };
-
 
 export type InvUnitOfMeasureQueryListArgs = {
   filter?: InputMaybe<InvUnitOfMeasureDataFilter>;
@@ -5623,7 +5483,6 @@ export type InvVendorsMutation = {
   add: InvVendorsAddResult;
 };
 
-
 export type InvVendorsMutationAddArgs = {
   data: InvVendorsInput;
 };
@@ -5633,11 +5492,9 @@ export type InvVendorsQuery = {
   list?: Maybe<InvVendorsConnection>;
 };
 
-
 export type InvVendorsQueryGetArgs = {
   id: Scalars['ID'];
 };
-
 
 export type InvVendorsQueryListArgs = {
   filter?: InputMaybe<InvVendorsDataFilter>;
@@ -5775,13 +5632,13 @@ export type InvestmentTransactionListEdges = {
 
 export enum InvestmentTransactionMethod {
   Cash = 'CASH',
-  Cheque = 'CHEQUE'
+  Cheque = 'CHEQUE',
 }
 
 export enum InvestmentType {
   FixedDeposit = 'FIXED_DEPOSIT',
   Saving = 'SAVING',
-  Share = 'SHARE'
+  Share = 'SHARE',
 }
 
 export type JournalChartsOfAccount = {
@@ -5849,7 +5706,6 @@ export type KymEntryMutation = {
   upsertDynamic: KymEntryMutationResult;
 };
 
-
 export type KymEntryMutationUpsertDynamicArgs = {
   data: KymEntryInput;
 };
@@ -5864,7 +5720,6 @@ export type KymEntryMutationResult = {
 export type KymEntryQuery = {
   getDynamic?: Maybe<KymDynamicEntryResult>;
 };
-
 
 export type KymEntryQueryGetDynamicArgs = {
   filter: KymDynamicEntryFilter;
@@ -5883,7 +5738,6 @@ export type KymFieldInputData = {
 export type KymGeneralSettingsMutation = {
   generalMember?: Maybe<GeneralMemberResult>;
 };
-
 
 export type KymGeneralSettingsMutationGeneralMemberArgs = {
   data: GeneralMemberInput;
@@ -5956,11 +5810,9 @@ export type KymIndFamilyMemberMutation = {
   upsert: KymIndFamilyMemberResult;
 };
 
-
 export type KymIndFamilyMemberMutationDeleteArgs = {
   id: Scalars['ID'];
 };
-
 
 export type KymIndFamilyMemberMutationUpsertArgs = {
   data: KymIndFamilyMemberInput;
@@ -6009,11 +5861,9 @@ export type KymIndIdentificationMutation = {
   upsert: KymIndIdentificationResult;
 };
 
-
 export type KymIndIdentificationMutationDeleteArgs = {
   id: Scalars['ID'];
 };
-
 
 export type KymIndIdentificationMutationUpsertArgs = {
   data: KymIndIdentificationInput;
@@ -6051,11 +5901,9 @@ export type KymIndIncomeSourceMutation = {
   upsert: KymIndIncomeSourceResult;
 };
 
-
 export type KymIndIncomeSourceMutationDeleteArgs = {
   id: Scalars['ID'];
 };
-
 
 export type KymIndIncomeSourceMutationUpsertArgs = {
   data: KymIndIncomeSourceInput;
@@ -6127,11 +5975,9 @@ export type KymIndOccupationMutation = {
   upsert: KymIndOccupationResult;
 };
 
-
 export type KymIndOccupationMutationDeleteArgs = {
   id: Scalars['ID'];
 };
-
 
 export type KymIndOccupationMutationUpsertArgs = {
   data: KymIndOccupationInput;
@@ -6197,11 +6043,9 @@ export type KymCoopAccountOperatorDetails = {
   Upsert?: Maybe<KymCooperativeAddResult>;
 };
 
-
 export type KymCoopAccountOperatorDetailsDeleteArgs = {
   accOperatorId: Scalars['ID'];
 };
-
 
 export type KymCoopAccountOperatorDetailsUpsertArgs = {
   accOperatorId: Scalars['ID'];
@@ -6235,11 +6079,9 @@ export type KymCoopDirectorDetails = {
   Upsert?: Maybe<KymCooperativeAddResult>;
 };
 
-
 export type KymCoopDirectorDetailsDeleteArgs = {
   dirId: Scalars['ID'];
 };
-
 
 export type KymCoopDirectorDetailsUpsertArgs = {
   data: KymCoopDirectorDetailsFormInput;
@@ -6319,7 +6161,7 @@ export type KymCoopUnionAccountOperatorLus = {
 };
 
 export enum KymCoopUnionAccountOperatorSection {
-  AccountOperatorsDetails = 'ACCOUNT_OPERATORS_DETAILS'
+  AccountOperatorsDetails = 'ACCOUNT_OPERATORS_DETAILS',
 }
 
 export type KymCoopUnionAccountOperatorStatus = {
@@ -6339,7 +6181,13 @@ export type KymCoopUnionAddInvalidDataError = {
   error?: Maybe<Scalars['InvalidData']>;
 };
 
-export type KymCoopUnionAddLus = KymCoopUnionAccountOperatorLus | KymCoopUnionBodlus | KymCoopUnionCentralRepresentativeLus | KymCoopUnionDeclarationLus | KymCoopUnionEconomicDetailsLus | KymCoopUnionInstitutionInformationLus;
+export type KymCoopUnionAddLus =
+  | KymCoopUnionAccountOperatorLus
+  | KymCoopUnionBodlus
+  | KymCoopUnionCentralRepresentativeLus
+  | KymCoopUnionDeclarationLus
+  | KymCoopUnionEconomicDetailsLus
+  | KymCoopUnionInstitutionInformationLus;
 
 export type KymCoopUnionAddSectionStatus = {
   accountOperatorDetails?: Maybe<Array<Maybe<KymFormStatus>>>;
@@ -6387,7 +6235,7 @@ export type KymCoopUnionBodlus = {
 };
 
 export enum KymCoopUnionBodSection {
-  BoardOfDirectorsDetails = 'BOARD_OF_DIRECTORS_DETAILS'
+  BoardOfDirectorsDetails = 'BOARD_OF_DIRECTORS_DETAILS',
 }
 
 export type KymCoopUnionBodDetailsStatus = {
@@ -6400,7 +6248,7 @@ export type KymCoopUnionCentralRepresentativeLus = {
 };
 
 export enum KymCoopUnionCentralRepresentativeSection {
-  CentralRepresentativeDetails = 'CENTRAL_REPRESENTATIVE_DETAILS'
+  CentralRepresentativeDetails = 'CENTRAL_REPRESENTATIVE_DETAILS',
 }
 
 export type KymCoopUnionCentralRepresentativeStatus = {
@@ -6413,7 +6261,7 @@ export type KymCoopUnionDeclarationLus = {
 };
 
 export enum KymCoopUnionDeclarationSection {
-  DocumentsDeclaration = 'DOCUMENTS_DECLARATION'
+  DocumentsDeclaration = 'DOCUMENTS_DECLARATION',
 }
 
 export type KymCoopUnionDeclarationStatus = {
@@ -6443,7 +6291,7 @@ export enum KymCoopUnionEconomicDetailsSection {
   Assets = 'ASSETS',
   EquityAndLiabilities = 'EQUITY_AND_LIABILITIES',
   ExpenseDetails = 'EXPENSE_DETAILS',
-  IncomeDetails = 'INCOME_DETAILS'
+  IncomeDetails = 'INCOME_DETAILS',
 }
 
 export type KymCoopUnionEconomicDetailsStatus = {
@@ -6465,7 +6313,7 @@ export enum KymCoopUnionInstitutionInformationSection {
   BasicInformation = 'BASIC_INFORMATION',
   ContactDetails = 'CONTACT_DETAILS',
   CooperativeMemberInformation = 'COOPERATIVE_MEMBER_INFORMATION',
-  RegisteredDetails = 'REGISTERED_DETAILS'
+  RegisteredDetails = 'REGISTERED_DETAILS',
 }
 
 export type KymCoopUnionInstitutionalInformationStatus = {
@@ -6479,16 +6327,13 @@ export type KymCoopUnionMutation = {
   deletePersonnel?: Maybe<KymCoopUnionDeletion>;
 };
 
-
 export type KymCoopUnionMutationAddArgs = {
   id: Scalars['ID'];
 };
 
-
 export type KymCoopUnionMutationDeleteArgs = {
   id: Scalars['ID'];
 };
-
 
 export type KymCoopUnionMutationDeletePersonnelArgs = {
   id: Scalars['ID'];
@@ -6497,7 +6342,6 @@ export type KymCoopUnionMutationDeletePersonnelArgs = {
 export type KymCoopUnionQuery = {
   formState?: Maybe<KymCoopUnionAddFormStatus>;
 };
-
 
 export type KymCoopUnionQueryFormStateArgs = {
   id: Scalars['ID'];
@@ -6511,21 +6355,17 @@ export type KymCoopUnionSectionMutation = {
   personnelDetails?: Maybe<CoopUnionPersonnelDetailsResult>;
 };
 
-
 export type KymCoopUnionSectionMutationDeclarationArgs = {
   data?: InputMaybe<CoopUnionDeclarationInput>;
 };
-
 
 export type KymCoopUnionSectionMutationEconomicDetailsArgs = {
   data?: InputMaybe<CoopUnionEconomicDetailsInput>;
 };
 
-
 export type KymCoopUnionSectionMutationInstitutionInformationArgs = {
   data?: InputMaybe<CoopUnionInstitutionInformationInput>;
 };
-
 
 export type KymCoopUnionSectionMutationPersonnelDetailsArgs = {
   data?: InputMaybe<CoopUnionPersonnelInput>;
@@ -6585,7 +6425,7 @@ export type KymCooperativeAccountOperatorLus = {
 };
 
 export enum KymCooperativeAccountOperatorSection {
-  AccountOperatorsDetails = 'ACCOUNT_OPERATORS_DETAILS'
+  AccountOperatorsDetails = 'ACCOUNT_OPERATORS_DETAILS',
 }
 
 export type KymCooperativeAccountOperatorStatus = {
@@ -6595,11 +6435,16 @@ export type KymCooperativeAccountOperatorStatus = {
 
 export type KymCooperativeAddFormStatus = {
   formData?: Maybe<KymCooperativeFormData>;
-  lastUpdated: KymCooperativeAddLus;
+  lastUpdated?: Maybe<KymCooperativeAddLus>;
   sectionStatus?: Maybe<KymCooperativeAddSectionStatus>;
 };
 
-export type KymCooperativeAddLus = KymCooperativeAccountOperatorLus | KymCooperativeBodlus | KymCooperativeDeclarationLus | KymCooperativeEconomicDetailsLus | KymCooperativeInstitutionInformationLus;
+export type KymCooperativeAddLus =
+  | KymCooperativeAccountOperatorLus
+  | KymCooperativeBodlus
+  | KymCooperativeDeclarationLus
+  | KymCooperativeEconomicDetailsLus
+  | KymCooperativeInstitutionInformationLus;
 
 export type KymCooperativeAddResult = {
   error?: Maybe<MutationError>;
@@ -6664,7 +6509,7 @@ export type KymCooperativeBodlus = {
 };
 
 export enum KymCooperativeBodSection {
-  BoardOfDirectorsDetails = 'BOARD_OF_DIRECTORS_DETAILS'
+  BoardOfDirectorsDetails = 'BOARD_OF_DIRECTORS_DETAILS',
 }
 
 export type KymCooperativeBodDetailsStatus = {
@@ -6678,7 +6523,7 @@ export type KymCooperativeDeclarationLus = {
 
 export enum KymCooperativeDeclarationSection {
   AccountHolderDeclaration = 'ACCOUNT_HOLDER_DECLARATION',
-  DocumentDeclaration = 'DOCUMENT_DECLARATION'
+  DocumentDeclaration = 'DOCUMENT_DECLARATION',
 }
 
 export type KymCooperativeDeclarationStatus = {
@@ -6702,7 +6547,7 @@ export type KymCooperativeEconomicDetailsLus = {
 
 export enum KymCooperativeEconomicDetailsSection {
   Assets = 'ASSETS',
-  EquityAndLiabilities = 'EQUITY_AND_LIABILITIES'
+  EquityAndLiabilities = 'EQUITY_AND_LIABILITIES',
 }
 
 export type KymCooperativeEconomicDetailsStatus = {
@@ -6828,7 +6673,7 @@ export enum KymCooperativeInstitutionInformationSection {
   NumberOfEmployee = 'NUMBER_OF_EMPLOYEE',
   OperatingAddress = 'OPERATING_ADDRESS',
   RegisteredAddress = 'REGISTERED_ADDRESS',
-  Representative = 'REPRESENTATIVE'
+  Representative = 'REPRESENTATIVE',
 }
 
 export type KymCooperativeInstitutionalInformationStatus = {
@@ -6842,7 +6687,6 @@ export type KymCooperativeMutation = {
   directorDetails?: Maybe<KymCoopDirectorDetails>;
 };
 
-
 export type KymCooperativeMutationAddArgs = {
   data: KymCooperativeFormInput;
 };
@@ -6853,16 +6697,13 @@ export type KymCooperativeQuery = {
   listDirectors?: Maybe<KymCoopDirectorQuery>;
 };
 
-
 export type KymCooperativeQueryFormStateArgs = {
   id: Scalars['ID'];
 };
 
-
 export type KymCooperativeQueryListAccountOperatorsArgs = {
   id: Scalars['ID'];
 };
-
 
 export type KymCooperativeQueryListDirectorsArgs = {
   id: Scalars['ID'];
@@ -6978,7 +6819,11 @@ export type KymIndAddInvalidDataError = {
   error?: Maybe<Array<Maybe<SectionWiseError>>>;
 };
 
-export type KymIndAddLus = KymIndCooperativeLus | KymIndDeclarationLus | KymIndPersonalLus | KymIndProfessionalLus;
+export type KymIndAddLus =
+  | KymIndCooperativeLus
+  | KymIndDeclarationLus
+  | KymIndPersonalLus
+  | KymIndProfessionalLus;
 
 export type KymIndAddLastUpdated = {
   cooperativeMembership?: Maybe<KymIndCooperativeMemberStatus>;
@@ -7003,7 +6848,7 @@ export enum KymIndCooperativeMemberSection {
   IsFamilyAMember = 'IS_FAMILY_A_MEMBER',
   MemberOfAnotherCooperative = 'MEMBER_OF_ANOTHER_COOPERATIVE',
   Purpose = 'PURPOSE',
-  TransactionDetails = 'TRANSACTION_DETAILS'
+  TransactionDetails = 'TRANSACTION_DETAILS',
 }
 
 export type KymIndCooperativeMemberStatus = {
@@ -7019,7 +6864,7 @@ export enum KymIndDeclarationSection {
   BeneficialOwner = 'BENEFICIAL_OWNER',
   Conviction = 'CONVICTION',
   FamilyMemberInPolitics = 'FAMILY_MEMBER_IN_POLITICS',
-  ForeignResidentialPermit = 'FOREIGN_RESIDENTIAL_PERMIT'
+  ForeignResidentialPermit = 'FOREIGN_RESIDENTIAL_PERMIT',
 }
 
 export type KymIndDeclarationStatus = {
@@ -7141,7 +6986,6 @@ export type KymIndMutation = {
   occupation: KymIndOccupationMutation;
 };
 
-
 export type KymIndMutationAddArgs = {
   data: KymIndMemberInput;
 };
@@ -7177,7 +7021,7 @@ export enum KymIndPersonalSection {
   IdentificationDetails = 'IDENTIFICATION_DETAILS',
   PermanentAddress = 'PERMANENT_ADDRESS',
   RentedHouse = 'RENTED_HOUSE',
-  TemporaryAddress = 'TEMPORARY_ADDRESS'
+  TemporaryAddress = 'TEMPORARY_ADDRESS',
 }
 
 export type KymIndPersonalStatus = {
@@ -7201,7 +7045,7 @@ export enum KymIndProfessionalSection {
   IncomeSource = 'INCOME_SOURCE',
   MainProfession = 'MAIN_PROFESSION',
   Profession = 'PROFESSION',
-  SpouseOccupation = 'SPOUSE_OCCUPATION'
+  SpouseOccupation = 'SPOUSE_OCCUPATION',
 }
 
 export type KymIndProfessionalStatus = {
@@ -7217,11 +7061,9 @@ export type KymIndQuery = {
   listOccupation?: Maybe<KymIndOccupationQueryResult>;
 };
 
-
 export type KymIndQueryListFamilyMemberArgs = {
   isMember?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 export type KymIndQueryListOccupationArgs = {
   isSpouse: Scalars['Boolean'];
@@ -7236,11 +7078,9 @@ export type KymInsAccountOperator = {
   Upsert?: Maybe<KymInsAddResult>;
 };
 
-
 export type KymInsAccountOperatorDeleteArgs = {
   operatorId: Scalars['ID'];
 };
-
 
 export type KymInsAccountOperatorUpsertArgs = {
   data: KymInsAccountOperatorInput;
@@ -7261,7 +7101,7 @@ export type KymInsAccountOperatorInput = {
 
 export enum KymInsAccountSection {
   AccountOperationInstruction = 'ACCOUNT_OPERATION_INSTRUCTION',
-  DetailsOfAccountOperators = 'DETAILS_OF_ACCOUNT_OPERATORS'
+  DetailsOfAccountOperators = 'DETAILS_OF_ACCOUNT_OPERATORS',
 }
 
 export type KymInsAccountStatus = {
@@ -7269,7 +7109,12 @@ export type KymInsAccountStatus = {
   error?: Maybe<Array<Maybe<KymInsAccountSection>>>;
 };
 
-export type KymInsAddLus = KymInsAccountLus | KymInsDeclarationLus | KymInsDirectorDetailsLus | KymInsInformationLus | KymInsTransactionLus;
+export type KymInsAddLus =
+  | KymInsAccountLus
+  | KymInsDeclarationLus
+  | KymInsDirectorDetailsLus
+  | KymInsInformationLus
+  | KymInsTransactionLus;
 
 export type KymInsAddResult = {
   error?: Maybe<KymIndAddError>;
@@ -7292,7 +7137,7 @@ export type KymInsDeclarationLus = {
 
 export enum KymInsDeclarationSection {
   AccountHolderDeclaration = 'ACCOUNT_HOLDER_DECLARATION',
-  DocumentsDeclaration = 'DOCUMENTS_DECLARATION'
+  DocumentsDeclaration = 'DOCUMENTS_DECLARATION',
 }
 
 export type KymInsDeclarationStatus = {
@@ -7305,11 +7150,9 @@ export type KymInsDirector = {
   Upsert?: Maybe<KymInsAddResult>;
 };
 
-
 export type KymInsDirectorDeleteArgs = {
   directorId: Scalars['ID'];
 };
-
 
 export type KymInsDirectorUpsertArgs = {
   data: KymInsDirectorInput;
@@ -7330,7 +7173,7 @@ export type KymInsDirectorDetailsLus = {
 
 export enum KymInsDirectorDetailsSection {
   DetailsOfDirectors = 'DETAILS_OF_DIRECTORS',
-  DetailsOfDirectorsAffiliated = 'DETAILS_OF_DIRECTORS_AFFILIATED'
+  DetailsOfDirectorsAffiliated = 'DETAILS_OF_DIRECTORS_AFFILIATED',
 }
 
 export type KymInsDirectorDetailsStatus = {
@@ -7418,7 +7261,7 @@ export enum KymInsInformationSection {
   BasicInformation = 'BASIC_INFORMATION',
   ContactDetails = 'CONTACT_DETAILS',
   DetailsOfSisterConcern = 'DETAILS_OF_SISTER_CONCERN',
-  RegisteredDetails = 'REGISTERED_DETAILS'
+  RegisteredDetails = 'REGISTERED_DETAILS',
 }
 
 export type KymInsInformationStatus = {
@@ -7490,7 +7333,6 @@ export type KymInsMutation = {
   sisterConcern?: Maybe<KymInsSisterConcern>;
 };
 
-
 export type KymInsMutationAddArgs = {
   data: KymInsInput;
 };
@@ -7510,26 +7352,21 @@ export type KymInsQuery = {
   overallFormStatus?: Maybe<KymInsOverallFormStatus>;
 };
 
-
 export type KymInsQueryFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type KymInsQueryListAccountOperatorsArgs = {
   id: Scalars['ID'];
 };
 
-
 export type KymInsQueryListDirectorsArgs = {
   id: Scalars['ID'];
 };
 
-
 export type KymInsQueryListSisterConcernsArgs = {
   id: Scalars['ID'];
 };
-
 
 export type KymInsQueryOverallFormStatusArgs = {
   id: Scalars['ID'];
@@ -7545,11 +7382,9 @@ export type KymInsSisterConcern = {
   Upsert?: Maybe<KymInsAddResult>;
 };
 
-
 export type KymInsSisterConcernDeleteArgs = {
   sisterConcernId: Scalars['ID'];
 };
-
 
 export type KymInsSisterConcernUpsertArgs = {
   data: KymInsSisterConcernInput;
@@ -7569,7 +7404,7 @@ export type KymInsTransactionLus = {
 };
 
 export enum KymInsTransactionSection {
-  TransactionDetails = 'TRANSACTION_DETAILS'
+  TransactionDetails = 'TRANSACTION_DETAILS',
 }
 
 export type KymInsTransactionStatus = {
@@ -7625,7 +7460,7 @@ export enum KymMemberTypesEnum {
   Cooperative = 'COOPERATIVE',
   CooperativeUnion = 'COOPERATIVE_UNION',
   Individual = 'INDIVIDUAL',
-  Institution = 'INSTITUTION'
+  Institution = 'INSTITUTION',
 }
 
 export type KymOccupationDetails = {
@@ -7668,7 +7503,7 @@ export type LadderRateFormState = {
 
 export enum Language {
   English = 'ENGLISH',
-  Nepali = 'NEPALI'
+  Nepali = 'NEPALI',
 }
 
 export type LedgerMapping = {
@@ -7687,7 +7522,6 @@ export type Level1 = {
   level2: Level2;
 };
 
-
 export type Level1Level2Args = {
   id: Scalars['String'];
 };
@@ -7697,11 +7531,9 @@ export type Level2 = {
   hello: Example;
 };
 
-
 export type Level2AddArgs = {
   data: ExampleInput;
 };
-
 
 export type Level2HelloArgs = {
   data: ExampleInput;
@@ -7839,9 +7671,9 @@ export type LoanAccountFormState = {
   fingerprintDoc?: Maybe<Array<Maybe<Scalars['String']>>>;
   gracePeriod?: Maybe<LoanAccountGrace>;
   gurantee_details?: Maybe<Array<Maybe<LoanAccountGurantee>>>;
+  interestAuthority?: Maybe<InterestAuthority>;
+  interestDoc?: Maybe<Array<Maybe<PictureData>>>;
   intrestRate?: Maybe<Scalars['Float']>;
-  isBoardAuthority?: Maybe<Scalars['Boolean']>;
-  isCeoAuthority?: Maybe<Scalars['Boolean']>;
   justifySanction?: Maybe<Scalars['String']>;
   linkedAccountId?: Maybe<Scalars['String']>;
   loanAccountName?: Maybe<Scalars['String']>;
@@ -7918,9 +7750,9 @@ export type LoanAccountInput = {
   fingerprintDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   gracePeriod?: InputMaybe<LoanAccountGraceInput>;
   gurantee_details?: InputMaybe<Array<InputMaybe<LoanAccountGuranteeInput>>>;
+  interestAuthority?: InputMaybe<InterestAuthority>;
+  interestDoc?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   intrestRate?: InputMaybe<Scalars['Float']>;
-  isBoardAuthority?: InputMaybe<Scalars['Boolean']>;
-  isCeoAuthority?: InputMaybe<Scalars['Boolean']>;
   justifySanction?: InputMaybe<Scalars['String']>;
   linkedAccountId?: InputMaybe<Scalars['String']>;
   loanAccountName?: InputMaybe<Scalars['String']>;
@@ -7952,12 +7784,10 @@ export type LoanAccountMutation = {
   repayment?: Maybe<LoanRepaymentResult>;
 };
 
-
 export type LoanAccountMutationAddArgs = {
   data?: InputMaybe<LoanAccountInput>;
   id: Scalars['ID'];
 };
-
 
 export type LoanAccountMutationApproveOrCancelArgs = {
   action: LoanApproveOrCancel;
@@ -7965,12 +7795,10 @@ export type LoanAccountMutationApproveOrCancelArgs = {
   remarks?: InputMaybe<Scalars['String']>;
 };
 
-
 export type LoanAccountMutationDisburseArgs = {
   data: LoanDisbursementInput;
   loanAccount: Scalars['ID'];
 };
-
 
 export type LoanAccountMutationRepaymentArgs = {
   data?: InputMaybe<LoanRepaymentInput>;
@@ -8013,11 +7841,9 @@ export type LoanAccountQuery = {
   repaymentList?: Maybe<LoanRepaymentConnection>;
 };
 
-
 export type LoanAccountQueryFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type LoanAccountQueryGetLoanInstallmentsArgs = {
   gracePeriod?: InputMaybe<LoanAccountGraceInput>;
@@ -8028,11 +7854,9 @@ export type LoanAccountQueryGetLoanInstallmentsArgs = {
   tenure: Scalars['Int'];
 };
 
-
 export type LoanAccountQueryGetProductCriteriaArgs = {
   productId: Scalars['ID'];
 };
-
 
 export type LoanAccountQueryGetProductListArgs = {
   memberId: Scalars['ID'];
@@ -8040,27 +7864,22 @@ export type LoanAccountQueryGetProductListArgs = {
   productType: Scalars['ID'];
 };
 
-
 export type LoanAccountQueryListArgs = {
   filter?: InputMaybe<LoanAccountSearchFilter>;
   paginate?: InputMaybe<Pagination>;
 };
 
-
 export type LoanAccountQueryLoanPreviewArgs = {
   loanAccountId: Scalars['String'];
 };
-
 
 export type LoanAccountQueryMemberDisbursedLoanAccountsArgs = {
   memberId: Scalars['ID'];
 };
 
-
 export type LoanAccountQueryPaymentScheduleArgs = {
   loanAccountId: Scalars['ID'];
 };
-
 
 export type LoanAccountQueryRepaymentListArgs = {
   filter?: InputMaybe<LoanRepaymentFilter>;
@@ -8082,7 +7901,7 @@ export type LoanAccountSearchFilter = {
 
 export enum LoanApproveOrCancel {
   Approve = 'APPROVE',
-  Cancel = 'CANCEL'
+  Cancel = 'CANCEL',
 }
 
 export type LoanBankDisbursement = {
@@ -8105,7 +7924,7 @@ export type LoanDisbursementInput = {
 
 export enum LoanDisbursementMethod {
   Account = 'ACCOUNT',
-  BankCheque = 'BANK_CHEQUE'
+  BankCheque = 'BANK_CHEQUE',
 }
 
 export type LoanDisbursementResult = {
@@ -8161,7 +7980,7 @@ export type LoanInstallments = {
 
 export enum LoanInsurancePaymentType {
   Amount = 'AMOUNT',
-  Percentage = 'PERCENTAGE'
+  Percentage = 'PERCENTAGE',
 }
 
 export type LoanInsuranceScheme = {
@@ -8192,7 +8011,7 @@ export type LoanInsuranceSchemeInput = {
 
 export enum LoanInterestMethod {
   Diminishing = 'DIMINISHING',
-  Straight = 'STRAIGHT'
+  Straight = 'STRAIGHT',
 }
 
 export type LoanNatureOfProductInput = {
@@ -8206,16 +8025,16 @@ export enum LoanObjState {
   Cancelled = 'CANCELLED',
   Completed = 'COMPLETED',
   Disbursed = 'DISBURSED',
-  Submitted = 'SUBMITTED'
+  Submitted = 'SUBMITTED',
 }
 
 export enum LoanPaymentInstallmentType {
   Monthly = 'MONTHLY',
-  Quarterly = 'QUARTERLY'
+  Quarterly = 'QUARTERLY',
 }
 
 export enum LoanPaymentMode {
-  Installment = 'INSTALLMENT'
+  Installment = 'INSTALLMENT',
 }
 
 export type LoanPreviewAdditionalFeatures = {
@@ -8465,7 +8284,7 @@ export enum LoanProductInstallment {
   Monthly = 'MONTHLY',
   Quarterly = 'QUARTERLY',
   Weekly = 'WEEKLY',
-  Yearly = 'YEARLY'
+  Yearly = 'YEARLY',
 }
 
 export type LoanProductList = {
@@ -8543,7 +8362,7 @@ export enum LoanProductSubType {
   StationaryBusiness = 'STATIONARY_BUSINESS',
   TechnicalEducation = 'TECHNICAL_EDUCATION',
   VegetableAndSeasonalFarming = 'VEGETABLE_AND_SEASONAL_FARMING',
-  YouthSelfEmployment = 'YOUTH_SELF__EMPLOYMENT'
+  YouthSelfEmployment = 'YOUTH_SELF__EMPLOYMENT',
 }
 
 export type LoanProductSubTypeInput = {
@@ -8555,7 +8374,7 @@ export type LoanProductSubTypeInput = {
 export enum LoanProductType {
   InvestmentInAgriculturalSector = 'INVESTMENT_IN_AGRICULTURAL_SECTOR',
   InvestmentInIndustrialSector = 'INVESTMENT_IN_INDUSTRIAL_SECTOR',
-  InvestmentInOtherSector = 'INVESTMENT_IN_OTHER_SECTOR'
+  InvestmentInOtherSector = 'INVESTMENT_IN_OTHER_SECTOR',
 }
 
 export type LoanProductTypeInput = {
@@ -8569,11 +8388,9 @@ export type LoanProductsMutation = {
   upsert?: Maybe<LoanProductsResult>;
 };
 
-
 export type LoanProductsMutationMakeInactiveArgs = {
   data?: InputMaybe<LoanProductInactiveData>;
 };
-
 
 export type LoanProductsMutationUpsertArgs = {
   data?: InputMaybe<LoanProductInput>;
@@ -8585,11 +8402,9 @@ export type LoanProductsQuery = {
   list?: Maybe<LoanProductConnection>;
 };
 
-
 export type LoanProductsQueryFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type LoanProductsQueryListArgs = {
   filter?: InputMaybe<LoanProductSearchFilter>;
@@ -8657,7 +8472,7 @@ export type LoanRepaymentInput = {
 export enum LoanRepaymentMethod {
   Account = 'ACCOUNT',
   BankVoucher = 'BANK_VOUCHER',
-  Cash = 'CASH'
+  Cash = 'CASH',
 }
 
 export type LoanRepaymentResult = {
@@ -8670,7 +8485,7 @@ export type LoanRepaymentResult = {
 export enum LoanRepaymentScheme {
   Emi = 'EMI',
   Epi = 'EPI',
-  Flat = 'FLAT'
+  Flat = 'FLAT',
 }
 
 export type LoanRepaymentView = {
@@ -8729,7 +8544,7 @@ export enum LoanRequiredDocuments {
   Citizenship = 'CITIZENSHIP',
   Form = 'FORM',
   LoanChangeDocument = 'LOAN_CHANGE_DOCUMENT',
-  PolicyDocument = 'POLICY_DOCUMENT'
+  PolicyDocument = 'POLICY_DOCUMENT',
 }
 
 export type LoanSettingsMutation = {
@@ -8738,16 +8553,13 @@ export type LoanSettingsMutation = {
   productType?: Maybe<LoanSettingsResult>;
 };
 
-
 export type LoanSettingsMutationGeneralArgs = {
   data?: InputMaybe<LoanGeneralSettingsInput>;
 };
 
-
 export type LoanSettingsMutationInsuranceSchemeArgs = {
   data?: InputMaybe<Array<InputMaybe<LoanInsuranceSchemeInput>>>;
 };
-
 
 export type LoanSettingsMutationProductTypeArgs = {
   data?: InputMaybe<LoanSettingsProductTypeInput>;
@@ -8770,7 +8582,6 @@ export type LoanSettingsProductType = {
   productSubTypes?: Maybe<Array<Maybe<LoanSettingsProductSubTypeData>>>;
   productTypes?: Maybe<Array<Maybe<LoanSettingsProductTypeData>>>;
 };
-
 
 export type LoanSettingsProductTypeProductSubTypesArgs = {
   productTypeID?: InputMaybe<Scalars['String']>;
@@ -8914,6 +8725,7 @@ export type MemberAccountDetails = {
   atmFacility?: Maybe<Scalars['Boolean']>;
   autoOpen?: Maybe<Scalars['Boolean']>;
   chequeIssue?: Maybe<Scalars['Boolean']>;
+  defaultAccountType?: Maybe<DefaultAccountType>;
   guaranteedAmount?: Maybe<Scalars['String']>;
   installmentAmount?: Maybe<Scalars['String']>;
   insurance?: Maybe<Scalars['Boolean']>;
@@ -8957,7 +8769,6 @@ export type MemberActivateMutation = {
   membershipPayment?: Maybe<MembershipPaymentResult>;
 };
 
-
 export type MemberActivateMutationMembershipPaymentArgs = {
   data?: InputMaybe<MembershipPaymentInput>;
   memberId: Scalars['ID'];
@@ -8969,17 +8780,14 @@ export type MemberActivateQuery = {
   memberActivateChecks?: Maybe<MemberActivateCheck>;
 };
 
-
 export type MemberActivateQueryAccountUpdateCheckArgs = {
   accountId: Scalars['ID'];
   memberId: Scalars['ID'];
 };
 
-
 export type MemberActivateQueryGetMembershipFeeArgs = {
   memberID: Scalars['ID'];
 };
-
 
 export type MemberActivateQueryMemberActivateChecksArgs = {
   memberId: Scalars['ID'];
@@ -9003,11 +8811,14 @@ export type MemberBasicInfoView = {
   address?: Maybe<Scalars['Localized']>;
   addressId?: Maybe<Scalars['String']>;
   contactNumber?: Maybe<Scalars['String']>;
+  documents?: Maybe<Array<Maybe<MemberDocumentDetails>>>;
   email?: Maybe<Scalars['String']>;
+  familyMembers?: Maybe<Array<Maybe<FamilyMemberDetails>>>;
   fathersName?: Maybe<Scalars['String']>;
   gender?: Maybe<Scalars['Localized']>;
   genderId?: Maybe<Scalars['String']>;
   grandFathersName?: Maybe<Scalars['String']>;
+  isStaff?: Maybe<Scalars['Boolean']>;
   maritalStatus?: Maybe<Scalars['Localized']>;
   maritalStatusId?: Maybe<Scalars['String']>;
   memberCode?: Maybe<Scalars['String']>;
@@ -9027,6 +8838,14 @@ export type MemberChargeInput = {
   charge: Scalars['Int'];
   ledgerId: Scalars['ID'];
   memberType: KymMemberTypesEnum;
+};
+
+export type MemberChequeDetails = {
+  accountName?: Maybe<Scalars['String']>;
+  cancelled?: Maybe<Scalars['Int']>;
+  issued?: Maybe<Scalars['Int']>;
+  left?: Maybe<Scalars['Int']>;
+  used?: Maybe<Scalars['Int']>;
 };
 
 export type MemberClassificationReportAddressData = {
@@ -9061,8 +8880,18 @@ export type MemberCodeInput = {
   prefix?: InputMaybe<Scalars['String']>;
 };
 
+export type MemberDeleteDraftResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['ID']>;
+};
+
 export type MemberDetailsResult = {
   data?: Maybe<Member>;
+};
+
+export type MemberDocumentDetails = {
+  key?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
 };
 
 export type MemberFamilyDetails = {
@@ -9078,7 +8907,7 @@ export type MemberGraphData = {
 export enum MemberIdentityLevel {
   General = 'GENERAL',
   Mid = 'MID',
-  Vip = 'VIP'
+  Vip = 'VIP',
 }
 
 export type MemberInactivateQuery = {
@@ -9086,13 +8915,11 @@ export type MemberInactivateQuery = {
   inactivateCheck?: Maybe<InactivateMemberCheck>;
 };
 
-
 export type MemberInactivateQueryAccountCloseCheckArgs = {
   accountId: Scalars['ID'];
   accounttype: AccountTypeFilter;
   memberId: Scalars['ID'];
 };
-
 
 export type MemberInactivateQueryInactivateCheckArgs = {
   memberId: Scalars['ID'];
@@ -9108,6 +8935,7 @@ export type MemberMutation = {
   activateMember?: Maybe<MemberActivateMutation>;
   cooperative?: Maybe<KymCooperativeMutation>;
   cooperativeUnion?: Maybe<KymCoopUnionMutation>;
+  deleteDraft?: Maybe<MemberDeleteDraftResult>;
   entry: KymEntryMutation;
   generateExcel: Scalars['String'];
   individual?: Maybe<KymIndMutation>;
@@ -9118,42 +8946,38 @@ export type MemberMutation = {
   translate?: Maybe<TranslateData>;
 };
 
-
 export type MemberMutationCooperativeArgs = {
   id: Scalars['ID'];
 };
 
+export type MemberMutationDeleteDraftArgs = {
+  memberId: Scalars['ID'];
+};
 
 export type MemberMutationEntryArgs = {
   memberId: Scalars['String'];
 };
-
 
 export type MemberMutationGenerateExcelArgs = {
   filename: Scalars['String'];
   id: Scalars['ID'];
 };
 
-
 export type MemberMutationIndividualArgs = {
   id: Scalars['ID'];
 };
-
 
 export type MemberMutationInstitutionArgs = {
   id: Scalars['ID'];
 };
 
-
 export type MemberMutationMakeInactiveArgs = {
   memberId: Scalars['ID'];
 };
 
-
 export type MemberMutationOfficialUseArgs = {
   data: OfficialUseInputData;
 };
-
 
 export type MemberMutationTranslateArgs = {
   data: TranslateInput;
@@ -9168,6 +8992,7 @@ export type MemberOverviewAccountsView = {
 export type MemberOverviewData = {
   accounts?: Maybe<MemberOverviewAccountsView>;
   bio?: Maybe<Scalars['String']>;
+  cheques?: Maybe<Array<Maybe<MemberChequeDetails>>>;
   loan?: Maybe<MemberOverviewLoanView>;
   overview?: Maybe<OverviewView>;
   reports?: Maybe<MemberOverviewReportView>;
@@ -9208,7 +9033,11 @@ export type MemberPaymentView = {
   paymentType?: Maybe<Scalars['String']>;
 };
 
-export type MemberProfile = CooperativeUnionMember | KymCooperativeFormStateQuery | KymIndFormStateQuery | KymInsFormStateQuery;
+export type MemberProfile =
+  | CooperativeUnionMember
+  | KymCooperativeFormStateQuery
+  | KymIndFormStateQuery
+  | KymInsFormStateQuery;
 
 export type MemberQuery = {
   activateMember?: Maybe<MemberActivateQuery>;
@@ -9228,53 +9057,43 @@ export type MemberQuery = {
   translate: TranslateQueryResult;
 };
 
-
 export type MemberQueryDetailsArgs = {
   id: Scalars['ID'];
 };
-
 
 export type MemberQueryEntryArgs = {
   membeId: Scalars['String'];
 };
 
-
 export type MemberQueryGetAllAccountsArgs = {
   memberId: Scalars['ID'];
 };
-
 
 export type MemberQueryIndividualArgs = {
   hasPressedNext?: InputMaybe<Scalars['Boolean']>;
   id: Scalars['String'];
 };
 
-
 export type MemberQueryInstitutionArgs = {
   includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 export type MemberQueryListArgs = {
   filter?: InputMaybe<KymMemberDataFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type MemberQueryMemberOverviewArgs = {
   id: Scalars['ID'];
 };
-
 
 export type MemberQueryMemberPdfArgs = {
   id: Scalars['ID'];
 };
 
-
 export type MemberQueryOfficialUseArgs = {
   id: Scalars['ID'];
 };
-
 
 export type MemberQueryTranslateArgs = {
   id: Scalars['ID'];
@@ -9290,7 +9109,7 @@ export type MemberRecentTransactionView = {
 
 export enum MemberRecentTransactionViewTxnType {
   Credit = 'CREDIT',
-  Debit = 'DEBIT'
+  Debit = 'DEBIT',
 }
 
 export type MemberReportView = {
@@ -9336,7 +9155,6 @@ export type MembershipPaymentInput = {
   amount?: InputMaybe<Scalars['String']>;
   bankDeposit?: InputMaybe<BankDepositData>;
   cashData?: InputMaybe<CashDepositData>;
-  chequeData?: InputMaybe<ChequeDepositData>;
   depositedBy?: InputMaybe<DepositedBy>;
   doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   otherName?: InputMaybe<Scalars['String']>;
@@ -9344,6 +9162,7 @@ export type MembershipPaymentInput = {
   paymentMode: DepositPaymentType;
   remark?: InputMaybe<Scalars['String']>;
   sourceFund?: InputMaybe<Scalars['String']>;
+  withdrawSlipData?: InputMaybe<WithdrawSlipDepositData>;
 };
 
 export type MembershipPaymentRecord = {
@@ -9406,7 +9225,7 @@ export enum Months {
   May = 'MAY',
   November = 'NOVEMBER',
   October = 'OCTOBER',
-  September = 'SEPTEMBER'
+  September = 'SEPTEMBER',
 }
 
 export type Municipality = {
@@ -9441,12 +9260,16 @@ export type Mutation = {
   withdrawSlip: WithdrawSlipMutation;
 };
 
-
 export type MutationNewIdArgs = {
   idType?: InputMaybe<Id_Type>;
 };
 
-export type MutationError = AuthorizationError | BadRequestError | NotFoundError | ServerError | ValidationError;
+export type MutationError =
+  | AuthorizationError
+  | BadRequestError
+  | NotFoundError
+  | ServerError
+  | ValidationError;
 
 export type MyraUser = Base & {
   branch?: Maybe<Branch>;
@@ -9550,7 +9373,6 @@ export type MyraUserMutation = {
   add?: Maybe<MyraUserResult>;
 };
 
-
 export type MyraUserMutationAddArgs = {
   data?: InputMaybe<MyraUserInput>;
   id: Scalars['ID'];
@@ -9561,11 +9383,9 @@ export type MyraUserQuery = {
   list?: Maybe<MyraUserConnection>;
 };
 
-
 export type MyraUserQueryFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type MyraUserQueryListArgs = {
   filter?: InputMaybe<MyraUserSearchFilter>;
@@ -9596,19 +9416,19 @@ export enum NatureOfCooperative {
   HealthCooperative = 'HEALTH_COOPERATIVE',
   MultipurposeCooperative = 'MULTIPURPOSE_COOPERATIVE',
   Others = 'OTHERS',
-  SavingAndCredit = 'SAVING_AND_CREDIT'
+  SavingAndCredit = 'SAVING_AND_CREDIT',
 }
 
 export enum NatureOfDepositProduct {
   Current = 'CURRENT',
   RecurringSaving = 'RECURRING_SAVING',
   Saving = 'SAVING',
-  TermSavingOrFd = 'TERM_SAVING_OR_FD'
+  TermSavingOrFd = 'TERM_SAVING_OR_FD',
 }
 
 export enum NatureOfLoanProduct {
   Progressive = 'PROGRESSIVE',
-  Unprogressive = 'UNPROGRESSIVE'
+  Unprogressive = 'UNPROGRESSIVE',
 }
 
 export type NeosysAuthMutation = {
@@ -9616,11 +9436,9 @@ export type NeosysAuthMutation = {
   token?: Maybe<NeosysAuthTokenResult>;
 };
 
-
 export type NeosysAuthMutationLoginArgs = {
   data: NeosysLoginInput;
 };
-
 
 export type NeosysAuthMutationTokenArgs = {
   refreshToken: Scalars['String'];
@@ -9664,11 +9482,9 @@ export type NeosysClientMutation = {
   createDB?: Maybe<DbCreateResult>;
 };
 
-
 export type NeosysClientMutationAddArgs = {
   data?: InputMaybe<OrganizationClientInput>;
 };
-
 
 export type NeosysClientMutationCreateDbArgs = {
   saccosId: Scalars['ID'];
@@ -9677,7 +9493,6 @@ export type NeosysClientMutationCreateDbArgs = {
 export type NeosysClientQuery = {
   list?: Maybe<Array<Maybe<NeosysClientMinimalInfo>>>;
 };
-
 
 export type NeosysClientQueryListArgs = {
   filter?: InputMaybe<NeosysClientFilter>;
@@ -9764,7 +9579,7 @@ export enum ObjState {
   Draft = 'DRAFT',
   Inactive = 'INACTIVE',
   Submitted = 'SUBMITTED',
-  Validated = 'VALIDATED'
+  Validated = 'VALIDATED',
 }
 
 export type OfficialUseData = {
@@ -9797,7 +9612,7 @@ export enum OfficialUseRiskCategory {
   High = 'HIGH',
   Low = 'LOW',
   Medium = 'MEDIUM',
-  Pep = 'PEP'
+  Pep = 'PEP',
 }
 
 export type OrConditions = {
@@ -9809,19 +9624,14 @@ export type Order = {
   column: Scalars['String'];
 };
 
-export type Organization = Base & {
+export type Organization = {
   address?: Maybe<Address>;
   basicDetails?: Maybe<OrganizationBasicDetails>;
   contactDetails?: Maybe<OrganizationContactDetails>;
-  createdAt: Scalars['Time'];
-  createdBy: Identity;
   documents?: Maybe<Array<Maybe<Scalars['String']>>>;
   id: Scalars['ID'];
   location?: Maybe<LocationCoordinate>;
   mainContactPerson?: Maybe<OrganizationMainContactPerson>;
-  modifiedAt: Scalars['Time'];
-  modifiedBy: Identity;
-  objState: ObjState;
   registrationDetails?: Maybe<OrganizationRegistrationDetails>;
   statistics?: Maybe<OrganizationStatistics>;
 };
@@ -10029,7 +9839,7 @@ export type OrganizationInput = {
 export enum OrganizationInstallmentLicense {
   Basic = 'BASIC',
   Professional = 'PROFESSIONAL',
-  Standard = 'STANDARD'
+  Standard = 'STANDARD',
 }
 
 export type OrganizationListResult = {
@@ -10060,13 +9870,12 @@ export type OrganizationRegistrationDetailsInput = {
 
 export enum OrganizationSecuritySetup {
   PureSass = 'PURE_SASS',
-  Vpn = 'VPN'
+  Vpn = 'VPN',
 }
 
 export type OrganizationSettingsMutation = {
   initialSetup?: Maybe<OrganizationAddResult>;
 };
-
 
 export type OrganizationSettingsMutationInitialSetupArgs = {
   data: OrganizationInput;
@@ -10087,12 +9896,12 @@ export enum OrganizationType {
   CooperativeUnion = 'COOPERATIVE_UNION',
   DistrictUnion = 'DISTRICT_UNION',
   Preliminary = 'PRELIMINARY',
-  ProvinceUnion = 'PROVINCE_UNION'
+  ProvinceUnion = 'PROVINCE_UNION',
 }
 
 export enum OtpFor {
   ResetPassword = 'RESET_PASSWORD',
-  SignUp = 'SIGN_UP'
+  SignUp = 'SIGN_UP',
 }
 
 export type OverviewView = {
@@ -10136,7 +9945,7 @@ export type PaymentAllocationInput = {
 
 export enum PaymentDepositedBy {
   Other = 'OTHER',
-  Self = 'SELF'
+  Self = 'SELF',
 }
 
 export type Penalty = {
@@ -10164,7 +9973,7 @@ export type PenaltyInput = {
 
 export enum PenaltyRateType {
   FlatRate = 'FLAT_RATE',
-  RelativeRate = 'RELATIVE_RATE'
+  RelativeRate = 'RELATIVE_RATE',
 }
 
 export type PenaltyRebate = {
@@ -10181,7 +9990,7 @@ export type PenaltyRebateResult = {
 
 export enum PenaltyType {
   PenalInterest = 'PenalInterest',
-  RemainingPrincipal = 'RemainingPrincipal'
+  RemainingPrincipal = 'RemainingPrincipal',
 }
 
 export type PenaltyTypeInput = {
@@ -10198,7 +10007,7 @@ export enum PeriodTypeEnum {
   Lifetime = 'LIFETIME',
   ThisFiscalYearToDate = 'THIS_FISCAL_YEAR_TO_DATE',
   Today = 'TODAY',
-  Yesterday = 'YESTERDAY'
+  Yesterday = 'YESTERDAY',
 }
 
 export type PersonalInformation = {
@@ -10247,11 +10056,9 @@ export type PredefinedFormQuery = {
   list: PredefinedElementListQueryResult;
 };
 
-
 export type PredefinedFormQueryDetailsArgs = {
   filter: PredefinedElementFilter;
 };
-
 
 export type PredefinedFormQueryListArgs = {
   filter: PredefinedElementListFilter;
@@ -10267,7 +10074,7 @@ export type PrematurePenalty = {
 
 export enum PrematurePenaltyDateType {
   EffectiveDaysFromStart = 'EFFECTIVE_DAYS_FROM_START',
-  RemainingDaysToGetMatured = 'REMAINING_DAYS_TO_GET_MATURED'
+  RemainingDaysToGetMatured = 'REMAINING_DAYS_TO_GET_MATURED',
 }
 
 export type PrematurePenaltyFormState = {
@@ -10281,7 +10088,6 @@ export type PrematurePenaltyFormState = {
 export type PresignedUrlMutation = {
   upload: PresignedUrlOutput;
 };
-
 
 export type PresignedUrlMutationUploadArgs = {
   contentType?: InputMaybe<Scalars['String']>;
@@ -10328,36 +10134,29 @@ export type ProductsQuery = {
   loanProductTypes?: Maybe<Array<Maybe<LoanSettingsProductTypeData>>>;
 };
 
-
 export type ProductsQueryDepositProductListArgs = {
   filter: NatureOfDepositProduct;
 };
-
 
 export type ProductsQueryGetDepositProductArgs = {
   id: Scalars['ID'];
 };
 
-
 export type ProductsQueryGetDepositProductCriteriaArgs = {
   productId: Scalars['ID'];
 };
-
 
 export type ProductsQueryGetLoanProductArgs = {
   id: Scalars['ID'];
 };
 
-
 export type ProductsQueryGetLoanProductCriteriaArgs = {
   productId: Scalars['ID'];
 };
 
-
 export type ProductsQueryGetLoanProductTypeArgs = {
   id: Scalars['ID'];
 };
-
 
 export type ProductsQueryLoanProductListArgs = {
   productSubTypeId: Scalars['ID'];
@@ -10374,7 +10173,7 @@ export enum PurposeOfTransaction {
   BillSharing = 'BILL_SHARING',
   FamilyExpenses = 'FAMILY_EXPENSES',
   LendOrBorrow = 'LEND_OR_BORROW',
-  PersonalUse = 'PERSONAL_USE'
+  PersonalUse = 'PERSONAL_USE',
 }
 
 export type QuarterlyDividendRate = {
@@ -10497,7 +10296,6 @@ export type ReportMutation = {
   statementReport?: Maybe<ReportResult>;
 };
 
-
 export type ReportMutationStatementReportArgs = {
   data: StatementReportInput;
 };
@@ -10510,7 +10308,7 @@ export enum ReportPeriodType {
   Lifetime = 'LIFETIME',
   ThisFiscalYearToDate = 'THIS_FISCAL_YEAR_TO_DATE',
   Today = 'TODAY',
-  Yesterday = 'YESTERDAY'
+  Yesterday = 'YESTERDAY',
 }
 
 export type ReportQuery = {
@@ -10523,18 +10321,15 @@ export type ReportQuery = {
   shareStatementReport?: Maybe<ReportResult>;
 };
 
-
 export type ReportQueryGeneralLedgerReportArgs = {
   date?: InputMaybe<LocalizedDateFilter>;
   ledgerId: Scalars['ID'];
   period?: InputMaybe<ReportPeriodType>;
 };
 
-
 export type ReportQueryGetReportArgs = {
   reportId: Scalars['ID'];
 };
-
 
 export type ReportQueryListReportsArgs = {
   filter?: InputMaybe<ReportListFilter>;
@@ -10542,22 +10337,18 @@ export type ReportQueryListReportsArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type ReportQueryLoanStatementReportArgs = {
   data: LoanStatementReportSettings;
 };
-
 
 export type ReportQueryMemberClassificationReportArgs = {
   date?: InputMaybe<LocalizedDateFilter>;
   period?: InputMaybe<ReportPeriodType>;
 };
 
-
 export type ReportQuerySavingStatementReportArgs = {
   data: SavingStatementReportSettings;
 };
-
 
 export type ReportQueryShareStatementReportArgs = {
   data: ShareStatementReportSettings;
@@ -10592,20 +10383,20 @@ export type RequestFilter = {
 
 export enum RequestSource {
   Ebanking = 'EBANKING',
-  MobileBanking = 'MOBILE_BANKING'
+  MobileBanking = 'MOBILE_BANKING',
 }
 
 export enum RequestStatus {
   Approved = 'APPROVED',
   Declined = 'DECLINED',
-  Pending = 'PENDING'
+  Pending = 'PENDING',
 }
 
 export enum RequestType {
   BlockCheque = 'BLOCK_CHEQUE',
   ChequeBookRequest = 'CHEQUE_BOOK_REQUEST',
   LoanRequest = 'LOAN_REQUEST',
-  WithdrawRequest = 'WITHDRAW_REQUEST'
+  WithdrawRequest = 'WITHDRAW_REQUEST',
 }
 
 export type RequestsList = {
@@ -10615,24 +10406,20 @@ export type RequestsList = {
   withdrawViaCollector?: Maybe<WithdrawViaCollectorConnection>;
 };
 
-
 export type RequestsListBlockChequeArgs = {
   filter?: InputMaybe<RequestFilter>;
   paginate?: InputMaybe<Pagination>;
 };
-
 
 export type RequestsListChequeBookRequestArgs = {
   filter?: InputMaybe<RequestFilter>;
   paginate?: InputMaybe<Pagination>;
 };
 
-
 export type RequestsListLoanRequestArgs = {
   filter?: InputMaybe<RequestFilter>;
   paginate?: InputMaybe<Pagination>;
 };
-
 
 export type RequestsListWithdrawViaCollectorArgs = {
   filter?: InputMaybe<RequestFilter>;
@@ -10642,7 +10429,6 @@ export type RequestsListWithdrawViaCollectorArgs = {
 export type RequestsMutation = {
   requestApproveOrDecline?: Maybe<RequestApproveOrDeclineResult>;
 };
-
 
 export type RequestsMutationRequestApproveOrDeclineArgs = {
   data?: InputMaybe<RequestApproveOrDeclineInput>;
@@ -10674,7 +10460,7 @@ export enum Roles {
   BranchManager = 'BRANCH_MANAGER',
   HeadTeller = 'HEAD_TELLER',
   Superadmin = 'SUPERADMIN',
-  Teller = 'TELLER'
+  Teller = 'TELLER',
 }
 
 export type RoutesAndCodes = {
@@ -10691,7 +10477,6 @@ export type RoutesAndCodesQuery = {
   list: Array<RoutesAndCodes>;
 };
 
-
 export type RoutesAndCodesQueryListArgs = {
   filter?: InputMaybe<RoutesAndCodesFilter>;
 };
@@ -10699,12 +10484,12 @@ export type RoutesAndCodesQueryListArgs = {
 export enum Share_Status {
   Active = 'ACTIVE',
   Draft = 'DRAFT',
-  Submitted = 'SUBMITTED'
+  Submitted = 'SUBMITTED',
 }
 
 export enum Share_Transaction_Direction {
   Purchase = 'PURCHASE',
-  Return = 'RETURN'
+  Return = 'RETURN',
 }
 
 export type SaleProduct = {
@@ -10976,13 +10761,13 @@ export type SavingInvestmentTransactionInput = {
 export enum SavingInvestmentType {
   Type_1 = 'TYPE_1',
   Type_2 = 'TYPE_2',
-  Type_3 = 'TYPE_3'
+  Type_3 = 'TYPE_3',
 }
 
 export enum SavingServiceType {
   Charges = 'CHARGES',
   CustomerInitiated = 'CUSTOMER_INITIATED',
-  Interest = 'INTEREST'
+  Interest = 'INTEREST',
 }
 
 export type SavingStatement = {
@@ -11016,7 +10801,7 @@ export type SavingTotalReport = {
 export enum SavingTransactionType {
   All = 'ALL',
   Deposit = 'DEPOSIT',
-  Withdraw = 'WITHDRAW'
+  Withdraw = 'WITHDRAW',
 }
 
 export type SearchFilterData = {
@@ -11035,7 +10820,6 @@ export type SearchListEdges = {
 export type SearchQuery = {
   globalPages: SearchQueryResult;
 };
-
 
 export type SearchQueryGlobalPagesArgs = {
   filter?: InputMaybe<SearchFilterData>;
@@ -11177,7 +10961,7 @@ export type ShareChargeInput = {
 
 export enum ShareChargeType {
   FixedAmount = 'FIXED_AMOUNT',
-  Percentage = 'PERCENTAGE'
+  Percentage = 'PERCENTAGE',
 }
 
 export type ShareCharges = {
@@ -11260,7 +11044,7 @@ export type ShareInvestmentTransactionInput = {
 
 export enum ShareInvestmentType {
   ShareBonusDividend = 'SHARE_BONUS_DIVIDEND',
-  ShareReturn = 'SHARE_RETURN'
+  ShareReturn = 'SHARE_RETURN',
 }
 
 export type ShareIssueChargesInput = {
@@ -11278,11 +11062,9 @@ export type ShareMutation = {
   return: ShareReturnResult;
 };
 
-
 export type ShareMutationPurchaseArgs = {
   data: SharePurchaseInput;
 };
-
 
 export type ShareMutationReturnArgs = {
   data: ShareReturnInput;
@@ -11296,7 +11078,7 @@ export type ShareNumber = {
 export enum SharePaymentMode {
   Account = 'ACCOUNT',
   BankVoucherOrCheque = 'BANK_VOUCHER_OR_CHEQUE',
-  Cash = 'CASH'
+  Cash = 'CASH',
 }
 
 export type SharePurchaseError = InvalidDataError;
@@ -11326,23 +11108,19 @@ export type ShareQuery = {
   register?: Maybe<ShareRegisterConnection>;
 };
 
-
 export type ShareQueryBalanceArgs = {
   filter?: InputMaybe<ShareBalanceFilter>;
   pagination?: InputMaybe<Pagination>;
 };
-
 
 export type ShareQueryChargesArgs = {
   shareCount: Scalars['Int'];
   transactionType: Share_Transaction_Direction;
 };
 
-
 export type ShareQueryHistoryArgs = {
   memberId: Scalars['ID'];
 };
-
 
 export type ShareQueryRegisterArgs = {
   filter?: InputMaybe<ShareRegisterFilter>;
@@ -11436,31 +11214,25 @@ export type ShareSettingsAddMutation = {
   transfer?: Maybe<ShareSettingsQuery>;
 };
 
-
 export type ShareSettingsAddMutationBonusArgs = {
   data?: InputMaybe<ShareBonusSettingsInput>;
 };
-
 
 export type ShareSettingsAddMutationDividendArgs = {
   data?: InputMaybe<ShareDividendSettingsInput>;
 };
 
-
 export type ShareSettingsAddMutationGeneralArgs = {
   data?: InputMaybe<ShareSettingsGeneralInput>;
 };
-
 
 export type ShareSettingsAddMutationShareIssueChargesArgs = {
   data?: InputMaybe<ShareIssueChargesInput>;
 };
 
-
 export type ShareSettingsAddMutationShareReturnChargesArgs = {
   data?: InputMaybe<ShareReturnChargesInput>;
 };
-
 
 export type ShareSettingsAddMutationTransferArgs = {
   data?: InputMaybe<ShareTransferSettingsInput>;
@@ -11564,7 +11336,7 @@ export type ShareTransactionChequePayment = {
 export enum ShareTransactionType {
   All = 'ALL',
   Issue = 'ISSUE',
-  Return = 'RETURN'
+  Return = 'RETURN',
 }
 
 export type ShareTransactionVoucherPayment = {
@@ -11593,12 +11365,12 @@ export type ShareTransferSettingsResult = {
 
 export enum ShareTransferType {
   MemberToMember = 'MEMBER_TO_MEMBER',
-  ShareRefund = 'SHARE_REFUND'
+  ShareRefund = 'SHARE_REFUND',
 }
 
 export enum ShareVoucherDepositedBy {
   Other = 'OTHER',
-  Self = 'SELF'
+  Self = 'SELF',
 }
 
 export type SisterConcernDetails = {
@@ -11642,7 +11414,7 @@ export type SlipRangeInput = {
 export enum SlipState {
   Cancelled = 'CANCELLED',
   Issued = 'ISSUED',
-  Used = 'USED'
+  Used = 'USED',
 }
 
 export type StatementReport = LoanStatementReport | SavingStatementReport | ShareStatementReport;
@@ -11659,13 +11431,11 @@ export type SubscriptionMutation = {
   Upsert: DocumentMutationResult;
 };
 
-
 export type SubscriptionMutationReferenceKymArgs = {
   deference?: InputMaybe<Scalars['Boolean']>;
   fieldId: Scalars['String'];
   memberId: Scalars['String'];
 };
-
 
 export type SubscriptionMutationUpsertArgs = {
   fieldId: Scalars['String'];
@@ -11674,12 +11444,12 @@ export type SubscriptionMutationUpsertArgs = {
 
 export enum Transaction_Direction {
   Purchased = 'PURCHASED',
-  Sold = 'SOLD'
+  Sold = 'SOLD',
 }
 
 export enum TaxPayerOptions {
   Cooperative = 'COOPERATIVE',
-  Member = 'MEMBER'
+  Member = 'MEMBER',
 }
 
 export type TellerActivityEntry = {
@@ -11733,7 +11503,7 @@ export enum TellerTransferType {
   BranchTransfer = 'BRANCH_TRANSFER',
   CashToVault = 'CASH_TO_VAULT',
   TellerTransfer = 'TELLER_TRANSFER',
-  VaultToCash = 'VAULT_TO_CASH'
+  VaultToCash = 'VAULT_TO_CASH',
 }
 
 export type TestDbResult = {
@@ -11743,7 +11513,7 @@ export type TestDbResult = {
 export enum TextFormat {
   Email = 'EMAIL',
   IPv4 = 'IPv4',
-  IPv6 = 'IPv6'
+  IPv6 = 'IPv6',
 }
 
 export enum TimePeriod {
@@ -11751,7 +11521,7 @@ export enum TimePeriod {
   Fortnight = 'FORTNIGHT',
   Month = 'MONTH',
   Week = 'WEEK',
-  Year = 'YEAR'
+  Year = 'YEAR',
 }
 
 export type TodayTrend = {
@@ -11760,7 +11530,6 @@ export type TodayTrend = {
   value: Scalars['Float'];
   yesterdayValue: Scalars['Float'];
 };
-
 
 export type TodayTrendTrendDataArgs = {
   filter: TrendDataFilter;
@@ -11791,7 +11560,7 @@ export type TransactionListSummary = {
 export enum TransactionMode {
   Ebanking = 'EBANKING',
   Mobile = 'MOBILE',
-  MyraErp = 'MYRA_ERP'
+  MyraErp = 'MYRA_ERP',
 }
 
 export type TransactionMutation = {
@@ -11806,45 +11575,37 @@ export type TransactionMutation = {
   withdraw: WithdrawResult;
 };
 
-
 export type TransactionMutationAddMemberToAgentArgs = {
   agentId: Scalars['String'];
   data?: InputMaybe<AssignMembersInput>;
   override?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 export type TransactionMutationAgentTodayDepositArgs = {
   agentID: Scalars['ID'];
   data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>>>;
 };
-
 
 export type TransactionMutationAgentTodayListArgs = {
   data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>>>;
   id: Scalars['ID'];
 };
 
-
 export type TransactionMutationBulkDepositArgs = {
   data?: InputMaybe<BulkDepositInput>;
 };
-
 
 export type TransactionMutationDepositArgs = {
   data: DepositInput;
 };
 
-
 export type TransactionMutationTellerTransferArgs = {
   data: TellerTransferInput;
 };
 
-
 export type TransactionMutationTransferArgs = {
   data: TransferInput;
 };
-
 
 export type TransactionMutationWithdrawArgs = {
   data: WithdrawInput;
@@ -11867,73 +11628,60 @@ export type TransactionQuery = {
   viewWithdraw?: Maybe<WithdrawTransactionViewResult>;
 };
 
-
 export type TransactionQueryAgentDetailArgs = {
   id: Scalars['ID'];
 };
-
 
 export type TransactionQueryAssignedMemberListArgs = {
   filter?: InputMaybe<AssignedMemberListFiler>;
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type TransactionQueryListAgentArgs = {
   filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type TransactionQueryListAgentTaskArgs = {
   id: Scalars['ID'];
 };
-
 
 export type TransactionQueryListDepositArgs = {
   filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type TransactionQueryListTellerTransactionArgs = {
   filter?: InputMaybe<TellerTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 };
-
 
 export type TransactionQueryListTransferArgs = {
   filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type TransactionQueryListWithdrawArgs = {
   filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type TransactionQueryViewAccountTransferArgs = {
   transactionId: Scalars['ID'];
 };
-
 
 export type TransactionQueryViewAgentListArgs = {
   agentId: Scalars['ID'];
   date: Scalars['String'];
 };
 
-
 export type TransactionQueryViewDepositArgs = {
   transactionId: Scalars['ID'];
 };
 
-
 export type TransactionQueryViewLoanRepaymentArgs = {
   paymentId: Scalars['ID'];
 };
-
 
 export type TransactionQueryViewWithdrawArgs = {
   transactionId: Scalars['ID'];
@@ -11941,7 +11689,7 @@ export type TransactionQueryViewWithdrawArgs = {
 
 export enum TransactionState {
   Active = 'ACTIVE',
-  Submitted = 'SUBMITTED'
+  Submitted = 'SUBMITTED',
 }
 
 export type TransferData = {
@@ -11954,7 +11702,7 @@ export type TransferData = {
 
 export type TransferInput = {
   amount: Scalars['String'];
-  chequeNo?: InputMaybe<Scalars['String']>;
+  counterSlipNo?: InputMaybe<Scalars['String']>;
   destAccountId: Scalars['String'];
   memberId: Scalars['String'];
   notes?: InputMaybe<Scalars['String']>;
@@ -11975,7 +11723,7 @@ export type TransferResult = {
 
 export enum TransferType {
   Member = 'MEMBER',
-  Self = 'SELF'
+  Self = 'SELF',
 }
 
 export type TranslateData = {
@@ -12003,11 +11751,11 @@ export type TrendDataFilter = {
 
 export enum TypeOfOrganization {
   Cooperative = 'COOPERATIVE',
-  CooperativeUnion = 'COOPERATIVE_UNION'
+  CooperativeUnion = 'COOPERATIVE_UNION',
 }
 
 export enum TypeOfShare {
-  PaidUp = 'PAID_UP'
+  PaidUp = 'PAID_UP',
 }
 
 export type UploadedDocument = {
@@ -12033,7 +11781,7 @@ export type User = Base & {
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   objState: ObjState;
-  organization: Organization;
+  organization?: Maybe<Organization>;
   profilePic?: Maybe<Scalars['String']>;
   role?: Maybe<Roles>;
   username: Scalars['String'];
@@ -12047,14 +11795,13 @@ export type UserData = {
 export enum UserGender {
   Female = 'FEMALE',
   Male = 'MALE',
-  Other = 'OTHER'
+  Other = 'OTHER',
 }
 
 export type UserMutation = {
   preference?: Maybe<UserPreferenceMutation>;
   resetPassword?: Maybe<ResetPasswordResult>;
 };
-
 
 export type UserMutationResetPasswordArgs = {
   data: ResetPasswordData;
@@ -12076,7 +11823,6 @@ export type UserPreferenceMutation = {
   update?: Maybe<UserPreferenceResult>;
 };
 
-
 export type UserPreferenceMutationUpdateArgs = {
   data: UserPreferenceInput;
   id: Scalars['ID'];
@@ -12085,7 +11831,6 @@ export type UserPreferenceMutationUpdateArgs = {
 export type UserPreferenceQuery = {
   get?: Maybe<UserPreference>;
 };
-
 
 export type UserPreferenceQueryGetArgs = {
   id: Scalars['ID'];
@@ -12103,13 +11848,12 @@ export type UserQuery = {
 
 export enum UserType {
   Human = 'HUMAN',
-  System = 'SYSTEM'
+  System = 'SYSTEM',
 }
 
 export type UtilityPayemntMutation = {
   post?: Maybe<UtilityPaymentResult>;
 };
-
 
 export type UtilityPayemntMutationPostArgs = {
   serviceID: Scalars['ID'];
@@ -12156,7 +11900,7 @@ export type ValidationError = {
 
 export enum ValuationMethod {
   Dv = 'DV',
-  Fmv = 'FMV'
+  Fmv = 'FMV',
 }
 
 export type Valuator = Base & {
@@ -12245,7 +11989,6 @@ export type ValuatorSettingsMutation = {
   add?: Maybe<ValuatorResult>;
 };
 
-
 export type ValuatorSettingsMutationAddArgs = {
   data?: InputMaybe<ValuatorInput>;
   id: Scalars['ID'];
@@ -12256,11 +11999,9 @@ export type ValuatorSettingsQuery = {
   list?: Maybe<ValuatorConnection>;
 };
 
-
 export type ValuatorSettingsQueryFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type ValuatorSettingsQueryListArgs = {
   filter?: InputMaybe<ValuatorSearchFilter>;
@@ -12269,7 +12010,7 @@ export type ValuatorSettingsQueryListArgs = {
 
 export enum ValuatorType {
   Individual = 'INDIVIDUAL',
-  Organization = 'ORGANIZATION'
+  Organization = 'ORGANIZATION',
 }
 
 export enum Week {
@@ -12279,12 +12020,12 @@ export enum Week {
   Sunday = 'SUNDAY',
   Thursaday = 'THURSADAY',
   Tuesday = 'TUESDAY',
-  Wednesday = 'WEDNESDAY'
+  Wednesday = 'WEDNESDAY',
 }
 
 export enum WeeklyFrequency {
   Day = 'DAY',
-  DayOfTheWeek = 'DAY_OF_THE_WEEK'
+  DayOfTheWeek = 'DAY_OF_THE_WEEK',
 }
 
 export type WithdrawBankCheque = {
@@ -12295,7 +12036,7 @@ export type WithdrawBankCheque = {
 
 export enum WithdrawBy {
   Agent = 'AGENT',
-  Self = 'SELF'
+  Self = 'SELF',
 }
 
 export type WithdrawInput = {
@@ -12304,7 +12045,7 @@ export type WithdrawInput = {
   amount: Scalars['String'];
   bankCheque?: InputMaybe<WithdrawBankCheque>;
   cash?: InputMaybe<DepositCash>;
-  chequeNo?: InputMaybe<Scalars['String']>;
+  counterSlipNo?: InputMaybe<Scalars['String']>;
   doc_identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   fine?: InputMaybe<Scalars['String']>;
   memberId: Scalars['String'];
@@ -12320,7 +12061,6 @@ export type WithdrawInput = {
 export enum WithdrawPaymentType {
   BankCheque = 'BANK_CHEQUE',
   Cash = 'CASH',
-  WithdrawSlip = 'WITHDRAW_SLIP'
 }
 
 export type WithdrawPenalty = {
@@ -12341,18 +12081,34 @@ export type WithdrawResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type WithdrawSlip = {
+  accId: Scalars['String'];
+  amount: Scalars['String'];
+  isDifferentMember?: InputMaybe<Scalars['Boolean']>;
+  memberId?: InputMaybe<Scalars['String']>;
+  withdrawSlipNo: Scalars['String'];
+};
+
+export type WithdrawSlipDepositData = {
+  accountId: Scalars['String'];
+  agentID?: InputMaybe<Scalars['ID']>;
+  amount: Scalars['String'];
+  depositedBy: DepositedBy;
+  isDifferentMember?: InputMaybe<Scalars['Boolean']>;
+  memberId?: InputMaybe<Scalars['String']>;
+  withdrawSlipNo: Scalars['String'];
+};
+
 export type WithdrawSlipMutation = {
   cancelSlip?: Maybe<AccountWithdrawSlipMutationResult>;
   issueNew?: Maybe<AccountWithdrawSlipMutationResult>;
 };
-
 
 export type WithdrawSlipMutationCancelSlipArgs = {
   accountId: Scalars['ID'];
   slipNumber?: InputMaybe<Scalars['Int']>;
   slipRange?: InputMaybe<SlipRangeInput>;
 };
-
 
 export type WithdrawSlipMutationIssueNewArgs = {
   accountId: Scalars['ID'];
@@ -12365,16 +12121,13 @@ export type WithdrawSlipQuery = {
   listPastSlips?: Maybe<AccountWithdrawSlipQueryResult>;
 };
 
-
 export type WithdrawSlipQueryGetAvailableRangeArgs = {
   count: Scalars['Int'];
 };
 
-
 export type WithdrawSlipQueryListAvailableSlipsArgs = {
   accountId: Scalars['ID'];
 };
-
 
 export type WithdrawSlipQueryListPastSlipsArgs = {
   accountId: Scalars['ID'];
@@ -12437,73 +12190,218 @@ export type WithdrawViaCollectorList = {
 };
 
 export enum WithdrawWith {
-  Cheque = 'CHEQUE',
-  WithdrawSlip = 'WITHDRAW_SLIP'
+  CounterSlip = 'COUNTER_SLIP',
+  WithdrawSlip = 'WITHDRAW_SLIP',
 }
 
 export type LoginMutationVariables = Exact<{
   data: NeosysLoginInput;
 }>;
 
-
-export type LoginMutation = { neosys: { auth?: { login?: { recordId?: string | null, record?: { token: { access: string, refresh: string }, user: { id: string, objState: ObjState, username: string, firstName: Record<"local"|"en"|"np",string>, middleName: Record<"local"|"en"|"np",string>, lastName: Record<"local"|"en"|"np",string> } } | null } | null } | null } };
+export type LoginMutation = {
+  neosys: {
+    auth?: {
+      login?: {
+        recordId?: string | null;
+        record?: {
+          token: { access: string; refresh: string };
+          user: {
+            id: string;
+            objState: ObjState;
+            username: string;
+            firstName: Record<'local' | 'en' | 'np', string>;
+            middleName: Record<'local' | 'en' | 'np', string>;
+            lastName: Record<'local' | 'en' | 'np', string>;
+          };
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type RefreshMutationVariables = Exact<{
   refreshToken: Scalars['String'];
 }>;
 
-
-export type RefreshMutation = { neosys: { auth?: { token?: { token?: { access: string, refresh: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } };
+export type RefreshMutation = {
+  neosys: {
+    auth?: {
+      token?: {
+        token?: { access: string; refresh: string } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type AddNewClientMutationVariables = Exact<{
   data?: InputMaybe<OrganizationClientInput>;
 }>;
 
-
-export type AddNewClientMutation = { neosys: { client?: { add?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } };
+export type AddNewClientMutation = {
+  neosys: {
+    client?: {
+      add?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type CreateDbMutationVariables = Exact<{
   saccosID: Scalars['ID'];
 }>;
 
+export type CreateDbMutation = {
+  neosys: {
+    client?: {
+      createDB?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type CreateDbMutation = { neosys: { client?: { createDB?: { recordId?: string | null } | null } | null } };
+export type GetMeQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetMeQuery = {
+  neosys: {
+    auth?: {
+      me: {
+        data?: { id: string; username: string; email?: string | null } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | null;
+      };
+    } | null;
+  };
+};
 
+export type GetClientsListQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetMeQuery = { neosys: { auth?: { me: { data?: { id: string, username: string, email?: string | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } } | null } };
+export type GetClientsListQuery = {
+  neosys: {
+    client?: {
+      list?: Array<{
+        id?: string | null;
+        clientName?: string | null;
+        provinceId?: string | null;
+        districtId?: string | null;
+        localGovernmentId?: string | null;
+        locality?: string | null;
+        houseNo?: string | null;
+        wardNo?: number | null;
+        dateJoined?: string | null;
+        dbCreated?: boolean | null;
+      } | null> | null;
+    } | null;
+  };
+};
 
-export type GetClientsListQueryVariables = Exact<{ [key: string]: never; }>;
+type MutationError_AuthorizationError_Fragment = {
+  __typename: 'AuthorizationError';
+  code: number;
+  authorizationErrorMsg: string;
+};
 
+type MutationError_BadRequestError_Fragment = {
+  __typename: 'BadRequestError';
+  code: number;
+  badRequestErrorMessage: string;
+};
 
-export type GetClientsListQuery = { neosys: { client?: { list?: Array<{ id?: string | null, clientName?: string | null, provinceId?: string | null, districtId?: string | null, localGovernmentId?: string | null, locality?: string | null, houseNo?: string | null, wardNo?: number | null, dateJoined?: string | null, dbCreated?: boolean | null } | null> | null } | null } };
+type MutationError_NotFoundError_Fragment = {
+  __typename: 'NotFoundError';
+  code: number;
+  notFoundErrorMsg: string;
+};
 
-type MutationError_AuthorizationError_Fragment = { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string };
+type MutationError_ServerError_Fragment = {
+  __typename: 'ServerError';
+  code: number;
+  serverErrorMessage: string;
+};
 
-type MutationError_BadRequestError_Fragment = { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string };
+type MutationError_ValidationError_Fragment = {
+  __typename: 'ValidationError';
+  code: number;
+  validationErrorMsg: Record<string, Array<string>>;
+};
 
-type MutationError_NotFoundError_Fragment = { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string };
+export type MutationErrorFragment =
+  | MutationError_AuthorizationError_Fragment
+  | MutationError_BadRequestError_Fragment
+  | MutationError_NotFoundError_Fragment
+  | MutationError_ServerError_Fragment
+  | MutationError_ValidationError_Fragment;
 
-type MutationError_ServerError_Fragment = { __typename: 'ServerError', code: number, serverErrorMessage: string };
+type QueryError_AuthorizationError_Fragment = {
+  __typename: 'AuthorizationError';
+  code: number;
+  authorizationErrorMsg: string;
+};
 
-type MutationError_ValidationError_Fragment = { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> };
+type QueryError_BadRequestError_Fragment = {
+  __typename: 'BadRequestError';
+  code: number;
+  badRequestErrorMessage: string;
+};
 
-export type MutationErrorFragment = MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment;
+type QueryError_NotFoundError_Fragment = {
+  __typename: 'NotFoundError';
+  code: number;
+  notFoundErrorMsg: string;
+};
 
-type QueryError_AuthorizationError_Fragment = { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string };
+type QueryError_ServerError_Fragment = {
+  __typename: 'ServerError';
+  code: number;
+  serverErrorMessage: string;
+};
 
-type QueryError_BadRequestError_Fragment = { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string };
+export type QueryErrorFragment =
+  | QueryError_AuthorizationError_Fragment
+  | QueryError_BadRequestError_Fragment
+  | QueryError_NotFoundError_Fragment
+  | QueryError_ServerError_Fragment;
 
-type QueryError_NotFoundError_Fragment = { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string };
+export type KymFieldDataFragment = {
+  id?: string | null;
+  options?: Array<{
+    id?: string | null;
+    value?: Record<'local' | 'en' | 'np', string> | null;
+  } | null> | null;
+};
 
-type QueryError_ServerError_Fragment = { __typename: 'ServerError', code: number, serverErrorMessage: string };
-
-export type QueryErrorFragment = QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment;
-
-export type KymFieldDataFragment = { id?: string | null, options?: Array<{ id?: string | null, value?: Record<"local"|"en"|"np",string> | null } | null> | null };
-
-export type PaginationFragment = { startCursor?: string | null, endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean };
+export type PaginationFragment = {
+  startCursor?: string | null;
+  endCursor?: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+};
 
 export const MutationErrorFragmentDoc = `
     fragment MutationError on MutationError {
@@ -12600,15 +12498,14 @@ export const LoginDocument = `
   }
 }
     `;
-export const useLoginMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>) =>
-    useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
-      ['login'],
-      useAxios<LoginMutation, LoginMutationVariables>(LoginDocument),
-      options
-    );
+export const useLoginMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>
+) =>
+  useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
+    ['login'],
+    useAxios<LoginMutation, LoginMutationVariables>(LoginDocument),
+    options
+  );
 export const RefreshDocument = `
     mutation refresh($refreshToken: String!) {
   neosys {
@@ -12626,15 +12523,14 @@ export const RefreshDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useRefreshMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<RefreshMutation, TError, RefreshMutationVariables, TContext>) =>
-    useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
-      ['refresh'],
-      useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
-      options
-    );
+export const useRefreshMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<RefreshMutation, TError, RefreshMutationVariables, TContext>
+) =>
+  useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
+    ['refresh'],
+    useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
+    options
+  );
 export const AddNewClientDocument = `
     mutation addNewClient($data: OrganizationClientInput) {
   neosys {
@@ -12649,35 +12545,41 @@ export const AddNewClientDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useAddNewClientMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<AddNewClientMutation, TError, AddNewClientMutationVariables, TContext>) =>
-    useMutation<AddNewClientMutation, TError, AddNewClientMutationVariables, TContext>(
-      ['addNewClient'],
-      useAxios<AddNewClientMutation, AddNewClientMutationVariables>(AddNewClientDocument),
-      options
-    );
+export const useAddNewClientMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddNewClientMutation,
+    TError,
+    AddNewClientMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddNewClientMutation, TError, AddNewClientMutationVariables, TContext>(
+    ['addNewClient'],
+    useAxios<AddNewClientMutation, AddNewClientMutationVariables>(AddNewClientDocument),
+    options
+  );
 export const CreateDbDocument = `
     mutation createDB($saccosID: ID!) {
   neosys {
     client {
       createDB(saccosId: $saccosID) {
         recordId
+        error {
+          ...MutationError
+        }
       }
     }
   }
 }
-    `;
-export const useCreateDbMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<CreateDbMutation, TError, CreateDbMutationVariables, TContext>) =>
-    useMutation<CreateDbMutation, TError, CreateDbMutationVariables, TContext>(
-      ['createDB'],
-      useAxios<CreateDbMutation, CreateDbMutationVariables>(CreateDbDocument),
-      options
-    );
+    ${MutationErrorFragmentDoc}`;
+export const useCreateDbMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<CreateDbMutation, TError, CreateDbMutationVariables, TContext>
+) =>
+  useMutation<CreateDbMutation, TError, CreateDbMutationVariables, TContext>(
+    ['createDB'],
+    useAxios<CreateDbMutation, CreateDbMutationVariables>(CreateDbDocument),
+    options
+  );
 export const GetMeDocument = `
     query getMe {
   neosys {
@@ -12696,18 +12598,15 @@ export const GetMeDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useGetMeQuery = <
-      TData = GetMeQuery,
-      TError = unknown
-    >(
-      variables?: GetMeQueryVariables,
-      options?: UseQueryOptions<GetMeQuery, TError, TData>
-    ) =>
-    useQuery<GetMeQuery, TError, TData>(
-      variables === undefined ? ['getMe'] : ['getMe', variables],
-      useAxios<GetMeQuery, GetMeQueryVariables>(GetMeDocument).bind(null, variables),
-      options
-    );
+export const useGetMeQuery = <TData = GetMeQuery, TError = unknown>(
+  variables?: GetMeQueryVariables,
+  options?: UseQueryOptions<GetMeQuery, TError, TData>
+) =>
+  useQuery<GetMeQuery, TError, TData>(
+    variables === undefined ? ['getMe'] : ['getMe', variables],
+    useAxios<GetMeQuery, GetMeQueryVariables>(GetMeDocument).bind(null, variables),
+    options
+  );
 export const GetClientsListDocument = `
     query getClientsList {
   neosys {
@@ -12728,15 +12627,15 @@ export const GetClientsListDocument = `
   }
 }
     `;
-export const useGetClientsListQuery = <
-      TData = GetClientsListQuery,
-      TError = unknown
-    >(
-      variables?: GetClientsListQueryVariables,
-      options?: UseQueryOptions<GetClientsListQuery, TError, TData>
-    ) =>
-    useQuery<GetClientsListQuery, TError, TData>(
-      variables === undefined ? ['getClientsList'] : ['getClientsList', variables],
-      useAxios<GetClientsListQuery, GetClientsListQueryVariables>(GetClientsListDocument).bind(null, variables),
-      options
-    );
+export const useGetClientsListQuery = <TData = GetClientsListQuery, TError = unknown>(
+  variables?: GetClientsListQueryVariables,
+  options?: UseQueryOptions<GetClientsListQuery, TError, TData>
+) =>
+  useQuery<GetClientsListQuery, TError, TData>(
+    variables === undefined ? ['getClientsList'] : ['getClientsList', variables],
+    useAxios<GetClientsListQuery, GetClientsListQueryVariables>(GetClientsListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );

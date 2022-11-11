@@ -6,9 +6,9 @@ interface ILoanPaymentScheduleTableProps {
   data:
     | {
         sn: number;
-        code: string | null | undefined;
-        reportName: string | null | undefined;
-        category: string | null | undefined;
+        accounttName: string | null | undefined;
+        used: number | null | undefined;
+        left: number | null | undefined;
       }[];
 
   //   data: MemberPaymentView[] | null | undefined;
@@ -22,22 +22,25 @@ export const ReportTableComponent = ({ data }: ILoanPaymentScheduleTableProps) =
         accessorKey: 'sn',
       },
       {
-        header: 'Code',
-        accessorKey: 'code',
+        header: 'Account Name',
+        accessorKey: 'accounttName',
         meta: {
-          width: '10%',
+          width: '40%',
         },
       },
       {
-        header: 'Report Name',
-        accessorKey: 'reportName',
+        header: 'No- of leaves used',
+        accessorKey: 'used',
         meta: {
-          width: '60%',
+          isNumeric: true,
         },
       },
       {
-        header: 'Category',
-        accessorKey: 'category',
+        header: 'No- of leaves left',
+        accessorKey: 'left',
+        meta: {
+          isNumeric: true,
+        },
       },
     ],
     []

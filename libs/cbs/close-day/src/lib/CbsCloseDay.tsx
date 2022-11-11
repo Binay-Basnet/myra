@@ -1,4 +1,14 @@
-import { Box, Container, FormFooter, FormHeader } from '@coop/shared/ui';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useQueryClient } from 'react-query';
+import { useRouter } from 'next/router';
+
+import {
+  EodOption,
+  EodState,
+  useGetEodStatusQuery,
+  useSetEndOfDayDataMutation,
+} from '@coop/cbs/data-access';
+import { asyncToast, Box, Container, FormFooter, FormHeader } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { DayClose } from '../component/DayClose';
@@ -7,22 +17,74 @@ import { DayClose } from '../component/DayClose';
 export interface CbsCloseDayProps {}
 
 export const CbsCloseDay = () => {
+  const router = useRouter();
+
   const { t } = useTranslation();
+
+  const queryClient = useQueryClient();
+
+  const methods = useForm();
+
+  const { watch } = methods;
+
+  const ignore = watch('ignore');
+
+  const { mutateAsync: closeDay } = useSetEndOfDayDataMutation();
+
+  const { data: eodStatusQueryData } = useGetEodStatusQuery();
+  const eodStatus = eodStatusQueryData?.transaction?.eodStatus;
+
+  const handleDayClose = () => {
+    asyncToast({
+      id: 'set-close-day-with-error',
+      promise: closeDay({ option: EodOption.CompleteWithError }),
+      msgs: {
+        loading: 'Closing the Day',
+        success: 'Day closed',
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries('getEndOfDayDateData');
+        router.push('/');
+      },
+      onError: () => {
+        queryClient.invalidateQueries('getEndOfDayDateData');
+        router.push('/');
+      },
+    });
+  };
+
+  const isDayCloseDisabled = () => {
+    if (!ignore) return true;
+
+    if (!eodStatus) return true;
+
+    const temp = Object.keys(eodStatus).find((key) => eodStatus[key] === EodState.Ongoing);
+
+    if (temp) return true;
+
+    return false;
+  };
 
   return (
     <>
-      <Box color="red" mt="110px" bg="gray.100" width="100%" zIndex="1000">
+      <Box bg="gray.100" width="100%" position="sticky" top={110} zIndex={10}>
         <Container minW="container.lg" height="fit-content" paddingInline="0">
           <FormHeader title={t['dayClose']} />
         </Container>
       </Box>
       <Container bg="white" height="fit-content" pb="90px" minW="container.lg">
-        <DayClose />
+        <FormProvider {...methods}>
+          <DayClose />
+        </FormProvider>
       </Container>
       <Box position="relative" margin="0px auto">
         <Box bottom="0" position="fixed" width="100%" bg="gray.100" zIndex={10}>
           <Container minW="container.lg" height="fit-content" p="0">
-            <FormFooter mainButtonLabel={t['dayCloseCloseDay']} />
+            <FormFooter
+              mainButtonLabel={t['dayCloseCloseDay']}
+              mainButtonHandler={handleDayClose}
+              isMainButtonDisabled={isDayCloseDisabled()}
+            />
           </Container>
         </Box>
       </Box>

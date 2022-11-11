@@ -56,7 +56,7 @@ export const EbankingFeaureWithdrawCollectorRequest = () => {
       <PathBar
         paths={[
           { label: 'COOP', link: '/coop' },
-          { label: 'Withdraw Request via Collector', link: '/coop/cheque/withdraw' },
+          { label: 'Withdraw Request via Market Representative', link: '/coop/cheque/withdraw' },
         ]}
       />
       <FormProvider {...methods}>

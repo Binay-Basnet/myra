@@ -1,7 +1,8 @@
 import { useFormContext } from 'react-hook-form';
 import dayjs from 'dayjs';
 
-import { ReportPeriodType } from '@coop/cbs/data-access';
+import { ReportPeriodType, useAppSelector } from '@coop/cbs/data-access';
+import { formatAddress } from '@coop/cbs/utils';
 import { Box, Text } from '@coop/shared/ui';
 
 import { getPeriodDate } from '../utils/getPeriodDate';
@@ -12,6 +13,7 @@ interface ReportOrganizationProps {
 
 export const ReportOrganization = ({ statementDate }: ReportOrganizationProps) => {
   const { watch } = useFormContext();
+  const user = useAppSelector((state) => state.auth.user);
 
   const period = watch('period');
 
@@ -23,7 +25,7 @@ export const ReportOrganization = ({ statementDate }: ReportOrganizationProps) =
             Address:
           </Text>
           <Text fontSize="r1" color="gray.700" fontWeight="500">
-            Ekantakuna, Lalitpur, Province 3
+            {formatAddress(user?.organization?.address)}
           </Text>
         </Box>
 
@@ -32,16 +34,16 @@ export const ReportOrganization = ({ statementDate }: ReportOrganizationProps) =
             Regd No:
           </Text>
           <Text fontSize="r1" color="gray.700" fontWeight="500">
-            112233/2077/2978
+            {user?.organization?.registrationDetails?.regdNo ?? 'N/A'}
           </Text>
         </Box>
 
         <Box display="flex" gap="s4">
           <Text fontSize="r1" color="gray.700">
-            Pan No:
+            Pan:
           </Text>
           <Text fontSize="r1" color="gray.700" fontWeight="500">
-            123456789
+            {user?.organization?.registrationDetails?.panOrVat ?? 'N/A'}
           </Text>
         </Box>
       </Box>

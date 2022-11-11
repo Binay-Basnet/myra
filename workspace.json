@@ -23,6 +23,7 @@
     "cbs-accounts-ui-layouts": "libs/cbs/accounts/ui-layouts",
     "cbs-close-day": "libs/cbs/close-day",
     "cbs-data-access": "libs/cbs/data-access",
+    "cbs-feature-dashboard": "libs/cbs/feature-dashboard",
     "cbs-kym-form-feature-cooperative": "libs/cbs/kym-form/feature-cooperative",
     "cbs-kym-form-feature-cooperative-union": "libs/cbs/kym-form/feature-cooperative-union",
     "cbs-kym-form-feature-individual": "libs/cbs/kym-form/feature-individual",

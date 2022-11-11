@@ -44,7 +44,7 @@ export const OtherCollateral = () => {
       <GridItem colSpan={2}>
         <FormInput
           name="valuationPercent"
-          label="Validation Percentage"
+          label="Valuation Percentage"
           rules={{
             max: {
               value: Number(maxValue),

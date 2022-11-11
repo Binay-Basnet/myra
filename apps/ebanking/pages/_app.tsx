@@ -46,7 +46,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <>
       <Head>
-        <title>E Banking</title>
+        <title>Myra | EBanking </title>
       </Head>
       <Toaster />
 

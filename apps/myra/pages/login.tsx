@@ -80,7 +80,7 @@ export const Login = () => {
         >
           <Box display="flex" justifyContent="space-between">
             <Box position="relative" w="120px" h="62px">
-              <Image src="/loginLogo.png" layout="fill" alt="logo" />
+              <Image src="/loginLogo.svg" layout="fill" alt="logo" />
             </Box>
 
             <LocaleSwitcher />

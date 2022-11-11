@@ -12,11 +12,11 @@ const tabList = [
     title: 'settingsDepositTds',
     to: '/settings/general/deposit/tds',
   },
-  {
-    // title: 'IRO Setup',
-    title: 'settingsDepositIROSetup',
-    to: '/settings/general/deposit/iro-setup',
-  },
+  // {
+  //   // title: 'IRO Setup',
+  //   title: 'settingsDepositIROSetup',
+  //   to: '/settings/general/deposit/iro-setup',
+  // },
 ];
 
 interface ISettingsDepositLayout {

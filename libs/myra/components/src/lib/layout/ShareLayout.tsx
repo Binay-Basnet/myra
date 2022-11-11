@@ -44,15 +44,13 @@ const settingsColumn = [
 const reportColumn = [
   {
     label: 'shareLayoutRegisterReport',
-    navigate: '/settings/general/members',
   },
   {
     label: 'shareLayoutStateReport',
-    navigate: '/settings/general/members/kym-individual',
+    navigate: '/reports/cbs/share/statement/new',
   },
   {
     label: 'shareLayoutTransactionReport',
-    navigate: '/settings/general/members/kym-individual',
   },
 ];
 
@@ -99,7 +97,11 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
             />
           ))}
           {reportColumn.map((item) => (
-            <SettingsButton icon={CgLoadbarDoc} buttonLabel={t[item?.label]} />
+            <SettingsButton
+              onClick={() => item?.navigate && router.push(item?.navigate)}
+              icon={CgLoadbarDoc}
+              buttonLabel={t[item?.label]}
+            />
           ))}
         </Box>
       </Box>
