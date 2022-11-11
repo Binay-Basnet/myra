@@ -111,7 +111,9 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
     {
       enabled: !!id,
       onSuccess: (response) =>
-        setTotalAmount(String(response?.members?.activateMember?.getMembershipFee?.data?.charge)),
+        setTotalAmount(
+          String(response?.members?.activateMember?.getMembershipFee?.data?.charge ?? 0)
+        ),
     }
   );
 
@@ -119,13 +121,13 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
     defaultValues: {
       paymentMode: DepositPaymentType.Cash,
       cashData: {
-        cash: totalAmount,
+        cash: String(totalAmount ?? 0),
       },
       withdrawSlipData: {
-        amount: totalAmount,
+        amount: String(totalAmount ?? 0),
       },
       bankDeposit: {
-        amount: totalAmount,
+        amount: String(totalAmount ?? 0),
       },
     },
   });

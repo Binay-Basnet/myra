@@ -44,6 +44,7 @@ query getSavingStatement($data: SavingStatementReportSettings!) {
       memberId
       member {
         id
+        code
         name
         address {
           wardNo
@@ -132,6 +133,7 @@ query getLoanStatementReport($data: LoanStatementReportSettings!) {
       memberId
       member {
         name
+        code
       }
       statement {
         ... on LoanStatementReport {
