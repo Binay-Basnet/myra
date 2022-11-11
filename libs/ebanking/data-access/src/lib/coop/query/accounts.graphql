@@ -2,6 +2,7 @@ query getAccountList($transactionPagination: Pagination) {
   eBanking {
     account {
       list {
+        totalBalance
         accounts {
           id
           name
@@ -126,6 +127,7 @@ query getEbankingLoanAccounts{
   eBanking {
     loanAccount {
       list {
+        totalBalance
         accounts {
           id
           name

@@ -51,7 +51,7 @@ export const SharePurchasePayment = ({
   }, [totalAmount, setValue]);
 
   return (
-    <Box minHeight="100vh" background="gray.0" border="1px solid" borderColor="border.layout">
+    <Box height="100vh" background="gray.0" borderRight="1px solid" borderColor="border.layout">
       <Box p="s20">
         <Text color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="Medium" mb="s16">
           {t['sharePurchasePaymentMode']}
@@ -157,7 +157,7 @@ export const SharePurchasePayment = ({
       )}
 
       {paymentModes === SharePaymentMode.BankVoucherOrCheque && (
-        <FormSection>
+        <FormSection divider={false}>
           <GridItem colSpan={3}>
             <Text color="neutralColorLight.Gray-70" fontSize="s3" fontWeight="Medium" mb="s8">
               {t['sharePurchaseNote']}

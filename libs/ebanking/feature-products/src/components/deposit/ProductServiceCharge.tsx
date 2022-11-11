@@ -42,7 +42,7 @@ export const ProductServiceCharge = ({ serviceCharge }: IProductServiceCharge) =
   if (serviceCharge?.length === 0) return null;
 
   return (
-    <DetailsCard title="Account Service Charge" hideBorder hasTable>
+    <DetailsCard title="Account Service Charge" hasTable>
       <Table variant="report" size="report" isStatic data={serviceCharge ?? []} columns={columns} />
     </DetailsCard>
   );

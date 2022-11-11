@@ -116,7 +116,7 @@ export const TermSavingDetails = ({ product, criteria }: IRecurringDepositDetail
       <ProductInterestRate interestRate={product?.interest} />
       <ProductDormantSetup dormantSetup={product?.dormantSetup} />
 
-      <DetailsCard title="Others " hideBorder hasTable>
+      <DetailsCard title="Others " hasTable>
         <Box display="flex" flexDir="column" gap="s32">
           <ProductFeatures features={otherFeatures} />
           <ProductCharges charges={charges} />

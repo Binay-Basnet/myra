@@ -19,7 +19,7 @@ export const AccountList = () => {
   const memberAccountDetails =
     memberDetails?.data?.members?.memberOverview?.data?.accounts?.accounts;
   const memberLength = memberAccountDetails?.length;
-  const title = `Accounts(${memberLength})`;
+  const title = `Saving Accounts List(${memberLength})`;
   const memberListData =
     memberAccountDetails?.map((data, index) => ({
       sn: Number(index) + 1,
@@ -34,7 +34,7 @@ export const AccountList = () => {
       {showGrid && (
         <DetailsCard
           bg="white"
-          title={memberLength ? title : 'Accounts (0)'}
+          title={memberLength ? title : 'Saving Accounts List (0)'}
           leftBtn={
             <Button
               variant="ghost"
@@ -89,7 +89,7 @@ export const AccountList = () => {
         <DetailsCard
           hasTable
           bg="white"
-          title={memberLength ? title : 'Accounts (0)'}
+          title={memberLength ? title : 'Saving Accounts List (0)'}
           leftBtn={
             <Button
               variant="ghost"

@@ -1,13 +1,7 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import {
-  RootState,
-  useAppSelector,
-  useGetCoaBankListQuery,
-  WithdrawBy,
-  WithdrawPaymentType,
-} from '@coop/cbs/data-access';
+import { useGetCoaBankListQuery, WithdrawBy, WithdrawPaymentType } from '@coop/cbs/data-access';
 import {
   BoxContainer,
   ContainerWithDivider,
@@ -70,7 +64,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
       value: WithdrawPaymentType.Cash,
     },
     {
-      label: t['withdrawPaymentBankCheque'],
+      label: 'Bank Cheque',
       value: WithdrawPaymentType.BankCheque,
     },
   ];
@@ -86,7 +80,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
     },
   ];
 
-  const { watch, resetField, setValue } = useFormContext();
+  const { watch, setValue } = useFormContext();
 
   useEffect(() => {
     setValue('cash.cashPaid', String(totalWithdraw));
@@ -123,13 +117,6 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
   const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
 
   const returnAmount = Number(totalCashPaid) - Number(totalWithdraw);
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    resetField('bankCheque.depositedAt');
-  }, [preference?.date]);
 
   return (
     <ContainerWithDivider

@@ -12,3 +12,15 @@ mutation addNewAccountInCOA($data: AddCOAAccountInput!) {
     }
   }
 }
+
+mutation deleteCOA($id: ID!) {
+  settings {
+    chartsOfAccount {
+      account {
+        delete(id: $id) {
+          recordId
+        }
+      }
+    }
+  }
+}

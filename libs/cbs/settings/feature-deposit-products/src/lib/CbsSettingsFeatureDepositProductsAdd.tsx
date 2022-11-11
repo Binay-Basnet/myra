@@ -241,7 +241,6 @@ export const SettingsDepositProductsAdd = () => {
         dayAfterInstallmentDate: penalty ? values?.penaltyData?.dayAfterInstallmentDate : null,
         penaltyAmount: penalty ? values?.penaltyData?.penaltyAmount : null,
         penaltyRate: penalty ? values?.penaltyData?.penaltyRate : null,
-        // penaltyLedgerMapping: penalty ? values?.penaltyData?.penaltyLedgerMapping : null,
       },
       rebateData: {
         dayBeforeInstallmentDate: rebate ? values?.rebateData?.dayBeforeInstallmentDate : null,

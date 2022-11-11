@@ -10,23 +10,20 @@ import {
   MemberFamilyInfo,
 } from '../components';
 
-const links = [
-  {
-    icon: IoCreateOutline,
-    title: 'Edit KYM',
-    link: '/',
-  },
-  {
-    icon: IoEyeOutline,
-    title: 'View KYM',
-    link: '/',
-  },
-  {
-    icon: IoPrintOutline,
-    title: 'Print KYM',
-    link: '/',
-  },
-];
+// const links = [
+//   {
+//     icon: IoCreateOutline,
+//     title: 'Edit KYM',
+//   },
+//   {
+//     icon: IoEyeOutline,
+//     title: 'View KYM',
+//   },
+//   {
+//     icon: IoPrintOutline,
+//     title: 'Print KYM',
+//   },
+// ];
 export const Bio = () => {
   const router = useRouter();
 
@@ -40,28 +37,58 @@ export const Bio = () => {
           Quick Links
         </Text>
         <Grid templateColumns="repeat(3,1fr)" gap="s16">
-          {links?.map((item) => (
-            <Box key={`${item.link}${item.title}`}>
-              <Box
-                display="flex"
-                justifyContent="flex-start"
-                alignItems="center"
-                bg="white"
-                borderRadius="br2"
-                gap="s12"
-                h="58px"
-                pl="s16"
-                cursor="pointer"
-                onClick={() => router.push(`${item.link}`)}
-              >
-                <Icon as={item?.icon} />
+          <Box
+            display="flex"
+            justifyContent="flex-start"
+            alignItems="center"
+            bg="white"
+            borderRadius="br2"
+            gap="s12"
+            h="58px"
+            pl="s16"
+            cursor="pointer"
+            onClick={() => {
+              router.push(`/members/individual/edit/${router.query['id'] as string}`);
+            }}
+          >
+            <Icon as={IoCreateOutline} />
 
-                <Text fontWeight="500" fontSize="s3">
-                  {item.title}
-                </Text>
-              </Box>
-            </Box>
-          ))}
+            <Text fontWeight="500" fontSize="s3">
+              Edit KYM
+            </Text>
+          </Box>
+          <Box
+            display="flex"
+            justifyContent="flex-start"
+            alignItems="center"
+            bg="white"
+            borderRadius="br2"
+            gap="s12"
+            h="58px"
+            pl="s16"
+          >
+            <Icon as={IoEyeOutline} />
+
+            <Text fontWeight="500" fontSize="s3">
+              View KYM{' '}
+            </Text>
+          </Box>
+          <Box
+            display="flex"
+            justifyContent="flex-start"
+            alignItems="center"
+            bg="white"
+            borderRadius="br2"
+            gap="s12"
+            h="58px"
+            pl="s16"
+          >
+            <Icon as={IoPrintOutline} />
+
+            <Text fontWeight="500" fontSize="s3">
+              Print KYM{' '}
+            </Text>
+          </Box>
         </Grid>
       </Box>
       <MemberBasicInfo />

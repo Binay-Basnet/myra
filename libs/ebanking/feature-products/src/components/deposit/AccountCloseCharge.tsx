@@ -42,7 +42,7 @@ export const AccountCloseCharge = ({ accountCloseCharge }: IAccountCloseCharge) 
   if (accountCloseCharge && accountCloseCharge?.length === 0) return null;
 
   return (
-    <DetailsCard title="Account Close Service Charge" hideBorder hasTable>
+    <DetailsCard title="Account Close Service Charge" hasTable>
       <Table
         variant="report"
         size="report"

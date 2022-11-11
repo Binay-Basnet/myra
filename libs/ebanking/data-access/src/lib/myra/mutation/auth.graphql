@@ -137,3 +137,29 @@ mutation loginToCooperative($cooperativeId: ID!, $pinCode: String!, $mobileNumbe
     }
   }
 }
+
+mutation resendOTP($mobile: String!, $otpFor: OtpFor!) {
+  eBanking {
+    auth {
+      resendOtp(mobile: $mobile, otpFor: $otpFor) {
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+
+mutation resetPassword($mobileNo: String!, $newPassword: String!) {
+  eBanking {
+    auth {
+      resetPassword(mobileNo: $mobileNo, newPassword: $newPassword) {
+        success
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

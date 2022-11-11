@@ -92,7 +92,7 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
     },
     {
       label: 'Withdraw Slip',
-      value: DepositPaymentType.Cheque,
+      value: DepositPaymentType.WithdrawSlip,
     },
     {
       label: t['depositPaymentBankVoucher'],
@@ -120,16 +120,16 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
   useEffect(() => {
     if (totalDeposit) {
       setValue('cash.cashPaid', String(totalDeposit));
-      setValue('cheque.amount', String(totalDeposit));
+      setValue('withdrawSlip.amount', String(totalDeposit));
       setValue('bankVoucher.amount', String(totalDeposit));
     }
   }, [totalDeposit]);
 
   const memberId = watch('memberId');
 
-  const isDiffMember = watch('cheque.isDifferentMember');
+  const isDiffMember = watch('withdrawSlip.isDifferentMember');
 
-  const dmemberId = watch('cheque.memberId');
+  const dmemberId = watch('withdrawSlip.memberId');
 
   const selectedPaymentMode = watch('payment_type');
 
@@ -171,11 +171,11 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
   // refetch data when calendar preference is updated
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
 
-  const chequeAccountId = watch('cheque.accId');
+  const withdrawSlipAccountId = watch('withdrawSlip.accId');
 
   const { data: availableSlipsListQueryData } = useGetAvailableSlipsListQuery(
-    { accountId: chequeAccountId },
-    { enabled: !!chequeAccountId }
+    { accountId: withdrawSlipAccountId },
+    { enabled: !!withdrawSlipAccountId }
   );
 
   const availableSlipListOptions = useMemo(
@@ -189,7 +189,7 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
 
   useEffect(() => {
     resetField('bankVoucher.depositedAt');
-    resetField('cheque.depositedAt');
+    resetField('withdrawSlip.depositedAt');
   }, [preference?.date]);
 
   return (
@@ -235,24 +235,24 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
           </InputGroupContainer>
         )}
 
-        {selectedPaymentMode === DepositPaymentType.Cheque && (
+        {selectedPaymentMode === DepositPaymentType.WithdrawSlip && (
           <InputGroupContainer>
             <GridItem colSpan={3}>
               <FormCheckbox
-                name="cheque.isDifferentMember"
-                label="Cheque is from different member"
+                name="withdrawSlip.isDifferentMember"
+                label="Withdraw Slip is from different member"
               />
             </GridItem>
 
             {isDiffMember && (
               <GridItem colSpan={3}>
-                <FormMemberSelect name="cheque.memberId" label="Member" />
+                <FormMemberSelect name="withdrawSlip.memberId" label="Member" />
               </GridItem>
             )}
 
             <GridItem colSpan={2}>
               <FormAccountSelect
-                name="cheque.accId"
+                name="withdrawSlip.accId"
                 memberId={isDiffMember ? dmemberId : memberId}
                 label="Account Name"
                 filterBy={ObjState.Active}
@@ -260,12 +260,12 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
             </GridItem>
 
             <FormSelect
-              name="cheque.chequeNo"
+              name="withdrawSlip.withdrawSlipNo"
               label="Withdraw Slip No."
               options={availableSlipListOptions}
             />
 
-            <FormAmountInput name="cheque.amount" label={t['depositPaymentAmount']} />
+            <FormAmountInput name="withdrawSlip.amount" label={t['depositPaymentAmount']} />
           </InputGroupContainer>
         )}
 

@@ -129,7 +129,7 @@ export const RecurringDepositDetails = ({ product, criteria }: IRecurringDeposit
       <ProductPrematurePenalty prematurePenalty={product?.prematurePenalty} />
       <ProductPenaltyWithdrawSetup withDrawData={product?.withdrawPenalty} />
 
-      <DetailsCard title="Others " hideBorder hasTable>
+      <DetailsCard title="Others " hasTable>
         <Box display="flex" flexDir="column" gap="s32">
           <ProductFeatures features={otherFeatures} />
           <ProductCharges charges={charges} />

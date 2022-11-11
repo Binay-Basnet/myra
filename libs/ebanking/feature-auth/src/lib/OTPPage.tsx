@@ -1,9 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { useRouter } from 'next/router';
 
-import { useVerifyOtpMutation } from '@coop/ebanking/data-access';
-import { Box, Button, Input, Text } from '@coop/shared/ui';
+import { OtpFor, useResendOtpMutation, useVerifyOtpMutation } from '@coop/ebanking/data-access';
+import { asyncToast, Box, Button, Input, Text } from '@coop/shared/ui';
 
 import { AuthContainer } from '../components/AuthContainer';
 import { SignUpStatus } from '../types/SignUpStatus';
@@ -13,15 +12,16 @@ interface IOTPPageProps {
 }
 
 export const OTPPage = ({ setStatus }: IOTPPageProps) => {
-  const router = useRouter();
-
   const {
     register,
+    getValues,
     handleSubmit,
     setError,
     reset,
     formState: { errors },
   } = useFormContext<{ otp: string; mobileNo: string }>();
+
+  const { mutateAsync: resendOTP } = useResendOtpMutation();
 
   const { isLoading, mutateAsync } = useVerifyOtpMutation({
     onSuccess: (response) => {
@@ -74,7 +74,16 @@ export const OTPPage = ({ setStatus }: IOTPPageProps) => {
               as="span"
               color="primary.500"
               cursor="pointer"
-              onClick={() => router.push('/login')}
+              onClick={async () => {
+                await asyncToast({
+                  id: 'resend-toast',
+                  msgs: {
+                    loading: 'Resending OTP',
+                    success: 'OTP Resent Successfully',
+                  },
+                  promise: resendOTP({ otpFor: OtpFor.SignUp, mobile: getValues().mobileNo }),
+                });
+              }}
             >
               Resend
             </Text>

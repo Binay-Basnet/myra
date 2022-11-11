@@ -1,14 +1,16 @@
 import { FaUsers } from 'react-icons/fa';
 import { IoCashOutline } from 'react-icons/io5';
 
-import { useAppSelector, useGetAccountSummaryQuery } from '@coop/ebanking/data-access';
+import { useAppSelector, useGetCoopStatsQuery } from '@coop/ebanking/data-access';
 import { Avatar, Box, Grid, Icon, TextFields } from '@coop/shared/ui';
 
 export const COOPHeaderCard = () => {
-  const { data: accountSummary } = useGetAccountSummaryQuery();
+  const { data: coopStatsData } = useGetCoopStatsQuery();
 
   const coop = useAppSelector((state) => state?.auth?.cooperative?.user);
   const myra = useAppSelector((state) => state?.auth);
+
+  const coopStats = coopStatsData?.eBanking?.cooperativeServices?.coopStatistics;
 
   return (
     <Box
@@ -30,7 +32,9 @@ export const COOPHeaderCard = () => {
           }
         />
 
-        <TextFields variant="stickyCardHeader">{coop?.cooperativeName}</TextFields>
+        <TextFields variant="stickyCardHeader" textTransform="capitalize">
+          {coop?.cooperativeName}
+        </TextFields>
       </Box>
 
       <Grid templateColumns="repeat(2, 1fr)" gap="s16">
@@ -50,11 +54,7 @@ export const COOPHeaderCard = () => {
             <TextFields color="primary.200" variant="tableHeader">
               Members
             </TextFields>
-            <TextFields variant="stickyCardHeader">
-              {accountSummary?.eBanking?.account?.summary?.totalSaving.toLocaleString('en-IN', {
-                maximumFractionDigits: 0,
-              }) ?? 'N/A'}
-            </TextFields>
+            <TextFields variant="stickyCardHeader">{coopStats?.totalMembers}</TextFields>
           </Box>
         </Box>
         <Box display="flex" alignItems="center" gap="s12">
@@ -71,13 +71,9 @@ export const COOPHeaderCard = () => {
           </Box>
           <Box display="flex" gap="s4" flexDir="column">
             <TextFields color="primary.200" variant="tableHeader">
-              Total Capital
+              Total Branches
             </TextFields>
-            <TextFields variant="stickyCardHeader">
-              {accountSummary?.eBanking?.account?.summary?.totalLoan.toLocaleString('en-IN', {
-                maximumFractionDigits: 0,
-              }) ?? 'N/A'}
-            </TextFields>
+            <TextFields variant="stickyCardHeader">{coopStats?.totalBranches}</TextFields>
           </Box>
         </Box>
       </Grid>
