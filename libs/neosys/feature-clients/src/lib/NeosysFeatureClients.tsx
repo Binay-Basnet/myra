@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useQueryClient } from 'react-query';
 
 import { useCreateDbMutation, useGetClientsListQuery } from '@coop/neosys-admin/data-access';
 import { Column, Table } from '@coop/shared/table';
@@ -23,6 +24,7 @@ export const CLIENTS_TAB_ITEMS = [
 
 export const ClientsListPage = () => {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const { mutateAsync } = useCreateDbMutation();
 
   // const router = useRouter();
@@ -101,6 +103,7 @@ export const ClientsListPage = () => {
                           success: 'Db Created Successfully',
                           loading: 'Creating New DB for this Saccos',
                         },
+                        onSuccess: () => queryClient.invalidateQueries('getClientsList'),
                         promise: mutateAsync({ saccosID: node.id as string }),
                       });
                     }
