@@ -139,12 +139,6 @@ export const MemberListPage = () => {
                         },
                       },
                       {
-                        title: t['memberListTableMakeInactive'],
-                        onClick: (node) => {
-                          router.push(`/members/inactivation/${node?.id}`);
-                        },
-                      },
-                      {
                         title: t['memberDeleteMember'],
                         onClick: (node) => {
                           onOpenModal();

@@ -8,6 +8,10 @@ type PaymentDetailProps = {
   detailPage: 'deposit' | 'withdraw' | 'accountTransfer' | 'agentTransaction' | 'loanRepayment';
 };
 
+const agentSlug = {
+  AGENT: 'Market Representative',
+};
+
 export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
   const { t } = useTranslation();
 
@@ -28,7 +32,11 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailDepositedBy']}
-            subtitle={depositDetailData?.depositedBy}
+            subtitle={
+              depositDetailData?.depositedBy === 'AGENT'
+                ? agentSlug[depositDetailData?.depositedBy]
+                : depositDetailData?.depositedBy
+            }
           />
         </>
       )}
