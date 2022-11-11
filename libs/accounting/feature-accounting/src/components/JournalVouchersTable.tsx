@@ -5,6 +5,7 @@ type JournalVouchersTableType = {
   transferred_to: string;
   dr_amount: string;
   cr_amount: string;
+  description: string;
 };
 
 export const JournalVouchersTable = () => {
@@ -39,6 +40,12 @@ export const JournalVouchersTable = () => {
           accessor: 'cr_amount',
           header: t['accountingJournalVouchersFormTableCRAmount'],
           isNumeric: true,
+        },
+        {
+          accessor: 'description',
+          hidden: true,
+          fieldType: 'textarea',
+          header: 'Description',
         },
       ]}
     />

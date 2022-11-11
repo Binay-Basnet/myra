@@ -1,31 +1,19 @@
-import { FormProvider, useForm } from 'react-hook-form';
-import { BiSave } from 'react-icons/bi';
-import { GrClose } from 'react-icons/gr';
+import {FormProvider, useForm} from 'react-hook-form';
+import {BiSave} from 'react-icons/bi';
+import {GrClose} from 'react-icons/gr';
 import router from 'next/router';
 
-import {
-  BoxContainer,
-  DividerContainer,
-  InputGroupContainer,
-} from '@coop/accounting/ui-components';
-import { FormInput, FormTextArea } from '@coop/shared/form';
-import {
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  Icon,
-  IconButton,
-  Text,
-} from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import {BoxContainer, DividerContainer, InputGroupContainer,} from '@coop/accounting/ui-components';
+import {FormInput, FormTextArea} from '@coop/shared/form';
+import {Box, Button, Container, FormFooter, Icon, IconButton, SwitchTabs, Text,} from '@coop/shared/ui';
+import {useTranslation} from '@coop/shared/utils';
 
-import { JournalVouchersTable } from '../components';
+import {JournalVouchersTable} from '../components';
 
 /* eslint-disable-next-line */
 export interface AccountingFeatureAddJournalVoucherProps {}
 
-export function AccountingFeatureAddJournalVoucher() {
+export const AccountingFeatureAddJournalVoucher = () => {
   const { t } = useTranslation();
 
   const methods = useForm({
@@ -35,6 +23,7 @@ export function AccountingFeatureAddJournalVoucher() {
           dr_amount: 45,
           cr_amount: 45,
           transferred_to: 'savings_account',
+          paymentMode: 'cash',
         },
       ],
     },
@@ -57,15 +46,11 @@ export function AccountingFeatureAddJournalVoucher() {
           top="110px"
           zIndex={8}
         >
-          <Text
-            fontSize="r2"
-            fontWeight="600"
-            color="neutralColorLight.Gray-80"
-          >
+          <Text fontSize="r2" fontWeight="600" color="neutralColorLight.Gray-80">
             {t['accountingJournalVoucherAddNewJournalVoucher']}
           </Text>
           <IconButton
-            variant={'ghost'}
+            variant="ghost"
             aria-label="close"
             icon={<GrClose />}
             onClick={() => router.back()}
@@ -88,18 +73,28 @@ export function AccountingFeatureAddJournalVoucher() {
                       name="reference"
                       type="text"
                       label={t['accountingJournalVoucherAddReference']}
-                      __placeholder={t['accountingJournalVoucherAddReference']}
                     />
                   </InputGroupContainer>
                 </BoxContainer>
 
                 <JournalVouchersTable />
 
-                <Box
-                  display="grid"
-                  gap="s32"
-                  gridTemplateColumns="repeat(2,1fr)"
-                >
+                <Box display="flex" flexDir="column" gap="s16">
+                  <SwitchTabs
+                    name="paymentMode"
+                    defaultValue="cash"
+                    options={[
+                      { label: 'Cash', value: 'cash' },
+                      { label: 'Cheque', value: 'cheque' },
+                    ]}
+                  />
+
+                  <Box>
+                    <FormInput name="chequeNo" label="Cheque No" />
+                  </Box>
+                </Box>
+
+                <Box display="grid" gap="s32" gridTemplateColumns="repeat(2,1fr)">
                   <FormTextArea
                     name="note"
                     label={t['accountingJournalVoucherAddNotes']}
@@ -118,12 +113,7 @@ export function AccountingFeatureAddJournalVoucher() {
             draftButton={
               <Button type="submit" variant="ghost" shade="neutral">
                 <Icon as={BiSave} />
-                <Text
-                  alignSelf="center"
-                  fontWeight="Medium"
-                  fontSize="s2"
-                  ml="5px"
-                >
+                <Text alignSelf="center" fontWeight="Medium" fontSize="s2" ml="5px">
                   {t['saveDraft']}
                 </Text>
               </Button>
@@ -135,6 +125,6 @@ export function AccountingFeatureAddJournalVoucher() {
       </Box>
     </>
   );
-}
+};
 
 export default AccountingFeatureAddJournalVoucher;

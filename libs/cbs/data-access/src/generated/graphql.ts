@@ -1188,6 +1188,14 @@ export type BranchGetResult = {
   error?: Maybe<QueryError>;
 };
 
+export type BranchInfo = {
+  membersToApprove?: Maybe<Scalars['Int']>;
+  percentOfAccounts?: Maybe<Scalars['String']>;
+  percentofMemberRequest?: Maybe<Scalars['String']>;
+  totalAccounts?: Maybe<Scalars['Int']>;
+  totalMembers?: Maybe<Scalars['Int']>;
+};
+
 export type BranchInput = {
   abbsStatus?: InputMaybe<Scalars['Boolean']>;
   branchCode?: InputMaybe<Scalars['String']>;
@@ -1323,6 +1331,12 @@ export type CashDepositData = {
   disableDenomination: Scalars['Boolean'];
   returned_amount: Scalars['String'];
   total: Scalars['String'];
+};
+
+export type CashInHandData = {
+  fromVault?: Maybe<Scalars['String']>;
+  percent?: Maybe<Scalars['String']>;
+  todayValue?: Maybe<Scalars['String']>;
 };
 
 export enum CashValue {
@@ -2175,36 +2189,21 @@ export type DbCreateResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
-export type DashboardData = {
-  listDashboardTask?: Maybe<Array<Maybe<DashboardTask>>>;
-  listTodayTrend?: Maybe<Array<Maybe<TodayTrend>>>;
+export type DashboardInfo = {
+  branchInfo?: Maybe<BranchInfo>;
+  coopInfo?: Maybe<MyCoopInfo>;
+  pendingRequest?: Maybe<PendingRequestInfo>;
 };
 
-export type DashboardEmployee = {
-  id: Scalars['ID'];
-  image: Scalars['String'];
-  name?: Maybe<Scalars['String']>;
+export type DashboardInfoResult = {
+  data?: Maybe<DashboardInfo>;
+  error?: Maybe<QueryError>;
 };
 
 export type DashboardQuery = {
-  dashboardData?: Maybe<DashboardData>;
+  dashboardInfo?: Maybe<DashboardInfoResult>;
+  myDayInfo?: Maybe<TransactionMyDayData>;
 };
-
-export type DashboardTask = {
-  createdBy?: Maybe<DashboardEmployee>;
-  createdFor?: Maybe<DashboardEmployee>;
-  description?: Maybe<Scalars['String']>;
-  due?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
-  title?: Maybe<Scalars['String']>;
-};
-
-export enum DashboardTodayType {
-  Deposits = 'DEPOSITS',
-  Loan = 'LOAN',
-  Transaction = 'TRANSACTION',
-  Withdraws = 'WITHDRAWS'
-}
 
 export type DateFilter = {
   from?: InputMaybe<Scalars['String']>;
@@ -9481,6 +9480,12 @@ export type MutationNewIdArgs = {
 
 export type MutationError = AuthorizationError | BadRequestError | NotFoundError | ServerError | ValidationError;
 
+export type MyCoopInfo = {
+  totalBranch?: Maybe<Scalars['Int']>;
+  totalMembers?: Maybe<Scalars['Int']>;
+  totalShareIssued?: Maybe<Scalars['Int']>;
+};
+
 export type MyraUser = Base & {
   branch?: Maybe<Branch>;
   contactNo?: Maybe<Scalars['String']>;
@@ -10218,6 +10223,13 @@ export type PenaltyTypeInput = {
   penaltyAmount?: InputMaybe<Scalars['Amount']>;
   penaltyLedgerMapping?: InputMaybe<Scalars['String']>;
   penaltyRate?: InputMaybe<Scalars['Float']>;
+};
+
+export type PendingRequestInfo = {
+  loanApplicationRequest?: Maybe<Scalars['Int']>;
+  loanDisbursementRequest?: Maybe<Scalars['Int']>;
+  memberRequestCount?: Maybe<Scalars['Int']>;
+  withdrawSlipCount?: Maybe<Scalars['Int']>;
 };
 
 export enum PeriodTypeEnum {
@@ -11775,31 +11787,17 @@ export enum TextFormat {
   IPv6 = 'IPv6'
 }
 
-export enum TimePeriod {
-  Day = 'DAY',
-  Fortnight = 'FORTNIGHT',
-  Month = 'MONTH',
-  Week = 'WEEK',
-  Year = 'YEAR'
-}
-
-export type TodayTrend = {
-  trendData?: Maybe<Array<Maybe<Scalars['Float']>>>;
-  type: DashboardTodayType;
-  value: Scalars['Float'];
-  yesterdayValue: Scalars['Float'];
-};
-
-
-export type TodayTrendTrendDataArgs = {
-  filter: TrendDataFilter;
-};
-
 export type TotalReport = {
   totalBalanceSheet?: Maybe<Scalars['Int']>;
   totalCr?: Maybe<Scalars['Int']>;
   totalDr?: Maybe<Scalars['Int']>;
   totalShares?: Maybe<Scalars['Int']>;
+};
+
+export type TransactionData = {
+  noOfTransaction?: Maybe<Scalars['Int']>;
+  percent?: Maybe<Scalars['String']>;
+  todayValue?: Maybe<Scalars['String']>;
 };
 
 export type TransactionFilter = {
@@ -11878,6 +11876,17 @@ export type TransactionMutationTransferArgs = {
 
 export type TransactionMutationWithdrawArgs = {
   data: WithdrawInput;
+};
+
+export type TransactionMyDay = {
+  cashInHand?: Maybe<CashInHandData>;
+  deposit?: Maybe<TransactionData>;
+  withdraw?: Maybe<TransactionData>;
+};
+
+export type TransactionMyDayData = {
+  data?: Maybe<TransactionMyDay>;
+  error?: Maybe<QueryError>;
 };
 
 export type TransactionQuery = {
@@ -12023,12 +12032,6 @@ export type TranslateInput = {
 export type TranslateQueryResult = {
   data?: Maybe<Array<Maybe<TranslateData>>>;
   error?: Maybe<QueryError>;
-};
-
-export type TrendDataFilter = {
-  fromDate?: InputMaybe<Scalars['String']>;
-  period?: InputMaybe<TimePeriod>;
-  toDate?: InputMaybe<Scalars['String']>;
 };
 
 export enum TypeOfOrganization {
