@@ -1,8 +1,10 @@
-import { FormProvider, useForm } from 'react-hook-form';
-import { IoCheckmarkDone, IoRefreshOutline } from 'react-icons/io5';
+import { useMemo } from 'react';
+import { IoCheckmarkDone, IoClose, IoRefreshOutline } from 'react-icons/io5';
+import { Spinner } from '@chakra-ui/react';
 
+import { EodState, useGetEodStatusQuery } from '@coop/cbs/data-access';
 import { FormCheckbox } from '@coop/shared/form';
-import { Alert, Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface INumberStatusProps {
@@ -27,56 +29,78 @@ export const NumberStatus = ({ number, active }: INumberStatusProps) => (
   </Box>
 );
 
-const dayCloseList = [
-  {
-    index: 1,
-    title: 'dayCloseDailyInterestBooking',
-    subTitle: 'dayCloseInterestBooking',
-    isDisabled: false,
-  },
-  {
-    index: 2,
-    title: 'dayCloseCheckFrequency',
-    subTitle: 'dayCloseImplementthedayend',
-    isDisabled: true,
-  },
-  {
-    index: 3,
-    title: 'dayCloseTransactionDateProgress',
-    subTitle: 'dayCloseChecktransactiondate',
-    isDisabled: false,
-  },
-  {
-    index: 4,
-    title: 'dayCloseCheckMaturity',
-    subTitle: 'dayCloseCheckAccount',
-    isDisabled: true,
-  },
-  {
-    index: 5,
-    title: 'dayCloseCashVault',
-    subTitle: 'dayCloseCheckCashVault',
-    isDisabled: false,
-  },
-];
-
 export const DayClose = () => {
-  const methods = useForm();
   const { t } = useTranslation();
 
-  // const { mutateAsync: closeDay } = useSetEndOfDayDataMutation();
+  const { data: eodStatusQueryData, refetch } = useGetEodStatusQuery();
 
-  // const closeDayFxn = () => {
-  //   asyncToast({
-  //     id: 'set-close-day',
-  //     promise: closeDay({}),
-  //     msgs: {
-  //       loading: 'Closing the Day',
-  //       success: 'Day Closed',
-  //     },
-  //     // onSuccess: () => refetchEndOfDay(),
-  //   });
-  // };
+  const dayCloseList = useMemo(() => {
+    const eodStatus = eodStatusQueryData?.transaction?.eodStatus;
+
+    return [
+      {
+        title: 'dayCloseDailyInterestBooking',
+        subTitle: 'dayCloseInterestBooking',
+        status: eodStatus?.interestBooking,
+      },
+      {
+        title: 'dayCloseCheckFrequency',
+        subTitle: 'dayCloseImplementthedayend',
+        status: eodStatus?.interestPosting,
+      },
+      {
+        title: 'dayCloseTransactionDateProgress',
+        subTitle: 'dayCloseChecktransactiondate',
+        status: eodStatus?.transactionDate,
+      },
+      {
+        title: 'dayCloseCheckMaturity',
+        subTitle: 'dayCloseCheckAccount',
+        status: eodStatus?.maturity,
+      },
+      {
+        title: 'Check Dormant',
+        subTitle: 'Check if the account is dormant or not.',
+        status: eodStatus?.dormancy,
+      },
+      {
+        title: 'dayCloseCashVault',
+        subTitle: 'dayCloseCheckCashVault',
+        status: eodStatus?.cashInVault,
+      },
+    ];
+  }, [eodStatusQueryData]);
+
+  const eodStatusIcon = (status: EodState | undefined | null) => {
+    switch (status) {
+      case EodState.Completed:
+        return <Icon color="primary.500" as={IoCheckmarkDone} />;
+      case EodState.CompletedWithErrors:
+        return <Icon color="danger.500" as={IoClose} />;
+      case EodState.Ongoing:
+        return <Spinner size="sm" />;
+      default:
+        return <Icon color="danger.500" as={IoClose} />;
+    }
+  };
+  const eodStatusText = (status: EodState | undefined | null) => {
+    let statusText = '';
+    switch (status) {
+      case EodState.Completed:
+        statusText = 'Completed';
+        break;
+      case EodState.CompletedWithErrors:
+        statusText = 'Not completed';
+        break;
+      case EodState.Ongoing:
+        statusText = 'Ongoing';
+        break;
+      default:
+        statusText = 'Not completed';
+    }
+
+    return statusText;
+  };
 
   return (
     <Box display="flex" flexDirection="column" py="s16">
@@ -90,12 +114,14 @@ export const DayClose = () => {
           >
             {t['dayCloseInOrder']}
           </Text>
-          <Button leftIcon={<IoRefreshOutline />}>{t['dayCloseReload']} </Button>
+          <Button leftIcon={<IoRefreshOutline />} onClick={() => refetch()}>
+            {t['dayCloseReload']}{' '}
+          </Button>
         </Box>
-        {dayCloseList?.map(({ index, title, subTitle, isDisabled }) => (
+        {dayCloseList?.map(({ title, subTitle, status }, index) => (
           <>
-            <Box display="flex" gap="s16" py="s16">
-              <NumberStatus number={index} active={isDisabled} />
+            <Box display="flex" gap="s16" py="s16" key={title}>
+              <NumberStatus number={index + 1} active={status === EodState.Completed} />
               <Box display="flex" flexDirection="column" gap="s16">
                 <Box>
                   <Text
@@ -104,7 +130,7 @@ export const DayClose = () => {
                     color="neutralColorLight.Gray-80"
                     lineHeight="150%"
                   >
-                    {t[title]}
+                    {t[title] ?? title}
                   </Text>
                   <Text
                     fontSize="r1"
@@ -112,47 +138,24 @@ export const DayClose = () => {
                     color="neutralColorLight.Gray-80"
                     lineHeight="150%"
                   >
-                    {t[subTitle]}
+                    {t[subTitle] ?? subTitle}
                   </Text>
                 </Box>
 
-                <Box display="flex" gap="s4">
-                  <Icon color="primary.500" as={IoCheckmarkDone} />
+                <Box display="flex" alignItems="center" gap="s8">
+                  {eodStatusIcon(status)}
+
                   <Text
                     fontSize="s3"
                     fontWeight="SemiBold"
                     color="neutralColorLight.Gray-70"
                     lineHeight="150%"
                   >
-                    {t['dayCloseCompleted']}
+                    {eodStatusText(status)}
                   </Text>
                 </Box>
 
-                {/* <Box display="flex" gap="s4">
-                  <Icon color="danger.500" as={IoCloseOutline} />
-                  <Text
-                    fontSize="s3"
-                    fontWeight="SemiBold"
-                    color="neutralColorLight.Gray-70"
-                    lineHeight="150%"
-                  >
-                    {t['dayCloseNotCompleted']}
-                  </Text>
-                </Box>
-
-                <Box display="flex" gap="s4">
-                  <Icon color="primary.500" as={RiLoader5Fill} />
-                  <Text
-                    fontSize="s3"
-                    fontWeight="SemiBold"
-                    color="neutralColorLight.Gray-70"
-                    lineHeight="150%"
-                  >
-                    {t['dayCloseOngoing']}
-                  </Text>
-                </Box> */}
-
-                {isDisabled && (
+                {/* {status === EodState.CompletedWithErrors && (
                   <Alert status="error">
                     <Text
                       fontSize="r1"
@@ -163,20 +166,19 @@ export const DayClose = () => {
                       Lorem ipsum dolor sit amet, consectetur adipiscing alit.
                     </Text>
                   </Alert>
-                )}
+                )} */}
               </Box>
             </Box>
             <Divider />
           </>
         ))}
 
-        <Box display="flex" flexDirection="column" gap="s48">
-          <Box mt="s48" w="148px">
-            <Button> {t['dayCloseReinitiateDayEnd']} </Button>
-          </Box>
-          <FormProvider {...methods}>
-            <FormCheckbox name="ignore" label={t['dayCloseIgnoreErrors']} />
-          </FormProvider>
+        <Box display="flex" flexDirection="column" gap="s48" py="s32">
+          {/* <Box w="148px">
+            <Button variant="outline">{t['dayCloseReinitiateDayEnd']}</Button>
+          </Box> */}
+
+          <FormCheckbox name="ignore" label={t['dayCloseIgnoreErrors']} />
         </Box>
       </Box>
     </Box>

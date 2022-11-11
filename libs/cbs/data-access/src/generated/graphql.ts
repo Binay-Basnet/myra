@@ -3951,6 +3951,31 @@ export type EBankingTransactionQueryRecentArgs = {
   paginate?: InputMaybe<Pagination>;
 };
 
+export enum EodOption {
+  CompleteWithError = 'COMPLETE_WITH_ERROR',
+  Reinitiate = 'REINITIATE'
+}
+
+export type EodResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<Scalars['ID']>;
+};
+
+export type EodSatusResult = {
+  cashInVault?: Maybe<EodState>;
+  dormancy?: Maybe<EodState>;
+  interestBooking?: Maybe<EodState>;
+  interestPosting?: Maybe<EodState>;
+  maturity?: Maybe<EodState>;
+  transactionDate?: Maybe<EodState>;
+};
+
+export enum EodState {
+  Completed = 'COMPLETED',
+  CompletedWithErrors = 'COMPLETED_WITH_ERRORS',
+  Ongoing = 'ONGOING'
+}
+
 export type EbankingAccount = {
   accountNumber: Scalars['String'];
   accountSubType: Scalars['String'];
@@ -11828,7 +11853,7 @@ export type TransactionMutation = {
   agentTodayList?: Maybe<AgentTodayListResult>;
   bulkDeposit: BulkDepositResult;
   deposit: DepositResult;
-  endOfDay?: Maybe<Scalars['String']>;
+  endOfDay?: Maybe<EodResult>;
   tellerTransfer: TellerTransferResult;
   transfer: TransferResult;
   withdraw: WithdrawResult;
@@ -11864,6 +11889,11 @@ export type TransactionMutationDepositArgs = {
 };
 
 
+export type TransactionMutationEndOfDayArgs = {
+  option?: InputMaybe<EodOption>;
+};
+
+
 export type TransactionMutationTellerTransferArgs = {
   data: TellerTransferInput;
 };
@@ -11893,6 +11923,7 @@ export type TransactionQuery = {
   agentDetail?: Maybe<AgentRecord>;
   assignedMemberList: AssignedMembersListConnection;
   endOfDayDate: Scalars['String'];
+  eodStatus?: Maybe<EodSatusResult>;
   listAgent: AccountAgentListConnection;
   listAgentTask?: Maybe<AgentTodayListData>;
   listDeposit: AccountActivityListConnection;
@@ -13310,10 +13341,12 @@ export type SetAccountForgiveInstallmentDataMutationVariables = Exact<{
 
 export type SetAccountForgiveInstallmentDataMutation = { account: { forgiveInstallment?: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
 
-export type SetEndOfDayDataMutationVariables = Exact<{ [key: string]: never; }>;
+export type SetEndOfDayDataMutationVariables = Exact<{
+  option?: InputMaybe<EodOption>;
+}>;
 
 
-export type SetEndOfDayDataMutation = { transaction: { endOfDay?: string | null } };
+export type SetEndOfDayDataMutation = { transaction: { endOfDay?: { record?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
 
 export type SetTellerTransferDataMutationVariables = Exact<{
   data: TellerTransferInput;
@@ -14473,6 +14506,11 @@ export type LoanRepaymentDetailQueryVariables = Exact<{
 
 
 export type LoanRepaymentDetailQuery = { transaction: { viewLoanRepayment?: { data?: { repaymentId: string, loanSubType?: string | null, loanAccountId?: string | null, loanAccountName?: string | null, repaymentDate?: string | null, installmentNo?: string | null, installmentAmount?: string | null, fine?: string | null, totalRepaymentAmount?: string | null, objState: string, paymentMode?: string | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null } | null, installmentDetails?: Array<{ installmentNo?: number | null, payment?: string | null, principalAmount?: string | null, interestAmount?: string | null } | null> | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
+
+export type GetEodStatusQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetEodStatusQuery = { transaction: { eodStatus?: { interestBooking?: EodState | null, interestPosting?: EodState | null, transactionDate?: EodState | null, maturity?: EodState | null, dormancy?: EodState | null, cashInVault?: EodState | null } | null } };
 
 export type GetPastSlipsListQueryVariables = Exact<{
   accountId: Scalars['ID'];
@@ -17238,12 +17276,17 @@ export const useSetAccountForgiveInstallmentDataMutation = <
       options
     );
 export const SetEndOfDayDataDocument = `
-    mutation setEndOfDayData {
+    mutation setEndOfDayData($option: EODOption) {
   transaction {
-    endOfDay
+    endOfDay(option: $option) {
+      record
+      error {
+        ...MutationError
+      }
+    }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useSetEndOfDayDataMutation = <
       TError = unknown,
       TContext = unknown
@@ -24691,6 +24734,32 @@ export const useLoanRepaymentDetailQuery = <
     useQuery<LoanRepaymentDetailQuery, TError, TData>(
       ['loanRepaymentDetail', variables],
       useAxios<LoanRepaymentDetailQuery, LoanRepaymentDetailQueryVariables>(LoanRepaymentDetailDocument).bind(null, variables),
+      options
+    );
+export const GetEodStatusDocument = `
+    query getEODStatus {
+  transaction {
+    eodStatus {
+      interestBooking
+      interestPosting
+      transactionDate
+      maturity
+      dormancy
+      cashInVault
+    }
+  }
+}
+    `;
+export const useGetEodStatusQuery = <
+      TData = GetEodStatusQuery,
+      TError = unknown
+    >(
+      variables?: GetEodStatusQueryVariables,
+      options?: UseQueryOptions<GetEodStatusQuery, TError, TData>
+    ) =>
+    useQuery<GetEodStatusQuery, TError, TData>(
+      variables === undefined ? ['getEODStatus'] : ['getEODStatus', variables],
+      useAxios<GetEodStatusQuery, GetEodStatusQueryVariables>(GetEodStatusDocument).bind(null, variables),
       options
     );
 export const GetPastSlipsListDocument = `

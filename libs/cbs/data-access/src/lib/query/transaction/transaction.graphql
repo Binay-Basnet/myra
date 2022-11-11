@@ -307,3 +307,16 @@ query loanRepaymentDetail($paymentId: ID!) {
     }
   }
 }
+
+query getEODStatus {
+  transaction {
+    eodStatus {
+      interestBooking
+      interestPosting
+      transactionDate
+      maturity
+      dormancy
+      cashInVault
+    }
+  }
+}

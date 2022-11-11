@@ -213,15 +213,24 @@ export const TopLevelHeader = () => {
   const { mutateAsync: closeDay } = useSetEndOfDayDataMutation();
 
   const closeDayFxn = () => {
-    asyncToast({
-      id: 'set-close-day',
-      promise: closeDay({}),
-      msgs: {
-        loading: 'Closing the Day',
-        success: 'Day Closed',
-      },
-      onSuccess: () => refetchEndOfDay(),
-    });
+    closeDay({});
+
+    refetchEndOfDay();
+
+    router.push('/day-close');
+
+    // asyncToast({
+    //   id: 'set-close-day',
+    //   promise: closeDay({}),
+    //   msgs: {
+    //     loading: 'Closing the Day',
+    //     success: 'Day close initiated',
+    //   },
+    //   onSuccess: () => {
+    //     refetchEndOfDay();
+    //     router.push('/day-close');
+    //   },
+    // });
   };
 
   return (
