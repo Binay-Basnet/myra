@@ -1,6 +1,6 @@
 import { EbankingTransactionDirection } from '@coop/cbs/data-access';
 import { Box, Text } from '@coop/shared/ui';
-
+/*  will be used later */
 interface ITransactionCardProps {
   transactionItem: {
     date?: Record<'local' | 'en' | 'np', string> | undefined;

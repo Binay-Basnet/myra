@@ -1,7 +1,6 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 
-import { AddButtonList, Box, Divider, PopOverComponentForButtonList, Text } from '@coop/shared/ui';
+import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { TabColumn } from '../tab/TabforMemberPage';
@@ -12,10 +11,6 @@ interface IMemberPageLayout {
 
 const shareColumns = [
   {
-    title: 'withdrawSlipBook',
-    link: '/withdraw/withdraw-slip',
-  },
-  {
     title: 'withdrawSlipRequests',
     link: '/withdraw/cheque-book',
   },
@@ -25,19 +20,8 @@ const shareColumns = [
   },
 ];
 
-const addButtoncolumns = [
-  {
-    title: 'shareLayoutSharePurchase',
-    link: '/share/share-issue',
-  },
-  {
-    title: 'shareLayoutShareReturn',
-    link: '/share/share-return',
-  },
-];
-
 export const WithdrawSlipLayout = ({ children }: IMemberPageLayout) => {
-  const router = useRouter();
+  // const router = useRouter();
   const { t } = useTranslation();
 
   return (
@@ -49,15 +33,15 @@ export const WithdrawSlipLayout = ({ children }: IMemberPageLayout) => {
           </Text>
         </Box>
         <Box p="s16">
-          <PopOverComponentForButtonList buttonLabel="New">
+          {/* <PopOverComponentForButtonList buttonLabel="New">
             {addButtoncolumns.map((item) => (
               <Box key={item?.title}>
                 <AddButtonList label={t[item.title]} onClick={() => router.push(`${item.link}`)} />
               </Box>
             ))}
-          </PopOverComponentForButtonList>
+          </PopOverComponentForButtonList> */}
 
-          <Divider my="s16" />
+          {/* <Divider my="s16" /> */}
           <TabColumn list={shareColumns} />
         </Box>
       </Box>

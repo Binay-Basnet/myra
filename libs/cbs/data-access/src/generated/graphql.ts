@@ -1563,6 +1563,7 @@ export type CoopRelatedTrainingType = {
 
 export type CoopStatistics = {
   totalBranches: Scalars['Int'];
+  totalCapital?: Maybe<Scalars['String']>;
   totalMembers: Scalars['Int'];
 };
 
@@ -17684,6 +17685,7 @@ export type GetMemberDetailsOverviewQuery = {
             memberJoined?: string | null;
             genderId?: string | null;
             gender?: Record<'local' | 'en' | 'np', string> | null;
+            isStaff?: boolean | null;
             maritalStatusId?: string | null;
             maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
             contactNumber?: string | null;
@@ -17723,6 +17725,13 @@ export type GetMemberDetailsOverviewQuery = {
             noOfShares?: number | null;
           } | null> | null;
         } | null;
+        cheques?: Array<{
+          accountName?: string | null;
+          issued?: number | null;
+          used?: number | null;
+          left?: number | null;
+          cancelled?: number | null;
+        } | null> | null;
       } | null;
     } | null;
   };
@@ -27934,6 +27943,7 @@ export const GetMemberDetailsOverviewDocument = `
             memberJoined
             genderId
             gender
+            isStaff
             maritalStatusId
             maritalStatus
             contactNumber
@@ -27978,6 +27988,13 @@ export const GetMemberDetailsOverviewDocument = `
             amount
             noOfShares
           }
+        }
+        cheques {
+          accountName
+          issued
+          used
+          left
+          cancelled
         }
       }
     }

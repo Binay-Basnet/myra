@@ -7,7 +7,7 @@ import {
   Accounts,
   Activity,
   Bio,
-  Cheque,
+  Cheques,
   Documents,
   Loan,
   MemberShareInfo,
@@ -52,7 +52,7 @@ export const MemberDetails = () => {
         {tabQuery === 'activity' && <Activity />}
         {tabQuery === 'loan' && <Loan />}
         {tabQuery === 'bio' && <Bio />}
-        {tabQuery === 'cheque' && <Cheque />}
+        {tabQuery === 'cheque' && <Cheques />}
         {tabQuery === 'documents' && <Documents />}
         {tabQuery === 'reports' && <Reports />}
         {tabQuery === 'share' && <MemberShareInfo />}

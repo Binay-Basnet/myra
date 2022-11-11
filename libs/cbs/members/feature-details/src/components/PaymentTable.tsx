@@ -44,8 +44,8 @@ export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) =
             <Tags
               type="chip"
               label={value}
-              bg={value !== 'Loan' ? 'primary.100' : 'danger.100'}
-              labelColor={value !== 'Loan' ? 'primary.500' : 'danger.500'}
+              bg={value !== 'LOAN' ? 'primary.100' : 'danger.100'}
+              labelColor={value !== 'LOAN' ? 'primary.500' : 'danger.500'}
             />
           );
         },
