@@ -1,13 +1,8 @@
-import { useState } from 'react';
-import {
-  AiOutlineBug,
-  AiOutlineExclamation,
-  AiOutlineQuestionCircle,
-  AiOutlineStar,
-} from 'react-icons/ai';
-import { BsBook, BsFacebook, BsHeart, BsInstagram, BsTwitter } from 'react-icons/bs';
-import { CgShortcut } from 'react-icons/cg';
-import { TbMessageDots } from 'react-icons/tb';
+import {useState} from 'react';
+import {AiOutlineBug, AiOutlineExclamation, AiOutlineQuestionCircle, AiOutlineStar,} from 'react-icons/ai';
+import {BsBook, BsFacebook, BsHeart, BsInstagram, BsTwitter} from 'react-icons/bs';
+import {CgShortcut} from 'react-icons/cg';
+import {TbMessageDots} from 'react-icons/tb';
 import isEmpty from 'lodash/isEmpty';
 
 import {
@@ -26,7 +21,7 @@ import {
   Text,
   UnorderedList,
 } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import {useTranslation} from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface FloatingShortcutButtonProps {}
