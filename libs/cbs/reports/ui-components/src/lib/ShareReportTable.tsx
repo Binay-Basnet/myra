@@ -70,7 +70,7 @@ export const ShareReportTable = ({ shareReport, shareTotal }: ShareReportTablePr
           },
         },
         {
-          header: 'Purchase Amount (Cr.)',
+          header: 'Issue Amount (Cr.)',
           accessorKey: 'purchaseAmountCr',
           footer: () => shareTotal?.totalCr,
 
