@@ -113,6 +113,30 @@
             "deprecationReason": null
           },
           {
+            "name": "agentPic",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "agentPicUrl",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "amount",
             "description": null,
             "args": [],
@@ -54917,13 +54941,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "UNION",
-                "name": "KymCooperativeAddLUS",
-                "ofType": null
-              }
+              "kind": "UNION",
+              "name": "KymCooperativeAddLUS",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
