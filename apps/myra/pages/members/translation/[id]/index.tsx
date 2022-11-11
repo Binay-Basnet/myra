@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { AiOutlineEye } from 'react-icons/ai';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { Accordion, AccordionButton, AccordionItem, AccordionPanel, Flex } from '@chakra-ui/react';
@@ -14,17 +13,7 @@ import {
 } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormRadioGroup, FormSwitchTab } from '@coop/shared/form';
-import {
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  FormHeader,
-  Icon,
-  Input,
-  MainLayout,
-  Text,
-} from '@coop/shared/ui';
+import { Box, Container, FormFooter, FormHeader, Input, MainLayout, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const Translation = () => {
@@ -218,25 +207,22 @@ const Translation = () => {
                   <Text as="i" fontSize="r1">
                     {t['formDetails']}
                   </Text>
-                  <Text as="i" fontSize="r1">
-                    09:41 AM
-                  </Text>
                 </Box>
               }
-              draftButton={
-                <Button type="submit" variant="ghost" onClick={() => router.push(`/pdf?id=${id}`)}>
-                  <Icon as={AiOutlineEye} color="primary.500" />
-                  <Text
-                    alignSelf="center"
-                    color="primary.500"
-                    fontWeight="Medium"
-                    fontSize="s2"
-                    ml="5px"
-                  >
-                    {t['sharePreview']}
-                  </Text>
-                </Button>
-              }
+              // draftButton={
+              //   <Button type="submit" variant="ghost" onClick={() => router.push(`/pdf?id=${id}`)}>
+              //     <Icon as={AiOutlineEye} color="primary.500" />
+              //     <Text
+              //       alignSelf="center"
+              //       color="primary.500"
+              //       fontWeight="Medium"
+              //       fontSize="s2"
+              //       ml="5px"
+              //     >
+              //       {t['sharePreview']}
+              //     </Text>
+              //   </Button>
+              // }
               mainButtonLabel={t['complete']}
               mainButtonHandler={() => router.push(`/members/activation/${id}`)}
             />

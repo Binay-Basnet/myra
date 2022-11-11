@@ -137,9 +137,6 @@ export const KYMInstitutionPage = () => {
                 <Text as="i" fontSize="r1">
                   {t['formDetails']}
                 </Text>
-                <Text as="i" fontSize="r1">
-                  09:41 AM
-                </Text>
               </Box>
             }
             draftButton={

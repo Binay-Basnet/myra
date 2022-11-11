@@ -8,7 +8,7 @@ const en: Record<string, string> = {
   next: 'Next',
   save: 'Save',
   saveDraft: 'Save Draft',
-  formDetails: 'Form Details saved to draft',
+  formDetails: 'Form details saved to draft',
   pinOnMap: 'Pin on Map',
   id: 'ID',
   memberSince: 'Member since',
