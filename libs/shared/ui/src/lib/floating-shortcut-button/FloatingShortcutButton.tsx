@@ -8,6 +8,7 @@ import {
 import { BsBook, BsFacebook, BsHeart, BsInstagram, BsTwitter } from 'react-icons/bs';
 import { CgShortcut } from 'react-icons/cg';
 import { TbMessageDots } from 'react-icons/tb';
+import { useRouter } from 'next/router';
 import isEmpty from 'lodash/isEmpty';
 
 import {
@@ -186,6 +187,7 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
 
 export const FloatingShortcutButton = () => {
   const { t } = useTranslation();
+  const router = useRouter();
   const helpOptions = [
     {
       title: t['shortcutsModalGeneral'],
@@ -272,6 +274,7 @@ export const FloatingShortcutButton = () => {
                 px="s8"
                 cursor="pointer"
                 alignItems="center"
+                onClick={() => router.push('https://docs.migration.myraerp.com/docs/intro')}
               >
                 <Icon as={BsBook} />
                 <Text fontSize="s3" fontWeight="500" color="gray.600">
