@@ -21,6 +21,10 @@ type SummaryProps = {
   detailPage?: 'deposit' | 'withdraw' | 'accountTransfer' | 'agentTransaction' | 'loanRepayment';
 };
 
+const agentSlug = {
+  AGENT: 'Market Representative',
+};
+
 export const Summary = ({ summary, detailPage }: SummaryProps) => {
   const { t } = useTranslation();
 
@@ -51,7 +55,8 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
               </Text>
             ) : (
               <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">
-                {t['transDetailDeposit']} - {summary.method}
+                {t['transDetailDeposit']} -{' '}
+                {summary.method === 'AGENT' ? agentSlug[summary.method] : summary.method}
               </Text>
             )}
           </Box>

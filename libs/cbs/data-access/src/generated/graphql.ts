@@ -22,7 +22,7 @@ export type Scalars = {
   Email: any;
   HTML: any;
   InvalidData: Record<string, Array<string>>;
-  Localized: Record<"local"|"en"|"np",string>;
+  Localized: Record<'local' | 'en' | 'np', string>;
   Map: Record<string, string>;
   Time: string;
 };
@@ -84,14 +84,14 @@ export type AccountAgentListEdges = {
 export enum AccountClosePaymentMode {
   AccountTransfer = 'ACCOUNT_TRANSFER',
   BankCheque = 'BANK_CHEQUE',
-  Cash = 'CASH'
+  Cash = 'CASH',
 }
 
 export enum AccountCloseReason {
   Death = 'DEATH',
   Migration = 'MIGRATION',
   Other = 'OTHER',
-  PersonalReason = 'PERSONAL_REASON'
+  PersonalReason = 'PERSONAL_REASON',
 }
 
 export type AccountConnection = {
@@ -137,7 +137,6 @@ export type AccountMinimalResult = {
   totalBalance?: Maybe<Scalars['String']>;
 };
 
-
 export type AccountMinimalResultRecentTransactionsArgs = {
   filter?: InputMaybe<EbankingTransactionFilter>;
   paginate?: InputMaybe<Pagination>;
@@ -145,7 +144,7 @@ export type AccountMinimalResultRecentTransactionsArgs = {
 
 export enum AccountOperationType {
   Joint = 'JOINT',
-  Single = 'SINGLE'
+  Single = 'SINGLE',
 }
 
 export type AccountOperatorDetailsFormState = {
@@ -246,7 +245,7 @@ export type AccountTypeDetailsUnion = BankChartsOfAccount | JournalChartsOfAccou
 
 export enum AccountTypeFilter {
   Deposit = 'DEPOSIT',
-  Loan = 'LOAN'
+  Loan = 'LOAN',
 }
 
 export type AccountWithdrawSlipMutationResult = {
@@ -281,17 +280,14 @@ export type AccountingInvestmentMutation = {
   upsertEntry: AccountingInvestmentMutationResult;
 };
 
-
 export type AccountingInvestmentMutationAddTransactionArgs = {
   data: InvestmentTransactionInput;
 };
-
 
 export type AccountingInvestmentMutationUpsertAccountArgs = {
   data: InvestmentAccountInput;
   id: Scalars['ID'];
 };
-
 
 export type AccountingInvestmentMutationUpsertEntryArgs = {
   data: InvestmentEntryInput;
@@ -312,28 +308,23 @@ export type AccountingInvestmentQuery = {
   listTransaction: InvestmentTransactionListConnection;
 };
 
-
 export type AccountingInvestmentQueryAccountFormStateArgs = {
   id: Scalars['ID'];
 };
 
-
 export type AccountingInvestmentQueryEntryFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type AccountingInvestmentQueryListAccountArgs = {
   filter?: InputMaybe<InvestmentAccountFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type AccountingInvestmentQueryListEntryArgs = {
   filter?: InputMaybe<InvestmentEntryFilter>;
   pagination?: InputMaybe<Pagination>;
 };
-
 
 export type AccountingInvestmentQueryListTransactionArgs = {
   filter?: InputMaybe<InvestmentTransactionFilter>;
@@ -372,24 +363,20 @@ export type AccountingSalesMutation = {
   upsertSaleEntry: AccountingSalesMutationResult;
 };
 
-
 export type AccountingSalesMutationUpsertCreditNoteArgs = {
   data: SalesCreditNoteInput;
   id: Scalars['ID'];
 };
-
 
 export type AccountingSalesMutationUpsertCustomerArgs = {
   data: SalesCustomerInput;
   id: Scalars['ID'];
 };
 
-
 export type AccountingSalesMutationUpsertCustomerPaymentArgs = {
   data: SalesCustomerPaymentInput;
   id: Scalars['ID'];
 };
-
 
 export type AccountingSalesMutationUpsertSaleEntryArgs = {
   data: SalesSaleEntryInput;
@@ -413,45 +400,37 @@ export type AccountingSalesQuery = {
   saleEntryFormState: AccountingSalesSaleEntryQueryResult;
 };
 
-
 export type AccountingSalesQueryCreditNoteFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type AccountingSalesQueryCustomerFormStateArgs = {
   id: Scalars['ID'];
 };
 
-
 export type AccountingSalesQueryCustomerPaymentFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type AccountingSalesQueryListCreditNoteArgs = {
   filter?: InputMaybe<SalesCreditNoteFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type AccountingSalesQueryListCustomerArgs = {
   filter?: InputMaybe<SalesCustomerFilter>;
   pagination?: InputMaybe<Pagination>;
 };
-
 
 export type AccountingSalesQueryListCustomerPaymentArgs = {
   filter?: InputMaybe<SalesCustomerPaymentFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type AccountingSalesQueryListSaleEntryArgs = {
   filter?: InputMaybe<SalesSaleEntryFilter>;
   pagination?: InputMaybe<Pagination>;
 };
-
 
 export type AccountingSalesQuerySaleEntryFormStateArgs = {
   id: Scalars['ID'];
@@ -521,17 +500,14 @@ export type AdministrationQuery = {
   wards: Array<Scalars['Int']>;
 };
 
-
 export type AdministrationQueryDistrictsArgs = {
   provinceId?: InputMaybe<Scalars['Int']>;
 };
-
 
 export type AdministrationQueryMunicipalitiesArgs = {
   districtId?: InputMaybe<Scalars['Int']>;
   provinceId?: InputMaybe<Scalars['Int']>;
 };
-
 
 export type AdministrationQueryWardsArgs = {
   districtId: Scalars['Int'];
@@ -627,7 +603,7 @@ export enum AllModules {
   HrManagement = 'HR_MANAGEMENT',
   InventoryManagement = 'INVENTORY_MANAGEMENT',
   MemberAndShareManagement = 'MEMBER_AND_SHARE_MANAGEMENT',
-  QualityAssuranceForNefscun = 'QUALITY_ASSURANCE_FOR_NEFSCUN'
+  QualityAssuranceForNefscun = 'QUALITY_ASSURANCE_FOR_NEFSCUN',
 }
 
 export type AlternativeChannelActivation = {
@@ -673,7 +649,7 @@ export type AlternativeChannelConnection = {
 
 export enum AlternativeChannelDepositedBy {
   Others = 'OTHERS',
-  Self = 'SELF'
+  Self = 'SELF',
 }
 
 export type AlternativeChannelEdge = {
@@ -696,7 +672,6 @@ export type AlternativeChannelMutation = {
   serviceActivation?: Maybe<AlternativeChannelServiceActivationResult>;
 };
 
-
 export type AlternativeChannelMutationServiceActivationArgs = {
   data?: InputMaybe<AlternativeChannelServiceActivationInput>;
 };
@@ -704,7 +679,7 @@ export type AlternativeChannelMutationServiceActivationArgs = {
 export enum AlternativeChannelPaymentMode {
   Account = 'ACCOUNT',
   BankVoucher = 'BANK_VOUCHER',
-  Cash = 'CASH'
+  Cash = 'CASH',
 }
 
 export type AlternativeChannelQuery = {
@@ -712,12 +687,10 @@ export type AlternativeChannelQuery = {
   memberActivations?: Maybe<AlternativeChannelMemberActivations>;
 };
 
-
 export type AlternativeChannelQueryListArgs = {
   filter?: InputMaybe<AlternativeChannelFilter>;
   paginate?: InputMaybe<Pagination>;
 };
-
 
 export type AlternativeChannelQueryMemberActivationsArgs = {
   memberId: Scalars['String'];
@@ -745,13 +718,12 @@ export type AlternativeChannelServiceActivationResult = {
 export enum AlternativeChannelServiceType {
   Ebanking = 'EBANKING',
   MobileBanking = 'MOBILE_BANKING',
-  SmsBanking = 'SMS_BANKING'
+  SmsBanking = 'SMS_BANKING',
 }
 
 export type AlternativeChannelSettingsMutation = {
   feesAndCharges?: Maybe<AlternativeChannelChargesResult>;
 };
-
 
 export type AlternativeChannelSettingsMutationFeesAndChargesArgs = {
   data?: InputMaybe<Array<InputMaybe<AlternativeChannelChargesInput>>>;
@@ -763,7 +735,7 @@ export type AlternativeChannelSettingsQuery = {
 
 export enum AlternativeChannelStatus {
   Active = 'ACTIVE',
-  Inactive = 'INACTIVE'
+  Inactive = 'INACTIVE',
 }
 
 export type AmountLimit = {
@@ -780,7 +752,7 @@ export type AmountLimitFormState = {
 
 export enum Arrange {
   Asc = 'ASC',
-  Desc = 'DESC'
+  Desc = 'DESC',
 }
 
 export type AssignMembersInput = {
@@ -847,11 +819,9 @@ export type AuthMutation = {
   token?: Maybe<AuthTokenResult>;
 };
 
-
 export type AuthMutationLoginArgs = {
   data: LoginInput;
 };
-
 
 export type AuthMutationTokenArgs = {
   refreshToken: Scalars['String'];
@@ -946,12 +916,10 @@ export type BankBranchMutation = {
   delete: BankBranchDeleteResult;
 };
 
-
 export type BankBranchMutationAddArgs = {
   data?: InputMaybe<BankBranchInput>;
   id: Scalars['ID'];
 };
-
 
 export type BankBranchMutationDeleteArgs = {
   id: Scalars['ID'];
@@ -964,16 +932,13 @@ export type BankBranchQuery = {
   list?: Maybe<Array<Maybe<BankBranch>>>;
 };
 
-
 export type BankBranchQueryGetArgs = {
   id: Scalars['ID'];
 };
 
-
 export type BankBranchQueryGetBranchesArgs = {
   bankId: Scalars['ID'];
 };
-
 
 export type BankBranchQueryListArgs = {
   filter?: InputMaybe<BankBranchSearchFilter>;
@@ -1010,12 +975,10 @@ export type BankDataMutation = {
   delete: BankDeleteResult;
 };
 
-
 export type BankDataMutationAddArgs = {
   data?: InputMaybe<BankInput>;
   id: Scalars['ID'];
 };
-
 
 export type BankDataMutationDeleteArgs = {
   id: Scalars['ID'];
@@ -1026,11 +989,9 @@ export type BankDataQuery = {
   list?: Maybe<Array<Maybe<Bank>>>;
 };
 
-
 export type BankDataQueryGetArgs = {
   id: Scalars['ID'];
 };
-
 
 export type BankDataQueryListArgs = {
   filter?: InputMaybe<BankSearchFilter>;
@@ -1141,7 +1102,7 @@ export enum BranchCategory {
   ContactOffice = 'CONTACT_OFFICE',
   HeadOffice = 'HEAD_OFFICE',
   RegionalOffice = 'REGIONAL_OFFICE',
-  ServiceCenter = 'SERVICE_CENTER'
+  ServiceCenter = 'SERVICE_CENTER',
 }
 
 export type BranchConnection = {
@@ -1188,6 +1149,14 @@ export type BranchGetResult = {
   error?: Maybe<QueryError>;
 };
 
+export type BranchInfo = {
+  membersToApprove?: Maybe<Scalars['Int']>;
+  percentOfAccounts?: Maybe<Scalars['String']>;
+  percentofMemberRequest?: Maybe<Scalars['String']>;
+  totalAccounts?: Maybe<Scalars['Int']>;
+  totalMembers?: Maybe<Scalars['Int']>;
+};
+
 export type BranchInput = {
   abbsStatus?: InputMaybe<Scalars['Boolean']>;
   branchCode?: InputMaybe<Scalars['String']>;
@@ -1212,7 +1181,7 @@ export type BranchInput = {
 
 export enum BranchPaymentMode {
   BankCheque = 'BANK_CHEQUE',
-  Cash = 'CASH'
+  Cash = 'CASH',
 }
 
 export type BranchSearchFilter = {
@@ -1225,7 +1194,7 @@ export enum BuildingType {
   Commercial = 'COMMERCIAL',
   Industrial = 'INDUSTRIAL',
   Institutional = 'INSTITUTIONAL',
-  Residential = 'RESIDENTIAL'
+  Residential = 'RESIDENTIAL',
 }
 
 export type BulkDepositInput = {
@@ -1265,7 +1234,7 @@ export type BulkInstallmentResult = {
 
 export enum CoaCategory {
   SystemDefined = 'SYSTEM_DEFINED',
-  UserDefined = 'USER_DEFINED'
+  UserDefined = 'USER_DEFINED',
 }
 
 export type CoaFullView = {
@@ -1287,7 +1256,7 @@ export type CoaMinimalResult = {
 export enum CoaTypesOfAccount {
   Bank = 'BANK',
   Cash = 'CASH',
-  Journal = 'JOURNAL'
+  Journal = 'JOURNAL',
 }
 
 export type CoaView = {
@@ -1325,6 +1294,12 @@ export type CashDepositData = {
   total: Scalars['String'];
 };
 
+export type CashInHandData = {
+  fromVault?: Maybe<Scalars['String']>;
+  percent?: Maybe<Scalars['String']>;
+  todayValue?: Maybe<Scalars['String']>;
+};
+
 export enum CashValue {
   Cash_1 = 'CASH_1',
   Cash_2 = 'CASH_2',
@@ -1335,7 +1310,7 @@ export enum CashValue {
   Cash_50 = 'CASH_50',
   Cash_100 = 'CASH_100',
   Cash_500 = 'CASH_500',
-  Cash_1000 = 'CASH_1000'
+  Cash_1000 = 'CASH_1000',
 }
 
 export type ChartsOfAccount = Base & {
@@ -1389,11 +1364,9 @@ export type ChartsOfAccountMutation = {
   delete: AddChartsOfAccountResult;
 };
 
-
 export type ChartsOfAccountMutationAddArgs = {
   data: AddCoaAccountInput;
 };
-
 
 export type ChartsOfAccountMutationDeleteArgs = {
   id: Scalars['ID'];
@@ -1416,16 +1389,13 @@ export type ChartsOfAccountSettingsQuery = {
   search?: Maybe<CoaMinimalResult>;
 };
 
-
 export type ChartsOfAccountSettingsQueryAccountsArgs = {
   filter: ChartsOfAccountFilter;
 };
 
-
 export type ChartsOfAccountSettingsQueryAccountsUnderArgs = {
   accountCode?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
-
 
 export type ChartsOfAccountSettingsQuerySearchArgs = {
   name: Scalars['String'];
@@ -1481,7 +1451,7 @@ export type ChequePastRequest = {
 
 export enum ChequePickUpMethod {
   SelfPickup = 'Self_Pickup',
-  ThroughAgent = 'Through_agent'
+  ThroughAgent = 'Through_agent',
 }
 
 export type Citizenship = {
@@ -1501,7 +1471,7 @@ export enum Collateral {
   Land = 'LAND',
   LandAndBuilding = 'LAND_AND_BUILDING',
   Others = 'OTHERS',
-  Vehicle = 'VEHICLE'
+  Vehicle = 'VEHICLE',
 }
 
 export type CollateralFormState = {
@@ -1542,7 +1512,7 @@ export type CollateralListInputData = {
 export enum ComparatorType {
   EqualTo = 'EqualTo',
   GreaterThan = 'GreaterThan',
-  LessThan = 'LessThan'
+  LessThan = 'LessThan',
 }
 
 export type Condition = {
@@ -1558,11 +1528,9 @@ export type ConfigQuery = {
   country?: Maybe<Country>;
 };
 
-
 export type ConfigQueryBankArgs = {
   id: Scalars['ID'];
 };
-
 
 export type ConfigQueryCountryArgs = {
   code: Scalars['String'];
@@ -1574,7 +1542,7 @@ export enum ConstructionType {
   LightGaugeSteelFrame = 'LIGHT_GAUGE_STEEL_FRAME',
   PreEngineered = 'PRE_ENGINEERED',
   SteelFrame = 'STEEL_FRAME',
-  WoodFrame = 'WOOD_FRAME'
+  WoodFrame = 'WOOD_FRAME',
 }
 
 export type Contact = {
@@ -1816,7 +1784,7 @@ export enum CoopUnionSection {
   Declaration = 'DECLARATION',
   EconomicDetails = 'ECONOMIC_DETAILS',
   InstitutionInformation = 'INSTITUTION_INFORMATION',
-  MemberDetails = 'MEMBER_DETAILS'
+  MemberDetails = 'MEMBER_DETAILS',
 }
 
 export type CooperativeAccountOperatorDetails = {
@@ -2105,7 +2073,7 @@ export type CooperativeUnionMember = {
 export enum CooperativeUnionPersonnelSection {
   AccountOperators = 'ACCOUNT_OPERATORS',
   CentralRepresentative = 'CENTRAL_REPRESENTATIVE',
-  Directors = 'DIRECTORS'
+  Directors = 'DIRECTORS',
 }
 
 export type Coordinate = {
@@ -2133,7 +2101,7 @@ export enum CriteriaSection {
   MaritalStatus = 'MARITAL_STATUS',
   NatureOfBusinessCoopunion = 'NATURE_OF_BUSINESS_COOPUNION',
   NatureOfBusinessInstitutions = 'NATURE_OF_BUSINESS_INSTITUTIONS',
-  OccupationDetails = 'OCCUPATION_DETAILS'
+  OccupationDetails = 'OCCUPATION_DETAILS',
 }
 
 export type CustomFormListQueryResult = {
@@ -2144,7 +2112,6 @@ export type CustomFormListQueryResult = {
 export type CustomFormQuery = {
   list: CustomFormListQueryResult;
 };
-
 
 export type CustomFormQueryListArgs = {
   filter: CustomListFilter;
@@ -2167,7 +2134,7 @@ export type CustomPeriodType = {
 export enum CustomerPayment {
   BankTransfer = 'BANK_TRANSFER',
   Cash = 'CASH',
-  Cheque = 'CHEQUE'
+  Cheque = 'CHEQUE',
 }
 
 export type DbCreateResult = {
@@ -2175,36 +2142,21 @@ export type DbCreateResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
-export type DashboardData = {
-  listDashboardTask?: Maybe<Array<Maybe<DashboardTask>>>;
-  listTodayTrend?: Maybe<Array<Maybe<TodayTrend>>>;
+export type DashboardInfo = {
+  branchInfo?: Maybe<BranchInfo>;
+  coopInfo?: Maybe<MyCoopInfo>;
+  pendingRequest?: Maybe<PendingRequestInfo>;
 };
 
-export type DashboardEmployee = {
-  id: Scalars['ID'];
-  image: Scalars['String'];
-  name?: Maybe<Scalars['String']>;
+export type DashboardInfoResult = {
+  data?: Maybe<DashboardInfo>;
+  error?: Maybe<QueryError>;
 };
 
 export type DashboardQuery = {
-  dashboardData?: Maybe<DashboardData>;
+  dashboardInfo?: Maybe<DashboardInfoResult>;
+  myDayInfo?: Maybe<TransactionMyDayData>;
 };
-
-export type DashboardTask = {
-  createdBy?: Maybe<DashboardEmployee>;
-  createdFor?: Maybe<DashboardEmployee>;
-  description?: Maybe<Scalars['String']>;
-  due?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
-  title?: Maybe<Scalars['String']>;
-};
-
-export enum DashboardTodayType {
-  Deposits = 'DEPOSITS',
-  Loan = 'LOAN',
-  Transaction = 'TRANSACTION',
-  Withdraws = 'WITHDRAWS'
-}
 
 export type DateFilter = {
   from?: InputMaybe<Scalars['String']>;
@@ -2213,7 +2165,7 @@ export type DateFilter = {
 
 export enum DateType {
   Ad = 'AD',
-  Bs = 'BS'
+  Bs = 'BS',
 }
 
 export type Declaration = Base & {
@@ -2231,7 +2183,7 @@ export enum DeclarationFor {
   KymCoop = 'KYM_COOP',
   KymCoopUnion = 'KYM_COOP_UNION',
   KymIndividual = 'KYM_INDIVIDUAL',
-  KymInstitution = 'KYM_INSTITUTION'
+  KymInstitution = 'KYM_INSTITUTION',
 }
 
 export type DeclarationGetResult = {
@@ -2249,7 +2201,6 @@ export type DeclarationMutation = {
   update: DeclarationUpdateResult;
 };
 
-
 export type DeclarationMutationUpdateArgs = {
   data: DeclarationInput;
 };
@@ -2257,7 +2208,6 @@ export type DeclarationMutationUpdateArgs = {
 export type DeclarationQuery = {
   get?: Maybe<DeclarationGetResult>;
 };
-
 
 export type DeclarationQueryGetArgs = {
   for?: InputMaybe<DeclarationFor>;
@@ -2279,7 +2229,7 @@ export type DeclarationUpdateResult = {
 
 export enum DefaultAccountType {
   Current = 'CURRENT',
-  Saving = 'SAVING'
+  Saving = 'SAVING',
 }
 
 export type Denomination = {
@@ -2360,7 +2310,7 @@ export enum DepositFrequency {
   HalfYearly = 'HALF_YEARLY',
   Monthly = 'MONTHLY',
   Quarterly = 'QUARTERLY',
-  Yearly = 'YEARLY'
+  Yearly = 'YEARLY',
 }
 
 export type DepositInput = {
@@ -2513,17 +2463,14 @@ export type DepositLoanAccountMutation = {
   forgiveInstallment?: Maybe<DepositAccountInstallmentResult>;
 };
 
-
 export type DepositLoanAccountMutationAddArgs = {
   data?: InputMaybe<DepositLoanAccountInput>;
   id: Scalars['ID'];
 };
 
-
 export type DepositLoanAccountMutationCloseArgs = {
   data?: InputMaybe<DepositAccountClose>;
 };
-
 
 export type DepositLoanAccountMutationForgiveInstallmentArgs = {
   id: Scalars['ID'];
@@ -2542,26 +2489,21 @@ export type DepositLoanAccountQuery = {
   listTransactions?: Maybe<EbankingTransactionConnection>;
 };
 
-
 export type DepositLoanAccountQueryAccountDetailsArgs = {
   id: Scalars['ID'];
 };
-
 
 export type DepositLoanAccountQueryFormStateArgs = {
   id: Scalars['ID'];
 };
 
-
 export type DepositLoanAccountQueryGetArgs = {
   id: Scalars['ID'];
 };
 
-
 export type DepositLoanAccountQueryGetBulkInstallmentsArgs = {
   ids: Array<InputMaybe<Scalars['ID']>>;
 };
-
 
 export type DepositLoanAccountQueryGetInstallmentsArgs = {
   from?: InputMaybe<Scalars['String']>;
@@ -2571,23 +2513,19 @@ export type DepositLoanAccountQueryGetInstallmentsArgs = {
   toN?: InputMaybe<Scalars['Int']>;
 };
 
-
 export type DepositLoanAccountQueryListArgs = {
   filter?: InputMaybe<DepositLoanAccountSearchFilter>;
   paginate?: InputMaybe<Pagination>;
 };
-
 
 export type DepositLoanAccountQueryListDefaultAccountsArgs = {
   memberId: Scalars['ID'];
   productId: Scalars['ID'];
 };
 
-
 export type DepositLoanAccountQueryListMinorsArgs = {
   memberId: Scalars['ID'];
 };
-
 
 export type DepositLoanAccountQueryListTransactionsArgs = {
   filter: AccountsTransactionFilter;
@@ -2611,7 +2549,7 @@ export type DepositLoanAccountSearchFilter = {
 export enum DepositPaymentType {
   BankVoucher = 'BANK_VOUCHER',
   Cash = 'CASH',
-  WithdrawSlip = 'WITHDRAW_SLIP'
+  WithdrawSlip = 'WITHDRAW_SLIP',
 }
 
 export type DepositProduct = Base & {
@@ -2852,19 +2790,16 @@ export type DepositProductSettingsMutation = {
   makeInactive?: Maybe<DepositProductInactiveResult>;
 };
 
-
 export type DepositProductSettingsMutationActivateProductArgs = {
   productId: Scalars['ID'];
   productType: AccountTypeFilter;
   remarks: Scalars['String'];
 };
 
-
 export type DepositProductSettingsMutationAddArgs = {
   data?: InputMaybe<DepositProductInput>;
   id: Scalars['ID'];
 };
-
 
 export type DepositProductSettingsMutationMakeInactiveArgs = {
   data?: InputMaybe<DepositProductInactiveData>;
@@ -2879,31 +2814,25 @@ export type DepositProductSettingsQuery = {
   list?: Maybe<DepositProductConnection>;
 };
 
-
 export type DepositProductSettingsQueryFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type DepositProductSettingsQueryGetArgs = {
   id: Scalars['ID'];
 };
 
-
 export type DepositProductSettingsQueryGetPenaltyRebateInfoArgs = {
   productId: Scalars['ID'];
 };
-
 
 export type DepositProductSettingsQueryGetProductCriteriaArgs = {
   productId: Scalars['ID'];
 };
 
-
 export type DepositProductSettingsQueryGetProductListArgs = {
   memberId: Scalars['ID'];
 };
-
 
 export type DepositProductSettingsQueryListArgs = {
   filter?: InputMaybe<DepositProductSearchFilter>;
@@ -2912,7 +2841,7 @@ export type DepositProductSettingsQueryListArgs = {
 
 export enum DepositProductStatus {
   Active = 'ACTIVE',
-  Inactive = 'INACTIVE'
+  Inactive = 'INACTIVE',
 }
 
 export type DepositResult = {
@@ -2926,11 +2855,9 @@ export type DepositSettingsMutation = {
   tdsSetup?: Maybe<DepositTdsResult>;
 };
 
-
 export type DepositSettingsMutationIroSetupArgs = {
   data?: InputMaybe<DepositIroInput>;
 };
-
 
 export type DepositSettingsMutationTdsSetupArgs = {
   data?: InputMaybe<DepositTdsInput>;
@@ -3004,7 +2931,7 @@ export type DepositTransactionViewResult = {
 export enum DepositedBy {
   Agent = 'AGENT',
   Other = 'OTHER',
-  Self = 'SELF'
+  Self = 'SELF',
 }
 
 export type DirectorAffiliatedFirms = {
@@ -3062,7 +2989,7 @@ export type District = {
 export enum DividendDistributionCondition {
   Daily = 'DAILY',
   Monthly = 'MONTHLY',
-  Quarterly = 'QUARTERLY'
+  Quarterly = 'QUARTERLY',
 }
 
 export type DividendRate = {
@@ -3078,7 +3005,7 @@ export type DividendRateInput = {
 export enum DividendTransferTreatment {
   AccountTransfer = 'ACCOUNT_TRANSFER',
   BookPayable = 'BOOK_PAYABLE',
-  ShareAndAccount = 'SHARE_AND_ACCOUNT'
+  ShareAndAccount = 'SHARE_AND_ACCOUNT',
 }
 
 export type Document = {
@@ -3096,13 +3023,11 @@ export type DocumentMutation = {
   Subscription: SubscriptionMutation;
 };
 
-
 export type DocumentMutationKymUpsertArgs = {
   fieldId: Scalars['String'];
   identifiers: Array<Scalars['String']>;
   memberId: Scalars['String'];
 };
-
 
 export type DocumentMutationSubscriptionArgs = {
   subscriptionId: Scalars['String'];
@@ -3119,11 +3044,9 @@ export type DocumentQuery = {
   listSubscriptionDocuments: DocumentResult;
 };
 
-
 export type DocumentQueryListKymDocumentsArgs = {
   memberId: Scalars['String'];
 };
-
 
 export type DocumentQueryListSubscriptionDocumentsArgs = {
   subscriptionId: Scalars['String'];
@@ -3154,7 +3077,6 @@ export type EBankingAccountMutation = {
   setDefaultAccount?: Maybe<EbankingSetDefaultAccountResult>;
 };
 
-
 export type EBankingAccountMutationSetDefaultAccountArgs = {
   accountId: Scalars['String'];
 };
@@ -3165,7 +3087,6 @@ export type EBankingAccountQuery = {
   summary?: Maybe<AccountSummary>;
 };
 
-
 export type EBankingAccountQueryGetArgs = {
   id: Scalars['ID'];
 };
@@ -3173,13 +3094,12 @@ export type EBankingAccountQueryGetArgs = {
 export enum EBankingActiveLoanStatus {
   Pending = 'Pending',
   Processing = 'Processing',
-  Scheduled = 'Scheduled'
+  Scheduled = 'Scheduled',
 }
 
 export type EBankingAnnouncementQuery = {
   list: Array<Maybe<EBankingAppAnnouncement>>;
 };
-
 
 export type EBankingAnnouncementQueryListArgs = {
   filter?: InputMaybe<NotificationFilter>;
@@ -3204,7 +3124,6 @@ export type EBankingAppNotification = {
 export type EBankingAppNotificationQuery = {
   list: Array<Maybe<EBankingAppNotification>>;
 };
-
 
 export type EBankingAppNotificationQueryListArgs = {
   filter?: InputMaybe<NotificationFilter>;
@@ -3239,18 +3158,15 @@ export type EBankingAuthMutation = {
   verifyOtp?: Maybe<EbankingOtpResult>;
 };
 
-
 export type EBankingAuthMutationChangeCoopPinArgs = {
   newPin: Scalars['String'];
   oldPin: Scalars['String'];
 };
 
-
 export type EBankingAuthMutationChangePasswordArgs = {
   newPassword: Scalars['String'];
   oldPassword: Scalars['String'];
 };
-
 
 export type EBankingAuthMutationCheckAccountArgs = {
   coopId: Scalars['ID'];
@@ -3258,17 +3174,14 @@ export type EBankingAuthMutationCheckAccountArgs = {
   pin: Scalars['Int'];
 };
 
-
 export type EBankingAuthMutationGetNewTokenArgs = {
   refreshToken: Scalars['String'];
   tokenFor: EBankingTokenType;
 };
 
-
 export type EBankingAuthMutationLoginArgs = {
   data: EbankingLoginInput;
 };
-
 
 export type EBankingAuthMutationLoginToCooperativeArgs = {
   cooperativeId: Scalars['ID'];
@@ -3276,34 +3189,28 @@ export type EBankingAuthMutationLoginToCooperativeArgs = {
   pinCode: Scalars['String'];
 };
 
-
 export type EBankingAuthMutationResendOtpArgs = {
   mobile: Scalars['String'];
   otpFor: OtpFor;
 };
-
 
 export type EBankingAuthMutationResetPasswordArgs = {
   mobileNo: Scalars['String'];
   newPassword: Scalars['String'];
 };
 
-
 export type EBankingAuthMutationSetNewPinArgs = {
   data?: InputMaybe<CooperativeConnectInput>;
 };
-
 
 export type EBankingAuthMutationSetPasswordArgs = {
   data: EbankingPasswordInput;
   userID: Scalars['ID'];
 };
 
-
 export type EBankingAuthMutationSignUpArgs = {
   mobileNo: Scalars['String'];
 };
-
 
 export type EBankingAuthMutationVerifyOtpArgs = {
   data: EbankingOtpInput;
@@ -3321,18 +3228,15 @@ export type EBankingChequeMutation = {
   withdrawViaCollector?: Maybe<EBankingChequeResult>;
 };
 
-
 export type EBankingChequeMutationBlockArgs = {
   data?: InputMaybe<EBankingChequeBlockInput>;
   memberID: Scalars['String'];
 };
 
-
 export type EBankingChequeMutationRequestArgs = {
   data?: InputMaybe<EBankingChequeRequestInput>;
   memberID: Scalars['String'];
 };
-
 
 export type EBankingChequeMutationWithdrawViaCollectorArgs = {
   data?: InputMaybe<EBankingChequeWithdrawViaCollectorInput>;
@@ -3345,7 +3249,6 @@ export type EBankingChequeQuery = {
   options: Array<EBankingCooperativeServiceOption>;
   pastRequests?: Maybe<Array<Maybe<ChequePastRequest>>>;
 };
-
 
 export type EBankingChequeQueryPastRequestsArgs = {
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
@@ -3363,7 +3266,7 @@ export type EBankingChequeRequestInput = {
 
 export enum EBankingChequeRequestType {
   SelfPickup = 'Self_Pickup',
-  ThroughAgent = 'Through_agent'
+  ThroughAgent = 'Through_agent',
 }
 
 export type EBankingChequeResult = {
@@ -3411,7 +3314,6 @@ export type EBankingComplaintMutation = {
   register?: Maybe<EBankingComplaintRegisterResult>;
 };
 
-
 export type EBankingComplaintMutationRegisterArgs = {
   data?: InputMaybe<EBankingRegisterComplaintInput>;
   memberID: Scalars['String'];
@@ -3421,7 +3323,6 @@ export type EBankingComplaintQuery = {
   history?: Maybe<EBankingComplaintHistoryData>;
   options: Array<EBankingCooperativeServiceOption>;
 };
-
 
 export type EBankingComplaintQueryHistoryArgs = {
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
@@ -3466,7 +3367,6 @@ export type EBankingCooperativeServiceQuery = {
   organizationInfo: Organization;
 };
 
-
 export type EBankingCooperativeServiceQueryOrganizationInfoArgs = {
   id: Scalars['ID'];
 };
@@ -3489,7 +3389,6 @@ export type EBankingDownloadsQuery = {
   options: Array<EBankingCooperativeServiceOption>;
 };
 
-
 export type EBankingDownloadsQueryFilesArgs = {
   filter?: InputMaybe<EBankingDownloadsFilter>;
 };
@@ -3499,7 +3398,11 @@ export type EBankingKymAddFormStatus = {
   sectionStatus?: Maybe<EBankingKymAddSectionStatus>;
 };
 
-export type EBankingKymAddLus = EBankingKymCooperativeLus | EBankingKymDeclarationLus | EBankingKymPersonalLus | EBankingKymProfessionalLus;
+export type EBankingKymAddLus =
+  | EBankingKymCooperativeLus
+  | EBankingKymDeclarationLus
+  | EBankingKymPersonalLus
+  | EBankingKymProfessionalLus;
 
 export type EBankingKymAddLastUpdated = {
   cooperativeMembership?: Maybe<EBankingKymCooperativeMemberStatus>;
@@ -3522,7 +3425,7 @@ export type EBankingKymCooperativeLus = {
 export enum EBankingKymCooperativeMemberSection {
   BackgroundInformation = 'BACKGROUND_INFORMATION',
   EstimatedTransactions = 'ESTIMATED_TRANSACTIONS',
-  FinancialTransactionDetails = 'FINANCIAL_TRANSACTION_DETAILS'
+  FinancialTransactionDetails = 'FINANCIAL_TRANSACTION_DETAILS',
 }
 
 export type EBankingKymCooperativeMemberStatus = {
@@ -3535,7 +3438,9 @@ export type EBankingKymCooperativeMembership = {
   estimatedAnnualLoanAmount?: Maybe<Scalars['Float']>;
   estimatedAnnualTransactionAmount?: Maybe<Scalars['Float']>;
   estimatedAnnualTransactionFrequencyId?: Maybe<Scalars['ID']>;
-  familyMemberInThisCooperative?: Maybe<Array<Maybe<KymFamilyMemberDetailsInThisCooperativeFormState>>>;
+  familyMemberInThisCooperative?: Maybe<
+    Array<Maybe<KymFamilyMemberDetailsInThisCooperativeFormState>>
+  >;
   isMemberOfAnotherCooperative?: Maybe<Scalars['Boolean']>;
   loan?: Maybe<Scalars['Float']>;
   memberNumberInAnotherCooperative?: Maybe<Scalars['String']>;
@@ -3551,7 +3456,9 @@ export type EBankingKymCooperativeMembershipInput = {
   estimatedAnnualLoanAmount?: InputMaybe<Scalars['Float']>;
   estimatedAnnualTransactionAmount?: InputMaybe<Scalars['Float']>;
   estimatedAnnualTransactionFrequencyId?: InputMaybe<Scalars['ID']>;
-  familyMemberInThisCooperative?: InputMaybe<Array<InputMaybe<KymFamilyMemberDetailsInThisCooperative>>>;
+  familyMemberInThisCooperative?: InputMaybe<
+    Array<InputMaybe<KymFamilyMemberDetailsInThisCooperative>>
+  >;
   isMemberOfAnotherCooperative?: InputMaybe<Scalars['Boolean']>;
   loan?: InputMaybe<Scalars['Float']>;
   memberNumberInAnotherCooperative?: InputMaybe<Scalars['String']>;
@@ -3613,7 +3520,7 @@ export type EBankingKymDeclarationResult = {
 };
 
 export enum EBankingKymDeclarationSection {
-  DeclarationInformation = 'DECLARATION_INFORMATION'
+  DeclarationInformation = 'DECLARATION_INFORMATION',
 }
 
 export type EBankingKymDeclarationStatus = {
@@ -3649,11 +3556,9 @@ export type EBankingKymMutation = {
   newKymId: Scalars['ID'];
 };
 
-
 export type EBankingKymMutationAddArgs = {
   id: Scalars['ID'];
 };
-
 
 export type EBankingKymMutationNewKymIdArgs = {
   cooperativeId: Scalars['ID'];
@@ -3748,7 +3653,7 @@ export enum EBankingKymPersonalSection {
   BasicInformation = 'BASIC_INFORMATION',
   ContactDetails = 'CONTACT_DETAILS',
   FamilyDetails = 'FAMILY_DETAILS',
-  IdentificationDetails = 'IDENTIFICATION_DETAILS'
+  IdentificationDetails = 'IDENTIFICATION_DETAILS',
 }
 
 export type EBankingKymPersonalStatus = {
@@ -3785,7 +3690,7 @@ export enum EBankingKymProfessionalSection {
   IncomeSource = 'INCOME_SOURCE',
   MainProfession = 'MAIN_PROFESSION',
   Profession = 'PROFESSION',
-  SpouseOccupation = 'SPOUSE_OCCUPATION'
+  SpouseOccupation = 'SPOUSE_OCCUPATION',
 }
 
 export type EBankingKymProfessionalStatus = {
@@ -3796,7 +3701,6 @@ export type EBankingKymProfessionalStatus = {
 export type EBankingKymQuery = {
   formState: EBankingKymFormStateQuery;
 };
-
 
 export type EBankingKymQueryFormStateArgs = {
   id: Scalars['ID'];
@@ -3809,21 +3713,17 @@ export type EBankingKymSectionMutation = {
   professionalInformation?: Maybe<EBankingKymProfessionalInformationResult>;
 };
 
-
 export type EBankingKymSectionMutationCooperativeMembershipArgs = {
   data?: InputMaybe<EBankingKymCooperativeMembershipInput>;
 };
-
 
 export type EBankingKymSectionMutationDeclarationArgs = {
   data?: InputMaybe<EBankingKymDeclarationInput>;
 };
 
-
 export type EBankingKymSectionMutationPersonalInformationArgs = {
   data?: InputMaybe<EBankingKymPersonalInformationInput>;
 };
-
 
 export type EBankingKymSectionMutationProfessionalInformationArgs = {
   data?: InputMaybe<EBankingKymProfessionalInformationInput>;
@@ -3833,7 +3733,6 @@ export type EBankingLoanAccountQuery = {
   get?: Maybe<EbankingAccountResult>;
   list?: Maybe<AccountMinimalResult>;
 };
-
 
 export type EBankingLoanAccountQueryGetArgs = {
   id: Scalars['ID'];
@@ -3855,7 +3754,6 @@ export type EBankingLoanMutation = {
   apply?: Maybe<EBankingApplyLoanResult>;
 };
 
-
 export type EBankingLoanMutationApplyArgs = {
   data?: InputMaybe<EBankingApplyLoanInput>;
   memberID: Scalars['String'];
@@ -3865,7 +3763,6 @@ export type EBankingLoanQuery = {
   history?: Maybe<EbankingLoanHistoryData>;
   options: Array<EBankingCooperativeServiceOption>;
 };
-
 
 export type EBankingLoanQueryHistoryArgs = {
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
@@ -3880,7 +3777,6 @@ export type EBankingMutation = {
   utilityPayment: UtilityPayemntMutation;
   webUtilityPayments?: Maybe<EbankingWebUtilityPaymentsMutation>;
 };
-
 
 export type EBankingMutationAuthArgs = {
   type?: InputMaybe<RequestSource>;
@@ -3919,7 +3815,7 @@ export type EBankingRegisterComplaintInput = {
 export enum EBankingServiceStatus {
   Active = 'Active',
   Completed = 'Completed',
-  Declined = 'Declined'
+  Declined = 'Declined',
 }
 
 export type EBankingShareQuery = {
@@ -3927,14 +3823,13 @@ export type EBankingShareQuery = {
   summary?: Maybe<EbankingShare>;
 };
 
-
 export type EBankingShareQueryHistoryArgs = {
   filter?: InputMaybe<EbankingShareFilter>;
 };
 
 export enum EBankingTokenType {
   Cooperative = 'COOPERATIVE',
-  Myra = 'MYRA'
+  Myra = 'MYRA',
 }
 
 export type EBankingTransactionQuery = {
@@ -3942,11 +3837,9 @@ export type EBankingTransactionQuery = {
   recent?: Maybe<EbankingTransactionConnection>;
 };
 
-
 export type EBankingTransactionQueryMonthlyArgs = {
   filter?: InputMaybe<Filter>;
 };
-
 
 export type EBankingTransactionQueryRecentArgs = {
   paginate?: InputMaybe<Pagination>;
@@ -3969,7 +3862,6 @@ export type EbankingAccount = {
   subscribedDate: Scalars['String'];
   transactions?: Maybe<EbankingTransactionConnection>;
 };
-
 
 export type EbankingAccountTransactionsArgs = {
   filter?: InputMaybe<EbankingTransactionFilter>;
@@ -4017,7 +3909,7 @@ export type EbankingAccountTransferResult = {
 
 export enum EbankingAccountType {
   Loan = 'LOAN',
-  Saving = 'SAVING'
+  Saving = 'SAVING',
 }
 
 export type EbankingAuthQuery = {
@@ -4148,11 +4040,9 @@ export type EbankingSendMoneyMutation = {
   proceed?: Maybe<EbankingSendMoneyResult>;
 };
 
-
 export type EbankingSendMoneyMutationCheckArgs = {
   data?: InputMaybe<EbankingSendMoneyInput>;
 };
-
 
 export type EbankingSendMoneyMutationProceedArgs = {
   data?: InputMaybe<EbankingSendMoneyInput>;
@@ -4181,7 +4071,7 @@ export type EbankingSendMoneyResult = {
 export enum EbankingServiceRequestType {
   ChequeBlockRequest = 'CHEQUE_BLOCK_REQUEST',
   ChequeRequest = 'CHEQUE_REQUEST',
-  WithdrawViaCollector = 'WITHDRAW_VIA_COLLECTOR'
+  WithdrawViaCollector = 'WITHDRAW_VIA_COLLECTOR',
 }
 
 export type EbankingSetDefaultAccountResult = {
@@ -4241,12 +4131,12 @@ export type EbankingTransactionConnection = {
 
 export enum EbankingTransactionCrOrDr {
   Credit = 'CREDIT',
-  Debit = 'DEBIT'
+  Debit = 'DEBIT',
 }
 
 export enum EbankingTransactionDirection {
   Incoming = 'INCOMING',
-  Outgoing = 'OUTGOING'
+  Outgoing = 'OUTGOING',
 }
 
 export type EbankingTransactionEdge = {
@@ -4264,7 +4154,7 @@ export enum EbankingTransactionType {
   Deposit = 'DEPOSIT',
   SharePurchase = 'SHARE_PURCHASE',
   Transfer = 'TRANSFER',
-  Withdraw = 'WITHDRAW'
+  Withdraw = 'WITHDRAW',
 }
 
 export type EbankingUser = {
@@ -4285,7 +4175,6 @@ export type EbankingWebUtilityPaymentsMutation = {
   accountTransfer?: Maybe<EbankingAccountTransferResult>;
   sendMoney?: Maybe<EbankingSendMoneyMutation>;
 };
-
 
 export type EbankingWebUtilityPaymentsMutationAccountTransferArgs = {
   data?: InputMaybe<EbankingAccountTransferInput>;
@@ -4347,7 +4236,7 @@ export type FdInvestmentTransactionInput = {
 export enum FdInvestmentType {
   Type_1 = 'TYPE_1',
   Type_2 = 'TYPE_2',
-  Type_3 = 'TYPE_3'
+  Type_3 = 'TYPE_3',
 }
 
 export enum File_Variant {
@@ -4357,12 +4246,12 @@ export enum File_Variant {
   Jpg = 'JPG',
   Other = 'OTHER',
   Pdf = 'PDF',
-  Png = 'PNG'
+  Png = 'PNG',
 }
 
 export enum Filter_Mode {
   And = 'AND',
-  Or = 'OR'
+  Or = 'OR',
 }
 
 export type FamilyDetails = {
@@ -4401,7 +4290,7 @@ export enum FormCategory {
   KymCoop = 'KYM_COOP',
   KymCoopUnion = 'KYM_COOP_UNION',
   KymIndividual = 'KYM_INDIVIDUAL',
-  KymInstitution = 'KYM_INSTITUTION'
+  KymInstitution = 'KYM_INSTITUTION',
 }
 
 export type FormDynamicFieldsFilter = {
@@ -4474,29 +4363,24 @@ export type FormFieldMutation = {
   upsert: FormFieldMutationResult;
 };
 
-
 export type FormFieldMutationConditionArgs = {
   dependsOn: Array<InputMaybe<Scalars['ID']>>;
   fieldId: Scalars['ID'];
 };
 
-
 export type FormFieldMutationDeleteArgs = {
   id: Scalars['ID'];
 };
-
 
 export type FormFieldMutationMoveArgs = {
   id: Scalars['ID'];
   to: Scalars['Int'];
 };
 
-
 export type FormFieldMutationUpdateArgs = {
   data: FormFieldUpdateInput;
   id: Scalars['ID'];
 };
-
 
 export type FormFieldMutationUpsertArgs = {
   data: FormFieldUpsertInput;
@@ -4512,7 +4396,6 @@ export type FormFieldMutationResult = {
 export type FormFieldQuery = {
   details: FieldDetailsQueryResult;
 };
-
 
 export type FormFieldQueryDetailsArgs = {
   id: Scalars['ID'];
@@ -4543,7 +4426,7 @@ export enum FormFieldSearchTerm {
   OrganizationType = 'ORGANIZATION_TYPE',
   Purpose = 'PURPOSE',
   Relationship = 'RELATIONSHIP',
-  Religion = 'RELIGION'
+  Religion = 'RELIGION',
 }
 
 export enum FormFieldType {
@@ -4569,7 +4452,7 @@ export enum FormFieldType {
   /**  These are for SINGLE_SELECT, MULTI_SELECT  */
   SingleSelect = 'SINGLE_SELECT',
   TextInput = 'TEXT_INPUT',
-  Url = 'URL'
+  Url = 'URL',
 }
 
 export type FormFieldUpdateInput = {
@@ -4621,23 +4504,19 @@ export type FormOptionMutation = {
   upsert: FormOptionResult;
 };
 
-
 export type FormOptionMutationDeleteArgs = {
   id: Scalars['ID'];
 };
-
 
 export type FormOptionMutationMoveArgs = {
   id: Scalars['ID'];
   to: Scalars['Int'];
 };
 
-
 export type FormOptionMutationUpdateArgs = {
   data: FormOptionUpdateInput;
   id: Scalars['ID'];
 };
-
 
 export type FormOptionMutationUpsertArgs = {
   data: FormOptionUpsertInput;
@@ -4677,11 +4556,9 @@ export type FormOptionsQuery = {
   predefined?: Maybe<FormOptionsQueryResult>;
 };
 
-
 export type FormOptionsQueryGetArgs = {
   filter: FormOptionsGetFilter;
 };
-
 
 export type FormOptionsQueryPredefinedArgs = {
   filter: FormOptionsPredefinedFilter;
@@ -4696,7 +4573,6 @@ export type FormQuery = {
   dynamicFields?: Maybe<FormFieldQueryResult>;
   options: FormOptionsQuery;
 };
-
 
 export type FormQueryDynamicFieldsArgs = {
   filter: FormOptionsPredefinedFilter;
@@ -4765,7 +4641,7 @@ export enum FormSearchTerm {
   Representative = 'REPRESENTATIVE',
   SisterConcernDetails = 'SISTER_CONCERN_DETAILS',
   TransactionDetails = 'TRANSACTION_DETAILS',
-  VoterId = 'VOTER_ID'
+  VoterId = 'VOTER_ID',
 }
 
 export type FormSection = Base & {
@@ -4809,23 +4685,19 @@ export type FormSectionMutation = {
   upsert: FormSectionMutationResult;
 };
 
-
 export type FormSectionMutationDeleteArgs = {
   id: Scalars['ID'];
 };
-
 
 export type FormSectionMutationSubSectionArgs = {
   data?: InputMaybe<FormSectionInput>;
   sectionId: Scalars['ID'];
 };
 
-
 export type FormSectionMutationUpdateArgs = {
   data: FormSectionUpdateInput;
   id: Scalars['ID'];
 };
-
 
 export type FormSectionMutationUpsertArgs = {
   data: FormSectionUpsertInput;
@@ -4840,7 +4712,6 @@ export type FormSectionMutationResult = {
 export type FormSectionQuery = {
   details: SectionDetailsQueryResult;
 };
-
 
 export type FormSectionQueryDetailsArgs = {
   id: Scalars['ID'];
@@ -4890,13 +4761,13 @@ export enum FormSectionSearchTerm {
   Representative = 'REPRESENTATIVE',
   SisterConcernDetails = 'SISTER_CONCERN_DETAILS',
   TransactionDetails = 'TRANSACTION_DETAILS',
-  VoterId = 'VOTER_ID'
+  VoterId = 'VOTER_ID',
 }
 
 export enum FormSectionType {
   Group = 'GROUP',
   Input = 'INPUT',
-  Upload = 'UPLOAD'
+  Upload = 'UPLOAD',
 }
 
 export type FormSectionUpdateInput = {
@@ -4919,11 +4790,9 @@ export type FormSettingMutation = {
   section: FormSectionMutation;
 };
 
-
 export type FormSettingMutationDeleteArgs = {
   id: Scalars['ID'];
 };
-
 
 export type FormSettingMutationMaxSizeArgs = {
   id: Scalars['ID'];
@@ -4941,21 +4810,21 @@ export enum Frequency {
   Daily = 'DAILY',
   Monthly = 'MONTHLY',
   Weekly = 'WEEKLY',
-  Yearly = 'YEARLY'
+  Yearly = 'YEARLY',
 }
 
 export enum FrequencyDay {
   First = 'FIRST',
   Last = 'LAST',
   Second = 'SECOND',
-  Third = 'THIRD'
+  Third = 'THIRD',
 }
 
 export enum FrequencyTenure {
   Day = 'DAY',
   Month = 'MONTH',
   Week = 'WEEK',
-  Year = 'YEAR'
+  Year = 'YEAR',
 }
 
 export type GenderLedgerReportResult = {
@@ -4966,7 +4835,6 @@ export type GenderLedgerReportResult = {
 export type GeneralBranchSettingsMutation = {
   add: BranchAddResult;
 };
-
 
 export type GeneralBranchSettingsMutationAddArgs = {
   data?: InputMaybe<BranchInput>;
@@ -4979,11 +4847,9 @@ export type GeneralBranchSettingsQuery = {
   mine?: Maybe<Branch>;
 };
 
-
 export type GeneralBranchSettingsQueryFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type GeneralBranchSettingsQueryListArgs = {
   filter?: InputMaybe<BranchSearchFilter>;
@@ -5057,7 +4923,7 @@ export enum GlobalPageAppName {
   AccountingSystem = 'ACCOUNTING_SYSTEM',
   CoreBankingSystem = 'CORE_BANKING_SYSTEM',
   InventoryMgmt = 'INVENTORY_MGMT',
-  Settings = 'SETTINGS'
+  Settings = 'SETTINGS',
 }
 
 export enum GlobalPageMenuName {
@@ -5066,7 +4932,7 @@ export enum GlobalPageMenuName {
   Member = 'MEMBER',
   Reports = 'REPORTS',
   Share = 'SHARE',
-  Transactions = 'TRANSACTIONS'
+  Transactions = 'TRANSACTIONS',
 }
 
 export enum GlobalPagesIconType {
@@ -5074,7 +4940,7 @@ export enum GlobalPagesIconType {
   List = 'LIST',
   Profile = 'PROFILE',
   Reports = 'REPORTS',
-  Settings = 'SETTINGS'
+  Settings = 'SETTINGS',
 }
 
 export type GlobalPagesResultNode = {
@@ -5089,7 +4955,7 @@ export type GlobalPagesResultNode = {
 
 export enum GracePeriod {
   Interest = 'INTEREST',
-  Principal = 'PRINCIPAL'
+  Principal = 'PRINCIPAL',
 }
 
 export type GraphData = {
@@ -5150,7 +5016,7 @@ export enum Id_Type {
   Sharenumbers = 'SHARENUMBERS',
   Shareregister = 'SHAREREGISTER',
   User = 'USER',
-  Userpreference = 'USERPREFERENCE'
+  Userpreference = 'USERPREFERENCE',
 }
 
 export type Identity = {
@@ -5165,7 +5031,7 @@ export enum IdetificationType {
   DrivingLicense = 'DRIVING_LICENSE',
   NationalId = 'NATIONAL_ID',
   Passport = 'PASSPORT',
-  VoterCard = 'VOTER_CARD'
+  VoterCard = 'VOTER_CARD',
 }
 
 export type InactivateMemberCheck = {
@@ -5190,7 +5056,7 @@ export enum IndividualRequiredDocument {
   Form = 'FORM',
   NomineeDocument = 'NOMINEE_DOCUMENT',
   Photo = 'PHOTO',
-  Signature = 'SIGNATURE'
+  Signature = 'SIGNATURE',
 }
 
 export type Installment = {
@@ -5215,7 +5081,7 @@ export enum InstallmentFrequency {
   Monthly = 'MONTHLY',
   Quarterly = 'QUARTERLY',
   Weekly = 'WEEKLY',
-  Yearly = 'YEARLY'
+  Yearly = 'YEARLY',
 }
 
 export type InstallmentResult = {
@@ -5227,7 +5093,7 @@ export enum InstallmentState {
   Cancelled = 'CANCELLED',
   Overdue = 'OVERDUE',
   Paid = 'PAID',
-  Pending = 'PENDING'
+  Pending = 'PENDING',
 }
 
 export type InstitutionAccountOperatoionsDetails = {
@@ -5251,7 +5117,7 @@ export type InstitutionDeclaration = {
 export enum InstitutionExpectedMonthlyTransaction {
   Above_25Lakhs = 'ABOVE_25_LAKHS',
   LessThan_10Lakhs = 'LESS_THAN_10_LAKHS',
-  LessThan_25Lakhs = 'LESS_THAN_25_LAKHS'
+  LessThan_25Lakhs = 'LESS_THAN_25_LAKHS',
 }
 
 export type InstitutionMember = {
@@ -5296,7 +5162,7 @@ export enum InstitutionRequiredDocument {
   Decision = 'DECISION',
   Registered = 'REGISTERED',
   Signature = 'SIGNATURE',
-  TaxClearance = 'TAX_CLEARANCE'
+  TaxClearance = 'TAX_CLEARANCE',
 }
 
 export type InstitutionTransactionProfile = {
@@ -5321,7 +5187,7 @@ export type InsuranceType = {
 
 export enum InterestAuthority {
   Board = 'BOARD',
-  Ceo = 'CEO'
+  Ceo = 'CEO',
 }
 
 export type InterestFormState = {
@@ -5336,7 +5202,7 @@ export type InterestFormState = {
 
 export enum InterestMethod {
   Diminishing = 'DIMINISHING',
-  Flat = 'FLAT'
+  Flat = 'FLAT',
 }
 
 export type InterestRate = {
@@ -5437,7 +5303,6 @@ export type InvItemsGroupMutation = {
   add: InvItemsGroupAddResult;
 };
 
-
 export type InvItemsGroupMutationAddArgs = {
   data: InvItemsGroupInput;
 };
@@ -5447,11 +5312,9 @@ export type InvItemsGroupQuery = {
   list?: Maybe<InvItemsGroupConnection>;
 };
 
-
 export type InvItemsGroupQueryGetArgs = {
   id: Scalars['ID'];
 };
-
 
 export type InvItemsGroupQueryListArgs = {
   filter?: InputMaybe<InvItemsGroupDataFilter>;
@@ -5477,7 +5340,6 @@ export type InvItemsMutation = {
   add: InvItemsAddResult;
 };
 
-
 export type InvItemsMutationAddArgs = {
   data: InvItemsInput;
 };
@@ -5488,16 +5350,13 @@ export type InvItemsQuery = {
   list?: Maybe<InvItemsConnection>;
 };
 
-
 export type InvItemsQueryGetArgs = {
   id: Scalars['ID'];
 };
 
-
 export type InvItemsQueryGetNewItemCodeArgs = {
   type?: InputMaybe<Scalars['String']>;
 };
-
 
 export type InvItemsQueryListArgs = {
   filter?: InputMaybe<InvItemsDataFilter>;
@@ -5551,7 +5410,6 @@ export type InvUnitOfMeasureMutation = {
   add: InvUnitOfMeasureAddResult;
 };
 
-
 export type InvUnitOfMeasureMutationAddArgs = {
   data: InvUnitOfMeasureInput;
 };
@@ -5561,11 +5419,9 @@ export type InvUnitOfMeasureQuery = {
   list?: Maybe<InvUnitOfMeasureConnection>;
 };
 
-
 export type InvUnitOfMeasureQueryGetArgs = {
   id: Scalars['ID'];
 };
-
 
 export type InvUnitOfMeasureQueryListArgs = {
   filter?: InputMaybe<InvUnitOfMeasureDataFilter>;
@@ -5627,7 +5483,6 @@ export type InvVendorsMutation = {
   add: InvVendorsAddResult;
 };
 
-
 export type InvVendorsMutationAddArgs = {
   data: InvVendorsInput;
 };
@@ -5637,11 +5492,9 @@ export type InvVendorsQuery = {
   list?: Maybe<InvVendorsConnection>;
 };
 
-
 export type InvVendorsQueryGetArgs = {
   id: Scalars['ID'];
 };
-
 
 export type InvVendorsQueryListArgs = {
   filter?: InputMaybe<InvVendorsDataFilter>;
@@ -5779,13 +5632,13 @@ export type InvestmentTransactionListEdges = {
 
 export enum InvestmentTransactionMethod {
   Cash = 'CASH',
-  Cheque = 'CHEQUE'
+  Cheque = 'CHEQUE',
 }
 
 export enum InvestmentType {
   FixedDeposit = 'FIXED_DEPOSIT',
   Saving = 'SAVING',
-  Share = 'SHARE'
+  Share = 'SHARE',
 }
 
 export type JournalChartsOfAccount = {
@@ -5853,7 +5706,6 @@ export type KymEntryMutation = {
   upsertDynamic: KymEntryMutationResult;
 };
 
-
 export type KymEntryMutationUpsertDynamicArgs = {
   data: KymEntryInput;
 };
@@ -5868,7 +5720,6 @@ export type KymEntryMutationResult = {
 export type KymEntryQuery = {
   getDynamic?: Maybe<KymDynamicEntryResult>;
 };
-
 
 export type KymEntryQueryGetDynamicArgs = {
   filter: KymDynamicEntryFilter;
@@ -5887,7 +5738,6 @@ export type KymFieldInputData = {
 export type KymGeneralSettingsMutation = {
   generalMember?: Maybe<GeneralMemberResult>;
 };
-
 
 export type KymGeneralSettingsMutationGeneralMemberArgs = {
   data: GeneralMemberInput;
@@ -5960,11 +5810,9 @@ export type KymIndFamilyMemberMutation = {
   upsert: KymIndFamilyMemberResult;
 };
 
-
 export type KymIndFamilyMemberMutationDeleteArgs = {
   id: Scalars['ID'];
 };
-
 
 export type KymIndFamilyMemberMutationUpsertArgs = {
   data: KymIndFamilyMemberInput;
@@ -6013,11 +5861,9 @@ export type KymIndIdentificationMutation = {
   upsert: KymIndIdentificationResult;
 };
 
-
 export type KymIndIdentificationMutationDeleteArgs = {
   id: Scalars['ID'];
 };
-
 
 export type KymIndIdentificationMutationUpsertArgs = {
   data: KymIndIdentificationInput;
@@ -6055,11 +5901,9 @@ export type KymIndIncomeSourceMutation = {
   upsert: KymIndIncomeSourceResult;
 };
 
-
 export type KymIndIncomeSourceMutationDeleteArgs = {
   id: Scalars['ID'];
 };
-
 
 export type KymIndIncomeSourceMutationUpsertArgs = {
   data: KymIndIncomeSourceInput;
@@ -6131,11 +5975,9 @@ export type KymIndOccupationMutation = {
   upsert: KymIndOccupationResult;
 };
 
-
 export type KymIndOccupationMutationDeleteArgs = {
   id: Scalars['ID'];
 };
-
 
 export type KymIndOccupationMutationUpsertArgs = {
   data: KymIndOccupationInput;
@@ -6201,11 +6043,9 @@ export type KymCoopAccountOperatorDetails = {
   Upsert?: Maybe<KymCooperativeAddResult>;
 };
 
-
 export type KymCoopAccountOperatorDetailsDeleteArgs = {
   accOperatorId: Scalars['ID'];
 };
-
 
 export type KymCoopAccountOperatorDetailsUpsertArgs = {
   accOperatorId: Scalars['ID'];
@@ -6239,11 +6079,9 @@ export type KymCoopDirectorDetails = {
   Upsert?: Maybe<KymCooperativeAddResult>;
 };
 
-
 export type KymCoopDirectorDetailsDeleteArgs = {
   dirId: Scalars['ID'];
 };
-
 
 export type KymCoopDirectorDetailsUpsertArgs = {
   data: KymCoopDirectorDetailsFormInput;
@@ -6323,7 +6161,7 @@ export type KymCoopUnionAccountOperatorLus = {
 };
 
 export enum KymCoopUnionAccountOperatorSection {
-  AccountOperatorsDetails = 'ACCOUNT_OPERATORS_DETAILS'
+  AccountOperatorsDetails = 'ACCOUNT_OPERATORS_DETAILS',
 }
 
 export type KymCoopUnionAccountOperatorStatus = {
@@ -6343,7 +6181,13 @@ export type KymCoopUnionAddInvalidDataError = {
   error?: Maybe<Scalars['InvalidData']>;
 };
 
-export type KymCoopUnionAddLus = KymCoopUnionAccountOperatorLus | KymCoopUnionBodlus | KymCoopUnionCentralRepresentativeLus | KymCoopUnionDeclarationLus | KymCoopUnionEconomicDetailsLus | KymCoopUnionInstitutionInformationLus;
+export type KymCoopUnionAddLus =
+  | KymCoopUnionAccountOperatorLus
+  | KymCoopUnionBodlus
+  | KymCoopUnionCentralRepresentativeLus
+  | KymCoopUnionDeclarationLus
+  | KymCoopUnionEconomicDetailsLus
+  | KymCoopUnionInstitutionInformationLus;
 
 export type KymCoopUnionAddSectionStatus = {
   accountOperatorDetails?: Maybe<Array<Maybe<KymFormStatus>>>;
@@ -6391,7 +6235,7 @@ export type KymCoopUnionBodlus = {
 };
 
 export enum KymCoopUnionBodSection {
-  BoardOfDirectorsDetails = 'BOARD_OF_DIRECTORS_DETAILS'
+  BoardOfDirectorsDetails = 'BOARD_OF_DIRECTORS_DETAILS',
 }
 
 export type KymCoopUnionBodDetailsStatus = {
@@ -6404,7 +6248,7 @@ export type KymCoopUnionCentralRepresentativeLus = {
 };
 
 export enum KymCoopUnionCentralRepresentativeSection {
-  CentralRepresentativeDetails = 'CENTRAL_REPRESENTATIVE_DETAILS'
+  CentralRepresentativeDetails = 'CENTRAL_REPRESENTATIVE_DETAILS',
 }
 
 export type KymCoopUnionCentralRepresentativeStatus = {
@@ -6417,7 +6261,7 @@ export type KymCoopUnionDeclarationLus = {
 };
 
 export enum KymCoopUnionDeclarationSection {
-  DocumentsDeclaration = 'DOCUMENTS_DECLARATION'
+  DocumentsDeclaration = 'DOCUMENTS_DECLARATION',
 }
 
 export type KymCoopUnionDeclarationStatus = {
@@ -6447,7 +6291,7 @@ export enum KymCoopUnionEconomicDetailsSection {
   Assets = 'ASSETS',
   EquityAndLiabilities = 'EQUITY_AND_LIABILITIES',
   ExpenseDetails = 'EXPENSE_DETAILS',
-  IncomeDetails = 'INCOME_DETAILS'
+  IncomeDetails = 'INCOME_DETAILS',
 }
 
 export type KymCoopUnionEconomicDetailsStatus = {
@@ -6469,7 +6313,7 @@ export enum KymCoopUnionInstitutionInformationSection {
   BasicInformation = 'BASIC_INFORMATION',
   ContactDetails = 'CONTACT_DETAILS',
   CooperativeMemberInformation = 'COOPERATIVE_MEMBER_INFORMATION',
-  RegisteredDetails = 'REGISTERED_DETAILS'
+  RegisteredDetails = 'REGISTERED_DETAILS',
 }
 
 export type KymCoopUnionInstitutionalInformationStatus = {
@@ -6483,16 +6327,13 @@ export type KymCoopUnionMutation = {
   deletePersonnel?: Maybe<KymCoopUnionDeletion>;
 };
 
-
 export type KymCoopUnionMutationAddArgs = {
   id: Scalars['ID'];
 };
 
-
 export type KymCoopUnionMutationDeleteArgs = {
   id: Scalars['ID'];
 };
-
 
 export type KymCoopUnionMutationDeletePersonnelArgs = {
   id: Scalars['ID'];
@@ -6501,7 +6342,6 @@ export type KymCoopUnionMutationDeletePersonnelArgs = {
 export type KymCoopUnionQuery = {
   formState?: Maybe<KymCoopUnionAddFormStatus>;
 };
-
 
 export type KymCoopUnionQueryFormStateArgs = {
   id: Scalars['ID'];
@@ -6515,21 +6355,17 @@ export type KymCoopUnionSectionMutation = {
   personnelDetails?: Maybe<CoopUnionPersonnelDetailsResult>;
 };
 
-
 export type KymCoopUnionSectionMutationDeclarationArgs = {
   data?: InputMaybe<CoopUnionDeclarationInput>;
 };
-
 
 export type KymCoopUnionSectionMutationEconomicDetailsArgs = {
   data?: InputMaybe<CoopUnionEconomicDetailsInput>;
 };
 
-
 export type KymCoopUnionSectionMutationInstitutionInformationArgs = {
   data?: InputMaybe<CoopUnionInstitutionInformationInput>;
 };
-
 
 export type KymCoopUnionSectionMutationPersonnelDetailsArgs = {
   data?: InputMaybe<CoopUnionPersonnelInput>;
@@ -6589,7 +6425,7 @@ export type KymCooperativeAccountOperatorLus = {
 };
 
 export enum KymCooperativeAccountOperatorSection {
-  AccountOperatorsDetails = 'ACCOUNT_OPERATORS_DETAILS'
+  AccountOperatorsDetails = 'ACCOUNT_OPERATORS_DETAILS',
 }
 
 export type KymCooperativeAccountOperatorStatus = {
@@ -6603,7 +6439,12 @@ export type KymCooperativeAddFormStatus = {
   sectionStatus?: Maybe<KymCooperativeAddSectionStatus>;
 };
 
-export type KymCooperativeAddLus = KymCooperativeAccountOperatorLus | KymCooperativeBodlus | KymCooperativeDeclarationLus | KymCooperativeEconomicDetailsLus | KymCooperativeInstitutionInformationLus;
+export type KymCooperativeAddLus =
+  | KymCooperativeAccountOperatorLus
+  | KymCooperativeBodlus
+  | KymCooperativeDeclarationLus
+  | KymCooperativeEconomicDetailsLus
+  | KymCooperativeInstitutionInformationLus;
 
 export type KymCooperativeAddResult = {
   error?: Maybe<MutationError>;
@@ -6668,7 +6509,7 @@ export type KymCooperativeBodlus = {
 };
 
 export enum KymCooperativeBodSection {
-  BoardOfDirectorsDetails = 'BOARD_OF_DIRECTORS_DETAILS'
+  BoardOfDirectorsDetails = 'BOARD_OF_DIRECTORS_DETAILS',
 }
 
 export type KymCooperativeBodDetailsStatus = {
@@ -6682,7 +6523,7 @@ export type KymCooperativeDeclarationLus = {
 
 export enum KymCooperativeDeclarationSection {
   AccountHolderDeclaration = 'ACCOUNT_HOLDER_DECLARATION',
-  DocumentDeclaration = 'DOCUMENT_DECLARATION'
+  DocumentDeclaration = 'DOCUMENT_DECLARATION',
 }
 
 export type KymCooperativeDeclarationStatus = {
@@ -6706,7 +6547,7 @@ export type KymCooperativeEconomicDetailsLus = {
 
 export enum KymCooperativeEconomicDetailsSection {
   Assets = 'ASSETS',
-  EquityAndLiabilities = 'EQUITY_AND_LIABILITIES'
+  EquityAndLiabilities = 'EQUITY_AND_LIABILITIES',
 }
 
 export type KymCooperativeEconomicDetailsStatus = {
@@ -6832,7 +6673,7 @@ export enum KymCooperativeInstitutionInformationSection {
   NumberOfEmployee = 'NUMBER_OF_EMPLOYEE',
   OperatingAddress = 'OPERATING_ADDRESS',
   RegisteredAddress = 'REGISTERED_ADDRESS',
-  Representative = 'REPRESENTATIVE'
+  Representative = 'REPRESENTATIVE',
 }
 
 export type KymCooperativeInstitutionalInformationStatus = {
@@ -6846,7 +6687,6 @@ export type KymCooperativeMutation = {
   directorDetails?: Maybe<KymCoopDirectorDetails>;
 };
 
-
 export type KymCooperativeMutationAddArgs = {
   data: KymCooperativeFormInput;
 };
@@ -6857,16 +6697,13 @@ export type KymCooperativeQuery = {
   listDirectors?: Maybe<KymCoopDirectorQuery>;
 };
 
-
 export type KymCooperativeQueryFormStateArgs = {
   id: Scalars['ID'];
 };
 
-
 export type KymCooperativeQueryListAccountOperatorsArgs = {
   id: Scalars['ID'];
 };
-
 
 export type KymCooperativeQueryListDirectorsArgs = {
   id: Scalars['ID'];
@@ -6982,7 +6819,11 @@ export type KymIndAddInvalidDataError = {
   error?: Maybe<Array<Maybe<SectionWiseError>>>;
 };
 
-export type KymIndAddLus = KymIndCooperativeLus | KymIndDeclarationLus | KymIndPersonalLus | KymIndProfessionalLus;
+export type KymIndAddLus =
+  | KymIndCooperativeLus
+  | KymIndDeclarationLus
+  | KymIndPersonalLus
+  | KymIndProfessionalLus;
 
 export type KymIndAddLastUpdated = {
   cooperativeMembership?: Maybe<KymIndCooperativeMemberStatus>;
@@ -7007,7 +6848,7 @@ export enum KymIndCooperativeMemberSection {
   IsFamilyAMember = 'IS_FAMILY_A_MEMBER',
   MemberOfAnotherCooperative = 'MEMBER_OF_ANOTHER_COOPERATIVE',
   Purpose = 'PURPOSE',
-  TransactionDetails = 'TRANSACTION_DETAILS'
+  TransactionDetails = 'TRANSACTION_DETAILS',
 }
 
 export type KymIndCooperativeMemberStatus = {
@@ -7023,7 +6864,7 @@ export enum KymIndDeclarationSection {
   BeneficialOwner = 'BENEFICIAL_OWNER',
   Conviction = 'CONVICTION',
   FamilyMemberInPolitics = 'FAMILY_MEMBER_IN_POLITICS',
-  ForeignResidentialPermit = 'FOREIGN_RESIDENTIAL_PERMIT'
+  ForeignResidentialPermit = 'FOREIGN_RESIDENTIAL_PERMIT',
 }
 
 export type KymIndDeclarationStatus = {
@@ -7145,7 +6986,6 @@ export type KymIndMutation = {
   occupation: KymIndOccupationMutation;
 };
 
-
 export type KymIndMutationAddArgs = {
   data: KymIndMemberInput;
 };
@@ -7181,7 +7021,7 @@ export enum KymIndPersonalSection {
   IdentificationDetails = 'IDENTIFICATION_DETAILS',
   PermanentAddress = 'PERMANENT_ADDRESS',
   RentedHouse = 'RENTED_HOUSE',
-  TemporaryAddress = 'TEMPORARY_ADDRESS'
+  TemporaryAddress = 'TEMPORARY_ADDRESS',
 }
 
 export type KymIndPersonalStatus = {
@@ -7205,7 +7045,7 @@ export enum KymIndProfessionalSection {
   IncomeSource = 'INCOME_SOURCE',
   MainProfession = 'MAIN_PROFESSION',
   Profession = 'PROFESSION',
-  SpouseOccupation = 'SPOUSE_OCCUPATION'
+  SpouseOccupation = 'SPOUSE_OCCUPATION',
 }
 
 export type KymIndProfessionalStatus = {
@@ -7221,11 +7061,9 @@ export type KymIndQuery = {
   listOccupation?: Maybe<KymIndOccupationQueryResult>;
 };
 
-
 export type KymIndQueryListFamilyMemberArgs = {
   isMember?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 export type KymIndQueryListOccupationArgs = {
   isSpouse: Scalars['Boolean'];
@@ -7240,11 +7078,9 @@ export type KymInsAccountOperator = {
   Upsert?: Maybe<KymInsAddResult>;
 };
 
-
 export type KymInsAccountOperatorDeleteArgs = {
   operatorId: Scalars['ID'];
 };
-
 
 export type KymInsAccountOperatorUpsertArgs = {
   data: KymInsAccountOperatorInput;
@@ -7265,7 +7101,7 @@ export type KymInsAccountOperatorInput = {
 
 export enum KymInsAccountSection {
   AccountOperationInstruction = 'ACCOUNT_OPERATION_INSTRUCTION',
-  DetailsOfAccountOperators = 'DETAILS_OF_ACCOUNT_OPERATORS'
+  DetailsOfAccountOperators = 'DETAILS_OF_ACCOUNT_OPERATORS',
 }
 
 export type KymInsAccountStatus = {
@@ -7273,7 +7109,12 @@ export type KymInsAccountStatus = {
   error?: Maybe<Array<Maybe<KymInsAccountSection>>>;
 };
 
-export type KymInsAddLus = KymInsAccountLus | KymInsDeclarationLus | KymInsDirectorDetailsLus | KymInsInformationLus | KymInsTransactionLus;
+export type KymInsAddLus =
+  | KymInsAccountLus
+  | KymInsDeclarationLus
+  | KymInsDirectorDetailsLus
+  | KymInsInformationLus
+  | KymInsTransactionLus;
 
 export type KymInsAddResult = {
   error?: Maybe<KymIndAddError>;
@@ -7296,7 +7137,7 @@ export type KymInsDeclarationLus = {
 
 export enum KymInsDeclarationSection {
   AccountHolderDeclaration = 'ACCOUNT_HOLDER_DECLARATION',
-  DocumentsDeclaration = 'DOCUMENTS_DECLARATION'
+  DocumentsDeclaration = 'DOCUMENTS_DECLARATION',
 }
 
 export type KymInsDeclarationStatus = {
@@ -7309,11 +7150,9 @@ export type KymInsDirector = {
   Upsert?: Maybe<KymInsAddResult>;
 };
 
-
 export type KymInsDirectorDeleteArgs = {
   directorId: Scalars['ID'];
 };
-
 
 export type KymInsDirectorUpsertArgs = {
   data: KymInsDirectorInput;
@@ -7334,7 +7173,7 @@ export type KymInsDirectorDetailsLus = {
 
 export enum KymInsDirectorDetailsSection {
   DetailsOfDirectors = 'DETAILS_OF_DIRECTORS',
-  DetailsOfDirectorsAffiliated = 'DETAILS_OF_DIRECTORS_AFFILIATED'
+  DetailsOfDirectorsAffiliated = 'DETAILS_OF_DIRECTORS_AFFILIATED',
 }
 
 export type KymInsDirectorDetailsStatus = {
@@ -7422,7 +7261,7 @@ export enum KymInsInformationSection {
   BasicInformation = 'BASIC_INFORMATION',
   ContactDetails = 'CONTACT_DETAILS',
   DetailsOfSisterConcern = 'DETAILS_OF_SISTER_CONCERN',
-  RegisteredDetails = 'REGISTERED_DETAILS'
+  RegisteredDetails = 'REGISTERED_DETAILS',
 }
 
 export type KymInsInformationStatus = {
@@ -7494,7 +7333,6 @@ export type KymInsMutation = {
   sisterConcern?: Maybe<KymInsSisterConcern>;
 };
 
-
 export type KymInsMutationAddArgs = {
   data: KymInsInput;
 };
@@ -7514,26 +7352,21 @@ export type KymInsQuery = {
   overallFormStatus?: Maybe<KymInsOverallFormStatus>;
 };
 
-
 export type KymInsQueryFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type KymInsQueryListAccountOperatorsArgs = {
   id: Scalars['ID'];
 };
 
-
 export type KymInsQueryListDirectorsArgs = {
   id: Scalars['ID'];
 };
 
-
 export type KymInsQueryListSisterConcernsArgs = {
   id: Scalars['ID'];
 };
-
 
 export type KymInsQueryOverallFormStatusArgs = {
   id: Scalars['ID'];
@@ -7549,11 +7382,9 @@ export type KymInsSisterConcern = {
   Upsert?: Maybe<KymInsAddResult>;
 };
 
-
 export type KymInsSisterConcernDeleteArgs = {
   sisterConcernId: Scalars['ID'];
 };
-
 
 export type KymInsSisterConcernUpsertArgs = {
   data: KymInsSisterConcernInput;
@@ -7573,7 +7404,7 @@ export type KymInsTransactionLus = {
 };
 
 export enum KymInsTransactionSection {
-  TransactionDetails = 'TRANSACTION_DETAILS'
+  TransactionDetails = 'TRANSACTION_DETAILS',
 }
 
 export type KymInsTransactionStatus = {
@@ -7629,7 +7460,7 @@ export enum KymMemberTypesEnum {
   Cooperative = 'COOPERATIVE',
   CooperativeUnion = 'COOPERATIVE_UNION',
   Individual = 'INDIVIDUAL',
-  Institution = 'INSTITUTION'
+  Institution = 'INSTITUTION',
 }
 
 export type KymOccupationDetails = {
@@ -7672,7 +7503,7 @@ export type LadderRateFormState = {
 
 export enum Language {
   English = 'ENGLISH',
-  Nepali = 'NEPALI'
+  Nepali = 'NEPALI',
 }
 
 export type LedgerMapping = {
@@ -7691,7 +7522,6 @@ export type Level1 = {
   level2: Level2;
 };
 
-
 export type Level1Level2Args = {
   id: Scalars['String'];
 };
@@ -7701,11 +7531,9 @@ export type Level2 = {
   hello: Example;
 };
 
-
 export type Level2AddArgs = {
   data: ExampleInput;
 };
-
 
 export type Level2HelloArgs = {
   data: ExampleInput;
@@ -7956,12 +7784,10 @@ export type LoanAccountMutation = {
   repayment?: Maybe<LoanRepaymentResult>;
 };
 
-
 export type LoanAccountMutationAddArgs = {
   data?: InputMaybe<LoanAccountInput>;
   id: Scalars['ID'];
 };
-
 
 export type LoanAccountMutationApproveOrCancelArgs = {
   action: LoanApproveOrCancel;
@@ -7969,12 +7795,10 @@ export type LoanAccountMutationApproveOrCancelArgs = {
   remarks?: InputMaybe<Scalars['String']>;
 };
 
-
 export type LoanAccountMutationDisburseArgs = {
   data: LoanDisbursementInput;
   loanAccount: Scalars['ID'];
 };
-
 
 export type LoanAccountMutationRepaymentArgs = {
   data?: InputMaybe<LoanRepaymentInput>;
@@ -8017,11 +7841,9 @@ export type LoanAccountQuery = {
   repaymentList?: Maybe<LoanRepaymentConnection>;
 };
 
-
 export type LoanAccountQueryFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type LoanAccountQueryGetLoanInstallmentsArgs = {
   gracePeriod?: InputMaybe<LoanAccountGraceInput>;
@@ -8032,11 +7854,9 @@ export type LoanAccountQueryGetLoanInstallmentsArgs = {
   tenure: Scalars['Int'];
 };
 
-
 export type LoanAccountQueryGetProductCriteriaArgs = {
   productId: Scalars['ID'];
 };
-
 
 export type LoanAccountQueryGetProductListArgs = {
   memberId: Scalars['ID'];
@@ -8044,27 +7864,22 @@ export type LoanAccountQueryGetProductListArgs = {
   productType: Scalars['ID'];
 };
 
-
 export type LoanAccountQueryListArgs = {
   filter?: InputMaybe<LoanAccountSearchFilter>;
   paginate?: InputMaybe<Pagination>;
 };
 
-
 export type LoanAccountQueryLoanPreviewArgs = {
   loanAccountId: Scalars['String'];
 };
-
 
 export type LoanAccountQueryMemberDisbursedLoanAccountsArgs = {
   memberId: Scalars['ID'];
 };
 
-
 export type LoanAccountQueryPaymentScheduleArgs = {
   loanAccountId: Scalars['ID'];
 };
-
 
 export type LoanAccountQueryRepaymentListArgs = {
   filter?: InputMaybe<LoanRepaymentFilter>;
@@ -8086,7 +7901,7 @@ export type LoanAccountSearchFilter = {
 
 export enum LoanApproveOrCancel {
   Approve = 'APPROVE',
-  Cancel = 'CANCEL'
+  Cancel = 'CANCEL',
 }
 
 export type LoanBankDisbursement = {
@@ -8109,7 +7924,7 @@ export type LoanDisbursementInput = {
 
 export enum LoanDisbursementMethod {
   Account = 'ACCOUNT',
-  BankCheque = 'BANK_CHEQUE'
+  BankCheque = 'BANK_CHEQUE',
 }
 
 export type LoanDisbursementResult = {
@@ -8165,7 +7980,7 @@ export type LoanInstallments = {
 
 export enum LoanInsurancePaymentType {
   Amount = 'AMOUNT',
-  Percentage = 'PERCENTAGE'
+  Percentage = 'PERCENTAGE',
 }
 
 export type LoanInsuranceScheme = {
@@ -8196,7 +8011,7 @@ export type LoanInsuranceSchemeInput = {
 
 export enum LoanInterestMethod {
   Diminishing = 'DIMINISHING',
-  Straight = 'STRAIGHT'
+  Straight = 'STRAIGHT',
 }
 
 export type LoanNatureOfProductInput = {
@@ -8210,16 +8025,16 @@ export enum LoanObjState {
   Cancelled = 'CANCELLED',
   Completed = 'COMPLETED',
   Disbursed = 'DISBURSED',
-  Submitted = 'SUBMITTED'
+  Submitted = 'SUBMITTED',
 }
 
 export enum LoanPaymentInstallmentType {
   Monthly = 'MONTHLY',
-  Quarterly = 'QUARTERLY'
+  Quarterly = 'QUARTERLY',
 }
 
 export enum LoanPaymentMode {
-  Installment = 'INSTALLMENT'
+  Installment = 'INSTALLMENT',
 }
 
 export type LoanPreviewAdditionalFeatures = {
@@ -8469,7 +8284,7 @@ export enum LoanProductInstallment {
   Monthly = 'MONTHLY',
   Quarterly = 'QUARTERLY',
   Weekly = 'WEEKLY',
-  Yearly = 'YEARLY'
+  Yearly = 'YEARLY',
 }
 
 export type LoanProductList = {
@@ -8547,7 +8362,7 @@ export enum LoanProductSubType {
   StationaryBusiness = 'STATIONARY_BUSINESS',
   TechnicalEducation = 'TECHNICAL_EDUCATION',
   VegetableAndSeasonalFarming = 'VEGETABLE_AND_SEASONAL_FARMING',
-  YouthSelfEmployment = 'YOUTH_SELF__EMPLOYMENT'
+  YouthSelfEmployment = 'YOUTH_SELF__EMPLOYMENT',
 }
 
 export type LoanProductSubTypeInput = {
@@ -8559,7 +8374,7 @@ export type LoanProductSubTypeInput = {
 export enum LoanProductType {
   InvestmentInAgriculturalSector = 'INVESTMENT_IN_AGRICULTURAL_SECTOR',
   InvestmentInIndustrialSector = 'INVESTMENT_IN_INDUSTRIAL_SECTOR',
-  InvestmentInOtherSector = 'INVESTMENT_IN_OTHER_SECTOR'
+  InvestmentInOtherSector = 'INVESTMENT_IN_OTHER_SECTOR',
 }
 
 export type LoanProductTypeInput = {
@@ -8573,11 +8388,9 @@ export type LoanProductsMutation = {
   upsert?: Maybe<LoanProductsResult>;
 };
 
-
 export type LoanProductsMutationMakeInactiveArgs = {
   data?: InputMaybe<LoanProductInactiveData>;
 };
-
 
 export type LoanProductsMutationUpsertArgs = {
   data?: InputMaybe<LoanProductInput>;
@@ -8589,11 +8402,9 @@ export type LoanProductsQuery = {
   list?: Maybe<LoanProductConnection>;
 };
 
-
 export type LoanProductsQueryFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type LoanProductsQueryListArgs = {
   filter?: InputMaybe<LoanProductSearchFilter>;
@@ -8661,7 +8472,7 @@ export type LoanRepaymentInput = {
 export enum LoanRepaymentMethod {
   Account = 'ACCOUNT',
   BankVoucher = 'BANK_VOUCHER',
-  Cash = 'CASH'
+  Cash = 'CASH',
 }
 
 export type LoanRepaymentResult = {
@@ -8674,7 +8485,7 @@ export type LoanRepaymentResult = {
 export enum LoanRepaymentScheme {
   Emi = 'EMI',
   Epi = 'EPI',
-  Flat = 'FLAT'
+  Flat = 'FLAT',
 }
 
 export type LoanRepaymentView = {
@@ -8733,7 +8544,7 @@ export enum LoanRequiredDocuments {
   Citizenship = 'CITIZENSHIP',
   Form = 'FORM',
   LoanChangeDocument = 'LOAN_CHANGE_DOCUMENT',
-  PolicyDocument = 'POLICY_DOCUMENT'
+  PolicyDocument = 'POLICY_DOCUMENT',
 }
 
 export type LoanSettingsMutation = {
@@ -8742,16 +8553,13 @@ export type LoanSettingsMutation = {
   productType?: Maybe<LoanSettingsResult>;
 };
 
-
 export type LoanSettingsMutationGeneralArgs = {
   data?: InputMaybe<LoanGeneralSettingsInput>;
 };
 
-
 export type LoanSettingsMutationInsuranceSchemeArgs = {
   data?: InputMaybe<Array<InputMaybe<LoanInsuranceSchemeInput>>>;
 };
-
 
 export type LoanSettingsMutationProductTypeArgs = {
   data?: InputMaybe<LoanSettingsProductTypeInput>;
@@ -8774,7 +8582,6 @@ export type LoanSettingsProductType = {
   productSubTypes?: Maybe<Array<Maybe<LoanSettingsProductSubTypeData>>>;
   productTypes?: Maybe<Array<Maybe<LoanSettingsProductTypeData>>>;
 };
-
 
 export type LoanSettingsProductTypeProductSubTypesArgs = {
   productTypeID?: InputMaybe<Scalars['String']>;
@@ -8962,7 +8769,6 @@ export type MemberActivateMutation = {
   membershipPayment?: Maybe<MembershipPaymentResult>;
 };
 
-
 export type MemberActivateMutationMembershipPaymentArgs = {
   data?: InputMaybe<MembershipPaymentInput>;
   memberId: Scalars['ID'];
@@ -8974,17 +8780,14 @@ export type MemberActivateQuery = {
   memberActivateChecks?: Maybe<MemberActivateCheck>;
 };
 
-
 export type MemberActivateQueryAccountUpdateCheckArgs = {
   accountId: Scalars['ID'];
   memberId: Scalars['ID'];
 };
 
-
 export type MemberActivateQueryGetMembershipFeeArgs = {
   memberID: Scalars['ID'];
 };
-
 
 export type MemberActivateQueryMemberActivateChecksArgs = {
   memberId: Scalars['ID'];
@@ -9104,7 +8907,7 @@ export type MemberGraphData = {
 export enum MemberIdentityLevel {
   General = 'GENERAL',
   Mid = 'MID',
-  Vip = 'VIP'
+  Vip = 'VIP',
 }
 
 export type MemberInactivateQuery = {
@@ -9112,13 +8915,11 @@ export type MemberInactivateQuery = {
   inactivateCheck?: Maybe<InactivateMemberCheck>;
 };
 
-
 export type MemberInactivateQueryAccountCloseCheckArgs = {
   accountId: Scalars['ID'];
   accounttype: AccountTypeFilter;
   memberId: Scalars['ID'];
 };
-
 
 export type MemberInactivateQueryInactivateCheckArgs = {
   memberId: Scalars['ID'];
@@ -9145,47 +8946,38 @@ export type MemberMutation = {
   translate?: Maybe<TranslateData>;
 };
 
-
 export type MemberMutationCooperativeArgs = {
   id: Scalars['ID'];
 };
-
 
 export type MemberMutationDeleteDraftArgs = {
   memberId: Scalars['ID'];
 };
 
-
 export type MemberMutationEntryArgs = {
   memberId: Scalars['String'];
 };
-
 
 export type MemberMutationGenerateExcelArgs = {
   filename: Scalars['String'];
   id: Scalars['ID'];
 };
 
-
 export type MemberMutationIndividualArgs = {
   id: Scalars['ID'];
 };
-
 
 export type MemberMutationInstitutionArgs = {
   id: Scalars['ID'];
 };
 
-
 export type MemberMutationMakeInactiveArgs = {
   memberId: Scalars['ID'];
 };
 
-
 export type MemberMutationOfficialUseArgs = {
   data: OfficialUseInputData;
 };
-
 
 export type MemberMutationTranslateArgs = {
   data: TranslateInput;
@@ -9241,7 +9033,11 @@ export type MemberPaymentView = {
   paymentType?: Maybe<Scalars['String']>;
 };
 
-export type MemberProfile = CooperativeUnionMember | KymCooperativeFormStateQuery | KymIndFormStateQuery | KymInsFormStateQuery;
+export type MemberProfile =
+  | CooperativeUnionMember
+  | KymCooperativeFormStateQuery
+  | KymIndFormStateQuery
+  | KymInsFormStateQuery;
 
 export type MemberQuery = {
   activateMember?: Maybe<MemberActivateQuery>;
@@ -9261,53 +9057,43 @@ export type MemberQuery = {
   translate: TranslateQueryResult;
 };
 
-
 export type MemberQueryDetailsArgs = {
   id: Scalars['ID'];
 };
-
 
 export type MemberQueryEntryArgs = {
   membeId: Scalars['String'];
 };
 
-
 export type MemberQueryGetAllAccountsArgs = {
   memberId: Scalars['ID'];
 };
-
 
 export type MemberQueryIndividualArgs = {
   hasPressedNext?: InputMaybe<Scalars['Boolean']>;
   id: Scalars['String'];
 };
 
-
 export type MemberQueryInstitutionArgs = {
   includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 export type MemberQueryListArgs = {
   filter?: InputMaybe<KymMemberDataFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type MemberQueryMemberOverviewArgs = {
   id: Scalars['ID'];
 };
-
 
 export type MemberQueryMemberPdfArgs = {
   id: Scalars['ID'];
 };
 
-
 export type MemberQueryOfficialUseArgs = {
   id: Scalars['ID'];
 };
-
 
 export type MemberQueryTranslateArgs = {
   id: Scalars['ID'];
@@ -9323,7 +9109,7 @@ export type MemberRecentTransactionView = {
 
 export enum MemberRecentTransactionViewTxnType {
   Credit = 'CREDIT',
-  Debit = 'DEBIT'
+  Debit = 'DEBIT',
 }
 
 export type MemberReportView = {
@@ -9439,7 +9225,7 @@ export enum Months {
   May = 'MAY',
   November = 'NOVEMBER',
   October = 'OCTOBER',
-  September = 'SEPTEMBER'
+  September = 'SEPTEMBER',
 }
 
 export type Municipality = {
@@ -9474,12 +9260,22 @@ export type Mutation = {
   withdrawSlip: WithdrawSlipMutation;
 };
 
-
 export type MutationNewIdArgs = {
   idType?: InputMaybe<Id_Type>;
 };
 
-export type MutationError = AuthorizationError | BadRequestError | NotFoundError | ServerError | ValidationError;
+export type MutationError =
+  | AuthorizationError
+  | BadRequestError
+  | NotFoundError
+  | ServerError
+  | ValidationError;
+
+export type MyCoopInfo = {
+  totalBranch?: Maybe<Scalars['Int']>;
+  totalMembers?: Maybe<Scalars['Int']>;
+  totalShareIssued?: Maybe<Scalars['Int']>;
+};
 
 export type MyraUser = Base & {
   branch?: Maybe<Branch>;
@@ -9583,7 +9379,6 @@ export type MyraUserMutation = {
   add?: Maybe<MyraUserResult>;
 };
 
-
 export type MyraUserMutationAddArgs = {
   data?: InputMaybe<MyraUserInput>;
   id: Scalars['ID'];
@@ -9594,11 +9389,9 @@ export type MyraUserQuery = {
   list?: Maybe<MyraUserConnection>;
 };
 
-
 export type MyraUserQueryFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type MyraUserQueryListArgs = {
   filter?: InputMaybe<MyraUserSearchFilter>;
@@ -9630,19 +9423,19 @@ export enum NatureOfCooperative {
   HealthCooperative = 'HEALTH_COOPERATIVE',
   MultipurposeCooperative = 'MULTIPURPOSE_COOPERATIVE',
   Others = 'OTHERS',
-  SavingAndCredit = 'SAVING_AND_CREDIT'
+  SavingAndCredit = 'SAVING_AND_CREDIT',
 }
 
 export enum NatureOfDepositProduct {
   Current = 'CURRENT',
   RecurringSaving = 'RECURRING_SAVING',
   Saving = 'SAVING',
-  TermSavingOrFd = 'TERM_SAVING_OR_FD'
+  TermSavingOrFd = 'TERM_SAVING_OR_FD',
 }
 
 export enum NatureOfLoanProduct {
   Progressive = 'PROGRESSIVE',
-  Unprogressive = 'UNPROGRESSIVE'
+  Unprogressive = 'UNPROGRESSIVE',
 }
 
 export type NeosysAuthMutation = {
@@ -9650,11 +9443,9 @@ export type NeosysAuthMutation = {
   token?: Maybe<NeosysAuthTokenResult>;
 };
 
-
 export type NeosysAuthMutationLoginArgs = {
   data: NeosysLoginInput;
 };
-
 
 export type NeosysAuthMutationTokenArgs = {
   refreshToken: Scalars['String'];
@@ -9698,11 +9489,9 @@ export type NeosysClientMutation = {
   createDB?: Maybe<DbCreateResult>;
 };
 
-
 export type NeosysClientMutationAddArgs = {
   data?: InputMaybe<OrganizationClientInput>;
 };
-
 
 export type NeosysClientMutationCreateDbArgs = {
   saccosId: Scalars['ID'];
@@ -9711,7 +9500,6 @@ export type NeosysClientMutationCreateDbArgs = {
 export type NeosysClientQuery = {
   list?: Maybe<Array<Maybe<NeosysClientMinimalInfo>>>;
 };
-
 
 export type NeosysClientQueryListArgs = {
   filter?: InputMaybe<NeosysClientFilter>;
@@ -9798,7 +9586,7 @@ export enum ObjState {
   Draft = 'DRAFT',
   Inactive = 'INACTIVE',
   Submitted = 'SUBMITTED',
-  Validated = 'VALIDATED'
+  Validated = 'VALIDATED',
 }
 
 export type OfficialUseData = {
@@ -9831,7 +9619,7 @@ export enum OfficialUseRiskCategory {
   High = 'HIGH',
   Low = 'LOW',
   Medium = 'MEDIUM',
-  Pep = 'PEP'
+  Pep = 'PEP',
 }
 
 export type OrConditions = {
@@ -10058,7 +9846,7 @@ export type OrganizationInput = {
 export enum OrganizationInstallmentLicense {
   Basic = 'BASIC',
   Professional = 'PROFESSIONAL',
-  Standard = 'STANDARD'
+  Standard = 'STANDARD',
 }
 
 export type OrganizationListResult = {
@@ -10089,13 +9877,12 @@ export type OrganizationRegistrationDetailsInput = {
 
 export enum OrganizationSecuritySetup {
   PureSass = 'PURE_SASS',
-  Vpn = 'VPN'
+  Vpn = 'VPN',
 }
 
 export type OrganizationSettingsMutation = {
   initialSetup?: Maybe<OrganizationAddResult>;
 };
-
 
 export type OrganizationSettingsMutationInitialSetupArgs = {
   data: OrganizationInput;
@@ -10116,12 +9903,12 @@ export enum OrganizationType {
   CooperativeUnion = 'COOPERATIVE_UNION',
   DistrictUnion = 'DISTRICT_UNION',
   Preliminary = 'PRELIMINARY',
-  ProvinceUnion = 'PROVINCE_UNION'
+  ProvinceUnion = 'PROVINCE_UNION',
 }
 
 export enum OtpFor {
   ResetPassword = 'RESET_PASSWORD',
-  SignUp = 'SIGN_UP'
+  SignUp = 'SIGN_UP',
 }
 
 export type OverviewView = {
@@ -10165,7 +9952,7 @@ export type PaymentAllocationInput = {
 
 export enum PaymentDepositedBy {
   Other = 'OTHER',
-  Self = 'SELF'
+  Self = 'SELF',
 }
 
 export type Penalty = {
@@ -10193,7 +9980,7 @@ export type PenaltyInput = {
 
 export enum PenaltyRateType {
   FlatRate = 'FLAT_RATE',
-  RelativeRate = 'RELATIVE_RATE'
+  RelativeRate = 'RELATIVE_RATE',
 }
 
 export type PenaltyRebate = {
@@ -10210,7 +9997,7 @@ export type PenaltyRebateResult = {
 
 export enum PenaltyType {
   PenalInterest = 'PenalInterest',
-  RemainingPrincipal = 'RemainingPrincipal'
+  RemainingPrincipal = 'RemainingPrincipal',
 }
 
 export type PenaltyTypeInput = {
@@ -10220,6 +10007,13 @@ export type PenaltyTypeInput = {
   penaltyRate?: InputMaybe<Scalars['Float']>;
 };
 
+export type PendingRequestInfo = {
+  loanApplicationRequest?: Maybe<Scalars['Int']>;
+  loanDisbursementRequest?: Maybe<Scalars['Int']>;
+  memberRequestCount?: Maybe<Scalars['Int']>;
+  withdrawSlipCount?: Maybe<Scalars['Int']>;
+};
+
 export enum PeriodTypeEnum {
   Last_7Days = 'LAST_7_DAYS',
   Last_14Days = 'LAST_14_DAYS',
@@ -10227,7 +10021,7 @@ export enum PeriodTypeEnum {
   Lifetime = 'LIFETIME',
   ThisFiscalYearToDate = 'THIS_FISCAL_YEAR_TO_DATE',
   Today = 'TODAY',
-  Yesterday = 'YESTERDAY'
+  Yesterday = 'YESTERDAY',
 }
 
 export type PersonalInformation = {
@@ -10276,11 +10070,9 @@ export type PredefinedFormQuery = {
   list: PredefinedElementListQueryResult;
 };
 
-
 export type PredefinedFormQueryDetailsArgs = {
   filter: PredefinedElementFilter;
 };
-
 
 export type PredefinedFormQueryListArgs = {
   filter: PredefinedElementListFilter;
@@ -10296,7 +10088,7 @@ export type PrematurePenalty = {
 
 export enum PrematurePenaltyDateType {
   EffectiveDaysFromStart = 'EFFECTIVE_DAYS_FROM_START',
-  RemainingDaysToGetMatured = 'REMAINING_DAYS_TO_GET_MATURED'
+  RemainingDaysToGetMatured = 'REMAINING_DAYS_TO_GET_MATURED',
 }
 
 export type PrematurePenaltyFormState = {
@@ -10310,7 +10102,6 @@ export type PrematurePenaltyFormState = {
 export type PresignedUrlMutation = {
   upload: PresignedUrlOutput;
 };
-
 
 export type PresignedUrlMutationUploadArgs = {
   contentType?: InputMaybe<Scalars['String']>;
@@ -10357,36 +10148,29 @@ export type ProductsQuery = {
   loanProductTypes?: Maybe<Array<Maybe<LoanSettingsProductTypeData>>>;
 };
 
-
 export type ProductsQueryDepositProductListArgs = {
   filter: NatureOfDepositProduct;
 };
-
 
 export type ProductsQueryGetDepositProductArgs = {
   id: Scalars['ID'];
 };
 
-
 export type ProductsQueryGetDepositProductCriteriaArgs = {
   productId: Scalars['ID'];
 };
-
 
 export type ProductsQueryGetLoanProductArgs = {
   id: Scalars['ID'];
 };
 
-
 export type ProductsQueryGetLoanProductCriteriaArgs = {
   productId: Scalars['ID'];
 };
 
-
 export type ProductsQueryGetLoanProductTypeArgs = {
   id: Scalars['ID'];
 };
-
 
 export type ProductsQueryLoanProductListArgs = {
   productSubTypeId: Scalars['ID'];
@@ -10403,7 +10187,7 @@ export enum PurposeOfTransaction {
   BillSharing = 'BILL_SHARING',
   FamilyExpenses = 'FAMILY_EXPENSES',
   LendOrBorrow = 'LEND_OR_BORROW',
-  PersonalUse = 'PERSONAL_USE'
+  PersonalUse = 'PERSONAL_USE',
 }
 
 export type QuarterlyDividendRate = {
@@ -10526,7 +10310,6 @@ export type ReportMutation = {
   statementReport?: Maybe<ReportResult>;
 };
 
-
 export type ReportMutationStatementReportArgs = {
   data: StatementReportInput;
 };
@@ -10539,7 +10322,7 @@ export enum ReportPeriodType {
   Lifetime = 'LIFETIME',
   ThisFiscalYearToDate = 'THIS_FISCAL_YEAR_TO_DATE',
   Today = 'TODAY',
-  Yesterday = 'YESTERDAY'
+  Yesterday = 'YESTERDAY',
 }
 
 export type ReportQuery = {
@@ -10552,18 +10335,15 @@ export type ReportQuery = {
   shareStatementReport?: Maybe<ReportResult>;
 };
 
-
 export type ReportQueryGeneralLedgerReportArgs = {
   date?: InputMaybe<LocalizedDateFilter>;
   ledgerId: Scalars['ID'];
   period?: InputMaybe<ReportPeriodType>;
 };
 
-
 export type ReportQueryGetReportArgs = {
   reportId: Scalars['ID'];
 };
-
 
 export type ReportQueryListReportsArgs = {
   filter?: InputMaybe<ReportListFilter>;
@@ -10571,22 +10351,18 @@ export type ReportQueryListReportsArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type ReportQueryLoanStatementReportArgs = {
   data: LoanStatementReportSettings;
 };
-
 
 export type ReportQueryMemberClassificationReportArgs = {
   date?: InputMaybe<LocalizedDateFilter>;
   period?: InputMaybe<ReportPeriodType>;
 };
 
-
 export type ReportQuerySavingStatementReportArgs = {
   data: SavingStatementReportSettings;
 };
-
 
 export type ReportQueryShareStatementReportArgs = {
   data: ShareStatementReportSettings;
@@ -10621,20 +10397,20 @@ export type RequestFilter = {
 
 export enum RequestSource {
   Ebanking = 'EBANKING',
-  MobileBanking = 'MOBILE_BANKING'
+  MobileBanking = 'MOBILE_BANKING',
 }
 
 export enum RequestStatus {
   Approved = 'APPROVED',
   Declined = 'DECLINED',
-  Pending = 'PENDING'
+  Pending = 'PENDING',
 }
 
 export enum RequestType {
   BlockCheque = 'BLOCK_CHEQUE',
   ChequeBookRequest = 'CHEQUE_BOOK_REQUEST',
   LoanRequest = 'LOAN_REQUEST',
-  WithdrawRequest = 'WITHDRAW_REQUEST'
+  WithdrawRequest = 'WITHDRAW_REQUEST',
 }
 
 export type RequestsList = {
@@ -10644,24 +10420,20 @@ export type RequestsList = {
   withdrawViaCollector?: Maybe<WithdrawViaCollectorConnection>;
 };
 
-
 export type RequestsListBlockChequeArgs = {
   filter?: InputMaybe<RequestFilter>;
   paginate?: InputMaybe<Pagination>;
 };
-
 
 export type RequestsListChequeBookRequestArgs = {
   filter?: InputMaybe<RequestFilter>;
   paginate?: InputMaybe<Pagination>;
 };
 
-
 export type RequestsListLoanRequestArgs = {
   filter?: InputMaybe<RequestFilter>;
   paginate?: InputMaybe<Pagination>;
 };
-
 
 export type RequestsListWithdrawViaCollectorArgs = {
   filter?: InputMaybe<RequestFilter>;
@@ -10671,7 +10443,6 @@ export type RequestsListWithdrawViaCollectorArgs = {
 export type RequestsMutation = {
   requestApproveOrDecline?: Maybe<RequestApproveOrDeclineResult>;
 };
-
 
 export type RequestsMutationRequestApproveOrDeclineArgs = {
   data?: InputMaybe<RequestApproveOrDeclineInput>;
@@ -10703,7 +10474,7 @@ export enum Roles {
   BranchManager = 'BRANCH_MANAGER',
   HeadTeller = 'HEAD_TELLER',
   Superadmin = 'SUPERADMIN',
-  Teller = 'TELLER'
+  Teller = 'TELLER',
 }
 
 export type RoutesAndCodes = {
@@ -10720,7 +10491,6 @@ export type RoutesAndCodesQuery = {
   list: Array<RoutesAndCodes>;
 };
 
-
 export type RoutesAndCodesQueryListArgs = {
   filter?: InputMaybe<RoutesAndCodesFilter>;
 };
@@ -10728,12 +10498,12 @@ export type RoutesAndCodesQueryListArgs = {
 export enum Share_Status {
   Active = 'ACTIVE',
   Draft = 'DRAFT',
-  Submitted = 'SUBMITTED'
+  Submitted = 'SUBMITTED',
 }
 
 export enum Share_Transaction_Direction {
   Purchase = 'PURCHASE',
-  Return = 'RETURN'
+  Return = 'RETURN',
 }
 
 export type SaleProduct = {
@@ -11005,13 +10775,13 @@ export type SavingInvestmentTransactionInput = {
 export enum SavingInvestmentType {
   Type_1 = 'TYPE_1',
   Type_2 = 'TYPE_2',
-  Type_3 = 'TYPE_3'
+  Type_3 = 'TYPE_3',
 }
 
 export enum SavingServiceType {
   Charges = 'CHARGES',
   CustomerInitiated = 'CUSTOMER_INITIATED',
-  Interest = 'INTEREST'
+  Interest = 'INTEREST',
 }
 
 export type SavingStatement = {
@@ -11045,7 +10815,7 @@ export type SavingTotalReport = {
 export enum SavingTransactionType {
   All = 'ALL',
   Deposit = 'DEPOSIT',
-  Withdraw = 'WITHDRAW'
+  Withdraw = 'WITHDRAW',
 }
 
 export type SearchFilterData = {
@@ -11064,7 +10834,6 @@ export type SearchListEdges = {
 export type SearchQuery = {
   globalPages: SearchQueryResult;
 };
-
 
 export type SearchQueryGlobalPagesArgs = {
   filter?: InputMaybe<SearchFilterData>;
@@ -11206,7 +10975,7 @@ export type ShareChargeInput = {
 
 export enum ShareChargeType {
   FixedAmount = 'FIXED_AMOUNT',
-  Percentage = 'PERCENTAGE'
+  Percentage = 'PERCENTAGE',
 }
 
 export type ShareCharges = {
@@ -11289,7 +11058,7 @@ export type ShareInvestmentTransactionInput = {
 
 export enum ShareInvestmentType {
   ShareBonusDividend = 'SHARE_BONUS_DIVIDEND',
-  ShareReturn = 'SHARE_RETURN'
+  ShareReturn = 'SHARE_RETURN',
 }
 
 export type ShareIssueChargesInput = {
@@ -11307,11 +11076,9 @@ export type ShareMutation = {
   return: ShareReturnResult;
 };
 
-
 export type ShareMutationPurchaseArgs = {
   data: SharePurchaseInput;
 };
-
 
 export type ShareMutationReturnArgs = {
   data: ShareReturnInput;
@@ -11325,7 +11092,7 @@ export type ShareNumber = {
 export enum SharePaymentMode {
   Account = 'ACCOUNT',
   BankVoucherOrCheque = 'BANK_VOUCHER_OR_CHEQUE',
-  Cash = 'CASH'
+  Cash = 'CASH',
 }
 
 export type SharePurchaseError = InvalidDataError;
@@ -11355,23 +11122,19 @@ export type ShareQuery = {
   register?: Maybe<ShareRegisterConnection>;
 };
 
-
 export type ShareQueryBalanceArgs = {
   filter?: InputMaybe<ShareBalanceFilter>;
   pagination?: InputMaybe<Pagination>;
 };
-
 
 export type ShareQueryChargesArgs = {
   shareCount: Scalars['Int'];
   transactionType: Share_Transaction_Direction;
 };
 
-
 export type ShareQueryHistoryArgs = {
   memberId: Scalars['ID'];
 };
-
 
 export type ShareQueryRegisterArgs = {
   filter?: InputMaybe<ShareRegisterFilter>;
@@ -11465,31 +11228,25 @@ export type ShareSettingsAddMutation = {
   transfer?: Maybe<ShareSettingsQuery>;
 };
 
-
 export type ShareSettingsAddMutationBonusArgs = {
   data?: InputMaybe<ShareBonusSettingsInput>;
 };
-
 
 export type ShareSettingsAddMutationDividendArgs = {
   data?: InputMaybe<ShareDividendSettingsInput>;
 };
 
-
 export type ShareSettingsAddMutationGeneralArgs = {
   data?: InputMaybe<ShareSettingsGeneralInput>;
 };
-
 
 export type ShareSettingsAddMutationShareIssueChargesArgs = {
   data?: InputMaybe<ShareIssueChargesInput>;
 };
 
-
 export type ShareSettingsAddMutationShareReturnChargesArgs = {
   data?: InputMaybe<ShareReturnChargesInput>;
 };
-
 
 export type ShareSettingsAddMutationTransferArgs = {
   data?: InputMaybe<ShareTransferSettingsInput>;
@@ -11593,7 +11350,7 @@ export type ShareTransactionChequePayment = {
 export enum ShareTransactionType {
   All = 'ALL',
   Issue = 'ISSUE',
-  Return = 'RETURN'
+  Return = 'RETURN',
 }
 
 export type ShareTransactionVoucherPayment = {
@@ -11622,12 +11379,12 @@ export type ShareTransferSettingsResult = {
 
 export enum ShareTransferType {
   MemberToMember = 'MEMBER_TO_MEMBER',
-  ShareRefund = 'SHARE_REFUND'
+  ShareRefund = 'SHARE_REFUND',
 }
 
 export enum ShareVoucherDepositedBy {
   Other = 'OTHER',
-  Self = 'SELF'
+  Self = 'SELF',
 }
 
 export type SisterConcernDetails = {
@@ -11671,7 +11428,7 @@ export type SlipRangeInput = {
 export enum SlipState {
   Cancelled = 'CANCELLED',
   Issued = 'ISSUED',
-  Used = 'USED'
+  Used = 'USED',
 }
 
 export type StatementReport = LoanStatementReport | SavingStatementReport | ShareStatementReport;
@@ -11688,13 +11445,11 @@ export type SubscriptionMutation = {
   Upsert: DocumentMutationResult;
 };
 
-
 export type SubscriptionMutationReferenceKymArgs = {
   deference?: InputMaybe<Scalars['Boolean']>;
   fieldId: Scalars['String'];
   memberId: Scalars['String'];
 };
-
 
 export type SubscriptionMutationUpsertArgs = {
   fieldId: Scalars['String'];
@@ -11703,12 +11458,12 @@ export type SubscriptionMutationUpsertArgs = {
 
 export enum Transaction_Direction {
   Purchased = 'PURCHASED',
-  Sold = 'SOLD'
+  Sold = 'SOLD',
 }
 
 export enum TaxPayerOptions {
   Cooperative = 'COOPERATIVE',
-  Member = 'MEMBER'
+  Member = 'MEMBER',
 }
 
 export type TellerActivityEntry = {
@@ -11762,7 +11517,7 @@ export enum TellerTransferType {
   BranchTransfer = 'BRANCH_TRANSFER',
   CashToVault = 'CASH_TO_VAULT',
   TellerTransfer = 'TELLER_TRANSFER',
-  VaultToCash = 'VAULT_TO_CASH'
+  VaultToCash = 'VAULT_TO_CASH',
 }
 
 export type TestDbResult = {
@@ -11772,34 +11527,20 @@ export type TestDbResult = {
 export enum TextFormat {
   Email = 'EMAIL',
   IPv4 = 'IPv4',
-  IPv6 = 'IPv6'
+  IPv6 = 'IPv6',
 }
-
-export enum TimePeriod {
-  Day = 'DAY',
-  Fortnight = 'FORTNIGHT',
-  Month = 'MONTH',
-  Week = 'WEEK',
-  Year = 'YEAR'
-}
-
-export type TodayTrend = {
-  trendData?: Maybe<Array<Maybe<Scalars['Float']>>>;
-  type: DashboardTodayType;
-  value: Scalars['Float'];
-  yesterdayValue: Scalars['Float'];
-};
-
-
-export type TodayTrendTrendDataArgs = {
-  filter: TrendDataFilter;
-};
 
 export type TotalReport = {
   totalBalanceSheet?: Maybe<Scalars['Int']>;
   totalCr?: Maybe<Scalars['Int']>;
   totalDr?: Maybe<Scalars['Int']>;
   totalShares?: Maybe<Scalars['Int']>;
+};
+
+export type TransactionData = {
+  noOfTransaction?: Maybe<Scalars['Int']>;
+  percent?: Maybe<Scalars['String']>;
+  todayValue?: Maybe<Scalars['String']>;
 };
 
 export type TransactionFilter = {
@@ -11821,7 +11562,7 @@ export type TransactionListSummary = {
 export enum TransactionMode {
   Ebanking = 'EBANKING',
   Mobile = 'MOBILE',
-  MyraErp = 'MYRA_ERP'
+  MyraErp = 'MYRA_ERP',
 }
 
 export type TransactionMutation = {
@@ -11836,48 +11577,51 @@ export type TransactionMutation = {
   withdraw: WithdrawResult;
 };
 
-
 export type TransactionMutationAddMemberToAgentArgs = {
   agentId: Scalars['String'];
   data?: InputMaybe<AssignMembersInput>;
   override?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 export type TransactionMutationAgentTodayDepositArgs = {
   agentID: Scalars['ID'];
   data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>>>;
 };
-
 
 export type TransactionMutationAgentTodayListArgs = {
   data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>>>;
   id: Scalars['ID'];
 };
 
-
 export type TransactionMutationBulkDepositArgs = {
   data?: InputMaybe<BulkDepositInput>;
 };
-
 
 export type TransactionMutationDepositArgs = {
   data: DepositInput;
 };
 
-
 export type TransactionMutationTellerTransferArgs = {
   data: TellerTransferInput;
 };
-
 
 export type TransactionMutationTransferArgs = {
   data: TransferInput;
 };
 
-
 export type TransactionMutationWithdrawArgs = {
   data: WithdrawInput;
+};
+
+export type TransactionMyDay = {
+  cashInHand?: Maybe<CashInHandData>;
+  deposit?: Maybe<TransactionData>;
+  withdraw?: Maybe<TransactionData>;
+};
+
+export type TransactionMyDayData = {
+  data?: Maybe<TransactionMyDay>;
+  error?: Maybe<QueryError>;
 };
 
 export type TransactionQuery = {
@@ -11897,73 +11641,60 @@ export type TransactionQuery = {
   viewWithdraw?: Maybe<WithdrawTransactionViewResult>;
 };
 
-
 export type TransactionQueryAgentDetailArgs = {
   id: Scalars['ID'];
 };
-
 
 export type TransactionQueryAssignedMemberListArgs = {
   filter?: InputMaybe<AssignedMemberListFiler>;
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type TransactionQueryListAgentArgs = {
   filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type TransactionQueryListAgentTaskArgs = {
   id: Scalars['ID'];
 };
-
 
 export type TransactionQueryListDepositArgs = {
   filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type TransactionQueryListTellerTransactionArgs = {
   filter?: InputMaybe<TellerTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 };
-
 
 export type TransactionQueryListTransferArgs = {
   filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type TransactionQueryListWithdrawArgs = {
   filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 };
 
-
 export type TransactionQueryViewAccountTransferArgs = {
   transactionId: Scalars['ID'];
 };
-
 
 export type TransactionQueryViewAgentListArgs = {
   agentId: Scalars['ID'];
   date: Scalars['String'];
 };
 
-
 export type TransactionQueryViewDepositArgs = {
   transactionId: Scalars['ID'];
 };
 
-
 export type TransactionQueryViewLoanRepaymentArgs = {
   paymentId: Scalars['ID'];
 };
-
 
 export type TransactionQueryViewWithdrawArgs = {
   transactionId: Scalars['ID'];
@@ -11971,7 +11702,7 @@ export type TransactionQueryViewWithdrawArgs = {
 
 export enum TransactionState {
   Active = 'ACTIVE',
-  Submitted = 'SUBMITTED'
+  Submitted = 'SUBMITTED',
 }
 
 export type TransferData = {
@@ -12005,7 +11736,7 @@ export type TransferResult = {
 
 export enum TransferType {
   Member = 'MEMBER',
-  Self = 'SELF'
+  Self = 'SELF',
 }
 
 export type TranslateData = {
@@ -12025,19 +11756,13 @@ export type TranslateQueryResult = {
   error?: Maybe<QueryError>;
 };
 
-export type TrendDataFilter = {
-  fromDate?: InputMaybe<Scalars['String']>;
-  period?: InputMaybe<TimePeriod>;
-  toDate?: InputMaybe<Scalars['String']>;
-};
-
 export enum TypeOfOrganization {
   Cooperative = 'COOPERATIVE',
-  CooperativeUnion = 'COOPERATIVE_UNION'
+  CooperativeUnion = 'COOPERATIVE_UNION',
 }
 
 export enum TypeOfShare {
-  PaidUp = 'PAID_UP'
+  PaidUp = 'PAID_UP',
 }
 
 export type UploadedDocument = {
@@ -12077,14 +11802,13 @@ export type UserData = {
 export enum UserGender {
   Female = 'FEMALE',
   Male = 'MALE',
-  Other = 'OTHER'
+  Other = 'OTHER',
 }
 
 export type UserMutation = {
   preference?: Maybe<UserPreferenceMutation>;
   resetPassword?: Maybe<ResetPasswordResult>;
 };
-
 
 export type UserMutationResetPasswordArgs = {
   data: ResetPasswordData;
@@ -12106,7 +11830,6 @@ export type UserPreferenceMutation = {
   update?: Maybe<UserPreferenceResult>;
 };
 
-
 export type UserPreferenceMutationUpdateArgs = {
   data: UserPreferenceInput;
   id: Scalars['ID'];
@@ -12115,7 +11838,6 @@ export type UserPreferenceMutationUpdateArgs = {
 export type UserPreferenceQuery = {
   get?: Maybe<UserPreference>;
 };
-
 
 export type UserPreferenceQueryGetArgs = {
   id: Scalars['ID'];
@@ -12133,13 +11855,12 @@ export type UserQuery = {
 
 export enum UserType {
   Human = 'HUMAN',
-  System = 'SYSTEM'
+  System = 'SYSTEM',
 }
 
 export type UtilityPayemntMutation = {
   post?: Maybe<UtilityPaymentResult>;
 };
-
 
 export type UtilityPayemntMutationPostArgs = {
   serviceID: Scalars['ID'];
@@ -12186,7 +11907,7 @@ export type ValidationError = {
 
 export enum ValuationMethod {
   Dv = 'DV',
-  Fmv = 'FMV'
+  Fmv = 'FMV',
 }
 
 export type Valuator = Base & {
@@ -12275,7 +11996,6 @@ export type ValuatorSettingsMutation = {
   add?: Maybe<ValuatorResult>;
 };
 
-
 export type ValuatorSettingsMutationAddArgs = {
   data?: InputMaybe<ValuatorInput>;
   id: Scalars['ID'];
@@ -12286,11 +12006,9 @@ export type ValuatorSettingsQuery = {
   list?: Maybe<ValuatorConnection>;
 };
 
-
 export type ValuatorSettingsQueryFormStateArgs = {
   id: Scalars['ID'];
 };
-
 
 export type ValuatorSettingsQueryListArgs = {
   filter?: InputMaybe<ValuatorSearchFilter>;
@@ -12299,7 +12017,7 @@ export type ValuatorSettingsQueryListArgs = {
 
 export enum ValuatorType {
   Individual = 'INDIVIDUAL',
-  Organization = 'ORGANIZATION'
+  Organization = 'ORGANIZATION',
 }
 
 export enum Week {
@@ -12309,12 +12027,12 @@ export enum Week {
   Sunday = 'SUNDAY',
   Thursaday = 'THURSADAY',
   Tuesday = 'TUESDAY',
-  Wednesday = 'WEDNESDAY'
+  Wednesday = 'WEDNESDAY',
 }
 
 export enum WeeklyFrequency {
   Day = 'DAY',
-  DayOfTheWeek = 'DAY_OF_THE_WEEK'
+  DayOfTheWeek = 'DAY_OF_THE_WEEK',
 }
 
 export type WithdrawBankCheque = {
@@ -12325,7 +12043,7 @@ export type WithdrawBankCheque = {
 
 export enum WithdrawBy {
   Agent = 'AGENT',
-  Self = 'SELF'
+  Self = 'SELF',
 }
 
 export type WithdrawInput = {
@@ -12349,7 +12067,7 @@ export type WithdrawInput = {
 
 export enum WithdrawPaymentType {
   BankCheque = 'BANK_CHEQUE',
-  Cash = 'CASH'
+  Cash = 'CASH',
 }
 
 export type WithdrawPenalty = {
@@ -12393,13 +12111,11 @@ export type WithdrawSlipMutation = {
   issueNew?: Maybe<AccountWithdrawSlipMutationResult>;
 };
 
-
 export type WithdrawSlipMutationCancelSlipArgs = {
   accountId: Scalars['ID'];
   slipNumber?: InputMaybe<Scalars['Int']>;
   slipRange?: InputMaybe<SlipRangeInput>;
 };
-
 
 export type WithdrawSlipMutationIssueNewArgs = {
   accountId: Scalars['ID'];
@@ -12412,16 +12128,13 @@ export type WithdrawSlipQuery = {
   listPastSlips?: Maybe<AccountWithdrawSlipQueryResult>;
 };
 
-
 export type WithdrawSlipQueryGetAvailableRangeArgs = {
   count: Scalars['Int'];
 };
 
-
 export type WithdrawSlipQueryListAvailableSlipsArgs = {
   accountId: Scalars['ID'];
 };
-
 
 export type WithdrawSlipQueryListPastSlipsArgs = {
   accountId: Scalars['ID'];
@@ -12485,7 +12198,7 @@ export type WithdrawViaCollectorList = {
 
 export enum WithdrawWith {
   CounterSlip = 'COUNTER_SLIP',
-  WithdrawSlip = 'WITHDRAW_SLIP'
+  WithdrawSlip = 'WITHDRAW_SLIP',
 }
 
 export type SetInvestmentAccountDataMutationVariables = Exact<{
@@ -12493,70 +12206,193 @@ export type SetInvestmentAccountDataMutationVariables = Exact<{
   data: InvestmentAccountInput;
 }>;
 
-
-export type SetInvestmentAccountDataMutation = { accounting: { investment: { upsertAccount: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } };
+export type SetInvestmentAccountDataMutation = {
+  accounting: {
+    investment: {
+      upsertAccount: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
 
 export type SetInvestmentEntryDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: InvestmentEntryInput;
 }>;
 
-
-export type SetInvestmentEntryDataMutation = { accounting: { investment: { upsertEntry: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } };
+export type SetInvestmentEntryDataMutation = {
+  accounting: {
+    investment: {
+      upsertEntry: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
 
 export type SetInvestmentTransactionDataMutationVariables = Exact<{
   data: InvestmentTransactionInput;
 }>;
 
-
-export type SetInvestmentTransactionDataMutation = { accounting: { investment: { addTransaction: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } };
+export type SetInvestmentTransactionDataMutation = {
+  accounting: {
+    investment: {
+      addTransaction: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
 
 export type SetSalesCustomerDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: SalesCustomerInput;
 }>;
 
-
-export type SetSalesCustomerDataMutation = { accounting: { sales: { upsertCustomer: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } };
+export type SetSalesCustomerDataMutation = {
+  accounting: {
+    sales: {
+      upsertCustomer: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
 
 export type SetSalesSaleEntryDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: SalesSaleEntryInput;
 }>;
 
-
-export type SetSalesSaleEntryDataMutation = { accounting: { sales: { upsertSaleEntry: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } };
+export type SetSalesSaleEntryDataMutation = {
+  accounting: {
+    sales: {
+      upsertSaleEntry: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
 
 export type SetSalesCreditNoteDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: SalesCreditNoteInput;
 }>;
 
-
-export type SetSalesCreditNoteDataMutation = { accounting: { sales: { upsertCreditNote: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } };
+export type SetSalesCreditNoteDataMutation = {
+  accounting: {
+    sales: {
+      upsertCreditNote: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
 
 export type SetSalesCustomerPaymentDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: SalesCustomerPaymentInput;
 }>;
 
-
-export type SetSalesCustomerPaymentDataMutation = { accounting: { sales: { upsertCustomerPayment: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } };
+export type SetSalesCustomerPaymentDataMutation = {
+  accounting: {
+    sales: {
+      upsertCustomerPayment: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      };
+    };
+  };
+};
 
 export type SetAccountCloseDataMutationVariables = Exact<{
   data?: InputMaybe<DepositAccountClose>;
 }>;
 
-
-export type SetAccountCloseDataMutation = { account: { close?: { recordId: string, calculatedAmount?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type SetAccountCloseDataMutation = {
+  account: {
+    close?: {
+      recordId: string;
+      calculatedAmount?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type SetAccountOpenDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: DepositLoanAccountInput;
 }>;
 
-
-export type SetAccountOpenDataMutation = { account: { add?: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type SetAccountOpenDataMutation = {
+  account: {
+    add?: {
+      recordId: string;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type SetAccountDocumentDataMutationVariables = Exact<{
   subscriptionId: Scalars['String'];
@@ -12564,16 +12400,29 @@ export type SetAccountDocumentDataMutationVariables = Exact<{
   identifiers: Array<Scalars['String']> | Scalars['String'];
 }>;
 
-
-export type SetAccountDocumentDataMutation = { document: { Subscription: { Upsert: { recordId?: string | null } } } };
+export type SetAccountDocumentDataMutation = {
+  document: { Subscription: { Upsert: { recordId?: string | null } } };
+};
 
 export type SetIssueNewSlipMutationVariables = Exact<{
   accountId: Scalars['ID'];
   count: Scalars['Int'];
 }>;
 
-
-export type SetIssueNewSlipMutation = { withdrawSlip: { issueNew?: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type SetIssueNewSlipMutation = {
+  withdrawSlip: {
+    issueNew?: {
+      recordId: string;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type SetAddMemberToAgentDataMutationVariables = Exact<{
   agentId: Scalars['String'];
@@ -12581,68 +12430,194 @@ export type SetAddMemberToAgentDataMutationVariables = Exact<{
   override?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-
-export type SetAddMemberToAgentDataMutation = { transaction: { addMemberToAgent?: { data?: { id: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type SetAddMemberToAgentDataMutation = {
+  transaction: {
+    addMemberToAgent?: {
+      data?: { id: string } | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type SetAgentTodayListDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>> | InputMaybe<AgentTodayListInput>>;
 }>;
 
-
-export type SetAgentTodayListDataMutation = { transaction: { agentTodayList?: { error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type SetAgentTodayListDataMutation = {
+  transaction: {
+    agentTodayList?: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type SetAgentTodayDepositDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<Array<InputMaybe<AgentTodayListInput>> | InputMaybe<AgentTodayListInput>>;
 }>;
 
-
-export type SetAgentTodayDepositDataMutation = { transaction: { agentTodayDeposit?: { error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type SetAgentTodayDepositDataMutation = {
+  transaction: {
+    agentTodayDeposit?: {
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type LoginMutationVariables = Exact<{
   data: LoginInput;
 }>;
 
-
-export type LoginMutation = { auth: { login?: { recordId?: string | null, record?: { token: { access: string, refresh: string }, data: { user?: { id: string, objState: ObjState, username: string, firstName: Record<"local"|"en"|"np",string>, middleName: Record<"local"|"en"|"np",string>, lastName: Record<"local"|"en"|"np",string>, role?: Roles | null, profilePic?: string | null, branch?: { id: string, name?: string | null } | null, organization?: { basicDetails?: { name?: string | null, logo?: string | null } | null, contactDetails?: { website?: string | null, phoneNumber?: string | null, email?: string | null } | null, address?: { district?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, locality?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null } | null, registrationDetails?: { regdNo?: string | null, panOrVat?: string | null } | null } | null } | null, preference?: { language?: Language | null, languageCode?: string | null, date?: DateType | null } | null } } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type LoginMutation = {
+  auth: {
+    login?: {
+      recordId?: string | null;
+      record?: {
+        token: { access: string; refresh: string };
+        data: {
+          user?: {
+            id: string;
+            objState: ObjState;
+            username: string;
+            firstName: Record<'local' | 'en' | 'np', string>;
+            middleName: Record<'local' | 'en' | 'np', string>;
+            lastName: Record<'local' | 'en' | 'np', string>;
+            role?: Roles | null;
+            profilePic?: string | null;
+            branch?: { id: string; name?: string | null } | null;
+            organization?: {
+              basicDetails?: { name?: string | null; logo?: string | null } | null;
+              contactDetails?: {
+                website?: string | null;
+                phoneNumber?: string | null;
+                email?: string | null;
+              } | null;
+              address?: {
+                district?: Record<'local' | 'en' | 'np', string> | null;
+                wardNo?: string | null;
+                state?: Record<'local' | 'en' | 'np', string> | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+              } | null;
+              registrationDetails?: { regdNo?: string | null; panOrVat?: string | null } | null;
+            } | null;
+          } | null;
+          preference?: {
+            language?: Language | null;
+            languageCode?: string | null;
+            date?: DateType | null;
+          } | null;
+        };
+      } | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type RefreshMutationVariables = Exact<{
   refreshToken: Scalars['String'];
 }>;
 
-
-export type RefreshMutation = { auth: { token?: { token?: { access: string, refresh: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type RefreshMutation = {
+  auth: {
+    token?: {
+      token?: { access: string; refresh: string } | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type ResetPasswordMutationVariables = Exact<{
   userId: Scalars['String'];
   newPassword: Scalars['String'];
 }>;
 
-
-export type ResetPasswordMutation = { user: { resetPassword?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type ResetPasswordMutation = {
+  user: {
+    resetPassword?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type AddNewAccountInCoaMutationVariables = Exact<{
   data: AddCoaAccountInput;
 }>;
 
-
-export type AddNewAccountInCoaMutation = { settings: { chartsOfAccount?: { account?: { add: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
+export type AddNewAccountInCoaMutation = {
+  settings: {
+    chartsOfAccount?: {
+      account?: {
+        add: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
 
 export type DeleteCoaMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type DeleteCoaMutation = { settings: { chartsOfAccount?: { account?: { delete: { recordId: string } } | null } | null } };
+export type DeleteCoaMutation = {
+  settings: { chartsOfAccount?: { account?: { delete: { recordId: string } } | null } | null };
+};
 
 export type SetCooperativeDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: KymCooperativeFormInput;
 }>;
 
-
-export type SetCooperativeDataMutation = { members: { cooperative?: { add?: { recordId: string } | null } | null } };
+export type SetCooperativeDataMutation = {
+  members: { cooperative?: { add?: { recordId: string } | null } | null };
+};
 
 export type SetCoopAccOperatorDataMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -12650,16 +12625,26 @@ export type SetCoopAccOperatorDataMutationVariables = Exact<{
   data: KymCoopAccountOperatorDetailsFormInput;
 }>;
 
-
-export type SetCoopAccOperatorDataMutation = { members: { cooperative?: { accountOperatorDetail?: { Upsert?: { recordId: string } | null } | null } | null } };
+export type SetCoopAccOperatorDataMutation = {
+  members: {
+    cooperative?: {
+      accountOperatorDetail?: { Upsert?: { recordId: string } | null } | null;
+    } | null;
+  };
+};
 
 export type DeleteCoopAccOperatorDataMutationVariables = Exact<{
   id: Scalars['ID'];
   accOperatorId: Scalars['ID'];
 }>;
 
-
-export type DeleteCoopAccOperatorDataMutation = { members: { cooperative?: { accountOperatorDetail?: { Delete?: { recordId: string } | null } | null } | null } };
+export type DeleteCoopAccOperatorDataMutation = {
+  members: {
+    cooperative?: {
+      accountOperatorDetail?: { Delete?: { recordId: string } | null } | null;
+    } | null;
+  };
+};
 
 export type SetCooPdirectorDataMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -12667,24 +12652,35 @@ export type SetCooPdirectorDataMutationVariables = Exact<{
   data: KymCoopDirectorDetailsFormInput;
 }>;
 
-
-export type SetCooPdirectorDataMutation = { members: { cooperative?: { directorDetails?: { Upsert?: { recordId: string } | null } | null } | null } };
+export type SetCooPdirectorDataMutation = {
+  members: {
+    cooperative?: { directorDetails?: { Upsert?: { recordId: string } | null } | null } | null;
+  };
+};
 
 export type DeleteCooPdirectorDataMutationVariables = Exact<{
   id: Scalars['ID'];
   dirId: Scalars['ID'];
 }>;
 
-
-export type DeleteCooPdirectorDataMutation = { members: { cooperative?: { directorDetails?: { Delete?: { recordId: string } | null } | null } | null } };
+export type DeleteCooPdirectorDataMutation = {
+  members: {
+    cooperative?: { directorDetails?: { Delete?: { recordId: string } | null } | null } | null;
+  };
+};
 
 export type SetCooperativeUnionInstitutionDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<CoopUnionInstitutionInformationInput>;
 }>;
 
-
-export type SetCooperativeUnionInstitutionDataMutation = { members: { cooperativeUnion?: { add?: { institutionInformation?: { recordId: string } | null } | null } | null } };
+export type SetCooperativeUnionInstitutionDataMutation = {
+  members: {
+    cooperativeUnion?: {
+      add?: { institutionInformation?: { recordId: string } | null } | null;
+    } | null;
+  };
+};
 
 export type SetPersonnelDetailsMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -12693,47 +12689,83 @@ export type SetPersonnelDetailsMutationVariables = Exact<{
   data?: InputMaybe<CoopUnionPersonnelInput>;
 }>;
 
-
-export type SetPersonnelDetailsMutation = { members: { cooperativeUnion?: { add?: { personnelDetails?: { recordId?: string | null } | null } | null } | null } };
+export type SetPersonnelDetailsMutation = {
+  members: {
+    cooperativeUnion?: {
+      add?: { personnelDetails?: { recordId?: string | null } | null } | null;
+    } | null;
+  };
+};
 
 export type DeletePersonnelDetailsMutationVariables = Exact<{
   personnelId: Scalars['ID'];
 }>;
 
-
-export type DeletePersonnelDetailsMutation = { members: { cooperativeUnion?: { deletePersonnel?: { recordId: string } | null } | null } };
+export type DeletePersonnelDetailsMutation = {
+  members: { cooperativeUnion?: { deletePersonnel?: { recordId: string } | null } | null };
+};
 
 export type SetEconomicDetailsDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<CoopUnionEconomicDetailsInput>;
 }>;
 
-
-export type SetEconomicDetailsDataMutation = { members: { cooperativeUnion?: { add?: { economicDetails?: { recordId: string } | null } | null } | null } };
+export type SetEconomicDetailsDataMutation = {
+  members: {
+    cooperativeUnion?: { add?: { economicDetails?: { recordId: string } | null } | null } | null;
+  };
+};
 
 export type SetDeclarationDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<CoopUnionDeclarationInput>;
 }>;
 
-
-export type SetDeclarationDataMutation = { members: { cooperativeUnion?: { add?: { declaration?: { recordId: string } | null } | null } | null } };
+export type SetDeclarationDataMutation = {
+  members: {
+    cooperativeUnion?: { add?: { declaration?: { recordId: string } | null } | null } | null;
+  };
+};
 
 export type SendLoanApplicationForApprovalMutationVariables = Exact<{
   id: Scalars['ID'];
   data: LoanAccountInput;
 }>;
 
-
-export type SendLoanApplicationForApprovalMutation = { loanAccount: { add?: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type SendLoanApplicationForApprovalMutation = {
+  loanAccount: {
+    add?: {
+      recordId: string;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type SetDisburseLoanMutationVariables = Exact<{
   loanAccountId: Scalars['ID'];
   data: LoanDisbursementInput;
 }>;
 
-
-export type SetDisburseLoanMutation = { loanAccount: { disburse?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type SetDisburseLoanMutation = {
+  loanAccount: {
+    disburse?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type ApproveLoanAccountMutationVariables = Exact<{
   id: Scalars['String'];
@@ -12741,20 +12773,43 @@ export type ApproveLoanAccountMutationVariables = Exact<{
   remarks?: InputMaybe<Scalars['String']>;
 }>;
 
-
-export type ApproveLoanAccountMutation = { loanAccount: { approveOrCancel?: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type ApproveLoanAccountMutation = {
+  loanAccount: {
+    approveOrCancel?: {
+      recordId: string;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type SetLoanRepaymentMutationVariables = Exact<{
   data?: InputMaybe<LoanRepaymentInput>;
 }>;
 
-
-export type SetLoanRepaymentMutation = { loanAccount: { repayment?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type SetLoanRepaymentMutation = {
+  loanAccount: {
+    repayment?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type GetNewIdMutationVariables = Exact<{
   idType?: InputMaybe<Id_Type>;
 }>;
-
 
 export type GetNewIdMutation = { newId: string };
 
@@ -12763,24 +12818,39 @@ export type SetMemberDataMutationVariables = Exact<{
   data: KymIndMemberInput;
 }>;
 
-
-export type SetMemberDataMutation = { members: { individual?: { add?: { recordId: string, error?: { error?: Array<{ sectionName?: string | null, errors?: Record<string, Array<string>> | null } | null> | null } | null } | null } | null } };
+export type SetMemberDataMutation = {
+  members: {
+    individual?: {
+      add?: {
+        recordId: string;
+        error?: {
+          error?: Array<{
+            sectionName?: string | null;
+            errors?: Record<string, Array<string>> | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetMemberFamilyDetailsMutationVariables = Exact<{
   id: Scalars['ID'];
   data: KymIndFamilyMemberInput;
 }>;
 
-
-export type SetMemberFamilyDetailsMutation = { members: { individual?: { familyMember: { upsert: { recordId?: string | null } } } | null } };
+export type SetMemberFamilyDetailsMutation = {
+  members: { individual?: { familyMember: { upsert: { recordId?: string | null } } } | null };
+};
 
 export type DeleteMemberFamilyDetailsMutationVariables = Exact<{
   memberId: Scalars['ID'];
   id: Scalars['ID'];
 }>;
 
-
-export type DeleteMemberFamilyDetailsMutation = { members: { individual?: { familyMember: { delete: { recordId?: string | null } } } | null } };
+export type DeleteMemberFamilyDetailsMutation = {
+  members: { individual?: { familyMember: { delete: { recordId?: string | null } } } | null };
+};
 
 export type SetMemberOccupationMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -12788,47 +12858,51 @@ export type SetMemberOccupationMutationVariables = Exact<{
   data: KymIndOccupationInput;
 }>;
 
-
-export type SetMemberOccupationMutation = { members: { individual?: { occupation: { upsert: { recordId?: string | null } } } | null } };
+export type SetMemberOccupationMutation = {
+  members: { individual?: { occupation: { upsert: { recordId?: string | null } } } | null };
+};
 
 export type DeleteMemberOccupationMutationVariables = Exact<{
   memberId: Scalars['ID'];
   id: Scalars['ID'];
 }>;
 
-
-export type DeleteMemberOccupationMutation = { members: { individual?: { occupation: { delete: { recordId?: string | null } } } | null } };
+export type DeleteMemberOccupationMutation = {
+  members: { individual?: { occupation: { delete: { recordId?: string | null } } } | null };
+};
 
 export type SetMemberIncomeSourceMutationVariables = Exact<{
   id: Scalars['ID'];
   data: KymIndIncomeSourceInput;
 }>;
 
-
-export type SetMemberIncomeSourceMutation = { members: { individual?: { incomeSource: { upsert: { recordId?: string | null } } } | null } };
+export type SetMemberIncomeSourceMutation = {
+  members: { individual?: { incomeSource: { upsert: { recordId?: string | null } } } | null };
+};
 
 export type DeleteMemberIncomeSourceMutationVariables = Exact<{
   memberId: Scalars['ID'];
   id: Scalars['ID'];
 }>;
 
-
-export type DeleteMemberIncomeSourceMutation = { members: { individual?: { incomeSource: { delete: { recordId?: string | null } } } | null } };
+export type DeleteMemberIncomeSourceMutation = {
+  members: { individual?: { incomeSource: { delete: { recordId?: string | null } } } | null };
+};
 
 export type SetKymCooperativeDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: KymCooperativeFormInput;
 }>;
 
-
-export type SetKymCooperativeDataMutation = { members: { cooperative?: { add?: { recordId: string } | null } | null } };
+export type SetKymCooperativeDataMutation = {
+  members: { cooperative?: { add?: { recordId: string } | null } | null };
+};
 
 export type SetKymDocumentDataMutationVariables = Exact<{
   memberId: Scalars['String'];
   fieldId: Scalars['String'];
   identifiers: Array<Scalars['String']> | Scalars['String'];
 }>;
-
 
 export type SetKymDocumentDataMutation = { document: { KYMUpsert: { recordId?: string | null } } };
 
@@ -12837,8 +12911,9 @@ export type SetKymIndividualIdentificationDataMutationVariables = Exact<{
   data: KymIndIdentificationInput;
 }>;
 
-
-export type SetKymIndividualIdentificationDataMutation = { members: { individual?: { identification: { upsert: { recordId?: string | null } } } | null } };
+export type SetKymIndividualIdentificationDataMutation = {
+  members: { individual?: { identification: { upsert: { recordId?: string | null } } } | null };
+};
 
 export type SetOfficialUseMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -12850,38 +12925,90 @@ export type SetOfficialUseMutationVariables = Exact<{
   acceptableAddressDoc?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-
-export type SetOfficialUseMutation = { members: { officialUse?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type SetOfficialUseMutation = {
+  members: {
+    officialUse?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type DeleteDraftMutationVariables = Exact<{
   memberId: Scalars['ID'];
 }>;
 
-
-export type DeleteDraftMutation = { members: { deleteDraft?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type DeleteDraftMutation = {
+  members: {
+    deleteDraft?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type PayMembershipMutationVariables = Exact<{
   data?: InputMaybe<MembershipPaymentInput>;
   memberId: Scalars['ID'];
 }>;
 
-
-export type PayMembershipMutation = { members: { activateMember?: { membershipPayment?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } };
+export type PayMembershipMutation = {
+  members: {
+    activateMember?: {
+      membershipPayment?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type InactivateMemberMutationVariables = Exact<{
   memberId: Scalars['ID'];
 }>;
 
-
-export type InactivateMemberMutation = { members: { makeInactive?: { recordId?: string | null } | null } };
+export type InactivateMemberMutation = {
+  members: { makeInactive?: { recordId?: string | null } | null };
+};
 
 export type SetInstitutionDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: KymInsInput;
 }>;
 
-
-export type SetInstitutionDataMutation = { members: { institution?: { add?: { recordId: string, error?: { error?: Array<{ sectionName?: string | null, errors?: Record<string, Array<string>> | null } | null> | null } | null } | null } | null } };
+export type SetInstitutionDataMutation = {
+  members: {
+    institution?: {
+      add?: {
+        recordId: string;
+        error?: {
+          error?: Array<{
+            sectionName?: string | null;
+            errors?: Record<string, Array<string>> | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetSisterConcernsMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -12889,16 +13016,22 @@ export type SetSisterConcernsMutationVariables = Exact<{
   data: KymInsSisterConcernInput;
 }>;
 
-
-export type SetSisterConcernsMutation = { members: { institution?: { sisterConcern?: { Upsert?: { recordId: string } | null } | null } | null } };
+export type SetSisterConcernsMutation = {
+  members: {
+    institution?: { sisterConcern?: { Upsert?: { recordId: string } | null } | null } | null;
+  };
+};
 
 export type DeleteSisterConcernsMutationVariables = Exact<{
   insId: Scalars['ID'];
   sis: Scalars['ID'];
 }>;
 
-
-export type DeleteSisterConcernsMutation = { members: { institution?: { sisterConcern?: { Delete?: { recordId: string } | null } | null } | null } };
+export type DeleteSisterConcernsMutation = {
+  members: {
+    institution?: { sisterConcern?: { Delete?: { recordId: string } | null } | null } | null;
+  };
+};
 
 export type SetAddDirectorInstitutionMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -12906,16 +13039,18 @@ export type SetAddDirectorInstitutionMutationVariables = Exact<{
   data: KymInsDirectorInput;
 }>;
 
-
-export type SetAddDirectorInstitutionMutation = { members: { institution?: { director?: { Upsert?: { recordId: string } | null } | null } | null } };
+export type SetAddDirectorInstitutionMutation = {
+  members: { institution?: { director?: { Upsert?: { recordId: string } | null } | null } | null };
+};
 
 export type DeleteDirectorInstitutionMutationVariables = Exact<{
   insId: Scalars['ID'];
   dir: Scalars['ID'];
 }>;
 
-
-export type DeleteDirectorInstitutionMutation = { members: { institution?: { director?: { Delete?: { recordId: string } | null } | null } | null } };
+export type DeleteDirectorInstitutionMutation = {
+  members: { institution?: { director?: { Delete?: { recordId: string } | null } | null } | null };
+};
 
 export type SetAddAccountOperatorInstitutionMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -12923,111 +13058,328 @@ export type SetAddAccountOperatorInstitutionMutationVariables = Exact<{
   data: KymInsAccountOperatorInput;
 }>;
 
-
-export type SetAddAccountOperatorInstitutionMutation = { members: { institution?: { accountOperator?: { Upsert?: { recordId: string } | null } | null } | null } };
+export type SetAddAccountOperatorInstitutionMutation = {
+  members: {
+    institution?: { accountOperator?: { Upsert?: { recordId: string } | null } | null } | null;
+  };
+};
 
 export type DeleteAccountOperatorInstitutionMutationVariables = Exact<{
   insId: Scalars['ID'];
   acc: Scalars['ID'];
 }>;
 
-
-export type DeleteAccountOperatorInstitutionMutation = { members: { institution?: { accountOperator?: { Delete?: { recordId: string } | null } | null } | null } };
+export type DeleteAccountOperatorInstitutionMutation = {
+  members: {
+    institution?: { accountOperator?: { Delete?: { recordId: string } | null } | null } | null;
+  };
+};
 
 export type SetOrganizationDataMutationVariables = Exact<{
   data: OrganizationInput;
 }>;
 
-
-export type SetOrganizationDataMutation = { settings: { general?: { organization?: { initialSetup?: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
+export type SetOrganizationDataMutation = {
+  settings: {
+    general?: {
+      organization?: {
+        initialSetup?: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetPreSignedUrlMutationVariables = Exact<{
   contentType?: InputMaybe<Scalars['String']>;
 }>;
 
-
-export type GetPreSignedUrlMutation = { presignedUrl: { upload: { filename?: string | null, getUrl?: string | null, putUrl?: string | null } } };
+export type GetPreSignedUrlMutation = {
+  presignedUrl: {
+    upload: { filename?: string | null; getUrl?: string | null; putUrl?: string | null };
+  };
+};
 
 export type SaveNewReportMutationVariables = Exact<{
   data: StatementReportInput;
 }>;
 
-
-export type SaveNewReportMutation = { report: { statementReport?: { member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, locality?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null } | null } | null, statement?: { shareStatement?: Array<{ date: string, particular: string, noOfShares: number, returnAmountDr: number, purchaseAmountCr: number, balanceSheet: number } | null> | null, totals?: { totalShares?: number | null, totalDr?: number | null, totalCr?: number | null, totalBalanceSheet?: number | null } | null } | {} | null } | null } };
+export type SaveNewReportMutation = {
+  report: {
+    statementReport?: {
+      member?: {
+        id: string;
+        name?: Record<'local' | 'en' | 'np', string> | null;
+        address?: {
+          state?: Record<'local' | 'en' | 'np', string> | null;
+          district?: Record<'local' | 'en' | 'np', string> | null;
+          locality?: Record<'local' | 'en' | 'np', string> | null;
+          localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
+      } | null;
+      statement?:
+        | {
+            shareStatement?: Array<{
+              date: string;
+              particular: string;
+              noOfShares: number;
+              returnAmountDr: number;
+              purchaseAmountCr: number;
+              balanceSheet: number;
+            } | null> | null;
+            totals?: {
+              totalShares?: number | null;
+              totalDr?: number | null;
+              totalCr?: number | null;
+              totalBalanceSheet?: number | null;
+            } | null;
+          }
+        | {}
+        | null;
+    } | null;
+  };
+};
 
 export type ApproveOrDeclineRequestMutationVariables = Exact<{
   data?: InputMaybe<RequestApproveOrDeclineInput>;
   requestType: RequestType;
 }>;
 
-
-export type ApproveOrDeclineRequestMutation = { requests: { requestApproveOrDecline?: { requestId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type ApproveOrDeclineRequestMutation = {
+  requests: {
+    requestApproveOrDecline?: {
+      requestId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type SaveAlternativeChargesMutationVariables = Exact<{
-  data?: InputMaybe<Array<InputMaybe<AlternativeChannelChargesInput>> | InputMaybe<AlternativeChannelChargesInput>>;
+  data?: InputMaybe<
+    Array<InputMaybe<AlternativeChannelChargesInput>> | InputMaybe<AlternativeChannelChargesInput>
+  >;
 }>;
 
-
-export type SaveAlternativeChargesMutation = { settings: { general?: { alternativeChannel?: { feesAndCharges?: { error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null, record?: Array<{ id?: string | null, amount?: string | null, ledgerId?: string | null, serviceType?: AlternativeChannelServiceType | null } | null> | null } | null } | null } | null } };
+export type SaveAlternativeChargesMutation = {
+  settings: {
+    general?: {
+      alternativeChannel?: {
+        feesAndCharges?: {
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+          record?: Array<{
+            id?: string | null;
+            amount?: string | null;
+            ledgerId?: string | null;
+            serviceType?: AlternativeChannelServiceType | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type ActivateServiceMutationVariables = Exact<{
   data?: InputMaybe<AlternativeChannelServiceActivationInput>;
 }>;
 
-
-export type ActivateServiceMutation = { alternativeChannel?: { serviceActivation?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null };
+export type ActivateServiceMutation = {
+  alternativeChannel?: {
+    serviceActivation?: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  } | null;
+};
 
 export type SetBranchDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: BranchInput;
 }>;
 
-
-export type SetBranchDataMutation = { settings: { general?: { branch?: { add: { record?: { id: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
+export type SetBranchDataMutation = {
+  settings: {
+    general?: {
+      branch?: {
+        add: {
+          record?: { id: string } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
 
 export type SetDepositProductMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<DepositProductInput>;
 }>;
 
-
-export type SetDepositProductMutation = { settings: { general?: { depositProduct?: { add?: { recordId: string, record?: { id: string, productCode: string, productName: string, createdDate?: string | null, interest?: number | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
+export type SetDepositProductMutation = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        add?: {
+          recordId: string;
+          record?: {
+            id: string;
+            productCode: string;
+            productName: string;
+            createdDate?: string | null;
+            interest?: number | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetDepositProductInactiveMutationVariables = Exact<{
   data?: InputMaybe<DepositProductInactiveData>;
 }>;
 
-
-export type SetDepositProductInactiveMutation = { settings: { general?: { depositProduct?: { makeInactive?: { recordId: string } | null } | null } | null } };
+export type SetDepositProductInactiveMutation = {
+  settings: {
+    general?: { depositProduct?: { makeInactive?: { recordId: string } | null } | null } | null;
+  };
+};
 
 export type SetDepositIroMutationVariables = Exact<{
   data?: InputMaybe<DepositIroInput>;
 }>;
 
-
-export type SetDepositIroMutation = { settings: { general?: { deposit?: { iroSetup?: { recordId: string, record?: { id: string, iroName?: string | null, iroAddress?: string | null, iroCode?: string | null } | null, error?: { __typename: 'AuthorizationError' } | { __typename: 'BadRequestError' } | { __typename: 'NotFoundError' } | { __typename: 'ServerError' } | { __typename: 'ValidationError' } | null } | null } | null } | null } };
+export type SetDepositIroMutation = {
+  settings: {
+    general?: {
+      deposit?: {
+        iroSetup?: {
+          recordId: string;
+          record?: {
+            id: string;
+            iroName?: string | null;
+            iroAddress?: string | null;
+            iroCode?: string | null;
+          } | null;
+          error?:
+            | { __typename: 'AuthorizationError' }
+            | { __typename: 'BadRequestError' }
+            | { __typename: 'NotFoundError' }
+            | { __typename: 'ServerError' }
+            | { __typename: 'ValidationError' }
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetDepositTdsMutationVariables = Exact<{
   data?: InputMaybe<DepositTdsInput>;
 }>;
 
-
-export type SetDepositTdsMutation = { settings: { general?: { deposit?: { tdsSetup?: { recordId: string, record?: { id: string, individual?: number | null, institution?: number | null, cooperative?: number | null, coopUnion?: number | null } | null, error?: { __typename: 'AuthorizationError' } | { __typename: 'BadRequestError' } | { __typename: 'NotFoundError' } | { __typename: 'ServerError' } | { __typename: 'ValidationError' } | null } | null } | null } | null } };
+export type SetDepositTdsMutation = {
+  settings: {
+    general?: {
+      deposit?: {
+        tdsSetup?: {
+          recordId: string;
+          record?: {
+            id: string;
+            individual?: number | null;
+            institution?: number | null;
+            cooperative?: number | null;
+            coopUnion?: number | null;
+          } | null;
+          error?:
+            | { __typename: 'AuthorizationError' }
+            | { __typename: 'BadRequestError' }
+            | { __typename: 'NotFoundError' }
+            | { __typename: 'ServerError' }
+            | { __typename: 'ValidationError' }
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetLoanProductMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<LoanProductInput>;
 }>;
 
-
-export type SetLoanProductMutation = { settings: { general?: { loanProducts?: { upsert?: { recordId?: string | null, record?: { id: string, objState: ObjState, productName: string, productType: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
+export type SetLoanProductMutation = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        upsert?: {
+          recordId?: string | null;
+          record?: {
+            id: string;
+            objState: ObjState;
+            productName: string;
+            productType: string;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetLoanProductInactiveMutationVariables = Exact<{
   data?: InputMaybe<LoanProductInactiveData>;
 }>;
 
-
-export type SetLoanProductInactiveMutation = { settings: { general?: { loanProducts?: { makeInactive?: { recordId: string } | null } | null } | null } };
+export type SetLoanProductInactiveMutation = {
+  settings: {
+    general?: { loanProducts?: { makeInactive?: { recordId: string } | null } | null } | null;
+  };
+};
 
 export type SetProductActiveMutationVariables = Exact<{
   productId: Scalars['ID'];
@@ -13035,239 +13387,716 @@ export type SetProductActiveMutationVariables = Exact<{
   remarks: Scalars['String'];
 }>;
 
-
-export type SetProductActiveMutation = { settings: { general?: { depositProduct?: { activateProduct?: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
+export type SetProductActiveMutation = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        activateProduct?: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetLoanGeneralSettingsMutationVariables = Exact<{
   emi?: InputMaybe<Scalars['Boolean']>;
   epi?: InputMaybe<Scalars['Boolean']>;
   flat?: InputMaybe<Scalars['Boolean']>;
-  collateralList?: InputMaybe<Array<InputMaybe<CollateralListInputData>> | InputMaybe<CollateralListInputData>>;
+  collateralList?: InputMaybe<
+    Array<InputMaybe<CollateralListInputData>> | InputMaybe<CollateralListInputData>
+  >;
 }>;
 
-
-export type SetLoanGeneralSettingsMutation = { settings: { general?: { loan?: { general?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
+export type SetLoanGeneralSettingsMutation = {
+  settings: {
+    general?: {
+      loan?: {
+        general?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetLoanInsuranceSchemeMutationVariables = Exact<{
-  data?: InputMaybe<Array<InputMaybe<LoanInsuranceSchemeInput>> | InputMaybe<LoanInsuranceSchemeInput>>;
+  data?: InputMaybe<
+    Array<InputMaybe<LoanInsuranceSchemeInput>> | InputMaybe<LoanInsuranceSchemeInput>
+  >;
 }>;
 
-
-export type SetLoanInsuranceSchemeMutation = { settings: { general?: { loan?: { insuranceScheme?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
+export type SetLoanInsuranceSchemeMutation = {
+  settings: {
+    general?: {
+      loan?: {
+        insuranceScheme?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetProductTypeMutationVariables = Exact<{
-  productType?: InputMaybe<Array<InputMaybe<LoanProductTypeInput>> | InputMaybe<LoanProductTypeInput>>;
-  productSubType?: InputMaybe<Array<InputMaybe<LoanProductSubTypeInput>> | InputMaybe<LoanProductSubTypeInput>>;
+  productType?: InputMaybe<
+    Array<InputMaybe<LoanProductTypeInput>> | InputMaybe<LoanProductTypeInput>
+  >;
+  productSubType?: InputMaybe<
+    Array<InputMaybe<LoanProductSubTypeInput>> | InputMaybe<LoanProductSubTypeInput>
+  >;
 }>;
 
-
-export type SetProductTypeMutation = { settings: { general?: { loan?: { productType?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
+export type SetProductTypeMutation = {
+  settings: {
+    general?: {
+      loan?: {
+        productType?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type AddGeneralMemberMutationVariables = Exact<{
   data: GeneralMemberInput;
 }>;
 
-
-export type AddGeneralMemberMutation = { settings: { general?: { KYM?: { general?: { generalMember?: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } | null } };
+export type AddGeneralMemberMutation = {
+  settings: {
+    general?: {
+      KYM?: {
+        general?: {
+          generalMember?: {
+            recordId: string;
+            error?:
+              | MutationError_AuthorizationError_Fragment
+              | MutationError_BadRequestError_Fragment
+              | MutationError_NotFoundError_Fragment
+              | MutationError_ServerError_Fragment
+              | MutationError_ValidationError_Fragment
+              | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type UpsertNewOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
   data: FormOptionUpsertInput;
 }>;
 
-
-export type UpsertNewOptionMutation = { settings: { form?: { option: { upsert: { recordId?: string | null, record?: { id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, order: number } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
+export type UpsertNewOptionMutation = {
+  settings: {
+    form?: {
+      option: {
+        upsert: {
+          recordId?: string | null;
+          record?: {
+            id: string;
+            name: Record<'local' | 'en' | 'np', string>;
+            enabled: boolean;
+            order: number;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    } | null;
+  };
+};
 
 export type DeleteOptionMutationVariables = Exact<{
   optionId: Scalars['ID'];
 }>;
 
-
-export type DeleteOptionMutation = { settings: { form?: { option: { delete: { recordId?: string | null } } } | null } };
+export type DeleteOptionMutation = {
+  settings: { form?: { option: { delete: { recordId?: string | null } } } | null };
+};
 
 export type MoveOptionMutationVariables = Exact<{
   optionId: Scalars['ID'];
   to: Scalars['Int'];
 }>;
 
-
-export type MoveOptionMutation = { settings: { form?: { option: { move: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
+export type MoveOptionMutation = {
+  settings: {
+    form?: {
+      option: {
+        move: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    } | null;
+  };
+};
 
 export type ToggleFieldOtherOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
   hasOtherField?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-
-export type ToggleFieldOtherOptionMutation = { settings: { form?: { field: { update: { record?: { name: Record<"local"|"en"|"np",string>, hasOtherField: boolean } | null } } } | null } };
+export type ToggleFieldOtherOptionMutation = {
+  settings: {
+    form?: {
+      field: {
+        update: {
+          record?: { name: Record<'local' | 'en' | 'np', string>; hasOtherField: boolean } | null;
+        };
+      };
+    } | null;
+  };
+};
 
 export type UpsertSectionOptionMutationVariables = Exact<{
   sectionId: Scalars['ID'];
   data: FormFieldUpsertInput;
 }>;
 
-
-export type UpsertSectionOptionMutation = { settings: { form?: { field: { upsert: { recordId?: string | null, record?: { id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: FormFieldType, order: number } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
+export type UpsertSectionOptionMutation = {
+  settings: {
+    form?: {
+      field: {
+        upsert: {
+          recordId?: string | null;
+          record?: {
+            id: string;
+            name: Record<'local' | 'en' | 'np', string>;
+            enabled: boolean;
+            fieldType: FormFieldType;
+            order: number;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    } | null;
+  };
+};
 
 export type DeleteFieldMutationVariables = Exact<{
   fieldId: Scalars['ID'];
 }>;
 
-
-export type DeleteFieldMutation = { settings: { form?: { field: { delete: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
+export type DeleteFieldMutation = {
+  settings: {
+    form?: {
+      field: {
+        delete: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    } | null;
+  };
+};
 
 export type MoveFieldMutationVariables = Exact<{
   fieldId: Scalars['ID'];
   to: Scalars['Int'];
 }>;
 
-
-export type MoveFieldMutation = { settings: { form?: { field: { move: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
+export type MoveFieldMutation = {
+  settings: {
+    form?: {
+      field: {
+        move: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    } | null;
+  };
+};
 
 export type AddConditionOptionMutationVariables = Exact<{
   fieldId: Scalars['ID'];
   dependsOn: Array<InputMaybe<Scalars['ID']>> | InputMaybe<Scalars['ID']>;
 }>;
 
-
-export type AddConditionOptionMutation = { settings: { form?: { field: { condition: { recordId?: string | null, record?: { id: string, dependsOn?: Array<string | null> | null, name: Record<"local"|"en"|"np",string> } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
+export type AddConditionOptionMutation = {
+  settings: {
+    form?: {
+      field: {
+        condition: {
+          recordId?: string | null;
+          record?: {
+            id: string;
+            dependsOn?: Array<string | null> | null;
+            name: Record<'local' | 'en' | 'np', string>;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    } | null;
+  };
+};
 
 export type AddFileSizeToSectionMutationVariables = Exact<{
   sectionId: Scalars['ID'];
   maxSize: Scalars['Int'];
 }>;
 
-
-export type AddFileSizeToSectionMutation = { settings: { form?: { maxSize: { error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null, record?: { id: string, name: Record<"local"|"en"|"np",string>, maxSize?: number | null } | {} | null } } | null } };
+export type AddFileSizeToSectionMutation = {
+  settings: {
+    form?: {
+      maxSize: {
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+        record?:
+          | { id: string; name: Record<'local' | 'en' | 'np', string>; maxSize?: number | null }
+          | {}
+          | null;
+      };
+    } | null;
+  };
+};
 
 export type UpsertCustomSectionMutationVariables = Exact<{
   data: FormSectionUpsertInput;
 }>;
 
-
-export type UpsertCustomSectionMutation = { settings: { form?: { section: { upsert: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null, record?: { id: string, name: Record<"local"|"en"|"np",string>, isCustom: boolean } | null } } } | null } };
+export type UpsertCustomSectionMutation = {
+  settings: {
+    form?: {
+      section: {
+        upsert: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+          record?: {
+            id: string;
+            name: Record<'local' | 'en' | 'np', string>;
+            isCustom: boolean;
+          } | null;
+        };
+      };
+    } | null;
+  };
+};
 
 export type UpsertCustomFieldMutationVariables = Exact<{
   data: FormFieldUpsertInput;
 }>;
 
-
-export type UpsertCustomFieldMutation = { settings: { form?: { field: { upsert: { record?: { id: string } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
+export type UpsertCustomFieldMutation = {
+  settings: {
+    form?: {
+      field: {
+        upsert: {
+          record?: { id: string } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    } | null;
+  };
+};
 
 export type DeleteCustomSectionMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type DeleteCustomSectionMutation = { settings: { form?: { section: { delete: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
+export type DeleteCustomSectionMutation = {
+  settings: {
+    form?: {
+      section: {
+        delete: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    } | null;
+  };
+};
 
 export type DeleteCustomSectionFieldMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type DeleteCustomSectionFieldMutation = { settings: { form?: { field: { delete: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } } | null } };
+export type DeleteCustomSectionFieldMutation = {
+  settings: {
+    form?: {
+      field: {
+        delete: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      };
+    } | null;
+  };
+};
 
 export type UpdateCustomSectionMutationVariables = Exact<{
   id: Scalars['ID'];
   data: FormSectionUpdateInput;
 }>;
 
-
-export type UpdateCustomSectionMutation = { settings: { form?: { section: { update: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null, record?: { id: string, name: Record<"local"|"en"|"np",string>, isCustom: boolean } | null } } } | null } };
+export type UpdateCustomSectionMutation = {
+  settings: {
+    form?: {
+      section: {
+        update: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+          record?: {
+            id: string;
+            name: Record<'local' | 'en' | 'np', string>;
+            isCustom: boolean;
+          } | null;
+        };
+      };
+    } | null;
+  };
+};
 
 export type UpdateCustomSectionFieldMutationVariables = Exact<{
   id: Scalars['ID'];
   data: FormFieldUpdateInput;
 }>;
 
-
-export type UpdateCustomSectionFieldMutation = { settings: { form?: { field: { update: { record?: { id: string } | null } } } | null } };
+export type UpdateCustomSectionFieldMutation = {
+  settings: { form?: { field: { update: { record?: { id: string } | null } } } | null };
+};
 
 export type UpdateDeclarationMutationVariables = Exact<{
   data: DeclarationInput;
 }>;
 
-
-export type UpdateDeclarationMutation = { settings: { declaration: { update: { record?: { content: Record<"local"|"en"|"np",string> } | null } } } };
+export type UpdateDeclarationMutation = {
+  settings: {
+    declaration: { update: { record?: { content: Record<'local' | 'en' | 'np', string> } | null } };
+  };
+};
 
 export type SetSettingsShareBonusMutationVariables = Exact<{
   data?: InputMaybe<ShareBonusSettingsInput>;
 }>;
 
-
-export type SetSettingsShareBonusMutation = { settings: { general?: { share?: { add?: { bonus?: { bonus?: { taxPayer?: TaxPayerOptions | null, taxRate?: number | null, accountMapping?: string | null } | null } | null } | null } | null } | null } };
+export type SetSettingsShareBonusMutation = {
+  settings: {
+    general?: {
+      share?: {
+        add?: {
+          bonus?: {
+            bonus?: {
+              taxPayer?: TaxPayerOptions | null;
+              taxRate?: number | null;
+              accountMapping?: string | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetSettingsShareDividendMutationVariables = Exact<{
   data?: InputMaybe<ShareDividendSettingsInput>;
 }>;
 
-
-export type SetSettingsShareDividendMutation = { settings: { general?: { share?: { add?: { dividend?: { dividend?: { distributionCondition?: DividendDistributionCondition | null, dividendTransferTreatment?: DividendTransferTreatment | null, accountForFractionalDividends?: string | null, accountForShareDividends?: string | null, organizationFundForDividends?: string | null } | null } | null } | null } | null } | null } };
+export type SetSettingsShareDividendMutation = {
+  settings: {
+    general?: {
+      share?: {
+        add?: {
+          dividend?: {
+            dividend?: {
+              distributionCondition?: DividendDistributionCondition | null;
+              dividendTransferTreatment?: DividendTransferTreatment | null;
+              accountForFractionalDividends?: string | null;
+              accountForShareDividends?: string | null;
+              organizationFundForDividends?: string | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetSettingsShareIssueChargesMutationVariables = Exact<{
   data?: InputMaybe<ShareIssueChargesInput>;
 }>;
 
-
-export type SetSettingsShareIssueChargesMutation = { settings: { general?: { share?: { add?: { shareIssueCharges?: { bonus?: { taxPayer?: TaxPayerOptions | null, taxRate?: number | null, accountMapping?: string | null } | null } | null } | null } | null } | null } };
+export type SetSettingsShareIssueChargesMutation = {
+  settings: {
+    general?: {
+      share?: {
+        add?: {
+          shareIssueCharges?: {
+            bonus?: {
+              taxPayer?: TaxPayerOptions | null;
+              taxRate?: number | null;
+              accountMapping?: string | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetSettingsShareReturnChargesMutationVariables = Exact<{
   data?: InputMaybe<ShareReturnChargesInput>;
 }>;
 
-
-export type SetSettingsShareReturnChargesMutation = { settings: { general?: { share?: { add?: { shareReturnCharges?: { bonus?: { taxPayer?: TaxPayerOptions | null, taxRate?: number | null, accountMapping?: string | null } | null } | null } | null } | null } | null } };
+export type SetSettingsShareReturnChargesMutation = {
+  settings: {
+    general?: {
+      share?: {
+        add?: {
+          shareReturnCharges?: {
+            bonus?: {
+              taxPayer?: TaxPayerOptions | null;
+              taxRate?: number | null;
+              accountMapping?: string | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetSettingsShareGeneralMutationVariables = Exact<{
   data?: InputMaybe<ShareSettingsGeneralInput>;
 }>;
 
-
-export type SetSettingsShareGeneralMutation = { settings: { general?: { share?: { add?: { general?: { bonus?: { taxPayer?: TaxPayerOptions | null, taxRate?: number | null, accountMapping?: string | null } | null } | null } | null } | null } | null } };
+export type SetSettingsShareGeneralMutation = {
+  settings: {
+    general?: {
+      share?: {
+        add?: {
+          general?: {
+            bonus?: {
+              taxPayer?: TaxPayerOptions | null;
+              taxRate?: number | null;
+              accountMapping?: string | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetSettingsShareTransferMutationVariables = Exact<{
   data?: InputMaybe<ShareTransferSettingsInput>;
 }>;
 
-
-export type SetSettingsShareTransferMutation = { settings: { general?: { share?: { add?: { transfer?: { bonus?: { taxPayer?: TaxPayerOptions | null, taxRate?: number | null, accountMapping?: string | null } | null } | null } | null } | null } | null } };
+export type SetSettingsShareTransferMutation = {
+  settings: {
+    general?: {
+      share?: {
+        add?: {
+          transfer?: {
+            bonus?: {
+              taxPayer?: TaxPayerOptions | null;
+              taxRate?: number | null;
+              accountMapping?: string | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetSettingsUserDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<MyraUserInput>;
 }>;
 
-
-export type SetSettingsUserDataMutation = { settings: { myraUser?: { add?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } };
+export type SetSettingsUserDataMutation = {
+  settings: {
+    myraUser?: {
+      add?: {
+        recordId?: string | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetPreferenceMutationVariables = Exact<{
   id: Scalars['ID'];
   data: UserPreferenceInput;
 }>;
 
-
-export type SetPreferenceMutation = { user: { preference?: { update?: { recordId?: string | null, record?: { language?: Language | null, languageCode?: string | null, date?: DateType | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } };
+export type SetPreferenceMutation = {
+  user: {
+    preference?: {
+      update?: {
+        recordId?: string | null;
+        record?: {
+          language?: Language | null;
+          languageCode?: string | null;
+          date?: DateType | null;
+        } | null;
+        error?:
+          | MutationError_AuthorizationError_Fragment
+          | MutationError_BadRequestError_Fragment
+          | MutationError_NotFoundError_Fragment
+          | MutationError_ServerError_Fragment
+          | MutationError_ValidationError_Fragment
+          | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SetValuatorMutationVariables = Exact<{
   id: Scalars['ID'];
   data?: InputMaybe<ValuatorInput>;
 }>;
 
-
-export type SetValuatorMutation = { settings: { general?: { valuator?: { add?: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
+export type SetValuatorMutation = {
+  settings: {
+    general?: {
+      valuator?: {
+        add?: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type AddSharePurchaseMutationVariables = Exact<{
   data: SharePurchaseInput;
 }>;
 
-
-export type AddSharePurchaseMutation = { share: { purchase: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
+export type AddSharePurchaseMutation = {
+  share: {
+    purchase: {
+      recordId: string;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
 
 export type AddShareReturnMutationVariables = Exact<{
   data: ShareReturnInput;
 }>;
-
 
 export type AddShareReturnMutation = { share: { return: { recordId: string } } };
 
@@ -13275,40 +14104,99 @@ export type SetDepositDataMutationVariables = Exact<{
   data: DepositInput;
 }>;
 
-
-export type SetDepositDataMutation = { transaction: { deposit: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
+export type SetDepositDataMutation = {
+  transaction: {
+    deposit: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
 
 export type SetBulkDepositDataMutationVariables = Exact<{
   data?: InputMaybe<BulkDepositInput>;
 }>;
 
-
-export type SetBulkDepositDataMutation = { transaction: { bulkDeposit: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
+export type SetBulkDepositDataMutation = {
+  transaction: {
+    bulkDeposit: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
 
 export type SetWithdrawDataMutationVariables = Exact<{
   data: WithdrawInput;
 }>;
 
-
-export type SetWithdrawDataMutation = { transaction: { withdraw: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
+export type SetWithdrawDataMutation = {
+  transaction: {
+    withdraw: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
 
 export type SetAccountTransferDataMutationVariables = Exact<{
   data: TransferInput;
 }>;
 
-
-export type SetAccountTransferDataMutation = { transaction: { transfer: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
+export type SetAccountTransferDataMutation = {
+  transaction: {
+    transfer: {
+      recordId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
 
 export type SetAccountForgiveInstallmentDataMutationVariables = Exact<{
   id: Scalars['ID'];
   installmentDates: Array<Scalars['String']> | Scalars['String'];
 }>;
 
+export type SetAccountForgiveInstallmentDataMutation = {
+  account: {
+    forgiveInstallment?: {
+      recordId: string;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
-export type SetAccountForgiveInstallmentDataMutation = { account: { forgiveInstallment?: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
-
-export type SetEndOfDayDataMutationVariables = Exact<{ [key: string]: never; }>;
-
+export type SetEndOfDayDataMutationVariables = Exact<{ [key: string]: never }>;
 
 export type SetEndOfDayDataMutation = { transaction: { endOfDay?: string | null } };
 
@@ -13316,73 +14204,417 @@ export type SetTellerTransferDataMutationVariables = Exact<{
   data: TellerTransferInput;
 }>;
 
-
-export type SetTellerTransferDataMutation = { transaction: { tellerTransfer: { record?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } };
+export type SetTellerTransferDataMutation = {
+  transaction: {
+    tellerTransfer: {
+      record?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
 
 export type GetAccountMemberListQueryVariables = Exact<{
   objState?: InputMaybe<ObjState>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
-
-export type GetAccountMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, type: KymMemberTypesEnum, contact?: string | null, createdAt: string, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetAccountMemberListQuery = {
+  members: {
+    list: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          code: string;
+          type: KymMemberTypesEnum;
+          contact?: string | null;
+          createdAt: string;
+          dateJoined?: string | null;
+          address?: {
+            state?: Record<'local' | 'en' | 'np', string> | null;
+            district?: Record<'local' | 'en' | 'np', string> | null;
+            localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+            wardNo?: string | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+          } | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: { startCursor?: string | null; endCursor?: string | null } | null;
+    };
+  };
+};
 
 export type GetProductListQueryVariables = Exact<{
   memberId: Scalars['ID'];
 }>;
 
-
-export type GetProductListQuery = { settings: { general?: { depositProduct?: { getProductList?: { allowed?: Array<{ id: string, productName: string } | null> | null, notAllowed?: Array<{ error?: Array<string | null> | null, data?: { id: string, productName: string } | null } | null> | null } | null } | null } | null } };
+export type GetProductListQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        getProductList?: {
+          allowed?: Array<{ id: string; productName: string } | null> | null;
+          notAllowed?: Array<{
+            error?: Array<string | null> | null;
+            data?: { id: string; productName: string } | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetAccountOpenProductDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetAccountOpenProductDetailsQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, isMandatorySaving?: boolean | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, tenureUnit?: FrequencyTenure | null, isTenureApplicable?: boolean | null, minTenureUnitNumber?: number | null, maxTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: DepositFrequency | null, maxPostingFreqDifference?: number | null, noOftransactionAllowed?: number | null, accountType?: DefaultAccountType | null, autoOpen?: boolean | null, allowLoan?: boolean | null, chequeIssue?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, isForMinors?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, productCode: { prefix: string, initialNo: string }, depositAmount?: { minAmount?: any | null, maxAmount?: any | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, rebateData?: { dayBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, rebateRate?: number | null, rebateLedgerMapping?: string | null } | null, balanceLimit?: { minAmount?: any | null, maxAmount?: any | null, avgAmount?: any | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type: string, amount: any, rate: number } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, accountCloseCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, alternativeChannelCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, atmCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, withdrawAmountLimit?: { minAmount?: any | null, maxAmount?: any | null, avgAmount?: any | null } | null, chequeCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
+export type GetAccountOpenProductDetailsQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        formState?: {
+          data?: {
+            productName?: string | null;
+            nature?: NatureOfDepositProduct | null;
+            typeOfMember?: Array<KymMemberTypesEnum | null> | null;
+            criteria?: Array<CriteriaSection | null> | null;
+            minAge?: number | null;
+            maxAge?: number | null;
+            genderId?: Array<string | null> | null;
+            maritalStatusId?: Array<string | null> | null;
+            educationQualification?: Array<string | null> | null;
+            ethnicity?: Array<string | null> | null;
+            occupation?: Array<string | null> | null;
+            isMandatorySaving?: boolean | null;
+            foreignEmployment?: boolean | null;
+            natureOfBusinessInstitution?: Array<string | null> | null;
+            natureOFBusinessCoop?: Array<string | null> | null;
+            cooperativeType?: Array<string | null> | null;
+            depositFrequency?: Frequency | null;
+            penalty?: boolean | null;
+            rebate?: boolean | null;
+            tenureUnit?: FrequencyTenure | null;
+            isTenureApplicable?: boolean | null;
+            minTenureUnitNumber?: number | null;
+            maxTenureUnitNumber?: number | null;
+            ladderRate?: boolean | null;
+            postingFrequency?: DepositFrequency | null;
+            maxPostingFreqDifference?: number | null;
+            noOftransactionAllowed?: number | null;
+            accountType?: DefaultAccountType | null;
+            autoOpen?: boolean | null;
+            allowLoan?: boolean | null;
+            chequeIssue?: boolean | null;
+            percentageOfDeposit?: number | null;
+            alternativeChannels?: boolean | null;
+            atmFacility?: boolean | null;
+            isForMinors?: boolean | null;
+            supportMultiple?: boolean | null;
+            staffProduct?: boolean | null;
+            withdrawRestricted?: boolean | null;
+            specifyWithdrawRestriction?: string | null;
+            wealthBuildingProduct?: boolean | null;
+            individualDocuments?: Array<IndividualRequiredDocument | null> | null;
+            institutionDocuments?: Array<InstitutionRequiredDocument | null> | null;
+            productCode: { prefix: string; initialNo: string };
+            depositAmount?: { minAmount?: any | null; maxAmount?: any | null } | null;
+            penaltyData?: {
+              dayAfterInstallmentDate?: number | null;
+              penaltyRate?: number | null;
+              penaltyAmount?: any | null;
+              penaltyLedgerMapping?: string | null;
+            } | null;
+            rebateData?: {
+              dayBeforeInstallmentDate?: number | null;
+              noOfInstallment?: number | null;
+              rebateAmount?: any | null;
+              rebateRate?: number | null;
+              rebateLedgerMapping?: string | null;
+            } | null;
+            balanceLimit?: {
+              minAmount?: any | null;
+              maxAmount?: any | null;
+              avgAmount?: any | null;
+            } | null;
+            interest?: {
+              minRate?: number | null;
+              maxRate?: number | null;
+              defaultRate?: number | null;
+              ceoAuthority?: number | null;
+              boardAuthority?: number | null;
+              additionalRate?: number | null;
+            } | null;
+            ladderRateData?: Array<{ type: string; amount: any; rate: number } | null> | null;
+            serviceCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            accountCloseCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            alternativeChannelCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            atmCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            dormantSetup?: Array<{
+              duration?: string | null;
+              condition?: string | null;
+            } | null> | null;
+            withdrawAmountLimit?: {
+              minAmount?: any | null;
+              maxAmount?: any | null;
+              avgAmount?: any | null;
+            } | null;
+            chequeCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            prematurePenalty?: {
+              penaltyDateType?: PrematurePenaltyDateType | null;
+              noOfDays?: number | null;
+              penaltyLedgerMapping?: string | null;
+              penaltyAmount?: any | null;
+              penaltyRate?: number | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetAccountOpenEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetAccountOpenEditDataQuery = { account: { formState?: { data?: { memberId: string, productId: string, accountName?: string | null, minor?: string | null, tenure?: FrequencyTenure | null, tenureNumber?: number | null, initialDepositAmount?: any | null, defaultAmountDepositAccountName?: string | null, interestRate?: number | null, installmentAmount?: string | null, depositFrequencyWeekly?: Week | null, depositFrequencyMonthly?: WeeklyFrequency | null, depositFrequencyDay?: number | null, depositFrequencyFrequencyDay?: FrequencyDay | null, depositFrequencyDayOfWeek?: Week | null, depositFrequencyYearlyMonth?: Months | null, depositFrequencyYearlyDay?: number | null, mobileBanking?: boolean | null, eBanking?: boolean | null, atmFacility?: boolean | null, smsBanking?: boolean | null, chequeFacility?: boolean | null, agentId?: string | null, interestDoc?: Array<{ identifier?: string | null, url?: string | null } | null> | null, serviceCharge?: Array<{ name: string, amount?: any | null } | null> | null } | null } | null } };
+export type GetAccountOpenEditDataQuery = {
+  account: {
+    formState?: {
+      data?: {
+        memberId: string;
+        productId: string;
+        accountName?: string | null;
+        minor?: string | null;
+        tenure?: FrequencyTenure | null;
+        tenureNumber?: number | null;
+        initialDepositAmount?: any | null;
+        defaultAmountDepositAccountName?: string | null;
+        interestRate?: number | null;
+        installmentAmount?: string | null;
+        depositFrequencyWeekly?: Week | null;
+        depositFrequencyMonthly?: WeeklyFrequency | null;
+        depositFrequencyDay?: number | null;
+        depositFrequencyFrequencyDay?: FrequencyDay | null;
+        depositFrequencyDayOfWeek?: Week | null;
+        depositFrequencyYearlyMonth?: Months | null;
+        depositFrequencyYearlyDay?: number | null;
+        mobileBanking?: boolean | null;
+        eBanking?: boolean | null;
+        atmFacility?: boolean | null;
+        smsBanking?: boolean | null;
+        chequeFacility?: boolean | null;
+        agentId?: string | null;
+        interestDoc?: Array<{ identifier?: string | null; url?: string | null } | null> | null;
+        serviceCharge?: Array<{ name: string; amount?: any | null } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetAccountTableListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<DepositLoanAccountSearchFilter>;
 }>;
 
-
-export type GetAccountTableListQuery = { account: { list?: { totalCount: number, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null, edges?: Array<{ node?: { id: string, objState: ObjState, createdAt: string, accountName?: string | null, modifiedAt: string, installmentAmount?: string | null, balance?: string | null, accountOpenedDate?: string | null, lastTransactionDate?: string | null, accountExpiryDate?: string | null, closedAt?: string | null, overDrawnBalance?: string | null, guaranteedAmount?: string | null, interestAccured?: string | null, interestTax?: string | null, createdBy: { id: string }, modifiedBy: { id: string }, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null, profilePic?: string | null, contact?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null, product: { id: string, productCode: string, productName: string, nature: NatureOfDepositProduct, minimumBalance?: string | null, isMandatorySaving?: boolean | null, withdrawRestricted?: boolean | null, accountClosingCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null }, dues?: { fine?: string | null, totalDue?: string | null, dueInstallments?: number | null } | null } | null }> | null } | null } };
+export type GetAccountTableListQuery = {
+  account: {
+    list?: {
+      totalCount: number;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+      edges?: Array<{
+        node?: {
+          id: string;
+          objState: ObjState;
+          createdAt: string;
+          accountName?: string | null;
+          modifiedAt: string;
+          installmentAmount?: string | null;
+          balance?: string | null;
+          accountOpenedDate?: string | null;
+          lastTransactionDate?: string | null;
+          accountExpiryDate?: string | null;
+          closedAt?: string | null;
+          overDrawnBalance?: string | null;
+          guaranteedAmount?: string | null;
+          interestAccured?: string | null;
+          interestTax?: string | null;
+          createdBy: { id: string };
+          modifiedBy: { id: string };
+          member?: {
+            id: string;
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            profilePicUrl?: string | null;
+            profilePic?: string | null;
+            contact?: string | null;
+            dateJoined?: string | null;
+            address?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+          } | null;
+          product: {
+            id: string;
+            productCode: string;
+            productName: string;
+            nature: NatureOfDepositProduct;
+            minimumBalance?: string | null;
+            isMandatorySaving?: boolean | null;
+            withdrawRestricted?: boolean | null;
+            accountClosingCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+          };
+          dues?: {
+            fine?: string | null;
+            totalDue?: string | null;
+            dueInstallments?: number | null;
+          } | null;
+        } | null;
+      }> | null;
+    } | null;
+  };
+};
 
 export type GetAccountDocumentsListQueryVariables = Exact<{
   subscriptionId: Scalars['String'];
 }>;
 
-
-export type GetAccountDocumentsListQuery = { document: { listSubscriptionDocuments: { data?: Array<{ fieldId?: string | null, docData: Array<{ identifier: string, url: string } | null> } | null> | null } } };
+export type GetAccountDocumentsListQuery = {
+  document: {
+    listSubscriptionDocuments: {
+      data?: Array<{
+        fieldId?: string | null;
+        docData: Array<{ identifier: string; url: string } | null>;
+      } | null> | null;
+    };
+  };
+};
 
 export type GetAccountOpenProductCriteriaQueryVariables = Exact<{
   productId: Scalars['ID'];
 }>;
 
-
-export type GetAccountOpenProductCriteriaQuery = { settings: { general?: { depositProduct?: { getProductCriteria?: { data?: { gender?: Array<string | null> | null, minAge?: number | null, maxAge?: number | null, ethnicity?: Array<string | null> | null, educationQualification?: Array<string | null> | null, maritalStatus?: Array<string | null> | null, foreignEmployment?: boolean | null, occupation?: Array<string | null> | null, institutionType?: Array<string | null> | null, cooperativeUnion?: Array<string | null> | null, cooperativeType?: Array<string | null> | null } | null } | null } | null } | null } };
+export type GetAccountOpenProductCriteriaQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        getProductCriteria?: {
+          data?: {
+            gender?: Array<string | null> | null;
+            minAge?: number | null;
+            maxAge?: number | null;
+            ethnicity?: Array<string | null> | null;
+            educationQualification?: Array<string | null> | null;
+            maritalStatus?: Array<string | null> | null;
+            foreignEmployment?: boolean | null;
+            occupation?: Array<string | null> | null;
+            institutionType?: Array<string | null> | null;
+            cooperativeUnion?: Array<string | null> | null;
+            cooperativeType?: Array<string | null> | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetAccountOpenProductPenaltyQueryVariables = Exact<{
   productId: Scalars['ID'];
 }>;
 
-
-export type GetAccountOpenProductPenaltyQuery = { settings: { general?: { depositProduct?: { getPenaltyRebateInfo?: { data?: { penalty?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, rebate?: { dayBeforeInstallmentDate?: number | null, rebateRate?: number | null, rebateAmount?: any | null, rebateLedgerMapping?: string | null, noOfInstallment?: number | null } | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null, withdrawPenalty?: { penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
+export type GetAccountOpenProductPenaltyQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        getPenaltyRebateInfo?: {
+          data?: {
+            penalty?: {
+              dayAfterInstallmentDate?: number | null;
+              penaltyRate?: number | null;
+              penaltyAmount?: any | null;
+              penaltyLedgerMapping?: string | null;
+            } | null;
+            rebate?: {
+              dayBeforeInstallmentDate?: number | null;
+              rebateRate?: number | null;
+              rebateAmount?: any | null;
+              rebateLedgerMapping?: string | null;
+              noOfInstallment?: number | null;
+            } | null;
+            prematurePenalty?: {
+              penaltyDateType?: PrematurePenaltyDateType | null;
+              noOfDays?: number | null;
+              penaltyLedgerMapping?: string | null;
+              penaltyAmount?: any | null;
+              penaltyRate?: number | null;
+            } | null;
+            withdrawPenalty?: {
+              penaltyLedgerMapping?: string | null;
+              penaltyAmount?: any | null;
+              penaltyRate?: number | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetAccountOpenMinorListQueryVariables = Exact<{
   memberId: Scalars['ID'];
 }>;
 
-
-export type GetAccountOpenMinorListQuery = { account: { listMinors?: { data?: Array<{ id: string, fullName?: Record<"local"|"en"|"np",string> | null, familyMemberId?: string | null } | null> | null } | null } };
+export type GetAccountOpenMinorListQuery = {
+  account: {
+    listMinors?: {
+      data?: Array<{
+        id: string;
+        fullName?: Record<'local' | 'en' | 'np', string> | null;
+        familyMemberId?: string | null;
+      } | null> | null;
+    } | null;
+  };
+};
 
 export type GetInstallmentsListDataQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -13392,390 +14624,1979 @@ export type GetInstallmentsListDataQueryVariables = Exact<{
   toN?: InputMaybe<Scalars['Int']>;
 }>;
 
-
-export type GetInstallmentsListDataQuery = { account: { getInstallments?: { data?: Array<{ number: number, dueDate: Record<"local"|"en"|"np",string>, status: InstallmentState, monthName: Record<"local"|"en"|"np",string>, fine?: string | null, rebate?: string | null } | null> | null, error?: QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment | null } | null } };
+export type GetInstallmentsListDataQuery = {
+  account: {
+    getInstallments?: {
+      data?: Array<{
+        number: number;
+        dueDate: Record<'local' | 'en' | 'np', string>;
+        status: InstallmentState;
+        monthName: Record<'local' | 'en' | 'np', string>;
+        fine?: string | null;
+        rebate?: string | null;
+      } | null> | null;
+      error?:
+        | QueryError_AuthorizationError_Fragment
+        | QueryError_BadRequestError_Fragment
+        | QueryError_NotFoundError_Fragment
+        | QueryError_ServerError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type GetBulkInstallmentsDataQueryVariables = Exact<{
   ids: Array<InputMaybe<Scalars['ID']>> | InputMaybe<Scalars['ID']>;
 }>;
 
-
-export type GetBulkInstallmentsDataQuery = { account: { getBulkInstallments?: Array<{ accountId?: string | null, value?: { data?: Array<{ dueDate: Record<"local"|"en"|"np",string>, status: InstallmentState, monthName: Record<"local"|"en"|"np",string>, fine?: string | null, rebate?: string | null } | null> | null } | null } | null> | null } };
+export type GetBulkInstallmentsDataQuery = {
+  account: {
+    getBulkInstallments?: Array<{
+      accountId?: string | null;
+      value?: {
+        data?: Array<{
+          dueDate: Record<'local' | 'en' | 'np', string>;
+          status: InstallmentState;
+          monthName: Record<'local' | 'en' | 'np', string>;
+          fine?: string | null;
+          rebate?: string | null;
+        } | null> | null;
+      } | null;
+    } | null> | null;
+  };
+};
 
 export type GetDefaultAccountListQueryVariables = Exact<{
   productId: Scalars['ID'];
   memberId: Scalars['ID'];
 }>;
 
-
-export type GetDefaultAccountListQuery = { account: { listDefaultAccounts?: { data?: Array<{ id: string, accountName?: string | null } | null> | null } | null } };
+export type GetDefaultAccountListQuery = {
+  account: {
+    listDefaultAccounts?: {
+      data?: Array<{ id: string; accountName?: string | null } | null> | null;
+    } | null;
+  };
+};
 
 export type GetAccountDetailsDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetAccountDetailsDataQuery = { account: { accountDetails?: { data?: { accountId?: string | null, installmentAmount?: string | null, accountName?: string | null, productName?: string | null, accountOpenDate?: Record<"local"|"en"|"np",string> | null, accountType?: NatureOfDepositProduct | null, defaultAccountType?: DefaultAccountType | null, accountBalance?: string | null, totalDepositBalance?: string | null, interestAccrued?: string | null, interestEarned?: string | null, guaranteedAmount?: string | null, accountBranch?: string | null, alternativeChannel?: boolean | null, allowLoan?: boolean | null, withdrawRestricted?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, allowPartialInstallment?: boolean | null, monthlyInterestCompulsory?: boolean | null, isForMinors?: boolean | null, autoOpen?: boolean | null, isMandatory?: boolean | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null, contact?: string | null } | null } | null } | null } };
+export type GetAccountDetailsDataQuery = {
+  account: {
+    accountDetails?: {
+      data?: {
+        accountId?: string | null;
+        installmentAmount?: string | null;
+        accountName?: string | null;
+        productName?: string | null;
+        accountOpenDate?: Record<'local' | 'en' | 'np', string> | null;
+        accountType?: NatureOfDepositProduct | null;
+        defaultAccountType?: DefaultAccountType | null;
+        accountBalance?: string | null;
+        totalDepositBalance?: string | null;
+        interestAccrued?: string | null;
+        interestEarned?: string | null;
+        guaranteedAmount?: string | null;
+        accountBranch?: string | null;
+        alternativeChannel?: boolean | null;
+        allowLoan?: boolean | null;
+        withdrawRestricted?: boolean | null;
+        supportMultiple?: boolean | null;
+        staffProduct?: boolean | null;
+        atmFacility?: boolean | null;
+        chequeIssue?: boolean | null;
+        allowPartialInstallment?: boolean | null;
+        monthlyInterestCompulsory?: boolean | null;
+        isForMinors?: boolean | null;
+        autoOpen?: boolean | null;
+        isMandatory?: boolean | null;
+        member?: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          profilePicUrl?: string | null;
+          contact?: string | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetAccountTransactionListsQueryVariables = Exact<{
   filter: AccountsTransactionFilter;
   pagination: Pagination;
 }>;
 
-
-export type GetAccountTransactionListsQuery = { account: { listTransactions?: { edges?: Array<{ node: { id: string, accountId?: string | null, name: string, date: Record<"local"|"en"|"np",string>, month: Record<"local"|"en"|"np",string>, transactionDirection: EbankingTransactionDirection, amount: string, currentBalance: string } } | null> | null, pageInfo?: { endCursor?: string | null, startCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null, summary?: { totalDeposit?: string | null, totalWithdraw?: string | null, averageBalance?: string | null } | null } | null } };
+export type GetAccountTransactionListsQuery = {
+  account: {
+    listTransactions?: {
+      edges?: Array<{
+        node: {
+          id: string;
+          accountId?: string | null;
+          name: string;
+          date: Record<'local' | 'en' | 'np', string>;
+          month: Record<'local' | 'en' | 'np', string>;
+          transactionDirection: EbankingTransactionDirection;
+          amount: string;
+          currentBalance: string;
+        };
+      } | null> | null;
+      pageInfo?: {
+        endCursor?: string | null;
+        startCursor?: string | null;
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+      } | null;
+      summary?: {
+        totalDeposit?: string | null;
+        totalWithdraw?: string | null;
+        averageBalance?: string | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetInvestmentAccountsListDataQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<InvestmentAccountFilter>;
 }>;
 
-
-export type GetInvestmentAccountsListDataQuery = { accounting: { investment: { listAccount: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: string | null, type?: InvestmentType | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null } } } };
+export type GetInvestmentAccountsListDataQuery = {
+  accounting: {
+    investment: {
+      listAccount: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id: string;
+            name?: string | null;
+            type?: InvestmentType | null;
+            address?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+            } | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: {
+          startCursor?: string | null;
+          endCursor?: string | null;
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+        } | null;
+      };
+    };
+  };
+};
 
 export type GetInvestmentAccountFormStateDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetInvestmentAccountFormStateDataQuery = { accounting: { investment: { accountFormState: { data?: { name: string, type: InvestmentType, address: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } } | null } } } };
+export type GetInvestmentAccountFormStateDataQuery = {
+  accounting: {
+    investment: {
+      accountFormState: {
+        data?: {
+          name: string;
+          type: InvestmentType;
+          address: {
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          };
+        } | null;
+      };
+    };
+  };
+};
 
 export type GetInvestmentEntriesListDataQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<InvestmentEntryFilter>;
 }>;
 
-
-export type GetInvestmentEntriesListDataQuery = { accounting: { investment: { listEntry: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: string | null, type?: InvestmentType | null, amount?: string | null, date?: Record<"local"|"en"|"np",string> | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null } } } };
+export type GetInvestmentEntriesListDataQuery = {
+  accounting: {
+    investment: {
+      listEntry: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id: string;
+            name?: string | null;
+            type?: InvestmentType | null;
+            amount?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: {
+          startCursor?: string | null;
+          endCursor?: string | null;
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+        } | null;
+      };
+    };
+  };
+};
 
 export type GetInvestmentEntryFormStateDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetInvestmentEntryFormStateDataQuery = { accounting: { investment: { entryFormState: { data?: { accountID: string, investmentType?: InvestmentType | null, share?: { count: number, rate: string, purchaseAmount: string, certificateNo: string, date: Record<"local"|"en"|"np",string>, notes?: string | null } | null, saving?: { type: SavingInvestmentType, installmentAmount: string, frequency: InstallmentFrequency, rate: number, openDate: Record<"local"|"en"|"np",string>, initialDepositAmount?: string | null, notes?: string | null } | null, fd?: { type: FdInvestmentType, fdAmount: string, rate: number, certificateNo: string, startDate: Record<"local"|"en"|"np",string>, maturityDate: Record<"local"|"en"|"np",string>, interestNomineeBank: string, bankACNo: string, interestLedgerMapping: string, notes?: string | null } | null } | null } } } };
+export type GetInvestmentEntryFormStateDataQuery = {
+  accounting: {
+    investment: {
+      entryFormState: {
+        data?: {
+          accountID: string;
+          investmentType?: InvestmentType | null;
+          share?: {
+            count: number;
+            rate: string;
+            purchaseAmount: string;
+            certificateNo: string;
+            date: Record<'local' | 'en' | 'np', string>;
+            notes?: string | null;
+          } | null;
+          saving?: {
+            type: SavingInvestmentType;
+            installmentAmount: string;
+            frequency: InstallmentFrequency;
+            rate: number;
+            openDate: Record<'local' | 'en' | 'np', string>;
+            initialDepositAmount?: string | null;
+            notes?: string | null;
+          } | null;
+          fd?: {
+            type: FdInvestmentType;
+            fdAmount: string;
+            rate: number;
+            certificateNo: string;
+            startDate: Record<'local' | 'en' | 'np', string>;
+            maturityDate: Record<'local' | 'en' | 'np', string>;
+            interestNomineeBank: string;
+            bankACNo: string;
+            interestLedgerMapping: string;
+            notes?: string | null;
+          } | null;
+        } | null;
+      };
+    };
+  };
+};
 
 export type GetInvestmentTransactionsListDataQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<InvestmentTransactionFilter>;
 }>;
 
-
-export type GetInvestmentTransactionsListDataQuery = { accounting: { investment: { listTransaction: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: string | null, type?: InvestmentType | null, amount?: string | null, date?: Record<"local"|"en"|"np",string> | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null } } } };
+export type GetInvestmentTransactionsListDataQuery = {
+  accounting: {
+    investment: {
+      listTransaction: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id: string;
+            name?: string | null;
+            type?: InvestmentType | null;
+            amount?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: {
+          startCursor?: string | null;
+          endCursor?: string | null;
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+        } | null;
+      };
+    };
+  };
+};
 
 export type GetSalesCustomerListDataQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<SalesCustomerFilter>;
 }>;
 
-
-export type GetSalesCustomerListDataQuery = { accounting: { sales: { listCustomer: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: string | null, phoneNumber?: string | null, email?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null } } } };
+export type GetSalesCustomerListDataQuery = {
+  accounting: {
+    sales: {
+      listCustomer: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id: string;
+            name?: string | null;
+            phoneNumber?: string | null;
+            email?: string | null;
+            address?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+            } | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: {
+          startCursor?: string | null;
+          endCursor?: string | null;
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+        } | null;
+      };
+    };
+  };
+};
 
 export type GetSalesCustomerFormStateDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetSalesCustomerFormStateDataQuery = { accounting: { sales: { customerFormState: { data?: { name: string, code: string, phoneNumber: string, pan: string, email?: string | null, creditTerms?: string | null, creditLimit?: string | null, openingBalance?: string | null, address: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } } | null } } } };
+export type GetSalesCustomerFormStateDataQuery = {
+  accounting: {
+    sales: {
+      customerFormState: {
+        data?: {
+          name: string;
+          code: string;
+          phoneNumber: string;
+          pan: string;
+          email?: string | null;
+          creditTerms?: string | null;
+          creditLimit?: string | null;
+          openingBalance?: string | null;
+          address: {
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          };
+        } | null;
+      };
+    };
+  };
+};
 
 export type GetSalesSaleEntryListDataQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<SalesSaleEntryFilter>;
 }>;
 
-
-export type GetSalesSaleEntryListDataQuery = { accounting: { sales: { listSaleEntry: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: string | null, totalAmount?: string | null, date?: Record<"local"|"en"|"np",string> | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null } } } };
+export type GetSalesSaleEntryListDataQuery = {
+  accounting: {
+    sales: {
+      listSaleEntry: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id: string;
+            name?: string | null;
+            totalAmount?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: {
+          startCursor?: string | null;
+          endCursor?: string | null;
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+        } | null;
+      };
+    };
+  };
+};
 
 export type GetSalesSaleEntryFormStateDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetSalesSaleEntryFormStateDataQuery = { accounting: { sales: { saleEntryFormState: { data?: { customerID: string, reference: string, invoiceDate: Record<"local"|"en"|"np",string>, dueDate: Record<"local"|"en"|"np",string>, notes?: string | null, subTotal?: string | null, discount?: string | null, taxableTotal?: string | null, vat?: string | null, products: Array<{ name: string, quantity: string, rate: string, tax: number, amount: string, productDescription?: string | null, warehousePartition?: string | null, salesLedger?: string | null }> } | null } } } };
+export type GetSalesSaleEntryFormStateDataQuery = {
+  accounting: {
+    sales: {
+      saleEntryFormState: {
+        data?: {
+          customerID: string;
+          reference: string;
+          invoiceDate: Record<'local' | 'en' | 'np', string>;
+          dueDate: Record<'local' | 'en' | 'np', string>;
+          notes?: string | null;
+          subTotal?: string | null;
+          discount?: string | null;
+          taxableTotal?: string | null;
+          vat?: string | null;
+          products: Array<{
+            name: string;
+            quantity: string;
+            rate: string;
+            tax: number;
+            amount: string;
+            productDescription?: string | null;
+            warehousePartition?: string | null;
+            salesLedger?: string | null;
+          }>;
+        } | null;
+      };
+    };
+  };
+};
 
 export type GetSalesCreditNoteListDataQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<SalesCreditNoteFilter>;
 }>;
 
-
-export type GetSalesCreditNoteListDataQuery = { accounting: { sales: { listCreditNote: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: string | null, totalAmount?: string | null, date?: Record<"local"|"en"|"np",string> | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null } } } };
+export type GetSalesCreditNoteListDataQuery = {
+  accounting: {
+    sales: {
+      listCreditNote: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id: string;
+            name?: string | null;
+            totalAmount?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: {
+          startCursor?: string | null;
+          endCursor?: string | null;
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+        } | null;
+      };
+    };
+  };
+};
 
 export type GetSalesCreditNoteFormStateDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetSalesCreditNoteFormStateDataQuery = { accounting: { sales: { creditNoteFormState: { data?: { customerID: string, invoiceReference: string, date: Record<"local"|"en"|"np",string>, notes?: string | null, subTotal?: string | null, nonTaxableTotal?: string | null, taxableTotal?: string | null, vat?: string | null, products: Array<{ name: string, quantity: string, rate: string, tax: number, amount: string, productDescription?: string | null, warehousePartition?: string | null, salesLedger?: string | null }> } | null } } } };
+export type GetSalesCreditNoteFormStateDataQuery = {
+  accounting: {
+    sales: {
+      creditNoteFormState: {
+        data?: {
+          customerID: string;
+          invoiceReference: string;
+          date: Record<'local' | 'en' | 'np', string>;
+          notes?: string | null;
+          subTotal?: string | null;
+          nonTaxableTotal?: string | null;
+          taxableTotal?: string | null;
+          vat?: string | null;
+          products: Array<{
+            name: string;
+            quantity: string;
+            rate: string;
+            tax: number;
+            amount: string;
+            productDescription?: string | null;
+            warehousePartition?: string | null;
+            salesLedger?: string | null;
+          }>;
+        } | null;
+      };
+    };
+  };
+};
 
 export type GetSalesCustomerPaymentListDataQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<SalesCustomerPaymentFilter>;
 }>;
 
-
-export type GetSalesCustomerPaymentListDataQuery = { accounting: { sales: { listCustomerPayment: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, receivedFrom?: string | null, totalAmount?: string | null, date?: Record<"local"|"en"|"np",string> | null, paymentMode?: CustomerPayment | null } | null } | null> | null, pageInfo?: { startCursor?: string | null, endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null } } } };
+export type GetSalesCustomerPaymentListDataQuery = {
+  accounting: {
+    sales: {
+      listCustomerPayment: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id: string;
+            receivedFrom?: string | null;
+            totalAmount?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            paymentMode?: CustomerPayment | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: {
+          startCursor?: string | null;
+          endCursor?: string | null;
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+        } | null;
+      };
+    };
+  };
+};
 
 export type GetSalesCustomerPaymentFormStateDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
+export type GetSalesCustomerPaymentFormStateDataQuery = {
+  accounting: {
+    sales: {
+      customerPaymentFormState: {
+        data?: {
+          receivedFrom: string;
+          receivedAccount: string;
+          receivedAmount: string;
+          receivedDate: Record<'local' | 'en' | 'np', string>;
+          paymentMethod: CustomerPayment;
+          paymentReferenceNo?: string | null;
+          tds: boolean;
+          tdsAccount?: string | null;
+          tdsType?: string | null;
+          tdsAmount?: string | null;
+          notes?: string | null;
+          paymentAllocation: Array<{
+            type: string;
+            date: Record<'local' | 'en' | 'np', string>;
+            amount: string;
+            leftToAllocate: string;
+            thisAllocation: string;
+          }>;
+        } | null;
+      };
+    };
+  };
+};
 
-export type GetSalesCustomerPaymentFormStateDataQuery = { accounting: { sales: { customerPaymentFormState: { data?: { receivedFrom: string, receivedAccount: string, receivedAmount: string, receivedDate: Record<"local"|"en"|"np",string>, paymentMethod: CustomerPayment, paymentReferenceNo?: string | null, tds: boolean, tdsAccount?: string | null, tdsType?: string | null, tdsAmount?: string | null, notes?: string | null, paymentAllocation: Array<{ type: string, date: Record<"local"|"en"|"np",string>, amount: string, leftToAllocate: string, thisAllocation: string }> } | null } } } };
+export type AllAdministrationQueryVariables = Exact<{ [key: string]: never }>;
 
-export type AllAdministrationQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AllAdministrationQuery = { administration: { all: Array<{ id: number, name: string, districts: Array<{ id: number, name: string, municipalities: Array<{ id: number, name: string, wards: Array<number> }> }> }> } };
+export type AllAdministrationQuery = {
+  administration: {
+    all: Array<{
+      id: number;
+      name: string;
+      districts: Array<{
+        id: number;
+        name: string;
+        municipalities: Array<{ id: number; name: string; wards: Array<number> }>;
+      }>;
+    }>;
+  };
+};
 
 export type GetAgentListDataQueryVariables = Exact<{
   filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
-
-export type GetAgentListDataQuery = { transaction: { listAgent: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, agentName?: string | null, phoneNo?: string | null, assignedMember?: number | null, profilePicUrl?: string | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetAgentListDataQuery = {
+  transaction: {
+    listAgent: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          agentName?: string | null;
+          phoneNo?: string | null;
+          assignedMember?: number | null;
+          profilePicUrl?: string | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    };
+  };
+};
 
 export type GetAgentDetailDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetAgentDetailDataQuery = { transaction: { agentDetail?: { data?: { id?: string | null, name?: string | null, branch?: string | null, totalMembers?: number | null, profilePicUrl?: string | null } | null } | null } };
+export type GetAgentDetailDataQuery = {
+  transaction: {
+    agentDetail?: {
+      data?: {
+        id?: string | null;
+        name?: string | null;
+        branch?: string | null;
+        totalMembers?: number | null;
+        profilePicUrl?: string | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetAgentAssignedMemberListDataQueryVariables = Exact<{
   filter?: InputMaybe<AssignedMemberListFiler>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
-
-export type GetAgentAssignedMemberListDataQuery = { transaction: { assignedMemberList: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, assignedDate?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null } | null, account?: { id: string, dues?: { totalDue?: string | null } | null } | null, product?: { productName: string } | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetAgentAssignedMemberListDataQuery = {
+  transaction: {
+    assignedMemberList: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          assignedDate?: string | null;
+          member?: { id: string; name?: Record<'local' | 'en' | 'np', string> | null } | null;
+          account?: { id: string; dues?: { totalDue?: string | null } | null } | null;
+          product?: { productName: string } | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    };
+  };
+};
 
 export type GetAgentTodayListDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
+export type GetAgentTodayListDataQuery = {
+  transaction: {
+    listAgentTask?: {
+      record?: Array<{
+        amount?: any | null;
+        paid?: boolean | null;
+        member?: { id: string } | null;
+        account?: { id: string } | null;
+      } | null> | null;
+    } | null;
+  };
+};
 
-export type GetAgentTodayListDataQuery = { transaction: { listAgentTask?: { record?: Array<{ amount?: any | null, paid?: boolean | null, member?: { id: string } | null, account?: { id: string } | null } | null> | null } | null } };
+export type GetMeQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetMeQuery = {
+  auth: {
+    me: {
+      data?: {
+        user?: {
+          id: string;
+          username: string;
+          email?: string | null;
+          firstName: Record<'local' | 'en' | 'np', string>;
+          lastName: Record<'local' | 'en' | 'np', string>;
+          role?: Roles | null;
+          profilePic?: string | null;
+          branch?: { id: string; name?: string | null } | null;
+          organization?: {
+            basicDetails?: { name?: string | null; logo?: string | null } | null;
+            contactDetails?: {
+              website?: string | null;
+              phoneNumber?: string | null;
+              email?: string | null;
+            } | null;
+            address?: {
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+            } | null;
+            registrationDetails?: { regdNo?: string | null; panOrVat?: string | null } | null;
+          } | null;
+        } | null;
+        preference?: {
+          language?: Language | null;
+          languageCode?: string | null;
+          date?: DateType | null;
+        } | null;
+      } | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | null;
+    };
+  };
+};
 
+export type GetBankListQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetMeQuery = { auth: { me: { data?: { user?: { id: string, username: string, email?: string | null, firstName: Record<"local"|"en"|"np",string>, lastName: Record<"local"|"en"|"np",string>, role?: Roles | null, profilePic?: string | null, branch?: { id: string, name?: string | null } | null, organization?: { basicDetails?: { name?: string | null, logo?: string | null } | null, contactDetails?: { website?: string | null, phoneNumber?: string | null, email?: string | null } | null, address?: { district?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, locality?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null } | null, registrationDetails?: { regdNo?: string | null, panOrVat?: string | null } | null } | null } | null, preference?: { language?: Language | null, languageCode?: string | null, date?: DateType | null } | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } } };
+export type GetBankListQuery = {
+  bank: { bank?: { list?: Array<{ id: string; name?: string | null } | null> | null } | null };
+};
 
-export type GetBankListQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetUserBranchListQueryVariables = Exact<{ [key: string]: never }>;
 
+export type GetUserBranchListQuery = {
+  bank: { branch?: { list?: Array<{ id: string; name?: string | null } | null> | null } | null };
+};
 
-export type GetBankListQuery = { bank: { bank?: { list?: Array<{ id: string, name?: string | null } | null> | null } | null } };
+type MutationError_AuthorizationError_Fragment = {
+  __typename: 'AuthorizationError';
+  code: number;
+  authorizationErrorMsg: string;
+};
 
-export type GetUserBranchListQueryVariables = Exact<{ [key: string]: never; }>;
+type MutationError_BadRequestError_Fragment = {
+  __typename: 'BadRequestError';
+  code: number;
+  badRequestErrorMessage: string;
+};
 
+type MutationError_NotFoundError_Fragment = {
+  __typename: 'NotFoundError';
+  code: number;
+  notFoundErrorMsg: string;
+};
 
-export type GetUserBranchListQuery = { bank: { branch?: { list?: Array<{ id: string, name?: string | null } | null> | null } | null } };
+type MutationError_ServerError_Fragment = {
+  __typename: 'ServerError';
+  code: number;
+  serverErrorMessage: string;
+};
 
-type MutationError_AuthorizationError_Fragment = { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string };
+type MutationError_ValidationError_Fragment = {
+  __typename: 'ValidationError';
+  code: number;
+  validationErrorMsg: Record<string, Array<string>>;
+};
 
-type MutationError_BadRequestError_Fragment = { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string };
+export type MutationErrorFragment =
+  | MutationError_AuthorizationError_Fragment
+  | MutationError_BadRequestError_Fragment
+  | MutationError_NotFoundError_Fragment
+  | MutationError_ServerError_Fragment
+  | MutationError_ValidationError_Fragment;
 
-type MutationError_NotFoundError_Fragment = { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string };
+type QueryError_AuthorizationError_Fragment = {
+  __typename: 'AuthorizationError';
+  code: number;
+  authorizationErrorMsg: string;
+};
 
-type MutationError_ServerError_Fragment = { __typename: 'ServerError', code: number, serverErrorMessage: string };
+type QueryError_BadRequestError_Fragment = {
+  __typename: 'BadRequestError';
+  code: number;
+  badRequestErrorMessage: string;
+};
 
-type MutationError_ValidationError_Fragment = { __typename: 'ValidationError', code: number, validationErrorMsg: Record<string, Array<string>> };
+type QueryError_NotFoundError_Fragment = {
+  __typename: 'NotFoundError';
+  code: number;
+  notFoundErrorMsg: string;
+};
 
-export type MutationErrorFragment = MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment;
+type QueryError_ServerError_Fragment = {
+  __typename: 'ServerError';
+  code: number;
+  serverErrorMessage: string;
+};
 
-type QueryError_AuthorizationError_Fragment = { __typename: 'AuthorizationError', code: number, authorizationErrorMsg: string };
+export type QueryErrorFragment =
+  | QueryError_AuthorizationError_Fragment
+  | QueryError_BadRequestError_Fragment
+  | QueryError_NotFoundError_Fragment
+  | QueryError_ServerError_Fragment;
 
-type QueryError_BadRequestError_Fragment = { __typename: 'BadRequestError', code: number, badRequestErrorMessage: string };
+export type KymFieldDataFragment = {
+  id?: string | null;
+  options?: Array<{
+    id?: string | null;
+    value?: Record<'local' | 'en' | 'np', string> | null;
+  } | null> | null;
+};
 
-type QueryError_NotFoundError_Fragment = { __typename: 'NotFoundError', code: number, notFoundErrorMsg: string };
+export type PaginationFragment = {
+  startCursor?: string | null;
+  endCursor?: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+};
 
-type QueryError_ServerError_Fragment = { __typename: 'ServerError', code: number, serverErrorMessage: string };
+export type GetConfigQueryVariables = Exact<{ [key: string]: never }>;
 
-export type QueryErrorFragment = QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment;
-
-export type KymFieldDataFragment = { id?: string | null, options?: Array<{ id?: string | null, value?: Record<"local"|"en"|"np",string> | null } | null> | null };
-
-export type PaginationFragment = { startCursor?: string | null, endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean };
-
-export type GetConfigQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetConfigQuery = { config: { countries?: Array<{ name?: string | null, code?: string | null } | null> | null } };
+export type GetConfigQuery = {
+  config: { countries?: Array<{ name?: string | null; code?: string | null } | null> | null };
+};
 
 export type GetCoOperativeKymEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetCoOperativeKymEditDataQuery = { members: { cooperative?: { formState?: { data?: { formData?: { nameOfOrganization?: string | null, regdNumber?: number | null, regdDate?: string | null, regdOffice?: string | null, email?: string | null, website?: string | null, contactNumber?: string | null, noOfMaleMembers?: number | null, noOfFemaleMembers?: number | null, noOfOtherMembers?: number | null, lastAuditDate?: string | null, lastAgmDate?: string | null, representativeFullName?: string | null, representativeDesignatiton?: string | null, representativeEmail?: string | null, representativeContactNumber?: string | null, representativePanNo?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, cooperativeTypeId?: string | null, mainServiceProduct?: string | null, noOfMaleEmployee?: number | null, noOfFemaleEmployee?: number | null, totalEmployee?: number | null, shareCapital?: number | null, reserveAndSurplus?: number | null, savingDeposit?: number | null, loanAccount?: number | null, capitalGrant?: number | null, currentLiabilities?: number | null, nonCurrentLiabilities?: number | null, cashAndCashEquivalent?: number | null, bank?: number | null, investments?: number | null, loan?: number | null, nonCurrentAssets?: number | null, otherNonCurrentAssets?: number | null, totalAssets?: number | null, accountHoldersName?: string | null, hasTCAccepted?: boolean | null, registeredAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, operatingAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, permanentRepresentativeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryRepresentativeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } };
+export type GetCoOperativeKymEditDataQuery = {
+  members: {
+    cooperative?: {
+      formState?: {
+        data?: {
+          formData?: {
+            nameOfOrganization?: string | null;
+            regdNumber?: number | null;
+            regdDate?: string | null;
+            regdOffice?: string | null;
+            email?: string | null;
+            website?: string | null;
+            contactNumber?: string | null;
+            noOfMaleMembers?: number | null;
+            noOfFemaleMembers?: number | null;
+            noOfOtherMembers?: number | null;
+            lastAuditDate?: string | null;
+            lastAgmDate?: string | null;
+            representativeFullName?: string | null;
+            representativeDesignatiton?: string | null;
+            representativeEmail?: string | null;
+            representativeContactNumber?: string | null;
+            representativePanNo?: string | null;
+            isPermanentAndTemporaryAddressSame?: boolean | null;
+            cooperativeTypeId?: string | null;
+            mainServiceProduct?: string | null;
+            noOfMaleEmployee?: number | null;
+            noOfFemaleEmployee?: number | null;
+            totalEmployee?: number | null;
+            shareCapital?: number | null;
+            reserveAndSurplus?: number | null;
+            savingDeposit?: number | null;
+            loanAccount?: number | null;
+            capitalGrant?: number | null;
+            currentLiabilities?: number | null;
+            nonCurrentLiabilities?: number | null;
+            cashAndCashEquivalent?: number | null;
+            bank?: number | null;
+            investments?: number | null;
+            loan?: number | null;
+            nonCurrentAssets?: number | null;
+            otherNonCurrentAssets?: number | null;
+            totalAssets?: number | null;
+            accountHoldersName?: string | null;
+            hasTCAccepted?: boolean | null;
+            registeredAddress?: {
+              provinceId?: number | null;
+              districtId?: number | null;
+              localGovernmentId?: number | null;
+              wardNo?: number | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+            operatingAddress?: {
+              provinceId?: number | null;
+              districtId?: number | null;
+              localGovernmentId?: number | null;
+              wardNo?: number | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+            permanentRepresentativeAddress?: {
+              provinceId?: number | null;
+              districtId?: number | null;
+              localGovernmentId?: number | null;
+              wardNo?: number | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+            temporaryRepresentativeAddress?: {
+              provinceId?: number | null;
+              districtId?: number | null;
+              localGovernmentId?: number | null;
+              wardNo?: number | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetCoOperativeDirectorEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetCoOperativeDirectorEditDataQuery = { members: { cooperative?: { listDirectors?: { data?: Array<{ id?: string | null, fullName?: string | null, designation?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, contactNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null> | null } | null } | null } };
+export type GetCoOperativeDirectorEditDataQuery = {
+  members: {
+    cooperative?: {
+      listDirectors?: {
+        data?: Array<{
+          id?: string | null;
+          fullName?: string | null;
+          designation?: string | null;
+          isPermanentAndTemporaryAddressSame?: boolean | null;
+          dateOfMembership?: string | null;
+          highestQualification?: string | null;
+          contactNumber?: string | null;
+          email?: string | null;
+          citizenshipNo?: string | null;
+          panNo?: string | null;
+          permanentAddress?: {
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+          temporaryAddress?: {
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetCoOperativeAccountOperatorEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetCoOperativeAccountOperatorEditDataQuery = { members: { cooperative?: { listAccountOperators?: { data?: Array<{ id?: string | null, fullName?: string | null, designation?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, contactNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, coopRelatedTraining?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null> | null } | null } | null } };
+export type GetCoOperativeAccountOperatorEditDataQuery = {
+  members: {
+    cooperative?: {
+      listAccountOperators?: {
+        data?: Array<{
+          id?: string | null;
+          fullName?: string | null;
+          designation?: string | null;
+          isPermanentAndTemporaryAddressSame?: boolean | null;
+          dateOfMembership?: string | null;
+          highestQualification?: string | null;
+          contactNumber?: string | null;
+          email?: string | null;
+          citizenshipNo?: string | null;
+          panNo?: string | null;
+          permanentAddress?: {
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+          temporaryAddress?: {
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+          coopRelatedTraining?: Array<{
+            subjectOfTraining?: string | null;
+            dateOfTraining?: string | null;
+            trainingOrganization?: string | null;
+          } | null> | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetCooperativeUnionKymEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
   includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-
-export type GetCooperativeUnionKymEditDataQuery = { members: { cooperativeUnion?: { formState?: { formData?: { institutionInformation?: { data?: { nameOfInstitutionEn?: string | null, nameOfInstitutionNp?: string | null, institutionType?: string | null, natureOfBusinessEn?: string | null, natureOfBusinessNp?: string | null, regdDate?: string | null, vatOrPan?: string | null, noOfBranches?: number | null, regdNo?: string | null, issuingOffice?: string | null, phone?: string | null, fax?: string | null, contactEmail?: string | null, website?: string | null, postBoxNo?: string | null, noOfEmployee?: number | null, lastAgmDate?: string | null, nameOfBank?: string | null, accountNumber?: string | null, accountName?: string | null, applicantName?: string | null, applicantNameNp?: string | null, applicantDesignationEn?: string | null, applicantDesignationNp?: string | null, applicantEmail?: string | null, applicantContactNo?: string | null, applicantPanNo?: string | null, applicantDateOfMembership?: string | null, applicantHighestQualification?: string | null, applicantIsPermanentAndTemporaryAddrSame?: boolean | null, noOfMaleMemberCurrent?: number | null, noOfMaleMemberTarget?: number | null, noOfFemaleMemberCurrent?: number | null, noOfFemaleMemberTarget?: number | null, noOfInstitutionalMemberCurrent?: number | null, noOfInstitutionalMemberTarget?: number | null, regdAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, operatingOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, branchOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, applicantPermanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, applicantTemporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null, sectionStatus?: { id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null } | null } | null } | null } | null } };
+export type GetCooperativeUnionKymEditDataQuery = {
+  members: {
+    cooperativeUnion?: {
+      formState?: {
+        formData?: {
+          institutionInformation?: {
+            data?: {
+              nameOfInstitutionEn?: string | null;
+              nameOfInstitutionNp?: string | null;
+              institutionType?: string | null;
+              natureOfBusinessEn?: string | null;
+              natureOfBusinessNp?: string | null;
+              regdDate?: string | null;
+              vatOrPan?: string | null;
+              noOfBranches?: number | null;
+              regdNo?: string | null;
+              issuingOffice?: string | null;
+              phone?: string | null;
+              fax?: string | null;
+              contactEmail?: string | null;
+              website?: string | null;
+              postBoxNo?: string | null;
+              noOfEmployee?: number | null;
+              lastAgmDate?: string | null;
+              nameOfBank?: string | null;
+              accountNumber?: string | null;
+              accountName?: string | null;
+              applicantName?: string | null;
+              applicantNameNp?: string | null;
+              applicantDesignationEn?: string | null;
+              applicantDesignationNp?: string | null;
+              applicantEmail?: string | null;
+              applicantContactNo?: string | null;
+              applicantPanNo?: string | null;
+              applicantDateOfMembership?: string | null;
+              applicantHighestQualification?: string | null;
+              applicantIsPermanentAndTemporaryAddrSame?: boolean | null;
+              noOfMaleMemberCurrent?: number | null;
+              noOfMaleMemberTarget?: number | null;
+              noOfFemaleMemberCurrent?: number | null;
+              noOfFemaleMemberTarget?: number | null;
+              noOfInstitutionalMemberCurrent?: number | null;
+              noOfInstitutionalMemberTarget?: number | null;
+              regdAddress?: {
+                provinceId?: number | null;
+                districtId?: number | null;
+                localGovernmentId?: number | null;
+                wardNo?: number | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+              } | null;
+              operatingOfficeAddress?: {
+                provinceId?: number | null;
+                districtId?: number | null;
+                localGovernmentId?: number | null;
+                wardNo?: number | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+              } | null;
+              branchOfficeAddress?: {
+                provinceId?: number | null;
+                districtId?: number | null;
+                localGovernmentId?: number | null;
+                wardNo?: number | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+              } | null;
+              applicantPermanentAddress?: {
+                provinceId?: number | null;
+                districtId?: number | null;
+                localGovernmentId?: number | null;
+                wardNo?: number | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+              } | null;
+              applicantTemporaryAddress?: {
+                provinceId?: number | null;
+                districtId?: number | null;
+                localGovernmentId?: number | null;
+                wardNo?: number | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+              } | null;
+            } | null;
+            sectionStatus?: {
+              id?: string | null;
+              errors?: Record<string, Array<string>> | null;
+              sectionStatus?: {
+                errors?: Array<string> | null;
+                incomplete?: Array<string> | null;
+              } | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetEconimicDetailsEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
   includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-
-export type GetEconimicDetailsEditDataQuery = { members: { cooperativeUnion?: { formState?: { formData?: { economicDetails?: { data?: { cashAndCashEquivalentCurrent?: number | null, cashAndCashEquivalentTarget?: number | null, bankCurrent?: number | null, bankTarget?: number | null, investmentsCurrent?: number | null, investmentsTarget?: number | null, loanCurrent?: number | null, loanTarget?: number | null, nonCurrentAssetsCurrent?: number | null, nonCurrentAssetsTarget?: number | null, otherNonCurrentAssetsCurrent?: number | null, otherNonCurrentAssetsTarget?: number | null, shareCapitalCurrent?: number | null, shareCapitalTarget?: number | null, reserveAndSurplusCurrent?: number | null, reserveAndSurplusTarget?: number | null, savingDepositCurrent?: number | null, savingDepositTarget?: number | null, loanAccountCurrent?: number | null, loanAccountTarget?: number | null, capitalGrantCurrent?: number | null, capitalGrantTarget?: number | null, currentLiabilitiesCurrent?: number | null, currentLiabilitiesTarget?: number | null, nonCurrentLiabilitiesCurrent?: number | null, nonCurrentLiabilitiesTarget?: number | null, incomeFromFinancialInvestment?: number | null, incomeFromNonFinancialInvestment?: number | null, incomeFromInvestment?: number | null, incomeFromServiceOperation?: number | null, incomeFromSales?: number | null, otherIncome?: number | null, miscellaneousIncome?: number | null, purchase?: number | null, directExpense?: number | null, administrativeExpense?: number | null, financialCost?: number | null, riskManagementCost?: number | null, deferredTaxExpense?: number | null } | null, sectionStatus?: { id?: string | null } | null } | null } | null } | null } | null } };
+export type GetEconimicDetailsEditDataQuery = {
+  members: {
+    cooperativeUnion?: {
+      formState?: {
+        formData?: {
+          economicDetails?: {
+            data?: {
+              cashAndCashEquivalentCurrent?: number | null;
+              cashAndCashEquivalentTarget?: number | null;
+              bankCurrent?: number | null;
+              bankTarget?: number | null;
+              investmentsCurrent?: number | null;
+              investmentsTarget?: number | null;
+              loanCurrent?: number | null;
+              loanTarget?: number | null;
+              nonCurrentAssetsCurrent?: number | null;
+              nonCurrentAssetsTarget?: number | null;
+              otherNonCurrentAssetsCurrent?: number | null;
+              otherNonCurrentAssetsTarget?: number | null;
+              shareCapitalCurrent?: number | null;
+              shareCapitalTarget?: number | null;
+              reserveAndSurplusCurrent?: number | null;
+              reserveAndSurplusTarget?: number | null;
+              savingDepositCurrent?: number | null;
+              savingDepositTarget?: number | null;
+              loanAccountCurrent?: number | null;
+              loanAccountTarget?: number | null;
+              capitalGrantCurrent?: number | null;
+              capitalGrantTarget?: number | null;
+              currentLiabilitiesCurrent?: number | null;
+              currentLiabilitiesTarget?: number | null;
+              nonCurrentLiabilitiesCurrent?: number | null;
+              nonCurrentLiabilitiesTarget?: number | null;
+              incomeFromFinancialInvestment?: number | null;
+              incomeFromNonFinancialInvestment?: number | null;
+              incomeFromInvestment?: number | null;
+              incomeFromServiceOperation?: number | null;
+              incomeFromSales?: number | null;
+              otherIncome?: number | null;
+              miscellaneousIncome?: number | null;
+              purchase?: number | null;
+              directExpense?: number | null;
+              administrativeExpense?: number | null;
+              financialCost?: number | null;
+              riskManagementCost?: number | null;
+              deferredTaxExpense?: number | null;
+            } | null;
+            sectionStatus?: { id?: string | null } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetBoardOfDirectorsDetailsListQueryVariables = Exact<{
   id: Scalars['ID'];
   includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-
-export type GetBoardOfDirectorsDetailsListQuery = { members: { cooperativeUnion?: { formState?: { formData?: { boardOfDirectorsDetails?: { data?: { personnelDetails?: Array<{ id?: string | null, cooperativeUnionId?: string | null, fullName?: string | null, fullNameNp?: string | null, designationEn?: string | null, designationNp?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainingAttended?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null> | null } | null, sectionStatus?: Array<{ id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null } | null } | null } | null } | null } };
+export type GetBoardOfDirectorsDetailsListQuery = {
+  members: {
+    cooperativeUnion?: {
+      formState?: {
+        formData?: {
+          boardOfDirectorsDetails?: {
+            data?: {
+              personnelDetails?: Array<{
+                id?: string | null;
+                cooperativeUnionId?: string | null;
+                fullName?: string | null;
+                fullNameNp?: string | null;
+                designationEn?: string | null;
+                designationNp?: string | null;
+                isPermanentAndTemporaryAddressSame?: boolean | null;
+                dateOfMembership?: string | null;
+                highestQualification?: string | null;
+                mobileNumber?: string | null;
+                email?: string | null;
+                citizenshipNo?: string | null;
+                panNo?: string | null;
+                permanentAddress?: {
+                  provinceId?: number | null;
+                  districtId?: number | null;
+                  localGovernmentId?: number | null;
+                  wardNo?: number | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                  coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+                } | null;
+                temporaryAddress?: {
+                  provinceId?: number | null;
+                  districtId?: number | null;
+                  localGovernmentId?: number | null;
+                  wardNo?: number | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                  coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+                } | null;
+                trainingAttended?: Array<{
+                  subjectOfTraining?: string | null;
+                  dateOfTraining?: string | null;
+                  trainingOrganization?: string | null;
+                } | null> | null;
+              } | null> | null;
+            } | null;
+            sectionStatus?: Array<{
+              id?: string | null;
+              errors?: Record<string, Array<string>> | null;
+              sectionStatus?: {
+                errors?: Array<string> | null;
+                incomplete?: Array<string> | null;
+              } | null;
+            } | null> | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetAccountOperatorDetailsListQueryVariables = Exact<{
   id: Scalars['ID'];
   includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-
-export type GetAccountOperatorDetailsListQuery = { members: { cooperativeUnion?: { formState?: { formData?: { accountOperatorsDetails?: { data?: { personnelDetails?: Array<{ id?: string | null, cooperativeUnionId?: string | null, fullName?: string | null, fullNameNp?: string | null, designationEn?: string | null, designationNp?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainingAttended?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null> | null } | null, sectionStatus?: Array<{ id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null } | null } | null } | null } | null } };
+export type GetAccountOperatorDetailsListQuery = {
+  members: {
+    cooperativeUnion?: {
+      formState?: {
+        formData?: {
+          accountOperatorsDetails?: {
+            data?: {
+              personnelDetails?: Array<{
+                id?: string | null;
+                cooperativeUnionId?: string | null;
+                fullName?: string | null;
+                fullNameNp?: string | null;
+                designationEn?: string | null;
+                designationNp?: string | null;
+                isPermanentAndTemporaryAddressSame?: boolean | null;
+                dateOfMembership?: string | null;
+                highestQualification?: string | null;
+                mobileNumber?: string | null;
+                email?: string | null;
+                citizenshipNo?: string | null;
+                panNo?: string | null;
+                permanentAddress?: {
+                  provinceId?: number | null;
+                  districtId?: number | null;
+                  localGovernmentId?: number | null;
+                  wardNo?: number | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                  coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+                } | null;
+                temporaryAddress?: {
+                  provinceId?: number | null;
+                  districtId?: number | null;
+                  localGovernmentId?: number | null;
+                  wardNo?: number | null;
+                  locality?: Record<'local' | 'en' | 'np', string> | null;
+                  houseNo?: string | null;
+                  coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+                } | null;
+                trainingAttended?: Array<{
+                  subjectOfTraining?: string | null;
+                  dateOfTraining?: string | null;
+                  trainingOrganization?: string | null;
+                } | null> | null;
+              } | null> | null;
+            } | null;
+            sectionStatus?: Array<{
+              id?: string | null;
+              errors?: Record<string, Array<string>> | null;
+              sectionStatus?: {
+                errors?: Array<string> | null;
+                incomplete?: Array<string> | null;
+              } | null;
+            } | null> | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetCentralRepresentativeDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
   includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-
-export type GetCentralRepresentativeDetailsQuery = { members: { cooperativeUnion?: { formState?: { formData?: { centralRepresentativeDetails?: { data?: { id?: string | null, cooperativeUnionId?: string | null, fullName?: string | null, fullNameNp?: string | null, designationEn?: string | null, designationNp?: string | null, isPermanentAndTemporaryAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNumber?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, notAmongDirectors?: boolean | null, centralRepID?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, trainingAttended?: Array<{ subjectOfTraining?: string | null, dateOfTraining?: string | null, trainingOrganization?: string | null } | null> | null } | null, sectionStatus?: { id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null } | null } | null } | null } | null } };
+export type GetCentralRepresentativeDetailsQuery = {
+  members: {
+    cooperativeUnion?: {
+      formState?: {
+        formData?: {
+          centralRepresentativeDetails?: {
+            data?: {
+              id?: string | null;
+              cooperativeUnionId?: string | null;
+              fullName?: string | null;
+              fullNameNp?: string | null;
+              designationEn?: string | null;
+              designationNp?: string | null;
+              isPermanentAndTemporaryAddressSame?: boolean | null;
+              dateOfMembership?: string | null;
+              highestQualification?: string | null;
+              mobileNumber?: string | null;
+              email?: string | null;
+              citizenshipNo?: string | null;
+              panNo?: string | null;
+              notAmongDirectors?: boolean | null;
+              centralRepID?: string | null;
+              permanentAddress?: {
+                provinceId?: number | null;
+                districtId?: number | null;
+                localGovernmentId?: number | null;
+                wardNo?: number | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+              } | null;
+              temporaryAddress?: {
+                provinceId?: number | null;
+                districtId?: number | null;
+                localGovernmentId?: number | null;
+                wardNo?: number | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+              } | null;
+              trainingAttended?: Array<{
+                subjectOfTraining?: string | null;
+                dateOfTraining?: string | null;
+                trainingOrganization?: string | null;
+              } | null> | null;
+            } | null;
+            sectionStatus?: {
+              id?: string | null;
+              errors?: Record<string, Array<string>> | null;
+              sectionStatus?: {
+                errors?: Array<string> | null;
+                incomplete?: Array<string> | null;
+              } | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetCoopUnionSectionStatusQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetCoopUnionSectionStatusQuery = { members: { cooperativeUnion?: { formState?: { sectionStatus?: { institutionInformation?: { id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null, bodDetails?: Array<{ id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null, accountOperatorDetails?: Array<{ id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null, centralRepresentativeDetails?: { id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null, economicDetails?: { id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null, declaration?: { id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null } | null } | null } | null } };
+export type GetCoopUnionSectionStatusQuery = {
+  members: {
+    cooperativeUnion?: {
+      formState?: {
+        sectionStatus?: {
+          institutionInformation?: {
+            id?: string | null;
+            errors?: Record<string, Array<string>> | null;
+            sectionStatus?: {
+              errors?: Array<string> | null;
+              incomplete?: Array<string> | null;
+            } | null;
+          } | null;
+          bodDetails?: Array<{
+            id?: string | null;
+            errors?: Record<string, Array<string>> | null;
+            sectionStatus?: {
+              errors?: Array<string> | null;
+              incomplete?: Array<string> | null;
+            } | null;
+          } | null> | null;
+          accountOperatorDetails?: Array<{
+            id?: string | null;
+            errors?: Record<string, Array<string>> | null;
+            sectionStatus?: {
+              errors?: Array<string> | null;
+              incomplete?: Array<string> | null;
+            } | null;
+          } | null> | null;
+          centralRepresentativeDetails?: {
+            id?: string | null;
+            errors?: Record<string, Array<string>> | null;
+            sectionStatus?: {
+              errors?: Array<string> | null;
+              incomplete?: Array<string> | null;
+            } | null;
+          } | null;
+          economicDetails?: {
+            id?: string | null;
+            errors?: Record<string, Array<string>> | null;
+            sectionStatus?: {
+              errors?: Array<string> | null;
+              incomplete?: Array<string> | null;
+            } | null;
+          } | null;
+          declaration?: {
+            id?: string | null;
+            errors?: Record<string, Array<string>> | null;
+            sectionStatus?: {
+              errors?: Array<string> | null;
+              incomplete?: Array<string> | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetKymFormStatusInstitutionQueryVariables = Exact<{
   id: Scalars['ID'];
   hasPressedNext?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-
-export type GetKymFormStatusInstitutionQuery = { members: { institution?: { formState?: { data?: { sectionStatus?: { id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null } | null } | null } | null } };
+export type GetKymFormStatusInstitutionQuery = {
+  members: {
+    institution?: {
+      formState?: {
+        data?: {
+          sectionStatus?: {
+            id?: string | null;
+            errors?: Record<string, Array<string>> | null;
+            sectionStatus?: {
+              errors?: Array<string> | null;
+              incomplete?: Array<string> | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetKymOverallFormStatusQueryVariables = Exact<{
   id: Scalars['ID'];
   hasPressedNext?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-
-export type GetKymOverallFormStatusQuery = { members: { institution?: { overallFormStatus?: { accountOperatorDetails?: Array<{ id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null, directorDetails?: Array<{ id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null, institutionDetails?: { id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null, sisterConcernDetails?: Array<{ id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null } | null } | null } };
+export type GetKymOverallFormStatusQuery = {
+  members: {
+    institution?: {
+      overallFormStatus?: {
+        accountOperatorDetails?: Array<{
+          id?: string | null;
+          errors?: Record<string, Array<string>> | null;
+          sectionStatus?: {
+            errors?: Array<string> | null;
+            incomplete?: Array<string> | null;
+          } | null;
+        } | null> | null;
+        directorDetails?: Array<{
+          id?: string | null;
+          errors?: Record<string, Array<string>> | null;
+          sectionStatus?: {
+            errors?: Array<string> | null;
+            incomplete?: Array<string> | null;
+          } | null;
+        } | null> | null;
+        institutionDetails?: {
+          id?: string | null;
+          errors?: Record<string, Array<string>> | null;
+          sectionStatus?: {
+            errors?: Array<string> | null;
+            incomplete?: Array<string> | null;
+          } | null;
+        } | null;
+        sisterConcernDetails?: Array<{
+          id?: string | null;
+          errors?: Record<string, Array<string>> | null;
+          sectionStatus?: {
+            errors?: Array<string> | null;
+            incomplete?: Array<string> | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetInstitutionKymEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
   hasPressedNext?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-
-export type GetInstitutionKymEditDataQuery = { members: { institution?: { formState?: { data?: { lastUpdated?: { account: KymInsAccountSection } | { declaration: KymInsDeclarationSection } | { directorDetails: KymInsDirectorDetailsSection } | { information: KymInsInformationSection } | { transaction: KymInsTransactionSection } | null, sectionStatus?: { errors?: Record<string, Array<string>> | null, id?: string | null, sectionStatus?: { incomplete?: Array<string> | null, errors?: Array<string> | null } | null } | null, formData?: { institutionName?: string | null, institutionTypeId?: string | null, natureOfBusiness?: string | null, registrationDate?: string | null, vatOrPanNo?: string | null, noOfBranches?: number | null, registeredNumber?: string | null, issuingOffice?: string | null, phone?: string | null, fax?: string | null, email?: string | null, website?: string | null, postBoxNo?: string | null, numberOfEmployee?: number | null, dateOfLastAGM?: string | null, bank?: string | null, accountNumber?: string | null, accountName?: string | null, natureOfTransaction?: string | null, annualTurnover?: number | null, initialDepositAmount?: number | null, expectedMonthlyTurnover?: string | null, expectedMonthlyTransaction?: string | null, accountType?: AccountOperationType | null, isCompanyStampCompulsory?: boolean | null, specialInstruction?: string | null, companyStamp?: string | null, accountHolderName?: string | null, accountHolderPhone?: string | null, accountHolderEmail?: string | null, operatingOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, branchOfficeAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, registeredAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, accountHolderAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } };
+export type GetInstitutionKymEditDataQuery = {
+  members: {
+    institution?: {
+      formState?: {
+        data?: {
+          lastUpdated?:
+            | { account: KymInsAccountSection }
+            | { declaration: KymInsDeclarationSection }
+            | { directorDetails: KymInsDirectorDetailsSection }
+            | { information: KymInsInformationSection }
+            | { transaction: KymInsTransactionSection }
+            | null;
+          sectionStatus?: {
+            errors?: Record<string, Array<string>> | null;
+            id?: string | null;
+            sectionStatus?: {
+              incomplete?: Array<string> | null;
+              errors?: Array<string> | null;
+            } | null;
+          } | null;
+          formData?: {
+            institutionName?: string | null;
+            institutionTypeId?: string | null;
+            natureOfBusiness?: string | null;
+            registrationDate?: string | null;
+            vatOrPanNo?: string | null;
+            noOfBranches?: number | null;
+            registeredNumber?: string | null;
+            issuingOffice?: string | null;
+            phone?: string | null;
+            fax?: string | null;
+            email?: string | null;
+            website?: string | null;
+            postBoxNo?: string | null;
+            numberOfEmployee?: number | null;
+            dateOfLastAGM?: string | null;
+            bank?: string | null;
+            accountNumber?: string | null;
+            accountName?: string | null;
+            natureOfTransaction?: string | null;
+            annualTurnover?: number | null;
+            initialDepositAmount?: number | null;
+            expectedMonthlyTurnover?: string | null;
+            expectedMonthlyTransaction?: string | null;
+            accountType?: AccountOperationType | null;
+            isCompanyStampCompulsory?: boolean | null;
+            specialInstruction?: string | null;
+            companyStamp?: string | null;
+            accountHolderName?: string | null;
+            accountHolderPhone?: string | null;
+            accountHolderEmail?: string | null;
+            operatingOfficeAddress?: {
+              provinceId?: number | null;
+              districtId?: number | null;
+              localGovernmentId?: number | null;
+              wardNo?: number | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+            branchOfficeAddress?: {
+              provinceId?: number | null;
+              districtId?: number | null;
+              localGovernmentId?: number | null;
+              wardNo?: number | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+            registeredAddress?: {
+              provinceId?: number | null;
+              districtId?: number | null;
+              localGovernmentId?: number | null;
+              wardNo?: number | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+            accountHolderAddress?: {
+              provinceId?: number | null;
+              districtId?: number | null;
+              localGovernmentId?: number | null;
+              wardNo?: number | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetInstitutionSisterDetailsEditListQueryVariables = Exact<{
   id: Scalars['ID'];
   includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-
-export type GetInstitutionSisterDetailsEditListQuery = { members: { institution?: { listSisterConcerns?: { data?: Array<{ id?: string | null, name?: string | null, natureOfBusiness?: string | null, address?: string | null, phone?: string | null } | null> | null, sectionStatus?: Array<{ id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null } | null } | null } };
+export type GetInstitutionSisterDetailsEditListQuery = {
+  members: {
+    institution?: {
+      listSisterConcerns?: {
+        data?: Array<{
+          id?: string | null;
+          name?: string | null;
+          natureOfBusiness?: string | null;
+          address?: string | null;
+          phone?: string | null;
+        } | null> | null;
+        sectionStatus?: Array<{
+          id?: string | null;
+          errors?: Record<string, Array<string>> | null;
+          sectionStatus?: {
+            errors?: Array<string> | null;
+            incomplete?: Array<string> | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetInsBoardDirectorEditListQueryVariables = Exact<{
   id: Scalars['ID'];
   hasRequiredErrors?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-
-export type GetInsBoardDirectorEditListQuery = { members: { institution?: { listDirectors?: { sectionStatus?: Array<{ id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null, data?: Array<{ id?: string | null, name?: string | null, designation?: string | null, isTemporaryAndPermanentAddressSame?: boolean | null, dateOfMembership?: string | null, highestQualification?: string | null, mobileNo?: string | null, email?: string | null, citizenshipNo?: string | null, panNo?: string | null, isHeadOfOrganization?: boolean | null, isAffiliatedWithOtherFirms?: boolean | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, firmDetails?: { directorName?: string | null, institutionName?: string | null, address?: string | null, designation?: string | null, yearlyIncome?: number | null } | null } | null> | null } | null } | null } };
+export type GetInsBoardDirectorEditListQuery = {
+  members: {
+    institution?: {
+      listDirectors?: {
+        sectionStatus?: Array<{
+          id?: string | null;
+          errors?: Record<string, Array<string>> | null;
+          sectionStatus?: {
+            errors?: Array<string> | null;
+            incomplete?: Array<string> | null;
+          } | null;
+        } | null> | null;
+        data?: Array<{
+          id?: string | null;
+          name?: string | null;
+          designation?: string | null;
+          isTemporaryAndPermanentAddressSame?: boolean | null;
+          dateOfMembership?: string | null;
+          highestQualification?: string | null;
+          mobileNo?: string | null;
+          email?: string | null;
+          citizenshipNo?: string | null;
+          panNo?: string | null;
+          isHeadOfOrganization?: boolean | null;
+          isAffiliatedWithOtherFirms?: boolean | null;
+          permanentAddress?: {
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+          temporaryAddress?: {
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+          firmDetails?: {
+            directorName?: string | null;
+            institutionName?: string | null;
+            address?: string | null;
+            designation?: string | null;
+            yearlyIncome?: number | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetInsAccountOperatorEditListQueryVariables = Exact<{
   id: Scalars['ID'];
   hasRequiredErrors?: InputMaybe<Scalars['Boolean']>;
 }>;
 
+export type GetInsAccountOperatorEditListQuery = {
+  members: {
+    institution?: {
+      listAccountOperators?: {
+        data?: Array<{
+          id?: string | null;
+          name?: string | null;
+          contact?: string | null;
+          email?: string | null;
+          isTemporaryAndPermanentAddressSame?: boolean | null;
+          designation?: string | null;
+          panNo?: string | null;
+          permanentAddress?: {
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+          temporaryAddress?: {
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+        } | null> | null;
+        sectionStatus?: Array<{
+          id?: string | null;
+          errors?: Record<string, Array<string>> | null;
+          sectionStatus?: {
+            errors?: Array<string> | null;
+            incomplete?: Array<string> | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetInsAccountOperatorEditListQuery = { members: { institution?: { listAccountOperators?: { data?: Array<{ id?: string | null, name?: string | null, contact?: string | null, email?: string | null, isTemporaryAndPermanentAddressSame?: boolean | null, designation?: string | null, panNo?: string | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null> | null, sectionStatus?: Array<{ id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null> | null } | null } | null } };
+export type GetInventoryItemsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetInventoryItemsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetInventoryItemsQuery = {
+  inventory: {
+    items?: {
+      list?: {
+        edges: Array<{
+          node: { id: string; name: string; type: string; unitPrice: number; itemQuantity: number };
+        } | null>;
+      } | null;
+    } | null;
+  };
+};
 
+export type GetInventoryItemGroupQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetInventoryItemsQuery = { inventory: { items?: { list?: { edges: Array<{ node: { id: string, name: string, type: string, unitPrice: number, itemQuantity: number } } | null> } | null } | null } };
+export type GetInventoryItemGroupQuery = {
+  inventory: {
+    itemsGroup?: {
+      list?: {
+        edges: Array<{
+          node: { name: string; id: string; description: string; parentCategory: string };
+        } | null>;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetInventoryItemGroupQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetInventoryVendorQueryVariables = Exact<{ [key: string]: never }>;
 
+export type GetInventoryVendorQuery = {
+  inventory: {
+    vendors?: {
+      list?: {
+        edges: Array<{
+          node: { name: string; location: string; email: string; phoneNumber: string };
+        } | null>;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetInventoryItemGroupQuery = { inventory: { itemsGroup?: { list?: { edges: Array<{ node: { name: string, id: string, description: string, parentCategory: string } } | null> } | null } | null } };
+export type GetInventoryUnitOfMeasureQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetInventoryVendorQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetInventoryVendorQuery = { inventory: { vendors?: { list?: { edges: Array<{ node: { name: string, location: string, email: string, phoneNumber: string } } | null> } | null } | null } };
-
-export type GetInventoryUnitOfMeasureQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetInventoryUnitOfMeasureQuery = { inventory: { unitOfMeasure?: { list?: { edges: Array<{ node: { name: string, shortName: string, acceptFraction: boolean } } | null> } | null } | null } };
+export type GetInventoryUnitOfMeasureQuery = {
+  inventory: {
+    unitOfMeasure?: {
+      list?: {
+        edges: Array<{ node: { name: string; shortName: string; acceptFraction: boolean } } | null>;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetIndividualKymOptionsQueryVariables = Exact<{
   searchTerm: FormFieldSearchTerm;
 }>;
 
-
-export type GetIndividualKymOptionsQuery = { form: { options: { predefined?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string> } | null> | null } | null } } };
+export type GetIndividualKymOptionsQuery = {
+  form: {
+    options: {
+      predefined?: {
+        data?: Array<{ id: string; name: Record<'local' | 'en' | 'np', string> } | null> | null;
+      } | null;
+    };
+  };
+};
 
 export type GetInstitutionKymOptionsQueryVariables = Exact<{
   searchTerm: FormFieldSearchTerm;
 }>;
 
-
-export type GetInstitutionKymOptionsQuery = { form: { options: { predefined?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string> } | null> | null } | null } } };
+export type GetInstitutionKymOptionsQuery = {
+  form: {
+    options: {
+      predefined?: {
+        data?: Array<{ id: string; name: Record<'local' | 'en' | 'np', string> } | null> | null;
+      } | null;
+    };
+  };
+};
 
 export type GetCooperativeKymOptionsQueryVariables = Exact<{
   searchTerm: FormFieldSearchTerm;
 }>;
 
-
-export type GetCooperativeKymOptionsQuery = { form: { options: { predefined?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string> } | null> | null } | null } } };
+export type GetCooperativeKymOptionsQuery = {
+  form: {
+    options: {
+      predefined?: {
+        data?: Array<{ id: string; name: Record<'local' | 'en' | 'np', string> } | null> | null;
+      } | null;
+    };
+  };
+};
 
 export type GetCoopUnionKymOptionsQueryVariables = Exact<{
   searchTerm: FormFieldSearchTerm;
 }>;
 
+export type GetCoopUnionKymOptionsQuery = {
+  form: {
+    options: {
+      predefined?: {
+        data?: Array<{ id: string; name: Record<'local' | 'en' | 'np', string> } | null> | null;
+      } | null;
+    };
+  };
+};
 
-export type GetCoopUnionKymOptionsQuery = { form: { options: { predefined?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string> } | null> | null } | null } } };
-
-export type LoanProductFragment = { id: string, objState: ObjState, createdAt: string, modifiedAt: string, createdDate: string, productName: string, productType: string, productSubType: string, productNature: NatureOfLoanProduct, description?: string | null, productCodeString?: string | null, typeOfMember: Array<KymMemberTypesEnum | null>, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, tenureUnit?: FrequencyTenure | null, isTenureApplicable?: boolean | null, minTenureUnitNumber?: number | null, maxTenureUnitNumber?: number | null, minimumLoanAmount?: any | null, maxLoanAmount?: any | null, interestMethod?: LoanInterestMethod | null, repaymentScheme?: Array<LoanRepaymentScheme | null> | null, allowPartialInstallment?: boolean | null, isMonthlyInstallmentCompulsory?: boolean | null, isPenaltyApplicable?: boolean | null, penaltyDayAfterInstallmentDate?: number | null, penaltyType?: PenaltyType | null, penaltyRate?: number | null, penaltyAmount?: any | null, principalMaxGraceNumber?: number | null, interestMaxGraceNumber?: number | null, isRebateApplicable?: boolean | null, updateInterest?: boolean | null, waiveInterest?: boolean | null, postingFrequency?: LoanProductInstallment | null, isInsuranceApplicable?: boolean | null, isStaffProduct?: boolean | null, supportMultipleAccounts?: boolean | null, loanScheduleChangeOverride?: boolean | null, allowGurantee?: boolean | null, maxPercentOfGurantee?: number | null, isCollateralRequired?: boolean | null, collateralTypes?: Array<string | null> | null, requiredDocuments?: Array<LoanRequiredDocuments | null> | null, productCode?: { prefix: string, initialNo: string } | null, rebate?: { dayBeforeInstallmentDate?: number | null, rebateRate?: number | null, rebateAmount?: any | null, rebateLedgerMapping?: string | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate: number, ceoAuthority?: number | null, boardAuthority?: number | null } | null, loanProcessingCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, insuranceType?: { type?: string | null, amount?: any | null, rate?: number | null } | null, ledgerMapping?: { principal?: string | null, interestAccuredDaily?: string | null, interestIncome?: string | null } | null, collateralValue?: Array<{ type?: string | null, name?: string | null, minFMV?: number | null, maxFMV?: number | null, minDV?: number | null, maxDV?: number | null, minValue?: number | null, maxValue?: number | null } | null> | null, prematurePenaltySetup?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null };
+export type LoanProductFragment = {
+  id: string;
+  objState: ObjState;
+  createdAt: string;
+  modifiedAt: string;
+  createdDate: string;
+  productName: string;
+  productType: string;
+  productSubType: string;
+  productNature: NatureOfLoanProduct;
+  description?: string | null;
+  productCodeString?: string | null;
+  typeOfMember: Array<KymMemberTypesEnum | null>;
+  criteria?: Array<CriteriaSection | null> | null;
+  minAge?: number | null;
+  maxAge?: number | null;
+  genderId?: Array<string | null> | null;
+  maritalStatusId?: Array<string | null> | null;
+  educationQualification?: Array<string | null> | null;
+  ethnicity?: Array<string | null> | null;
+  occupation?: Array<string | null> | null;
+  foreignEmployment?: boolean | null;
+  natureOfBusinessInstitution?: Array<string | null> | null;
+  natureOFBusinessCoop?: Array<string | null> | null;
+  cooperativeType?: Array<string | null> | null;
+  tenureUnit?: FrequencyTenure | null;
+  isTenureApplicable?: boolean | null;
+  minTenureUnitNumber?: number | null;
+  maxTenureUnitNumber?: number | null;
+  minimumLoanAmount?: any | null;
+  maxLoanAmount?: any | null;
+  interestMethod?: LoanInterestMethod | null;
+  repaymentScheme?: Array<LoanRepaymentScheme | null> | null;
+  allowPartialInstallment?: boolean | null;
+  isMonthlyInstallmentCompulsory?: boolean | null;
+  isPenaltyApplicable?: boolean | null;
+  penaltyDayAfterInstallmentDate?: number | null;
+  penaltyType?: PenaltyType | null;
+  penaltyRate?: number | null;
+  penaltyAmount?: any | null;
+  principalMaxGraceNumber?: number | null;
+  interestMaxGraceNumber?: number | null;
+  isRebateApplicable?: boolean | null;
+  updateInterest?: boolean | null;
+  waiveInterest?: boolean | null;
+  postingFrequency?: LoanProductInstallment | null;
+  isInsuranceApplicable?: boolean | null;
+  isStaffProduct?: boolean | null;
+  supportMultipleAccounts?: boolean | null;
+  loanScheduleChangeOverride?: boolean | null;
+  allowGurantee?: boolean | null;
+  maxPercentOfGurantee?: number | null;
+  isCollateralRequired?: boolean | null;
+  collateralTypes?: Array<string | null> | null;
+  requiredDocuments?: Array<LoanRequiredDocuments | null> | null;
+  productCode?: { prefix: string; initialNo: string } | null;
+  rebate?: {
+    dayBeforeInstallmentDate?: number | null;
+    rebateRate?: number | null;
+    rebateAmount?: any | null;
+    rebateLedgerMapping?: string | null;
+  } | null;
+  interest?: {
+    minRate?: number | null;
+    maxRate?: number | null;
+    defaultRate: number;
+    ceoAuthority?: number | null;
+    boardAuthority?: number | null;
+  } | null;
+  loanProcessingCharge?: Array<{
+    serviceName?: string | null;
+    ledgerName?: string | null;
+    amount?: any | null;
+  } | null> | null;
+  insuranceType?: { type?: string | null; amount?: any | null; rate?: number | null } | null;
+  ledgerMapping?: {
+    principal?: string | null;
+    interestAccuredDaily?: string | null;
+    interestIncome?: string | null;
+  } | null;
+  collateralValue?: Array<{
+    type?: string | null;
+    name?: string | null;
+    minFMV?: number | null;
+    maxFMV?: number | null;
+    minDV?: number | null;
+    maxDV?: number | null;
+    minValue?: number | null;
+    maxValue?: number | null;
+  } | null> | null;
+  prematurePenaltySetup?: {
+    penaltyDateType?: PrematurePenaltyDateType | null;
+    noOfDays?: number | null;
+    penaltyLedgerMapping?: string | null;
+    penaltyAmount?: any | null;
+    penaltyRate?: number | null;
+  } | null;
+};
 
 export type GetLoanProductDetailsDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetLoanProductDetailsDataQuery = { settings: { general?: { loanProducts?: { formState?: { data?: LoanProductFragment | null, error?: QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment | null } | null } | null } | null } };
+export type GetLoanProductDetailsDataQuery = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        formState?: {
+          data?: LoanProductFragment | null;
+          error?:
+            | QueryError_AuthorizationError_Fragment
+            | QueryError_BadRequestError_Fragment
+            | QueryError_NotFoundError_Fragment
+            | QueryError_ServerError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetLoanProductsListQueryVariables = Exact<{
   memberId: Scalars['ID'];
@@ -13783,40 +16604,132 @@ export type GetLoanProductsListQueryVariables = Exact<{
   productSubTypeId: Scalars['ID'];
 }>;
 
-
-export type GetLoanProductsListQuery = { loanAccount: { getProductList?: { allowed?: Array<{ id: string, productName: string } | null> | null, notAllowed?: Array<{ error?: Array<string | null> | null, data?: { id: string, productName: string } | null } | null> | null } | null } };
+export type GetLoanProductsListQuery = {
+  loanAccount: {
+    getProductList?: {
+      allowed?: Array<{ id: string; productName: string } | null> | null;
+      notAllowed?: Array<{
+        error?: Array<string | null> | null;
+        data?: { id: string; productName: string } | null;
+      } | null> | null;
+    } | null;
+  };
+};
 
 export type GetProductCriteriaQueryVariables = Exact<{
   productId: Scalars['ID'];
 }>;
 
-
-export type GetProductCriteriaQuery = { loanAccount: { getProductCriteria?: { data?: { gender?: Array<string | null> | null, minAge?: number | null, maxAge?: number | null, ethnicity?: Array<string | null> | null, educationQualification?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, institutionType?: Array<string | null> | null, cooperativeUnion?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, maritalStatus?: Array<string | null> | null } | null, error?: QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment | null } | null } };
+export type GetProductCriteriaQuery = {
+  loanAccount: {
+    getProductCriteria?: {
+      data?: {
+        gender?: Array<string | null> | null;
+        minAge?: number | null;
+        maxAge?: number | null;
+        ethnicity?: Array<string | null> | null;
+        educationQualification?: Array<string | null> | null;
+        occupation?: Array<string | null> | null;
+        foreignEmployment?: boolean | null;
+        institutionType?: Array<string | null> | null;
+        cooperativeUnion?: Array<string | null> | null;
+        cooperativeType?: Array<string | null> | null;
+        maritalStatus?: Array<string | null> | null;
+      } | null;
+      error?:
+        | QueryError_AuthorizationError_Fragment
+        | QueryError_BadRequestError_Fragment
+        | QueryError_NotFoundError_Fragment
+        | QueryError_ServerError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type GetLoanAccountTypeQueryVariables = Exact<{
   productTypeId?: InputMaybe<Scalars['String']>;
 }>;
 
+export type GetLoanAccountTypeQuery = {
+  settings: {
+    general?: {
+      loan?: {
+        productType?: {
+          productTypes?: Array<{ id?: string | null; productType?: string | null } | null> | null;
+          productSubTypes?: Array<{
+            id?: string | null;
+            productSubType?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetLoanAccountTypeQuery = { settings: { general?: { loan?: { productType?: { productTypes?: Array<{ id?: string | null, productType?: string | null } | null> | null, productSubTypes?: Array<{ id?: string | null, productSubType?: string | null } | null> | null } | null } | null } | null } };
+export type GetLoanProductTypesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetLoanProductTypesQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetLoanProductTypesQuery = {
+  settings: {
+    general?: {
+      loan?: {
+        productType?: {
+          productTypes?: Array<{
+            id?: string | null;
+            productType?: string | null;
+            description?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
+export type GetCollateralListQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetLoanProductTypesQuery = { settings: { general?: { loan?: { productType?: { productTypes?: Array<{ id?: string | null, productType?: string | null, description?: string | null } | null> | null } | null } | null } | null } };
-
-export type GetCollateralListQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetCollateralListQuery = { settings: { general?: { loan?: { general?: { collateralList?: Array<{ id?: string | null, name?: string | null } | null> | null } | null } | null } | null } };
+export type GetCollateralListQuery = {
+  settings: {
+    general?: {
+      loan?: {
+        general?: {
+          collateralList?: Array<{ id?: string | null; name?: string | null } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetLoanListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<LoanAccountSearchFilter>;
 }>;
 
-
-export type GetLoanListQuery = { loanAccount: { list?: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, LoanAccountName?: string | null, createdAt: string, member: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null }, product: { productName: string } } | null }> | null, pageInfo?: { endCursor?: string | null, startCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null } | null } };
+export type GetLoanListQuery = {
+  loanAccount: {
+    list?: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          LoanAccountName?: string | null;
+          createdAt: string;
+          member: {
+            id: string;
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            profilePicUrl?: string | null;
+          };
+          product: { productName: string };
+        } | null;
+      }> | null;
+      pageInfo?: {
+        endCursor?: string | null;
+        startCursor?: string | null;
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetLoanInstallmentsQueryVariables = Exact<{
   productId: Scalars['ID'];
@@ -13827,160 +16740,808 @@ export type GetLoanInstallmentsQueryVariables = Exact<{
   repaymentScheme: LoanRepaymentScheme;
 }>;
 
-
-export type GetLoanInstallmentsQuery = { loanAccount: { getLoanInstallments?: { data?: { total: string, installments?: Array<{ interest: string, installmentDate: string, installmentNo: number, payment: string, principal: string, remainingPrincipal: string } | null> | null } | null, error?: QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment | null } | null } };
+export type GetLoanInstallmentsQuery = {
+  loanAccount: {
+    getLoanInstallments?: {
+      data?: {
+        total: string;
+        installments?: Array<{
+          interest: string;
+          installmentDate: string;
+          installmentNo: number;
+          payment: string;
+          principal: string;
+          remainingPrincipal: string;
+        } | null> | null;
+      } | null;
+      error?:
+        | QueryError_AuthorizationError_Fragment
+        | QueryError_BadRequestError_Fragment
+        | QueryError_NotFoundError_Fragment
+        | QueryError_ServerError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type GetLoanApplicationDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetLoanApplicationDetailsQuery = { loanAccount: { formState?: { data?: { memberId?: string | null, productType: string, productSubType?: string | null, productId?: string | null, loanAccountName?: string | null, appliedLoanAmount?: string | null, linkedAccountId?: string | null, totalValuation?: string | null, totalSanctionedAmount?: string | null, justifySanction?: string | null, interestAuthority?: InterestAuthority | null, intrestRate?: number | null, tenure?: number | null, tenureType?: FrequencyTenure | null, repaymentScheme?: LoanRepaymentScheme | null, note?: string | null, collateralData?: Array<{ collateralType?: string | null, ownerName?: string | null, relation?: string | null, sheetNo?: number | null, plotNo?: number | null, kittaNo?: number | null, area?: number | null, buildingType?: BuildingType | null, constructionType?: ConstructionType | null, valuatorId?: string | null, noOfStorey?: number | null, fmvMaxAmount?: any | null, dvMinAmount?: string | null, valuationMethod?: ValuationMethod | null, valuationPercent?: number | null, collaterallValuation?: any | null, collateralDescription?: string | null, collateralFiles?: Array<string | null> | null, valuationFiles?: Array<string | null> | null, vehicleName?: string | null, vehicleModelNo?: string | null, vehicleRegistrationNo?: string | null, vehicleNo?: string | null, vehicleSeatCapacity?: number | null, vehicleCapacity?: string | null, vehicleType?: string | null, vehicleFuelType?: string | null, documentName?: string | null, valuationAmount?: string | null, description?: string | null } | null> | null, gurantee_details?: Array<{ accountId?: string | null, guranteeAmount?: any | null, maxGuranteeAmountLimit?: any | null, memberId?: string | null, totalAmount?: any | null, accountName?: string | null } | null> | null, gracePeriod?: { principalGracePeriod?: number | null, interestGracePeriod?: number | null } | null, interestDoc?: Array<{ identifier?: string | null, url?: string | null } | null> | null, loanProcessingCharge?: Array<{ amount?: any | null, ledgerName?: string | null, serviceName?: string | null } | null> | null } | null, error?: QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment | null } | null } };
+export type GetLoanApplicationDetailsQuery = {
+  loanAccount: {
+    formState?: {
+      data?: {
+        memberId?: string | null;
+        productType: string;
+        productSubType?: string | null;
+        productId?: string | null;
+        loanAccountName?: string | null;
+        appliedLoanAmount?: string | null;
+        linkedAccountId?: string | null;
+        totalValuation?: string | null;
+        totalSanctionedAmount?: string | null;
+        justifySanction?: string | null;
+        interestAuthority?: InterestAuthority | null;
+        intrestRate?: number | null;
+        tenure?: number | null;
+        tenureType?: FrequencyTenure | null;
+        repaymentScheme?: LoanRepaymentScheme | null;
+        note?: string | null;
+        collateralData?: Array<{
+          collateralType?: string | null;
+          ownerName?: string | null;
+          relation?: string | null;
+          sheetNo?: number | null;
+          plotNo?: number | null;
+          kittaNo?: number | null;
+          area?: number | null;
+          buildingType?: BuildingType | null;
+          constructionType?: ConstructionType | null;
+          valuatorId?: string | null;
+          noOfStorey?: number | null;
+          fmvMaxAmount?: any | null;
+          dvMinAmount?: string | null;
+          valuationMethod?: ValuationMethod | null;
+          valuationPercent?: number | null;
+          collaterallValuation?: any | null;
+          collateralDescription?: string | null;
+          collateralFiles?: Array<string | null> | null;
+          valuationFiles?: Array<string | null> | null;
+          vehicleName?: string | null;
+          vehicleModelNo?: string | null;
+          vehicleRegistrationNo?: string | null;
+          vehicleNo?: string | null;
+          vehicleSeatCapacity?: number | null;
+          vehicleCapacity?: string | null;
+          vehicleType?: string | null;
+          vehicleFuelType?: string | null;
+          documentName?: string | null;
+          valuationAmount?: string | null;
+          description?: string | null;
+        } | null> | null;
+        gurantee_details?: Array<{
+          accountId?: string | null;
+          guranteeAmount?: any | null;
+          maxGuranteeAmountLimit?: any | null;
+          memberId?: string | null;
+          totalAmount?: any | null;
+          accountName?: string | null;
+        } | null> | null;
+        gracePeriod?: {
+          principalGracePeriod?: number | null;
+          interestGracePeriod?: number | null;
+        } | null;
+        interestDoc?: Array<{ identifier?: string | null; url?: string | null } | null> | null;
+        loanProcessingCharge?: Array<{
+          amount?: any | null;
+          ledgerName?: string | null;
+          serviceName?: string | null;
+        } | null> | null;
+      } | null;
+      error?:
+        | QueryError_AuthorizationError_Fragment
+        | QueryError_BadRequestError_Fragment
+        | QueryError_NotFoundError_Fragment
+        | QueryError_ServerError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type GetMemberLoanAccountsQueryVariables = Exact<{
   memberId: Scalars['ID'];
 }>;
 
-
-export type GetMemberLoanAccountsQuery = { loanAccount: { memberDisbursedLoanAccounts?: Array<{ id?: string | null, name?: string | null } | null> | null } };
+export type GetMemberLoanAccountsQuery = {
+  loanAccount: {
+    memberDisbursedLoanAccounts?: Array<{ id?: string | null; name?: string | null } | null> | null;
+  };
+};
 
 export type GetLoanPreviewQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
-
-export type GetLoanPreviewQuery = { loanAccount: { loanPreview?: { data?: { productId?: string | null, memberId?: string | null, additionalFeatures?: { allowPartialInstallment?: boolean | null, collateral?: boolean | null, insurance?: boolean | null, isMonthlyInterestCompulsory?: boolean | null, loanScheduleChangeOverride?: boolean | null, overrideInterest?: boolean | null, staffProduct?: boolean | null, supportMultipleAccount?: boolean | null } | null, criteria?: { gender?: Array<string | null> | null, minAge?: number | null, maxAge?: number | null, ethnicity?: Array<string | null> | null, educationQualification?: Array<string | null> | null, maritalStatus?: Array<string | null> | null, foreignEmployment?: boolean | null, occupation?: Array<string | null> | null, institutionType?: Array<string | null> | null, cooperativeUnion?: Array<string | null> | null, cooperativeType?: Array<string | null> | null } | null, collateralAndGuarantees?: Array<{ name?: string | null, valuation?: string | null } | null> | null, generalInformation?: { loanProduct?: string | null, loanSubType?: string | null, loanType?: string | null, natureOfLoanProduct?: NatureOfLoanProduct | null, loanName?: string | null, productCode?: string | null } | null, loanDetails?: { appliedLoanAmount?: string | null, interestMethod?: LoanInterestMethod | null, interestRate?: number | null, loanRepaymentScheme?: LoanRepaymentScheme | null, tenure?: number | null, tenureUnit?: FrequencyTenure | null, totalCollateralValuation?: string | null, totalGuaranteeValuation?: string | null, totalProcessingChargesValuation?: string | null, totalSanctionedAmount?: string | null, totalDisbursedAmount?: string | null, principalGracePeriod?: number | null, interestGracePeriod?: number | null, interestAmount?: string | null, disburseDate?: string | null, expiryDate?: string | null, paymentFrequency?: LoanProductInstallment | null, processingCharges?: Array<{ name: string, amount?: any | null } | null> | null } | null, repaymentDetails?: { lastPaymentDate?: string | null, remainingPrincipal?: string | null, remainingInterest?: string | null, remainingTotal?: string | null, totalInstallmentAmount?: string | null, nextInstallmentNo?: number | null, remainingInstallments?: Array<{ installmentNo?: number | null, principal?: string | null, fine?: string | null, interestAmount?: string | null } | null> | null } | null, member?: { name?: Record<"local"|"en"|"np",string> | null, id: string, profilePicUrl?: string | null } | null, paymentSchedule?: { total: string, installments?: Array<{ installmentDate: string, installmentNo: number, interest: string, payment: string, principal: string, remainingPrincipal: string, paid: boolean } | null> | null } | null, statistics?: { remainingPayableAmount?: string | null, totalPaidAmount?: string | null, totalPayableAmount?: string | null } | null } | null } | null } };
+export type GetLoanPreviewQuery = {
+  loanAccount: {
+    loanPreview?: {
+      data?: {
+        productId?: string | null;
+        memberId?: string | null;
+        additionalFeatures?: {
+          allowPartialInstallment?: boolean | null;
+          collateral?: boolean | null;
+          insurance?: boolean | null;
+          isMonthlyInterestCompulsory?: boolean | null;
+          loanScheduleChangeOverride?: boolean | null;
+          overrideInterest?: boolean | null;
+          staffProduct?: boolean | null;
+          supportMultipleAccount?: boolean | null;
+        } | null;
+        criteria?: {
+          gender?: Array<string | null> | null;
+          minAge?: number | null;
+          maxAge?: number | null;
+          ethnicity?: Array<string | null> | null;
+          educationQualification?: Array<string | null> | null;
+          maritalStatus?: Array<string | null> | null;
+          foreignEmployment?: boolean | null;
+          occupation?: Array<string | null> | null;
+          institutionType?: Array<string | null> | null;
+          cooperativeUnion?: Array<string | null> | null;
+          cooperativeType?: Array<string | null> | null;
+        } | null;
+        collateralAndGuarantees?: Array<{
+          name?: string | null;
+          valuation?: string | null;
+        } | null> | null;
+        generalInformation?: {
+          loanProduct?: string | null;
+          loanSubType?: string | null;
+          loanType?: string | null;
+          natureOfLoanProduct?: NatureOfLoanProduct | null;
+          loanName?: string | null;
+          productCode?: string | null;
+        } | null;
+        loanDetails?: {
+          appliedLoanAmount?: string | null;
+          interestMethod?: LoanInterestMethod | null;
+          interestRate?: number | null;
+          loanRepaymentScheme?: LoanRepaymentScheme | null;
+          tenure?: number | null;
+          tenureUnit?: FrequencyTenure | null;
+          totalCollateralValuation?: string | null;
+          totalGuaranteeValuation?: string | null;
+          totalProcessingChargesValuation?: string | null;
+          totalSanctionedAmount?: string | null;
+          totalDisbursedAmount?: string | null;
+          principalGracePeriod?: number | null;
+          interestGracePeriod?: number | null;
+          interestAmount?: string | null;
+          disburseDate?: string | null;
+          expiryDate?: string | null;
+          paymentFrequency?: LoanProductInstallment | null;
+          processingCharges?: Array<{ name: string; amount?: any | null } | null> | null;
+        } | null;
+        repaymentDetails?: {
+          lastPaymentDate?: string | null;
+          remainingPrincipal?: string | null;
+          remainingInterest?: string | null;
+          remainingTotal?: string | null;
+          totalInstallmentAmount?: string | null;
+          nextInstallmentNo?: number | null;
+          remainingInstallments?: Array<{
+            installmentNo?: number | null;
+            principal?: string | null;
+            fine?: string | null;
+            interestAmount?: string | null;
+          } | null> | null;
+        } | null;
+        member?: {
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          id: string;
+          profilePicUrl?: string | null;
+        } | null;
+        paymentSchedule?: {
+          total: string;
+          installments?: Array<{
+            installmentDate: string;
+            installmentNo: number;
+            interest: string;
+            payment: string;
+            principal: string;
+            remainingPrincipal: string;
+            paid: boolean;
+          } | null> | null;
+        } | null;
+        statistics?: {
+          remainingPayableAmount?: string | null;
+          totalPaidAmount?: string | null;
+          totalPayableAmount?: string | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetLoanRepaymentListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<LoanRepaymentFilter>;
 }>;
 
-
-export type GetLoanRepaymentListQuery = { loanAccount: { repaymentList?: { totalCount?: number | null, edges?: Array<{ cursor: string, node?: { id: string, loanAccountId: string, memberId: string, memberName: Record<"local"|"en"|"np",string>, memberProfilePicId?: string | null, memberProfilePicUrl?: string | null, loanAccountName: string, loanProductId: string, loanProductName: string, amount: string, paymentDate: string } | null }> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } | null } };
+export type GetLoanRepaymentListQuery = {
+  loanAccount: {
+    repaymentList?: {
+      totalCount?: number | null;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          loanAccountId: string;
+          memberId: string;
+          memberName: Record<'local' | 'en' | 'np', string>;
+          memberProfilePicId?: string | null;
+          memberProfilePicUrl?: string | null;
+          loanAccountName: string;
+          loanProductId: string;
+          loanProductName: string;
+          amount: string;
+          paymentDate: string;
+        } | null;
+      }> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetMemberListQueryVariables = Exact<{
   pagination: Pagination;
   filter?: InputMaybe<KymMemberDataFilter>;
 }>;
 
+export type GetMemberListQuery = {
+  members: {
+    list: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          code: string;
+          type: KymMemberTypesEnum;
+          profilePicUrl?: string | null;
+          signaturePicUrl?: string | null;
+          contact?: string | null;
+          createdAt: string;
+          dateJoined?: string | null;
+          address?: {
+            state?: Record<'local' | 'en' | 'np', string> | null;
+            district?: Record<'local' | 'en' | 'np', string> | null;
+            localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+            wardNo?: string | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+          } | null;
+          profile?:
+            | {
+                data?: {
+                  formData?: {
+                    maritalStatusId?: string | null;
+                    maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
+                    basicInformation?: {
+                      genderId?: string | null;
+                      gender?: Record<'local' | 'en' | 'np', string> | null;
+                      age?: number | null;
+                    } | null;
+                    contactDetails?: {
+                      mobileNumber?: string | null;
+                      phoneNumber?: string | null;
+                      email?: string | null;
+                    } | null;
+                  } | null;
+                } | null;
+              }
+            | {}
+            | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: PaginationFragment | null;
+    };
+  };
+};
 
-export type GetMemberListQuery = { members: { list: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, type: KymMemberTypesEnum, profilePicUrl?: string | null, signaturePicUrl?: string | null, contact?: string | null, createdAt: string, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { data?: { formData?: { maritalStatusId?: string | null, maritalStatus?: Record<"local"|"en"|"np",string> | null, basicInformation?: { genderId?: string | null, gender?: Record<"local"|"en"|"np",string> | null, age?: number | null } | null, contactDetails?: { mobileNumber?: string | null, phoneNumber?: string | null, email?: string | null } | null } | null } | null } | {} | null } | null } | null> | null, pageInfo?: PaginationFragment | null } } };
+export type GetMemberTypesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetMemberTypesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetMemberTypesQuery = { members: { memberTypes: { data?: Array<{ id: string, type?: Array<KymMemberTypesEnum | null> | null } | null> | null } } };
+export type GetMemberTypesQuery = {
+  members: {
+    memberTypes: {
+      data?: Array<{ id: string; type?: Array<KymMemberTypesEnum | null> | null } | null> | null;
+    };
+  };
+};
 
 export type GetMemberTranslationQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetMemberTranslationQuery = { members: { translate: { data?: Array<{ id: string, data?: string | null, translatedValue?: string | null } | null> | null } } };
+export type GetMemberTranslationQuery = {
+  members: {
+    translate: {
+      data?: Array<{
+        id: string;
+        data?: string | null;
+        translatedValue?: string | null;
+      } | null> | null;
+    };
+  };
+};
 
 export type GetKymFormStatusQueryVariables = Exact<{
   id: Scalars['String'];
   hasPressedNext?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-
-export type GetKymFormStatusQuery = { members: { individual?: { formState?: { sectionStatus?: { id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null } | null } | null } };
+export type GetKymFormStatusQuery = {
+  members: {
+    individual?: {
+      formState?: {
+        sectionStatus?: {
+          id?: string | null;
+          errors?: Record<string, Array<string>> | null;
+          sectionStatus?: {
+            errors?: Array<string> | null;
+            incomplete?: Array<string> | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetMemberIndividualDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null, profilePic?: string | null, contact?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { id?: string | null, institutionInformation?: { data?: { nameOfInstitutionEn?: string | null, nameOfInstitutionNp?: string | null } | null } | null } | { data?: { formData?: { nameOfOrganization?: string | null, regdNumber?: number | null, regdDate?: string | null } | null } | null } | { data?: { formData?: { maritalStatus?: Record<"local"|"en"|"np",string> | null, maritalStatusId?: string | null, basicInformation?: { dateOfBirth?: string | null, age?: number | null, gender?: Record<"local"|"en"|"np",string> | null } | null, contactDetails?: { email?: string | null } | null } | null } | null } | { data?: { formData?: { institutionName?: string | null, institutionTypeId?: string | null, natureOfBusiness?: string | null } | null } | null } | null } | null } } };
+export type GetMemberIndividualDataQuery = {
+  members: {
+    details: {
+      data?: {
+        id: string;
+        code: string;
+        name?: Record<'local' | 'en' | 'np', string> | null;
+        profilePicUrl?: string | null;
+        profilePic?: string | null;
+        contact?: string | null;
+        dateJoined?: string | null;
+        address?: {
+          state?: Record<'local' | 'en' | 'np', string> | null;
+          district?: Record<'local' | 'en' | 'np', string> | null;
+          localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+          wardNo?: string | null;
+          locality?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
+        profile?:
+          | {
+              id?: string | null;
+              institutionInformation?: {
+                data?: {
+                  nameOfInstitutionEn?: string | null;
+                  nameOfInstitutionNp?: string | null;
+                } | null;
+              } | null;
+            }
+          | {
+              data?: {
+                formData?: {
+                  nameOfOrganization?: string | null;
+                  regdNumber?: number | null;
+                  regdDate?: string | null;
+                } | null;
+              } | null;
+            }
+          | {
+              data?: {
+                formData?: {
+                  maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
+                  maritalStatusId?: string | null;
+                  basicInformation?: {
+                    dateOfBirth?: string | null;
+                    age?: number | null;
+                    gender?: Record<'local' | 'en' | 'np', string> | null;
+                  } | null;
+                  contactDetails?: { email?: string | null } | null;
+                } | null;
+              } | null;
+            }
+          | {
+              data?: {
+                formData?: {
+                  institutionName?: string | null;
+                  institutionTypeId?: string | null;
+                  natureOfBusiness?: string | null;
+                } | null;
+              } | null;
+            }
+          | null;
+      } | null;
+    };
+  };
+};
 
 export type GetIndividualKymEditDataQueryVariables = Exact<{
   id: Scalars['String'];
   hasPressedNext?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-
-export type GetIndividualKymEditDataQuery = { members: { individual?: { formState?: { sectionStatus?: { id?: string | null, errors?: Record<string, Array<string>> | null, sectionStatus?: { errors?: Array<string> | null, incomplete?: Array<string> | null } | null } | null, data?: { formData?: { maritalStatusId?: string | null, annualIncomeSourceId?: string | null, isFamilyAMember?: boolean | null, identificationSelection?: Array<string | null> | null, basicInformation?: { firstName?: Record<"local"|"en"|"np",string> | null, middleName?: Record<"local"|"en"|"np",string> | null, lastName?: Record<"local"|"en"|"np",string> | null, genderId?: string | null, dateOfBirth?: string | null, ethnicityId?: string | null, nationalityId?: string | null, educationQualificationId?: string | null, religionId?: string | null } | null, contactDetails?: { mobileNumber?: string | null, phoneNumber?: string | null, email?: string | null } | null, rentedHouse?: { landlordName?: Record<"local"|"en"|"np",string> | null, landlordContact?: string | null } | null, profession?: { professionId?: Array<string | null> | null, otherProfession?: string | null } | null, foreignEmployment?: { isForeignEmployment?: boolean | null, foreignEmpCountryId?: string | null, typeOfVisaId?: string | null, foreignEstimatedAnnualIncome?: string | null } | null, membershipDetails?: { purposeId?: string | null, isMemberOfAnotherCooperative?: boolean | null, otherCoopName?: Record<"local"|"en"|"np",string> | null, otherCoopBranchId?: string | null, otherCoopMemberId?: string | null } | null, introducers?: { firstIntroducerId?: string | null, secondIntroducerId?: string | null } | null, initialTransactionDetails?: { initialShare?: number | null, initialSaving?: string | null, initialLoan?: string | null, otherFinancialAmount?: string | null } | null, estimatedTransactions?: { estimatedAnnualTransactionAmount?: string | null, estimatedAnnualLoanAmount?: string | null, estimatedAnnualTransactionFrequencyId?: string | null, estimatedAnnualDepositAmount?: string | null } | null, declaration?: { isPoliticallyExposed?: boolean | null, politicallyExposedDetails?: string | null, hasBeneficialOwner?: boolean | null, beneficialRelationshipId?: string | null, beneficialFullName?: Record<"local"|"en"|"np",string> | null, isConvicted?: boolean | null, convictedDetails?: string | null, hasForeignResidentialPermit?: boolean | null, foreignResidentialPermitTypeId?: string | null, declarationAgreement?: boolean | null } | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { sameTempAsPermanentAddress?: boolean | null, address?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null } | null } | null } | null } | null } };
+export type GetIndividualKymEditDataQuery = {
+  members: {
+    individual?: {
+      formState?: {
+        sectionStatus?: {
+          id?: string | null;
+          errors?: Record<string, Array<string>> | null;
+          sectionStatus?: {
+            errors?: Array<string> | null;
+            incomplete?: Array<string> | null;
+          } | null;
+        } | null;
+        data?: {
+          formData?: {
+            maritalStatusId?: string | null;
+            annualIncomeSourceId?: string | null;
+            isFamilyAMember?: boolean | null;
+            identificationSelection?: Array<string | null> | null;
+            basicInformation?: {
+              firstName?: Record<'local' | 'en' | 'np', string> | null;
+              middleName?: Record<'local' | 'en' | 'np', string> | null;
+              lastName?: Record<'local' | 'en' | 'np', string> | null;
+              genderId?: string | null;
+              dateOfBirth?: string | null;
+              ethnicityId?: string | null;
+              nationalityId?: string | null;
+              educationQualificationId?: string | null;
+              religionId?: string | null;
+            } | null;
+            contactDetails?: {
+              mobileNumber?: string | null;
+              phoneNumber?: string | null;
+              email?: string | null;
+            } | null;
+            rentedHouse?: {
+              landlordName?: Record<'local' | 'en' | 'np', string> | null;
+              landlordContact?: string | null;
+            } | null;
+            profession?: {
+              professionId?: Array<string | null> | null;
+              otherProfession?: string | null;
+            } | null;
+            foreignEmployment?: {
+              isForeignEmployment?: boolean | null;
+              foreignEmpCountryId?: string | null;
+              typeOfVisaId?: string | null;
+              foreignEstimatedAnnualIncome?: string | null;
+            } | null;
+            membershipDetails?: {
+              purposeId?: string | null;
+              isMemberOfAnotherCooperative?: boolean | null;
+              otherCoopName?: Record<'local' | 'en' | 'np', string> | null;
+              otherCoopBranchId?: string | null;
+              otherCoopMemberId?: string | null;
+            } | null;
+            introducers?: {
+              firstIntroducerId?: string | null;
+              secondIntroducerId?: string | null;
+            } | null;
+            initialTransactionDetails?: {
+              initialShare?: number | null;
+              initialSaving?: string | null;
+              initialLoan?: string | null;
+              otherFinancialAmount?: string | null;
+            } | null;
+            estimatedTransactions?: {
+              estimatedAnnualTransactionAmount?: string | null;
+              estimatedAnnualLoanAmount?: string | null;
+              estimatedAnnualTransactionFrequencyId?: string | null;
+              estimatedAnnualDepositAmount?: string | null;
+            } | null;
+            declaration?: {
+              isPoliticallyExposed?: boolean | null;
+              politicallyExposedDetails?: string | null;
+              hasBeneficialOwner?: boolean | null;
+              beneficialRelationshipId?: string | null;
+              beneficialFullName?: Record<'local' | 'en' | 'np', string> | null;
+              isConvicted?: boolean | null;
+              convictedDetails?: string | null;
+              hasForeignResidentialPermit?: boolean | null;
+              foreignResidentialPermitTypeId?: string | null;
+              declarationAgreement?: boolean | null;
+            } | null;
+            permanentAddress?: {
+              provinceId?: number | null;
+              districtId?: number | null;
+              localGovernmentId?: number | null;
+              wardNo?: number | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+            temporaryAddress?: {
+              sameTempAsPermanentAddress?: boolean | null;
+              address?: {
+                provinceId?: number | null;
+                districtId?: number | null;
+                localGovernmentId?: number | null;
+                wardNo?: number | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+              } | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetIndividualKymFamilyMembersListQueryVariables = Exact<{
   id: Scalars['String'];
   isMember?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-
-export type GetIndividualKymFamilyMembersListQuery = { members: { individual?: { listFamilyMember?: { data?: Array<{ id: string, relationshipId?: string | null, fullName?: Record<"local"|"en"|"np",string> | null, familyMemberId?: string | null, dateOfBirth?: string | null } | null> | null } | null } | null } };
+export type GetIndividualKymFamilyMembersListQuery = {
+  members: {
+    individual?: {
+      listFamilyMember?: {
+        data?: Array<{
+          id: string;
+          relationshipId?: string | null;
+          fullName?: Record<'local' | 'en' | 'np', string> | null;
+          familyMemberId?: string | null;
+          dateOfBirth?: string | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetIndividualKymFamilyOccupationListQueryVariables = Exact<{
   id: Scalars['String'];
   isSpouse: Scalars['Boolean'];
 }>;
 
-
-export type GetIndividualKymFamilyOccupationListQuery = { members: { individual?: { listOccupation?: { data?: Array<{ id: string, occupationId?: string | null, orgName?: Record<"local"|"en"|"np",string> | null, panVatNo?: string | null, address?: Record<"local"|"en"|"np",string> | null, estimatedAnnualIncome?: string | null, establishedDate?: string | null, registrationNo?: string | null, contact?: string | null, isOwner?: boolean | null } | null> | null } | null } | null } };
+export type GetIndividualKymFamilyOccupationListQuery = {
+  members: {
+    individual?: {
+      listOccupation?: {
+        data?: Array<{
+          id: string;
+          occupationId?: string | null;
+          orgName?: Record<'local' | 'en' | 'np', string> | null;
+          panVatNo?: string | null;
+          address?: Record<'local' | 'en' | 'np', string> | null;
+          estimatedAnnualIncome?: string | null;
+          establishedDate?: string | null;
+          registrationNo?: string | null;
+          contact?: string | null;
+          isOwner?: boolean | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetIndividualKymIncomeSourceListQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
-
-export type GetIndividualKymIncomeSourceListQuery = { members: { individual?: { listIncomeSource?: { data?: Array<{ id: string, incomeSource?: Record<"local"|"en"|"np",string> | null, amount?: string | null } | null> | null } | null } | null } };
+export type GetIndividualKymIncomeSourceListQuery = {
+  members: {
+    individual?: {
+      listIncomeSource?: {
+        data?: Array<{
+          id: string;
+          incomeSource?: Record<'local' | 'en' | 'np', string> | null;
+          amount?: string | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetKymDocumentsListQueryVariables = Exact<{
   memberId: Scalars['String'];
 }>;
 
-
-export type GetKymDocumentsListQuery = { document: { listKYMDocuments: { data?: Array<{ fieldId?: string | null, docData: Array<{ identifier: string, url: string } | null> } | null> | null } } };
+export type GetKymDocumentsListQuery = {
+  document: {
+    listKYMDocuments: {
+      data?: Array<{
+        fieldId?: string | null;
+        docData: Array<{ identifier: string; url: string } | null>;
+      } | null> | null;
+    };
+  };
+};
 
 export type GetIndividualKymIdentificationListQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
-
-export type GetIndividualKymIdentificationListQuery = { members: { individual?: { listIdentification?: { data?: Array<{ id: string, idNo?: string | null, idType: string, place?: Record<"local"|"en"|"np",string> | null, date?: string | null } | null> | null } | null } | null } };
+export type GetIndividualKymIdentificationListQuery = {
+  members: {
+    individual?: {
+      listIdentification?: {
+        data?: Array<{
+          id: string;
+          idNo?: string | null;
+          idType: string;
+          place?: Record<'local' | 'en' | 'np', string> | null;
+          date?: string | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetMemberDetailsQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetMemberDetailsQuery = { members: { details: { data?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, contact?: string | null, profilePicUrl?: string | null, signaturePicUrl?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null } | null, share?: { summary?: { memberId?: string | null, count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string } } | null } | null, profile?: { data?: { formData?: { basicInformation?: { gender?: Record<"local"|"en"|"np",string> | null, dateOfBirth?: string | null, age?: number | null } | null } | null } | null } | {} | null } | null } } };
+export type GetMemberDetailsQuery = {
+  members: {
+    details: {
+      data?: {
+        id: string;
+        name?: Record<'local' | 'en' | 'np', string> | null;
+        code: string;
+        contact?: string | null;
+        profilePicUrl?: string | null;
+        signaturePicUrl?: string | null;
+        address?: {
+          state?: Record<'local' | 'en' | 'np', string> | null;
+          district?: Record<'local' | 'en' | 'np', string> | null;
+          localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+          wardNo?: string | null;
+          locality?: Record<'local' | 'en' | 'np', string> | null;
+          houseNo?: string | null;
+        } | null;
+        share?: {
+          summary?: {
+            memberId?: string | null;
+            count: number;
+            amount: number;
+            member: {
+              id: string;
+              name?: Record<'local' | 'en' | 'np', string> | null;
+              code: string;
+            };
+          } | null;
+        } | null;
+        profile?:
+          | {
+              data?: {
+                formData?: {
+                  basicInformation?: {
+                    gender?: Record<'local' | 'en' | 'np', string> | null;
+                    dateOfBirth?: string | null;
+                    age?: number | null;
+                  } | null;
+                } | null;
+              } | null;
+            }
+          | {}
+          | null;
+      } | null;
+    };
+  };
+};
 
 export type GetOfficialUseQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetOfficialUseQuery = { members: { officialUse?: { recordId?: string | null, record?: { id?: string | null, isStaff?: boolean | null, checkSanction?: boolean | null, checkNegative?: boolean | null, riskCategory?: OfficialUseRiskCategory | null, docCollectedAndVerified?: boolean | null, acceptableAddressDoc?: boolean | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } };
+export type GetOfficialUseQuery = {
+  members: {
+    officialUse?: {
+      recordId?: string | null;
+      record?: {
+        id?: string | null;
+        isStaff?: boolean | null;
+        checkSanction?: boolean | null;
+        checkNegative?: boolean | null;
+        riskCategory?: OfficialUseRiskCategory | null;
+        docCollectedAndVerified?: boolean | null;
+        acceptableAddressDoc?: boolean | null;
+      } | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
 
 export type GetMembershipFeeQueryVariables = Exact<{
   memberID: Scalars['ID'];
 }>;
 
-
-export type GetMembershipFeeQuery = { members: { activateMember?: { getMembershipFee?: { error?: QueryError_AuthorizationError_Fragment | QueryError_BadRequestError_Fragment | QueryError_NotFoundError_Fragment | QueryError_ServerError_Fragment | null, data?: { charge: number } | null } | null } | null } };
+export type GetMembershipFeeQuery = {
+  members: {
+    activateMember?: {
+      getMembershipFee?: {
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+        data?: { charge: number } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetMemberCheckQueryVariables = Exact<{
   memberID: Scalars['ID'];
 }>;
 
-
-export type GetMemberCheckQuery = { members: { activateMember?: { memberActivateChecks?: { isFeePaid: boolean, isShareIssued: boolean, isAccountUpdated: boolean } | null } | null } };
+export type GetMemberCheckQuery = {
+  members: {
+    activateMember?: {
+      memberActivateChecks?: {
+        isFeePaid: boolean;
+        isShareIssued: boolean;
+        isAccountUpdated: boolean;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetAccountCheckQueryVariables = Exact<{
   memberId: Scalars['ID'];
   accountId: Scalars['ID'];
 }>;
 
-
-export type GetAccountCheckQuery = { members: { activateMember?: { accountUpdateCheck: boolean } | null } };
+export type GetAccountCheckQuery = {
+  members: { activateMember?: { accountUpdateCheck: boolean } | null };
+};
 
 export type GetMemberAccountsQueryVariables = Exact<{
   memberId: Scalars['ID'];
 }>;
 
-
-export type GetMemberAccountsQuery = { members: { getAllAccounts?: { data?: { depositAccount?: Array<{ id: string, accountName?: string | null, product: { nature: NatureOfDepositProduct, isMandatorySaving?: boolean | null, productName: string } } | null> | null, loanAccount?: Array<{ id: string, accountName?: string | null, product: { productName: string } } | null> | null } | null } | null } };
+export type GetMemberAccountsQuery = {
+  members: {
+    getAllAccounts?: {
+      data?: {
+        depositAccount?: Array<{
+          id: string;
+          accountName?: string | null;
+          product: {
+            nature: NatureOfDepositProduct;
+            isMandatorySaving?: boolean | null;
+            productName: string;
+          };
+        } | null> | null;
+        loanAccount?: Array<{
+          id: string;
+          accountName?: string | null;
+          product: { productName: string };
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetAccountInactiveCheckQueryVariables = Exact<{
   memberId: Scalars['ID'];
@@ -13988,34 +17549,232 @@ export type GetAccountInactiveCheckQueryVariables = Exact<{
   accountType: AccountTypeFilter;
 }>;
 
-
-export type GetAccountInactiveCheckQuery = { members: { inactivateMember?: { accountCloseCheck: boolean } | null } };
+export type GetAccountInactiveCheckQuery = {
+  members: { inactivateMember?: { accountCloseCheck: boolean } | null };
+};
 
 export type GetMemberInactiveCheckQueryVariables = Exact<{
   memberId: Scalars['ID'];
 }>;
 
-
-export type GetMemberInactiveCheckQuery = { members: { inactivateMember?: { inactivateCheck?: { isAccountClosed: boolean, isShareReturned: boolean } | null } | null } };
+export type GetMemberInactiveCheckQuery = {
+  members: {
+    inactivateMember?: {
+      inactivateCheck?: { isAccountClosed: boolean; isShareReturned: boolean } | null;
+    } | null;
+  };
+};
 
 export type GetMemberDetailsOverviewQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetMemberDetailsOverviewQuery = { members: { memberOverview?: { data?: { bio?: string | null, accounts?: { accounts?: Array<{ accountName?: string | null, accountNumber?: string | null, totalBalance?: string | null, productName?: string | null, productType?: string | null, interestRate?: string | null } | null> | null, payments?: Array<{ date?: string | null, accountName?: string | null, paymentType?: string | null, amount?: string | null, installmentNo?: string | null, interestRate?: string | null } | null> | null } | null, share?: { shareInfo?: { totalCount?: string | null, issuedCount?: string | null, returnedCount?: string | null, totalBalance?: string | null } | null, registerDetails?: Array<{ date?: string | null, title?: string | null, txnAmount?: string | null, txnType?: ShareTransactionType | null, noOfShares?: number | null } | null> | null, balanceDetails?: { totalCount: number, edges: Array<{ cursor: string, node: { id?: string | null, memberId?: string | null, status?: Share_Status | null, transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, balance?: number | null, shareAmount?: number | null, totalAmount?: number | null, paymentMode?: SharePaymentMode | null, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, member?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, code: string, type: KymMemberTypesEnum, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, dateJoined?: string | null, profilePic?: string | null, signaturepic?: string | null, profilePicUrl?: string | null, signaturePicUrl?: string | null } | null, extraFee?: Array<{ name: string, value: number } | null> | null } }>, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } | null } | null, loan?: { accounts?: Array<{ accountName?: string | null, accountNumber?: string | null, totalBalance?: string | null, productName?: string | null, productType?: string | null, interestRate?: string | null, subscriptionDate?: string | null, interestEarned?: string | null, interestBooked?: string | null } | null> | null, payments?: Array<{ date?: string | null, accountName?: string | null, paymentType?: string | null, amount?: string | null, installmentNo?: string | null, interestRate?: string | null } | null> | null } | null, reports?: { list?: Array<{ code?: string | null, reportName?: string | null, category?: string | null } | null> | null } | null, overview?: { basicInformation?: { memberName?: string | null, profilePic?: string | null, memberCode?: string | null, memberJoined?: string | null, genderId?: string | null, gender?: Record<"local"|"en"|"np",string> | null, isStaff?: boolean | null, maritalStatusId?: string | null, maritalStatus?: Record<"local"|"en"|"np",string> | null, contactNumber?: string | null, email?: string | null, addressId?: string | null, address?: Record<"local"|"en"|"np",string> | null, fathersName?: string | null, mothersName?: string | null, grandFathersName?: string | null } | null, memberGraphs?: { deposit?: { periodType?: PeriodTypeEnum | null, data?: Array<{ time?: number | null, amount?: string | null } | null> | null } | null, withdraw?: { periodType?: PeriodTypeEnum | null, data?: Array<{ time?: number | null, amount?: string | null } | null> | null } | null } | null, statistics?: { totalShareValue?: string | null, accountBalance?: string | null, loanBalance?: string | null } | null, payments?: Array<{ date?: string | null, accountName?: string | null, paymentType?: string | null, amount?: string | null } | null> | null, recentTransactions?: Array<{ date?: string | null, title?: string | null, txnType?: MemberRecentTransactionViewTxnType | null, amount?: string | null, noOfShares?: number | null } | null> | null } | null, cheques?: Array<{ accountName?: string | null, issued?: number | null, used?: number | null, left?: number | null, cancelled?: number | null } | null> | null } | null } | null } };
+export type GetMemberDetailsOverviewQuery = {
+  members: {
+    memberOverview?: {
+      data?: {
+        bio?: string | null;
+        accounts?: {
+          accounts?: Array<{
+            accountName?: string | null;
+            accountNumber?: string | null;
+            totalBalance?: string | null;
+            productName?: string | null;
+            productType?: string | null;
+            interestRate?: string | null;
+          } | null> | null;
+          payments?: Array<{
+            date?: string | null;
+            accountName?: string | null;
+            paymentType?: string | null;
+            amount?: string | null;
+            installmentNo?: string | null;
+            interestRate?: string | null;
+          } | null> | null;
+        } | null;
+        share?: {
+          shareInfo?: {
+            totalCount?: string | null;
+            issuedCount?: string | null;
+            returnedCount?: string | null;
+            totalBalance?: string | null;
+          } | null;
+          registerDetails?: Array<{
+            date?: string | null;
+            title?: string | null;
+            txnAmount?: string | null;
+            txnType?: ShareTransactionType | null;
+            noOfShares?: number | null;
+          } | null> | null;
+          balanceDetails?: {
+            totalCount: number;
+            edges: Array<{
+              cursor: string;
+              node: {
+                id?: string | null;
+                memberId?: string | null;
+                status?: Share_Status | null;
+                transactionDate?: string | null;
+                transactionDirection: Share_Transaction_Direction;
+                credit?: number | null;
+                debit?: number | null;
+                startNumber: number;
+                endNumber: number;
+                balance?: number | null;
+                shareAmount?: number | null;
+                totalAmount?: number | null;
+                paymentMode?: SharePaymentMode | null;
+                bankId?: string | null;
+                voucherNumber?: string | null;
+                accountId?: string | null;
+                member?: {
+                  id: string;
+                  objState: ObjState;
+                  createdAt: string;
+                  modifiedAt: string;
+                  code: string;
+                  type: KymMemberTypesEnum;
+                  name?: Record<'local' | 'en' | 'np', string> | null;
+                  contact?: string | null;
+                  dateJoined?: string | null;
+                  profilePic?: string | null;
+                  signaturepic?: string | null;
+                  profilePicUrl?: string | null;
+                  signaturePicUrl?: string | null;
+                } | null;
+                extraFee?: Array<{ name: string; value: number } | null> | null;
+              };
+            }>;
+            pageInfo?: {
+              hasNextPage: boolean;
+              hasPreviousPage: boolean;
+              startCursor?: string | null;
+              endCursor?: string | null;
+            } | null;
+          } | null;
+        } | null;
+        loan?: {
+          accounts?: Array<{
+            accountName?: string | null;
+            accountNumber?: string | null;
+            totalBalance?: string | null;
+            productName?: string | null;
+            productType?: string | null;
+            interestRate?: string | null;
+            subscriptionDate?: string | null;
+            interestEarned?: string | null;
+            interestBooked?: string | null;
+          } | null> | null;
+          payments?: Array<{
+            date?: string | null;
+            accountName?: string | null;
+            paymentType?: string | null;
+            amount?: string | null;
+            installmentNo?: string | null;
+            interestRate?: string | null;
+          } | null> | null;
+        } | null;
+        reports?: {
+          list?: Array<{
+            code?: string | null;
+            reportName?: string | null;
+            category?: string | null;
+          } | null> | null;
+        } | null;
+        overview?: {
+          basicInformation?: {
+            memberName?: string | null;
+            profilePic?: string | null;
+            memberCode?: string | null;
+            memberJoined?: string | null;
+            genderId?: string | null;
+            gender?: Record<'local' | 'en' | 'np', string> | null;
+            isStaff?: boolean | null;
+            maritalStatusId?: string | null;
+            maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
+            contactNumber?: string | null;
+            email?: string | null;
+            addressId?: string | null;
+            address?: Record<'local' | 'en' | 'np', string> | null;
+            fathersName?: string | null;
+            mothersName?: string | null;
+            grandFathersName?: string | null;
+          } | null;
+          memberGraphs?: {
+            deposit?: {
+              periodType?: PeriodTypeEnum | null;
+              data?: Array<{ time?: number | null; amount?: string | null } | null> | null;
+            } | null;
+            withdraw?: {
+              periodType?: PeriodTypeEnum | null;
+              data?: Array<{ time?: number | null; amount?: string | null } | null> | null;
+            } | null;
+          } | null;
+          statistics?: {
+            totalShareValue?: string | null;
+            accountBalance?: string | null;
+            loanBalance?: string | null;
+          } | null;
+          payments?: Array<{
+            date?: string | null;
+            accountName?: string | null;
+            paymentType?: string | null;
+            amount?: string | null;
+          } | null> | null;
+          recentTransactions?: Array<{
+            date?: string | null;
+            title?: string | null;
+            txnType?: MemberRecentTransactionViewTxnType | null;
+            amount?: string | null;
+            noOfShares?: number | null;
+          } | null> | null;
+        } | null;
+        cheques?: Array<{
+          accountName?: string | null;
+          issued?: number | null;
+          used?: number | null;
+          left?: number | null;
+          cancelled?: number | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetMemberDetailsShareBalanceQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetMemberDetailsShareBalanceQuery = { share: { history?: { history?: Array<{ id?: string | null, memberId?: string | null, status?: Share_Status | null, transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, balance?: number | null, shareAmount?: number | null, totalAmount?: number | null, paymentMode?: SharePaymentMode | null, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, member?: { id: string, objState: ObjState, createdAt: string } | null, extraFee?: Array<{ name: string, value: number } | null> | null } | null> | null } | null } };
+export type GetMemberDetailsShareBalanceQuery = {
+  share: {
+    history?: {
+      history?: Array<{
+        id?: string | null;
+        memberId?: string | null;
+        status?: Share_Status | null;
+        transactionDate?: string | null;
+        transactionDirection: Share_Transaction_Direction;
+        credit?: number | null;
+        debit?: number | null;
+        startNumber: number;
+        endNumber: number;
+        balance?: number | null;
+        shareAmount?: number | null;
+        totalAmount?: number | null;
+        paymentMode?: SharePaymentMode | null;
+        bankId?: string | null;
+        voucherNumber?: string | null;
+        accountId?: string | null;
+        member?: { id: string; objState: ObjState; createdAt: string } | null;
+        extraFee?: Array<{ name: string; value: number } | null> | null;
+      } | null> | null;
+    } | null;
+  };
+};
 
 export type GetMemberPdfQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
-
 
 export type GetMemberPdfQuery = { members: { memberPDF: string } };
 
@@ -14023,36 +17782,170 @@ export type GetAllSavedReportsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
 }>;
 
-
-export type GetAllSavedReportsQuery = { report: { listReports: { totalCount: number, pageInfo?: PaginationFragment | null, edges?: Array<{ cursor: string, node?: { id: string, lastModifiedDate: string, name: string, reportType: string, savedBy: string } | null } | null> | null } } };
+export type GetAllSavedReportsQuery = {
+  report: {
+    listReports: {
+      totalCount: number;
+      pageInfo?: PaginationFragment | null;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          id: string;
+          lastModifiedDate: string;
+          name: string;
+          reportType: string;
+          savedBy: string;
+        } | null;
+      } | null> | null;
+    };
+  };
+};
 
 export type GetSavedReportQueryVariables = Exact<{
   reportId: Scalars['ID'];
 }>;
 
-
-export type GetSavedReportQuery = { report: { getReport?: { name?: string | null, settings?: { filter?: ShareTransactionType | null, memberId: string, periodType: ReportPeriodType, customPeriod?: { from: string, to: string } | null } | null } | null } };
+export type GetSavedReportQuery = {
+  report: {
+    getReport?: {
+      name?: string | null;
+      settings?: {
+        filter?: ShareTransactionType | null;
+        memberId: string;
+        periodType: ReportPeriodType;
+        customPeriod?: { from: string; to: string } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetSavingStatementQueryVariables = Exact<{
   data: SavingStatementReportSettings;
 }>;
 
-
-export type GetSavingStatementQuery = { report: { savingStatementReport?: { memberId?: string | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, dateJoined?: string | null, address?: { wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, localGovernment?: Record<"local"|"en"|"np",string> | null } | null } | null, statement?: { savingStatement?: Array<{ date: string, balanceAmount: number, depositCr: number, chequeOrVoucherNo: string, particular: string, withdrawDr: number } | null> | null, totals?: { totalBalance: number, totalWithdraw: number, totalDeposit: number } | null } | {} | null } | null } };
+export type GetSavingStatementQuery = {
+  report: {
+    savingStatementReport?: {
+      memberId?: string | null;
+      member?: {
+        id: string;
+        code: string;
+        name?: Record<'local' | 'en' | 'np', string> | null;
+        dateJoined?: string | null;
+        address?: {
+          wardNo?: string | null;
+          state?: Record<'local' | 'en' | 'np', string> | null;
+          district?: Record<'local' | 'en' | 'np', string> | null;
+          houseNo?: string | null;
+          localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
+      } | null;
+      statement?:
+        | {
+            savingStatement?: Array<{
+              date: string;
+              balanceAmount: number;
+              depositCr: number;
+              chequeOrVoucherNo: string;
+              particular: string;
+              withdrawDr: number;
+            } | null> | null;
+            totals?: { totalBalance: number; totalWithdraw: number; totalDeposit: number } | null;
+          }
+        | {}
+        | null;
+    } | null;
+  };
+};
 
 export type GetMemberClassificationReportQueryVariables = Exact<{
   period?: InputMaybe<ReportPeriodType>;
 }>;
 
-
-export type GetMemberClassificationReportQuery = { report: { memberClassificationReport: { data?: { gender?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, age?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, occupation?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, education?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, memberCategory?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, income?: Array<{ entryName?: string | null, inPercent?: string | null } | null> | null, address?: { province?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null, district?: Array<{ entryName?: string | null, inNumber?: number | null, inPercent?: string | null } | null> | null } | null } | null } } };
+export type GetMemberClassificationReportQuery = {
+  report: {
+    memberClassificationReport: {
+      data?: {
+        gender?: Array<{
+          entryName?: string | null;
+          inNumber?: number | null;
+          inPercent?: string | null;
+        } | null> | null;
+        age?: Array<{
+          entryName?: string | null;
+          inNumber?: number | null;
+          inPercent?: string | null;
+        } | null> | null;
+        occupation?: Array<{
+          entryName?: string | null;
+          inNumber?: number | null;
+          inPercent?: string | null;
+        } | null> | null;
+        education?: Array<{
+          entryName?: string | null;
+          inNumber?: number | null;
+          inPercent?: string | null;
+        } | null> | null;
+        memberCategory?: Array<{
+          entryName?: string | null;
+          inNumber?: number | null;
+          inPercent?: string | null;
+        } | null> | null;
+        income?: Array<{ entryName?: string | null; inPercent?: string | null } | null> | null;
+        address?: {
+          province?: Array<{
+            entryName?: string | null;
+            inNumber?: number | null;
+            inPercent?: string | null;
+          } | null> | null;
+          district?: Array<{
+            entryName?: string | null;
+            inNumber?: number | null;
+            inPercent?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    };
+  };
+};
 
 export type GetLoanStatementReportQueryVariables = Exact<{
   data: LoanStatementReportSettings;
 }>;
 
-
-export type GetLoanStatementReportQuery = { report: { loanStatementReport?: { memberId?: string | null, member?: { name?: Record<"local"|"en"|"np",string> | null, code: string } | null, statement?: { loanAccDetails?: { accountNo?: string | null, approvedAmount?: string | null, interestRate?: number | null, loanType?: string | null, loanSubtype?: string | null, issuedDate?: string | null, installment?: number | null } | null, loanStatement?: Array<{ date?: string | null, particular?: string | null, txnId?: string | null, disbursePrinciple?: string | null, paidPrinciple?: string | null, interestPaid?: string | null, finePaid?: string | null, discount?: string | null, remainingPrinciple?: string | null } | null> | null } | {} | null } | null } };
+export type GetLoanStatementReportQuery = {
+  report: {
+    loanStatementReport?: {
+      memberId?: string | null;
+      member?: { name?: Record<'local' | 'en' | 'np', string> | null; code: string } | null;
+      statement?:
+        | {
+            loanAccDetails?: {
+              accountNo?: string | null;
+              approvedAmount?: string | null;
+              interestRate?: number | null;
+              loanType?: string | null;
+              loanSubtype?: string | null;
+              issuedDate?: string | null;
+              installment?: number | null;
+            } | null;
+            loanStatement?: Array<{
+              date?: string | null;
+              particular?: string | null;
+              txnId?: string | null;
+              disbursePrinciple?: string | null;
+              paidPrinciple?: string | null;
+              interestPaid?: string | null;
+              finePaid?: string | null;
+              discount?: string | null;
+              remainingPrinciple?: string | null;
+            } | null> | null;
+          }
+        | {}
+        | null;
+    } | null;
+  };
+};
 
 export type GetLedgerReportQueryVariables = Exact<{
   ledgerId: Scalars['ID'];
@@ -14060,353 +17953,1709 @@ export type GetLedgerReportQueryVariables = Exact<{
   date?: InputMaybe<LocalizedDateFilter>;
 }>;
 
-
-export type GetLedgerReportQuery = { report: { generalLedgerReport: { data?: Array<{ id?: string | null, date?: Record<"local"|"en"|"np",string> | null, account?: string | null, balance?: string | null, credit?: string | null, debit?: string | null } | null> | null } } };
+export type GetLedgerReportQuery = {
+  report: {
+    generalLedgerReport: {
+      data?: Array<{
+        id?: string | null;
+        date?: Record<'local' | 'en' | 'np', string> | null;
+        account?: string | null;
+        balance?: string | null;
+        credit?: string | null;
+        debit?: string | null;
+      } | null> | null;
+    };
+  };
+};
 
 export type GetShareStatementQueryVariables = Exact<{
   data: ShareStatementReportSettings;
 }>;
 
-
-export type GetShareStatementQuery = { report: { shareStatementReport?: { member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, dateJoined?: string | null, address?: { wardNo?: string | null, state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, localGovernment?: Record<"local"|"en"|"np",string> | null } | null } | null, statement?: { shareStatement?: Array<{ date: string, particular: string, noOfShares: number, returnAmountDr: number, purchaseAmountCr: number, balanceSheet: number } | null> | null, totals?: { totalShares?: number | null, totalDr?: number | null, totalCr?: number | null, totalBalanceSheet?: number | null } | null } | {} | null } | null } };
+export type GetShareStatementQuery = {
+  report: {
+    shareStatementReport?: {
+      member?: {
+        id: string;
+        code: string;
+        name?: Record<'local' | 'en' | 'np', string> | null;
+        dateJoined?: string | null;
+        address?: {
+          wardNo?: string | null;
+          state?: Record<'local' | 'en' | 'np', string> | null;
+          district?: Record<'local' | 'en' | 'np', string> | null;
+          houseNo?: string | null;
+          localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
+      } | null;
+      statement?:
+        | {
+            shareStatement?: Array<{
+              date: string;
+              particular: string;
+              noOfShares: number;
+              returnAmountDr: number;
+              purchaseAmountCr: number;
+              balanceSheet: number;
+            } | null> | null;
+            totals?: {
+              totalShares?: number | null;
+              totalDr?: number | null;
+              totalCr?: number | null;
+              totalBalanceSheet?: number | null;
+            } | null;
+          }
+        | {}
+        | null;
+    } | null;
+  };
+};
 
 export type GetChequeBookRequestsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<RequestFilter>;
 }>;
 
-
-export type GetChequeBookRequestsQuery = { requests: { list?: { chequeBookRequest?: { totalCount?: number | null, pageInfo?: PaginationFragment | null, edges?: Array<{ node?: { id: string, memberId: string, memberName: Record<"local"|"en"|"np",string>, memberPhoneNumber: string, memberAge?: number | null, memberGender?: string | null, memberProfilePicUrl?: string | null, accountNumber: string, accountType: string, approvalStatus: RequestStatus, requestedDate: string, branchId?: string | null, branchName?: string | null, numberOfLeaves?: number | null, pickUpMethod?: ChequePickUpMethod | null, agentName?: string | null, remarks?: string | null } | null } | null> | null } | null } | null } };
+export type GetChequeBookRequestsQuery = {
+  requests: {
+    list?: {
+      chequeBookRequest?: {
+        totalCount?: number | null;
+        pageInfo?: PaginationFragment | null;
+        edges?: Array<{
+          node?: {
+            id: string;
+            memberId: string;
+            memberName: Record<'local' | 'en' | 'np', string>;
+            memberPhoneNumber: string;
+            memberAge?: number | null;
+            memberGender?: string | null;
+            memberProfilePicUrl?: string | null;
+            accountNumber: string;
+            accountType: string;
+            approvalStatus: RequestStatus;
+            requestedDate: string;
+            branchId?: string | null;
+            branchName?: string | null;
+            numberOfLeaves?: number | null;
+            pickUpMethod?: ChequePickUpMethod | null;
+            agentName?: string | null;
+            remarks?: string | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetWithdrawViaCollectorQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<RequestFilter>;
 }>;
 
-
-export type GetWithdrawViaCollectorQuery = { requests: { list?: { withdrawViaCollector?: { totalCount?: number | null, pageInfo?: PaginationFragment | null, edges?: Array<{ node?: { id: string, memberId: string, memberName: Record<"local"|"en"|"np",string>, memberPhoneNumber: string, accountNumber: string, accountType: string, approvalStatus: RequestStatus, requestedDate: string, collectorName: string, amount: string, remarks?: string | null } | null } | null> | null } | null } | null } };
+export type GetWithdrawViaCollectorQuery = {
+  requests: {
+    list?: {
+      withdrawViaCollector?: {
+        totalCount?: number | null;
+        pageInfo?: PaginationFragment | null;
+        edges?: Array<{
+          node?: {
+            id: string;
+            memberId: string;
+            memberName: Record<'local' | 'en' | 'np', string>;
+            memberPhoneNumber: string;
+            accountNumber: string;
+            accountType: string;
+            approvalStatus: RequestStatus;
+            requestedDate: string;
+            collectorName: string;
+            amount: string;
+            remarks?: string | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetLoanRequestsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<RequestFilter>;
 }>;
 
-
-export type GetLoanRequestsQuery = { requests: { list?: { loanRequest?: { totalCount?: number | null, pageInfo?: PaginationFragment | null, edges?: Array<{ node?: { id: string, memberId: string, memberName: Record<"local"|"en"|"np",string>, memberPhoneNumber: string, approvalStatus: RequestStatus, loanAmount: string, lastModifiedDate: string, purpose?: string | null } | null } | null> | null } | null } | null } };
+export type GetLoanRequestsQuery = {
+  requests: {
+    list?: {
+      loanRequest?: {
+        totalCount?: number | null;
+        pageInfo?: PaginationFragment | null;
+        edges?: Array<{
+          node?: {
+            id: string;
+            memberId: string;
+            memberName: Record<'local' | 'en' | 'np', string>;
+            memberPhoneNumber: string;
+            approvalStatus: RequestStatus;
+            loanAmount: string;
+            lastModifiedDate: string;
+            purpose?: string | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetBlockChequeListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<RequestFilter>;
 }>;
 
-
-export type GetBlockChequeListQuery = { requests: { list?: { blockCheque?: { totalCount?: number | null, pageInfo?: PaginationFragment | null, edges?: Array<{ node?: { id: string, memberId: string, memberName: Record<"local"|"en"|"np",string>, memberPhoneNumber: string, accountNumber: string, accountType: string, approvalStatus: RequestStatus, requestedDate: string, reason?: string | null, chequeNumber: string } | null } | null> | null } | null } | null } };
+export type GetBlockChequeListQuery = {
+  requests: {
+    list?: {
+      blockCheque?: {
+        totalCount?: number | null;
+        pageInfo?: PaginationFragment | null;
+        edges?: Array<{
+          node?: {
+            id: string;
+            memberId: string;
+            memberName: Record<'local' | 'en' | 'np', string>;
+            memberPhoneNumber: string;
+            accountNumber: string;
+            accountType: string;
+            approvalStatus: RequestStatus;
+            requestedDate: string;
+            reason?: string | null;
+            chequeNumber: string;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetGlobalSearchQueryVariables = Exact<{
   filter?: InputMaybe<SearchFilterData>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
+export type GetGlobalSearchQuery = {
+  search: {
+    globalPages: {
+      data?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            fullCode?: string | null;
+            hasParam?: boolean | null;
+            iconType?: GlobalPagesIconType | null;
+            page?: string | null;
+            url?: string | null;
+          } | null;
+        } | null> | null;
+        pageInfo?: PaginationFragment | null;
+      } | null;
+    };
+  };
+};
 
-export type GetGlobalSearchQuery = { search: { globalPages: { data?: { totalCount: number, edges?: Array<{ cursor: string, node?: { fullCode?: string | null, hasParam?: boolean | null, iconType?: GlobalPagesIconType | null, page?: string | null, url?: string | null } | null } | null> | null, pageInfo?: PaginationFragment | null } | null } } };
+export type GetAlternativeFeeAndChargesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetAlternativeFeeAndChargesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAlternativeFeeAndChargesQuery = { settings: { general?: { alternativeChannel?: { feesAndCharges?: { data?: Array<{ id?: string | null, serviceType?: AlternativeChannelServiceType | null, ledgerId?: string | null, amount?: string | null } | null> | null } | null } | null } | null } };
+export type GetAlternativeFeeAndChargesQuery = {
+  settings: {
+    general?: {
+      alternativeChannel?: {
+        feesAndCharges?: {
+          data?: Array<{
+            id?: string | null;
+            serviceType?: AlternativeChannelServiceType | null;
+            ledgerId?: string | null;
+            amount?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetActivatedServiceQueryVariables = Exact<{
   memberId: Scalars['String'];
 }>;
 
-
-export type GetActivatedServiceQuery = { alternativeChannel: { memberActivations?: { eBanking?: boolean | null, mobileBanking?: boolean | null, smsBanking?: boolean | null } | null } };
+export type GetActivatedServiceQuery = {
+  alternativeChannel: {
+    memberActivations?: {
+      eBanking?: boolean | null;
+      mobileBanking?: boolean | null;
+      smsBanking?: boolean | null;
+    } | null;
+  };
+};
 
 export type GetAlternativeChannelListQueryVariables = Exact<{
   filter?: InputMaybe<AlternativeChannelFilter>;
   paginate?: InputMaybe<Pagination>;
 }>;
 
+export type GetAlternativeChannelListQuery = {
+  alternativeChannel: {
+    list?: {
+      totalCount: number;
+      pageInfo?: PaginationFragment | null;
+      edges?: Array<{
+        cursor: string;
+        data?: {
+          id?: string | null;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          memberId?: string | null;
+          coopConnection?: boolean | null;
+          lastActive?: string | null;
+          phoneNumber?: string | null;
+          serviceStatus?: AlternativeChannelStatus | null;
+          serviceType?: AlternativeChannelServiceType | null;
+        } | null;
+      } | null> | null;
+    } | null;
+  };
+};
 
-export type GetAlternativeChannelListQuery = { alternativeChannel: { list?: { totalCount: number, pageInfo?: PaginationFragment | null, edges?: Array<{ cursor: string, data?: { id?: string | null, name?: Record<"local"|"en"|"np",string> | null, memberId?: string | null, coopConnection?: boolean | null, lastActive?: string | null, phoneNumber?: string | null, serviceStatus?: AlternativeChannelStatus | null, serviceType?: AlternativeChannelServiceType | null } | null } | null> | null } | null } };
+export type GetAcFeeCoaQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetAcFeeCoaQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAcFeeCoaQuery = {
+  settings: {
+    chartsOfAccount?: {
+      accountsUnder?: {
+        data?: Array<{
+          id: string;
+          accountCode: string;
+          name: Record<'local' | 'en' | 'np', string>;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
+export type GetAuditLogListQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetAcFeeCoaQuery = { settings: { chartsOfAccount?: { accountsUnder?: { data?: Array<{ id: string, accountCode: string, name: Record<"local"|"en"|"np",string> } | null> | null } | null } | null } };
-
-export type GetAuditLogListQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAuditLogListQuery = { auditLog: { humanize?: { __typename: 'AuditLogHumanizeResult', data?: Array<{ timestamp?: string | null, narration?: string | null, extraData?: Array<string | null> | null } | null> | null } | { __typename: 'RawAuditLog' } | null } };
+export type GetAuditLogListQuery = {
+  auditLog: {
+    humanize?:
+      | {
+          __typename: 'AuditLogHumanizeResult';
+          data?: Array<{
+            timestamp?: string | null;
+            narration?: string | null;
+            extraData?: Array<string | null> | null;
+          } | null> | null;
+        }
+      | { __typename: 'RawAuditLog' }
+      | null;
+  };
+};
 
 export type GetBranchListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<BranchSearchFilter>;
 }>;
 
-
-export type GetBranchListQuery = { settings: { general?: { branch?: { list?: { totalCount: number, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null, edges?: Array<{ node?: { id: string, branchCode?: string | null, name?: string | null, category?: BranchCategory | null, estDate?: string | null, managerName?: string | null, contactNumber?: string | null, email?: string | null, plTransferId?: string | null, tdsTransaferId?: string | null, branchStatus?: boolean | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null } | null, location?: { longitude?: number | null, latitude?: number | null } | null, abbsTransaction?: { abbsStatus?: boolean | null, receivableAccountId?: string | null, payableAccountId?: string | null } | null } | null }> | null } | null } | null } | null } };
+export type GetBranchListQuery = {
+  settings: {
+    general?: {
+      branch?: {
+        list?: {
+          totalCount: number;
+          pageInfo?: {
+            hasNextPage: boolean;
+            hasPreviousPage: boolean;
+            startCursor?: string | null;
+            endCursor?: string | null;
+          } | null;
+          edges?: Array<{
+            node?: {
+              id: string;
+              branchCode?: string | null;
+              name?: string | null;
+              category?: BranchCategory | null;
+              estDate?: string | null;
+              managerName?: string | null;
+              contactNumber?: string | null;
+              email?: string | null;
+              plTransferId?: string | null;
+              tdsTransaferId?: string | null;
+              branchStatus?: boolean | null;
+              address?: {
+                state?: Record<'local' | 'en' | 'np', string> | null;
+                district?: Record<'local' | 'en' | 'np', string> | null;
+                localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+                wardNo?: string | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+              } | null;
+              location?: { longitude?: number | null; latitude?: number | null } | null;
+              abbsTransaction?: {
+                abbsStatus?: boolean | null;
+                receivableAccountId?: string | null;
+                payableAccountId?: string | null;
+              } | null;
+            } | null;
+          }> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetBranchEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetBranchEditDataQuery = { settings: { general?: { branch?: { formState?: { data?: { branchCode?: string | null, name?: string | null, category?: BranchCategory | null, estDate?: string | null, managerName?: string | null, provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: string | null, phoneNumber?: string | null, email?: string | null, abbsStatus?: boolean | null, receivableAccountId?: string | null, payableAccountId?: string | null, plTransferId?: string | null, tdsTransaferId?: string | null, branchStatus?: boolean | null, location?: { longitude?: number | null, latitude?: number | null } | null } | null, error?: { __typename: 'AuthorizationError' } | { __typename: 'BadRequestError' } | { __typename: 'NotFoundError' } | { __typename: 'ServerError' } | null } | null } | null } | null } };
+export type GetBranchEditDataQuery = {
+  settings: {
+    general?: {
+      branch?: {
+        formState?: {
+          data?: {
+            branchCode?: string | null;
+            name?: string | null;
+            category?: BranchCategory | null;
+            estDate?: string | null;
+            managerName?: string | null;
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: string | null;
+            phoneNumber?: string | null;
+            email?: string | null;
+            abbsStatus?: boolean | null;
+            receivableAccountId?: string | null;
+            payableAccountId?: string | null;
+            plTransferId?: string | null;
+            tdsTransaferId?: string | null;
+            branchStatus?: boolean | null;
+            location?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+          error?:
+            | { __typename: 'AuthorizationError' }
+            | { __typename: 'BadRequestError' }
+            | { __typename: 'NotFoundError' }
+            | { __typename: 'ServerError' }
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetCoaListQueryVariables = Exact<{
   filter: ChartsOfAccountFilter;
 }>;
 
+export type GetCoaListQuery = {
+  settings: {
+    general?: {
+      chartsOfAccount?: {
+        accounts: {
+          data?: Array<{
+            id: string;
+            name: Record<'local' | 'en' | 'np', string>;
+            under?: string | null;
+            accountClass: string;
+            accountCode: string;
+            currency: string;
+            accountType: CoaTypesOfAccount;
+            openingBalance: number;
+          }> | null;
+        };
+      } | null;
+    } | null;
+  };
+};
 
-export type GetCoaListQuery = { settings: { general?: { chartsOfAccount?: { accounts: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, under?: string | null, accountClass: string, accountCode: string, currency: string, accountType: CoaTypesOfAccount, openingBalance: number }> | null } } | null } | null } };
+export type GetCoaFullViewQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetCoaFullViewQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetCoaFullViewQuery = { settings: { chartsOfAccount?: { fullView: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, under?: string | null, accountType: CoaTypesOfAccount, accountClass: string, accountCode: string, category?: CoaCategory | null } | null> | null } } | null } };
+export type GetCoaFullViewQuery = {
+  settings: {
+    chartsOfAccount?: {
+      fullView: {
+        data?: Array<{
+          id: string;
+          name: Record<'local' | 'en' | 'np', string>;
+          under?: string | null;
+          accountType: CoaTypesOfAccount;
+          accountClass: string;
+          accountCode: string;
+          category?: CoaCategory | null;
+        } | null> | null;
+      };
+    } | null;
+  };
+};
 
 export type GetCoaBankListQueryVariables = Exact<{
   accountCode?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
 }>;
 
-
-export type GetCoaBankListQuery = { settings: { chartsOfAccount?: { accountsUnder?: { data?: Array<{ id: string, accountCode: string, name: Record<"local"|"en"|"np",string> } | null> | null } | null } | null } };
+export type GetCoaBankListQuery = {
+  settings: {
+    chartsOfAccount?: {
+      accountsUnder?: {
+        data?: Array<{
+          id: string;
+          accountCode: string;
+          name: Record<'local' | 'en' | 'np', string>;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type SearchCoaQueryVariables = Exact<{
   coaName: Scalars['String'];
 }>;
 
-
-export type SearchCoaQuery = { settings: { general?: { chartsOfAccount?: { search?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, accountCode: string } | null> | null } | null } | null } | null } };
+export type SearchCoaQuery = {
+  settings: {
+    general?: {
+      chartsOfAccount?: {
+        search?: {
+          data?: Array<{
+            id: string;
+            name: Record<'local' | 'en' | 'np', string>;
+            accountCode: string;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetLoanProductListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<LoanProductSearchFilter>;
 }>;
 
-
-export type GetLoanProductListQuery = { settings: { general?: { loanProducts?: { list?: { totalCount: number, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ node: { id: string, objState: ObjState, createdDate: string, productName: string, productCodeString?: string | null, productType: string, productSubType: string, createdBy: { id: string, name: string, username: string, userType: UserType }, modifiedBy: { id: string, name: string, username: string, userType: UserType }, productCode?: { prefix: string, initialNo: string } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate: number, ceoAuthority?: number | null, boardAuthority?: number | null } | null } }> } | null } | null } | null } };
+export type GetLoanProductListQuery = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        list?: {
+          totalCount: number;
+          pageInfo: {
+            hasNextPage: boolean;
+            hasPreviousPage: boolean;
+            startCursor?: string | null;
+            endCursor?: string | null;
+          };
+          edges: Array<{
+            node: {
+              id: string;
+              objState: ObjState;
+              createdDate: string;
+              productName: string;
+              productCodeString?: string | null;
+              productType: string;
+              productSubType: string;
+              createdBy: { id: string; name: string; username: string; userType: UserType };
+              modifiedBy: { id: string; name: string; username: string; userType: UserType };
+              productCode?: { prefix: string; initialNo: string } | null;
+              interest?: {
+                minRate?: number | null;
+                maxRate?: number | null;
+                defaultRate: number;
+                ceoAuthority?: number | null;
+                boardAuthority?: number | null;
+              } | null;
+            };
+          }>;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetLoanProductEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
+export type GetLoanProductEditDataQuery = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        formState?: {
+          data?: {
+            id: string;
+            objState: ObjState;
+            createdAt: string;
+            modifiedAt: string;
+            productName: string;
+            productType: string;
+            productSubType: string;
+            productNature: NatureOfLoanProduct;
+            description?: string | null;
+            typeOfMember: Array<KymMemberTypesEnum | null>;
+            criteria?: Array<CriteriaSection | null> | null;
+            minAge?: number | null;
+            maxAge?: number | null;
+            genderId?: Array<string | null> | null;
+            maritalStatusId?: Array<string | null> | null;
+            educationQualification?: Array<string | null> | null;
+            ethnicity?: Array<string | null> | null;
+            occupation?: Array<string | null> | null;
+            foreignEmployment?: boolean | null;
+            natureOfBusinessInstitution?: Array<string | null> | null;
+            natureOFBusinessCoop?: Array<string | null> | null;
+            cooperativeType?: Array<string | null> | null;
+            isTenureApplicable?: boolean | null;
+            tenureUnit?: FrequencyTenure | null;
+            minTenureUnitNumber?: number | null;
+            maxTenureUnitNumber?: number | null;
+            minimumLoanAmount?: any | null;
+            maxLoanAmount?: any | null;
+            repaymentScheme?: Array<LoanRepaymentScheme | null> | null;
+            allowPartialInstallment?: boolean | null;
+            installmentFrequency?: LoanProductInstallment | null;
+            isMonthlyInstallmentCompulsory?: boolean | null;
+            interestMethod?: LoanInterestMethod | null;
+            isPenaltyApplicable?: boolean | null;
+            penaltyType?: PenaltyType | null;
+            penaltyDayAfterInstallmentDate?: number | null;
+            penaltyRate?: number | null;
+            penaltyAmount?: any | null;
+            isRebateApplicable?: boolean | null;
+            principalMaxGraceNumber?: number | null;
+            interestMaxGraceNumber?: number | null;
+            updateInterest?: boolean | null;
+            waiveInterest?: boolean | null;
+            postingFrequency?: LoanProductInstallment | null;
+            isInsuranceApplicable?: boolean | null;
+            isStaffProduct?: boolean | null;
+            supportMultipleAccounts?: boolean | null;
+            loanScheduleChangeOverride?: boolean | null;
+            requiredDocuments?: Array<LoanRequiredDocuments | null> | null;
+            isCollateralRequired?: boolean | null;
+            allowGurantee?: boolean | null;
+            maxPercentOfGurantee?: number | null;
+            collateralTypes?: Array<string | null> | null;
+            isPrematurePenaltyApplicable?: boolean | null;
+            productCode?: { prefix: string; initialNo: string; noOfDigits?: number | null } | null;
+            rebate?: {
+              dayBeforeInstallmentDate?: number | null;
+              rebateRate?: number | null;
+              rebateAmount?: any | null;
+              rebateLedgerMapping?: string | null;
+            } | null;
+            interest?: {
+              minRate?: number | null;
+              maxRate?: number | null;
+              defaultRate: number;
+              ceoAuthority?: number | null;
+              boardAuthority?: number | null;
+            } | null;
+            loanProcessingCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            insuranceType?: {
+              type?: string | null;
+              amount?: any | null;
+              rate?: number | null;
+            } | null;
+            ledgerMapping?: {
+              principal?: string | null;
+              interestAccuredDaily?: string | null;
+              interestIncome?: string | null;
+            } | null;
+            collateralValue?: Array<{
+              type?: string | null;
+              minFMV?: number | null;
+              maxFMV?: number | null;
+              minDV?: number | null;
+              maxDV?: number | null;
+              minValue?: number | null;
+              maxValue?: number | null;
+            } | null> | null;
+            prematurePenaltySetup?: {
+              penaltyDateType?: PrematurePenaltyDateType | null;
+              noOfDays?: number | null;
+              penaltyLedgerMapping?: string | null;
+              penaltyAmount?: any | null;
+              penaltyRate?: number | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetLoanProductEditDataQuery = { settings: { general?: { loanProducts?: { formState?: { data?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, productName: string, productType: string, productSubType: string, productNature: NatureOfLoanProduct, description?: string | null, typeOfMember: Array<KymMemberTypesEnum | null>, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, isTenureApplicable?: boolean | null, tenureUnit?: FrequencyTenure | null, minTenureUnitNumber?: number | null, maxTenureUnitNumber?: number | null, minimumLoanAmount?: any | null, maxLoanAmount?: any | null, repaymentScheme?: Array<LoanRepaymentScheme | null> | null, allowPartialInstallment?: boolean | null, installmentFrequency?: LoanProductInstallment | null, isMonthlyInstallmentCompulsory?: boolean | null, interestMethod?: LoanInterestMethod | null, isPenaltyApplicable?: boolean | null, penaltyType?: PenaltyType | null, penaltyDayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, isRebateApplicable?: boolean | null, principalMaxGraceNumber?: number | null, interestMaxGraceNumber?: number | null, updateInterest?: boolean | null, waiveInterest?: boolean | null, postingFrequency?: LoanProductInstallment | null, isInsuranceApplicable?: boolean | null, isStaffProduct?: boolean | null, supportMultipleAccounts?: boolean | null, loanScheduleChangeOverride?: boolean | null, requiredDocuments?: Array<LoanRequiredDocuments | null> | null, isCollateralRequired?: boolean | null, allowGurantee?: boolean | null, maxPercentOfGurantee?: number | null, collateralTypes?: Array<string | null> | null, isPrematurePenaltyApplicable?: boolean | null, productCode?: { prefix: string, initialNo: string, noOfDigits?: number | null } | null, rebate?: { dayBeforeInstallmentDate?: number | null, rebateRate?: number | null, rebateAmount?: any | null, rebateLedgerMapping?: string | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate: number, ceoAuthority?: number | null, boardAuthority?: number | null } | null, loanProcessingCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, insuranceType?: { type?: string | null, amount?: any | null, rate?: number | null } | null, ledgerMapping?: { principal?: string | null, interestAccuredDaily?: string | null, interestIncome?: string | null } | null, collateralValue?: Array<{ type?: string | null, minFMV?: number | null, maxFMV?: number | null, minDV?: number | null, maxDV?: number | null, minValue?: number | null, maxValue?: number | null } | null> | null, prematurePenaltySetup?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
+export type GetLoanGeneralSettingsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetLoanGeneralSettingsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetLoanGeneralSettingsQuery = {
+  settings: {
+    general?: {
+      loan?: {
+        general?: {
+          emi?: boolean | null;
+          epi?: boolean | null;
+          flat?: boolean | null;
+          collateralList?: Array<{
+            id?: string | null;
+            name?: string | null;
+            enabled?: boolean | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
+export type GetLoanProductSettingsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetLoanGeneralSettingsQuery = { settings: { general?: { loan?: { general?: { emi?: boolean | null, epi?: boolean | null, flat?: boolean | null, collateralList?: Array<{ id?: string | null, name?: string | null, enabled?: boolean | null } | null> | null } | null } | null } | null } };
-
-export type GetLoanProductSettingsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetLoanProductSettingsQuery = { settings: { general?: { loan?: { productType?: { productTypes?: Array<{ id?: string | null, productType?: string | null, description?: string | null } | null> | null } | null } | null } | null } };
+export type GetLoanProductSettingsQuery = {
+  settings: {
+    general?: {
+      loan?: {
+        productType?: {
+          productTypes?: Array<{
+            id?: string | null;
+            productType?: string | null;
+            description?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetLoanProductSubTypeQueryVariables = Exact<{
   productTypeId?: InputMaybe<Scalars['String']>;
 }>;
 
+export type GetLoanProductSubTypeQuery = {
+  settings: {
+    general?: {
+      loan?: {
+        productType?: {
+          productSubTypes?: Array<{
+            id?: string | null;
+            productSubType?: string | null;
+            productTypeID?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetLoanProductSubTypeQuery = { settings: { general?: { loan?: { productType?: { productSubTypes?: Array<{ id?: string | null, productSubType?: string | null, productTypeID?: string | null } | null> | null } | null } | null } | null } };
+export type GetLoanInsuranceSchemeQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetLoanInsuranceSchemeQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetLoanInsuranceSchemeQuery = {
+  settings: {
+    general?: {
+      loan?: {
+        insuranceSchemes?: Array<{
+          id: string;
+          insuranceCompany?: string | null;
+          insurancePremiumPercent?: number | null;
+          maxAmount?: string | null;
+          maxPercent?: number | null;
+          minAmount?: string | null;
+          paymentFrequency?: Frequency | null;
+          minPercent?: number | null;
+          paymentType?: LoanInsurancePaymentType | null;
+          schemeName?: string | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
+export type GetLoanProductTypeQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetLoanInsuranceSchemeQuery = { settings: { general?: { loan?: { insuranceSchemes?: Array<{ id: string, insuranceCompany?: string | null, insurancePremiumPercent?: number | null, maxAmount?: string | null, maxPercent?: number | null, minAmount?: string | null, paymentFrequency?: Frequency | null, minPercent?: number | null, paymentType?: LoanInsurancePaymentType | null, schemeName?: string | null } | null> | null } | null } | null } };
+export type GetLoanProductTypeQuery = {
+  settings: {
+    general?: {
+      loan?: {
+        productType?: {
+          productTypes?: Array<{
+            id?: string | null;
+            productType?: string | null;
+            description?: string | null;
+          } | null> | null;
+          productSubTypes?: Array<{
+            id?: string | null;
+            productSubType?: string | null;
+            productTypeID?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetLoanProductTypeQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetGeneralMemberSettingsDataQueryVariables = Exact<{ [key: string]: never }>;
 
-
-export type GetLoanProductTypeQuery = { settings: { general?: { loan?: { productType?: { productTypes?: Array<{ id?: string | null, productType?: string | null, description?: string | null } | null> | null, productSubTypes?: Array<{ id?: string | null, productSubType?: string | null, productTypeID?: string | null } | null> | null } | null } | null } | null } };
-
-export type GetGeneralMemberSettingsDataQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetGeneralMemberSettingsDataQuery = { settings: { general?: { KYM?: { general?: { generalMember?: { record?: { memberType?: { individual?: boolean | null, institution?: boolean | null, cooperative?: boolean | null, cooperativeUnion?: boolean | null } | null, risk?: { generalRisk?: number | null, mediumRisk?: number | null, highRisk?: number | null } | null, charge?: Array<{ memberType: KymMemberTypesEnum, ledgerId: string, charge: number } | null> | null, memberCode?: { prefix?: string | null, noOfDigits?: number | null, initialNo?: string | null } | null } | null } | null } | null } | null } | null } };
+export type GetGeneralMemberSettingsDataQuery = {
+  settings: {
+    general?: {
+      KYM?: {
+        general?: {
+          generalMember?: {
+            record?: {
+              memberType?: {
+                individual?: boolean | null;
+                institution?: boolean | null;
+                cooperative?: boolean | null;
+                cooperativeUnion?: boolean | null;
+              } | null;
+              risk?: {
+                generalRisk?: number | null;
+                mediumRisk?: number | null;
+                highRisk?: number | null;
+              } | null;
+              charge?: Array<{
+                memberType: KymMemberTypesEnum;
+                ledgerId: string;
+                charge: number;
+              } | null> | null;
+              memberCode?: {
+                prefix?: string | null;
+                noOfDigits?: number | null;
+                initialNo?: string | null;
+              } | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetPreDefinedFieldsQueryVariables = Exact<{
   filter: PredefinedElementFilter;
 }>;
 
-
-export type GetPreDefinedFieldsQuery = { settings: { form?: { predefined: { details: { data?: { __typename: 'FormField', id: string, name: Record<"local"|"en"|"np",string>, fieldType: FormFieldType, hasOtherField: boolean, order: number, dependsOn?: Array<string | null> | null, isDefault: boolean, options?: Array<{ order: number, id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, isDefault: boolean }> | null } | { __typename: 'FormSection', id: string, name: Record<"local"|"en"|"np",string>, isDefault: boolean, sectionType: FormSectionType, maxSize?: number | null, fields?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: FormFieldType, isDefault: boolean }> | null, subSections?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, search_term?: FormSectionSearchTerm | null }> | null } | null } } } | null } };
+export type GetPreDefinedFieldsQuery = {
+  settings: {
+    form?: {
+      predefined: {
+        details: {
+          data?:
+            | {
+                __typename: 'FormField';
+                id: string;
+                name: Record<'local' | 'en' | 'np', string>;
+                fieldType: FormFieldType;
+                hasOtherField: boolean;
+                order: number;
+                dependsOn?: Array<string | null> | null;
+                isDefault: boolean;
+                options?: Array<{
+                  order: number;
+                  id: string;
+                  name: Record<'local' | 'en' | 'np', string>;
+                  enabled: boolean;
+                  isDefault: boolean;
+                }> | null;
+              }
+            | {
+                __typename: 'FormSection';
+                id: string;
+                name: Record<'local' | 'en' | 'np', string>;
+                isDefault: boolean;
+                sectionType: FormSectionType;
+                maxSize?: number | null;
+                fields?: Array<{
+                  id: string;
+                  name: Record<'local' | 'en' | 'np', string>;
+                  enabled: boolean;
+                  fieldType: FormFieldType;
+                  isDefault: boolean;
+                }> | null;
+                subSections?: Array<{
+                  id: string;
+                  name: Record<'local' | 'en' | 'np', string>;
+                  search_term?: FormSectionSearchTerm | null;
+                }> | null;
+              }
+            | null;
+        };
+      };
+    } | null;
+  };
+};
 
 export type GetCustomFieldsQueryVariables = Exact<{
   kymType: FormCategory;
 }>;
 
-
-export type GetCustomFieldsQuery = { settings: { form?: { custom: { list: { data?: Array<{ __typename: 'FormField', id: string, name: Record<"local"|"en"|"np",string>, fieldType: FormFieldType, hasOtherField: boolean, order: number, dependsOn?: Array<string | null> | null, isDefault: boolean, options?: Array<{ order: number, id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, isDefault: boolean }> | null } | { __typename: 'FormSection', id: string, name: Record<"local"|"en"|"np",string>, isDefault: boolean, sectionType: FormSectionType, maxSize?: number | null, fields?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, enabled: boolean, fieldType: FormFieldType, isDefault: boolean }> | null, subSections?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, search_term?: FormSectionSearchTerm | null }> | null } | null> | null } } } | null } };
+export type GetCustomFieldsQuery = {
+  settings: {
+    form?: {
+      custom: {
+        list: {
+          data?: Array<
+            | {
+                __typename: 'FormField';
+                id: string;
+                name: Record<'local' | 'en' | 'np', string>;
+                fieldType: FormFieldType;
+                hasOtherField: boolean;
+                order: number;
+                dependsOn?: Array<string | null> | null;
+                isDefault: boolean;
+                options?: Array<{
+                  order: number;
+                  id: string;
+                  name: Record<'local' | 'en' | 'np', string>;
+                  enabled: boolean;
+                  isDefault: boolean;
+                }> | null;
+              }
+            | {
+                __typename: 'FormSection';
+                id: string;
+                name: Record<'local' | 'en' | 'np', string>;
+                isDefault: boolean;
+                sectionType: FormSectionType;
+                maxSize?: number | null;
+                fields?: Array<{
+                  id: string;
+                  name: Record<'local' | 'en' | 'np', string>;
+                  enabled: boolean;
+                  fieldType: FormFieldType;
+                  isDefault: boolean;
+                }> | null;
+                subSections?: Array<{
+                  id: string;
+                  name: Record<'local' | 'en' | 'np', string>;
+                  search_term?: FormSectionSearchTerm | null;
+                }> | null;
+              }
+            | null
+          > | null;
+        };
+      };
+    } | null;
+  };
+};
 
 export type GetDeclarationQueryVariables = Exact<{
   kymType: DeclarationFor;
 }>;
 
+export type GetDeclarationQuery = {
+  settings: {
+    declaration: {
+      get?: { data?: { content: Record<'local' | 'en' | 'np', string> } | null } | null;
+    };
+  };
+};
 
-export type GetDeclarationQuery = { settings: { declaration: { get?: { data?: { content: Record<"local"|"en"|"np",string> } | null } | null } } };
+export type GetDepositSettingsIroQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetDepositSettingsIroQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetDepositSettingsIroQuery = {
+  settings: {
+    general?: {
+      deposit?: {
+        iroFormState?: {
+          data?: {
+            iroName?: string | null;
+            iroAddress?: string | null;
+            iroCode?: string | null;
+          } | null;
+          error?:
+            | { __typename: 'AuthorizationError' }
+            | { __typename: 'BadRequestError' }
+            | { __typename: 'NotFoundError' }
+            | { __typename: 'ServerError' }
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
+export type GetDepositSettingsTdsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetDepositSettingsIroQuery = { settings: { general?: { deposit?: { iroFormState?: { data?: { iroName?: string | null, iroAddress?: string | null, iroCode?: string | null } | null, error?: { __typename: 'AuthorizationError' } | { __typename: 'BadRequestError' } | { __typename: 'NotFoundError' } | { __typename: 'ServerError' } | null } | null } | null } | null } };
-
-export type GetDepositSettingsTdsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetDepositSettingsTdsQuery = { settings: { general?: { deposit?: { tdsFormState?: { data?: { individual?: number | null, institution?: number | null, cooperative?: number | null, coopUnion?: number | null } | null, error?: { __typename: 'AuthorizationError' } | { __typename: 'BadRequestError' } | { __typename: 'NotFoundError' } | { __typename: 'ServerError' } | null } | null } | null } | null } };
+export type GetDepositSettingsTdsQuery = {
+  settings: {
+    general?: {
+      deposit?: {
+        tdsFormState?: {
+          data?: {
+            individual?: number | null;
+            institution?: number | null;
+            cooperative?: number | null;
+            coopUnion?: number | null;
+          } | null;
+          error?:
+            | { __typename: 'AuthorizationError' }
+            | { __typename: 'BadRequestError' }
+            | { __typename: 'NotFoundError' }
+            | { __typename: 'ServerError' }
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetDepositProductSettingsListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<DepositProductSearchFilter>;
 }>;
 
-
-export type GetDepositProductSettingsListQuery = { settings: { general?: { depositProduct?: { list?: { totalCount: number, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ node: { id: string, objState: ObjState, productCode: string, productName: string, nature: NatureOfDepositProduct, interest?: number | null, createdDate?: string | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, createdAt: string, modifiedAt: string, createdBy: { id: string, name: string, username: string, userType: UserType }, modifiedBy: { id: string, name: string, username: string, userType: UserType } } }> } | null } | null } | null } };
+export type GetDepositProductSettingsListQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        list?: {
+          totalCount: number;
+          pageInfo: {
+            hasNextPage: boolean;
+            hasPreviousPage: boolean;
+            startCursor?: string | null;
+            endCursor?: string | null;
+          };
+          edges: Array<{
+            node: {
+              id: string;
+              objState: ObjState;
+              productCode: string;
+              productName: string;
+              nature: NatureOfDepositProduct;
+              interest?: number | null;
+              createdDate?: string | null;
+              typeOfMember?: Array<KymMemberTypesEnum | null> | null;
+              createdAt: string;
+              modifiedAt: string;
+              createdBy: { id: string; name: string; username: string; userType: UserType };
+              modifiedBy: { id: string; name: string; username: string; userType: UserType };
+            };
+          }>;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetDepositProductSettingsEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetDepositProductSettingsEditDataQuery = { settings: { general?: { depositProduct?: { formState?: { data?: { productName?: string | null, nature?: NatureOfDepositProduct | null, description?: string | null, typeOfMember?: Array<KymMemberTypesEnum | null> | null, criteria?: Array<CriteriaSection | null> | null, minAge?: number | null, maxAge?: number | null, genderId?: Array<string | null> | null, maritalStatusId?: Array<string | null> | null, educationQualification?: Array<string | null> | null, transactionAllowed?: DepositFrequency | null, noOftransactionAllowed?: number | null, ethnicity?: Array<string | null> | null, occupation?: Array<string | null> | null, foreignEmployment?: boolean | null, natureOfBusinessInstitution?: Array<string | null> | null, natureOFBusinessCoop?: Array<string | null> | null, cooperativeType?: Array<string | null> | null, isForMinors?: boolean | null, depositFrequency?: Frequency | null, penalty?: boolean | null, rebate?: boolean | null, isTenureApplicable?: boolean | null, tenureUnit?: FrequencyTenure | null, minTenureUnitNumber?: number | null, maxTenureUnitNumber?: number | null, ladderRate?: boolean | null, postingFrequency?: DepositFrequency | null, maxPostingFreqDifference?: number | null, accountType?: DefaultAccountType | null, isMandatorySaving?: boolean | null, autoOpen?: boolean | null, allowLoan?: boolean | null, percentageOfDeposit?: number | null, alternativeChannels?: boolean | null, atmFacility?: boolean | null, chequeIssue?: boolean | null, supportMultiple?: boolean | null, staffProduct?: boolean | null, withdrawRestricted?: boolean | null, specifyWithdrawRestriction?: string | null, wealthBuildingProduct?: boolean | null, individualDocuments?: Array<IndividualRequiredDocument | null> | null, institutionDocuments?: Array<InstitutionRequiredDocument | null> | null, isPrematurePenaltyApplicable?: boolean | null, productCode: { prefix: string, initialNo: string, noOfDigits?: number | null }, depositAmount?: { minAmount?: any | null, maxAmount?: any | null } | null, withdrawAmountLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, fixedDepositAmountLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, penaltyData?: { dayAfterInstallmentDate?: number | null, penaltyRate?: number | null, penaltyAmount?: any | null, penaltyLedgerMapping?: string | null } | null, rebateData?: { dayBeforeInstallmentDate?: number | null, noOfInstallment?: number | null, rebateAmount?: any | null, rebateRate?: number | null, rebateLedgerMapping?: string | null } | null, balanceLimit?: { minAmount?: any | null, maxAmount?: any | null } | null, interest?: { minRate?: number | null, maxRate?: number | null, defaultRate?: number | null, ceoAuthority?: number | null, boardAuthority?: number | null, additionalRate?: number | null } | null, ladderRateData?: Array<{ type: string, amount: any, rate: number } | null> | null, serviceCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, accountCloseCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, chequeCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, atmCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, alternativeChannelCharge?: Array<{ serviceName?: string | null, ledgerName?: string | null, amount?: any | null } | null> | null, dormantSetup?: Array<{ duration?: string | null, condition?: string | null } | null> | null, withdrawPenalty?: { penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null, prematurePenalty?: { penaltyDateType?: PrematurePenaltyDateType | null, noOfDays?: number | null, penaltyLedgerMapping?: string | null, penaltyAmount?: any | null, penaltyRate?: number | null } | null } | null } | null } | null } | null } };
+export type GetDepositProductSettingsEditDataQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        formState?: {
+          data?: {
+            productName?: string | null;
+            nature?: NatureOfDepositProduct | null;
+            description?: string | null;
+            typeOfMember?: Array<KymMemberTypesEnum | null> | null;
+            criteria?: Array<CriteriaSection | null> | null;
+            minAge?: number | null;
+            maxAge?: number | null;
+            genderId?: Array<string | null> | null;
+            maritalStatusId?: Array<string | null> | null;
+            educationQualification?: Array<string | null> | null;
+            transactionAllowed?: DepositFrequency | null;
+            noOftransactionAllowed?: number | null;
+            ethnicity?: Array<string | null> | null;
+            occupation?: Array<string | null> | null;
+            foreignEmployment?: boolean | null;
+            natureOfBusinessInstitution?: Array<string | null> | null;
+            natureOFBusinessCoop?: Array<string | null> | null;
+            cooperativeType?: Array<string | null> | null;
+            isForMinors?: boolean | null;
+            depositFrequency?: Frequency | null;
+            penalty?: boolean | null;
+            rebate?: boolean | null;
+            isTenureApplicable?: boolean | null;
+            tenureUnit?: FrequencyTenure | null;
+            minTenureUnitNumber?: number | null;
+            maxTenureUnitNumber?: number | null;
+            ladderRate?: boolean | null;
+            postingFrequency?: DepositFrequency | null;
+            maxPostingFreqDifference?: number | null;
+            accountType?: DefaultAccountType | null;
+            isMandatorySaving?: boolean | null;
+            autoOpen?: boolean | null;
+            allowLoan?: boolean | null;
+            percentageOfDeposit?: number | null;
+            alternativeChannels?: boolean | null;
+            atmFacility?: boolean | null;
+            chequeIssue?: boolean | null;
+            supportMultiple?: boolean | null;
+            staffProduct?: boolean | null;
+            withdrawRestricted?: boolean | null;
+            specifyWithdrawRestriction?: string | null;
+            wealthBuildingProduct?: boolean | null;
+            individualDocuments?: Array<IndividualRequiredDocument | null> | null;
+            institutionDocuments?: Array<InstitutionRequiredDocument | null> | null;
+            isPrematurePenaltyApplicable?: boolean | null;
+            productCode: { prefix: string; initialNo: string; noOfDigits?: number | null };
+            depositAmount?: { minAmount?: any | null; maxAmount?: any | null } | null;
+            withdrawAmountLimit?: { minAmount?: any | null; maxAmount?: any | null } | null;
+            fixedDepositAmountLimit?: { minAmount?: any | null; maxAmount?: any | null } | null;
+            penaltyData?: {
+              dayAfterInstallmentDate?: number | null;
+              penaltyRate?: number | null;
+              penaltyAmount?: any | null;
+              penaltyLedgerMapping?: string | null;
+            } | null;
+            rebateData?: {
+              dayBeforeInstallmentDate?: number | null;
+              noOfInstallment?: number | null;
+              rebateAmount?: any | null;
+              rebateRate?: number | null;
+              rebateLedgerMapping?: string | null;
+            } | null;
+            balanceLimit?: { minAmount?: any | null; maxAmount?: any | null } | null;
+            interest?: {
+              minRate?: number | null;
+              maxRate?: number | null;
+              defaultRate?: number | null;
+              ceoAuthority?: number | null;
+              boardAuthority?: number | null;
+              additionalRate?: number | null;
+            } | null;
+            ladderRateData?: Array<{ type: string; amount: any; rate: number } | null> | null;
+            serviceCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            accountCloseCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            chequeCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            atmCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            alternativeChannelCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            dormantSetup?: Array<{
+              duration?: string | null;
+              condition?: string | null;
+            } | null> | null;
+            withdrawPenalty?: {
+              penaltyLedgerMapping?: string | null;
+              penaltyAmount?: any | null;
+              penaltyRate?: number | null;
+            } | null;
+            prematurePenalty?: {
+              penaltyDateType?: PrematurePenaltyDateType | null;
+              noOfDays?: number | null;
+              penaltyLedgerMapping?: string | null;
+              penaltyAmount?: any | null;
+              penaltyRate?: number | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetSettingsOptionsFieldsQueryVariables = Exact<{
   searchTerm: FormFieldSearchTerm;
   category: FormCategory;
 }>;
 
+export type GetSettingsOptionsFieldsQuery = {
+  form: {
+    options: {
+      predefined?: {
+        data?: Array<{ id: string; name: Record<'local' | 'en' | 'np', string> } | null> | null;
+      } | null;
+    };
+  };
+};
 
-export type GetSettingsOptionsFieldsQuery = { form: { options: { predefined?: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string> } | null> | null } | null } } };
+export type GetSettingsShareBonusDataQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetSettingsShareBonusDataQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetSettingsShareBonusDataQuery = {
+  settings: {
+    general?: {
+      share?: {
+        bonus?: {
+          taxPayer?: TaxPayerOptions | null;
+          taxRate?: number | null;
+          accountMapping?: string | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
+export type GetSettingsShareDividendDataQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetSettingsShareBonusDataQuery = { settings: { general?: { share?: { bonus?: { taxPayer?: TaxPayerOptions | null, taxRate?: number | null, accountMapping?: string | null } | null } | null } | null } };
+export type GetSettingsShareDividendDataQuery = {
+  settings: {
+    general?: {
+      share?: {
+        dividend?: {
+          distributionCondition?: DividendDistributionCondition | null;
+          dividendTransferTreatment?: DividendTransferTreatment | null;
+          accountForFractionalDividends?: string | null;
+          accountForShareDividends?: string | null;
+          organizationFundForDividends?: string | null;
+          dividendRate?: {
+            quarterly?: {
+              firstQuarter?: number | null;
+              secondQuarter?: number | null;
+              thirdQuarter?: number | null;
+              fourthQuarter?: number | null;
+            } | null;
+            monthly?: {
+              firstMonth?: number | null;
+              secondMonth?: number | null;
+              thirdMonth?: number | null;
+              fourthMonth?: number | null;
+              fifthMonth?: number | null;
+              sixthMonth?: number | null;
+              seventhMonth?: number | null;
+              eightMonth?: number | null;
+              ninthMonth?: number | null;
+              tenthMonth?: number | null;
+              eleventhMonth?: number | null;
+              twelfthMonth?: number | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetSettingsShareDividendDataQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetSettingsShareIssueChargesDataQueryVariables = Exact<{ [key: string]: never }>;
 
+export type GetSettingsShareIssueChargesDataQuery = {
+  settings: {
+    general?: {
+      share?: {
+        shareIssueCharges?: {
+          shareCertificate?: Array<{
+            minShare?: number | null;
+            maxShare?: number | null;
+            type?: ShareChargeType | null;
+            charge?: string | null;
+            ledgerMapping?: string | null;
+          } | null> | null;
+          other?: Array<{
+            name?: string | null;
+            minShare?: number | null;
+            maxShare?: number | null;
+            type?: ShareChargeType | null;
+            charge?: string | null;
+            ledgerMapping?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetSettingsShareDividendDataQuery = { settings: { general?: { share?: { dividend?: { distributionCondition?: DividendDistributionCondition | null, dividendTransferTreatment?: DividendTransferTreatment | null, accountForFractionalDividends?: string | null, accountForShareDividends?: string | null, organizationFundForDividends?: string | null, dividendRate?: { quarterly?: { firstQuarter?: number | null, secondQuarter?: number | null, thirdQuarter?: number | null, fourthQuarter?: number | null } | null, monthly?: { firstMonth?: number | null, secondMonth?: number | null, thirdMonth?: number | null, fourthMonth?: number | null, fifthMonth?: number | null, sixthMonth?: number | null, seventhMonth?: number | null, eightMonth?: number | null, ninthMonth?: number | null, tenthMonth?: number | null, eleventhMonth?: number | null, twelfthMonth?: number | null } | null } | null } | null } | null } | null } };
+export type GetLedgerMapingShareQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetSettingsShareIssueChargesDataQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetLedgerMapingShareQuery = {
+  settings: {
+    general?: {
+      chartsOfAccount?: {
+        accountsUnder?: {
+          data?: Array<{
+            id: string;
+            accountCode: string;
+            name: Record<'local' | 'en' | 'np', string>;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
+export type GetSettingsShareReturnChargesDataQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetSettingsShareIssueChargesDataQuery = { settings: { general?: { share?: { shareIssueCharges?: { shareCertificate?: Array<{ minShare?: number | null, maxShare?: number | null, type?: ShareChargeType | null, charge?: string | null, ledgerMapping?: string | null } | null> | null, other?: Array<{ name?: string | null, minShare?: number | null, maxShare?: number | null, type?: ShareChargeType | null, charge?: string | null, ledgerMapping?: string | null } | null> | null } | null } | null } | null } };
+export type GetSettingsShareReturnChargesDataQuery = {
+  settings: {
+    general?: {
+      share?: {
+        shareReturnCharges?: {
+          other?: Array<{
+            name?: string | null;
+            minShare?: number | null;
+            maxShare?: number | null;
+            type?: ShareChargeType | null;
+            charge?: string | null;
+            ledgerMapping?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetLedgerMapingShareQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetSettingsShareGeneralDataQueryVariables = Exact<{ [key: string]: never }>;
 
+export type GetSettingsShareGeneralDataQuery = {
+  settings: {
+    general?: {
+      share?: {
+        general?: {
+          typeOfShare?: TypeOfShare | null;
+          multiplicityFactor?: number | null;
+          minimumQuantityOfShare?: number | null;
+          maximumQuantityOfShare?: number | null;
+          paidUpShareRate?: number | null;
+          shareIssueAuthority?: Array<BranchCategory | null> | null;
+          typeOfShareKitta?: TypeOfShare | null;
+          noOfAuthorisedPaidUpShare?: number | null;
+          noOfIssuedShare?: number | null;
+          startNumber?: number | null;
+          endNumber?: number | null;
+          incrementor?: number | null;
+          noOfDigits?: number | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetLedgerMapingShareQuery = { settings: { general?: { chartsOfAccount?: { accountsUnder?: { data?: Array<{ id: string, accountCode: string, name: Record<"local"|"en"|"np",string> } | null> | null } | null } | null } | null } };
+export type GetSettingsShareTransferDataQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetSettingsShareReturnChargesDataQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetSettingsShareReturnChargesDataQuery = { settings: { general?: { share?: { shareReturnCharges?: { other?: Array<{ name?: string | null, minShare?: number | null, maxShare?: number | null, type?: ShareChargeType | null, charge?: string | null, ledgerMapping?: string | null } | null> | null } | null } | null } | null } };
-
-export type GetSettingsShareGeneralDataQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetSettingsShareGeneralDataQuery = { settings: { general?: { share?: { general?: { typeOfShare?: TypeOfShare | null, multiplicityFactor?: number | null, minimumQuantityOfShare?: number | null, maximumQuantityOfShare?: number | null, paidUpShareRate?: number | null, shareIssueAuthority?: Array<BranchCategory | null> | null, typeOfShareKitta?: TypeOfShare | null, noOfAuthorisedPaidUpShare?: number | null, noOfIssuedShare?: number | null, startNumber?: number | null, endNumber?: number | null, incrementor?: number | null, noOfDigits?: number | null } | null } | null } | null } };
-
-export type GetSettingsShareTransferDataQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetSettingsShareTransferDataQuery = { settings: { general?: { share?: { transfer?: { type?: ShareTransferType | null, accountForShareFund?: string | null, mappedShareLedger?: string | null } | null } | null } | null } };
+export type GetSettingsShareTransferDataQuery = {
+  settings: {
+    general?: {
+      share?: {
+        transfer?: {
+          type?: ShareTransferType | null;
+          accountForShareFund?: string | null;
+          mappedShareLedger?: string | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetSettingsUserListDataQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
   filter?: InputMaybe<MyraUserSearchFilter>;
 }>;
 
-
-export type GetSettingsUserListDataQuery = { settings: { myraUser?: { list?: { totalCount: number, edges?: Array<{ cursor: string, node?: { id: string, objState: ObjState, createdAt: string, modifiedAt: string, name?: string | null, email?: string | null, contactNo?: string | null, gender?: UserGender | null, dob?: string | null, role?: Roles | null, profilePicUrl?: string | null, branch?: { id: string } | null } | null }> | null, pageInfo: PaginationFragment } | null } | null } };
+export type GetSettingsUserListDataQuery = {
+  settings: {
+    myraUser?: {
+      list?: {
+        totalCount: number;
+        edges?: Array<{
+          cursor: string;
+          node?: {
+            id: string;
+            objState: ObjState;
+            createdAt: string;
+            modifiedAt: string;
+            name?: string | null;
+            email?: string | null;
+            contactNo?: string | null;
+            gender?: UserGender | null;
+            dob?: string | null;
+            role?: Roles | null;
+            profilePicUrl?: string | null;
+            branch?: { id: string } | null;
+          } | null;
+        }> | null;
+        pageInfo: PaginationFragment;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetSettingsUserEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetSettingsUserEditDataQuery = { settings: { myraUser?: { formState?: { data?: { name?: string | null, email?: string | null, contactNo?: string | null, gender?: UserGender | null, dob?: string | null, role?: Roles | null, branch?: string | null, identificationSelection?: Array<string | null> | null, isTempAsPermanentAddressSame?: boolean | null, landlordName?: string | null, landlordContact?: string | null, identificationDetails?: Array<{ id?: string | null, idNo?: string | null, idType?: string | null, place?: string | null, date?: string | null } | null> | null, permanentAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, temporaryAddress?: { provinceId?: number | null, districtId?: number | null, localGovernmentId?: number | null, wardNo?: number | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null, profilePicture?: Array<{ identifier?: string | null, url?: string | null } | null> | null } | null } | null } | null } };
+export type GetSettingsUserEditDataQuery = {
+  settings: {
+    myraUser?: {
+      formState?: {
+        data?: {
+          name?: string | null;
+          email?: string | null;
+          contactNo?: string | null;
+          gender?: UserGender | null;
+          dob?: string | null;
+          role?: Roles | null;
+          branch?: string | null;
+          identificationSelection?: Array<string | null> | null;
+          isTempAsPermanentAddressSame?: boolean | null;
+          landlordName?: string | null;
+          landlordContact?: string | null;
+          identificationDetails?: Array<{
+            id?: string | null;
+            idNo?: string | null;
+            idType?: string | null;
+            place?: string | null;
+            date?: string | null;
+          } | null> | null;
+          permanentAddress?: {
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+          temporaryAddress?: {
+            provinceId?: number | null;
+            districtId?: number | null;
+            localGovernmentId?: number | null;
+            wardNo?: number | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+          profilePicture?: Array<{ identifier?: string | null; url?: string | null } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetValuatorQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetValuatorQuery = { settings: { general?: { valuator?: { formState?: { data?: { valuatorName?: string | null, valuatorType?: ValuatorType | null, valuatorId?: string | null, academicQualification?: string | null, valuationLicenseNo?: string | null, renewalDate?: string | null, contractDate?: string | null, insurancePremium?: number | null, mobileNo?: string | null, phoneNo?: string | null, email?: string | null, documents?: Array<string | null> | null, address?: { localGovernmentId?: number | null, districtId?: number | null, provinceId?: number | null, houseNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, wardNo?: number | null, coordinates?: { longitude?: number | null, latitude?: number | null } | null } | null } | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | null } | null } | null } | null } };
+export type GetValuatorQuery = {
+  settings: {
+    general?: {
+      valuator?: {
+        formState?: {
+          data?: {
+            valuatorName?: string | null;
+            valuatorType?: ValuatorType | null;
+            valuatorId?: string | null;
+            academicQualification?: string | null;
+            valuationLicenseNo?: string | null;
+            renewalDate?: string | null;
+            contractDate?: string | null;
+            insurancePremium?: number | null;
+            mobileNo?: string | null;
+            phoneNo?: string | null;
+            email?: string | null;
+            documents?: Array<string | null> | null;
+            address?: {
+              localGovernmentId?: number | null;
+              districtId?: number | null;
+              provinceId?: number | null;
+              houseNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: number | null;
+              coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+            } | null;
+          } | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetValuatorListQueryVariables = Exact<{
   paginate?: InputMaybe<Pagination>;
 }>;
 
+export type GetValuatorListQuery = {
+  settings: {
+    general?: {
+      valuator?: {
+        list?: {
+          totalCount: number;
+          pageInfo?: {
+            hasNextPage: boolean;
+            hasPreviousPage: boolean;
+            startCursor?: string | null;
+            endCursor?: string | null;
+          } | null;
+          edges?: Array<{
+            cursor: string;
+            node?: {
+              id: string;
+              valuatorName?: string | null;
+              valuatorType?: ValuatorType | null;
+              phoneNo?: string | null;
+              contractDate?: string | null;
+              address?: {
+                localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+                district?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                state?: Record<'local' | 'en' | 'np', string> | null;
+                wardNo?: string | null;
+              } | null;
+            } | null;
+          }> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
 
-export type GetValuatorListQuery = { settings: { general?: { valuator?: { list?: { totalCount: number, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null, edges?: Array<{ cursor: string, node?: { id: string, valuatorName?: string | null, valuatorType?: ValuatorType | null, phoneNo?: string | null, contractDate?: string | null, address?: { localGovernment?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, state?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null } | null } | null }> | null } | null } | null } | null } };
+export type GetChartOfAccountsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetChartOfAccountsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetChartOfAccountsQuery = { settings: { general?: { chartsOfAccount?: { class?: { data: Array<{ id: string, name: string }> } | null } | null } | null } };
+export type GetChartOfAccountsQuery = {
+  settings: {
+    general?: {
+      chartsOfAccount?: { class?: { data: Array<{ id: string; name: string }> } | null } | null;
+    } | null;
+  };
+};
 
 export type GetShareBalanceListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
 }>;
 
-
-export type GetShareBalanceListQuery = { share: { balance?: { totalCount: number, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ node: { count: number, amount: number, member: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } } }> } | null } };
+export type GetShareBalanceListQuery = {
+  share: {
+    balance?: {
+      totalCount: number;
+      pageInfo: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      };
+      edges: Array<{
+        node: {
+          count: number;
+          amount: number;
+          member: {
+            id: string;
+            code: string;
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            profilePic?: string | null;
+            profilePicUrl?: string | null;
+          };
+        };
+      }>;
+    } | null;
+  };
+};
 
 export type GetShareRegisterListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
   filter?: InputMaybe<ShareRegisterFilter>;
 }>;
 
-
-export type GetShareRegisterListQuery = { share: { register?: { totalCount: number, edges: Array<{ cursor: string, node: { transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, balance?: number | null, startNumber: number, shareAmount?: number | null, endNumber: number, credit?: number | null, debit?: number | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null } }>, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } | null } };
+export type GetShareRegisterListQuery = {
+  share: {
+    register?: {
+      totalCount: number;
+      edges: Array<{
+        cursor: string;
+        node: {
+          transactionDate?: string | null;
+          transactionDirection: Share_Transaction_Direction;
+          balance?: number | null;
+          startNumber: number;
+          shareAmount?: number | null;
+          endNumber: number;
+          credit?: number | null;
+          debit?: number | null;
+          member?: {
+            id: string;
+            code: string;
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            profilePic?: string | null;
+            profilePicUrl?: string | null;
+          } | null;
+        };
+      }>;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetShareHistoryQueryVariables = Exact<{
   memberId: Scalars['ID'];
 }>;
 
-
-export type GetShareHistoryQuery = { share: { history?: { history?: Array<{ id?: string | null, status?: Share_Status | null, transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, balance?: number | null, shareAmount?: number | null, totalAmount?: number | null, paymentMode?: SharePaymentMode | null, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string } | null, extraFee?: Array<{ name: string, value: number } | null> | null } | null> | null, balance?: { count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null } } | null } | null } };
+export type GetShareHistoryQuery = {
+  share: {
+    history?: {
+      history?: Array<{
+        id?: string | null;
+        status?: Share_Status | null;
+        transactionDate?: string | null;
+        transactionDirection: Share_Transaction_Direction;
+        credit?: number | null;
+        debit?: number | null;
+        startNumber: number;
+        endNumber: number;
+        balance?: number | null;
+        shareAmount?: number | null;
+        totalAmount?: number | null;
+        paymentMode?: SharePaymentMode | null;
+        bankId?: string | null;
+        voucherNumber?: string | null;
+        accountId?: string | null;
+        member?: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          code: string;
+        } | null;
+        extraFee?: Array<{ name: string; value: number } | null> | null;
+      } | null> | null;
+      balance?: {
+        count: number;
+        amount: number;
+        member: { id: string; name?: Record<'local' | 'en' | 'np', string> | null };
+      } | null;
+    } | null;
+  };
+};
 
 export type GetShareChargesQueryVariables = Exact<{
   transactionType: Share_Transaction_Direction;
   shareCount: Scalars['Int'];
 }>;
 
-
-export type GetShareChargesQuery = { share: { charges?: Array<{ id?: string | null, name?: string | null, charge?: string | null } | null> | null } };
+export type GetShareChargesQuery = {
+  share: {
+    charges?: Array<{
+      id?: string | null;
+      name?: string | null;
+      charge?: string | null;
+    } | null> | null;
+  };
+};
 
 export type GetDepositListDataQueryVariables = Exact<{
   filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
-
-export type GetDepositListDataQuery = { transaction: { listDeposit: { totalCount: number, edges?: Array<{ cursor: string, node?: { ID: string, name?: Record<"local"|"en"|"np",string> | null, amount?: string | null, state: TransactionState, paymentMode?: string | null, processedBy?: string | null, date?: string | null, agentName?: string | null, agentId?: string | null, profilePicUrl?: string | null, agentPicUrl?: string | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetDepositListDataQuery = {
+  transaction: {
+    listDeposit: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          ID: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          amount?: string | null;
+          state: TransactionState;
+          paymentMode?: string | null;
+          processedBy?: string | null;
+          date?: string | null;
+          agentName?: string | null;
+          agentId?: string | null;
+          profilePicUrl?: string | null;
+          agentPicUrl?: string | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    };
+  };
+};
 
 export type GetWithdrawListDataQueryVariables = Exact<{
   filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
-
-export type GetWithdrawListDataQuery = { transaction: { listWithdraw: { totalCount: number, edges?: Array<{ cursor: string, node?: { ID: string, name?: Record<"local"|"en"|"np",string> | null, amount?: string | null, state: TransactionState, paymentMode?: string | null, processedBy?: string | null, date?: string | null, profilePicUrl?: string | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetWithdrawListDataQuery = {
+  transaction: {
+    listWithdraw: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          ID: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          amount?: string | null;
+          state: TransactionState;
+          paymentMode?: string | null;
+          processedBy?: string | null;
+          date?: string | null;
+          profilePicUrl?: string | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    };
+  };
+};
 
 export type GetAccountTransferListDataQueryVariables = Exact<{
   filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
 }>;
 
+export type GetAccountTransferListDataQuery = {
+  transaction: {
+    listTransfer: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          ID: string;
+          amount?: string | null;
+          state: TransactionState;
+          transferType: TransferType;
+          date?: string | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    };
+  };
+};
 
-export type GetAccountTransferListDataQuery = { transaction: { listTransfer: { totalCount: number, edges?: Array<{ cursor: string, node?: { ID: string, amount?: string | null, state: TransactionState, transferType: TransferType, date?: string | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
-
-export type GetEndOfDayDateDataQueryVariables = Exact<{ [key: string]: never; }>;
-
+export type GetEndOfDayDateDataQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetEndOfDayDateDataQuery = { transaction: { endOfDayDate: string } };
 
@@ -14415,72 +19664,285 @@ export type GetTellerTransactionListDataQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
 }>;
 
-
-export type GetTellerTransactionListDataQuery = { transaction: { listTellerTransaction: { totalCount: number, edges?: Array<{ cursor: string, node?: { ID: string, transferType: TellerTransferType, srcTeller?: Record<"local"|"en"|"np",string> | null, amount?: string | null, destTeller?: Record<"local"|"en"|"np",string> | null, date?: string | null, srcProfilePic?: string | null, destProfilePic?: string | null, srcProfilePicUrl?: string | null, destProfilePicUrl?: string | null } | null } | null> | null, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } } };
+export type GetTellerTransactionListDataQuery = {
+  transaction: {
+    listTellerTransaction: {
+      totalCount: number;
+      edges?: Array<{
+        cursor: string;
+        node?: {
+          ID: string;
+          transferType: TellerTransferType;
+          srcTeller?: Record<'local' | 'en' | 'np', string> | null;
+          amount?: string | null;
+          destTeller?: Record<'local' | 'en' | 'np', string> | null;
+          date?: string | null;
+          srcProfilePic?: string | null;
+          destProfilePic?: string | null;
+          srcProfilePicUrl?: string | null;
+          destProfilePicUrl?: string | null;
+        } | null;
+      } | null> | null;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+    };
+  };
+};
 
 export type TransactionDepositDetailQueryVariables = Exact<{
   transactionId: Scalars['ID'];
 }>;
 
-
-export type TransactionDepositDetailQuery = { transaction: { viewDeposit?: { data?: { id: string, transactionDate?: string | null, accountName?: string | null, voucherId?: string | null, amount?: string | null, fine?: string | null, rebate?: string | null, totalDepositedAmount?: string | null, status?: ObjState | null, paymentMode?: DepositPaymentType | null, sourceOfFund?: string | null, depositedBy?: DepositedBy | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, objState: ObjState, code: string, type: KymMemberTypesEnum, name?: Record<"local"|"en"|"np",string> | null, contact?: string | null, profilePic?: string | null, profilePicUrl?: string | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
+export type TransactionDepositDetailQuery = {
+  transaction: {
+    viewDeposit?: {
+      data?: {
+        id: string;
+        transactionDate?: string | null;
+        accountName?: string | null;
+        voucherId?: string | null;
+        amount?: string | null;
+        fine?: string | null;
+        rebate?: string | null;
+        totalDepositedAmount?: string | null;
+        status?: ObjState | null;
+        paymentMode?: DepositPaymentType | null;
+        sourceOfFund?: string | null;
+        depositedBy?: DepositedBy | null;
+        transactionBranch?: string | null;
+        teller?: string | null;
+        totalDebit?: string | null;
+        totalCredit?: string | null;
+        member?: {
+          id: string;
+          objState: ObjState;
+          code: string;
+          type: KymMemberTypesEnum;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          contact?: string | null;
+          profilePic?: string | null;
+          profilePicUrl?: string | null;
+        } | null;
+        glTransaction?: Array<{
+          account: string;
+          debit?: string | null;
+          credit?: string | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type TransactionWithdrawDetailQueryVariables = Exact<{
   transactionId: Scalars['ID'];
 }>;
 
-
-export type TransactionWithdrawDetailQuery = { transaction: { viewWithdraw?: { data?: { id: string, transactionDate?: string | null, accountName?: string | null, chequeNo?: string | null, withdrawAmount?: string | null, withdrawWith?: WithdrawWith | null, fine?: string | null, totalWithdrawnAmount?: string | null, status?: ObjState | null, paymentMode?: WithdrawPaymentType | null, withdrawnBy?: WithdrawBy | null, marketRepId?: string | null, marketRepName?: string | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
+export type TransactionWithdrawDetailQuery = {
+  transaction: {
+    viewWithdraw?: {
+      data?: {
+        id: string;
+        transactionDate?: string | null;
+        accountName?: string | null;
+        chequeNo?: string | null;
+        withdrawAmount?: string | null;
+        withdrawWith?: WithdrawWith | null;
+        fine?: string | null;
+        totalWithdrawnAmount?: string | null;
+        status?: ObjState | null;
+        paymentMode?: WithdrawPaymentType | null;
+        withdrawnBy?: WithdrawBy | null;
+        marketRepId?: string | null;
+        marketRepName?: string | null;
+        transactionBranch?: string | null;
+        teller?: string | null;
+        totalDebit?: string | null;
+        totalCredit?: string | null;
+        member?: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          profilePic?: string | null;
+          profilePicUrl?: string | null;
+        } | null;
+        glTransaction?: Array<{
+          account: string;
+          debit?: string | null;
+          credit?: string | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type TransactionAccountTransferDetailQueryVariables = Exact<{
   transactionId: Scalars['ID'];
 }>;
 
-
-export type TransactionAccountTransferDetailQuery = { transaction: { viewAccountTransfer?: { data?: { id: string, transactionDate?: string | null, transferAmount?: string | null, transferType?: TransferType | null, withdrawnBy?: string | null, withdrawnSlipNo?: string | null, transactionBranch?: string | null, objState?: ObjState | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null, sourceAccount?: { id: string, accountName?: string | null } | null, destinationAccount?: { id: string, accountName?: string | null } | null, recipientMember?: { id: string, name?: Record<"local"|"en"|"np",string> | null } | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
+export type TransactionAccountTransferDetailQuery = {
+  transaction: {
+    viewAccountTransfer?: {
+      data?: {
+        id: string;
+        transactionDate?: string | null;
+        transferAmount?: string | null;
+        transferType?: TransferType | null;
+        withdrawnBy?: string | null;
+        withdrawnSlipNo?: string | null;
+        transactionBranch?: string | null;
+        objState?: ObjState | null;
+        teller?: string | null;
+        totalDebit?: string | null;
+        totalCredit?: string | null;
+        member?: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          profilePic?: string | null;
+          profilePicUrl?: string | null;
+        } | null;
+        sourceAccount?: { id: string; accountName?: string | null } | null;
+        destinationAccount?: { id: string; accountName?: string | null } | null;
+        recipientMember?: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+        } | null;
+        glTransaction?: Array<{
+          account: string;
+          debit?: string | null;
+          credit?: string | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type AgentTransactionDetailQueryVariables = Exact<{
   agentId: Scalars['ID'];
   date: Scalars['String'];
 }>;
 
-
-export type AgentTransactionDetailQuery = { transaction: { viewAgentList?: { data?: { transactionId: string, transactionDate?: string | null, status: string, totalAmount?: string | null, assignedMember?: Array<{ member?: string | null, account?: string | null, amount?: string | null } | null> | null } | null } | null } };
+export type AgentTransactionDetailQuery = {
+  transaction: {
+    viewAgentList?: {
+      data?: {
+        transactionId: string;
+        transactionDate?: string | null;
+        status: string;
+        totalAmount?: string | null;
+        assignedMember?: Array<{
+          member?: string | null;
+          account?: string | null;
+          amount?: string | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetAgentDetailQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
-
-export type GetAgentDetailQuery = { transaction: { agentDetail?: { data?: { id?: string | null, name?: string | null, branch?: string | null, totalMembers?: number | null, profilePicUrl?: string | null } | null } | null } };
+export type GetAgentDetailQuery = {
+  transaction: {
+    agentDetail?: {
+      data?: {
+        id?: string | null;
+        name?: string | null;
+        branch?: string | null;
+        totalMembers?: number | null;
+        profilePicUrl?: string | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type LoanRepaymentDetailQueryVariables = Exact<{
   paymentId: Scalars['ID'];
 }>;
 
-
-export type LoanRepaymentDetailQuery = { transaction: { viewLoanRepayment?: { data?: { repaymentId: string, loanSubType?: string | null, loanAccountId?: string | null, loanAccountName?: string | null, repaymentDate?: string | null, installmentNo?: string | null, installmentAmount?: string | null, fine?: string | null, totalRepaymentAmount?: string | null, objState: string, paymentMode?: string | null, transactionBranch?: string | null, teller?: string | null, totalDebit?: string | null, totalCredit?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null } | null, installmentDetails?: Array<{ installmentNo?: number | null, payment?: string | null, principalAmount?: string | null, interestAmount?: string | null } | null> | null, glTransaction?: Array<{ account: string, debit?: string | null, credit?: string | null } | null> | null } | null } | null } };
+export type LoanRepaymentDetailQuery = {
+  transaction: {
+    viewLoanRepayment?: {
+      data?: {
+        repaymentId: string;
+        loanSubType?: string | null;
+        loanAccountId?: string | null;
+        loanAccountName?: string | null;
+        repaymentDate?: string | null;
+        installmentNo?: string | null;
+        installmentAmount?: string | null;
+        fine?: string | null;
+        totalRepaymentAmount?: string | null;
+        objState: string;
+        paymentMode?: string | null;
+        transactionBranch?: string | null;
+        teller?: string | null;
+        totalDebit?: string | null;
+        totalCredit?: string | null;
+        member?: {
+          id: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          profilePicUrl?: string | null;
+        } | null;
+        installmentDetails?: Array<{
+          installmentNo?: number | null;
+          payment?: string | null;
+          principalAmount?: string | null;
+          interestAmount?: string | null;
+        } | null> | null;
+        glTransaction?: Array<{
+          account: string;
+          debit?: string | null;
+          credit?: string | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
 
 export type GetPastSlipsListQueryVariables = Exact<{
   accountId: Scalars['ID'];
 }>;
 
-
-export type GetPastSlipsListQuery = { withdrawSlip: { listPastSlips?: { data?: Array<{ slipNumber: string, state: SlipState, date?: Record<"local"|"en"|"np",string> | null } | null> | null } | null } };
+export type GetPastSlipsListQuery = {
+  withdrawSlip: {
+    listPastSlips?: {
+      data?: Array<{
+        slipNumber: string;
+        state: SlipState;
+        date?: Record<'local' | 'en' | 'np', string> | null;
+      } | null> | null;
+    } | null;
+  };
+};
 
 export type GetAvailableSlipsListQueryVariables = Exact<{
   accountId: Scalars['ID'];
 }>;
 
-
-export type GetAvailableSlipsListQuery = { withdrawSlip: { listAvailableSlips?: { data?: Array<{ slipNumber: string, state: SlipState, date?: Record<"local"|"en"|"np",string> | null } | null> | null } | null } };
+export type GetAvailableSlipsListQuery = {
+  withdrawSlip: {
+    listAvailableSlips?: {
+      data?: Array<{
+        slipNumber: string;
+        state: SlipState;
+        date?: Record<'local' | 'en' | 'np', string> | null;
+      } | null> | null;
+    } | null;
+  };
+};
 
 export type GetAvailableRangeQueryVariables = Exact<{
   count: Scalars['Int'];
 }>;
 
-
-export type GetAvailableRangeQuery = { withdrawSlip: { getAvailableRange?: { range?: { from: string, to: string } | null } | null } };
+export type GetAvailableRangeQuery = {
+  withdrawSlip: { getAvailableRange?: { range?: { from: string; to: string } | null } | null };
+};
 
 export const MutationErrorFragmentDoc = `
     fragment MutationError on MutationError {
@@ -14673,15 +20135,26 @@ export const SetInvestmentAccountDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetInvestmentAccountDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetInvestmentAccountDataMutation, TError, SetInvestmentAccountDataMutationVariables, TContext>) =>
-    useMutation<SetInvestmentAccountDataMutation, TError, SetInvestmentAccountDataMutationVariables, TContext>(
-      ['setInvestmentAccountData'],
-      useAxios<SetInvestmentAccountDataMutation, SetInvestmentAccountDataMutationVariables>(SetInvestmentAccountDataDocument),
-      options
-    );
+export const useSetInvestmentAccountDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetInvestmentAccountDataMutation,
+    TError,
+    SetInvestmentAccountDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetInvestmentAccountDataMutation,
+    TError,
+    SetInvestmentAccountDataMutationVariables,
+    TContext
+  >(
+    ['setInvestmentAccountData'],
+    useAxios<SetInvestmentAccountDataMutation, SetInvestmentAccountDataMutationVariables>(
+      SetInvestmentAccountDataDocument
+    ),
+    options
+  );
 export const SetInvestmentEntryDataDocument = `
     mutation setInvestmentEntryData($id: ID!, $data: InvestmentEntryInput!) {
   accounting {
@@ -14696,15 +20169,26 @@ export const SetInvestmentEntryDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetInvestmentEntryDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetInvestmentEntryDataMutation, TError, SetInvestmentEntryDataMutationVariables, TContext>) =>
-    useMutation<SetInvestmentEntryDataMutation, TError, SetInvestmentEntryDataMutationVariables, TContext>(
-      ['setInvestmentEntryData'],
-      useAxios<SetInvestmentEntryDataMutation, SetInvestmentEntryDataMutationVariables>(SetInvestmentEntryDataDocument),
-      options
-    );
+export const useSetInvestmentEntryDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetInvestmentEntryDataMutation,
+    TError,
+    SetInvestmentEntryDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetInvestmentEntryDataMutation,
+    TError,
+    SetInvestmentEntryDataMutationVariables,
+    TContext
+  >(
+    ['setInvestmentEntryData'],
+    useAxios<SetInvestmentEntryDataMutation, SetInvestmentEntryDataMutationVariables>(
+      SetInvestmentEntryDataDocument
+    ),
+    options
+  );
 export const SetInvestmentTransactionDataDocument = `
     mutation setInvestmentTransactionData($data: InvestmentTransactionInput!) {
   accounting {
@@ -14719,15 +20203,26 @@ export const SetInvestmentTransactionDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetInvestmentTransactionDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetInvestmentTransactionDataMutation, TError, SetInvestmentTransactionDataMutationVariables, TContext>) =>
-    useMutation<SetInvestmentTransactionDataMutation, TError, SetInvestmentTransactionDataMutationVariables, TContext>(
-      ['setInvestmentTransactionData'],
-      useAxios<SetInvestmentTransactionDataMutation, SetInvestmentTransactionDataMutationVariables>(SetInvestmentTransactionDataDocument),
-      options
-    );
+export const useSetInvestmentTransactionDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetInvestmentTransactionDataMutation,
+    TError,
+    SetInvestmentTransactionDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetInvestmentTransactionDataMutation,
+    TError,
+    SetInvestmentTransactionDataMutationVariables,
+    TContext
+  >(
+    ['setInvestmentTransactionData'],
+    useAxios<SetInvestmentTransactionDataMutation, SetInvestmentTransactionDataMutationVariables>(
+      SetInvestmentTransactionDataDocument
+    ),
+    options
+  );
 export const SetSalesCustomerDataDocument = `
     mutation setSalesCustomerData($id: ID!, $data: SalesCustomerInput!) {
   accounting {
@@ -14742,15 +20237,26 @@ export const SetSalesCustomerDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetSalesCustomerDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetSalesCustomerDataMutation, TError, SetSalesCustomerDataMutationVariables, TContext>) =>
-    useMutation<SetSalesCustomerDataMutation, TError, SetSalesCustomerDataMutationVariables, TContext>(
-      ['setSalesCustomerData'],
-      useAxios<SetSalesCustomerDataMutation, SetSalesCustomerDataMutationVariables>(SetSalesCustomerDataDocument),
-      options
-    );
+export const useSetSalesCustomerDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSalesCustomerDataMutation,
+    TError,
+    SetSalesCustomerDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSalesCustomerDataMutation,
+    TError,
+    SetSalesCustomerDataMutationVariables,
+    TContext
+  >(
+    ['setSalesCustomerData'],
+    useAxios<SetSalesCustomerDataMutation, SetSalesCustomerDataMutationVariables>(
+      SetSalesCustomerDataDocument
+    ),
+    options
+  );
 export const SetSalesSaleEntryDataDocument = `
     mutation setSalesSaleEntryData($id: ID!, $data: SalesSaleEntryInput!) {
   accounting {
@@ -14765,15 +20271,26 @@ export const SetSalesSaleEntryDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetSalesSaleEntryDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetSalesSaleEntryDataMutation, TError, SetSalesSaleEntryDataMutationVariables, TContext>) =>
-    useMutation<SetSalesSaleEntryDataMutation, TError, SetSalesSaleEntryDataMutationVariables, TContext>(
-      ['setSalesSaleEntryData'],
-      useAxios<SetSalesSaleEntryDataMutation, SetSalesSaleEntryDataMutationVariables>(SetSalesSaleEntryDataDocument),
-      options
-    );
+export const useSetSalesSaleEntryDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSalesSaleEntryDataMutation,
+    TError,
+    SetSalesSaleEntryDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSalesSaleEntryDataMutation,
+    TError,
+    SetSalesSaleEntryDataMutationVariables,
+    TContext
+  >(
+    ['setSalesSaleEntryData'],
+    useAxios<SetSalesSaleEntryDataMutation, SetSalesSaleEntryDataMutationVariables>(
+      SetSalesSaleEntryDataDocument
+    ),
+    options
+  );
 export const SetSalesCreditNoteDataDocument = `
     mutation setSalesCreditNoteData($id: ID!, $data: SalesCreditNoteInput!) {
   accounting {
@@ -14788,15 +20305,26 @@ export const SetSalesCreditNoteDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetSalesCreditNoteDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetSalesCreditNoteDataMutation, TError, SetSalesCreditNoteDataMutationVariables, TContext>) =>
-    useMutation<SetSalesCreditNoteDataMutation, TError, SetSalesCreditNoteDataMutationVariables, TContext>(
-      ['setSalesCreditNoteData'],
-      useAxios<SetSalesCreditNoteDataMutation, SetSalesCreditNoteDataMutationVariables>(SetSalesCreditNoteDataDocument),
-      options
-    );
+export const useSetSalesCreditNoteDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSalesCreditNoteDataMutation,
+    TError,
+    SetSalesCreditNoteDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSalesCreditNoteDataMutation,
+    TError,
+    SetSalesCreditNoteDataMutationVariables,
+    TContext
+  >(
+    ['setSalesCreditNoteData'],
+    useAxios<SetSalesCreditNoteDataMutation, SetSalesCreditNoteDataMutationVariables>(
+      SetSalesCreditNoteDataDocument
+    ),
+    options
+  );
 export const SetSalesCustomerPaymentDataDocument = `
     mutation setSalesCustomerPaymentData($id: ID!, $data: SalesCustomerPaymentInput!) {
   accounting {
@@ -14811,15 +20339,26 @@ export const SetSalesCustomerPaymentDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetSalesCustomerPaymentDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetSalesCustomerPaymentDataMutation, TError, SetSalesCustomerPaymentDataMutationVariables, TContext>) =>
-    useMutation<SetSalesCustomerPaymentDataMutation, TError, SetSalesCustomerPaymentDataMutationVariables, TContext>(
-      ['setSalesCustomerPaymentData'],
-      useAxios<SetSalesCustomerPaymentDataMutation, SetSalesCustomerPaymentDataMutationVariables>(SetSalesCustomerPaymentDataDocument),
-      options
-    );
+export const useSetSalesCustomerPaymentDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSalesCustomerPaymentDataMutation,
+    TError,
+    SetSalesCustomerPaymentDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSalesCustomerPaymentDataMutation,
+    TError,
+    SetSalesCustomerPaymentDataMutationVariables,
+    TContext
+  >(
+    ['setSalesCustomerPaymentData'],
+    useAxios<SetSalesCustomerPaymentDataMutation, SetSalesCustomerPaymentDataMutationVariables>(
+      SetSalesCustomerPaymentDataDocument
+    ),
+    options
+  );
 export const SetAccountCloseDataDocument = `
     mutation setAccountCloseData($data: DepositAccountClose) {
   account {
@@ -14833,15 +20372,21 @@ export const SetAccountCloseDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetAccountCloseDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetAccountCloseDataMutation, TError, SetAccountCloseDataMutationVariables, TContext>) =>
-    useMutation<SetAccountCloseDataMutation, TError, SetAccountCloseDataMutationVariables, TContext>(
-      ['setAccountCloseData'],
-      useAxios<SetAccountCloseDataMutation, SetAccountCloseDataMutationVariables>(SetAccountCloseDataDocument),
-      options
-    );
+export const useSetAccountCloseDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAccountCloseDataMutation,
+    TError,
+    SetAccountCloseDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetAccountCloseDataMutation, TError, SetAccountCloseDataMutationVariables, TContext>(
+    ['setAccountCloseData'],
+    useAxios<SetAccountCloseDataMutation, SetAccountCloseDataMutationVariables>(
+      SetAccountCloseDataDocument
+    ),
+    options
+  );
 export const SetAccountOpenDataDocument = `
     mutation setAccountOpenData($id: ID!, $data: DepositLoanAccountInput!) {
   account {
@@ -14854,15 +20399,21 @@ export const SetAccountOpenDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetAccountOpenDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetAccountOpenDataMutation, TError, SetAccountOpenDataMutationVariables, TContext>) =>
-    useMutation<SetAccountOpenDataMutation, TError, SetAccountOpenDataMutationVariables, TContext>(
-      ['setAccountOpenData'],
-      useAxios<SetAccountOpenDataMutation, SetAccountOpenDataMutationVariables>(SetAccountOpenDataDocument),
-      options
-    );
+export const useSetAccountOpenDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAccountOpenDataMutation,
+    TError,
+    SetAccountOpenDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetAccountOpenDataMutation, TError, SetAccountOpenDataMutationVariables, TContext>(
+    ['setAccountOpenData'],
+    useAxios<SetAccountOpenDataMutation, SetAccountOpenDataMutationVariables>(
+      SetAccountOpenDataDocument
+    ),
+    options
+  );
 export const SetAccountDocumentDataDocument = `
     mutation setAccountDocumentData($subscriptionId: String!, $fieldId: String!, $identifiers: [String!]!) {
   document {
@@ -14874,15 +20425,26 @@ export const SetAccountDocumentDataDocument = `
   }
 }
     `;
-export const useSetAccountDocumentDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetAccountDocumentDataMutation, TError, SetAccountDocumentDataMutationVariables, TContext>) =>
-    useMutation<SetAccountDocumentDataMutation, TError, SetAccountDocumentDataMutationVariables, TContext>(
-      ['setAccountDocumentData'],
-      useAxios<SetAccountDocumentDataMutation, SetAccountDocumentDataMutationVariables>(SetAccountDocumentDataDocument),
-      options
-    );
+export const useSetAccountDocumentDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAccountDocumentDataMutation,
+    TError,
+    SetAccountDocumentDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAccountDocumentDataMutation,
+    TError,
+    SetAccountDocumentDataMutationVariables,
+    TContext
+  >(
+    ['setAccountDocumentData'],
+    useAxios<SetAccountDocumentDataMutation, SetAccountDocumentDataMutationVariables>(
+      SetAccountDocumentDataDocument
+    ),
+    options
+  );
 export const SetIssueNewSlipDocument = `
     mutation setIssueNewSlip($accountId: ID!, $count: Int!) {
   withdrawSlip {
@@ -14895,15 +20457,19 @@ export const SetIssueNewSlipDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetIssueNewSlipMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetIssueNewSlipMutation, TError, SetIssueNewSlipMutationVariables, TContext>) =>
-    useMutation<SetIssueNewSlipMutation, TError, SetIssueNewSlipMutationVariables, TContext>(
-      ['setIssueNewSlip'],
-      useAxios<SetIssueNewSlipMutation, SetIssueNewSlipMutationVariables>(SetIssueNewSlipDocument),
-      options
-    );
+export const useSetIssueNewSlipMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetIssueNewSlipMutation,
+    TError,
+    SetIssueNewSlipMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetIssueNewSlipMutation, TError, SetIssueNewSlipMutationVariables, TContext>(
+    ['setIssueNewSlip'],
+    useAxios<SetIssueNewSlipMutation, SetIssueNewSlipMutationVariables>(SetIssueNewSlipDocument),
+    options
+  );
 export const SetAddMemberToAgentDataDocument = `
     mutation setAddMemberToAgentData($agentId: String!, $data: AssignMembersInput, $override: Boolean) {
   transaction {
@@ -14918,15 +20484,26 @@ export const SetAddMemberToAgentDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetAddMemberToAgentDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetAddMemberToAgentDataMutation, TError, SetAddMemberToAgentDataMutationVariables, TContext>) =>
-    useMutation<SetAddMemberToAgentDataMutation, TError, SetAddMemberToAgentDataMutationVariables, TContext>(
-      ['setAddMemberToAgentData'],
-      useAxios<SetAddMemberToAgentDataMutation, SetAddMemberToAgentDataMutationVariables>(SetAddMemberToAgentDataDocument),
-      options
-    );
+export const useSetAddMemberToAgentDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAddMemberToAgentDataMutation,
+    TError,
+    SetAddMemberToAgentDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAddMemberToAgentDataMutation,
+    TError,
+    SetAddMemberToAgentDataMutationVariables,
+    TContext
+  >(
+    ['setAddMemberToAgentData'],
+    useAxios<SetAddMemberToAgentDataMutation, SetAddMemberToAgentDataMutationVariables>(
+      SetAddMemberToAgentDataDocument
+    ),
+    options
+  );
 export const SetAgentTodayListDataDocument = `
     mutation setAgentTodayListData($id: ID!, $data: [AgentTodayListInput]) {
   transaction {
@@ -14938,15 +20515,26 @@ export const SetAgentTodayListDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetAgentTodayListDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetAgentTodayListDataMutation, TError, SetAgentTodayListDataMutationVariables, TContext>) =>
-    useMutation<SetAgentTodayListDataMutation, TError, SetAgentTodayListDataMutationVariables, TContext>(
-      ['setAgentTodayListData'],
-      useAxios<SetAgentTodayListDataMutation, SetAgentTodayListDataMutationVariables>(SetAgentTodayListDataDocument),
-      options
-    );
+export const useSetAgentTodayListDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAgentTodayListDataMutation,
+    TError,
+    SetAgentTodayListDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAgentTodayListDataMutation,
+    TError,
+    SetAgentTodayListDataMutationVariables,
+    TContext
+  >(
+    ['setAgentTodayListData'],
+    useAxios<SetAgentTodayListDataMutation, SetAgentTodayListDataMutationVariables>(
+      SetAgentTodayListDataDocument
+    ),
+    options
+  );
 export const SetAgentTodayDepositDataDocument = `
     mutation setAgentTodayDepositData($id: ID!, $data: [AgentTodayListInput]) {
   transaction {
@@ -14958,15 +20546,26 @@ export const SetAgentTodayDepositDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetAgentTodayDepositDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetAgentTodayDepositDataMutation, TError, SetAgentTodayDepositDataMutationVariables, TContext>) =>
-    useMutation<SetAgentTodayDepositDataMutation, TError, SetAgentTodayDepositDataMutationVariables, TContext>(
-      ['setAgentTodayDepositData'],
-      useAxios<SetAgentTodayDepositDataMutation, SetAgentTodayDepositDataMutationVariables>(SetAgentTodayDepositDataDocument),
-      options
-    );
+export const useSetAgentTodayDepositDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAgentTodayDepositDataMutation,
+    TError,
+    SetAgentTodayDepositDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAgentTodayDepositDataMutation,
+    TError,
+    SetAgentTodayDepositDataMutationVariables,
+    TContext
+  >(
+    ['setAgentTodayDepositData'],
+    useAxios<SetAgentTodayDepositDataMutation, SetAgentTodayDepositDataMutationVariables>(
+      SetAgentTodayDepositDataDocument
+    ),
+    options
+  );
 export const LoginDocument = `
     mutation login($data: LoginInput!) {
   auth {
@@ -15029,15 +20628,14 @@ export const LoginDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useLoginMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>) =>
-    useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
-      ['login'],
-      useAxios<LoginMutation, LoginMutationVariables>(LoginDocument),
-      options
-    );
+export const useLoginMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>
+) =>
+  useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
+    ['login'],
+    useAxios<LoginMutation, LoginMutationVariables>(LoginDocument),
+    options
+  );
 export const RefreshDocument = `
     mutation refresh($refreshToken: String!) {
   auth {
@@ -15053,15 +20651,14 @@ export const RefreshDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useRefreshMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<RefreshMutation, TError, RefreshMutationVariables, TContext>) =>
-    useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
-      ['refresh'],
-      useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
-      options
-    );
+export const useRefreshMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<RefreshMutation, TError, RefreshMutationVariables, TContext>
+) =>
+  useMutation<RefreshMutation, TError, RefreshMutationVariables, TContext>(
+    ['refresh'],
+    useAxios<RefreshMutation, RefreshMutationVariables>(RefreshDocument),
+    options
+  );
 export const ResetPasswordDocument = `
     mutation resetPassword($userId: String!, $newPassword: String!) {
   user {
@@ -15074,15 +20671,19 @@ export const ResetPasswordDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useResetPasswordMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<ResetPasswordMutation, TError, ResetPasswordMutationVariables, TContext>) =>
-    useMutation<ResetPasswordMutation, TError, ResetPasswordMutationVariables, TContext>(
-      ['resetPassword'],
-      useAxios<ResetPasswordMutation, ResetPasswordMutationVariables>(ResetPasswordDocument),
-      options
-    );
+export const useResetPasswordMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ResetPasswordMutation,
+    TError,
+    ResetPasswordMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ResetPasswordMutation, TError, ResetPasswordMutationVariables, TContext>(
+    ['resetPassword'],
+    useAxios<ResetPasswordMutation, ResetPasswordMutationVariables>(ResetPasswordDocument),
+    options
+  );
 export const AddNewAccountInCoaDocument = `
     mutation addNewAccountInCOA($data: AddCOAAccountInput!) {
   settings {
@@ -15099,15 +20700,21 @@ export const AddNewAccountInCoaDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useAddNewAccountInCoaMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<AddNewAccountInCoaMutation, TError, AddNewAccountInCoaMutationVariables, TContext>) =>
-    useMutation<AddNewAccountInCoaMutation, TError, AddNewAccountInCoaMutationVariables, TContext>(
-      ['addNewAccountInCOA'],
-      useAxios<AddNewAccountInCoaMutation, AddNewAccountInCoaMutationVariables>(AddNewAccountInCoaDocument),
-      options
-    );
+export const useAddNewAccountInCoaMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddNewAccountInCoaMutation,
+    TError,
+    AddNewAccountInCoaMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddNewAccountInCoaMutation, TError, AddNewAccountInCoaMutationVariables, TContext>(
+    ['addNewAccountInCOA'],
+    useAxios<AddNewAccountInCoaMutation, AddNewAccountInCoaMutationVariables>(
+      AddNewAccountInCoaDocument
+    ),
+    options
+  );
 export const DeleteCoaDocument = `
     mutation deleteCOA($id: ID!) {
   settings {
@@ -15121,15 +20728,14 @@ export const DeleteCoaDocument = `
   }
 }
     `;
-export const useDeleteCoaMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteCoaMutation, TError, DeleteCoaMutationVariables, TContext>) =>
-    useMutation<DeleteCoaMutation, TError, DeleteCoaMutationVariables, TContext>(
-      ['deleteCOA'],
-      useAxios<DeleteCoaMutation, DeleteCoaMutationVariables>(DeleteCoaDocument),
-      options
-    );
+export const useDeleteCoaMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<DeleteCoaMutation, TError, DeleteCoaMutationVariables, TContext>
+) =>
+  useMutation<DeleteCoaMutation, TError, DeleteCoaMutationVariables, TContext>(
+    ['deleteCOA'],
+    useAxios<DeleteCoaMutation, DeleteCoaMutationVariables>(DeleteCoaDocument),
+    options
+  );
 export const SetCooperativeDataDocument = `
     mutation setCooperativeData($id: ID!, $data: KymCooperativeFormInput!) {
   members {
@@ -15141,15 +20747,21 @@ export const SetCooperativeDataDocument = `
   }
 }
     `;
-export const useSetCooperativeDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetCooperativeDataMutation, TError, SetCooperativeDataMutationVariables, TContext>) =>
-    useMutation<SetCooperativeDataMutation, TError, SetCooperativeDataMutationVariables, TContext>(
-      ['setCooperativeData'],
-      useAxios<SetCooperativeDataMutation, SetCooperativeDataMutationVariables>(SetCooperativeDataDocument),
-      options
-    );
+export const useSetCooperativeDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetCooperativeDataMutation,
+    TError,
+    SetCooperativeDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetCooperativeDataMutation, TError, SetCooperativeDataMutationVariables, TContext>(
+    ['setCooperativeData'],
+    useAxios<SetCooperativeDataMutation, SetCooperativeDataMutationVariables>(
+      SetCooperativeDataDocument
+    ),
+    options
+  );
 export const SetCoopAccOperatorDataDocument = `
     mutation setCOOPAccOperatorData($id: ID!, $accOperatorId: ID!, $data: KymCoopAccountOperatorDetailsFormInput!) {
   members {
@@ -15163,15 +20775,26 @@ export const SetCoopAccOperatorDataDocument = `
   }
 }
     `;
-export const useSetCoopAccOperatorDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetCoopAccOperatorDataMutation, TError, SetCoopAccOperatorDataMutationVariables, TContext>) =>
-    useMutation<SetCoopAccOperatorDataMutation, TError, SetCoopAccOperatorDataMutationVariables, TContext>(
-      ['setCOOPAccOperatorData'],
-      useAxios<SetCoopAccOperatorDataMutation, SetCoopAccOperatorDataMutationVariables>(SetCoopAccOperatorDataDocument),
-      options
-    );
+export const useSetCoopAccOperatorDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetCoopAccOperatorDataMutation,
+    TError,
+    SetCoopAccOperatorDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetCoopAccOperatorDataMutation,
+    TError,
+    SetCoopAccOperatorDataMutationVariables,
+    TContext
+  >(
+    ['setCOOPAccOperatorData'],
+    useAxios<SetCoopAccOperatorDataMutation, SetCoopAccOperatorDataMutationVariables>(
+      SetCoopAccOperatorDataDocument
+    ),
+    options
+  );
 export const DeleteCoopAccOperatorDataDocument = `
     mutation deleteCOOPAccOperatorData($id: ID!, $accOperatorId: ID!) {
   members {
@@ -15185,15 +20808,26 @@ export const DeleteCoopAccOperatorDataDocument = `
   }
 }
     `;
-export const useDeleteCoopAccOperatorDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteCoopAccOperatorDataMutation, TError, DeleteCoopAccOperatorDataMutationVariables, TContext>) =>
-    useMutation<DeleteCoopAccOperatorDataMutation, TError, DeleteCoopAccOperatorDataMutationVariables, TContext>(
-      ['deleteCOOPAccOperatorData'],
-      useAxios<DeleteCoopAccOperatorDataMutation, DeleteCoopAccOperatorDataMutationVariables>(DeleteCoopAccOperatorDataDocument),
-      options
-    );
+export const useDeleteCoopAccOperatorDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteCoopAccOperatorDataMutation,
+    TError,
+    DeleteCoopAccOperatorDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteCoopAccOperatorDataMutation,
+    TError,
+    DeleteCoopAccOperatorDataMutationVariables,
+    TContext
+  >(
+    ['deleteCOOPAccOperatorData'],
+    useAxios<DeleteCoopAccOperatorDataMutation, DeleteCoopAccOperatorDataMutationVariables>(
+      DeleteCoopAccOperatorDataDocument
+    ),
+    options
+  );
 export const SetCooPdirectorDataDocument = `
     mutation setCOOPdirectorData($id: ID!, $dirId: ID!, $data: KymCoopDirectorDetailsFormInput!) {
   members {
@@ -15207,15 +20841,21 @@ export const SetCooPdirectorDataDocument = `
   }
 }
     `;
-export const useSetCooPdirectorDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetCooPdirectorDataMutation, TError, SetCooPdirectorDataMutationVariables, TContext>) =>
-    useMutation<SetCooPdirectorDataMutation, TError, SetCooPdirectorDataMutationVariables, TContext>(
-      ['setCOOPdirectorData'],
-      useAxios<SetCooPdirectorDataMutation, SetCooPdirectorDataMutationVariables>(SetCooPdirectorDataDocument),
-      options
-    );
+export const useSetCooPdirectorDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetCooPdirectorDataMutation,
+    TError,
+    SetCooPdirectorDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetCooPdirectorDataMutation, TError, SetCooPdirectorDataMutationVariables, TContext>(
+    ['setCOOPdirectorData'],
+    useAxios<SetCooPdirectorDataMutation, SetCooPdirectorDataMutationVariables>(
+      SetCooPdirectorDataDocument
+    ),
+    options
+  );
 export const DeleteCooPdirectorDataDocument = `
     mutation deleteCOOPdirectorData($id: ID!, $dirId: ID!) {
   members {
@@ -15229,15 +20869,26 @@ export const DeleteCooPdirectorDataDocument = `
   }
 }
     `;
-export const useDeleteCooPdirectorDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteCooPdirectorDataMutation, TError, DeleteCooPdirectorDataMutationVariables, TContext>) =>
-    useMutation<DeleteCooPdirectorDataMutation, TError, DeleteCooPdirectorDataMutationVariables, TContext>(
-      ['deleteCOOPdirectorData'],
-      useAxios<DeleteCooPdirectorDataMutation, DeleteCooPdirectorDataMutationVariables>(DeleteCooPdirectorDataDocument),
-      options
-    );
+export const useDeleteCooPdirectorDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteCooPdirectorDataMutation,
+    TError,
+    DeleteCooPdirectorDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteCooPdirectorDataMutation,
+    TError,
+    DeleteCooPdirectorDataMutationVariables,
+    TContext
+  >(
+    ['deleteCOOPdirectorData'],
+    useAxios<DeleteCooPdirectorDataMutation, DeleteCooPdirectorDataMutationVariables>(
+      DeleteCooPdirectorDataDocument
+    ),
+    options
+  );
 export const SetCooperativeUnionInstitutionDataDocument = `
     mutation setCooperativeUnionInstitutionData($id: ID!, $data: CoopUnionInstitutionInformationInput) {
   members {
@@ -15251,15 +20902,27 @@ export const SetCooperativeUnionInstitutionDataDocument = `
   }
 }
     `;
-export const useSetCooperativeUnionInstitutionDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetCooperativeUnionInstitutionDataMutation, TError, SetCooperativeUnionInstitutionDataMutationVariables, TContext>) =>
-    useMutation<SetCooperativeUnionInstitutionDataMutation, TError, SetCooperativeUnionInstitutionDataMutationVariables, TContext>(
-      ['setCooperativeUnionInstitutionData'],
-      useAxios<SetCooperativeUnionInstitutionDataMutation, SetCooperativeUnionInstitutionDataMutationVariables>(SetCooperativeUnionInstitutionDataDocument),
-      options
-    );
+export const useSetCooperativeUnionInstitutionDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetCooperativeUnionInstitutionDataMutation,
+    TError,
+    SetCooperativeUnionInstitutionDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetCooperativeUnionInstitutionDataMutation,
+    TError,
+    SetCooperativeUnionInstitutionDataMutationVariables,
+    TContext
+  >(
+    ['setCooperativeUnionInstitutionData'],
+    useAxios<
+      SetCooperativeUnionInstitutionDataMutation,
+      SetCooperativeUnionInstitutionDataMutationVariables
+    >(SetCooperativeUnionInstitutionDataDocument),
+    options
+  );
 export const SetPersonnelDetailsDocument = `
     mutation setPersonnelDetails($id: ID!, $personnelId: String, $sectionType: CooperativeUnionPersonnelSection!, $data: CoopUnionPersonnelInput) {
   members {
@@ -15273,15 +20936,21 @@ export const SetPersonnelDetailsDocument = `
   }
 }
     `;
-export const useSetPersonnelDetailsMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetPersonnelDetailsMutation, TError, SetPersonnelDetailsMutationVariables, TContext>) =>
-    useMutation<SetPersonnelDetailsMutation, TError, SetPersonnelDetailsMutationVariables, TContext>(
-      ['setPersonnelDetails'],
-      useAxios<SetPersonnelDetailsMutation, SetPersonnelDetailsMutationVariables>(SetPersonnelDetailsDocument),
-      options
-    );
+export const useSetPersonnelDetailsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetPersonnelDetailsMutation,
+    TError,
+    SetPersonnelDetailsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetPersonnelDetailsMutation, TError, SetPersonnelDetailsMutationVariables, TContext>(
+    ['setPersonnelDetails'],
+    useAxios<SetPersonnelDetailsMutation, SetPersonnelDetailsMutationVariables>(
+      SetPersonnelDetailsDocument
+    ),
+    options
+  );
 export const DeletePersonnelDetailsDocument = `
     mutation deletePersonnelDetails($personnelId: ID!) {
   members {
@@ -15293,15 +20962,26 @@ export const DeletePersonnelDetailsDocument = `
   }
 }
     `;
-export const useDeletePersonnelDetailsMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeletePersonnelDetailsMutation, TError, DeletePersonnelDetailsMutationVariables, TContext>) =>
-    useMutation<DeletePersonnelDetailsMutation, TError, DeletePersonnelDetailsMutationVariables, TContext>(
-      ['deletePersonnelDetails'],
-      useAxios<DeletePersonnelDetailsMutation, DeletePersonnelDetailsMutationVariables>(DeletePersonnelDetailsDocument),
-      options
-    );
+export const useDeletePersonnelDetailsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeletePersonnelDetailsMutation,
+    TError,
+    DeletePersonnelDetailsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeletePersonnelDetailsMutation,
+    TError,
+    DeletePersonnelDetailsMutationVariables,
+    TContext
+  >(
+    ['deletePersonnelDetails'],
+    useAxios<DeletePersonnelDetailsMutation, DeletePersonnelDetailsMutationVariables>(
+      DeletePersonnelDetailsDocument
+    ),
+    options
+  );
 export const SetEconomicDetailsDataDocument = `
     mutation setEconomicDetailsData($id: ID!, $data: CoopUnionEconomicDetailsInput) {
   members {
@@ -15315,15 +20995,26 @@ export const SetEconomicDetailsDataDocument = `
   }
 }
     `;
-export const useSetEconomicDetailsDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetEconomicDetailsDataMutation, TError, SetEconomicDetailsDataMutationVariables, TContext>) =>
-    useMutation<SetEconomicDetailsDataMutation, TError, SetEconomicDetailsDataMutationVariables, TContext>(
-      ['setEconomicDetailsData'],
-      useAxios<SetEconomicDetailsDataMutation, SetEconomicDetailsDataMutationVariables>(SetEconomicDetailsDataDocument),
-      options
-    );
+export const useSetEconomicDetailsDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEconomicDetailsDataMutation,
+    TError,
+    SetEconomicDetailsDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetEconomicDetailsDataMutation,
+    TError,
+    SetEconomicDetailsDataMutationVariables,
+    TContext
+  >(
+    ['setEconomicDetailsData'],
+    useAxios<SetEconomicDetailsDataMutation, SetEconomicDetailsDataMutationVariables>(
+      SetEconomicDetailsDataDocument
+    ),
+    options
+  );
 export const SetDeclarationDataDocument = `
     mutation setDeclarationData($id: ID!, $data: CoopUnionDeclarationInput) {
   members {
@@ -15337,15 +21028,21 @@ export const SetDeclarationDataDocument = `
   }
 }
     `;
-export const useSetDeclarationDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetDeclarationDataMutation, TError, SetDeclarationDataMutationVariables, TContext>) =>
-    useMutation<SetDeclarationDataMutation, TError, SetDeclarationDataMutationVariables, TContext>(
-      ['setDeclarationData'],
-      useAxios<SetDeclarationDataMutation, SetDeclarationDataMutationVariables>(SetDeclarationDataDocument),
-      options
-    );
+export const useSetDeclarationDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDeclarationDataMutation,
+    TError,
+    SetDeclarationDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetDeclarationDataMutation, TError, SetDeclarationDataMutationVariables, TContext>(
+    ['setDeclarationData'],
+    useAxios<SetDeclarationDataMutation, SetDeclarationDataMutationVariables>(
+      SetDeclarationDataDocument
+    ),
+    options
+  );
 export const SendLoanApplicationForApprovalDocument = `
     mutation sendLoanApplicationForApproval($id: ID!, $data: LoanAccountInput!) {
   loanAccount {
@@ -15358,15 +21055,27 @@ export const SendLoanApplicationForApprovalDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSendLoanApplicationForApprovalMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SendLoanApplicationForApprovalMutation, TError, SendLoanApplicationForApprovalMutationVariables, TContext>) =>
-    useMutation<SendLoanApplicationForApprovalMutation, TError, SendLoanApplicationForApprovalMutationVariables, TContext>(
-      ['sendLoanApplicationForApproval'],
-      useAxios<SendLoanApplicationForApprovalMutation, SendLoanApplicationForApprovalMutationVariables>(SendLoanApplicationForApprovalDocument),
-      options
-    );
+export const useSendLoanApplicationForApprovalMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SendLoanApplicationForApprovalMutation,
+    TError,
+    SendLoanApplicationForApprovalMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SendLoanApplicationForApprovalMutation,
+    TError,
+    SendLoanApplicationForApprovalMutationVariables,
+    TContext
+  >(
+    ['sendLoanApplicationForApproval'],
+    useAxios<
+      SendLoanApplicationForApprovalMutation,
+      SendLoanApplicationForApprovalMutationVariables
+    >(SendLoanApplicationForApprovalDocument),
+    options
+  );
 export const SetDisburseLoanDocument = `
     mutation setDisburseLoan($loanAccountId: ID!, $data: LoanDisbursementInput!) {
   loanAccount {
@@ -15379,15 +21088,19 @@ export const SetDisburseLoanDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetDisburseLoanMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetDisburseLoanMutation, TError, SetDisburseLoanMutationVariables, TContext>) =>
-    useMutation<SetDisburseLoanMutation, TError, SetDisburseLoanMutationVariables, TContext>(
-      ['setDisburseLoan'],
-      useAxios<SetDisburseLoanMutation, SetDisburseLoanMutationVariables>(SetDisburseLoanDocument),
-      options
-    );
+export const useSetDisburseLoanMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDisburseLoanMutation,
+    TError,
+    SetDisburseLoanMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetDisburseLoanMutation, TError, SetDisburseLoanMutationVariables, TContext>(
+    ['setDisburseLoan'],
+    useAxios<SetDisburseLoanMutation, SetDisburseLoanMutationVariables>(SetDisburseLoanDocument),
+    options
+  );
 export const ApproveLoanAccountDocument = `
     mutation approveLoanAccount($id: String!, $action: LoanApproveOrCancel!, $remarks: String) {
   loanAccount {
@@ -15400,15 +21113,21 @@ export const ApproveLoanAccountDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useApproveLoanAccountMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<ApproveLoanAccountMutation, TError, ApproveLoanAccountMutationVariables, TContext>) =>
-    useMutation<ApproveLoanAccountMutation, TError, ApproveLoanAccountMutationVariables, TContext>(
-      ['approveLoanAccount'],
-      useAxios<ApproveLoanAccountMutation, ApproveLoanAccountMutationVariables>(ApproveLoanAccountDocument),
-      options
-    );
+export const useApproveLoanAccountMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ApproveLoanAccountMutation,
+    TError,
+    ApproveLoanAccountMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ApproveLoanAccountMutation, TError, ApproveLoanAccountMutationVariables, TContext>(
+    ['approveLoanAccount'],
+    useAxios<ApproveLoanAccountMutation, ApproveLoanAccountMutationVariables>(
+      ApproveLoanAccountDocument
+    ),
+    options
+  );
 export const SetLoanRepaymentDocument = `
     mutation setLoanRepayment($data: LoanRepaymentInput) {
   loanAccount {
@@ -15421,29 +21140,32 @@ export const SetLoanRepaymentDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetLoanRepaymentMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetLoanRepaymentMutation, TError, SetLoanRepaymentMutationVariables, TContext>) =>
-    useMutation<SetLoanRepaymentMutation, TError, SetLoanRepaymentMutationVariables, TContext>(
-      ['setLoanRepayment'],
-      useAxios<SetLoanRepaymentMutation, SetLoanRepaymentMutationVariables>(SetLoanRepaymentDocument),
-      options
-    );
+export const useSetLoanRepaymentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetLoanRepaymentMutation,
+    TError,
+    SetLoanRepaymentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetLoanRepaymentMutation, TError, SetLoanRepaymentMutationVariables, TContext>(
+    ['setLoanRepayment'],
+    useAxios<SetLoanRepaymentMutation, SetLoanRepaymentMutationVariables>(SetLoanRepaymentDocument),
+    options
+  );
 export const GetNewIdDocument = `
     mutation getNewId($idType: ID_TYPE) {
   newId(idType: $idType)
 }
     `;
-export const useGetNewIdMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<GetNewIdMutation, TError, GetNewIdMutationVariables, TContext>) =>
-    useMutation<GetNewIdMutation, TError, GetNewIdMutationVariables, TContext>(
-      ['getNewId'],
-      useAxios<GetNewIdMutation, GetNewIdMutationVariables>(GetNewIdDocument),
-      options
-    );
+export const useGetNewIdMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<GetNewIdMutation, TError, GetNewIdMutationVariables, TContext>
+) =>
+  useMutation<GetNewIdMutation, TError, GetNewIdMutationVariables, TContext>(
+    ['getNewId'],
+    useAxios<GetNewIdMutation, GetNewIdMutationVariables>(GetNewIdDocument),
+    options
+  );
 export const SetMemberDataDocument = `
     mutation setMemberData($id: ID!, $data: KymIndMemberInput!) {
   members {
@@ -15463,15 +21185,19 @@ export const SetMemberDataDocument = `
   }
 }
     `;
-export const useSetMemberDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetMemberDataMutation, TError, SetMemberDataMutationVariables, TContext>) =>
-    useMutation<SetMemberDataMutation, TError, SetMemberDataMutationVariables, TContext>(
-      ['setMemberData'],
-      useAxios<SetMemberDataMutation, SetMemberDataMutationVariables>(SetMemberDataDocument),
-      options
-    );
+export const useSetMemberDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetMemberDataMutation,
+    TError,
+    SetMemberDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetMemberDataMutation, TError, SetMemberDataMutationVariables, TContext>(
+    ['setMemberData'],
+    useAxios<SetMemberDataMutation, SetMemberDataMutationVariables>(SetMemberDataDocument),
+    options
+  );
 export const SetMemberFamilyDetailsDocument = `
     mutation setMemberFamilyDetails($id: ID!, $data: KYMIndFamilyMemberInput!) {
   members {
@@ -15485,15 +21211,26 @@ export const SetMemberFamilyDetailsDocument = `
   }
 }
     `;
-export const useSetMemberFamilyDetailsMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetMemberFamilyDetailsMutation, TError, SetMemberFamilyDetailsMutationVariables, TContext>) =>
-    useMutation<SetMemberFamilyDetailsMutation, TError, SetMemberFamilyDetailsMutationVariables, TContext>(
-      ['setMemberFamilyDetails'],
-      useAxios<SetMemberFamilyDetailsMutation, SetMemberFamilyDetailsMutationVariables>(SetMemberFamilyDetailsDocument),
-      options
-    );
+export const useSetMemberFamilyDetailsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetMemberFamilyDetailsMutation,
+    TError,
+    SetMemberFamilyDetailsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetMemberFamilyDetailsMutation,
+    TError,
+    SetMemberFamilyDetailsMutationVariables,
+    TContext
+  >(
+    ['setMemberFamilyDetails'],
+    useAxios<SetMemberFamilyDetailsMutation, SetMemberFamilyDetailsMutationVariables>(
+      SetMemberFamilyDetailsDocument
+    ),
+    options
+  );
 export const DeleteMemberFamilyDetailsDocument = `
     mutation deleteMemberFamilyDetails($memberId: ID!, $id: ID!) {
   members {
@@ -15507,15 +21244,26 @@ export const DeleteMemberFamilyDetailsDocument = `
   }
 }
     `;
-export const useDeleteMemberFamilyDetailsMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteMemberFamilyDetailsMutation, TError, DeleteMemberFamilyDetailsMutationVariables, TContext>) =>
-    useMutation<DeleteMemberFamilyDetailsMutation, TError, DeleteMemberFamilyDetailsMutationVariables, TContext>(
-      ['deleteMemberFamilyDetails'],
-      useAxios<DeleteMemberFamilyDetailsMutation, DeleteMemberFamilyDetailsMutationVariables>(DeleteMemberFamilyDetailsDocument),
-      options
-    );
+export const useDeleteMemberFamilyDetailsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteMemberFamilyDetailsMutation,
+    TError,
+    DeleteMemberFamilyDetailsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteMemberFamilyDetailsMutation,
+    TError,
+    DeleteMemberFamilyDetailsMutationVariables,
+    TContext
+  >(
+    ['deleteMemberFamilyDetails'],
+    useAxios<DeleteMemberFamilyDetailsMutation, DeleteMemberFamilyDetailsMutationVariables>(
+      DeleteMemberFamilyDetailsDocument
+    ),
+    options
+  );
 export const SetMemberOccupationDocument = `
     mutation setMemberOccupation($id: ID!, $isSpouse: Boolean!, $data: KYMIndOccupationInput!) {
   members {
@@ -15529,15 +21277,21 @@ export const SetMemberOccupationDocument = `
   }
 }
     `;
-export const useSetMemberOccupationMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetMemberOccupationMutation, TError, SetMemberOccupationMutationVariables, TContext>) =>
-    useMutation<SetMemberOccupationMutation, TError, SetMemberOccupationMutationVariables, TContext>(
-      ['setMemberOccupation'],
-      useAxios<SetMemberOccupationMutation, SetMemberOccupationMutationVariables>(SetMemberOccupationDocument),
-      options
-    );
+export const useSetMemberOccupationMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetMemberOccupationMutation,
+    TError,
+    SetMemberOccupationMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetMemberOccupationMutation, TError, SetMemberOccupationMutationVariables, TContext>(
+    ['setMemberOccupation'],
+    useAxios<SetMemberOccupationMutation, SetMemberOccupationMutationVariables>(
+      SetMemberOccupationDocument
+    ),
+    options
+  );
 export const DeleteMemberOccupationDocument = `
     mutation deleteMemberOccupation($memberId: ID!, $id: ID!) {
   members {
@@ -15551,15 +21305,26 @@ export const DeleteMemberOccupationDocument = `
   }
 }
     `;
-export const useDeleteMemberOccupationMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteMemberOccupationMutation, TError, DeleteMemberOccupationMutationVariables, TContext>) =>
-    useMutation<DeleteMemberOccupationMutation, TError, DeleteMemberOccupationMutationVariables, TContext>(
-      ['deleteMemberOccupation'],
-      useAxios<DeleteMemberOccupationMutation, DeleteMemberOccupationMutationVariables>(DeleteMemberOccupationDocument),
-      options
-    );
+export const useDeleteMemberOccupationMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteMemberOccupationMutation,
+    TError,
+    DeleteMemberOccupationMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteMemberOccupationMutation,
+    TError,
+    DeleteMemberOccupationMutationVariables,
+    TContext
+  >(
+    ['deleteMemberOccupation'],
+    useAxios<DeleteMemberOccupationMutation, DeleteMemberOccupationMutationVariables>(
+      DeleteMemberOccupationDocument
+    ),
+    options
+  );
 export const SetMemberIncomeSourceDocument = `
     mutation setMemberIncomeSource($id: ID!, $data: KYMIndIncomeSourceInput!) {
   members {
@@ -15573,15 +21338,26 @@ export const SetMemberIncomeSourceDocument = `
   }
 }
     `;
-export const useSetMemberIncomeSourceMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetMemberIncomeSourceMutation, TError, SetMemberIncomeSourceMutationVariables, TContext>) =>
-    useMutation<SetMemberIncomeSourceMutation, TError, SetMemberIncomeSourceMutationVariables, TContext>(
-      ['setMemberIncomeSource'],
-      useAxios<SetMemberIncomeSourceMutation, SetMemberIncomeSourceMutationVariables>(SetMemberIncomeSourceDocument),
-      options
-    );
+export const useSetMemberIncomeSourceMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetMemberIncomeSourceMutation,
+    TError,
+    SetMemberIncomeSourceMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetMemberIncomeSourceMutation,
+    TError,
+    SetMemberIncomeSourceMutationVariables,
+    TContext
+  >(
+    ['setMemberIncomeSource'],
+    useAxios<SetMemberIncomeSourceMutation, SetMemberIncomeSourceMutationVariables>(
+      SetMemberIncomeSourceDocument
+    ),
+    options
+  );
 export const DeleteMemberIncomeSourceDocument = `
     mutation deleteMemberIncomeSource($memberId: ID!, $id: ID!) {
   members {
@@ -15595,15 +21371,26 @@ export const DeleteMemberIncomeSourceDocument = `
   }
 }
     `;
-export const useDeleteMemberIncomeSourceMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteMemberIncomeSourceMutation, TError, DeleteMemberIncomeSourceMutationVariables, TContext>) =>
-    useMutation<DeleteMemberIncomeSourceMutation, TError, DeleteMemberIncomeSourceMutationVariables, TContext>(
-      ['deleteMemberIncomeSource'],
-      useAxios<DeleteMemberIncomeSourceMutation, DeleteMemberIncomeSourceMutationVariables>(DeleteMemberIncomeSourceDocument),
-      options
-    );
+export const useDeleteMemberIncomeSourceMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteMemberIncomeSourceMutation,
+    TError,
+    DeleteMemberIncomeSourceMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteMemberIncomeSourceMutation,
+    TError,
+    DeleteMemberIncomeSourceMutationVariables,
+    TContext
+  >(
+    ['deleteMemberIncomeSource'],
+    useAxios<DeleteMemberIncomeSourceMutation, DeleteMemberIncomeSourceMutationVariables>(
+      DeleteMemberIncomeSourceDocument
+    ),
+    options
+  );
 export const SetKymCooperativeDataDocument = `
     mutation setKymCooperativeData($id: ID!, $data: KymCooperativeFormInput!) {
   members {
@@ -15615,15 +21402,26 @@ export const SetKymCooperativeDataDocument = `
   }
 }
     `;
-export const useSetKymCooperativeDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetKymCooperativeDataMutation, TError, SetKymCooperativeDataMutationVariables, TContext>) =>
-    useMutation<SetKymCooperativeDataMutation, TError, SetKymCooperativeDataMutationVariables, TContext>(
-      ['setKymCooperativeData'],
-      useAxios<SetKymCooperativeDataMutation, SetKymCooperativeDataMutationVariables>(SetKymCooperativeDataDocument),
-      options
-    );
+export const useSetKymCooperativeDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetKymCooperativeDataMutation,
+    TError,
+    SetKymCooperativeDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetKymCooperativeDataMutation,
+    TError,
+    SetKymCooperativeDataMutationVariables,
+    TContext
+  >(
+    ['setKymCooperativeData'],
+    useAxios<SetKymCooperativeDataMutation, SetKymCooperativeDataMutationVariables>(
+      SetKymCooperativeDataDocument
+    ),
+    options
+  );
 export const SetKymDocumentDataDocument = `
     mutation setKYMDocumentData($memberId: String!, $fieldId: String!, $identifiers: [String!]!) {
   document {
@@ -15633,15 +21431,21 @@ export const SetKymDocumentDataDocument = `
   }
 }
     `;
-export const useSetKymDocumentDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetKymDocumentDataMutation, TError, SetKymDocumentDataMutationVariables, TContext>) =>
-    useMutation<SetKymDocumentDataMutation, TError, SetKymDocumentDataMutationVariables, TContext>(
-      ['setKYMDocumentData'],
-      useAxios<SetKymDocumentDataMutation, SetKymDocumentDataMutationVariables>(SetKymDocumentDataDocument),
-      options
-    );
+export const useSetKymDocumentDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetKymDocumentDataMutation,
+    TError,
+    SetKymDocumentDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetKymDocumentDataMutation, TError, SetKymDocumentDataMutationVariables, TContext>(
+    ['setKYMDocumentData'],
+    useAxios<SetKymDocumentDataMutation, SetKymDocumentDataMutationVariables>(
+      SetKymDocumentDataDocument
+    ),
+    options
+  );
 export const SetKymIndividualIdentificationDataDocument = `
     mutation setKymIndividualIdentificationData($id: ID!, $data: KYMIndIdentificationInput!) {
   members {
@@ -15655,15 +21459,27 @@ export const SetKymIndividualIdentificationDataDocument = `
   }
 }
     `;
-export const useSetKymIndividualIdentificationDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetKymIndividualIdentificationDataMutation, TError, SetKymIndividualIdentificationDataMutationVariables, TContext>) =>
-    useMutation<SetKymIndividualIdentificationDataMutation, TError, SetKymIndividualIdentificationDataMutationVariables, TContext>(
-      ['setKymIndividualIdentificationData'],
-      useAxios<SetKymIndividualIdentificationDataMutation, SetKymIndividualIdentificationDataMutationVariables>(SetKymIndividualIdentificationDataDocument),
-      options
-    );
+export const useSetKymIndividualIdentificationDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetKymIndividualIdentificationDataMutation,
+    TError,
+    SetKymIndividualIdentificationDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetKymIndividualIdentificationDataMutation,
+    TError,
+    SetKymIndividualIdentificationDataMutationVariables,
+    TContext
+  >(
+    ['setKymIndividualIdentificationData'],
+    useAxios<
+      SetKymIndividualIdentificationDataMutation,
+      SetKymIndividualIdentificationDataMutationVariables
+    >(SetKymIndividualIdentificationDataDocument),
+    options
+  );
 export const SetOfficialUseDocument = `
     mutation setOfficialUse($id: ID!, $isStaff: Boolean, $checkSanction: Boolean, $checkNegative: Boolean, $riskCategory: OfficialUseRiskCategory, $docCollectedAndVerified: Boolean, $acceptableAddressDoc: Boolean) {
   members {
@@ -15678,15 +21494,19 @@ export const SetOfficialUseDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetOfficialUseMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetOfficialUseMutation, TError, SetOfficialUseMutationVariables, TContext>) =>
-    useMutation<SetOfficialUseMutation, TError, SetOfficialUseMutationVariables, TContext>(
-      ['setOfficialUse'],
-      useAxios<SetOfficialUseMutation, SetOfficialUseMutationVariables>(SetOfficialUseDocument),
-      options
-    );
+export const useSetOfficialUseMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetOfficialUseMutation,
+    TError,
+    SetOfficialUseMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetOfficialUseMutation, TError, SetOfficialUseMutationVariables, TContext>(
+    ['setOfficialUse'],
+    useAxios<SetOfficialUseMutation, SetOfficialUseMutationVariables>(SetOfficialUseDocument),
+    options
+  );
 export const DeleteDraftDocument = `
     mutation deleteDraft($memberId: ID!) {
   members {
@@ -15699,15 +21519,14 @@ export const DeleteDraftDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useDeleteDraftMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteDraftMutation, TError, DeleteDraftMutationVariables, TContext>) =>
-    useMutation<DeleteDraftMutation, TError, DeleteDraftMutationVariables, TContext>(
-      ['deleteDraft'],
-      useAxios<DeleteDraftMutation, DeleteDraftMutationVariables>(DeleteDraftDocument),
-      options
-    );
+export const useDeleteDraftMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<DeleteDraftMutation, TError, DeleteDraftMutationVariables, TContext>
+) =>
+  useMutation<DeleteDraftMutation, TError, DeleteDraftMutationVariables, TContext>(
+    ['deleteDraft'],
+    useAxios<DeleteDraftMutation, DeleteDraftMutationVariables>(DeleteDraftDocument),
+    options
+  );
 export const PayMembershipDocument = `
     mutation payMembership($data: MembershipPaymentInput, $memberId: ID!) {
   members {
@@ -15722,15 +21541,19 @@ export const PayMembershipDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const usePayMembershipMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<PayMembershipMutation, TError, PayMembershipMutationVariables, TContext>) =>
-    useMutation<PayMembershipMutation, TError, PayMembershipMutationVariables, TContext>(
-      ['payMembership'],
-      useAxios<PayMembershipMutation, PayMembershipMutationVariables>(PayMembershipDocument),
-      options
-    );
+export const usePayMembershipMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    PayMembershipMutation,
+    TError,
+    PayMembershipMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<PayMembershipMutation, TError, PayMembershipMutationVariables, TContext>(
+    ['payMembership'],
+    useAxios<PayMembershipMutation, PayMembershipMutationVariables>(PayMembershipDocument),
+    options
+  );
 export const InactivateMemberDocument = `
     mutation inactivateMember($memberId: ID!) {
   members {
@@ -15740,15 +21563,19 @@ export const InactivateMemberDocument = `
   }
 }
     `;
-export const useInactivateMemberMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<InactivateMemberMutation, TError, InactivateMemberMutationVariables, TContext>) =>
-    useMutation<InactivateMemberMutation, TError, InactivateMemberMutationVariables, TContext>(
-      ['inactivateMember'],
-      useAxios<InactivateMemberMutation, InactivateMemberMutationVariables>(InactivateMemberDocument),
-      options
-    );
+export const useInactivateMemberMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    InactivateMemberMutation,
+    TError,
+    InactivateMemberMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<InactivateMemberMutation, TError, InactivateMemberMutationVariables, TContext>(
+    ['inactivateMember'],
+    useAxios<InactivateMemberMutation, InactivateMemberMutationVariables>(InactivateMemberDocument),
+    options
+  );
 export const SetInstitutionDataDocument = `
     mutation setInstitutionData($id: ID!, $data: KymInsInput!) {
   members {
@@ -15768,15 +21595,21 @@ export const SetInstitutionDataDocument = `
   }
 }
     `;
-export const useSetInstitutionDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetInstitutionDataMutation, TError, SetInstitutionDataMutationVariables, TContext>) =>
-    useMutation<SetInstitutionDataMutation, TError, SetInstitutionDataMutationVariables, TContext>(
-      ['setInstitutionData'],
-      useAxios<SetInstitutionDataMutation, SetInstitutionDataMutationVariables>(SetInstitutionDataDocument),
-      options
-    );
+export const useSetInstitutionDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetInstitutionDataMutation,
+    TError,
+    SetInstitutionDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetInstitutionDataMutation, TError, SetInstitutionDataMutationVariables, TContext>(
+    ['setInstitutionData'],
+    useAxios<SetInstitutionDataMutation, SetInstitutionDataMutationVariables>(
+      SetInstitutionDataDocument
+    ),
+    options
+  );
 export const SetSisterConcernsDocument = `
     mutation setSisterConcerns($id: ID!, $sis: ID!, $data: KymInsSisterConcernInput!) {
   members {
@@ -15790,15 +21623,21 @@ export const SetSisterConcernsDocument = `
   }
 }
     `;
-export const useSetSisterConcernsMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetSisterConcernsMutation, TError, SetSisterConcernsMutationVariables, TContext>) =>
-    useMutation<SetSisterConcernsMutation, TError, SetSisterConcernsMutationVariables, TContext>(
-      ['setSisterConcerns'],
-      useAxios<SetSisterConcernsMutation, SetSisterConcernsMutationVariables>(SetSisterConcernsDocument),
-      options
-    );
+export const useSetSisterConcernsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSisterConcernsMutation,
+    TError,
+    SetSisterConcernsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetSisterConcernsMutation, TError, SetSisterConcernsMutationVariables, TContext>(
+    ['setSisterConcerns'],
+    useAxios<SetSisterConcernsMutation, SetSisterConcernsMutationVariables>(
+      SetSisterConcernsDocument
+    ),
+    options
+  );
 export const DeleteSisterConcernsDocument = `
     mutation deleteSisterConcerns($insId: ID!, $sis: ID!) {
   members {
@@ -15812,15 +21651,26 @@ export const DeleteSisterConcernsDocument = `
   }
 }
     `;
-export const useDeleteSisterConcernsMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteSisterConcernsMutation, TError, DeleteSisterConcernsMutationVariables, TContext>) =>
-    useMutation<DeleteSisterConcernsMutation, TError, DeleteSisterConcernsMutationVariables, TContext>(
-      ['deleteSisterConcerns'],
-      useAxios<DeleteSisterConcernsMutation, DeleteSisterConcernsMutationVariables>(DeleteSisterConcernsDocument),
-      options
-    );
+export const useDeleteSisterConcernsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteSisterConcernsMutation,
+    TError,
+    DeleteSisterConcernsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteSisterConcernsMutation,
+    TError,
+    DeleteSisterConcernsMutationVariables,
+    TContext
+  >(
+    ['deleteSisterConcerns'],
+    useAxios<DeleteSisterConcernsMutation, DeleteSisterConcernsMutationVariables>(
+      DeleteSisterConcernsDocument
+    ),
+    options
+  );
 export const SetAddDirectorInstitutionDocument = `
     mutation setAddDirectorInstitution($id: ID!, $dir: ID!, $data: KymInsDirectorInput!) {
   members {
@@ -15834,15 +21684,26 @@ export const SetAddDirectorInstitutionDocument = `
   }
 }
     `;
-export const useSetAddDirectorInstitutionMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetAddDirectorInstitutionMutation, TError, SetAddDirectorInstitutionMutationVariables, TContext>) =>
-    useMutation<SetAddDirectorInstitutionMutation, TError, SetAddDirectorInstitutionMutationVariables, TContext>(
-      ['setAddDirectorInstitution'],
-      useAxios<SetAddDirectorInstitutionMutation, SetAddDirectorInstitutionMutationVariables>(SetAddDirectorInstitutionDocument),
-      options
-    );
+export const useSetAddDirectorInstitutionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAddDirectorInstitutionMutation,
+    TError,
+    SetAddDirectorInstitutionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAddDirectorInstitutionMutation,
+    TError,
+    SetAddDirectorInstitutionMutationVariables,
+    TContext
+  >(
+    ['setAddDirectorInstitution'],
+    useAxios<SetAddDirectorInstitutionMutation, SetAddDirectorInstitutionMutationVariables>(
+      SetAddDirectorInstitutionDocument
+    ),
+    options
+  );
 export const DeleteDirectorInstitutionDocument = `
     mutation deleteDirectorInstitution($insId: ID!, $dir: ID!) {
   members {
@@ -15856,15 +21717,26 @@ export const DeleteDirectorInstitutionDocument = `
   }
 }
     `;
-export const useDeleteDirectorInstitutionMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteDirectorInstitutionMutation, TError, DeleteDirectorInstitutionMutationVariables, TContext>) =>
-    useMutation<DeleteDirectorInstitutionMutation, TError, DeleteDirectorInstitutionMutationVariables, TContext>(
-      ['deleteDirectorInstitution'],
-      useAxios<DeleteDirectorInstitutionMutation, DeleteDirectorInstitutionMutationVariables>(DeleteDirectorInstitutionDocument),
-      options
-    );
+export const useDeleteDirectorInstitutionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteDirectorInstitutionMutation,
+    TError,
+    DeleteDirectorInstitutionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteDirectorInstitutionMutation,
+    TError,
+    DeleteDirectorInstitutionMutationVariables,
+    TContext
+  >(
+    ['deleteDirectorInstitution'],
+    useAxios<DeleteDirectorInstitutionMutation, DeleteDirectorInstitutionMutationVariables>(
+      DeleteDirectorInstitutionDocument
+    ),
+    options
+  );
 export const SetAddAccountOperatorInstitutionDocument = `
     mutation setAddAccountOperatorInstitution($id: ID!, $acc: ID!, $data: KymInsAccountOperatorInput!) {
   members {
@@ -15878,15 +21750,27 @@ export const SetAddAccountOperatorInstitutionDocument = `
   }
 }
     `;
-export const useSetAddAccountOperatorInstitutionMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetAddAccountOperatorInstitutionMutation, TError, SetAddAccountOperatorInstitutionMutationVariables, TContext>) =>
-    useMutation<SetAddAccountOperatorInstitutionMutation, TError, SetAddAccountOperatorInstitutionMutationVariables, TContext>(
-      ['setAddAccountOperatorInstitution'],
-      useAxios<SetAddAccountOperatorInstitutionMutation, SetAddAccountOperatorInstitutionMutationVariables>(SetAddAccountOperatorInstitutionDocument),
-      options
-    );
+export const useSetAddAccountOperatorInstitutionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAddAccountOperatorInstitutionMutation,
+    TError,
+    SetAddAccountOperatorInstitutionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAddAccountOperatorInstitutionMutation,
+    TError,
+    SetAddAccountOperatorInstitutionMutationVariables,
+    TContext
+  >(
+    ['setAddAccountOperatorInstitution'],
+    useAxios<
+      SetAddAccountOperatorInstitutionMutation,
+      SetAddAccountOperatorInstitutionMutationVariables
+    >(SetAddAccountOperatorInstitutionDocument),
+    options
+  );
 export const DeleteAccountOperatorInstitutionDocument = `
     mutation deleteAccountOperatorInstitution($insId: ID!, $acc: ID!) {
   members {
@@ -15900,15 +21784,27 @@ export const DeleteAccountOperatorInstitutionDocument = `
   }
 }
     `;
-export const useDeleteAccountOperatorInstitutionMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteAccountOperatorInstitutionMutation, TError, DeleteAccountOperatorInstitutionMutationVariables, TContext>) =>
-    useMutation<DeleteAccountOperatorInstitutionMutation, TError, DeleteAccountOperatorInstitutionMutationVariables, TContext>(
-      ['deleteAccountOperatorInstitution'],
-      useAxios<DeleteAccountOperatorInstitutionMutation, DeleteAccountOperatorInstitutionMutationVariables>(DeleteAccountOperatorInstitutionDocument),
-      options
-    );
+export const useDeleteAccountOperatorInstitutionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteAccountOperatorInstitutionMutation,
+    TError,
+    DeleteAccountOperatorInstitutionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteAccountOperatorInstitutionMutation,
+    TError,
+    DeleteAccountOperatorInstitutionMutationVariables,
+    TContext
+  >(
+    ['deleteAccountOperatorInstitution'],
+    useAxios<
+      DeleteAccountOperatorInstitutionMutation,
+      DeleteAccountOperatorInstitutionMutationVariables
+    >(DeleteAccountOperatorInstitutionDocument),
+    options
+  );
 export const SetOrganizationDataDocument = `
     mutation setOrganizationData($data: OrganizationInput!) {
   settings {
@@ -15925,15 +21821,21 @@ export const SetOrganizationDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetOrganizationDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetOrganizationDataMutation, TError, SetOrganizationDataMutationVariables, TContext>) =>
-    useMutation<SetOrganizationDataMutation, TError, SetOrganizationDataMutationVariables, TContext>(
-      ['setOrganizationData'],
-      useAxios<SetOrganizationDataMutation, SetOrganizationDataMutationVariables>(SetOrganizationDataDocument),
-      options
-    );
+export const useSetOrganizationDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetOrganizationDataMutation,
+    TError,
+    SetOrganizationDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetOrganizationDataMutation, TError, SetOrganizationDataMutationVariables, TContext>(
+    ['setOrganizationData'],
+    useAxios<SetOrganizationDataMutation, SetOrganizationDataMutationVariables>(
+      SetOrganizationDataDocument
+    ),
+    options
+  );
 export const GetPreSignedUrlDocument = `
     mutation getPreSignedUrl($contentType: String) {
   presignedUrl {
@@ -15945,15 +21847,19 @@ export const GetPreSignedUrlDocument = `
   }
 }
     `;
-export const useGetPreSignedUrlMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<GetPreSignedUrlMutation, TError, GetPreSignedUrlMutationVariables, TContext>) =>
-    useMutation<GetPreSignedUrlMutation, TError, GetPreSignedUrlMutationVariables, TContext>(
-      ['getPreSignedUrl'],
-      useAxios<GetPreSignedUrlMutation, GetPreSignedUrlMutationVariables>(GetPreSignedUrlDocument),
-      options
-    );
+export const useGetPreSignedUrlMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    GetPreSignedUrlMutation,
+    TError,
+    GetPreSignedUrlMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<GetPreSignedUrlMutation, TError, GetPreSignedUrlMutationVariables, TContext>(
+    ['getPreSignedUrl'],
+    useAxios<GetPreSignedUrlMutation, GetPreSignedUrlMutationVariables>(GetPreSignedUrlDocument),
+    options
+  );
 export const SaveNewReportDocument = `
     mutation saveNewReport($data: StatementReportInput!) {
   report {
@@ -15990,15 +21896,19 @@ export const SaveNewReportDocument = `
   }
 }
     `;
-export const useSaveNewReportMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SaveNewReportMutation, TError, SaveNewReportMutationVariables, TContext>) =>
-    useMutation<SaveNewReportMutation, TError, SaveNewReportMutationVariables, TContext>(
-      ['saveNewReport'],
-      useAxios<SaveNewReportMutation, SaveNewReportMutationVariables>(SaveNewReportDocument),
-      options
-    );
+export const useSaveNewReportMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SaveNewReportMutation,
+    TError,
+    SaveNewReportMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SaveNewReportMutation, TError, SaveNewReportMutationVariables, TContext>(
+    ['saveNewReport'],
+    useAxios<SaveNewReportMutation, SaveNewReportMutationVariables>(SaveNewReportDocument),
+    options
+  );
 export const ApproveOrDeclineRequestDocument = `
     mutation approveOrDeclineRequest($data: RequestApproveOrDeclineInput, $requestType: RequestType!) {
   requests {
@@ -16011,15 +21921,26 @@ export const ApproveOrDeclineRequestDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useApproveOrDeclineRequestMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<ApproveOrDeclineRequestMutation, TError, ApproveOrDeclineRequestMutationVariables, TContext>) =>
-    useMutation<ApproveOrDeclineRequestMutation, TError, ApproveOrDeclineRequestMutationVariables, TContext>(
-      ['approveOrDeclineRequest'],
-      useAxios<ApproveOrDeclineRequestMutation, ApproveOrDeclineRequestMutationVariables>(ApproveOrDeclineRequestDocument),
-      options
-    );
+export const useApproveOrDeclineRequestMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ApproveOrDeclineRequestMutation,
+    TError,
+    ApproveOrDeclineRequestMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    ApproveOrDeclineRequestMutation,
+    TError,
+    ApproveOrDeclineRequestMutationVariables,
+    TContext
+  >(
+    ['approveOrDeclineRequest'],
+    useAxios<ApproveOrDeclineRequestMutation, ApproveOrDeclineRequestMutationVariables>(
+      ApproveOrDeclineRequestDocument
+    ),
+    options
+  );
 export const SaveAlternativeChargesDocument = `
     mutation saveAlternativeCharges($data: [AlternativeChannelChargesInput]) {
   settings {
@@ -16041,15 +21962,26 @@ export const SaveAlternativeChargesDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSaveAlternativeChargesMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SaveAlternativeChargesMutation, TError, SaveAlternativeChargesMutationVariables, TContext>) =>
-    useMutation<SaveAlternativeChargesMutation, TError, SaveAlternativeChargesMutationVariables, TContext>(
-      ['saveAlternativeCharges'],
-      useAxios<SaveAlternativeChargesMutation, SaveAlternativeChargesMutationVariables>(SaveAlternativeChargesDocument),
-      options
-    );
+export const useSaveAlternativeChargesMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SaveAlternativeChargesMutation,
+    TError,
+    SaveAlternativeChargesMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SaveAlternativeChargesMutation,
+    TError,
+    SaveAlternativeChargesMutationVariables,
+    TContext
+  >(
+    ['saveAlternativeCharges'],
+    useAxios<SaveAlternativeChargesMutation, SaveAlternativeChargesMutationVariables>(
+      SaveAlternativeChargesDocument
+    ),
+    options
+  );
 export const ActivateServiceDocument = `
     mutation activateService($data: AlternativeChannelServiceActivationInput) {
   alternativeChannel {
@@ -16062,15 +21994,19 @@ export const ActivateServiceDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useActivateServiceMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<ActivateServiceMutation, TError, ActivateServiceMutationVariables, TContext>) =>
-    useMutation<ActivateServiceMutation, TError, ActivateServiceMutationVariables, TContext>(
-      ['activateService'],
-      useAxios<ActivateServiceMutation, ActivateServiceMutationVariables>(ActivateServiceDocument),
-      options
-    );
+export const useActivateServiceMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ActivateServiceMutation,
+    TError,
+    ActivateServiceMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<ActivateServiceMutation, TError, ActivateServiceMutationVariables, TContext>(
+    ['activateService'],
+    useAxios<ActivateServiceMutation, ActivateServiceMutationVariables>(ActivateServiceDocument),
+    options
+  );
 export const SetBranchDataDocument = `
     mutation setBranchData($id: ID!, $data: BranchInput!) {
   settings {
@@ -16089,15 +22025,19 @@ export const SetBranchDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetBranchDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetBranchDataMutation, TError, SetBranchDataMutationVariables, TContext>) =>
-    useMutation<SetBranchDataMutation, TError, SetBranchDataMutationVariables, TContext>(
-      ['setBranchData'],
-      useAxios<SetBranchDataMutation, SetBranchDataMutationVariables>(SetBranchDataDocument),
-      options
-    );
+export const useSetBranchDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetBranchDataMutation,
+    TError,
+    SetBranchDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetBranchDataMutation, TError, SetBranchDataMutationVariables, TContext>(
+    ['setBranchData'],
+    useAxios<SetBranchDataMutation, SetBranchDataMutationVariables>(SetBranchDataDocument),
+    options
+  );
 export const SetDepositProductDocument = `
     mutation setDepositProduct($id: ID!, $data: DepositProductInput) {
   settings {
@@ -16121,15 +22061,21 @@ export const SetDepositProductDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetDepositProductMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetDepositProductMutation, TError, SetDepositProductMutationVariables, TContext>) =>
-    useMutation<SetDepositProductMutation, TError, SetDepositProductMutationVariables, TContext>(
-      ['setDepositProduct'],
-      useAxios<SetDepositProductMutation, SetDepositProductMutationVariables>(SetDepositProductDocument),
-      options
-    );
+export const useSetDepositProductMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDepositProductMutation,
+    TError,
+    SetDepositProductMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetDepositProductMutation, TError, SetDepositProductMutationVariables, TContext>(
+    ['setDepositProduct'],
+    useAxios<SetDepositProductMutation, SetDepositProductMutationVariables>(
+      SetDepositProductDocument
+    ),
+    options
+  );
 export const SetDepositProductInactiveDocument = `
     mutation setDepositProductInactive($data: DepositProductInactiveData) {
   settings {
@@ -16143,15 +22089,26 @@ export const SetDepositProductInactiveDocument = `
   }
 }
     `;
-export const useSetDepositProductInactiveMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetDepositProductInactiveMutation, TError, SetDepositProductInactiveMutationVariables, TContext>) =>
-    useMutation<SetDepositProductInactiveMutation, TError, SetDepositProductInactiveMutationVariables, TContext>(
-      ['setDepositProductInactive'],
-      useAxios<SetDepositProductInactiveMutation, SetDepositProductInactiveMutationVariables>(SetDepositProductInactiveDocument),
-      options
-    );
+export const useSetDepositProductInactiveMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDepositProductInactiveMutation,
+    TError,
+    SetDepositProductInactiveMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetDepositProductInactiveMutation,
+    TError,
+    SetDepositProductInactiveMutationVariables,
+    TContext
+  >(
+    ['setDepositProductInactive'],
+    useAxios<SetDepositProductInactiveMutation, SetDepositProductInactiveMutationVariables>(
+      SetDepositProductInactiveDocument
+    ),
+    options
+  );
 export const SetDepositIroDocument = `
     mutation setDepositIro($data: DepositIroInput) {
   settings {
@@ -16176,15 +22133,19 @@ export const SetDepositIroDocument = `
   }
 }
     `;
-export const useSetDepositIroMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetDepositIroMutation, TError, SetDepositIroMutationVariables, TContext>) =>
-    useMutation<SetDepositIroMutation, TError, SetDepositIroMutationVariables, TContext>(
-      ['setDepositIro'],
-      useAxios<SetDepositIroMutation, SetDepositIroMutationVariables>(SetDepositIroDocument),
-      options
-    );
+export const useSetDepositIroMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDepositIroMutation,
+    TError,
+    SetDepositIroMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetDepositIroMutation, TError, SetDepositIroMutationVariables, TContext>(
+    ['setDepositIro'],
+    useAxios<SetDepositIroMutation, SetDepositIroMutationVariables>(SetDepositIroDocument),
+    options
+  );
 export const SetDepositTdsDocument = `
     mutation setDepositTds($data: DepositTdsInput) {
   settings {
@@ -16210,15 +22171,19 @@ export const SetDepositTdsDocument = `
   }
 }
     `;
-export const useSetDepositTdsMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetDepositTdsMutation, TError, SetDepositTdsMutationVariables, TContext>) =>
-    useMutation<SetDepositTdsMutation, TError, SetDepositTdsMutationVariables, TContext>(
-      ['setDepositTds'],
-      useAxios<SetDepositTdsMutation, SetDepositTdsMutationVariables>(SetDepositTdsDocument),
-      options
-    );
+export const useSetDepositTdsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDepositTdsMutation,
+    TError,
+    SetDepositTdsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetDepositTdsMutation, TError, SetDepositTdsMutationVariables, TContext>(
+    ['setDepositTds'],
+    useAxios<SetDepositTdsMutation, SetDepositTdsMutationVariables>(SetDepositTdsDocument),
+    options
+  );
 export const SetLoanProductDocument = `
     mutation setLoanProduct($id: ID!, $data: LoanProductInput) {
   settings {
@@ -16241,15 +22206,19 @@ export const SetLoanProductDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetLoanProductMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetLoanProductMutation, TError, SetLoanProductMutationVariables, TContext>) =>
-    useMutation<SetLoanProductMutation, TError, SetLoanProductMutationVariables, TContext>(
-      ['setLoanProduct'],
-      useAxios<SetLoanProductMutation, SetLoanProductMutationVariables>(SetLoanProductDocument),
-      options
-    );
+export const useSetLoanProductMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetLoanProductMutation,
+    TError,
+    SetLoanProductMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetLoanProductMutation, TError, SetLoanProductMutationVariables, TContext>(
+    ['setLoanProduct'],
+    useAxios<SetLoanProductMutation, SetLoanProductMutationVariables>(SetLoanProductDocument),
+    options
+  );
 export const SetLoanProductInactiveDocument = `
     mutation setLoanProductInactive($data: LoanProductInactiveData) {
   settings {
@@ -16263,15 +22232,26 @@ export const SetLoanProductInactiveDocument = `
   }
 }
     `;
-export const useSetLoanProductInactiveMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetLoanProductInactiveMutation, TError, SetLoanProductInactiveMutationVariables, TContext>) =>
-    useMutation<SetLoanProductInactiveMutation, TError, SetLoanProductInactiveMutationVariables, TContext>(
-      ['setLoanProductInactive'],
-      useAxios<SetLoanProductInactiveMutation, SetLoanProductInactiveMutationVariables>(SetLoanProductInactiveDocument),
-      options
-    );
+export const useSetLoanProductInactiveMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetLoanProductInactiveMutation,
+    TError,
+    SetLoanProductInactiveMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetLoanProductInactiveMutation,
+    TError,
+    SetLoanProductInactiveMutationVariables,
+    TContext
+  >(
+    ['setLoanProductInactive'],
+    useAxios<SetLoanProductInactiveMutation, SetLoanProductInactiveMutationVariables>(
+      SetLoanProductInactiveDocument
+    ),
+    options
+  );
 export const SetProductActiveDocument = `
     mutation setProductActive($productId: ID!, $productType: AccountTypeFilter!, $remarks: String!) {
   settings {
@@ -16292,15 +22272,19 @@ export const SetProductActiveDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetProductActiveMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetProductActiveMutation, TError, SetProductActiveMutationVariables, TContext>) =>
-    useMutation<SetProductActiveMutation, TError, SetProductActiveMutationVariables, TContext>(
-      ['setProductActive'],
-      useAxios<SetProductActiveMutation, SetProductActiveMutationVariables>(SetProductActiveDocument),
-      options
-    );
+export const useSetProductActiveMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetProductActiveMutation,
+    TError,
+    SetProductActiveMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetProductActiveMutation, TError, SetProductActiveMutationVariables, TContext>(
+    ['setProductActive'],
+    useAxios<SetProductActiveMutation, SetProductActiveMutationVariables>(SetProductActiveDocument),
+    options
+  );
 export const SetLoanGeneralSettingsDocument = `
     mutation setLoanGeneralSettings($emi: Boolean, $epi: Boolean, $flat: Boolean, $collateralList: [CollateralListInputData]) {
   settings {
@@ -16319,15 +22303,26 @@ export const SetLoanGeneralSettingsDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetLoanGeneralSettingsMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetLoanGeneralSettingsMutation, TError, SetLoanGeneralSettingsMutationVariables, TContext>) =>
-    useMutation<SetLoanGeneralSettingsMutation, TError, SetLoanGeneralSettingsMutationVariables, TContext>(
-      ['setLoanGeneralSettings'],
-      useAxios<SetLoanGeneralSettingsMutation, SetLoanGeneralSettingsMutationVariables>(SetLoanGeneralSettingsDocument),
-      options
-    );
+export const useSetLoanGeneralSettingsMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetLoanGeneralSettingsMutation,
+    TError,
+    SetLoanGeneralSettingsMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetLoanGeneralSettingsMutation,
+    TError,
+    SetLoanGeneralSettingsMutationVariables,
+    TContext
+  >(
+    ['setLoanGeneralSettings'],
+    useAxios<SetLoanGeneralSettingsMutation, SetLoanGeneralSettingsMutationVariables>(
+      SetLoanGeneralSettingsDocument
+    ),
+    options
+  );
 export const SetLoanInsuranceSchemeDocument = `
     mutation setLoanInsuranceScheme($data: [LoanInsuranceSchemeInput]) {
   settings {
@@ -16344,15 +22339,26 @@ export const SetLoanInsuranceSchemeDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetLoanInsuranceSchemeMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetLoanInsuranceSchemeMutation, TError, SetLoanInsuranceSchemeMutationVariables, TContext>) =>
-    useMutation<SetLoanInsuranceSchemeMutation, TError, SetLoanInsuranceSchemeMutationVariables, TContext>(
-      ['setLoanInsuranceScheme'],
-      useAxios<SetLoanInsuranceSchemeMutation, SetLoanInsuranceSchemeMutationVariables>(SetLoanInsuranceSchemeDocument),
-      options
-    );
+export const useSetLoanInsuranceSchemeMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetLoanInsuranceSchemeMutation,
+    TError,
+    SetLoanInsuranceSchemeMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetLoanInsuranceSchemeMutation,
+    TError,
+    SetLoanInsuranceSchemeMutationVariables,
+    TContext
+  >(
+    ['setLoanInsuranceScheme'],
+    useAxios<SetLoanInsuranceSchemeMutation, SetLoanInsuranceSchemeMutationVariables>(
+      SetLoanInsuranceSchemeDocument
+    ),
+    options
+  );
 export const SetProductTypeDocument = `
     mutation setProductType($productType: [LoanProductTypeInput], $productSubType: [LoanProductSubTypeInput]) {
   settings {
@@ -16371,15 +22377,19 @@ export const SetProductTypeDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetProductTypeMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetProductTypeMutation, TError, SetProductTypeMutationVariables, TContext>) =>
-    useMutation<SetProductTypeMutation, TError, SetProductTypeMutationVariables, TContext>(
-      ['setProductType'],
-      useAxios<SetProductTypeMutation, SetProductTypeMutationVariables>(SetProductTypeDocument),
-      options
-    );
+export const useSetProductTypeMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetProductTypeMutation,
+    TError,
+    SetProductTypeMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetProductTypeMutation, TError, SetProductTypeMutationVariables, TContext>(
+    ['setProductType'],
+    useAxios<SetProductTypeMutation, SetProductTypeMutationVariables>(SetProductTypeDocument),
+    options
+  );
 export const AddGeneralMemberDocument = `
     mutation addGeneralMember($data: GeneralMemberInput!) {
   settings {
@@ -16398,15 +22408,19 @@ export const AddGeneralMemberDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useAddGeneralMemberMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<AddGeneralMemberMutation, TError, AddGeneralMemberMutationVariables, TContext>) =>
-    useMutation<AddGeneralMemberMutation, TError, AddGeneralMemberMutationVariables, TContext>(
-      ['addGeneralMember'],
-      useAxios<AddGeneralMemberMutation, AddGeneralMemberMutationVariables>(AddGeneralMemberDocument),
-      options
-    );
+export const useAddGeneralMemberMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddGeneralMemberMutation,
+    TError,
+    AddGeneralMemberMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddGeneralMemberMutation, TError, AddGeneralMemberMutationVariables, TContext>(
+    ['addGeneralMember'],
+    useAxios<AddGeneralMemberMutation, AddGeneralMemberMutationVariables>(AddGeneralMemberDocument),
+    options
+  );
 export const UpsertNewOptionDocument = `
     mutation upsertNewOption($fieldId: ID!, $data: FormOptionUpsertInput!) {
   settings {
@@ -16429,15 +22443,19 @@ export const UpsertNewOptionDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useUpsertNewOptionMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<UpsertNewOptionMutation, TError, UpsertNewOptionMutationVariables, TContext>) =>
-    useMutation<UpsertNewOptionMutation, TError, UpsertNewOptionMutationVariables, TContext>(
-      ['upsertNewOption'],
-      useAxios<UpsertNewOptionMutation, UpsertNewOptionMutationVariables>(UpsertNewOptionDocument),
-      options
-    );
+export const useUpsertNewOptionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpsertNewOptionMutation,
+    TError,
+    UpsertNewOptionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<UpsertNewOptionMutation, TError, UpsertNewOptionMutationVariables, TContext>(
+    ['upsertNewOption'],
+    useAxios<UpsertNewOptionMutation, UpsertNewOptionMutationVariables>(UpsertNewOptionDocument),
+    options
+  );
 export const DeleteOptionDocument = `
     mutation deleteOption($optionId: ID!) {
   settings {
@@ -16451,15 +22469,19 @@ export const DeleteOptionDocument = `
   }
 }
     `;
-export const useDeleteOptionMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteOptionMutation, TError, DeleteOptionMutationVariables, TContext>) =>
-    useMutation<DeleteOptionMutation, TError, DeleteOptionMutationVariables, TContext>(
-      ['deleteOption'],
-      useAxios<DeleteOptionMutation, DeleteOptionMutationVariables>(DeleteOptionDocument),
-      options
-    );
+export const useDeleteOptionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteOptionMutation,
+    TError,
+    DeleteOptionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<DeleteOptionMutation, TError, DeleteOptionMutationVariables, TContext>(
+    ['deleteOption'],
+    useAxios<DeleteOptionMutation, DeleteOptionMutationVariables>(DeleteOptionDocument),
+    options
+  );
 export const MoveOptionDocument = `
     mutation moveOption($optionId: ID!, $to: Int!) {
   settings {
@@ -16476,15 +22498,14 @@ export const MoveOptionDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useMoveOptionMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<MoveOptionMutation, TError, MoveOptionMutationVariables, TContext>) =>
-    useMutation<MoveOptionMutation, TError, MoveOptionMutationVariables, TContext>(
-      ['moveOption'],
-      useAxios<MoveOptionMutation, MoveOptionMutationVariables>(MoveOptionDocument),
-      options
-    );
+export const useMoveOptionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<MoveOptionMutation, TError, MoveOptionMutationVariables, TContext>
+) =>
+  useMutation<MoveOptionMutation, TError, MoveOptionMutationVariables, TContext>(
+    ['moveOption'],
+    useAxios<MoveOptionMutation, MoveOptionMutationVariables>(MoveOptionDocument),
+    options
+  );
 export const ToggleFieldOtherOptionDocument = `
     mutation toggleFieldOtherOption($fieldId: ID!, $hasOtherField: Boolean) {
   settings {
@@ -16501,15 +22522,26 @@ export const ToggleFieldOtherOptionDocument = `
   }
 }
     `;
-export const useToggleFieldOtherOptionMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<ToggleFieldOtherOptionMutation, TError, ToggleFieldOtherOptionMutationVariables, TContext>) =>
-    useMutation<ToggleFieldOtherOptionMutation, TError, ToggleFieldOtherOptionMutationVariables, TContext>(
-      ['toggleFieldOtherOption'],
-      useAxios<ToggleFieldOtherOptionMutation, ToggleFieldOtherOptionMutationVariables>(ToggleFieldOtherOptionDocument),
-      options
-    );
+export const useToggleFieldOtherOptionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ToggleFieldOtherOptionMutation,
+    TError,
+    ToggleFieldOtherOptionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    ToggleFieldOtherOptionMutation,
+    TError,
+    ToggleFieldOtherOptionMutationVariables,
+    TContext
+  >(
+    ['toggleFieldOtherOption'],
+    useAxios<ToggleFieldOtherOptionMutation, ToggleFieldOtherOptionMutationVariables>(
+      ToggleFieldOtherOptionDocument
+    ),
+    options
+  );
 export const UpsertSectionOptionDocument = `
     mutation upsertSectionOption($sectionId: ID!, $data: FormFieldUpsertInput!) {
   settings {
@@ -16533,15 +22565,21 @@ export const UpsertSectionOptionDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useUpsertSectionOptionMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<UpsertSectionOptionMutation, TError, UpsertSectionOptionMutationVariables, TContext>) =>
-    useMutation<UpsertSectionOptionMutation, TError, UpsertSectionOptionMutationVariables, TContext>(
-      ['upsertSectionOption'],
-      useAxios<UpsertSectionOptionMutation, UpsertSectionOptionMutationVariables>(UpsertSectionOptionDocument),
-      options
-    );
+export const useUpsertSectionOptionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpsertSectionOptionMutation,
+    TError,
+    UpsertSectionOptionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<UpsertSectionOptionMutation, TError, UpsertSectionOptionMutationVariables, TContext>(
+    ['upsertSectionOption'],
+    useAxios<UpsertSectionOptionMutation, UpsertSectionOptionMutationVariables>(
+      UpsertSectionOptionDocument
+    ),
+    options
+  );
 export const DeleteFieldDocument = `
     mutation deleteField($fieldId: ID!) {
   settings {
@@ -16558,15 +22596,14 @@ export const DeleteFieldDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useDeleteFieldMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteFieldMutation, TError, DeleteFieldMutationVariables, TContext>) =>
-    useMutation<DeleteFieldMutation, TError, DeleteFieldMutationVariables, TContext>(
-      ['deleteField'],
-      useAxios<DeleteFieldMutation, DeleteFieldMutationVariables>(DeleteFieldDocument),
-      options
-    );
+export const useDeleteFieldMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<DeleteFieldMutation, TError, DeleteFieldMutationVariables, TContext>
+) =>
+  useMutation<DeleteFieldMutation, TError, DeleteFieldMutationVariables, TContext>(
+    ['deleteField'],
+    useAxios<DeleteFieldMutation, DeleteFieldMutationVariables>(DeleteFieldDocument),
+    options
+  );
 export const MoveFieldDocument = `
     mutation moveField($fieldId: ID!, $to: Int!) {
   settings {
@@ -16583,15 +22620,14 @@ export const MoveFieldDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useMoveFieldMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<MoveFieldMutation, TError, MoveFieldMutationVariables, TContext>) =>
-    useMutation<MoveFieldMutation, TError, MoveFieldMutationVariables, TContext>(
-      ['moveField'],
-      useAxios<MoveFieldMutation, MoveFieldMutationVariables>(MoveFieldDocument),
-      options
-    );
+export const useMoveFieldMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<MoveFieldMutation, TError, MoveFieldMutationVariables, TContext>
+) =>
+  useMutation<MoveFieldMutation, TError, MoveFieldMutationVariables, TContext>(
+    ['moveField'],
+    useAxios<MoveFieldMutation, MoveFieldMutationVariables>(MoveFieldDocument),
+    options
+  );
 export const AddConditionOptionDocument = `
     mutation addConditionOption($fieldId: ID!, $dependsOn: [ID]!) {
   settings {
@@ -16613,15 +22649,21 @@ export const AddConditionOptionDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useAddConditionOptionMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<AddConditionOptionMutation, TError, AddConditionOptionMutationVariables, TContext>) =>
-    useMutation<AddConditionOptionMutation, TError, AddConditionOptionMutationVariables, TContext>(
-      ['addConditionOption'],
-      useAxios<AddConditionOptionMutation, AddConditionOptionMutationVariables>(AddConditionOptionDocument),
-      options
-    );
+export const useAddConditionOptionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddConditionOptionMutation,
+    TError,
+    AddConditionOptionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddConditionOptionMutation, TError, AddConditionOptionMutationVariables, TContext>(
+    ['addConditionOption'],
+    useAxios<AddConditionOptionMutation, AddConditionOptionMutationVariables>(
+      AddConditionOptionDocument
+    ),
+    options
+  );
 export const AddFileSizeToSectionDocument = `
     mutation addFileSizeToSection($sectionId: ID!, $maxSize: Int!) {
   settings {
@@ -16642,15 +22684,26 @@ export const AddFileSizeToSectionDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useAddFileSizeToSectionMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<AddFileSizeToSectionMutation, TError, AddFileSizeToSectionMutationVariables, TContext>) =>
-    useMutation<AddFileSizeToSectionMutation, TError, AddFileSizeToSectionMutationVariables, TContext>(
-      ['addFileSizeToSection'],
-      useAxios<AddFileSizeToSectionMutation, AddFileSizeToSectionMutationVariables>(AddFileSizeToSectionDocument),
-      options
-    );
+export const useAddFileSizeToSectionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddFileSizeToSectionMutation,
+    TError,
+    AddFileSizeToSectionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    AddFileSizeToSectionMutation,
+    TError,
+    AddFileSizeToSectionMutationVariables,
+    TContext
+  >(
+    ['addFileSizeToSection'],
+    useAxios<AddFileSizeToSectionMutation, AddFileSizeToSectionMutationVariables>(
+      AddFileSizeToSectionDocument
+    ),
+    options
+  );
 export const UpsertCustomSectionDocument = `
     mutation upsertCustomSection($data: FormSectionUpsertInput!) {
   settings {
@@ -16672,15 +22725,21 @@ export const UpsertCustomSectionDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useUpsertCustomSectionMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<UpsertCustomSectionMutation, TError, UpsertCustomSectionMutationVariables, TContext>) =>
-    useMutation<UpsertCustomSectionMutation, TError, UpsertCustomSectionMutationVariables, TContext>(
-      ['upsertCustomSection'],
-      useAxios<UpsertCustomSectionMutation, UpsertCustomSectionMutationVariables>(UpsertCustomSectionDocument),
-      options
-    );
+export const useUpsertCustomSectionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpsertCustomSectionMutation,
+    TError,
+    UpsertCustomSectionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<UpsertCustomSectionMutation, TError, UpsertCustomSectionMutationVariables, TContext>(
+    ['upsertCustomSection'],
+    useAxios<UpsertCustomSectionMutation, UpsertCustomSectionMutationVariables>(
+      UpsertCustomSectionDocument
+    ),
+    options
+  );
 export const UpsertCustomFieldDocument = `
     mutation upsertCustomField($data: FormFieldUpsertInput!) {
   settings {
@@ -16699,15 +22758,21 @@ export const UpsertCustomFieldDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useUpsertCustomFieldMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<UpsertCustomFieldMutation, TError, UpsertCustomFieldMutationVariables, TContext>) =>
-    useMutation<UpsertCustomFieldMutation, TError, UpsertCustomFieldMutationVariables, TContext>(
-      ['upsertCustomField'],
-      useAxios<UpsertCustomFieldMutation, UpsertCustomFieldMutationVariables>(UpsertCustomFieldDocument),
-      options
-    );
+export const useUpsertCustomFieldMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpsertCustomFieldMutation,
+    TError,
+    UpsertCustomFieldMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<UpsertCustomFieldMutation, TError, UpsertCustomFieldMutationVariables, TContext>(
+    ['upsertCustomField'],
+    useAxios<UpsertCustomFieldMutation, UpsertCustomFieldMutationVariables>(
+      UpsertCustomFieldDocument
+    ),
+    options
+  );
 export const DeleteCustomSectionDocument = `
     mutation deleteCustomSection($id: ID!) {
   settings {
@@ -16724,15 +22789,21 @@ export const DeleteCustomSectionDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useDeleteCustomSectionMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteCustomSectionMutation, TError, DeleteCustomSectionMutationVariables, TContext>) =>
-    useMutation<DeleteCustomSectionMutation, TError, DeleteCustomSectionMutationVariables, TContext>(
-      ['deleteCustomSection'],
-      useAxios<DeleteCustomSectionMutation, DeleteCustomSectionMutationVariables>(DeleteCustomSectionDocument),
-      options
-    );
+export const useDeleteCustomSectionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteCustomSectionMutation,
+    TError,
+    DeleteCustomSectionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<DeleteCustomSectionMutation, TError, DeleteCustomSectionMutationVariables, TContext>(
+    ['deleteCustomSection'],
+    useAxios<DeleteCustomSectionMutation, DeleteCustomSectionMutationVariables>(
+      DeleteCustomSectionDocument
+    ),
+    options
+  );
 export const DeleteCustomSectionFieldDocument = `
     mutation deleteCustomSectionField($id: ID!) {
   settings {
@@ -16749,15 +22820,26 @@ export const DeleteCustomSectionFieldDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useDeleteCustomSectionFieldMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<DeleteCustomSectionFieldMutation, TError, DeleteCustomSectionFieldMutationVariables, TContext>) =>
-    useMutation<DeleteCustomSectionFieldMutation, TError, DeleteCustomSectionFieldMutationVariables, TContext>(
-      ['deleteCustomSectionField'],
-      useAxios<DeleteCustomSectionFieldMutation, DeleteCustomSectionFieldMutationVariables>(DeleteCustomSectionFieldDocument),
-      options
-    );
+export const useDeleteCustomSectionFieldMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteCustomSectionFieldMutation,
+    TError,
+    DeleteCustomSectionFieldMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteCustomSectionFieldMutation,
+    TError,
+    DeleteCustomSectionFieldMutationVariables,
+    TContext
+  >(
+    ['deleteCustomSectionField'],
+    useAxios<DeleteCustomSectionFieldMutation, DeleteCustomSectionFieldMutationVariables>(
+      DeleteCustomSectionFieldDocument
+    ),
+    options
+  );
 export const UpdateCustomSectionDocument = `
     mutation updateCustomSection($id: ID!, $data: FormSectionUpdateInput!) {
   settings {
@@ -16779,15 +22861,21 @@ export const UpdateCustomSectionDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useUpdateCustomSectionMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<UpdateCustomSectionMutation, TError, UpdateCustomSectionMutationVariables, TContext>) =>
-    useMutation<UpdateCustomSectionMutation, TError, UpdateCustomSectionMutationVariables, TContext>(
-      ['updateCustomSection'],
-      useAxios<UpdateCustomSectionMutation, UpdateCustomSectionMutationVariables>(UpdateCustomSectionDocument),
-      options
-    );
+export const useUpdateCustomSectionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateCustomSectionMutation,
+    TError,
+    UpdateCustomSectionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<UpdateCustomSectionMutation, TError, UpdateCustomSectionMutationVariables, TContext>(
+    ['updateCustomSection'],
+    useAxios<UpdateCustomSectionMutation, UpdateCustomSectionMutationVariables>(
+      UpdateCustomSectionDocument
+    ),
+    options
+  );
 export const UpdateCustomSectionFieldDocument = `
     mutation updateCustomSectionField($id: ID!, $data: FormFieldUpdateInput!) {
   settings {
@@ -16803,15 +22891,26 @@ export const UpdateCustomSectionFieldDocument = `
   }
 }
     `;
-export const useUpdateCustomSectionFieldMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<UpdateCustomSectionFieldMutation, TError, UpdateCustomSectionFieldMutationVariables, TContext>) =>
-    useMutation<UpdateCustomSectionFieldMutation, TError, UpdateCustomSectionFieldMutationVariables, TContext>(
-      ['updateCustomSectionField'],
-      useAxios<UpdateCustomSectionFieldMutation, UpdateCustomSectionFieldMutationVariables>(UpdateCustomSectionFieldDocument),
-      options
-    );
+export const useUpdateCustomSectionFieldMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateCustomSectionFieldMutation,
+    TError,
+    UpdateCustomSectionFieldMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateCustomSectionFieldMutation,
+    TError,
+    UpdateCustomSectionFieldMutationVariables,
+    TContext
+  >(
+    ['updateCustomSectionField'],
+    useAxios<UpdateCustomSectionFieldMutation, UpdateCustomSectionFieldMutationVariables>(
+      UpdateCustomSectionFieldDocument
+    ),
+    options
+  );
 export const UpdateDeclarationDocument = `
     mutation updateDeclaration($data: DeclarationInput!) {
   settings {
@@ -16825,15 +22924,21 @@ export const UpdateDeclarationDocument = `
   }
 }
     `;
-export const useUpdateDeclarationMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<UpdateDeclarationMutation, TError, UpdateDeclarationMutationVariables, TContext>) =>
-    useMutation<UpdateDeclarationMutation, TError, UpdateDeclarationMutationVariables, TContext>(
-      ['updateDeclaration'],
-      useAxios<UpdateDeclarationMutation, UpdateDeclarationMutationVariables>(UpdateDeclarationDocument),
-      options
-    );
+export const useUpdateDeclarationMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateDeclarationMutation,
+    TError,
+    UpdateDeclarationMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<UpdateDeclarationMutation, TError, UpdateDeclarationMutationVariables, TContext>(
+    ['updateDeclaration'],
+    useAxios<UpdateDeclarationMutation, UpdateDeclarationMutationVariables>(
+      UpdateDeclarationDocument
+    ),
+    options
+  );
 export const SetSettingsShareBonusDocument = `
     mutation setSettingsShareBonus($data: ShareBonusSettingsInput) {
   settings {
@@ -16853,15 +22958,26 @@ export const SetSettingsShareBonusDocument = `
   }
 }
     `;
-export const useSetSettingsShareBonusMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetSettingsShareBonusMutation, TError, SetSettingsShareBonusMutationVariables, TContext>) =>
-    useMutation<SetSettingsShareBonusMutation, TError, SetSettingsShareBonusMutationVariables, TContext>(
-      ['setSettingsShareBonus'],
-      useAxios<SetSettingsShareBonusMutation, SetSettingsShareBonusMutationVariables>(SetSettingsShareBonusDocument),
-      options
-    );
+export const useSetSettingsShareBonusMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSettingsShareBonusMutation,
+    TError,
+    SetSettingsShareBonusMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsShareBonusMutation,
+    TError,
+    SetSettingsShareBonusMutationVariables,
+    TContext
+  >(
+    ['setSettingsShareBonus'],
+    useAxios<SetSettingsShareBonusMutation, SetSettingsShareBonusMutationVariables>(
+      SetSettingsShareBonusDocument
+    ),
+    options
+  );
 export const SetSettingsShareDividendDocument = `
     mutation setSettingsShareDividend($data: ShareDividendSettingsInput) {
   settings {
@@ -16883,15 +22999,26 @@ export const SetSettingsShareDividendDocument = `
   }
 }
     `;
-export const useSetSettingsShareDividendMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetSettingsShareDividendMutation, TError, SetSettingsShareDividendMutationVariables, TContext>) =>
-    useMutation<SetSettingsShareDividendMutation, TError, SetSettingsShareDividendMutationVariables, TContext>(
-      ['setSettingsShareDividend'],
-      useAxios<SetSettingsShareDividendMutation, SetSettingsShareDividendMutationVariables>(SetSettingsShareDividendDocument),
-      options
-    );
+export const useSetSettingsShareDividendMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSettingsShareDividendMutation,
+    TError,
+    SetSettingsShareDividendMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsShareDividendMutation,
+    TError,
+    SetSettingsShareDividendMutationVariables,
+    TContext
+  >(
+    ['setSettingsShareDividend'],
+    useAxios<SetSettingsShareDividendMutation, SetSettingsShareDividendMutationVariables>(
+      SetSettingsShareDividendDocument
+    ),
+    options
+  );
 export const SetSettingsShareIssueChargesDocument = `
     mutation setSettingsShareIssueCharges($data: ShareIssueChargesInput) {
   settings {
@@ -16911,15 +23038,26 @@ export const SetSettingsShareIssueChargesDocument = `
   }
 }
     `;
-export const useSetSettingsShareIssueChargesMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetSettingsShareIssueChargesMutation, TError, SetSettingsShareIssueChargesMutationVariables, TContext>) =>
-    useMutation<SetSettingsShareIssueChargesMutation, TError, SetSettingsShareIssueChargesMutationVariables, TContext>(
-      ['setSettingsShareIssueCharges'],
-      useAxios<SetSettingsShareIssueChargesMutation, SetSettingsShareIssueChargesMutationVariables>(SetSettingsShareIssueChargesDocument),
-      options
-    );
+export const useSetSettingsShareIssueChargesMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSettingsShareIssueChargesMutation,
+    TError,
+    SetSettingsShareIssueChargesMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsShareIssueChargesMutation,
+    TError,
+    SetSettingsShareIssueChargesMutationVariables,
+    TContext
+  >(
+    ['setSettingsShareIssueCharges'],
+    useAxios<SetSettingsShareIssueChargesMutation, SetSettingsShareIssueChargesMutationVariables>(
+      SetSettingsShareIssueChargesDocument
+    ),
+    options
+  );
 export const SetSettingsShareReturnChargesDocument = `
     mutation setSettingsShareReturnCharges($data: ShareReturnChargesInput) {
   settings {
@@ -16939,15 +23077,26 @@ export const SetSettingsShareReturnChargesDocument = `
   }
 }
     `;
-export const useSetSettingsShareReturnChargesMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetSettingsShareReturnChargesMutation, TError, SetSettingsShareReturnChargesMutationVariables, TContext>) =>
-    useMutation<SetSettingsShareReturnChargesMutation, TError, SetSettingsShareReturnChargesMutationVariables, TContext>(
-      ['setSettingsShareReturnCharges'],
-      useAxios<SetSettingsShareReturnChargesMutation, SetSettingsShareReturnChargesMutationVariables>(SetSettingsShareReturnChargesDocument),
-      options
-    );
+export const useSetSettingsShareReturnChargesMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSettingsShareReturnChargesMutation,
+    TError,
+    SetSettingsShareReturnChargesMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsShareReturnChargesMutation,
+    TError,
+    SetSettingsShareReturnChargesMutationVariables,
+    TContext
+  >(
+    ['setSettingsShareReturnCharges'],
+    useAxios<SetSettingsShareReturnChargesMutation, SetSettingsShareReturnChargesMutationVariables>(
+      SetSettingsShareReturnChargesDocument
+    ),
+    options
+  );
 export const SetSettingsShareGeneralDocument = `
     mutation setSettingsShareGeneral($data: ShareSettingsGeneralInput) {
   settings {
@@ -16967,15 +23116,26 @@ export const SetSettingsShareGeneralDocument = `
   }
 }
     `;
-export const useSetSettingsShareGeneralMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetSettingsShareGeneralMutation, TError, SetSettingsShareGeneralMutationVariables, TContext>) =>
-    useMutation<SetSettingsShareGeneralMutation, TError, SetSettingsShareGeneralMutationVariables, TContext>(
-      ['setSettingsShareGeneral'],
-      useAxios<SetSettingsShareGeneralMutation, SetSettingsShareGeneralMutationVariables>(SetSettingsShareGeneralDocument),
-      options
-    );
+export const useSetSettingsShareGeneralMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSettingsShareGeneralMutation,
+    TError,
+    SetSettingsShareGeneralMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsShareGeneralMutation,
+    TError,
+    SetSettingsShareGeneralMutationVariables,
+    TContext
+  >(
+    ['setSettingsShareGeneral'],
+    useAxios<SetSettingsShareGeneralMutation, SetSettingsShareGeneralMutationVariables>(
+      SetSettingsShareGeneralDocument
+    ),
+    options
+  );
 export const SetSettingsShareTransferDocument = `
     mutation setSettingsShareTransfer($data: ShareTransferSettingsInput) {
   settings {
@@ -16995,15 +23155,26 @@ export const SetSettingsShareTransferDocument = `
   }
 }
     `;
-export const useSetSettingsShareTransferMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetSettingsShareTransferMutation, TError, SetSettingsShareTransferMutationVariables, TContext>) =>
-    useMutation<SetSettingsShareTransferMutation, TError, SetSettingsShareTransferMutationVariables, TContext>(
-      ['setSettingsShareTransfer'],
-      useAxios<SetSettingsShareTransferMutation, SetSettingsShareTransferMutationVariables>(SetSettingsShareTransferDocument),
-      options
-    );
+export const useSetSettingsShareTransferMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSettingsShareTransferMutation,
+    TError,
+    SetSettingsShareTransferMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetSettingsShareTransferMutation,
+    TError,
+    SetSettingsShareTransferMutationVariables,
+    TContext
+  >(
+    ['setSettingsShareTransfer'],
+    useAxios<SetSettingsShareTransferMutation, SetSettingsShareTransferMutationVariables>(
+      SetSettingsShareTransferDocument
+    ),
+    options
+  );
 export const SetSettingsUserDataDocument = `
     mutation setSettingsUserData($id: ID!, $data: MyraUserInput) {
   settings {
@@ -17018,15 +23189,21 @@ export const SetSettingsUserDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetSettingsUserDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetSettingsUserDataMutation, TError, SetSettingsUserDataMutationVariables, TContext>) =>
-    useMutation<SetSettingsUserDataMutation, TError, SetSettingsUserDataMutationVariables, TContext>(
-      ['setSettingsUserData'],
-      useAxios<SetSettingsUserDataMutation, SetSettingsUserDataMutationVariables>(SetSettingsUserDataDocument),
-      options
-    );
+export const useSetSettingsUserDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetSettingsUserDataMutation,
+    TError,
+    SetSettingsUserDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetSettingsUserDataMutation, TError, SetSettingsUserDataMutationVariables, TContext>(
+    ['setSettingsUserData'],
+    useAxios<SetSettingsUserDataMutation, SetSettingsUserDataMutationVariables>(
+      SetSettingsUserDataDocument
+    ),
+    options
+  );
 export const SetPreferenceDocument = `
     mutation setPreference($id: ID!, $data: UserPreferenceInput!) {
   user {
@@ -17046,15 +23223,19 @@ export const SetPreferenceDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetPreferenceMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetPreferenceMutation, TError, SetPreferenceMutationVariables, TContext>) =>
-    useMutation<SetPreferenceMutation, TError, SetPreferenceMutationVariables, TContext>(
-      ['setPreference'],
-      useAxios<SetPreferenceMutation, SetPreferenceMutationVariables>(SetPreferenceDocument),
-      options
-    );
+export const useSetPreferenceMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetPreferenceMutation,
+    TError,
+    SetPreferenceMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetPreferenceMutation, TError, SetPreferenceMutationVariables, TContext>(
+    ['setPreference'],
+    useAxios<SetPreferenceMutation, SetPreferenceMutationVariables>(SetPreferenceDocument),
+    options
+  );
 export const SetValuatorDocument = `
     mutation setValuator($id: ID!, $data: ValuatorInput) {
   settings {
@@ -17071,15 +23252,14 @@ export const SetValuatorDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetValuatorMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetValuatorMutation, TError, SetValuatorMutationVariables, TContext>) =>
-    useMutation<SetValuatorMutation, TError, SetValuatorMutationVariables, TContext>(
-      ['setValuator'],
-      useAxios<SetValuatorMutation, SetValuatorMutationVariables>(SetValuatorDocument),
-      options
-    );
+export const useSetValuatorMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<SetValuatorMutation, TError, SetValuatorMutationVariables, TContext>
+) =>
+  useMutation<SetValuatorMutation, TError, SetValuatorMutationVariables, TContext>(
+    ['setValuator'],
+    useAxios<SetValuatorMutation, SetValuatorMutationVariables>(SetValuatorDocument),
+    options
+  );
 export const AddSharePurchaseDocument = `
     mutation addSharePurchase($data: SharePurchaseInput!) {
   share {
@@ -17092,15 +23272,19 @@ export const AddSharePurchaseDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useAddSharePurchaseMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<AddSharePurchaseMutation, TError, AddSharePurchaseMutationVariables, TContext>) =>
-    useMutation<AddSharePurchaseMutation, TError, AddSharePurchaseMutationVariables, TContext>(
-      ['addSharePurchase'],
-      useAxios<AddSharePurchaseMutation, AddSharePurchaseMutationVariables>(AddSharePurchaseDocument),
-      options
-    );
+export const useAddSharePurchaseMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddSharePurchaseMutation,
+    TError,
+    AddSharePurchaseMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddSharePurchaseMutation, TError, AddSharePurchaseMutationVariables, TContext>(
+    ['addSharePurchase'],
+    useAxios<AddSharePurchaseMutation, AddSharePurchaseMutationVariables>(AddSharePurchaseDocument),
+    options
+  );
 export const AddShareReturnDocument = `
     mutation addShareReturn($data: ShareReturnInput!) {
   share {
@@ -17110,15 +23294,19 @@ export const AddShareReturnDocument = `
   }
 }
     `;
-export const useAddShareReturnMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<AddShareReturnMutation, TError, AddShareReturnMutationVariables, TContext>) =>
-    useMutation<AddShareReturnMutation, TError, AddShareReturnMutationVariables, TContext>(
-      ['addShareReturn'],
-      useAxios<AddShareReturnMutation, AddShareReturnMutationVariables>(AddShareReturnDocument),
-      options
-    );
+export const useAddShareReturnMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddShareReturnMutation,
+    TError,
+    AddShareReturnMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddShareReturnMutation, TError, AddShareReturnMutationVariables, TContext>(
+    ['addShareReturn'],
+    useAxios<AddShareReturnMutation, AddShareReturnMutationVariables>(AddShareReturnDocument),
+    options
+  );
 export const SetDepositDataDocument = `
     mutation setDepositData($data: DepositInput!) {
   transaction {
@@ -17131,15 +23319,19 @@ export const SetDepositDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetDepositDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetDepositDataMutation, TError, SetDepositDataMutationVariables, TContext>) =>
-    useMutation<SetDepositDataMutation, TError, SetDepositDataMutationVariables, TContext>(
-      ['setDepositData'],
-      useAxios<SetDepositDataMutation, SetDepositDataMutationVariables>(SetDepositDataDocument),
-      options
-    );
+export const useSetDepositDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetDepositDataMutation,
+    TError,
+    SetDepositDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetDepositDataMutation, TError, SetDepositDataMutationVariables, TContext>(
+    ['setDepositData'],
+    useAxios<SetDepositDataMutation, SetDepositDataMutationVariables>(SetDepositDataDocument),
+    options
+  );
 export const SetBulkDepositDataDocument = `
     mutation setBulkDepositData($data: BulkDepositInput) {
   transaction {
@@ -17152,15 +23344,21 @@ export const SetBulkDepositDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetBulkDepositDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetBulkDepositDataMutation, TError, SetBulkDepositDataMutationVariables, TContext>) =>
-    useMutation<SetBulkDepositDataMutation, TError, SetBulkDepositDataMutationVariables, TContext>(
-      ['setBulkDepositData'],
-      useAxios<SetBulkDepositDataMutation, SetBulkDepositDataMutationVariables>(SetBulkDepositDataDocument),
-      options
-    );
+export const useSetBulkDepositDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetBulkDepositDataMutation,
+    TError,
+    SetBulkDepositDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetBulkDepositDataMutation, TError, SetBulkDepositDataMutationVariables, TContext>(
+    ['setBulkDepositData'],
+    useAxios<SetBulkDepositDataMutation, SetBulkDepositDataMutationVariables>(
+      SetBulkDepositDataDocument
+    ),
+    options
+  );
 export const SetWithdrawDataDocument = `
     mutation setWithdrawData($data: WithdrawInput!) {
   transaction {
@@ -17173,15 +23371,19 @@ export const SetWithdrawDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetWithdrawDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetWithdrawDataMutation, TError, SetWithdrawDataMutationVariables, TContext>) =>
-    useMutation<SetWithdrawDataMutation, TError, SetWithdrawDataMutationVariables, TContext>(
-      ['setWithdrawData'],
-      useAxios<SetWithdrawDataMutation, SetWithdrawDataMutationVariables>(SetWithdrawDataDocument),
-      options
-    );
+export const useSetWithdrawDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetWithdrawDataMutation,
+    TError,
+    SetWithdrawDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetWithdrawDataMutation, TError, SetWithdrawDataMutationVariables, TContext>(
+    ['setWithdrawData'],
+    useAxios<SetWithdrawDataMutation, SetWithdrawDataMutationVariables>(SetWithdrawDataDocument),
+    options
+  );
 export const SetAccountTransferDataDocument = `
     mutation setAccountTransferData($data: TransferInput!) {
   transaction {
@@ -17194,15 +23396,26 @@ export const SetAccountTransferDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetAccountTransferDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetAccountTransferDataMutation, TError, SetAccountTransferDataMutationVariables, TContext>) =>
-    useMutation<SetAccountTransferDataMutation, TError, SetAccountTransferDataMutationVariables, TContext>(
-      ['setAccountTransferData'],
-      useAxios<SetAccountTransferDataMutation, SetAccountTransferDataMutationVariables>(SetAccountTransferDataDocument),
-      options
-    );
+export const useSetAccountTransferDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAccountTransferDataMutation,
+    TError,
+    SetAccountTransferDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAccountTransferDataMutation,
+    TError,
+    SetAccountTransferDataMutationVariables,
+    TContext
+  >(
+    ['setAccountTransferData'],
+    useAxios<SetAccountTransferDataMutation, SetAccountTransferDataMutationVariables>(
+      SetAccountTransferDataDocument
+    ),
+    options
+  );
 export const SetAccountForgiveInstallmentDataDocument = `
     mutation setAccountForgiveInstallmentData($id: ID!, $installmentDates: [String!]!) {
   account {
@@ -17215,15 +23428,27 @@ export const SetAccountForgiveInstallmentDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetAccountForgiveInstallmentDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetAccountForgiveInstallmentDataMutation, TError, SetAccountForgiveInstallmentDataMutationVariables, TContext>) =>
-    useMutation<SetAccountForgiveInstallmentDataMutation, TError, SetAccountForgiveInstallmentDataMutationVariables, TContext>(
-      ['setAccountForgiveInstallmentData'],
-      useAxios<SetAccountForgiveInstallmentDataMutation, SetAccountForgiveInstallmentDataMutationVariables>(SetAccountForgiveInstallmentDataDocument),
-      options
-    );
+export const useSetAccountForgiveInstallmentDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetAccountForgiveInstallmentDataMutation,
+    TError,
+    SetAccountForgiveInstallmentDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetAccountForgiveInstallmentDataMutation,
+    TError,
+    SetAccountForgiveInstallmentDataMutationVariables,
+    TContext
+  >(
+    ['setAccountForgiveInstallmentData'],
+    useAxios<
+      SetAccountForgiveInstallmentDataMutation,
+      SetAccountForgiveInstallmentDataMutationVariables
+    >(SetAccountForgiveInstallmentDataDocument),
+    options
+  );
 export const SetEndOfDayDataDocument = `
     mutation setEndOfDayData {
   transaction {
@@ -17231,15 +23456,19 @@ export const SetEndOfDayDataDocument = `
   }
 }
     `;
-export const useSetEndOfDayDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetEndOfDayDataMutation, TError, SetEndOfDayDataMutationVariables, TContext>) =>
-    useMutation<SetEndOfDayDataMutation, TError, SetEndOfDayDataMutationVariables, TContext>(
-      ['setEndOfDayData'],
-      useAxios<SetEndOfDayDataMutation, SetEndOfDayDataMutationVariables>(SetEndOfDayDataDocument),
-      options
-    );
+export const useSetEndOfDayDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetEndOfDayDataMutation,
+    TError,
+    SetEndOfDayDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetEndOfDayDataMutation, TError, SetEndOfDayDataMutationVariables, TContext>(
+    ['setEndOfDayData'],
+    useAxios<SetEndOfDayDataMutation, SetEndOfDayDataMutationVariables>(SetEndOfDayDataDocument),
+    options
+  );
 export const SetTellerTransferDataDocument = `
     mutation setTellerTransferData($data: TellerTransferInput!) {
   transaction {
@@ -17252,15 +23481,26 @@ export const SetTellerTransferDataDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useSetTellerTransferDataMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<SetTellerTransferDataMutation, TError, SetTellerTransferDataMutationVariables, TContext>) =>
-    useMutation<SetTellerTransferDataMutation, TError, SetTellerTransferDataMutationVariables, TContext>(
-      ['setTellerTransferData'],
-      useAxios<SetTellerTransferDataMutation, SetTellerTransferDataMutationVariables>(SetTellerTransferDataDocument),
-      options
-    );
+export const useSetTellerTransferDataMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetTellerTransferDataMutation,
+    TError,
+    SetTellerTransferDataMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    SetTellerTransferDataMutation,
+    TError,
+    SetTellerTransferDataMutationVariables,
+    TContext
+  >(
+    ['setTellerTransferData'],
+    useAxios<SetTellerTransferDataMutation, SetTellerTransferDataMutationVariables>(
+      SetTellerTransferDataDocument
+    ),
+    options
+  );
 export const GetAccountMemberListDocument = `
     query getAccountMemberList($objState: ObjState, $pagination: Pagination) {
   members {
@@ -17293,18 +23533,17 @@ export const GetAccountMemberListDocument = `
   }
 }
     `;
-export const useGetAccountMemberListQuery = <
-      TData = GetAccountMemberListQuery,
-      TError = unknown
-    >(
-      variables?: GetAccountMemberListQueryVariables,
-      options?: UseQueryOptions<GetAccountMemberListQuery, TError, TData>
-    ) =>
-    useQuery<GetAccountMemberListQuery, TError, TData>(
-      variables === undefined ? ['getAccountMemberList'] : ['getAccountMemberList', variables],
-      useAxios<GetAccountMemberListQuery, GetAccountMemberListQueryVariables>(GetAccountMemberListDocument).bind(null, variables),
-      options
-    );
+export const useGetAccountMemberListQuery = <TData = GetAccountMemberListQuery, TError = unknown>(
+  variables?: GetAccountMemberListQueryVariables,
+  options?: UseQueryOptions<GetAccountMemberListQuery, TError, TData>
+) =>
+  useQuery<GetAccountMemberListQuery, TError, TData>(
+    variables === undefined ? ['getAccountMemberList'] : ['getAccountMemberList', variables],
+    useAxios<GetAccountMemberListQuery, GetAccountMemberListQueryVariables>(
+      GetAccountMemberListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetProductListDocument = `
     query getProductList($memberId: ID!) {
   settings {
@@ -17328,18 +23567,18 @@ export const GetProductListDocument = `
   }
 }
     `;
-export const useGetProductListQuery = <
-      TData = GetProductListQuery,
-      TError = unknown
-    >(
-      variables: GetProductListQueryVariables,
-      options?: UseQueryOptions<GetProductListQuery, TError, TData>
-    ) =>
-    useQuery<GetProductListQuery, TError, TData>(
-      ['getProductList', variables],
-      useAxios<GetProductListQuery, GetProductListQueryVariables>(GetProductListDocument).bind(null, variables),
-      options
-    );
+export const useGetProductListQuery = <TData = GetProductListQuery, TError = unknown>(
+  variables: GetProductListQueryVariables,
+  options?: UseQueryOptions<GetProductListQuery, TError, TData>
+) =>
+  useQuery<GetProductListQuery, TError, TData>(
+    ['getProductList', variables],
+    useAxios<GetProductListQuery, GetProductListQueryVariables>(GetProductListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetAccountOpenProductDetailsDocument = `
     query getAccountOpenProductDetails($id: ID!) {
   settings {
@@ -17477,17 +23716,19 @@ export const GetAccountOpenProductDetailsDocument = `
 }
     `;
 export const useGetAccountOpenProductDetailsQuery = <
-      TData = GetAccountOpenProductDetailsQuery,
-      TError = unknown
-    >(
-      variables: GetAccountOpenProductDetailsQueryVariables,
-      options?: UseQueryOptions<GetAccountOpenProductDetailsQuery, TError, TData>
-    ) =>
-    useQuery<GetAccountOpenProductDetailsQuery, TError, TData>(
-      ['getAccountOpenProductDetails', variables],
-      useAxios<GetAccountOpenProductDetailsQuery, GetAccountOpenProductDetailsQueryVariables>(GetAccountOpenProductDetailsDocument).bind(null, variables),
-      options
-    );
+  TData = GetAccountOpenProductDetailsQuery,
+  TError = unknown
+>(
+  variables: GetAccountOpenProductDetailsQueryVariables,
+  options?: UseQueryOptions<GetAccountOpenProductDetailsQuery, TError, TData>
+) =>
+  useQuery<GetAccountOpenProductDetailsQuery, TError, TData>(
+    ['getAccountOpenProductDetails', variables],
+    useAxios<GetAccountOpenProductDetailsQuery, GetAccountOpenProductDetailsQueryVariables>(
+      GetAccountOpenProductDetailsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAccountOpenEditDataDocument = `
     query getAccountOpenEditData($id: ID!) {
   account {
@@ -17530,17 +23771,19 @@ export const GetAccountOpenEditDataDocument = `
 }
     `;
 export const useGetAccountOpenEditDataQuery = <
-      TData = GetAccountOpenEditDataQuery,
-      TError = unknown
-    >(
-      variables: GetAccountOpenEditDataQueryVariables,
-      options?: UseQueryOptions<GetAccountOpenEditDataQuery, TError, TData>
-    ) =>
-    useQuery<GetAccountOpenEditDataQuery, TError, TData>(
-      ['getAccountOpenEditData', variables],
-      useAxios<GetAccountOpenEditDataQuery, GetAccountOpenEditDataQueryVariables>(GetAccountOpenEditDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetAccountOpenEditDataQuery,
+  TError = unknown
+>(
+  variables: GetAccountOpenEditDataQueryVariables,
+  options?: UseQueryOptions<GetAccountOpenEditDataQuery, TError, TData>
+) =>
+  useQuery<GetAccountOpenEditDataQuery, TError, TData>(
+    ['getAccountOpenEditData', variables],
+    useAxios<GetAccountOpenEditDataQuery, GetAccountOpenEditDataQueryVariables>(
+      GetAccountOpenEditDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAccountTableListDocument = `
     query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSearchFilter) {
   account {
@@ -17620,18 +23863,17 @@ export const GetAccountTableListDocument = `
   }
 }
     `;
-export const useGetAccountTableListQuery = <
-      TData = GetAccountTableListQuery,
-      TError = unknown
-    >(
-      variables?: GetAccountTableListQueryVariables,
-      options?: UseQueryOptions<GetAccountTableListQuery, TError, TData>
-    ) =>
-    useQuery<GetAccountTableListQuery, TError, TData>(
-      variables === undefined ? ['getAccountTableList'] : ['getAccountTableList', variables],
-      useAxios<GetAccountTableListQuery, GetAccountTableListQueryVariables>(GetAccountTableListDocument).bind(null, variables),
-      options
-    );
+export const useGetAccountTableListQuery = <TData = GetAccountTableListQuery, TError = unknown>(
+  variables?: GetAccountTableListQueryVariables,
+  options?: UseQueryOptions<GetAccountTableListQuery, TError, TData>
+) =>
+  useQuery<GetAccountTableListQuery, TError, TData>(
+    variables === undefined ? ['getAccountTableList'] : ['getAccountTableList', variables],
+    useAxios<GetAccountTableListQuery, GetAccountTableListQueryVariables>(
+      GetAccountTableListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAccountDocumentsListDocument = `
     query getAccountDocumentsList($subscriptionId: String!) {
   document {
@@ -17648,17 +23890,19 @@ export const GetAccountDocumentsListDocument = `
 }
     `;
 export const useGetAccountDocumentsListQuery = <
-      TData = GetAccountDocumentsListQuery,
-      TError = unknown
-    >(
-      variables: GetAccountDocumentsListQueryVariables,
-      options?: UseQueryOptions<GetAccountDocumentsListQuery, TError, TData>
-    ) =>
-    useQuery<GetAccountDocumentsListQuery, TError, TData>(
-      ['getAccountDocumentsList', variables],
-      useAxios<GetAccountDocumentsListQuery, GetAccountDocumentsListQueryVariables>(GetAccountDocumentsListDocument).bind(null, variables),
-      options
-    );
+  TData = GetAccountDocumentsListQuery,
+  TError = unknown
+>(
+  variables: GetAccountDocumentsListQueryVariables,
+  options?: UseQueryOptions<GetAccountDocumentsListQuery, TError, TData>
+) =>
+  useQuery<GetAccountDocumentsListQuery, TError, TData>(
+    ['getAccountDocumentsList', variables],
+    useAxios<GetAccountDocumentsListQuery, GetAccountDocumentsListQueryVariables>(
+      GetAccountDocumentsListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAccountOpenProductCriteriaDocument = `
     query getAccountOpenProductCriteria($productId: ID!) {
   settings {
@@ -17685,17 +23929,19 @@ export const GetAccountOpenProductCriteriaDocument = `
 }
     `;
 export const useGetAccountOpenProductCriteriaQuery = <
-      TData = GetAccountOpenProductCriteriaQuery,
-      TError = unknown
-    >(
-      variables: GetAccountOpenProductCriteriaQueryVariables,
-      options?: UseQueryOptions<GetAccountOpenProductCriteriaQuery, TError, TData>
-    ) =>
-    useQuery<GetAccountOpenProductCriteriaQuery, TError, TData>(
-      ['getAccountOpenProductCriteria', variables],
-      useAxios<GetAccountOpenProductCriteriaQuery, GetAccountOpenProductCriteriaQueryVariables>(GetAccountOpenProductCriteriaDocument).bind(null, variables),
-      options
-    );
+  TData = GetAccountOpenProductCriteriaQuery,
+  TError = unknown
+>(
+  variables: GetAccountOpenProductCriteriaQueryVariables,
+  options?: UseQueryOptions<GetAccountOpenProductCriteriaQuery, TError, TData>
+) =>
+  useQuery<GetAccountOpenProductCriteriaQuery, TError, TData>(
+    ['getAccountOpenProductCriteria', variables],
+    useAxios<GetAccountOpenProductCriteriaQuery, GetAccountOpenProductCriteriaQueryVariables>(
+      GetAccountOpenProductCriteriaDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAccountOpenProductPenaltyDocument = `
     query getAccountOpenProductPenalty($productId: ID!) {
   settings {
@@ -17736,17 +23982,19 @@ export const GetAccountOpenProductPenaltyDocument = `
 }
     `;
 export const useGetAccountOpenProductPenaltyQuery = <
-      TData = GetAccountOpenProductPenaltyQuery,
-      TError = unknown
-    >(
-      variables: GetAccountOpenProductPenaltyQueryVariables,
-      options?: UseQueryOptions<GetAccountOpenProductPenaltyQuery, TError, TData>
-    ) =>
-    useQuery<GetAccountOpenProductPenaltyQuery, TError, TData>(
-      ['getAccountOpenProductPenalty', variables],
-      useAxios<GetAccountOpenProductPenaltyQuery, GetAccountOpenProductPenaltyQueryVariables>(GetAccountOpenProductPenaltyDocument).bind(null, variables),
-      options
-    );
+  TData = GetAccountOpenProductPenaltyQuery,
+  TError = unknown
+>(
+  variables: GetAccountOpenProductPenaltyQueryVariables,
+  options?: UseQueryOptions<GetAccountOpenProductPenaltyQuery, TError, TData>
+) =>
+  useQuery<GetAccountOpenProductPenaltyQuery, TError, TData>(
+    ['getAccountOpenProductPenalty', variables],
+    useAxios<GetAccountOpenProductPenaltyQuery, GetAccountOpenProductPenaltyQueryVariables>(
+      GetAccountOpenProductPenaltyDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAccountOpenMinorListDocument = `
     query getAccountOpenMinorList($memberId: ID!) {
   account {
@@ -17761,17 +24009,19 @@ export const GetAccountOpenMinorListDocument = `
 }
     `;
 export const useGetAccountOpenMinorListQuery = <
-      TData = GetAccountOpenMinorListQuery,
-      TError = unknown
-    >(
-      variables: GetAccountOpenMinorListQueryVariables,
-      options?: UseQueryOptions<GetAccountOpenMinorListQuery, TError, TData>
-    ) =>
-    useQuery<GetAccountOpenMinorListQuery, TError, TData>(
-      ['getAccountOpenMinorList', variables],
-      useAxios<GetAccountOpenMinorListQuery, GetAccountOpenMinorListQueryVariables>(GetAccountOpenMinorListDocument).bind(null, variables),
-      options
-    );
+  TData = GetAccountOpenMinorListQuery,
+  TError = unknown
+>(
+  variables: GetAccountOpenMinorListQueryVariables,
+  options?: UseQueryOptions<GetAccountOpenMinorListQuery, TError, TData>
+) =>
+  useQuery<GetAccountOpenMinorListQuery, TError, TData>(
+    ['getAccountOpenMinorList', variables],
+    useAxios<GetAccountOpenMinorListQuery, GetAccountOpenMinorListQueryVariables>(
+      GetAccountOpenMinorListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetInstallmentsListDataDocument = `
     query getInstallmentsListData($id: ID!, $from: String, $to: String, $fromN: Int, $toN: Int) {
   account {
@@ -17792,17 +24042,19 @@ export const GetInstallmentsListDataDocument = `
 }
     ${QueryErrorFragmentDoc}`;
 export const useGetInstallmentsListDataQuery = <
-      TData = GetInstallmentsListDataQuery,
-      TError = unknown
-    >(
-      variables: GetInstallmentsListDataQueryVariables,
-      options?: UseQueryOptions<GetInstallmentsListDataQuery, TError, TData>
-    ) =>
-    useQuery<GetInstallmentsListDataQuery, TError, TData>(
-      ['getInstallmentsListData', variables],
-      useAxios<GetInstallmentsListDataQuery, GetInstallmentsListDataQueryVariables>(GetInstallmentsListDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetInstallmentsListDataQuery,
+  TError = unknown
+>(
+  variables: GetInstallmentsListDataQueryVariables,
+  options?: UseQueryOptions<GetInstallmentsListDataQuery, TError, TData>
+) =>
+  useQuery<GetInstallmentsListDataQuery, TError, TData>(
+    ['getInstallmentsListData', variables],
+    useAxios<GetInstallmentsListDataQuery, GetInstallmentsListDataQueryVariables>(
+      GetInstallmentsListDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetBulkInstallmentsDataDocument = `
     query getBulkInstallmentsData($ids: [ID]!) {
   account {
@@ -17822,17 +24074,19 @@ export const GetBulkInstallmentsDataDocument = `
 }
     `;
 export const useGetBulkInstallmentsDataQuery = <
-      TData = GetBulkInstallmentsDataQuery,
-      TError = unknown
-    >(
-      variables: GetBulkInstallmentsDataQueryVariables,
-      options?: UseQueryOptions<GetBulkInstallmentsDataQuery, TError, TData>
-    ) =>
-    useQuery<GetBulkInstallmentsDataQuery, TError, TData>(
-      ['getBulkInstallmentsData', variables],
-      useAxios<GetBulkInstallmentsDataQuery, GetBulkInstallmentsDataQueryVariables>(GetBulkInstallmentsDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetBulkInstallmentsDataQuery,
+  TError = unknown
+>(
+  variables: GetBulkInstallmentsDataQueryVariables,
+  options?: UseQueryOptions<GetBulkInstallmentsDataQuery, TError, TData>
+) =>
+  useQuery<GetBulkInstallmentsDataQuery, TError, TData>(
+    ['getBulkInstallmentsData', variables],
+    useAxios<GetBulkInstallmentsDataQuery, GetBulkInstallmentsDataQueryVariables>(
+      GetBulkInstallmentsDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetDefaultAccountListDocument = `
     query getDefaultAccountList($productId: ID!, $memberId: ID!) {
   account {
@@ -17845,18 +24099,17 @@ export const GetDefaultAccountListDocument = `
   }
 }
     `;
-export const useGetDefaultAccountListQuery = <
-      TData = GetDefaultAccountListQuery,
-      TError = unknown
-    >(
-      variables: GetDefaultAccountListQueryVariables,
-      options?: UseQueryOptions<GetDefaultAccountListQuery, TError, TData>
-    ) =>
-    useQuery<GetDefaultAccountListQuery, TError, TData>(
-      ['getDefaultAccountList', variables],
-      useAxios<GetDefaultAccountListQuery, GetDefaultAccountListQueryVariables>(GetDefaultAccountListDocument).bind(null, variables),
-      options
-    );
+export const useGetDefaultAccountListQuery = <TData = GetDefaultAccountListQuery, TError = unknown>(
+  variables: GetDefaultAccountListQueryVariables,
+  options?: UseQueryOptions<GetDefaultAccountListQuery, TError, TData>
+) =>
+  useQuery<GetDefaultAccountListQuery, TError, TData>(
+    ['getDefaultAccountList', variables],
+    useAxios<GetDefaultAccountListQuery, GetDefaultAccountListQueryVariables>(
+      GetDefaultAccountListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAccountDetailsDataDocument = `
     query getAccountDetailsData($id: ID!) {
   account {
@@ -17898,18 +24151,17 @@ export const GetAccountDetailsDataDocument = `
   }
 }
     `;
-export const useGetAccountDetailsDataQuery = <
-      TData = GetAccountDetailsDataQuery,
-      TError = unknown
-    >(
-      variables: GetAccountDetailsDataQueryVariables,
-      options?: UseQueryOptions<GetAccountDetailsDataQuery, TError, TData>
-    ) =>
-    useQuery<GetAccountDetailsDataQuery, TError, TData>(
-      ['getAccountDetailsData', variables],
-      useAxios<GetAccountDetailsDataQuery, GetAccountDetailsDataQueryVariables>(GetAccountDetailsDataDocument).bind(null, variables),
-      options
-    );
+export const useGetAccountDetailsDataQuery = <TData = GetAccountDetailsDataQuery, TError = unknown>(
+  variables: GetAccountDetailsDataQueryVariables,
+  options?: UseQueryOptions<GetAccountDetailsDataQuery, TError, TData>
+) =>
+  useQuery<GetAccountDetailsDataQuery, TError, TData>(
+    ['getAccountDetailsData', variables],
+    useAxios<GetAccountDetailsDataQuery, GetAccountDetailsDataQueryVariables>(
+      GetAccountDetailsDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAccountTransactionListsDocument = `
     query getAccountTransactionLists($filter: AccountsTransactionFilter!, $pagination: Pagination!) {
   account {
@@ -17942,17 +24194,19 @@ export const GetAccountTransactionListsDocument = `
 }
     `;
 export const useGetAccountTransactionListsQuery = <
-      TData = GetAccountTransactionListsQuery,
-      TError = unknown
-    >(
-      variables: GetAccountTransactionListsQueryVariables,
-      options?: UseQueryOptions<GetAccountTransactionListsQuery, TError, TData>
-    ) =>
-    useQuery<GetAccountTransactionListsQuery, TError, TData>(
-      ['getAccountTransactionLists', variables],
-      useAxios<GetAccountTransactionListsQuery, GetAccountTransactionListsQueryVariables>(GetAccountTransactionListsDocument).bind(null, variables),
-      options
-    );
+  TData = GetAccountTransactionListsQuery,
+  TError = unknown
+>(
+  variables: GetAccountTransactionListsQueryVariables,
+  options?: UseQueryOptions<GetAccountTransactionListsQuery, TError, TData>
+) =>
+  useQuery<GetAccountTransactionListsQuery, TError, TData>(
+    ['getAccountTransactionLists', variables],
+    useAxios<GetAccountTransactionListsQuery, GetAccountTransactionListsQueryVariables>(
+      GetAccountTransactionListsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetInvestmentAccountsListDataDocument = `
     query getInvestmentAccountsListData($pagination: Pagination, $filter: InvestmentAccountFilter) {
   accounting {
@@ -17986,17 +24240,21 @@ export const GetInvestmentAccountsListDataDocument = `
 }
     `;
 export const useGetInvestmentAccountsListDataQuery = <
-      TData = GetInvestmentAccountsListDataQuery,
-      TError = unknown
-    >(
-      variables?: GetInvestmentAccountsListDataQueryVariables,
-      options?: UseQueryOptions<GetInvestmentAccountsListDataQuery, TError, TData>
-    ) =>
-    useQuery<GetInvestmentAccountsListDataQuery, TError, TData>(
-      variables === undefined ? ['getInvestmentAccountsListData'] : ['getInvestmentAccountsListData', variables],
-      useAxios<GetInvestmentAccountsListDataQuery, GetInvestmentAccountsListDataQueryVariables>(GetInvestmentAccountsListDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetInvestmentAccountsListDataQuery,
+  TError = unknown
+>(
+  variables?: GetInvestmentAccountsListDataQueryVariables,
+  options?: UseQueryOptions<GetInvestmentAccountsListDataQuery, TError, TData>
+) =>
+  useQuery<GetInvestmentAccountsListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getInvestmentAccountsListData']
+      : ['getInvestmentAccountsListData', variables],
+    useAxios<GetInvestmentAccountsListDataQuery, GetInvestmentAccountsListDataQueryVariables>(
+      GetInvestmentAccountsListDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetInvestmentAccountFormStateDataDocument = `
     query getInvestmentAccountFormStateData($id: ID!) {
   accounting {
@@ -18024,17 +24282,20 @@ export const GetInvestmentAccountFormStateDataDocument = `
 }
     `;
 export const useGetInvestmentAccountFormStateDataQuery = <
-      TData = GetInvestmentAccountFormStateDataQuery,
-      TError = unknown
-    >(
-      variables: GetInvestmentAccountFormStateDataQueryVariables,
-      options?: UseQueryOptions<GetInvestmentAccountFormStateDataQuery, TError, TData>
-    ) =>
-    useQuery<GetInvestmentAccountFormStateDataQuery, TError, TData>(
-      ['getInvestmentAccountFormStateData', variables],
-      useAxios<GetInvestmentAccountFormStateDataQuery, GetInvestmentAccountFormStateDataQueryVariables>(GetInvestmentAccountFormStateDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetInvestmentAccountFormStateDataQuery,
+  TError = unknown
+>(
+  variables: GetInvestmentAccountFormStateDataQueryVariables,
+  options?: UseQueryOptions<GetInvestmentAccountFormStateDataQuery, TError, TData>
+) =>
+  useQuery<GetInvestmentAccountFormStateDataQuery, TError, TData>(
+    ['getInvestmentAccountFormStateData', variables],
+    useAxios<
+      GetInvestmentAccountFormStateDataQuery,
+      GetInvestmentAccountFormStateDataQueryVariables
+    >(GetInvestmentAccountFormStateDataDocument).bind(null, variables),
+    options
+  );
 export const GetInvestmentEntriesListDataDocument = `
     query getInvestmentEntriesListData($pagination: Pagination, $filter: InvestmentEntryFilter) {
   accounting {
@@ -18063,17 +24324,21 @@ export const GetInvestmentEntriesListDataDocument = `
 }
     `;
 export const useGetInvestmentEntriesListDataQuery = <
-      TData = GetInvestmentEntriesListDataQuery,
-      TError = unknown
-    >(
-      variables?: GetInvestmentEntriesListDataQueryVariables,
-      options?: UseQueryOptions<GetInvestmentEntriesListDataQuery, TError, TData>
-    ) =>
-    useQuery<GetInvestmentEntriesListDataQuery, TError, TData>(
-      variables === undefined ? ['getInvestmentEntriesListData'] : ['getInvestmentEntriesListData', variables],
-      useAxios<GetInvestmentEntriesListDataQuery, GetInvestmentEntriesListDataQueryVariables>(GetInvestmentEntriesListDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetInvestmentEntriesListDataQuery,
+  TError = unknown
+>(
+  variables?: GetInvestmentEntriesListDataQueryVariables,
+  options?: UseQueryOptions<GetInvestmentEntriesListDataQuery, TError, TData>
+) =>
+  useQuery<GetInvestmentEntriesListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getInvestmentEntriesListData']
+      : ['getInvestmentEntriesListData', variables],
+    useAxios<GetInvestmentEntriesListDataQuery, GetInvestmentEntriesListDataQueryVariables>(
+      GetInvestmentEntriesListDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetInvestmentEntryFormStateDataDocument = `
     query getInvestmentEntryFormStateData($id: ID!) {
   accounting {
@@ -18118,17 +24383,19 @@ export const GetInvestmentEntryFormStateDataDocument = `
 }
     `;
 export const useGetInvestmentEntryFormStateDataQuery = <
-      TData = GetInvestmentEntryFormStateDataQuery,
-      TError = unknown
-    >(
-      variables: GetInvestmentEntryFormStateDataQueryVariables,
-      options?: UseQueryOptions<GetInvestmentEntryFormStateDataQuery, TError, TData>
-    ) =>
-    useQuery<GetInvestmentEntryFormStateDataQuery, TError, TData>(
-      ['getInvestmentEntryFormStateData', variables],
-      useAxios<GetInvestmentEntryFormStateDataQuery, GetInvestmentEntryFormStateDataQueryVariables>(GetInvestmentEntryFormStateDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetInvestmentEntryFormStateDataQuery,
+  TError = unknown
+>(
+  variables: GetInvestmentEntryFormStateDataQueryVariables,
+  options?: UseQueryOptions<GetInvestmentEntryFormStateDataQuery, TError, TData>
+) =>
+  useQuery<GetInvestmentEntryFormStateDataQuery, TError, TData>(
+    ['getInvestmentEntryFormStateData', variables],
+    useAxios<GetInvestmentEntryFormStateDataQuery, GetInvestmentEntryFormStateDataQueryVariables>(
+      GetInvestmentEntryFormStateDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetInvestmentTransactionsListDataDocument = `
     query getInvestmentTransactionsListData($pagination: Pagination, $filter: InvestmentTransactionFilter) {
   accounting {
@@ -18157,17 +24424,22 @@ export const GetInvestmentTransactionsListDataDocument = `
 }
     `;
 export const useGetInvestmentTransactionsListDataQuery = <
-      TData = GetInvestmentTransactionsListDataQuery,
-      TError = unknown
-    >(
-      variables?: GetInvestmentTransactionsListDataQueryVariables,
-      options?: UseQueryOptions<GetInvestmentTransactionsListDataQuery, TError, TData>
-    ) =>
-    useQuery<GetInvestmentTransactionsListDataQuery, TError, TData>(
-      variables === undefined ? ['getInvestmentTransactionsListData'] : ['getInvestmentTransactionsListData', variables],
-      useAxios<GetInvestmentTransactionsListDataQuery, GetInvestmentTransactionsListDataQueryVariables>(GetInvestmentTransactionsListDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetInvestmentTransactionsListDataQuery,
+  TError = unknown
+>(
+  variables?: GetInvestmentTransactionsListDataQueryVariables,
+  options?: UseQueryOptions<GetInvestmentTransactionsListDataQuery, TError, TData>
+) =>
+  useQuery<GetInvestmentTransactionsListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getInvestmentTransactionsListData']
+      : ['getInvestmentTransactionsListData', variables],
+    useAxios<
+      GetInvestmentTransactionsListDataQuery,
+      GetInvestmentTransactionsListDataQueryVariables
+    >(GetInvestmentTransactionsListDataDocument).bind(null, variables),
+    options
+  );
 export const GetSalesCustomerListDataDocument = `
     query getSalesCustomerListData($pagination: Pagination, $filter: SalesCustomerFilter) {
   accounting {
@@ -18202,17 +24474,21 @@ export const GetSalesCustomerListDataDocument = `
 }
     `;
 export const useGetSalesCustomerListDataQuery = <
-      TData = GetSalesCustomerListDataQuery,
-      TError = unknown
-    >(
-      variables?: GetSalesCustomerListDataQueryVariables,
-      options?: UseQueryOptions<GetSalesCustomerListDataQuery, TError, TData>
-    ) =>
-    useQuery<GetSalesCustomerListDataQuery, TError, TData>(
-      variables === undefined ? ['getSalesCustomerListData'] : ['getSalesCustomerListData', variables],
-      useAxios<GetSalesCustomerListDataQuery, GetSalesCustomerListDataQueryVariables>(GetSalesCustomerListDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetSalesCustomerListDataQuery,
+  TError = unknown
+>(
+  variables?: GetSalesCustomerListDataQueryVariables,
+  options?: UseQueryOptions<GetSalesCustomerListDataQuery, TError, TData>
+) =>
+  useQuery<GetSalesCustomerListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSalesCustomerListData']
+      : ['getSalesCustomerListData', variables],
+    useAxios<GetSalesCustomerListDataQuery, GetSalesCustomerListDataQueryVariables>(
+      GetSalesCustomerListDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetSalesCustomerFormStateDataDocument = `
     query getSalesCustomerFormStateData($id: ID!) {
   accounting {
@@ -18246,17 +24522,19 @@ export const GetSalesCustomerFormStateDataDocument = `
 }
     `;
 export const useGetSalesCustomerFormStateDataQuery = <
-      TData = GetSalesCustomerFormStateDataQuery,
-      TError = unknown
-    >(
-      variables: GetSalesCustomerFormStateDataQueryVariables,
-      options?: UseQueryOptions<GetSalesCustomerFormStateDataQuery, TError, TData>
-    ) =>
-    useQuery<GetSalesCustomerFormStateDataQuery, TError, TData>(
-      ['getSalesCustomerFormStateData', variables],
-      useAxios<GetSalesCustomerFormStateDataQuery, GetSalesCustomerFormStateDataQueryVariables>(GetSalesCustomerFormStateDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetSalesCustomerFormStateDataQuery,
+  TError = unknown
+>(
+  variables: GetSalesCustomerFormStateDataQueryVariables,
+  options?: UseQueryOptions<GetSalesCustomerFormStateDataQuery, TError, TData>
+) =>
+  useQuery<GetSalesCustomerFormStateDataQuery, TError, TData>(
+    ['getSalesCustomerFormStateData', variables],
+    useAxios<GetSalesCustomerFormStateDataQuery, GetSalesCustomerFormStateDataQueryVariables>(
+      GetSalesCustomerFormStateDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetSalesSaleEntryListDataDocument = `
     query getSalesSaleEntryListData($pagination: Pagination, $filter: SalesSaleEntryFilter) {
   accounting {
@@ -18284,17 +24562,21 @@ export const GetSalesSaleEntryListDataDocument = `
 }
     `;
 export const useGetSalesSaleEntryListDataQuery = <
-      TData = GetSalesSaleEntryListDataQuery,
-      TError = unknown
-    >(
-      variables?: GetSalesSaleEntryListDataQueryVariables,
-      options?: UseQueryOptions<GetSalesSaleEntryListDataQuery, TError, TData>
-    ) =>
-    useQuery<GetSalesSaleEntryListDataQuery, TError, TData>(
-      variables === undefined ? ['getSalesSaleEntryListData'] : ['getSalesSaleEntryListData', variables],
-      useAxios<GetSalesSaleEntryListDataQuery, GetSalesSaleEntryListDataQueryVariables>(GetSalesSaleEntryListDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetSalesSaleEntryListDataQuery,
+  TError = unknown
+>(
+  variables?: GetSalesSaleEntryListDataQueryVariables,
+  options?: UseQueryOptions<GetSalesSaleEntryListDataQuery, TError, TData>
+) =>
+  useQuery<GetSalesSaleEntryListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSalesSaleEntryListData']
+      : ['getSalesSaleEntryListData', variables],
+    useAxios<GetSalesSaleEntryListDataQuery, GetSalesSaleEntryListDataQueryVariables>(
+      GetSalesSaleEntryListDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetSalesSaleEntryFormStateDataDocument = `
     query getSalesSaleEntryFormStateData($id: ID!) {
   accounting {
@@ -18327,17 +24609,19 @@ export const GetSalesSaleEntryFormStateDataDocument = `
 }
     `;
 export const useGetSalesSaleEntryFormStateDataQuery = <
-      TData = GetSalesSaleEntryFormStateDataQuery,
-      TError = unknown
-    >(
-      variables: GetSalesSaleEntryFormStateDataQueryVariables,
-      options?: UseQueryOptions<GetSalesSaleEntryFormStateDataQuery, TError, TData>
-    ) =>
-    useQuery<GetSalesSaleEntryFormStateDataQuery, TError, TData>(
-      ['getSalesSaleEntryFormStateData', variables],
-      useAxios<GetSalesSaleEntryFormStateDataQuery, GetSalesSaleEntryFormStateDataQueryVariables>(GetSalesSaleEntryFormStateDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetSalesSaleEntryFormStateDataQuery,
+  TError = unknown
+>(
+  variables: GetSalesSaleEntryFormStateDataQueryVariables,
+  options?: UseQueryOptions<GetSalesSaleEntryFormStateDataQuery, TError, TData>
+) =>
+  useQuery<GetSalesSaleEntryFormStateDataQuery, TError, TData>(
+    ['getSalesSaleEntryFormStateData', variables],
+    useAxios<GetSalesSaleEntryFormStateDataQuery, GetSalesSaleEntryFormStateDataQueryVariables>(
+      GetSalesSaleEntryFormStateDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetSalesCreditNoteListDataDocument = `
     query getSalesCreditNoteListData($pagination: Pagination, $filter: SalesCreditNoteFilter) {
   accounting {
@@ -18365,17 +24649,21 @@ export const GetSalesCreditNoteListDataDocument = `
 }
     `;
 export const useGetSalesCreditNoteListDataQuery = <
-      TData = GetSalesCreditNoteListDataQuery,
-      TError = unknown
-    >(
-      variables?: GetSalesCreditNoteListDataQueryVariables,
-      options?: UseQueryOptions<GetSalesCreditNoteListDataQuery, TError, TData>
-    ) =>
-    useQuery<GetSalesCreditNoteListDataQuery, TError, TData>(
-      variables === undefined ? ['getSalesCreditNoteListData'] : ['getSalesCreditNoteListData', variables],
-      useAxios<GetSalesCreditNoteListDataQuery, GetSalesCreditNoteListDataQueryVariables>(GetSalesCreditNoteListDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetSalesCreditNoteListDataQuery,
+  TError = unknown
+>(
+  variables?: GetSalesCreditNoteListDataQueryVariables,
+  options?: UseQueryOptions<GetSalesCreditNoteListDataQuery, TError, TData>
+) =>
+  useQuery<GetSalesCreditNoteListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSalesCreditNoteListData']
+      : ['getSalesCreditNoteListData', variables],
+    useAxios<GetSalesCreditNoteListDataQuery, GetSalesCreditNoteListDataQueryVariables>(
+      GetSalesCreditNoteListDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetSalesCreditNoteFormStateDataDocument = `
     query getSalesCreditNoteFormStateData($id: ID!) {
   accounting {
@@ -18407,17 +24695,19 @@ export const GetSalesCreditNoteFormStateDataDocument = `
 }
     `;
 export const useGetSalesCreditNoteFormStateDataQuery = <
-      TData = GetSalesCreditNoteFormStateDataQuery,
-      TError = unknown
-    >(
-      variables: GetSalesCreditNoteFormStateDataQueryVariables,
-      options?: UseQueryOptions<GetSalesCreditNoteFormStateDataQuery, TError, TData>
-    ) =>
-    useQuery<GetSalesCreditNoteFormStateDataQuery, TError, TData>(
-      ['getSalesCreditNoteFormStateData', variables],
-      useAxios<GetSalesCreditNoteFormStateDataQuery, GetSalesCreditNoteFormStateDataQueryVariables>(GetSalesCreditNoteFormStateDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetSalesCreditNoteFormStateDataQuery,
+  TError = unknown
+>(
+  variables: GetSalesCreditNoteFormStateDataQueryVariables,
+  options?: UseQueryOptions<GetSalesCreditNoteFormStateDataQuery, TError, TData>
+) =>
+  useQuery<GetSalesCreditNoteFormStateDataQuery, TError, TData>(
+    ['getSalesCreditNoteFormStateData', variables],
+    useAxios<GetSalesCreditNoteFormStateDataQuery, GetSalesCreditNoteFormStateDataQueryVariables>(
+      GetSalesCreditNoteFormStateDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetSalesCustomerPaymentListDataDocument = `
     query getSalesCustomerPaymentListData($pagination: Pagination, $filter: SalesCustomerPaymentFilter) {
   accounting {
@@ -18446,17 +24736,21 @@ export const GetSalesCustomerPaymentListDataDocument = `
 }
     `;
 export const useGetSalesCustomerPaymentListDataQuery = <
-      TData = GetSalesCustomerPaymentListDataQuery,
-      TError = unknown
-    >(
-      variables?: GetSalesCustomerPaymentListDataQueryVariables,
-      options?: UseQueryOptions<GetSalesCustomerPaymentListDataQuery, TError, TData>
-    ) =>
-    useQuery<GetSalesCustomerPaymentListDataQuery, TError, TData>(
-      variables === undefined ? ['getSalesCustomerPaymentListData'] : ['getSalesCustomerPaymentListData', variables],
-      useAxios<GetSalesCustomerPaymentListDataQuery, GetSalesCustomerPaymentListDataQueryVariables>(GetSalesCustomerPaymentListDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetSalesCustomerPaymentListDataQuery,
+  TError = unknown
+>(
+  variables?: GetSalesCustomerPaymentListDataQueryVariables,
+  options?: UseQueryOptions<GetSalesCustomerPaymentListDataQuery, TError, TData>
+) =>
+  useQuery<GetSalesCustomerPaymentListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSalesCustomerPaymentListData']
+      : ['getSalesCustomerPaymentListData', variables],
+    useAxios<GetSalesCustomerPaymentListDataQuery, GetSalesCustomerPaymentListDataQueryVariables>(
+      GetSalesCustomerPaymentListDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetSalesCustomerPaymentFormStateDataDocument = `
     query getSalesCustomerPaymentFormStateData($id: ID!) {
   accounting {
@@ -18488,17 +24782,20 @@ export const GetSalesCustomerPaymentFormStateDataDocument = `
 }
     `;
 export const useGetSalesCustomerPaymentFormStateDataQuery = <
-      TData = GetSalesCustomerPaymentFormStateDataQuery,
-      TError = unknown
-    >(
-      variables: GetSalesCustomerPaymentFormStateDataQueryVariables,
-      options?: UseQueryOptions<GetSalesCustomerPaymentFormStateDataQuery, TError, TData>
-    ) =>
-    useQuery<GetSalesCustomerPaymentFormStateDataQuery, TError, TData>(
-      ['getSalesCustomerPaymentFormStateData', variables],
-      useAxios<GetSalesCustomerPaymentFormStateDataQuery, GetSalesCustomerPaymentFormStateDataQueryVariables>(GetSalesCustomerPaymentFormStateDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetSalesCustomerPaymentFormStateDataQuery,
+  TError = unknown
+>(
+  variables: GetSalesCustomerPaymentFormStateDataQueryVariables,
+  options?: UseQueryOptions<GetSalesCustomerPaymentFormStateDataQuery, TError, TData>
+) =>
+  useQuery<GetSalesCustomerPaymentFormStateDataQuery, TError, TData>(
+    ['getSalesCustomerPaymentFormStateData', variables],
+    useAxios<
+      GetSalesCustomerPaymentFormStateDataQuery,
+      GetSalesCustomerPaymentFormStateDataQueryVariables
+    >(GetSalesCustomerPaymentFormStateDataDocument).bind(null, variables),
+    options
+  );
 export const AllAdministrationDocument = `
     query allAdministration {
   administration {
@@ -18518,18 +24815,17 @@ export const AllAdministrationDocument = `
   }
 }
     `;
-export const useAllAdministrationQuery = <
-      TData = AllAdministrationQuery,
-      TError = unknown
-    >(
-      variables?: AllAdministrationQueryVariables,
-      options?: UseQueryOptions<AllAdministrationQuery, TError, TData>
-    ) =>
-    useQuery<AllAdministrationQuery, TError, TData>(
-      variables === undefined ? ['allAdministration'] : ['allAdministration', variables],
-      useAxios<AllAdministrationQuery, AllAdministrationQueryVariables>(AllAdministrationDocument).bind(null, variables),
-      options
-    );
+export const useAllAdministrationQuery = <TData = AllAdministrationQuery, TError = unknown>(
+  variables?: AllAdministrationQueryVariables,
+  options?: UseQueryOptions<AllAdministrationQuery, TError, TData>
+) =>
+  useQuery<AllAdministrationQuery, TError, TData>(
+    variables === undefined ? ['allAdministration'] : ['allAdministration', variables],
+    useAxios<AllAdministrationQuery, AllAdministrationQueryVariables>(
+      AllAdministrationDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAgentListDataDocument = `
     query getAgentListData($filter: AccountTransactionFilter, $pagination: Pagination) {
   transaction {
@@ -18555,18 +24851,18 @@ export const GetAgentListDataDocument = `
   }
 }
     `;
-export const useGetAgentListDataQuery = <
-      TData = GetAgentListDataQuery,
-      TError = unknown
-    >(
-      variables?: GetAgentListDataQueryVariables,
-      options?: UseQueryOptions<GetAgentListDataQuery, TError, TData>
-    ) =>
-    useQuery<GetAgentListDataQuery, TError, TData>(
-      variables === undefined ? ['getAgentListData'] : ['getAgentListData', variables],
-      useAxios<GetAgentListDataQuery, GetAgentListDataQueryVariables>(GetAgentListDataDocument).bind(null, variables),
-      options
-    );
+export const useGetAgentListDataQuery = <TData = GetAgentListDataQuery, TError = unknown>(
+  variables?: GetAgentListDataQueryVariables,
+  options?: UseQueryOptions<GetAgentListDataQuery, TError, TData>
+) =>
+  useQuery<GetAgentListDataQuery, TError, TData>(
+    variables === undefined ? ['getAgentListData'] : ['getAgentListData', variables],
+    useAxios<GetAgentListDataQuery, GetAgentListDataQueryVariables>(GetAgentListDataDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetAgentDetailDataDocument = `
     query getAgentDetailData($id: ID!) {
   transaction {
@@ -18582,18 +24878,17 @@ export const GetAgentDetailDataDocument = `
   }
 }
     `;
-export const useGetAgentDetailDataQuery = <
-      TData = GetAgentDetailDataQuery,
-      TError = unknown
-    >(
-      variables: GetAgentDetailDataQueryVariables,
-      options?: UseQueryOptions<GetAgentDetailDataQuery, TError, TData>
-    ) =>
-    useQuery<GetAgentDetailDataQuery, TError, TData>(
-      ['getAgentDetailData', variables],
-      useAxios<GetAgentDetailDataQuery, GetAgentDetailDataQueryVariables>(GetAgentDetailDataDocument).bind(null, variables),
-      options
-    );
+export const useGetAgentDetailDataQuery = <TData = GetAgentDetailDataQuery, TError = unknown>(
+  variables: GetAgentDetailDataQueryVariables,
+  options?: UseQueryOptions<GetAgentDetailDataQuery, TError, TData>
+) =>
+  useQuery<GetAgentDetailDataQuery, TError, TData>(
+    ['getAgentDetailData', variables],
+    useAxios<GetAgentDetailDataQuery, GetAgentDetailDataQueryVariables>(
+      GetAgentDetailDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAgentAssignedMemberListDataDocument = `
     query getAgentAssignedMemberListData($filter: AssignedMemberListFiler, $pagination: Pagination) {
   transaction {
@@ -18630,17 +24925,21 @@ export const GetAgentAssignedMemberListDataDocument = `
 }
     `;
 export const useGetAgentAssignedMemberListDataQuery = <
-      TData = GetAgentAssignedMemberListDataQuery,
-      TError = unknown
-    >(
-      variables?: GetAgentAssignedMemberListDataQueryVariables,
-      options?: UseQueryOptions<GetAgentAssignedMemberListDataQuery, TError, TData>
-    ) =>
-    useQuery<GetAgentAssignedMemberListDataQuery, TError, TData>(
-      variables === undefined ? ['getAgentAssignedMemberListData'] : ['getAgentAssignedMemberListData', variables],
-      useAxios<GetAgentAssignedMemberListDataQuery, GetAgentAssignedMemberListDataQueryVariables>(GetAgentAssignedMemberListDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetAgentAssignedMemberListDataQuery,
+  TError = unknown
+>(
+  variables?: GetAgentAssignedMemberListDataQueryVariables,
+  options?: UseQueryOptions<GetAgentAssignedMemberListDataQuery, TError, TData>
+) =>
+  useQuery<GetAgentAssignedMemberListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getAgentAssignedMemberListData']
+      : ['getAgentAssignedMemberListData', variables],
+    useAxios<GetAgentAssignedMemberListDataQuery, GetAgentAssignedMemberListDataQueryVariables>(
+      GetAgentAssignedMemberListDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAgentTodayListDataDocument = `
     query getAgentTodayListData($id: ID!) {
   transaction {
@@ -18659,18 +24958,17 @@ export const GetAgentTodayListDataDocument = `
   }
 }
     `;
-export const useGetAgentTodayListDataQuery = <
-      TData = GetAgentTodayListDataQuery,
-      TError = unknown
-    >(
-      variables: GetAgentTodayListDataQueryVariables,
-      options?: UseQueryOptions<GetAgentTodayListDataQuery, TError, TData>
-    ) =>
-    useQuery<GetAgentTodayListDataQuery, TError, TData>(
-      ['getAgentTodayListData', variables],
-      useAxios<GetAgentTodayListDataQuery, GetAgentTodayListDataQueryVariables>(GetAgentTodayListDataDocument).bind(null, variables),
-      options
-    );
+export const useGetAgentTodayListDataQuery = <TData = GetAgentTodayListDataQuery, TError = unknown>(
+  variables: GetAgentTodayListDataQueryVariables,
+  options?: UseQueryOptions<GetAgentTodayListDataQuery, TError, TData>
+) =>
+  useQuery<GetAgentTodayListDataQuery, TError, TData>(
+    ['getAgentTodayListData', variables],
+    useAxios<GetAgentTodayListDataQuery, GetAgentTodayListDataQueryVariables>(
+      GetAgentTodayListDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetMeDocument = `
     query getMe {
   auth {
@@ -18725,18 +25023,15 @@ export const GetMeDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useGetMeQuery = <
-      TData = GetMeQuery,
-      TError = unknown
-    >(
-      variables?: GetMeQueryVariables,
-      options?: UseQueryOptions<GetMeQuery, TError, TData>
-    ) =>
-    useQuery<GetMeQuery, TError, TData>(
-      variables === undefined ? ['getMe'] : ['getMe', variables],
-      useAxios<GetMeQuery, GetMeQueryVariables>(GetMeDocument).bind(null, variables),
-      options
-    );
+export const useGetMeQuery = <TData = GetMeQuery, TError = unknown>(
+  variables?: GetMeQueryVariables,
+  options?: UseQueryOptions<GetMeQuery, TError, TData>
+) =>
+  useQuery<GetMeQuery, TError, TData>(
+    variables === undefined ? ['getMe'] : ['getMe', variables],
+    useAxios<GetMeQuery, GetMeQueryVariables>(GetMeDocument).bind(null, variables),
+    options
+  );
 export const GetBankListDocument = `
     query getBankList {
   bank {
@@ -18749,18 +25044,18 @@ export const GetBankListDocument = `
   }
 }
     `;
-export const useGetBankListQuery = <
-      TData = GetBankListQuery,
-      TError = unknown
-    >(
-      variables?: GetBankListQueryVariables,
-      options?: UseQueryOptions<GetBankListQuery, TError, TData>
-    ) =>
-    useQuery<GetBankListQuery, TError, TData>(
-      variables === undefined ? ['getBankList'] : ['getBankList', variables],
-      useAxios<GetBankListQuery, GetBankListQueryVariables>(GetBankListDocument).bind(null, variables),
-      options
-    );
+export const useGetBankListQuery = <TData = GetBankListQuery, TError = unknown>(
+  variables?: GetBankListQueryVariables,
+  options?: UseQueryOptions<GetBankListQuery, TError, TData>
+) =>
+  useQuery<GetBankListQuery, TError, TData>(
+    variables === undefined ? ['getBankList'] : ['getBankList', variables],
+    useAxios<GetBankListQuery, GetBankListQueryVariables>(GetBankListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetUserBranchListDocument = `
     query getUserBranchList {
   bank {
@@ -18773,18 +25068,17 @@ export const GetUserBranchListDocument = `
   }
 }
     `;
-export const useGetUserBranchListQuery = <
-      TData = GetUserBranchListQuery,
-      TError = unknown
-    >(
-      variables?: GetUserBranchListQueryVariables,
-      options?: UseQueryOptions<GetUserBranchListQuery, TError, TData>
-    ) =>
-    useQuery<GetUserBranchListQuery, TError, TData>(
-      variables === undefined ? ['getUserBranchList'] : ['getUserBranchList', variables],
-      useAxios<GetUserBranchListQuery, GetUserBranchListQueryVariables>(GetUserBranchListDocument).bind(null, variables),
-      options
-    );
+export const useGetUserBranchListQuery = <TData = GetUserBranchListQuery, TError = unknown>(
+  variables?: GetUserBranchListQueryVariables,
+  options?: UseQueryOptions<GetUserBranchListQuery, TError, TData>
+) =>
+  useQuery<GetUserBranchListQuery, TError, TData>(
+    variables === undefined ? ['getUserBranchList'] : ['getUserBranchList', variables],
+    useAxios<GetUserBranchListQuery, GetUserBranchListQueryVariables>(
+      GetUserBranchListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetConfigDocument = `
     query getConfig {
   config {
@@ -18795,18 +25089,15 @@ export const GetConfigDocument = `
   }
 }
     `;
-export const useGetConfigQuery = <
-      TData = GetConfigQuery,
-      TError = unknown
-    >(
-      variables?: GetConfigQueryVariables,
-      options?: UseQueryOptions<GetConfigQuery, TError, TData>
-    ) =>
-    useQuery<GetConfigQuery, TError, TData>(
-      variables === undefined ? ['getConfig'] : ['getConfig', variables],
-      useAxios<GetConfigQuery, GetConfigQueryVariables>(GetConfigDocument).bind(null, variables),
-      options
-    );
+export const useGetConfigQuery = <TData = GetConfigQuery, TError = unknown>(
+  variables?: GetConfigQueryVariables,
+  options?: UseQueryOptions<GetConfigQuery, TError, TData>
+) =>
+  useQuery<GetConfigQuery, TError, TData>(
+    variables === undefined ? ['getConfig'] : ['getConfig', variables],
+    useAxios<GetConfigQuery, GetConfigQueryVariables>(GetConfigDocument).bind(null, variables),
+    options
+  );
 export const GetCoOperativeKymEditDataDocument = `
     query getCoOperativeKymEditData($id: ID!) {
   members {
@@ -18909,17 +25200,19 @@ export const GetCoOperativeKymEditDataDocument = `
 }
     `;
 export const useGetCoOperativeKymEditDataQuery = <
-      TData = GetCoOperativeKymEditDataQuery,
-      TError = unknown
-    >(
-      variables: GetCoOperativeKymEditDataQueryVariables,
-      options?: UseQueryOptions<GetCoOperativeKymEditDataQuery, TError, TData>
-    ) =>
-    useQuery<GetCoOperativeKymEditDataQuery, TError, TData>(
-      ['getCoOperativeKymEditData', variables],
-      useAxios<GetCoOperativeKymEditDataQuery, GetCoOperativeKymEditDataQueryVariables>(GetCoOperativeKymEditDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetCoOperativeKymEditDataQuery,
+  TError = unknown
+>(
+  variables: GetCoOperativeKymEditDataQueryVariables,
+  options?: UseQueryOptions<GetCoOperativeKymEditDataQuery, TError, TData>
+) =>
+  useQuery<GetCoOperativeKymEditDataQuery, TError, TData>(
+    ['getCoOperativeKymEditData', variables],
+    useAxios<GetCoOperativeKymEditDataQuery, GetCoOperativeKymEditDataQueryVariables>(
+      GetCoOperativeKymEditDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetCoOperativeDirectorEditDataDocument = `
     query getCoOperativeDirectorEditData($id: ID!) {
   members {
@@ -18967,17 +25260,19 @@ export const GetCoOperativeDirectorEditDataDocument = `
 }
     `;
 export const useGetCoOperativeDirectorEditDataQuery = <
-      TData = GetCoOperativeDirectorEditDataQuery,
-      TError = unknown
-    >(
-      variables: GetCoOperativeDirectorEditDataQueryVariables,
-      options?: UseQueryOptions<GetCoOperativeDirectorEditDataQuery, TError, TData>
-    ) =>
-    useQuery<GetCoOperativeDirectorEditDataQuery, TError, TData>(
-      ['getCoOperativeDirectorEditData', variables],
-      useAxios<GetCoOperativeDirectorEditDataQuery, GetCoOperativeDirectorEditDataQueryVariables>(GetCoOperativeDirectorEditDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetCoOperativeDirectorEditDataQuery,
+  TError = unknown
+>(
+  variables: GetCoOperativeDirectorEditDataQueryVariables,
+  options?: UseQueryOptions<GetCoOperativeDirectorEditDataQuery, TError, TData>
+) =>
+  useQuery<GetCoOperativeDirectorEditDataQuery, TError, TData>(
+    ['getCoOperativeDirectorEditData', variables],
+    useAxios<GetCoOperativeDirectorEditDataQuery, GetCoOperativeDirectorEditDataQueryVariables>(
+      GetCoOperativeDirectorEditDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetCoOperativeAccountOperatorEditDataDocument = `
     query getCoOperativeAccountOperatorEditData($id: ID!) {
   members {
@@ -19030,17 +25325,20 @@ export const GetCoOperativeAccountOperatorEditDataDocument = `
 }
     `;
 export const useGetCoOperativeAccountOperatorEditDataQuery = <
-      TData = GetCoOperativeAccountOperatorEditDataQuery,
-      TError = unknown
-    >(
-      variables: GetCoOperativeAccountOperatorEditDataQueryVariables,
-      options?: UseQueryOptions<GetCoOperativeAccountOperatorEditDataQuery, TError, TData>
-    ) =>
-    useQuery<GetCoOperativeAccountOperatorEditDataQuery, TError, TData>(
-      ['getCoOperativeAccountOperatorEditData', variables],
-      useAxios<GetCoOperativeAccountOperatorEditDataQuery, GetCoOperativeAccountOperatorEditDataQueryVariables>(GetCoOperativeAccountOperatorEditDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetCoOperativeAccountOperatorEditDataQuery,
+  TError = unknown
+>(
+  variables: GetCoOperativeAccountOperatorEditDataQueryVariables,
+  options?: UseQueryOptions<GetCoOperativeAccountOperatorEditDataQuery, TError, TData>
+) =>
+  useQuery<GetCoOperativeAccountOperatorEditDataQuery, TError, TData>(
+    ['getCoOperativeAccountOperatorEditData', variables],
+    useAxios<
+      GetCoOperativeAccountOperatorEditDataQuery,
+      GetCoOperativeAccountOperatorEditDataQueryVariables
+    >(GetCoOperativeAccountOperatorEditDataDocument).bind(null, variables),
+    options
+  );
 export const GetCooperativeUnionKymEditDataDocument = `
     query getCooperativeUnionKymEditData($id: ID!, $includeRequiredErrors: Boolean) {
   members {
@@ -19162,17 +25460,19 @@ export const GetCooperativeUnionKymEditDataDocument = `
 }
     `;
 export const useGetCooperativeUnionKymEditDataQuery = <
-      TData = GetCooperativeUnionKymEditDataQuery,
-      TError = unknown
-    >(
-      variables: GetCooperativeUnionKymEditDataQueryVariables,
-      options?: UseQueryOptions<GetCooperativeUnionKymEditDataQuery, TError, TData>
-    ) =>
-    useQuery<GetCooperativeUnionKymEditDataQuery, TError, TData>(
-      ['getCooperativeUnionKymEditData', variables],
-      useAxios<GetCooperativeUnionKymEditDataQuery, GetCooperativeUnionKymEditDataQueryVariables>(GetCooperativeUnionKymEditDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetCooperativeUnionKymEditDataQuery,
+  TError = unknown
+>(
+  variables: GetCooperativeUnionKymEditDataQueryVariables,
+  options?: UseQueryOptions<GetCooperativeUnionKymEditDataQuery, TError, TData>
+) =>
+  useQuery<GetCooperativeUnionKymEditDataQuery, TError, TData>(
+    ['getCooperativeUnionKymEditData', variables],
+    useAxios<GetCooperativeUnionKymEditDataQuery, GetCooperativeUnionKymEditDataQueryVariables>(
+      GetCooperativeUnionKymEditDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetEconimicDetailsEditDataDocument = `
     query getEconimicDetailsEditData($id: ID!, $includeRequiredErrors: Boolean) {
   members {
@@ -19232,17 +25532,19 @@ export const GetEconimicDetailsEditDataDocument = `
 }
     `;
 export const useGetEconimicDetailsEditDataQuery = <
-      TData = GetEconimicDetailsEditDataQuery,
-      TError = unknown
-    >(
-      variables: GetEconimicDetailsEditDataQueryVariables,
-      options?: UseQueryOptions<GetEconimicDetailsEditDataQuery, TError, TData>
-    ) =>
-    useQuery<GetEconimicDetailsEditDataQuery, TError, TData>(
-      ['getEconimicDetailsEditData', variables],
-      useAxios<GetEconimicDetailsEditDataQuery, GetEconimicDetailsEditDataQueryVariables>(GetEconimicDetailsEditDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetEconimicDetailsEditDataQuery,
+  TError = unknown
+>(
+  variables: GetEconimicDetailsEditDataQueryVariables,
+  options?: UseQueryOptions<GetEconimicDetailsEditDataQuery, TError, TData>
+) =>
+  useQuery<GetEconimicDetailsEditDataQuery, TError, TData>(
+    ['getEconimicDetailsEditData', variables],
+    useAxios<GetEconimicDetailsEditDataQuery, GetEconimicDetailsEditDataQueryVariables>(
+      GetEconimicDetailsEditDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetBoardOfDirectorsDetailsListDocument = `
     query getBoardOfDirectorsDetailsList($id: ID!, $includeRequiredErrors: Boolean) {
   members {
@@ -19312,17 +25614,19 @@ export const GetBoardOfDirectorsDetailsListDocument = `
 }
     `;
 export const useGetBoardOfDirectorsDetailsListQuery = <
-      TData = GetBoardOfDirectorsDetailsListQuery,
-      TError = unknown
-    >(
-      variables: GetBoardOfDirectorsDetailsListQueryVariables,
-      options?: UseQueryOptions<GetBoardOfDirectorsDetailsListQuery, TError, TData>
-    ) =>
-    useQuery<GetBoardOfDirectorsDetailsListQuery, TError, TData>(
-      ['getBoardOfDirectorsDetailsList', variables],
-      useAxios<GetBoardOfDirectorsDetailsListQuery, GetBoardOfDirectorsDetailsListQueryVariables>(GetBoardOfDirectorsDetailsListDocument).bind(null, variables),
-      options
-    );
+  TData = GetBoardOfDirectorsDetailsListQuery,
+  TError = unknown
+>(
+  variables: GetBoardOfDirectorsDetailsListQueryVariables,
+  options?: UseQueryOptions<GetBoardOfDirectorsDetailsListQuery, TError, TData>
+) =>
+  useQuery<GetBoardOfDirectorsDetailsListQuery, TError, TData>(
+    ['getBoardOfDirectorsDetailsList', variables],
+    useAxios<GetBoardOfDirectorsDetailsListQuery, GetBoardOfDirectorsDetailsListQueryVariables>(
+      GetBoardOfDirectorsDetailsListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAccountOperatorDetailsListDocument = `
     query getAccountOperatorDetailsList($id: ID!, $includeRequiredErrors: Boolean) {
   members {
@@ -19392,17 +25696,19 @@ export const GetAccountOperatorDetailsListDocument = `
 }
     `;
 export const useGetAccountOperatorDetailsListQuery = <
-      TData = GetAccountOperatorDetailsListQuery,
-      TError = unknown
-    >(
-      variables: GetAccountOperatorDetailsListQueryVariables,
-      options?: UseQueryOptions<GetAccountOperatorDetailsListQuery, TError, TData>
-    ) =>
-    useQuery<GetAccountOperatorDetailsListQuery, TError, TData>(
-      ['getAccountOperatorDetailsList', variables],
-      useAxios<GetAccountOperatorDetailsListQuery, GetAccountOperatorDetailsListQueryVariables>(GetAccountOperatorDetailsListDocument).bind(null, variables),
-      options
-    );
+  TData = GetAccountOperatorDetailsListQuery,
+  TError = unknown
+>(
+  variables: GetAccountOperatorDetailsListQueryVariables,
+  options?: UseQueryOptions<GetAccountOperatorDetailsListQuery, TError, TData>
+) =>
+  useQuery<GetAccountOperatorDetailsListQuery, TError, TData>(
+    ['getAccountOperatorDetailsList', variables],
+    useAxios<GetAccountOperatorDetailsListQuery, GetAccountOperatorDetailsListQueryVariables>(
+      GetAccountOperatorDetailsListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetCentralRepresentativeDetailsDocument = `
     query getCentralRepresentativeDetails($id: ID!, $includeRequiredErrors: Boolean) {
   members {
@@ -19472,17 +25778,19 @@ export const GetCentralRepresentativeDetailsDocument = `
 }
     `;
 export const useGetCentralRepresentativeDetailsQuery = <
-      TData = GetCentralRepresentativeDetailsQuery,
-      TError = unknown
-    >(
-      variables: GetCentralRepresentativeDetailsQueryVariables,
-      options?: UseQueryOptions<GetCentralRepresentativeDetailsQuery, TError, TData>
-    ) =>
-    useQuery<GetCentralRepresentativeDetailsQuery, TError, TData>(
-      ['getCentralRepresentativeDetails', variables],
-      useAxios<GetCentralRepresentativeDetailsQuery, GetCentralRepresentativeDetailsQueryVariables>(GetCentralRepresentativeDetailsDocument).bind(null, variables),
-      options
-    );
+  TData = GetCentralRepresentativeDetailsQuery,
+  TError = unknown
+>(
+  variables: GetCentralRepresentativeDetailsQueryVariables,
+  options?: UseQueryOptions<GetCentralRepresentativeDetailsQuery, TError, TData>
+) =>
+  useQuery<GetCentralRepresentativeDetailsQuery, TError, TData>(
+    ['getCentralRepresentativeDetails', variables],
+    useAxios<GetCentralRepresentativeDetailsQuery, GetCentralRepresentativeDetailsQueryVariables>(
+      GetCentralRepresentativeDetailsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetCoopUnionSectionStatusDocument = `
     query getCoopUnionSectionStatus($id: ID!) {
   members {
@@ -19544,17 +25852,19 @@ export const GetCoopUnionSectionStatusDocument = `
 }
     `;
 export const useGetCoopUnionSectionStatusQuery = <
-      TData = GetCoopUnionSectionStatusQuery,
-      TError = unknown
-    >(
-      variables: GetCoopUnionSectionStatusQueryVariables,
-      options?: UseQueryOptions<GetCoopUnionSectionStatusQuery, TError, TData>
-    ) =>
-    useQuery<GetCoopUnionSectionStatusQuery, TError, TData>(
-      ['getCoopUnionSectionStatus', variables],
-      useAxios<GetCoopUnionSectionStatusQuery, GetCoopUnionSectionStatusQueryVariables>(GetCoopUnionSectionStatusDocument).bind(null, variables),
-      options
-    );
+  TData = GetCoopUnionSectionStatusQuery,
+  TError = unknown
+>(
+  variables: GetCoopUnionSectionStatusQueryVariables,
+  options?: UseQueryOptions<GetCoopUnionSectionStatusQuery, TError, TData>
+) =>
+  useQuery<GetCoopUnionSectionStatusQuery, TError, TData>(
+    ['getCoopUnionSectionStatus', variables],
+    useAxios<GetCoopUnionSectionStatusQuery, GetCoopUnionSectionStatusQueryVariables>(
+      GetCoopUnionSectionStatusDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetKymFormStatusInstitutionDocument = `
     query getKymFormStatusInstitution($id: ID!, $hasPressedNext: Boolean) {
   members {
@@ -19576,17 +25886,19 @@ export const GetKymFormStatusInstitutionDocument = `
 }
     `;
 export const useGetKymFormStatusInstitutionQuery = <
-      TData = GetKymFormStatusInstitutionQuery,
-      TError = unknown
-    >(
-      variables: GetKymFormStatusInstitutionQueryVariables,
-      options?: UseQueryOptions<GetKymFormStatusInstitutionQuery, TError, TData>
-    ) =>
-    useQuery<GetKymFormStatusInstitutionQuery, TError, TData>(
-      ['getKymFormStatusInstitution', variables],
-      useAxios<GetKymFormStatusInstitutionQuery, GetKymFormStatusInstitutionQueryVariables>(GetKymFormStatusInstitutionDocument).bind(null, variables),
-      options
-    );
+  TData = GetKymFormStatusInstitutionQuery,
+  TError = unknown
+>(
+  variables: GetKymFormStatusInstitutionQueryVariables,
+  options?: UseQueryOptions<GetKymFormStatusInstitutionQuery, TError, TData>
+) =>
+  useQuery<GetKymFormStatusInstitutionQuery, TError, TData>(
+    ['getKymFormStatusInstitution', variables],
+    useAxios<GetKymFormStatusInstitutionQuery, GetKymFormStatusInstitutionQueryVariables>(
+      GetKymFormStatusInstitutionDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetKymOverallFormStatusDocument = `
     query getKYMOverallFormStatus($id: ID!, $hasPressedNext: Boolean) {
   members {
@@ -19630,17 +25942,19 @@ export const GetKymOverallFormStatusDocument = `
 }
     `;
 export const useGetKymOverallFormStatusQuery = <
-      TData = GetKymOverallFormStatusQuery,
-      TError = unknown
-    >(
-      variables: GetKymOverallFormStatusQueryVariables,
-      options?: UseQueryOptions<GetKymOverallFormStatusQuery, TError, TData>
-    ) =>
-    useQuery<GetKymOverallFormStatusQuery, TError, TData>(
-      ['getKYMOverallFormStatus', variables],
-      useAxios<GetKymOverallFormStatusQuery, GetKymOverallFormStatusQueryVariables>(GetKymOverallFormStatusDocument).bind(null, variables),
-      options
-    );
+  TData = GetKymOverallFormStatusQuery,
+  TError = unknown
+>(
+  variables: GetKymOverallFormStatusQueryVariables,
+  options?: UseQueryOptions<GetKymOverallFormStatusQuery, TError, TData>
+) =>
+  useQuery<GetKymOverallFormStatusQuery, TError, TData>(
+    ['getKYMOverallFormStatus', variables],
+    useAxios<GetKymOverallFormStatusQuery, GetKymOverallFormStatusQueryVariables>(
+      GetKymOverallFormStatusDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetInstitutionKymEditDataDocument = `
     query getInstitutionKymEditData($id: ID!, $hasPressedNext: Boolean) {
   members {
@@ -19759,17 +26073,19 @@ export const GetInstitutionKymEditDataDocument = `
 }
     `;
 export const useGetInstitutionKymEditDataQuery = <
-      TData = GetInstitutionKymEditDataQuery,
-      TError = unknown
-    >(
-      variables: GetInstitutionKymEditDataQueryVariables,
-      options?: UseQueryOptions<GetInstitutionKymEditDataQuery, TError, TData>
-    ) =>
-    useQuery<GetInstitutionKymEditDataQuery, TError, TData>(
-      ['getInstitutionKymEditData', variables],
-      useAxios<GetInstitutionKymEditDataQuery, GetInstitutionKymEditDataQueryVariables>(GetInstitutionKymEditDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetInstitutionKymEditDataQuery,
+  TError = unknown
+>(
+  variables: GetInstitutionKymEditDataQueryVariables,
+  options?: UseQueryOptions<GetInstitutionKymEditDataQuery, TError, TData>
+) =>
+  useQuery<GetInstitutionKymEditDataQuery, TError, TData>(
+    ['getInstitutionKymEditData', variables],
+    useAxios<GetInstitutionKymEditDataQuery, GetInstitutionKymEditDataQueryVariables>(
+      GetInstitutionKymEditDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetInstitutionSisterDetailsEditListDocument = `
     query getInstitutionSisterDetailsEditList($id: ID!, $includeRequiredErrors: Boolean) {
   members {
@@ -19796,17 +26112,20 @@ export const GetInstitutionSisterDetailsEditListDocument = `
 }
     `;
 export const useGetInstitutionSisterDetailsEditListQuery = <
-      TData = GetInstitutionSisterDetailsEditListQuery,
-      TError = unknown
-    >(
-      variables: GetInstitutionSisterDetailsEditListQueryVariables,
-      options?: UseQueryOptions<GetInstitutionSisterDetailsEditListQuery, TError, TData>
-    ) =>
-    useQuery<GetInstitutionSisterDetailsEditListQuery, TError, TData>(
-      ['getInstitutionSisterDetailsEditList', variables],
-      useAxios<GetInstitutionSisterDetailsEditListQuery, GetInstitutionSisterDetailsEditListQueryVariables>(GetInstitutionSisterDetailsEditListDocument).bind(null, variables),
-      options
-    );
+  TData = GetInstitutionSisterDetailsEditListQuery,
+  TError = unknown
+>(
+  variables: GetInstitutionSisterDetailsEditListQueryVariables,
+  options?: UseQueryOptions<GetInstitutionSisterDetailsEditListQuery, TError, TData>
+) =>
+  useQuery<GetInstitutionSisterDetailsEditListQuery, TError, TData>(
+    ['getInstitutionSisterDetailsEditList', variables],
+    useAxios<
+      GetInstitutionSisterDetailsEditListQuery,
+      GetInstitutionSisterDetailsEditListQueryVariables
+    >(GetInstitutionSisterDetailsEditListDocument).bind(null, variables),
+    options
+  );
 export const GetInsBoardDirectorEditListDocument = `
     query getInsBoardDirectorEditList($id: ID!, $hasRequiredErrors: Boolean) {
   members {
@@ -19871,17 +26190,19 @@ export const GetInsBoardDirectorEditListDocument = `
 }
     `;
 export const useGetInsBoardDirectorEditListQuery = <
-      TData = GetInsBoardDirectorEditListQuery,
-      TError = unknown
-    >(
-      variables: GetInsBoardDirectorEditListQueryVariables,
-      options?: UseQueryOptions<GetInsBoardDirectorEditListQuery, TError, TData>
-    ) =>
-    useQuery<GetInsBoardDirectorEditListQuery, TError, TData>(
-      ['getInsBoardDirectorEditList', variables],
-      useAxios<GetInsBoardDirectorEditListQuery, GetInsBoardDirectorEditListQueryVariables>(GetInsBoardDirectorEditListDocument).bind(null, variables),
-      options
-    );
+  TData = GetInsBoardDirectorEditListQuery,
+  TError = unknown
+>(
+  variables: GetInsBoardDirectorEditListQueryVariables,
+  options?: UseQueryOptions<GetInsBoardDirectorEditListQuery, TError, TData>
+) =>
+  useQuery<GetInsBoardDirectorEditListQuery, TError, TData>(
+    ['getInsBoardDirectorEditList', variables],
+    useAxios<GetInsBoardDirectorEditListQuery, GetInsBoardDirectorEditListQueryVariables>(
+      GetInsBoardDirectorEditListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetInsAccountOperatorEditListDocument = `
     query getInsAccountOperatorEditList($id: ID!, $hasRequiredErrors: Boolean) {
   members {
@@ -19934,17 +26255,19 @@ export const GetInsAccountOperatorEditListDocument = `
 }
     `;
 export const useGetInsAccountOperatorEditListQuery = <
-      TData = GetInsAccountOperatorEditListQuery,
-      TError = unknown
-    >(
-      variables: GetInsAccountOperatorEditListQueryVariables,
-      options?: UseQueryOptions<GetInsAccountOperatorEditListQuery, TError, TData>
-    ) =>
-    useQuery<GetInsAccountOperatorEditListQuery, TError, TData>(
-      ['getInsAccountOperatorEditList', variables],
-      useAxios<GetInsAccountOperatorEditListQuery, GetInsAccountOperatorEditListQueryVariables>(GetInsAccountOperatorEditListDocument).bind(null, variables),
-      options
-    );
+  TData = GetInsAccountOperatorEditListQuery,
+  TError = unknown
+>(
+  variables: GetInsAccountOperatorEditListQueryVariables,
+  options?: UseQueryOptions<GetInsAccountOperatorEditListQuery, TError, TData>
+) =>
+  useQuery<GetInsAccountOperatorEditListQuery, TError, TData>(
+    ['getInsAccountOperatorEditList', variables],
+    useAxios<GetInsAccountOperatorEditListQuery, GetInsAccountOperatorEditListQueryVariables>(
+      GetInsAccountOperatorEditListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetInventoryItemsDocument = `
     query getInventoryItems {
   inventory {
@@ -19964,18 +26287,17 @@ export const GetInventoryItemsDocument = `
   }
 }
     `;
-export const useGetInventoryItemsQuery = <
-      TData = GetInventoryItemsQuery,
-      TError = unknown
-    >(
-      variables?: GetInventoryItemsQueryVariables,
-      options?: UseQueryOptions<GetInventoryItemsQuery, TError, TData>
-    ) =>
-    useQuery<GetInventoryItemsQuery, TError, TData>(
-      variables === undefined ? ['getInventoryItems'] : ['getInventoryItems', variables],
-      useAxios<GetInventoryItemsQuery, GetInventoryItemsQueryVariables>(GetInventoryItemsDocument).bind(null, variables),
-      options
-    );
+export const useGetInventoryItemsQuery = <TData = GetInventoryItemsQuery, TError = unknown>(
+  variables?: GetInventoryItemsQueryVariables,
+  options?: UseQueryOptions<GetInventoryItemsQuery, TError, TData>
+) =>
+  useQuery<GetInventoryItemsQuery, TError, TData>(
+    variables === undefined ? ['getInventoryItems'] : ['getInventoryItems', variables],
+    useAxios<GetInventoryItemsQuery, GetInventoryItemsQueryVariables>(
+      GetInventoryItemsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetInventoryItemGroupDocument = `
     query getInventoryItemGroup {
   inventory {
@@ -19994,18 +26316,17 @@ export const GetInventoryItemGroupDocument = `
   }
 }
     `;
-export const useGetInventoryItemGroupQuery = <
-      TData = GetInventoryItemGroupQuery,
-      TError = unknown
-    >(
-      variables?: GetInventoryItemGroupQueryVariables,
-      options?: UseQueryOptions<GetInventoryItemGroupQuery, TError, TData>
-    ) =>
-    useQuery<GetInventoryItemGroupQuery, TError, TData>(
-      variables === undefined ? ['getInventoryItemGroup'] : ['getInventoryItemGroup', variables],
-      useAxios<GetInventoryItemGroupQuery, GetInventoryItemGroupQueryVariables>(GetInventoryItemGroupDocument).bind(null, variables),
-      options
-    );
+export const useGetInventoryItemGroupQuery = <TData = GetInventoryItemGroupQuery, TError = unknown>(
+  variables?: GetInventoryItemGroupQueryVariables,
+  options?: UseQueryOptions<GetInventoryItemGroupQuery, TError, TData>
+) =>
+  useQuery<GetInventoryItemGroupQuery, TError, TData>(
+    variables === undefined ? ['getInventoryItemGroup'] : ['getInventoryItemGroup', variables],
+    useAxios<GetInventoryItemGroupQuery, GetInventoryItemGroupQueryVariables>(
+      GetInventoryItemGroupDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetInventoryVendorDocument = `
     query getInventoryVendor {
   inventory {
@@ -20024,18 +26345,17 @@ export const GetInventoryVendorDocument = `
   }
 }
     `;
-export const useGetInventoryVendorQuery = <
-      TData = GetInventoryVendorQuery,
-      TError = unknown
-    >(
-      variables?: GetInventoryVendorQueryVariables,
-      options?: UseQueryOptions<GetInventoryVendorQuery, TError, TData>
-    ) =>
-    useQuery<GetInventoryVendorQuery, TError, TData>(
-      variables === undefined ? ['getInventoryVendor'] : ['getInventoryVendor', variables],
-      useAxios<GetInventoryVendorQuery, GetInventoryVendorQueryVariables>(GetInventoryVendorDocument).bind(null, variables),
-      options
-    );
+export const useGetInventoryVendorQuery = <TData = GetInventoryVendorQuery, TError = unknown>(
+  variables?: GetInventoryVendorQueryVariables,
+  options?: UseQueryOptions<GetInventoryVendorQuery, TError, TData>
+) =>
+  useQuery<GetInventoryVendorQuery, TError, TData>(
+    variables === undefined ? ['getInventoryVendor'] : ['getInventoryVendor', variables],
+    useAxios<GetInventoryVendorQuery, GetInventoryVendorQueryVariables>(
+      GetInventoryVendorDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetInventoryUnitOfMeasureDocument = `
     query getInventoryUnitOfMeasure {
   inventory {
@@ -20054,17 +26374,21 @@ export const GetInventoryUnitOfMeasureDocument = `
 }
     `;
 export const useGetInventoryUnitOfMeasureQuery = <
-      TData = GetInventoryUnitOfMeasureQuery,
-      TError = unknown
-    >(
-      variables?: GetInventoryUnitOfMeasureQueryVariables,
-      options?: UseQueryOptions<GetInventoryUnitOfMeasureQuery, TError, TData>
-    ) =>
-    useQuery<GetInventoryUnitOfMeasureQuery, TError, TData>(
-      variables === undefined ? ['getInventoryUnitOfMeasure'] : ['getInventoryUnitOfMeasure', variables],
-      useAxios<GetInventoryUnitOfMeasureQuery, GetInventoryUnitOfMeasureQueryVariables>(GetInventoryUnitOfMeasureDocument).bind(null, variables),
-      options
-    );
+  TData = GetInventoryUnitOfMeasureQuery,
+  TError = unknown
+>(
+  variables?: GetInventoryUnitOfMeasureQueryVariables,
+  options?: UseQueryOptions<GetInventoryUnitOfMeasureQuery, TError, TData>
+) =>
+  useQuery<GetInventoryUnitOfMeasureQuery, TError, TData>(
+    variables === undefined
+      ? ['getInventoryUnitOfMeasure']
+      : ['getInventoryUnitOfMeasure', variables],
+    useAxios<GetInventoryUnitOfMeasureQuery, GetInventoryUnitOfMeasureQueryVariables>(
+      GetInventoryUnitOfMeasureDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetIndividualKymOptionsDocument = `
     query getIndividualKYMOptions($searchTerm: FormFieldSearchTerm!) {
   form {
@@ -20080,17 +26404,19 @@ export const GetIndividualKymOptionsDocument = `
 }
     `;
 export const useGetIndividualKymOptionsQuery = <
-      TData = GetIndividualKymOptionsQuery,
-      TError = unknown
-    >(
-      variables: GetIndividualKymOptionsQueryVariables,
-      options?: UseQueryOptions<GetIndividualKymOptionsQuery, TError, TData>
-    ) =>
-    useQuery<GetIndividualKymOptionsQuery, TError, TData>(
-      ['getIndividualKYMOptions', variables],
-      useAxios<GetIndividualKymOptionsQuery, GetIndividualKymOptionsQueryVariables>(GetIndividualKymOptionsDocument).bind(null, variables),
-      options
-    );
+  TData = GetIndividualKymOptionsQuery,
+  TError = unknown
+>(
+  variables: GetIndividualKymOptionsQueryVariables,
+  options?: UseQueryOptions<GetIndividualKymOptionsQuery, TError, TData>
+) =>
+  useQuery<GetIndividualKymOptionsQuery, TError, TData>(
+    ['getIndividualKYMOptions', variables],
+    useAxios<GetIndividualKymOptionsQuery, GetIndividualKymOptionsQueryVariables>(
+      GetIndividualKymOptionsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetInstitutionKymOptionsDocument = `
     query getInstitutionKYMOptions($searchTerm: FormFieldSearchTerm!) {
   form {
@@ -20106,17 +26432,19 @@ export const GetInstitutionKymOptionsDocument = `
 }
     `;
 export const useGetInstitutionKymOptionsQuery = <
-      TData = GetInstitutionKymOptionsQuery,
-      TError = unknown
-    >(
-      variables: GetInstitutionKymOptionsQueryVariables,
-      options?: UseQueryOptions<GetInstitutionKymOptionsQuery, TError, TData>
-    ) =>
-    useQuery<GetInstitutionKymOptionsQuery, TError, TData>(
-      ['getInstitutionKYMOptions', variables],
-      useAxios<GetInstitutionKymOptionsQuery, GetInstitutionKymOptionsQueryVariables>(GetInstitutionKymOptionsDocument).bind(null, variables),
-      options
-    );
+  TData = GetInstitutionKymOptionsQuery,
+  TError = unknown
+>(
+  variables: GetInstitutionKymOptionsQueryVariables,
+  options?: UseQueryOptions<GetInstitutionKymOptionsQuery, TError, TData>
+) =>
+  useQuery<GetInstitutionKymOptionsQuery, TError, TData>(
+    ['getInstitutionKYMOptions', variables],
+    useAxios<GetInstitutionKymOptionsQuery, GetInstitutionKymOptionsQueryVariables>(
+      GetInstitutionKymOptionsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetCooperativeKymOptionsDocument = `
     query getCooperativeKYMOptions($searchTerm: FormFieldSearchTerm!) {
   form {
@@ -20132,17 +26460,19 @@ export const GetCooperativeKymOptionsDocument = `
 }
     `;
 export const useGetCooperativeKymOptionsQuery = <
-      TData = GetCooperativeKymOptionsQuery,
-      TError = unknown
-    >(
-      variables: GetCooperativeKymOptionsQueryVariables,
-      options?: UseQueryOptions<GetCooperativeKymOptionsQuery, TError, TData>
-    ) =>
-    useQuery<GetCooperativeKymOptionsQuery, TError, TData>(
-      ['getCooperativeKYMOptions', variables],
-      useAxios<GetCooperativeKymOptionsQuery, GetCooperativeKymOptionsQueryVariables>(GetCooperativeKymOptionsDocument).bind(null, variables),
-      options
-    );
+  TData = GetCooperativeKymOptionsQuery,
+  TError = unknown
+>(
+  variables: GetCooperativeKymOptionsQueryVariables,
+  options?: UseQueryOptions<GetCooperativeKymOptionsQuery, TError, TData>
+) =>
+  useQuery<GetCooperativeKymOptionsQuery, TError, TData>(
+    ['getCooperativeKYMOptions', variables],
+    useAxios<GetCooperativeKymOptionsQuery, GetCooperativeKymOptionsQueryVariables>(
+      GetCooperativeKymOptionsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetCoopUnionKymOptionsDocument = `
     query getCoopUnionKYMOptions($searchTerm: FormFieldSearchTerm!) {
   form {
@@ -20158,17 +26488,19 @@ export const GetCoopUnionKymOptionsDocument = `
 }
     `;
 export const useGetCoopUnionKymOptionsQuery = <
-      TData = GetCoopUnionKymOptionsQuery,
-      TError = unknown
-    >(
-      variables: GetCoopUnionKymOptionsQueryVariables,
-      options?: UseQueryOptions<GetCoopUnionKymOptionsQuery, TError, TData>
-    ) =>
-    useQuery<GetCoopUnionKymOptionsQuery, TError, TData>(
-      ['getCoopUnionKYMOptions', variables],
-      useAxios<GetCoopUnionKymOptionsQuery, GetCoopUnionKymOptionsQueryVariables>(GetCoopUnionKymOptionsDocument).bind(null, variables),
-      options
-    );
+  TData = GetCoopUnionKymOptionsQuery,
+  TError = unknown
+>(
+  variables: GetCoopUnionKymOptionsQueryVariables,
+  options?: UseQueryOptions<GetCoopUnionKymOptionsQuery, TError, TData>
+) =>
+  useQuery<GetCoopUnionKymOptionsQuery, TError, TData>(
+    ['getCoopUnionKYMOptions', variables],
+    useAxios<GetCoopUnionKymOptionsQuery, GetCoopUnionKymOptionsQueryVariables>(
+      GetCoopUnionKymOptionsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanProductDetailsDataDocument = `
     query getLoanProductDetailsData($id: ID!) {
   settings {
@@ -20189,17 +26521,19 @@ export const GetLoanProductDetailsDataDocument = `
     ${LoanProductFragmentDoc}
 ${QueryErrorFragmentDoc}`;
 export const useGetLoanProductDetailsDataQuery = <
-      TData = GetLoanProductDetailsDataQuery,
-      TError = unknown
-    >(
-      variables: GetLoanProductDetailsDataQueryVariables,
-      options?: UseQueryOptions<GetLoanProductDetailsDataQuery, TError, TData>
-    ) =>
-    useQuery<GetLoanProductDetailsDataQuery, TError, TData>(
-      ['getLoanProductDetailsData', variables],
-      useAxios<GetLoanProductDetailsDataQuery, GetLoanProductDetailsDataQueryVariables>(GetLoanProductDetailsDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetLoanProductDetailsDataQuery,
+  TError = unknown
+>(
+  variables: GetLoanProductDetailsDataQueryVariables,
+  options?: UseQueryOptions<GetLoanProductDetailsDataQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductDetailsDataQuery, TError, TData>(
+    ['getLoanProductDetailsData', variables],
+    useAxios<GetLoanProductDetailsDataQuery, GetLoanProductDetailsDataQueryVariables>(
+      GetLoanProductDetailsDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanProductsListDocument = `
     query getLoanProductsList($memberId: ID!, $productTypeId: ID!, $productSubTypeId: ID!) {
   loanAccount {
@@ -20223,18 +26557,17 @@ export const GetLoanProductsListDocument = `
   }
 }
     `;
-export const useGetLoanProductsListQuery = <
-      TData = GetLoanProductsListQuery,
-      TError = unknown
-    >(
-      variables: GetLoanProductsListQueryVariables,
-      options?: UseQueryOptions<GetLoanProductsListQuery, TError, TData>
-    ) =>
-    useQuery<GetLoanProductsListQuery, TError, TData>(
-      ['getLoanProductsList', variables],
-      useAxios<GetLoanProductsListQuery, GetLoanProductsListQueryVariables>(GetLoanProductsListDocument).bind(null, variables),
-      options
-    );
+export const useGetLoanProductsListQuery = <TData = GetLoanProductsListQuery, TError = unknown>(
+  variables: GetLoanProductsListQueryVariables,
+  options?: UseQueryOptions<GetLoanProductsListQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductsListQuery, TError, TData>(
+    ['getLoanProductsList', variables],
+    useAxios<GetLoanProductsListQuery, GetLoanProductsListQueryVariables>(
+      GetLoanProductsListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetProductCriteriaDocument = `
     query getProductCriteria($productId: ID!) {
   loanAccount {
@@ -20259,18 +26592,17 @@ export const GetProductCriteriaDocument = `
   }
 }
     ${QueryErrorFragmentDoc}`;
-export const useGetProductCriteriaQuery = <
-      TData = GetProductCriteriaQuery,
-      TError = unknown
-    >(
-      variables: GetProductCriteriaQueryVariables,
-      options?: UseQueryOptions<GetProductCriteriaQuery, TError, TData>
-    ) =>
-    useQuery<GetProductCriteriaQuery, TError, TData>(
-      ['getProductCriteria', variables],
-      useAxios<GetProductCriteriaQuery, GetProductCriteriaQueryVariables>(GetProductCriteriaDocument).bind(null, variables),
-      options
-    );
+export const useGetProductCriteriaQuery = <TData = GetProductCriteriaQuery, TError = unknown>(
+  variables: GetProductCriteriaQueryVariables,
+  options?: UseQueryOptions<GetProductCriteriaQuery, TError, TData>
+) =>
+  useQuery<GetProductCriteriaQuery, TError, TData>(
+    ['getProductCriteria', variables],
+    useAxios<GetProductCriteriaQuery, GetProductCriteriaQueryVariables>(
+      GetProductCriteriaDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanAccountTypeDocument = `
     query getLoanAccountType($productTypeId: String) {
   settings {
@@ -20291,18 +26623,17 @@ export const GetLoanAccountTypeDocument = `
   }
 }
     `;
-export const useGetLoanAccountTypeQuery = <
-      TData = GetLoanAccountTypeQuery,
-      TError = unknown
-    >(
-      variables?: GetLoanAccountTypeQueryVariables,
-      options?: UseQueryOptions<GetLoanAccountTypeQuery, TError, TData>
-    ) =>
-    useQuery<GetLoanAccountTypeQuery, TError, TData>(
-      variables === undefined ? ['getLoanAccountType'] : ['getLoanAccountType', variables],
-      useAxios<GetLoanAccountTypeQuery, GetLoanAccountTypeQueryVariables>(GetLoanAccountTypeDocument).bind(null, variables),
-      options
-    );
+export const useGetLoanAccountTypeQuery = <TData = GetLoanAccountTypeQuery, TError = unknown>(
+  variables?: GetLoanAccountTypeQueryVariables,
+  options?: UseQueryOptions<GetLoanAccountTypeQuery, TError, TData>
+) =>
+  useQuery<GetLoanAccountTypeQuery, TError, TData>(
+    variables === undefined ? ['getLoanAccountType'] : ['getLoanAccountType', variables],
+    useAxios<GetLoanAccountTypeQuery, GetLoanAccountTypeQueryVariables>(
+      GetLoanAccountTypeDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanProductTypesDocument = `
     query getLoanProductTypes {
   settings {
@@ -20320,18 +26651,17 @@ export const GetLoanProductTypesDocument = `
   }
 }
     `;
-export const useGetLoanProductTypesQuery = <
-      TData = GetLoanProductTypesQuery,
-      TError = unknown
-    >(
-      variables?: GetLoanProductTypesQueryVariables,
-      options?: UseQueryOptions<GetLoanProductTypesQuery, TError, TData>
-    ) =>
-    useQuery<GetLoanProductTypesQuery, TError, TData>(
-      variables === undefined ? ['getLoanProductTypes'] : ['getLoanProductTypes', variables],
-      useAxios<GetLoanProductTypesQuery, GetLoanProductTypesQueryVariables>(GetLoanProductTypesDocument).bind(null, variables),
-      options
-    );
+export const useGetLoanProductTypesQuery = <TData = GetLoanProductTypesQuery, TError = unknown>(
+  variables?: GetLoanProductTypesQueryVariables,
+  options?: UseQueryOptions<GetLoanProductTypesQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductTypesQuery, TError, TData>(
+    variables === undefined ? ['getLoanProductTypes'] : ['getLoanProductTypes', variables],
+    useAxios<GetLoanProductTypesQuery, GetLoanProductTypesQueryVariables>(
+      GetLoanProductTypesDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetCollateralListDocument = `
     query getCollateralList {
   settings {
@@ -20348,18 +26678,17 @@ export const GetCollateralListDocument = `
   }
 }
     `;
-export const useGetCollateralListQuery = <
-      TData = GetCollateralListQuery,
-      TError = unknown
-    >(
-      variables?: GetCollateralListQueryVariables,
-      options?: UseQueryOptions<GetCollateralListQuery, TError, TData>
-    ) =>
-    useQuery<GetCollateralListQuery, TError, TData>(
-      variables === undefined ? ['getCollateralList'] : ['getCollateralList', variables],
-      useAxios<GetCollateralListQuery, GetCollateralListQueryVariables>(GetCollateralListDocument).bind(null, variables),
-      options
-    );
+export const useGetCollateralListQuery = <TData = GetCollateralListQuery, TError = unknown>(
+  variables?: GetCollateralListQueryVariables,
+  options?: UseQueryOptions<GetCollateralListQuery, TError, TData>
+) =>
+  useQuery<GetCollateralListQuery, TError, TData>(
+    variables === undefined ? ['getCollateralList'] : ['getCollateralList', variables],
+    useAxios<GetCollateralListQuery, GetCollateralListQueryVariables>(
+      GetCollateralListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanListDocument = `
     query getLoanList($paginate: Pagination, $filter: LoanAccountSearchFilter) {
   loanAccount {
@@ -20391,18 +26720,18 @@ export const GetLoanListDocument = `
   }
 }
     `;
-export const useGetLoanListQuery = <
-      TData = GetLoanListQuery,
-      TError = unknown
-    >(
-      variables?: GetLoanListQueryVariables,
-      options?: UseQueryOptions<GetLoanListQuery, TError, TData>
-    ) =>
-    useQuery<GetLoanListQuery, TError, TData>(
-      variables === undefined ? ['getLoanList'] : ['getLoanList', variables],
-      useAxios<GetLoanListQuery, GetLoanListQueryVariables>(GetLoanListDocument).bind(null, variables),
-      options
-    );
+export const useGetLoanListQuery = <TData = GetLoanListQuery, TError = unknown>(
+  variables?: GetLoanListQueryVariables,
+  options?: UseQueryOptions<GetLoanListQuery, TError, TData>
+) =>
+  useQuery<GetLoanListQuery, TError, TData>(
+    variables === undefined ? ['getLoanList'] : ['getLoanList', variables],
+    useAxios<GetLoanListQuery, GetLoanListQueryVariables>(GetLoanListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetLoanInstallmentsDocument = `
     query getLoanInstallments($productId: ID!, $gracePeriod: LoanAccountGraceInput, $sanctionAmount: Int!, $tenure: Int!, $interest: Float!, $repaymentScheme: LoanRepaymentScheme!) {
   loanAccount {
@@ -20433,18 +26762,17 @@ export const GetLoanInstallmentsDocument = `
   }
 }
     ${QueryErrorFragmentDoc}`;
-export const useGetLoanInstallmentsQuery = <
-      TData = GetLoanInstallmentsQuery,
-      TError = unknown
-    >(
-      variables: GetLoanInstallmentsQueryVariables,
-      options?: UseQueryOptions<GetLoanInstallmentsQuery, TError, TData>
-    ) =>
-    useQuery<GetLoanInstallmentsQuery, TError, TData>(
-      ['getLoanInstallments', variables],
-      useAxios<GetLoanInstallmentsQuery, GetLoanInstallmentsQueryVariables>(GetLoanInstallmentsDocument).bind(null, variables),
-      options
-    );
+export const useGetLoanInstallmentsQuery = <TData = GetLoanInstallmentsQuery, TError = unknown>(
+  variables: GetLoanInstallmentsQueryVariables,
+  options?: UseQueryOptions<GetLoanInstallmentsQuery, TError, TData>
+) =>
+  useQuery<GetLoanInstallmentsQuery, TError, TData>(
+    ['getLoanInstallments', variables],
+    useAxios<GetLoanInstallmentsQuery, GetLoanInstallmentsQueryVariables>(
+      GetLoanInstallmentsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanApplicationDetailsDocument = `
     query getLoanApplicationDetails($id: ID!) {
   loanAccount {
@@ -20528,17 +26856,19 @@ export const GetLoanApplicationDetailsDocument = `
 }
     ${QueryErrorFragmentDoc}`;
 export const useGetLoanApplicationDetailsQuery = <
-      TData = GetLoanApplicationDetailsQuery,
-      TError = unknown
-    >(
-      variables: GetLoanApplicationDetailsQueryVariables,
-      options?: UseQueryOptions<GetLoanApplicationDetailsQuery, TError, TData>
-    ) =>
-    useQuery<GetLoanApplicationDetailsQuery, TError, TData>(
-      ['getLoanApplicationDetails', variables],
-      useAxios<GetLoanApplicationDetailsQuery, GetLoanApplicationDetailsQueryVariables>(GetLoanApplicationDetailsDocument).bind(null, variables),
-      options
-    );
+  TData = GetLoanApplicationDetailsQuery,
+  TError = unknown
+>(
+  variables: GetLoanApplicationDetailsQueryVariables,
+  options?: UseQueryOptions<GetLoanApplicationDetailsQuery, TError, TData>
+) =>
+  useQuery<GetLoanApplicationDetailsQuery, TError, TData>(
+    ['getLoanApplicationDetails', variables],
+    useAxios<GetLoanApplicationDetailsQuery, GetLoanApplicationDetailsQueryVariables>(
+      GetLoanApplicationDetailsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetMemberLoanAccountsDocument = `
     query getMemberLoanAccounts($memberId: ID!) {
   loanAccount {
@@ -20549,18 +26879,17 @@ export const GetMemberLoanAccountsDocument = `
   }
 }
     `;
-export const useGetMemberLoanAccountsQuery = <
-      TData = GetMemberLoanAccountsQuery,
-      TError = unknown
-    >(
-      variables: GetMemberLoanAccountsQueryVariables,
-      options?: UseQueryOptions<GetMemberLoanAccountsQuery, TError, TData>
-    ) =>
-    useQuery<GetMemberLoanAccountsQuery, TError, TData>(
-      ['getMemberLoanAccounts', variables],
-      useAxios<GetMemberLoanAccountsQuery, GetMemberLoanAccountsQueryVariables>(GetMemberLoanAccountsDocument).bind(null, variables),
-      options
-    );
+export const useGetMemberLoanAccountsQuery = <TData = GetMemberLoanAccountsQuery, TError = unknown>(
+  variables: GetMemberLoanAccountsQueryVariables,
+  options?: UseQueryOptions<GetMemberLoanAccountsQuery, TError, TData>
+) =>
+  useQuery<GetMemberLoanAccountsQuery, TError, TData>(
+    ['getMemberLoanAccounts', variables],
+    useAxios<GetMemberLoanAccountsQuery, GetMemberLoanAccountsQueryVariables>(
+      GetMemberLoanAccountsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanPreviewDocument = `
     query getLoanPreview($id: String!) {
   loanAccount {
@@ -20668,18 +26997,18 @@ export const GetLoanPreviewDocument = `
   }
 }
     `;
-export const useGetLoanPreviewQuery = <
-      TData = GetLoanPreviewQuery,
-      TError = unknown
-    >(
-      variables: GetLoanPreviewQueryVariables,
-      options?: UseQueryOptions<GetLoanPreviewQuery, TError, TData>
-    ) =>
-    useQuery<GetLoanPreviewQuery, TError, TData>(
-      ['getLoanPreview', variables],
-      useAxios<GetLoanPreviewQuery, GetLoanPreviewQueryVariables>(GetLoanPreviewDocument).bind(null, variables),
-      options
-    );
+export const useGetLoanPreviewQuery = <TData = GetLoanPreviewQuery, TError = unknown>(
+  variables: GetLoanPreviewQueryVariables,
+  options?: UseQueryOptions<GetLoanPreviewQuery, TError, TData>
+) =>
+  useQuery<GetLoanPreviewQuery, TError, TData>(
+    ['getLoanPreview', variables],
+    useAxios<GetLoanPreviewQuery, GetLoanPreviewQueryVariables>(GetLoanPreviewDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetLoanRepaymentListDocument = `
     query getLoanRepaymentList($paginate: Pagination, $filter: LoanRepaymentFilter) {
   loanAccount {
@@ -20711,18 +27040,17 @@ export const GetLoanRepaymentListDocument = `
   }
 }
     `;
-export const useGetLoanRepaymentListQuery = <
-      TData = GetLoanRepaymentListQuery,
-      TError = unknown
-    >(
-      variables?: GetLoanRepaymentListQueryVariables,
-      options?: UseQueryOptions<GetLoanRepaymentListQuery, TError, TData>
-    ) =>
-    useQuery<GetLoanRepaymentListQuery, TError, TData>(
-      variables === undefined ? ['getLoanRepaymentList'] : ['getLoanRepaymentList', variables],
-      useAxios<GetLoanRepaymentListQuery, GetLoanRepaymentListQueryVariables>(GetLoanRepaymentListDocument).bind(null, variables),
-      options
-    );
+export const useGetLoanRepaymentListQuery = <TData = GetLoanRepaymentListQuery, TError = unknown>(
+  variables?: GetLoanRepaymentListQueryVariables,
+  options?: UseQueryOptions<GetLoanRepaymentListQuery, TError, TData>
+) =>
+  useQuery<GetLoanRepaymentListQuery, TError, TData>(
+    variables === undefined ? ['getLoanRepaymentList'] : ['getLoanRepaymentList', variables],
+    useAxios<GetLoanRepaymentListQuery, GetLoanRepaymentListQueryVariables>(
+      GetLoanRepaymentListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetMemberListDocument = `
     query getMemberList($pagination: Pagination!, $filter: KymMemberDataFilter) {
   members {
@@ -20776,18 +27104,18 @@ export const GetMemberListDocument = `
   }
 }
     ${PaginationFragmentDoc}`;
-export const useGetMemberListQuery = <
-      TData = GetMemberListQuery,
-      TError = unknown
-    >(
-      variables: GetMemberListQueryVariables,
-      options?: UseQueryOptions<GetMemberListQuery, TError, TData>
-    ) =>
-    useQuery<GetMemberListQuery, TError, TData>(
-      ['getMemberList', variables],
-      useAxios<GetMemberListQuery, GetMemberListQueryVariables>(GetMemberListDocument).bind(null, variables),
-      options
-    );
+export const useGetMemberListQuery = <TData = GetMemberListQuery, TError = unknown>(
+  variables: GetMemberListQueryVariables,
+  options?: UseQueryOptions<GetMemberListQuery, TError, TData>
+) =>
+  useQuery<GetMemberListQuery, TError, TData>(
+    ['getMemberList', variables],
+    useAxios<GetMemberListQuery, GetMemberListQueryVariables>(GetMemberListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetMemberTypesDocument = `
     query getMemberTypes {
   members {
@@ -20800,18 +27128,18 @@ export const GetMemberTypesDocument = `
   }
 }
     `;
-export const useGetMemberTypesQuery = <
-      TData = GetMemberTypesQuery,
-      TError = unknown
-    >(
-      variables?: GetMemberTypesQueryVariables,
-      options?: UseQueryOptions<GetMemberTypesQuery, TError, TData>
-    ) =>
-    useQuery<GetMemberTypesQuery, TError, TData>(
-      variables === undefined ? ['getMemberTypes'] : ['getMemberTypes', variables],
-      useAxios<GetMemberTypesQuery, GetMemberTypesQueryVariables>(GetMemberTypesDocument).bind(null, variables),
-      options
-    );
+export const useGetMemberTypesQuery = <TData = GetMemberTypesQuery, TError = unknown>(
+  variables?: GetMemberTypesQueryVariables,
+  options?: UseQueryOptions<GetMemberTypesQuery, TError, TData>
+) =>
+  useQuery<GetMemberTypesQuery, TError, TData>(
+    variables === undefined ? ['getMemberTypes'] : ['getMemberTypes', variables],
+    useAxios<GetMemberTypesQuery, GetMemberTypesQueryVariables>(GetMemberTypesDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetMemberTranslationDocument = `
     query getMemberTranslation($id: ID!) {
   members {
@@ -20825,18 +27153,17 @@ export const GetMemberTranslationDocument = `
   }
 }
     `;
-export const useGetMemberTranslationQuery = <
-      TData = GetMemberTranslationQuery,
-      TError = unknown
-    >(
-      variables: GetMemberTranslationQueryVariables,
-      options?: UseQueryOptions<GetMemberTranslationQuery, TError, TData>
-    ) =>
-    useQuery<GetMemberTranslationQuery, TError, TData>(
-      ['getMemberTranslation', variables],
-      useAxios<GetMemberTranslationQuery, GetMemberTranslationQueryVariables>(GetMemberTranslationDocument).bind(null, variables),
-      options
-    );
+export const useGetMemberTranslationQuery = <TData = GetMemberTranslationQuery, TError = unknown>(
+  variables: GetMemberTranslationQueryVariables,
+  options?: UseQueryOptions<GetMemberTranslationQuery, TError, TData>
+) =>
+  useQuery<GetMemberTranslationQuery, TError, TData>(
+    ['getMemberTranslation', variables],
+    useAxios<GetMemberTranslationQuery, GetMemberTranslationQueryVariables>(
+      GetMemberTranslationDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetKymFormStatusDocument = `
     query getKymFormStatus($id: String!, $hasPressedNext: Boolean) {
   members {
@@ -20855,18 +27182,18 @@ export const GetKymFormStatusDocument = `
   }
 }
     `;
-export const useGetKymFormStatusQuery = <
-      TData = GetKymFormStatusQuery,
-      TError = unknown
-    >(
-      variables: GetKymFormStatusQueryVariables,
-      options?: UseQueryOptions<GetKymFormStatusQuery, TError, TData>
-    ) =>
-    useQuery<GetKymFormStatusQuery, TError, TData>(
-      ['getKymFormStatus', variables],
-      useAxios<GetKymFormStatusQuery, GetKymFormStatusQueryVariables>(GetKymFormStatusDocument).bind(null, variables),
-      options
-    );
+export const useGetKymFormStatusQuery = <TData = GetKymFormStatusQuery, TError = unknown>(
+  variables: GetKymFormStatusQueryVariables,
+  options?: UseQueryOptions<GetKymFormStatusQuery, TError, TData>
+) =>
+  useQuery<GetKymFormStatusQuery, TError, TData>(
+    ['getKymFormStatus', variables],
+    useAxios<GetKymFormStatusQuery, GetKymFormStatusQueryVariables>(GetKymFormStatusDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetMemberIndividualDataDocument = `
     query getMemberIndividualData($id: ID!) {
   members {
@@ -20937,17 +27264,19 @@ export const GetMemberIndividualDataDocument = `
 }
     `;
 export const useGetMemberIndividualDataQuery = <
-      TData = GetMemberIndividualDataQuery,
-      TError = unknown
-    >(
-      variables: GetMemberIndividualDataQueryVariables,
-      options?: UseQueryOptions<GetMemberIndividualDataQuery, TError, TData>
-    ) =>
-    useQuery<GetMemberIndividualDataQuery, TError, TData>(
-      ['getMemberIndividualData', variables],
-      useAxios<GetMemberIndividualDataQuery, GetMemberIndividualDataQueryVariables>(GetMemberIndividualDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetMemberIndividualDataQuery,
+  TError = unknown
+>(
+  variables: GetMemberIndividualDataQueryVariables,
+  options?: UseQueryOptions<GetMemberIndividualDataQuery, TError, TData>
+) =>
+  useQuery<GetMemberIndividualDataQuery, TError, TData>(
+    ['getMemberIndividualData', variables],
+    useAxios<GetMemberIndividualDataQuery, GetMemberIndividualDataQueryVariables>(
+      GetMemberIndividualDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetIndividualKymEditDataDocument = `
     query getIndividualKymEditData($id: String!, $hasPressedNext: Boolean) {
   members {
@@ -21069,17 +27398,19 @@ export const GetIndividualKymEditDataDocument = `
 }
     `;
 export const useGetIndividualKymEditDataQuery = <
-      TData = GetIndividualKymEditDataQuery,
-      TError = unknown
-    >(
-      variables: GetIndividualKymEditDataQueryVariables,
-      options?: UseQueryOptions<GetIndividualKymEditDataQuery, TError, TData>
-    ) =>
-    useQuery<GetIndividualKymEditDataQuery, TError, TData>(
-      ['getIndividualKymEditData', variables],
-      useAxios<GetIndividualKymEditDataQuery, GetIndividualKymEditDataQueryVariables>(GetIndividualKymEditDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetIndividualKymEditDataQuery,
+  TError = unknown
+>(
+  variables: GetIndividualKymEditDataQueryVariables,
+  options?: UseQueryOptions<GetIndividualKymEditDataQuery, TError, TData>
+) =>
+  useQuery<GetIndividualKymEditDataQuery, TError, TData>(
+    ['getIndividualKymEditData', variables],
+    useAxios<GetIndividualKymEditDataQuery, GetIndividualKymEditDataQueryVariables>(
+      GetIndividualKymEditDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetIndividualKymFamilyMembersListDocument = `
     query getIndividualKymFamilyMembersList($id: String!, $isMember: Boolean) {
   members {
@@ -21098,17 +27429,20 @@ export const GetIndividualKymFamilyMembersListDocument = `
 }
     `;
 export const useGetIndividualKymFamilyMembersListQuery = <
-      TData = GetIndividualKymFamilyMembersListQuery,
-      TError = unknown
-    >(
-      variables: GetIndividualKymFamilyMembersListQueryVariables,
-      options?: UseQueryOptions<GetIndividualKymFamilyMembersListQuery, TError, TData>
-    ) =>
-    useQuery<GetIndividualKymFamilyMembersListQuery, TError, TData>(
-      ['getIndividualKymFamilyMembersList', variables],
-      useAxios<GetIndividualKymFamilyMembersListQuery, GetIndividualKymFamilyMembersListQueryVariables>(GetIndividualKymFamilyMembersListDocument).bind(null, variables),
-      options
-    );
+  TData = GetIndividualKymFamilyMembersListQuery,
+  TError = unknown
+>(
+  variables: GetIndividualKymFamilyMembersListQueryVariables,
+  options?: UseQueryOptions<GetIndividualKymFamilyMembersListQuery, TError, TData>
+) =>
+  useQuery<GetIndividualKymFamilyMembersListQuery, TError, TData>(
+    ['getIndividualKymFamilyMembersList', variables],
+    useAxios<
+      GetIndividualKymFamilyMembersListQuery,
+      GetIndividualKymFamilyMembersListQueryVariables
+    >(GetIndividualKymFamilyMembersListDocument).bind(null, variables),
+    options
+  );
 export const GetIndividualKymFamilyOccupationListDocument = `
     query getIndividualKymFamilyOccupationList($id: String!, $isSpouse: Boolean!) {
   members {
@@ -21132,17 +27466,20 @@ export const GetIndividualKymFamilyOccupationListDocument = `
 }
     `;
 export const useGetIndividualKymFamilyOccupationListQuery = <
-      TData = GetIndividualKymFamilyOccupationListQuery,
-      TError = unknown
-    >(
-      variables: GetIndividualKymFamilyOccupationListQueryVariables,
-      options?: UseQueryOptions<GetIndividualKymFamilyOccupationListQuery, TError, TData>
-    ) =>
-    useQuery<GetIndividualKymFamilyOccupationListQuery, TError, TData>(
-      ['getIndividualKymFamilyOccupationList', variables],
-      useAxios<GetIndividualKymFamilyOccupationListQuery, GetIndividualKymFamilyOccupationListQueryVariables>(GetIndividualKymFamilyOccupationListDocument).bind(null, variables),
-      options
-    );
+  TData = GetIndividualKymFamilyOccupationListQuery,
+  TError = unknown
+>(
+  variables: GetIndividualKymFamilyOccupationListQueryVariables,
+  options?: UseQueryOptions<GetIndividualKymFamilyOccupationListQuery, TError, TData>
+) =>
+  useQuery<GetIndividualKymFamilyOccupationListQuery, TError, TData>(
+    ['getIndividualKymFamilyOccupationList', variables],
+    useAxios<
+      GetIndividualKymFamilyOccupationListQuery,
+      GetIndividualKymFamilyOccupationListQueryVariables
+    >(GetIndividualKymFamilyOccupationListDocument).bind(null, variables),
+    options
+  );
 export const GetIndividualKymIncomeSourceListDocument = `
     query getIndividualKymIncomeSourceList($id: String!) {
   members {
@@ -21159,17 +27496,19 @@ export const GetIndividualKymIncomeSourceListDocument = `
 }
     `;
 export const useGetIndividualKymIncomeSourceListQuery = <
-      TData = GetIndividualKymIncomeSourceListQuery,
-      TError = unknown
-    >(
-      variables: GetIndividualKymIncomeSourceListQueryVariables,
-      options?: UseQueryOptions<GetIndividualKymIncomeSourceListQuery, TError, TData>
-    ) =>
-    useQuery<GetIndividualKymIncomeSourceListQuery, TError, TData>(
-      ['getIndividualKymIncomeSourceList', variables],
-      useAxios<GetIndividualKymIncomeSourceListQuery, GetIndividualKymIncomeSourceListQueryVariables>(GetIndividualKymIncomeSourceListDocument).bind(null, variables),
-      options
-    );
+  TData = GetIndividualKymIncomeSourceListQuery,
+  TError = unknown
+>(
+  variables: GetIndividualKymIncomeSourceListQueryVariables,
+  options?: UseQueryOptions<GetIndividualKymIncomeSourceListQuery, TError, TData>
+) =>
+  useQuery<GetIndividualKymIncomeSourceListQuery, TError, TData>(
+    ['getIndividualKymIncomeSourceList', variables],
+    useAxios<GetIndividualKymIncomeSourceListQuery, GetIndividualKymIncomeSourceListQueryVariables>(
+      GetIndividualKymIncomeSourceListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetKymDocumentsListDocument = `
     query getKYMDocumentsList($memberId: String!) {
   document {
@@ -21185,18 +27524,17 @@ export const GetKymDocumentsListDocument = `
   }
 }
     `;
-export const useGetKymDocumentsListQuery = <
-      TData = GetKymDocumentsListQuery,
-      TError = unknown
-    >(
-      variables: GetKymDocumentsListQueryVariables,
-      options?: UseQueryOptions<GetKymDocumentsListQuery, TError, TData>
-    ) =>
-    useQuery<GetKymDocumentsListQuery, TError, TData>(
-      ['getKYMDocumentsList', variables],
-      useAxios<GetKymDocumentsListQuery, GetKymDocumentsListQueryVariables>(GetKymDocumentsListDocument).bind(null, variables),
-      options
-    );
+export const useGetKymDocumentsListQuery = <TData = GetKymDocumentsListQuery, TError = unknown>(
+  variables: GetKymDocumentsListQueryVariables,
+  options?: UseQueryOptions<GetKymDocumentsListQuery, TError, TData>
+) =>
+  useQuery<GetKymDocumentsListQuery, TError, TData>(
+    ['getKYMDocumentsList', variables],
+    useAxios<GetKymDocumentsListQuery, GetKymDocumentsListQueryVariables>(
+      GetKymDocumentsListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetIndividualKymIdentificationListDocument = `
     query getIndividualKymIdentificationList($id: String!) {
   members {
@@ -21215,17 +27553,20 @@ export const GetIndividualKymIdentificationListDocument = `
 }
     `;
 export const useGetIndividualKymIdentificationListQuery = <
-      TData = GetIndividualKymIdentificationListQuery,
-      TError = unknown
-    >(
-      variables: GetIndividualKymIdentificationListQueryVariables,
-      options?: UseQueryOptions<GetIndividualKymIdentificationListQuery, TError, TData>
-    ) =>
-    useQuery<GetIndividualKymIdentificationListQuery, TError, TData>(
-      ['getIndividualKymIdentificationList', variables],
-      useAxios<GetIndividualKymIdentificationListQuery, GetIndividualKymIdentificationListQueryVariables>(GetIndividualKymIdentificationListDocument).bind(null, variables),
-      options
-    );
+  TData = GetIndividualKymIdentificationListQuery,
+  TError = unknown
+>(
+  variables: GetIndividualKymIdentificationListQueryVariables,
+  options?: UseQueryOptions<GetIndividualKymIdentificationListQuery, TError, TData>
+) =>
+  useQuery<GetIndividualKymIdentificationListQuery, TError, TData>(
+    ['getIndividualKymIdentificationList', variables],
+    useAxios<
+      GetIndividualKymIdentificationListQuery,
+      GetIndividualKymIdentificationListQueryVariables
+    >(GetIndividualKymIdentificationListDocument).bind(null, variables),
+    options
+  );
 export const GetMemberDetailsDocument = `
     query getMemberDetails($id: ID!) {
   members {
@@ -21275,18 +27616,18 @@ export const GetMemberDetailsDocument = `
   }
 }
     `;
-export const useGetMemberDetailsQuery = <
-      TData = GetMemberDetailsQuery,
-      TError = unknown
-    >(
-      variables: GetMemberDetailsQueryVariables,
-      options?: UseQueryOptions<GetMemberDetailsQuery, TError, TData>
-    ) =>
-    useQuery<GetMemberDetailsQuery, TError, TData>(
-      ['getMemberDetails', variables],
-      useAxios<GetMemberDetailsQuery, GetMemberDetailsQueryVariables>(GetMemberDetailsDocument).bind(null, variables),
-      options
-    );
+export const useGetMemberDetailsQuery = <TData = GetMemberDetailsQuery, TError = unknown>(
+  variables: GetMemberDetailsQueryVariables,
+  options?: UseQueryOptions<GetMemberDetailsQuery, TError, TData>
+) =>
+  useQuery<GetMemberDetailsQuery, TError, TData>(
+    ['getMemberDetails', variables],
+    useAxios<GetMemberDetailsQuery, GetMemberDetailsQueryVariables>(GetMemberDetailsDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetOfficialUseDocument = `
     query getOfficialUse($id: ID!) {
   members {
@@ -21308,18 +27649,18 @@ export const GetOfficialUseDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useGetOfficialUseQuery = <
-      TData = GetOfficialUseQuery,
-      TError = unknown
-    >(
-      variables: GetOfficialUseQueryVariables,
-      options?: UseQueryOptions<GetOfficialUseQuery, TError, TData>
-    ) =>
-    useQuery<GetOfficialUseQuery, TError, TData>(
-      ['getOfficialUse', variables],
-      useAxios<GetOfficialUseQuery, GetOfficialUseQueryVariables>(GetOfficialUseDocument).bind(null, variables),
-      options
-    );
+export const useGetOfficialUseQuery = <TData = GetOfficialUseQuery, TError = unknown>(
+  variables: GetOfficialUseQueryVariables,
+  options?: UseQueryOptions<GetOfficialUseQuery, TError, TData>
+) =>
+  useQuery<GetOfficialUseQuery, TError, TData>(
+    ['getOfficialUse', variables],
+    useAxios<GetOfficialUseQuery, GetOfficialUseQueryVariables>(GetOfficialUseDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetMembershipFeeDocument = `
     query getMembershipFee($memberID: ID!) {
   members {
@@ -21336,18 +27677,18 @@ export const GetMembershipFeeDocument = `
   }
 }
     ${QueryErrorFragmentDoc}`;
-export const useGetMembershipFeeQuery = <
-      TData = GetMembershipFeeQuery,
-      TError = unknown
-    >(
-      variables: GetMembershipFeeQueryVariables,
-      options?: UseQueryOptions<GetMembershipFeeQuery, TError, TData>
-    ) =>
-    useQuery<GetMembershipFeeQuery, TError, TData>(
-      ['getMembershipFee', variables],
-      useAxios<GetMembershipFeeQuery, GetMembershipFeeQueryVariables>(GetMembershipFeeDocument).bind(null, variables),
-      options
-    );
+export const useGetMembershipFeeQuery = <TData = GetMembershipFeeQuery, TError = unknown>(
+  variables: GetMembershipFeeQueryVariables,
+  options?: UseQueryOptions<GetMembershipFeeQuery, TError, TData>
+) =>
+  useQuery<GetMembershipFeeQuery, TError, TData>(
+    ['getMembershipFee', variables],
+    useAxios<GetMembershipFeeQuery, GetMembershipFeeQueryVariables>(GetMembershipFeeDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetMemberCheckDocument = `
     query getMemberCheck($memberID: ID!) {
   members {
@@ -21361,18 +27702,18 @@ export const GetMemberCheckDocument = `
   }
 }
     `;
-export const useGetMemberCheckQuery = <
-      TData = GetMemberCheckQuery,
-      TError = unknown
-    >(
-      variables: GetMemberCheckQueryVariables,
-      options?: UseQueryOptions<GetMemberCheckQuery, TError, TData>
-    ) =>
-    useQuery<GetMemberCheckQuery, TError, TData>(
-      ['getMemberCheck', variables],
-      useAxios<GetMemberCheckQuery, GetMemberCheckQueryVariables>(GetMemberCheckDocument).bind(null, variables),
-      options
-    );
+export const useGetMemberCheckQuery = <TData = GetMemberCheckQuery, TError = unknown>(
+  variables: GetMemberCheckQueryVariables,
+  options?: UseQueryOptions<GetMemberCheckQuery, TError, TData>
+) =>
+  useQuery<GetMemberCheckQuery, TError, TData>(
+    ['getMemberCheck', variables],
+    useAxios<GetMemberCheckQuery, GetMemberCheckQueryVariables>(GetMemberCheckDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetAccountCheckDocument = `
     query getAccountCheck($memberId: ID!, $accountId: ID!) {
   members {
@@ -21382,18 +27723,18 @@ export const GetAccountCheckDocument = `
   }
 }
     `;
-export const useGetAccountCheckQuery = <
-      TData = GetAccountCheckQuery,
-      TError = unknown
-    >(
-      variables: GetAccountCheckQueryVariables,
-      options?: UseQueryOptions<GetAccountCheckQuery, TError, TData>
-    ) =>
-    useQuery<GetAccountCheckQuery, TError, TData>(
-      ['getAccountCheck', variables],
-      useAxios<GetAccountCheckQuery, GetAccountCheckQueryVariables>(GetAccountCheckDocument).bind(null, variables),
-      options
-    );
+export const useGetAccountCheckQuery = <TData = GetAccountCheckQuery, TError = unknown>(
+  variables: GetAccountCheckQueryVariables,
+  options?: UseQueryOptions<GetAccountCheckQuery, TError, TData>
+) =>
+  useQuery<GetAccountCheckQuery, TError, TData>(
+    ['getAccountCheck', variables],
+    useAxios<GetAccountCheckQuery, GetAccountCheckQueryVariables>(GetAccountCheckDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetMemberAccountsDocument = `
     query getMemberAccounts($memberId: ID!) {
   members {
@@ -21420,18 +27761,17 @@ export const GetMemberAccountsDocument = `
   }
 }
     `;
-export const useGetMemberAccountsQuery = <
-      TData = GetMemberAccountsQuery,
-      TError = unknown
-    >(
-      variables: GetMemberAccountsQueryVariables,
-      options?: UseQueryOptions<GetMemberAccountsQuery, TError, TData>
-    ) =>
-    useQuery<GetMemberAccountsQuery, TError, TData>(
-      ['getMemberAccounts', variables],
-      useAxios<GetMemberAccountsQuery, GetMemberAccountsQueryVariables>(GetMemberAccountsDocument).bind(null, variables),
-      options
-    );
+export const useGetMemberAccountsQuery = <TData = GetMemberAccountsQuery, TError = unknown>(
+  variables: GetMemberAccountsQueryVariables,
+  options?: UseQueryOptions<GetMemberAccountsQuery, TError, TData>
+) =>
+  useQuery<GetMemberAccountsQuery, TError, TData>(
+    ['getMemberAccounts', variables],
+    useAxios<GetMemberAccountsQuery, GetMemberAccountsQueryVariables>(
+      GetMemberAccountsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAccountInactiveCheckDocument = `
     query getAccountInactiveCheck($memberId: ID!, $accountId: ID!, $accountType: AccountTypeFilter!) {
   members {
@@ -21446,17 +27786,19 @@ export const GetAccountInactiveCheckDocument = `
 }
     `;
 export const useGetAccountInactiveCheckQuery = <
-      TData = GetAccountInactiveCheckQuery,
-      TError = unknown
-    >(
-      variables: GetAccountInactiveCheckQueryVariables,
-      options?: UseQueryOptions<GetAccountInactiveCheckQuery, TError, TData>
-    ) =>
-    useQuery<GetAccountInactiveCheckQuery, TError, TData>(
-      ['getAccountInactiveCheck', variables],
-      useAxios<GetAccountInactiveCheckQuery, GetAccountInactiveCheckQueryVariables>(GetAccountInactiveCheckDocument).bind(null, variables),
-      options
-    );
+  TData = GetAccountInactiveCheckQuery,
+  TError = unknown
+>(
+  variables: GetAccountInactiveCheckQueryVariables,
+  options?: UseQueryOptions<GetAccountInactiveCheckQuery, TError, TData>
+) =>
+  useQuery<GetAccountInactiveCheckQuery, TError, TData>(
+    ['getAccountInactiveCheck', variables],
+    useAxios<GetAccountInactiveCheckQuery, GetAccountInactiveCheckQueryVariables>(
+      GetAccountInactiveCheckDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetMemberInactiveCheckDocument = `
     query getMemberInactiveCheck($memberId: ID!) {
   members {
@@ -21470,17 +27812,19 @@ export const GetMemberInactiveCheckDocument = `
 }
     `;
 export const useGetMemberInactiveCheckQuery = <
-      TData = GetMemberInactiveCheckQuery,
-      TError = unknown
-    >(
-      variables: GetMemberInactiveCheckQueryVariables,
-      options?: UseQueryOptions<GetMemberInactiveCheckQuery, TError, TData>
-    ) =>
-    useQuery<GetMemberInactiveCheckQuery, TError, TData>(
-      ['getMemberInactiveCheck', variables],
-      useAxios<GetMemberInactiveCheckQuery, GetMemberInactiveCheckQueryVariables>(GetMemberInactiveCheckDocument).bind(null, variables),
-      options
-    );
+  TData = GetMemberInactiveCheckQuery,
+  TError = unknown
+>(
+  variables: GetMemberInactiveCheckQueryVariables,
+  options?: UseQueryOptions<GetMemberInactiveCheckQuery, TError, TData>
+) =>
+  useQuery<GetMemberInactiveCheckQuery, TError, TData>(
+    ['getMemberInactiveCheck', variables],
+    useAxios<GetMemberInactiveCheckQuery, GetMemberInactiveCheckQueryVariables>(
+      GetMemberInactiveCheckDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetMemberDetailsOverviewDocument = `
     query getMemberDetailsOverview($id: ID!) {
   members {
@@ -21664,17 +28008,19 @@ export const GetMemberDetailsOverviewDocument = `
 }
     `;
 export const useGetMemberDetailsOverviewQuery = <
-      TData = GetMemberDetailsOverviewQuery,
-      TError = unknown
-    >(
-      variables: GetMemberDetailsOverviewQueryVariables,
-      options?: UseQueryOptions<GetMemberDetailsOverviewQuery, TError, TData>
-    ) =>
-    useQuery<GetMemberDetailsOverviewQuery, TError, TData>(
-      ['getMemberDetailsOverview', variables],
-      useAxios<GetMemberDetailsOverviewQuery, GetMemberDetailsOverviewQueryVariables>(GetMemberDetailsOverviewDocument).bind(null, variables),
-      options
-    );
+  TData = GetMemberDetailsOverviewQuery,
+  TError = unknown
+>(
+  variables: GetMemberDetailsOverviewQueryVariables,
+  options?: UseQueryOptions<GetMemberDetailsOverviewQuery, TError, TData>
+) =>
+  useQuery<GetMemberDetailsOverviewQuery, TError, TData>(
+    ['getMemberDetailsOverview', variables],
+    useAxios<GetMemberDetailsOverviewQuery, GetMemberDetailsOverviewQueryVariables>(
+      GetMemberDetailsOverviewDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetMemberDetailsShareBalanceDocument = `
     query getMemberDetailsShareBalance($id: ID!) {
   share {
@@ -21711,17 +28057,19 @@ export const GetMemberDetailsShareBalanceDocument = `
 }
     `;
 export const useGetMemberDetailsShareBalanceQuery = <
-      TData = GetMemberDetailsShareBalanceQuery,
-      TError = unknown
-    >(
-      variables: GetMemberDetailsShareBalanceQueryVariables,
-      options?: UseQueryOptions<GetMemberDetailsShareBalanceQuery, TError, TData>
-    ) =>
-    useQuery<GetMemberDetailsShareBalanceQuery, TError, TData>(
-      ['getMemberDetailsShareBalance', variables],
-      useAxios<GetMemberDetailsShareBalanceQuery, GetMemberDetailsShareBalanceQueryVariables>(GetMemberDetailsShareBalanceDocument).bind(null, variables),
-      options
-    );
+  TData = GetMemberDetailsShareBalanceQuery,
+  TError = unknown
+>(
+  variables: GetMemberDetailsShareBalanceQueryVariables,
+  options?: UseQueryOptions<GetMemberDetailsShareBalanceQuery, TError, TData>
+) =>
+  useQuery<GetMemberDetailsShareBalanceQuery, TError, TData>(
+    ['getMemberDetailsShareBalance', variables],
+    useAxios<GetMemberDetailsShareBalanceQuery, GetMemberDetailsShareBalanceQueryVariables>(
+      GetMemberDetailsShareBalanceDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetMemberPdfDocument = `
     query getMemberPDF($id: ID!) {
   members {
@@ -21729,18 +28077,18 @@ export const GetMemberPdfDocument = `
   }
 }
     `;
-export const useGetMemberPdfQuery = <
-      TData = GetMemberPdfQuery,
-      TError = unknown
-    >(
-      variables: GetMemberPdfQueryVariables,
-      options?: UseQueryOptions<GetMemberPdfQuery, TError, TData>
-    ) =>
-    useQuery<GetMemberPdfQuery, TError, TData>(
-      ['getMemberPDF', variables],
-      useAxios<GetMemberPdfQuery, GetMemberPdfQueryVariables>(GetMemberPdfDocument).bind(null, variables),
-      options
-    );
+export const useGetMemberPdfQuery = <TData = GetMemberPdfQuery, TError = unknown>(
+  variables: GetMemberPdfQueryVariables,
+  options?: UseQueryOptions<GetMemberPdfQuery, TError, TData>
+) =>
+  useQuery<GetMemberPdfQuery, TError, TData>(
+    ['getMemberPDF', variables],
+    useAxios<GetMemberPdfQuery, GetMemberPdfQueryVariables>(GetMemberPdfDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetAllSavedReportsDocument = `
     query getAllSavedReports($pagination: Pagination) {
   report {
@@ -21763,18 +28111,17 @@ export const GetAllSavedReportsDocument = `
   }
 }
     ${PaginationFragmentDoc}`;
-export const useGetAllSavedReportsQuery = <
-      TData = GetAllSavedReportsQuery,
-      TError = unknown
-    >(
-      variables?: GetAllSavedReportsQueryVariables,
-      options?: UseQueryOptions<GetAllSavedReportsQuery, TError, TData>
-    ) =>
-    useQuery<GetAllSavedReportsQuery, TError, TData>(
-      variables === undefined ? ['getAllSavedReports'] : ['getAllSavedReports', variables],
-      useAxios<GetAllSavedReportsQuery, GetAllSavedReportsQueryVariables>(GetAllSavedReportsDocument).bind(null, variables),
-      options
-    );
+export const useGetAllSavedReportsQuery = <TData = GetAllSavedReportsQuery, TError = unknown>(
+  variables?: GetAllSavedReportsQueryVariables,
+  options?: UseQueryOptions<GetAllSavedReportsQuery, TError, TData>
+) =>
+  useQuery<GetAllSavedReportsQuery, TError, TData>(
+    variables === undefined ? ['getAllSavedReports'] : ['getAllSavedReports', variables],
+    useAxios<GetAllSavedReportsQuery, GetAllSavedReportsQueryVariables>(
+      GetAllSavedReportsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetSavedReportDocument = `
     query getSavedReport($reportId: ID!) {
   report {
@@ -21795,18 +28142,18 @@ export const GetSavedReportDocument = `
   }
 }
     `;
-export const useGetSavedReportQuery = <
-      TData = GetSavedReportQuery,
-      TError = unknown
-    >(
-      variables: GetSavedReportQueryVariables,
-      options?: UseQueryOptions<GetSavedReportQuery, TError, TData>
-    ) =>
-    useQuery<GetSavedReportQuery, TError, TData>(
-      ['getSavedReport', variables],
-      useAxios<GetSavedReportQuery, GetSavedReportQueryVariables>(GetSavedReportDocument).bind(null, variables),
-      options
-    );
+export const useGetSavedReportQuery = <TData = GetSavedReportQuery, TError = unknown>(
+  variables: GetSavedReportQueryVariables,
+  options?: UseQueryOptions<GetSavedReportQuery, TError, TData>
+) =>
+  useQuery<GetSavedReportQuery, TError, TData>(
+    ['getSavedReport', variables],
+    useAxios<GetSavedReportQuery, GetSavedReportQueryVariables>(GetSavedReportDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetSavingStatementDocument = `
     query getSavingStatement($data: SavingStatementReportSettings!) {
   report {
@@ -21846,18 +28193,17 @@ export const GetSavingStatementDocument = `
   }
 }
     `;
-export const useGetSavingStatementQuery = <
-      TData = GetSavingStatementQuery,
-      TError = unknown
-    >(
-      variables: GetSavingStatementQueryVariables,
-      options?: UseQueryOptions<GetSavingStatementQuery, TError, TData>
-    ) =>
-    useQuery<GetSavingStatementQuery, TError, TData>(
-      ['getSavingStatement', variables],
-      useAxios<GetSavingStatementQuery, GetSavingStatementQueryVariables>(GetSavingStatementDocument).bind(null, variables),
-      options
-    );
+export const useGetSavingStatementQuery = <TData = GetSavingStatementQuery, TError = unknown>(
+  variables: GetSavingStatementQueryVariables,
+  options?: UseQueryOptions<GetSavingStatementQuery, TError, TData>
+) =>
+  useQuery<GetSavingStatementQuery, TError, TData>(
+    ['getSavingStatement', variables],
+    useAxios<GetSavingStatementQuery, GetSavingStatementQueryVariables>(
+      GetSavingStatementDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetMemberClassificationReportDocument = `
     query getMemberClassificationReport($period: ReportPeriodType) {
   report {
@@ -21911,17 +28257,21 @@ export const GetMemberClassificationReportDocument = `
 }
     `;
 export const useGetMemberClassificationReportQuery = <
-      TData = GetMemberClassificationReportQuery,
-      TError = unknown
-    >(
-      variables?: GetMemberClassificationReportQueryVariables,
-      options?: UseQueryOptions<GetMemberClassificationReportQuery, TError, TData>
-    ) =>
-    useQuery<GetMemberClassificationReportQuery, TError, TData>(
-      variables === undefined ? ['getMemberClassificationReport'] : ['getMemberClassificationReport', variables],
-      useAxios<GetMemberClassificationReportQuery, GetMemberClassificationReportQueryVariables>(GetMemberClassificationReportDocument).bind(null, variables),
-      options
-    );
+  TData = GetMemberClassificationReportQuery,
+  TError = unknown
+>(
+  variables?: GetMemberClassificationReportQueryVariables,
+  options?: UseQueryOptions<GetMemberClassificationReportQuery, TError, TData>
+) =>
+  useQuery<GetMemberClassificationReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getMemberClassificationReport']
+      : ['getMemberClassificationReport', variables],
+    useAxios<GetMemberClassificationReportQuery, GetMemberClassificationReportQueryVariables>(
+      GetMemberClassificationReportDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanStatementReportDocument = `
     query getLoanStatementReport($data: LoanStatementReportSettings!) {
   report {
@@ -21960,17 +28310,19 @@ export const GetLoanStatementReportDocument = `
 }
     `;
 export const useGetLoanStatementReportQuery = <
-      TData = GetLoanStatementReportQuery,
-      TError = unknown
-    >(
-      variables: GetLoanStatementReportQueryVariables,
-      options?: UseQueryOptions<GetLoanStatementReportQuery, TError, TData>
-    ) =>
-    useQuery<GetLoanStatementReportQuery, TError, TData>(
-      ['getLoanStatementReport', variables],
-      useAxios<GetLoanStatementReportQuery, GetLoanStatementReportQueryVariables>(GetLoanStatementReportDocument).bind(null, variables),
-      options
-    );
+  TData = GetLoanStatementReportQuery,
+  TError = unknown
+>(
+  variables: GetLoanStatementReportQueryVariables,
+  options?: UseQueryOptions<GetLoanStatementReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanStatementReportQuery, TError, TData>(
+    ['getLoanStatementReport', variables],
+    useAxios<GetLoanStatementReportQuery, GetLoanStatementReportQueryVariables>(
+      GetLoanStatementReportDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLedgerReportDocument = `
     query getLedgerReport($ledgerId: ID!, $period: ReportPeriodType, $date: LocalizedDateFilter) {
   report {
@@ -21987,18 +28339,18 @@ export const GetLedgerReportDocument = `
   }
 }
     `;
-export const useGetLedgerReportQuery = <
-      TData = GetLedgerReportQuery,
-      TError = unknown
-    >(
-      variables: GetLedgerReportQueryVariables,
-      options?: UseQueryOptions<GetLedgerReportQuery, TError, TData>
-    ) =>
-    useQuery<GetLedgerReportQuery, TError, TData>(
-      ['getLedgerReport', variables],
-      useAxios<GetLedgerReportQuery, GetLedgerReportQueryVariables>(GetLedgerReportDocument).bind(null, variables),
-      options
-    );
+export const useGetLedgerReportQuery = <TData = GetLedgerReportQuery, TError = unknown>(
+  variables: GetLedgerReportQueryVariables,
+  options?: UseQueryOptions<GetLedgerReportQuery, TError, TData>
+) =>
+  useQuery<GetLedgerReportQuery, TError, TData>(
+    ['getLedgerReport', variables],
+    useAxios<GetLedgerReportQuery, GetLedgerReportQueryVariables>(GetLedgerReportDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetShareStatementDocument = `
     query getShareStatement($data: ShareStatementReportSettings!) {
   report {
@@ -22038,18 +28390,17 @@ export const GetShareStatementDocument = `
   }
 }
     `;
-export const useGetShareStatementQuery = <
-      TData = GetShareStatementQuery,
-      TError = unknown
-    >(
-      variables: GetShareStatementQueryVariables,
-      options?: UseQueryOptions<GetShareStatementQuery, TError, TData>
-    ) =>
-    useQuery<GetShareStatementQuery, TError, TData>(
-      ['getShareStatement', variables],
-      useAxios<GetShareStatementQuery, GetShareStatementQueryVariables>(GetShareStatementDocument).bind(null, variables),
-      options
-    );
+export const useGetShareStatementQuery = <TData = GetShareStatementQuery, TError = unknown>(
+  variables: GetShareStatementQueryVariables,
+  options?: UseQueryOptions<GetShareStatementQuery, TError, TData>
+) =>
+  useQuery<GetShareStatementQuery, TError, TData>(
+    ['getShareStatement', variables],
+    useAxios<GetShareStatementQuery, GetShareStatementQueryVariables>(
+      GetShareStatementDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetChequeBookRequestsDocument = `
     query getChequeBookRequests($pagination: Pagination, $filter: RequestFilter) {
   requests {
@@ -22085,18 +28436,17 @@ export const GetChequeBookRequestsDocument = `
   }
 }
     ${PaginationFragmentDoc}`;
-export const useGetChequeBookRequestsQuery = <
-      TData = GetChequeBookRequestsQuery,
-      TError = unknown
-    >(
-      variables?: GetChequeBookRequestsQueryVariables,
-      options?: UseQueryOptions<GetChequeBookRequestsQuery, TError, TData>
-    ) =>
-    useQuery<GetChequeBookRequestsQuery, TError, TData>(
-      variables === undefined ? ['getChequeBookRequests'] : ['getChequeBookRequests', variables],
-      useAxios<GetChequeBookRequestsQuery, GetChequeBookRequestsQueryVariables>(GetChequeBookRequestsDocument).bind(null, variables),
-      options
-    );
+export const useGetChequeBookRequestsQuery = <TData = GetChequeBookRequestsQuery, TError = unknown>(
+  variables?: GetChequeBookRequestsQueryVariables,
+  options?: UseQueryOptions<GetChequeBookRequestsQuery, TError, TData>
+) =>
+  useQuery<GetChequeBookRequestsQuery, TError, TData>(
+    variables === undefined ? ['getChequeBookRequests'] : ['getChequeBookRequests', variables],
+    useAxios<GetChequeBookRequestsQuery, GetChequeBookRequestsQueryVariables>(
+      GetChequeBookRequestsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetWithdrawViaCollectorDocument = `
     query getWithdrawViaCollector($pagination: Pagination, $filter: RequestFilter) {
   requests {
@@ -22127,17 +28477,19 @@ export const GetWithdrawViaCollectorDocument = `
 }
     ${PaginationFragmentDoc}`;
 export const useGetWithdrawViaCollectorQuery = <
-      TData = GetWithdrawViaCollectorQuery,
-      TError = unknown
-    >(
-      variables?: GetWithdrawViaCollectorQueryVariables,
-      options?: UseQueryOptions<GetWithdrawViaCollectorQuery, TError, TData>
-    ) =>
-    useQuery<GetWithdrawViaCollectorQuery, TError, TData>(
-      variables === undefined ? ['getWithdrawViaCollector'] : ['getWithdrawViaCollector', variables],
-      useAxios<GetWithdrawViaCollectorQuery, GetWithdrawViaCollectorQueryVariables>(GetWithdrawViaCollectorDocument).bind(null, variables),
-      options
-    );
+  TData = GetWithdrawViaCollectorQuery,
+  TError = unknown
+>(
+  variables?: GetWithdrawViaCollectorQueryVariables,
+  options?: UseQueryOptions<GetWithdrawViaCollectorQuery, TError, TData>
+) =>
+  useQuery<GetWithdrawViaCollectorQuery, TError, TData>(
+    variables === undefined ? ['getWithdrawViaCollector'] : ['getWithdrawViaCollector', variables],
+    useAxios<GetWithdrawViaCollectorQuery, GetWithdrawViaCollectorQueryVariables>(
+      GetWithdrawViaCollectorDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanRequestsDocument = `
     query getLoanRequests($pagination: Pagination, $filter: RequestFilter) {
   requests {
@@ -22164,18 +28516,18 @@ export const GetLoanRequestsDocument = `
   }
 }
     ${PaginationFragmentDoc}`;
-export const useGetLoanRequestsQuery = <
-      TData = GetLoanRequestsQuery,
-      TError = unknown
-    >(
-      variables?: GetLoanRequestsQueryVariables,
-      options?: UseQueryOptions<GetLoanRequestsQuery, TError, TData>
-    ) =>
-    useQuery<GetLoanRequestsQuery, TError, TData>(
-      variables === undefined ? ['getLoanRequests'] : ['getLoanRequests', variables],
-      useAxios<GetLoanRequestsQuery, GetLoanRequestsQueryVariables>(GetLoanRequestsDocument).bind(null, variables),
-      options
-    );
+export const useGetLoanRequestsQuery = <TData = GetLoanRequestsQuery, TError = unknown>(
+  variables?: GetLoanRequestsQueryVariables,
+  options?: UseQueryOptions<GetLoanRequestsQuery, TError, TData>
+) =>
+  useQuery<GetLoanRequestsQuery, TError, TData>(
+    variables === undefined ? ['getLoanRequests'] : ['getLoanRequests', variables],
+    useAxios<GetLoanRequestsQuery, GetLoanRequestsQueryVariables>(GetLoanRequestsDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetBlockChequeListDocument = `
     query getBlockChequeList($pagination: Pagination, $filter: RequestFilter) {
   requests {
@@ -22204,18 +28556,17 @@ export const GetBlockChequeListDocument = `
   }
 }
     ${PaginationFragmentDoc}`;
-export const useGetBlockChequeListQuery = <
-      TData = GetBlockChequeListQuery,
-      TError = unknown
-    >(
-      variables?: GetBlockChequeListQueryVariables,
-      options?: UseQueryOptions<GetBlockChequeListQuery, TError, TData>
-    ) =>
-    useQuery<GetBlockChequeListQuery, TError, TData>(
-      variables === undefined ? ['getBlockChequeList'] : ['getBlockChequeList', variables],
-      useAxios<GetBlockChequeListQuery, GetBlockChequeListQueryVariables>(GetBlockChequeListDocument).bind(null, variables),
-      options
-    );
+export const useGetBlockChequeListQuery = <TData = GetBlockChequeListQuery, TError = unknown>(
+  variables?: GetBlockChequeListQueryVariables,
+  options?: UseQueryOptions<GetBlockChequeListQuery, TError, TData>
+) =>
+  useQuery<GetBlockChequeListQuery, TError, TData>(
+    variables === undefined ? ['getBlockChequeList'] : ['getBlockChequeList', variables],
+    useAxios<GetBlockChequeListQuery, GetBlockChequeListQueryVariables>(
+      GetBlockChequeListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetGlobalSearchDocument = `
     query getGlobalSearch($filter: SearchFilterData, $pagination: Pagination) {
   search {
@@ -22242,18 +28593,18 @@ export const GetGlobalSearchDocument = `
   }
 }
     ${PaginationFragmentDoc}`;
-export const useGetGlobalSearchQuery = <
-      TData = GetGlobalSearchQuery,
-      TError = unknown
-    >(
-      variables?: GetGlobalSearchQueryVariables,
-      options?: UseQueryOptions<GetGlobalSearchQuery, TError, TData>
-    ) =>
-    useQuery<GetGlobalSearchQuery, TError, TData>(
-      variables === undefined ? ['getGlobalSearch'] : ['getGlobalSearch', variables],
-      useAxios<GetGlobalSearchQuery, GetGlobalSearchQueryVariables>(GetGlobalSearchDocument).bind(null, variables),
-      options
-    );
+export const useGetGlobalSearchQuery = <TData = GetGlobalSearchQuery, TError = unknown>(
+  variables?: GetGlobalSearchQueryVariables,
+  options?: UseQueryOptions<GetGlobalSearchQuery, TError, TData>
+) =>
+  useQuery<GetGlobalSearchQuery, TError, TData>(
+    variables === undefined ? ['getGlobalSearch'] : ['getGlobalSearch', variables],
+    useAxios<GetGlobalSearchQuery, GetGlobalSearchQueryVariables>(GetGlobalSearchDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetAlternativeFeeAndChargesDocument = `
     query getAlternativeFeeAndCharges {
   settings {
@@ -22273,17 +28624,21 @@ export const GetAlternativeFeeAndChargesDocument = `
 }
     `;
 export const useGetAlternativeFeeAndChargesQuery = <
-      TData = GetAlternativeFeeAndChargesQuery,
-      TError = unknown
-    >(
-      variables?: GetAlternativeFeeAndChargesQueryVariables,
-      options?: UseQueryOptions<GetAlternativeFeeAndChargesQuery, TError, TData>
-    ) =>
-    useQuery<GetAlternativeFeeAndChargesQuery, TError, TData>(
-      variables === undefined ? ['getAlternativeFeeAndCharges'] : ['getAlternativeFeeAndCharges', variables],
-      useAxios<GetAlternativeFeeAndChargesQuery, GetAlternativeFeeAndChargesQueryVariables>(GetAlternativeFeeAndChargesDocument).bind(null, variables),
-      options
-    );
+  TData = GetAlternativeFeeAndChargesQuery,
+  TError = unknown
+>(
+  variables?: GetAlternativeFeeAndChargesQueryVariables,
+  options?: UseQueryOptions<GetAlternativeFeeAndChargesQuery, TError, TData>
+) =>
+  useQuery<GetAlternativeFeeAndChargesQuery, TError, TData>(
+    variables === undefined
+      ? ['getAlternativeFeeAndCharges']
+      : ['getAlternativeFeeAndCharges', variables],
+    useAxios<GetAlternativeFeeAndChargesQuery, GetAlternativeFeeAndChargesQueryVariables>(
+      GetAlternativeFeeAndChargesDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetActivatedServiceDocument = `
     query getActivatedService($memberId: String!) {
   alternativeChannel {
@@ -22295,18 +28650,17 @@ export const GetActivatedServiceDocument = `
   }
 }
     `;
-export const useGetActivatedServiceQuery = <
-      TData = GetActivatedServiceQuery,
-      TError = unknown
-    >(
-      variables: GetActivatedServiceQueryVariables,
-      options?: UseQueryOptions<GetActivatedServiceQuery, TError, TData>
-    ) =>
-    useQuery<GetActivatedServiceQuery, TError, TData>(
-      ['getActivatedService', variables],
-      useAxios<GetActivatedServiceQuery, GetActivatedServiceQueryVariables>(GetActivatedServiceDocument).bind(null, variables),
-      options
-    );
+export const useGetActivatedServiceQuery = <TData = GetActivatedServiceQuery, TError = unknown>(
+  variables: GetActivatedServiceQueryVariables,
+  options?: UseQueryOptions<GetActivatedServiceQuery, TError, TData>
+) =>
+  useQuery<GetActivatedServiceQuery, TError, TData>(
+    ['getActivatedService', variables],
+    useAxios<GetActivatedServiceQuery, GetActivatedServiceQueryVariables>(
+      GetActivatedServiceDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAlternativeChannelListDocument = `
     query getAlternativeChannelList($filter: AlternativeChannelFilter, $paginate: Pagination) {
   alternativeChannel {
@@ -22333,17 +28687,21 @@ export const GetAlternativeChannelListDocument = `
 }
     ${PaginationFragmentDoc}`;
 export const useGetAlternativeChannelListQuery = <
-      TData = GetAlternativeChannelListQuery,
-      TError = unknown
-    >(
-      variables?: GetAlternativeChannelListQueryVariables,
-      options?: UseQueryOptions<GetAlternativeChannelListQuery, TError, TData>
-    ) =>
-    useQuery<GetAlternativeChannelListQuery, TError, TData>(
-      variables === undefined ? ['getAlternativeChannelList'] : ['getAlternativeChannelList', variables],
-      useAxios<GetAlternativeChannelListQuery, GetAlternativeChannelListQueryVariables>(GetAlternativeChannelListDocument).bind(null, variables),
-      options
-    );
+  TData = GetAlternativeChannelListQuery,
+  TError = unknown
+>(
+  variables?: GetAlternativeChannelListQueryVariables,
+  options?: UseQueryOptions<GetAlternativeChannelListQuery, TError, TData>
+) =>
+  useQuery<GetAlternativeChannelListQuery, TError, TData>(
+    variables === undefined
+      ? ['getAlternativeChannelList']
+      : ['getAlternativeChannelList', variables],
+    useAxios<GetAlternativeChannelListQuery, GetAlternativeChannelListQueryVariables>(
+      GetAlternativeChannelListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAcFeeCoaDocument = `
     query getACFeeCOA {
   settings {
@@ -22359,18 +28717,18 @@ export const GetAcFeeCoaDocument = `
   }
 }
     `;
-export const useGetAcFeeCoaQuery = <
-      TData = GetAcFeeCoaQuery,
-      TError = unknown
-    >(
-      variables?: GetAcFeeCoaQueryVariables,
-      options?: UseQueryOptions<GetAcFeeCoaQuery, TError, TData>
-    ) =>
-    useQuery<GetAcFeeCoaQuery, TError, TData>(
-      variables === undefined ? ['getACFeeCOA'] : ['getACFeeCOA', variables],
-      useAxios<GetAcFeeCoaQuery, GetAcFeeCoaQueryVariables>(GetAcFeeCoaDocument).bind(null, variables),
-      options
-    );
+export const useGetAcFeeCoaQuery = <TData = GetAcFeeCoaQuery, TError = unknown>(
+  variables?: GetAcFeeCoaQueryVariables,
+  options?: UseQueryOptions<GetAcFeeCoaQuery, TError, TData>
+) =>
+  useQuery<GetAcFeeCoaQuery, TError, TData>(
+    variables === undefined ? ['getACFeeCOA'] : ['getACFeeCOA', variables],
+    useAxios<GetAcFeeCoaQuery, GetAcFeeCoaQueryVariables>(GetAcFeeCoaDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetAuditLogListDocument = `
     query getAuditLogList {
   auditLog {
@@ -22387,18 +28745,18 @@ export const GetAuditLogListDocument = `
   }
 }
     `;
-export const useGetAuditLogListQuery = <
-      TData = GetAuditLogListQuery,
-      TError = unknown
-    >(
-      variables?: GetAuditLogListQueryVariables,
-      options?: UseQueryOptions<GetAuditLogListQuery, TError, TData>
-    ) =>
-    useQuery<GetAuditLogListQuery, TError, TData>(
-      variables === undefined ? ['getAuditLogList'] : ['getAuditLogList', variables],
-      useAxios<GetAuditLogListQuery, GetAuditLogListQueryVariables>(GetAuditLogListDocument).bind(null, variables),
-      options
-    );
+export const useGetAuditLogListQuery = <TData = GetAuditLogListQuery, TError = unknown>(
+  variables?: GetAuditLogListQueryVariables,
+  options?: UseQueryOptions<GetAuditLogListQuery, TError, TData>
+) =>
+  useQuery<GetAuditLogListQuery, TError, TData>(
+    variables === undefined ? ['getAuditLogList'] : ['getAuditLogList', variables],
+    useAxios<GetAuditLogListQuery, GetAuditLogListQueryVariables>(GetAuditLogListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetBranchListDocument = `
     query getBranchList($paginate: Pagination, $filter: BranchSearchFilter) {
   settings {
@@ -22450,18 +28808,18 @@ export const GetBranchListDocument = `
   }
 }
     `;
-export const useGetBranchListQuery = <
-      TData = GetBranchListQuery,
-      TError = unknown
-    >(
-      variables?: GetBranchListQueryVariables,
-      options?: UseQueryOptions<GetBranchListQuery, TError, TData>
-    ) =>
-    useQuery<GetBranchListQuery, TError, TData>(
-      variables === undefined ? ['getBranchList'] : ['getBranchList', variables],
-      useAxios<GetBranchListQuery, GetBranchListQueryVariables>(GetBranchListDocument).bind(null, variables),
-      options
-    );
+export const useGetBranchListQuery = <TData = GetBranchListQuery, TError = unknown>(
+  variables?: GetBranchListQueryVariables,
+  options?: UseQueryOptions<GetBranchListQuery, TError, TData>
+) =>
+  useQuery<GetBranchListQuery, TError, TData>(
+    variables === undefined ? ['getBranchList'] : ['getBranchList', variables],
+    useAxios<GetBranchListQuery, GetBranchListQueryVariables>(GetBranchListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetBranchEditDataDocument = `
     query getBranchEditData($id: ID!) {
   settings {
@@ -22501,18 +28859,17 @@ export const GetBranchEditDataDocument = `
   }
 }
     `;
-export const useGetBranchEditDataQuery = <
-      TData = GetBranchEditDataQuery,
-      TError = unknown
-    >(
-      variables: GetBranchEditDataQueryVariables,
-      options?: UseQueryOptions<GetBranchEditDataQuery, TError, TData>
-    ) =>
-    useQuery<GetBranchEditDataQuery, TError, TData>(
-      ['getBranchEditData', variables],
-      useAxios<GetBranchEditDataQuery, GetBranchEditDataQueryVariables>(GetBranchEditDataDocument).bind(null, variables),
-      options
-    );
+export const useGetBranchEditDataQuery = <TData = GetBranchEditDataQuery, TError = unknown>(
+  variables: GetBranchEditDataQueryVariables,
+  options?: UseQueryOptions<GetBranchEditDataQuery, TError, TData>
+) =>
+  useQuery<GetBranchEditDataQuery, TError, TData>(
+    ['getBranchEditData', variables],
+    useAxios<GetBranchEditDataQuery, GetBranchEditDataQueryVariables>(
+      GetBranchEditDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetCoaListDocument = `
     query getCOAList($filter: ChartsOfAccountFilter!) {
   settings {
@@ -22535,18 +28892,15 @@ export const GetCoaListDocument = `
   }
 }
     `;
-export const useGetCoaListQuery = <
-      TData = GetCoaListQuery,
-      TError = unknown
-    >(
-      variables: GetCoaListQueryVariables,
-      options?: UseQueryOptions<GetCoaListQuery, TError, TData>
-    ) =>
-    useQuery<GetCoaListQuery, TError, TData>(
-      ['getCOAList', variables],
-      useAxios<GetCoaListQuery, GetCoaListQueryVariables>(GetCoaListDocument).bind(null, variables),
-      options
-    );
+export const useGetCoaListQuery = <TData = GetCoaListQuery, TError = unknown>(
+  variables: GetCoaListQueryVariables,
+  options?: UseQueryOptions<GetCoaListQuery, TError, TData>
+) =>
+  useQuery<GetCoaListQuery, TError, TData>(
+    ['getCOAList', variables],
+    useAxios<GetCoaListQuery, GetCoaListQueryVariables>(GetCoaListDocument).bind(null, variables),
+    options
+  );
 export const GetCoaFullViewDocument = `
     query getCoaFullView {
   settings {
@@ -22566,18 +28920,18 @@ export const GetCoaFullViewDocument = `
   }
 }
     `;
-export const useGetCoaFullViewQuery = <
-      TData = GetCoaFullViewQuery,
-      TError = unknown
-    >(
-      variables?: GetCoaFullViewQueryVariables,
-      options?: UseQueryOptions<GetCoaFullViewQuery, TError, TData>
-    ) =>
-    useQuery<GetCoaFullViewQuery, TError, TData>(
-      variables === undefined ? ['getCoaFullView'] : ['getCoaFullView', variables],
-      useAxios<GetCoaFullViewQuery, GetCoaFullViewQueryVariables>(GetCoaFullViewDocument).bind(null, variables),
-      options
-    );
+export const useGetCoaFullViewQuery = <TData = GetCoaFullViewQuery, TError = unknown>(
+  variables?: GetCoaFullViewQueryVariables,
+  options?: UseQueryOptions<GetCoaFullViewQuery, TError, TData>
+) =>
+  useQuery<GetCoaFullViewQuery, TError, TData>(
+    variables === undefined ? ['getCoaFullView'] : ['getCoaFullView', variables],
+    useAxios<GetCoaFullViewQuery, GetCoaFullViewQueryVariables>(GetCoaFullViewDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetCoaBankListDocument = `
     query getCOABankList($accountCode: [String]) {
   settings {
@@ -22593,18 +28947,18 @@ export const GetCoaBankListDocument = `
   }
 }
     `;
-export const useGetCoaBankListQuery = <
-      TData = GetCoaBankListQuery,
-      TError = unknown
-    >(
-      variables?: GetCoaBankListQueryVariables,
-      options?: UseQueryOptions<GetCoaBankListQuery, TError, TData>
-    ) =>
-    useQuery<GetCoaBankListQuery, TError, TData>(
-      variables === undefined ? ['getCOABankList'] : ['getCOABankList', variables],
-      useAxios<GetCoaBankListQuery, GetCoaBankListQueryVariables>(GetCoaBankListDocument).bind(null, variables),
-      options
-    );
+export const useGetCoaBankListQuery = <TData = GetCoaBankListQuery, TError = unknown>(
+  variables?: GetCoaBankListQueryVariables,
+  options?: UseQueryOptions<GetCoaBankListQuery, TError, TData>
+) =>
+  useQuery<GetCoaBankListQuery, TError, TData>(
+    variables === undefined ? ['getCOABankList'] : ['getCOABankList', variables],
+    useAxios<GetCoaBankListQuery, GetCoaBankListQueryVariables>(GetCoaBankListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const SearchCoaDocument = `
     query searchCOA($coaName: String!) {
   settings {
@@ -22622,18 +28976,15 @@ export const SearchCoaDocument = `
   }
 }
     `;
-export const useSearchCoaQuery = <
-      TData = SearchCoaQuery,
-      TError = unknown
-    >(
-      variables: SearchCoaQueryVariables,
-      options?: UseQueryOptions<SearchCoaQuery, TError, TData>
-    ) =>
-    useQuery<SearchCoaQuery, TError, TData>(
-      ['searchCOA', variables],
-      useAxios<SearchCoaQuery, SearchCoaQueryVariables>(SearchCoaDocument).bind(null, variables),
-      options
-    );
+export const useSearchCoaQuery = <TData = SearchCoaQuery, TError = unknown>(
+  variables: SearchCoaQueryVariables,
+  options?: UseQueryOptions<SearchCoaQuery, TError, TData>
+) =>
+  useQuery<SearchCoaQuery, TError, TData>(
+    ['searchCOA', variables],
+    useAxios<SearchCoaQuery, SearchCoaQueryVariables>(SearchCoaDocument).bind(null, variables),
+    options
+  );
 export const GetLoanProductListDocument = `
     query getLoanProductList($paginate: Pagination, $filter: LoanProductSearchFilter) {
   settings {
@@ -22688,18 +29039,17 @@ export const GetLoanProductListDocument = `
   }
 }
     `;
-export const useGetLoanProductListQuery = <
-      TData = GetLoanProductListQuery,
-      TError = unknown
-    >(
-      variables?: GetLoanProductListQueryVariables,
-      options?: UseQueryOptions<GetLoanProductListQuery, TError, TData>
-    ) =>
-    useQuery<GetLoanProductListQuery, TError, TData>(
-      variables === undefined ? ['getLoanProductList'] : ['getLoanProductList', variables],
-      useAxios<GetLoanProductListQuery, GetLoanProductListQueryVariables>(GetLoanProductListDocument).bind(null, variables),
-      options
-    );
+export const useGetLoanProductListQuery = <TData = GetLoanProductListQuery, TError = unknown>(
+  variables?: GetLoanProductListQueryVariables,
+  options?: UseQueryOptions<GetLoanProductListQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductListQuery, TError, TData>(
+    variables === undefined ? ['getLoanProductList'] : ['getLoanProductList', variables],
+    useAxios<GetLoanProductListQuery, GetLoanProductListQueryVariables>(
+      GetLoanProductListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanProductEditDataDocument = `
     query getLoanProductEditData($id: ID!) {
   settings {
@@ -22818,17 +29168,19 @@ export const GetLoanProductEditDataDocument = `
 }
     `;
 export const useGetLoanProductEditDataQuery = <
-      TData = GetLoanProductEditDataQuery,
-      TError = unknown
-    >(
-      variables: GetLoanProductEditDataQueryVariables,
-      options?: UseQueryOptions<GetLoanProductEditDataQuery, TError, TData>
-    ) =>
-    useQuery<GetLoanProductEditDataQuery, TError, TData>(
-      ['getLoanProductEditData', variables],
-      useAxios<GetLoanProductEditDataQuery, GetLoanProductEditDataQueryVariables>(GetLoanProductEditDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetLoanProductEditDataQuery,
+  TError = unknown
+>(
+  variables: GetLoanProductEditDataQueryVariables,
+  options?: UseQueryOptions<GetLoanProductEditDataQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductEditDataQuery, TError, TData>(
+    ['getLoanProductEditData', variables],
+    useAxios<GetLoanProductEditDataQuery, GetLoanProductEditDataQueryVariables>(
+      GetLoanProductEditDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanGeneralSettingsDocument = `
     query getLoanGeneralSettings {
   settings {
@@ -22850,17 +29202,19 @@ export const GetLoanGeneralSettingsDocument = `
 }
     `;
 export const useGetLoanGeneralSettingsQuery = <
-      TData = GetLoanGeneralSettingsQuery,
-      TError = unknown
-    >(
-      variables?: GetLoanGeneralSettingsQueryVariables,
-      options?: UseQueryOptions<GetLoanGeneralSettingsQuery, TError, TData>
-    ) =>
-    useQuery<GetLoanGeneralSettingsQuery, TError, TData>(
-      variables === undefined ? ['getLoanGeneralSettings'] : ['getLoanGeneralSettings', variables],
-      useAxios<GetLoanGeneralSettingsQuery, GetLoanGeneralSettingsQueryVariables>(GetLoanGeneralSettingsDocument).bind(null, variables),
-      options
-    );
+  TData = GetLoanGeneralSettingsQuery,
+  TError = unknown
+>(
+  variables?: GetLoanGeneralSettingsQueryVariables,
+  options?: UseQueryOptions<GetLoanGeneralSettingsQuery, TError, TData>
+) =>
+  useQuery<GetLoanGeneralSettingsQuery, TError, TData>(
+    variables === undefined ? ['getLoanGeneralSettings'] : ['getLoanGeneralSettings', variables],
+    useAxios<GetLoanGeneralSettingsQuery, GetLoanGeneralSettingsQueryVariables>(
+      GetLoanGeneralSettingsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanProductSettingsDocument = `
     query getLoanProductSettings {
   settings {
@@ -22879,17 +29233,19 @@ export const GetLoanProductSettingsDocument = `
 }
     `;
 export const useGetLoanProductSettingsQuery = <
-      TData = GetLoanProductSettingsQuery,
-      TError = unknown
-    >(
-      variables?: GetLoanProductSettingsQueryVariables,
-      options?: UseQueryOptions<GetLoanProductSettingsQuery, TError, TData>
-    ) =>
-    useQuery<GetLoanProductSettingsQuery, TError, TData>(
-      variables === undefined ? ['getLoanProductSettings'] : ['getLoanProductSettings', variables],
-      useAxios<GetLoanProductSettingsQuery, GetLoanProductSettingsQueryVariables>(GetLoanProductSettingsDocument).bind(null, variables),
-      options
-    );
+  TData = GetLoanProductSettingsQuery,
+  TError = unknown
+>(
+  variables?: GetLoanProductSettingsQueryVariables,
+  options?: UseQueryOptions<GetLoanProductSettingsQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductSettingsQuery, TError, TData>(
+    variables === undefined ? ['getLoanProductSettings'] : ['getLoanProductSettings', variables],
+    useAxios<GetLoanProductSettingsQuery, GetLoanProductSettingsQueryVariables>(
+      GetLoanProductSettingsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanProductSubTypeDocument = `
     query getLoanProductSubType($productTypeId: String) {
   settings {
@@ -22907,18 +29263,17 @@ export const GetLoanProductSubTypeDocument = `
   }
 }
     `;
-export const useGetLoanProductSubTypeQuery = <
-      TData = GetLoanProductSubTypeQuery,
-      TError = unknown
-    >(
-      variables?: GetLoanProductSubTypeQueryVariables,
-      options?: UseQueryOptions<GetLoanProductSubTypeQuery, TError, TData>
-    ) =>
-    useQuery<GetLoanProductSubTypeQuery, TError, TData>(
-      variables === undefined ? ['getLoanProductSubType'] : ['getLoanProductSubType', variables],
-      useAxios<GetLoanProductSubTypeQuery, GetLoanProductSubTypeQueryVariables>(GetLoanProductSubTypeDocument).bind(null, variables),
-      options
-    );
+export const useGetLoanProductSubTypeQuery = <TData = GetLoanProductSubTypeQuery, TError = unknown>(
+  variables?: GetLoanProductSubTypeQueryVariables,
+  options?: UseQueryOptions<GetLoanProductSubTypeQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductSubTypeQuery, TError, TData>(
+    variables === undefined ? ['getLoanProductSubType'] : ['getLoanProductSubType', variables],
+    useAxios<GetLoanProductSubTypeQuery, GetLoanProductSubTypeQueryVariables>(
+      GetLoanProductSubTypeDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanInsuranceSchemeDocument = `
     query getLoanInsuranceScheme {
   settings {
@@ -22942,17 +29297,19 @@ export const GetLoanInsuranceSchemeDocument = `
 }
     `;
 export const useGetLoanInsuranceSchemeQuery = <
-      TData = GetLoanInsuranceSchemeQuery,
-      TError = unknown
-    >(
-      variables?: GetLoanInsuranceSchemeQueryVariables,
-      options?: UseQueryOptions<GetLoanInsuranceSchemeQuery, TError, TData>
-    ) =>
-    useQuery<GetLoanInsuranceSchemeQuery, TError, TData>(
-      variables === undefined ? ['getLoanInsuranceScheme'] : ['getLoanInsuranceScheme', variables],
-      useAxios<GetLoanInsuranceSchemeQuery, GetLoanInsuranceSchemeQueryVariables>(GetLoanInsuranceSchemeDocument).bind(null, variables),
-      options
-    );
+  TData = GetLoanInsuranceSchemeQuery,
+  TError = unknown
+>(
+  variables?: GetLoanInsuranceSchemeQueryVariables,
+  options?: UseQueryOptions<GetLoanInsuranceSchemeQuery, TError, TData>
+) =>
+  useQuery<GetLoanInsuranceSchemeQuery, TError, TData>(
+    variables === undefined ? ['getLoanInsuranceScheme'] : ['getLoanInsuranceScheme', variables],
+    useAxios<GetLoanInsuranceSchemeQuery, GetLoanInsuranceSchemeQueryVariables>(
+      GetLoanInsuranceSchemeDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanProductTypeDocument = `
     query getLoanProductType {
   settings {
@@ -22975,18 +29332,17 @@ export const GetLoanProductTypeDocument = `
   }
 }
     `;
-export const useGetLoanProductTypeQuery = <
-      TData = GetLoanProductTypeQuery,
-      TError = unknown
-    >(
-      variables?: GetLoanProductTypeQueryVariables,
-      options?: UseQueryOptions<GetLoanProductTypeQuery, TError, TData>
-    ) =>
-    useQuery<GetLoanProductTypeQuery, TError, TData>(
-      variables === undefined ? ['getLoanProductType'] : ['getLoanProductType', variables],
-      useAxios<GetLoanProductTypeQuery, GetLoanProductTypeQueryVariables>(GetLoanProductTypeDocument).bind(null, variables),
-      options
-    );
+export const useGetLoanProductTypeQuery = <TData = GetLoanProductTypeQuery, TError = unknown>(
+  variables?: GetLoanProductTypeQueryVariables,
+  options?: UseQueryOptions<GetLoanProductTypeQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductTypeQuery, TError, TData>(
+    variables === undefined ? ['getLoanProductType'] : ['getLoanProductType', variables],
+    useAxios<GetLoanProductTypeQuery, GetLoanProductTypeQueryVariables>(
+      GetLoanProductTypeDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetGeneralMemberSettingsDataDocument = `
     query getGeneralMemberSettingsData {
   settings {
@@ -23025,17 +29381,21 @@ export const GetGeneralMemberSettingsDataDocument = `
 }
     `;
 export const useGetGeneralMemberSettingsDataQuery = <
-      TData = GetGeneralMemberSettingsDataQuery,
-      TError = unknown
-    >(
-      variables?: GetGeneralMemberSettingsDataQueryVariables,
-      options?: UseQueryOptions<GetGeneralMemberSettingsDataQuery, TError, TData>
-    ) =>
-    useQuery<GetGeneralMemberSettingsDataQuery, TError, TData>(
-      variables === undefined ? ['getGeneralMemberSettingsData'] : ['getGeneralMemberSettingsData', variables],
-      useAxios<GetGeneralMemberSettingsDataQuery, GetGeneralMemberSettingsDataQueryVariables>(GetGeneralMemberSettingsDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetGeneralMemberSettingsDataQuery,
+  TError = unknown
+>(
+  variables?: GetGeneralMemberSettingsDataQueryVariables,
+  options?: UseQueryOptions<GetGeneralMemberSettingsDataQuery, TError, TData>
+) =>
+  useQuery<GetGeneralMemberSettingsDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getGeneralMemberSettingsData']
+      : ['getGeneralMemberSettingsData', variables],
+    useAxios<GetGeneralMemberSettingsDataQuery, GetGeneralMemberSettingsDataQueryVariables>(
+      GetGeneralMemberSettingsDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetPreDefinedFieldsDocument = `
     query getPreDefinedFields($filter: PredefinedElementFilter!) {
   settings {
@@ -23087,18 +29447,17 @@ export const GetPreDefinedFieldsDocument = `
   }
 }
     `;
-export const useGetPreDefinedFieldsQuery = <
-      TData = GetPreDefinedFieldsQuery,
-      TError = unknown
-    >(
-      variables: GetPreDefinedFieldsQueryVariables,
-      options?: UseQueryOptions<GetPreDefinedFieldsQuery, TError, TData>
-    ) =>
-    useQuery<GetPreDefinedFieldsQuery, TError, TData>(
-      ['getPreDefinedFields', variables],
-      useAxios<GetPreDefinedFieldsQuery, GetPreDefinedFieldsQueryVariables>(GetPreDefinedFieldsDocument).bind(null, variables),
-      options
-    );
+export const useGetPreDefinedFieldsQuery = <TData = GetPreDefinedFieldsQuery, TError = unknown>(
+  variables: GetPreDefinedFieldsQueryVariables,
+  options?: UseQueryOptions<GetPreDefinedFieldsQuery, TError, TData>
+) =>
+  useQuery<GetPreDefinedFieldsQuery, TError, TData>(
+    ['getPreDefinedFields', variables],
+    useAxios<GetPreDefinedFieldsQuery, GetPreDefinedFieldsQueryVariables>(
+      GetPreDefinedFieldsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetCustomFieldsDocument = `
     query getCustomFields($kymType: FormCategory!) {
   settings {
@@ -23150,18 +29509,18 @@ export const GetCustomFieldsDocument = `
   }
 }
     `;
-export const useGetCustomFieldsQuery = <
-      TData = GetCustomFieldsQuery,
-      TError = unknown
-    >(
-      variables: GetCustomFieldsQueryVariables,
-      options?: UseQueryOptions<GetCustomFieldsQuery, TError, TData>
-    ) =>
-    useQuery<GetCustomFieldsQuery, TError, TData>(
-      ['getCustomFields', variables],
-      useAxios<GetCustomFieldsQuery, GetCustomFieldsQueryVariables>(GetCustomFieldsDocument).bind(null, variables),
-      options
-    );
+export const useGetCustomFieldsQuery = <TData = GetCustomFieldsQuery, TError = unknown>(
+  variables: GetCustomFieldsQueryVariables,
+  options?: UseQueryOptions<GetCustomFieldsQuery, TError, TData>
+) =>
+  useQuery<GetCustomFieldsQuery, TError, TData>(
+    ['getCustomFields', variables],
+    useAxios<GetCustomFieldsQuery, GetCustomFieldsQueryVariables>(GetCustomFieldsDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetDeclarationDocument = `
     query getDeclaration($kymType: DeclarationFor!) {
   settings {
@@ -23175,18 +29534,18 @@ export const GetDeclarationDocument = `
   }
 }
     `;
-export const useGetDeclarationQuery = <
-      TData = GetDeclarationQuery,
-      TError = unknown
-    >(
-      variables: GetDeclarationQueryVariables,
-      options?: UseQueryOptions<GetDeclarationQuery, TError, TData>
-    ) =>
-    useQuery<GetDeclarationQuery, TError, TData>(
-      ['getDeclaration', variables],
-      useAxios<GetDeclarationQuery, GetDeclarationQueryVariables>(GetDeclarationDocument).bind(null, variables),
-      options
-    );
+export const useGetDeclarationQuery = <TData = GetDeclarationQuery, TError = unknown>(
+  variables: GetDeclarationQueryVariables,
+  options?: UseQueryOptions<GetDeclarationQuery, TError, TData>
+) =>
+  useQuery<GetDeclarationQuery, TError, TData>(
+    ['getDeclaration', variables],
+    useAxios<GetDeclarationQuery, GetDeclarationQueryVariables>(GetDeclarationDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetDepositSettingsIroDocument = `
     query getDepositSettingsIro {
   settings {
@@ -23209,18 +29568,17 @@ export const GetDepositSettingsIroDocument = `
   }
 }
     `;
-export const useGetDepositSettingsIroQuery = <
-      TData = GetDepositSettingsIroQuery,
-      TError = unknown
-    >(
-      variables?: GetDepositSettingsIroQueryVariables,
-      options?: UseQueryOptions<GetDepositSettingsIroQuery, TError, TData>
-    ) =>
-    useQuery<GetDepositSettingsIroQuery, TError, TData>(
-      variables === undefined ? ['getDepositSettingsIro'] : ['getDepositSettingsIro', variables],
-      useAxios<GetDepositSettingsIroQuery, GetDepositSettingsIroQueryVariables>(GetDepositSettingsIroDocument).bind(null, variables),
-      options
-    );
+export const useGetDepositSettingsIroQuery = <TData = GetDepositSettingsIroQuery, TError = unknown>(
+  variables?: GetDepositSettingsIroQueryVariables,
+  options?: UseQueryOptions<GetDepositSettingsIroQuery, TError, TData>
+) =>
+  useQuery<GetDepositSettingsIroQuery, TError, TData>(
+    variables === undefined ? ['getDepositSettingsIro'] : ['getDepositSettingsIro', variables],
+    useAxios<GetDepositSettingsIroQuery, GetDepositSettingsIroQueryVariables>(
+      GetDepositSettingsIroDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetDepositSettingsTdsDocument = `
     query getDepositSettingsTds {
   settings {
@@ -23244,18 +29602,17 @@ export const GetDepositSettingsTdsDocument = `
   }
 }
     `;
-export const useGetDepositSettingsTdsQuery = <
-      TData = GetDepositSettingsTdsQuery,
-      TError = unknown
-    >(
-      variables?: GetDepositSettingsTdsQueryVariables,
-      options?: UseQueryOptions<GetDepositSettingsTdsQuery, TError, TData>
-    ) =>
-    useQuery<GetDepositSettingsTdsQuery, TError, TData>(
-      variables === undefined ? ['getDepositSettingsTds'] : ['getDepositSettingsTds', variables],
-      useAxios<GetDepositSettingsTdsQuery, GetDepositSettingsTdsQueryVariables>(GetDepositSettingsTdsDocument).bind(null, variables),
-      options
-    );
+export const useGetDepositSettingsTdsQuery = <TData = GetDepositSettingsTdsQuery, TError = unknown>(
+  variables?: GetDepositSettingsTdsQueryVariables,
+  options?: UseQueryOptions<GetDepositSettingsTdsQuery, TError, TData>
+) =>
+  useQuery<GetDepositSettingsTdsQuery, TError, TData>(
+    variables === undefined ? ['getDepositSettingsTds'] : ['getDepositSettingsTds', variables],
+    useAxios<GetDepositSettingsTdsQuery, GetDepositSettingsTdsQueryVariables>(
+      GetDepositSettingsTdsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetDepositProductSettingsListDocument = `
     query getDepositProductSettingsList($paginate: Pagination, $filter: DepositProductSearchFilter) {
   settings {
@@ -23304,17 +29661,21 @@ export const GetDepositProductSettingsListDocument = `
 }
     `;
 export const useGetDepositProductSettingsListQuery = <
-      TData = GetDepositProductSettingsListQuery,
-      TError = unknown
-    >(
-      variables?: GetDepositProductSettingsListQueryVariables,
-      options?: UseQueryOptions<GetDepositProductSettingsListQuery, TError, TData>
-    ) =>
-    useQuery<GetDepositProductSettingsListQuery, TError, TData>(
-      variables === undefined ? ['getDepositProductSettingsList'] : ['getDepositProductSettingsList', variables],
-      useAxios<GetDepositProductSettingsListQuery, GetDepositProductSettingsListQueryVariables>(GetDepositProductSettingsListDocument).bind(null, variables),
-      options
-    );
+  TData = GetDepositProductSettingsListQuery,
+  TError = unknown
+>(
+  variables?: GetDepositProductSettingsListQueryVariables,
+  options?: UseQueryOptions<GetDepositProductSettingsListQuery, TError, TData>
+) =>
+  useQuery<GetDepositProductSettingsListQuery, TError, TData>(
+    variables === undefined
+      ? ['getDepositProductSettingsList']
+      : ['getDepositProductSettingsList', variables],
+    useAxios<GetDepositProductSettingsListQuery, GetDepositProductSettingsListQueryVariables>(
+      GetDepositProductSettingsListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetDepositProductSettingsEditDataDocument = `
     query getDepositProductSettingsEditData($id: ID!) {
   settings {
@@ -23463,17 +29824,20 @@ export const GetDepositProductSettingsEditDataDocument = `
 }
     `;
 export const useGetDepositProductSettingsEditDataQuery = <
-      TData = GetDepositProductSettingsEditDataQuery,
-      TError = unknown
-    >(
-      variables: GetDepositProductSettingsEditDataQueryVariables,
-      options?: UseQueryOptions<GetDepositProductSettingsEditDataQuery, TError, TData>
-    ) =>
-    useQuery<GetDepositProductSettingsEditDataQuery, TError, TData>(
-      ['getDepositProductSettingsEditData', variables],
-      useAxios<GetDepositProductSettingsEditDataQuery, GetDepositProductSettingsEditDataQueryVariables>(GetDepositProductSettingsEditDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetDepositProductSettingsEditDataQuery,
+  TError = unknown
+>(
+  variables: GetDepositProductSettingsEditDataQueryVariables,
+  options?: UseQueryOptions<GetDepositProductSettingsEditDataQuery, TError, TData>
+) =>
+  useQuery<GetDepositProductSettingsEditDataQuery, TError, TData>(
+    ['getDepositProductSettingsEditData', variables],
+    useAxios<
+      GetDepositProductSettingsEditDataQuery,
+      GetDepositProductSettingsEditDataQueryVariables
+    >(GetDepositProductSettingsEditDataDocument).bind(null, variables),
+    options
+  );
 export const GetSettingsOptionsFieldsDocument = `
     query getSettingsOptionsFields($searchTerm: FormFieldSearchTerm!, $category: FormCategory!) {
   form {
@@ -23489,17 +29853,19 @@ export const GetSettingsOptionsFieldsDocument = `
 }
     `;
 export const useGetSettingsOptionsFieldsQuery = <
-      TData = GetSettingsOptionsFieldsQuery,
-      TError = unknown
-    >(
-      variables: GetSettingsOptionsFieldsQueryVariables,
-      options?: UseQueryOptions<GetSettingsOptionsFieldsQuery, TError, TData>
-    ) =>
-    useQuery<GetSettingsOptionsFieldsQuery, TError, TData>(
-      ['getSettingsOptionsFields', variables],
-      useAxios<GetSettingsOptionsFieldsQuery, GetSettingsOptionsFieldsQueryVariables>(GetSettingsOptionsFieldsDocument).bind(null, variables),
-      options
-    );
+  TData = GetSettingsOptionsFieldsQuery,
+  TError = unknown
+>(
+  variables: GetSettingsOptionsFieldsQueryVariables,
+  options?: UseQueryOptions<GetSettingsOptionsFieldsQuery, TError, TData>
+) =>
+  useQuery<GetSettingsOptionsFieldsQuery, TError, TData>(
+    ['getSettingsOptionsFields', variables],
+    useAxios<GetSettingsOptionsFieldsQuery, GetSettingsOptionsFieldsQueryVariables>(
+      GetSettingsOptionsFieldsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetSettingsShareBonusDataDocument = `
     query getSettingsShareBonusData {
   settings {
@@ -23516,17 +29882,21 @@ export const GetSettingsShareBonusDataDocument = `
 }
     `;
 export const useGetSettingsShareBonusDataQuery = <
-      TData = GetSettingsShareBonusDataQuery,
-      TError = unknown
-    >(
-      variables?: GetSettingsShareBonusDataQueryVariables,
-      options?: UseQueryOptions<GetSettingsShareBonusDataQuery, TError, TData>
-    ) =>
-    useQuery<GetSettingsShareBonusDataQuery, TError, TData>(
-      variables === undefined ? ['getSettingsShareBonusData'] : ['getSettingsShareBonusData', variables],
-      useAxios<GetSettingsShareBonusDataQuery, GetSettingsShareBonusDataQueryVariables>(GetSettingsShareBonusDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetSettingsShareBonusDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsShareBonusDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsShareBonusDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsShareBonusDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsShareBonusData']
+      : ['getSettingsShareBonusData', variables],
+    useAxios<GetSettingsShareBonusDataQuery, GetSettingsShareBonusDataQueryVariables>(
+      GetSettingsShareBonusDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetSettingsShareDividendDataDocument = `
     query getSettingsShareDividendData {
   settings {
@@ -23567,17 +29937,21 @@ export const GetSettingsShareDividendDataDocument = `
 }
     `;
 export const useGetSettingsShareDividendDataQuery = <
-      TData = GetSettingsShareDividendDataQuery,
-      TError = unknown
-    >(
-      variables?: GetSettingsShareDividendDataQueryVariables,
-      options?: UseQueryOptions<GetSettingsShareDividendDataQuery, TError, TData>
-    ) =>
-    useQuery<GetSettingsShareDividendDataQuery, TError, TData>(
-      variables === undefined ? ['getSettingsShareDividendData'] : ['getSettingsShareDividendData', variables],
-      useAxios<GetSettingsShareDividendDataQuery, GetSettingsShareDividendDataQueryVariables>(GetSettingsShareDividendDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetSettingsShareDividendDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsShareDividendDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsShareDividendDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsShareDividendDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsShareDividendData']
+      : ['getSettingsShareDividendData', variables],
+    useAxios<GetSettingsShareDividendDataQuery, GetSettingsShareDividendDataQueryVariables>(
+      GetSettingsShareDividendDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetSettingsShareIssueChargesDataDocument = `
     query getSettingsShareIssueChargesData {
   settings {
@@ -23606,17 +29980,21 @@ export const GetSettingsShareIssueChargesDataDocument = `
 }
     `;
 export const useGetSettingsShareIssueChargesDataQuery = <
-      TData = GetSettingsShareIssueChargesDataQuery,
-      TError = unknown
-    >(
-      variables?: GetSettingsShareIssueChargesDataQueryVariables,
-      options?: UseQueryOptions<GetSettingsShareIssueChargesDataQuery, TError, TData>
-    ) =>
-    useQuery<GetSettingsShareIssueChargesDataQuery, TError, TData>(
-      variables === undefined ? ['getSettingsShareIssueChargesData'] : ['getSettingsShareIssueChargesData', variables],
-      useAxios<GetSettingsShareIssueChargesDataQuery, GetSettingsShareIssueChargesDataQueryVariables>(GetSettingsShareIssueChargesDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetSettingsShareIssueChargesDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsShareIssueChargesDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsShareIssueChargesDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsShareIssueChargesDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsShareIssueChargesData']
+      : ['getSettingsShareIssueChargesData', variables],
+    useAxios<GetSettingsShareIssueChargesDataQuery, GetSettingsShareIssueChargesDataQueryVariables>(
+      GetSettingsShareIssueChargesDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLedgerMapingShareDocument = `
     query getLedgerMapingShare {
   settings {
@@ -23634,18 +30012,17 @@ export const GetLedgerMapingShareDocument = `
   }
 }
     `;
-export const useGetLedgerMapingShareQuery = <
-      TData = GetLedgerMapingShareQuery,
-      TError = unknown
-    >(
-      variables?: GetLedgerMapingShareQueryVariables,
-      options?: UseQueryOptions<GetLedgerMapingShareQuery, TError, TData>
-    ) =>
-    useQuery<GetLedgerMapingShareQuery, TError, TData>(
-      variables === undefined ? ['getLedgerMapingShare'] : ['getLedgerMapingShare', variables],
-      useAxios<GetLedgerMapingShareQuery, GetLedgerMapingShareQueryVariables>(GetLedgerMapingShareDocument).bind(null, variables),
-      options
-    );
+export const useGetLedgerMapingShareQuery = <TData = GetLedgerMapingShareQuery, TError = unknown>(
+  variables?: GetLedgerMapingShareQueryVariables,
+  options?: UseQueryOptions<GetLedgerMapingShareQuery, TError, TData>
+) =>
+  useQuery<GetLedgerMapingShareQuery, TError, TData>(
+    variables === undefined ? ['getLedgerMapingShare'] : ['getLedgerMapingShare', variables],
+    useAxios<GetLedgerMapingShareQuery, GetLedgerMapingShareQueryVariables>(
+      GetLedgerMapingShareDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetSettingsShareReturnChargesDataDocument = `
     query getSettingsShareReturnChargesData {
   settings {
@@ -23667,17 +30044,22 @@ export const GetSettingsShareReturnChargesDataDocument = `
 }
     `;
 export const useGetSettingsShareReturnChargesDataQuery = <
-      TData = GetSettingsShareReturnChargesDataQuery,
-      TError = unknown
-    >(
-      variables?: GetSettingsShareReturnChargesDataQueryVariables,
-      options?: UseQueryOptions<GetSettingsShareReturnChargesDataQuery, TError, TData>
-    ) =>
-    useQuery<GetSettingsShareReturnChargesDataQuery, TError, TData>(
-      variables === undefined ? ['getSettingsShareReturnChargesData'] : ['getSettingsShareReturnChargesData', variables],
-      useAxios<GetSettingsShareReturnChargesDataQuery, GetSettingsShareReturnChargesDataQueryVariables>(GetSettingsShareReturnChargesDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetSettingsShareReturnChargesDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsShareReturnChargesDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsShareReturnChargesDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsShareReturnChargesDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsShareReturnChargesData']
+      : ['getSettingsShareReturnChargesData', variables],
+    useAxios<
+      GetSettingsShareReturnChargesDataQuery,
+      GetSettingsShareReturnChargesDataQueryVariables
+    >(GetSettingsShareReturnChargesDataDocument).bind(null, variables),
+    options
+  );
 export const GetSettingsShareGeneralDataDocument = `
     query getSettingsShareGeneralData {
   settings {
@@ -23704,17 +30086,21 @@ export const GetSettingsShareGeneralDataDocument = `
 }
     `;
 export const useGetSettingsShareGeneralDataQuery = <
-      TData = GetSettingsShareGeneralDataQuery,
-      TError = unknown
-    >(
-      variables?: GetSettingsShareGeneralDataQueryVariables,
-      options?: UseQueryOptions<GetSettingsShareGeneralDataQuery, TError, TData>
-    ) =>
-    useQuery<GetSettingsShareGeneralDataQuery, TError, TData>(
-      variables === undefined ? ['getSettingsShareGeneralData'] : ['getSettingsShareGeneralData', variables],
-      useAxios<GetSettingsShareGeneralDataQuery, GetSettingsShareGeneralDataQueryVariables>(GetSettingsShareGeneralDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetSettingsShareGeneralDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsShareGeneralDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsShareGeneralDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsShareGeneralDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsShareGeneralData']
+      : ['getSettingsShareGeneralData', variables],
+    useAxios<GetSettingsShareGeneralDataQuery, GetSettingsShareGeneralDataQueryVariables>(
+      GetSettingsShareGeneralDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetSettingsShareTransferDataDocument = `
     query getSettingsShareTransferData {
   settings {
@@ -23731,17 +30117,21 @@ export const GetSettingsShareTransferDataDocument = `
 }
     `;
 export const useGetSettingsShareTransferDataQuery = <
-      TData = GetSettingsShareTransferDataQuery,
-      TError = unknown
-    >(
-      variables?: GetSettingsShareTransferDataQueryVariables,
-      options?: UseQueryOptions<GetSettingsShareTransferDataQuery, TError, TData>
-    ) =>
-    useQuery<GetSettingsShareTransferDataQuery, TError, TData>(
-      variables === undefined ? ['getSettingsShareTransferData'] : ['getSettingsShareTransferData', variables],
-      useAxios<GetSettingsShareTransferDataQuery, GetSettingsShareTransferDataQueryVariables>(GetSettingsShareTransferDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetSettingsShareTransferDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsShareTransferDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsShareTransferDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsShareTransferDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getSettingsShareTransferData']
+      : ['getSettingsShareTransferData', variables],
+    useAxios<GetSettingsShareTransferDataQuery, GetSettingsShareTransferDataQueryVariables>(
+      GetSettingsShareTransferDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetSettingsUserListDataDocument = `
     query getSettingsUserListData($paginate: Pagination, $filter: MyraUserSearchFilter) {
   settings {
@@ -23776,17 +30166,19 @@ export const GetSettingsUserListDataDocument = `
 }
     ${PaginationFragmentDoc}`;
 export const useGetSettingsUserListDataQuery = <
-      TData = GetSettingsUserListDataQuery,
-      TError = unknown
-    >(
-      variables?: GetSettingsUserListDataQueryVariables,
-      options?: UseQueryOptions<GetSettingsUserListDataQuery, TError, TData>
-    ) =>
-    useQuery<GetSettingsUserListDataQuery, TError, TData>(
-      variables === undefined ? ['getSettingsUserListData'] : ['getSettingsUserListData', variables],
-      useAxios<GetSettingsUserListDataQuery, GetSettingsUserListDataQueryVariables>(GetSettingsUserListDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetSettingsUserListDataQuery,
+  TError = unknown
+>(
+  variables?: GetSettingsUserListDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsUserListDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsUserListDataQuery, TError, TData>(
+    variables === undefined ? ['getSettingsUserListData'] : ['getSettingsUserListData', variables],
+    useAxios<GetSettingsUserListDataQuery, GetSettingsUserListDataQueryVariables>(
+      GetSettingsUserListDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetSettingsUserEditDataDocument = `
     query getSettingsUserEditData($id: ID!) {
   settings {
@@ -23846,17 +30238,19 @@ export const GetSettingsUserEditDataDocument = `
 }
     `;
 export const useGetSettingsUserEditDataQuery = <
-      TData = GetSettingsUserEditDataQuery,
-      TError = unknown
-    >(
-      variables: GetSettingsUserEditDataQueryVariables,
-      options?: UseQueryOptions<GetSettingsUserEditDataQuery, TError, TData>
-    ) =>
-    useQuery<GetSettingsUserEditDataQuery, TError, TData>(
-      ['getSettingsUserEditData', variables],
-      useAxios<GetSettingsUserEditDataQuery, GetSettingsUserEditDataQueryVariables>(GetSettingsUserEditDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetSettingsUserEditDataQuery,
+  TError = unknown
+>(
+  variables: GetSettingsUserEditDataQueryVariables,
+  options?: UseQueryOptions<GetSettingsUserEditDataQuery, TError, TData>
+) =>
+  useQuery<GetSettingsUserEditDataQuery, TError, TData>(
+    ['getSettingsUserEditData', variables],
+    useAxios<GetSettingsUserEditDataQuery, GetSettingsUserEditDataQueryVariables>(
+      GetSettingsUserEditDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetValuatorDocument = `
     query getValuator($id: ID!) {
   settings {
@@ -23898,18 +30292,18 @@ export const GetValuatorDocument = `
   }
 }
     ${MutationErrorFragmentDoc}`;
-export const useGetValuatorQuery = <
-      TData = GetValuatorQuery,
-      TError = unknown
-    >(
-      variables: GetValuatorQueryVariables,
-      options?: UseQueryOptions<GetValuatorQuery, TError, TData>
-    ) =>
-    useQuery<GetValuatorQuery, TError, TData>(
-      ['getValuator', variables],
-      useAxios<GetValuatorQuery, GetValuatorQueryVariables>(GetValuatorDocument).bind(null, variables),
-      options
-    );
+export const useGetValuatorQuery = <TData = GetValuatorQuery, TError = unknown>(
+  variables: GetValuatorQueryVariables,
+  options?: UseQueryOptions<GetValuatorQuery, TError, TData>
+) =>
+  useQuery<GetValuatorQuery, TError, TData>(
+    ['getValuator', variables],
+    useAxios<GetValuatorQuery, GetValuatorQueryVariables>(GetValuatorDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetValuatorListDocument = `
     query getValuatorList($paginate: Pagination) {
   settings {
@@ -23947,18 +30341,18 @@ export const GetValuatorListDocument = `
   }
 }
     `;
-export const useGetValuatorListQuery = <
-      TData = GetValuatorListQuery,
-      TError = unknown
-    >(
-      variables?: GetValuatorListQueryVariables,
-      options?: UseQueryOptions<GetValuatorListQuery, TError, TData>
-    ) =>
-    useQuery<GetValuatorListQuery, TError, TData>(
-      variables === undefined ? ['getValuatorList'] : ['getValuatorList', variables],
-      useAxios<GetValuatorListQuery, GetValuatorListQueryVariables>(GetValuatorListDocument).bind(null, variables),
-      options
-    );
+export const useGetValuatorListQuery = <TData = GetValuatorListQuery, TError = unknown>(
+  variables?: GetValuatorListQueryVariables,
+  options?: UseQueryOptions<GetValuatorListQuery, TError, TData>
+) =>
+  useQuery<GetValuatorListQuery, TError, TData>(
+    variables === undefined ? ['getValuatorList'] : ['getValuatorList', variables],
+    useAxios<GetValuatorListQuery, GetValuatorListQueryVariables>(GetValuatorListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetChartOfAccountsDocument = `
     query getChartOfAccounts {
   settings {
@@ -23975,18 +30369,17 @@ export const GetChartOfAccountsDocument = `
   }
 }
     `;
-export const useGetChartOfAccountsQuery = <
-      TData = GetChartOfAccountsQuery,
-      TError = unknown
-    >(
-      variables?: GetChartOfAccountsQueryVariables,
-      options?: UseQueryOptions<GetChartOfAccountsQuery, TError, TData>
-    ) =>
-    useQuery<GetChartOfAccountsQuery, TError, TData>(
-      variables === undefined ? ['getChartOfAccounts'] : ['getChartOfAccounts', variables],
-      useAxios<GetChartOfAccountsQuery, GetChartOfAccountsQueryVariables>(GetChartOfAccountsDocument).bind(null, variables),
-      options
-    );
+export const useGetChartOfAccountsQuery = <TData = GetChartOfAccountsQuery, TError = unknown>(
+  variables?: GetChartOfAccountsQueryVariables,
+  options?: UseQueryOptions<GetChartOfAccountsQuery, TError, TData>
+) =>
+  useQuery<GetChartOfAccountsQuery, TError, TData>(
+    variables === undefined ? ['getChartOfAccounts'] : ['getChartOfAccounts', variables],
+    useAxios<GetChartOfAccountsQuery, GetChartOfAccountsQueryVariables>(
+      GetChartOfAccountsDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetShareBalanceListDocument = `
     query getShareBalanceList($pagination: Pagination) {
   share {
@@ -24015,18 +30408,17 @@ export const GetShareBalanceListDocument = `
   }
 }
     `;
-export const useGetShareBalanceListQuery = <
-      TData = GetShareBalanceListQuery,
-      TError = unknown
-    >(
-      variables?: GetShareBalanceListQueryVariables,
-      options?: UseQueryOptions<GetShareBalanceListQuery, TError, TData>
-    ) =>
-    useQuery<GetShareBalanceListQuery, TError, TData>(
-      variables === undefined ? ['getShareBalanceList'] : ['getShareBalanceList', variables],
-      useAxios<GetShareBalanceListQuery, GetShareBalanceListQueryVariables>(GetShareBalanceListDocument).bind(null, variables),
-      options
-    );
+export const useGetShareBalanceListQuery = <TData = GetShareBalanceListQuery, TError = unknown>(
+  variables?: GetShareBalanceListQueryVariables,
+  options?: UseQueryOptions<GetShareBalanceListQuery, TError, TData>
+) =>
+  useQuery<GetShareBalanceListQuery, TError, TData>(
+    variables === undefined ? ['getShareBalanceList'] : ['getShareBalanceList', variables],
+    useAxios<GetShareBalanceListQuery, GetShareBalanceListQueryVariables>(
+      GetShareBalanceListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetShareRegisterListDocument = `
     query getShareRegisterList($pagination: Pagination, $filter: ShareRegisterFilter) {
   share {
@@ -24062,18 +30454,17 @@ export const GetShareRegisterListDocument = `
   }
 }
     `;
-export const useGetShareRegisterListQuery = <
-      TData = GetShareRegisterListQuery,
-      TError = unknown
-    >(
-      variables?: GetShareRegisterListQueryVariables,
-      options?: UseQueryOptions<GetShareRegisterListQuery, TError, TData>
-    ) =>
-    useQuery<GetShareRegisterListQuery, TError, TData>(
-      variables === undefined ? ['getShareRegisterList'] : ['getShareRegisterList', variables],
-      useAxios<GetShareRegisterListQuery, GetShareRegisterListQueryVariables>(GetShareRegisterListDocument).bind(null, variables),
-      options
-    );
+export const useGetShareRegisterListQuery = <TData = GetShareRegisterListQuery, TError = unknown>(
+  variables?: GetShareRegisterListQueryVariables,
+  options?: UseQueryOptions<GetShareRegisterListQuery, TError, TData>
+) =>
+  useQuery<GetShareRegisterListQuery, TError, TData>(
+    variables === undefined ? ['getShareRegisterList'] : ['getShareRegisterList', variables],
+    useAxios<GetShareRegisterListQuery, GetShareRegisterListQueryVariables>(
+      GetShareRegisterListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetShareHistoryDocument = `
     query getShareHistory($memberId: ID!) {
   share {
@@ -24116,18 +30507,18 @@ export const GetShareHistoryDocument = `
   }
 }
     `;
-export const useGetShareHistoryQuery = <
-      TData = GetShareHistoryQuery,
-      TError = unknown
-    >(
-      variables: GetShareHistoryQueryVariables,
-      options?: UseQueryOptions<GetShareHistoryQuery, TError, TData>
-    ) =>
-    useQuery<GetShareHistoryQuery, TError, TData>(
-      ['getShareHistory', variables],
-      useAxios<GetShareHistoryQuery, GetShareHistoryQueryVariables>(GetShareHistoryDocument).bind(null, variables),
-      options
-    );
+export const useGetShareHistoryQuery = <TData = GetShareHistoryQuery, TError = unknown>(
+  variables: GetShareHistoryQueryVariables,
+  options?: UseQueryOptions<GetShareHistoryQuery, TError, TData>
+) =>
+  useQuery<GetShareHistoryQuery, TError, TData>(
+    ['getShareHistory', variables],
+    useAxios<GetShareHistoryQuery, GetShareHistoryQueryVariables>(GetShareHistoryDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetShareChargesDocument = `
     query getShareCharges($transactionType: SHARE_TRANSACTION_DIRECTION!, $shareCount: Int!) {
   share {
@@ -24139,18 +30530,18 @@ export const GetShareChargesDocument = `
   }
 }
     `;
-export const useGetShareChargesQuery = <
-      TData = GetShareChargesQuery,
-      TError = unknown
-    >(
-      variables: GetShareChargesQueryVariables,
-      options?: UseQueryOptions<GetShareChargesQuery, TError, TData>
-    ) =>
-    useQuery<GetShareChargesQuery, TError, TData>(
-      ['getShareCharges', variables],
-      useAxios<GetShareChargesQuery, GetShareChargesQueryVariables>(GetShareChargesDocument).bind(null, variables),
-      options
-    );
+export const useGetShareChargesQuery = <TData = GetShareChargesQuery, TError = unknown>(
+  variables: GetShareChargesQueryVariables,
+  options?: UseQueryOptions<GetShareChargesQuery, TError, TData>
+) =>
+  useQuery<GetShareChargesQuery, TError, TData>(
+    ['getShareCharges', variables],
+    useAxios<GetShareChargesQuery, GetShareChargesQueryVariables>(GetShareChargesDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetDepositListDataDocument = `
     query getDepositListData($filter: AccountTransactionFilter, $pagination: Pagination) {
   transaction {
@@ -24182,18 +30573,17 @@ export const GetDepositListDataDocument = `
   }
 }
     `;
-export const useGetDepositListDataQuery = <
-      TData = GetDepositListDataQuery,
-      TError = unknown
-    >(
-      variables?: GetDepositListDataQueryVariables,
-      options?: UseQueryOptions<GetDepositListDataQuery, TError, TData>
-    ) =>
-    useQuery<GetDepositListDataQuery, TError, TData>(
-      variables === undefined ? ['getDepositListData'] : ['getDepositListData', variables],
-      useAxios<GetDepositListDataQuery, GetDepositListDataQueryVariables>(GetDepositListDataDocument).bind(null, variables),
-      options
-    );
+export const useGetDepositListDataQuery = <TData = GetDepositListDataQuery, TError = unknown>(
+  variables?: GetDepositListDataQueryVariables,
+  options?: UseQueryOptions<GetDepositListDataQuery, TError, TData>
+) =>
+  useQuery<GetDepositListDataQuery, TError, TData>(
+    variables === undefined ? ['getDepositListData'] : ['getDepositListData', variables],
+    useAxios<GetDepositListDataQuery, GetDepositListDataQueryVariables>(
+      GetDepositListDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetWithdrawListDataDocument = `
     query getWithdrawListData($filter: AccountTransactionFilter, $pagination: Pagination) {
   transaction {
@@ -24222,18 +30612,17 @@ export const GetWithdrawListDataDocument = `
   }
 }
     `;
-export const useGetWithdrawListDataQuery = <
-      TData = GetWithdrawListDataQuery,
-      TError = unknown
-    >(
-      variables?: GetWithdrawListDataQueryVariables,
-      options?: UseQueryOptions<GetWithdrawListDataQuery, TError, TData>
-    ) =>
-    useQuery<GetWithdrawListDataQuery, TError, TData>(
-      variables === undefined ? ['getWithdrawListData'] : ['getWithdrawListData', variables],
-      useAxios<GetWithdrawListDataQuery, GetWithdrawListDataQueryVariables>(GetWithdrawListDataDocument).bind(null, variables),
-      options
-    );
+export const useGetWithdrawListDataQuery = <TData = GetWithdrawListDataQuery, TError = unknown>(
+  variables?: GetWithdrawListDataQueryVariables,
+  options?: UseQueryOptions<GetWithdrawListDataQuery, TError, TData>
+) =>
+  useQuery<GetWithdrawListDataQuery, TError, TData>(
+    variables === undefined ? ['getWithdrawListData'] : ['getWithdrawListData', variables],
+    useAxios<GetWithdrawListDataQuery, GetWithdrawListDataQueryVariables>(
+      GetWithdrawListDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAccountTransferListDataDocument = `
     query getAccountTransferListData($filter: AccountTransactionFilter, $pagination: Pagination) {
   transaction {
@@ -24260,17 +30649,21 @@ export const GetAccountTransferListDataDocument = `
 }
     `;
 export const useGetAccountTransferListDataQuery = <
-      TData = GetAccountTransferListDataQuery,
-      TError = unknown
-    >(
-      variables?: GetAccountTransferListDataQueryVariables,
-      options?: UseQueryOptions<GetAccountTransferListDataQuery, TError, TData>
-    ) =>
-    useQuery<GetAccountTransferListDataQuery, TError, TData>(
-      variables === undefined ? ['getAccountTransferListData'] : ['getAccountTransferListData', variables],
-      useAxios<GetAccountTransferListDataQuery, GetAccountTransferListDataQueryVariables>(GetAccountTransferListDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetAccountTransferListDataQuery,
+  TError = unknown
+>(
+  variables?: GetAccountTransferListDataQueryVariables,
+  options?: UseQueryOptions<GetAccountTransferListDataQuery, TError, TData>
+) =>
+  useQuery<GetAccountTransferListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getAccountTransferListData']
+      : ['getAccountTransferListData', variables],
+    useAxios<GetAccountTransferListDataQuery, GetAccountTransferListDataQueryVariables>(
+      GetAccountTransferListDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetEndOfDayDateDataDocument = `
     query getEndOfDayDateData {
   transaction {
@@ -24278,18 +30671,17 @@ export const GetEndOfDayDateDataDocument = `
   }
 }
     `;
-export const useGetEndOfDayDateDataQuery = <
-      TData = GetEndOfDayDateDataQuery,
-      TError = unknown
-    >(
-      variables?: GetEndOfDayDateDataQueryVariables,
-      options?: UseQueryOptions<GetEndOfDayDateDataQuery, TError, TData>
-    ) =>
-    useQuery<GetEndOfDayDateDataQuery, TError, TData>(
-      variables === undefined ? ['getEndOfDayDateData'] : ['getEndOfDayDateData', variables],
-      useAxios<GetEndOfDayDateDataQuery, GetEndOfDayDateDataQueryVariables>(GetEndOfDayDateDataDocument).bind(null, variables),
-      options
-    );
+export const useGetEndOfDayDateDataQuery = <TData = GetEndOfDayDateDataQuery, TError = unknown>(
+  variables?: GetEndOfDayDateDataQueryVariables,
+  options?: UseQueryOptions<GetEndOfDayDateDataQuery, TError, TData>
+) =>
+  useQuery<GetEndOfDayDateDataQuery, TError, TData>(
+    variables === undefined ? ['getEndOfDayDateData'] : ['getEndOfDayDateData', variables],
+    useAxios<GetEndOfDayDateDataQuery, GetEndOfDayDateDataQueryVariables>(
+      GetEndOfDayDateDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetTellerTransactionListDataDocument = `
     query getTellerTransactionListData($filter: TellerTransactionFilter, $pagination: Pagination) {
   transaction {
@@ -24321,17 +30713,21 @@ export const GetTellerTransactionListDataDocument = `
 }
     `;
 export const useGetTellerTransactionListDataQuery = <
-      TData = GetTellerTransactionListDataQuery,
-      TError = unknown
-    >(
-      variables?: GetTellerTransactionListDataQueryVariables,
-      options?: UseQueryOptions<GetTellerTransactionListDataQuery, TError, TData>
-    ) =>
-    useQuery<GetTellerTransactionListDataQuery, TError, TData>(
-      variables === undefined ? ['getTellerTransactionListData'] : ['getTellerTransactionListData', variables],
-      useAxios<GetTellerTransactionListDataQuery, GetTellerTransactionListDataQueryVariables>(GetTellerTransactionListDataDocument).bind(null, variables),
-      options
-    );
+  TData = GetTellerTransactionListDataQuery,
+  TError = unknown
+>(
+  variables?: GetTellerTransactionListDataQueryVariables,
+  options?: UseQueryOptions<GetTellerTransactionListDataQuery, TError, TData>
+) =>
+  useQuery<GetTellerTransactionListDataQuery, TError, TData>(
+    variables === undefined
+      ? ['getTellerTransactionListData']
+      : ['getTellerTransactionListData', variables],
+    useAxios<GetTellerTransactionListDataQuery, GetTellerTransactionListDataQueryVariables>(
+      GetTellerTransactionListDataDocument
+    ).bind(null, variables),
+    options
+  );
 export const TransactionDepositDetailDocument = `
     query transactionDepositDetail($transactionId: ID!) {
   transaction {
@@ -24374,17 +30770,19 @@ export const TransactionDepositDetailDocument = `
 }
     `;
 export const useTransactionDepositDetailQuery = <
-      TData = TransactionDepositDetailQuery,
-      TError = unknown
-    >(
-      variables: TransactionDepositDetailQueryVariables,
-      options?: UseQueryOptions<TransactionDepositDetailQuery, TError, TData>
-    ) =>
-    useQuery<TransactionDepositDetailQuery, TError, TData>(
-      ['transactionDepositDetail', variables],
-      useAxios<TransactionDepositDetailQuery, TransactionDepositDetailQueryVariables>(TransactionDepositDetailDocument).bind(null, variables),
-      options
-    );
+  TData = TransactionDepositDetailQuery,
+  TError = unknown
+>(
+  variables: TransactionDepositDetailQueryVariables,
+  options?: UseQueryOptions<TransactionDepositDetailQuery, TError, TData>
+) =>
+  useQuery<TransactionDepositDetailQuery, TError, TData>(
+    ['transactionDepositDetail', variables],
+    useAxios<TransactionDepositDetailQuery, TransactionDepositDetailQueryVariables>(
+      TransactionDepositDetailDocument
+    ).bind(null, variables),
+    options
+  );
 export const TransactionWithdrawDetailDocument = `
     query transactionWithdrawDetail($transactionId: ID!) {
   transaction {
@@ -24424,17 +30822,19 @@ export const TransactionWithdrawDetailDocument = `
 }
     `;
 export const useTransactionWithdrawDetailQuery = <
-      TData = TransactionWithdrawDetailQuery,
-      TError = unknown
-    >(
-      variables: TransactionWithdrawDetailQueryVariables,
-      options?: UseQueryOptions<TransactionWithdrawDetailQuery, TError, TData>
-    ) =>
-    useQuery<TransactionWithdrawDetailQuery, TError, TData>(
-      ['transactionWithdrawDetail', variables],
-      useAxios<TransactionWithdrawDetailQuery, TransactionWithdrawDetailQueryVariables>(TransactionWithdrawDetailDocument).bind(null, variables),
-      options
-    );
+  TData = TransactionWithdrawDetailQuery,
+  TError = unknown
+>(
+  variables: TransactionWithdrawDetailQueryVariables,
+  options?: UseQueryOptions<TransactionWithdrawDetailQuery, TError, TData>
+) =>
+  useQuery<TransactionWithdrawDetailQuery, TError, TData>(
+    ['transactionWithdrawDetail', variables],
+    useAxios<TransactionWithdrawDetailQuery, TransactionWithdrawDetailQueryVariables>(
+      TransactionWithdrawDetailDocument
+    ).bind(null, variables),
+    options
+  );
 export const TransactionAccountTransferDetailDocument = `
     query transactionAccountTransferDetail($transactionId: ID!) {
   transaction {
@@ -24481,17 +30881,19 @@ export const TransactionAccountTransferDetailDocument = `
 }
     `;
 export const useTransactionAccountTransferDetailQuery = <
-      TData = TransactionAccountTransferDetailQuery,
-      TError = unknown
-    >(
-      variables: TransactionAccountTransferDetailQueryVariables,
-      options?: UseQueryOptions<TransactionAccountTransferDetailQuery, TError, TData>
-    ) =>
-    useQuery<TransactionAccountTransferDetailQuery, TError, TData>(
-      ['transactionAccountTransferDetail', variables],
-      useAxios<TransactionAccountTransferDetailQuery, TransactionAccountTransferDetailQueryVariables>(TransactionAccountTransferDetailDocument).bind(null, variables),
-      options
-    );
+  TData = TransactionAccountTransferDetailQuery,
+  TError = unknown
+>(
+  variables: TransactionAccountTransferDetailQueryVariables,
+  options?: UseQueryOptions<TransactionAccountTransferDetailQuery, TError, TData>
+) =>
+  useQuery<TransactionAccountTransferDetailQuery, TError, TData>(
+    ['transactionAccountTransferDetail', variables],
+    useAxios<TransactionAccountTransferDetailQuery, TransactionAccountTransferDetailQueryVariables>(
+      TransactionAccountTransferDetailDocument
+    ).bind(null, variables),
+    options
+  );
 export const AgentTransactionDetailDocument = `
     query agentTransactionDetail($agentId: ID!, $date: String!) {
   transaction {
@@ -24512,17 +30914,19 @@ export const AgentTransactionDetailDocument = `
 }
     `;
 export const useAgentTransactionDetailQuery = <
-      TData = AgentTransactionDetailQuery,
-      TError = unknown
-    >(
-      variables: AgentTransactionDetailQueryVariables,
-      options?: UseQueryOptions<AgentTransactionDetailQuery, TError, TData>
-    ) =>
-    useQuery<AgentTransactionDetailQuery, TError, TData>(
-      ['agentTransactionDetail', variables],
-      useAxios<AgentTransactionDetailQuery, AgentTransactionDetailQueryVariables>(AgentTransactionDetailDocument).bind(null, variables),
-      options
-    );
+  TData = AgentTransactionDetailQuery,
+  TError = unknown
+>(
+  variables: AgentTransactionDetailQueryVariables,
+  options?: UseQueryOptions<AgentTransactionDetailQuery, TError, TData>
+) =>
+  useQuery<AgentTransactionDetailQuery, TError, TData>(
+    ['agentTransactionDetail', variables],
+    useAxios<AgentTransactionDetailQuery, AgentTransactionDetailQueryVariables>(
+      AgentTransactionDetailDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAgentDetailDocument = `
     query getAgentDetail($id: ID!) {
   transaction {
@@ -24538,18 +30942,18 @@ export const GetAgentDetailDocument = `
   }
 }
     `;
-export const useGetAgentDetailQuery = <
-      TData = GetAgentDetailQuery,
-      TError = unknown
-    >(
-      variables: GetAgentDetailQueryVariables,
-      options?: UseQueryOptions<GetAgentDetailQuery, TError, TData>
-    ) =>
-    useQuery<GetAgentDetailQuery, TError, TData>(
-      ['getAgentDetail', variables],
-      useAxios<GetAgentDetailQuery, GetAgentDetailQueryVariables>(GetAgentDetailDocument).bind(null, variables),
-      options
-    );
+export const useGetAgentDetailQuery = <TData = GetAgentDetailQuery, TError = unknown>(
+  variables: GetAgentDetailQueryVariables,
+  options?: UseQueryOptions<GetAgentDetailQuery, TError, TData>
+) =>
+  useQuery<GetAgentDetailQuery, TError, TData>(
+    ['getAgentDetail', variables],
+    useAxios<GetAgentDetailQuery, GetAgentDetailQueryVariables>(GetAgentDetailDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const LoanRepaymentDetailDocument = `
     query loanRepaymentDetail($paymentId: ID!) {
   transaction {
@@ -24591,18 +30995,17 @@ export const LoanRepaymentDetailDocument = `
   }
 }
     `;
-export const useLoanRepaymentDetailQuery = <
-      TData = LoanRepaymentDetailQuery,
-      TError = unknown
-    >(
-      variables: LoanRepaymentDetailQueryVariables,
-      options?: UseQueryOptions<LoanRepaymentDetailQuery, TError, TData>
-    ) =>
-    useQuery<LoanRepaymentDetailQuery, TError, TData>(
-      ['loanRepaymentDetail', variables],
-      useAxios<LoanRepaymentDetailQuery, LoanRepaymentDetailQueryVariables>(LoanRepaymentDetailDocument).bind(null, variables),
-      options
-    );
+export const useLoanRepaymentDetailQuery = <TData = LoanRepaymentDetailQuery, TError = unknown>(
+  variables: LoanRepaymentDetailQueryVariables,
+  options?: UseQueryOptions<LoanRepaymentDetailQuery, TError, TData>
+) =>
+  useQuery<LoanRepaymentDetailQuery, TError, TData>(
+    ['loanRepaymentDetail', variables],
+    useAxios<LoanRepaymentDetailQuery, LoanRepaymentDetailQueryVariables>(
+      LoanRepaymentDetailDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetPastSlipsListDocument = `
     query getPastSlipsList($accountId: ID!) {
   withdrawSlip {
@@ -24616,18 +31019,18 @@ export const GetPastSlipsListDocument = `
   }
 }
     `;
-export const useGetPastSlipsListQuery = <
-      TData = GetPastSlipsListQuery,
-      TError = unknown
-    >(
-      variables: GetPastSlipsListQueryVariables,
-      options?: UseQueryOptions<GetPastSlipsListQuery, TError, TData>
-    ) =>
-    useQuery<GetPastSlipsListQuery, TError, TData>(
-      ['getPastSlipsList', variables],
-      useAxios<GetPastSlipsListQuery, GetPastSlipsListQueryVariables>(GetPastSlipsListDocument).bind(null, variables),
-      options
-    );
+export const useGetPastSlipsListQuery = <TData = GetPastSlipsListQuery, TError = unknown>(
+  variables: GetPastSlipsListQueryVariables,
+  options?: UseQueryOptions<GetPastSlipsListQuery, TError, TData>
+) =>
+  useQuery<GetPastSlipsListQuery, TError, TData>(
+    ['getPastSlipsList', variables],
+    useAxios<GetPastSlipsListQuery, GetPastSlipsListQueryVariables>(GetPastSlipsListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
 export const GetAvailableSlipsListDocument = `
     query getAvailableSlipsList($accountId: ID!) {
   withdrawSlip {
@@ -24641,18 +31044,17 @@ export const GetAvailableSlipsListDocument = `
   }
 }
     `;
-export const useGetAvailableSlipsListQuery = <
-      TData = GetAvailableSlipsListQuery,
-      TError = unknown
-    >(
-      variables: GetAvailableSlipsListQueryVariables,
-      options?: UseQueryOptions<GetAvailableSlipsListQuery, TError, TData>
-    ) =>
-    useQuery<GetAvailableSlipsListQuery, TError, TData>(
-      ['getAvailableSlipsList', variables],
-      useAxios<GetAvailableSlipsListQuery, GetAvailableSlipsListQueryVariables>(GetAvailableSlipsListDocument).bind(null, variables),
-      options
-    );
+export const useGetAvailableSlipsListQuery = <TData = GetAvailableSlipsListQuery, TError = unknown>(
+  variables: GetAvailableSlipsListQueryVariables,
+  options?: UseQueryOptions<GetAvailableSlipsListQuery, TError, TData>
+) =>
+  useQuery<GetAvailableSlipsListQuery, TError, TData>(
+    ['getAvailableSlipsList', variables],
+    useAxios<GetAvailableSlipsListQuery, GetAvailableSlipsListQueryVariables>(
+      GetAvailableSlipsListDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAvailableRangeDocument = `
     query getAvailableRange($count: Int!) {
   withdrawSlip {
@@ -24665,15 +31067,14 @@ export const GetAvailableRangeDocument = `
   }
 }
     `;
-export const useGetAvailableRangeQuery = <
-      TData = GetAvailableRangeQuery,
-      TError = unknown
-    >(
-      variables: GetAvailableRangeQueryVariables,
-      options?: UseQueryOptions<GetAvailableRangeQuery, TError, TData>
-    ) =>
-    useQuery<GetAvailableRangeQuery, TError, TData>(
-      ['getAvailableRange', variables],
-      useAxios<GetAvailableRangeQuery, GetAvailableRangeQueryVariables>(GetAvailableRangeDocument).bind(null, variables),
-      options
-    );
+export const useGetAvailableRangeQuery = <TData = GetAvailableRangeQuery, TError = unknown>(
+  variables: GetAvailableRangeQueryVariables,
+  options?: UseQueryOptions<GetAvailableRangeQuery, TError, TData>
+) =>
+  useQuery<GetAvailableRangeQuery, TError, TData>(
+    ['getAvailableRange', variables],
+    useAxios<GetAvailableRangeQuery, GetAvailableRangeQueryVariables>(
+      GetAvailableRangeDocument
+    ).bind(null, variables),
+    options
+  );
