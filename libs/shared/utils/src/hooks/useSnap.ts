@@ -9,8 +9,9 @@ import { useChakraToast } from './useChakraToast';
 const snap = new Snipping({
   buttonLabel: 'Send Feedback',
   initialMarkMode: 'mark',
+  buttonPosition: 'bottom',
   fileName: 'feedbackScreenshot.png',
-  /** other configs **/
+  /** other configs * */
 });
 export const useSnap = () => {
   const toast = useChakraToast();
@@ -69,5 +70,4 @@ export const useSnap = () => {
       }
     });
   }, [toast, username]);
-  return;
 };
