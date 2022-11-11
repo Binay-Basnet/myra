@@ -49,7 +49,7 @@ export const ShareRegisterTable = () => {
       },
       {
         header: t['shareRegisterTableMemberID'],
-        accessorFn: (row) => row?.node.member?.id,
+        accessorFn: (row) => row?.node.member?.code,
       },
 
       {

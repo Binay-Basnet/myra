@@ -288,6 +288,7 @@ const en: Record<string, string> = {
   memberListTableViewMemberProfile: 'View Member Profile',
   memberListTableEditMember: 'Edit Member',
   memberListTableMakeInactive: 'Make Inactive',
+  memberListTableMakeActive: 'Make Active',
   memberListTableMemberId: 'Member Id',
   memberListTableMemberCode: 'Member Code',
   memberListTableName: 'Name',
@@ -299,7 +300,7 @@ const en: Record<string, string> = {
 
   // share balance table
   shareBalanceTable: 'Share Balance',
-  shareTableMemberId: 'Member ID',
+  shareTableMemberId: 'Member Code',
   shareTableName: 'Name',
   shareTableShareCount: 'Share Count',
 
@@ -307,7 +308,7 @@ const en: Record<string, string> = {
   shareRegisterTable: 'Share Register',
   shareRegisterDate: 'Date',
   shareRegisterType: 'Type',
-  shareRegisterTableMemberID: 'Member ID',
+  shareRegisterTableMemberID: 'Member Code',
   shareRegisterTableName: 'Name',
   shareRegisterTableNameToFrom: 'From - To',
   shareRegisterTableNameShareDr: 'Returned',

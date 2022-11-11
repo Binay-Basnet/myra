@@ -12,6 +12,7 @@ query getShareBalanceList($pagination: Pagination) {
         node {
           member {
             id
+            code
             name
             profilePic
             profilePicUrl
@@ -33,6 +34,7 @@ query getShareRegisterList($pagination: Pagination, $filter: ShareRegisterFilter
           transactionDirection
           member {
             id
+            code
             name
             profilePic
             profilePicUrl
@@ -65,6 +67,7 @@ query getShareHistory($memberId: ID!) {
         member {
           id
           name
+          code
         }
         status
         transactionDate

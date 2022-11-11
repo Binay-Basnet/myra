@@ -8,6 +8,7 @@ import Text from '../text/Text';
 
 type MemberType = {
   name?: string | undefined | null;
+  code?: string | null;
   id?: string | undefined | null;
   gender?: string | undefined | null;
   age?: string | number | undefined | null;
@@ -69,7 +70,7 @@ export const ShareMemberCard = ({
             {memberDetailData?.name}
           </Text>
           <Text fontWeight="Regular" fontSize="r1" color="neutralColorLight.Gray-80">
-            {memberDetailData?.id}
+            {memberDetailData?.code}
           </Text>
           <Text fontWeight="Regular" fontSize="r1" color="neutralColorLight.Gray-80">
             {memberDetailData?.gender} | {memberDetailData?.age}

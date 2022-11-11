@@ -13889,7 +13889,7 @@ export type GetMemberIndividualDataQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null, profilePic?: string | null, contact?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { id?: string | null, institutionInformation?: { data?: { nameOfInstitutionEn?: string | null, nameOfInstitutionNp?: string | null } | null } | null } | { data?: { formData?: { nameOfOrganization?: string | null, regdNumber?: number | null, regdDate?: string | null } | null } | null } | { data?: { formData?: { maritalStatus?: Record<"local"|"en"|"np",string> | null, maritalStatusId?: string | null, basicInformation?: { dateOfBirth?: string | null, age?: number | null, gender?: Record<"local"|"en"|"np",string> | null } | null, contactDetails?: { email?: string | null } | null } | null } | null } | { data?: { formData?: { institutionName?: string | null, institutionTypeId?: string | null, natureOfBusiness?: string | null } | null } | null } | null } | null } } };
+export type GetMemberIndividualDataQuery = { members: { details: { data?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePicUrl?: string | null, profilePic?: string | null, contact?: string | null, dateJoined?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null } | null, profile?: { id?: string | null, institutionInformation?: { data?: { nameOfInstitutionEn?: string | null, nameOfInstitutionNp?: string | null } | null } | null } | { data?: { formData?: { nameOfOrganization?: string | null, regdNumber?: number | null, regdDate?: string | null } | null } | null } | { data?: { formData?: { maritalStatus?: Record<"local"|"en"|"np",string> | null, maritalStatusId?: string | null, basicInformation?: { dateOfBirth?: string | null, age?: number | null, gender?: Record<"local"|"en"|"np",string> | null } | null, contactDetails?: { email?: string | null } | null } | null } | null } | { data?: { formData?: { institutionName?: string | null, institutionTypeId?: string | null, natureOfBusiness?: string | null } | null } | null } | null } | null } } };
 
 export type GetIndividualKymEditDataQueryVariables = Exact<{
   id: Scalars['String'];
@@ -13941,7 +13941,7 @@ export type GetMemberDetailsQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberDetailsQuery = { members: { details: { data?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, contact?: string | null, profilePicUrl?: string | null, signaturePicUrl?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null } | null, share?: { summary?: { memberId?: string | null, count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null } } | null } | null, profile?: { data?: { formData?: { basicInformation?: { gender?: Record<"local"|"en"|"np",string> | null, dateOfBirth?: string | null, age?: number | null } | null } | null } | null } | {} | null } | null } } };
+export type GetMemberDetailsQuery = { members: { details: { data?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string, contact?: string | null, profilePicUrl?: string | null, signaturePicUrl?: string | null, address?: { state?: Record<"local"|"en"|"np",string> | null, district?: Record<"local"|"en"|"np",string> | null, localGovernment?: Record<"local"|"en"|"np",string> | null, wardNo?: string | null, locality?: Record<"local"|"en"|"np",string> | null, houseNo?: string | null } | null, share?: { summary?: { memberId?: string | null, count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string } } | null } | null, profile?: { data?: { formData?: { basicInformation?: { gender?: Record<"local"|"en"|"np",string> | null, dateOfBirth?: string | null, age?: number | null } | null } | null } | null } | {} | null } | null } } };
 
 export type GetOfficialUseQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -14353,7 +14353,7 @@ export type GetShareBalanceListQueryVariables = Exact<{
 }>;
 
 
-export type GetShareBalanceListQuery = { share: { balance?: { totalCount: number, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ node: { count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } } }> } | null } };
+export type GetShareBalanceListQuery = { share: { balance?: { totalCount: number, pageInfo: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null }, edges: Array<{ node: { count: number, amount: number, member: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } } }> } | null } };
 
 export type GetShareRegisterListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
@@ -14361,14 +14361,14 @@ export type GetShareRegisterListQueryVariables = Exact<{
 }>;
 
 
-export type GetShareRegisterListQuery = { share: { register?: { totalCount: number, edges: Array<{ cursor: string, node: { transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, balance?: number | null, startNumber: number, shareAmount?: number | null, endNumber: number, credit?: number | null, debit?: number | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null } }>, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } | null } };
+export type GetShareRegisterListQuery = { share: { register?: { totalCount: number, edges: Array<{ cursor: string, node: { transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, balance?: number | null, startNumber: number, shareAmount?: number | null, endNumber: number, credit?: number | null, debit?: number | null, member?: { id: string, code: string, name?: Record<"local"|"en"|"np",string> | null, profilePic?: string | null, profilePicUrl?: string | null } | null } }>, pageInfo?: { hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null, endCursor?: string | null } | null } | null } };
 
 export type GetShareHistoryQueryVariables = Exact<{
   memberId: Scalars['ID'];
 }>;
 
 
-export type GetShareHistoryQuery = { share: { history?: { history?: Array<{ id?: string | null, status?: Share_Status | null, transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, balance?: number | null, shareAmount?: number | null, totalAmount?: number | null, paymentMode?: SharePaymentMode | null, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null } | null, extraFee?: Array<{ name: string, value: number } | null> | null } | null> | null, balance?: { count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null } } | null } | null } };
+export type GetShareHistoryQuery = { share: { history?: { history?: Array<{ id?: string | null, status?: Share_Status | null, transactionDate?: string | null, transactionDirection: Share_Transaction_Direction, credit?: number | null, debit?: number | null, startNumber: number, endNumber: number, balance?: number | null, shareAmount?: number | null, totalAmount?: number | null, paymentMode?: SharePaymentMode | null, bankId?: string | null, voucherNumber?: string | null, accountId?: string | null, member?: { id: string, name?: Record<"local"|"en"|"np",string> | null, code: string } | null, extraFee?: Array<{ name: string, value: number } | null> | null } | null> | null, balance?: { count: number, amount: number, member: { id: string, name?: Record<"local"|"en"|"np",string> | null } } | null } | null } };
 
 export type GetShareChargesQueryVariables = Exact<{
   transactionType: Share_Transaction_Direction;
@@ -20870,6 +20870,7 @@ export const GetMemberIndividualDataDocument = `
     details(id: $id) {
       data {
         id
+        code
         name
         profilePicUrl
         profilePic
@@ -21245,6 +21246,7 @@ export const GetMemberDetailsDocument = `
             member {
               id
               name
+              code
             }
             count
             amount
@@ -23986,6 +23988,7 @@ export const GetShareBalanceListDocument = `
         node {
           member {
             id
+            code
             name
             profilePic
             profilePicUrl
@@ -24020,6 +24023,7 @@ export const GetShareRegisterListDocument = `
           transactionDirection
           member {
             id
+            code
             name
             profilePic
             profilePicUrl
@@ -24065,6 +24069,7 @@ export const GetShareHistoryDocument = `
         member {
           id
           name
+          code
         }
         status
         transactionDate

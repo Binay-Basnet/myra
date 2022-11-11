@@ -29,7 +29,6 @@ export const MemberDetailsSidebar = () => {
           src={memberInfo?.profilePic ?? ''}
           name={memberInfo?.memberName as string}
         />
-
         <Box display="flex" flexDirection="column" gap="s8">
           <Text fontSize="l1" fontWeight="600">
             {' '}
