@@ -31,7 +31,7 @@ export const TellerTransferList = () => {
       },
       {
         accessorFn: (row) => row?.node?.srcTeller?.local,
-        header: 'Source Teller',
+        header: 'Sender',
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
             <Avatar
@@ -56,7 +56,7 @@ export const TellerTransferList = () => {
       },
       {
         accessorFn: (row) => row?.node?.destTeller?.local,
-        header: 'Receiver Teller',
+        header: 'Receiver',
         cell: (props) => (
           <Box display="flex" alignItems="center" gap="s12">
             <Avatar
