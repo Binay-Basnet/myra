@@ -82,15 +82,13 @@ const settingsColumn = [
 const reportColumn = [
   {
     label: 'savingsDepositStatementReport',
-    navigate: '/settings/general/members',
+    navigate: '/reports/cbs/savings/statement/new',
   },
   {
     label: 'savingsIntrestTaxReport',
-    navigate: '/settings/general/members/kym-individual',
   },
   {
     label: 'savingsIntrestStatement',
-    navigate: '/settings/general/members/kym-individual',
   },
 ];
 export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
@@ -148,7 +146,11 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
             />
           ))}
           {reportColumn.map((item) => (
-            <SettingsButton icon={CgLoadbarDoc} buttonLabel={t[item?.label]} />
+            <SettingsButton
+              icon={CgLoadbarDoc}
+              buttonLabel={t[item?.label]}
+              onClick={() => item?.navigate && router.push(item?.navigate)}
+            />
           ))}
         </Box>
       </Box>

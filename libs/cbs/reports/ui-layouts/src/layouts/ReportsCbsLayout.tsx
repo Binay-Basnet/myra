@@ -21,10 +21,10 @@ export const ReportsCbsLayout = ({ children }: ReportsCbsLayoutProps) => {
             title: 'reportsListView',
             key: 'list-view',
           },
-          {
-            title: 'reportsTableView',
-            key: 'table-view',
-          },
+          // {
+          //   title: 'reportsTableView',
+          //   key: 'table-view',
+          // },
         ]}
       />
 

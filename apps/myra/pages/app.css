@@ -2,6 +2,28 @@
   --cl-primary: #006837;
 }
 
+.snipping__captureScreenshotContainer_bottom {
+  left: 16px;
+  bottom: 16px;
+}
+
+.snipping__captureScreenshotBtn {
+  background: white !important;
+  border-top-left-radius: 4px !important;
+  border-top-right-radius: 4px !important;
+  font-size: 13px;
+  padding: 8px 16px !important;
+  border-radius: 4px;
+  color: #343c46 !important;
+  transition: all 0.2s ease-in;
+}
+
+.snipping__captureScreenshotBtn:hover {
+  color: #006837 !important;
+  box-shadow: 0px 4px 10px rgba(52, 60, 70, 0.1) !important;
+
+}
+
 .rl-nepali-datepicker-wrapper .input-wrapper {
   height: 44px;
 }
@@ -14,11 +36,9 @@
   /*padding: 0 12px;*/
 }
 
-
 /*:root {*/
 /*  --cl-primary: var(--myra-colors-primary-500);*/
 /*}*/
-
 
 /*.rl-nepali-datepicker-wrapper .input-wrapper {*/
 /*  height: 44px;*/
@@ -35,7 +55,6 @@
 /*  font-weight: 400;*/
 /*  line-height: 1.5;*/
 /*}*/
-
 
 /*.rl-nepali-datepicker-wrapper .input-wrapper .rl-nepali-datepicker-icon {*/
 /*  height: 16px;*/

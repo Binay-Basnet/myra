@@ -64,7 +64,7 @@ const settingsColumn = [
 const reportColumn = [
   {
     label: 'loanLayoutStatementReport',
-    navigate: '/settings/general/members',
+    navigate: '/reports/cbs/loan/statement/new',
   },
   {
     label: 'loanLayoutAgeingReport',
@@ -125,7 +125,11 @@ export const LoanListLayout = ({ children }: IAccountPageLayoutProps) => {
             />
           ))}
           {reportColumn.map((item) => (
-            <SettingsButton icon={CgLoadbarDoc} buttonLabel={t[item?.label]} />
+            <SettingsButton
+              onClick={() => item?.navigate && router.push(item?.navigate)}
+              icon={CgLoadbarDoc}
+              buttonLabel={t[item?.label]}
+            />
           ))}
         </Box>
       </Box>

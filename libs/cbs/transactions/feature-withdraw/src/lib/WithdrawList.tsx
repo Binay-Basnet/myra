@@ -7,20 +7,20 @@ import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, TablePopover, Text } from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-const tabList = [
-  {
-    title: 'memberNavActive',
-    key: 'APPROVED',
-  },
-  {
-    title: 'memberNavInactive',
-    key: 'VALIDATED',
-  },
-  {
-    title: 'memberNavDraft',
-    key: 'DRAFT',
-  },
-];
+// const tabList = [
+//   {
+//     title: 'memberNavActive',
+//     key: 'APPROVED',
+//   },
+//   {
+//     title: 'memberNavInactive',
+//     key: 'VALIDATED',
+//   },
+//   {
+//     title: 'memberNavDraft',
+//     key: 'DRAFT',
+//   },
+// ];
 
 /* eslint-disable-next-line */
 export interface WithdrawListProps {}
@@ -117,7 +117,7 @@ export const WithdrawList = () => {
     <>
       <TransactionPageHeader
         heading={`${t['withdrawListWithdraw']} - ${featureCode?.withdrawList}`}
-        tabItems={tabList}
+        // tabItems={tabList}
       />
 
       <Table

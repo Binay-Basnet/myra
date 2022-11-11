@@ -197,12 +197,7 @@ export const KYMInstitutionPage = () => {
 
               if (response) {
                 dispatch(setInstitutionHasPressedNext(true));
-                if (
-                  !sectionStatus?.institutionDetails?.errors &&
-                  sectionStatus?.accountOperatorDetails?.some((a) => !a?.errors) &&
-                  sectionStatus?.sisterConcernDetails?.some((a) => !a?.errors) &&
-                  sectionStatus?.directorDetails?.some((a) => !a?.errors)
-                ) {
+                if (!basicErrors) {
                   router.push(`/members/translation/${router.query['id']}`);
                 } else {
                   toast({
