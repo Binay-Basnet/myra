@@ -19,12 +19,12 @@ export const MyDay = () => {
     subtitle: 'No. of Transactions',
   };
 
-  const cashInHandData = {
-    todayValue: myDayData?.cashInHand?.todayValue,
-    percent: myDayData?.cashInHand?.percent,
-    noOfTransaction: myDayData?.cashInHand?.fromVault,
-    subtitle: 'From Vault',
-  };
+  // const cashInHandData = {
+  //   todayValue: myDayData?.cashInHand?.todayValue,
+  //   percent: myDayData?.cashInHand?.percent,
+  //   noOfTransaction: myDayData?.cashInHand?.fromVault,
+  //   subtitle: 'From Vault',
+  // };
 
   return (
     <Box display="flex" flexDir="column" gap="s16">
@@ -33,7 +33,7 @@ export const MyDay = () => {
           My Day
         </Text>
       </Box>
-      <Grid templateColumns="repeat(3,1fr)" gap="s16">
+      <Grid templateColumns="repeat(2,1fr)" gap="s16">
         <GridItem>
           <DetailCardStats
             title="Total Deposits"
@@ -74,7 +74,7 @@ export const MyDay = () => {
             </Text>
           </DetailCardStats>
         </GridItem>
-        <GridItem>
+        {/* <GridItem>
           <DetailCardStats
             title="Cash in Hand"
             stats={Number(cashInHandData?.todayValue) as number}
@@ -93,7 +93,7 @@ export const MyDay = () => {
               </Text>
             </Text>
           </DetailCardStats>
-        </GridItem>
+        </GridItem> */}
       </Grid>
     </Box>
   );
