@@ -274,7 +274,7 @@ export const FloatingShortcutButton = () => {
                 px="s8"
                 cursor="pointer"
                 alignItems="center"
-                onClick={() => router.push('https://docs.migration.myraerp.com/docs/intro')}
+                onClick={() => router.push('https://docs.migration.myraerp.com/')}
               >
                 <Icon as={BsBook} />
                 <Text fontSize="s3" fontWeight="500" color="gray.600">
