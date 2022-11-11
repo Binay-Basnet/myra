@@ -19,6 +19,7 @@ export * from './lib/checkbox-group/CheckboxGroup';
 export * from './lib/collapse/Collapse';
 export * from './lib/container-/Container';
 export * from './lib/detail-card-content/DetailCardContent';
+export * from './lib/detail-card-stats/DetailCardStats';
 export * from './lib/detail-page-content-card/DetailPageContentCard';
 export * from './lib/detail-page-header/DetailPageHeader';
 export * from './lib/detail-page-member-card/DetailPageMemberCard';
