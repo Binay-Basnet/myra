@@ -7,20 +7,20 @@ import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, PageHeader, Text } from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-const MEMBER_TAB_ITEMS = [
-  {
-    title: 'memberNavActive',
-    key: 'APPROVED',
-  },
-  {
-    title: 'memberNavInactive',
-    key: 'VALIDATED',
-  },
-  {
-    title: 'memberNavDraft',
-    key: 'DRAFT',
-  },
-];
+// const MEMBER_TAB_ITEMS = [
+//   {
+//     title: 'memberNavActive',
+//     key: 'APPROVED',
+//   },
+//   {
+//     title: 'memberNavInactive',
+//     key: 'VALIDATED',
+//   },
+//   {
+//     title: 'memberNavDraft',
+//     key: 'DRAFT',
+//   },
+// ];
 
 export const AgentList = () => {
   const { t } = useTranslation();
@@ -117,7 +117,7 @@ export const AgentList = () => {
     <>
       <PageHeader
         heading={`${t['agentListMarketRepresentativeList']} - ${featureCode?.agentList}`}
-        tabItems={MEMBER_TAB_ITEMS}
+        // tabItems={MEMBER_TAB_ITEMS}
       />
 
       <Table
