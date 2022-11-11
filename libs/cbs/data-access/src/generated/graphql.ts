@@ -38,6 +38,8 @@ export type AccountActivityEntry = {
   accountId?: Maybe<Scalars['String']>;
   agentId?: Maybe<Scalars['String']>;
   agentName?: Maybe<Scalars['String']>;
+  agentPic?: Maybe<Scalars['String']>;
+  agentPicUrl?: Maybe<Scalars['String']>;
   amount?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['Localized']>;
@@ -6433,7 +6435,7 @@ export type KymCooperativeAccountOperatorStatus = {
 
 export type KymCooperativeAddFormStatus = {
   formData?: Maybe<KymCooperativeFormData>;
-  lastUpdated: KymCooperativeAddLus;
+  lastUpdated?: Maybe<KymCooperativeAddLus>;
   sectionStatus?: Maybe<KymCooperativeAddSectionStatus>;
 };
 
@@ -19517,6 +19519,7 @@ export type GetDepositListDataQuery = {
           agentName?: string | null;
           agentId?: string | null;
           profilePicUrl?: string | null;
+          agentPicUrl?: string | null;
         } | null;
       } | null> | null;
       pageInfo?: {
@@ -30432,6 +30435,7 @@ export const GetDepositListDataDocument = `
           agentName
           agentId
           profilePicUrl
+          agentPicUrl
         }
         cursor
       }
