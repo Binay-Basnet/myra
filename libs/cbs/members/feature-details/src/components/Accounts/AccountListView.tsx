@@ -3,19 +3,26 @@ import { IoList, IoLogoMicrosoft } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
 import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
-import { Box, Button, DetailsCard, Icon, Text } from '@coop/shared/ui';
+import { Button, DetailsCard, Icon } from '@coop/shared/ui';
 
+import { AccountCard } from './AccountCard';
 import { UpcomingPaymentTable } from './AccountTable';
 
 export const AccountList = () => {
   const router = useRouter();
   const [showGrid, setShowGrid] = useState(true);
+
   const handleClick = () => {
     setShowGrid(!showGrid);
   };
   const memberDetails = useGetMemberDetailsOverviewQuery({
     id: router.query['id'] as string,
   });
+
+  const memberBasicDetails =
+    memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation;
+  const contactNo = memberBasicDetails?.contactNumber;
+  const memberName = memberBasicDetails?.memberName;
   const memberAccountDetails =
     memberDetails?.data?.members?.memberOverview?.data?.accounts?.accounts;
   const memberLength = memberAccountDetails?.length;
@@ -28,6 +35,7 @@ export const AccountList = () => {
       totalBalance: data?.totalBalance,
       interestRate: data?.interestRate,
     })) || [];
+
   return (
     <>
       {' '}
@@ -46,42 +54,16 @@ export const AccountList = () => {
           }
         >
           {memberAccountDetails?.map((item) => (
-            <Box
-              bg="white"
-              display="flex"
-              justifyContent="space-between"
-              p="s16"
-              border="1px solid"
-              borderRadius="br2"
-              borderColor="border.layout"
-            >
-              <Box display="flex" flexDirection="column" gap="s16">
-                <Box display="flex" flexDirection="column" gap="s4">
-                  <Box>
-                    <Text fontWeight="600" fontSize="r1" color="primary.500">
-                      {item?.accountName}{' '}
-                    </Text>
-                    <Text fontWeight="400" fontSize="s3">
-                      {item?.accountNumber}{' '}
-                    </Text>
-                  </Box>
-                  <Text fontWeight="400" fontSize="s3" color="gray.500">
-                    {item?.productName}
-                  </Text>
-                </Box>
-                <Text fontWeight="500" fontSize="s3">
-                  {item?.productType}
-                </Text>
-              </Box>
-              <Box pt="s8" display="flex" flexDirection="column" gap="s4">
-                <Text fontWeight="500" fontSize="r2" textAlign="right">
-                  {item?.totalBalance ?? '0'}
-                </Text>
-                <Text fontWeight="400" fontSize="s3">
-                  Interest Rate : {item?.interestRate} %
-                </Text>
-              </Box>
-            </Box>
+            <AccountCard
+              accountName={item?.accountName as string}
+              accountNumber={item?.accountNumber as string}
+              contactNo={contactNo as string}
+              interestRate={item?.interestRate as string}
+              memberName={memberName as string}
+              productName={item?.productName as string}
+              productType={item?.productType as string}
+              totalBalance={item?.totalBalance as string}
+            />
           ))}
         </DetailsCard>
       )}

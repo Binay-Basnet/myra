@@ -1,8 +1,10 @@
+import { IoCopyOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { Avatar } from '@chakra-ui/react';
 
 import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
-import { Box, DetailPageTabs, Text } from '@coop/shared/ui';
+import { Box, DetailPageTabs, Icon, Tags, Text } from '@coop/shared/ui';
+import { copyToClipboard } from '@coop/shared/utils';
 
 export const MemberDetailsSidebar = () => {
   const router = useRouter();
@@ -30,15 +32,28 @@ export const MemberDetailsSidebar = () => {
           name={memberInfo?.memberName as string}
         />
         <Box display="flex" flexDirection="column" gap="s8">
-          <Text fontSize="l1" fontWeight="600">
-            {' '}
-            {memberInfo?.memberName}
-          </Text>
-          {memberInfo?.memberCode && (
-            <Text fontSize="r1" fontWeight="600">
+          <Box display="flex" alignItems="center" gap="s8">
+            <Text fontSize="l1" fontWeight="600">
               {' '}
-              {memberInfo?.memberCode}{' '}
+              {memberInfo?.memberName}
             </Text>
+            {memberInfo?.isStaff && (
+              <Tags label="staff" type="chip" bg="info.0" labelColor="info.500" />
+            )}
+          </Box>
+          {memberInfo?.memberCode && (
+            <Box display="flex" alignItems="center" gap="s4">
+              <Text fontSize="r1" fontWeight="600">
+                {' '}
+                {memberInfo?.memberCode}{' '}
+              </Text>
+              <Icon
+                _hover={{ cursor: 'pointer' }}
+                size="sm"
+                as={IoCopyOutline}
+                onClick={() => copyToClipboard(memberInfo?.memberCode as string)}
+              />
+            </Box>
           )}
           <Text fontSize="r1" fontWeight="600">
             {' '}
