@@ -35,7 +35,7 @@ export interface DetailPageHeaderProps {
   closeLink?: string;
 }
 
-export const OptionsIcon = () => (
+const OptionsIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" viewBox="0 0 17 18" fill="none">
     <path
       d="M8.89961 10.5187C9.73839 10.5187 10.4184 9.83874 10.4184 8.99995C10.4184 8.16117 9.73839 7.4812 8.89961 7.4812C8.06083 7.4812 7.38086 8.16117 7.38086 8.99995C7.38086 9.83874 8.06083 10.5187 8.89961 10.5187Z"
