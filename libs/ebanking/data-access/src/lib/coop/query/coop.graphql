@@ -4,6 +4,7 @@ query getCoopStats {
       coopStatistics {
         totalBranches
         totalMembers
+        totalCapital
       }
     }
   }

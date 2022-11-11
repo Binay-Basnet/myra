@@ -3,6 +3,7 @@ import { IoCashOutline } from 'react-icons/io5';
 
 import { useAppSelector, useGetCoopStatsQuery } from '@coop/ebanking/data-access';
 import { Avatar, Box, Grid, Icon, TextFields } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
 export const COOPHeaderCard = () => {
   const { data: coopStatsData } = useGetCoopStatsQuery();
@@ -71,9 +72,11 @@ export const COOPHeaderCard = () => {
           </Box>
           <Box display="flex" gap="s4" flexDir="column">
             <TextFields color="primary.200" variant="tableHeader">
-              Total Branches
+              Total Capital
             </TextFields>
-            <TextFields variant="stickyCardHeader">{coopStats?.totalBranches}</TextFields>
+            <TextFields variant="stickyCardHeader">
+              {coopStats?.totalCapital ? amountConverter(coopStats?.totalCapital) : 'N/A'}
+            </TextFields>
           </Box>
         </Box>
       </Grid>

@@ -184,3 +184,17 @@ query getEbankLoanAccountDetails($id: ID!, $transactionPagination: Pagination) {
     }
   }
 }
+
+query getTotalExpense {
+  eBanking {
+    account {
+      list {
+        recentTransactions(paginate: {after: "", first: 1}){
+          summary {
+            expensesThisMonth
+          }
+        }
+      }
+    }
+  }
+}

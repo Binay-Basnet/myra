@@ -121,13 +121,13 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
     defaultValues: {
       paymentMode: DepositPaymentType.Cash,
       cashData: {
-        cash: totalAmount ?? 0,
+        cash: String(totalAmount ?? 0),
       },
       withdrawSlipData: {
-        amount: totalAmount ?? 0,
+        amount: String(totalAmount ?? 0),
       },
       bankDeposit: {
-        amount: totalAmount ?? 0,
+        amount: String(totalAmount ?? 0),
       },
     },
   });
