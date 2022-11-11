@@ -18,9 +18,9 @@ interface IInstitutionHookProps {
 
 export const useCooperative = ({ methods }: IInstitutionHookProps) => {
   const router = useRouter();
-  const id = String(router?.query?.['id']);
+  const id = router?.query?.['id'] as string;
   const { watch, reset } = methods;
-  const { mutate } = useSetCooperativeDataMutation();
+
   const {
     data: editValues,
     isLoading: editLoading,
@@ -32,21 +32,27 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
     { enabled: id !== 'undefined' }
   );
 
+  const { mutateAsync } = useSetCooperativeDataMutation({
+    onSuccess: async () => {
+      await refetch();
+    },
+  });
+
   useEffect(() => {
     const subscription = watch(
-      debounce((data) => {
-        if (editValues && data) {
-          mutate({
+      debounce(async (data) => {
+        if (id) {
+          await mutateAsync({
             id: router.query['id'] as string,
-            data: pickBy(data, (v) => v !== 0 && v !== '' && v !== null),
+            data: pickBy(data, (v) => v !== 0 && v !== '' && v !== null && v !== undefined),
           });
-          refetch();
         }
       }, 800)
     );
 
     return () => subscription.unsubscribe();
-  }, [watch, router.isReady, editValues]);
+  }, [watch, id, mutateAsync]);
+
   const editLastValues = editValues?.members?.cooperative?.formState?.data?.formData;
 
   useEffect(() => {
@@ -79,7 +85,7 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
         },
       });
     }
-  }, [editLoading, editLastValues]);
+  }, [editLoading]);
 
   // refetch data when calendar preference is updated
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
