@@ -26,8 +26,8 @@ export const EbankingHeaderLayout = ({ children }: IEbankingHeaderLayoutProps) =
         alignItems="center"
         justifyContent="space-between"
       >
-        <Box position="relative" h="s32" w="285px" ml="s16">
-          <Image src="/img.png" alt="logo" layout="fill" />{' '}
+        <Box position="relative" h="s32" w="100px" ml="s16">
+          <Image src="/logo-light.svg" alt="logo" layout="fill" objectPosition="center" />{' '}
         </Box>
 
         {user?.token && <HeaderRightSection />}

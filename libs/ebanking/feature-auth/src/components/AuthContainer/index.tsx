@@ -41,7 +41,7 @@ export const AuthContainer = ({
             onClick={() => router.push('/login')}
           >
             <Image
-              src="/sidebar-logo.png"
+              src="/sidebar-logo.svg"
               layout="fill"
               objectFit="contain"
               objectPosition="left"

@@ -1,14 +1,27 @@
-import {FormProvider, useForm} from 'react-hook-form';
-import {BiSave} from 'react-icons/bi';
-import {GrClose} from 'react-icons/gr';
+import { FormProvider, useForm } from 'react-hook-form';
+import { BiSave } from 'react-icons/bi';
+import { GrClose } from 'react-icons/gr';
 import router from 'next/router';
 
-import {BoxContainer, DividerContainer, InputGroupContainer,} from '@coop/accounting/ui-components';
-import {FormInput, FormTextArea} from '@coop/shared/form';
-import {Box, Button, Container, FormFooter, Icon, IconButton, SwitchTabs, Text,} from '@coop/shared/ui';
-import {useTranslation} from '@coop/shared/utils';
+import {
+  BoxContainer,
+  DividerContainer,
+  InputGroupContainer,
+} from '@coop/accounting/ui-components';
+import { FormInput, FormTextArea } from '@coop/shared/form';
+import {
+  Box,
+  Button,
+  Container,
+  FormFooter,
+  Icon,
+  IconButton,
+  SwitchTabs,
+  Text,
+} from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
 
-import {JournalVouchersTable} from '../components';
+import { JournalVouchersTable } from '../components';
 
 /* eslint-disable-next-line */
 export interface AccountingFeatureAddJournalVoucherProps {}
@@ -20,9 +33,15 @@ export const AccountingFeatureAddJournalVoucher = () => {
     defaultValues: {
       data: [
         {
-          dr_amount: 45,
-          cr_amount: 45,
+          dr_amount: 4500,
+          cr_amount: '',
           transferred_to: 'savings_account',
+          paymentMode: 'cash',
+        },
+        {
+          dr_amount: '',
+          cr_amount: 4500,
+          transferred_to: 'nic-asia',
           paymentMode: 'cash',
         },
       ],
@@ -119,7 +138,6 @@ export const AccountingFeatureAddJournalVoucher = () => {
               </Button>
             }
             mainButtonLabel={t['submit']}
-            mainButtonHandler={() => alert('Submitted')}
           />
         </Container>
       </Box>
