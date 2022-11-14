@@ -3,7 +3,7 @@ import Box from '../box/Box';
 import Text from '../text/Text';
 
 export interface DetailPageMemberCardProps {
-  id: string;
+  id?: string;
   name: string;
   profilePicUrl: string;
   memberAge?: number | null;
@@ -23,9 +23,11 @@ export const DetailPageMemberCard = ({
       <Text fontSize="r1" fontWeight="500" color="primary.500" textTransform="capitalize">
         {name}
       </Text>
-      <Text fontSize="r1" fontWeight="400" color="gray.800" wordBreak="break-all">
-        {id}
-      </Text>
+      {id && (
+        <Text fontSize="r1" fontWeight="400" color="gray.800" wordBreak="break-all">
+          {id}
+        </Text>
+      )}
 
       {(memberGender || memberAge) && (
         <Text fontSize="r1" fontWeight="400" color="gray.800">

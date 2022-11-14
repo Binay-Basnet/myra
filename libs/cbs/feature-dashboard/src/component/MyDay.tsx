@@ -49,7 +49,7 @@ export const MyDay = () => {
                 fontSize="r1"
                 lineHeight="140%"
               >
-                {depositData?.noOfTransaction}
+                {depositData?.noOfTransaction ?? '0'}
               </Text>
             </Text>
           </DetailCardStats>
@@ -69,7 +69,7 @@ export const MyDay = () => {
                 fontSize="r1"
                 lineHeight="140%"
               >
-                {withdrawData?.noOfTransaction}
+                {withdrawData?.noOfTransaction ?? '0'}
               </Text>
             </Text>
           </DetailCardStats>
@@ -89,7 +89,7 @@ export const MyDay = () => {
                 fontSize="r1"
                 lineHeight="140%"
               >
-                {cashInHandData?.noOfTransaction}
+                {cashInHandData?.noOfTransaction ?? "0"}
               </Text>
             </Text>
           </DetailCardStats>
