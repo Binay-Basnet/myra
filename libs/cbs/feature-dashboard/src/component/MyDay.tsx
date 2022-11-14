@@ -37,8 +37,8 @@ export const MyDay = () => {
         <GridItem>
           <DetailCardStats
             title="Total Deposits"
-            stats={Number(depositData?.todayValue) as number}
-            meta={{ growth: Number(depositData?.percent) as number, time: 'Yesterday' }}
+            stats={Number(depositData?.todayValue ?? 0) as number}
+            meta={{ growth: Number(depositData?.percent ?? 0) as number, time: 'Yesterday' }}
           >
             <Text color="gray.500" fontWeight="Regular" fontSize="s3" lineHeight="140%">
               No. of Transactions:
@@ -57,8 +57,8 @@ export const MyDay = () => {
         <GridItem>
           <DetailCardStats
             title="Total Withdraw"
-            stats={Number(withdrawData?.todayValue) as number}
-            meta={{ growth: Number(withdrawData?.percent) as number, time: 'Yesterday' }}
+            stats={Number(withdrawData?.todayValue ?? 0) as number}
+            meta={{ growth: Number(withdrawData?.percent ?? 0) as number, time: 'Yesterday' }}
           >
             <Text color="gray.500" fontWeight="Regular" fontSize="s3" lineHeight="140%">
               No. of Transactions:

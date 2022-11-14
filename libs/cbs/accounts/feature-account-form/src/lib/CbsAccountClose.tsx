@@ -101,7 +101,7 @@ export const CbsAccountClose = () => {
   const redirectAccountId = String(router?.query?.['accountId']);
 
   const methods = useForm<CustomAccountCloseInput>({
-    defaultValues: { paymentMode: AccountClosePaymentMode.AccountTransfer },
+    defaultValues: { paymentMode: AccountClosePaymentMode.Cash },
   });
 
   const { watch, getValues, setValue, reset } = methods;

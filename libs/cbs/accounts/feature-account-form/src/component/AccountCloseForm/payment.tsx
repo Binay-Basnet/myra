@@ -23,16 +23,16 @@ import { featureCode } from '@coop/shared/utils';
 
 const paymentModes = [
   {
+    label: 'Cash',
+    value: AccountClosePaymentMode?.Cash,
+  },
+  {
     label: 'Account Transfer',
     value: AccountClosePaymentMode?.AccountTransfer,
   },
   {
     label: 'Bank Cheque',
     value: AccountClosePaymentMode?.BankCheque,
-  },
-  {
-    label: 'Cash',
-    value: AccountClosePaymentMode?.Cash,
   },
 ];
 
