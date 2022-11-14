@@ -1,5 +1,6 @@
 import { EbankingTransactionDirection } from '@coop/cbs/data-access';
 import { Box, Text } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
 interface ITransactionCardProps {
   transactionItem: {
@@ -13,7 +14,7 @@ interface ITransactionCardProps {
   };
 }
 
-export const TransactionCard = ({transactionItem}: ITransactionCardProps) => (
+export const TransactionCard = ({ transactionItem }: ITransactionCardProps) => (
   <Box
     h="80px"
     display="flex"
@@ -35,6 +36,8 @@ export const TransactionCard = ({transactionItem}: ITransactionCardProps) => (
       <Box
         display="flex"
         justifyContent="flex-start"
+        alignItems="center"
+        gap="s4"
         color={
           transactionItem?.transactionDirection === EbankingTransactionDirection?.Outgoing
             ? 'danger.500'
@@ -47,8 +50,7 @@ export const TransactionCard = ({transactionItem}: ITransactionCardProps) => (
             : '+'}
         </Text>
         <Text fontSize="s3" fontWeight="400">
-          {' '}
-          {transactionItem?.amount}
+          {amountConverter(transactionItem?.amount ?? 0)}
         </Text>
       </Box>
     </Box>
