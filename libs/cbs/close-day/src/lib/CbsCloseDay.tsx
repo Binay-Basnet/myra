@@ -58,9 +58,7 @@ export const CbsCloseDay = () => {
 
     if (!eodStatus) return true;
 
-    const temp = Object.keys(eodStatus).find((key) => eodStatus[key] === EodState.Ongoing);
-
-    if (temp) return true;
+    if (Object.values(eodStatus).find((value) => value === EodState.Ongoing)) return true;
 
     return false;
   };
