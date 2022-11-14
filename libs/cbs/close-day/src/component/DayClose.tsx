@@ -83,6 +83,7 @@ export const DayClose = () => {
         return <Icon color="danger.500" as={IoClose} />;
     }
   };
+
   const eodStatusText = (status: EodState | undefined | null) => {
     let statusText = '';
     switch (status) {
