@@ -12668,7 +12668,7 @@ export type DeleteCoaMutationVariables = Exact<{
 }>;
 
 
-export type DeleteCoaMutation = { settings: { chartsOfAccount?: { account?: { delete: { recordId: string } } | null } | null } };
+export type DeleteCoaMutation = { settings: { chartsOfAccount?: { account?: { delete: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
 
 export type SetCooperativeDataMutationVariables = Exact<{
   id: Scalars['ID'];
@@ -15166,12 +15166,15 @@ export const DeleteCoaDocument = `
       account {
         delete(id: $id) {
           recordId
+          error {
+            ...MutationError
+          }
         }
       }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useDeleteCoaMutation = <
       TError = unknown,
       TContext = unknown
