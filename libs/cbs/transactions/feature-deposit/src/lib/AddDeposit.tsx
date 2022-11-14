@@ -544,6 +544,7 @@ export const AddDeposit = () => {
                       memberDetails={{
                         name: memberDetailData?.name,
                         avatar: memberDetailData?.profilePicUrl ?? '',
+                        code: memberDetailData?.code,
                         memberID: memberDetailData?.id,
                         gender: memberDetailData?.gender,
                         age: memberDetailData?.age,

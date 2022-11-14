@@ -53,6 +53,7 @@ const cashOptions: Record<string, string> = {
   '5': CashValue.Cash_5,
   '2': CashValue.Cash_2,
   '1': CashValue.Cash_1,
+  MemberCard,
 };
 
 export const AddBulkDeposit = () => {
@@ -190,6 +191,7 @@ export const AddBulkDeposit = () => {
                       memberDetails={{
                         name: memberDetailData?.name,
                         avatar: memberDetailData?.profilePicUrl ?? '',
+                        code: memberDetailData?.code,
                         memberID: memberDetailData?.id,
                         gender: memberDetailData?.gender,
                         age: memberDetailData?.age,

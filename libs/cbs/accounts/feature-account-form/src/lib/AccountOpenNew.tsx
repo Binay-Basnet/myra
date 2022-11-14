@@ -585,6 +585,7 @@ export const AccountOpenNew = () => {
                   name: memberDetailData?.name,
                   avatar: memberDetailData?.profilePicUrl ?? '',
                   memberID: memberDetailData?.id,
+                  code: memberDetailData?.code,
                   gender: memberDetailData?.gender,
                   age: memberDetailData?.age,
                   maritalStatus: memberDetailData?.maritalStatus,

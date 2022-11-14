@@ -310,6 +310,7 @@ export const NewLoanApplication = () => {
               <MemberCard
                 memberDetails={{
                   name: memberDetailData?.name,
+                  code: memberDetailData?.code,
                   avatar: memberDetailData?.profilePicUrl ?? '',
                   memberID: memberDetailData?.id,
                   gender: memberDetailData?.gender,

@@ -306,6 +306,7 @@ export const NewAccountTransfer = () => {
                     <MemberCard
                       memberDetails={{
                         name: memberDetailData?.name,
+                        code: memberDetailData?.code,
                         avatar: memberDetailData?.profilePicUrl ?? '',
                         memberID: memberDetailData?.id,
                         gender: memberDetailData?.gender,
@@ -350,6 +351,7 @@ export const NewAccountTransfer = () => {
                           cardTitle={t['newAccountTransferReceipentMemberInfo']}
                           memberDetails={{
                             name: destMemberDetailData?.name,
+                            code: destMemberDetailData?.code,
                             avatar: destMemberDetailData?.profilePicUrl ?? '',
                             memberID: destMemberDetailData?.id,
                             gender: destMemberDetailData?.gender,

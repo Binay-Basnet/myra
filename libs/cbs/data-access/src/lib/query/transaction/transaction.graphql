@@ -121,6 +121,7 @@ query transactionDepositDetail($transactionId: ID!) {
         id
         member {
           id
+          code
           objState
           code
           type
@@ -161,6 +162,7 @@ query transactionWithdrawDetail($transactionId: ID!) {
         id
         member {
           id
+          code
           name
           profilePic
           profilePicUrl
@@ -275,6 +277,7 @@ query loanRepaymentDetail($paymentId: ID!) {
         repaymentId
         member {
           id
+          code
           name
           profilePicUrl
         }

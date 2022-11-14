@@ -32,6 +32,7 @@ export interface MemberCardProps {
   isInline?: boolean;
   memberDetails: {
     name?: string | undefined | null;
+    code?: string | null;
     avatar: string | undefined;
     memberID?: string | undefined | null;
     gender?: string | undefined | null;
@@ -300,7 +301,7 @@ export const MemberCard = ({
               </Popover>
 
               <Text fontSize="s3" fontWeight="400" color="gray.800">
-                {memberDetails.memberID}
+                {memberDetails.code}
               </Text>
               <Text fontSize="s3" fontWeight="400" color="gray.800">
                 {memberMeta.join(' | ')}
