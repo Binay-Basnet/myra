@@ -19,6 +19,9 @@ mutation deleteCOA($id: ID!) {
       account {
         delete(id: $id) {
           recordId
+          error {
+            ...MutationError
+          }
         }
       }
     }
