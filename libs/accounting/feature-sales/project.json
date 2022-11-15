@@ -1,4 +1,5 @@
 {
+  "name": "accounting-feature-sales",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/accounting/feature-sales/src",
   "projectType": "library",

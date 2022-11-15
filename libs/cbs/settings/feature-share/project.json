@@ -1,4 +1,5 @@
 {
+  "name": "cbs-settings-feature-share",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/settings/feature-share/src",
   "projectType": "library",

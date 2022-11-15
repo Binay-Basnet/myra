@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from "next/legacy/image";
 
 import { useAppSelector } from '@coop/ebanking/data-access';
 import { Box } from '@coop/shared/ui';

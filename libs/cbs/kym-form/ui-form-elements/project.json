@@ -1,4 +1,5 @@
 {
+  "name": "cbs-kym-form-ui-form-elements",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/kym-form/ui-form-elements/src",
   "projectType": "library",

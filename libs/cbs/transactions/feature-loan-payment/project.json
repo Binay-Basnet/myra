@@ -1,4 +1,5 @@
 {
+  "name": "cbs-transactions-feature-loan-payment",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/transactions/feature-loan-payment/src",
   "projectType": "library",

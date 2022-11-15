@@ -1,4 +1,5 @@
 {
+  "name": "ebanking-ui-cards",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/ebanking/ui-cards/src",
   "projectType": "library",

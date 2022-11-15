@@ -1,4 +1,5 @@
 {
+  "name": "accounting-feature-accounting",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/accounting/feature-accounting/src",
   "projectType": "library",

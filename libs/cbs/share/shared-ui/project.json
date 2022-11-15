@@ -1,4 +1,5 @@
 {
+  "name": "cbs-share-shared-ui",
   "sourceRoot": "libs/cbs/share/shared-ui/src",
   "projectType": "library",
   "tags": [],

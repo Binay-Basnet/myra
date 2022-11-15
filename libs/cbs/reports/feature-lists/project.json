@@ -1,4 +1,5 @@
 {
+  "name": "cbs-reports-feature-lists",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/reports/feature-lists/src",
   "projectType": "library",

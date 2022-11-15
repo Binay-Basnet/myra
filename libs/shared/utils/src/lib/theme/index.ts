@@ -20,6 +20,9 @@ export const theme = extendTheme({
       ':not(.chakra-dont-set-collapse) > .chakra-collapse': {
         overflow: 'initial !important',
       },
+      a: {
+        display: 'flex',
+      },
     }),
   },
   ...foundations,

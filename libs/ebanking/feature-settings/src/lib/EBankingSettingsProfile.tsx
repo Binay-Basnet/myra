@@ -1,5 +1,5 @@
 import { AiOutlineDownload } from 'react-icons/ai';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import dayjs from 'dayjs';
 
 import { formatAddress } from '@coop/cbs/utils';

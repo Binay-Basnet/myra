@@ -1,4 +1,5 @@
 {
+  "name": "myra",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/myra",
   "projectType": "application",

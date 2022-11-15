@@ -1,4 +1,5 @@
 {
+  "name": "shared-table",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/table/src",
   "projectType": "library",
