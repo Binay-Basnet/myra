@@ -19,7 +19,13 @@ import {
   useSetAccountDocumentDataMutation,
   useSetAccountOpenDataMutation,
 } from '@coop/cbs/data-access';
-import { FormAgentSelect, FormCheckbox, FormInput, FormSelect } from '@coop/shared/form';
+import {
+  FormAgentSelect,
+  FormAmountInput,
+  FormCheckbox,
+  FormInput,
+  FormSelect,
+} from '@coop/shared/form';
 import {
   Alert,
   asyncToast,
@@ -256,7 +262,7 @@ export const AccountOpenNew = () => {
 
   const returnAmount = Number(totalCashPaid) - totalDeposit;
 
-  const chequeAmount = watch('openingPayment.cheque.amount');
+  const withdrawSlipAmount = watch('openingPayment.withdrawSlip.amount');
 
   const bankVoucherAmount = watch('openingPayment.bankVoucher.amount');
 
@@ -284,8 +290,8 @@ export const AccountOpenNew = () => {
     }
 
     if (
-      selectedPaymentMode === DepositPaymentType.Cheque &&
-      Number(chequeAmount ?? 0) < Number(totalDeposit)
+      selectedPaymentMode === DepositPaymentType.WithdrawSlip &&
+      Number(withdrawSlipAmount ?? 0) < Number(totalDeposit)
     ) {
       return true;
     }
@@ -303,7 +309,7 @@ export const AccountOpenNew = () => {
         updatedData = {
           ...values,
           openingPayment: {
-            ...omit({ ...values?.openingPayment }, ['cheque', 'bankVoucher']),
+            ...omit({ ...values?.openingPayment }, ['withdrawSlip', 'bankVoucher']),
             cash: {
               ...values.openingPayment.cash,
               cashPaid: values.openingPayment.cash?.cashPaid as string,
@@ -324,18 +330,18 @@ export const AccountOpenNew = () => {
         updatedData = {
           ...values,
           openingPayment: {
-            ...omit(values?.openingPayment, ['cheque', 'cash']),
+            ...omit(values?.openingPayment, ['withdrawSlip', 'cash']),
             bankVoucher: { ...values.openingPayment.bankVoucher },
           },
         };
       }
 
-      if (values.openingPayment?.payment_type === DepositPaymentType.Cheque) {
+      if (values.openingPayment?.payment_type === DepositPaymentType.WithdrawSlip) {
         updatedData = {
           ...values,
           openingPayment: {
             ...omit(values?.openingPayment, ['cash', 'bankVoucher']),
-            cheque: { ...values.openingPayment.cheque },
+            withdrawSlip: { ...values.openingPayment.withdrawSlip },
           },
         };
       }
@@ -373,6 +379,10 @@ export const AccountOpenNew = () => {
         loading: 'Opening new Account',
       },
       onSuccess: () => {
+        if (values.openingPayment?.payment_type === DepositPaymentType.WithdrawSlip) {
+          queryClient.invalidateQueries('getAvailableSlipsList');
+          queryClient.invalidateQueries('getPastSlipsList');
+        }
         if (redirectPath) {
           router.push(String(redirectPath));
           queryClient.invalidateQueries('getAccountCheck');
@@ -534,11 +544,7 @@ export const AccountOpenNew = () => {
                       </Box>
                     )}
                     <Grid templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
-                      <FormInput
-                        name="initialDepositAmount"
-                        label="Initial Deposit Amount"
-                        type="number"
-                      />
+                      <FormAmountInput name="initialDepositAmount" label="Initial Deposit Amount" />
                     </Grid>
                     {/* <Agent /> */}
                     <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
@@ -579,6 +585,7 @@ export const AccountOpenNew = () => {
                   name: memberDetailData?.name,
                   avatar: memberDetailData?.profilePicUrl ?? '',
                   memberID: memberDetailData?.id,
+                  code: memberDetailData?.code,
                   gender: memberDetailData?.gender,
                   age: memberDetailData?.age,
                   maritalStatus: memberDetailData?.maritalStatus,

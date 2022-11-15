@@ -150,3 +150,14 @@ mutation setOfficialUse(
     }
   }
 }
+
+mutation deleteDraft($memberId: ID!) {
+  members {
+    deleteDraft(memberId: $memberId) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

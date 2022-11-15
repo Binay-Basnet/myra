@@ -16,7 +16,7 @@ export const RecentTransactions = () => {
     memberDetails?.data?.members?.memberOverview?.data?.overview?.recentTransactions;
 
   return (
-    <Box p="s16" bg="white">
+    <Box p="s16" bg="white" borderRadius="br2">
       <Box display="flex" justifyContent="space-between" alignItems="center" h="50px">
         <Text fontWeight="600" fontSize="r1">
           Recent Transactions{' '}

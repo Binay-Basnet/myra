@@ -13,13 +13,14 @@ interface ITreeHeaderProps {
   data: CoaTree;
 }
 
-function TreeHeader(props: ITreeHeaderProps) {
+const TreeHeader = ({ data }: ITreeHeaderProps) => {
   const { isOpen } = useAccordion();
+
   const router = useRouter();
 
   return (
     <Box display="flex" gap="s8" ml="-3px" alignItems="center">
-      {props.data.children.length !== 0 ? (
+      {data.children.length !== 0 ? (
         <Icon
           size="sm"
           as={BsFillCaretRightFill}
@@ -33,11 +34,12 @@ function TreeHeader(props: ITreeHeaderProps) {
 
       <Box display="flex" alignItems="center" gap="s8" role="group">
         <Text fontWeight="bold" fontSize="14px">
-          {props.data.accountCode}
+          {data.accountCode}
         </Text>
         <Text fontWeight="400" fontSize="14px" color="gray.800">
-          {props.data?.name?.local}
+          {data?.name?.local}
         </Text>
+
         <Button
           variant="link"
           py="0"
@@ -48,7 +50,7 @@ function TreeHeader(props: ITreeHeaderProps) {
           _groupHover={{ display: 'flex' }}
           onClick={() =>
             router.push(
-              `/settings/general/charts-of-accounts/add-new-account?under=${props.data.accountCode}`
+              `/settings/general/charts-of-accounts/add-new-account?under=${data.accountCode}`
             )
           }
         >
@@ -58,6 +60,6 @@ function TreeHeader(props: ITreeHeaderProps) {
       </Box>
     </Box>
   );
-}
+};
 
 export default TreeHeader;

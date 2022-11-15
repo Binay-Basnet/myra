@@ -14,6 +14,7 @@ query getDepositListData($filter: AccountTransactionFilter, $pagination: Paginat
           agentName
           agentId
           profilePicUrl
+          agentPicUrl
         }
         cursor
       }
@@ -120,6 +121,7 @@ query transactionDepositDetail($transactionId: ID!) {
         id
         member {
           id
+          code
           objState
           code
           type
@@ -160,6 +162,7 @@ query transactionWithdrawDetail($transactionId: ID!) {
         id
         member {
           id
+          code
           name
           profilePic
           profilePicUrl
@@ -274,6 +277,7 @@ query loanRepaymentDetail($paymentId: ID!) {
         repaymentId
         member {
           id
+          code
           name
           profilePicUrl
         }
@@ -303,6 +307,19 @@ query loanRepaymentDetail($paymentId: ID!) {
         totalDebit
         totalCredit
       }
+    }
+  }
+}
+
+query getEODStatus {
+  transaction {
+    eodStatus {
+      interestBooking
+      interestPosting
+      transactionDate
+      maturity
+      dormancy
+      cashInVault
     }
   }
 }

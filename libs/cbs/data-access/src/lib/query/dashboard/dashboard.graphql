@@ -1,0 +1,50 @@
+query getDashboardDayInfo {
+  dashboard {
+    myDayInfo {
+      data {
+        deposit {
+          todayValue
+          percent
+          noOfTransaction
+        }
+        withdraw {
+          todayValue
+          percent
+          noOfTransaction
+        }
+        cashInHand {
+          todayValue
+          percent
+          fromVault
+        }
+      }
+    }
+  }
+}
+
+query getDashboardInfo {
+  dashboard {
+    dashboardInfo {
+      data {
+        pendingRequest {
+          memberRequestCount
+          withdrawSlipCount
+          loanApplicationRequest
+          loanDisbursementRequest
+        }
+        branchInfo {
+          membersToApprove
+          totalMembers
+          percentofMemberRequest
+          totalAccounts
+          percentOfAccounts
+        }
+        coopInfo {
+          totalMembers
+          totalShareIssued
+          totalBranch
+        }
+      }
+    }
+  }
+}

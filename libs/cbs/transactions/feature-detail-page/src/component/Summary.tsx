@@ -21,6 +21,10 @@ type SummaryProps = {
   detailPage?: 'deposit' | 'withdraw' | 'accountTransfer' | 'agentTransaction' | 'loanRepayment';
 };
 
+const agentSlug = {
+  AGENT: 'Market Representative',
+};
+
 export const Summary = ({ summary, detailPage }: SummaryProps) => {
   const { t } = useTranslation();
 
@@ -36,37 +40,40 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
       {(detailPage === 'accountTransfer' ||
         detailPage === 'deposit' ||
         detailPage === 'withdraw') && (
-        <>
-          <Box w="100%" display="flex" flexDirection="column">
-            <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-70">
-              #{summary.transactionId}
-            </Text>
-            <Text fontSize="r1" fontWeight="Medium" color="neutralColorLight.Gray-80">
-              {summary.transactionDate}
-            </Text>
-            {detailPage === 'accountTransfer' ? (
-              <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-80">
-                {summary.method === TransferType.Self && t['transDetailSelf']}
-                {summary.method === TransferType.Member && t['transDetailMembertoMember']}
+        <Box gap="s8" display="flex" flexDirection="column" width="full">
+          <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-70">
+            #{summary.transactionId}
+          </Text>
+          <Box gap="s8" display="flex" width="full" justifyContent="space-between">
+            <Box gap="s4" w="100%" display="flex" flexDirection="column">
+              <Text fontSize="r1" fontWeight="Medium" color="neutralColorLight.Gray-80">
+                {summary.transactionDate}
               </Text>
-            ) : (
-              <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">
-                {t['transDetailDeposit']} - {summary.method}
+              {detailPage === 'accountTransfer' ? (
+                <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-80">
+                  {summary.method === TransferType.Self && t['transDetailSelf']}
+                  {summary.method === TransferType.Member && t['transDetailMembertoMember']}
+                </Text>
+              ) : (
+                <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">
+                  {t['transDetailDeposit']} -{' '}
+                  {summary.method === 'AGENT' ? agentSlug[summary.method] : summary.method}
+                </Text>
+              )}
+            </Box>
+            <Box gap="s4" display="flex" flexDirection="column">
+              <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
+                {summary.amount}
               </Text>
-            )}
+              <Tags
+                type="chip"
+                label={summary.paymentMode ?? ''}
+                tagColor="primary.100"
+                labelColor="success.500"
+              />
+            </Box>
           </Box>
-          <Box display="flex" flexDirection="column">
-            <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
-              {summary.amount}
-            </Text>
-            <Tags
-              type="chip"
-              label={summary.paymentMode ?? ''}
-              tagColor="primary.100"
-              labelColor="success.500"
-            />
-          </Box>
-        </>
+        </Box>
       )}
 
       {detailPage === 'agentTransaction' && (

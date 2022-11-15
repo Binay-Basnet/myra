@@ -33,8 +33,6 @@ export const UpcomingInstallments = () => {
   return (
     <DetailsCard title="Upcoming Payments" bg="white" hasTable>
       <Table
-        // variant="report"
-        // size="small"
         isStatic
         showFooter
         data={data}

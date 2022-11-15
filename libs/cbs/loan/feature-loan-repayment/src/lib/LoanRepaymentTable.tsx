@@ -103,7 +103,7 @@ export const CBSLoanRepaymentList = () => {
   return (
     <>
       <Box position="sticky" top="110px" zIndex={3}>
-        <PageHeader heading="Loan Repayment List" />
+        <PageHeader heading="Loan Repayment" />
       </Box>
 
       <Table

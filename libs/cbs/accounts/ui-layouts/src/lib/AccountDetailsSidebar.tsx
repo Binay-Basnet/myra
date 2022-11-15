@@ -10,7 +10,7 @@ import {
   Icon,
   Text,
 } from '@coop/shared/ui';
-import { copyToClipboard, useAccountDetails } from '@coop/shared/utils';
+import { amountConverter, copyToClipboard, useAccountDetails } from '@coop/shared/utils';
 
 const accountTypes = {
   [NatureOfDepositProduct.Saving]: 'Saving Account',
@@ -26,28 +26,6 @@ export const AccountDetailsSidebar = () => {
 
   return (
     <>
-      <Box
-        borderBottom="1px"
-        borderBottomColor="border.layout"
-        display="flex"
-        flexDirection="column"
-      >
-        <DetailPageMemberCard
-          id={accountDetails?.accountId as string}
-          name={accountDetails?.member?.name?.local as string}
-          profilePicUrl={accountDetails?.member?.profilePicUrl ?? ''}
-        />
-      </Box>
-
-      <Box borderBottom="1px" borderBottomColor="border.layout" p="s16" display="flex" gap="s4">
-        <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
-          Created Date:
-        </Text>
-        <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
-          {accountDetails?.accountOpenDate}
-        </Text>
-      </Box>
-
       <Box
         borderBottom="1px"
         borderBottomColor="border.layout"
@@ -92,10 +70,31 @@ export const AccountDetailsSidebar = () => {
             </Text>
 
             <Text fontSize="r2" fontWeight={500} color="neutralColorLight.Gray-80">
-              {accountDetails?.accountBalance ?? 0}
+              {amountConverter(accountDetails?.accountBalance ?? 0)}
             </Text>
           </Box>
         </Box>
+      </Box>
+
+      <Box borderBottom="1px" borderBottomColor="border.layout" p="s16" display="flex" gap="s4">
+        <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
+          Created Date:
+        </Text>
+        <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-70">
+          {accountDetails?.accountOpenDate}
+        </Text>
+      </Box>
+
+      <Box
+        borderBottom="1px"
+        borderBottomColor="border.layout"
+        display="flex"
+        flexDirection="column"
+      >
+        <DetailPageMemberCard
+          name={accountDetails?.member?.name?.local as string}
+          profilePicUrl={accountDetails?.member?.profilePicUrl ?? ''}
+        />
       </Box>
 
       <DetailPageTabs

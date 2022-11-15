@@ -14,6 +14,29 @@ query getMe {
             id
             name
           }
+          organization {
+            basicDetails {
+              name
+              logo
+            }
+            contactDetails {
+              website
+              phoneNumber
+              email
+            }
+            address {
+              district
+              wardNo
+              state
+              locality
+              localGovernment
+              houseNo
+            }
+            registrationDetails {
+              regdNo
+              panOrVat
+            }
+          }
         }
         preference {
           language

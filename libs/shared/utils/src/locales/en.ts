@@ -8,7 +8,7 @@ const en: Record<string, string> = {
   next: 'Next',
   save: 'Save',
   saveDraft: 'Save Draft',
-  formDetails: 'Form Details saved to draft',
+  formDetails: 'Form details saved to draft',
   pinOnMap: 'Pin on Map',
   id: 'ID',
   memberSince: 'Member since',
@@ -213,7 +213,7 @@ const en: Record<string, string> = {
   accountNavDraft: 'Draft',
 
   accountList: 'Saving Accounts',
-  accountClose: 'Close Account',
+  accountClose: 'Closed Accounts',
   accountReport: 'Account Reports',
 
   // Inventory Page TODO ( Update Translations )
@@ -288,15 +288,19 @@ const en: Record<string, string> = {
   memberListTableViewMemberProfile: 'View Member Profile',
   memberListTableEditMember: 'Edit Member',
   memberListTableMakeInactive: 'Make Inactive',
-  memberListTableMemberID: 'Member Code',
+  memberListTableMakeActive: 'Make Active',
+  memberListTableMemberId: 'Member Id',
+  memberListTableMemberCode: 'Member Code',
   memberListTableName: 'Name',
   memberListTableAddress: 'Address',
   memberListTablePhoneNo: 'Phone No.',
   memberListDateJoined: 'Date Joined',
+  memberDeleteMember: 'Delete member',
+  memberDeleteConfirm: 'Are you sure you want to delete this member?',
 
   // share balance table
   shareBalanceTable: 'Share Balance',
-  shareTableMemberId: 'Member ID',
+  shareTableMemberId: 'Member Code',
   shareTableName: 'Name',
   shareTableShareCount: 'Share Count',
 
@@ -304,7 +308,7 @@ const en: Record<string, string> = {
   shareRegisterTable: 'Share Register',
   shareRegisterDate: 'Date',
   shareRegisterType: 'Type',
-  shareRegisterTableMemberID: 'Member ID',
+  shareRegisterTableMemberID: 'Member Code',
   shareRegisterTableName: 'Name',
   shareRegisterTableNameToFrom: 'From - To',
   shareRegisterTableNameShareDr: 'Returned',
@@ -566,7 +570,7 @@ const en: Record<string, string> = {
   settingsDepositIroAddress: 'IRO Address',
   settingsDepositIroCode: 'IRO Code',
   settingsDepositProducts: 'Saving Products',
-  settingsDepositProductNew: 'New Deposit Product',
+  settingsDepositProductNew: 'New Saving Product',
 
   // settings LOAN
   settingsLoanGeneral: 'General',
@@ -3451,7 +3455,7 @@ const en: Record<string, string> = {
   accountTransferListTransactionId: 'Transaction ID',
   accountTransferListTransactionType: 'Transaction Type',
   accountTransferListAmount: 'Amount',
-  accountTransferListAccountTransferList: 'Account Transfer List',
+  accountTransferListAccountTransferList: 'Account Transfer',
   accountTransferListNewAccountTransfer: 'New Account Transfer',
   accountTransferListSearch: 'Search',
 

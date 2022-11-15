@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
@@ -9,6 +10,7 @@ import {
   TransferInput,
   TransferType,
   useGetAccountTableListQuery,
+  useGetAvailableSlipsListQuery,
   useSetAccountTransferDataMutation,
   WithdrawWith,
 } from '@coop/cbs/data-access';
@@ -17,7 +19,13 @@ import {
   ContainerWithDivider,
   InputGroupContainer,
 } from '@coop/cbs/transactions/ui-containers';
-import { FormInput, FormSwitchTab, FormTextArea } from '@coop/shared/form';
+import {
+  FormAmountInput,
+  FormInput,
+  FormSelect,
+  FormSwitchTab,
+  FormTextArea,
+} from '@coop/shared/form';
 import {
   asyncToast,
   Box,
@@ -42,6 +50,8 @@ type AccountTransferForm = TransferInput & { destMemberId: string };
 export const NewAccountTransfer = () => {
   const { t } = useTranslation();
 
+  const queryClient = useQueryClient();
+
   const accountTypes = {
     [NatureOfDepositProduct.Current]: t['depositProductCurrent'],
     [NatureOfDepositProduct.RecurringSaving]: t['addDepositRecurringSavingAccount'],
@@ -50,8 +60,8 @@ export const NewAccountTransfer = () => {
   };
 
   const withdrawTypes = [
-    { label: t['addWithdrawCheque'], value: WithdrawWith.Cheque },
     { label: t['addWithdrawWithdrawSlip'], value: WithdrawWith.WithdrawSlip },
+    { label: 'Counter Slip', value: WithdrawWith.CounterSlip },
   ];
 
   const transferTypes = [
@@ -64,7 +74,7 @@ export const NewAccountTransfer = () => {
   const methods = useForm<AccountTransferForm>({
     defaultValues: {
       transferType: TransferType.Self,
-      withdrawWith: WithdrawWith.Cheque,
+      withdrawWith: WithdrawWith.WithdrawSlip,
     },
   });
 
@@ -92,7 +102,7 @@ export const NewAccountTransfer = () => {
       srcAccountId: '',
       amount: '',
       transferType: TransferType.Self,
-      withdrawWith: WithdrawWith.Cheque,
+      withdrawWith: WithdrawWith.WithdrawSlip,
     });
   }, [memberId]);
 
@@ -127,6 +137,20 @@ export const NewAccountTransfer = () => {
 
   const withdrawn = watch('withdrawWith');
 
+  const { data: availableSlipsListQueryData } = useGetAvailableSlipsListQuery(
+    { accountId: srcAccountId },
+    { enabled: !!srcAccountId }
+  );
+
+  const availableSlipListOptions = useMemo(
+    () =>
+      availableSlipsListQueryData?.withdrawSlip?.listAvailableSlips?.data?.map((withdrawSlip) => ({
+        label: String(withdrawSlip?.slipNumber).padStart(10, '0'),
+        value: withdrawSlip?.slipNumber as string,
+      })) ?? [],
+    [availableSlipsListQueryData]
+  );
+
   const sourceAccount = useMemo(
     () =>
       accountListData?.account?.list?.edges?.find((account) => account.node?.id === srcAccountId)
@@ -152,7 +176,13 @@ export const NewAccountTransfer = () => {
         success: t['newAccountTransferAccountTransferAdded'],
         loading: t['newAccountTransferAddingAccountTransfer'],
       },
-      onSuccess: () => router.push('/transactions/account-transfer/list'),
+      onSuccess: () => {
+        if (values.withdrawWith === WithdrawWith.WithdrawSlip) {
+          queryClient.invalidateQueries('getAvailableSlipsList');
+          queryClient.invalidateQueries('getPastSlipsList');
+        }
+        router.push('/transactions/account-transfer/list');
+      },
       promise: mutateAsync({ data: omit(values, ['destMemberId']) }),
     });
   };
@@ -238,18 +268,19 @@ export const NewAccountTransfer = () => {
                           options={withdrawTypes}
                         />
 
-                        {withdrawn === WithdrawWith.Cheque && (
+                        {withdrawn === WithdrawWith.WithdrawSlip && (
                           <InputGroupContainer>
-                            <FormInput name="chequeNo" label={t['newAccountTransferChequeNo']} />
+                            <FormSelect
+                              name="withdrawSlipNo"
+                              label="Withdraw Slip No"
+                              options={availableSlipListOptions}
+                            />
                           </InputGroupContainer>
                         )}
 
-                        {withdrawn === WithdrawWith.WithdrawSlip && (
+                        {withdrawn === WithdrawWith.CounterSlip && (
                           <InputGroupContainer>
-                            <FormInput
-                              name="withdrawSlipNo"
-                              label={t['newAccountTransferWithdrawSlipNo']}
-                            />
+                            <FormInput name="counterSlipNo" label="Counter Slip No" />
                           </InputGroupContainer>
                         )}
                       </BoxContainer>
@@ -258,12 +289,9 @@ export const NewAccountTransfer = () => {
                     {srcAccountId && transferType && (
                       <BoxContainer>
                         <InputGroupContainer>
-                          <FormInput
-                            type="number"
-                            min={0}
+                          <FormAmountInput
                             name="amount"
                             label={t['newAccountTransferTransferAmount']}
-                            textAlign="right"
                           />
                         </InputGroupContainer>
 
@@ -278,6 +306,7 @@ export const NewAccountTransfer = () => {
                     <MemberCard
                       memberDetails={{
                         name: memberDetailData?.name,
+                        code: memberDetailData?.code,
                         avatar: memberDetailData?.profilePicUrl ?? '',
                         memberID: memberDetailData?.id,
                         gender: memberDetailData?.gender,
@@ -322,6 +351,7 @@ export const NewAccountTransfer = () => {
                           cardTitle={t['newAccountTransferReceipentMemberInfo']}
                           memberDetails={{
                             name: destMemberDetailData?.name,
+                            code: destMemberDetailData?.code,
                             avatar: destMemberDetailData?.profilePicUrl ?? '',
                             memberID: destMemberDetailData?.id,
                             gender: destMemberDetailData?.gender,

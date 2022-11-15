@@ -8,6 +8,7 @@ import {
 import { BsBook, BsFacebook, BsHeart, BsInstagram, BsTwitter } from 'react-icons/bs';
 import { CgShortcut } from 'react-icons/cg';
 import { TbMessageDots } from 'react-icons/tb';
+import { useRouter } from 'next/router';
 import isEmpty from 'lodash/isEmpty';
 
 import {
@@ -53,30 +54,40 @@ const whatsNewData = {
       'Transaction Detail Page (Overview) of Deposit, Withdraw',
       'Alternative Channel',
       'Settings-User-Teller Creation',
+      'Reports - Share Statement, Loan Statement, Genral Ledger, Member Classification & Saving Report',
     ],
   },
   bugsSquashed: {
     title: 'Bug Squashed',
     data: [
-      // 'Transactions fixes related to amount  populate, validation in payment mode.',
-      // 'Loan product product changes and fixes are done.',
-      // 'User role names are populated in user role details.',
-      // 'Submit Text changed in different sections of pages, share register table details',
-      // 'Agent details are fixed up.',
-      // 'Notfound pages are fixed.',
+      'Editing user email needs no verification, changing email to the same as other members doesn’t return error information.',
+      'In loan products premature penalty is set optional.',
+      'Loan application criteria are fixed.',
+      'Error for longer Product name. Error in saving.',
+      'Share Report name in table',
+      'The payable amount is 2000 but is accepting an amount less than 2000  in share issue.',
+      'Disbursement method: default account disbursement. Also, disbursed amount to be autofill',
+      'Loan product active and inactive',
+      'Deposit product as active and inactive.',
+      'Transaction should have default effect on cash',
     ],
   },
   knownBugs: {
     title: 'Known Bugs',
     data: [
-      // 'Date calendar in Nepali to be implemented, Drop down list might not be relevant.',
-      // 'Multiple upload on edit is not applicable, Some input contains zero value as default.',
-      // 'Every table has a search field that needs to be implemented.',
-      // 'Validation shows, alerts, and toast messages still need to be implemented.',
-      // 'Nepali translations are still yet to be completed and fixed.',
-      // 'Save drafts are not implemented, More than 100 shares cannot be purchased as well as returned.',
-      // 'Validation in the audit log and many other pages are remaining.',
-      // 'Preview page of kym form needs to be implemented. ',
+      'Changing the Market Representative role did not remove the member from the Market Representative list.',
+      'Pagination in table of Loan Products - 900009',
+      'Global search needs to be enhanced properly.',
+      'calendar error for date of birth selection',
+      'Photos size validation (maximum supported: below 1MB OR change size by system itself)',
+      'New Education Qualification option not being saved',
+      'One user can only be logged in at one location (no simultaneous multiple login: if done so, older location should be logged out)',
+      'Phone number and email validation error',
+      'Default Loan Interest validation according to min-max range',
+      'Audit log as work in progress.',
+      'Share Balance Export in excel(Share Register also same issue)',
+      'Types of Members Selection Issue.',
+      'Kym membership payment page might crash sometimes.',
     ],
   },
 };
@@ -115,8 +126,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 2</Text>
-          <Text fontSize="s3">November 5, 2022</Text>
+          <Text fontSize="r2">Version 1.0.5</Text>
+          <Text fontSize="s3">November 11, 2022</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>
@@ -176,6 +187,7 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
 
 export const FloatingShortcutButton = () => {
   const { t } = useTranslation();
+  const router = useRouter();
   const helpOptions = [
     {
       title: t['shortcutsModalGeneral'],
@@ -262,6 +274,7 @@ export const FloatingShortcutButton = () => {
                 px="s8"
                 cursor="pointer"
                 alignItems="center"
+                onClick={() => router.push('https://docs.migration.myraerp.com/')}
               >
                 <Icon as={BsBook} />
                 <Text fontSize="s3" fontWeight="500" color="gray.600">

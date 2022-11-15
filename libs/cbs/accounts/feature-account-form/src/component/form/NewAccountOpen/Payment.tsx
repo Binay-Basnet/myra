@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import {
@@ -7,6 +7,7 @@ import {
   ObjState,
   RootState,
   useAppSelector,
+  useGetAvailableSlipsListQuery,
   useGetCoaBankListQuery,
 } from '@coop/cbs/data-access';
 import {
@@ -86,8 +87,8 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
       value: DepositPaymentType.Cash,
     },
     {
-      label: t['depositPaymentCheque'],
-      value: DepositPaymentType.Cheque,
+      label: 'Withdraw Slip',
+      value: DepositPaymentType.WithdrawSlip,
     },
     {
       label: t['depositPaymentBankVoucher'],
@@ -115,16 +116,16 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
   useEffect(() => {
     if (totalAmount) {
       setValue('openingPayment.bankVoucher.amount', String(totalAmount));
-      setValue('openingPayment.cheque.amount', String(totalAmount));
+      setValue('openingPayment.withdrawSlip.amount', String(totalAmount));
       setValue('openingPayment.cash.cashPaid', String(totalAmount));
     }
   }, [totalAmount]);
 
   const memberId = watch('memberId');
 
-  const isDiffMember = watch('openingPayment.cheque.isDifferentMember');
+  const isDiffMember = watch('openingPayment.withdrawSlip.isDifferentMember');
 
-  const dmemberId = watch('openingPayment.cheque.memberId');
+  const dmemberId = watch('openingPayment.withdrawSlip.memberId');
 
   const selectedPaymentMode = watch('openingPayment.payment_type');
 
@@ -142,6 +143,22 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
     label: item?.name?.local as string,
     value: item?.id as string,
   }));
+
+  const withdrawSlipAccountId = watch('openingPayment.withdrawSlip.accId');
+
+  const { data: availableSlipsListQueryData } = useGetAvailableSlipsListQuery(
+    { accountId: withdrawSlipAccountId },
+    { enabled: !!withdrawSlipAccountId }
+  );
+
+  const availableSlipListOptions = useMemo(
+    () =>
+      availableSlipsListQueryData?.withdrawSlip?.listAvailableSlips?.data?.map((withdrawSlip) => ({
+        label: String(withdrawSlip?.slipNumber).padStart(10, '0'),
+        value: withdrawSlip?.slipNumber as string,
+      })) ?? [],
+    [availableSlipsListQueryData]
+  );
 
   const denominationTotal =
     denominations?.reduce(
@@ -213,34 +230,38 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
           </InputGroupContainer>
         )}
 
-        {selectedPaymentMode === DepositPaymentType.Cheque && (
+        {selectedPaymentMode === DepositPaymentType.WithdrawSlip && (
           <InputGroupContainer>
             <GridItem colSpan={3}>
               <FormCheckbox
-                name="openingPayment.cheque.isDifferentMember"
-                label="Cheque is from different member"
+                name="openingPayment.withdrawSlip.isDifferentMember"
+                label="Withdraw slip is from different member"
               />
             </GridItem>
 
             {isDiffMember && (
               <GridItem colSpan={3}>
-                <FormMemberSelect name="openingPayment.cheque.memberId" label="Member" />
+                <FormMemberSelect name="openingPayment.withdrawSlip.memberId" label="Member" />
               </GridItem>
             )}
 
             <GridItem colSpan={2}>
               <FormAccountSelect
-                name="openingPayment.cheque.accId"
+                name="openingPayment.withdrawSlip.accId"
                 memberId={isDiffMember ? dmemberId : memberId}
                 label="Account Name"
                 filterBy={ObjState.Active}
               />
             </GridItem>
 
-            <FormInput name="openingPayment.cheque.chequeNo" label={t['depositePaymentChequeNo']} />
+            <FormSelect
+              name="openingPayment.withdrawSlip.withdrawSlipNo"
+              label="Withdraw Slip No"
+              options={availableSlipListOptions}
+            />
 
             <FormAmountInput
-              name="openingPayment.cheque.amount"
+              name="openingPayment.withdrawSlip.amount"
               label={t['depositPaymentAmount']}
             />
           </InputGroupContainer>

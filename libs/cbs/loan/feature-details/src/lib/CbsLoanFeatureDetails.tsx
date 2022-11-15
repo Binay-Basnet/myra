@@ -27,7 +27,7 @@ export const CBSLoanDetails = ({ showStats = true }: CBSLoanDetailsProps) => (
       <LoanDetailsSidebar />
     </Box>
 
-    <Box ml="320px" bg="white" p="s16" display="flex" flexDir="column" gap="s16">
+    <Box ml="320px" bg="background.500" p="s16" display="flex" flexDir="column" gap="s16">
       <LoanGeneralInformation />
       <LoanDetails />
       {showStats && <LoanStatistics />}

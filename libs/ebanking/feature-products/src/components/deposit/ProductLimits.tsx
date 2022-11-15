@@ -45,7 +45,7 @@ export const ProductLimits = ({ limits }: IProductLimits) => {
   );
 
   return (
-    <DetailsCard title="Limits" hideBorder hasTable>
+    <DetailsCard title="Limits" hasTable>
       <Table variant="report" size="report" isStatic data={limits} columns={columns} />
     </DetailsCard>
   );

@@ -53,9 +53,14 @@ mutation setAccountForgiveInstallmentData($id: ID!, $installmentDates: [String!]
   }
 }
 
-mutation setEndOfDayData {
+mutation setEndOfDayData($option: EODOption) {
   transaction {
-    endOfDay
+    endOfDay(option: $option) {
+      record
+      error {
+        ...MutationError
+      }
+    }
   }
 }
 

@@ -89,11 +89,11 @@ export const AccountDetails = ({ account, isLoading }: IAccountDetailsProps) => 
               <AccountDetail title="Interest Rate" value={`${account.interestRate.toFixed(2)}%`} />
               <AccountDetail
                 title="Interest Booked"
-                value={amountConverter(account.interestRate)}
+                value={`${Number(account.interestBooked).toFixed(2)}%`}
               />
               <AccountDetail
                 title="Interest Earned"
-                value={amountConverter(account.interestEarned)}
+                value={`${Number(account.interestEarned).toFixed(2)}%`}
               />
               <AccountDetail title="Total Balance" value={amountConverter(account.balance)} />
               <AccountDetail

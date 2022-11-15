@@ -119,7 +119,7 @@ export const AddBulkDeposit = () => {
     };
 
     if (values['payment_type'] === DepositPaymentType.Cash) {
-      filteredValues = omit({ ...filteredValues }, ['cheque', 'bankVoucher']);
+      filteredValues = omit({ ...filteredValues }, ['withdrawSlip', 'bankVoucher']);
       filteredValues['cash'] = {
         ...values['cash'],
         cashPaid: values.cash?.cashPaid as string,
@@ -135,10 +135,10 @@ export const AddBulkDeposit = () => {
     }
 
     if (values['payment_type'] === DepositPaymentType.BankVoucher) {
-      filteredValues = omit({ ...filteredValues }, ['cheque', 'cash']);
+      filteredValues = omit({ ...filteredValues }, ['withdrawSlip', 'cash']);
     }
 
-    if (values['payment_type'] === DepositPaymentType.Cheque) {
+    if (values['payment_type'] === DepositPaymentType.WithdrawSlip) {
       filteredValues = omit({ ...filteredValues }, ['bankVoucher', 'cash']);
     }
 
@@ -190,6 +190,7 @@ export const AddBulkDeposit = () => {
                       memberDetails={{
                         name: memberDetailData?.name,
                         avatar: memberDetailData?.profilePicUrl ?? '',
+                        code: memberDetailData?.code,
                         memberID: memberDetailData?.id,
                         gender: memberDetailData?.gender,
                         age: memberDetailData?.age,

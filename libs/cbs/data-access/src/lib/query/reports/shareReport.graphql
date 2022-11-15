@@ -3,6 +3,7 @@ query getShareStatement($data: ShareStatementReportSettings!) {
     shareStatementReport(data: $data) {
       member {
         id
+        code
         name
         address {
           wardNo

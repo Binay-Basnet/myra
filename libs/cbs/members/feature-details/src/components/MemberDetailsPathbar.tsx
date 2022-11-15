@@ -16,7 +16,7 @@ export const MemberDetailsPathBar = ({ title }: PathBarProps) => {
     memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation;
 
   return (
-    <Box position="sticky" top="110px" zIndex={10}>
+    <Box position="sticky" top="110px" w="100%" zIndex={12}>
       <DetailPageHeader
         title={title}
         member={{

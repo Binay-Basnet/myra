@@ -8,6 +8,7 @@ import { Summary } from './Summary';
 type SidebarProps = {
   summary: {
     memberId?: string | undefined | null;
+    code?: string | null;
     name?: string | undefined | null;
     profilePic?: string | undefined | null;
     transactionId?: string | undefined | null;
@@ -55,7 +56,7 @@ export const SideBar = ({ summary, detailPage }: SidebarProps) => {
         <>
           <MemberInfo
             memberId={
-              detailPage === 'agentTransaction' ? (id as string) : (summary?.memberId as string)
+              detailPage === 'agentTransaction' ? (id as string) : (summary?.code as string)
             }
             detailPage={detailPage}
             name={summary?.name}
@@ -71,7 +72,7 @@ export const SideBar = ({ summary, detailPage }: SidebarProps) => {
       {detailPage === 'loanRepayment' && (
         <>
           <MemberInfo
-            memberId={summary?.memberId}
+            memberId={summary?.code}
             detailPage={detailPage}
             name={summary?.name}
             profilePic={summary?.profilePic ?? ''}

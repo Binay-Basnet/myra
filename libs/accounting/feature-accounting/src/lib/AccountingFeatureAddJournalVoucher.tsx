@@ -16,6 +16,7 @@ import {
   FormFooter,
   Icon,
   IconButton,
+  SwitchTabs,
   Text,
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -25,16 +26,23 @@ import { JournalVouchersTable } from '../components';
 /* eslint-disable-next-line */
 export interface AccountingFeatureAddJournalVoucherProps {}
 
-export function AccountingFeatureAddJournalVoucher() {
+export const AccountingFeatureAddJournalVoucher = () => {
   const { t } = useTranslation();
 
   const methods = useForm({
     defaultValues: {
       data: [
         {
-          dr_amount: 45,
-          cr_amount: 45,
+          dr_amount: 4500,
+          cr_amount: '',
           transferred_to: 'savings_account',
+          paymentMode: 'cash',
+        },
+        {
+          dr_amount: '',
+          cr_amount: 4500,
+          transferred_to: 'nic-asia',
+          paymentMode: 'cash',
         },
       ],
     },
@@ -57,15 +65,11 @@ export function AccountingFeatureAddJournalVoucher() {
           top="110px"
           zIndex={8}
         >
-          <Text
-            fontSize="r2"
-            fontWeight="600"
-            color="neutralColorLight.Gray-80"
-          >
+          <Text fontSize="r2" fontWeight="600" color="neutralColorLight.Gray-80">
             {t['accountingJournalVoucherAddNewJournalVoucher']}
           </Text>
           <IconButton
-            variant={'ghost'}
+            variant="ghost"
             aria-label="close"
             icon={<GrClose />}
             onClick={() => router.back()}
@@ -88,18 +92,28 @@ export function AccountingFeatureAddJournalVoucher() {
                       name="reference"
                       type="text"
                       label={t['accountingJournalVoucherAddReference']}
-                      __placeholder={t['accountingJournalVoucherAddReference']}
                     />
                   </InputGroupContainer>
                 </BoxContainer>
 
                 <JournalVouchersTable />
 
-                <Box
-                  display="grid"
-                  gap="s32"
-                  gridTemplateColumns="repeat(2,1fr)"
-                >
+                <Box display="flex" flexDir="column" gap="s16">
+                  <SwitchTabs
+                    name="paymentMode"
+                    defaultValue="cash"
+                    options={[
+                      { label: 'Cash', value: 'cash' },
+                      { label: 'Cheque', value: 'cheque' },
+                    ]}
+                  />
+
+                  <Box>
+                    <FormInput name="chequeNo" label="Cheque No" />
+                  </Box>
+                </Box>
+
+                <Box display="grid" gap="s32" gridTemplateColumns="repeat(2,1fr)">
                   <FormTextArea
                     name="note"
                     label={t['accountingJournalVoucherAddNotes']}
@@ -118,23 +132,17 @@ export function AccountingFeatureAddJournalVoucher() {
             draftButton={
               <Button type="submit" variant="ghost" shade="neutral">
                 <Icon as={BiSave} />
-                <Text
-                  alignSelf="center"
-                  fontWeight="Medium"
-                  fontSize="s2"
-                  ml="5px"
-                >
+                <Text alignSelf="center" fontWeight="Medium" fontSize="s2" ml="5px">
                   {t['saveDraft']}
                 </Text>
               </Button>
             }
             mainButtonLabel={t['submit']}
-            mainButtonHandler={() => alert('Submitted')}
           />
         </Container>
       </Box>
     </>
   );
-}
+};
 
 export default AccountingFeatureAddJournalVoucher;

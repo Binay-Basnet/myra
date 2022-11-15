@@ -29,7 +29,6 @@ export const RegisteredDetailsInstitution = ({ setSection }: IProps) => {
           {' '}
           <FormInput
             id="registeredDetailsInstitution"
-            type="number"
             name="registeredNumber"
             label={t['kymInsRegisteredNumber']}
           />

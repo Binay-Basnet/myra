@@ -6,7 +6,7 @@ export const ProductInterestRate = ({
 }: {
   interestRate: InterestFormState | undefined | null;
 }) => (
-  <DetailsCard hideBorder title="Interest Rate">
+  <DetailsCard title="Interest Rate">
     <Box px="s16" fontSize="r1">
       <ul>
         <li>

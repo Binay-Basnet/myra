@@ -26,7 +26,7 @@ export const ShareBalanceTable = () => {
     () => [
       {
         header: t['shareTableMemberId'],
-        accessorFn: (row) => row?.node?.member?.id,
+        accessorFn: (row) => row?.node?.member?.code,
       },
 
       {

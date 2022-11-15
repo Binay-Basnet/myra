@@ -30,7 +30,7 @@ export const EbankingSidebar = () => {
         <Box display="flex" flexDir="column" gap="s8" cursor="pointer">
           <Box position="relative" h="40px" w="100%">
             <Image
-              src="/sidebar-logo.png"
+              src="/sidebar-logo.svg"
               layout="fill"
               objectFit="contain"
               objectPosition="left"

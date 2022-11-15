@@ -134,7 +134,7 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
                 onClick={() => router.push(item.link)}
               >
                 <Box flexShrink={0} display="flex" justifyContent="center" alignItems="center">
-                  <Image width="32px" height="32px" src={item.img} alt={t[item.title]} />
+                  <Image width="32" height="32" src={item.img} alt={t[item.title]} />
                 </Box>
                 <TextFields fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">
                   {t[item.title]}

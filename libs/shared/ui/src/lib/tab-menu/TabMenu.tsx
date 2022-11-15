@@ -70,7 +70,7 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   {
     title: 'withdrawSlip',
     icon: TbMailForward,
-    link: '/withdraw/withdraw-slip',
+    link: '/withdraw/cheque-book',
   },
   {
     title: 'reports',

@@ -53,10 +53,29 @@ export const Overview = () => {
     },
     {
       label: 'Default Amount Deposit Account Type',
-      value: accountDetails?.accountType ? accountTypes[accountDetails?.accountType] : '',
+      value:
+        accountDetails?.accountType === NatureOfDepositProduct.RecurringSaving ||
+        (accountDetails?.accountType === NatureOfDepositProduct?.Current &&
+          accountDetails?.isMandatory)
+          ? accountDetails?.defaultAccountType
+            ? accountTypes[accountDetails?.defaultAccountType]
+            : '-'
+          : '',
     },
-    { label: 'Interest Accrued', value: accountDetails?.interestAccrued ?? '0' },
-    { label: 'Interest Earned', value: accountDetails?.interestEarned ?? '0' },
+    {
+      label: 'Interest Accrued',
+      value:
+        accountDetails?.accountType === NatureOfDepositProduct.Current
+          ? null
+          : accountDetails?.interestAccrued ?? '0',
+    },
+    {
+      label: 'Interest Earned',
+      value:
+        accountDetails?.accountType === NatureOfDepositProduct.Current
+          ? null
+          : accountDetails?.interestEarned ?? '0',
+    },
     { label: 'Guarantee Amount', value: accountDetails?.guaranteedAmount ?? '0' },
   ];
 

@@ -2,6 +2,7 @@ query getAccountList($transactionPagination: Pagination) {
   eBanking {
     account {
       list {
+        totalBalance
         accounts {
           id
           name
@@ -121,11 +122,11 @@ query getAccountDetails($id: ID!, $transactionPagination: Pagination) {
   }
 }
 
-
-query getEbankingLoanAccounts{
+query getEbankingLoanAccounts {
   eBanking {
     loanAccount {
       list {
+        totalBalance
         accounts {
           id
           name
@@ -140,10 +141,9 @@ query getEbankingLoanAccounts{
   }
 }
 
-
 query getEbankLoanAccountDetails($id: ID!, $transactionPagination: Pagination) {
   eBanking {
-    loanAccount{
+    loanAccount {
       get(id: $id) {
         data {
           id
@@ -178,6 +178,20 @@ query getEbankLoanAccountDetails($id: ID!, $transactionPagination: Pagination) {
             pageInfo {
               ...Pagination
             }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getTotalExpense {
+  eBanking {
+    account {
+      list {
+        recentTransactions(paginate: {after: "", first: 1}){
+          summary {
+            expensesThisMonth
           }
         }
       }

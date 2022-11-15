@@ -74,7 +74,7 @@ const CustomApp = (props: AppPropsWithLayout) => (
       <ChakraProvider theme={theme}>
         <MainApp {...props} />
       </ChakraProvider>
-      <ReactQueryDevtools />
+      <ReactQueryDevtools position="bottom-right" />
     </QueryClientProvider>
     {/* </AuthProvider> */}
   </Provider>

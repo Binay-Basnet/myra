@@ -11,7 +11,7 @@ export const ProductTenure = ({ tenureUnit, maxTenure, minTenure }: ProductTenur
   if (!maxTenure && !minTenure) return null;
 
   return (
-    <DetailsCard hideBorder title="Tenure">
+    <DetailsCard title="Tenure">
       <Box px="s16" fontSize="r1" textTransform="capitalize">
         <ul>
           <li>

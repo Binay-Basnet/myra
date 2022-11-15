@@ -7,9 +7,8 @@ import {
   useGetAgentTodayListDataQuery,
   useSetAgentTodayDepositDataMutation,
 } from '@coop/cbs/data-access';
-import { AgentSelect } from '@coop/cbs/transactions/ui-components';
 import { BoxContainer } from '@coop/cbs/transactions/ui-containers';
-import { FormEditableTable } from '@coop/shared/form';
+import { FormAgentSelect, FormEditableTable } from '@coop/shared/form';
 import { asyncToast, Box, Container, FormFooter, FormHeader, Text } from '@coop/shared/ui';
 import { getRouterQuery } from '@coop/shared/utils';
 
@@ -148,7 +147,7 @@ export const AddAgentTransaction = () => {
                   <Box display="flex" flexDirection="column" gap="s16">
                     <Text>Market Representative Transaction</Text>
 
-                    <AgentSelect name="agentId" label="Market Representative" />
+                    <FormAgentSelect name="agentId" label="Market Representative" />
                   </Box>
 
                   {agentId && (

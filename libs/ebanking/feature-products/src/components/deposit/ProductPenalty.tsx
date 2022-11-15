@@ -45,7 +45,7 @@ export const ProductPenalty = ({ penaltyData }: IProductPenalty) => {
   if (!penaltyData || Object.keys(penaltyData).length === 0) return null;
 
   return (
-    <DetailsCard title="Penalty" hideBorder hasTable>
+    <DetailsCard title="Penalty" hasTable>
       <Table variant="report" size="report" isStatic data={penaltyDataArray} columns={columns} />
     </DetailsCard>
   );

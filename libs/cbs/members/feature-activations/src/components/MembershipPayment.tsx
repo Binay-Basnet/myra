@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
@@ -11,6 +11,7 @@ import {
   MembershipPaymentInput,
   ObjState,
   PaymentDepositedBy,
+  useGetAvailableSlipsListQuery,
   useGetCoaBankListQuery,
   useGetMembershipFeeQuery,
   usePayMembershipMutation,
@@ -110,7 +111,9 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
     {
       enabled: !!id,
       onSuccess: (response) =>
-        setTotalAmount(String(response?.members?.activateMember?.getMembershipFee?.data?.charge)),
+        setTotalAmount(
+          String(response?.members?.activateMember?.getMembershipFee?.data?.charge ?? 0)
+        ),
     }
   );
 
@@ -118,13 +121,13 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
     defaultValues: {
       paymentMode: DepositPaymentType.Cash,
       cashData: {
-        cash: totalAmount,
+        cash: String(totalAmount ?? 0),
       },
-      chequeData: {
-        amount: totalAmount,
+      withdrawSlipData: {
+        amount: String(totalAmount ?? 0),
       },
       bankDeposit: {
-        amount: totalAmount,
+        amount: String(totalAmount ?? 0),
       },
     },
   });
@@ -144,9 +147,9 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
   const totalCashPaid = Number((disableDenomination ? cashPaid : denominationTotal) ?? 0);
   const returnAmount = totalCashPaid - Number(totalAmount) ?? 0;
 
-  const isDiffMember = watch('chequeData.isDifferentMember');
-  const dmemberId = watch('chequeData.memberId');
-  const depositedBy = watch('chequeData.depositedBy');
+  const isDiffMember = watch('withdrawSlipData.isDifferentMember');
+  const dmemberId = watch('withdrawSlipData.memberId');
+  const depositedBy = watch('withdrawSlipData.depositedBy');
 
   const memberId = id;
 
@@ -157,7 +160,7 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
     },
     {
       label: t['addWithdrawWithdrawSlip'],
-      value: DepositPaymentType.Cheque,
+      value: DepositPaymentType.WithdrawSlip,
     },
     {
       label: t['depositPaymentBankVoucher'],
@@ -176,11 +179,27 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
     value: item?.id as string,
   }));
 
+  const withdrawSlipAccountId = watch('withdrawSlipData.accountId');
+
+  const { data: availableSlipsListQueryData } = useGetAvailableSlipsListQuery(
+    { accountId: withdrawSlipAccountId },
+    { enabled: !!withdrawSlipAccountId }
+  );
+
+  const availableSlipListOptions = useMemo(
+    () =>
+      availableSlipsListQueryData?.withdrawSlip?.listAvailableSlips?.data?.map((withdrawSlip) => ({
+        label: String(withdrawSlip?.slipNumber).padStart(10, '0'),
+        value: withdrawSlip?.slipNumber as string,
+      })) ?? [],
+    [availableSlipsListQueryData]
+  );
+
   useEffect(() => {
     if (totalAmount) {
       methods.setValue('bankDeposit.amount', String(totalAmount));
       methods.setValue('cashData.cash', String(totalAmount));
-      methods.setValue('chequeData.amount', String(totalAmount));
+      methods.setValue('withdrawSlipData.amount', String(totalAmount));
     }
   }, [totalAmount]);
 
@@ -190,7 +209,7 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
 
     if (values.paymentMode === DepositPaymentType.Cash) {
       updatedData = {
-        ...omit({ ...values }, ['chequeData', 'bankDeposit']),
+        ...omit({ ...values }, ['withdrawSlipData', 'bankDeposit']),
         cashData: {
           ...values.cashData,
           disableDenomination: Boolean(values.cashData?.disableDenomination),
@@ -207,15 +226,15 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
 
     if (values.paymentMode === DepositPaymentType.BankVoucher) {
       updatedData = {
-        ...omit(values, ['chequeData', 'cashData']),
+        ...omit(values, ['withdrawSlipData', 'cashData']),
         bankDeposit: { ...values.bankDeposit },
       };
     }
 
-    if (values.paymentMode === DepositPaymentType.Cheque) {
+    if (values.paymentMode === DepositPaymentType.WithdrawSlip) {
       updatedData = {
         ...omit(values, ['cashData', 'bankDeposit']),
-        chequeData: { ...values.chequeData },
+        withdrawSlipData: { ...values.withdrawSlipData },
       };
     }
 
@@ -226,6 +245,10 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
         loading: 'Paying for Membership',
       },
       onSuccess: () => {
+        if (values.paymentMode === DepositPaymentType.WithdrawSlip) {
+          queryClient.invalidateQueries('getAvailableSlipsList');
+          queryClient.invalidateQueries('getPastSlipsList');
+        }
         queryClient.invalidateQueries('getMemberCheck');
         setMode('details');
       },
@@ -249,35 +272,39 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
             />
           </Box>
 
-          {selectedPaymentMode === DepositPaymentType.Cheque && (
+          {selectedPaymentMode === DepositPaymentType.WithdrawSlip && (
             <Box>
               <GridItem colSpan={3} px="s20">
                 <FormCheckbox
-                  name="chequeData.isDifferentMember"
-                  label="Cheque is from different member"
+                  name="withdrawSlipData.isDifferentMember"
+                  label="Withdraw slip is from different member"
                 />
               </GridItem>
 
               <FormSection>
                 {isDiffMember && (
                   <GridItem colSpan={3}>
-                    <FormMemberSelect name="chequeData.memberId" label="Member" />
+                    <FormMemberSelect name="withdrawSlipData.memberId" label="Member" />
                   </GridItem>
                 )}
 
                 <GridItem colSpan={2}>
                   <FormAccountSelect
-                    name="chequeData.accountId"
+                    name="withdrawSlipData.accountId"
                     memberId={String(isDiffMember ? dmemberId : memberId)}
                     label="Account Name"
                     filterBy={ObjState.Active}
                   />
                 </GridItem>
 
-                <FormInput name="chequeData.chequeNo" label={t['depositePaymentChequeNo']} />
+                <FormSelect
+                  name="withdrawSlipData.withdrawSlipNo"
+                  label="Withdraw Slip No"
+                  options={availableSlipListOptions}
+                />
 
                 <FormInput
-                  name="chequeData.amount"
+                  name="withdrawSlipData.amount"
                   type="number"
                   label={t['depositPaymentAmount']}
                   textAlign="right"
@@ -288,7 +315,7 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
                 <Box display="flex" flexDir="column" gap="s16">
                   <FormSwitchTab
                     label="Deposited By"
-                    name="chequeData.depositedBy"
+                    name="withdrawSlipData.depositedBy"
                     options={[
                       {
                         label: t['depositPaymentSelf'],

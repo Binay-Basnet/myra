@@ -8,6 +8,7 @@ interface AuthenticatePayload {
   user: Partial<User>;
   token: string;
 }
+
 // Define a type for the slice state
 interface AuthState {
   user: Partial<User> | null;
@@ -33,11 +34,11 @@ export const authSlice = createSlice({
       state.token = action.payload;
     },
     // Use the PayloadAction type to declare the contents of `action.payload`
-    authenticate: (state, action: PayloadAction<{ user: Partial<User> }>) => {
+    authenticate: (state, action: PayloadAction<{ user: Partial<User | any> }>) => {
       state.user = action.payload.user;
       state.isLogged = true;
     },
-    login: (state, action: PayloadAction<AuthenticatePayload>) => {
+    login: (state, action: PayloadAction<AuthenticatePayload | any>) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.isLogged = true;

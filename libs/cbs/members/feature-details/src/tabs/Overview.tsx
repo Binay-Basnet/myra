@@ -150,7 +150,7 @@ export const Overview = () => {
       </Box>
       <MemberBasicInformation />
       <Grid templateColumns="repeat(2,1fr)" gap="s16">
-        <Box display="flex" flexDirection="column" gap="s16" bg="white" p="s16">
+        <Box borderRadius="br2" display="flex" flexDirection="column" gap="s16" bg="white" p="s16">
           <Text>Deposit</Text>{' '}
           <Charts
             series={[
@@ -200,7 +200,7 @@ export const Overview = () => {
             }}
           />
         </Box>
-        <Box display="flex" flexDirection="column" gap="s16" bg="white" p="s16">
+        <Box borderRadius="br2" display="flex" flexDirection="column" gap="s16" bg="white" p="s16">
           <Text>Withdraw</Text>{' '}
           <Charts
             series={[
@@ -251,14 +251,14 @@ export const Overview = () => {
 
       {memberShareDetails && <MemberStatistics />}
       {memberPaymentUp && (
-        <Box bg="white" display="flex" flexDirection="column" gap="s8" pb="s16" borderRadius="br2">
+        <Box bg="white" display="flex" flexDirection="column" borderRadius="br2">
           <Box display="flex" justifyContent="space-between" p="s16">
             <Text fontSize="r1" fontWeight="600">
               {' '}
               Upcoming Payments
             </Text>
           </Box>
-          <Box>
+          <Box borderRadius="br4" p="s16">
             <UpcomingPaymentTable data={memberPaymentUp} />
           </Box>
         </Box>

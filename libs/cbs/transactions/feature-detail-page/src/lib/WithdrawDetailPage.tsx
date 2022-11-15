@@ -19,6 +19,7 @@ export const WithdrawDetailPage = () => {
 
   const summary = {
     memberId: withdrawDetailData?.member?.id,
+    code: withdrawDetailData?.member?.code,
     name: withdrawDetailData?.member?.name?.local,
     profilePic: withdrawDetailData?.member?.profilePicUrl,
     transactionId: withdrawDetailData?.id,

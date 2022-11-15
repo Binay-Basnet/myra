@@ -93,6 +93,9 @@ query getMemberDetailsOverview($id: ID!) {
             productName
             productType
             interestRate
+            subscriptionDate
+            interestEarned
+            interestBooked
           }
           payments {
             date
@@ -119,6 +122,7 @@ query getMemberDetailsOverview($id: ID!) {
             memberJoined
             genderId
             gender
+            isStaff
             maritalStatusId
             maritalStatus
             contactNumber
@@ -163,6 +167,13 @@ query getMemberDetailsOverview($id: ID!) {
             amount
             noOfShares
           }
+        }
+        cheques {
+          accountName
+          issued
+          used
+          left
+          cancelled
         }
       }
     }

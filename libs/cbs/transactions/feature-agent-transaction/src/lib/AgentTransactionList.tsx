@@ -65,7 +65,7 @@ export const AgentTransactionList = () => {
             <Avatar
               name={props.getValue() as string}
               size="sm"
-              src={props?.row?.original?.node?.profilePicUrl ?? ''}
+              src={props?.row?.original?.node?.agentPicUrl ?? ''}
             />
             <Text
               fontSize="s3"
@@ -123,7 +123,9 @@ export const AgentTransactionList = () => {
         isLoading={isFetching}
         columns={columns}
         rowOnClick={(row) =>
-          `/transactions/agent-transaction/view?id=${row?.node?.agentId}&date=${row?.node?.date}`
+          router.push(
+            `/transactions/agent-transaction/view?id=${row?.node?.agentId}&date=${row?.node?.date}`
+          )
         }
         noDataTitle="Market Representative Transaction"
         pagination={{

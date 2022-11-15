@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useDeepCompareEffect } from 'react-use';
 
 import { Share_Transaction_Direction, useGetShareChargesQuery } from '@coop/cbs/data-access';
 import { FieldCardComponents } from '@coop/shared/components';
@@ -14,7 +15,7 @@ type IPurchaseInfo = {
 export const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
   const { t } = useTranslation();
   const methods = useFormContext();
-  const { watch, register } = methods;
+  const { watch, register, setValue, resetField } = methods;
 
   const noOfShares = watch('shareCount');
 
@@ -31,6 +32,16 @@ export const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
   useEffect(() => {
     refetch();
   }, [noOfShares, refetch]);
+
+  useDeepCompareEffect(() => {
+    if (chargeList) {
+      resetField('extraFee');
+      chargeList.forEach((charge, index) => {
+        setValue(`extraFee.${index}.Id`, charge?.id);
+        setValue(`extraFee.${index}.value`, charge?.charge);
+      });
+    }
+  }, [noOfShares, chargeList]);
 
   return (
     <Box display="flex" flexDirection="column" pb="s24" background="white" borderTopRadius={5}>
@@ -57,33 +68,24 @@ export const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
                     value: item?.id,
                   });
                   register(`extraFee.${index}.value`, {
-                    value: item?.charge,
+                    value: Number(item?.charge),
                   });
+
                   return (
-                    <div key={item.id}>
-                      <GridItem display="flex" justifyContent="space-between">
-                        <Text
-                          color="neutralLightColor.Gray-60"
-                          fontWeight="Medium"
-                          fontSize="s3"
-                          display="flex"
-                          alignItems="center"
-                        >
-                          {item?.name}
-                        </Text>
-                        <Box width="300px">
-                          <FormNumberInput
-                            // {...register(`extraFee.${index}.value`, {
-                            //   value: item?.charge,
-                            // })}
-                            key={item.charge}
-                            name={`extraFee.${index}.value`}
-                            defaultValue={Number(item?.charge)}
-                          />
-                          {/* <Text> {item?.charge} </Text> */}
-                        </Box>
-                      </GridItem>
-                    </div>
+                    <GridItem display="flex" justifyContent="space-between">
+                      <Text
+                        color="neutralLightColor.Gray-60"
+                        fontWeight="Medium"
+                        fontSize="s3"
+                        display="flex"
+                        alignItems="center"
+                      >
+                        {item?.name}
+                      </Text>
+                      <Box width="300px">
+                        <FormNumberInput name={`extraFee.${index}.value`} />
+                      </Box>
+                    </GridItem>
                   );
                 })}
 

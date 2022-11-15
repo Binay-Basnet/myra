@@ -7,8 +7,9 @@ import {
   Accounts,
   Activity,
   Bio,
-  Cheque,
+  Cheques,
   Documents,
+  Loan,
   MemberShareInfo,
   Overview,
   Reports,
@@ -28,9 +29,12 @@ export const MemberDetails = () => {
         w="320px"
         position="fixed"
         h="calc(100vh - 110px)"
-        borderRight="1px"
-        borderRightColor="border.layout"
         overflowY="auto"
+        sx={{
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        }}
       >
         <MemberDetailsSidebar />
       </Box>
@@ -44,10 +48,11 @@ export const MemberDetails = () => {
         minH="calc(100vh - 110px)"
       >
         {(tabQuery === 'overview' || tabQuery === 'undefined' || !tabQuery) && <Overview />}
-        {tabQuery === 'accounts' && <Accounts />}
+        {tabQuery === 'saving accounts' && <Accounts />}
         {tabQuery === 'activity' && <Activity />}
+        {tabQuery === 'loan' && <Loan />}
         {tabQuery === 'bio' && <Bio />}
-        {tabQuery === 'cheque' && <Cheque />}
+        {tabQuery === 'cheque' && <Cheques />}
         {tabQuery === 'documents' && <Documents />}
         {tabQuery === 'reports' && <Reports />}
         {tabQuery === 'share' && <MemberShareInfo />}

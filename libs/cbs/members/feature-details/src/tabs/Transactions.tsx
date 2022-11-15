@@ -16,7 +16,7 @@ const links = [
   },
   {
     title: 'Transfer',
-    link: '/transfer',
+    link: '/accounts/account-transfer/add',
   },
 ];
 export const Transactions = () => {

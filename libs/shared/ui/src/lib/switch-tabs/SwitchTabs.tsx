@@ -118,7 +118,7 @@ export const SwitchTabs = ({
         spacing={0}
       >
         {options?.map((val, index) => {
-          const radio = getRadioProps({ value: val.value.toString() }) as UseRadioProps;
+          const radio = getRadioProps({ value: val?.value?.toString() }) as UseRadioProps;
 
           return (
             <Box

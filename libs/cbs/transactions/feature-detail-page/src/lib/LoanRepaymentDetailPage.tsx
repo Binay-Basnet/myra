@@ -19,6 +19,7 @@ export const LoanRepaymentDetailPage = () => {
 
   const summary = {
     memberId: loanRepaymentDetailData?.member?.id,
+    code: loanRepaymentDetailData?.member?.code,
     name: loanRepaymentDetailData?.member?.name?.local,
     profilePic: loanRepaymentDetailData?.member?.profilePicUrl,
     transactionId: loanRepaymentDetailData?.member?.id,

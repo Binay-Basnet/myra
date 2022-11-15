@@ -30,6 +30,7 @@ query getCoaFullView {
           accountType
           accountClass
           accountCode
+          category
         }
       }
     }

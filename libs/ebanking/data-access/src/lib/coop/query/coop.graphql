@@ -1,3 +1,15 @@
+query getCoopStats {
+  eBanking {
+    cooperativeServices {
+      coopStatistics {
+        totalBranches
+        totalMembers
+        totalCapital
+      }
+    }
+  }
+}
+
 query getCoopChequeServices {
   eBanking {
     cooperativeServices {

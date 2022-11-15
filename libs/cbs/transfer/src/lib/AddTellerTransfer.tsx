@@ -136,9 +136,9 @@ export const AddTellerTransfer = () => {
                   borderColor="border.layout"
                 >
                   <Grid templateColumns="repeat(2, 1fr)" gap="s20" alignItems="flex-end">
-                    <FormInput name="srcTellerID" label="Source Teller" isDisabled />
+                    <FormInput name="srcTellerID" label="Sender" isDisabled />
 
-                    <FormTellerSelect name="destTellerID" label="Destination Teller" />
+                    <FormTellerSelect name="destTellerID" label="Receiver" />
                   </Grid>
 
                   <Box display="flex" flexDirection="column" gap="s16" py="s20">
