@@ -131,6 +131,11 @@ query getMemberDetailsOverview($id: ID!) {
             address
             fathersName
             mothersName
+            familyMembers {
+              relationship
+              fullName
+              dob
+            }
             grandFathersName
           }
           memberGraphs {

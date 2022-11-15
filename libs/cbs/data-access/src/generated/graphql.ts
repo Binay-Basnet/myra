@@ -17818,6 +17818,11 @@ export type GetMemberDetailsOverviewQuery = {
             fathersName?: string | null;
             mothersName?: string | null;
             grandFathersName?: string | null;
+            familyMembers?: Array<{
+              relationship?: string | null;
+              fullName?: string | null;
+              dob?: string | null;
+            } | null> | null;
           } | null;
           memberGraphs?: {
             deposit?: {
@@ -28179,6 +28184,11 @@ export const GetMemberDetailsOverviewDocument = `
             address
             fathersName
             mothersName
+            familyMembers {
+              relationship
+              fullName
+              dob
+            }
             grandFathersName
           }
           memberGraphs {
