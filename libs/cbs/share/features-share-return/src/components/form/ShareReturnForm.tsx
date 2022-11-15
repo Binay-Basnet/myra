@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { omit } from 'lodash';
 
@@ -10,6 +10,7 @@ import {
   SharePaymentMode,
   ShareReturnInput,
   useAddShareReturnMutation,
+  useGetIndividualMemberDetails,
   useGetShareChargesQuery,
   useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
@@ -26,7 +27,7 @@ import {
   ShareMemberCard,
   TabMenu,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { ShareInfoFooter } from './ShareInfoFooter';
 import { SharePaymentFooter } from './SharePaymentFooter';
@@ -177,7 +178,7 @@ export const ShareReturnForm = () => {
       },
       onSuccess: () => {
         if (redirectPath) {
-          queryClient.invalidateQueries('getMemberInactiveCheck');
+          queryClient.invalidateQueries(['getMemberInactiveCheck']);
           router.push(String(redirectPath));
         } else {
           router.push('/share/register');

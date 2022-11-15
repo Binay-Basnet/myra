@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { IoSyncCircleOutline } from 'react-icons/io5';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { omit } from 'lodash';
 
@@ -174,8 +174,8 @@ export const ActivationForm = () => {
 
       onSuccess: () => {
         router.push(`/alternative-channels/${router.query['type']}/users`);
-        queryClient.invalidateQueries('getActivatedService');
-        queryClient.invalidateQueries('getAlternativeChannelList');
+        queryClient.invalidateQueries(['getActivatedService']);
+        queryClient.invalidateQueries(['getAlternativeChannelList']);
       },
       promise: activateService({
         data: {

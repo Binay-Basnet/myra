@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
@@ -10,6 +10,7 @@ import {
   ObjState,
   useGetAccountTableListQuery,
   useGetAvailableSlipsListQuery,
+  useGetIndividualMemberDetails,
   useSetWithdrawDataMutation,
   WithdrawBy,
   WithdrawInput,
@@ -31,7 +32,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { Payment } from '../components';
 
@@ -199,10 +200,10 @@ export const AddWithdraw = () => {
         },
         onSuccess: () => {
           if (values.withdrawWith === WithdrawWith.WithdrawSlip) {
-            queryClient.invalidateQueries('getAvailableSlipsList');
-            queryClient.invalidateQueries('getPastSlipsList');
+            queryClient.invalidateQueries(['getAvailableSlipsList']);
+            queryClient.invalidateQueries(['getPastSlipsList']);
           }
-          queryClient.invalidateQueries('getWithdrawListData');
+          queryClient.invalidateQueries(['getWithdrawListData']);
           router.push('/transactions/withdraw/list');
         },
         promise: mutateAsync({ data: filteredValues as WithdrawInput }),
@@ -220,10 +221,10 @@ export const AddWithdraw = () => {
         },
         onSuccess: () => {
           if (values.withdrawWith === WithdrawWith.WithdrawSlip) {
-            queryClient.invalidateQueries('getAvailableSlipsList');
-            queryClient.invalidateQueries('getPastSlipsList');
+            queryClient.invalidateQueries(['getAvailableSlipsList']);
+            queryClient.invalidateQueries(['getPastSlipsList']);
           }
-          queryClient.invalidateQueries('getWithdrawListData');
+          queryClient.invalidateQueries(['getWithdrawListData']);
           router.push('/transactions/withdraw/list');
         },
         promise: mutateAsync({ data: filteredValues as WithdrawInput }),

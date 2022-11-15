@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
@@ -15,6 +15,7 @@ import {
   useGetAccountOpenMinorListQuery,
   useGetAccountOpenProductDetailsQuery,
   useGetDefaultAccountListQuery,
+  useGetIndividualMemberDetails,
   useGetProductListQuery,
   useSetAccountDocumentDataMutation,
   useSetAccountOpenDataMutation,
@@ -40,7 +41,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import {
   DepositFrequency,
@@ -380,12 +381,12 @@ export const AccountOpenNew = () => {
       },
       onSuccess: () => {
         if (values.openingPayment?.payment_type === DepositPaymentType.WithdrawSlip) {
-          queryClient.invalidateQueries('getAvailableSlipsList');
-          queryClient.invalidateQueries('getPastSlipsList');
+          queryClient.invalidateQueries(['getAvailableSlipsList']);
+          queryClient.invalidateQueries(['getPastSlipsList']);
         }
         if (redirectPath) {
           router.push(String(redirectPath));
-          queryClient.invalidateQueries('getAccountCheck');
+          queryClient.invalidateQueries(['getAccountCheck']);
         } else {
           router.push('/accounts/list');
         }

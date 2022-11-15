@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 
 import { InfoCard } from '@coop/ebanking/cards';
@@ -30,7 +30,7 @@ export const NewComplaint = () => {
         success: 'Added New Complaint Request',
       },
       onSuccess: () => {
-        queryClient.invalidateQueries('getComplaintsList');
+        queryClient.invalidateQueries(['getComplaintsList']);
         router.push('/coop');
       },
     });

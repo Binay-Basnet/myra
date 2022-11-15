@@ -22,6 +22,7 @@ export const EbankingSidebarNavItem = ({ item, isActive }: IEbankingSidebarNavIt
     <Box
       tabIndex={0}
       px="s16"
+      w="100%"
       h="48px"
       cursor="pointer"
       display="flex"

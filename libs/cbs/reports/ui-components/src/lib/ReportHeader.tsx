@@ -3,9 +3,9 @@ import { useForm, useFormContext } from 'react-hook-form';
 import { BsPinAngle } from 'react-icons/bs';
 import { GrClose } from 'react-icons/gr';
 import { IoChevronForward, IoSaveOutline } from 'react-icons/io5';
-import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { IconButton } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
 
 import {
   ShareStatementReportSettings,
@@ -44,7 +44,7 @@ export const ReportHeader = ({ paths, hasSave }: PathBarProps) => {
   };
 
   return (
-    <Box
+    (<Box
       h="50px"
       display="flex"
       alignItems="center"
@@ -83,7 +83,6 @@ export const ReportHeader = ({ paths, hasSave }: PathBarProps) => {
         </Box>
         <Icon as={BsPinAngle} color="gray.700" pr="" />
       </Box>
-
       <Box display="flex" alignItems="center" gap="s16">
         <Button variant="ghost" shade="neutral" gap="s8">
           <Icon as={ExportIcon} />
@@ -112,7 +111,6 @@ export const ReportHeader = ({ paths, hasSave }: PathBarProps) => {
           }}
         />
       </Box>
-
       <Modal open={openModal} isCentered onClose={onCloseModal} title="Save Report">
         <Box pb="s12" borderBottom="1px" borderBottomColor="border.layout">
           <Input label="Give your untitled report a name" {...register('name')} />
@@ -142,7 +140,7 @@ export const ReportHeader = ({ paths, hasSave }: PathBarProps) => {
               await asyncToast({
                 id: 'save-report-toast',
                 onSuccess: () => {
-                  queryClient.invalidateQueries('getAllSavedReports');
+                  queryClient.invalidateQueries(['getAllSavedReports']);
                   router.push('/reports/saved');
                 },
                 msgs: {
@@ -158,7 +156,7 @@ export const ReportHeader = ({ paths, hasSave }: PathBarProps) => {
           </Button>
         </Box>
       </Modal>
-    </Box>
+    </Box>)
   );
 };
 

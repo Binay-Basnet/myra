@@ -19,7 +19,7 @@ export const LoginPage = () => {
       data,
     });
 
-    if (response?.eBanking?.auth?.login?.recordId === null) {
+    if (response?.eBanking?.auth?.login?.error) {
       toast({ id: 'login-error', type: 'error', message: 'Invalid Credentials' });
       return;
     }

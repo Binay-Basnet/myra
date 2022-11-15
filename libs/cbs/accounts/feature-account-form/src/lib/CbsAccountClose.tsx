@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import rhtoast from 'react-hot-toast';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
@@ -13,6 +13,7 @@ import {
   NatureOfDepositProduct,
   ObjState,
   useGetAccountTableListQuery,
+  useGetIndividualMemberDetails,
   useSetAccountCloseDataMutation,
 } from '@coop/cbs/data-access';
 import { FormAmountInput, FormInput, FormRadioGroup, FormTextArea } from '@coop/shared/form';
@@ -33,7 +34,7 @@ import {
   Text,
   toast,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { Payment } from '../component/AccountCloseForm/payment';
 
@@ -273,7 +274,7 @@ export const CbsAccountClose = () => {
 
                   if (redirectPath) {
                     router.push(String(redirectPath));
-                    queryClient.invalidateQueries('getAccountInactiveCheck');
+                    queryClient.invalidateQueries(['getAccountInactiveCheck']);
                   } else {
                     router.push('/accounts/account-close');
                   }
@@ -339,7 +340,7 @@ export const CbsAccountClose = () => {
       onSuccess: () => {
         if (redirectPath) {
           router.push(String(redirectPath));
-          queryClient.invalidateQueries('getAccountInactiveCheck');
+          queryClient.invalidateQueries(['getAccountInactiveCheck']);
         } else {
           router.push('/accounts/account-close');
         }

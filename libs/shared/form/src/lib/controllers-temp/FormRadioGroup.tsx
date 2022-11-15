@@ -20,13 +20,13 @@ export const FormRadioGroup = ({ name, label, ...rest }: IFormSelectProps) => {
   const error = errors[name];
 
   return (
-    <Controller
+    (<Controller
       control={control}
       name={name}
       render={({ field: { onChange, value } }) => (
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        <Box display="flex" flexDirection="column" gap="s16">
+        (<Box display="flex" flexDirection="column" gap="s16">
           {label && <TextFields variant="formLabel">{label}</TextFields>}
           <RadioGroup {...rest} value={value} onChange={onChange} name={name} id={name} />
           {error ? (
@@ -34,8 +34,8 @@ export const FormRadioGroup = ({ name, label, ...rest }: IFormSelectProps) => {
               {error?.message as string}
             </TextFields>
           ) : null}
-        </Box>
+        </Box>)
       )}
-    />
+    />)
   );
 };

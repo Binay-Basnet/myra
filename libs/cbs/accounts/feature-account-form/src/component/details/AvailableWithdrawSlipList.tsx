@@ -1,9 +1,13 @@
 import { useMemo } from 'react';
 
-import { DateType, useAppSelector, useGetAvailableSlipsListQuery } from '@coop/cbs/data-access';
+import {
+  DateType,
+  useAccountDetails,
+  useAppSelector,
+  useGetAvailableSlipsListQuery,
+} from '@coop/cbs/data-access';
 import { Table } from '@coop/shared/table';
 import { DetailsCard } from '@coop/shared/ui';
-import { useAccountDetails } from '@coop/shared/utils';
 
 export const AvailableWithdrawSlipList = () => {
   const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);

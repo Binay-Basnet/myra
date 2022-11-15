@@ -3,9 +3,9 @@ import dynamic from 'next/dynamic';
 import format from 'date-fns/format';
 import subDays from 'date-fns/subDays';
 
-import { useGetAccountTransactionListsQuery } from '@coop/cbs/data-access';
+import { useAccountDetails, useGetAccountTransactionListsQuery } from '@coop/cbs/data-access';
 import { Box, DetailsCard, Text } from '@coop/shared/ui';
-import { amountConverter, getRouterQuery, useAccountDetails } from '@coop/shared/utils';
+import { amountConverter, getRouterQuery } from '@coop/shared/utils';
 
 const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });
 

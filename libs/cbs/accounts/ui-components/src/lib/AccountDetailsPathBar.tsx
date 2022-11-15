@@ -1,5 +1,5 @@
+import { useAccountDetails } from '@coop/cbs/data-access';
 import { Box, DetailPageHeader } from '@coop/shared/ui';
-import { useAccountDetails } from '@coop/shared/utils';
 
 export interface PathBarProps {
   title: string;

@@ -1,6 +1,5 @@
-import { NatureOfDepositProduct } from '@coop/cbs/data-access';
+import { NatureOfDepositProduct, useAccountDetails } from '@coop/cbs/data-access';
 import { DetailPageQuickLinks } from '@coop/shared/ui';
-import { useAccountDetails } from '@coop/shared/utils';
 
 import {
   AccountStatistics,

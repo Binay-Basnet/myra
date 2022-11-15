@@ -35,7 +35,7 @@ export const useGetIndividualMemberDetails = ({
 
   const memberDetailData = useMemo(() => {
     if (!memberDetailQueryData?.members?.details?.data) {
-      return;
+      return undefined;
     }
 
     const memberData = memberDetailQueryData?.members?.details?.data as MemberDetailData;
@@ -71,7 +71,7 @@ export const useGetIndividualMemberDetails = ({
 
   const memberSignatureUrl = useMemo(() => {
     if (!documentListQueryData) {
-      return;
+      return undefined;
     }
 
     const kymDocumentsList = documentListQueryData?.document?.listKYMDocuments?.data;
@@ -81,7 +81,7 @@ export const useGetIndividualMemberDetails = ({
 
   const memberCitizenshipUrl = useMemo(() => {
     if (!documentListQueryData) {
-      return;
+      return undefined;
     }
 
     const kymDocumentsList = documentListQueryData?.document?.listKYMDocuments?.data;

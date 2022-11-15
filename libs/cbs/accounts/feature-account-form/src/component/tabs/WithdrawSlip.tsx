@@ -16,7 +16,7 @@ export const WithdrawSlip = () => {
   return (
     //   const router = useRouter();
 
-    <>
+    (<>
       <TabHeader
         heading="Withdraw Slip"
         headerButton={
@@ -25,12 +25,9 @@ export const WithdrawSlip = () => {
           </Button>
         }
       />
-
       <AvailableWithdrawSlipList />
-
       <PastWithdrawSlipList />
-
       <CreateWithdrawSlipModal isOpen={isOpen} onClose={onClose} />
-    </>
+    </>)
   );
 };

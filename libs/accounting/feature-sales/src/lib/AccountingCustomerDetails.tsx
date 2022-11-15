@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import pickBy from 'lodash/pickBy';
 
@@ -86,7 +86,7 @@ export const CustomerPaymentForm = () => {
         success: 'Customer payment saved',
       },
       onSuccess: () => {
-        queryClient.invalidateQueries('getSalesCustomerPaymentListData');
+        queryClient.invalidateQueries(['getSalesCustomerPaymentListData']);
         router.push('/accounting/sales/customer-payment/list');
       },
     });

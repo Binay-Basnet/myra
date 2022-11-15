@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import pickBy from 'lodash/pickBy';
 
@@ -70,7 +70,7 @@ export const AddCustomer = () => {
         success: 'Customer detail saved',
       },
       onSuccess: () => {
-        queryClient.invalidateQueries('getSalesCustomerListData');
+        queryClient.invalidateQueries(['getSalesCustomerListData']);
         router.push('/accounting/sales/customer/list');
       },
     });

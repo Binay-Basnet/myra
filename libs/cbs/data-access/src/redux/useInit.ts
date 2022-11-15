@@ -8,9 +8,7 @@ import {
   useGetMeQuery,
   useRefreshToken,
 } from '@coop/cbs/data-access';
-
-import { useReplace } from './useReplace';
-import { getSchemaPath } from '../utilFunctions/getSchemaPath';
+import { getSchemaPath, useReplace } from '@coop/shared/utils';
 
 const url = getSchemaPath();
 

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 import pickBy from 'lodash/pickBy';
@@ -173,7 +173,7 @@ export const AddInvestment = () => {
         success: 'Investment entry saved',
       },
       onSuccess: () => {
-        queryClient.invalidateQueries('getInvestmentEntriesListData');
+        queryClient.invalidateQueries(['getInvestmentEntriesListData']);
         router.push('/accounting/investment/list');
       },
     });

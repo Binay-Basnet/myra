@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { CoaView, useDeleteCoaMutation, useGetCoaFullViewQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
@@ -169,7 +169,7 @@ export const COAListView = () => {
                         success: 'Deleted Successfully',
                       },
                       promise: deleteCOA({ id: node?.id as string }),
-                      onSuccess: () => queryClient.invalidateQueries('getCoaFullView'),
+                      onSuccess: () => queryClient.invalidateQueries(['getCoaFullView']),
                     }),
                 },
               ]}

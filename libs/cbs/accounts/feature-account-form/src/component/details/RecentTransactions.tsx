@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
+import { useAccountDetails, useGetAccountTransactionList } from '@coop/cbs/data-access';
 import { Button, DetailsCard } from '@coop/shared/ui';
-import { useAccountDetails, useGetAccountTransactionList } from '@coop/shared/utils';
 
 import { TransactionCard } from './TransactionCard';
 

@@ -11,6 +11,7 @@ import {
   LoanRepaymentBankVoucher,
   LoanRepaymentInput,
   LoanRepaymentMethod,
+  useGetIndividualMemberDetails,
   useGetLoanPreviewQuery,
   useGetMemberLoanAccountsQuery,
   useSetLoanRepaymentMutation,
@@ -29,7 +30,6 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { useGetIndividualMemberDetails } from '@coop/shared/utils';
 
 import { InstallmentData, LoanPaymentScheduleTable, LoanProductCard, Payment } from '../components';
 
