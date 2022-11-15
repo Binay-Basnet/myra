@@ -38,7 +38,6 @@
     "cbs-members-feature-activations": "libs/cbs/members/feature-activations",
     "cbs-members-feature-details": "libs/cbs/members/feature-details",
     "cbs-members-feature-list": "libs/cbs/members/feature-list",
-    "cbs-members-feature-profile": "libs/cbs/members/feature-profile",
     "cbs-reports-feature-lists": "libs/cbs/reports/feature-lists",
     "cbs-reports-feature-reports": "libs/cbs/reports/feature-reports",
     "cbs-reports-ui-components": "libs/cbs/reports/ui-components",

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
-import Image from "next/legacy/image";
+import Image from 'next/image';
 
 import { Box, Icon, Modal, Text } from '@coop/shared/ui';
 
@@ -9,10 +9,7 @@ export interface INeosysDocumentCardProps {
   title: string;
 }
 
-export const NeosysDocumentCard = ({
-  img,
-  title,
-}: INeosysDocumentCardProps) => {
+export const NeosysDocumentCard = ({ img, title }: INeosysDocumentCardProps) => {
   const [openModal, setOpenModal] = useState(false);
 
   const onOpenModal = () => {
@@ -33,7 +30,7 @@ export const NeosysDocumentCard = ({
       borderRadius="br3"
     >
       <Box borderRadius="br2" display="flex">
-        <Image height="36px" width="36px" src={img} alt={title} />
+        <Image height={36} width={36} src={img} alt={title} />
         <Text
           ml="s8"
           alignSelf="center"
@@ -59,13 +56,9 @@ export const NeosysDocumentCard = ({
       <Modal
         open={openModal}
         onClose={onCloseModal}
-        isCentered={true}
+        isCentered
         title={
-          <Text
-            fontSize="r2"
-            color="neutralColorLight.Gray-80"
-            fontWeight="SemiBold"
-          >
+          <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
             {title}
           </Text>
         }
