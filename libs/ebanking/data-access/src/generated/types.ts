@@ -3843,6 +3843,31 @@ export type EBankingTransactionQueryRecentArgs = {
   paginate?: InputMaybe<Pagination>;
 };
 
+export enum EodOption {
+  CompleteWithError = 'COMPLETE_WITH_ERROR',
+  Reinitiate = 'REINITIATE',
+}
+
+export type EodResult = {
+  error?: Maybe<MutationError>;
+  record?: Maybe<Scalars['ID']>;
+};
+
+export type EodSatusResult = {
+  cashInVault?: Maybe<EodState>;
+  dormancy?: Maybe<EodState>;
+  interestBooking?: Maybe<EodState>;
+  interestPosting?: Maybe<EodState>;
+  maturity?: Maybe<EodState>;
+  transactionDate?: Maybe<EodState>;
+};
+
+export enum EodState {
+  Completed = 'COMPLETED',
+  CompletedWithErrors = 'COMPLETED_WITH_ERRORS',
+  Ongoing = 'ONGOING',
+}
+
 export type EbankingAccount = {
   accountNumber: Scalars['String'];
   accountSubType: Scalars['String'];
@@ -11569,7 +11594,7 @@ export type TransactionMutation = {
   agentTodayList?: Maybe<AgentTodayListResult>;
   bulkDeposit: BulkDepositResult;
   deposit: DepositResult;
-  endOfDay?: Maybe<Scalars['String']>;
+  endOfDay?: Maybe<EodResult>;
   tellerTransfer: TellerTransferResult;
   transfer: TransferResult;
   withdraw: WithdrawResult;
@@ -11599,6 +11624,10 @@ export type TransactionMutationDepositArgs = {
   data: DepositInput;
 };
 
+export type TransactionMutationEndOfDayArgs = {
+  option?: InputMaybe<EodOption>;
+};
+
 export type TransactionMutationTellerTransferArgs = {
   data: TellerTransferInput;
 };
@@ -11626,6 +11655,7 @@ export type TransactionQuery = {
   agentDetail?: Maybe<AgentRecord>;
   assignedMemberList: AssignedMembersListConnection;
   endOfDayDate: Scalars['String'];
+  eodStatus?: Maybe<EodSatusResult>;
   listAgent: AccountAgentListConnection;
   listAgentTask?: Maybe<AgentTodayListData>;
   listDeposit: AccountActivityListConnection;
