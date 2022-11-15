@@ -117,6 +117,8 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
 
   const { watch, resetField, setValue } = useFormContext();
 
+  const accountId = watch('accountId');
+
   useEffect(() => {
     if (totalDeposit) {
       setValue('cash.cashPaid', String(totalDeposit));
@@ -256,6 +258,7 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
                 memberId={isDiffMember ? dmemberId : memberId}
                 label="Account Name"
                 filterBy={ObjState.Active}
+                excludeIds={[accountId]}
               />
             </GridItem>
 

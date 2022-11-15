@@ -14,6 +14,7 @@ interface IAccountSelectProps {
   memberId: string;
   placeholder?: string;
   filterBy?: ObjState;
+  excludeIds?: string[];
 }
 
 export const FormAccountSelect = ({
@@ -22,6 +23,7 @@ export const FormAccountSelect = ({
   memberId,
   placeholder,
   filterBy,
+  excludeIds,
 }: IAccountSelectProps) => {
   const { t } = useTranslation();
   const { data: accountListData, isFetching } = useGetAccountTableListQuery(
@@ -48,8 +50,12 @@ export const FormAccountSelect = ({
   const accountsList = accountListData?.account?.list?.edges;
 
   const accountOptions: Option[] =
-    accountsList?.reduce(
-      (prevVal, curVal) => [
+    accountsList?.reduce((prevVal, curVal) => {
+      if (excludeIds?.includes(curVal?.node?.id as string) || !curVal) {
+        return prevVal;
+      }
+
+      return [
         ...prevVal,
         {
           label: `${curVal?.node?.product?.productName} (ID:${curVal?.node?.id})`,
@@ -64,10 +70,9 @@ export const FormAccountSelect = ({
             fine: curVal?.node?.dues?.fine as string,
             productName: curVal?.node?.product?.productName,
           },
-        },
-      ],
-      [] as Option[]
-    ) ?? [];
+        } as Option,
+      ];
+    }, [] as Option[]) ?? [];
 
   return (
     <FormCustomSelect
