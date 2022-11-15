@@ -6,6 +6,9 @@ const path = require('path');
  * @type {import('@nrwl/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
+  env: {
+    NX_SCHEMA_PATH: process.env['NX_SCHEMA_PATH'],
+  },
   output: 'standalone',
   experimental: {
     outputFileTracingRoot: path.join(__dirname, '../../'),

@@ -16,6 +16,7 @@ import {
   ObjState,
   useAppSelector,
   useGetAccountTableListQuery,
+  useGetIndividualMemberDetails,
   useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
@@ -34,7 +35,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { InstallmentModel, Payment } from '../components';
 

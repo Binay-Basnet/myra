@@ -2,10 +2,13 @@ import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 
-import { useGetAvailableRangeQuery, useSetIssueNewSlipMutation } from '@coop/cbs/data-access';
+import {
+  useAccountDetails,
+  useGetAvailableRangeQuery,
+  useSetIssueNewSlipMutation,
+} from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { Alert, asyncToast, ChakraModal, Grid, GridItem } from '@coop/shared/ui';
-import { useAccountDetails } from '@coop/shared/utils';
 
 interface ICreateWithdrawSlipModalProps {
   isOpen: boolean;

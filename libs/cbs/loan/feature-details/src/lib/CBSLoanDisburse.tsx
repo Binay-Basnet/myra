@@ -12,6 +12,7 @@ import {
   LoanDisbursementMethod,
   ObjState,
   useGetCoaBankListQuery,
+  useGetIndividualMemberDetails,
   useSetDisburseLoanMutation,
 } from '@coop/cbs/data-access';
 import { LoanListLayout } from '@coop/cbs/loan/layouts';
@@ -30,7 +31,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails } from '@coop/shared/utils';
+import { featureCode } from '@coop/shared/utils';
 
 import CBSLoanDetails from './CbsLoanFeatureDetails';
 import {
@@ -122,6 +123,7 @@ export const CBSLoanDisburseSuccess = () => {
 interface IProps {
   setMode: Dispatch<SetStateAction<'details' | 'payment' | 'success'>>;
 }
+
 export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
   const queryClient = useQueryClient();
 

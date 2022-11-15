@@ -13,6 +13,7 @@ import {
   NatureOfDepositProduct,
   ObjState,
   useGetAccountTableListQuery,
+  useGetIndividualMemberDetails,
   useSetAccountCloseDataMutation,
 } from '@coop/cbs/data-access';
 import { FormAmountInput, FormInput, FormRadioGroup, FormTextArea } from '@coop/shared/form';
@@ -33,7 +34,7 @@ import {
   Text,
   toast,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { Payment } from '../component/AccountCloseForm/payment';
 

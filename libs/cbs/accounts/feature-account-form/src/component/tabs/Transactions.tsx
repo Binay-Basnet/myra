@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
+import { useAccountDetails, useGetAccountTransactionList } from '@coop/cbs/data-access';
 import { Button, DetailsCard } from '@coop/shared/ui';
-import { useAccountDetails, useGetAccountTransactionList } from '@coop/shared/utils';
 
 import { TabHeader, TransactionCard } from '../details';
 

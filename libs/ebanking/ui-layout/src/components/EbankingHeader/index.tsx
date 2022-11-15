@@ -8,6 +8,7 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import { logout, useAppDispatch, useAppSelector } from '@coop/ebanking/data-access';
 import {
   Avatar,
+  BasicSearchBar,
   Box,
   Button,
   Icon,
@@ -16,7 +17,6 @@ import {
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
-  SearchBar,
   SwitchTabs,
   Text,
 } from '@coop/shared/ui';
@@ -151,7 +151,7 @@ export const EbankingHeader = () => {
 
       <Box w="100%" display="flex" alignItems="center" justifyContent="space-between">
         <Box mt="-1.2px" w="50vw">
-          <SearchBar />
+          <BasicSearchBar />
         </Box>
 
         <HeaderRightSection />

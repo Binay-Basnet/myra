@@ -12809,14 +12809,6 @@ export type GetCoopMeQuery = {
   };
 };
 
-export type KymFieldDataFragment = {
-  id?: string | null;
-  options?: Array<{
-    id?: string | null;
-    value?: Record<'local' | 'en' | 'np', string> | null;
-  } | null> | null;
-};
-
 export type GetCoopStatsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetCoopStatsQuery = {
@@ -13417,12 +13409,6 @@ export type GetUtilityListQuery = {
     } | null> | null;
   };
 };
-
-export type GetNewIdMutationVariables = Exact<{
-  idType?: InputMaybe<Id_Type>;
-}>;
-
-export type GetNewIdMutation = { newId: string };
 
 export type SignUpMutationVariables = Exact<{
   mobileNo: Scalars['String'];

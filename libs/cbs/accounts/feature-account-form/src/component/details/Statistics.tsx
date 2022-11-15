@@ -1,5 +1,6 @@
+import { useAccountDetails } from '@coop/cbs/data-access';
 import { Box, Grid, Text } from '@coop/shared/ui';
-import { amountConverter, useAccountDetails } from '@coop/shared/utils';
+import { amountConverter } from '@coop/shared/utils';
 
 export const AccountStatistics = () => {
   const { accountDetails } = useAccountDetails();

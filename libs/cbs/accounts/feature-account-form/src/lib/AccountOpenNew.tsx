@@ -15,6 +15,7 @@ import {
   useGetAccountOpenMinorListQuery,
   useGetAccountOpenProductDetailsQuery,
   useGetDefaultAccountListQuery,
+  useGetIndividualMemberDetails,
   useGetProductListQuery,
   useSetAccountDocumentDataMutation,
   useSetAccountOpenDataMutation,
@@ -40,7 +41,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import {
   DepositFrequency,

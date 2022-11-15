@@ -10,6 +10,7 @@ import {
   ObjState,
   useGetAccountTableListQuery,
   useGetAvailableSlipsListQuery,
+  useGetIndividualMemberDetails,
   useSetWithdrawDataMutation,
   WithdrawBy,
   WithdrawInput,
@@ -31,7 +32,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { Payment } from '../components';
 

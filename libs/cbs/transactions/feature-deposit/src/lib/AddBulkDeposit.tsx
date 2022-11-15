@@ -9,6 +9,7 @@ import {
   CashValue,
   DepositedBy,
   DepositPaymentType,
+  useGetIndividualMemberDetails,
   useSetBulkDepositDataMutation,
 } from '@coop/cbs/data-access';
 import {
@@ -22,7 +23,6 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { useGetIndividualMemberDetails } from '@coop/shared/utils';
 
 import { BulkDepositAccountsSummary, BulkDepositAccountsTable, Payment } from '../components';
 

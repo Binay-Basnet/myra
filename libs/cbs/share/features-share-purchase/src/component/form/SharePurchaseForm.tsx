@@ -11,6 +11,7 @@ import {
   SharePurchaseInput,
   ShareVoucherDepositedBy,
   useAddSharePurchaseMutation,
+  useGetIndividualMemberDetails,
   useGetShareChargesQuery,
 } from '@coop/cbs/data-access';
 import {
@@ -26,7 +27,7 @@ import {
   ShareMemberCard,
   TabMenu,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { ShareInfoFooter } from './ShareInfoFooter';
 import { SharePaymentFooter } from './SharePaymentFooter';

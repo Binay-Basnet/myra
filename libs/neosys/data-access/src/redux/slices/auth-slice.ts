@@ -8,6 +8,7 @@ interface AuthenticatePayload {
   user: Partial<NeosysUser>;
   token: string;
 }
+
 // Define a type for the slice state
 interface AuthState {
   user: Partial<NeosysUser> | null;
@@ -41,7 +42,7 @@ export const authSlice = createSlice({
       state.isLogged = true;
     },
     logout: (state) => {
-      localStorage.clear();
+      localStorage.removeItem('refreshToken');
       state.user = null;
       state.token = null;
       state.isLogged = false;

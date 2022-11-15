@@ -6,6 +6,7 @@ import { omit } from 'lodash';
 
 import {
   LoanAccountInput,
+  useGetIndividualMemberDetails,
   useGetLoanApplicationDetailsQuery,
   useGetLoanProductSubTypeQuery,
   useGetLoanProductTypesQuery,
@@ -24,7 +25,6 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { useGetIndividualMemberDetails } from '@coop/shared/utils';
 
 import {
   AccordianComponent,
