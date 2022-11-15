@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import pickBy from 'lodash/pickBy';
 
@@ -75,7 +75,7 @@ export const CreditNoteForm = () => {
         success: 'Credit note saved',
       },
       onSuccess: () => {
-        queryClient.invalidateQueries('getSalesCreditNoteListData');
+        queryClient.invalidateQueries(['getSalesCreditNoteListData']);
         router.push('/accounting/sales/credit-note/list');
       },
     });

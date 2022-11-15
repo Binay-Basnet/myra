@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiFillCheckCircle } from 'react-icons/ai';
 import { IoChevronBackOutline } from 'react-icons/io5';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { Box } from '@chakra-ui/react';
 import { omit } from 'lodash';
@@ -158,7 +158,7 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
         loading: 'Disbursing Loan',
       },
       onSuccess: () => {
-        queryClient.invalidateQueries('getLoanList');
+        queryClient.invalidateQueries(['getLoanList']);
 
         setMode('success');
       },

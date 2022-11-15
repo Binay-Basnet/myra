@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -40,7 +40,7 @@ export const ApplyForLoan = () => {
         success: 'Added New Loan Request',
       },
       onSuccess: () => {
-        queryClient.invalidateQueries('getLoanHistory');
+        queryClient.invalidateQueries(['getLoanHistory']);
         router.push('/coop');
       },
     });

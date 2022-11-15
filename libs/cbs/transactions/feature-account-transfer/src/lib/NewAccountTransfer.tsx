@@ -1,7 +1,7 @@
-import { useEffect, useMemo } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
-import { useRouter } from 'next/router';
+import {useEffect, useMemo} from 'react';
+import {FormProvider, useForm} from 'react-hook-form';
+import {useQueryClient} from '@tanstack/react-query';
+import {useRouter} from 'next/router';
 import omit from 'lodash/omit';
 
 import {
@@ -15,18 +15,8 @@ import {
   useSetAccountTransferDataMutation,
   WithdrawWith,
 } from '@coop/cbs/data-access';
-import {
-  BoxContainer,
-  ContainerWithDivider,
-  InputGroupContainer,
-} from '@coop/cbs/transactions/ui-containers';
-import {
-  FormAmountInput,
-  FormInput,
-  FormSelect,
-  FormSwitchTab,
-  FormTextArea,
-} from '@coop/shared/form';
+import {BoxContainer, ContainerWithDivider, InputGroupContainer,} from '@coop/cbs/transactions/ui-containers';
+import {FormAmountInput, FormInput, FormSelect, FormSwitchTab, FormTextArea,} from '@coop/shared/form';
 import {
   asyncToast,
   Box,
@@ -38,7 +28,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import {featureCode, useTranslation} from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface NewAccountTransferProps {}
@@ -179,8 +169,8 @@ export const NewAccountTransfer = () => {
       },
       onSuccess: () => {
         if (values.withdrawWith === WithdrawWith.WithdrawSlip) {
-          queryClient.invalidateQueries('getAvailableSlipsList');
-          queryClient.invalidateQueries('getPastSlipsList');
+          queryClient.invalidateQueries(['getAvailableSlipsList']);
+          queryClient.invalidateQueries(['getPastSlipsList']);
         }
         router.push('/transactions/account-transfer/list');
       },

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { omit } from 'lodash';
 
@@ -183,7 +183,7 @@ export const SharePurchaseForm = () => {
       },
       onSuccess: () => {
         if (redirectPath) {
-          queryClient.invalidateQueries('getMemberCheck');
+          queryClient.invalidateQueries(['getMemberCheck']);
           router.push(String(redirectPath));
         } else {
           router.push('/share/register');

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { InfoCard } from '@coop/ebanking/cards';
 import { useAccountTransferMutation, useGetAccountListQuery } from '@coop/ebanking/data-access';
@@ -35,7 +35,7 @@ export const AccountTransferReview = ({
   }));
 
   return (
-    <InfoCard
+    (<InfoCard
       title="Payment Review"
       btn={
         <Button variant="ghost" gap="s4">
@@ -86,8 +86,8 @@ export const AccountTransferReview = ({
               });
 
               if (response?.eBanking?.webUtilityPayments?.accountTransfer?.success) {
-                queryClient.invalidateQueries('getAccountList');
-                queryClient.invalidateQueries('getTransactionLists');
+                queryClient.invalidateQueries(['getAccountList']);
+                queryClient.invalidateQueries(['getTransactionLists']);
 
                 setTransactionCode(
                   response?.eBanking?.webUtilityPayments?.accountTransfer?.record
@@ -123,6 +123,6 @@ export const AccountTransferReview = ({
           </Button>
         </Box>
       </CardContainer>
-    </InfoCard>
+    </InfoCard>)
   );
 };

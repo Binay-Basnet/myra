@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 
 import {
@@ -64,8 +64,8 @@ export const CbsSettingsFeatureValuatorAdd = () => {
         loading: 'Adding New Valuator',
       },
       onSuccess: () => {
-        queryClient.invalidateQueries('getValuatorList');
-        queryClient.invalidateQueries('getValuator');
+        queryClient.invalidateQueries(['getValuatorList']);
+        queryClient.invalidateQueries(['getValuator']);
         router.push('/settings/general/loan/valuator');
       },
       onError: (error) => {

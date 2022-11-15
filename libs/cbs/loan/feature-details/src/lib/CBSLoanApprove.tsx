@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
@@ -32,7 +32,7 @@ export const CBSLoanApprove = () => {
         loading: 'Approving Loan !!',
       },
       onSuccess: () => {
-        queryClient.invalidateQueries('getLoanList');
+        queryClient.invalidateQueries(['getLoanList']);
         router.replace('/loan/applications');
       },
       promise: mutateAsync({ id: id as string, action: LoanApproveOrCancel.Approve }),

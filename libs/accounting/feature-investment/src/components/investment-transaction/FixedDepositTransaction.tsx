@@ -20,11 +20,9 @@ export const FixedDepositTransaction = () => (
   //   value: item?.id as string,
   // }));
 
-  <FormSection header="Fixed Deposit">
+  (<FormSection header="Fixed Deposit">
     <FormSelect name="fd.type" label="Type" options={fdTypeOptions} />
-
     <FormAmountInput name="fd.amount" label="FD Amount" />
-
     <GridItem colSpan={3} display="none">
       <Alert status="info" title="Bank Details" hideCloseIcon>
         {/* <Box display="flex" flexDirection="column"> */}
@@ -55,5 +53,5 @@ export const FixedDepositTransaction = () => (
         {/* </Box> */}
       </Alert>
     </GridItem>
-  </FormSection>
+  </FormSection>)
 );

@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
-import { useRouter } from 'next/router';
+import {useMemo, useState} from 'react';
+import {FormProvider, useForm} from 'react-hook-form';
+import {useQueryClient} from '@tanstack/react-query';
+import {useRouter} from 'next/router';
 import omit from 'lodash/omit';
 
 import {
@@ -24,7 +24,7 @@ import {
   Text,
 } from '@coop/shared/ui';
 
-import { BulkDepositAccountsSummary, BulkDepositAccountsTable, Payment } from '../components';
+import {BulkDepositAccountsSummary, BulkDepositAccountsTable, Payment} from '../components';
 
 /* eslint-disable-next-line */
 export interface AddBulkDepositProps {}
@@ -150,7 +150,7 @@ export const AddBulkDeposit = () => {
       },
       promise: mutateAsync({ data: filteredValues as BulkDepositInput }),
       onSuccess: () => {
-        queryClient.invalidateQueries('getDepositListData');
+        queryClient.invalidateQueries(['getDepositListData']);
         router.push('/transactions/deposit/list');
       },
     });

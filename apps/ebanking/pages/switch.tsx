@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 

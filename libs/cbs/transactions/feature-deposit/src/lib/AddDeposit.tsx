@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
-import { useRouter } from 'next/router';
+import {useEffect, useMemo, useState} from 'react';
+import {FormProvider, useForm} from 'react-hook-form';
+import {useQueryClient} from '@tanstack/react-query';
+import {useRouter} from 'next/router';
 import omit from 'lodash/omit';
 
 import {
@@ -20,7 +20,7 @@ import {
   useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
-import { FormAmountInput, FormInput } from '@coop/shared/form';
+import {FormAmountInput, FormInput} from '@coop/shared/form';
 import {
   asyncToast,
   Box,
@@ -35,9 +35,9 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import {featureCode, useTranslation} from '@coop/shared/utils';
 
-import { InstallmentModel, Payment } from '../components';
+import {InstallmentModel, Payment} from '../components';
 
 /* eslint-disable-next-line */
 export interface AddDepositProps {}
@@ -345,10 +345,10 @@ export const AddDeposit = () => {
       promise: mutateAsync({ data: filteredValues as DepositInput }),
       onSuccess: () => {
         if (values.payment_type === DepositPaymentType.WithdrawSlip) {
-          queryClient.invalidateQueries('getAvailableSlipsList');
-          queryClient.invalidateQueries('getPastSlipsList');
+          queryClient.invalidateQueries(['getAvailableSlipsList']);
+          queryClient.invalidateQueries(['getPastSlipsList']);
         }
-        queryClient.invalidateQueries('getDepositListData');
+        queryClient.invalidateQueries(['getDepositListData']);
         router.push('/transactions/deposit/list');
       },
     });

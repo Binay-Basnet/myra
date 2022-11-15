@@ -1,5 +1,5 @@
 import { MdOutlineCircle } from 'react-icons/md';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 
@@ -20,7 +20,7 @@ const LeafNode = ({ data }: ITestProps) => {
   const { mutateAsync: deleteCOA } = useDeleteCoaMutation();
 
   return (
-    <NodeWrapper>
+    (<NodeWrapper>
       <Box display="flex" gap="s8" ml="-3px" alignItems="center" cursor="pointer">
         <Icon size="sm" as={MdOutlineCircle} color="gray.500" />
         <Box display="flex" alignItems="center" gap="s8" role="group">
@@ -64,7 +64,7 @@ const LeafNode = ({ data }: ITestProps) => {
                     success: 'Deleted Successfully',
                   },
                   promise: deleteCOA({ id: data?.id as string }),
-                  onSuccess: () => queryClient.invalidateQueries('getCoaFullView'),
+                  onSuccess: () => queryClient.invalidateQueries(['getCoaFullView']),
                 });
               }}
             >
@@ -74,7 +74,7 @@ const LeafNode = ({ data }: ITestProps) => {
           ) : null}
         </Box>
       </Box>
-    </NodeWrapper>
+    </NodeWrapper>)
   );
 };
 

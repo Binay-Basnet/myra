@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
 import {
   useAccountDetails,
@@ -69,7 +69,7 @@ export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlip
       },
       promise: issueWithdrawSlip({ accountId: accountDetails?.accountId as string, count }),
       onSuccess: () => {
-        queryClient.invalidateQueries('getAvailableSlipsList');
+        queryClient.invalidateQueries(['getAvailableSlipsList']);
         setValue('count', '');
         onClose();
       },

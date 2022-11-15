@@ -1,7 +1,7 @@
 import { BiBell } from 'react-icons/bi';
 import { IoCheckmark } from 'react-icons/io5';
 import { VscDebugDisconnect } from 'react-icons/vsc';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 

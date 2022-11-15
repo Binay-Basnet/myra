@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 
 import { TransactionHeaderCardWithChip, TransferModal } from '@coop/ebanking/cards';
@@ -27,9 +27,9 @@ export const SendMoneyResult = ({ paymentStatus, setPaymentStatus }: SendMoneyRe
 
   const queryClient = useQueryClient();
 
-  const successResponse = queryClient?.getQueryData(
-    'send-money-success'
-  ) as EbankingSendMoneyRecord;
+  const successResponse = queryClient?.getQueryData([
+    'send-money-success',
+  ]) as EbankingSendMoneyRecord;
 
   const { getValues } = useFormContext<EbankingSendMoneyInput>();
 

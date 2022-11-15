@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IoCopyOutline, IoQrCodeOutline } from 'react-icons/io5';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
@@ -49,7 +49,7 @@ export const AccountCard = ({ isDefault, account, isLoan }: IAccountCardProps) =
   }, [isDefault]);
 
   return (
-    <Box p="s16" display="flex" flexDir="column" gap="s8" bg="white" borderRadius="br2">
+    (<Box p="s16" display="flex" flexDir="column" gap="s8" bg="white" borderRadius="br2">
       <Box display="flex" justifyContent="space-between" alignItems="flex-start">
         <Box
           display="flex"
@@ -140,7 +140,7 @@ export const AccountCard = ({ isDefault, account, isLoan }: IAccountCardProps) =
                             onSuccess: (response) => {
                               const data = response?.eBanking?.account?.setDefaultAccount?.recordId;
                               if (data) {
-                                queryClient.invalidateQueries('getAccountList');
+                                queryClient.invalidateQueries(['getAccountList']);
                                 dispatch(updateDefaultAccountInCoop(data));
                                 onClose();
                               }
@@ -157,7 +157,6 @@ export const AccountCard = ({ isDefault, account, isLoan }: IAccountCardProps) =
           </Popover>
         </Box>
       </Box>
-
       <Box display="flex" flexDir="column" gap="s8">
         <TextFields variant="formHelper" color="gray.700">
           {account?.productName}
@@ -166,7 +165,6 @@ export const AccountCard = ({ isDefault, account, isLoan }: IAccountCardProps) =
           Term Saving
         </TextFields>
       </Box>
-
       <Divider />
       <Box display="flex" alignItems="center" justifyContent="space-between" mt="s8">
         <TextFields variant="pageHeader" color="gray.800">
@@ -195,6 +193,6 @@ export const AccountCard = ({ isDefault, account, isLoan }: IAccountCardProps) =
         {/*  Interest Rate: {account?.interestRate?.toFixed(2) ?? 'N/A'}% */}
         {/* </TextFields> */}
       </Box>
-    </Box>
+    </Box>)
   );
 };
