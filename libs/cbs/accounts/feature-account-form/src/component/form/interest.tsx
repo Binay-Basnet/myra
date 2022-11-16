@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { InterestAuthority, useGetAccountOpenProductDetailsQuery } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
@@ -19,6 +20,9 @@ const radioGroupdata = [
 ];
 export const Interest = () => {
   const { t } = useTranslation();
+  const router = useRouter();
+  const routerAction = router.query['action'];
+
   const [triggerQuery, setTriggerQuery] = useState(false);
   const { watch, setValue } = useFormContext();
   const products = watch('productId');
@@ -46,7 +50,9 @@ export const Interest = () => {
   // }, [valueInput, setValue]);
 
   useEffect(() => {
-    setValue('interestRate', defaultRate);
+    if (routerAction === 'add') {
+      setValue('interestRate', defaultRate);
+    }
   }, [defaultRate]);
 
   const maxValue =
