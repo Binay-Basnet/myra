@@ -5,22 +5,23 @@ import { Box, Grid, Icon, Text } from '@coop/shared/ui';
 
 import { TransactionTable } from '../components';
 
-const links = [
-  {
-    title: 'New Deposit',
-    link: '/transactions/deposit/add',
-  },
-  {
-    title: 'New Withdraw',
-    link: '/transactions/withdraw/add',
-  },
-  {
-    title: 'Transfer',
-    link: '/accounts/account-transfer/add',
-  },
-];
 export const Transactions = () => {
   const router = useRouter();
+  const id = router.query['id'] as string;
+  const links = [
+    {
+      title: 'New Deposit',
+      link: `/transactions/deposit/add?memberId=${id}`,
+    },
+    {
+      title: 'New Withdraw',
+      link: '/transactions/withdraw/add',
+    },
+    {
+      title: 'Transfer',
+      link: '/accounts/account-transfer/add',
+    },
+  ];
 
   return (
     <>

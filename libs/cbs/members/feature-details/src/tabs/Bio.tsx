@@ -8,6 +8,7 @@ import {
   MemberBasicInfo,
   MemberContactInfo,
   MemberFamilyInfo,
+  MemberFamilyRelationsInfo,
 } from '../components';
 
 // const links = [
@@ -95,6 +96,7 @@ export const Bio = () => {
       <MemberContactInfo />
       <MemberAddressInfo />
       <MemberFamilyInfo />
+      <MemberFamilyRelationsInfo />
     </>
   );
 };
