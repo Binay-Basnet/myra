@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
 import {
@@ -508,11 +508,9 @@ export const AccountOpenNew = () => {
                       <Box display="flex" flexDirection="column" gap="s16">
                         <Box display="flex" flexDirection="column" gap="s4">
                           <Text fontWeight="500" fontSize="r1">
-                            {' '}
-                            Default Amount Deposit Account Name
+                            Nominee Account
                           </Text>
                           <Text fontWeight="400" fontSize="s2">
-                            {' '}
                             If the member does not specify particular account for deposit, this
                             mapped account will be set globally. Normally this is a compulsory
                             account type.
@@ -521,7 +519,6 @@ export const AccountOpenNew = () => {
 
                         <FormSelect
                           name="defaultAmountDepositAccountName"
-                          label="Account Type"
                           options={defaultDataOptions}
                         />
                       </Box>
