@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
 import {
@@ -111,6 +111,7 @@ const cashOptions: Record<string, string> = {
 
 export const AccountOpenNew = () => {
   const queryClient = useQueryClient();
+
   const [mode, setMode] = useState('0');
 
   const [totalCharge, setTotalCharge] = useState<number>(0);
@@ -142,9 +143,10 @@ export const AccountOpenNew = () => {
       },
     },
   });
-  const { getValues, watch, reset } = methods;
+  const { getValues, watch, reset, setValue } = methods;
   const memberId = watch('memberId');
   const router = useRouter();
+  const routerAction = router.query['action'];
   const redirectPath = router.query['redirect'];
 
   const id = String(router?.query?.['id']);
@@ -189,6 +191,8 @@ export const AccountOpenNew = () => {
   const newLog = data?.settings?.general?.depositProduct?.getProductList?.notAllowed;
 
   const productID = watch('productId');
+  const defaultAccount = productOptions.find((d) => d?.value === productID);
+  const defaultAccountName = defaultAccount?.label;
 
   const errors = newLog?.find((d) => d?.data?.id === productID);
 
@@ -433,6 +437,11 @@ export const AccountOpenNew = () => {
     }
   }, [refetch]);
 
+  useEffect(() => {
+    if (routerAction === 'add') {
+      setValue('accountName', defaultAccountName);
+    }
+  }, [defaultAccountName]);
   return (
     <Container minW="container.xl" p="0" bg="white">
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">

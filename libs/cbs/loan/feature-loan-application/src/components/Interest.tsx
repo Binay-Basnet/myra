@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 import { InterestAuthority, LoanAccountInput } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
@@ -20,6 +21,8 @@ const radioGroupdata = [
 ];
 
 export const Interest = () => {
+  const router = useRouter();
+  const loanApplicationId = router.query['id'] as string;
   const { watch, setValue } = useFormContext<LoanAccountInput>();
 
   const { product } = useLoanProductContext();
@@ -29,7 +32,9 @@ export const Interest = () => {
   const defaultInput = Number(product?.interest?.defaultRate);
 
   useEffect(() => {
-    setValue('intrestRate', defaultInput);
+    if (!loanApplicationId) {
+      setValue('intrestRate', defaultInput);
+    }
   }, [defaultInput]);
 
   const minRate =

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import { omit } from 'lodash';
 
 import {
@@ -46,6 +46,7 @@ import { useLoanProductErrors } from '../hooks/useLoanProductListErrors';
 
 export const NewLoanApplication = () => {
   const router = useRouter();
+  const loanApplicationId = router.query['id'] as string;
   const { id } = router.query;
 
   const queryClient = useQueryClient();
@@ -54,7 +55,7 @@ export const NewLoanApplication = () => {
   const methods = useForm<LoanAccountInput>({
     mode: 'onChange',
   });
-  const { watch, resetField } = methods;
+  const { watch, resetField, setValue } = methods;
 
   const memberId = watch('memberId');
   const loanType = watch('productType');
@@ -193,6 +194,14 @@ export const NewLoanApplication = () => {
       });
     }
   }, [id, isLoanFetching, loanApplication, methods]);
+
+  const defaultAccount = loanProductOptions.find((d) => d?.value === productId);
+  const defaultAccountName = defaultAccount?.label;
+  useEffect(() => {
+    if (!loanApplicationId) {
+      setValue('loanAccountName', defaultAccountName);
+    }
+  }, [defaultAccountName, loanApplicationId]);
 
   return (
     <Container minW="container.xl" p="0" bg="white">
