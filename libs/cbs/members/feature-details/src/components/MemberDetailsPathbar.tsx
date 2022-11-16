@@ -14,7 +14,6 @@ export const MemberDetailsPathBar = ({ title }: PathBarProps) => {
   });
   const memberBasicInfo =
     memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation;
-  console.log('hello');
 
   return (
     <Box position="sticky" top="110px" w="100%" zIndex={10}>
