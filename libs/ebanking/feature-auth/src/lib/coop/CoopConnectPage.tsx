@@ -26,7 +26,7 @@ export const CoopConnectPage = () => {
 
   const selectedCoopPhone = cooperativesList?.find((c) => c?.id === selectedCoop)?.mobileNo;
 
-  const onSubmit = async () => {
+  const onSubmit = methods.handleSubmit(async () => {
     if (!selectedCoopPhone || !selectedCoop) return;
 
     const response = await loginToCooperative({
@@ -62,7 +62,7 @@ export const CoopConnectPage = () => {
         message: 'Something went wrong. Please try again later',
       });
     }
-  };
+  });
 
   return (
     <>
