@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { AiFillCheckCircle, AiOutlinePlus } from 'react-icons/ai';
 import { IoCheckmarkDone } from 'react-icons/io5';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { Box } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
 
 import {
   NatureOfDepositProduct,
   useGetAccountCheckQuery,
   useGetMemberAccountsQuery,
   useGetMemberCheckQuery,
+  useGetMemberIndividualDataQuery,
 } from '@coop/cbs/data-access';
 import { Alert, Button, Container, Divider, FormFooter, Icon, Text, VStack } from '@coop/shared/ui';
 
@@ -34,206 +35,209 @@ export const CbsMembersFeatureActivate = () => {
   );
 
   const accounts = memberAccountsData?.members?.getAllAccounts?.data?.depositAccount;
+  const { data: memberDetails } = useGetMemberIndividualDataQuery({ id });
 
-  return (<>
-    <Box display={mode === 'payment' ? 'block' : 'none'}>
-      <MembershipPayment setMode={setMode} />
-    </Box>
-    <Container
-      display={mode === 'details' ? 'block' : 'none'}
-      p={0}
-      minWidth="container.lg"
-      bg="white"
-      minH="calc(100vh - 110px)"
-    >
-      <Box minH="calc(100vh - 170px)" p="s16" display="flex" flexDir="column" gap="s32">
-        <Box
-          display="flex"
-          bg="background.500"
-          flexDir="column"
-          justifyContent="center"
-          borderRadius="br2"
-          alignItems="center"
-          py="s32"
-          px="s16"
-          gap="s16"
-        >
-          <Icon as={AiFillCheckCircle} size="xl" color="primary.500" />
-          <Text fontSize="r2" color="gray.800" fontWeight="600">
-            Member
-            <Text as="span" color="primary.500">
-              #{id}
-            </Text>{' '}
-            Created Successfully
-          </Text>
-        </Box>
+  return (
+    <>
+      <Box display={mode === 'payment' ? 'block' : 'none'}>
+        <MembershipPayment setMode={setMode} />
+      </Box>
+      <Container
+        display={mode === 'details' ? 'block' : 'none'}
+        p={0}
+        minWidth="container.lg"
+        bg="white"
+        minH="calc(100vh - 110px)"
+      >
+        <Box minH="calc(100vh - 170px)" p="s16" display="flex" flexDir="column" gap="s32">
+          <Box
+            display="flex"
+            bg="background.500"
+            flexDir="column"
+            justifyContent="center"
+            borderRadius="br2"
+            alignItems="center"
+            py="s32"
+            px="s16"
+            gap="s16"
+          >
+            <Icon as={AiFillCheckCircle} size="xl" color="primary.500" />
+            <Text fontSize="r2" color="gray.800" fontWeight="600">
+              Member
+              <Text as="span" color="primary.500">
+                #{memberDetails?.members?.details?.data?.code}
+              </Text>{' '}
+              Created Successfully
+            </Text>
+          </Box>
 
-        <Box px="s16">
-          <Text fontSize="r2" fontWeight="600" color="gray.800">
-            In order to activate the member, please follow the steps below:
-          </Text>
-        </Box>
+          <Box px="s16">
+            <Text fontSize="r2" fontWeight="600" color="gray.800">
+              In order to activate the member, please follow the steps below:
+            </Text>
+          </Box>
 
-        <Box px="s16" display="flex" flexDir="column" gap="s24">
-          <Box display="flex" gap="s16">
-            <NumberStatus active={!hasPaidMemberFee} number={1} />
+          <Box px="s16" display="flex" flexDir="column" gap="s24">
+            <Box display="flex" gap="s16">
+              <NumberStatus active={!hasPaidMemberFee} number={1} />
 
-            <Box display="flex" flexDir="column" gap="s16">
-              <Box display="flex" flexDir="column" gap="s4">
-                <Text fontSize="r1" fontWeight="600" color="gray.800">
-                  Membership Payment
-                </Text>
-                <Text fontSize="r1" color="gray.800">
-                  In order to activate the member, please follow the steps below:
-                </Text>
-              </Box>
-              {hasPaidMemberFee ? (
-                <Box display="flex" gap="s4">
-                  <Icon color="primary.500" as={IoCheckmarkDone} />
-                  <Text
-                    fontSize="s3"
-                    fontWeight="SemiBold"
-                    color="neutralColorLight.Gray-70"
-                    lineHeight="150%"
-                  >
-                    Paid for Membership
+              <Box display="flex" flexDir="column" gap="s16">
+                <Box display="flex" flexDir="column" gap="s4">
+                  <Text fontSize="r1" fontWeight="600" color="gray.800">
+                    Membership Payment
+                  </Text>
+                  <Text fontSize="r1" color="gray.800">
+                    In order to activate the member, please follow the steps below:
                   </Text>
                 </Box>
-              ) : (
-                <Box>
-                  <Button onClick={() => setMode('payment')}>Pay for Membership</Button>
-                </Box>
-              )}
-            </Box>
-          </Box>
-          <Divider />
-          <Box display="flex" gap="s16">
-            <NumberStatus active={!hasShareIssued && !!hasPaidMemberFee} number={2} />
-            <Box display="flex" flexDir="column" gap="s16">
-              <Box display="flex" flexDir="column" gap="s4">
-                <Text fontSize="r1" fontWeight="600" color="gray.800">
-                  Share Issue
-                </Text>
-                <Text fontSize="r1" color="gray.800">
-                  Share must be issued for a member to be active
-                </Text>
+                {hasPaidMemberFee ? (
+                  <Box display="flex" gap="s4">
+                    <Icon color="primary.500" as={IoCheckmarkDone} />
+                    <Text
+                      fontSize="s3"
+                      fontWeight="SemiBold"
+                      color="neutralColorLight.Gray-70"
+                      lineHeight="150%"
+                    >
+                      Paid for Membership
+                    </Text>
+                  </Box>
+                ) : (
+                  <Box>
+                    <Button onClick={() => setMode('payment')}>Pay for Membership</Button>
+                  </Box>
+                )}
               </Box>
-              {hasShareIssued ? (
-                <Box display="flex" gap="s4">
-                  <Icon color="primary.500" as={IoCheckmarkDone} />
-                  <Text
-                    fontSize="s3"
-                    fontWeight="SemiBold"
-                    color="neutralColorLight.Gray-70"
-                    lineHeight="150%"
-                  >
-                    Share Issued
+            </Box>
+            <Divider />
+            <Box display="flex" gap="s16">
+              <NumberStatus active={!hasShareIssued && !!hasPaidMemberFee} number={2} />
+              <Box display="flex" flexDir="column" gap="s16">
+                <Box display="flex" flexDir="column" gap="s4">
+                  <Text fontSize="r1" fontWeight="600" color="gray.800">
+                    Share Issue
+                  </Text>
+                  <Text fontSize="r1" color="gray.800">
+                    Share must be issued for a member to be active
                   </Text>
                 </Box>
-              ) : (
-                <Box>
-                  <Button
-                    {...(!hasPaidMemberFee ? { shade: 'neutral', disabled: true } : {})}
-                    leftIcon={<Icon as={AiOutlinePlus} />}
-                    onClick={() =>
-                      router.push(`/share/share-issue?redirect=${router.asPath}&memberId=${id}`)
-                    }
-                  >
-                    New Share Issue
-                  </Button>
-                </Box>
-              )}
-            </Box>
-          </Box>
-          <Divider />
-
-          <Box display="flex" gap="s16">
-            <NumberStatus
-              active={!!hasShareIssued && !!hasPaidMemberFee && !hasAccountUpdated}
-              number={3}
-            />
-            <Box w="100%" display="flex" flexDir="column" gap="s16">
-              <Box display="flex" flexDir="column" gap="s4">
-                <Text fontSize="r1" fontWeight="600" color="gray.800">
-                  Update Account Details
-                </Text>
-                <Text fontSize="r1" color="gray.800">
-                  Some of the accounts are mandatory for all the users. Update account details
-                  below to activate your membership{' '}
-                </Text>
+                {hasShareIssued ? (
+                  <Box display="flex" gap="s4">
+                    <Icon color="primary.500" as={IoCheckmarkDone} />
+                    <Text
+                      fontSize="s3"
+                      fontWeight="SemiBold"
+                      color="neutralColorLight.Gray-70"
+                      lineHeight="150%"
+                    >
+                      Share Issued
+                    </Text>
+                  </Box>
+                ) : (
+                  <Box>
+                    <Button
+                      {...(!hasPaidMemberFee ? { shade: 'neutral', disabled: true } : {})}
+                      leftIcon={<Icon as={AiOutlinePlus} />}
+                      onClick={() =>
+                        router.push(`/share/share-issue?redirect=${router.asPath}&memberId=${id}`)
+                      }
+                    >
+                      New Share Issue
+                    </Button>
+                  </Box>
+                )}
               </Box>
-
-              {accounts && accounts?.length !== 0 ? (
-                <Box w="100%" display="flex" flexDir="column" gap="s8">
-                  <VStack
-                    divider={<Divider />}
-                    spacing={0}
-                    alignItems="normal"
-                    border="1px"
-                    borderColor="border.layout"
-                    borderRadius="br2"
-                  >
-                    {accounts?.map((account, index) => (
-                      <AccountRow index={index + 1} account={account} />
-                    ))}
-                  </VStack>
-
-                  {hasAccountUpdated || skipAccounts ? (
-                    <Box display="flex" gap="s4" py="s16">
-                      <Icon color="primary.500" as={IoCheckmarkDone} />
-                      <Text
-                        fontSize="s3"
-                        fontWeight="SemiBold"
-                        color="neutralColorLight.Gray-70"
-                        lineHeight="150%"
-                      >
-                        Completed
-                      </Text>
-                    </Box>
-                  ) : (
-                    <Box>
-                      <Button variant="ghost" onClick={() => setSkipAccounts(true)}>
-                        Skip for now
-                      </Button>
-                    </Box>
-                  )}
-                </Box>
-              ) : null}
             </Box>
+            <Divider />
+
+            <Box display="flex" gap="s16">
+              <NumberStatus
+                active={!!hasShareIssued && !!hasPaidMemberFee && !hasAccountUpdated}
+                number={3}
+              />
+              <Box w="100%" display="flex" flexDir="column" gap="s16">
+                <Box display="flex" flexDir="column" gap="s4">
+                  <Text fontSize="r1" fontWeight="600" color="gray.800">
+                    Update Account Details
+                  </Text>
+                  <Text fontSize="r1" color="gray.800">
+                    Some of the accounts are mandatory for all the users. Update account details
+                    below to activate your membership{' '}
+                  </Text>
+                </Box>
+
+                {accounts && accounts?.length !== 0 ? (
+                  <Box w="100%" display="flex" flexDir="column" gap="s8">
+                    <VStack
+                      divider={<Divider />}
+                      spacing={0}
+                      alignItems="normal"
+                      border="1px"
+                      borderColor="border.layout"
+                      borderRadius="br2"
+                    >
+                      {accounts?.map((account, index) => (
+                        <AccountRow index={index + 1} account={account} />
+                      ))}
+                    </VStack>
+
+                    {hasAccountUpdated || skipAccounts ? (
+                      <Box display="flex" gap="s4" py="s16">
+                        <Icon color="primary.500" as={IoCheckmarkDone} />
+                        <Text
+                          fontSize="s3"
+                          fontWeight="SemiBold"
+                          color="neutralColorLight.Gray-70"
+                          lineHeight="150%"
+                        >
+                          Completed
+                        </Text>
+                      </Box>
+                    ) : (
+                      <Box>
+                        <Button variant="ghost" onClick={() => setSkipAccounts(true)}>
+                          Skip for now
+                        </Button>
+                      </Box>
+                    )}
+                  </Box>
+                ) : null}
+              </Box>
+            </Box>
+            {/**
+             *  <Divider />
+             *             <Box display="flex" gap="s16">
+             *               <NumberStatus active={false} number={4} />
+             *               <Box display="flex" flexDir="column" gap="s16">
+             *                 <Box display="flex" flexDir="column" gap="s4">
+             *                   <Text fontSize="r1" fontWeight="600" color="gray.800">
+             *                     Add Nepali Transaltion
+             *                   </Text>
+             *                   <Text fontSize="r1" color="gray.800">
+             *                     Nepali translation makes it easy for reporting and viewing data in Nepali
+             *                   </Text>
+             *                 </Box>
+             *                 <Box display="flex" alignItems="center" gap="s8">
+             *                   <Button variant="outline">Add Translation</Button>
+             *                   <Button variant="ghost">Skip for now</Button>
+             *                 </Box>
+             *               </Box>
+             *             </Box>
+             * */}
           </Box>
-          {/**
-           *  <Divider />
-           *             <Box display="flex" gap="s16">
-           *               <NumberStatus active={false} number={4} />
-           *               <Box display="flex" flexDir="column" gap="s16">
-           *                 <Box display="flex" flexDir="column" gap="s4">
-           *                   <Text fontSize="r1" fontWeight="600" color="gray.800">
-           *                     Add Nepali Transaltion
-           *                   </Text>
-           *                   <Text fontSize="r1" color="gray.800">
-           *                     Nepali translation makes it easy for reporting and viewing data in Nepali
-           *                   </Text>
-           *                 </Box>
-           *                 <Box display="flex" alignItems="center" gap="s8">
-           *                   <Button variant="outline">Add Translation</Button>
-           *                   <Button variant="ghost">Skip for now</Button>
-           *                 </Box>
-           *               </Box>
-           *             </Box>
-           * */}
         </Box>
-      </Box>
-      <Box position="sticky" bottom={0} zIndex="11">
-        <FormFooter
-          mainButtonLabel="Done"
-          mainButtonHandler={() => {
-            queryClient.invalidateQueries(['getMemberList']);
-            router.push('/members/list');
-          }}
-        />
-      </Box>
-    </Container>
-  </>);
+        <Box position="sticky" bottom={0} zIndex="11">
+          <FormFooter
+            mainButtonLabel="Done"
+            mainButtonHandler={() => {
+              queryClient.invalidateQueries(['getMemberList']);
+              router.push('/members/list');
+            }}
+          />
+        </Box>
+      </Container>
+    </>
+  );
 };
 
 interface INumberStatusProps {
