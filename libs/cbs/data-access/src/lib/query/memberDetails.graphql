@@ -136,6 +136,10 @@ query getMemberDetailsOverview($id: ID!) {
               fullName
               dob
             }
+            documents {
+              key
+              value
+            }
             grandFathersName
           }
           memberGraphs {

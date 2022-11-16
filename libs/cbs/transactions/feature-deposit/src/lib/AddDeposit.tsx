@@ -74,6 +74,8 @@ export const AddDeposit = () => {
 
   const router = useRouter();
 
+  const redirectMemberId = router.query['memberId'];
+
   const queryClient = useQueryClient();
 
   const { t } = useTranslation();
@@ -352,7 +354,9 @@ export const AddDeposit = () => {
       },
     });
   };
-
+  useEffect(() => {
+    methods.setValue('memberId', String(redirectMemberId));
+  }, [redirectMemberId]);
   return (
     <>
       <Container minW="container.xl" height="fit-content">

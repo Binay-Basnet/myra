@@ -17823,6 +17823,7 @@ export type GetMemberDetailsOverviewQuery = {
               fullName?: string | null;
               dob?: string | null;
             } | null> | null;
+            documents?: Array<{ key?: string | null; value?: string | null } | null> | null;
           } | null;
           memberGraphs?: {
             deposit?: {
@@ -28188,6 +28189,10 @@ export const GetMemberDetailsOverviewDocument = `
               relationship
               fullName
               dob
+            }
+            documents {
+              key
+              value
             }
             grandFathersName
           }
