@@ -73,7 +73,7 @@ export const LoanDetails = () => {
   ];
 
   return (
-    <Box display="flex" flexDirection="column" gap="s16">
+    (<Box display="flex" flexDirection="column" gap="s16">
       <PathBar
         paths={[
           { label: 'Home', link: '/home' },
@@ -87,13 +87,11 @@ export const LoanDetails = () => {
           },
         ]}
       />
-
       <DetailsCard hasTable title="About">
         <Text fontSize="r1" color="gray.900">
           {product?.description}
         </Text>
       </DetailsCard>
-
       <DetailsCard title="General Information">
         <DetailCardContent title="Product Name" subtitle={product?.productName} />
 
@@ -138,9 +136,7 @@ export const LoanDetails = () => {
           subtitle={product?.installmentFrequency?.toLowerCase()}
         />
       </DetailsCard>
-
       {criteria && <ProductCriteria criteria={criteria} />}
-
       {product?.requiredDocuments && product?.requiredDocuments.length !== 0 && (
         <DetailsCard title="Required Documents">
           <Box ml="s20" as="ul" fontSize="r1" textTransform="capitalize">
@@ -150,7 +146,6 @@ export const LoanDetails = () => {
           </Box>
         </DetailsCard>
       )}
-
       {(product?.minimumLoanAmount || product?.maxLoanAmount) && (
         <DetailsCard title="Limits" hasTable>
           <Table
@@ -188,7 +183,6 @@ export const LoanDetails = () => {
           />
         </DetailsCard>
       )}
-
       <ProductRebate rebateData={product?.rebate} />
       <ProductInterestRate interestRate={product?.interest} />
       <ProductPenalty
@@ -207,7 +201,6 @@ export const LoanDetails = () => {
         maxTenure={product?.maxTenureUnitNumber}
         minTenure={product?.minTenureUnitNumber}
       />
-
       <DetailsCard title="Loan Processing Charges" hasTable>
         <Table
           data={product?.loanProcessingCharge ?? []}
@@ -235,7 +228,6 @@ export const LoanDetails = () => {
           ]}
         />
       </DetailsCard>
-
       <DetailsCard title="Loan Repayment Start Grace Duration">
         <Box ml="s20" as="ul" fontSize="r1" textTransform="capitalize">
           <li>
@@ -294,7 +286,7 @@ export const LoanDetails = () => {
           />
         </DetailsCard>
       )}
-    </Box>
+    </Box>)
   );
 };
 

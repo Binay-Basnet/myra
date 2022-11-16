@@ -6,12 +6,13 @@ import {
   FormFieldSearchTerm,
   useGetIndividualKymFamilyMembersListQuery,
   useGetIndividualKymOptionsQuery,
+  useGetIndividualMemberDetails,
   useSetMemberFamilyDetailsMutation,
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/settings/ui-containers';
 import { FormSelect } from '@coop/shared/form';
 import { Box, Button, MemberCard } from '@coop/shared/ui';
-import { useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 

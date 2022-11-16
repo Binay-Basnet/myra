@@ -2,7 +2,7 @@ import { ReactElement, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineMobile, AiOutlineWarning } from 'react-icons/ai';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 

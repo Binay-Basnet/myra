@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { omit } from 'lodash';
 
@@ -11,6 +11,7 @@ import {
   SharePurchaseInput,
   ShareVoucherDepositedBy,
   useAddSharePurchaseMutation,
+  useGetIndividualMemberDetails,
   useGetShareChargesQuery,
 } from '@coop/cbs/data-access';
 import {
@@ -26,7 +27,7 @@ import {
   ShareMemberCard,
   TabMenu,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { ShareInfoFooter } from './ShareInfoFooter';
 import { SharePaymentFooter } from './SharePaymentFooter';
@@ -182,7 +183,7 @@ export const SharePurchaseForm = () => {
       },
       onSuccess: () => {
         if (redirectPath) {
-          queryClient.invalidateQueries('getMemberCheck');
+          queryClient.invalidateQueries(['getMemberCheck']);
           router.push(String(redirectPath));
         } else {
           router.push('/share/register');

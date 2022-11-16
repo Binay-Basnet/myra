@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { omit } from 'lodash';
 
 import {
   LoanAccountInput,
+  useGetIndividualMemberDetails,
   useGetLoanApplicationDetailsQuery,
   useGetLoanProductSubTypeQuery,
   useGetLoanProductTypesQuery,
@@ -24,7 +25,6 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { useGetIndividualMemberDetails } from '@coop/shared/utils';
 
 import {
   AccordianComponent,
@@ -158,7 +158,7 @@ export const NewLoanApplication = () => {
         }
       },
       onSuccess: () => {
-        queryClient.invalidateQueries('getLoanList');
+        queryClient.invalidateQueries(['getLoanList']);
         router.push('/loan/applications?objState=SUBMITTED');
       },
     });

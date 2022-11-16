@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
@@ -134,7 +134,7 @@ export const AddInvestmentTransaction = () => {
         success: 'Investment transaction added',
       },
       onSuccess: () => {
-        queryClient.invalidateQueries('getInvestmentTransactionsListData');
+        queryClient.invalidateQueries(['getInvestmentTransactionsListData']);
         router.push('/accounting/investment/investment-transaction/list');
       },
     });

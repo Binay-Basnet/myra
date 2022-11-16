@@ -28,13 +28,13 @@ export function RadioGroup(props: RadioGroupProps) {
     props;
 
   return (
-    <ChakraRadioGroup value={props.value}>
+    (<ChakraRadioGroup value={props.value}>
       <Stack spacing={spacing} direction={direction} gap="s8">
         {radioList
           ? radioList?.map((item, index) => {
               return (
                 // TODO string index
-                <Box>
+                (<Box>
                   <Radio
                     {...rest}
                     key={index}
@@ -44,7 +44,7 @@ export function RadioGroup(props: RadioGroupProps) {
                   >
                     <Text fontSize={labelFontSize}>{item}</Text>
                   </Radio>
-                </Box>
+                </Box>)
               );
             })
           : options?.map((option) => (
@@ -67,7 +67,7 @@ export function RadioGroup(props: RadioGroupProps) {
               </Box>
             ))}
       </Stack>
-    </ChakraRadioGroup>
+    </ChakraRadioGroup>)
   );
 }
 

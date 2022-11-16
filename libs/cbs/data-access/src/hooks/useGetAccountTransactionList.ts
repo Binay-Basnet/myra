@@ -3,8 +3,7 @@ import {
   useAppSelector,
   useGetAccountTransactionListsQuery,
 } from '@coop/cbs/data-access';
-
-import { getRouterQuery } from '../utilFunctions/getRouterQuery';
+import { getRouterQuery } from '@coop/shared/utils';
 
 interface IUseGetAccountTransactionListProps {
   accountId: string | null | undefined;

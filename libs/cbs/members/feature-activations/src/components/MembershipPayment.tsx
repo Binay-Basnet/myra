@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { omit } from 'lodash';
 
@@ -246,10 +246,10 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
       },
       onSuccess: () => {
         if (values.paymentMode === DepositPaymentType.WithdrawSlip) {
-          queryClient.invalidateQueries('getAvailableSlipsList');
-          queryClient.invalidateQueries('getPastSlipsList');
+          queryClient.invalidateQueries(['getAvailableSlipsList']);
+          queryClient.invalidateQueries(['getPastSlipsList']);
         }
-        queryClient.invalidateQueries('getMemberCheck');
+        queryClient.invalidateQueries(['getMemberCheck']);
         setMode('details');
       },
       promise: payFee({ memberId: id, data: updatedData as MembershipPaymentInput }),

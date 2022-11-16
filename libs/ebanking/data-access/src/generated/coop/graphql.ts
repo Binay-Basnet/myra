@@ -3,7 +3,7 @@
 //You can update the queries or mutations in *.graphql to generate any new changes.
 import * as Types from '../types';
 
-import { useMutation, useQuery, UseMutationOptions, UseQueryOptions } from 'react-query';
+import { useMutation, useQuery, UseMutationOptions, UseQueryOptions } from '@tanstack/react-query';
 import { useAxios } from './axiosHelper';
 export const MutationErrorFragmentDoc = `
     fragment MutationError on MutationError {
@@ -64,15 +64,6 @@ export const PaginationFragmentDoc = `
   endCursor
   hasNextPage
   hasPreviousPage
-}
-    `;
-export const KymFieldDataFragmentDoc = `
-    fragment KYMFieldData on KYMFieldData {
-  id
-  options {
-    id
-    value
-  }
 }
     `;
 export const SetDefaultAccountDocument = `
@@ -1576,19 +1567,5 @@ export const useGetUtilityListQuery = <
     useQuery<Types.GetUtilityListQuery, TError, TData>(
       variables === undefined ? ['getUtilityList'] : ['getUtilityList', variables],
       useAxios<Types.GetUtilityListQuery, Types.GetUtilityListQueryVariables>(GetUtilityListDocument).bind(null, variables),
-      options
-    );
-export const GetNewIdDocument = `
-    mutation getNewId($idType: ID_TYPE) {
-  newId(idType: $idType)
-}
-    `;
-export const useGetNewIdMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(options?: UseMutationOptions<Types.GetNewIdMutation, TError, Types.GetNewIdMutationVariables, TContext>) =>
-    useMutation<Types.GetNewIdMutation, TError, Types.GetNewIdMutationVariables, TContext>(
-      ['getNewId'],
-      useAxios<Types.GetNewIdMutation, Types.GetNewIdMutationVariables>(GetNewIdDocument),
       options
     );

@@ -5,9 +5,9 @@ import { Box, MainLayout, WIPState } from '@coop/shared/ui';
 
 const TransactionsAddAgent = () => (
     // <AgentList />
-    <Box display="flex" justifyContent="center" alignItems="center">
+    (<Box display="flex" justifyContent="center" alignItems="center">
       <WIPState />
-    </Box>
+    </Box>)
   );
 
 TransactionsAddAgent.getLayout = function getLayout(page: ReactElement) {

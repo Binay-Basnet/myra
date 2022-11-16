@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiFillCheckCircle } from 'react-icons/ai';
 import { IoChevronBackOutline } from 'react-icons/io5';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { Box } from '@chakra-ui/react';
 import { omit } from 'lodash';
@@ -12,6 +12,7 @@ import {
   LoanDisbursementMethod,
   ObjState,
   useGetCoaBankListQuery,
+  useGetIndividualMemberDetails,
   useSetDisburseLoanMutation,
 } from '@coop/cbs/data-access';
 import { LoanListLayout } from '@coop/cbs/loan/layouts';
@@ -30,7 +31,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails } from '@coop/shared/utils';
+import { featureCode } from '@coop/shared/utils';
 
 import CBSLoanDetails from './CbsLoanFeatureDetails';
 import {
@@ -122,6 +123,7 @@ export const CBSLoanDisburseSuccess = () => {
 interface IProps {
   setMode: Dispatch<SetStateAction<'details' | 'payment' | 'success'>>;
 }
+
 export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
   const queryClient = useQueryClient();
 
@@ -156,7 +158,7 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
         loading: 'Disbursing Loan',
       },
       onSuccess: () => {
-        queryClient.invalidateQueries('getLoanList');
+        queryClient.invalidateQueries(['getLoanList']);
 
         setMode('success');
       },
