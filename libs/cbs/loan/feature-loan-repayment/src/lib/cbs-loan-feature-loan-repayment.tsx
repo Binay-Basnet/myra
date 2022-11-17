@@ -200,7 +200,10 @@ export const LoanRepayment = () => {
       remainingPrincipal: value?.remainingPrincipal,
       paid: nextInstallmentNumber > index + 1,
     })) || [];
-  const loanPaymentScheduleSplice = loanPaymentSchedule?.slice(0, 11) || [];
+  const loanPaymentScheduleSplice =
+    nextInstallmentNumber > 5
+      ? loanPaymentSchedule?.slice(nextInstallmentNumber - 5, nextInstallmentNumber + 5) || []
+      : loanPaymentSchedule?.slice(0, 11) || [];
 
   useEffect(() => {
     if (loanAccountId) {

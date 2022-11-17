@@ -442,6 +442,13 @@ export const AccountOpenNew = () => {
       setValue('accountName', defaultAccountName);
     }
   }, [defaultAccountName]);
+  //  get redirect id from url
+  const redirectMemberId = router.query['memberId'];
+  // redirect from member details
+  useEffect(() => {
+    methods.setValue('memberId', String(redirectMemberId));
+  }, [redirectMemberId]);
+
   return (
     <Container minW="container.xl" p="0" bg="white">
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">

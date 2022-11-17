@@ -1,7 +1,7 @@
-import {useEffect, useMemo, useState} from 'react';
-import {FormProvider, useForm} from 'react-hook-form';
-import {useQueryClient} from '@tanstack/react-query';
-import {useRouter} from 'next/router';
+import { useEffect, useMemo, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
 import {
@@ -20,7 +20,7 @@ import {
   useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
-import {FormAmountInput, FormInput} from '@coop/shared/form';
+import { FormAmountInput, FormInput } from '@coop/shared/form';
 import {
   asyncToast,
   Box,
@@ -35,9 +35,9 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import {featureCode, useTranslation} from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
-import {InstallmentModel, Payment} from '../components';
+import { InstallmentModel, Payment } from '../components';
 
 /* eslint-disable-next-line */
 export interface AddDepositProps {}
@@ -355,6 +355,7 @@ export const AddDeposit = () => {
       },
     });
   };
+  // redirect from member details
   useEffect(() => {
     methods.setValue('memberId', String(redirectMemberId));
   }, [redirectMemberId]);
