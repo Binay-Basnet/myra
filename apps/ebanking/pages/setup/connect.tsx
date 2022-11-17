@@ -2,13 +2,13 @@ import { ReactElement, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineMobile, AiOutlineWarning } from 'react-icons/ai';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
 
-import { authenticate } from '@coop/cbs/data-access';
 import { GoBack } from '@coop/ebanking/components';
 import {
+  authenticate,
   logoutCooperative,
   switchCooperative,
   useAppDispatch,
