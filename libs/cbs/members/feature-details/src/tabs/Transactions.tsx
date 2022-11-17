@@ -15,11 +15,11 @@ export const Transactions = () => {
     },
     {
       title: 'New Withdraw',
-      link: '/transactions/withdraw/add',
+      link: `/transactions/withdraw/add?memberId=${id}`,
     },
     {
       title: 'Transfer',
-      link: '/accounts/account-transfer/add',
+      link: `/transactions/account-transfer/add?memberId=${id}`,
     },
   ];
 

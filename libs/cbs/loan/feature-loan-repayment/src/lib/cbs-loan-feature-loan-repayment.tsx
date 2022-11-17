@@ -200,13 +200,23 @@ export const LoanRepayment = () => {
       remainingPrincipal: value?.remainingPrincipal,
       paid: nextInstallmentNumber > index + 1,
     })) || [];
-  const loanPaymentScheduleSplice = loanPaymentSchedule?.slice(0, 11) || [];
+  const loanPaymentScheduleSplice =
+    nextInstallmentNumber > 5
+      ? loanPaymentSchedule?.slice(nextInstallmentNumber - 5, nextInstallmentNumber + 5) || []
+      : loanPaymentSchedule?.slice(0, 11) || [];
 
   useEffect(() => {
     if (loanAccountId) {
       setTriggerLoanQuery(true);
     }
   }, [loanAccountId]);
+
+  //  get redirect id from url
+  const redirectMemberId = router.query['memberId'];
+  // redirect from member details
+  useEffect(() => {
+    methods.setValue('memberId', String(redirectMemberId));
+  }, [redirectMemberId]);
 
   return (
     <Container minW="container.xl" p="0" bg="white">
