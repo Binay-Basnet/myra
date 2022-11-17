@@ -1,7 +1,7 @@
-import {useEffect, useMemo} from 'react';
-import {FormProvider, useForm} from 'react-hook-form';
-import {useQueryClient} from '@tanstack/react-query';
-import {useRouter} from 'next/router';
+import { useEffect, useMemo } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
 import {
@@ -15,8 +15,18 @@ import {
   useSetAccountTransferDataMutation,
   WithdrawWith,
 } from '@coop/cbs/data-access';
-import {BoxContainer, ContainerWithDivider, InputGroupContainer,} from '@coop/cbs/transactions/ui-containers';
-import {FormAmountInput, FormInput, FormSelect, FormSwitchTab, FormTextArea,} from '@coop/shared/form';
+import {
+  BoxContainer,
+  ContainerWithDivider,
+  InputGroupContainer,
+} from '@coop/cbs/transactions/ui-containers';
+import {
+  FormAmountInput,
+  FormInput,
+  FormSelect,
+  FormSwitchTab,
+  FormTextArea,
+} from '@coop/shared/form';
 import {
   asyncToast,
   Box,
@@ -28,7 +38,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import {featureCode, useTranslation} from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface NewAccountTransferProps {}
@@ -177,6 +187,12 @@ export const NewAccountTransfer = () => {
       promise: mutateAsync({ data: omit(values, ['destMemberId']) }),
     });
   };
+  //  get redirect id from url
+  const redirectMemberId = router.query['memberId'];
+  // redirect from member details
+  useEffect(() => {
+    methods.setValue('memberId', String(redirectMemberId));
+  }, [redirectMemberId]);
 
   return (
     <>

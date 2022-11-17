@@ -5,22 +5,24 @@ import { Box, Grid, Icon, Text } from '@coop/shared/ui';
 
 import { ShareInfo, ShareRegister, ShareTable } from '../components';
 
-const links = [
-  {
-    title: 'New Share Issue',
-    link: '/share/share-issue',
-  },
-  {
-    title: 'New Share Return',
-    link: '/share/share-return',
-  },
-  {
-    title: 'Share Register',
-    link: '/share/register',
-  },
-];
 export const MemberShareInfo = () => {
   const router = useRouter();
+  const id = router.query['id'] as string;
+
+  const links = [
+    {
+      title: 'New Share Issue',
+      link: `/share/share-issue?memberId=${id}`,
+    },
+    {
+      title: 'New Share Return',
+      link: `/share/share-return?memberId=${id}`,
+    },
+    {
+      title: 'Share Register',
+      link: `/share/register`,
+    },
+  ];
   return (
     <>
       <Text fontSize="r3" fontWeight="600">

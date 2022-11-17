@@ -202,6 +202,12 @@ export const NewLoanApplication = () => {
       setValue('loanAccountName', defaultAccountName);
     }
   }, [defaultAccountName, loanApplicationId]);
+  //  get redirect id from url
+  const redirectMemberId = router.query['memberId'];
+  // redirect from member details
+  useEffect(() => {
+    methods.setValue('memberId', String(redirectMemberId));
+  }, [redirectMemberId]);
 
   return (
     <Container minW="container.xl" p="0" bg="white">
