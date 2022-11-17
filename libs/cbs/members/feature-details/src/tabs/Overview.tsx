@@ -35,11 +35,11 @@ export const Overview = () => {
     },
     {
       title: 'Account Transfer',
-      link: `/transfer?memberId=${id}`,
+      link: `/accounts/account-transfer/add?memberId=${id}`,
     },
     {
       title: 'New Account',
-      link: `/accounts/account-open?memberId=${id}`,
+      link: `/accounts/account-open`,
     },
     {
       title: 'New Share Issue',
@@ -59,7 +59,7 @@ export const Overview = () => {
     },
     {
       title: 'New Cheques',
-      link: `/share/share-return?memberId=${id}`,
+      link: `/withdraw/cheque-book?memberId=${id}`,
     },
   ];
 
@@ -115,7 +115,7 @@ export const Overview = () => {
                   onClick={() =>
                     newId
                       .mutateAsync({ idType: Id_Type.Account })
-                      .then((res) => router.push(`${item.link}/add/${res?.newId}`))
+                      .then((res) => router.push(`${item.link}/add/${res?.newId}?memberId=${id}`))
                   }
                 >
                   <Icon as={IoAddOutline} />

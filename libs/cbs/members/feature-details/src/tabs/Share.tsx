@@ -20,7 +20,7 @@ export const MemberShareInfo = () => {
     },
     {
       title: 'Share Register',
-      link: `/share/register?memberId=${id}`,
+      link: `/share/register`,
     },
   ];
   return (
