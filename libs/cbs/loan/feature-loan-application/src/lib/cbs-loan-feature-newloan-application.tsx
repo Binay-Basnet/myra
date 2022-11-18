@@ -10,6 +10,7 @@ import {
   useGetLoanApplicationDetailsQuery,
   useGetLoanProductSubTypeQuery,
   useGetLoanProductTypesQuery,
+  useGetMemberLinkedAccountsQuery,
   useGetNewIdMutation,
   useSendLoanApplicationForApprovalMutation,
 } from '@coop/cbs/data-access';
@@ -208,7 +209,12 @@ export const NewLoanApplication = () => {
   useEffect(() => {
     methods.setValue('memberId', String(redirectMemberId));
   }, [redirectMemberId]);
-
+  const { data: linkedAccountData } = useGetMemberLinkedAccountsQuery({
+    memberId: String(memberId),
+    includeActiveAccountsOnly: true,
+  });
+  const loanLinkedData = linkedAccountData?.members?.getAllAccounts?.data?.depositAccount;
+  const loanLinkedAccountLength = loanLinkedData?.length;
   return (
     <Container minW="container.xl" p="0" bg="white">
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
@@ -227,7 +233,10 @@ export const NewLoanApplication = () => {
               <Box display="flex" flexDirection="column" gap="s32" p="s20" w="100%">
                 <Box display="flex" flexDir="column" gap="s16">
                   <FormMemberSelect name="memberId" label="Member Id" isDisabled={!!id} />
-                  {memberId && (
+                  {loanLinkedAccountLength === 0 && (
+                    <Alert status="error"> Member does not have a Saving Account </Alert>
+                  )}
+                  {memberId && loanLinkedAccountLength !== 0 && (
                     <FormSelect
                       name="productType"
                       label="Loan Type"
