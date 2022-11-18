@@ -392,7 +392,7 @@ export const AccountOpenNew = () => {
           router.push(String(redirectPath));
           queryClient.invalidateQueries(['getAccountCheck']);
         } else {
-          router.push('/accounts/list');
+          router.push('/savings/list');
         }
       },
       promise: mutateAsync({ id, data: updatedData as DepositLoanAccountInput }),

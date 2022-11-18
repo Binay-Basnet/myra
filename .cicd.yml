@@ -319,10 +319,7 @@ steps:
       secret_key:
         from_secret: aws_secret_key
     commands:
-      - cp /apps/myra-ui-dev/.env.erp ./apps/myra/.env
-      - cp /apps/myra-ui-dev/.env.neosys ./apps/neosys-admin/.env
-      - cp /apps/myra-ui-dev/.env.ebanking ./apps/ebanking/.env
-      - cp /apps/myra-ui-dev/.env.storybook .
+      - cp /apps/myra-ui-dev/.env .
       - aws configure set aws_access_key_id $access_key
       - aws configure set aws_secret_access_key $secret_key
       - aws ecr get-login-password --region us-east-1 | docker login -u AWS --password-stdin 110278083494.dkr.ecr.us-east-1.amazonaws.com
