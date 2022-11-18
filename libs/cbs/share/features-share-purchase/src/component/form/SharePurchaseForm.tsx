@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import { omit } from 'lodash';
 
 import {
@@ -310,7 +310,7 @@ export const SharePurchaseForm = () => {
                 handleSubmit={handleSubmit}
                 isDisabled={
                   paymentModes === SharePaymentMode.Cash && !disableDenomination
-                    ? Number(denominationTotal) !== Number(cashPaid)
+                    ? !(Number(cashPaid) >= Number(totalAmount))
                     : false
                 }
               />

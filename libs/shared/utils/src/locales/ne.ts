@@ -597,7 +597,6 @@ const ne: Record<string, string> = {
   kymCoopEnternumberofFemaleMembers: 'महिला सदस्यको संख्या',
   kymCoopNoofOthermembers: 'अन्य सदस्यको संख्या',
   kymCoopEnternumberofOthermembers: 'अन्य सदस्यको संख्या',
-  kymCoopLastAuditDate: 'अघिल्लो लेखापरीक्षण मिति',
   kymCoopLastAGMDate: 'अघिल्लो  वार्षिक साधारण सभा मिति',
   kymCoopRepresentative: 'प्रतिनिधि',
   kymCoopName: 'नाम',
@@ -1734,7 +1733,6 @@ const ne: Record<string, string> = {
   accountingAccountingTabMenuSales: 'Sales',
   accountingAccountingTabMenuPurchase: 'Purchase',
   accountingAccountingTabMenuAccounting: 'Accounting',
-  accountingAccountingTabMenuLoan: 'Loan',
   accountingAccountingTabMenuInvestment: 'Investment',
 
   // accounting purchase list
@@ -3386,6 +3384,11 @@ const ne: Record<string, string> = {
   memberSettingsMemberID: 'Member ID',
   memberSettingsCorePreview: 'Core Preview',
   memberSettingsSetup: 'Setup',
+  kymCoopLastAuditDate: 'Last Audit FY',
+  serviceCenterServiceCenterContactNumber: 'Service Center Contact Number',
+
+  bankAccountBankInformation: 'Bank Information',
+  accountingAccountingTabMenuLoan: 'External Loan',
 };
 
 export default ne;

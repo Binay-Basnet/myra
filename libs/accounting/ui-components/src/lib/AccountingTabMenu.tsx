@@ -45,7 +45,7 @@ export const AccountingTabMenu = () => {
     {
       title: t['accountingAccountingTabMenuLoan'],
       icon: ImStack,
-      link: '/accounting/loan/list',
+      link: '/accounting/loan/external-loan/list',
     },
 
     {

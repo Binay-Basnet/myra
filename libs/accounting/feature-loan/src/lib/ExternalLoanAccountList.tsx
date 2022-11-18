@@ -3,20 +3,19 @@ import { useRouter } from 'next/router';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
-import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, Text } from '@coop/shared/ui';
+import { Avatar, Box, TablePopover, Text } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
-export interface AccountingFeatureCashTransferListProps {}
+export interface ExternalLoanAccountListProps {}
 
-export const AccountingFeatureCashTransferList = () => {
+export const ExternalLoanAccountList = () => {
   const { t } = useTranslation();
 
   const router = useRouter();
 
-  const { data, isFetching } = useGetMemberListQuery({
+  const { data, isLoading } = useGetMemberListQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
     filter: {
       objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
@@ -27,10 +26,6 @@ export const AccountingFeatureCashTransferList = () => {
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
-      {
-        header: 'Item Id',
-        accessorFn: (row) => row?.node?.id,
-      },
       {
         accessorFn: (row) => row?.node?.name?.local,
         header: 'Name',
@@ -53,79 +48,49 @@ export const AccountingFeatureCashTransferList = () => {
         },
       },
       {
-        header: 'Type',
+        header: 'Address',
         accessorFn: (row) => row?.node?.code,
         meta: {
           width: '30%',
         },
       },
       {
-        header: 'Unit Price',
+        header: 'Created Date',
         accessorFn: (row) => row?.node?.contact,
         meta: {
           width: '30%',
         },
-      },
-      {
-        header: 'Total Cost',
-        accessorFn: (row) => row?.node?.contact,
-        meta: {
-          width: '30%',
-        },
-      },
-      {
-        header: 'Item Quantity',
-        accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
       },
       {
         id: '_actions',
         header: '',
-        accessorKey: 'actions',
-        cell: (cell) => (
-          <PopoverComponent
-            items={[
-              {
-                title: 'memberListTableViewMemberProfile',
-              },
-              {
-                title: 'memberListTableEditMember',
-                onClick: (member) => router.push(`/members/individual/edit/${member?.id}`),
-              },
-              {
-                title: 'memberListTableMakeInactive',
-              },
-            ]}
-            member={cell?.row?.original?.node}
-          />
-        ),
+        cell: (props) =>
+          props?.row?.original?.node && (
+            <TablePopover
+              node={props?.row?.original?.node}
+              items={[
+                {
+                  title: t['transDetailViewDetail'],
+                },
+              ]}
+            />
+          ),
         meta: {
-          width: '60px',
+          width: '50px',
         },
       },
     ],
     [t]
   );
-
   return (
     <>
       <AccountingPageHeader
-        heading="Cash Transfer"
+        heading="External Loan Accounts"
         buttonLabel="New Cash Transfer"
-        buttonHandler={() => router.push('/accounting/accounting/cash-transfer/add')}
+        buttonHandler={() => router.push('/accounting/loan/external-loan/67/add')}
       />
 
-      <Table
-        data={rowData}
-        getRowId={(row) => String(row?.node?.id)}
-        isLoading={isFetching}
-        columns={columns}
-        pagination={{
-          total: data?.members?.list?.totalCount ?? 'Many',
-          pageInfo: data?.members?.list?.pageInfo,
-        }}
-      />
+      <Table data={rowData} isLoading={isLoading} columns={columns} />
     </>
   );
 };
-
-export default AccountingFeatureCashTransferList;

@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 
-import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
+import { FormInput, FormMap, FormSelect, FormTextArea } from '@coop/shared/form';
 import {
   Box,
   Button,
@@ -15,50 +15,44 @@ import {
 } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
-import { QuickReceiptTable } from '../components';
-
 /* eslint-disable-next-line */
-export interface AccountingFeatureAddQuickReceiptProps {}
+export interface ExternalLoanAccountsProps {}
 
-export const AccountingFeatureAddQuickReceipt = () => {
+export const ExternalLoanAccountsAdd = () => {
   const { t } = useTranslation();
-
-  const methods = useForm({
-    defaultValues: { data: [{ account: 'Saving Account', amount: 45 }] },
-  });
+  const methods = useForm();
 
   return (
     <>
       <Container minW="container.lg" height="fit-content" pb="60px">
-        <FormHeader title={t['accountingQuickReceiptAddNewQuickReceipt']} />
+        <FormHeader title="New External Loan" />
 
         <FormProvider {...methods}>
           <form>
             <Box bg="white" minH="calc(100vh - 220px)">
               <FormSection>
-                <FormSelect
-                  name="depositTo"
-                  label={t['accountingQuickReceiptAddDepositTo']}
-                  options={[]}
-                />
-                <FormInput name="date" type="date" label={t['accountingQuickReceiptAddDate']} />
-
-                <FormInput
-                  name="reference"
-                  type="text"
-                  label={t['accountingQuickReceiptAddReference']}
-                />
+                <GridItem colSpan={3}>
+                  <FormInput name="dueDate" type="text" label="Name" />
+                </GridItem>
               </FormSection>
 
-              <FormSection>
-                <GridItem colSpan={3}>
-                  <QuickReceiptTable />
+              <FormSection header="Address">
+                <FormSelect name="select" label="Province" options={[]} />
+                <FormSelect name="select" label="District" options={[]} />
+                <FormSelect name="select" label="Local Government" options={[]} />
+
+                <FormSelect name="select" label="Ward No" options={[]} />
+                <FormSelect name="select" label="Locality" options={[]} />
+                <FormInput name="reference" type="text" label="House No" />
+
+                <GridItem colSpan={2}>
+                  <FormMap name="permanentAddress.coordinates" />
                 </GridItem>
               </FormSection>
 
               <FormSection divider={false}>
                 <GridItem colSpan={2}>
-                  <FormTextArea name="note" label={t['accountingQuickReceiptAddNotes']} rows={5} />
+                  <FormTextArea name="reference" label="Notes" />
                 </GridItem>
               </FormSection>
             </Box>
@@ -90,5 +84,3 @@ export const AccountingFeatureAddQuickReceipt = () => {
     </>
   );
 };
-
-export default AccountingFeatureAddQuickReceipt;
