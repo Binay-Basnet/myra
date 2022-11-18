@@ -4,6 +4,7 @@ import { useDeepCompareEffect } from 'react-use';
 
 import {
   Share_Transaction_Direction,
+  useGetSettingsShareGeneralDataQuery,
   useGetShareChargesQuery,
   useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
@@ -24,6 +25,8 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
   const memberId = watch('memberId');
   const noOfShares = watch('noOfReturnedShares');
   const allShares = watch('selectAllShares');
+
+  const { data: shareData } = useGetSettingsShareGeneralDataQuery();
 
   const { data: shareHistoryTableData } = useGetShareHistoryQuery(
     {
@@ -67,6 +70,8 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
     }
   }, [chargeList]);
 
+  const multiplicityFactor = shareData?.settings?.general?.share?.general?.multiplicityFactor;
+
   return (
     <Box display="flex" flexDirection="column" pb="28px" background="gray.0">
       <FormSection header="shareReturnShareInformation">
@@ -76,6 +81,11 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
             name="noOfReturnedShares"
             label={t['shareReturnNoOfShares']}
             isDisabled={allShares}
+            rules={{
+              validate: (value) =>
+                Number(value) % Number(multiplicityFactor) === 0 ||
+                `Number Of Share Should be multiple of ${multiplicityFactor ?? 10}`,
+            }}
           />
         </GridItem>
         <GridItem colSpan={3}>

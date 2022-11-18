@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import { useGetAccountTableListQuery } from '@coop/cbs/data-access';
+import { NatureOfDepositProduct, useGetMemberLinkedAccountsQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { Box, Text } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -10,23 +10,19 @@ export const LinkedAccounts = () => {
   const { watch } = useFormContext();
   const memberId = watch('memberId');
 
-  const { data } = useGetAccountTableListQuery({
-    paginate: {
-      first: -1,
-      after: '',
-    },
-    filter: {
-      memberId,
-    },
+  const { data: linkedAccountData } = useGetMemberLinkedAccountsQuery({
+    memberId,
+    includeActiveAccountsOnly: true,
+    filter: [NatureOfDepositProduct?.Current, NatureOfDepositProduct?.Saving],
   });
 
-  const accountArray = data?.account?.list?.edges;
+  const accountArray = linkedAccountData?.members?.getAllAccounts?.data?.depositAccount;
 
   const linkedAccList =
     accountArray &&
     accountArray?.map((item) => ({
-      label: item?.node?.accountName as string,
-      value: item?.node?.id as string,
+      label: item?.accountName as string,
+      value: item?.id as string,
     }));
 
   return (

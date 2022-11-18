@@ -3,7 +3,15 @@ import * as process from 'process';
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: process.env['NX_SCHEMA_PATH'],
+  schema: [
+    {
+      [process.env['NX_SCHEMA_PATH'] as string]: {
+        headers: {
+          schema: 'true',
+        },
+      },
+    },
+  ],
   watch: true,
   generates: {
     'libs/ebanking/data-access/src/generated/types.ts': {

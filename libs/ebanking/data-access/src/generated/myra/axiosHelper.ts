@@ -5,6 +5,20 @@ import { getSchemaPath } from '@coop/shared/utils';
 
 import { RootState, useAppSelector } from '../../redux/store';
 
+const axiosAgent = axios.create();
+
+// Request interceptors for API calls
+axiosAgent.interceptors.request.use(
+  (config) => {
+    config.headers = {
+      ...config.headers,
+      slug: 'neosys',
+    };
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 export const useAxios = <TData, TVariables>(
   query: string
 ): ((variables?: TVariables, config?: AxiosRequestConfig<TData>) => Promise<TData>) => {
@@ -34,7 +48,7 @@ export const useAxios = <TData, TVariables>(
       config = { headers };
     }
 
-    return axios
+    return axiosAgent
       .post<{ data: TData }>(url, { query, variables }, config)
       .then(
         (
@@ -71,7 +85,7 @@ export const useAxios = <TData, TVariables>(
               config = { headers };
             }
 
-            return axios.post<{ data: TData }>(url, { query, variables }, config).then(
+            return axiosAgent.post<{ data: TData }>(url, { query, variables }, config).then(
               (
                 res: AxiosResponse<{
                   data: TData;
@@ -93,4 +107,4 @@ export const useAxios = <TData, TVariables>(
   };
 };
 
-axios.interceptors.response.use((response) => response);
+axiosAgent.interceptors.response.use((response) => response);

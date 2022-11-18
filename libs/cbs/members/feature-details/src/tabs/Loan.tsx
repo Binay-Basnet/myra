@@ -5,23 +5,24 @@ import { Box, Grid, Icon, Text } from '@coop/shared/ui';
 
 import { LoanAccountList, LoanPaymentTable } from '../components';
 
-const links = [
-  {
-    title: 'New Loan Application',
-    link: '/loan/apply',
-  },
-  {
-    title: 'Loan Repayment',
-    link: '/loan/repayments/add',
-  },
-  {
-    title: 'Payment Schedules',
-    link: '/loan',
-  },
-];
-
 export const Loan = () => {
   const router = useRouter();
+  const id = router.query['id'] as string;
+
+  const links = [
+    {
+      title: 'New Loan Application',
+      link: `/loan/apply?memberId=${id}`,
+    },
+    {
+      title: 'Loan Repayment',
+      link: `/loan/repayments/add?memberId=${id}`,
+    },
+    {
+      title: 'Payment Schedules',
+      link: `/loan?memberId=${id}`,
+    },
+  ];
   return (
     <>
       <Text fontSize="r3" fontWeight="600">

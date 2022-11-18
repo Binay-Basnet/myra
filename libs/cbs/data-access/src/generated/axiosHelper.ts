@@ -1,9 +1,21 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import { useRefreshToken } from '@coop/cbs/data-access';
-import { getSchemaPath } from '@coop/shared/utils';
+import { getDatabaseSlug, getSchemaPath } from '@coop/shared/utils';
 
 import { RootState, useAppSelector } from '../redux/store';
+
+// Request interceptors for API calls
+axios.interceptors.request.use(
+  (config) => {
+    config.headers = {
+      ...config.headers,
+      slug: getDatabaseSlug(),
+    };
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 export const useAxios = <TData, TVariables>(
   query: string
@@ -56,6 +68,10 @@ export const useAxios = <TData, TVariables>(
           return { error: err.response.data.errors };
         }
 
+        if (err.response?.status === 503) {
+          return { error: 'Server Error: Database Slug is Missing !' };
+        }
+
         if (err.response && err.response?.status === 401) {
           // assuming that whenever catch blocked is executed this means that the access token is invalid
           return refreshToken().then((newAccessToken) => {
@@ -98,5 +114,3 @@ export const useAxios = <TData, TVariables>(
       });
   };
 };
-
-axios.interceptors.response.use((response) => response);

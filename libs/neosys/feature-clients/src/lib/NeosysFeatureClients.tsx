@@ -36,7 +36,7 @@ export const ClientsListPage = () => {
   //   },
   // }
 
-  const rowData = useMemo(() => data?.neosys.client?.list ?? [], [data]);
+  const rowData = useMemo(() => data?.neosys?.client?.list ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [

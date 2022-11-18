@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import { omit } from 'lodash';
 
 import {
@@ -10,6 +10,7 @@ import {
   useGetLoanApplicationDetailsQuery,
   useGetLoanProductSubTypeQuery,
   useGetLoanProductTypesQuery,
+  useGetMemberLinkedAccountsQuery,
   useGetNewIdMutation,
   useSendLoanApplicationForApprovalMutation,
 } from '@coop/cbs/data-access';
@@ -46,6 +47,7 @@ import { useLoanProductErrors } from '../hooks/useLoanProductListErrors';
 
 export const NewLoanApplication = () => {
   const router = useRouter();
+  const loanApplicationId = router.query['id'] as string;
   const { id } = router.query;
 
   const queryClient = useQueryClient();
@@ -54,7 +56,7 @@ export const NewLoanApplication = () => {
   const methods = useForm<LoanAccountInput>({
     mode: 'onChange',
   });
-  const { watch, resetField } = methods;
+  const { watch, resetField, setValue } = methods;
 
   const memberId = watch('memberId');
   const loanType = watch('productType');
@@ -194,6 +196,25 @@ export const NewLoanApplication = () => {
     }
   }, [id, isLoanFetching, loanApplication, methods]);
 
+  const defaultAccount = loanProductOptions.find((d) => d?.value === productId);
+  const defaultAccountName = defaultAccount?.label;
+  useEffect(() => {
+    if (!loanApplicationId) {
+      setValue('loanAccountName', defaultAccountName);
+    }
+  }, [defaultAccountName, loanApplicationId]);
+  //  get redirect id from url
+  const redirectMemberId = router.query['memberId'];
+  // redirect from member details
+  useEffect(() => {
+    methods.setValue('memberId', String(redirectMemberId));
+  }, [redirectMemberId]);
+  const { data: linkedAccountData } = useGetMemberLinkedAccountsQuery({
+    memberId: String(memberId),
+    includeActiveAccountsOnly: true,
+  });
+  const loanLinkedData = linkedAccountData?.members?.getAllAccounts?.data?.depositAccount;
+  const loanLinkedAccountLength = loanLinkedData?.length;
   return (
     <Container minW="container.xl" p="0" bg="white">
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
@@ -212,7 +233,10 @@ export const NewLoanApplication = () => {
               <Box display="flex" flexDirection="column" gap="s32" p="s20" w="100%">
                 <Box display="flex" flexDir="column" gap="s16">
                   <FormMemberSelect name="memberId" label="Member Id" isDisabled={!!id} />
-                  {memberId && (
+                  {loanLinkedAccountLength === 0 && (
+                    <Alert status="error"> Member does not have a Saving Account </Alert>
+                  )}
+                  {memberId && loanLinkedAccountLength !== 0 && (
                     <FormSelect
                       name="productType"
                       label="Loan Type"

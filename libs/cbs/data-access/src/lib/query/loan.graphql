@@ -452,6 +452,7 @@ query getLoanPreview($id: String!) {
         member {
           name
           id
+          code
           profilePicUrl
         }
 
@@ -504,6 +505,23 @@ query getLoanRepaymentList($paginate: Pagination, $filter: LoanRepaymentFilter) 
         hasPreviousPage
         startCursor
         endCursor
+      }
+    }
+  }
+}
+
+query getMemberLinkedAccounts(
+  $memberId: ID!
+  $filter: [NatureOfDepositProduct]
+  $includeActiveAccountsOnly: Boolean
+) {
+  members {
+    getAllAccounts(memberId: $memberId) {
+      data {
+        depositAccount(filter: $filter, includeActiveAccountsOnly: $includeActiveAccountsOnly) {
+          id
+          accountName
+        }
       }
     }
   }

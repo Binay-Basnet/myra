@@ -24,7 +24,7 @@ export const LoanPaymentTable = () => {
       paymentType: data?.paymentType,
     })) || [];
   return (
-    <DetailsCard hasTable bg="white" title="Reports List">
+    <DetailsCard hasTable bg="white" title="Upcoming Payments">
       <UpcomingLoanPaymentTable data={memberListData} />
     </DetailsCard>
   );

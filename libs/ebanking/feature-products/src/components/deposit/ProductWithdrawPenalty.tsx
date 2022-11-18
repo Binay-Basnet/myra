@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { Maybe, WithdrawPenalty } from '@coop/ebanking/data-access';
+import { Maybe, WithdrawPenaltyFormState } from '@coop/ebanking/data-access';
 import { Column, Table } from '@coop/shared/table';
 import { DetailsCard } from '@coop/shared/ui';
 
 interface IProductPenaltyWithdrawSetupProps {
-  withDrawData: Maybe<WithdrawPenalty> | undefined;
+  withDrawData: Maybe<WithdrawPenaltyFormState> | undefined;
 }
 
 export const ProductPenaltyWithdrawSetup = ({

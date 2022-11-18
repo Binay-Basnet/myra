@@ -71,6 +71,7 @@ type ShareReturnFormType = Omit<ShareReturnInput, 'selectAllShares' | 'fileUploa
 export const ShareReturnForm = () => {
   const { t } = useTranslation();
   const methods = useForm<ShareReturnFormType>({
+    mode: 'onChange',
     defaultValues: {
       paymentMode: SharePaymentMode.Cash,
     },

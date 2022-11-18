@@ -11,10 +11,10 @@ const tabList = [
     title: 'settingsLoanGeneral',
     to: '/settings/general/loan',
   },
-  {
-    title: 'settingsInsuranceGeneral',
-    to: '/settings/general/loan/insurance',
-  },
+  // {
+  //   title: 'settingsInsuranceGeneral',
+  //   to: '/settings/general/loan/insurance',
+  // },
   {
     title: 'settingsProductTypeGeneral',
     to: '/settings/general/loan/product-type',

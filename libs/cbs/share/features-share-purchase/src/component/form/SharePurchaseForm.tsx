@@ -77,6 +77,7 @@ export const SharePurchaseForm = () => {
   const [mode, setMode] = useState('shareInfo');
 
   const methods = useForm<ShareReturnFormType>({
+    mode: 'onChange',
     defaultValues: {
       paymentMode: SharePaymentMode.Cash,
       bankVoucher: {

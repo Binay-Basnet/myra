@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import rhtoast from 'react-hot-toast';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
 import {
@@ -276,7 +276,7 @@ export const CbsAccountClose = () => {
                     router.push(String(redirectPath));
                     queryClient.invalidateQueries(['getAccountInactiveCheck']);
                   } else {
-                    router.push('/accounts/account-close');
+                    router.push('/savings/account-close');
                   }
                 }
               }
@@ -342,7 +342,7 @@ export const CbsAccountClose = () => {
           router.push(String(redirectPath));
           queryClient.invalidateQueries(['getAccountInactiveCheck']);
         } else {
-          router.push('/accounts/account-close');
+          router.push('/savings/account-close');
         }
       },
     });
@@ -359,6 +359,13 @@ export const CbsAccountClose = () => {
       methods.setValue('accountID', String(redirectAccountId));
     }
   }, [redirectAccountId, memberId]);
+
+  //  get redirect id from url
+  const redirectMemberId = router.query['memberId'];
+  // redirect from member details
+  useEffect(() => {
+    methods.setValue('memberID', String(redirectMemberId));
+  }, [redirectMemberId]);
 
   return (
     <Container minW="container.xl" p="0" bg="white">

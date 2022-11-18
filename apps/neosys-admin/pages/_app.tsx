@@ -7,8 +7,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import { store } from '@coop/cbs/data-access';
-import { useInit } from '@coop/neosys-admin/data-access';
+import { store, useInit } from '@coop/neosys-admin/data-access';
 import { Box, FloatingShortcutButton, Toaster } from '@coop/shared/ui';
 import { neosysTheme, useSnap } from '@coop/shared/utils';
 

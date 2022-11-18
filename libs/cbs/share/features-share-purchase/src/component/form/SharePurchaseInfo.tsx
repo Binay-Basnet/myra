@@ -2,7 +2,11 @@ import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDeepCompareEffect } from 'react-use';
 
-import { Share_Transaction_Direction, useGetShareChargesQuery } from '@coop/cbs/data-access';
+import {
+  Share_Transaction_Direction,
+  useGetSettingsShareGeneralDataQuery,
+  useGetShareChargesQuery,
+} from '@coop/cbs/data-access';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormNumberInput } from '@coop/shared/form';
 import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
@@ -18,6 +22,8 @@ export const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
   const { watch, register, setValue, resetField } = methods;
 
   const noOfShares = watch('shareCount');
+
+  const { data: shareData } = useGetSettingsShareGeneralDataQuery();
 
   const { data: chargesData, refetch } = useGetShareChargesQuery(
     {
@@ -43,11 +49,23 @@ export const SharePurchaseInfo = ({ totalAmount }: IPurchaseInfo) => {
     }
   }, [noOfShares, chargeList]);
 
+  const multiplicityFactor = shareData?.settings?.general?.share?.general?.multiplicityFactor;
+
   return (
     <Box display="flex" flexDirection="column" pb="s24" background="white" borderTopRadius={5}>
       <FormSection header="sharePurchaseShareInformation">
         <GridItem colSpan={3}>
-          <FormNumberInput id="noOfShares" name="shareCount" label={t['sharePurchaseNoOfShares']} />
+          <FormNumberInput
+            step={Number(multiplicityFactor)}
+            id="noOfShares"
+            name="shareCount"
+            label={t['sharePurchaseNoOfShares']}
+            rules={{
+              validate: (value) =>
+                Number(value) % Number(multiplicityFactor) === 0 ||
+                `Number Of Share Should be multiple of ${multiplicityFactor ?? 10}`,
+            }}
+          />
         </GridItem>
 
         <GridItem colSpan={3}>

@@ -205,7 +205,7 @@ query getAccountOpenEditData($id: ID!) {
         initialDepositAmount
         defaultAmountDepositAccountName
         interestRate
-
+        interestAuthority
         installmentAmount
         depositFrequencyWeekly
         depositFrequencyMonthly
