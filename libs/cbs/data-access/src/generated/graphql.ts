@@ -1151,7 +1151,6 @@ export enum BranchPaymentMode {
 export type BranchReportFilter = {
   customPeriod?: InputMaybe<LocalizedDateFilter>;
   filter?: InputMaybe<BranchReportFilterType>;
-  organizationId?: InputMaybe<Scalars['ID']>;
   periodType?: InputMaybe<ReportPeriodType>;
 };
 
@@ -8943,13 +8942,13 @@ export enum ReportPeriodType {
 export type ReportQuery = {
   activeInactiveMemberReport?: Maybe<ReportResult>;
   branchReport?: Maybe<BranchReportResult>;
-  ebankingRegistrationReport?: Maybe<EbankingRegistrationReportResult>;
   generalLedgerReport: GenderLedgerReportResult;
   getReport?: Maybe<SavedReportResponse>;
   interestPostingReport: InterestPostingReportResult;
   listReports: ReportListConnection;
   loanStatementReport?: Maybe<ReportResult>;
   mBankingExpiryReport?: Maybe<EbankingRegistrationReportResult>;
+  mbankingRegistrationReport?: Maybe<EbankingRegistrationReportResult>;
   memberClassificationReport: MemberClassificationReportResult;
   savingStatementReport?: Maybe<ReportResult>;
   shareStatementReport?: Maybe<ReportResult>;
@@ -8961,10 +8960,6 @@ export type ReportQueryActiveInactiveMemberReportArgs = {
 
 export type ReportQueryBranchReportArgs = {
   data?: InputMaybe<BranchReportFilter>;
-};
-
-export type ReportQueryEbankingRegistrationReportArgs = {
-  data?: InputMaybe<EbankingReportFilter>;
 };
 
 export type ReportQueryGeneralLedgerReportArgs = {
@@ -8994,6 +8989,10 @@ export type ReportQueryLoanStatementReportArgs = {
 };
 
 export type ReportQueryMBankingExpiryReportArgs = {
+  data?: InputMaybe<EbankingReportFilter>;
+};
+
+export type ReportQueryMbankingRegistrationReportArgs = {
   data?: InputMaybe<EbankingReportFilter>;
 };
 

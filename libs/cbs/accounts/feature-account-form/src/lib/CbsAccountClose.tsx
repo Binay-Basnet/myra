@@ -276,7 +276,7 @@ export const CbsAccountClose = () => {
                     router.push(String(redirectPath));
                     queryClient.invalidateQueries(['getAccountInactiveCheck']);
                   } else {
-                    router.push('/accounts/account-close');
+                    router.push('/savings/account-close');
                   }
                 }
               }
@@ -342,7 +342,7 @@ export const CbsAccountClose = () => {
           router.push(String(redirectPath));
           queryClient.invalidateQueries(['getAccountInactiveCheck']);
         } else {
-          router.push('/accounts/account-close');
+          router.push('/savings/account-close');
         }
       },
     });
