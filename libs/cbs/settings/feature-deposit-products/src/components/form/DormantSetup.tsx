@@ -1,3 +1,4 @@
+import { DormantCondition, DormantDuration } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 import { FormSection, GridItem } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
@@ -8,14 +9,16 @@ type DormantSetupTable = {
 };
 
 const durationList = [
-  { label: '3 months', value: '3Months' },
-  { label: '6 months', value: '6Months' },
-  { label: 'A year', value: 'year' },
+  { label: '1 month', value: DormantDuration.Month },
+  { label: '3 months', value: DormantDuration.Quarter },
+  { label: '6 months', value: DormantDuration.HalfYear },
+  { label: '1 year', value: DormantDuration.Year },
+  { label: '2 years', value: DormantDuration.TwoYear },
 ];
 
 const conditionList = [
-  { label: 'Withdraw', value: 'Withdraw' },
-  { label: 'Deposit', value: 'deposit' },
+  { label: 'Withdraw', value: DormantCondition.Withdraw },
+  { label: 'Deposit', value: DormantCondition.Deposit },
 ];
 
 export const DormantSetup = () => {
