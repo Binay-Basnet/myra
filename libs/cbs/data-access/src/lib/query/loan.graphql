@@ -509,3 +509,20 @@ query getLoanRepaymentList($paginate: Pagination, $filter: LoanRepaymentFilter) 
     }
   }
 }
+
+query getMemberLinkedAccounts(
+  $memberId: ID!
+  $filter: [NatureOfDepositProduct]
+  $includeActiveAccountsOnly: Boolean
+) {
+  members {
+    getAllAccounts(memberId: $memberId) {
+      data {
+        depositAccount(filter: $filter, includeActiveAccountsOnly: $includeActiveAccountsOnly) {
+          id
+          accountName
+        }
+      }
+    }
+  }
+}

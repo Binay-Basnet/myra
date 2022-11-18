@@ -15730,6 +15730,24 @@ export type GetLoanRepaymentListQuery = {
   };
 };
 
+export type GetMemberLinkedAccountsQueryVariables = Exact<{
+  memberId: Scalars['ID'];
+  filter?: InputMaybe<
+    Array<InputMaybe<NatureOfDepositProduct>> | InputMaybe<NatureOfDepositProduct>
+  >;
+  includeActiveAccountsOnly?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type GetMemberLinkedAccountsQuery = {
+  members: {
+    getAllAccounts?: {
+      data?: {
+        depositAccount?: Array<{ id: string; accountName?: string | null } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetMemberListQueryVariables = Exact<{
   pagination: Pagination;
   filter?: InputMaybe<KymMemberDataFilter>;
@@ -25888,6 +25906,37 @@ export const useGetLoanRepaymentListQuery = <TData = GetLoanRepaymentListQuery, 
     variables === undefined ? ['getLoanRepaymentList'] : ['getLoanRepaymentList', variables],
     useAxios<GetLoanRepaymentListQuery, GetLoanRepaymentListQueryVariables>(
       GetLoanRepaymentListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberLinkedAccountsDocument = `
+    query getMemberLinkedAccounts($memberId: ID!, $filter: [NatureOfDepositProduct], $includeActiveAccountsOnly: Boolean) {
+  members {
+    getAllAccounts(memberId: $memberId) {
+      data {
+        depositAccount(
+          filter: $filter
+          includeActiveAccountsOnly: $includeActiveAccountsOnly
+        ) {
+          id
+          accountName
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberLinkedAccountsQuery = <
+  TData = GetMemberLinkedAccountsQuery,
+  TError = unknown
+>(
+  variables: GetMemberLinkedAccountsQueryVariables,
+  options?: UseQueryOptions<GetMemberLinkedAccountsQuery, TError, TData>
+) =>
+  useQuery<GetMemberLinkedAccountsQuery, TError, TData>(
+    ['getMemberLinkedAccounts', variables],
+    useAxios<GetMemberLinkedAccountsQuery, GetMemberLinkedAccountsQueryVariables>(
+      GetMemberLinkedAccountsDocument
     ).bind(null, variables),
     options
   );
