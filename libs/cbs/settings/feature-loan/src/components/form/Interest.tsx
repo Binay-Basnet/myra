@@ -1,4 +1,6 @@
-import { DepositFrequency } from '@coop/cbs/data-access';
+import { useFormContext } from 'react-hook-form';
+
+import { DepositFrequency, LoanProductInput } from '@coop/cbs/data-access';
 import { SubText } from '@coop/shared/components';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
@@ -8,6 +10,12 @@ import { SubHeadingText } from '../formui';
 
 export const Interest = () => {
   const { t } = useTranslation();
+  const { watch } = useFormContext<LoanProductInput>();
+  const minValueStr = watch('interest.minRate') ?? 0;
+  const minValue = Number(minValueStr);
+
+  const maxValueStr = watch('interest.maxRate') ?? 0;
+  const maxValue = Number(maxValueStr);
 
   const yesNo = [
     { label: t['yes'], value: true },
@@ -62,6 +70,16 @@ export const Interest = () => {
         type="number"
         label={t['loanProductDefaultRate']}
         textAlign="right"
+        rules={{
+          max: {
+            value: maxValue,
+            message: 'Interest Rate is invalid',
+          },
+          min: {
+            value: minValue,
+            message: 'Interest Rate is invalid',
+          },
+        }}
         rightElement={
           <Text fontWeight="Medium" fontSize="r1" color="primary.500">
             %
