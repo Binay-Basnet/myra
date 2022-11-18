@@ -311,7 +311,7 @@ export const SharePurchaseForm = () => {
                 handleSubmit={handleSubmit}
                 isDisabled={
                   paymentModes === SharePaymentMode.Cash && !disableDenomination
-                    ? Number(denominationTotal) !== Number(cashPaid)
+                    ? !(Number(cashPaid) >= Number(totalAmount))
                     : false
                 }
               />

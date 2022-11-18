@@ -72,7 +72,7 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
   );
 
   return (
-    <Box display="flex" flexDirection="column" gap="s16">
+    <Box minHeight="100vh" bg="gray.0" display="flex" flexDirection="column" gap="s16">
       <Box display="flex" flexDirection="column" p="s16" gap="s16">
         <Box display="flex" gap="s16">
           <Avatar
