@@ -544,7 +544,7 @@ export const AddDeposit = () => {
                   )}
                 </Box>
 
-                {memberId && (
+                {memberDetailData && (
                   <Box>
                     <MemberCard
                       memberDetails={{
