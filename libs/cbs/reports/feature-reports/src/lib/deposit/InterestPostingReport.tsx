@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import {
-  GeneralLedgerReportEntry,
+  InterestPostingReportEntry,
   ReportPeriodType,
-  useGetLedgerReportQuery,
+  useGetInterestStatementReportQuery,
 } from '@coop/cbs/data-access';
 import {
-  LedgerReportInputs,
-  LedgerReportTable,
+  InterestStatementInputs,
+  InterestStatementReportTable,
   ReportHeader,
   ReportOrganization,
   ReportOrganizationHeader,
@@ -16,47 +16,57 @@ import {
 import { Report } from '@coop/cbs/reports/list';
 import { Box, Divider, Loader, NoDataState } from '@coop/shared/ui';
 
-type GeneralLedgerReportType = {
-  ledgerId: string;
-  period: ReportPeriodType;
+type ReportFilterType = {
+  memberId: string;
+  accountId: string;
+  periodType: ReportPeriodType;
+  customPeriod?: {
+    from: string;
+    to: string;
+  };
 };
-export const LedgerReport = () => {
-  const methods = useForm<GeneralLedgerReportType>({});
 
-  const [filter, setFilter] = useState<GeneralLedgerReportType | null>(null);
+export const InterestPostingReport = () => {
+  const methods = useForm<ReportFilterType>({
+    defaultValues: {},
+  });
+
+  const [filter, setFilter] = useState<ReportFilterType | null>(null);
 
   const { watch } = methods;
 
-  const coaId = watch('ledgerId');
-  const periodType = watch('period');
+  const memberId = watch('memberId');
+  const periodType = watch('periodType');
+  const accountId = watch('accountId');
 
   const [hasShownFilter, setHasShownFilter] = useState(false);
 
-  const { data: ledgerReportData, isFetching: reportLoading } = useGetLedgerReportQuery(
-    {
-      data: {
-        ledgerId: filter?.ledgerId as string,
-        period: filter?.period,
+  const { data: savingStatementData, isFetching: reportLoading } =
+    useGetInterestStatementReportQuery(
+      {
+        data: {
+          period: filter?.periodType,
+          accountId: filter?.accountId as string,
+        },
       },
-    },
-    { enabled: !!filter }
-  );
-  const ledgerReport = ledgerReportData?.report?.generalLedgerReport?.data;
+      { enabled: !!filter }
+    );
+  const interestStatement = savingStatementData?.report?.interestStatementReport?.data;
 
   return (
     <FormProvider {...methods}>
       <Box bg="white" minH="calc(100vh - 110px)" w="100%" display="flex" flexDir="column">
         <ReportHeader
-          hasSave={!!coaId && !!periodType}
+          hasSave={!!memberId && !!periodType && !!accountId}
           paths={[
-            { label: 'Other Reports', link: '/reports/cbs/others' },
+            { label: 'Saving Statement', link: '/reports/cbs/savings' },
             {
-              label: 'Ledger Report',
-              link: '/reports/cbs/others/statement/new',
+              label: 'Interest Statement',
+              link: '/reports/cbs/interest-statement/new',
             },
           ]}
         />
-        <LedgerReportInputs
+        <InterestStatementInputs
           setFilter={setFilter}
           hasShownFilter={hasShownFilter}
           setHasShownFilter={setHasShownFilter}
@@ -78,15 +88,20 @@ export const LedgerReport = () => {
                 );
               }
 
-              if (ledgerReport && ledgerReport.length !== 0) {
+              if (interestStatement && interestStatement.entries?.length !== 0) {
                 return (
                   <Box display="flex" flexDir="column" w="100%">
-                    <ReportOrganizationHeader reportType={Report.GENERAL_LEDGER_REPORT} />
-                    <ReportOrganization statementDate={filter?.period} />
+                    <ReportOrganizationHeader reportType={Report.DEPOSIT_INTEREST_REPORT} />
+                    <ReportOrganization statementDate={filter?.periodType} />
                     <Box px="s32">
                       <Divider />
                     </Box>
-                    <LedgerReportTable ledgerReport={ledgerReport as GeneralLedgerReportEntry[]} />
+                    {/* <ReportMember */}
+                    {/*  member={savingStatementData.report.savingStatementReport?.member} */}
+                    {/* /> */}
+                    <InterestStatementReportTable
+                      interestReport={interestStatement.entries as InterestPostingReportEntry[]}
+                    />
                   </Box>
                 );
               }
@@ -106,6 +121,7 @@ export const LedgerReport = () => {
               return null;
             })()}
           </Box>
+          {/* <SavingReportFilters setFilter={setFilter} hasShownFilter={hasShownFilter} /> */}
         </Box>
       </Box>
     </FormProvider>
