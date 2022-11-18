@@ -174,6 +174,7 @@ export const REPORTS = {
     {
       id: '5.4',
       report: Report.DEPOSIT_INTEREST_REPORT,
+      link: 'interest-statement',
     },
     {
       id: '5.5',

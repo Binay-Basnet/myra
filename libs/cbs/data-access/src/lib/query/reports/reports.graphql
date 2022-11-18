@@ -177,3 +177,19 @@ query getLedgerReport($ledgerId: ID!, $period: ReportPeriodType, $date: Localize
     }
   }
 }
+
+
+query getInterestPostingReport($accountId: ID!, $period: ReportPeriodType, $date: LocalizedDateFilter){
+  report {
+    interestPostingReport(period: $period, accountId: $accountId, date: $date){
+      data {
+        date
+        amount
+        balance
+        days
+        rate
+        remarks
+      }
+    }
+  }
+}
