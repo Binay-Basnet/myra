@@ -4150,6 +4150,31 @@ export type InterestRateType = {
   minRate?: Maybe<Scalars['Float']>;
 };
 
+export type InterestTaxFilter = {
+  interestAmount?: InputMaybe<MinMaxFilter>;
+  savingBalance?: InputMaybe<MinMaxFilter>;
+  taxAmount?: InputMaybe<MinMaxFilter>;
+};
+
+export type InterestTaxReportEntry = {
+  accountNo?: Maybe<Scalars['String']>;
+  address?: Maybe<Address>;
+  closingBalance?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  interest?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['Localized']>;
+  panNo?: Maybe<Scalars['String']>;
+  remarks?: Maybe<Scalars['String']>;
+  savingBalance?: Maybe<Scalars['String']>;
+  tax?: Maybe<Scalars['String']>;
+};
+
+export type InterestTaxReportResult = {
+  data?: Maybe<Array<Maybe<InterestTaxReportEntry>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type InvItems = {
   id: Scalars['ID'];
   itemCode: Scalars['String'];
@@ -8117,6 +8142,11 @@ export type MembershipPaymentResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type MinMaxFilter = {
+  max?: InputMaybe<Scalars['String']>;
+  min?: InputMaybe<Scalars['String']>;
+};
+
 export type MonthlyDividendRate = {
   eightMonth?: Maybe<Scalars['Float']>;
   eleventhMonth?: Maybe<Scalars['Float']>;
@@ -8945,6 +8975,7 @@ export type ReportQuery = {
   generalLedgerReport: GenderLedgerReportResult;
   getReport?: Maybe<SavedReportResponse>;
   interestPostingReport: InterestPostingReportResult;
+  interestTaxReport: InterestTaxReportResult;
   listReports: ReportListConnection;
   loanStatementReport?: Maybe<ReportResult>;
   mBankingExpiryReport?: Maybe<EbankingRegistrationReportResult>;
@@ -8975,6 +9006,12 @@ export type ReportQueryGetReportArgs = {
 export type ReportQueryInterestPostingReportArgs = {
   accountId: Scalars['ID'];
   date?: InputMaybe<LocalizedDateFilter>;
+  period?: InputMaybe<ReportPeriodType>;
+};
+
+export type ReportQueryInterestTaxReportArgs = {
+  date?: InputMaybe<LocalizedDateFilter>;
+  filter?: InputMaybe<InterestTaxFilter>;
   period?: InputMaybe<ReportPeriodType>;
 };
 
@@ -15688,6 +15725,24 @@ export type GetLoanRepaymentListQuery = {
         hasPreviousPage: boolean;
         startCursor?: string | null;
         endCursor?: string | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetMemberLinkedAccountsQueryVariables = Exact<{
+  memberId: Scalars['ID'];
+  filter?: InputMaybe<
+    Array<InputMaybe<NatureOfDepositProduct>> | InputMaybe<NatureOfDepositProduct>
+  >;
+  includeActiveAccountsOnly?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type GetMemberLinkedAccountsQuery = {
+  members: {
+    getAllAccounts?: {
+      data?: {
+        depositAccount?: Array<{ id: string; accountName?: string | null } | null> | null;
       } | null;
     } | null;
   };
@@ -25851,6 +25906,37 @@ export const useGetLoanRepaymentListQuery = <TData = GetLoanRepaymentListQuery, 
     variables === undefined ? ['getLoanRepaymentList'] : ['getLoanRepaymentList', variables],
     useAxios<GetLoanRepaymentListQuery, GetLoanRepaymentListQueryVariables>(
       GetLoanRepaymentListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberLinkedAccountsDocument = `
+    query getMemberLinkedAccounts($memberId: ID!, $filter: [NatureOfDepositProduct], $includeActiveAccountsOnly: Boolean) {
+  members {
+    getAllAccounts(memberId: $memberId) {
+      data {
+        depositAccount(
+          filter: $filter
+          includeActiveAccountsOnly: $includeActiveAccountsOnly
+        ) {
+          id
+          accountName
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberLinkedAccountsQuery = <
+  TData = GetMemberLinkedAccountsQuery,
+  TError = unknown
+>(
+  variables: GetMemberLinkedAccountsQueryVariables,
+  options?: UseQueryOptions<GetMemberLinkedAccountsQuery, TError, TData>
+) =>
+  useQuery<GetMemberLinkedAccountsQuery, TError, TData>(
+    ['getMemberLinkedAccounts', variables],
+    useAxios<GetMemberLinkedAccountsQuery, GetMemberLinkedAccountsQueryVariables>(
+      GetMemberLinkedAccountsDocument
     ).bind(null, variables),
     options
   );

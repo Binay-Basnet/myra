@@ -103,6 +103,7 @@ export const SettingsLoanProductForm = () => {
   };
 
   const methods = useForm<LoanProductForm>({
+    mode: 'onChange',
     defaultValues: {
       isPenaltyApplicable: false,
       allowPartialInstallment: false,
