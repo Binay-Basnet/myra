@@ -3769,6 +3769,12 @@ export type GeneralBranchSettingsQueryListArgs = {
   paginate?: InputMaybe<Pagination>;
 };
 
+export type GeneralLedgerFilter = {
+  customDate?: InputMaybe<LocalizedDateFilter>;
+  ledgerId: Scalars['ID'];
+  period?: InputMaybe<ReportPeriodType>;
+};
+
 export type GeneralLedgerReportEntry = {
   account?: Maybe<Scalars['String']>;
   balance?: Maybe<Scalars['String']>;
@@ -4118,6 +4124,16 @@ export enum InterestMethod {
   Flat = 'FLAT',
 }
 
+export type InterestPostingReportData = {
+  accountNo?: Maybe<Scalars['String']>;
+  accountType?: Maybe<NatureOfDepositProduct>;
+  address?: Maybe<Address>;
+  currentInterestRate?: Maybe<Scalars['Float']>;
+  entries?: Maybe<Array<Maybe<InterestPostingReportEntry>>>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['Localized']>;
+};
+
 export type InterestPostingReportEntry = {
   amount?: Maybe<Scalars['String']>;
   balance?: Maybe<Scalars['String']>;
@@ -4128,7 +4144,7 @@ export type InterestPostingReportEntry = {
 };
 
 export type InterestPostingReportResult = {
-  data?: Maybe<Array<Maybe<InterestPostingReportEntry>>>;
+  data?: Maybe<InterestPostingReportData>;
   error?: Maybe<QueryError>;
 };
 
@@ -4148,6 +4164,48 @@ export type InterestRateType = {
   defaultRate: Scalars['Float'];
   maxRate?: Maybe<Scalars['Float']>;
   minRate?: Maybe<Scalars['Float']>;
+};
+
+export type InterestStatementFilter = {
+  accountId: Scalars['ID'];
+  customDate?: InputMaybe<LocalizedDateFilter>;
+  filter?: InputMaybe<InterestStatementRangeFilter>;
+  period?: InputMaybe<ReportPeriodType>;
+};
+
+export type InterestStatementRangeFilter = {
+  interestAmount?: InputMaybe<MinMaxFilter>;
+};
+
+export type InterestTaxFilter = {
+  interestAmount?: InputMaybe<MinMaxFilter>;
+  savingBalance?: InputMaybe<MinMaxFilter>;
+  taxAmount?: InputMaybe<MinMaxFilter>;
+};
+
+export type InterestTaxReportEntry = {
+  accountNo?: Maybe<Scalars['String']>;
+  address?: Maybe<Address>;
+  closingBalance?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  interest?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['Localized']>;
+  panNo?: Maybe<Scalars['String']>;
+  remarks?: Maybe<Scalars['String']>;
+  savingBalance?: Maybe<Scalars['String']>;
+  tax?: Maybe<Scalars['String']>;
+};
+
+export type InterestTaxReportFilter = {
+  customDate?: InputMaybe<LocalizedDateFilter>;
+  filter?: InputMaybe<InterestTaxFilter>;
+  period?: InputMaybe<ReportPeriodType>;
+};
+
+export type InterestTaxReportResult = {
+  data?: Maybe<Array<Maybe<InterestTaxReportEntry>>>;
+  error?: Maybe<QueryError>;
 };
 
 export type InvItems = {
@@ -7774,6 +7832,11 @@ export type MemberChequeDetails = {
   used?: Maybe<Scalars['Int']>;
 };
 
+export type MemberClassificationFilter = {
+  customDate?: InputMaybe<LocalizedDateFilter>;
+  period?: InputMaybe<ReportPeriodType>;
+};
+
 export type MemberClassificationReportAddressData = {
   district?: Maybe<Array<Maybe<ReportEntry>>>;
   province?: Maybe<Array<Maybe<ReportEntry>>>;
@@ -8115,6 +8178,11 @@ export type MembershipPaymentResult = {
   query?: Maybe<MemberQuery>;
   record?: Maybe<MembershipPaymentRecord>;
   recordId?: Maybe<Scalars['ID']>;
+};
+
+export type MinMaxFilter = {
+  max?: InputMaybe<Scalars['String']>;
+  min?: InputMaybe<Scalars['String']>;
 };
 
 export type MonthlyDividendRate = {
@@ -8944,7 +9012,8 @@ export type ReportQuery = {
   branchReport?: Maybe<BranchReportResult>;
   generalLedgerReport: GenderLedgerReportResult;
   getReport?: Maybe<SavedReportResponse>;
-  interestPostingReport: InterestPostingReportResult;
+  interestStatementReport: InterestPostingReportResult;
+  interestTaxReport: InterestTaxReportResult;
   listReports: ReportListConnection;
   loanStatementReport?: Maybe<ReportResult>;
   mBankingExpiryReport?: Maybe<EbankingRegistrationReportResult>;
@@ -8963,19 +9032,19 @@ export type ReportQueryBranchReportArgs = {
 };
 
 export type ReportQueryGeneralLedgerReportArgs = {
-  date?: InputMaybe<LocalizedDateFilter>;
-  ledgerId: Scalars['ID'];
-  period?: InputMaybe<ReportPeriodType>;
+  data: GeneralLedgerFilter;
 };
 
 export type ReportQueryGetReportArgs = {
   reportId: Scalars['ID'];
 };
 
-export type ReportQueryInterestPostingReportArgs = {
-  accountId: Scalars['ID'];
-  date?: InputMaybe<LocalizedDateFilter>;
-  period?: InputMaybe<ReportPeriodType>;
+export type ReportQueryInterestStatementReportArgs = {
+  data: InterestStatementFilter;
+};
+
+export type ReportQueryInterestTaxReportArgs = {
+  data: InterestTaxReportFilter;
 };
 
 export type ReportQueryListReportsArgs = {
@@ -8997,8 +9066,7 @@ export type ReportQueryMbankingRegistrationReportArgs = {
 };
 
 export type ReportQueryMemberClassificationReportArgs = {
-  date?: InputMaybe<LocalizedDateFilter>;
-  period?: InputMaybe<ReportPeriodType>;
+  data: MemberClassificationFilter;
 };
 
 export type ReportQuerySavingStatementReportArgs = {
@@ -16558,7 +16626,7 @@ export type GetSavingStatementQuery = {
 };
 
 export type GetMemberClassificationReportQueryVariables = Exact<{
-  period?: InputMaybe<ReportPeriodType>;
+  data: MemberClassificationFilter;
 }>;
 
 export type GetMemberClassificationReportQuery = {
@@ -16647,9 +16715,7 @@ export type GetLoanStatementReportQuery = {
 };
 
 export type GetLedgerReportQueryVariables = Exact<{
-  ledgerId: Scalars['ID'];
-  period?: InputMaybe<ReportPeriodType>;
-  date?: InputMaybe<LocalizedDateFilter>;
+  data: GeneralLedgerFilter;
 }>;
 
 export type GetLedgerReportQuery = {
@@ -16663,6 +16729,41 @@ export type GetLedgerReportQuery = {
         credit?: string | null;
         debit?: string | null;
       } | null> | null;
+    };
+  };
+};
+
+export type GetInterestStatementReportQueryVariables = Exact<{
+  data: InterestStatementFilter;
+}>;
+
+export type GetInterestStatementReportQuery = {
+  report: {
+    interestStatementReport: {
+      data?: {
+        memberId?: string | null;
+        accountNo?: string | null;
+        accountType?: NatureOfDepositProduct | null;
+        currentInterestRate?: number | null;
+        memberName?: Record<'local' | 'en' | 'np', string> | null;
+        entries?: Array<{
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          amount?: string | null;
+          balance?: string | null;
+          days?: number | null;
+          rate?: number | null;
+          remarks?: string | null;
+        } | null> | null;
+        address?: {
+          wardNo?: string | null;
+          state?: Record<'local' | 'en' | 'np', string> | null;
+          locality?: Record<'local' | 'en' | 'np', string> | null;
+          localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+          district?: Record<'local' | 'en' | 'np', string> | null;
+          houseNo?: string | null;
+          coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+        } | null;
+      } | null;
     };
   };
 };
@@ -27017,9 +27118,9 @@ export const useGetSavingStatementQuery = <TData = GetSavingStatementQuery, TErr
     options
   );
 export const GetMemberClassificationReportDocument = `
-    query getMemberClassificationReport($period: ReportPeriodType) {
+    query getMemberClassificationReport($data: MemberClassificationFilter!) {
   report {
-    memberClassificationReport(period: $period) {
+    memberClassificationReport(data: $data) {
       data {
         gender {
           entryName
@@ -27072,13 +27173,11 @@ export const useGetMemberClassificationReportQuery = <
   TData = GetMemberClassificationReportQuery,
   TError = unknown
 >(
-  variables?: GetMemberClassificationReportQueryVariables,
+  variables: GetMemberClassificationReportQueryVariables,
   options?: UseQueryOptions<GetMemberClassificationReportQuery, TError, TData>
 ) =>
   useQuery<GetMemberClassificationReportQuery, TError, TData>(
-    variables === undefined
-      ? ['getMemberClassificationReport']
-      : ['getMemberClassificationReport', variables],
+    ['getMemberClassificationReport', variables],
     useAxios<GetMemberClassificationReportQuery, GetMemberClassificationReportQueryVariables>(
       GetMemberClassificationReportDocument
     ).bind(null, variables),
@@ -27136,9 +27235,9 @@ export const useGetLoanStatementReportQuery = <
     options
   );
 export const GetLedgerReportDocument = `
-    query getLedgerReport($ledgerId: ID!, $period: ReportPeriodType, $date: LocalizedDateFilter) {
+    query getLedgerReport($data: GeneralLedgerFilter!) {
   report {
-    generalLedgerReport(date: $date, ledgerId: $ledgerId, period: $period) {
+    generalLedgerReport(data: $data) {
       data {
         id
         date
@@ -27161,6 +27260,55 @@ export const useGetLedgerReportQuery = <TData = GetLedgerReportQuery, TError = u
       null,
       variables
     ),
+    options
+  );
+export const GetInterestStatementReportDocument = `
+    query getInterestStatementReport($data: InterestStatementFilter!) {
+  report {
+    interestStatementReport(data: $data) {
+      data {
+        entries {
+          date
+          amount
+          balance
+          days
+          rate
+          remarks
+        }
+        memberId
+        accountNo
+        accountType
+        currentInterestRate
+        memberName
+        address {
+          wardNo
+          state
+          locality
+          localGovernment
+          district
+          houseNo
+          coordinates {
+            longitude
+            latitude
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInterestStatementReportQuery = <
+  TData = GetInterestStatementReportQuery,
+  TError = unknown
+>(
+  variables: GetInterestStatementReportQueryVariables,
+  options?: UseQueryOptions<GetInterestStatementReportQuery, TError, TData>
+) =>
+  useQuery<GetInterestStatementReportQuery, TError, TData>(
+    ['getInterestStatementReport', variables],
+    useAxios<GetInterestStatementReportQuery, GetInterestStatementReportQueryVariables>(
+      GetInterestStatementReportDocument
+    ).bind(null, variables),
     options
   );
 export const GetShareStatementDocument = `

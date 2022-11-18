@@ -87,6 +87,7 @@ export enum Report {
   BB_PROGRESS_REPORT = 'Progress Report',
 
   BRANCH_WISE_FINANCIAL_REPORT = 'Branchwise financial Report',
+  SERVICE_CENTER_LIST_REPORT = 'Service Center List Report',
   BRANCH_WISE_TARGET_VS_ACHIEVEMENT = 'Branchwise Target vs Achievement',
 }
 
@@ -174,6 +175,7 @@ export const REPORTS = {
     {
       id: '5.4',
       report: Report.DEPOSIT_INTEREST_REPORT,
+      link: 'interest-statement',
     },
     {
       id: '5.5',
@@ -365,6 +367,11 @@ export const REPORTS = {
   ],
 
   [ReportGroup.BRANCH]: [
+    {
+      id: '8',
+      report: Report.SERVICE_CENTER_LIST_REPORT,
+      link: 'list-report',
+    },
     {
       id: '8',
       report: Report.BRANCH_WISE_FINANCIAL_REPORT,

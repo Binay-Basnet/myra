@@ -46,7 +46,7 @@ const REPORTS_INNER_TAB_LINKS = [
   },
   {
     title: 'Branch Report',
-    to: '/reports/cbs/branch-report',
+    to: '/reports/cbs/service-center',
   },
   {
     title: 'Others Report',
