@@ -35,11 +35,11 @@ export const Overview = () => {
     },
     {
       title: 'Account Transfer',
-      link: `/accounts/account-transfer/add?memberId=${id}`,
+      link: `/savings/account-transfer/add?memberId=${id}`,
     },
     {
       title: 'New Account',
-      link: `/accounts/account-open`,
+      link: `/savings/account-open`,
     },
     {
       title: 'New Share Issue',

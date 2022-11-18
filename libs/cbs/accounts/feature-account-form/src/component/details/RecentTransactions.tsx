@@ -23,7 +23,7 @@ export const RecentTransactions = () => {
         <Button
           variant="ghost"
           onClick={() =>
-            router.push(`/accounts/details/${accountDetails?.accountId}?tab=transactions`)
+            router.push(`/savings/details/${accountDetails?.accountId}?tab=transactions`)
           }
         >
           View all transactions

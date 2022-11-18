@@ -16,11 +16,11 @@ export const Accounts = () => {
   const links = [
     {
       title: 'Account Open',
-      link: `/accounts/account-open`,
+      link: `/savings/account-open`,
     },
     {
       title: 'Account Close',
-      link: `/accounts/account-close`,
+      link: `/savings/account-close`,
     },
   ];
   const memberDetails = useGetMemberDetailsOverviewQuery({
