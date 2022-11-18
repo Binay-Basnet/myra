@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import { omit } from 'lodash';
 
 import {
@@ -77,6 +77,7 @@ export const SharePurchaseForm = () => {
   const [mode, setMode] = useState('shareInfo');
 
   const methods = useForm<ShareReturnFormType>({
+    mode: 'onChange',
     defaultValues: {
       paymentMode: SharePaymentMode.Cash,
       bankVoucher: {
