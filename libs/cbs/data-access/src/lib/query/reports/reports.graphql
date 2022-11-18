@@ -76,9 +76,9 @@ query getSavingStatement($data: SavingStatementReportSettings!) {
   }
 }
 
-query getMemberClassificationReport($period: ReportPeriodType) {
+query getMemberClassificationReport($data: MemberClassificationFilter!) {
   report {
-    memberClassificationReport(period: $period) {
+    memberClassificationReport(data: $data) {
       data {
         gender {
           entryName
@@ -163,9 +163,9 @@ query getLoanStatementReport($data: LoanStatementReportSettings!) {
   }
 }
 
-query getLedgerReport($ledgerId: ID!, $period: ReportPeriodType, $date: LocalizedDateFilter) {
+query getLedgerReport($data: GeneralLedgerFilter!) {
   report {
-    generalLedgerReport(date: $date, ledgerId: $ledgerId, period: $period) {
+    generalLedgerReport(data: $data) {
       data {
         id
         date
@@ -178,17 +178,35 @@ query getLedgerReport($ledgerId: ID!, $period: ReportPeriodType, $date: Localize
   }
 }
 
-
-query getInterestPostingReport($accountId: ID!, $period: ReportPeriodType, $date: LocalizedDateFilter){
+query getInterestStatementReport($data: InterestStatementFilter!) {
   report {
-    interestPostingReport(period: $period, accountId: $accountId, date: $date){
+    interestStatementReport(data: $data) {
       data {
-        date
-        amount
-        balance
-        days
-        rate
-        remarks
+        entries {
+          date
+          amount
+          balance
+          days
+          rate
+          remarks
+        }
+        memberId
+        accountNo
+        accountType
+        currentInterestRate
+        memberName
+        address {
+          wardNo
+          state
+          locality
+          localGovernment
+          district
+          houseNo
+          coordinates {
+            longitude
+            latitude
+          }
+        }
       }
     }
   }

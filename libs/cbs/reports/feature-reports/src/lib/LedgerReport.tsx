@@ -34,8 +34,10 @@ export const LedgerReport = () => {
 
   const { data: ledgerReportData, isFetching: reportLoading } = useGetLedgerReportQuery(
     {
-      ledgerId: filter?.ledgerId as string,
-      period: filter?.period,
+      data: {
+        ledgerId: filter?.ledgerId as string,
+        period: filter?.period,
+      },
     },
     { enabled: !!filter }
   );

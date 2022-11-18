@@ -56,7 +56,7 @@ export const MemberClassificationReport = () => {
   const [filter, setFilter] = useState<MemberClassificationFilter | null>(null);
 
   const { data: memberClassificationData, isLoading } = useGetMemberClassificationReportQuery(
-    { period: filter?.period },
+    { data: { period: filter?.period } },
     { enabled: !!filter }
   );
 

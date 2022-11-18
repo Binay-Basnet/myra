@@ -4,7 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import {
   InterestPostingReportEntry,
   ReportPeriodType,
-  useGetInterestPostingReportQuery,
+  useGetInterestStatementReportQuery,
 } from '@coop/cbs/data-access';
 import {
   InterestStatementInputs,
@@ -41,14 +41,17 @@ export const InterestPostingReport = () => {
 
   const [hasShownFilter, setHasShownFilter] = useState(false);
 
-  const { data: savingStatementData, isFetching: reportLoading } = useGetInterestPostingReportQuery(
-    {
-      period: filter?.periodType,
-      accountId: filter?.accountId as string,
-    },
-    { enabled: !!filter }
-  );
-  const interestStatement = savingStatementData?.report?.interestPostingReport?.data;
+  const { data: savingStatementData, isFetching: reportLoading } =
+    useGetInterestStatementReportQuery(
+      {
+        data: {
+          period: filter?.periodType,
+          accountId: filter?.accountId as string,
+        },
+      },
+      { enabled: !!filter }
+    );
+  const interestStatement = savingStatementData?.report?.interestStatementReport?.data;
 
   return (
     <FormProvider {...methods}>
@@ -85,7 +88,7 @@ export const InterestPostingReport = () => {
                 );
               }
 
-              if (interestStatement && interestStatement.length !== 0) {
+              if (interestStatement && interestStatement.entries?.length !== 0) {
                 return (
                   <Box display="flex" flexDir="column" w="100%">
                     <ReportOrganizationHeader reportType={Report.DEPOSIT_INTEREST_REPORT} />
@@ -97,7 +100,7 @@ export const InterestPostingReport = () => {
                     {/*  member={savingStatementData.report.savingStatementReport?.member} */}
                     {/* /> */}
                     <InterestStatementReportTable
-                      interestReport={interestStatement as InterestPostingReportEntry[]}
+                      interestReport={interestStatement.entries as InterestPostingReportEntry[]}
                     />
                   </Box>
                 );
