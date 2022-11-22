@@ -39,7 +39,7 @@ export const BlockChequeRequest = () => {
               {props.row?.original?.node?.memberName?.local}
             </Text>
             <Text fontSize="r1" color="gray.600">
-              {props.row?.original?.node?.memberId}
+              {props.row?.original?.node?.memberCode}
             </Text>
           </Box>
         ),
