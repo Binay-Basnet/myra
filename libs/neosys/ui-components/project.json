@@ -1,4 +1,5 @@
 {
+  "name": "neosys-ui-components",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/neosys/ui-components/src",
   "projectType": "library",

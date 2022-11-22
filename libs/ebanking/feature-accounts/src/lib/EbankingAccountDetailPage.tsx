@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { useRouter } from 'next/router';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Skeleton } from '@chakra-ui/react';

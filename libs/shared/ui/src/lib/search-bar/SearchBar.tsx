@@ -25,8 +25,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-import { Filter_Mode, useGetGlobalSearchQuery } from '@coop/cbs/data-access';
-import { useGetNewIdMutation } from '@coop/ebanking/data-access';
+import { Filter_Mode, useGetGlobalSearchQuery, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { useDebounce } from '@coop/shared/utils';
 
 import { useSearchNavigate } from './useSearchNavigate';
@@ -670,5 +669,85 @@ export const NoResultFound = ({
     </Text>
   </Flex>
 );
+
+export const BasicSearchBar = () => {
+  const [inputSearch, setInputSearch] = useState('');
+
+  const [searchAction, setSearchAction] = useState<'FOCUS' | 'SIMPLE' | 'USER' | 'EMPTY'>('EMPTY');
+
+  return (
+    <InputGroup
+      width="100%"
+      borderRadius="6px"
+      border="none"
+      flex={1}
+      color="white"
+      borderColor="secondary.700"
+      _hover={{ color: 'gray.700' }}
+    >
+      <InputLeftElement
+        pointerEvents="none"
+        children={<Icon as={IoSearch} fontSize="lg" />}
+        color={searchAction !== 'EMPTY' ? 'gray.800' : 'currentcolor'}
+      />
+      <Input
+        type="text"
+        id="search-input"
+        placeholder="Search"
+        autoComplete="off"
+        color="white"
+        fontSize="r1"
+        value={inputSearch}
+        border="none"
+        bg="secondary.900"
+        onFocus={() => {
+          if (inputSearch) {
+            if (inputSearch[0] === '@') {
+              setSearchAction('USER');
+            } else {
+              setSearchAction('SIMPLE');
+            }
+          } else {
+            setSearchAction('FOCUS');
+          }
+        }}
+        onChange={(e) => {
+          setInputSearch(e.target.value);
+          if (e.target.value[0] === '' || !e.target.value[0]) {
+            setSearchAction('FOCUS');
+          } else if (e.target.value[0] === '@') {
+            setSearchAction('USER');
+          } else {
+            setSearchAction('SIMPLE');
+          }
+        }}
+        onBlur={() => {
+          setSearchAction('EMPTY');
+        }}
+        _hover={{ color: 'gray.800', backgroundColor: 'gray.0' }}
+        _focus={{ color: 'gray.800', backgroundColor: 'gray.0' }}
+      />
+
+      {searchAction === 'SIMPLE' || searchAction === 'USER' ? (
+        <InputRightElement
+          cursor="pointer"
+          onMouseDown={(e) => e.preventDefault()}
+          color="gray.800"
+          children={<Icon as={IoClose} />}
+        />
+      ) : (
+        <InputRightElement
+          pointerEvents="none"
+          color={searchAction !== 'EMPTY' ? 'gray.800' : 'currentcolor'}
+          children={
+            <Text fontSize="r1" alignItems="center" pr="s12">
+              Ctrl+/
+            </Text>
+          }
+        />
+      )}
+    </InputGroup>
+  );
+};
 
 export default SearchBar;

@@ -10,18 +10,19 @@ import { Box, Grid, Icon, Text } from '@coop/shared/ui';
 
 import { AccountList, UpcomingPaymentTable } from '../components';
 
-const links = [
-  {
-    title: 'Account Open',
-    link: '/accounts/account-open',
-  },
-  {
-    title: 'Account Close',
-    link: '/accounts/account-close',
-  },
-];
 export const Accounts = () => {
   const router = useRouter();
+  const id = router.query['id'] as string;
+  const links = [
+    {
+      title: 'Account Open',
+      link: `/savings/account-open`,
+    },
+    {
+      title: 'Account Close',
+      link: `/savings/account-close`,
+    },
+  ];
   const memberDetails = useGetMemberDetailsOverviewQuery({
     id: router.query['id'] as string,
   });
@@ -61,7 +62,7 @@ export const Accounts = () => {
                 onClick={() =>
                   newId
                     .mutateAsync({ idType: Id_Type.Account })
-                    .then((res) => router.push(`${item.link}/add/${res?.newId}`))
+                    .then((res) => router.push(`${item.link}/add/${res?.newId}?memberId=${id}`))
                 }
               >
                 <Icon as={IoAddOutline} />

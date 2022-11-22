@@ -5,6 +5,18 @@ import { getSchemaPath } from '@coop/shared/utils';
 
 import { RootState, useAppSelector } from '../../redux/store';
 
+// Request interceptors for API calls
+axios.interceptors.request.use(
+  (config) => {
+    config.headers = {
+      ...config.headers,
+      slug: 'myra',
+    };
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 export const useAxios = <TData, TVariables>(
   query: string
 ): ((variables?: TVariables, config?: AxiosRequestConfig<TData>) => Promise<TData>) => {

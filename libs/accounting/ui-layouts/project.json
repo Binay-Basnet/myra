@@ -1,4 +1,5 @@
 {
+  "name": "accounting-ui-layouts",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/accounting/ui-layouts/src",
   "projectType": "library",

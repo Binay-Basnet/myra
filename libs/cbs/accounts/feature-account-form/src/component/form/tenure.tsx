@@ -47,6 +47,8 @@ export const Tenure = () => {
   );
 
   const productData = poductDetails?.data?.settings?.general?.depositProduct?.formState?.data;
+  const maxValue = String(productData?.maxTenureUnitNumber);
+  const minValue = String(productData?.minTenureUnitNumber);
 
   useEffect(() => {
     if (products) {
@@ -63,6 +65,16 @@ export const Tenure = () => {
             <FormInput
               type="number"
               name="tenureNumber"
+              rules={{
+                max: {
+                  value: maxValue,
+                  message: 'Tenure is invalid',
+                },
+                min: {
+                  value: minValue,
+                  message: 'Tenure is invalid',
+                },
+              }}
               textAlign="right"
               rightAddonText={productData?.tenureUnit?.toLowerCase()}
             />

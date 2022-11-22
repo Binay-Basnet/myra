@@ -1,4 +1,5 @@
 {
+  "name": "cbs-reports-ui-layouts",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/reports/ui-layouts/src",
   "projectType": "library",

@@ -10,6 +10,3 @@ query getUtilityList {
   }
 }
 
-mutation getNewId($idType: ID_TYPE) {
-  newId(idType: $idType)
-}

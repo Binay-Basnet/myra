@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import { omit } from 'lodash';
 
 import {
@@ -11,6 +11,7 @@ import {
   SharePurchaseInput,
   ShareVoucherDepositedBy,
   useAddSharePurchaseMutation,
+  useGetIndividualMemberDetails,
   useGetShareChargesQuery,
 } from '@coop/cbs/data-access';
 import {
@@ -26,7 +27,7 @@ import {
   ShareMemberCard,
   TabMenu,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { ShareInfoFooter } from './ShareInfoFooter';
 import { SharePaymentFooter } from './SharePaymentFooter';
@@ -76,6 +77,7 @@ export const SharePurchaseForm = () => {
   const [mode, setMode] = useState('shareInfo');
 
   const methods = useForm<ShareReturnFormType>({
+    mode: 'onChange',
     defaultValues: {
       paymentMode: SharePaymentMode.Cash,
       bankVoucher: {
@@ -182,7 +184,7 @@ export const SharePurchaseForm = () => {
       },
       onSuccess: () => {
         if (redirectPath) {
-          queryClient.invalidateQueries('getMemberCheck');
+          queryClient.invalidateQueries(['getMemberCheck']);
           router.push(String(redirectPath));
         } else {
           router.push('/share/register');
@@ -213,9 +215,10 @@ export const SharePurchaseForm = () => {
   }, [isLoading, extraFee, noOfShares, JSON.stringify(chargeList), JSON.stringify(extraFee)]);
 
   useEffect(() => {
-    methods.setValue('memberId', String(redirectMemberId));
+    if (redirectMemberId) {
+      methods.setValue('memberId', String(redirectMemberId));
+    }
   }, [redirectMemberId]);
-
   return (
     <>
       <FormProvider {...methods}>
@@ -309,7 +312,7 @@ export const SharePurchaseForm = () => {
                 handleSubmit={handleSubmit}
                 isDisabled={
                   paymentModes === SharePaymentMode.Cash && !disableDenomination
-                    ? Number(denominationTotal) !== Number(cashPaid)
+                    ? !(Number(cashPaid) >= Number(totalAmount))
                     : false
                 }
               />

@@ -3,9 +3,9 @@ import dynamic from 'next/dynamic';
 import format from 'date-fns/format';
 import subDays from 'date-fns/subDays';
 
-import { useGetAccountTransactionListsQuery } from '@coop/cbs/data-access';
+import { useAccountDetails, useGetAccountTransactionListsQuery } from '@coop/cbs/data-access';
 import { Box, DetailsCard, Text } from '@coop/shared/ui';
-import { getRouterQuery, useAccountDetails } from '@coop/shared/utils';
+import { amountConverter, getRouterQuery } from '@coop/shared/utils';
 
 const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
@@ -45,15 +45,21 @@ export const BalanceChart = () => {
     () => [
       {
         label: 'Total Deposits',
-        value: transactionListQueryData?.account?.listTransactions?.summary?.totalDeposit,
+        value: amountConverter(
+          transactionListQueryData?.account?.listTransactions?.summary?.totalDeposit ?? 0
+        ),
       },
       {
         label: 'Total Withdraw',
-        value: transactionListQueryData?.account?.listTransactions?.summary?.totalWithdraw,
+        value: amountConverter(
+          transactionListQueryData?.account?.listTransactions?.summary?.totalWithdraw ?? 0
+        ),
       },
       {
         label: 'Average Balance',
-        value: transactionListQueryData?.account?.listTransactions?.summary?.averageBalance,
+        value: amountConverter(
+          transactionListQueryData?.account?.listTransactions?.summary?.averageBalance ?? 0
+        ),
       },
     ],
     [transactionListQueryData]

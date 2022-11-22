@@ -3,7 +3,7 @@
 //You can update the queries or mutations in *.graphql to generate any new changes.
 import * as Types from '../types';
 
-import { useMutation, useQuery, UseMutationOptions, UseQueryOptions } from 'react-query';
+import { useMutation, useQuery, UseMutationOptions, UseQueryOptions } from '@tanstack/react-query';
 import { useAxios } from './axiosHelper';
 export const MutationErrorFragmentDoc = `
     fragment MutationError on MutationError {

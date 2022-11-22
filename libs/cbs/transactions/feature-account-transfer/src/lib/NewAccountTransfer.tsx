@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
 import {
@@ -11,6 +11,7 @@ import {
   TransferType,
   useGetAccountTableListQuery,
   useGetAvailableSlipsListQuery,
+  useGetIndividualMemberDetails,
   useSetAccountTransferDataMutation,
   WithdrawWith,
 } from '@coop/cbs/data-access';
@@ -37,7 +38,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface NewAccountTransferProps {}
@@ -178,15 +179,22 @@ export const NewAccountTransfer = () => {
       },
       onSuccess: () => {
         if (values.withdrawWith === WithdrawWith.WithdrawSlip) {
-          queryClient.invalidateQueries('getAvailableSlipsList');
-          queryClient.invalidateQueries('getPastSlipsList');
+          queryClient.invalidateQueries(['getAvailableSlipsList']);
+          queryClient.invalidateQueries(['getPastSlipsList']);
         }
         router.push('/transactions/account-transfer/list');
       },
       promise: mutateAsync({ data: omit(values, ['destMemberId']) }),
     });
   };
-
+  //  get redirect id from url
+  const redirectMemberId = router.query['memberId'];
+  // redirect from member details
+  useEffect(() => {
+    if (redirectMemberId) {
+      methods.setValue('memberId', String(redirectMemberId));
+    }
+  }, [redirectMemberId]);
   return (
     <>
       <Container minW="container.xl" height="fit-content">
@@ -306,6 +314,7 @@ export const NewAccountTransfer = () => {
                     <MemberCard
                       memberDetails={{
                         name: memberDetailData?.name,
+                        code: memberDetailData?.code,
                         avatar: memberDetailData?.profilePicUrl ?? '',
                         memberID: memberDetailData?.id,
                         gender: memberDetailData?.gender,
@@ -350,6 +359,7 @@ export const NewAccountTransfer = () => {
                           cardTitle={t['newAccountTransferReceipentMemberInfo']}
                           memberDetails={{
                             name: destMemberDetailData?.name,
+                            code: destMemberDetailData?.code,
                             avatar: destMemberDetailData?.profilePicUrl ?? '',
                             memberID: destMemberDetailData?.id,
                             gender: destMemberDetailData?.gender,

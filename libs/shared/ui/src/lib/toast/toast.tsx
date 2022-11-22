@@ -110,6 +110,14 @@ export const asyncToast = async <T extends Record<string, unknown>>({
 
     if (response) {
       if ('error' in response) {
+        if (typeof response['error'] === 'string') {
+          toast({
+            id,
+            type: 'error',
+            message: response['error'],
+          });
+          return;
+        }
         toast({
           id,
           type: 'error',

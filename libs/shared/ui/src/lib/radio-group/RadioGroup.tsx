@@ -23,44 +23,25 @@ export interface RadioGroupProps extends ChakraRadioProps {
   name?: string;
 }
 
-export function RadioGroup(props: RadioGroupProps) {
-  const { radioList, spacing, direction, labelFontSize, options, ...rest } =
-    props;
+export const RadioGroup = (props: RadioGroupProps) => {
+  const { radioList, spacing, direction, labelFontSize, options, value, ...rest } = props;
 
   return (
-    <ChakraRadioGroup value={props.value}>
+    <ChakraRadioGroup value={value}>
       <Stack spacing={spacing} direction={direction} gap="s8">
         {radioList
-          ? radioList?.map((item, index) => {
-              return (
-                // TODO string index
-                <Box>
-                  <Radio
-                    {...rest}
-                    key={index}
-                    id={`${item}${index}`}
-                    value={item}
-                    spacing="s8"
-                  >
-                    <Text fontSize={labelFontSize}>{item}</Text>
-                  </Radio>
-                </Box>
-              );
-            })
+          ? radioList?.map((item, index) => (
+              // TODO string index
+              <Box>
+                <Radio {...rest} key={item} id={`${item}${index}`} value={item} spacing="s8">
+                  <Text fontSize={labelFontSize}>{item}</Text>
+                </Radio>
+              </Box>
+            ))
           : options?.map((option) => (
               <Box display="flex" gap="s8">
-                <Radio
-                  {...rest}
-                  isChecked={true}
-                  key={option.value}
-                  value={option.value}
-                  spacing="s8"
-                >
-                  <TextFields
-                    variant="formInput"
-                    fontSize="s3"
-                    color="gray.800"
-                  >
+                <Radio {...rest} key={option.value} value={option.value} spacing="s8">
+                  <TextFields variant="formInput" fontSize="s3" color="gray.800">
                     {option.label}
                   </TextFields>
                 </Radio>
@@ -69,6 +50,6 @@ export function RadioGroup(props: RadioGroupProps) {
       </Stack>
     </ChakraRadioGroup>
   );
-}
+};
 
 export default RadioGroup;

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { useCreateDbMutation, useGetClientsListQuery } from '@coop/neosys-admin/data-access';
 import { Column, Table } from '@coop/shared/table';
@@ -36,7 +36,7 @@ export const ClientsListPage = () => {
   //   },
   // }
 
-  const rowData = useMemo(() => data?.neosys.client?.list ?? [], [data]);
+  const rowData = useMemo(() => data?.neosys?.client?.list ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -103,7 +103,7 @@ export const ClientsListPage = () => {
                           success: 'Db Created Successfully',
                           loading: 'Creating New DB for this Saccos',
                         },
-                        onSuccess: () => queryClient.invalidateQueries('getClientsList'),
+                        onSuccess: () => queryClient.invalidateQueries(['getClientsList']),
                         promise: mutateAsync({ saccosID: node.id as string }),
                       });
                     }

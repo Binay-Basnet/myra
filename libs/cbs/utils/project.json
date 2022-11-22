@@ -1,4 +1,5 @@
 {
+  "name": "cbs-utils",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/utils/src",
   "projectType": "library",

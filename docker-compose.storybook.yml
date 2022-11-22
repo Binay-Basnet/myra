@@ -7,6 +7,7 @@ services:
       dockerfile: Dockerfile.storybook
     image: 110278083494.dkr.ecr.us-east-1.amazonaws.com/storybook:dev
     container_name: ${STORYBOOK_CONTAINER_NAME}
+    env_file: .env
     ports:
       - ${STORYBOOK_PORT}:80
     restart: unless-stopped

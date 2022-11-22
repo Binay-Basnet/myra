@@ -63,3 +63,16 @@ fragment Pagination on PageInfo {
   hasNextPage
   hasPreviousPage
 }
+
+fragment Address on Address {
+  houseNo
+  coordinates {
+    latitude
+    longitude
+  }
+  district
+  localGovernment
+  locality
+  state
+  wardNo
+}

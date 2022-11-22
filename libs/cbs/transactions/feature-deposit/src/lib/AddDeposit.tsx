@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
 import {
@@ -16,6 +16,7 @@ import {
   ObjState,
   useAppSelector,
   useGetAccountTableListQuery,
+  useGetIndividualMemberDetails,
   useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
@@ -34,7 +35,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { InstallmentModel, Payment } from '../components';
 
@@ -73,6 +74,8 @@ export const AddDeposit = () => {
   const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);
 
   const router = useRouter();
+
+  const redirectMemberId = router.query['memberId'];
 
   const queryClient = useQueryClient();
 
@@ -344,15 +347,20 @@ export const AddDeposit = () => {
       promise: mutateAsync({ data: filteredValues as DepositInput }),
       onSuccess: () => {
         if (values.payment_type === DepositPaymentType.WithdrawSlip) {
-          queryClient.invalidateQueries('getAvailableSlipsList');
-          queryClient.invalidateQueries('getPastSlipsList');
+          queryClient.invalidateQueries(['getAvailableSlipsList']);
+          queryClient.invalidateQueries(['getPastSlipsList']);
         }
-        queryClient.invalidateQueries('getDepositListData');
+        queryClient.invalidateQueries(['getDepositListData']);
         router.push('/transactions/deposit/list');
       },
     });
   };
-
+  // redirect from member details
+  useEffect(() => {
+    if (redirectMemberId) {
+      methods.setValue('memberId', String(redirectMemberId));
+    }
+  }, [redirectMemberId]);
   return (
     <>
       <Container minW="container.xl" height="fit-content">
@@ -538,12 +546,13 @@ export const AddDeposit = () => {
                   )}
                 </Box>
 
-                {memberId && (
+                {memberDetailData && (
                   <Box>
                     <MemberCard
                       memberDetails={{
                         name: memberDetailData?.name,
                         avatar: memberDetailData?.profilePicUrl ?? '',
+                        code: memberDetailData?.code,
                         memberID: memberDetailData?.id,
                         gender: memberDetailData?.gender,
                         age: memberDetailData?.age,

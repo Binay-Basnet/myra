@@ -42,7 +42,7 @@ const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   {
     title: 'savings',
     icon: ImStack,
-    link: '/accounts/list',
+    link: '/savings/list',
   },
 
   {

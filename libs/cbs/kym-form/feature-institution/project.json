@@ -1,4 +1,5 @@
 {
+  "name": "cbs-kym-form-feature-institution",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/kym-form/feature-institution/src",
   "projectType": "library",

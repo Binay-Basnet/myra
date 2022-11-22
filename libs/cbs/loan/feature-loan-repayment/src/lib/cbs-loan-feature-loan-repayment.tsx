@@ -11,6 +11,7 @@ import {
   LoanRepaymentBankVoucher,
   LoanRepaymentInput,
   LoanRepaymentMethod,
+  useGetIndividualMemberDetails,
   useGetLoanPreviewQuery,
   useGetMemberLoanAccountsQuery,
   useSetLoanRepaymentMutation,
@@ -29,7 +30,6 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { useGetIndividualMemberDetails } from '@coop/shared/utils';
 
 import { InstallmentData, LoanPaymentScheduleTable, LoanProductCard, Payment } from '../components';
 
@@ -200,7 +200,10 @@ export const LoanRepayment = () => {
       remainingPrincipal: value?.remainingPrincipal,
       paid: nextInstallmentNumber > index + 1,
     })) || [];
-  const loanPaymentScheduleSplice = loanPaymentSchedule?.slice(0, 11) || [];
+  const loanPaymentScheduleSplice =
+    nextInstallmentNumber > 5
+      ? loanPaymentSchedule?.slice(nextInstallmentNumber - 5, nextInstallmentNumber + 5) || []
+      : loanPaymentSchedule?.slice(0, 11) || [];
 
   useEffect(() => {
     if (loanAccountId) {
@@ -208,6 +211,14 @@ export const LoanRepayment = () => {
     }
   }, [loanAccountId]);
 
+  //  get redirect id from url
+  const redirectMemberId = router.query['memberId'];
+  // redirect from member details
+  useEffect(() => {
+    if (redirectMemberId) {
+      methods.setValue('memberId', String(redirectMemberId));
+    }
+  }, [redirectMemberId]);
   return (
     <Container minW="container.xl" p="0" bg="white">
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
@@ -290,6 +301,7 @@ export const LoanRepayment = () => {
                   name: memberDetailData?.name,
                   avatar: memberDetailData?.profilePicUrl ?? '',
                   memberID: memberDetailData?.id,
+                  code: memberDetailData?.code,
                   gender: memberDetailData?.gender,
                   age: memberDetailData?.age,
                   maritalStatus: memberDetailData?.maritalStatus,

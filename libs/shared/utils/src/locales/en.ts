@@ -722,7 +722,6 @@ const en: Record<string, string> = {
   kymCoopNoofOthermembers: 'No. of Other members',
   kymCoopEnternumberofOthermembers: 'Enter number of Other members',
 
-  kymCoopLastAuditDate: 'Last Audit Date',
   kymCoopLastAGMDate: 'Last AGM Date',
 
   kymCoopRepresentative: 'Representative Details',
@@ -2038,7 +2037,6 @@ const en: Record<string, string> = {
   accountingAccountingTabMenuSales: 'Sales',
   accountingAccountingTabMenuPurchase: 'Purchase',
   accountingAccountingTabMenuAccounting: 'Accounting',
-  accountingAccountingTabMenuLoan: 'Loan',
   accountingAccountingTabMenuInvestment: 'Investment',
 
   // accounting purchase list
@@ -3820,6 +3818,11 @@ const en: Record<string, string> = {
   memberSettingsSetup: 'Setup',
 
   memberSettingssCorePreview: 'Core Preview',
+  kymCoopLastAuditDate: 'Last Audit FY',
+  serviceCenterServiceCenterContactNumber: 'Service Center Contact Number',
+
+  bankAccountBankInformation: 'Bank Information',
+  accountingAccountingTabMenuLoan: 'External Loan',
 };
 
 export default en;

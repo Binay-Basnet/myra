@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Snipping } from '@raralabs/web-feedback';
 import axios from 'axios';
-
-import { useAppSelector } from '@coop/cbs/data-access';
 
 import { useChakraToast } from './useChakraToast';
 
@@ -15,7 +14,9 @@ const snap = new Snipping({
 });
 export const useSnap = () => {
   const toast = useChakraToast();
-  const username = useAppSelector((state) => state?.auth?.user?.username);
+  const username = useSelector<{ auth: { user: { username: string } } }>(
+    (state) => state?.auth?.user?.username
+  );
 
   useEffect(() => {
     if (!username) return;

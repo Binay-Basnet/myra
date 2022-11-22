@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
+import { useAccountDetails, useGetAccountTransactionList } from '@coop/cbs/data-access';
 import { Button, DetailsCard } from '@coop/shared/ui';
-import { useAccountDetails, useGetAccountTransactionList } from '@coop/shared/utils';
 
 import { TransactionCard } from './TransactionCard';
 
@@ -23,7 +23,7 @@ export const RecentTransactions = () => {
         <Button
           variant="ghost"
           onClick={() =>
-            router.push(`/accounts/details/${accountDetails?.accountId}?tab=transactions`)
+            router.push(`/savings/details/${accountDetails?.accountId}?tab=transactions`)
           }
         >
           View all transactions

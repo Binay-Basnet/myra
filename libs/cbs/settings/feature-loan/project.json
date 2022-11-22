@@ -1,4 +1,5 @@
 {
+  "name": "cbs-settings-feature-loan",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/settings/feature-loan/src",
   "projectType": "library",

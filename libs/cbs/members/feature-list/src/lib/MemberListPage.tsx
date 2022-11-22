@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { ObjState, useDeleteDraftMutation, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { formatTableAddress } from '@coop/cbs/utils';
@@ -209,13 +209,12 @@ export const MemberListPage = () => {
           tabItems={MEMBER_TAB_ITEMS}
         />
       </Box>
-
       <Table
         data={rowData}
         columns={columns}
         getRowId={(row) => String(row?.node?.id)}
         rowOnClick={(row) => {
-          queryClient.invalidateQueries('getMemberDetailsOverview');
+          queryClient.invalidateQueries(['getMemberDetailsOverview']);
           router.push(`/members/details?id=${row?.node?.id}`);
         }}
         isLoading={isFetching}

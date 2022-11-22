@@ -92,11 +92,11 @@ export const CBSAccountList = () => {
               items={[
                 {
                   title: 'View Details',
-                  onClick: (row) => router.push(`/accounts/details/${row['id']}`),
+                  onClick: (row) => router.push(`/savings/details/${row['id']}`),
                 },
                 {
                   title: 'depositProductEdit',
-                  onClick: (row) => router.push(`/accounts/account-open/edit/${row['id']}`),
+                  onClick: (row) => router.push(`/savings/account-open/edit/${row['id']}`),
                 },
               ]}
               node={props?.row?.original?.node}
@@ -124,7 +124,7 @@ export const CBSAccountList = () => {
         data={rowData}
         columns={columns}
         rowOnClick={(row) => {
-          router.push(`/accounts/details/${row?.node?.id}`);
+          router.push(`/savings/details/${row?.node?.id}`);
         }}
         pagination={{
           total: data?.account?.list?.totalCount ?? 'Many',

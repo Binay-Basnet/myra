@@ -4,7 +4,7 @@ import { DropzoneOptions, useDropzone } from 'react-dropzone';
 import { BsCloudUpload } from 'react-icons/bs';
 import { IoClose } from 'react-icons/io5';
 import { useDeepCompareEffect } from 'react-use';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import {
   Flex,
   Modal,

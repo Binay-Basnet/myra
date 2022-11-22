@@ -53,7 +53,7 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
   //   [router.pathname]
   // );
   return (
-    <Tabs
+    (<Tabs
       variant="unstyled"
       index={list.findIndex((value) => router.asPath.includes(value.link)) ?? 0}
     >
@@ -65,7 +65,7 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
           alignItems="center"
           key={item.link}
         >
-          <Link href={item.link}>
+          <Link href={item.link} style={{ width: '100%' }}>
             <TabCol>
               <Text align="left" title={t[item.title as keyof typeof en]}>
                 {t[item.title as keyof typeof en] ?? item.title}
@@ -74,7 +74,7 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
           </Link>
           {item.addLinkId && (
             // <Link href={item.addLink}>
-            <IconButton
+            (<IconButton
               aria-label="add-Button"
               size="md"
               height="40px"
@@ -85,32 +85,32 @@ export const TabColumn = ({ list }: ITabColumnProps) => {
                   .mutateAsync({ idType: item?.idType })
                   .then((res) => router.push(`${item.addLinkId}/add/${res?.newId}`))
               }
-            />
+            />)
             // </Link>
           )}
           {item.addLink && (
             // <Link href={item.addLink}>
-            <IconButton
+            (<IconButton
               aria-label="add-Button"
               size="md"
               height="40px"
               variant="ghost"
               icon={<Icon as={IoAdd} />}
               onClick={() => router.push(`${item.addLink}`)}
-            />
+            />)
           )}
           {item.modalOpen && (
             // <Link href={item.addLink}>
-            <IconButton
+            (<IconButton
               aria-label="add-Button"
               size="lg"
               variant="ghost"
               icon={<Icon as={IoAdd} />}
               onClick={item.modalOpen}
-            />
+            />)
           )}
         </Box>
       ))}
-    </Tabs>
+    </Tabs>)
   );
 };

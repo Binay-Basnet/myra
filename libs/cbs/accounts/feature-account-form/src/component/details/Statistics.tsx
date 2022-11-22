@@ -1,12 +1,19 @@
+import { useAccountDetails } from '@coop/cbs/data-access';
 import { Box, Grid, Text } from '@coop/shared/ui';
-import { useAccountDetails } from '@coop/shared/utils';
+import { amountConverter } from '@coop/shared/utils';
 
 export const AccountStatistics = () => {
   const { accountDetails } = useAccountDetails();
 
   const accountSummary = [
-    { title: 'Overall Account Balance', value: `Rs. ${accountDetails?.accountBalance ?? 0}` },
-    { title: 'Total Deposit Balance', value: `Rs. ${accountDetails?.totalDepositBalance ?? 0}` },
+    {
+      title: 'Overall Account Balance',
+      value: amountConverter(accountDetails?.accountBalance ?? 0),
+    },
+    {
+      title: 'Total Deposit Balance',
+      value: amountConverter(accountDetails?.totalDepositBalance ?? 0),
+    },
   ];
 
   return (

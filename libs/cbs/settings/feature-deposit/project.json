@@ -1,4 +1,5 @@
 {
+  "name": "cbs-settings-feature-deposit",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/settings/feature-deposit/src",
   "projectType": "library",

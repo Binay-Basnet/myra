@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import AccountingFeatureLoan from './LoanEntry';
+import AccountingFeatureLoan from './ExternalLoans';
 
 describe('AccountingFeatureLoan', () => {
   it('should render successfully', () => {

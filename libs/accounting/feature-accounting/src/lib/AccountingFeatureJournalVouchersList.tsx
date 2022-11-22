@@ -35,22 +35,18 @@ export const AccountingFeatureJournalVouchersList = () => {
         accessorFn: (row) => row?.node?.name?.local,
         header: t['accountingJournalVouchersListName'],
         cell: (props) => (
-            <Box display="flex" alignItems="center" gap="s12">
-              <Avatar
-                name="Dan Abrahmov"
-                size="sm"
-                src="https://bit.ly/dan-abramov"
-              />
-              <Text
-                fontSize="s3"
-                textTransform="capitalize"
-                textOverflow="ellipsis"
-                overflow="hidden"
-              >
-                {props.getValue() as string}
-              </Text>
-            </Box>
-          ),
+          <Box display="flex" alignItems="center" gap="s12">
+            <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
+            <Text
+              fontSize="s3"
+              textTransform="capitalize"
+              textOverflow="ellipsis"
+              overflow="hidden"
+            >
+              {props.getValue() as string}
+            </Text>
+          </Box>
+        ),
 
         meta: {
           width: '60%',
@@ -93,8 +89,7 @@ export const AccountingFeatureJournalVouchersList = () => {
               },
               {
                 title: 'memberListTableEditMember',
-                onClick: (member) =>
-                  router.push(`/members/individual/edit/${member?.id}`),
+                onClick: (member) => router.push(`/members/individual/edit/${member?.id}`),
               },
               {
                 title: 'memberListTableMakeInactive',
@@ -116,9 +111,7 @@ export const AccountingFeatureJournalVouchersList = () => {
       <AccountingPageHeader
         heading={t['accountingJournalVouchersListJournalVouchers']}
         buttonLabel={t['accountingJournalVouchersListNewJournalVoucher']}
-        buttonHandler={() =>
-          router.push('/accounting/accounting/journal-vouchers/add')
-        }
+        buttonHandler={() => router.push('/accounting/accounting/journal-vouchers/add')}
       />
 
       <Table
@@ -128,11 +121,11 @@ export const AccountingFeatureJournalVouchersList = () => {
         columns={columns}
         pagination={{
           total: data?.members?.list?.totalCount ?? 'Many',
-          pageInfo: data?.members.list.pageInfo,
+          pageInfo: data?.members?.list?.pageInfo,
         }}
       />
     </>
   );
-}
+};
 
 export default AccountingFeatureJournalVouchersList;

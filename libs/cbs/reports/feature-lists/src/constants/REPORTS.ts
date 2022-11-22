@@ -46,6 +46,7 @@ export enum Report {
   PROGRESS_REPORT_WITH_CHART = 'Progress Report with Chart',
   CHEQUE_WITHDRAW_RECORD = 'Cheque/Withdraw Record',
   BALANCE_CERTIFICATE = 'Balance Certificate (Deposit)',
+  INTEREST_TAX_REPORT = 'Interest Tax Report',
 
   LOAN_INDIVIDUAL_STATEMENT = 'Loan Individual Statement',
   LOAN_CONSOLIDATED_REPORT = 'Loan Consolidated Report',
@@ -71,6 +72,8 @@ export enum Report {
   TRANSACTION_BANK_GL_BALANCE = 'Bank GL Balance',
   TRANSACTION_BANK_GL_REPORT = 'Bank GL Statement',
 
+  MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
+  MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
   MB_DAILY_TRANSACTION_REPORT = 'Daily Transaction Report',
   MB_USER_REPORT = 'Mobile Banking User Report',
   MB_RENEWABLE_LIST = 'Renewable List/Expiry List',
@@ -87,6 +90,7 @@ export enum Report {
   BB_PROGRESS_REPORT = 'Progress Report',
 
   BRANCH_WISE_FINANCIAL_REPORT = 'Branchwise financial Report',
+  SERVICE_CENTER_LIST_REPORT = 'Service Center List Report',
   BRANCH_WISE_TARGET_VS_ACHIEVEMENT = 'Branchwise Target vs Achievement',
 }
 
@@ -117,6 +121,7 @@ export const REPORTS = {
     {
       id: '2.4',
       report: Report.MEMBER_ACTIVATIONS,
+      link: 'activations',
     },
     {
       id: '2.5',
@@ -174,6 +179,7 @@ export const REPORTS = {
     {
       id: '5.4',
       report: Report.DEPOSIT_INTEREST_REPORT,
+      link: 'interest-statement',
     },
     {
       id: '5.5',
@@ -210,6 +216,11 @@ export const REPORTS = {
     {
       id: '5.13',
       report: Report.BALANCE_CERTIFICATE,
+    },
+    {
+      id: '5.14',
+      report: Report.INTEREST_TAX_REPORT,
+      link: 'interest-tax',
     },
   ],
 
@@ -298,6 +309,16 @@ export const REPORTS = {
       id: '4.5',
       report: Report.MB_FEE_AND_COMMISSION_REPORT,
     },
+    {
+      id: '4.6',
+      report: Report.MB_REGISTRATION_REPORT,
+      link: 'registration',
+    },
+    {
+      id: '4.7',
+      report: Report.MB_EXPIRY_REPORT,
+      link: 'expiry',
+    },
   ],
 
   [ReportGroup.ATM]: [
@@ -365,6 +386,11 @@ export const REPORTS = {
   ],
 
   [ReportGroup.BRANCH]: [
+    {
+      id: '8',
+      report: Report.SERVICE_CENTER_LIST_REPORT,
+      link: 'list-report',
+    },
     {
       id: '8',
       report: Report.BRANCH_WISE_FINANCIAL_REPORT,

@@ -47,22 +47,18 @@ export const AccountingFeatureQuickReceiptList = () => {
         accessorFn: (row) => row?.node?.name?.local,
         header: t['accountingQuickReceiptListName'],
         cell: (props) => (
-            <Box display="flex" alignItems="center" gap="s12">
-              <Avatar
-                name="Dan Abrahmov"
-                size="sm"
-                src="https://bit.ly/dan-abramov"
-              />
-              <Text
-                fontSize="s3"
-                textTransform="capitalize"
-                textOverflow="ellipsis"
-                overflow="hidden"
-              >
-                {props.getValue() as string}
-              </Text>
-            </Box>
-          ),
+          <Box display="flex" alignItems="center" gap="s12">
+            <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
+            <Text
+              fontSize="s3"
+              textTransform="capitalize"
+              textOverflow="ellipsis"
+              overflow="hidden"
+            >
+              {props.getValue() as string}
+            </Text>
+          </Box>
+        ),
 
         meta: {
           width: '60%',
@@ -98,10 +94,7 @@ export const AccountingFeatureQuickReceiptList = () => {
         header: '',
         accessorKey: 'actions',
         cell: (cell) => (
-          <PopoverComponent
-            items={popoverTitle}
-            member={cell?.row?.original?.node}
-          />
+          <PopoverComponent items={popoverTitle} member={cell?.row?.original?.node} />
         ),
         meta: {
           width: '60px',
@@ -116,9 +109,7 @@ export const AccountingFeatureQuickReceiptList = () => {
       <AccountingPageHeader
         heading={t['accountingQuickReceiptListQuickReceipt']}
         buttonLabel={t['accountingQuickReceiptListNewQuickReceipt']}
-        buttonHandler={() =>
-          router.push('/accounting/accounting/quick-receipt/add')
-        }
+        buttonHandler={() => router.push('/accounting/accounting/quick-receipt/add')}
       />
 
       <Table
@@ -128,11 +119,11 @@ export const AccountingFeatureQuickReceiptList = () => {
         columns={columns}
         pagination={{
           total: data?.members?.list?.totalCount ?? 'Many',
-          pageInfo: data?.members.list.pageInfo,
+          pageInfo: data?.members?.list?.pageInfo,
         }}
       />
     </>
   );
-}
+};
 
 export default AccountingFeatureQuickReceiptList;

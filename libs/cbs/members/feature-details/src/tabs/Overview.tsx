@@ -18,49 +18,50 @@ import {
 
 const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-const links = [
-  {
-    title: 'New Deposit',
-    link: '/transactions/deposit/add',
-  },
-  {
-    title: 'New Withdraw',
-    link: '/transactions/withdraw/add',
-  },
-  {
-    title: 'Account Transfer',
-    link: '/transfer',
-  },
-  {
-    title: 'New Account',
-    link: '/accounts/account-open',
-  },
-  {
-    title: 'New Share Issue',
-    link: '/share/share-issue',
-  },
-  {
-    title: 'Share Return',
-    link: '/share/share-return',
-  },
-  {
-    title: 'New Loan Application',
-    link: '/loan/apply',
-  },
-  {
-    title: 'Loan Payment',
-    link: '/loan/repayments/add',
-  },
-  {
-    title: 'New Cheques',
-    link: '/share/share-return',
-  },
-];
 export const Overview = () => {
   const router = useRouter();
+  const id = router.query['id'] as string;
   const memberDetails = useGetMemberDetailsOverviewQuery({
     id: router.query['id'] as string,
   });
+  const links = [
+    {
+      title: 'New Deposit',
+      link: `/transactions/deposit/add?memberId=${id}`,
+    },
+    {
+      title: 'New Withdraw',
+      link: `/transactions/withdraw/add?memberId=${id}`,
+    },
+    {
+      title: 'Account Transfer',
+      link: `/savings/account-transfer/add?memberId=${id}`,
+    },
+    {
+      title: 'New Account',
+      link: `/savings/account-open`,
+    },
+    {
+      title: 'New Share Issue',
+      link: `/share/share-issue?memberId=${id}`,
+    },
+    {
+      title: 'Share Return',
+      link: `/share/share-return?memberId=${id}`,
+    },
+    {
+      title: 'New Loan Application',
+      link: `/loan/apply?memberId=${id}`,
+    },
+    {
+      title: 'Loan Payment',
+      link: `/loan/repayments/add?memberId=${id}`,
+    },
+    {
+      title: 'New Cheques',
+      link: `/withdraw/cheque-book?memberId=${id}`,
+    },
+  ];
 
   const memberPayment = memberDetails?.data?.members?.memberOverview?.data?.overview?.payments;
   const memberShareDetails =
@@ -114,7 +115,7 @@ export const Overview = () => {
                   onClick={() =>
                     newId
                       .mutateAsync({ idType: Id_Type.Account })
-                      .then((res) => router.push(`${item.link}/add/${res?.newId}`))
+                      .then((res) => router.push(`${item.link}/add/${res?.newId}?memberId=${id}`))
                   }
                 >
                   <Icon as={IoAddOutline} />

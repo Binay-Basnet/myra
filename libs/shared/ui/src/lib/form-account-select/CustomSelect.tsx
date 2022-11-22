@@ -57,7 +57,7 @@ export const Select = ({
     //   }
     // }, [JSON.stringify(options)]);
 
-    <Flex direction="column" gap="s4">
+    (<Flex direction="column" gap="s4">
       <TextFields variant="formLabel" color="gray.700">
         {label}
       </TextFields>
@@ -104,7 +104,7 @@ export const Select = ({
           {helperText}
         </TextFields>
       ) : null}
-    </Flex>
+    </Flex>)
   );
 };
 

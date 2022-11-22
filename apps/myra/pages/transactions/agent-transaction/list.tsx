@@ -11,7 +11,7 @@ const TransactionsAgentTransactionList = () => (
   //   </Box>
   // );
 
-  <AgentTransactionList />
+  (<AgentTransactionList />)
 );
 TransactionsAgentTransactionList.getLayout = function getLayout(page: ReactElement) {
   return (

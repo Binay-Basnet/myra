@@ -11,7 +11,7 @@ import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 /* eslint-disable-next-line */
 export interface AccountingFeatureCashTransferListProps {}
 
-export function AccountingFeatureCashTransferList() {
+export const AccountingFeatureCashTransferList = () => {
   const { t } = useTranslation();
 
   const router = useRouter();
@@ -34,25 +34,19 @@ export function AccountingFeatureCashTransferList() {
       {
         accessorFn: (row) => row?.node?.name?.local,
         header: 'Name',
-        cell: (props) => {
-          return (
-            <Box display="flex" alignItems="center" gap="s12">
-              <Avatar
-                name="Dan Abrahmov"
-                size="sm"
-                src="https://bit.ly/dan-abramov"
-              />
-              <Text
-                fontSize="s3"
-                textTransform="capitalize"
-                textOverflow="ellipsis"
-                overflow="hidden"
-              >
-                {props.getValue() as string}
-              </Text>
-            </Box>
-          );
-        },
+        cell: (props) => (
+          <Box display="flex" alignItems="center" gap="s12">
+            <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
+            <Text
+              fontSize="s3"
+              textTransform="capitalize"
+              textOverflow="ellipsis"
+              overflow="hidden"
+            >
+              {props.getValue() as string}
+            </Text>
+          </Box>
+        ),
 
         meta: {
           width: '60%',
@@ -95,8 +89,7 @@ export function AccountingFeatureCashTransferList() {
               },
               {
                 title: 'memberListTableEditMember',
-                onClick: (member) =>
-                  router.push(`/members/individual/edit/${member?.id}`),
+                onClick: (member) => router.push(`/members/individual/edit/${member?.id}`),
               },
               {
                 title: 'memberListTableMakeInactive',
@@ -117,10 +110,8 @@ export function AccountingFeatureCashTransferList() {
     <>
       <AccountingPageHeader
         heading="Cash Transfer"
-        buttonLabel={'New Cash Transfer'}
-        buttonHandler={() =>
-          router.push('/accounting/accounting/cash-transfer/add')
-        }
+        buttonLabel="New Cash Transfer"
+        buttonHandler={() => router.push('/accounting/accounting/cash-transfer/add')}
       />
 
       <Table
@@ -130,11 +121,11 @@ export function AccountingFeatureCashTransferList() {
         columns={columns}
         pagination={{
           total: data?.members?.list?.totalCount ?? 'Many',
-          pageInfo: data?.members.list.pageInfo,
+          pageInfo: data?.members?.list?.pageInfo,
         }}
       />
     </>
   );
-}
+};
 
 export default AccountingFeatureCashTransferList;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { RequestType, useApproveOrDeclineRequestMutation } from '@coop/cbs/data-access';
 import { FormCheckbox, FormDatePicker, FormTextArea } from '@coop/shared/form';
@@ -64,7 +64,7 @@ export const LoanApproveOrDeclineModal = ({
               requestType: RequestType.LoanRequest,
             }),
             onSuccess: () => {
-              queryClient.invalidateQueries(queryKey);
+              queryClient.invalidateQueries([queryKey]);
               declineIsOnToggle();
               methods.reset();
               methods.setValue('reasonForDeclination', '');
@@ -112,7 +112,7 @@ export const LoanApproveOrDeclineModal = ({
               requestType: RequestType.LoanRequest,
             }),
             onSuccess: () => {
-              queryClient.invalidateQueries(queryKey);
+              queryClient.invalidateQueries([queryKey]);
               methods.reset();
               methods.setValue('reasonForDeclination', '');
               methods.setValue('notifyMember', false);

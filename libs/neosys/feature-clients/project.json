@@ -1,4 +1,5 @@
 {
+  "name": "neosys-feature-clients",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/neosys/feature-clients/src",
   "projectType": "library",

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
 import {
@@ -15,6 +15,7 @@ import {
   useGetAccountOpenMinorListQuery,
   useGetAccountOpenProductDetailsQuery,
   useGetDefaultAccountListQuery,
+  useGetIndividualMemberDetails,
   useGetProductListQuery,
   useSetAccountDocumentDataMutation,
   useSetAccountOpenDataMutation,
@@ -40,7 +41,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import {
   DepositFrequency,
@@ -110,6 +111,7 @@ const cashOptions: Record<string, string> = {
 
 export const AccountOpenNew = () => {
   const queryClient = useQueryClient();
+
   const [mode, setMode] = useState('0');
 
   const [totalCharge, setTotalCharge] = useState<number>(0);
@@ -141,9 +143,10 @@ export const AccountOpenNew = () => {
       },
     },
   });
-  const { getValues, watch, reset } = methods;
+  const { getValues, watch, reset, setValue } = methods;
   const memberId = watch('memberId');
   const router = useRouter();
+  const routerAction = router.query['action'];
   const redirectPath = router.query['redirect'];
 
   const id = String(router?.query?.['id']);
@@ -188,6 +191,8 @@ export const AccountOpenNew = () => {
   const newLog = data?.settings?.general?.depositProduct?.getProductList?.notAllowed;
 
   const productID = watch('productId');
+  const defaultAccount = productOptions.find((d) => d?.value === productID);
+  const defaultAccountName = defaultAccount?.label;
 
   const errors = newLog?.find((d) => d?.data?.id === productID);
 
@@ -380,14 +385,14 @@ export const AccountOpenNew = () => {
       },
       onSuccess: () => {
         if (values.openingPayment?.payment_type === DepositPaymentType.WithdrawSlip) {
-          queryClient.invalidateQueries('getAvailableSlipsList');
-          queryClient.invalidateQueries('getPastSlipsList');
+          queryClient.invalidateQueries(['getAvailableSlipsList']);
+          queryClient.invalidateQueries(['getPastSlipsList']);
         }
         if (redirectPath) {
           router.push(String(redirectPath));
-          queryClient.invalidateQueries('getAccountCheck');
+          queryClient.invalidateQueries(['getAccountCheck']);
         } else {
-          router.push('/accounts/list');
+          router.push('/savings/list');
         }
       },
       promise: mutateAsync({ id, data: updatedData as DepositLoanAccountInput }),
@@ -431,6 +436,20 @@ export const AccountOpenNew = () => {
       refetch();
     }
   }, [refetch]);
+
+  useEffect(() => {
+    if (routerAction === 'add') {
+      setValue('accountName', defaultAccountName);
+    }
+  }, [defaultAccountName]);
+  //  get redirect id from url
+  const redirectMemberId = router.query['memberId'];
+  // redirect from member details
+  useEffect(() => {
+    if (redirectMemberId) {
+      methods.setValue('memberId', String(redirectMemberId));
+    }
+  }, [redirectMemberId]);
 
   return (
     <Container minW="container.xl" p="0" bg="white">
@@ -507,11 +526,9 @@ export const AccountOpenNew = () => {
                       <Box display="flex" flexDirection="column" gap="s16">
                         <Box display="flex" flexDirection="column" gap="s4">
                           <Text fontWeight="500" fontSize="r1">
-                            {' '}
-                            Default Amount Deposit Account Name
+                            Nominee Account
                           </Text>
                           <Text fontWeight="400" fontSize="s2">
-                            {' '}
                             If the member does not specify particular account for deposit, this
                             mapped account will be set globally. Normally this is a compulsory
                             account type.
@@ -520,7 +537,6 @@ export const AccountOpenNew = () => {
 
                         <FormSelect
                           name="defaultAmountDepositAccountName"
-                          label="Account Type"
                           options={defaultDataOptions}
                         />
                       </Box>
@@ -585,6 +601,7 @@ export const AccountOpenNew = () => {
                   name: memberDetailData?.name,
                   avatar: memberDetailData?.profilePicUrl ?? '',
                   memberID: memberDetailData?.id,
+                  code: memberDetailData?.code,
                   gender: memberDetailData?.gender,
                   age: memberDetailData?.age,
                   maritalStatus: memberDetailData?.maritalStatus,

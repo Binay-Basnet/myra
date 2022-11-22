@@ -1,4 +1,4 @@
-import { MouseEventHandler, useState } from 'react';
+import { MouseEventHandler, useEffect, useState } from 'react';
 import { AiFillBank, AiOutlineSetting } from 'react-icons/ai';
 import { CgLoadbarDoc } from 'react-icons/cg';
 import { IoMdPerson } from 'react-icons/io';
@@ -9,7 +9,11 @@ import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 import { Grid } from '@chakra-ui/react';
 
-import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
+import {
+  Id_Type,
+  useGetGeneralMemberSettingsDataQuery,
+  useGetNewIdMutation,
+} from '@coop/cbs/data-access';
 import { TabColumn } from '@coop/myra/components';
 import { Box, Button, Divider, GridItem, Icon, Modal, SettingsButton, Text } from '@coop/shared/ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
@@ -64,15 +68,17 @@ interface MemberTypeButtonProps {
   subtitle: string;
   featCode: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
+  display: boolean | null | undefined;
 }
 
 type MemberType = 'INDIVIDUAL' | 'INSTITUTION' | 'COOPERATIVE' | 'COOPERATIVE_UNION';
 
 const MemberTypeButton = (props: MemberTypeButtonProps) => {
-  const { icon, title, featCode, subtitle, onClick } = props;
+  const { icon, title, featCode, subtitle, onClick, display } = props;
   const { t } = useTranslation();
   return (
     <Box
+      display={!display ? 'none' : ''}
       as="button"
       lineHeight="1.2"
       width={310}
@@ -109,34 +115,6 @@ const MemberTypeButton = (props: MemberTypeButtonProps) => {
       </Text>
     </Box>
   );
-};
-
-const memberTypesArray = {
-  INDIVIDUAL: {
-    icon: IoMdPerson,
-    featureCode: featureCode?.newMemberIndividual,
-    title: 'memberLayoutIndividual',
-    subtitle: 'memberLayoutCreateKYMFormForIndividualMembers',
-  },
-  INSTITUTION: {
-    icon: AiFillBank,
-    featureCode: featureCode?.newMemberInstitution,
-    title: 'memberLayoutInstitution',
-    subtitle: 'memberLayoutCreateKYMFormForInstituteMembers',
-  },
-
-  COOPERATIVE: {
-    icon: MdCorporateFare,
-    featureCode: featureCode?.newMemberCooperative,
-    title: 'memberLayoutCooperative',
-    subtitle: 'memberLayoutCreateKYMFormForCoOperativeMembers',
-  },
-  COOPERATIVE_UNION: {
-    icon: TbLayersUnion,
-    featureCode: featureCode?.newMemberCooperativeUnion,
-    title: 'memberLayoutCooperativeUnion',
-    subtitle: 'memberLayoutCreateKYMFormForCooperativeUnion',
-  },
 };
 
 export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
@@ -182,6 +160,47 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
         .then((res) => router.push(`/members/coop_union/add/${res?.newId}`));
     }
   };
+
+  const { data: editValues, refetch } = useGetGeneralMemberSettingsDataQuery();
+
+  const memberListQuery =
+    editValues?.settings?.general?.KYM?.general?.generalMember?.record?.memberType;
+
+  const memberTypesArray = {
+    INDIVIDUAL: {
+      icon: IoMdPerson,
+      featureCode: featureCode?.newMemberIndividual,
+      title: 'memberLayoutIndividual',
+      subtitle: 'memberLayoutCreateKYMFormForIndividualMembers',
+      display: memberListQuery?.individual,
+    },
+    INSTITUTION: {
+      icon: AiFillBank,
+      featureCode: featureCode?.newMemberInstitution,
+      title: 'memberLayoutInstitution',
+      subtitle: 'memberLayoutCreateKYMFormForInstituteMembers',
+      display: memberListQuery?.institution,
+    },
+
+    COOPERATIVE: {
+      icon: MdCorporateFare,
+      featureCode: featureCode?.newMemberCooperative,
+      title: 'memberLayoutCooperative',
+      subtitle: 'memberLayoutCreateKYMFormForCoOperativeMembers',
+      display: memberListQuery?.cooperative,
+    },
+    COOPERATIVE_UNION: {
+      icon: TbLayersUnion,
+      featureCode: featureCode?.newMemberCooperativeUnion,
+      title: 'memberLayoutCooperativeUnion',
+      subtitle: 'memberLayoutCreateKYMFormForCooperativeUnion',
+      display: memberListQuery?.cooperativeUnion,
+    },
+  };
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   return (
     <Box display="flex">
@@ -232,6 +251,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
                         featCode={memberTypesArray[dataItem]?.featureCode}
                         subtitle={memberTypesArray[dataItem]?.subtitle}
                         onClick={() => memberTypeRedirect(item as MemberType)}
+                        display={memberTypesArray[dataItem]?.display}
                       />
                     </GridItem>
                   );

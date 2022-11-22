@@ -1,4 +1,5 @@
 {
+  "name": "shared-editable-table",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/editable-table/src",
   "projectType": "library",

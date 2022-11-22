@@ -1,4 +1,5 @@
 {
+  "name": "cbs-settings-feature-audit-log",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/settings/feature-audit-log/src",
   "projectType": "library",

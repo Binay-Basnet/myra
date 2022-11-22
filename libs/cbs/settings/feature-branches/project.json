@@ -1,4 +1,5 @@
 {
+  "name": "cbs-settings-feature-branches",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/settings/feature-branches/src",
   "projectType": "library",

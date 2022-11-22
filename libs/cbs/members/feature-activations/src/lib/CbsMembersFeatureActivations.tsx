@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { AiFillCheckCircle, AiOutlinePlus } from 'react-icons/ai';
 import { IoCheckmarkDone } from 'react-icons/io5';
-import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { Box } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
 
 import {
   NatureOfDepositProduct,
   useGetAccountCheckQuery,
   useGetMemberAccountsQuery,
   useGetMemberCheckQuery,
+  useGetMemberIndividualDataQuery,
 } from '@coop/cbs/data-access';
 import { Alert, Button, Container, Divider, FormFooter, Icon, Text, VStack } from '@coop/shared/ui';
 
@@ -34,6 +35,7 @@ export const CbsMembersFeatureActivate = () => {
   );
 
   const accounts = memberAccountsData?.members?.getAllAccounts?.data?.depositAccount;
+  const { data: memberDetails } = useGetMemberIndividualDataQuery({ id });
 
   return (
     <>
@@ -63,7 +65,7 @@ export const CbsMembersFeatureActivate = () => {
             <Text fontSize="r2" color="gray.800" fontWeight="600">
               Member
               <Text as="span" color="primary.500">
-                #{id}
+                #{memberDetails?.members?.details?.data?.code}
               </Text>{' '}
               Created Successfully
             </Text>
@@ -228,7 +230,7 @@ export const CbsMembersFeatureActivate = () => {
           <FormFooter
             mainButtonLabel="Done"
             mainButtonHandler={() => {
-              queryClient.invalidateQueries('getMemberList');
+              queryClient.invalidateQueries(['getMemberList']);
               router.push('/members/list');
             }}
           />

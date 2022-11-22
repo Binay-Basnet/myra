@@ -1,4 +1,5 @@
 {
+  "name": "cbs-settings-ui-containers",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/cbs/settings/ui-containers/src",
   "projectType": "library",

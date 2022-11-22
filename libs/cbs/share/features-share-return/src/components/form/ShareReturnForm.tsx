@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import { omit } from 'lodash';
 
 import {
@@ -10,6 +10,7 @@ import {
   SharePaymentMode,
   ShareReturnInput,
   useAddShareReturnMutation,
+  useGetIndividualMemberDetails,
   useGetShareChargesQuery,
   useGetShareHistoryQuery,
 } from '@coop/cbs/data-access';
@@ -26,7 +27,7 @@ import {
   ShareMemberCard,
   TabMenu,
 } from '@coop/shared/ui';
-import { featureCode, useGetIndividualMemberDetails, useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { ShareInfoFooter } from './ShareInfoFooter';
 import { SharePaymentFooter } from './SharePaymentFooter';
@@ -70,6 +71,7 @@ type ShareReturnFormType = Omit<ShareReturnInput, 'selectAllShares' | 'fileUploa
 export const ShareReturnForm = () => {
   const { t } = useTranslation();
   const methods = useForm<ShareReturnFormType>({
+    mode: 'onChange',
     defaultValues: {
       paymentMode: SharePaymentMode.Cash,
     },
@@ -177,7 +179,7 @@ export const ShareReturnForm = () => {
       },
       onSuccess: () => {
         if (redirectPath) {
-          queryClient.invalidateQueries('getMemberInactiveCheck');
+          queryClient.invalidateQueries(['getMemberInactiveCheck']);
           router.push(String(redirectPath));
         } else {
           router.push('/share/register');
@@ -225,7 +227,9 @@ export const ShareReturnForm = () => {
   }, [isLoading, extraFee, noOfShares, JSON.stringify(chargeList), JSON.stringify(extraFee)]);
 
   useEffect(() => {
-    methods.setValue('memberId', String(redirectMemberId));
+    if (redirectMemberId) {
+      methods.setValue('memberId', String(redirectMemberId));
+    }
   }, [redirectMemberId]);
 
   return (
@@ -318,7 +322,7 @@ export const ShareReturnForm = () => {
                 handleSubmit={handleSubmit}
                 isDisabled={
                   paymentModes === SharePaymentMode.Cash && !disableDenomination
-                    ? Number(denominationTotal) !== Number(cashPaid)
+                    ? !(Number(cashPaid) >= Number(totalAmount))
                     : false
                 }
               />

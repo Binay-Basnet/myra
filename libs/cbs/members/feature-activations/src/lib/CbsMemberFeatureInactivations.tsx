@@ -1,6 +1,6 @@
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoCheckmarkDone } from 'react-icons/io5';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 
 import {
@@ -51,7 +51,7 @@ export const CbsMemberFeatureInactivations = () => {
   const isShareReturned = data?.members?.inactivateMember?.inactivateCheck?.isShareReturned;
 
   return (
-    <Container p={0} minWidth="container.lg" bg="white" minH="calc(100vh - 110px)">
+    (<Container p={0} minWidth="container.lg" bg="white" minH="calc(100vh - 110px)">
       <Box position="sticky" top="110px">
         <FormHeader title="Member Inactive" />
       </Box>
@@ -159,7 +159,7 @@ export const CbsMemberFeatureInactivations = () => {
               },
               onSuccess: () => {
                 router.push('/members/list');
-                queryClient.invalidateQueries('getMemberList');
+                queryClient.invalidateQueries(['getMemberList']);
               },
             });
           }}
@@ -167,7 +167,7 @@ export const CbsMemberFeatureInactivations = () => {
           isMainButtonDisabled={!isAllAccountsClosed || !isShareReturned}
         />
       </Box>
-    </Container>
+    </Container>)
   );
 };
 

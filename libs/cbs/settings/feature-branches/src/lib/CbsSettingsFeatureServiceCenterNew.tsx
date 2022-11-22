@@ -202,6 +202,14 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                         />
                         <FormDatePicker label={t['settingsBranchEstablishedDate']} name="estDate" />
                       </InputGroupContainer>
+
+                      <InputGroupContainer mt="s16">
+                        <FormInput
+                          type="text"
+                          name="serviceCenterPhone"
+                          label={t['serviceCenterServiceCenterContactNumber']}
+                        />
+                      </InputGroupContainer>
                     </Box>
 
                     <Box>
@@ -248,7 +256,10 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                       </Box>
                     </Box>
 
-                    <Box>
+                    <Box display="flex" flexDirection="column" gap="s20">
+                      <TextFields variant="tableHeader" color="gray.700">
+                        {t['serviceCenterManager']}
+                      </TextFields>
                       <InputGroupContainer>
                         <FormInput name="phoneNumber" label={t['settingsBranchPhoneNumber']} />
                         <FormInput name="email" label={t['settingsBranchEmail']} />

@@ -9,7 +9,12 @@ export const BranchReport = () => (
       Branch Reports
     </Text>
     {REPORTS[ReportGroup.BRANCH].map((report) => (
-      <ReportLinkText key={report.id}>{report.report}</ReportLinkText>
+      <ReportLinkText
+        key={report.id}
+        link={report.link ? `/reports/cbs/service-center/${report.link}/new` : undefined}
+      >
+        {report.report}
+      </ReportLinkText>
     ))}
   </Box>
 );

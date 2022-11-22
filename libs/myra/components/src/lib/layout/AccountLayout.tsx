@@ -23,36 +23,36 @@ interface IAccountPageLayoutProps {
 const accountColumns = [
   {
     title: 'accountList',
-    link: '/accounts/list',
-    addLinkId: '/accounts/account-open',
+    link: '/savings/list',
+    addLinkId: '/savings/account-open',
     idType: Id_Type?.Account,
   },
   {
     title: 'transactionsSidebarDeposit',
-    link: '/accounts/deposit/list',
+    link: '/savings/deposit/list',
     name: 'deposit',
-    addLink: '/accounts/deposit/add',
+    addLink: '/savings/deposit/add',
   },
   {
     title: 'transactionsSidebarWithdraw',
-    link: '/accounts/withdraw/list',
+    link: '/savings/withdraw/list',
     name: 'withdraw',
-    addLink: '/accounts/withdraw/add',
+    addLink: '/savings/withdraw/add',
   },
   {
     title: 'transactionsSidebarAccountTransfer',
-    link: '/accounts/account-transfer/list',
+    link: '/savings/account-transfer/list',
     name: 'account-transfer',
-    addLink: '/accounts/account-transfer/add',
+    addLink: '/savings/account-transfer/add',
   },
   {
     title: 'savingProducts',
-    link: '/accounts/products',
+    link: '/savings/products',
   },
   {
     title: 'accountClose',
-    link: '/accounts/account-close',
-    addLinkId: '/accounts/account-close',
+    link: '/savings/account-close',
+    addLinkId: '/savings/account-close',
     idType: Id_Type?.Account,
   },
 ];
@@ -60,11 +60,11 @@ const accountColumns = [
 const addButtoncolumns = [
   {
     title: 'newAccountOpen',
-    link: '/accounts/account-open',
+    link: '/savings/account-open',
   },
   {
     title: 'accountClose',
-    link: '/accounts/account-close',
+    link: '/savings/account-close',
   },
 ];
 

@@ -1,5 +1,5 @@
 import { IoCheckmark, IoRepeat } from 'react-icons/io5';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
 import {
   updateDefaultAccountInCoop,
@@ -16,7 +16,7 @@ export const DefaultAccountPopover = () => {
   const queryClient = useQueryClient();
 
   const { mutateAsync: setDefaultAccount } = useSetDefaultAccountMutation({
-    onSuccess: () => queryClient.invalidateQueries('getAccountList'),
+    onSuccess: () => queryClient.invalidateQueries(['getAccountList']),
   });
 
   const { data: accountList } = useGetAccountListQuery(

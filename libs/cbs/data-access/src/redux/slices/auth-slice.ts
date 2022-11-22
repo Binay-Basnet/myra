@@ -47,7 +47,7 @@ export const authSlice = createSlice({
       state.preference = action.payload.preference;
     },
     logout: (state) => {
-      localStorage.clear();
+      localStorage.removeItem('refreshToken');
       state.user = null;
       state.token = null;
       state.isLogged = false;

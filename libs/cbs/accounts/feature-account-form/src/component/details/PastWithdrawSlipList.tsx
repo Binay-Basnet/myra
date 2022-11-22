@@ -3,12 +3,12 @@ import { useMemo } from 'react';
 import {
   DateType,
   SlipState,
+  useAccountDetails,
   useAppSelector,
   useGetPastSlipsListQuery,
 } from '@coop/cbs/data-access';
 import { Table } from '@coop/shared/table';
 import { Box, DetailsCard, Text } from '@coop/shared/ui';
-import { useAccountDetails } from '@coop/shared/utils';
 
 export const PastWithdrawSlipList = () => {
   const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);

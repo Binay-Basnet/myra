@@ -76,9 +76,9 @@ query getSavingStatement($data: SavingStatementReportSettings!) {
   }
 }
 
-query getMemberClassificationReport($period: ReportPeriodType) {
+query getMemberClassificationReport($data: MemberClassificationFilter!) {
   report {
-    memberClassificationReport(period: $period) {
+    memberClassificationReport(data: $data) {
       data {
         gender {
           entryName
@@ -163,9 +163,9 @@ query getLoanStatementReport($data: LoanStatementReportSettings!) {
   }
 }
 
-query getLedgerReport($ledgerId: ID!, $period: ReportPeriodType, $date: LocalizedDateFilter) {
+query getLedgerReport($data: GeneralLedgerFilter!) {
   report {
-    generalLedgerReport(date: $date, ledgerId: $ledgerId, period: $period) {
+    generalLedgerReport(data: $data) {
       data {
         id
         date
@@ -173,6 +173,145 @@ query getLedgerReport($ledgerId: ID!, $period: ReportPeriodType, $date: Localize
         balance
         credit
         debit
+      }
+    }
+  }
+}
+
+query getInterestStatementReport($data: InterestStatementFilter!) {
+  report {
+    interestStatementReport(data: $data) {
+      data {
+        entries {
+          date
+          amount
+          balance
+          days
+          rate
+          remarks
+        }
+        memberId
+        accountNo
+        accountType
+        currentInterestRate
+        memberName
+        address {
+          wardNo
+          state
+          locality
+          localGovernment
+          district
+          houseNo
+          coordinates {
+            longitude
+            latitude
+          }
+        }
+      }
+    }
+  }
+}
+
+query getInterestTaxReport($data: InterestTaxReportFilter!) {
+  report {
+    interestTaxReport(data: $data) {
+      data {
+        memberId
+        name
+        address {
+          ...Address
+        }
+        panNo
+        accountNo
+        date
+        interest
+        tax
+        savingBalance
+        closingBalance
+        remarks
+      }
+    }
+  }
+}
+
+query getBranchReport($data: BranchReportFilter) {
+  report {
+    branchReport(data: $data) {
+      data {
+        id
+        serviceCenterCode
+        name
+        contactNumber
+        email
+        address {
+          ...Address
+        }
+        managerName
+        managerContact
+        isExtensionCounter
+        estDate
+        branchStatus
+        remarks
+      }
+    }
+  }
+}
+
+query getMBankingRegistrationReport($data: EbankingReportFilter) {
+  report {
+    mbankingRegistrationReport(data: $data) {
+      data {
+        memberId
+        memberName
+        mobileNo
+        branchCode
+        regDate
+        expDate
+        status
+        registeredBy
+      }
+    }
+  }
+}
+
+query getMBankingExpiryReport($data: EbankingReportFilter) {
+  report {
+    mbankingRegistrationReport(data: $data) {
+      data {
+        memberId
+        memberName
+        mobileNo
+        branchCode
+        regDate
+        expDate
+        status
+        registeredBy
+      }
+    }
+  }
+}
+
+query getActiveInactiveMemberReport($data: ActiveInactiveMemberReportData) {
+  report {
+    activeInactiveMemberReport(data: $data) {
+      statement {
+        ... on ActiveInactiveMemberReport {
+          reportStatement {
+            memberId
+            memberName
+            district
+            wardNo
+            address
+            dob
+            age
+            contactNo
+            gender
+            pan
+            occupation
+            memberRegistrationDate
+            status
+          }
+        }
       }
     }
   }

@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { useRouter } from 'next/router';
 
 import { login, setPreference, useAppDispatch, useLoginMutation } from '@coop/cbs/data-access';

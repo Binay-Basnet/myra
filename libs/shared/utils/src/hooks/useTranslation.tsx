@@ -7,6 +7,6 @@ export const useTranslation = () => {
 
   if (!route) return { t: en };
   const { locale } = route;
-  const t = locale === 'en' ? en : ne;
+  const t = locale === 'ne' ? ne : en;
   return { t };
 };

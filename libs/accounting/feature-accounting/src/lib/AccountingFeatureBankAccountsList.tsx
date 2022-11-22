@@ -32,27 +32,25 @@ export const AccountingFeatureBankAccountsList = () => {
         accessorFn: (row) => row?.node?.name?.local,
         header: t['bankAccountsBankName'],
         cell: (props) => (
-            <Box
-              display="flex"
-              alignItems="center"
-              cursor="pointer"
-              gap="s12"
-              onClick={() => {
-                router.push(
-                  '/accounting/accounting/bank-accounts/12123/overview'
-                );
-              }}
+          <Box
+            display="flex"
+            alignItems="center"
+            cursor="pointer"
+            gap="s12"
+            onClick={() => {
+              router.push('/accounting/accounting/bank-accounts/12123/overview');
+            }}
+          >
+            <Text
+              fontSize="s3"
+              textTransform="capitalize"
+              textOverflow="ellipsis"
+              overflow="hidden"
             >
-              <Text
-                fontSize="s3"
-                textTransform="capitalize"
-                textOverflow="ellipsis"
-                overflow="hidden"
-              >
-                {props.getValue() as string}
-              </Text>
-            </Box>
-          ),
+              {props.getValue() as string}
+            </Text>
+          </Box>
+        ),
 
         meta: {
           width: '60%',
@@ -94,8 +92,8 @@ export const AccountingFeatureBankAccountsList = () => {
                 },
                 {
                   title: 'memberListTableEditMember',
-                  onClick: (member) => {
-                    router.push(`/members/individul/edit/${member?.id}`);
+                  onClick: (item) => {
+                    router.push(`/members/individul/edit/${item?.id}`);
                   },
                 },
                 {
@@ -119,9 +117,7 @@ export const AccountingFeatureBankAccountsList = () => {
       <AccountingPageHeader
         heading={t['accountingBankAccountsListBankAccounts']}
         buttonLabel={t['accountingBankAccountsListNewBankAccounts']}
-        buttonHandler={() =>
-          router.push('/accounting/accounting/bank-accounts/add')
-        }
+        buttonHandler={() => router.push('/accounting/accounting/bank-accounts/add')}
       />
 
       <Table
@@ -131,11 +127,11 @@ export const AccountingFeatureBankAccountsList = () => {
         columns={columns}
         pagination={{
           total: data?.members?.list?.totalCount ?? 'Many',
-          pageInfo: data?.members.list.pageInfo,
+          pageInfo: data?.members?.list?.pageInfo,
         }}
       />
     </>
   );
-}
+};
 
 export default AccountingFeatureBankAccountsList;
