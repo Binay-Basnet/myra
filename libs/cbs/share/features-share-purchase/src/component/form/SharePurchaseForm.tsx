@@ -215,9 +215,10 @@ export const SharePurchaseForm = () => {
   }, [isLoading, extraFee, noOfShares, JSON.stringify(chargeList), JSON.stringify(extraFee)]);
 
   useEffect(() => {
-    methods.setValue('memberId', String(redirectMemberId));
+    if (redirectMemberId) {
+      methods.setValue('memberId', String(redirectMemberId));
+    }
   }, [redirectMemberId]);
-
   return (
     <>
       <FormProvider {...methods}>
