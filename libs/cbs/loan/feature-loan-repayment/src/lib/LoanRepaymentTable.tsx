@@ -25,8 +25,8 @@ export const CBSLoanRepaymentList = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        header: 'Member Id',
-        accessorFn: (row) => row?.node?.id,
+        header: 'Member Code',
+        accessorFn: (row) => row?.node?.memberCode,
       },
 
       {

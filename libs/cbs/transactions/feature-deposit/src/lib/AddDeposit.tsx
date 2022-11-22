@@ -357,7 +357,9 @@ export const AddDeposit = () => {
   };
   // redirect from member details
   useEffect(() => {
-    methods.setValue('memberId', String(redirectMemberId));
+    if (redirectMemberId) {
+      methods.setValue('memberId', String(redirectMemberId));
+    }
   }, [redirectMemberId]);
   return (
     <>

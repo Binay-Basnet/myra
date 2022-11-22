@@ -107,8 +107,11 @@ export const MemberListPage = () => {
         },
       },
       {
-        header: t['memberListDateJoined'],
-        accessorFn: (row) => row?.node?.dateJoined?.split(' ')[0] ?? 'N/A',
+        header: isDraft || isSubmitted ? t['memberListDateJoined'] : t['memberListActiveDate'],
+        accessorFn: (row) =>
+          isDraft || isSubmitted
+            ? row?.node?.dateJoined?.split(' ')[0]
+            : row?.node?.activeDate?.split(' ')[0] ?? 'N/A',
         meta: {
           width: '100px',
         },

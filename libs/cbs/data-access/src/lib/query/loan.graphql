@@ -490,6 +490,7 @@ query getLoanRepaymentList($paginate: Pagination, $filter: LoanRepaymentFilter) 
           loanAccountId
           memberId
           memberName
+          memberCode
           memberProfilePicId
           memberProfilePicUrl
           loanAccountName

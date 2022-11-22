@@ -10,6 +10,7 @@ query getChequeBookRequests($pagination: Pagination, $filter: RequestFilter) {
           node {
             id
             memberId
+            memberCode
             memberName
             memberPhoneNumber
             memberAge
@@ -44,6 +45,7 @@ query getWithdrawViaCollector($pagination: Pagination, $filter: RequestFilter) {
           node {
             id
             memberId
+            memberCode
             memberName
             memberPhoneNumber
             accountNumber
@@ -72,6 +74,7 @@ query getLoanRequests($pagination: Pagination, $filter: RequestFilter) {
           node {
             id
             memberId
+            memberCode
             memberName
             memberPhoneNumber
             approvalStatus
@@ -85,18 +88,19 @@ query getLoanRequests($pagination: Pagination, $filter: RequestFilter) {
   }
 }
 
-query getBlockChequeList($pagination: Pagination, $filter: RequestFilter){
-  requests{
-    list{
-      blockCheque(filter: $filter, paginate: $pagination){
+query getBlockChequeList($pagination: Pagination, $filter: RequestFilter) {
+  requests {
+    list {
+      blockCheque(filter: $filter, paginate: $pagination) {
         totalCount
         pageInfo {
           ...Pagination
         }
-        edges{
-          node{
+        edges {
+          node {
             id
             memberId
+            memberCode
             memberName
             memberPhoneNumber
             accountNumber

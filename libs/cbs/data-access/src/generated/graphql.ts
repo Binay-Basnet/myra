@@ -15866,6 +15866,7 @@ export type GetLoanRepaymentListQuery = {
           loanAccountId: string;
           memberId: string;
           memberName: Record<'local' | 'en' | 'np', string>;
+          memberCode?: string | null;
           memberProfilePicId?: string | null;
           memberProfilePicUrl?: string | null;
           loanAccountName: string;
@@ -15924,6 +15925,7 @@ export type GetMemberListQuery = {
           contact?: string | null;
           createdAt: string;
           dateJoined?: string | null;
+          activeDate?: string | null;
           address?: {
             state?: Record<'local' | 'en' | 'np', string> | null;
             district?: Record<'local' | 'en' | 'np', string> | null;
@@ -17090,6 +17092,7 @@ export type GetChequeBookRequestsQuery = {
           node?: {
             id: string;
             memberId: string;
+            memberCode?: string | null;
             memberName: Record<'local' | 'en' | 'np', string>;
             memberPhoneNumber: string;
             memberAge?: number | null;
@@ -17127,6 +17130,7 @@ export type GetWithdrawViaCollectorQuery = {
           node?: {
             id: string;
             memberId: string;
+            memberCode?: string | null;
             memberName: Record<'local' | 'en' | 'np', string>;
             memberPhoneNumber: string;
             accountNumber: string;
@@ -17158,6 +17162,7 @@ export type GetLoanRequestsQuery = {
           node?: {
             id: string;
             memberId: string;
+            memberCode?: string | null;
             memberName: Record<'local' | 'en' | 'np', string>;
             memberPhoneNumber: string;
             approvalStatus: RequestStatus;
@@ -17186,6 +17191,7 @@ export type GetBlockChequeListQuery = {
           node?: {
             id: string;
             memberId: string;
+            memberCode?: string | null;
             memberName: Record<'local' | 'en' | 'np', string>;
             memberPhoneNumber: string;
             accountNumber: string;
@@ -26268,6 +26274,7 @@ export const GetLoanRepaymentListDocument = `
           loanAccountId
           memberId
           memberName
+          memberCode
           memberProfilePicId
           memberProfilePicUrl
           loanAccountName
@@ -26353,6 +26360,7 @@ export const GetMemberListDocument = `
           contact
           createdAt
           dateJoined
+          activeDate
           profile {
             ... on KymIndFormStateQuery {
               data {
@@ -27928,6 +27936,7 @@ export const GetChequeBookRequestsDocument = `
           node {
             id
             memberId
+            memberCode
             memberName
             memberPhoneNumber
             memberAge
@@ -27974,6 +27983,7 @@ export const GetWithdrawViaCollectorDocument = `
           node {
             id
             memberId
+            memberCode
             memberName
             memberPhoneNumber
             accountNumber
@@ -28017,6 +28027,7 @@ export const GetLoanRequestsDocument = `
           node {
             id
             memberId
+            memberCode
             memberName
             memberPhoneNumber
             approvalStatus
@@ -28055,6 +28066,7 @@ export const GetBlockChequeListDocument = `
           node {
             id
             memberId
+            memberCode
             memberName
             memberPhoneNumber
             accountNumber
