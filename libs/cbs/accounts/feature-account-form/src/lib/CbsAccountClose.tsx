@@ -364,7 +364,9 @@ export const CbsAccountClose = () => {
   const redirectMemberId = router.query['memberId'];
   // redirect from member details
   useEffect(() => {
-    methods.setValue('memberID', String(redirectMemberId));
+    if (redirectMemberId) {
+      methods.setValue('memberID', String(redirectMemberId));
+    }
   }, [redirectMemberId]);
 
   return (

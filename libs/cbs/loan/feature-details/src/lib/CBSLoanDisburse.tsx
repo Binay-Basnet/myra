@@ -2,9 +2,9 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiFillCheckCircle } from 'react-icons/ai';
 import { IoChevronBackOutline } from 'react-icons/io5';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { Box } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
 import { omit } from 'lodash';
 
 import {
@@ -13,6 +13,7 @@ import {
   ObjState,
   useGetCoaBankListQuery,
   useGetIndividualMemberDetails,
+  useGetLoanApplicationDetailsQuery,
   useSetDisburseLoanMutation,
 } from '@coop/cbs/data-access';
 import { LoanListLayout } from '@coop/cbs/loan/layouts';
@@ -203,6 +204,12 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
   useEffect(() => {
     setValue('amount', totalDisbursedAmountString);
   }, [totalDisbursedAmountString]);
+
+  const { data: loanData } = useGetLoanApplicationDetailsQuery({ id: id as string });
+  const linkedAccountId = loanData?.loanAccount?.formState?.data?.linkedAccountId;
+  useEffect(() => {
+    methods.setValue('accountPayment.destinationAccount', String(linkedAccountId));
+  }, [linkedAccountId]);
 
   return (
     <Container minW="container.xl" p="0" bg="white">

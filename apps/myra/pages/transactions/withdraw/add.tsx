@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 import { AddWithdraw } from '@coop/cbs/transactions/withdraw';
 import { MainLayout } from '@coop/shared/ui';
