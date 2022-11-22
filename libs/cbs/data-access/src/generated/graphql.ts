@@ -3115,6 +3115,12 @@ export type ExampleQuery = {
   testDb: TestDbResult;
 };
 
+export enum ExpiryStatusFilter {
+  All = 'ALL',
+  Expired = 'EXPIRED',
+  NotExpired = 'NOT_EXPIRED',
+}
+
 export type FdInvestment = {
   bankACNo: Scalars['String'];
   certificateNo: Scalars['String'];
@@ -6474,6 +6480,35 @@ export type KymOccupationDetailsType = {
   orgName?: Maybe<Scalars['String']>;
 };
 
+export type KymStatusFilter = {
+  riskCategory?: InputMaybe<RiskCategoryFilter>;
+  status?: InputMaybe<ExpiryStatusFilter>;
+};
+
+export type KymStatusReport = {
+  address?: Maybe<Address>;
+  contact?: Maybe<Scalars['String']>;
+  kymExpireDays?: Maybe<Scalars['String']>;
+  kymStatus?: Maybe<Scalars['String']>;
+  lastKymUpdatedDate?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  memberName?: Maybe<Scalars['String']>;
+  regDate?: Maybe<Scalars['String']>;
+  riskCategory?: Maybe<Scalars['String']>;
+};
+
+export type KymStatusReportFilter = {
+  branchId?: InputMaybe<Scalars['String']>;
+  customPeriod?: InputMaybe<LocalizedDateFilter>;
+  filter?: InputMaybe<KymStatusFilter>;
+  periodType?: InputMaybe<ReportPeriodType>;
+};
+
+export type KymStatusReportResult = {
+  data?: Maybe<Array<Maybe<KymStatusReport>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type LadderRate = {
   amount: Scalars['Amount'];
   rate: Scalars['Float'];
@@ -7659,6 +7694,7 @@ export type MeResult = {
 };
 
 export type Member = Base & {
+  activeDate?: Maybe<Scalars['String']>;
   address?: Maybe<Address>;
   code: Scalars['String'];
   contact?: Maybe<Scalars['String']>;
@@ -9014,6 +9050,7 @@ export type ReportQuery = {
   getReport?: Maybe<SavedReportResponse>;
   interestStatementReport: InterestPostingReportResult;
   interestTaxReport: InterestTaxReportResult;
+  kymStatusReport?: Maybe<KymStatusReportResult>;
   listReports: ReportListConnection;
   loanStatementReport?: Maybe<ReportResult>;
   mBankingExpiryReport?: Maybe<EbankingRegistrationReportResult>;
@@ -9021,6 +9058,7 @@ export type ReportQuery = {
   memberClassificationReport: MemberClassificationReportResult;
   savingStatementReport?: Maybe<ReportResult>;
   shareStatementReport?: Maybe<ReportResult>;
+  userReport?: Maybe<UserReportResult>;
 };
 
 export type ReportQueryActiveInactiveMemberReportArgs = {
@@ -9045,6 +9083,10 @@ export type ReportQueryInterestStatementReportArgs = {
 
 export type ReportQueryInterestTaxReportArgs = {
   data: InterestTaxReportFilter;
+};
+
+export type ReportQueryKymStatusReportArgs = {
+  data?: InputMaybe<KymStatusReportFilter>;
 };
 
 export type ReportQueryListReportsArgs = {
@@ -9075,6 +9117,10 @@ export type ReportQuerySavingStatementReportArgs = {
 
 export type ReportQueryShareStatementReportArgs = {
   data: ShareStatementReportSettings;
+};
+
+export type ReportQueryUserReportArgs = {
+  data?: InputMaybe<UserReportFilter>;
 };
 
 export type ReportResult = {
@@ -9172,6 +9218,13 @@ export type Result = {
   name: Scalars['String'];
   nameNp: Scalars['String'];
 };
+
+export enum RiskCategoryFilter {
+  All = 'ALL',
+  High = 'HIGH',
+  Low = 'LOW',
+  Medium = 'MEDIUM',
+}
 
 export enum Roles {
   Agent = 'AGENT',
@@ -10562,6 +10615,38 @@ export type UserPreferenceResult = {
 
 export type UserQuery = {
   preference?: Maybe<UserPreferenceQuery>;
+};
+
+export type UserReport = {
+  accessForBranch?: Maybe<Scalars['String']>;
+  accessForGroup?: Maybe<Scalars['String']>;
+  createdBy?: Maybe<Scalars['String']>;
+  createdDate?: Maybe<Scalars['String']>;
+  empCode?: Maybe<Scalars['String']>;
+  empployeeName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  isAdmin?: Maybe<Scalars['String']>;
+  isCoreEmployee?: Maybe<Scalars['Boolean']>;
+  remarks?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+  usernameCode?: Maybe<Scalars['String']>;
+};
+
+export type UserReportFilter = {
+  customPeriod?: InputMaybe<LocalizedDateFilter>;
+  filter?: InputMaybe<UserReportFilterData>;
+  periodType?: InputMaybe<ReportPeriodType>;
+};
+
+export type UserReportFilterData = {
+  admin?: InputMaybe<Scalars['String']>;
+  employee?: InputMaybe<Scalars['String']>;
+};
+
+export type UserReportResult = {
+  data?: Maybe<Array<Maybe<UserReport>>>;
+  error?: Maybe<QueryError>;
 };
 
 export enum UserType {
