@@ -365,7 +365,7 @@ export const CbsAccountClose = () => {
   // redirect from member details
   useEffect(() => {
     if (redirectMemberId) {
-      methods.setValue('memberId', String(redirectMemberId));
+      methods.setValue('memberID', String(redirectMemberId));
     }
   }, [redirectMemberId]);
 
