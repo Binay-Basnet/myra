@@ -3824,6 +3824,8 @@ const en: Record<string, string> = {
 
   bankAccountBankInformation: 'Bank Information',
   accountingAccountingTabMenuLoan: 'External Loan',
+
+  settingsBranchExtensionCounter: 'ExtensionCounter',
 };
 
 export default en;

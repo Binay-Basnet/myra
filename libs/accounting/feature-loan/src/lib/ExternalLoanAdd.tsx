@@ -55,11 +55,12 @@ export const ExternalLoanAdd = () => {
             <Box bg="white" minH="calc(100vh - 220px)">
               <FormSection divider={false}>
                 <GridItem colSpan={2}>
-                  <FormSelect name="dueDate" label="Name of Organization" options={[]} />
+                  <FormInput name="reference" type="text" label="External Loan" />
                 </GridItem>
                 <GridItem colSpan={1}>
-                  <FormSelect name="dueDate" label="Type of Loan" options={[]} />
+                  <FormSelect name="dueDate" label="Name of Organization" options={[]} />
                 </GridItem>
+                <FormSelect name="dueDate" label="Type of Loan" options={[]} />
 
                 <FormInput name="dueDate" type="date" label="Loan Applied Date" />
                 <FormInput name="dueDate" type="date" label="Loan Approved Date" />

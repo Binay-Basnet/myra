@@ -3390,6 +3390,8 @@ const ne: Record<string, string> = {
 
   bankAccountBankInformation: 'Bank Information',
   accountingAccountingTabMenuLoan: 'External Loan',
+
+  settingsBranchExtensionCounter: 'ExtensionCounter',
 };
 
 export default ne;

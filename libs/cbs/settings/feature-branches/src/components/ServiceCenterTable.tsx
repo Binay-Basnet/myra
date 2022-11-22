@@ -102,8 +102,8 @@ export const SettingsServiceCenterTable = () => {
         data={rowData ?? []}
         columns={columns}
         pagination={{
-          total: data?.settings.general?.branch?.list?.totalCount ?? 'Many',
-          pageInfo: data?.settings.general?.branch?.list?.pageInfo,
+          total: data?.settings?.general?.branch?.list?.totalCount ?? 'Many',
+          pageInfo: data?.settings?.general?.branch?.list?.pageInfo,
         }}
       />
     </>
