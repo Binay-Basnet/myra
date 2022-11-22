@@ -461,7 +461,7 @@ const en: Record<string, string> = {
   settingsIndividual: 'Individuals',
   settingsInstitutional: 'Institutionals',
   settingsCooperative: 'Cooperative',
-  settingsCorporativeUnion: 'Corporative Union',
+  settingsCooperativeUnion: 'Cooperative Union',
   settingsGeneralRisk: 'General Risk',
   settingsMediumRisk: 'Medium Risk',
   settingsHighRisk: 'High Risk',

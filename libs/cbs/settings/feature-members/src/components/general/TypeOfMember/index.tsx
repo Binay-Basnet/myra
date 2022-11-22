@@ -30,7 +30,7 @@ export const TypeOfMember = () => {
         <FormCheckbox name="memberType.individual" label={t['settingsIndividual']} />
         <FormCheckbox name="memberType.institution" label={t['settingsInstitutional']} />
         <FormCheckbox name="memberType.cooperative" label={t['settingsCooperative']} />
-        <FormCheckbox name="memberType.cooperativeUnion" label={t['settingsCorporativeUnion']} />
+        <FormCheckbox name="memberType.cooperativeUnion" label={t['settingsCooperativeUnion']} />
       </Box>
     </VStack>
   );

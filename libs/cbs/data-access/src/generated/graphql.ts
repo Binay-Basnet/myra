@@ -8333,6 +8333,7 @@ export type MyraUser = Base & {
   email?: Maybe<Scalars['String']>;
   gender?: Maybe<UserGender>;
   id: Scalars['ID'];
+  isCoreEmployee?: Maybe<Scalars['Boolean']>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   name?: Maybe<Scalars['String']>;
@@ -8362,6 +8363,7 @@ export type MyraUserFormStateData = {
   id?: Maybe<Scalars['String']>;
   identificationDetails?: Maybe<Array<Maybe<MyraUserIdentification>>>;
   identificationSelection?: Maybe<Array<Maybe<Scalars['String']>>>;
+  isCoreEmployee?: Maybe<Scalars['Boolean']>;
   isTempAsPermanentAddressSame?: Maybe<Scalars['Boolean']>;
   landlordContact?: Maybe<Scalars['String']>;
   landlordName?: Maybe<Scalars['String']>;
@@ -8407,6 +8409,7 @@ export type MyraUserInput = {
   gender: UserGender;
   identificationDetails?: InputMaybe<Array<InputMaybe<MyraUserIdentificationInput>>>;
   identificationSelection?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  isCoreEmployee?: InputMaybe<Scalars['Boolean']>;
   isTempAsPermanentAddressSame?: InputMaybe<Scalars['Boolean']>;
   landlordContact?: InputMaybe<Scalars['String']>;
   landlordName?: InputMaybe<Scalars['String']>;
@@ -9238,6 +9241,14 @@ export enum RiskCategoryFilter {
 }
 
 export enum Roles {
+  Agent = 'AGENT',
+  BranchManager = 'BRANCH_MANAGER',
+  HeadTeller = 'HEAD_TELLER',
+  Superadmin = 'SUPERADMIN',
+  Teller = 'TELLER',
+}
+
+export enum RolesFilter {
   Agent = 'AGENT',
   BranchManager = 'BRANCH_MANAGER',
   HeadTeller = 'HEAD_TELLER',
@@ -10629,30 +10640,31 @@ export type UserQuery = {
 };
 
 export type UserReport = {
-  accessForBranch?: Maybe<Scalars['String']>;
-  accessForGroup?: Maybe<Scalars['String']>;
+  accessForBranch?: Maybe<Scalars['Boolean']>;
+  accessForGroup?: Maybe<Scalars['Boolean']>;
   createdBy?: Maybe<Scalars['String']>;
   createdDate?: Maybe<Scalars['String']>;
   empCode?: Maybe<Scalars['String']>;
-  empployeeName?: Maybe<Scalars['String']>;
+  employeeName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
-  isAdmin?: Maybe<Scalars['String']>;
   isCoreEmployee?: Maybe<Scalars['Boolean']>;
   remarks?: Maybe<Scalars['String']>;
+  role?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
   usernameCode?: Maybe<Scalars['String']>;
 };
 
 export type UserReportFilter = {
+  branchId?: InputMaybe<Scalars['String']>;
   customPeriod?: InputMaybe<LocalizedDateFilter>;
   filter?: InputMaybe<UserReportFilterData>;
   periodType?: InputMaybe<ReportPeriodType>;
 };
 
 export type UserReportFilterData = {
-  admin?: InputMaybe<Scalars['String']>;
-  employee?: InputMaybe<Scalars['String']>;
+  isCoreEmployee?: InputMaybe<Scalars['Boolean']>;
+  role?: InputMaybe<Array<InputMaybe<RolesFilter>>>;
 };
 
 export type UserReportResult = {
