@@ -402,6 +402,7 @@ export type ActiveInactiveMemberReport = {
   branchDetails?: Maybe<Branch>;
   branchID: Scalars['ID'];
   reportStatement?: Maybe<Array<Maybe<ActiveInactiveMemberStatement>>>;
+  summary?: Maybe<ActiveInactiveMemberReportSummary>;
 };
 
 export type ActiveInactiveMemberReportData = {
@@ -409,6 +410,12 @@ export type ActiveInactiveMemberReportData = {
   customPeriod?: InputMaybe<CustomPeriodInput>;
   filter?: InputMaybe<MemberReportFilters>;
   periodType: ReportPeriodType;
+};
+
+export type ActiveInactiveMemberReportSummary = {
+  activeTotal?: Maybe<Scalars['Int']>;
+  inactiveTotal?: Maybe<Scalars['Int']>;
+  totalMember?: Maybe<Scalars['Int']>;
 };
 
 export type ActiveInactiveMemberStatement = {
@@ -421,6 +428,7 @@ export type ActiveInactiveMemberStatement = {
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['String']>;
   memberRegistrationDate?: Maybe<Scalars['Date']>;
+  memberType?: Maybe<KymMemberTypesEnum>;
   occupation?: Maybe<Scalars['String']>;
   pan?: Maybe<Scalars['String']>;
   status?: Maybe<MemberStatus>;
@@ -8135,6 +8143,7 @@ export enum MemberRecentTransactionViewTxnType {
 export type MemberReportFilters = {
   ageRange?: InputMaybe<MemberAgeRange>;
   gender?: InputMaybe<Scalars['ID']>;
+  institutionType?: InputMaybe<Scalars['ID']>;
   memberType?: InputMaybe<MemberType>;
   occupation?: InputMaybe<Scalars['ID']>;
   status?: InputMaybe<MemberStatus>;
@@ -8171,10 +8180,12 @@ export type MemberStatisticsView = {
 
 export enum MemberStatus {
   Active = 'ACTIVE',
+  All = 'ALL',
   Inactive = 'INACTIVE',
 }
 
 export enum MemberType {
+  All = 'ALL',
   Cooperative = 'COOPERATIVE',
   CooperativeUnion = 'COOPERATIVE_UNION',
   Individual = 'INDIVIDUAL',

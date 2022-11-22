@@ -235,9 +235,10 @@ export const AddWithdraw = () => {
   const redirectMemberId = router.query['memberId'];
   // redirect from member details
   useEffect(() => {
-    methods.setValue('memberId', String(redirectMemberId));
+    if (redirectMemberId) {
+      methods.setValue('memberId', String(redirectMemberId));
+    }
   }, [redirectMemberId]);
-
   return (
     <>
       <Container minW="container.xl" height="fit-content">
