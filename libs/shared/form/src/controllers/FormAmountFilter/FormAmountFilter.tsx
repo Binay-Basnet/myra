@@ -46,7 +46,7 @@ export const AmountFilter = ({ value, onChange }: IAmountFilterProps) => {
               <Input
                 type="number"
                 textAlign="right"
-                placeholder="Minimum Amount"
+                placeholder="Minimum Amt"
                 value={value?.min ?? ''}
                 onChange={(e) => onChange({ min: e.target.value, max: value?.max ?? null })}
               />
@@ -56,7 +56,7 @@ export const AmountFilter = ({ value, onChange }: IAmountFilterProps) => {
               <Input
                 type="number"
                 textAlign="right"
-                placeholder="Maximum Amount"
+                placeholder="Maximum Amt"
                 value={value?.max ?? ''}
                 onChange={(e) => onChange({ max: e.target.value, min: value?.min ?? null })}
               />
@@ -69,7 +69,7 @@ export const AmountFilter = ({ value, onChange }: IAmountFilterProps) => {
             <Input
               type="number"
               textAlign="right"
-              placeholder="Maximum Amount"
+              placeholder="Maximum Amt"
               value={value?.max ?? ''}
               onChange={(e) => onChange({ max: e.target.value, min: null })}
             />
@@ -81,7 +81,7 @@ export const AmountFilter = ({ value, onChange }: IAmountFilterProps) => {
             <Input
               type="number"
               textAlign="right"
-              placeholder="Minimum Amount"
+              placeholder="Minimum Amt"
               value={value?.min ?? ''}
               onChange={(e) => onChange({ min: e.target.value, max: null })}
             />
