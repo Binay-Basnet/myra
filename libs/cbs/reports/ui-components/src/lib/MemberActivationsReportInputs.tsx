@@ -85,14 +85,14 @@ export const MemberActivationReportInputs = ({
               setFilter({
                 periodType: data['periodType'],
                 branchId: data['branchId'],
-                filter: null,
+                filter: methods.getValues()['filter'],
               });
             }
 
             setFilter({
               periodType: data['periodType'],
               branchId: data['branchId'],
-              filter: null,
+              filter: methods.getValues()['filter'],
             });
           })}
         >
