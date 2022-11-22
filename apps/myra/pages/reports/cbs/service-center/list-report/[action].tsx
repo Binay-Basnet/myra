@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
 
-import { ShareStatementReport } from '@coop/cbs/reports';
+import { ServiceCenterReport } from '@coop/cbs/reports';
 import { MainLayout } from '@coop/shared/ui';
 
-const NewShareStatementReport = () => <ShareStatementReport />;
+const NewShareStatementReport = () => <ServiceCenterReport />;
 
 export default NewShareStatementReport;
 

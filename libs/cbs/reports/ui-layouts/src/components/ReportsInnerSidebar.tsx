@@ -33,7 +33,7 @@ const REPORTS_INNER_TAB_LINKS = [
   },
   {
     title: 'Mobile Banking Reports',
-    to: '/reports/cbs/mobile-report',
+    to: '/reports/cbs/mobile-banking',
   },
 
   {

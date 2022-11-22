@@ -15,3 +15,30 @@ query allAdministration {
     }
   }
 }
+
+query getAllProvince {
+  administration {
+    provinces {
+      id
+      name
+    }
+  }
+}
+
+query getAllDistricts {
+  administration {
+    districts {
+      id
+      name
+    }
+  }
+}
+query getAllLocalGovernment {
+  administration {
+    municipalities {
+      id
+      name
+    }
+  }
+}
+

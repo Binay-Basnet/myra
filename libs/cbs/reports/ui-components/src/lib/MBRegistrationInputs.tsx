@@ -2,28 +2,22 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { IoFilterOutline } from 'react-icons/io5';
 
-import { InterestStatementFilter, ReportPeriodType } from '@coop/cbs/data-access';
-import { FormSelect } from '@coop/shared/form';
-import { Box, Button, FormAccountSelect, FormMemberSelect, GridItem, Icon } from '@coop/shared/ui';
+import { EbankingReportFilter, ReportPeriodType } from '@coop/cbs/data-access';
+import { FormBranchSelect, FormSelect } from '@coop/shared/form';
+import { Box, Button, GridItem, Icon } from '@coop/shared/ui';
 
-type ReportFilterType = InterestStatementFilter & {
-  memberId: string;
-};
-
-interface ReportInputsProps {
+interface MBRegistrationInputsProps {
   hasShownFilter: boolean;
-  setFilter: React.Dispatch<React.SetStateAction<ReportFilterType | null>>;
+  setFilter: React.Dispatch<React.SetStateAction<EbankingReportFilter | null>>;
   setHasShownFilter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const InterestStatementInputs = ({
+export const MBRegistrationInputs = ({
   hasShownFilter,
   setHasShownFilter,
   setFilter,
-}: ReportInputsProps) => {
-  const methods = useFormContext<ReportFilterType>();
-
-  const memberId = methods.watch('memberId');
+}: MBRegistrationInputsProps) => {
+  const methods = useFormContext<EbankingReportFilter>();
 
   return (
     <Box
@@ -36,15 +30,13 @@ export const InterestStatementInputs = ({
       py="s16"
     >
       <Box as="form" display="grid" width="100%" gridTemplateColumns="repeat(4, 1fr)" gap="s20">
-        <GridItem colSpan={2}>
-          <FormMemberSelect name="memberId" label="Member Search" />
+        <GridItem colSpan={3}>
+          <FormBranchSelect name="branchId" label="Branch" />
         </GridItem>
-        <GridItem colSpan={1}>
-          <FormAccountSelect name="accountId" memberId={memberId} label="Select Account" />
-        </GridItem>
+
         <GridItem colSpan={1}>
           <FormSelect
-            name="period"
+            name="periodType"
             hasRadioOption
             options={[
               { label: 'Today', value: ReportPeriodType.Today },
@@ -77,7 +69,7 @@ export const InterestStatementInputs = ({
                 value: ReportPeriodType.Lifetime,
               },
             ]}
-            label="Select Period"
+            label="Branch Established Date"
           />
         </GridItem>
       </Box>
@@ -85,22 +77,20 @@ export const InterestStatementInputs = ({
       <Box display="flex" gap="s16">
         <Button
           size="lg"
-          isDisabled={!methods.watch()['memberId'] || !methods.watch()['period']}
+          isDisabled={!methods.watch()['periodType']}
           onClick={methods.handleSubmit((data) => {
-            if (!data['memberId'] || !data['period']) return;
+            if (!data['periodType']) return;
 
-            if (data['period'] === ReportPeriodType.CustomPeriod) {
+            if (data['periodType'] === ReportPeriodType.CustomPeriod) {
               setFilter({
-                memberId: data['memberId'],
-                period: data['period'],
-                accountId: data['accountId'],
+                periodType: data['periodType'],
+                branchId: data['branchId'],
               });
             }
 
             setFilter({
-              memberId: data['memberId'],
-              period: data['period'],
-              accountId: data['accountId'],
+              periodType: data['periodType'],
+              branchId: data['branchId'],
             });
           })}
         >

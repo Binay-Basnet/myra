@@ -11,10 +11,11 @@ interface ShareReportTableProps {
 }
 
 export const InterestStatementReportTable = ({ interestReport }: ShareReportTableProps) => {
-  const report = interestReport.map((interest, index) => ({
-    ...interest,
-    index: index + 1,
-  }));
+  const report =
+    interestReport?.map((interest, index) => ({
+      ...interest,
+      index: index + 1,
+    })) ?? [];
 
   const columns = React.useMemo<Column<InterestPostingReportEntry & { index: number }>[]>(
     () => [

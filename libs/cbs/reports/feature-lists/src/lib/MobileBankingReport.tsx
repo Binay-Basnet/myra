@@ -9,7 +9,10 @@ export const MobileBankingReports = () => (
       Mobile Banking Reports
     </Text>
     {REPORTS[ReportGroup.MOBILE_BANKING].map((report) => (
-      <ReportLinkText key={report.id}>
+      <ReportLinkText
+        key={report.id}
+        link={report.link ? `/reports/cbs/mobile-banking/${report.link}/new` : undefined}
+      >
         {report.id} - {report.report}
       </ReportLinkText>
     ))}

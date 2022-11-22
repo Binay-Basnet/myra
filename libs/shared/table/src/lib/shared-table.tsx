@@ -117,6 +117,7 @@ export const Table = <T extends Record<string, unknown>>({
                     colSpan={header.colSpan}
                     isNumeric={header.column.columnDef.meta?.isNumeric}
                     width={header.column.columnDef.meta?.width}
+                    textAlign={header.column.columns.length !== 0 ? 'center' : 'left'}
                     px="s12"
                     py="0"
                   >
@@ -224,7 +225,6 @@ export const Table = <T extends Record<string, unknown>>({
                       overflow="hidden"
                       color="gray.800"
                       whiteSpace="nowrap"
-                      textTransform="capitalize"
                     >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </Text>

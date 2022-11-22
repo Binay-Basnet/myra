@@ -1,6 +1,7 @@
 export * from './controllers/FormAccountInput/FormAccountInput';
 export * from './controllers/FormAddress/FormAddress';
 export * from './controllers/FormAgentSelect/FormAgentSelect';
+export * from './controllers/FormAmountFilter/FormAmountFilter';
 export * from './controllers/FormAmountInput/FormAmountInput';
 export * from './controllers/FormBranchSelect/FormBranchSelect';
 export * from './controllers/FormCheckbox/FormCheckbox';

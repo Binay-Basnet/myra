@@ -13905,6 +13905,24 @@ export type AllAdministrationQuery = {
   };
 };
 
+export type GetAllProvinceQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllProvinceQuery = {
+  administration: { provinces: Array<{ id: number; name: string }> };
+};
+
+export type GetAllDistrictsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllDistrictsQuery = {
+  administration: { districts: Array<{ id: number; name: string }> };
+};
+
+export type GetAllLocalGovernmentQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAllLocalGovernmentQuery = {
+  administration: { municipalities: Array<{ id: number; name: string }> };
+};
+
 export type GetAgentListDataQueryVariables = Exact<{
   filter?: InputMaybe<AccountTransactionFilter>;
   pagination?: InputMaybe<Pagination>;
@@ -14143,6 +14161,16 @@ export type PaginationFragment = {
   endCursor?: string | null;
   hasNextPage: boolean;
   hasPreviousPage: boolean;
+};
+
+export type AddressFragment = {
+  houseNo?: string | null;
+  district?: Record<'local' | 'en' | 'np', string> | null;
+  localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+  locality?: Record<'local' | 'en' | 'np', string> | null;
+  state?: Record<'local' | 'en' | 'np', string> | null;
+  wardNo?: string | null;
+  coordinates?: { latitude?: number | null; longitude?: number | null } | null;
 };
 
 export type GetConfigQueryVariables = Exact<{ [key: string]: never }>;
@@ -16786,6 +16814,128 @@ export type GetInterestStatementReportQuery = {
   };
 };
 
+export type GetInterestTaxReportQueryVariables = Exact<{
+  data: InterestTaxReportFilter;
+}>;
+
+export type GetInterestTaxReportQuery = {
+  report: {
+    interestTaxReport: {
+      data?: Array<{
+        memberId?: string | null;
+        name?: Record<'local' | 'en' | 'np', string> | null;
+        panNo?: string | null;
+        accountNo?: string | null;
+        date?: Record<'local' | 'en' | 'np', string> | null;
+        interest?: string | null;
+        tax?: string | null;
+        savingBalance?: string | null;
+        closingBalance?: string | null;
+        remarks?: string | null;
+        address?: AddressFragment | null;
+      } | null> | null;
+    };
+  };
+};
+
+export type GetBranchReportQueryVariables = Exact<{
+  data?: InputMaybe<BranchReportFilter>;
+}>;
+
+export type GetBranchReportQuery = {
+  report: {
+    branchReport?: {
+      data?: Array<{
+        id: string;
+        serviceCenterCode?: string | null;
+        name?: string | null;
+        contactNumber?: string | null;
+        email?: string | null;
+        managerName?: string | null;
+        managerContact?: string | null;
+        isExtensionCounter?: boolean | null;
+        estDate?: string | null;
+        branchStatus?: boolean | null;
+        remarks?: string | null;
+        address?: AddressFragment | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
+export type GetMBankingRegistrationReportQueryVariables = Exact<{
+  data?: InputMaybe<EbankingReportFilter>;
+}>;
+
+export type GetMBankingRegistrationReportQuery = {
+  report: {
+    mbankingRegistrationReport?: {
+      data?: Array<{
+        memberId?: string | null;
+        memberName?: string | null;
+        mobileNo?: string | null;
+        branchCode?: string | null;
+        regDate?: string | null;
+        expDate?: string | null;
+        status?: string | null;
+        registeredBy?: string | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
+export type GetMBankingExpiryReportQueryVariables = Exact<{
+  data?: InputMaybe<EbankingReportFilter>;
+}>;
+
+export type GetMBankingExpiryReportQuery = {
+  report: {
+    mbankingRegistrationReport?: {
+      data?: Array<{
+        memberId?: string | null;
+        memberName?: string | null;
+        mobileNo?: string | null;
+        branchCode?: string | null;
+        regDate?: string | null;
+        expDate?: string | null;
+        status?: string | null;
+        registeredBy?: string | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
+export type GetActiveInactiveMemberReportQueryVariables = Exact<{
+  data?: InputMaybe<ActiveInactiveMemberReportData>;
+}>;
+
+export type GetActiveInactiveMemberReportQuery = {
+  report: {
+    activeInactiveMemberReport?: {
+      statement?:
+        | {
+            reportStatement?: Array<{
+              memberId?: string | null;
+              memberName?: string | null;
+              district?: string | null;
+              wardNo?: string | null;
+              address?: string | null;
+              dob?: string | null;
+              age?: number | null;
+              contactNo?: string | null;
+              gender?: string | null;
+              pan?: string | null;
+              occupation?: string | null;
+              memberRegistrationDate?: string | null;
+              status?: MemberStatus | null;
+            } | null> | null;
+          }
+        | {}
+        | null;
+    } | null;
+  };
+};
+
 export type GetShareStatementQueryVariables = Exact<{
   data: ShareStatementReportSettings;
 }>;
@@ -17139,6 +17289,7 @@ export type GetBranchEditDataQuery = {
           data?: {
             branchCode?: string | null;
             name?: string | null;
+            serviceCenterPhone?: string | null;
             category?: BranchCategory | null;
             estDate?: string | null;
             managerName?: string | null;
@@ -18847,6 +18998,20 @@ export const PaginationFragmentDoc = `
   endCursor
   hasNextPage
   hasPreviousPage
+}
+    `;
+export const AddressFragmentDoc = `
+    fragment Address on Address {
+  houseNo
+  coordinates {
+    latitude
+    longitude
+  }
+  district
+  localGovernment
+  locality
+  state
+  wardNo
 }
     `;
 export const LoanProductFragmentDoc = `
@@ -23670,6 +23835,71 @@ export const useAllAdministrationQuery = <TData = AllAdministrationQuery, TError
     ).bind(null, variables),
     options
   );
+export const GetAllProvinceDocument = `
+    query getAllProvince {
+  administration {
+    provinces {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetAllProvinceQuery = <TData = GetAllProvinceQuery, TError = unknown>(
+  variables?: GetAllProvinceQueryVariables,
+  options?: UseQueryOptions<GetAllProvinceQuery, TError, TData>
+) =>
+  useQuery<GetAllProvinceQuery, TError, TData>(
+    variables === undefined ? ['getAllProvince'] : ['getAllProvince', variables],
+    useAxios<GetAllProvinceQuery, GetAllProvinceQueryVariables>(GetAllProvinceDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetAllDistrictsDocument = `
+    query getAllDistricts {
+  administration {
+    districts {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetAllDistrictsQuery = <TData = GetAllDistrictsQuery, TError = unknown>(
+  variables?: GetAllDistrictsQueryVariables,
+  options?: UseQueryOptions<GetAllDistrictsQuery, TError, TData>
+) =>
+  useQuery<GetAllDistrictsQuery, TError, TData>(
+    variables === undefined ? ['getAllDistricts'] : ['getAllDistricts', variables],
+    useAxios<GetAllDistrictsQuery, GetAllDistrictsQueryVariables>(GetAllDistrictsDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetAllLocalGovernmentDocument = `
+    query getAllLocalGovernment {
+  administration {
+    municipalities {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetAllLocalGovernmentQuery = <TData = GetAllLocalGovernmentQuery, TError = unknown>(
+  variables?: GetAllLocalGovernmentQueryVariables,
+  options?: UseQueryOptions<GetAllLocalGovernmentQuery, TError, TData>
+) =>
+  useQuery<GetAllLocalGovernmentQuery, TError, TData>(
+    variables === undefined ? ['getAllLocalGovernment'] : ['getAllLocalGovernment', variables],
+    useAxios<GetAllLocalGovernmentQuery, GetAllLocalGovernmentQueryVariables>(
+      GetAllLocalGovernmentDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAgentListDataDocument = `
     query getAgentListData($filter: AccountTransactionFilter, $pagination: Pagination) {
   transaction {
@@ -27360,6 +27590,185 @@ export const useGetInterestStatementReportQuery = <
     ).bind(null, variables),
     options
   );
+export const GetInterestTaxReportDocument = `
+    query getInterestTaxReport($data: InterestTaxReportFilter!) {
+  report {
+    interestTaxReport(data: $data) {
+      data {
+        memberId
+        name
+        address {
+          ...Address
+        }
+        panNo
+        accountNo
+        date
+        interest
+        tax
+        savingBalance
+        closingBalance
+        remarks
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}`;
+export const useGetInterestTaxReportQuery = <TData = GetInterestTaxReportQuery, TError = unknown>(
+  variables: GetInterestTaxReportQueryVariables,
+  options?: UseQueryOptions<GetInterestTaxReportQuery, TError, TData>
+) =>
+  useQuery<GetInterestTaxReportQuery, TError, TData>(
+    ['getInterestTaxReport', variables],
+    useAxios<GetInterestTaxReportQuery, GetInterestTaxReportQueryVariables>(
+      GetInterestTaxReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetBranchReportDocument = `
+    query getBranchReport($data: BranchReportFilter) {
+  report {
+    branchReport(data: $data) {
+      data {
+        id
+        serviceCenterCode
+        name
+        contactNumber
+        email
+        address {
+          ...Address
+        }
+        managerName
+        managerContact
+        isExtensionCounter
+        estDate
+        branchStatus
+        remarks
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}`;
+export const useGetBranchReportQuery = <TData = GetBranchReportQuery, TError = unknown>(
+  variables?: GetBranchReportQueryVariables,
+  options?: UseQueryOptions<GetBranchReportQuery, TError, TData>
+) =>
+  useQuery<GetBranchReportQuery, TError, TData>(
+    variables === undefined ? ['getBranchReport'] : ['getBranchReport', variables],
+    useAxios<GetBranchReportQuery, GetBranchReportQueryVariables>(GetBranchReportDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetMBankingRegistrationReportDocument = `
+    query getMBankingRegistrationReport($data: EbankingReportFilter) {
+  report {
+    mbankingRegistrationReport(data: $data) {
+      data {
+        memberId
+        memberName
+        mobileNo
+        branchCode
+        regDate
+        expDate
+        status
+        registeredBy
+      }
+    }
+  }
+}
+    `;
+export const useGetMBankingRegistrationReportQuery = <
+  TData = GetMBankingRegistrationReportQuery,
+  TError = unknown
+>(
+  variables?: GetMBankingRegistrationReportQueryVariables,
+  options?: UseQueryOptions<GetMBankingRegistrationReportQuery, TError, TData>
+) =>
+  useQuery<GetMBankingRegistrationReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getMBankingRegistrationReport']
+      : ['getMBankingRegistrationReport', variables],
+    useAxios<GetMBankingRegistrationReportQuery, GetMBankingRegistrationReportQueryVariables>(
+      GetMBankingRegistrationReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMBankingExpiryReportDocument = `
+    query getMBankingExpiryReport($data: EbankingReportFilter) {
+  report {
+    mbankingRegistrationReport(data: $data) {
+      data {
+        memberId
+        memberName
+        mobileNo
+        branchCode
+        regDate
+        expDate
+        status
+        registeredBy
+      }
+    }
+  }
+}
+    `;
+export const useGetMBankingExpiryReportQuery = <
+  TData = GetMBankingExpiryReportQuery,
+  TError = unknown
+>(
+  variables?: GetMBankingExpiryReportQueryVariables,
+  options?: UseQueryOptions<GetMBankingExpiryReportQuery, TError, TData>
+) =>
+  useQuery<GetMBankingExpiryReportQuery, TError, TData>(
+    variables === undefined ? ['getMBankingExpiryReport'] : ['getMBankingExpiryReport', variables],
+    useAxios<GetMBankingExpiryReportQuery, GetMBankingExpiryReportQueryVariables>(
+      GetMBankingExpiryReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetActiveInactiveMemberReportDocument = `
+    query getActiveInactiveMemberReport($data: ActiveInactiveMemberReportData) {
+  report {
+    activeInactiveMemberReport(data: $data) {
+      statement {
+        ... on ActiveInactiveMemberReport {
+          reportStatement {
+            memberId
+            memberName
+            district
+            wardNo
+            address
+            dob
+            age
+            contactNo
+            gender
+            pan
+            occupation
+            memberRegistrationDate
+            status
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetActiveInactiveMemberReportQuery = <
+  TData = GetActiveInactiveMemberReportQuery,
+  TError = unknown
+>(
+  variables?: GetActiveInactiveMemberReportQueryVariables,
+  options?: UseQueryOptions<GetActiveInactiveMemberReportQuery, TError, TData>
+) =>
+  useQuery<GetActiveInactiveMemberReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getActiveInactiveMemberReport']
+      : ['getActiveInactiveMemberReport', variables],
+    useAxios<GetActiveInactiveMemberReportQuery, GetActiveInactiveMemberReportQueryVariables>(
+      GetActiveInactiveMemberReportDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetShareStatementDocument = `
     query getShareStatement($data: ShareStatementReportSettings!) {
   report {
@@ -27838,6 +28247,7 @@ export const GetBranchEditDataDocument = `
           data {
             branchCode
             name
+            serviceCenterPhone
             category
             estDate
             managerName

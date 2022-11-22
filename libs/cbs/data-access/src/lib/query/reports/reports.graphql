@@ -211,3 +211,108 @@ query getInterestStatementReport($data: InterestStatementFilter!) {
     }
   }
 }
+
+query getInterestTaxReport($data: InterestTaxReportFilter!) {
+  report {
+    interestTaxReport(data: $data) {
+      data {
+        memberId
+        name
+        address {
+          ...Address
+        }
+        panNo
+        accountNo
+        date
+        interest
+        tax
+        savingBalance
+        closingBalance
+        remarks
+      }
+    }
+  }
+}
+
+query getBranchReport($data: BranchReportFilter) {
+  report {
+    branchReport(data: $data) {
+      data {
+        id
+        serviceCenterCode
+        name
+        contactNumber
+        email
+        address {
+          ...Address
+        }
+        managerName
+        managerContact
+        isExtensionCounter
+        estDate
+        branchStatus
+        remarks
+      }
+    }
+  }
+}
+
+query getMBankingRegistrationReport($data: EbankingReportFilter) {
+  report {
+    mbankingRegistrationReport(data: $data) {
+      data {
+        memberId
+        memberName
+        mobileNo
+        branchCode
+        regDate
+        expDate
+        status
+        registeredBy
+      }
+    }
+  }
+}
+
+query getMBankingExpiryReport($data: EbankingReportFilter) {
+  report {
+    mbankingRegistrationReport(data: $data) {
+      data {
+        memberId
+        memberName
+        mobileNo
+        branchCode
+        regDate
+        expDate
+        status
+        registeredBy
+      }
+    }
+  }
+}
+
+query getActiveInactiveMemberReport($data: ActiveInactiveMemberReportData) {
+  report {
+    activeInactiveMemberReport(data: $data) {
+      statement {
+        ... on ActiveInactiveMemberReport {
+          reportStatement {
+            memberId
+            memberName
+            district
+            wardNo
+            address
+            dob
+            age
+            contactNo
+            gender
+            pan
+            occupation
+            memberRegistrationDate
+            status
+          }
+        }
+      }
+    }
+  }
+}

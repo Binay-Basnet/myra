@@ -4,13 +4,13 @@ import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { AccordionPanel } from '@chakra-ui/react';
 
 import {
-  InterestPostingReportEntry,
-  InterestStatementFilter,
-  useGetInterestStatementReportQuery,
+  InterestTaxReportEntry,
+  InterestTaxReportFilter,
+  useGetInterestTaxReportQuery,
 } from '@coop/cbs/data-access';
 import {
-  InterestStatementInputs,
-  InterestStatementReportTable,
+  InterestTaxInputs,
+  InterestTaxReportTable,
   ReportHeader,
   ReportOrganization,
   ReportOrganizationHeader,
@@ -30,52 +30,40 @@ import {
   Text,
 } from '@coop/shared/ui';
 
-type ReportFilterType = InterestStatementFilter & {
-  memberId: string;
-};
-
-export const InterestPostingReport = () => {
-  const methods = useForm<ReportFilterType>({
+export const InterestTaxReport = () => {
+  const methods = useForm<InterestTaxReportFilter>({
     defaultValues: {},
   });
 
-  const [filter, setFilter] = useState<ReportFilterType | null>(null);
+  const [hasShownFilter, setHasShownFilter] = useState(false);
+  const [filter, setFilter] = useState<InterestTaxReportFilter | null>(null);
 
   const { watch } = methods;
 
-  const memberId = watch('memberId');
-  const periodType = watch('period');
-  const accountId = watch('accountId');
+  const taxDeductDatePeriod = watch('period');
 
-  const [hasShownFilter, setHasShownFilter] = useState(false);
-
-  const { data: savingStatementData, isFetching: reportLoading } =
-    useGetInterestStatementReportQuery(
-      {
-        data: {
-          period: filter?.period,
-          accountId: filter?.accountId as string,
-          filter: filter?.filter,
-        },
-      },
-      { enabled: !!filter }
-    );
-  const interestStatement = savingStatementData?.report?.interestStatementReport?.data;
+  const { data: interestTaxReportData, isFetching: reportLoading } = useGetInterestTaxReportQuery(
+    {
+      data: filter as InterestTaxReportFilter,
+    },
+    { enabled: !!filter }
+  );
+  const interestTaxReport = interestTaxReportData?.report?.interestTaxReport?.data;
 
   return (
     <FormProvider {...methods}>
       <Box bg="white" minH="calc(100vh - 110px)" w="100%" display="flex" flexDir="column">
         <ReportHeader
-          hasSave={!!memberId && !!periodType && !!accountId}
+          hasSave={!!taxDeductDatePeriod}
           paths={[
-            { label: 'Saving Statement', link: '/reports/cbs/savings' },
+            { label: 'Saving Reports', link: '/reports/cbs/savings' },
             {
-              label: 'Interest Statement',
-              link: '/reports/cbs/interest-statement/new',
+              label: 'Interest Tax Report',
+              link: '/reports/cbs/interest-tax/new',
             },
           ]}
         />
-        <InterestStatementInputs
+        <InterestTaxInputs
           setFilter={setFilter}
           hasShownFilter={hasShownFilter}
           setHasShownFilter={setHasShownFilter}
@@ -97,7 +85,7 @@ export const InterestPostingReport = () => {
                 );
               }
 
-              if (interestStatement?.entries && interestStatement.entries?.length !== 0) {
+              if (interestTaxReport && interestTaxReport.length !== 0) {
                 return (
                   <Box display="flex" flexDir="column" w="100%">
                     <ReportOrganizationHeader reportType={Report.DEPOSIT_INTEREST_REPORT} />
@@ -108,8 +96,8 @@ export const InterestPostingReport = () => {
                     {/* <ReportMember */}
                     {/*  member={savingStatementData.report.savingStatementReport?.member} */}
                     {/* /> */}
-                    <InterestStatementReportTable
-                      interestReport={interestStatement.entries as InterestPostingReportEntry[]}
+                    <InterestTaxReportTable
+                      taxReport={interestTaxReport as InterestTaxReportEntry[]}
                     />
                   </Box>
                 );
@@ -130,23 +118,23 @@ export const InterestPostingReport = () => {
               return null;
             })()}
           </Box>
-          <InterestStatementFilters hasShownFilter={hasShownFilter} setFilter={setFilter} />
+          <InterestTaxReportFilters setFilter={setFilter} hasShownFilter={hasShownFilter} />
         </Box>
       </Box>
     </FormProvider>
   );
 };
 
-interface InterestStatementFilterProps {
+interface InterestTaxReportFilterProps {
   hasShownFilter: boolean;
-  setFilter: React.Dispatch<React.SetStateAction<ReportFilterType | null>>;
+  setFilter: React.Dispatch<React.SetStateAction<InterestTaxReportFilter | null>>;
 }
 
-export const InterestStatementFilters = ({
+export const InterestTaxReportFilters = ({
   hasShownFilter,
   setFilter,
-}: InterestStatementFilterProps) => {
-  const methods = useFormContext<ReportFilterType>();
+}: InterestTaxReportFilterProps) => {
+  const methods = useFormContext<InterestTaxReportFilter>();
 
   if (!hasShownFilter) return null;
 
@@ -192,7 +180,37 @@ export const InterestStatementFilters = ({
                   _expanded={{}}
                 >
                   <Text color="gray.800" fontWeight="500">
-                    Interest Rate
+                    Saving Balance
+                  </Text>
+                  <Icon
+                    as={isExpanded ? ChevronDownIcon : ChevronRightIcon}
+                    color="gray.800"
+                    flexShrink={0}
+                  />
+                </AccordionButton>
+                <AccordionPanel pt={0} pb="s16" px="s16">
+                  <FormAmountFilter name="filter.savingBalance" />
+                </AccordionPanel>
+              </>
+            )}
+          </AccordionItem>
+          <AccordionItem border="none" borderBottom="1px" borderBottomColor="border.layout">
+            {({ isExpanded }) => (
+              <>
+                <AccordionButton
+                  border="none"
+                  borderRadius={0}
+                  px="s16"
+                  py="s16"
+                  bg="white"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  _hover={{}}
+                  _expanded={{}}
+                >
+                  <Text color="gray.800" fontWeight="500">
+                    Interest Amount
                   </Text>
                   <Icon
                     as={isExpanded ? ChevronDownIcon : ChevronRightIcon}
@@ -202,6 +220,36 @@ export const InterestStatementFilters = ({
                 </AccordionButton>
                 <AccordionPanel pt={0} pb="s16" px="s16">
                   <FormAmountFilter name="filter.interestAmount" />
+                </AccordionPanel>
+              </>
+            )}
+          </AccordionItem>
+          <AccordionItem border="none" borderBottom="1px" borderBottomColor="border.layout">
+            {({ isExpanded }) => (
+              <>
+                <AccordionButton
+                  border="none"
+                  borderRadius={0}
+                  px="s16"
+                  py="s16"
+                  bg="white"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  _hover={{}}
+                  _expanded={{}}
+                >
+                  <Text color="gray.800" fontWeight="500">
+                    Tax Amount
+                  </Text>
+                  <Icon
+                    as={isExpanded ? ChevronDownIcon : ChevronRightIcon}
+                    color="gray.800"
+                    flexShrink={0}
+                  />
+                </AccordionButton>
+                <AccordionPanel pt={0} pb="s16" px="s16">
+                  <FormAmountFilter name="filter.taxAmount" />
                 </AccordionPanel>
               </>
             )}
@@ -223,10 +271,7 @@ export const InterestStatementFilters = ({
               prev
                 ? {
                     ...prev,
-                    filter: {
-                      ...methods.getValues()['filter'],
-                      interestAmount: methods.getValues().filter?.interestAmount,
-                    },
+                    filter: methods.getValues()['filter'],
                   }
                 : null
             );
@@ -247,6 +292,14 @@ export const InterestStatementFilters = ({
                         min: null,
                         max: null,
                       },
+                      savingBalance: {
+                        min: null,
+                        max: null,
+                      },
+                      taxAmount: {
+                        min: null,
+                        max: null,
+                      },
                     },
                   }
                 : null
@@ -255,6 +308,14 @@ export const InterestStatementFilters = ({
               ...methods.getValues(),
               filter: {
                 interestAmount: {
+                  min: null,
+                  max: null,
+                },
+                savingBalance: {
+                  min: null,
+                  max: null,
+                },
+                taxAmount: {
                   min: null,
                   max: null,
                 },
