@@ -6,7 +6,11 @@ const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export const AgeCharts = () => {
   const { data } = useGetMemberClassificationReportQuery({
-    data: { period: ReportPeriodType.Lifetime },
+    data: {
+      period: {
+        periodType: ReportPeriodType.Lifetime,
+      },
+    },
   });
 
   const ageData = data?.report?.memberClassificationReport?.data?.age;

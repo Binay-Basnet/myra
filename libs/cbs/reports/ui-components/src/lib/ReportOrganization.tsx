@@ -18,7 +18,15 @@ export const ReportOrganization = ({ statementDate }: ReportOrganizationProps) =
   const period = watch('period');
 
   return (
-    <Box px="s32" py="s16" display="flex" alignItems="center" justifyContent="space-between">
+    <Box
+      borderBottom="1px"
+      borderBottomColor="border.layout"
+      px="s16"
+      py="s16"
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+    >
       <Box>
         <Box display="flex" gap="s4">
           <Text fontSize="r1" color="gray.700">
@@ -52,7 +60,7 @@ export const ReportOrganization = ({ statementDate }: ReportOrganizationProps) =
           <Text fontSize="r1" color="gray.700">
             Statement from:
           </Text>
-          {period === 'everything' ? (
+          {period === 'lifetime' ? (
             <Text fontSize="r1" color="gray.700" fontWeight="500">
               Everything
             </Text>

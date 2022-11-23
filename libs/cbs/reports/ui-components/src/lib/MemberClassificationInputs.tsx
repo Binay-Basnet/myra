@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { IoFilterOutline } from 'react-icons/io5';
 
-import { ReportPeriodType } from '@coop/cbs/data-access';
+import { PeriodInput, ReportPeriodType } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
 import { Box, Button, GridItem, Icon } from '@coop/shared/ui';
 
@@ -18,7 +18,7 @@ type ClassifyBy =
 
 type MemberClassificationFilter = {
   classificationBy: ClassifyBy[];
-  period: ReportPeriodType;
+  period: PeriodInput;
 };
 
 interface ReportInputsProps {
@@ -33,7 +33,7 @@ export const MemberClassificationInputs = ({
   setHasShownFilter,
 }: ReportInputsProps) => {
   const methods = useFormContext<{
-    period: ReportPeriodType;
+    period: PeriodInput;
     classificationBy: { label: string; value: string }[];
   }>();
 
@@ -91,7 +91,7 @@ export const MemberClassificationInputs = ({
         </GridItem>
         <GridItem colSpan={1}>
           <FormSelect
-            name="period"
+            name="period.periodType"
             hasRadioOption
             options={[
               { label: 'Today', value: ReportPeriodType.Today },
@@ -136,10 +136,12 @@ export const MemberClassificationInputs = ({
           onClick={methods.handleSubmit((data) => {
             if (!data['classificationBy'] || !data['period']) return;
 
-            if (data['period'] === ReportPeriodType.CustomPeriod) {
+            if (data['period'].periodType === ReportPeriodType.CustomPeriod) {
               setFilter({
                 classificationBy: data['classificationBy'].map((a) => a.value) as ClassifyBy[],
-                period: ReportPeriodType.Lifetime,
+                period: {
+                  periodType: ReportPeriodType.Lifetime,
+                },
               });
             }
 

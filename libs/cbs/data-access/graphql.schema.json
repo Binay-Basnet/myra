@@ -9691,18 +9691,6 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "customPeriod",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "LocalizedDateFilter",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "filter",
             "description": null,
             "type": {
@@ -9715,11 +9703,11 @@
             "deprecationReason": null
           },
           {
-            "name": "periodType",
+            "name": "period",
             "description": null,
             "type": {
-              "kind": "ENUM",
-              "name": "ReportPeriodType",
+              "kind": "INPUT_OBJECT",
+              "name": "PeriodInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -9820,6 +9808,18 @@
         "description": null,
         "fields": [
           {
+            "name": "Summary",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Map",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "data",
             "description": null,
             "args": [],
@@ -9842,6 +9842,18 @@
             "type": {
               "kind": "UNION",
               "name": "QueryError",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "meta",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Map",
               "ofType": null
             },
             "isDeprecated": false,
@@ -18362,7 +18374,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "String",
+                "name": "Localized",
                 "ofType": null
               }
             },
@@ -18378,7 +18390,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "String",
+                "name": "Localized",
                 "ofType": null
               }
             },
@@ -27284,24 +27296,16 @@
             "deprecationReason": null
           },
           {
-            "name": "customPeriod",
+            "name": "period",
             "description": null,
             "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "LocalizedDateFilter",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "periodType",
-            "description": null,
-            "type": {
-              "kind": "ENUM",
-              "name": "ReportPeriodType",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "PeriodInput",
+                "ofType": null
+              }
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -34795,18 +34799,6 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "customDate",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "LocalizedDateFilter",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "ledgerId",
             "description": null,
             "type": {
@@ -34826,8 +34818,8 @@
             "name": "period",
             "description": null,
             "type": {
-              "kind": "ENUM",
-              "name": "ReportPeriodType",
+              "kind": "INPUT_OBJECT",
+              "name": "PeriodInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -38000,18 +37992,6 @@
             "deprecationReason": null
           },
           {
-            "name": "customDate",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "LocalizedDateFilter",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "filter",
             "description": null,
             "type": {
@@ -38027,8 +38007,8 @@
             "name": "period",
             "description": null,
             "type": {
-              "kind": "ENUM",
-              "name": "ReportPeriodType",
+              "kind": "INPUT_OBJECT",
+              "name": "PeriodInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -38260,18 +38240,6 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "customDate",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "LocalizedDateFilter",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "filter",
             "description": null,
             "type": {
@@ -38287,8 +38255,8 @@
             "name": "period",
             "description": null,
             "type": {
-              "kind": "ENUM",
-              "name": "ReportPeriodType",
+              "kind": "INPUT_OBJECT",
+              "name": "PeriodInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -57883,18 +57851,6 @@
             "deprecationReason": null
           },
           {
-            "name": "customPeriod",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "LocalizedDateFilter",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "filter",
             "description": null,
             "type": {
@@ -57907,12 +57863,16 @@
             "deprecationReason": null
           },
           {
-            "name": "periodType",
+            "name": "period",
             "description": null,
             "type": {
-              "kind": "ENUM",
-              "name": "ReportPeriodType",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "PeriodInput",
+                "ofType": null
+              }
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -57928,6 +57888,18 @@
         "name": "KymStatusReportResult",
         "description": null,
         "fields": [
+          {
+            "name": "Summary",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Map",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "data",
             "description": null,
@@ -57951,6 +57923,18 @@
             "type": {
               "kind": "UNION",
               "name": "QueryError",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "meta",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Map",
               "ofType": null
             },
             "isDeprecated": false,
@@ -68376,18 +68360,6 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "customPeriod",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "CustomPeriodInput",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "loanAccountId",
             "description": null,
             "type": {
@@ -68420,14 +68392,14 @@
             "deprecationReason": null
           },
           {
-            "name": "periodType",
+            "name": "period",
             "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "ENUM",
-                "name": "ReportPeriodType",
+                "kind": "INPUT_OBJECT",
+                "name": "PeriodInput",
                 "ofType": null
               }
             },
@@ -70695,23 +70667,11 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "customDate",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "LocalizedDateFilter",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "period",
             "description": null,
             "type": {
-              "kind": "ENUM",
-              "name": "ReportPeriodType",
+              "kind": "INPUT_OBJECT",
+              "name": "PeriodInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -78455,7 +78415,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "CustomPeriodInput",
+              "name": "LocalizedDateFilter",
               "ofType": null
             },
             "defaultValue": null,
@@ -78480,6 +78440,45 @@
           }
         ],
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "PeriodType",
+        "description": null,
+        "fields": [
+          {
+            "name": "customPeriod",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CustomPeriodType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "periodType",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "ReportPeriodType",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -85179,18 +85178,6 @@
             "deprecationReason": null
           },
           {
-            "name": "customPeriod",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "CustomPeriodInput",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "filter",
             "description": null,
             "type": {
@@ -85219,14 +85206,14 @@
             "deprecationReason": null
           },
           {
-            "name": "periodType",
+            "name": "period",
             "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "ENUM",
-                "name": "ReportPeriodType",
+                "kind": "INPUT_OBJECT",
+                "name": "PeriodInput",
                 "ofType": null
               }
             },
@@ -89629,18 +89616,6 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "customPeriod",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "CustomPeriodInput",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "filter",
             "description": null,
             "type": {
@@ -89669,14 +89644,14 @@
             "deprecationReason": null
           },
           {
-            "name": "periodType",
+            "name": "period",
             "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "ENUM",
-                "name": "ReportPeriodType",
+                "kind": "INPUT_OBJECT",
+                "name": "PeriodInput",
                 "ofType": null
               }
             },
@@ -89695,18 +89670,6 @@
         "description": null,
         "fields": [
           {
-            "name": "customPeriod",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "CustomPeriodType",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "filter",
             "description": null,
             "args": [],
@@ -89735,15 +89698,15 @@
             "deprecationReason": null
           },
           {
-            "name": "periodType",
+            "name": "period",
             "description": null,
             "args": [],
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "ENUM",
-                "name": "ReportPeriodType",
+                "kind": "OBJECT",
+                "name": "PeriodType",
                 "ofType": null
               }
             },
@@ -93298,18 +93261,6 @@
             "deprecationReason": null
           },
           {
-            "name": "customDate",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "LocalizedDateFilter",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "includeZero",
             "description": null,
             "type": {
@@ -93325,8 +93276,8 @@
             "name": "period",
             "description": null,
             "type": {
-              "kind": "ENUM",
-              "name": "ReportPeriodType",
+              "kind": "INPUT_OBJECT",
+              "name": "PeriodInput",
               "ofType": null
             },
             "defaultValue": null,
@@ -94310,18 +94261,6 @@
             "deprecationReason": null
           },
           {
-            "name": "customPeriod",
-            "description": null,
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "LocalizedDateFilter",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "filter",
             "description": null,
             "type": {
@@ -94334,12 +94273,16 @@
             "deprecationReason": null
           },
           {
-            "name": "periodType",
+            "name": "period",
             "description": null,
             "type": {
-              "kind": "ENUM",
-              "name": "ReportPeriodType",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "PeriodInput",
+                "ofType": null
+              }
             },
             "defaultValue": null,
             "isDeprecated": false,

@@ -27,10 +27,12 @@ query getSavedReport($reportId: ID!) {
         ... on ShareStatementReportSettingsType {
           filter
           memberId
-          periodType
-          customPeriod {
-            from
-            to
+          period {
+            customPeriod {
+              from
+              to
+            }
+            periodType
           }
         }
       }
@@ -252,6 +254,9 @@ query getBranchReport($data: BranchReportFilter) {
         estDate
         branchStatus
         remarks
+      }
+      error {
+        ...QueryError
       }
     }
   }

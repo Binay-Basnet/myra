@@ -1,3 +1,4 @@
+export * from './components/Report/useReport';
 export * from './lib/CbsReportsFeatureReports';
 export * from './lib/deposit/InterestPostingReport';
 export * from './lib/deposit/InterestTaxReport';
@@ -8,5 +9,5 @@ export * from './lib/members/MemberActiveInactiveReport';
 export * from './lib/members/MemberClassificationReport';
 export * from './lib/mobile-banking/MBExpiryReport';
 export * from './lib/mobile-banking/MBRegistrationReport';
-export * from './lib/service-center/ServiceCenterReport';
+export * from './lib/service-center/ServiceCenterListReport';
 export * from './lib/share/ShareStatementReport';

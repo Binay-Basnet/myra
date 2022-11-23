@@ -21,10 +21,10 @@ type Path = {
 
 export interface PathBarProps {
   paths: Path[];
-  hasSave: boolean;
+  hasSave?: boolean;
 }
 
-export const ReportHeader = ({ paths, hasSave }: PathBarProps) => {
+export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
   const router = useRouter();
   const { getValues: filters } = useFormContext<ShareStatementReportSettings>();
 
@@ -44,12 +44,12 @@ export const ReportHeader = ({ paths, hasSave }: PathBarProps) => {
   };
 
   return (
-    (<Box
+    <Box
       h="50px"
       display="flex"
       alignItems="center"
       justifyContent="space-between"
-      px="s32"
+      px="s16"
       borderBottom="1px"
       borderColor="border.layout"
     >
@@ -126,7 +126,9 @@ export const ReportHeader = ({ paths, hasSave }: PathBarProps) => {
                       id: idResponse.newId,
                       data: {
                         memberId: filters().memberId,
-                        periodType: filters().periodType,
+                        period: {
+                          periodType: filters().period.periodType,
+                        },
                         filter: filters().filter,
                       },
                       name: getValues()['name'],
@@ -156,7 +158,7 @@ export const ReportHeader = ({ paths, hasSave }: PathBarProps) => {
           </Button>
         </Box>
       </Modal>
-    </Box>)
+    </Box>
   );
 };
 
