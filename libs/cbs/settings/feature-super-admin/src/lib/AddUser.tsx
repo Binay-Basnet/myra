@@ -228,8 +228,12 @@ export const AddUser = () => {
         <Box bg="white" pb="120px">
           <FormProvider {...methods}>
             <form>
-              <FormSection header="settingsUserAddUserBasicInformation">
+              <Box p="s20">
+                <FormSwitch name="isCoreEmployee" label="This user is a core employee" />
+              </Box>
+              <FormSection header="settingsUserAddUserBasicInformation" templateColumns={2}>
                 <FormInput type="text" name="name" label="Name" />
+                <FormInput type="text" name="empCode" label="Employee Code" />
 
                 <FormSelect name="gender" label="Gender" options={genderOptions} />
 
