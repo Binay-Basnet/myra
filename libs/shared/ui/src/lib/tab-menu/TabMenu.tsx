@@ -18,7 +18,7 @@ export interface TabMenuProps {}
 const NAVBAR_TAB_OBJECT: Record<string, number> = {
   members: 0,
   share: 1,
-  accounts: 2,
+  savings: 2,
   loan: 3,
   transactions: 4,
   transfer: 5,
