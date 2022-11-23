@@ -46,7 +46,7 @@ export const MemberActivationsReportTable = ({ report }: MemberActivationsReport
       },
       {
         header: 'DOB',
-        accessorFn: (row) => row?.dob,
+        accessorFn: (row) => row?.dob?.local,
         cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
       },
       {
@@ -67,7 +67,7 @@ export const MemberActivationsReportTable = ({ report }: MemberActivationsReport
       },
       {
         header: 'Member Registration Date',
-        accessorFn: (row) => row?.memberRegistrationDate,
+        accessorFn: (row) => row?.memberRegistrationDate?.local,
         cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
       },
       {

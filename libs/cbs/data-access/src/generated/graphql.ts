@@ -423,11 +423,11 @@ export type ActiveInactiveMemberStatement = {
   age?: Maybe<Scalars['Int']>;
   contactNo?: Maybe<Scalars['String']>;
   district?: Maybe<Scalars['String']>;
-  dob?: Maybe<Scalars['Date']>;
+  dob?: Maybe<Scalars['Localized']>;
   gender?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   memberName?: Maybe<Scalars['String']>;
-  memberRegistrationDate?: Maybe<Scalars['Date']>;
+  memberRegistrationDate?: Maybe<Scalars['Localized']>;
   memberType?: Maybe<KymMemberTypesEnum>;
   occupation?: Maybe<Scalars['String']>;
   pan?: Maybe<Scalars['String']>;
@@ -7831,8 +7831,8 @@ export type MemberActiveInput = {
 };
 
 export type MemberAgeRange = {
-  from?: InputMaybe<Scalars['Int']>;
-  to?: InputMaybe<Scalars['Int']>;
+  max?: InputMaybe<Scalars['Int']>;
+  min?: InputMaybe<Scalars['Int']>;
 };
 
 export type MemberBasicInfoView = {
@@ -8333,6 +8333,7 @@ export type MyraUser = Base & {
   email?: Maybe<Scalars['String']>;
   gender?: Maybe<UserGender>;
   id: Scalars['ID'];
+  isCoreEmployee?: Maybe<Scalars['Boolean']>;
   modifiedAt: Scalars['Time'];
   modifiedBy: Identity;
   name?: Maybe<Scalars['String']>;
@@ -8362,6 +8363,7 @@ export type MyraUserFormStateData = {
   id?: Maybe<Scalars['String']>;
   identificationDetails?: Maybe<Array<Maybe<MyraUserIdentification>>>;
   identificationSelection?: Maybe<Array<Maybe<Scalars['String']>>>;
+  isCoreEmployee?: Maybe<Scalars['Boolean']>;
   isTempAsPermanentAddressSame?: Maybe<Scalars['Boolean']>;
   landlordContact?: Maybe<Scalars['String']>;
   landlordName?: Maybe<Scalars['String']>;
@@ -8407,6 +8409,7 @@ export type MyraUserInput = {
   gender: UserGender;
   identificationDetails?: InputMaybe<Array<InputMaybe<MyraUserIdentificationInput>>>;
   identificationSelection?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  isCoreEmployee?: InputMaybe<Scalars['Boolean']>;
   isTempAsPermanentAddressSame?: InputMaybe<Scalars['Boolean']>;
   landlordContact?: InputMaybe<Scalars['String']>;
   landlordName?: InputMaybe<Scalars['String']>;
@@ -9238,6 +9241,14 @@ export enum RiskCategoryFilter {
 }
 
 export enum Roles {
+  Agent = 'AGENT',
+  BranchManager = 'BRANCH_MANAGER',
+  HeadTeller = 'HEAD_TELLER',
+  Superadmin = 'SUPERADMIN',
+  Teller = 'TELLER',
+}
+
+export enum RolesFilter {
   Agent = 'AGENT',
   BranchManager = 'BRANCH_MANAGER',
   HeadTeller = 'HEAD_TELLER',
@@ -10629,30 +10640,31 @@ export type UserQuery = {
 };
 
 export type UserReport = {
-  accessForBranch?: Maybe<Scalars['String']>;
-  accessForGroup?: Maybe<Scalars['String']>;
+  accessForBranch?: Maybe<Scalars['Boolean']>;
+  accessForGroup?: Maybe<Scalars['Boolean']>;
   createdBy?: Maybe<Scalars['String']>;
   createdDate?: Maybe<Scalars['String']>;
   empCode?: Maybe<Scalars['String']>;
-  empployeeName?: Maybe<Scalars['String']>;
+  employeeName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
-  isAdmin?: Maybe<Scalars['String']>;
   isCoreEmployee?: Maybe<Scalars['Boolean']>;
   remarks?: Maybe<Scalars['String']>;
+  role?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
   usernameCode?: Maybe<Scalars['String']>;
 };
 
 export type UserReportFilter = {
+  branchId?: InputMaybe<Scalars['String']>;
   customPeriod?: InputMaybe<LocalizedDateFilter>;
   filter?: InputMaybe<UserReportFilterData>;
   periodType?: InputMaybe<ReportPeriodType>;
 };
 
 export type UserReportFilterData = {
-  admin?: InputMaybe<Scalars['String']>;
-  employee?: InputMaybe<Scalars['String']>;
+  isCoreEmployee?: InputMaybe<Scalars['Boolean']>;
+  role?: InputMaybe<Array<InputMaybe<RolesFilter>>>;
 };
 
 export type UserReportResult = {
@@ -15866,6 +15878,7 @@ export type GetLoanRepaymentListQuery = {
           loanAccountId: string;
           memberId: string;
           memberName: Record<'local' | 'en' | 'np', string>;
+          memberCode?: string | null;
           memberProfilePicId?: string | null;
           memberProfilePicUrl?: string | null;
           loanAccountName: string;
@@ -15924,6 +15937,7 @@ export type GetMemberListQuery = {
           contact?: string | null;
           createdAt: string;
           dateJoined?: string | null;
+          activeDate?: string | null;
           address?: {
             state?: Record<'local' | 'en' | 'np', string> | null;
             district?: Record<'local' | 'en' | 'np', string> | null;
@@ -17016,13 +17030,13 @@ export type GetActiveInactiveMemberReportQuery = {
               district?: string | null;
               wardNo?: string | null;
               address?: string | null;
-              dob?: string | null;
+              dob?: Record<'local' | 'en' | 'np', string> | null;
               age?: number | null;
               contactNo?: string | null;
               gender?: string | null;
               pan?: string | null;
               occupation?: string | null;
-              memberRegistrationDate?: string | null;
+              memberRegistrationDate?: Record<'local' | 'en' | 'np', string> | null;
               status?: MemberStatus | null;
             } | null> | null;
           }
@@ -17090,6 +17104,7 @@ export type GetChequeBookRequestsQuery = {
           node?: {
             id: string;
             memberId: string;
+            memberCode?: string | null;
             memberName: Record<'local' | 'en' | 'np', string>;
             memberPhoneNumber: string;
             memberAge?: number | null;
@@ -17127,6 +17142,7 @@ export type GetWithdrawViaCollectorQuery = {
           node?: {
             id: string;
             memberId: string;
+            memberCode?: string | null;
             memberName: Record<'local' | 'en' | 'np', string>;
             memberPhoneNumber: string;
             accountNumber: string;
@@ -17158,6 +17174,7 @@ export type GetLoanRequestsQuery = {
           node?: {
             id: string;
             memberId: string;
+            memberCode?: string | null;
             memberName: Record<'local' | 'en' | 'np', string>;
             memberPhoneNumber: string;
             approvalStatus: RequestStatus;
@@ -17186,6 +17203,7 @@ export type GetBlockChequeListQuery = {
           node?: {
             id: string;
             memberId: string;
+            memberCode?: string | null;
             memberName: Record<'local' | 'en' | 'np', string>;
             memberPhoneNumber: string;
             accountNumber: string;
@@ -26268,6 +26286,7 @@ export const GetLoanRepaymentListDocument = `
           loanAccountId
           memberId
           memberName
+          memberCode
           memberProfilePicId
           memberProfilePicUrl
           loanAccountName
@@ -26353,6 +26372,7 @@ export const GetMemberListDocument = `
           contact
           createdAt
           dateJoined
+          activeDate
           profile {
             ... on KymIndFormStateQuery {
               data {
@@ -27928,6 +27948,7 @@ export const GetChequeBookRequestsDocument = `
           node {
             id
             memberId
+            memberCode
             memberName
             memberPhoneNumber
             memberAge
@@ -27974,6 +27995,7 @@ export const GetWithdrawViaCollectorDocument = `
           node {
             id
             memberId
+            memberCode
             memberName
             memberPhoneNumber
             accountNumber
@@ -28017,6 +28039,7 @@ export const GetLoanRequestsDocument = `
           node {
             id
             memberId
+            memberCode
             memberName
             memberPhoneNumber
             approvalStatus
@@ -28055,6 +28078,7 @@ export const GetBlockChequeListDocument = `
           node {
             id
             memberId
+            memberCode
             memberName
             memberPhoneNumber
             accountNumber

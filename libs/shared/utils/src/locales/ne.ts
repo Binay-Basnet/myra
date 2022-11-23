@@ -238,6 +238,7 @@ const ne: Record<string, string> = {
   memberListTableAddress: 'ठेगाना',
   memberListTablePhoneNo: 'फोन नं',
   memberListDateJoined: 'आवद्ध मिति',
+  memberListActiveDate: 'Active Date',
   memberDeleteMember: 'Delete member',
   memberDeleteConfirm: 'Are you sure you want to delete this member?',
 

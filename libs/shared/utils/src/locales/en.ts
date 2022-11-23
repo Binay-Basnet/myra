@@ -295,6 +295,7 @@ const en: Record<string, string> = {
   memberListTableAddress: 'Address',
   memberListTablePhoneNo: 'Phone No.',
   memberListDateJoined: 'Date Joined',
+  memberListActiveDate: 'Active Date',
   memberDeleteMember: 'Delete member',
   memberDeleteConfirm: 'Are you sure you want to delete this member?',
 
@@ -460,7 +461,7 @@ const en: Record<string, string> = {
   settingsIndividual: 'Individuals',
   settingsInstitutional: 'Institutionals',
   settingsCooperative: 'Cooperative',
-  settingsCorporativeUnion: 'Corporative Union',
+  settingsCooperativeUnion: 'Cooperative Union',
   settingsGeneralRisk: 'General Risk',
   settingsMediumRisk: 'Medium Risk',
   settingsHighRisk: 'High Risk',
