@@ -1,10 +1,9 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
+import { useExternalLoanAccountListQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, TablePopover, Text } from '@coop/shared/ui';
+import { TablePopover } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -13,50 +12,39 @@ export interface ExternalLoanAccountListProps {}
 export const ExternalLoanAccountList = () => {
   const { t } = useTranslation();
 
-  const router = useRouter();
-
-  const { data, isLoading } = useGetMemberListQuery({
+  const { data, isLoading } = useExternalLoanAccountListQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    filter: {
-      objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    },
   });
 
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.accounting?.externalLoan?.account?.list?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        accessorFn: (row) => row?.node?.name?.local,
+        accessorFn: (row) => row?.node?.name,
         header: 'Name',
-        cell: (props) => (
-          <Box display="flex" alignItems="center" gap="s12">
-            <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
-            <Text
-              fontSize="s3"
-              textTransform="capitalize"
-              textOverflow="ellipsis"
-              overflow="hidden"
-            >
-              {props.getValue() as string}
-            </Text>
-          </Box>
-        ),
-
         meta: {
           width: '60%',
         },
       },
       {
         header: 'Address',
-        accessorFn: (row) => row?.node?.code,
+        accessorFn: (row) => row?.node?.address,
+        cell: (props) => {
+          const address = props?.row?.original?.node?.address;
+          return (
+            <span>
+              {address?.locality?.local} - {address?.wardNo},{address?.district?.local}
+            </span>
+          );
+        },
         meta: {
           width: '30%',
         },
       },
       {
         header: 'Created Date',
-        accessorFn: (row) => row?.node?.contact,
+        accessorFn: (row) => row?.node?.createdDate?.local,
         meta: {
           width: '30%',
         },
@@ -84,11 +72,7 @@ export const ExternalLoanAccountList = () => {
   );
   return (
     <>
-      <AccountingPageHeader
-        heading="External Loan Accounts"
-        buttonLabel="New Cash Transfer"
-        buttonHandler={() => router.push('/accounting/loan/external-loan/67/add')}
-      />
+      <AccountingPageHeader heading="External Loan Accounts" />
 
       <Table data={rowData} isLoading={isLoading} columns={columns} />
     </>

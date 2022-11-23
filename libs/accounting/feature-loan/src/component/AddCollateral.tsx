@@ -13,21 +13,21 @@ export const AddCollateral = () => (
           size="sm"
           icon={<CloseButton />}
           // onClick={() => {
-          //   removeMainOccupation(occupationId);
+          //   removeCollateral(occupationId);
           // }}
         />
       </Box>
       <Box display="flex" gap="16px" flexDirection="column">
         <Box display="flex" flexDirection="column">
           <Box display="flex" p="s16" gap="s16">
-            <FormInput type="text" name="fullName" label="Type of Collateral" />
+            <FormInput name="collateral.typeOfCollateral" type="text" label="Type of Collateral" />
             <FormInput
-              type="number"
+              name="collateral.valuationAmount"
               textAlign="right"
-              name="designationEn"
+              type="number"
               label="Valuation Amount"
             />
-            <FormInput type="text" name="designationEn" label="Collateral Details" />
+            <FormInput name="collateral.details" type="test" label="Collateral Details" />
           </Box>
         </Box>
       </Box>

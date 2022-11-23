@@ -3,7 +3,7 @@ import { Box, Text } from '@coop/shared/ui';
 
 type LoanProcessTableType = {
   serviceName: string;
-  serviceID: string;
+  serviceId: string;
   serviceCharge: string;
 };
 
@@ -13,20 +13,19 @@ export const LoanProcessTable = () => (
       Loan Process Fee and Charges
     </Text>
     <FormEditableTable<LoanProcessTableType>
-      name="data"
+      name="loanCharges"
       columns={[
         {
           accessor: 'serviceName',
           header: 'Service Name',
         },
         {
-          accessor: 'serviceID',
+          accessor: 'serviceId',
           header: 'Service ID',
         },
         {
           accessor: 'serviceCharge',
           header: 'Service Charge',
-          isNumeric: true,
         },
       ]}
     />

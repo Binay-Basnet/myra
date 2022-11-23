@@ -76,7 +76,7 @@ export const ExternalLoanSidebarLayout = ({ children }: IExternalLoanSidebarLayo
                   alignItems="center"
                   _hover={{ bg: 'gray.100' }}
                   cursor="pointer"
-                  onClick={() => router.push('/accounting/loan/external-loan/121/add')}
+                  onClick={() => router.push('/accounting/loan/external-loan/new/add')}
                 >
                   <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
                   <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
@@ -92,7 +92,7 @@ export const ExternalLoanSidebarLayout = ({ children }: IExternalLoanSidebarLayo
                   alignItems="center"
                   _hover={{ bg: 'gray.100' }}
                   cursor="pointer"
-                  onClick={() => router.push('/accounting/loan/external-loan-accounts/121/add')}
+                  onClick={() => router.push('/accounting/loan/external-loan-accounts/new/add')}
                 >
                   <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
                   <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
@@ -108,7 +108,7 @@ export const ExternalLoanSidebarLayout = ({ children }: IExternalLoanSidebarLayo
                   alignItems="center"
                   _hover={{ bg: 'gray.100' }}
                   cursor="pointer"
-                  onClick={() => router.push('/accounting/loan/external-loan-payment/121/add')}
+                  onClick={() => router.push('/accounting/loan/external-loan-payment/new/add')}
                 >
                   <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
                   <Text variant="bodyRegular" color="neutralColorLight.Gray-80">

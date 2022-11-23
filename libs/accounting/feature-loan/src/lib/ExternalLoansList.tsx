@@ -1,10 +1,9 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
+import { useExternalLoanListQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, TablePopover, Text } from '@coop/shared/ui';
+import { TablePopover } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -13,16 +12,11 @@ export interface AccountingFeatureLoanProps {}
 export const ExternalLoansList = () => {
   const { t } = useTranslation();
 
-  const router = useRouter();
-
-  const { data, isLoading } = useGetMemberListQuery({
+  const { data, isLoading } = useExternalLoanListQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    filter: {
-      objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    },
   });
 
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
+  const rowData = useMemo(() => data?.accounting?.externalLoan?.loan?.list?.edges ?? [], [data]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
@@ -31,21 +25,8 @@ export const ExternalLoansList = () => {
         accessorFn: (row) => row?.node?.id,
       },
       {
-        accessorFn: (row) => row?.node?.name?.local,
+        accessorFn: (row) => row?.node?.organizationName,
         header: 'Name of Organization',
-        cell: (props) => (
-          <Box display="flex" alignItems="center" gap="s12">
-            <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
-            <Text
-              fontSize="s3"
-              textTransform="capitalize"
-              textOverflow="ellipsis"
-              overflow="hidden"
-            >
-              {props.getValue() as string}
-            </Text>
-          </Box>
-        ),
 
         meta: {
           width: '60%',
@@ -53,21 +34,21 @@ export const ExternalLoansList = () => {
       },
       {
         header: 'Type',
-        accessorFn: (row) => row?.node?.code,
+        accessorFn: (row) => row?.node?.loanType,
         meta: {
           width: '30%',
         },
       },
       {
         header: 'Amount',
-        accessorFn: (row) => row?.node?.contact,
+        accessorFn: (row) => row?.node?.amount,
         meta: {
           width: '30%',
         },
       },
       {
         header: 'Applied Date',
-        accessorFn: (row) => row?.node?.contact,
+        accessorFn: (row) => row?.node?.appliedDate?.local,
         meta: {
           width: '30%',
         },
@@ -95,11 +76,7 @@ export const ExternalLoansList = () => {
   );
   return (
     <>
-      <AccountingPageHeader
-        heading="Investments"
-        buttonLabel="New Cash Transfer"
-        buttonHandler={() => router.push('/accounting/loan/external-loan/67/add')}
-      />
+      <AccountingPageHeader heading="Investments" />
 
       <Table isLoading={isLoading} data={rowData} columns={columns} />
     </>

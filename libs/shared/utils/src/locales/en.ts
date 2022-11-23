@@ -3826,6 +3826,10 @@ const en: Record<string, string> = {
   accountingAccountingTabMenuLoan: 'External Loan',
 
   settingsBranchExtensionCounter: 'ExtensionCounter',
+
+  cash: 'Cash',
+  bank: 'Bank',
+  other: 'Other',
 };
 
 export default en;

@@ -2,11 +2,23 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { BiSave } from 'react-icons/bi';
+import { useRouter } from 'next/router';
 
-import { useGetNewIdMutation } from '@coop/cbs/data-access';
-import { SubHeadingText } from '@coop/shared/components';
-import { FormFileInput, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
+  ExternalLoanApplicationInput,
+  ExternalLoanPaymentMethod,
+  FrequencyTenure,
+  InstallmentFrequency,
+  InvestmentType,
+  LoanRepaymentScheme,
+  useGetInvestmentEntriesListDataQuery,
+  useGetNewIdMutation,
+  useGetSettingsUserListDataQuery,
+  useSetExternalLoanMutation,
+} from '@coop/cbs/data-access';
+import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import {
+  asyncToast,
   Box,
   Button,
   Container,
@@ -17,21 +29,74 @@ import {
   Icon,
   Text,
 } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
-import { AddCollateral, LoanProcessTable } from '../component';
+import {
+  AddCollateral,
+  Documents,
+  ExternalLoanInfo,
+  Installment,
+  Insurance,
+  LoanProcessTable,
+  LoanTenure,
+} from '../component';
 
 /* eslint-disable-next-line */
 export interface ExternalLoanAddProps {}
 
 export const ExternalLoanAdd = () => {
   const { t } = useTranslation();
+  const router = useRouter();
+  const methods = useForm<ExternalLoanApplicationInput>({
+    defaultValues: {
+      tenureUnit: FrequencyTenure.Day,
+      insurance: false,
+      installmentType: LoanRepaymentScheme.Emi,
+      installmentFrequency: InstallmentFrequency.Daily,
+      paymentMethod: ExternalLoanPaymentMethod.Cash,
+    },
+  });
+  // const id = String(router?.query?.['id']);
+  const { getValues } = methods;
+
   const [collateralId, setCollateralId] = useState<string[]>([]);
 
-  const yesNo = [
-    { label: t['yes'], value: true },
-    { label: t['no'], value: false },
+  const { mutateAsync } = useSetExternalLoanMutation();
+
+  const paymentModeList = [
+    { label: 'Cash', value: ExternalLoanPaymentMethod.Cash },
+    { label: 'Bank', value: ExternalLoanPaymentMethod.Bank },
   ];
+
+  const { data: investmentData } = useGetInvestmentEntriesListDataQuery({
+    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    filter: { type: InvestmentType.FixedDeposit },
+  });
+
+  const investmentList = investmentData?.accounting?.investment?.listEntry?.edges;
+
+  const fixedDepositList =
+    investmentList &&
+    investmentList?.map((item) => ({
+      label: item?.node?.name as string,
+      value: item?.node?.id as string,
+    }));
+
+  const { data: userListQueryData } = useGetSettingsUserListDataQuery(
+    {
+      paginate: getRouterQuery({ type: ['PAGINATION'] }),
+    },
+    { staleTime: 0 }
+  );
+
+  const userList = userListQueryData?.settings?.myraUser?.list?.edges;
+
+  const representativeList =
+    userList &&
+    userList?.map((item) => ({
+      label: item?.node?.name as string,
+      value: item?.node?.id as string,
+    }));
 
   const { mutate: newIdMutate } = useGetNewIdMutation({
     onSuccess: (res) => {
@@ -43,7 +108,28 @@ export const ExternalLoanAdd = () => {
     newIdMutate({});
   };
 
-  const methods = useForm();
+  const submitForm = () => {
+    const values = getValues();
+
+    asyncToast({
+      id: 'external-loan-id',
+      msgs: {
+        success: 'New External Loan Added',
+        loading: 'Adding External Loan',
+      },
+      onSuccess: () => router.push('/accounting/loan/external-loan/list'),
+      promise: mutateAsync({ data: values }),
+      onError: (error) => {
+        if (error.__typename === 'ValidationError') {
+          Object.keys(error.validationErrorMsg).map((key) =>
+            methods.setError(key as keyof ExternalLoanApplicationInput, {
+              message: error.validationErrorMsg[key][0] as string,
+            })
+          );
+        }
+      },
+    });
+  };
 
   return (
     <>
@@ -53,70 +139,11 @@ export const ExternalLoanAdd = () => {
         <FormProvider {...methods}>
           <form>
             <Box bg="white" minH="calc(100vh - 220px)">
-              <FormSection divider={false}>
-                <GridItem colSpan={2}>
-                  <FormInput name="reference" type="text" label="External Loan" />
-                </GridItem>
-                <GridItem colSpan={1}>
-                  <FormSelect name="dueDate" label="Name of Organization" options={[]} />
-                </GridItem>
-                <FormSelect name="dueDate" label="Type of Loan" options={[]} />
+              <ExternalLoanInfo />
 
-                <FormInput name="dueDate" type="date" label="Loan Applied Date" />
-                <FormInput name="dueDate" type="date" label="Loan Approved Date" />
-              </FormSection>
+              <LoanTenure />
 
-              <FormSection divider={false}>
-                <FormInput name="reference" type="text" label="Applied Amount" />
-                <FormInput name="reference" type="text" label="Approved Amount" />
-                <FormInput name="reference" type="text" label="Loan Number" />
-              </FormSection>
-
-              <FormSection>
-                <FormInput name="reference" type="text" label="Tenure" />
-                <FormInput name="reference" type="date" label="Effective Start Date" />
-                <FormInput name="reference" type="date" label="Maturity Date" />
-                <FormInput
-                  name="reference"
-                  type="number"
-                  textAlign="right"
-                  rightElement={
-                    <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-                      %
-                    </Text>
-                  }
-                  label="Interest Rate"
-                />
-              </FormSection>
-
-              <FormSection>
-                <GridItem colSpan={2}>
-                  <FormSwitchTab
-                    name="paymentMode"
-                    label="Installment Type"
-                    defaultValue="cash"
-                    options={[
-                      { label: 'EMI', value: 'EMI' },
-                      { label: 'EPI', value: 'EPI' },
-                      { label: 'Flat', value: 'Flat' },
-                    ]}
-                  />
-                </GridItem>
-
-                <GridItem>
-                  <FormSwitchTab
-                    name="paymentMode"
-                    label="Installment Frequency"
-                    defaultValue="cash"
-                    options={[
-                      { label: 'Daily', value: 'Daily' },
-                      { label: 'Weekly', value: 'Weekly' },
-                      { label: 'Monthly', value: 'Monthly' },
-                      { label: 'Yearly', value: 'Yearly' },
-                    ]}
-                  />
-                </GridItem>
-              </FormSection>
+              <Installment />
 
               <FormSection header="Collaterals" divider={false}>
                 <GridItem
@@ -142,13 +169,21 @@ export const ExternalLoanAdd = () => {
                   </Button>
                 </GridItem>
                 <GridItem colSpan={3}>
-                  <FormSelect name="dueDate" label="Fix Deposit" options={[]} />
+                  <FormSelect
+                    name="fixDeposit"
+                    label="Fix Deposit"
+                    options={fixedDepositList ?? []}
+                  />
                 </GridItem>
                 <GridItem colSpan={2}>
-                  <FormSelect name="dueDate" label="Name of Representative" options={[]} />
+                  <FormSelect
+                    name="nameOfRepresentative"
+                    label="Name of Representative"
+                    options={representativeList ?? []}
+                  />
                 </GridItem>
                 <GridItem colSpan={1}>
-                  <FormInput name="reference" type="date" label="Position" />
+                  <FormInput name="position" type="text" label="Position" />
                 </GridItem>
               </FormSection>
 
@@ -158,69 +193,17 @@ export const ExternalLoanAdd = () => {
                 </GridItem>
               </FormSection>
 
-              <FormSection>
-                <GridItem colSpan={3}>
-                  <Box display="flex" flexDirection="row" justifyContent="space-between">
-                    <SubHeadingText>Insurance</SubHeadingText>
-                    <FormSwitchTab name="wealthBuildingProduct" options={yesNo} />
-                  </Box>
-                </GridItem>
-                <GridItem colSpan={2}>
-                  <FormInput name="reference" type="text" label="Insurance Company" />
-                </GridItem>
-                <GridItem colSpan={1}>
-                  <FormInput
-                    name="reference"
-                    type="number"
-                    textAlign="right"
-                    label="Insurance Premium Amount"
-                  />
-                </GridItem>
-                <GridItem colSpan={1}>
-                  <FormInput name="reference" type="date" label="Start Date" />
-                </GridItem>
-                <GridItem colSpan={1}>
-                  <FormInput name="reference" type="date" label="Valid Upto" />
-                </GridItem>
-              </FormSection>
+              <Insurance />
 
               <FormSection>
                 <FormSwitchTab
-                  name="paymentMode"
+                  name="paymentMethod"
                   label="Payment Method"
                   defaultValue="cash"
-                  options={[
-                    { label: 'Cash', value: 'Cash' },
-                    { label: 'Bank', value: 'Bank' },
-                  ]}
+                  options={paymentModeList}
                 />
               </FormSection>
-
-              <FormSection header="File Uploads" templateColumns={4}>
-                <GridItem colSpan={2}>
-                  <FormFileInput size="lg" label="Application" name="Application" />
-                </GridItem>
-
-                <GridItem colSpan={2}>
-                  <FormFileInput
-                    size="lg"
-                    label="Collateral Documents"
-                    name="CollateralDocuments"
-                  />
-                </GridItem>
-
-                <GridItem colSpan={2}>
-                  <FormFileInput size="lg" label="Guarantor Documents" name="GuarantorDocuments" />
-                </GridItem>
-
-                <GridItem colSpan={2}>
-                  <FormFileInput size="lg" label="BOD Details" name="BODDetails" />
-                </GridItem>
-
-                <GridItem colSpan={4}>
-                  <FormFileInput size="lg" label="Guarantor Documents" name="GuarantorDocuments" />
-                </GridItem>
-              </FormSection>
+              <Documents />
             </Box>
           </form>
         </FormProvider>
@@ -244,6 +227,7 @@ export const ExternalLoanAdd = () => {
               </Button>
             }
             mainButtonLabel={t['save']}
+            mainButtonHandler={submitForm}
           />
         </Container>
       </Box>

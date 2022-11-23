@@ -1,9 +1,17 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
+import { useRouter } from 'next/router';
 
+import {
+  ExternalLoanPaymentMethod,
+  ExternalLoanPaymentMutation,
+  useExternalLoanAccountListQuery,
+  useSetExternalPaymentMutation,
+} from '@coop/cbs/data-access';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
   Alert,
+  asyncToast,
   Box,
   Button,
   Container,
@@ -14,17 +22,63 @@ import {
   Icon,
   Text,
 } from '@coop/shared/ui';
-import { useTranslation } from '@coop/shared/utils';
+import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const ExternalLoanPaymentAdd = () => {
   const { t } = useTranslation();
-  const methods = useForm();
+  const router = useRouter();
+  const methods = useForm({
+    defaultValues: {
+      paymentModeList: ExternalLoanPaymentMethod.Cash,
+    },
+  });
+  // const id = String(router?.query?.['id']);
 
-  const yesNo = [
-    { label: 'Cash', value: 'Cash' },
-    { label: 'Bank', value: 'Bank' },
-    { label: 'Other', value: 'Other' },
+  const { getValues } = methods;
+
+  const paymentModeList = [
+    { label: t['cash'], value: ExternalLoanPaymentMethod.Cash },
+    { label: t['bank'], value: ExternalLoanPaymentMethod.Bank },
+    { label: t['other'], value: ExternalLoanPaymentMethod.Other },
   ];
+
+  const { data } = useExternalLoanAccountListQuery({
+    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+  });
+
+  const accountList = data?.accounting?.externalLoan?.account?.list?.edges;
+
+  const loanList =
+    accountList &&
+    accountList?.map((item) => ({
+      label: item?.node?.name as string,
+      value: item?.node?.id as string,
+    }));
+
+  const { mutateAsync } = useSetExternalPaymentMutation();
+
+  const submitForm = () => {
+    const values = getValues();
+
+    asyncToast({
+      id: 'external-loan-payment-id',
+      msgs: {
+        success: 'New External Loan Payment Added',
+        loading: 'Adding External Loan Payment',
+      },
+      onSuccess: () => router.push('/accounting/loan/external-loan/list'),
+      promise: mutateAsync({ data: values }),
+      onError: (error) => {
+        if (error.__typename === 'ValidationError') {
+          Object.keys(error.validationErrorMsg).map((key) =>
+            methods.setError(key as keyof ExternalLoanPaymentMutation, {
+              message: error.validationErrorMsg[key][0] as string,
+            })
+          );
+        }
+      },
+    });
+  };
 
   return (
     <>
@@ -36,10 +90,10 @@ export const ExternalLoanPaymentAdd = () => {
             <Box bg="white" minH="calc(100vh - 220px)">
               <FormSection>
                 <GridItem colSpan={2}>
-                  <FormSelect name="select" label="Select Loan" options={[]} />
+                  <FormSelect name="loanId" label="Select Loan" options={loanList ?? []} />
                 </GridItem>
                 <GridItem colSpan={1}>
-                  <FormInput name="dueDate" type="date" label="Date" />
+                  <FormInput name="date" type="date" label="Date" />
                 </GridItem>
                 <GridItem colSpan={3}>
                   <Alert status="info" title="Loan Detail" hideCloseIcon>
@@ -65,18 +119,27 @@ export const ExternalLoanPaymentAdd = () => {
 
               <FormSection>
                 <FormInput
-                  name="select"
+                  name="installmentAmount"
                   label="Installment Amount"
                   type="number"
                   textAlign="right"
                 />
-                <FormInput name="select" label="Rebate" type="number" textAlign="right" />
-                <FormInput name="select" label="Fine" type="number" textAlign="right" />
-                <FormInput name="select" label="Other Charges" type="number" textAlign="right" />
-                <FormInput name="select" label="Amount Paid" type="number" textAlign="right" />
+                <FormInput name="rebate" label="Rebate" type="number" textAlign="right" />
+                <FormInput name="fine" label="Fine" type="number" textAlign="right" />
+                <FormInput
+                  name="otherCharge"
+                  label="Other Charges"
+                  type="number"
+                  textAlign="right"
+                />
+                <FormInput name="amountPaid" label="Amount Paid" type="number" textAlign="right" />
 
                 <GridItem colSpan={3}>
-                  <FormSwitchTab label="Payment Mode" name="PaymentMode" options={yesNo} />
+                  <FormSwitchTab
+                    label="Payment Mode"
+                    name="paymentMode"
+                    options={paymentModeList}
+                  />
                 </GridItem>
               </FormSection>
             </Box>
@@ -102,6 +165,7 @@ export const ExternalLoanPaymentAdd = () => {
               </Button>
             }
             mainButtonLabel={t['save']}
+            mainButtonHandler={submitForm}
           />
         </Container>
       </Box>

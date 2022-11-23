@@ -11304,6 +11304,78 @@ export enum WithdrawWith {
   WithdrawSlip = 'WITHDRAW_SLIP',
 }
 
+export type SetExternalLoanMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  data?: InputMaybe<ExternalLoanApplicationInput>;
+}>;
+
+export type SetExternalLoanMutation = {
+  accounting: {
+    externalLoan: {
+      loan?: {
+        new?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    };
+  };
+};
+
+export type SetExternalAccountMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  data?: InputMaybe<ExternalLoanAccountInput>;
+}>;
+
+export type SetExternalAccountMutation = {
+  accounting: {
+    externalLoan: {
+      account?: {
+        new?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    };
+  };
+};
+
+export type SetExternalPaymentMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+  data?: InputMaybe<ExternalLoanPaymentInput>;
+}>;
+
+export type SetExternalPaymentMutation = {
+  accounting: {
+    externalLoan: {
+      payment?: {
+        new?: {
+          recordId?: string | null;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    };
+  };
+};
+
 export type SetInvestmentAccountDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: InvestmentAccountInput;
@@ -13889,6 +13961,112 @@ export type GetAccountTransactionListsQuery = {
         averageBalance?: string | null;
       } | null;
     } | null;
+  };
+};
+
+export type ExternalLoanListQueryVariables = Exact<{
+  filter?: InputMaybe<ExternalLoanApplicationFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type ExternalLoanListQuery = {
+  accounting: {
+    externalLoan: {
+      loan?: {
+        list?: {
+          totalCount: number;
+          pageInfo?: {
+            hasNextPage: boolean;
+            hasPreviousPage: boolean;
+            startCursor?: string | null;
+            endCursor?: string | null;
+          } | null;
+          edges?: Array<{
+            cursor?: string | null;
+            node?: {
+              id?: string | null;
+              loanName?: string | null;
+              organizationId?: string | null;
+              organizationName?: string | null;
+              createdBy?: string | null;
+              appliedDate?: Record<'local' | 'en' | 'np', string> | null;
+              loanType?: ExternalLoanType | null;
+              amount?: string | null;
+            } | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    };
+  };
+};
+
+export type ExternalLoanAccountListQueryVariables = Exact<{
+  filter?: InputMaybe<ExternalLoanAccountFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type ExternalLoanAccountListQuery = {
+  accounting: {
+    externalLoan: {
+      account?: {
+        list?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor?: string | null;
+            node?: {
+              id?: string | null;
+              name?: string | null;
+              createdBy?: string | null;
+              createdDate?: Record<'local' | 'en' | 'np', string> | null;
+              address?: {
+                state?: Record<'local' | 'en' | 'np', string> | null;
+                district?: Record<'local' | 'en' | 'np', string> | null;
+                localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+                wardNo?: string | null;
+                locality?: Record<'local' | 'en' | 'np', string> | null;
+                houseNo?: string | null;
+                coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+              } | null;
+            } | null;
+          } | null> | null;
+          pageInfo?: {
+            hasNextPage: boolean;
+            hasPreviousPage: boolean;
+            startCursor?: string | null;
+            endCursor?: string | null;
+          } | null;
+        } | null;
+      } | null;
+    };
+  };
+};
+
+export type ExternalLoanPaymentListQueryVariables = Exact<{
+  filter?: InputMaybe<ExternalLoanPaymentFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+export type ExternalLoanPaymentListQuery = {
+  accounting: {
+    externalLoan: {
+      payment?: {
+        list?: {
+          totalCount: number;
+          edges?: Array<{
+            cursor?: string | null;
+            node?: {
+              id?: string | null;
+              loanId?: string | null;
+              loanName?: string | null;
+              createdBy?: string | null;
+              createdDate?: Record<'local' | 'en' | 'np', string> | null;
+              amount?: string | null;
+              paymentMode?: ExternalLoanPaymentMethod | null;
+            } | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    };
   };
 };
 
@@ -19577,6 +19755,97 @@ export const LoanProductFragmentDoc = `
   requiredDocuments
 }
     `;
+export const SetExternalLoanDocument = `
+    mutation setExternalLoan($id: String, $data: ExternalLoanApplicationInput) {
+  accounting {
+    externalLoan {
+      loan {
+        new(id: $id, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetExternalLoanMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetExternalLoanMutation,
+    TError,
+    SetExternalLoanMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetExternalLoanMutation, TError, SetExternalLoanMutationVariables, TContext>(
+    ['setExternalLoan'],
+    useAxios<SetExternalLoanMutation, SetExternalLoanMutationVariables>(SetExternalLoanDocument),
+    options
+  );
+export const SetExternalAccountDocument = `
+    mutation setExternalAccount($id: String, $data: ExternalLoanAccountInput) {
+  accounting {
+    externalLoan {
+      account {
+        new(id: $id, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetExternalAccountMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetExternalAccountMutation,
+    TError,
+    SetExternalAccountMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetExternalAccountMutation, TError, SetExternalAccountMutationVariables, TContext>(
+    ['setExternalAccount'],
+    useAxios<SetExternalAccountMutation, SetExternalAccountMutationVariables>(
+      SetExternalAccountDocument
+    ),
+    options
+  );
+export const SetExternalPaymentDocument = `
+    mutation setExternalPayment($id: String, $data: ExternalLoanPaymentInput) {
+  accounting {
+    externalLoan {
+      payment {
+        new(id: $id, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetExternalPaymentMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetExternalPaymentMutation,
+    TError,
+    SetExternalPaymentMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<SetExternalPaymentMutation, TError, SetExternalPaymentMutationVariables, TContext>(
+    ['setExternalPayment'],
+    useAxios<SetExternalPaymentMutation, SetExternalPaymentMutationVariables>(
+      SetExternalPaymentDocument
+    ),
+    options
+  );
 export const SetInvestmentAccountDataDocument = `
     mutation setInvestmentAccountData($id: ID!, $data: InvestmentAccountInput!) {
   accounting {
@@ -23669,6 +23938,143 @@ export const useGetAccountTransactionListsQuery = <
     ['getAccountTransactionLists', variables],
     useAxios<GetAccountTransactionListsQuery, GetAccountTransactionListsQueryVariables>(
       GetAccountTransactionListsDocument
+    ).bind(null, variables),
+    options
+  );
+export const ExternalLoanListDocument = `
+    query externalLoanList($filter: ExternalLoanApplicationFilter, $pagination: Pagination) {
+  accounting {
+    externalLoan {
+      loan {
+        list(filter: $filter, pagination: $pagination) {
+          totalCount
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+          edges {
+            node {
+              id
+              loanName
+              organizationId
+              organizationName
+              createdBy
+              appliedDate
+              loanType
+              amount
+            }
+            cursor
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useExternalLoanListQuery = <TData = ExternalLoanListQuery, TError = unknown>(
+  variables?: ExternalLoanListQueryVariables,
+  options?: UseQueryOptions<ExternalLoanListQuery, TError, TData>
+) =>
+  useQuery<ExternalLoanListQuery, TError, TData>(
+    variables === undefined ? ['externalLoanList'] : ['externalLoanList', variables],
+    useAxios<ExternalLoanListQuery, ExternalLoanListQueryVariables>(ExternalLoanListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const ExternalLoanAccountListDocument = `
+    query externalLoanAccountList($filter: ExternalLoanAccountFilter, $pagination: Pagination) {
+  accounting {
+    externalLoan {
+      account {
+        list(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              name
+              createdBy
+              createdDate
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
+              }
+            }
+            cursor
+          }
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useExternalLoanAccountListQuery = <
+  TData = ExternalLoanAccountListQuery,
+  TError = unknown
+>(
+  variables?: ExternalLoanAccountListQueryVariables,
+  options?: UseQueryOptions<ExternalLoanAccountListQuery, TError, TData>
+) =>
+  useQuery<ExternalLoanAccountListQuery, TError, TData>(
+    variables === undefined ? ['externalLoanAccountList'] : ['externalLoanAccountList', variables],
+    useAxios<ExternalLoanAccountListQuery, ExternalLoanAccountListQueryVariables>(
+      ExternalLoanAccountListDocument
+    ).bind(null, variables),
+    options
+  );
+export const ExternalLoanPaymentListDocument = `
+    query externalLoanPaymentList($filter: ExternalLoanPaymentFilter, $pagination: Pagination) {
+  accounting {
+    externalLoan {
+      payment {
+        list(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            cursor
+            node {
+              id
+              loanId
+              loanName
+              createdBy
+              createdDate
+              amount
+              paymentMode
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useExternalLoanPaymentListQuery = <
+  TData = ExternalLoanPaymentListQuery,
+  TError = unknown
+>(
+  variables?: ExternalLoanPaymentListQueryVariables,
+  options?: UseQueryOptions<ExternalLoanPaymentListQuery, TError, TData>
+) =>
+  useQuery<ExternalLoanPaymentListQuery, TError, TData>(
+    variables === undefined ? ['externalLoanPaymentList'] : ['externalLoanPaymentList', variables],
+    useAxios<ExternalLoanPaymentListQuery, ExternalLoanPaymentListQueryVariables>(
+      ExternalLoanPaymentListDocument
     ).bind(null, variables),
     options
   );
