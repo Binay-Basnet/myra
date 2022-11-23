@@ -9,6 +9,7 @@ import {
   addInstitutionError,
   addSisterError,
   setInstitutionHasPressedNext,
+  useAppSelector,
   useGetKymOverallFormStatusQuery,
 } from '@coop/cbs/data-access';
 import { AccorrdianAddInstitution } from '@coop/cbs/kym-form/formElements';
@@ -53,6 +54,7 @@ export const KYMInstitutionPage = () => {
       enabled: false,
     }
   );
+  const isFormDirty = useAppSelector((state) => state.institution.isFormDirty);
 
   // const kymFormStatusQuery = useGetKymFormStatusInstitutionQuery({ id });
   // const kymFormStatus =
@@ -153,6 +155,7 @@ export const KYMInstitutionPage = () => {
                 </Text>
               </Button>
             }
+            isMainButtonDisabled={!isFormDirty}
             mainButtonLabel={t['next']}
             mainButtonHandler={async () => {
               const response = await refetch();
