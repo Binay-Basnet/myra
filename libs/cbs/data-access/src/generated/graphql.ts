@@ -7938,6 +7938,35 @@ export type LoginResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type MBankingTransactionData = {
+  amount?: Maybe<Scalars['String']>;
+  destAccount?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  initiatorName?: Maybe<Scalars['String']>;
+  narration?: Maybe<Scalars['String']>;
+  phoneNo?: Maybe<Scalars['String']>;
+  srcAccount?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  transDate?: Maybe<Scalars['String']>;
+  transThrough?: Maybe<Scalars['String']>;
+  transactionType?: Maybe<Scalars['String']>;
+};
+
+export type MBankingTransactionFilter = {
+  customPeriod?: InputMaybe<LocalizedDateFilter>;
+  filter?: InputMaybe<MBankingTransactionFilterData>;
+  periodType?: InputMaybe<ReportPeriodType>;
+};
+
+export type MBankingTransactionFilterData = {
+  transactionType?: InputMaybe<Array<InputMaybe<TransactionTypeFilter>>>;
+};
+
+export type MBankingTransactionResult = {
+  data?: Maybe<Array<Maybe<MBankingTransactionData>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type MeResult = {
   data?: Maybe<UserData>;
   error?: Maybe<QueryError>;
@@ -8573,6 +8602,7 @@ export type MyraUser = Base & {
   createdBy: Identity;
   dob?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+  empCode?: Maybe<Scalars['String']>;
   gender?: Maybe<UserGender>;
   id: Scalars['ID'];
   isCoreEmployee?: Maybe<Scalars['Boolean']>;
@@ -8601,6 +8631,7 @@ export type MyraUserFormStateData = {
   contactNo?: Maybe<Scalars['String']>;
   dob?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+  empCode?: Maybe<Scalars['String']>;
   gender?: Maybe<UserGender>;
   id?: Maybe<Scalars['String']>;
   identificationDetails?: Maybe<Array<Maybe<MyraUserIdentification>>>;
@@ -8648,6 +8679,7 @@ export type MyraUserInput = {
   contactNo: Scalars['String'];
   dob: Scalars['String'];
   email: Scalars['String'];
+  empCode?: InputMaybe<Scalars['String']>;
   gender: UserGender;
   identificationDetails?: InputMaybe<Array<InputMaybe<MyraUserIdentificationInput>>>;
   identificationSelection?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
@@ -9315,10 +9347,12 @@ export type ReportQuery = {
   listReports: ReportListConnection;
   loanStatementReport?: Maybe<ReportResult>;
   mBankingExpiryReport?: Maybe<EbankingRegistrationReportResult>;
+  mBankingTransactionReport?: Maybe<MBankingTransactionResult>;
   mbankingRegistrationReport?: Maybe<EbankingRegistrationReportResult>;
   memberClassificationReport: MemberClassificationReportResult;
   savingStatementReport?: Maybe<ReportResult>;
   shareStatementReport?: Maybe<ReportResult>;
+  trialSheetReport: TrialSheetReportResult;
   userReport?: Maybe<UserReportResult>;
 };
 
@@ -9364,6 +9398,10 @@ export type ReportQueryMBankingExpiryReportArgs = {
   data?: InputMaybe<EbankingReportFilter>;
 };
 
+export type ReportQueryMBankingTransactionReportArgs = {
+  data?: InputMaybe<MBankingTransactionFilter>;
+};
+
 export type ReportQueryMbankingRegistrationReportArgs = {
   data?: InputMaybe<EbankingReportFilter>;
 };
@@ -9378,6 +9416,10 @@ export type ReportQuerySavingStatementReportArgs = {
 
 export type ReportQueryShareStatementReportArgs = {
   data: ShareStatementReportSettings;
+};
+
+export type ReportQueryTrialSheetReportArgs = {
+  data: TrialSheetReportFilter;
 };
 
 export type ReportQueryUserReportArgs = {
@@ -10738,6 +10780,13 @@ export enum TransactionState {
   Submitted = 'SUBMITTED',
 }
 
+export enum TransactionTypeFilter {
+  All = 'ALL',
+  Ibft = 'IBFT',
+  Qr = 'QR',
+  Wallet = 'WALLET',
+}
+
 export type TransferData = {
   id?: Maybe<Scalars['ID']>;
   payeeNumber?: Maybe<Scalars['String']>;
@@ -10786,6 +10835,35 @@ export type TranslateInput = {
 
 export type TranslateQueryResult = {
   data?: Maybe<Array<Maybe<TranslateData>>>;
+  error?: Maybe<QueryError>;
+};
+
+export type TrialSheetReportData = {
+  assets?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
+  equityAndLiablities?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
+  expenses?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
+  income?: Maybe<Array<Maybe<TrialSheetReportDataEntry>>>;
+  totalAssetExpense?: Maybe<Scalars['String']>;
+  totalLiablitiesIncome?: Maybe<Scalars['String']>;
+  totalProfitLoss?: Maybe<Scalars['String']>;
+};
+
+export type TrialSheetReportDataEntry = {
+  balance?: Maybe<Scalars['String']>;
+  ledgerId?: Maybe<Scalars['String']>;
+  ledgerName?: Maybe<Scalars['Localized']>;
+  under?: Maybe<Scalars['String']>;
+};
+
+export type TrialSheetReportFilter = {
+  branchId: Scalars['String'];
+  customDate?: InputMaybe<LocalizedDateFilter>;
+  includeZero?: InputMaybe<Scalars['Boolean']>;
+  period?: InputMaybe<ReportPeriodType>;
+};
+
+export type TrialSheetReportResult = {
+  data?: Maybe<TrialSheetReportData>;
   error?: Maybe<QueryError>;
 };
 
@@ -18648,6 +18726,8 @@ export type GetSettingsUserEditDataQuery = {
           contactNo?: string | null;
           gender?: UserGender | null;
           dob?: string | null;
+          empCode?: string | null;
+          isCoreEmployee?: boolean | null;
           role?: Roles | null;
           branch?: string | null;
           identificationSelection?: Array<string | null> | null;
@@ -30008,6 +30088,8 @@ export const GetSettingsUserEditDataDocument = `
           contactNo
           gender
           dob
+          empCode
+          isCoreEmployee
           role
           branch
           identificationSelection

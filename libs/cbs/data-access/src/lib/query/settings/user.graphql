@@ -42,6 +42,8 @@ query getSettingsUserEditData($id: ID!) {
           contactNo
           gender
           dob
+          empCode
+          isCoreEmployee
           role
           branch
           identificationSelection
