@@ -2,6 +2,7 @@ import {
   NatureOfDepositProduct,
   ObjState,
   useGetAccountTableListQuery,
+  useGetMemberLinkedAccountsQuery,
 } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
@@ -13,6 +14,7 @@ interface IAccountSelectProps {
   label?: string;
   memberId: string;
   placeholder?: string;
+  loanLinkedAccounts?: boolean;
   filterBy?: ObjState;
   excludeIds?: string[];
 }
@@ -21,6 +23,7 @@ export const FormAccountSelect = ({
   name,
   label,
   memberId,
+  loanLinkedAccounts,
   placeholder,
   filterBy,
   excludeIds,
@@ -48,6 +51,32 @@ export const FormAccountSelect = ({
   };
 
   const accountsList = accountListData?.account?.list?.edges;
+  const { data: linkedAccountData } = useGetMemberLinkedAccountsQuery({
+    memberId,
+    includeActiveAccountsOnly: true,
+    filter: [NatureOfDepositProduct?.Current, NatureOfDepositProduct?.Saving],
+  });
+  const loanLinkedData = linkedAccountData?.members?.getAllAccounts?.data?.depositAccount;
+
+  const loanLinkedOptions: Option[] =
+    loanLinkedData?.reduce(
+      (prevVal, curVal) => [
+        ...prevVal,
+        {
+          label: `${curVal?.product?.productName} (ID:${curVal?.id})`,
+          value: curVal?.id as string,
+          accountInfo: {
+            accountName: curVal?.accountName,
+            accountId: curVal?.product?.nature,
+            accountType: curVal?.product?.nature ? accountTypes[curVal?.product?.nature] : '',
+            balance: curVal?.balance as string,
+            fine: '0',
+            productName: curVal?.product?.productName,
+          },
+        } as Option,
+      ],
+      [] as Option[]
+    ) ?? [];
 
   const accountOptions: Option[] =
     accountsList?.reduce((prevVal, curVal) => {
@@ -80,7 +109,7 @@ export const FormAccountSelect = ({
       label={label}
       isLoading={isFetching}
       placeholder={placeholder}
-      options={accountOptions}
+      options={loanLinkedAccounts ? loanLinkedOptions : accountOptions}
     />
   );
 };

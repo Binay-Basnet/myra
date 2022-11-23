@@ -522,6 +522,23 @@ query getMemberLinkedAccounts(
         depositAccount(filter: $filter, includeActiveAccountsOnly: $includeActiveAccountsOnly) {
           id
           accountName
+          member {
+            name
+          }
+          balance
+          interestAccured
+          interestTax
+          prematurePenalty
+          lastTransactionDate
+          accountOpenedDate
+          installmentAmount
+          product {
+            productName
+            nature
+          }
+          accountExpiryDate
+          overDrawnBalance
+          guaranteedAmount
         }
       }
     }

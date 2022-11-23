@@ -16157,7 +16157,22 @@ export type GetMemberLinkedAccountsQuery = {
   members: {
     getAllAccounts?: {
       data?: {
-        depositAccount?: Array<{ id: string; accountName?: string | null } | null> | null;
+        depositAccount?: Array<{
+          id: string;
+          accountName?: string | null;
+          balance?: string | null;
+          interestAccured?: string | null;
+          interestTax?: string | null;
+          prematurePenalty?: string | null;
+          lastTransactionDate?: string | null;
+          accountOpenedDate?: string | null;
+          installmentAmount?: string | null;
+          accountExpiryDate?: string | null;
+          overDrawnBalance?: string | null;
+          guaranteedAmount?: string | null;
+          member?: { name?: Record<'local' | 'en' | 'np', string> | null } | null;
+          product: { productName: string; nature: NatureOfDepositProduct };
+        } | null> | null;
       } | null;
     } | null;
   };
@@ -26576,6 +26591,23 @@ export const GetMemberLinkedAccountsDocument = `
         ) {
           id
           accountName
+          member {
+            name
+          }
+          balance
+          interestAccured
+          interestTax
+          prematurePenalty
+          lastTransactionDate
+          accountOpenedDate
+          installmentAmount
+          product {
+            productName
+            nature
+          }
+          accountExpiryDate
+          overDrawnBalance
+          guaranteedAmount
         }
       }
     }
