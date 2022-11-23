@@ -54,7 +54,7 @@ const whatsNewData = {
       'Transaction Detail Page (Overview) of Deposit, Withdraw',
       'Alternative Channel',
       'Settings-User-Teller Creation',
-      'Reports - Share Statement, Loan Statement, Genral Ledger, Member Classification & Saving Report',
+      'Reports - Mobile Banking Registration, Mobile Banking Expiry, Service Center List, Member Classification, Interest Tax,Interest Statement, General Ledger, Saving Statement, Share Statement, Loan Statement, Active/Inactive Member',
     ],
   },
   bugsSquashed: {
@@ -126,8 +126,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.5</Text>
-          <Text fontSize="s3">November 11, 2022</Text>
+          <Text fontSize="r2">Version 1.0.6</Text>
+          <Text fontSize="s3">November 23, 2022</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>
