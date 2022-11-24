@@ -102,7 +102,7 @@ export const TabMenu = () => {
     >
       <Box>
         <Text fontWeight="SemiBold" fontSize="s16" color="gray.0">
-          {isLargerThan720 ? t['corebankingSystems'] : 'CBS'}
+          {t['corebankingSystems']}
         </Text>
       </Box>
       <Tabs index={currentIndex} size="md" height="100%" variant="enclosed">
