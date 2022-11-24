@@ -38,7 +38,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface NewAccountTransferProps {}
@@ -247,6 +247,7 @@ export const NewAccountTransfer = () => {
                             label={t['newAccountTransferReceipentAccount']}
                             memberId={memberId}
                             filterBy={ObjState.Active}
+                            excludeIds={[srcAccountId]}
                           />
                         )}
 
@@ -396,7 +397,7 @@ export const NewAccountTransfer = () => {
                     {t['newAccountTransferTotalTransferAmount']}
                   </Text>
                   <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
-                    {totalDeposit ?? '---'}
+                    {amountConverter(totalDeposit) ?? '---'}
                   </Text>
                 </Box>
               }

@@ -19,7 +19,7 @@ import {
   FormTextArea,
 } from '@coop/shared/form';
 import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 const denominationsOptions = [
   { label: '1000x', value: '1000' },
@@ -215,7 +215,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
                   {t['withdrawPaymentTotal']}
                 </Text>
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  {totalCashPaid}
+                  {amountConverter(totalCashPaid)}
                 </Text>
               </Box>
 
@@ -224,7 +224,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
                   {t['withdrawPaymentReturn']}
                 </Text>
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  {returnAmount}
+                  {amountConverter(returnAmount)}
                 </Text>
               </Box>
 
@@ -233,7 +233,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
                   {t['withdrawPaymentGrandTotal']}
                 </Text>
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  {totalCashPaid - returnAmount}
+                  {amountConverter(totalCashPaid - returnAmount)}
                 </Text>
               </Box>
             </Box>

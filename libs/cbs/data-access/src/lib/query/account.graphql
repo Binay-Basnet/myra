@@ -301,6 +301,11 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
               ledgerName
               amount
             }
+            withdrawPenalty {
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
           }
           dues {
             fine

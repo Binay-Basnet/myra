@@ -35,7 +35,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 import { InstallmentModel, Payment } from '../components';
 
@@ -361,6 +361,7 @@ export const AddDeposit = () => {
       methods.setValue('memberId', String(redirectMemberId));
     }
   }, [redirectMemberId]);
+
   return (
     <>
       <Container minW="container.xl" height="fit-content">
@@ -449,9 +450,9 @@ export const AddDeposit = () => {
                             {t['addDepositTotalAmountAfterDeposit']}
                           </Text>
                           <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
-                            {`${t['rs']} ${
+                            {`${t['rs']} ${amountConverter(
                               Number(selectedAccount?.balance ?? 0) + Number(totalDeposit)
-                            }`}
+                            )}`}
                           </Text>
                         </Box>
                       </>
@@ -476,9 +477,9 @@ export const AddDeposit = () => {
                             {t['addDepositTotalAmountAfterDeposit']}
                           </Text>
                           <Text fontSize="s3" fontWeight={400} color="neutralColorLight.Gray-70">
-                            {`${t['rs']} ${
+                            {`${t['rs']} ${amountConverter(
                               Number(selectedAccount?.balance ?? 0) + Number(totalDeposit)
-                            }`}
+                            )}`}
                           </Text>
                         </Box>
                       </>
@@ -503,7 +504,7 @@ export const AddDeposit = () => {
                           </Text>
 
                           <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
-                            {amountToBeDeposited}
+                            {amountConverter(amountToBeDeposited)}
                           </Text>
                         </Box>
 
@@ -517,7 +518,7 @@ export const AddDeposit = () => {
                             </Text>
 
                             <Text fontSize="s3" fontWeight={500} color="danger.500">
-                              {`+ ${fine ?? FINE}`}
+                              {`+ ${amountConverter(fine ?? FINE)}`}
                             </Text>
                           </Box>
                         )}
@@ -528,7 +529,7 @@ export const AddDeposit = () => {
                           </Text>
 
                           <Text fontSize="s3" fontWeight={500} color="success.500">
-                            {`+ ${rebate ?? REBATE}`}
+                            {`+ ${amountConverter(rebate ?? REBATE)}`}
                           </Text>
                         </Box>
 
@@ -538,7 +539,7 @@ export const AddDeposit = () => {
                           </Text>
 
                           <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
-                            {totalDeposit}
+                            {amountConverter(totalDeposit)}
                           </Text>
                         </Box>
                       </Box>
@@ -616,7 +617,7 @@ export const AddDeposit = () => {
                       {t['addDepositTotalDepositAmount']}
                     </Text>
                     <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
-                      {totalDeposit ?? '---'}
+                      {amountConverter(totalDeposit) ?? '---'}
                     </Text>
                   </Box>
                 ) : (

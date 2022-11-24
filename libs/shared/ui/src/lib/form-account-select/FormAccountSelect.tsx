@@ -51,11 +51,18 @@ export const FormAccountSelect = ({
   };
 
   const accountsList = accountListData?.account?.list?.edges;
-  const { data: linkedAccountData } = useGetMemberLinkedAccountsQuery({
-    memberId,
-    includeActiveAccountsOnly: true,
-    filter: [NatureOfDepositProduct?.Current, NatureOfDepositProduct?.Saving],
-  });
+
+  const { data: linkedAccountData } = useGetMemberLinkedAccountsQuery(
+    {
+      memberId,
+      includeActiveAccountsOnly: true,
+      filter: [NatureOfDepositProduct?.Current, NatureOfDepositProduct?.Saving],
+    },
+    {
+      enabled: !!loanLinkedAccounts,
+    }
+  );
+
   const loanLinkedData = linkedAccountData?.members?.getAllAccounts?.data?.depositAccount;
 
   const loanLinkedOptions: Option[] =

@@ -32,7 +32,7 @@ import {
   MemberCard,
   Text,
 } from '@coop/shared/ui';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 import { Payment } from '../components';
 
@@ -65,8 +65,6 @@ const cashOptions: Record<string, string> = {
   '2': CashValue.Cash_2,
   '1': CashValue.Cash_1,
 };
-
-const FINE = '0';
 
 export const AddWithdraw = () => {
   const queryClient = useQueryClient();
@@ -152,9 +150,29 @@ export const AddWithdraw = () => {
 
   const amountToBeWithdrawn = watch('amount') ?? 0;
 
+  const fine = useMemo(() => {
+    if (!amountToBeWithdrawn) {
+      return 0;
+    }
+
+    const withdrawPenalty = selectedAccount?.product?.withdrawPenalty;
+
+    let tempFine = 0;
+
+    if (withdrawPenalty?.penaltyAmount) {
+      tempFine += Number(withdrawPenalty?.penaltyAmount);
+    }
+
+    if (withdrawPenalty?.penaltyRate) {
+      tempFine += Number(withdrawPenalty.penaltyRate / 100) * Number(amountToBeWithdrawn);
+    }
+
+    return tempFine;
+  }, [amountToBeWithdrawn, selectedAccount]);
+
   const totalWithdraw = useMemo(
-    () => (amountToBeWithdrawn ? Number(amountToBeWithdrawn) - Number(FINE) : 0),
-    [amountToBeWithdrawn]
+    () => (amountToBeWithdrawn ? Number(amountToBeWithdrawn) - fine : 0),
+    [amountToBeWithdrawn, fine]
   );
 
   const denominations = watch('cash.denominations');
@@ -239,6 +257,7 @@ export const AddWithdraw = () => {
       methods.setValue('memberId', String(redirectMemberId));
     }
   }, [redirectMemberId]);
+
   return (
     <>
       <Container minW="container.xl" height="fit-content">
@@ -327,7 +346,7 @@ export const AddWithdraw = () => {
                         </Text>
 
                         <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
-                          {amountToBeWithdrawn}
+                          {amountConverter(amountToBeWithdrawn)}
                         </Text>
                       </Box>
 
@@ -337,7 +356,7 @@ export const AddWithdraw = () => {
                         </Text>
 
                         <Text fontSize="s3" fontWeight={500} color="danger.500">
-                          {`- ${FINE}`}
+                          {`- ${amountConverter(fine)}`}
                         </Text>
                       </Box>
 
@@ -347,7 +366,7 @@ export const AddWithdraw = () => {
                         </Text>
 
                         <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
-                          {totalWithdraw}
+                          {amountConverter(totalWithdraw)}
                         </Text>
                       </Box>
                     </Box>
@@ -419,7 +438,7 @@ export const AddWithdraw = () => {
                       {t['addWithdrawTotalWithdrawAmount']}
                     </Text>
                     <Text fontSize="r1" fontWeight={600} color="neutralColorLight.Gray-70">
-                      {totalWithdraw ?? '---'}
+                      {amountConverter(totalWithdraw) ?? '---'}
                     </Text>
                   </Box>
                 ) : (
