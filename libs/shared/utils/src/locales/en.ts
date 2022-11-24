@@ -3830,6 +3830,8 @@ const en: Record<string, string> = {
   cash: 'Cash',
   bank: 'Bank',
   other: 'Other',
+  collateral: 'Collateral',
+  loanAgainstFd: 'Loan Against Fd',
 };
 
 export default en;

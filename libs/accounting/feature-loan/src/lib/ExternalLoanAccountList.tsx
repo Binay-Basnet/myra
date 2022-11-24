@@ -1,10 +1,12 @@
 import { useMemo } from 'react';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { useExternalLoanAccountListQuery } from '@coop/cbs/data-access';
+import { formatTableAddress } from '@coop/cbs/utils';
 import { Column, Table } from '@coop/shared/table';
 import { TablePopover } from '@coop/shared/ui';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
+
+import { useExternalLoan } from '../hooks/useExternalLoan';
 
 /* eslint-disable-next-line */
 export interface ExternalLoanAccountListProps {}
@@ -12,16 +14,14 @@ export interface ExternalLoanAccountListProps {}
 export const ExternalLoanAccountList = () => {
   const { t } = useTranslation();
 
-  const { data, isLoading } = useExternalLoanAccountListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-  });
+  const { loanAccountList, isLoanAccountLoading } = useExternalLoan();
 
-  const rowData = useMemo(() => data?.accounting?.externalLoan?.account?.list?.edges ?? [], [data]);
+  const rowData = useMemo(() => loanAccountList ?? [], [loanAccountList]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        accessorFn: (row) => row?.node?.name,
+        accessorFn: (row) => row?.name,
         header: 'Name',
         meta: {
           width: '60%',
@@ -29,14 +29,10 @@ export const ExternalLoanAccountList = () => {
       },
       {
         header: 'Address',
-        accessorFn: (row) => row?.node?.address,
+        accessorFn: (row) => row?.address,
         cell: (props) => {
-          const address = props?.row?.original?.node?.address;
-          return (
-            <span>
-              {address?.locality?.local} - {address?.wardNo},{address?.district?.local}
-            </span>
-          );
+          const address = props?.row?.original?.address;
+          return <span>{formatTableAddress(address)}</span>;
         },
         meta: {
           width: '30%',
@@ -44,7 +40,7 @@ export const ExternalLoanAccountList = () => {
       },
       {
         header: 'Created Date',
-        accessorFn: (row) => row?.node?.createdDate?.local,
+        accessorFn: (row) => row?.date,
         meta: {
           width: '30%',
         },
@@ -53,9 +49,9 @@ export const ExternalLoanAccountList = () => {
         id: '_actions',
         header: '',
         cell: (props) =>
-          props?.row?.original?.node && (
+          props?.row?.original && (
             <TablePopover
-              node={props?.row?.original?.node}
+              node={props?.row?.original}
               items={[
                 {
                   title: t['transDetailViewDetail'],
@@ -74,7 +70,7 @@ export const ExternalLoanAccountList = () => {
     <>
       <AccountingPageHeader heading="External Loan Accounts" />
 
-      <Table data={rowData} isLoading={isLoading} columns={columns} />
+      <Table data={rowData} isLoading={isLoanAccountLoading} columns={columns} />
     </>
   );
 };

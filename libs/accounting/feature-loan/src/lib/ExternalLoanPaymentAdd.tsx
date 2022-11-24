@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import {
   ExternalLoanPaymentInput,
   ExternalLoanPaymentMethod,
-  useExternalLoanAccountListQuery,
+  useExternalLoanListQuery,
   useSetExternalPaymentMutation,
 } from '@coop/cbs/data-access';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
@@ -42,16 +42,16 @@ export const ExternalLoanPaymentAdd = () => {
     { label: t['other'], value: ExternalLoanPaymentMethod.Other },
   ];
 
-  const { data } = useExternalLoanAccountListQuery({
+  const { data } = useExternalLoanListQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
   });
 
-  const accountList = data?.accounting?.externalLoan?.account?.list?.edges;
+  const accountList = data?.accounting?.externalLoan?.loan?.list?.edges;
 
   const loanList =
     accountList &&
     accountList?.map((item) => ({
-      label: item?.node?.name as string,
+      label: item?.node?.loanName as string,
       value: item?.node?.id as string,
     }));
 
