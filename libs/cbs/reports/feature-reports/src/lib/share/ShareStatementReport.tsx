@@ -15,7 +15,7 @@ import { Box, FormMemberSelect, GridItem } from '@coop/shared/ui';
 export const ShareStatementReport = () => {
   const [filters, setFilters] = useState<ShareStatementReportSettings | null>(null);
 
-  const { data, isInitialLoading } = useGetShareStatementQuery(
+  const { data, isFetching } = useGetShareStatementQuery(
     { data: filters as ShareStatementReportSettings },
     { enabled: !!filters }
   );
@@ -30,7 +30,7 @@ export const ShareStatementReport = () => {
       data={shareReport as ShareStatement[]}
       filters={filters}
       setFilters={setFilters}
-      isLoading={isInitialLoading}
+      isLoading={isFetching}
       report={ReportEnum.SERVICE_CENTER_LIST_REPORT}
     >
       <Report.Header>

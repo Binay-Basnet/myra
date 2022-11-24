@@ -34,6 +34,14 @@ export const ReportBody = ({ children }: { children: React.ReactNode }) => (
 export const ReportContent = ({ children }: { children: React.ReactNode }) => {
   const { isFilterShown, data, isLoading, filters } = useReport();
 
+  if (isLoading) {
+    return (
+      <Box display="flex" alignItems="center" w="100%" mb="100px" justifyContent="center">
+        <Spinner size="xl" />
+      </Box>
+    );
+  }
+
   if (filters && (!data || data?.length === 0)) {
     return (
       <Box display="flex" w="100%" justifyContent="center" overflowY="auto">
@@ -54,18 +62,14 @@ export const ReportContent = ({ children }: { children: React.ReactNode }) => {
     );
   }
 
-  if (isLoading) {
-    return (
-      <Box display="flex" alignItems="center" w="100%" mb="100px" justifyContent="center">
-        <Spinner size="xl" />
-      </Box>
-    );
-  }
-
   if (!data || data?.length === 0) {
     return (
       <Box display="flex" w="100%" justifyContent="center" overflowY="auto">
-        <Box width={isFilterShown ? '100%' : 'clamp(860px, 80%, 75vw)'} borderRadius="br2" />
+        <Box
+          overflowY="auto"
+          width={isFilterShown ? '100%' : 'clamp(860px, 80%, 75vw)'}
+          borderRadius="br2"
+        />
       </Box>
     );
   }
@@ -76,7 +80,9 @@ export const ReportContent = ({ children }: { children: React.ReactNode }) => {
         transition="all 0.1s ease-in-out"
         width={isFilterShown ? '100%' : 'clamp(860px, 80%, 75vw)'}
         bg="white"
+        overflowY="auto"
         borderRadius="br2"
+        h="100%"
       >
         {children}
       </Box>
@@ -304,12 +310,14 @@ export const ReportInputs = <T extends FieldValues | null>({
 };
 
 interface IReportTableProps<T extends Record<string, unknown>> {
+  data?: T[] | null;
   columns: Column<T>[];
   hasSNo?: boolean;
   showFooter?: boolean;
 }
 
 export const ReportTable = <T extends Record<string, unknown>>({
+  data: tableData,
   columns,
   hasSNo = true,
   showFooter = false,
@@ -317,14 +325,20 @@ export const ReportTable = <T extends Record<string, unknown>>({
   const { data } = useReport();
 
   return (
-    <Box py="s32" px="s16">
+    <Box py="s16" px="s16">
       <Table
         showFooter={showFooter}
         variant="report"
         size="report"
         isStatic
         data={
-          (hasSNo ? data?.map((d, index) => ({ ...d, index: index + 1 })) : data) as unknown as T[]
+          tableData
+            ? ((hasSNo
+                ? tableData?.map((d, index) => ({ ...d, index: index + 1 }))
+                : tableData) as unknown as T[])
+            : ((hasSNo
+                ? data?.map((d, index) => ({ ...d, index: index + 1 }))
+                : data) as unknown as T[])
         }
         columns={columns}
       />

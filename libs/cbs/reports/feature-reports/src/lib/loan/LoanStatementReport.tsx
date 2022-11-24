@@ -15,7 +15,7 @@ import { amountConverter } from '@coop/shared/utils';
 export const LoanStatementReport = () => {
   const [filters, setFilters] = useState<LoanStatementReportSettings | null>(null);
 
-  const { data, isInitialLoading } = useGetLoanStatementReportQuery(
+  const { data, isFetching } = useGetLoanStatementReportQuery(
     {
       data: filters as LoanStatementReportSettings,
     },
@@ -31,7 +31,7 @@ export const LoanStatementReport = () => {
       data={loanReport as LoanStatement[]}
       filters={filters}
       setFilters={setFilters}
-      isLoading={isInitialLoading}
+      isLoading={isFetching}
       report={ReportEnum.LOAN_INDIVIDUAL_STATEMENT}
     >
       <Report.Header>

@@ -15,7 +15,7 @@ import { amountConverter } from '@coop/shared/utils';
 export const LedgerReport = () => {
   const [filters, setFilters] = useState<GeneralLedgerFilter | null>(null);
 
-  const { data, isInitialLoading } = useGetLedgerReportQuery(
+  const { data, isFetching } = useGetLedgerReportQuery(
     {
       data: filters as GeneralLedgerFilter,
     },
@@ -29,7 +29,7 @@ export const LedgerReport = () => {
       data={ledgerReport as GeneralLedgerReportEntry[]}
       filters={filters}
       setFilters={setFilters}
-      isLoading={isInitialLoading}
+      isLoading={isFetching}
       report={ReportEnum.MB_REGISTRATION_REPORT}
     >
       <Report.Header>

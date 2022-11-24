@@ -15,7 +15,7 @@ import { GridItem } from '@coop/shared/ui';
 export const MBRegistrationReport = () => {
   const [filters, setFilters] = useState<EbankingReportFilter | null>(null);
 
-  const { data, isInitialLoading } = useGetMBankingRegistrationReportQuery(
+  const { data, isFetching } = useGetMBankingRegistrationReportQuery(
     {
       data: filters as EbankingReportFilter,
     },
@@ -29,7 +29,7 @@ export const MBRegistrationReport = () => {
       data={mobileBankingReport as EbankingReportResult[]}
       filters={filters}
       setFilters={setFilters}
-      isLoading={isInitialLoading}
+      isLoading={isFetching}
       report={ReportEnum.MB_REGISTRATION_REPORT}
     >
       <Report.Header>

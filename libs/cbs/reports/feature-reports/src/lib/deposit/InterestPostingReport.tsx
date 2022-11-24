@@ -16,7 +16,7 @@ import { amountConverter } from '@coop/shared/utils';
 export const InterestPostingReport = () => {
   const [filters, setFilters] = useState<InterestStatementFilter | null>(null);
 
-  const { data, isInitialLoading } = useGetInterestStatementReportQuery(
+  const { data, isFetching } = useGetInterestStatementReportQuery(
     {
       data: filters as InterestStatementFilter,
     },
@@ -30,7 +30,7 @@ export const InterestPostingReport = () => {
       data={interestStatementReport as unknown as InterestPostingReportEntry[]}
       filters={filters}
       setFilters={setFilters}
-      isLoading={isInitialLoading}
+      isLoading={isFetching}
       report={ReportEnum.SAVING_STATEMENT}
     >
       <Report.Header>

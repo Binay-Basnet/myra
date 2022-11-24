@@ -321,3 +321,101 @@ query getActiveInactiveMemberReport($data: ActiveInactiveMemberReportData) {
     }
   }
 }
+
+query getTrialSheetReport($data: TrialSheetReportFilter!) {
+  report {
+    trialSheetReport(data: $data) {
+      data {
+        equityAndLiablities {
+          balance
+          ledgerId
+          ledgerName
+          under
+        }
+        expenses {
+          balance
+          ledgerId
+          ledgerName
+          under
+        }
+        income {
+          balance
+          ledgerId
+          ledgerName
+          under
+        }
+        assets {
+          balance
+          ledgerId
+          ledgerName
+          under
+        }
+        totalAssetExpense
+        totalLiablitiesIncome
+        totalProfitLoss
+      }
+    }
+  }
+}
+
+query getKymStatusReport($data: KymStatusReportFilter) {
+  report {
+    kymStatusReport(data: $data) {
+      Summary
+      data {
+        address {
+          ...Address
+        }
+        memberName
+        memberId
+        contact
+        regDate
+        riskCategory
+        lastKymUpdatedDate
+        kymExpireDays
+        kymStatus
+      }
+    }
+  }
+}
+
+query getMBTransactionReport($data: MBankingTransactionFilter) {
+  report {
+    mBankingTransactionReport(data: $data) {
+      data {
+        initiatorName
+        phoneNo
+        srcAccount
+        destAccount
+        amount
+        transactionType
+        transThrough
+        transDate
+        narration
+        status
+      }
+    }
+  }
+}
+
+query getUserReport($data: UserReportFilter) {
+  report {
+    userReport(data: $data) {
+      data {
+        isCoreEmployee
+        employeeName
+        empCode
+        username
+        usernameCode
+        accessForBranch
+        accessForGroup
+        role
+        createdDate
+        createdBy
+        status
+        remarks
+      }
+    }
+  }
+}
+

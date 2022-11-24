@@ -17,7 +17,7 @@ import { GridItem } from '@coop/shared/ui';
 export const MemberActiveInactiveReport = () => {
   const [filters, setFilters] = useState<ActiveInactiveMemberReportData | null>(null);
 
-  const { data: memberActiveInactiveReportData, isInitialLoading } =
+  const { data: memberActiveInactiveReportData, isFetching } =
     useGetActiveInactiveMemberReportQuery(
       {
         data: filters as ActiveInactiveMemberReportData,
@@ -43,7 +43,7 @@ export const MemberActiveInactiveReport = () => {
       data={report as ActiveInactiveMemberStatement[]}
       filters={filters}
       setFilters={setFilters}
-      isLoading={isInitialLoading}
+      isLoading={isFetching}
       report={ReportEnum.MEMBER_ACTIVATIONS}
     >
       <Report.Header>

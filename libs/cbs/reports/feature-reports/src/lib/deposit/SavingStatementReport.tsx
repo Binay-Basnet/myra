@@ -20,7 +20,7 @@ import { amountConverter } from '@coop/shared/utils';
 export const SavingStatementReport = () => {
   const [filters, setFilters] = useState<SavingStatementReportSettings | null>(null);
 
-  const { data, isInitialLoading } = useGetSavingStatementQuery(
+  const { data, isFetching } = useGetSavingStatementQuery(
     {
       data: filters as SavingStatementReportSettings,
     },
@@ -44,7 +44,7 @@ export const SavingStatementReport = () => {
       data={savingReport as LoanStatement[]}
       filters={filters}
       setFilters={setFilters}
-      isLoading={isInitialLoading}
+      isLoading={isFetching}
       report={ReportEnum.SAVING_STATEMENT}
     >
       <Report.Header>

@@ -42,7 +42,7 @@ export const ServiceCenterListReport = () => {
       ? filters?.filter?.localGovernmentId?.map((local) => local.value)
       : null;
 
-  const { data: serviceCenterReportData, isInitialLoading } = useGetBranchReportQuery(
+  const { data: serviceCenterReportData, isFetching } = useGetBranchReportQuery(
     {
       data: {
         period: filters?.period,
@@ -68,7 +68,7 @@ export const ServiceCenterListReport = () => {
       data={serviceCenterReport as ServiceCenter[]}
       filters={filters}
       setFilters={setFilters}
-      isLoading={isInitialLoading}
+      isLoading={isFetching}
       report={ReportEnum.SERVICE_CENTER_LIST_REPORT}
     >
       <Report.Header>

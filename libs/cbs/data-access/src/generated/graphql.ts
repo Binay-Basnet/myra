@@ -7951,9 +7951,8 @@ export type MBankingTransactionData = {
 };
 
 export type MBankingTransactionFilter = {
-  customPeriod?: InputMaybe<LocalizedDateFilter>;
   filter?: InputMaybe<MBankingTransactionFilterData>;
-  periodType?: InputMaybe<ReportPeriodType>;
+  period: PeriodInput;
 };
 
 export type MBankingTransactionFilterData = {
@@ -13678,7 +13677,6 @@ export type GetAccountTableListQuery = {
           guaranteedAmount?: string | null;
           interestAccured?: string | null;
           interestTax?: string | null;
-          prematurePenalty?: string | null;
           createdBy: { id: string };
           modifiedBy: { id: string };
           member?: {
@@ -17570,6 +17568,117 @@ export type GetActiveInactiveMemberReportQuery = {
           }
         | {}
         | null;
+    } | null;
+  };
+};
+
+export type GetTrialSheetReportQueryVariables = Exact<{
+  data: TrialSheetReportFilter;
+}>;
+
+export type GetTrialSheetReportQuery = {
+  report: {
+    trialSheetReport: {
+      data?: {
+        totalAssetExpense?: string | null;
+        totalLiablitiesIncome?: string | null;
+        totalProfitLoss?: string | null;
+        equityAndLiablities?: Array<{
+          balance?: string | null;
+          ledgerId?: string | null;
+          ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+          under?: string | null;
+        } | null> | null;
+        expenses?: Array<{
+          balance?: string | null;
+          ledgerId?: string | null;
+          ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+          under?: string | null;
+        } | null> | null;
+        income?: Array<{
+          balance?: string | null;
+          ledgerId?: string | null;
+          ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+          under?: string | null;
+        } | null> | null;
+        assets?: Array<{
+          balance?: string | null;
+          ledgerId?: string | null;
+          ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+          under?: string | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetKymStatusReportQueryVariables = Exact<{
+  data?: InputMaybe<KymStatusReportFilter>;
+}>;
+
+export type GetKymStatusReportQuery = {
+  report: {
+    kymStatusReport?: {
+      Summary?: Record<string, string> | null;
+      data?: Array<{
+        memberName?: string | null;
+        memberId?: string | null;
+        contact?: string | null;
+        regDate?: string | null;
+        riskCategory?: string | null;
+        lastKymUpdatedDate?: string | null;
+        kymExpireDays?: string | null;
+        kymStatus?: string | null;
+        address?: AddressFragment | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
+export type GetMbTransactionReportQueryVariables = Exact<{
+  data?: InputMaybe<MBankingTransactionFilter>;
+}>;
+
+export type GetMbTransactionReportQuery = {
+  report: {
+    mBankingTransactionReport?: {
+      data?: Array<{
+        initiatorName?: string | null;
+        phoneNo?: string | null;
+        srcAccount?: string | null;
+        destAccount?: string | null;
+        amount?: string | null;
+        transactionType?: string | null;
+        transThrough?: string | null;
+        transDate?: string | null;
+        narration?: string | null;
+        status?: string | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
+export type GetUserReportQueryVariables = Exact<{
+  data?: InputMaybe<UserReportFilter>;
+}>;
+
+export type GetUserReportQuery = {
+  report: {
+    userReport?: {
+      data?: Array<{
+        isCoreEmployee?: boolean | null;
+        employeeName?: string | null;
+        empCode?: string | null;
+        username?: string | null;
+        usernameCode?: string | null;
+        accessForBranch?: boolean | null;
+        accessForGroup?: boolean | null;
+        role?: string | null;
+        createdDate?: string | null;
+        createdBy?: string | null;
+        status?: string | null;
+        remarks?: string | null;
+      } | null> | null;
     } | null;
   };
 };
@@ -23601,7 +23710,6 @@ export const GetAccountTableListDocument = `
             totalDue
             dueInstallments
           }
-          prematurePenalty
         }
       }
     }
@@ -28665,6 +28773,155 @@ export const useGetActiveInactiveMemberReportQuery = <
     useAxios<GetActiveInactiveMemberReportQuery, GetActiveInactiveMemberReportQueryVariables>(
       GetActiveInactiveMemberReportDocument
     ).bind(null, variables),
+    options
+  );
+export const GetTrialSheetReportDocument = `
+    query getTrialSheetReport($data: TrialSheetReportFilter!) {
+  report {
+    trialSheetReport(data: $data) {
+      data {
+        equityAndLiablities {
+          balance
+          ledgerId
+          ledgerName
+          under
+        }
+        expenses {
+          balance
+          ledgerId
+          ledgerName
+          under
+        }
+        income {
+          balance
+          ledgerId
+          ledgerName
+          under
+        }
+        assets {
+          balance
+          ledgerId
+          ledgerName
+          under
+        }
+        totalAssetExpense
+        totalLiablitiesIncome
+        totalProfitLoss
+      }
+    }
+  }
+}
+    `;
+export const useGetTrialSheetReportQuery = <TData = GetTrialSheetReportQuery, TError = unknown>(
+  variables: GetTrialSheetReportQueryVariables,
+  options?: UseQueryOptions<GetTrialSheetReportQuery, TError, TData>
+) =>
+  useQuery<GetTrialSheetReportQuery, TError, TData>(
+    ['getTrialSheetReport', variables],
+    useAxios<GetTrialSheetReportQuery, GetTrialSheetReportQueryVariables>(
+      GetTrialSheetReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetKymStatusReportDocument = `
+    query getKymStatusReport($data: KymStatusReportFilter) {
+  report {
+    kymStatusReport(data: $data) {
+      Summary
+      data {
+        address {
+          ...Address
+        }
+        memberName
+        memberId
+        contact
+        regDate
+        riskCategory
+        lastKymUpdatedDate
+        kymExpireDays
+        kymStatus
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}`;
+export const useGetKymStatusReportQuery = <TData = GetKymStatusReportQuery, TError = unknown>(
+  variables?: GetKymStatusReportQueryVariables,
+  options?: UseQueryOptions<GetKymStatusReportQuery, TError, TData>
+) =>
+  useQuery<GetKymStatusReportQuery, TError, TData>(
+    variables === undefined ? ['getKymStatusReport'] : ['getKymStatusReport', variables],
+    useAxios<GetKymStatusReportQuery, GetKymStatusReportQueryVariables>(
+      GetKymStatusReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMbTransactionReportDocument = `
+    query getMBTransactionReport($data: MBankingTransactionFilter) {
+  report {
+    mBankingTransactionReport(data: $data) {
+      data {
+        initiatorName
+        phoneNo
+        srcAccount
+        destAccount
+        amount
+        transactionType
+        transThrough
+        transDate
+        narration
+        status
+      }
+    }
+  }
+}
+    `;
+export const useGetMbTransactionReportQuery = <
+  TData = GetMbTransactionReportQuery,
+  TError = unknown
+>(
+  variables?: GetMbTransactionReportQueryVariables,
+  options?: UseQueryOptions<GetMbTransactionReportQuery, TError, TData>
+) =>
+  useQuery<GetMbTransactionReportQuery, TError, TData>(
+    variables === undefined ? ['getMBTransactionReport'] : ['getMBTransactionReport', variables],
+    useAxios<GetMbTransactionReportQuery, GetMbTransactionReportQueryVariables>(
+      GetMbTransactionReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetUserReportDocument = `
+    query getUserReport($data: UserReportFilter) {
+  report {
+    userReport(data: $data) {
+      data {
+        isCoreEmployee
+        employeeName
+        empCode
+        username
+        usernameCode
+        accessForBranch
+        accessForGroup
+        role
+        createdDate
+        createdBy
+        status
+        remarks
+      }
+    }
+  }
+}
+    `;
+export const useGetUserReportQuery = <TData = GetUserReportQuery, TError = unknown>(
+  variables?: GetUserReportQueryVariables,
+  options?: UseQueryOptions<GetUserReportQuery, TError, TData>
+) =>
+  useQuery<GetUserReportQuery, TError, TData>(
+    variables === undefined ? ['getUserReport'] : ['getUserReport', variables],
+    useAxios<GetUserReportQuery, GetUserReportQueryVariables>(GetUserReportDocument).bind(
+      null,
+      variables
+    ),
     options
   );
 export const GetShareStatementDocument = `
