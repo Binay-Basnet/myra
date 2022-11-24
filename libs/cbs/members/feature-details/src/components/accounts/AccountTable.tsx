@@ -15,7 +15,7 @@ interface ILoanPaymentScheduleTableProps {
   //   data: MemberPaymentView[] | null | undefined;
 }
 
-export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) => {
+export const AccountTable = ({ data }: ILoanPaymentScheduleTableProps) => {
   const columns = React.useMemo<Column<typeof data[0]>[]>(
     () => [
       {
