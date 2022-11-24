@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 
 import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
 import { Box, Grid, Text } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
 export const MemberStatistics = () => {
   const router = useRouter();
@@ -18,7 +19,7 @@ export const MemberStatistics = () => {
             Total Share Value
           </Text>
           <Text fontSize="r3" fontWeight="600">
-            {memberShareDetails?.totalShareValue}
+            {amountConverter(memberShareDetails?.totalShareValue)}
           </Text>
         </Box>
       )}
@@ -28,7 +29,7 @@ export const MemberStatistics = () => {
             Overall Account Balance
           </Text>
           <Text fontSize="r3" fontWeight="600">
-            {memberShareDetails?.accountBalance}
+            {amountConverter(memberShareDetails?.accountBalance)}
           </Text>
         </Box>
       )}
@@ -38,7 +39,7 @@ export const MemberStatistics = () => {
             Total Loan Amount
           </Text>
           <Text fontSize="r3" fontWeight="600">
-            {memberShareDetails?.loanBalance}
+            {amountConverter(memberShareDetails?.loanBalance as string)}
           </Text>
         </Box>
       )}
