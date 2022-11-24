@@ -215,6 +215,11 @@ export type AccountWithdrawSlipRangeQueryResult = {
   range?: Maybe<SlipRange>;
 };
 
+export enum AccountingBankAccountType {
+  Current = 'CURRENT',
+  Saving = 'SAVING'
+}
+
 export type AccountingInvestmentAccountQueryResult = {
   data?: Maybe<InvestmentAccount>;
   error?: Maybe<QueryError>;
@@ -291,12 +296,14 @@ export type AccountingInvestmentQueryListTransactionArgs = {
 };
 
 export type AccountingMutation = {
+  bankAccounts: BankAccountMutation;
   externalLoan: ExternalLoanMutation;
   investment: AccountingInvestmentMutation;
   sales: AccountingSalesMutation;
 };
 
 export type AccountingQuery = {
+  bankAccounts: BankAccountQuery;
   externalLoan: ExternalLoanQuery;
   investment: AccountingInvestmentQuery;
   sales: AccountingSalesQuery;
@@ -862,6 +869,50 @@ export type Bank = Base & {
   modifiedBy: Identity;
   name?: Maybe<Scalars['String']>;
   objState: ObjState;
+};
+
+export type BankAccount = {
+  accountNo?: Maybe<Scalars['String']>;
+  balance?: Maybe<Scalars['String']>;
+  bankId?: Maybe<Scalars['String']>;
+  bankName?: Maybe<Scalars['String']>;
+  displayName?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+};
+
+export type BankAccountConnection = {
+  edges?: Maybe<Array<Maybe<BankAccountEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type BankAccountEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<BankAccount>;
+};
+
+export type BankAccountFilter = {
+  bankId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type BankAccountMutation = {
+  new?: Maybe<NewBankAccountResult>;
+};
+
+
+export type BankAccountMutationNewArgs = {
+  data?: InputMaybe<NewBankAccountInput>;
+};
+
+export type BankAccountQuery = {
+  list?: Maybe<BankAccountConnection>;
+};
+
+
+export type BankAccountQueryListArgs = {
+  filter?: InputMaybe<BankAccountFilter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type BankAddResult = {
@@ -7008,6 +7059,7 @@ export type Level2HelloArgs = {
 export type LoanAccReportDetails = {
   accountNo?: Maybe<Scalars['String']>;
   approvedAmount?: Maybe<Scalars['String']>;
+  charge?: Maybe<Scalars['String']>;
   installment?: Maybe<Scalars['Int']>;
   interestRate?: Maybe<Scalars['Float']>;
   issuedDate?: Maybe<Scalars['String']>;
@@ -8108,9 +8160,18 @@ export type LoanStatement = {
   txnId?: Maybe<Scalars['String']>;
 };
 
+export type LoanStatementFooter = {
+  disbursePrincipleTotal?: Maybe<Scalars['String']>;
+  discountTotal?: Maybe<Scalars['String']>;
+  interestPaidTotal?: Maybe<Scalars['String']>;
+  paidPrincipleTotal?: Maybe<Scalars['String']>;
+  remainingPrincipleTotal?: Maybe<Scalars['String']>;
+};
+
 export type LoanStatementReport = {
-  loanAccDetails?: Maybe<LoanAccReportDetails>;
+  footer?: Maybe<LoanStatementFooter>;
   loanStatement?: Maybe<Array<Maybe<LoanStatement>>>;
+  meta?: Maybe<LoanAccReportDetails>;
 };
 
 export type LoanStatementReportSettings = {
@@ -8984,6 +9045,22 @@ export enum NatureOfLoanProduct {
   Progressive = 'PROGRESSIVE',
   Unprogressive = 'UNPROGRESSIVE'
 }
+
+export type NewBankAccountInput = {
+  accountName?: InputMaybe<Scalars['String']>;
+  accountNumber?: InputMaybe<Scalars['String']>;
+  accountType?: InputMaybe<AccountingBankAccountType>;
+  bankId?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  displayName?: InputMaybe<Scalars['String']>;
+  openingBalance?: InputMaybe<Scalars['String']>;
+};
+
+export type NewBankAccountResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<BankAccountQuery>;
+  recordId?: Maybe<Scalars['String']>;
+};
 
 export type Nominee = {
   address?: Maybe<Address>;
@@ -13278,7 +13355,7 @@ export type GetLoanStatementReportQueryVariables = Exact<{
 }>;
 
 
-export type GetLoanStatementReportQuery = { report: { loanStatementReport?: { memberId?: string | null, member?: { name?: Record<"local"|"en"|"np",string> | null, code: string } | null, statement?: { loanAccDetails?: { accountNo?: string | null, approvedAmount?: string | null, interestRate?: number | null, loanType?: string | null, loanSubtype?: string | null, issuedDate?: string | null, installment?: number | null } | null, loanStatement?: Array<{ date?: string | null, particular?: string | null, txnId?: string | null, disbursePrinciple?: string | null, paidPrinciple?: string | null, interestPaid?: string | null, finePaid?: string | null, discount?: string | null, remainingPrinciple?: string | null } | null> | null } | {} | null } | null } };
+export type GetLoanStatementReportQuery = { report: { loanStatementReport?: { memberId?: string | null, member?: { name?: Record<"local"|"en"|"np",string> | null, code: string } | null, statement?: { loanStatement?: Array<{ date?: string | null, particular?: string | null, txnId?: string | null, disbursePrinciple?: string | null, paidPrinciple?: string | null, interestPaid?: string | null, finePaid?: string | null, discount?: string | null, remainingPrinciple?: string | null } | null> | null } | {} | null } | null } };
 
 export type GetLedgerReportQueryVariables = Exact<{
   data: GeneralLedgerFilter;
@@ -21673,15 +21750,6 @@ export const GetLoanStatementReportDocument = `
       }
       statement {
         ... on LoanStatementReport {
-          loanAccDetails {
-            accountNo
-            approvedAmount
-            interestRate
-            loanType
-            loanSubtype
-            issuedDate
-            installment
-          }
           loanStatement {
             date
             particular

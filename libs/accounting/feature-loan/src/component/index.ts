@@ -1,4 +1,4 @@
-export * from './AddCollateral';
+export * from './Collateral';
 export * from './Documents';
 export * from './ExternalLoanInfo';
 export * from './Installment';

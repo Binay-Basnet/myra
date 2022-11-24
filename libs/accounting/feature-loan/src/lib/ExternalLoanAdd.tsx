@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { AiOutlinePlus } from 'react-icons/ai';
 import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 
@@ -9,14 +7,10 @@ import {
   ExternalLoanPaymentMethod,
   FrequencyTenure,
   InstallmentFrequency,
-  InvestmentType,
   LoanRepaymentScheme,
-  useGetInvestmentEntriesListDataQuery,
-  useGetNewIdMutation,
-  useGetSettingsUserListDataQuery,
   useSetExternalLoanMutation,
 } from '@coop/cbs/data-access';
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
+import { FormSwitchTab } from '@coop/shared/form';
 import {
   asyncToast,
   Box,
@@ -29,10 +23,10 @@ import {
   Icon,
   Text,
 } from '@coop/shared/ui';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 import {
-  AddCollateral,
+  Collateral,
   Documents,
   ExternalLoanInfo,
   Installment,
@@ -59,54 +53,12 @@ export const ExternalLoanAdd = () => {
   // const id = String(router?.query?.['id']);
   const { getValues } = methods;
 
-  const [collateralId, setCollateralId] = useState<string[]>([]);
-
   const { mutateAsync } = useSetExternalLoanMutation();
 
   const paymentModeList = [
-    { label: 'Cash', value: ExternalLoanPaymentMethod.Cash },
-    { label: 'Bank', value: ExternalLoanPaymentMethod.Bank },
+    { label: t['cash'], value: ExternalLoanPaymentMethod.Cash },
+    { label: t['bank'], value: ExternalLoanPaymentMethod.Bank },
   ];
-
-  const { data: investmentData } = useGetInvestmentEntriesListDataQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    filter: { type: InvestmentType.FixedDeposit },
-  });
-
-  const investmentList = investmentData?.accounting?.investment?.listEntry?.edges;
-
-  const fixedDepositList =
-    investmentList &&
-    investmentList?.map((item) => ({
-      label: item?.node?.name as string,
-      value: item?.node?.id as string,
-    }));
-
-  const { data: userListQueryData } = useGetSettingsUserListDataQuery(
-    {
-      paginate: getRouterQuery({ type: ['PAGINATION'] }),
-    },
-    { staleTime: 0 }
-  );
-
-  const userList = userListQueryData?.settings?.myraUser?.list?.edges;
-
-  const representativeList =
-    userList &&
-    userList?.map((item) => ({
-      label: item?.node?.name as string,
-      value: item?.node?.id as string,
-    }));
-
-  const { mutate: newIdMutate } = useGetNewIdMutation({
-    onSuccess: (res) => {
-      setCollateralId([...collateralId, res.newId]);
-    },
-  });
-
-  const addCollateral = () => {
-    newIdMutate({});
-  };
 
   const submitForm = () => {
     const values = getValues();
@@ -145,47 +97,7 @@ export const ExternalLoanAdd = () => {
 
               <Installment />
 
-              <FormSection header="Collaterals" divider={false}>
-                <GridItem
-                  p="s10"
-                  border="1px solid"
-                  borderColor="border.layout"
-                  display="flex"
-                  flexDirection="column"
-                  gap="s16"
-                  colSpan={3}
-                  borderRadius="br2"
-                >
-                  {collateralId.map(() => (
-                    <AddCollateral />
-                  ))}
-                  <Button
-                    alignSelf="start"
-                    leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-                    variant="outline"
-                    onClick={addCollateral}
-                  >
-                    Add New
-                  </Button>
-                </GridItem>
-                <GridItem colSpan={3}>
-                  <FormSelect
-                    name="fixDeposit"
-                    label="Fix Deposit"
-                    options={fixedDepositList ?? []}
-                  />
-                </GridItem>
-                <GridItem colSpan={2}>
-                  <FormSelect
-                    name="nameOfRepresentative"
-                    label="Name of Representative"
-                    options={representativeList ?? []}
-                  />
-                </GridItem>
-                <GridItem colSpan={1}>
-                  <FormInput name="position" type="text" label="Position" />
-                </GridItem>
-              </FormSection>
+              <Collateral />
 
               <FormSection>
                 <GridItem colSpan={3}>

@@ -368,7 +368,6 @@ export const AddDeposit = () => {
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
             title={`${t['addDepositNewDeposit']} - ${featureCode?.newDeposit}`}
-            closeLink="/transactions/deposit/list"
             buttonLabel={t['addDepositAddBulkDeposit']}
             buttonHandler={() => router.push('/transactions/deposit/add-bulk-deposit')}
           />
