@@ -3,8 +3,8 @@ import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 
 import {
+  ExternalLoanPaymentInput,
   ExternalLoanPaymentMethod,
-  ExternalLoanPaymentMutation,
   useExternalLoanAccountListQuery,
   useSetExternalPaymentMutation,
 } from '@coop/cbs/data-access';
@@ -27,9 +27,9 @@ import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 export const ExternalLoanPaymentAdd = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const methods = useForm({
+  const methods = useForm<ExternalLoanPaymentInput>({
     defaultValues: {
-      paymentModeList: ExternalLoanPaymentMethod.Cash,
+      paymentMode: ExternalLoanPaymentMethod.Cash,
     },
   });
   // const id = String(router?.query?.['id']);
@@ -71,7 +71,7 @@ export const ExternalLoanPaymentAdd = () => {
       onError: (error) => {
         if (error.__typename === 'ValidationError') {
           Object.keys(error.validationErrorMsg).map((key) =>
-            methods.setError(key as keyof ExternalLoanPaymentMutation, {
+            methods.setError(key as keyof ExternalLoanPaymentInput, {
               message: error.validationErrorMsg[key][0] as string,
             })
           );

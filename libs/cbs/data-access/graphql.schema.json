@@ -22376,6 +22376,18 @@
             "deprecationReason": null
           },
           {
+            "name": "withdrawPenalty",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "WithdrawPenaltyFormState",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "withdrawRestricted",
             "description": null,
             "args": [],
@@ -93069,6 +93081,29 @@
         "possibleTypes": null
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "TrialSheetFilter",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "includeZero",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "TrialSheetReportData",
         "description": null,
@@ -93261,11 +93296,11 @@
             "deprecationReason": null
           },
           {
-            "name": "includeZero",
+            "name": "filter",
             "description": null,
             "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
+              "kind": "INPUT_OBJECT",
+              "name": "TrialSheetFilter",
               "ofType": null
             },
             "defaultValue": null,
