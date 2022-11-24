@@ -10,7 +10,7 @@ interface ILoanPaymentScheduleTableProps {
         accountName: string | null | undefined;
         installmentNo: string | null | undefined;
         interestRate: string | null | undefined;
-        amount: string | null | undefined;
+        amount: string | 0;
         paymentType: string | null | undefined;
       }[];
 

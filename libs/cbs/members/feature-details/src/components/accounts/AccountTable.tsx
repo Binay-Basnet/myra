@@ -8,7 +8,7 @@ interface ILoanPaymentScheduleTableProps {
         sn: number;
         accountType: string | null | undefined;
         accountName: string | null | undefined;
-        totalBalance: string | null | undefined;
+        totalBalance: string | 0;
         interestRate: string | null | undefined;
       }[];
 

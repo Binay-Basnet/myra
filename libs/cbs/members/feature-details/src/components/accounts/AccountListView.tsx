@@ -33,7 +33,7 @@ export const AccountList = () => {
       sn: Number(index) + 1,
       accountType: data?.productType,
       accountName: data?.accountName,
-      totalBalance: data?.totalBalance,
+      totalBalance: amountConverter(data?.totalBalance as string),
       interestRate: data?.interestRate,
     })) || [];
 

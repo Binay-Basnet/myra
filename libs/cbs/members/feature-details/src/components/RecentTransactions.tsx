@@ -5,6 +5,7 @@ import {
   useGetMemberDetailsOverviewQuery,
 } from '@coop/cbs/data-access';
 import { Box, Tags, Text } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
 export const RecentTransactions = () => {
   const router = useRouter();
@@ -57,7 +58,7 @@ export const RecentTransactions = () => {
                   </Text>
                   <Text fontSize="s3" fontWeight="400">
                     {' '}
-                    {items?.amount}
+                    {amountConverter(items?.amount as string)}
                   </Text>
                 </Box>
                 {items?.noOfShares && (
