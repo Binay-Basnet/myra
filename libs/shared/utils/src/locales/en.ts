@@ -2495,10 +2495,10 @@ const en: Record<string, string> = {
   accountOpenChequeIssue: 'Cheque Issue',
 
   // settings deposit product
-  depositProductAddDepositProducts: 'Add Deposit Products',
+  depositProductAddDepositProducts: 'Add Savings Products',
   depositProductProductName: 'Product Name ',
   depositProductEnterProductName: 'Enter Product Name',
-  depositProductNatureofDepositProduct: 'Nature of Deposit Product',
+  depositProductNatureofDepositProduct: 'Nature of Savings Product',
   depositProductSelectNatureofDepositProduct: 'Select Nature of Deposit Product',
   depositProductProductCode: 'Product Code',
   depositProductAddprefixintial: 'Add prefix & intial number. Eg. ASM506',
