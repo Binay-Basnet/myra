@@ -7951,9 +7951,8 @@ export type MBankingTransactionData = {
 };
 
 export type MBankingTransactionFilter = {
-  customPeriod?: InputMaybe<LocalizedDateFilter>;
   filter?: InputMaybe<MBankingTransactionFilterData>;
-  periodType?: InputMaybe<ReportPeriodType>;
+  period: PeriodInput;
 };
 
 export type MBankingTransactionFilterData = {
