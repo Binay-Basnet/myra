@@ -2975,7 +2975,7 @@ const ne: Record<string, string> = {
   addDepositNewDeposit: 'New Deposit',
   addDepositAddBulkDeposit: 'Add Bulk Deposit',
   addDepositMember: 'Member',
-  addDepositSelectDepositAccount: 'Select Deposit Account',
+  addDepositSelectDepositAccount: 'Select Saving Account',
   addDepositVoucherId: 'Voucher ID',
   addDepositNoOfInstallments: 'No of Installments',
   addDepositViewAllInstallments: 'View all installments',
