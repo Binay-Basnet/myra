@@ -189,7 +189,9 @@ export const TrialSheetReport = () => {
                 fontSize="r1"
                 fontWeight={600}
                 color="gray.700"
-              />
+              >
+                Total Liabilities + Total Income
+              </Box>
               <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
                 {amountConverter(data?.report?.trialSheetReport?.data?.totalLiablitiesIncome ?? 0)}
               </Box>
