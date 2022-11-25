@@ -95,6 +95,7 @@ export const TrialSheetReport = () => {
             </Text>
             <COATable
               type="Liabilities"
+              total={data?.report?.trialSheetReport?.data?.totalLiablitiesIncome}
               data={equityAndLiablities as TrialSheetReportDataEntry[]}
             />
           </Box>
@@ -102,19 +103,31 @@ export const TrialSheetReport = () => {
             <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
               2. Assets
             </Text>
-            <COATable type="Assets" data={assetsReport as TrialSheetReportDataEntry[]} />
+            <COATable
+              total={data?.report?.trialSheetReport?.data?.assetsTotal}
+              type="Assets"
+              data={assetsReport as TrialSheetReportDataEntry[]}
+            />
           </Box>
           <Box display="flex" py="s16" flexDir="column">
             <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
               3. Expenses
             </Text>
-            <COATable type="Assets" data={expensesReport as TrialSheetReportDataEntry[]} />
+            <COATable
+              total={data?.report?.trialSheetReport?.data?.expenseTotal}
+              type="Expenses"
+              data={expensesReport as TrialSheetReportDataEntry[]}
+            />
           </Box>
           <Box display="flex" py="s16" flexDir="column">
             <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
               4. Income
             </Text>
-            <COATable type="Assets" data={incomeReport as TrialSheetReportDataEntry[]} />
+            <COATable
+              total={data?.report?.trialSheetReport?.data?.incomeTotal}
+              type="Income"
+              data={incomeReport as TrialSheetReportDataEntry[]}
+            />
           </Box>
 
           <Box
@@ -203,9 +216,10 @@ export const TrialSheetReport = () => {
 interface ICOATableProps {
   data: TrialSheetReportDataEntry[];
   type: string;
+  total: string | null | undefined;
 }
 
-const COATable = ({ data, type }: ICOATableProps) => (
+const COATable = ({ data, type, total }: ICOATableProps) => (
   <Report.Table<TrialSheetReportDataEntry>
     showFooter
     data={data as TrialSheetReportDataEntry[]}
@@ -231,7 +245,7 @@ const COATable = ({ data, type }: ICOATableProps) => (
         header: 'Balance',
         accessorKey: 'balance',
         cell: (props) => amountConverter(props.getValue() as string),
-        footer: () => <>{amountConverter(data?.reduce((a, b) => a + Number(b.balance), 0))}</>,
+        footer: () => <>{amountConverter(total ?? 0)}</>,
         meta: {
           isNumeric: true,
         },
