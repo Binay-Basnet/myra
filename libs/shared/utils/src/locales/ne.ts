@@ -3401,6 +3401,8 @@ const ne: Record<string, string> = {
   other: 'Other',
   collateral: 'Collateral',
   loanAgainstFd: 'Loan Against Fd',
+
+  bankAccountsAccountNo: 'Account No',
 };
 
 export default ne;

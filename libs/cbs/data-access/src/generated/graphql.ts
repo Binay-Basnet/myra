@@ -11709,6 +11709,13 @@ export enum WithdrawWith {
   WithdrawSlip = 'WITHDRAW_SLIP'
 }
 
+export type SetBankAccountsMutationVariables = Exact<{
+  data?: InputMaybe<NewBankAccountInput>;
+}>;
+
+
+export type SetBankAccountsMutation = { accounting: { bankAccounts: { new?: { recordId?: string | null, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } } };
+
 export type SetExternalLoanMutationVariables = Exact<{
   id?: InputMaybe<Scalars['String']>;
   data?: InputMaybe<ExternalLoanApplicationInput>;
@@ -12678,6 +12685,14 @@ export type GetAccountTransactionListsQueryVariables = Exact<{
 
 
 export type GetAccountTransactionListsQuery = { account: { listTransactions?: { edges?: Array<{ node: { id: string, accountId?: string | null, name: string, date: Record<"local"|"en"|"np",string>, month: Record<"local"|"en"|"np",string>, transactionDirection: EbankingTransactionDirection, amount: string, currentBalance: string } } | null> | null, pageInfo?: { endCursor?: string | null, startCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean } | null, summary?: { totalDeposit?: string | null, totalWithdraw?: string | null, averageBalance?: string | null } | null } | null } };
+
+export type GetBankAccountListQueryVariables = Exact<{
+  filter?: InputMaybe<BankAccountFilter>;
+  pagination?: InputMaybe<Pagination>;
+}>;
+
+
+export type GetBankAccountListQuery = { accounting: { bankAccounts: { list?: { edges?: Array<{ node?: { id?: string | null, bankId?: string | null, bankName?: string | null, displayName?: string | null, accountNo?: string | null, balance?: string | null } | null } | null> | null } | null } } };
 
 export type ExternalLoanListQueryVariables = Exact<{
   filter?: InputMaybe<ExternalLoanApplicationFilter>;
@@ -14072,6 +14087,29 @@ export const LoanProductFragmentDoc = `
   requiredDocuments
 }
     `;
+export const SetBankAccountsDocument = `
+    mutation setBankAccounts($data: NewBankAccountInput) {
+  accounting {
+    bankAccounts {
+      new(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useSetBankAccountsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<SetBankAccountsMutation, TError, SetBankAccountsMutationVariables, TContext>) =>
+    useMutation<SetBankAccountsMutation, TError, SetBankAccountsMutationVariables, TContext>(
+      ['setBankAccounts'],
+      useAxios<SetBankAccountsMutation, SetBankAccountsMutationVariables>(SetBankAccountsDocument),
+      options
+    );
 export const SetExternalLoanDocument = `
     mutation setExternalLoan($id: String, $data: ExternalLoanApplicationInput) {
   accounting {
@@ -17475,6 +17513,38 @@ export const useGetAccountTransactionListsQuery = <
     useQuery<GetAccountTransactionListsQuery, TError, TData>(
       ['getAccountTransactionLists', variables],
       useAxios<GetAccountTransactionListsQuery, GetAccountTransactionListsQueryVariables>(GetAccountTransactionListsDocument).bind(null, variables),
+      options
+    );
+export const GetBankAccountListDocument = `
+    query getBankAccountList($filter: BankAccountFilter, $pagination: Pagination) {
+  accounting {
+    bankAccounts {
+      list(filter: $filter, pagination: $pagination) {
+        edges {
+          node {
+            id
+            bankId
+            bankName
+            displayName
+            accountNo
+            balance
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetBankAccountListQuery = <
+      TData = GetBankAccountListQuery,
+      TError = unknown
+    >(
+      variables?: GetBankAccountListQueryVariables,
+      options?: UseQueryOptions<GetBankAccountListQuery, TError, TData>
+    ) =>
+    useQuery<GetBankAccountListQuery, TError, TData>(
+      variables === undefined ? ['getBankAccountList'] : ['getBankAccountList', variables],
+      useAxios<GetBankAccountListQuery, GetBankAccountListQueryVariables>(GetBankAccountListDocument).bind(null, variables),
       options
     );
 export const ExternalLoanListDocument = `
