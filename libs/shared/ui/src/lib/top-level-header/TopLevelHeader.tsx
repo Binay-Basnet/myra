@@ -512,7 +512,6 @@ export const TopLevelHeader = () => {
                       boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.2), 0px 2px 10px rgba(0, 0, 0, 0.1)',
                     }}
                     color="white"
-                    zIndex="2000"
                   >
                     <PopoverBody p="0">
                       <Box display="flex" flexDirection="column">
@@ -524,6 +523,7 @@ export const TopLevelHeader = () => {
                           alignItems="center"
                           borderBottom="1px solid"
                           borderColor="border.layout"
+                          zIndex="2000"
                         >
                           <Avatar src={user?.profilePic || ''} w="s32" h="s32" />
                           <Box
