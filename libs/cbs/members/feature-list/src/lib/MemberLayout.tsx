@@ -53,12 +53,15 @@ const reportColumn = [
   },
   {
     label: 'memberLayoutActiveInactiveMemberReport',
+    navigate: '/reports/cbs/members/activations/new',
   },
   {
     label: 'memberLayoutInactiveMemberReport',
+    navigate: '/reports/cbs/members/activations/new',
   },
   {
     label: 'memberLayoutKymStatusReport',
+    navigate: '/reports/cbs/members/kym-status/new',
   },
 ];
 
