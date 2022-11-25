@@ -41,22 +41,6 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-<<<<<<< HEAD
-      'Accounting App - Investment Section',
-      'Accounting App - Sales Section ',
-      'CBS - Transfers',
-      'CBS - Requests',
-      'Addition in menu and its left navigation',
-      'Savings- Close Account',
-      'Bulk Deposit',
-      'Loan Repayment',
-      'Account Detail Page ( Overview, Transaction, Withdraw Slip)',
-      'Member Detail Page (Overview, Accounts, Share, Bio)',
-      'Transaction Detail Page (Overview) of Deposit, Withdraw',
-      'Alternative Channel',
-      'Settings-User-Teller Creation',
-      'Reports - Mobile Banking Registration, Mobile Banking Expiry, Service Center List, Member Classification, Interest Tax,Interest Statement, General Ledger, Saving Statement, Share Statement, Loan Statement, Active/Inactive Member',
-=======
       'Accounting : External Loan',
       'Accounting : Bank Accounts',
       'CBS-Others: Fund Management ( Form )',
@@ -79,7 +63,6 @@ const whatsNewData = {
       '13. Trial Balance',
       '14. Mobile App Transaction',
       '15. User List',
->>>>>>> b107cf7b8269e457173f9770feac9a7c22cc30bf
     ],
   },
   bugsSquashed: {
@@ -142,13 +125,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-<<<<<<< HEAD
-          <Text fontSize="r2">Version 1.0.6</Text>
-          <Text fontSize="s3">November 23, 2022</Text>
-=======
           <Text fontSize="r2">Version 1.0.7</Text>
           <Text fontSize="s3">November 25, 2022</Text>
->>>>>>> b107cf7b8269e457173f9770feac9a7c22cc30bf
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>
