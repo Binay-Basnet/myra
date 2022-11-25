@@ -10,19 +10,29 @@ import { getRouterQuery } from '@coop/shared/utils';
 export const useExternalLoan = () => {
   const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);
 
-  const { data: externalLoanData, isLoading: isExternalLoanLoading } = useExternalLoanListQuery({
+  const {
+    data: externalLoanData,
+    isLoading: isExternalLoanLoading,
+    refetch: refetchExternalLoan,
+  } = useExternalLoanListQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
   });
 
-  const { data: loanPaymentData, isLoading: isLoanPaymentLoading } =
-    useExternalLoanPaymentListQuery({
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    });
+  const {
+    data: loanPaymentData,
+    isLoading: isLoanPaymentLoading,
+    refetch: refetchLoanPayment,
+  } = useExternalLoanPaymentListQuery({
+    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+  });
 
-  const { data: loanAccountData, isLoading: isLoanAccountLoading } =
-    useExternalLoanAccountListQuery({
-      pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    });
+  const {
+    data: loanAccountData,
+    isLoading: isLoanAccountLoading,
+    refetch: refetchLoanAccount,
+  } = useExternalLoanAccountListQuery({
+    pagination: getRouterQuery({ type: ['PAGINATION'] }),
+  });
 
   const externalLoanList = externalLoanData?.accounting?.externalLoan?.loan?.list?.edges?.map(
     (externalLoan) => ({
@@ -57,9 +67,12 @@ export const useExternalLoan = () => {
   return {
     externalLoanList,
     isExternalLoanLoading,
+    refetchExternalLoan,
     loanPaymentList,
     isLoanPaymentLoading,
+    refetchLoanPayment,
     loanAccountList,
     isLoanAccountLoading,
+    refetchLoanAccount,
   };
 };

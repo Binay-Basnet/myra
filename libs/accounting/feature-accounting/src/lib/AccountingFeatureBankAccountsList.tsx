@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
@@ -12,7 +12,7 @@ export const AccountingFeatureBankAccountsList = () => {
 
   const router = useRouter();
 
-  const { data, isLoading } = useGetBankAccountListQuery({
+  const { data, isLoading, refetch } = useGetBankAccountListQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
   });
 
@@ -66,6 +66,10 @@ export const AccountingFeatureBankAccountsList = () => {
     ],
     [t]
   );
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   return (
     <>

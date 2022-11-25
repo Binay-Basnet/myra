@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { ExternalLoanType } from '@coop/cbs/data-access';
@@ -30,7 +30,7 @@ const loanTypeSwitch = ({ loanType, t }: ILoanTypeProps) => {
 export const ExternalLoansList = () => {
   const { t } = useTranslation();
 
-  const { externalLoanList, isExternalLoanLoading } = useExternalLoan();
+  const { externalLoanList, isExternalLoanLoading, refetchExternalLoan } = useExternalLoan();
 
   const rowData = useMemo(() => externalLoanList ?? [], [externalLoanList]);
 
@@ -93,6 +93,11 @@ export const ExternalLoansList = () => {
     ],
     [t]
   );
+
+  useEffect(() => {
+    refetchExternalLoan();
+  }, [refetchExternalLoan]);
+
   return (
     <>
       <AccountingPageHeader heading="Investments" />

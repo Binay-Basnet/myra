@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { formatTableAddress } from '@coop/cbs/utils';
@@ -14,7 +14,7 @@ export interface ExternalLoanAccountListProps {}
 export const ExternalLoanAccountList = () => {
   const { t } = useTranslation();
 
-  const { loanAccountList, isLoanAccountLoading } = useExternalLoan();
+  const { loanAccountList, isLoanAccountLoading, refetchLoanAccount } = useExternalLoan();
 
   const rowData = useMemo(() => loanAccountList ?? [], [loanAccountList]);
 
@@ -66,6 +66,11 @@ export const ExternalLoanAccountList = () => {
     ],
     [t]
   );
+
+  useEffect(() => {
+    refetchLoanAccount();
+  }, [refetchLoanAccount]);
+
   return (
     <>
       <AccountingPageHeader heading="External Loan Accounts" />

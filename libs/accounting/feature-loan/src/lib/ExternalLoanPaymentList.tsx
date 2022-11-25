@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { ExternalLoanPaymentMethod } from '@coop/cbs/data-access';
@@ -33,7 +33,7 @@ const paymentModeSwitch = ({ paymentMode, t }: IPaymentModeProps) => {
 export const ExternalLoanPaymentList = () => {
   const { t } = useTranslation();
 
-  const { loanPaymentList, isLoanPaymentLoading } = useExternalLoan();
+  const { loanPaymentList, isLoanPaymentLoading, refetchLoanPayment } = useExternalLoan();
   const rowData = useMemo(() => loanPaymentList ?? [], [loanPaymentList]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
@@ -84,6 +84,11 @@ export const ExternalLoanPaymentList = () => {
     ],
     [t]
   );
+
+  useEffect(() => {
+    refetchLoanPayment();
+  }, [refetchLoanPayment]);
+
   return (
     <>
       <AccountingPageHeader heading="External Loan Payment" />
