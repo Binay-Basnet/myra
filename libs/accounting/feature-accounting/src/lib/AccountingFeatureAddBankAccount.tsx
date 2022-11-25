@@ -1,8 +1,16 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
+import { useRouter } from 'next/router';
 
+import {
+  AccountingBankAccountType,
+  NewBankAccountInput,
+  useGetBankListQuery,
+  useSetBankAccountsMutation,
+} from '@coop/cbs/data-access';
 import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
 import {
+  asyncToast,
   Box,
   Button,
   Container,
@@ -20,7 +28,56 @@ export interface AccountingFeatureAddBankAccountProps {}
 
 export const AccountingFeatureAddBankAccount = () => {
   const { t } = useTranslation();
+  const router = useRouter();
   const methods = useForm();
+
+  const { getValues } = methods;
+
+  const accountTypeList = [
+    {
+      label: 'Current',
+      value: AccountingBankAccountType.Current,
+    },
+    {
+      label: 'Saving',
+      value: AccountingBankAccountType.Saving,
+    },
+  ];
+
+  const { mutateAsync } = useSetBankAccountsMutation();
+
+  const { data } = useGetBankListQuery();
+
+  const bankList =
+    data &&
+    data?.bank?.bank?.list?.map((item) => ({
+      label: item?.name as string,
+      value: item?.id as string,
+    }));
+
+  const submitForm = () => {
+    const values = getValues();
+
+    asyncToast({
+      id: 'accounting-bank-account-id',
+      msgs: {
+        success: 'New Accounting Bank Account Added',
+        loading: 'Adding Accounting Bank Account',
+      },
+      onSuccess: () => router.push('/accounting/accounting/bank-accounts/list'),
+      promise: mutateAsync({ data: values }),
+      onError: (error) => {
+        if (error.__typename === 'ValidationError') {
+          Object.keys(error.validationErrorMsg).map((key) =>
+            methods.setError(key as keyof NewBankAccountInput, {
+              message: error.validationErrorMsg[key][0] as string,
+            })
+          );
+        }
+      },
+    });
+  };
+
   return (
     <>
       <Container minW="container.lg" height="fit-content" pb="60px">
@@ -29,26 +86,32 @@ export const AccountingFeatureAddBankAccount = () => {
         <FormProvider {...methods}>
           <form>
             <Box bg="white" minH="calc(100vh - 220px)">
-              <FormSection>
-                <FormSelect
-                  name="bank"
-                  label={t['accountingBankAccountAddSelectBank']}
-                  options={[]}
-                />
-                <FormInput
-                  name="bankDisplayName"
-                  type="text"
-                  label={t['accountingBankAccountAddDisplayName']}
-                />
-                <FormInput name="code" type="text" label={t['accountingBankAccountAddCode']} />
+              <FormSection templateColumns={4}>
+                <GridItem colSpan={2}>
+                  <FormSelect
+                    name="bankId"
+                    label={t['accountingBankAccountAddSelectBank']}
+                    options={bankList}
+                  />
+                </GridItem>
+
+                <GridItem colSpan={2}>
+                  <FormInput
+                    name="displayName"
+                    type="text"
+                    label={t['accountingBankAccountAddDisplayName']}
+                  />
+                </GridItem>
               </FormSection>
 
-              <FormSection header="bankAccountBankInformation">
-                <FormSelect
-                  name="accountName"
-                  label={t['accountingBankAccountAddAccountName']}
-                  options={[]}
-                />
+              <FormSection divider={false} header="bankAccountBankInformation">
+                <GridItem colSpan={2}>
+                  <FormInput
+                    name="accountName"
+                    type="text"
+                    label={t['accountingBankAccountAddAccountName']}
+                  />
+                </GridItem>
                 <FormInput
                   name="accountNumber"
                   type="text"
@@ -57,17 +120,15 @@ export const AccountingFeatureAddBankAccount = () => {
                 <FormSelect
                   name="accountType"
                   label={t['accountingBankAccountAddAccountType']}
-                  options={[]}
+                  options={accountTypeList}
                 />
                 <FormInput
                   name="openingBalance"
                   type="text"
                   label={t['accountingBankAccountAddOpeningBalance']}
                 />
-              </FormSection>
 
-              <FormSection divider={false}>
-                <GridItem colSpan={2}>
+                <GridItem colSpan={3}>
                   <FormTextArea
                     name="description"
                     label={t['accountingBankAccountAddDesciption']}
@@ -98,6 +159,7 @@ export const AccountingFeatureAddBankAccount = () => {
               </Button>
             }
             mainButtonLabel={t['save']}
+            mainButtonHandler={submitForm}
           />
         </Container>
       </Box>

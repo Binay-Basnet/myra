@@ -51,7 +51,9 @@ export const ExternalLoanAdd = () => {
     },
   });
   // const id = String(router?.query?.['id']);
-  const { getValues } = methods;
+  const { getValues, watch } = methods;
+
+  const insurance = watch('insurance');
 
   const { mutateAsync } = useSetExternalLoanMutation();
 
@@ -63,6 +65,14 @@ export const ExternalLoanAdd = () => {
   const submitForm = () => {
     const values = getValues();
 
+    const updatedData = {
+      ...values,
+      insuranceCompany: insurance ? values?.insuranceCompany : null,
+      insurancePremiumAmount: insurance ? values?.insurancePremiumAmount : null,
+      insuranceStartDate: insurance ? values?.insuranceStartDate : null,
+      insuranceValidUpto: insurance ? values?.insuranceValidUpto : null,
+    };
+
     asyncToast({
       id: 'external-loan-id',
       msgs: {
@@ -70,7 +80,7 @@ export const ExternalLoanAdd = () => {
         loading: 'Adding External Loan',
       },
       onSuccess: () => router.push('/accounting/loan/external-loan/list'),
-      promise: mutateAsync({ data: values }),
+      promise: mutateAsync({ data: updatedData }),
       onError: (error) => {
         if (error.__typename === 'ValidationError') {
           Object.keys(error.validationErrorMsg).map((key) =>
