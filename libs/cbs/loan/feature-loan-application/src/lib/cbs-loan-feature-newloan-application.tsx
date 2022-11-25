@@ -6,6 +6,7 @@ import { omit } from 'lodash';
 
 import {
   LoanAccountInput,
+  NatureOfDepositProduct,
   useGetIndividualMemberDetails,
   useGetLoanApplicationDetailsQuery,
   useGetLoanProductSubTypeQuery,
@@ -52,6 +53,7 @@ export const NewLoanApplication = () => {
 
   const queryClient = useQueryClient();
   const [showCriteria, setShowCriteria] = useState(false);
+  const [triggerAccountlist, setTriggerAccountList] = useState(false);
 
   const methods = useForm<LoanAccountInput>({
     mode: 'onChange',
@@ -211,12 +213,25 @@ export const NewLoanApplication = () => {
       methods.setValue('memberId', String(redirectMemberId));
     }
   }, [redirectMemberId]);
-  const { data: linkedAccountData } = useGetMemberLinkedAccountsQuery({
-    memberId: String(memberId),
-    includeActiveAccountsOnly: true,
-  });
+
+  // saving accounts check list
+  const { data: linkedAccountData } = useGetMemberLinkedAccountsQuery(
+    {
+      memberId: String(memberId),
+
+      filter: [NatureOfDepositProduct?.Current, NatureOfDepositProduct?.Saving],
+      includeActiveAccountsOnly: true,
+    },
+    {
+      enabled: triggerAccountlist,
+    }
+  );
   const loanLinkedData = linkedAccountData?.members?.getAllAccounts?.data?.depositAccount;
-  const loanLinkedAccountLength = loanLinkedData?.length;
+  useEffect(() => {
+    if (memberId) {
+      setTriggerAccountList(true);
+    }
+  }, [memberId]);
   return (
     <Container minW="container.xl" p="0" bg="white">
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
@@ -235,10 +250,10 @@ export const NewLoanApplication = () => {
               <Box display="flex" flexDirection="column" gap="s32" p="s20" w="100%">
                 <Box display="flex" flexDir="column" gap="s16">
                   <FormMemberSelect name="memberId" label="Member Id" isDisabled={!!id} />
-                  {loanLinkedAccountLength === 0 && (
+                  {memberId && !loanLinkedData && (
                     <Alert status="error"> Member does not have a Saving Account </Alert>
                   )}
-                  {memberId && loanLinkedAccountLength !== 0 && (
+                  {memberId && loanLinkedData && (
                     <FormSelect
                       name="productType"
                       label="Loan Type"

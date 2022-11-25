@@ -24,22 +24,27 @@ export const InstallmentDetails = ({ data }: InstallmentDetailsProps) => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: '1',
         header: t['transDetailSN'],
         accessorFn: (row) => row?.installmentNo,
       },
       {
+        id: '2',
         header: t['transDetailInstallmentNo'],
         accessorFn: (row) => row?.installmentNo,
       },
       {
+        id: '3',
         header: t['transDetailPayment'],
         accessorFn: (row) => row?.payment,
       },
       {
+        id: '4',
         header: t['transDetailPrincipalAmount'],
         accessorFn: (row) => row?.principalAmount,
       },
       {
+        id: '5',
         header: t['transDetailInterestAmount'],
         accessorFn: (row) => row?.interestAmount,
       },
