@@ -1,0 +1,93 @@
+query externalLoanList($filter: ExternalLoanApplicationFilter, $pagination: Pagination) {
+  accounting {
+    externalLoan {
+      loan {
+        list(filter: $filter, pagination: $pagination) {
+          totalCount
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+          edges {
+            node {
+              id
+              loanName
+              organizationId
+              organizationName
+              createdBy
+              appliedDate
+              loanType
+              amount
+            }
+            cursor
+          }
+        }
+      }
+    }
+  }
+}
+
+query externalLoanAccountList($filter: ExternalLoanAccountFilter, $pagination: Pagination) {
+  accounting {
+    externalLoan {
+      account {
+        list(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            node {
+              id
+              name
+              createdBy
+              createdDate
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+                coordinates {
+                  longitude
+                  latitude
+                }
+              }
+            }
+            cursor
+          }
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+        }
+      }
+    }
+  }
+}
+
+query externalLoanPaymentList($filter: ExternalLoanPaymentFilter, $pagination: Pagination) {
+  accounting {
+    externalLoan {
+      payment {
+        list(filter: $filter, pagination: $pagination) {
+          totalCount
+          edges {
+            cursor
+            node {
+              id
+              loanId
+              loanName
+              createdBy
+              createdDate
+              amount
+              paymentMode
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -11,7 +11,8 @@ export interface SidebarTabsProps {
 const TabCol = chakra(Tab, {
   baseStyle: {
     color: 'gray.800',
-    height: '48px',
+    height: '40px',
+    borderRadius: 'br2',
     fontSize: 'r1',
     fontWeight: '400',
     width: '100%',
@@ -19,6 +20,9 @@ const TabCol = chakra(Tab, {
     justifyContent: 'flex-start',
     alignItems: 'center',
 
+    _hover: {
+      bg: 'highlight.500',
+    },
     _selected: {
       bg: '#EEF2F7',
       fontWeight: '600',

@@ -7,6 +7,7 @@ import {
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
 import { Box, Grid, Icon, Text } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
 import { AccountList, UpcomingPaymentTable } from '../components';
 
@@ -33,7 +34,7 @@ export const Accounts = () => {
     date: data?.date,
     accountName: data?.accountName,
     paymentType: data?.paymentType,
-    amount: data?.amount,
+    amount: amountConverter(data?.amount as string),
   }));
   const newId = useGetNewIdMutation();
 

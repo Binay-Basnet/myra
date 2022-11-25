@@ -22,6 +22,7 @@ import {
 } from '@chakra-ui/react';
 
 import { AccountQRModal } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
 import { Avatar } from '../avatar/Avatar';
 import { Button } from '../button/Button';
@@ -396,7 +397,7 @@ export const MemberCard = ({
                         Current Balance
                       </Text>
                       <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
-                        {accountInfo.currentBalance}
+                        {amountConverter(accountInfo.currentBalance)}
                       </Text>
                     </Box>
                   )}
@@ -406,7 +407,7 @@ export const MemberCard = ({
                         Minimum Balance
                       </Text>
                       <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
-                        {accountInfo.minimumBalance}
+                        {amountConverter(accountInfo.minimumBalance)}
                       </Text>
                     </Box>
                   )}
@@ -416,7 +417,7 @@ export const MemberCard = ({
                         Accrued Interest
                       </Text>
                       <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
-                        {accountInfo.interestAccured}
+                        {amountConverter(accountInfo.interestAccured)}
                       </Text>
                     </Box>
                   )}
@@ -426,7 +427,7 @@ export const MemberCard = ({
                         Guarantee Balance
                       </Text>
                       <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
-                        {accountInfo.guaranteeBalance}
+                        {amountConverter(accountInfo.guaranteeBalance)}
                       </Text>
                     </Box>
                   )}
@@ -436,7 +437,7 @@ export const MemberCard = ({
                         Overdrawn Balance
                       </Text>
                       <Text fontSize="s3" fontWeight={500} color="neutralColorLight.700">
-                        {accountInfo.overdrawnBalance}
+                        {amountConverter(accountInfo.overdrawnBalance)}
                       </Text>
                     </Box>
                   )}
@@ -446,7 +447,7 @@ export const MemberCard = ({
                         Fine
                       </Text>
                       <Text fontSize="s3" fontWeight={500} color="danger.500">
-                        {accountInfo.fine}
+                        {amountConverter(accountInfo.fine)}
                       </Text>
                     </Box>
                   )}

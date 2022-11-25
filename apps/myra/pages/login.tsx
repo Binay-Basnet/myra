@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import Image from "next/legacy/image";
+import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 
 import { login, setPreference, useAppDispatch, useLoginMutation } from '@coop/cbs/data-access';
@@ -58,7 +58,7 @@ export const Login = () => {
       p={170}
       bg="primary.0"
     >
-      <Box display="flex" width="100%" justifyContent="space-between">
+      <Box display="flex" flexWrap="wrap" width="100%" justifyContent="space-between">
         <Box display="flex" flexDirection="column" width={500} justifyContent="center" gap="s16">
           <Text fontSize="m2" fontWeight="semibold" lineHeight="shorter" color="gray.700">
             {t['loginTitle']}

@@ -8,14 +8,14 @@ interface ILoanPaymentScheduleTableProps {
         sn: number;
         accountType: string | null | undefined;
         accountName: string | null | undefined;
-        totalBalance: string | null | undefined;
+        totalBalance: string | 0;
         interestRate: string | null | undefined;
       }[];
 
   //   data: MemberPaymentView[] | null | undefined;
 }
 
-export const UpcomingPaymentTable = ({ data }: ILoanPaymentScheduleTableProps) => {
+export const LoanTable = ({ data }: ILoanPaymentScheduleTableProps) => {
   const columns = React.useMemo<Column<typeof data[0]>[]>(
     () => [
       {

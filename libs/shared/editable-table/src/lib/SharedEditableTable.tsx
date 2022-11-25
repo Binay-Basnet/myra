@@ -72,6 +72,8 @@ export interface EditableTableProps<
   searchPlaceholder?: string;
 
   getRowId?: () => Promise<{ newId: string }>;
+
+  hideSN?: boolean;
 }
 
 const cellWidthObject = {
@@ -246,6 +248,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
   canAddRow = true,
   searchPlaceholder,
   getRowId,
+  hideSN,
 }: EditableTableProps<T>) => {
   const [state, dispatch] = useReducer<Reducer<EditableState<T>, EditableTableAction<T>>>(
     editableReducer,
@@ -287,18 +290,20 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
           {columns.some((column) => column.hidden) ? (
             <Box w="s36" flexShrink={0} />
           ) : (
-            <Box
-              w="s36"
-              flexShrink={0}
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              fontWeight="600"
-              fontSize="r1"
-              pl="8px"
-            >
-              S.N.
-            </Box>
+            !hideSN && (
+              <Box
+                w="s36"
+                flexShrink={0}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                fontWeight="600"
+                fontSize="r1"
+                pl="8px"
+              >
+                S.N.
+              </Box>
+            )
           )}
 
           {columns
@@ -328,6 +333,7 @@ export const EditableTable = <T extends RecordWithId & Record<string, string | n
                 dispatch={dispatch}
                 data={data}
                 index={index}
+                hideSN={hideSN}
               />
             </Fragment>
           ))}
@@ -434,6 +440,8 @@ interface IEditableTableRowProps<
   canDeleteRow?: boolean;
   index: number;
 
+  hideSN?: boolean;
+
   dispatch: React.Dispatch<EditableTableAction<T>>;
 }
 
@@ -443,6 +451,7 @@ const EditableTableRow = <T extends RecordWithId & Record<string, string | numbe
   index,
   dispatch,
   canDeleteRow,
+  hideSN,
 }: IEditableTableRowProps<T>) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -486,22 +495,24 @@ const EditableTableRow = <T extends RecordWithId & Record<string, string | numbe
             />
           </Box>
         ) : (
-          <Box
-            w="s36"
-            borderRadius="0"
-            minH="s36"
-            flexShrink={0}
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            color="gray.600"
-            cursor="pointer"
-            _hover={{ bg: 'gray.100' }}
-            _focus={{ bg: 'background.500' }}
-            _focusVisible={{ outline: 'none' }}
-          >
-            {index + 1}
-          </Box>
+          !hideSN && (
+            <Box
+              w="s36"
+              borderRadius="0"
+              minH="s36"
+              flexShrink={0}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              color="gray.600"
+              cursor="pointer"
+              _hover={{ bg: 'gray.100' }}
+              _focus={{ bg: 'background.500' }}
+              _focusVisible={{ outline: 'none' }}
+            >
+              {index + 1}
+            </Box>
+          )
         )}
 
         {columns

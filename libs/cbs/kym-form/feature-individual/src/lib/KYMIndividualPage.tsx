@@ -1,7 +1,7 @@
 /* eslint-disable-next-line */
-import {useTranslation} from '@coop/shared/utils';
-import React, {useEffect, useState} from 'react';
-import {useRouter} from 'next/router';
+import { useTranslation } from '@coop/shared/utils';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import {
   FormFieldSearchTerm,
   reset,
@@ -12,9 +12,9 @@ import {
   useGetIndividualKymOptionsQuery,
   useGetKymFormStatusQuery,
 } from '@coop/cbs/data-access';
-import {Box, Container, FormHeader, Text} from '@coop/shared/ui';
-import {SectionContainer} from '@coop/cbs/kym-form/ui-containers';
-import {AccorrdianAddMember} from '@coop/cbs/kym-form/formElements';
+import { Box, Container, FormHeader, Text } from '@coop/shared/ui';
+import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
+import { AccorrdianAddMember } from '@coop/cbs/kym-form/formElements';
 import {
   KYMBasiccoopDetails,
   KYMDeclaration,
@@ -35,7 +35,7 @@ import {
 } from '../components/form';
 
 export const KYMIndividualPage = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const router = useRouter();
   const id = String(router?.query?.['id']);
 
@@ -46,14 +46,14 @@ export const KYMIndividualPage = () => {
     subSection: string;
   }>();
 
-  const kymFormStatusQuery = useGetKymFormStatusQuery({id}, {enabled: id !== 'undefined'});
+  const kymFormStatusQuery = useGetKymFormStatusQuery({ id }, { enabled: id !== 'undefined' });
   const kymFormStatus = kymFormStatusQuery?.data?.members?.individual?.formState?.sectionStatus;
 
-  const {data: editValues, refetch: refetchEdit} = useGetIndividualKymEditDataQuery(
+  const { data: editValues, refetch: refetchEdit } = useGetIndividualKymEditDataQuery(
     {
       id: String(id),
     },
-    {enabled: !!id}
+    { enabled: !!id }
   );
 
   // refetch data when calendar preference is updated
@@ -63,7 +63,7 @@ export const KYMIndividualPage = () => {
     refetchEdit();
   }, [preference?.date]);
 
-  const {data: maritalStatusData, refetch} = useGetIndividualKymOptionsQuery({
+  const { data: maritalStatusData } = useGetIndividualKymOptionsQuery({
     searchTerm: FormFieldSearchTerm.MaritalStatus,
   });
 
@@ -71,7 +71,7 @@ export const KYMIndividualPage = () => {
   const marriedData = editValues?.members?.individual?.formState?.data?.formData?.maritalStatusId;
 
   useEffect(() => {
-    refetch();
+    // refetch();
     if (marriedData && maritialStatus) {
       if (maritialStatus[0]?.id === marriedData) {
         setIsMarried(true);
@@ -80,6 +80,7 @@ export const KYMIndividualPage = () => {
       }
     }
   }, [marriedData]);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -92,7 +93,7 @@ export const KYMIndividualPage = () => {
 
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.xl" height="fit-content">
-          <FormHeader title={t['membersFormAddNewMembers']} closeLink="/members/list"/>
+          <FormHeader title={t['membersFormAddNewMembers']} closeLink="/members/list" />
         </Container>
       </Box>
 
@@ -109,7 +110,7 @@ export const KYMIndividualPage = () => {
             bg="gray.0"
             zIndex={2}
           >
-            <AccorrdianAddMember formStatus={kymFormStatus} kymCurrentSection={kymCurrentSection}/>
+            <AccorrdianAddMember formStatus={kymFormStatus} kymCurrentSection={kymCurrentSection} />
           </Box>
 
           <Box zIndex={1} background="gray.0" ml="320" pb="120px">
@@ -117,51 +118,51 @@ export const KYMIndividualPage = () => {
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymInd1PersonalInformation']}
               </Text>
-              <MemberKYMBasicInfo setKymCurrentSection={setKymCurrentSection}/>
-              <MemberKYMContactDetails setKymCurrentSection={setKymCurrentSection}/>
-              <MemberKYMIdentificationDetails setKymCurrentSection={setKymCurrentSection}/>
-              <MemberKYMAddress setKymCurrentSection={setKymCurrentSection}/>
-              <MemberKYMFamilyDetails setKymCurrentSection={setKymCurrentSection}/>
+              <MemberKYMBasicInfo setKymCurrentSection={setKymCurrentSection} />
+              <MemberKYMContactDetails setKymCurrentSection={setKymCurrentSection} />
+              <MemberKYMIdentificationDetails setKymCurrentSection={setKymCurrentSection} />
+              <MemberKYMAddress setKymCurrentSection={setKymCurrentSection} />
+              <MemberKYMFamilyDetails setKymCurrentSection={setKymCurrentSection} />
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymInd2ProfessionalInformation']}
               </Text>
-              <MemberKYMProfession setKymCurrentSection={setKymCurrentSection}/>
-              <MemberKYMMainOccupation setKymCurrentSection={setKymCurrentSection}/>
+              <MemberKYMProfession setKymCurrentSection={setKymCurrentSection} />
+              <MemberKYMMainOccupation setKymCurrentSection={setKymCurrentSection} />
               {isMarried && (
-                <MemberKYMHusbandWifeOccupation setKymCurrentSection={setKymCurrentSection}/>
+                <MemberKYMHusbandWifeOccupation setKymCurrentSection={setKymCurrentSection} />
               )}
 
-              <MemberKYMIncomeSourceDetails setKymCurrentSection={setKymCurrentSection}/>
+              <MemberKYMIncomeSourceDetails setKymCurrentSection={setKymCurrentSection} />
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymInd3COOPmembership']}
               </Text>
-              <KYMBasiccoopDetails setKymCurrentSection={setKymCurrentSection}/>
-              <KYMFinancialTransactionDetails setKymCurrentSection={setKymCurrentSection}/>
-              <KYMEstimatedAmount setKymCurrentSection={setKymCurrentSection}/>
+              <KYMBasiccoopDetails setKymCurrentSection={setKymCurrentSection} />
+              <KYMFinancialTransactionDetails setKymCurrentSection={setKymCurrentSection} />
+              <KYMEstimatedAmount setKymCurrentSection={setKymCurrentSection} />
             </SectionContainer>
 
             <SectionContainer>
               <Text p="s20" fontSize="r3" fontWeight="SemiBold">
                 {t['kymInd4Declaration']}
               </Text>
-              <KYMDeclaration setKymCurrentSection={setKymCurrentSection}/>
-              <KYMDocumentDeclaration setKymCurrentSection={setKymCurrentSection}/>
+              <KYMDeclaration setKymCurrentSection={setKymCurrentSection} />
+              <KYMDocumentDeclaration setKymCurrentSection={setKymCurrentSection} />
             </SectionContainer>
 
-            <KYMDeclarationAgree/>
+            <KYMDeclarationAgree />
           </Box>
         </Box>
       </Container>
 
       <Box position="sticky" bottom="0" bg="gray.100" width="100%" zIndex="10">
         <Container minW="container.xl" height="fit-content">
-          <KymIndividualFooter/>
+          <KymIndividualFooter />
         </Container>
       </Box>
     </>

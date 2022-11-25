@@ -1,132 +1,159 @@
 import { useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import dayjs from 'dayjs';
 
 import {
-  LoanAccReportDetails,
   LoanStatement,
   LoanStatementReportSettings,
-  ReportPeriodType,
   useGetLoanStatementReportQuery,
 } from '@coop/cbs/data-access';
-import {
-  LoanReportInputs,
-  LoanReportMember,
-  LoanStatementReportTable,
-  ReportHeader,
-  ReportOrganization,
-  ReportOrganizationHeader,
-} from '@coop/cbs/reports/components';
-import { Report } from '@coop/cbs/reports/list';
-import { Box, Divider, Loader, NoDataState } from '@coop/shared/ui';
-
-type ReportFilterType = {
-  memberId: string;
-  accountId: string;
-  periodType: ReportPeriodType;
-  customPeriod?: {
-    from: string;
-    to: string;
-  };
-};
+import { Report } from '@coop/cbs/reports';
+import { LoanReportInputs } from '@coop/cbs/reports/components';
+import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { Box } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
 export const LoanStatementReport = () => {
-  const methods = useForm<ReportFilterType>({
-    defaultValues: {},
-  });
+  const [filters, setFilters] = useState<LoanStatementReportSettings | null>(null);
 
-  const [filter, setFilter] = useState<LoanStatementReportSettings | null>(null);
-
-  const { watch } = methods;
-
-  const memberId = watch('memberId');
-  const periodType = watch('periodType');
-  const accountId = watch('accountId');
-
-  const [hasShownFilter, setHasShownFilter] = useState(false);
-
-  const { data: savingStatementData, isFetching: reportLoading } = useGetLoanStatementReportQuery(
+  const { data, isFetching } = useGetLoanStatementReportQuery(
     {
-      data: filter as LoanStatementReportSettings,
+      data: filters as LoanStatementReportSettings,
     },
-    { enabled: !!filter }
+    { enabled: !!filters }
   );
-  const loanStatement = savingStatementData?.report?.loanStatementReport?.statement;
+
+  const loanData = data?.report?.loanStatementReport?.statement;
+  const loanReport = loanData && 'loanStatement' in loanData ? loanData.loanStatement : [];
 
   return (
-    <FormProvider {...methods}>
-      <Box bg="white" minH="calc(100vh - 110px)" w="100%" display="flex" flexDir="column">
-        <ReportHeader
-          hasSave={!!memberId && !!periodType && !!accountId}
+    <Report
+      defaultFilters={null}
+      data={loanReport as LoanStatement[]}
+      filters={filters}
+      setFilters={setFilters}
+      isLoading={isFetching}
+      report={ReportEnum.LOAN_INDIVIDUAL_STATEMENT}
+    >
+      <Report.Header>
+        <Report.PageHeader
           paths={[
             { label: 'Loan Reports', link: '/reports/cbs/loan' },
-            {
-              label: 'New Report',
-              link: '/reports/cbs/savings/new',
-            },
+            { label: 'Loan Statement', link: '/reports/cbs/loan/statement/new' },
           ]}
         />
-        <LoanReportInputs
-          setFilter={setFilter}
-          hasShownFilter={hasShownFilter}
-          setHasShownFilter={setHasShownFilter}
-        />
-        <Box display="flex" minH="calc(100vh - 260.5px)" w="100%" overflowX="auto">
-          <Box w="100%">
-            {(() => {
-              if (reportLoading) {
-                return (
-                  <Box
-                    h="200px"
-                    w="100%"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Loader />
-                  </Box>
-                );
-              }
+        <Report.Inputs defaultFilters={null} setFilters={setFilters}>
+          <LoanReportInputs />
+        </Report.Inputs>
+      </Report.Header>
 
-              if (
-                loanStatement &&
-                'loanStatement' in loanStatement &&
-                loanStatement.loanStatement
-              ) {
-                return (
-                  <Box display="flex" flexDir="column" w="100%">
-                    <ReportOrganizationHeader reportType={Report.LOAN_INDIVIDUAL_STATEMENT} />
-                    <ReportOrganization statementDate={filter?.periodType} />
-                    <Box px="s32">
-                      <Divider />
-                    </Box>
-                    <LoanReportMember
-                      account={loanStatement.loanAccDetails as LoanAccReportDetails}
-                      member={savingStatementData.report.loanStatementReport?.member}
-                    />
-                    <LoanStatementReportTable
-                      loanReport={loanStatement.loanStatement as LoanStatement[]}
-                    />
-                  </Box>
-                );
-              }
+      <Report.Body>
+        <Report.Content>
+          <Report.OrganizationHeader />
+          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Table<LoanStatement & { index: number }>
+            showFooter
+            columns={[
+              {
+                header: 'S.No.',
+                accessorKey: 'index',
+                footer: () => <Box textAlign="right">Closing Balance</Box>,
+                meta: {
+                  width: '60px',
+                  Footer: {
+                    colspan: 3,
+                  },
+                },
+              },
+              {
+                header: 'Date',
+                accessorKey: 'date',
+                cell: ({ cell }) => dayjs(cell.row.original.date).format('YYYY-MM-DD'),
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+              {
+                header: 'Particular',
+                accessorKey: 'particular',
+                meta: {
+                  width: '100%',
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
 
-              if (filter) {
-                return (
-                  <NoDataState
-                    custom={{
-                      title: 'No Reports Found',
-                      subtitle:
-                        'Please select a different member or a different filter to get reports',
-                    }}
-                  />
-                );
-              }
+              {
+                header: 'Transaction Id',
+                accessorKey: 'txnId',
+              },
 
-              return null;
-            })()}
-          </Box>
-        </Box>
-      </Box>
-    </FormProvider>
+              {
+                header: 'Disburse Principal',
+                accessorKey: 'disbursePrinciple',
+                cell: (props) => amountConverter(props.getValue() as string),
+                meta: {
+                  isNumeric: true,
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+
+              {
+                header: 'Paid Principal',
+                accessorKey: 'paidPrinciple',
+                cell: (props) => amountConverter(props.getValue() as string),
+                footer: () => amountConverter(0),
+                meta: {
+                  isNumeric: true,
+                },
+              },
+              {
+                header: 'Interest Paid',
+                accessorKey: 'interestPaid',
+                cell: (props) => amountConverter(props.getValue() as string),
+
+                footer: () => amountConverter(0),
+                meta: {
+                  isNumeric: true,
+                },
+              },
+              {
+                header: 'Fine Paid',
+                accessorKey: 'finePaid',
+                cell: (props) => amountConverter(props.getValue() as string),
+
+                footer: () => amountConverter(0),
+                meta: {
+                  isNumeric: true,
+                },
+              },
+              {
+                header: 'Discount',
+                accessorKey: 'discount',
+                cell: (props) => amountConverter(props.getValue() as string),
+
+                footer: () => amountConverter(0),
+                meta: {
+                  isNumeric: true,
+                },
+              },
+              {
+                header: 'Remaining Principal',
+                accessorKey: 'remainingPrinciple',
+                cell: (props) => amountConverter(props.getValue() as string),
+                footer: () => amountConverter(0),
+                meta: {
+                  isNumeric: true,
+                },
+              },
+            ]}
+          />
+        </Report.Content>
+      </Report.Body>
+    </Report>
   );
 };

@@ -4,9 +4,10 @@ import { useRouter } from 'next/router';
 
 import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
 import { Button, DetailsCard, Icon } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
 import { AccountCard } from './AccountCard';
-import { UpcomingPaymentTable } from './AccountTable';
+import { AccountTable } from './AccountTable';
 
 export const AccountList = () => {
   const router = useRouter();
@@ -32,7 +33,7 @@ export const AccountList = () => {
       sn: Number(index) + 1,
       accountType: data?.productType,
       accountName: data?.accountName,
-      totalBalance: data?.totalBalance,
+      totalBalance: amountConverter(data?.totalBalance as string),
       interestRate: data?.interestRate,
     })) || [];
 
@@ -62,7 +63,7 @@ export const AccountList = () => {
               memberName={memberName as string}
               productName={item?.productName as string}
               productType={item?.productType as string}
-              totalBalance={item?.totalBalance as string}
+              totalBalance={amountConverter(item?.totalBalance as string) as string}
             />
           ))}
         </DetailsCard>
@@ -82,7 +83,7 @@ export const AccountList = () => {
             </Button>
           }
         >
-          <UpcomingPaymentTable data={memberListData} />
+          <AccountTable data={memberListData} />
         </DetailsCard>
       )}
     </>

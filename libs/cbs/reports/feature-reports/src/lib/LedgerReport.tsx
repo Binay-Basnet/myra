@@ -1,53 +1,39 @@
 import { useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
 
 import {
+  GeneralLedgerFilter,
   GeneralLedgerReportEntry,
-  ReportPeriodType,
   useGetLedgerReportQuery,
 } from '@coop/cbs/data-access';
-import {
-  LedgerReportInputs,
-  LedgerReportTable,
-  ReportHeader,
-  ReportOrganization,
-  ReportOrganizationHeader,
-} from '@coop/cbs/reports/components';
-import { Report } from '@coop/cbs/reports/list';
-import { Box, Divider, Loader, NoDataState } from '@coop/shared/ui';
+import { Report } from '@coop/cbs/reports';
+import { ReportDateRange } from '@coop/cbs/reports/components';
+import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { FormCOASelect } from '@coop/shared/form';
+import { GridItem } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
-type GeneralLedgerReportType = {
-  ledgerId: string;
-  period: ReportPeriodType;
-};
 export const LedgerReport = () => {
-  const methods = useForm<GeneralLedgerReportType>({});
+  const [filters, setFilters] = useState<GeneralLedgerFilter | null>(null);
 
-  const [filter, setFilter] = useState<GeneralLedgerReportType | null>(null);
-
-  const { watch } = methods;
-
-  const coaId = watch('ledgerId');
-  const periodType = watch('period');
-
-  const [hasShownFilter, setHasShownFilter] = useState(false);
-
-  const { data: ledgerReportData, isFetching: reportLoading } = useGetLedgerReportQuery(
+  const { data, isFetching } = useGetLedgerReportQuery(
     {
-      data: {
-        ledgerId: filter?.ledgerId as string,
-        period: filter?.period,
-      },
+      data: filters as GeneralLedgerFilter,
     },
-    { enabled: !!filter }
+    { enabled: !!filters }
   );
-  const ledgerReport = ledgerReportData?.report?.generalLedgerReport?.data;
+  const ledgerReport = data?.report?.generalLedgerReport?.data;
 
   return (
-    <FormProvider {...methods}>
-      <Box bg="white" minH="calc(100vh - 110px)" w="100%" display="flex" flexDir="column">
-        <ReportHeader
-          hasSave={!!coaId && !!periodType}
+    <Report
+      defaultFilters={null}
+      data={ledgerReport as GeneralLedgerReportEntry[]}
+      filters={filters}
+      setFilters={setFilters}
+      isLoading={isFetching}
+      report={ReportEnum.MB_REGISTRATION_REPORT}
+    >
+      <Report.Header>
+        <Report.PageHeader
           paths={[
             { label: 'Other Reports', link: '/reports/cbs/others' },
             {
@@ -56,58 +42,65 @@ export const LedgerReport = () => {
             },
           ]}
         />
-        <LedgerReportInputs
-          setFilter={setFilter}
-          hasShownFilter={hasShownFilter}
-          setHasShownFilter={setHasShownFilter}
-        />
-        <Box display="flex" minH="calc(100vh - 260.5px)" w="100%" overflowX="auto">
-          <Box w="100%">
-            {(() => {
-              if (reportLoading) {
-                return (
-                  <Box
-                    h="200px"
-                    w="100%"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Loader />
-                  </Box>
-                );
-              }
+        <Report.Inputs defaultFilters={null} setFilters={setFilters}>
+          <GridItem colSpan={3}>
+            <FormCOASelect name="ledgerId" label="Ledger Name" />
+          </GridItem>
 
-              if (ledgerReport && ledgerReport.length !== 0) {
-                return (
-                  <Box display="flex" flexDir="column" w="100%">
-                    <ReportOrganizationHeader reportType={Report.GENERAL_LEDGER_REPORT} />
-                    <ReportOrganization statementDate={filter?.period} />
-                    <Box px="s32">
-                      <Divider />
-                    </Box>
-                    <LedgerReportTable ledgerReport={ledgerReport as GeneralLedgerReportEntry[]} />
-                  </Box>
-                );
-              }
+          <GridItem colSpan={1}>
+            <ReportDateRange />
+          </GridItem>
+        </Report.Inputs>
+      </Report.Header>
 
-              if (filter) {
-                return (
-                  <NoDataState
-                    custom={{
-                      title: 'No Reports Found',
-                      subtitle:
-                        'Please select a different member or a different filter to get reports',
-                    }}
-                  />
-                );
-              }
+      <Report.Body>
+        <Report.Content>
+          <Report.OrganizationHeader />
+          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Table<GeneralLedgerReportEntry>
+            hasSNo={false}
+            columns={[
+              {
+                header: 'ID',
+                accessorFn: (row) => row?.id,
+              },
+              {
+                header: 'Account',
+                accessorFn: (row) => row?.account,
+                meta: {
+                  width: '70%',
+                },
+              },
+              {
+                header: 'Dr.',
+                accessorFn: (row) => row?.debit,
+                cell: (props) => amountConverter(props.getValue() as string),
+                meta: {
+                  isNumeric: true,
+                },
+              },
+              {
+                header: 'Cr. ',
+                accessorFn: (row) => row?.credit,
+                cell: (props) => amountConverter(props.getValue() as string),
 
-              return null;
-            })()}
-          </Box>
-        </Box>
-      </Box>
-    </FormProvider>
+                meta: {
+                  isNumeric: true,
+                },
+              },
+              {
+                header: 'Balance',
+                accessorFn: (row) => row?.balance,
+                cell: (props) => amountConverter(props.getValue() as string),
+
+                meta: {
+                  isNumeric: true,
+                },
+              },
+            ]}
+          />
+        </Report.Content>
+      </Report.Body>
+    </Report>
   );
 };

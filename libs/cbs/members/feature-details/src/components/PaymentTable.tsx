@@ -10,7 +10,7 @@ interface ILoanPaymentScheduleTableProps {
         date?: string | null | undefined;
         accountName?: string | null | undefined;
         paymentType?: string | null | undefined;
-        amount?: string | null | undefined;
+        amount?: string | 0;
       }[];
 
   //   data: MemberPaymentView[] | null | undefined;

@@ -322,7 +322,7 @@ export const ShareReturnForm = () => {
                 handleSubmit={handleSubmit}
                 isDisabled={
                   paymentModes === SharePaymentMode.Cash && !disableDenomination
-                    ? !(Number(cashPaid) >= Number(totalAmount))
+                    ? !(Number(returnAmount) >= 0) || !(Number(cashPaid) >= Number(totalAmount))
                     : false
                 }
               />

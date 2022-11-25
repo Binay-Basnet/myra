@@ -66,3 +66,17 @@ query searchCOA($coaName: String!) {
     }
   }
 }
+
+query getCOAAccountsUnderList($accountCode: [String]) {
+  settings {
+    chartsOfAccount {
+      accountsUnder(accountCode: $accountCode) {
+        data {
+          id
+          accountCode
+          name
+        }
+      }
+    }
+  }
+}

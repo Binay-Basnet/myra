@@ -1,0 +1,12 @@
+mutation setBankAccounts($data: NewBankAccountInput) {
+  accounting {
+    bankAccounts {
+      new(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

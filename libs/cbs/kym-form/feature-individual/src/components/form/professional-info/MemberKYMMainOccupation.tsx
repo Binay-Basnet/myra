@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
-import { AiOutlinePlus } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import { CloseButton } from '@chakra-ui/react';
-import { isEmpty } from 'lodash';
+import { isEmpty, isEqual } from 'lodash';
 import debounce from 'lodash/debounce';
+import pickBy from 'lodash/pickBy';
 
 import {
   FormFieldSearchTerm,
@@ -12,7 +11,6 @@ import {
   KymIndMemberInput,
   RootState,
   useAppSelector,
-  useDeleteMemberOccupationMutation,
   useGetConfigQuery,
   useGetIndividualKymEditDataQuery,
   useGetIndividualKymFamilyOccupationListQuery,
@@ -22,10 +20,16 @@ import {
   useSetMemberOccupationMutation,
 } from '@coop/cbs/data-access';
 import { FormInputWithType } from '@coop/cbs/kym-form/formElements';
-import { DynamicBoxGroupContainer, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormCheckbox, FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Button, FormSection, GridItem, Icon, IconButton, TextFields } from '@coop/shared/ui';
-import { getKymSection, useTranslation } from '@coop/shared/utils';
+import {
+  FormAmountInput,
+  FormCheckbox,
+  FormDatePicker,
+  FormInput,
+  FormPhoneNumber,
+  FormSelect,
+} from '@coop/shared/form';
+import { Box, FormSection, GridItem, TextFields } from '@coop/shared/ui';
+import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
 
@@ -58,17 +62,13 @@ export const MainOccupationInput = ({ option, optionIndex, fieldIndex }: Dynamic
 };
 
 interface IMainOccupationProps {
-  removeMainOccupation: (occupationId: string) => void;
   setKymCurrentSection: (section?: { section: string; subSection: string }) => void;
-  occupationId: string;
 }
 
-const MainOccupation = ({
-  removeMainOccupation,
-  setKymCurrentSection,
-  occupationId,
-}: IMainOccupationProps) => {
+const MainOccupation = ({ setKymCurrentSection }: IMainOccupationProps) => {
   const { t } = useTranslation();
+
+  const [occupationId, setOccupationId] = useState<string>('');
 
   const methods = useForm();
 
@@ -114,20 +114,24 @@ const MainOccupation = ({
     if (familyOccupationListData) {
       const editValueData = familyOccupationListData?.members?.individual?.listOccupation?.data;
 
-      const occupationDetail = editValueData?.find((data) => data?.id === occupationId);
+      if (editValueData?.length) {
+        setOccupationId(editValueData[0]?.id as string);
 
-      if (occupationDetail) {
-        reset({
-          occupationId: occupationDetail?.occupationId,
-          orgName: occupationDetail?.orgName?.local,
-          panVatNo: occupationDetail?.panVatNo,
-          address: occupationDetail?.address?.local,
-          estimatedAnnualIncome: occupationDetail?.estimatedAnnualIncome,
-          establishedDate: occupationDetail?.establishedDate,
-          registrationNo: occupationDetail?.registrationNo,
-          contact: occupationDetail?.contact,
-          isOwner: occupationDetail?.isOwner,
-        });
+        const occupationDetail = editValueData[0];
+
+        if (occupationDetail) {
+          reset({
+            occupationId: occupationDetail?.occupationId,
+            orgName: occupationDetail?.orgName?.local,
+            panVatNo: occupationDetail?.panVatNo,
+            address: occupationDetail?.address?.local,
+            estimatedAnnualIncome: occupationDetail?.estimatedAnnualIncome,
+            establishedDate: occupationDetail?.establishedDate,
+            registrationNo: occupationDetail?.registrationNo,
+            contact: occupationDetail?.contact,
+            isOwner: occupationDetail?.isOwner,
+          });
+        }
       }
     }
   }, [familyOccupationListData]);
@@ -136,8 +140,10 @@ const MainOccupation = ({
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
 
   useEffect(() => {
-    refetchEdit();
-  }, [preference?.date]);
+    if (id) {
+      refetchEdit();
+    }
+  }, [preference?.date, id]);
 
   const { mutateAsync } = useSetMemberOccupationMutation({
     onSuccess: () => refetch(),
@@ -146,121 +152,87 @@ const MainOccupation = ({
   useEffect(() => {
     const subscription = watch(
       debounce((data) => {
-        if (id) {
+        const familyData = {
+          ...pickBy(
+            (familyOccupationListData?.members?.individual?.listOccupation?.data?.length &&
+              familyOccupationListData?.members?.individual?.listOccupation?.data[0]) ??
+              {},
+            (v) => v !== null
+          ),
+        };
+
+        if (id && occupationId && !isDeepEmpty(data) && !isEqual(data, familyData)) {
           mutateAsync({
             id: String(id),
             isSpouse: false,
             data: { id: occupationId, ...data },
-          }).then(() => refetch());
+          }).then(() => refetchEdit());
         }
       }, 800)
     );
 
     return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
+  }, [watch, router.isReady, familyOccupationListData]);
+
+  const { mutate: newIDMutate } = useGetNewIdMutation({
+    onSuccess: (res) => {
+      setOccupationId(res.newId);
+    },
+  });
+
+  useEffect(() => {
+    if (
+      !occupationId &&
+      !familyOccupationListData?.members?.individual?.listOccupation?.data?.length
+    ) {
+      newIDMutate({});
+    }
+  }, [familyOccupationListData, occupationId]);
 
   return (
-    <Box
-      p="s20"
-      display="flex"
-      borderRadius="br2"
-      flexDirection="column"
-      gap="s16"
-      bg="background.500"
-    >
-      <FormProvider {...methods}>
-        <form
-          onFocus={(e) => {
-            const kymSection = getKymSection(e.target.id);
-            setKymCurrentSection(kymSection);
-          }}
-        >
-          <Box display="flex" gap="16px" flexDirection="column">
-            <Box display="flex" flexDirection="column">
-              <Box display="flex" justifyContent="flex-end">
-                <IconButton
-                  aria-label="close"
-                  variant="ghost"
-                  size="sm"
-                  icon={<CloseButton />}
-                  onClick={() => {
-                    removeMainOccupation(occupationId);
-                  }}
-                  id="removeMainOccupationButton"
-                />
-              </Box>
+    <FormProvider {...methods}>
+      <form
+        onFocus={(e) => {
+          const kymSection = getKymSection(e.target.id);
+          setKymCurrentSection(kymSection);
+        }}
+      >
+        <FormSection header="Main Occupation">
+          <FormSelect
+            name="occupationId"
+            label={t['kymIndOccupation']}
+            options={
+              (profession as string[])?.map((data: string) => ({
+                label: String(
+                  getFieldOption(occupationData)?.find((prev) => prev.value === data)?.label
+                ),
+                value: data,
+              })) ?? []
+            }
+          />
+          <GridItem colSpan={2}>
+            <FormInput type="text" name="orgName" label={t['kymIndOrgFirmName']} />
+          </GridItem>
 
-              <InputGroupContainer>
-                <GridItem colSpan={1}>
-                  <FormSelect
-                    name="occupationId"
-                    label={t['kymIndOccupation']}
-                    options={
-                      (profession as string[])?.map((data: string) => ({
-                        label: String(
-                          getFieldOption(occupationData)?.find((prev) => prev.value === data)?.label
-                        ),
-                        value: data,
-                      })) ?? []
-                    }
-                  />
-                </GridItem>
-                <GridItem colSpan={2}>
-                  <FormInput bg="white" type="text" name="orgName" label={t['kymIndOrgFirmName']} />
-                </GridItem>
+          <FormInput type="number" name="panVatNo" label={t['kymIndPanVATNo']} />
+          <FormInput type="text" name="address" label={t['kymIndAddress']} />
+          <FormAmountInput name="estimatedAnnualIncome" label={t['kymIndEstimatedAnnualIncome']} />
 
-                <FormInput bg="white" type="number" name="panVatNo" label={t['kymIndPanVATNo']} />
-                <FormInput type="text" bg="white" name="address" label={t['kymIndAddress']} />
-                <FormInput
-                  bg="white"
-                  type="number"
-                  textAlign="right"
-                  name="estimatedAnnualIncome"
-                  label={t['kymIndEstimatedAnnualIncome']}
-                />
+          <GridItem colSpan={3} display="flex" gap="9px" alignItems="center">
+            <FormCheckbox name="isOwner" />
+            <TextFields variant="formLabel">{t['kymIndAreyouowner']}</TextFields>
+          </GridItem>
 
-                {/* {occupationFieldNames.map((option, optionIndex) => {
-                return (
-                  <Fragment key={option.id}>
-                    <MainOccupationInput
-                      fieldIndex={fieldIndex}
-                      option={option}
-                      optionIndex={optionIndex}
-                    />
-                  </Fragment>
-                );
-              })} */}
-              </InputGroupContainer>
-            </Box>
-
-            <Box display="flex" gap="16px" flexDirection="column">
-              <Box display="flex" gap="9px" alignItems="center">
-                {/* TODO! CHANGE THIS IS DISABLED AFTER BACKEND */}
-                <FormCheckbox name="isOwner" />
-                <TextFields variant="formLabel">{t['kymIndAreyouowner']}</TextFields>
-              </Box>
-
-              {isOwner && (
-                <InputGroupContainer>
-                  <FormDatePicker
-                    bg="white"
-                    name="establishedDate"
-                    label={t['kymIndEstablishedDate']}
-                  />
-                  <FormInput
-                    bg="white"
-                    type="number"
-                    name="registrationNo"
-                    label={t['kymIndRegistrationNo']}
-                  />
-                  <FormInput bg="white" type="number" name="contact" label={t['kymIndContactNo']} />
-                </InputGroupContainer>
-              )}
-            </Box>
-          </Box>
-        </form>
-      </FormProvider>
-    </Box>
+          {isOwner && (
+            <>
+              <FormDatePicker name="establishedDate" label={t['kymIndEstablishedDate']} />
+              <FormInput name="registrationNo" label={t['kymIndRegistrationNo']} />
+              <FormPhoneNumber name="contact" label={t['kymIndContactNo']} />
+            </>
+          )}
+        </FormSection>
+      </form>
+    </FormProvider>
   );
 };
 
@@ -278,8 +250,6 @@ export const MemberKYMMainOccupation = ({
   const [isForeignEmp, setIsForeignEmp] = useState(false);
 
   const { watch, reset, control } = methods;
-
-  const [occupationIds, setOccupationIds] = useState<string[]>([]);
 
   const { data: editValues, refetch } = useGetIndividualKymEditDataQuery(
     {
@@ -313,53 +283,6 @@ export const MemberKYMMainOccupation = ({
       // }
     }
   }, [editValues]);
-
-  const { data: occupationListEditValues } = useGetIndividualKymFamilyOccupationListQuery(
-    {
-      id: String(id),
-      isSpouse: false,
-    },
-    { enabled: !!id }
-  );
-
-  useEffect(() => {
-    if (occupationListEditValues) {
-      const editValueData = occupationListEditValues?.members?.individual?.listOccupation?.data;
-
-      setOccupationIds(
-        editValueData?.reduce(
-          (prevVal, curVal) => (curVal ? [...prevVal, curVal.id] : prevVal),
-          [] as string[]
-        ) ?? []
-      );
-    }
-  }, [occupationListEditValues]);
-
-  const { mutate: newIDMutate } = useGetNewIdMutation({
-    onSuccess: (res) => {
-      setOccupationIds([...occupationIds, res.newId]);
-    },
-  });
-
-  const { mutate: deleteMutate } = useDeleteMemberOccupationMutation({
-    onSuccess: (res) => {
-      const deletedId = String(res?.members?.individual?.occupation?.delete?.recordId);
-
-      const tempOccupationIds = [...occupationIds];
-
-      tempOccupationIds.splice(tempOccupationIds.indexOf(deletedId), 1);
-
-      setOccupationIds([...tempOccupationIds]);
-    },
-  });
-
-  const appendOccupation = () => {
-    newIDMutate({});
-  };
-
-  const removeOccuapation = (occupationId: string) => {
-    deleteMutate({ memberId: String(id), id: occupationId });
-  };
 
   const { mutate } = useSetMemberDataMutation();
 
@@ -411,30 +334,7 @@ export const MemberKYMMainOccupation = ({
 
   return (
     <Box id="kymAccIndMainProfession" scrollMarginTop="200px">
-      <FormSection templateColumns={1} header="kymIndMAINOCCUPATION">
-        <DynamicBoxGroupContainer>
-          {occupationIds.map((oId) => (
-            <MainOccupation
-              key={oId}
-              removeMainOccupation={removeOccuapation}
-              setKymCurrentSection={setKymCurrentSection}
-              occupationId={oId}
-            />
-          ))}
-
-          <Button
-            id="mainOccupationButton"
-            alignSelf="start"
-            leftIcon={<Icon size="md" as={AiOutlinePlus} />}
-            variant="outline"
-            onClick={() => {
-              appendOccupation();
-            }}
-          >
-            {t['kymIndAddOccupation']}
-          </Button>
-        </DynamicBoxGroupContainer>
-      </FormSection>
+      <MainOccupation setKymCurrentSection={setKymCurrentSection} />
 
       {isForeignEmp && (
         <FormProvider {...methods}>

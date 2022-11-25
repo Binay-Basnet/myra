@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import dayjs from 'dayjs';
 
 import {
-  ReportPeriodType,
-  SavingAmountRange,
+  LoanStatement,
   SavingServiceType,
   SavingStatement,
   SavingStatementReportSettings,
@@ -11,138 +10,171 @@ import {
   SavingTransactionType,
   useGetSavingStatementQuery,
 } from '@coop/cbs/data-access';
-import {
-  ReportHeader,
-  ReportMember,
-  ReportOrganization,
-  ReportOrganizationHeader,
-  SavingReportFilters,
-  SavingReportInputs,
-  SavingStatementReportTable,
-} from '@coop/cbs/reports/components';
-import { Report } from '@coop/cbs/reports/list';
-import { Box, Divider, Loader, NoDataState } from '@coop/shared/ui';
-
-type ReportFilterType = {
-  memberId: string;
-  accountId: string;
-  periodType: ReportPeriodType;
-  customPeriod?: {
-    from: string;
-    to: string;
-  };
-  filter?: {
-    transactionType: SavingTransactionType;
-    service: SavingServiceType;
-    amountRange: SavingAmountRange;
-  };
-};
+import { Report } from '@coop/cbs/reports';
+import { SavingReportInputs } from '@coop/cbs/reports/components';
+import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { FormAmountFilter, FormRadioGroup } from '@coop/shared/form';
+import { Box } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
 export const SavingStatementReport = () => {
-  const methods = useForm<ReportFilterType>({
-    defaultValues: {
-      filter: {
-        service: SavingServiceType.Charges,
-        transactionType: SavingTransactionType.All,
-      },
-    },
-  });
+  const [filters, setFilters] = useState<SavingStatementReportSettings | null>(null);
 
-  const [filter, setFilter] = useState<SavingStatementReportSettings | null>(null);
-
-  const { watch } = methods;
-
-  const memberId = watch('memberId');
-  const periodType = watch('periodType');
-  const accountId = watch('accountId');
-
-  const [hasShownFilter, setHasShownFilter] = useState(false);
-
-  const { data: savingStatementData, isFetching: reportLoading } = useGetSavingStatementQuery(
+  const { data, isFetching } = useGetSavingStatementQuery(
     {
-      data: filter as SavingStatementReportSettings,
+      data: filters as SavingStatementReportSettings,
     },
-    { enabled: !!filter }
+    { enabled: !!filters }
   );
-  const savingStatement = savingStatementData?.report?.savingStatementReport?.statement;
+  const savingData = data?.report?.savingStatementReport?.statement;
+  const savingReport =
+    savingData && 'savingStatement' in savingData ? savingData.savingStatement : [];
+  const savingReportTotal = (
+    savingData && 'totals' in savingData ? savingData?.totals : {}
+  ) as SavingTotalReport;
 
   return (
-    <FormProvider {...methods}>
-      <Box bg="white" minH="calc(100vh - 110px)" w="100%" display="flex" flexDir="column">
-        <ReportHeader
-          hasSave={!!memberId && !!periodType && !!accountId}
+    <Report
+      defaultFilters={{
+        filter: {
+          service: SavingServiceType.Charges,
+          transactionType: SavingTransactionType.All,
+        },
+      }}
+      data={savingReport as LoanStatement[]}
+      filters={filters}
+      setFilters={setFilters}
+      isLoading={isFetching}
+      report={ReportEnum.SAVING_STATEMENT}
+    >
+      <Report.Header>
+        <Report.PageHeader
           paths={[
-            { label: 'All Reports', link: '/reports/cbs/savings' },
-            { label: 'Saving Statement', link: '/reports/cbs/savings' },
-            {
-              label: 'New Report',
-              link: '/reports/cbs/savings/new',
-            },
+            { label: 'Saving Reports', link: '/reports/cbs/savings' },
+            { label: 'Saving Statement', link: '/reports/cbs/savings/statement/new' },
           ]}
         />
-        <SavingReportInputs
-          setFilter={setFilter}
-          hasShownFilter={hasShownFilter}
-          setHasShownFilter={setHasShownFilter}
-        />
-        <Box display="flex" minH="calc(100vh - 260.5px)" w="100%" overflowX="auto">
-          <Box w="100%">
-            {(() => {
-              if (reportLoading) {
-                return (
-                  <Box
-                    h="200px"
-                    w="100%"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Loader />
-                  </Box>
-                );
-              }
+        <Report.Inputs
+          defaultFilters={{
+            filter: {
+              service: SavingServiceType.Charges,
+              transactionType: SavingTransactionType.All,
+            },
+          }}
+          setFilters={setFilters}
+        >
+          <SavingReportInputs />
+        </Report.Inputs>
+      </Report.Header>
 
-              if (
-                savingStatement &&
-                'savingStatement' in savingStatement &&
-                savingStatement.savingStatement
-              ) {
-                return (
-                  <Box display="flex" flexDir="column" w="100%">
-                    <ReportOrganizationHeader reportType={Report.SAVING_STATEMENT} />
-                    <ReportOrganization statementDate={filter?.periodType} />
-                    <Box px="s32">
-                      <Divider />
-                    </Box>
-                    <ReportMember
-                      member={savingStatementData.report.savingStatementReport?.member}
-                    />
-                    <SavingStatementReportTable
-                      savingReport={savingStatement.savingStatement as SavingStatement[]}
-                      savingTotal={savingStatement.totals as SavingTotalReport}
-                    />
-                  </Box>
-                );
-              }
+      <Report.Body>
+        <Report.Content>
+          <Report.OrganizationHeader />
+          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Table<SavingStatement & { index: number }>
+            showFooter
+            columns={[
+              {
+                header: 'S.No.',
+                accessorKey: 'index',
+                footer: () => <Box textAlign="right">Total Balance</Box>,
+                meta: {
+                  width: '60px',
+                  Footer: {
+                    colspan: 4,
+                  },
+                },
+              },
+              {
+                header: 'Date',
+                accessorKey: 'date',
+                cell: ({ cell }) => dayjs(cell.row.original.date).format('YYYY-MM-DD'),
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+              {
+                header: 'Particular',
+                accessorKey: 'particular',
+                meta: {
+                  width: '100%',
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+              {
+                header: 'Cheque/Voucher no',
+                accessorKey: 'chequeOrVoucherNo',
+                meta: {
+                  isNumeric: true,
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+              {
+                header: 'Withdraw Amount (Dr.)',
+                accessorKey: 'withdrawDr',
+                cell: (props) => amountConverter(props.getValue() as string),
+                footer: () => amountConverter(savingReportTotal?.totalWithdraw),
+                meta: {
+                  isNumeric: true,
+                },
+              },
+              {
+                header: 'Deposit Amount (Cr.)',
+                accessorKey: 'depositCr',
+                cell: (props) => amountConverter(props.getValue() as string),
 
-              if (filter) {
-                return (
-                  <NoDataState
-                    custom={{
-                      title: 'No Reports Found',
-                      subtitle:
-                        'Please select a different member or a different filter to get reports',
-                    }}
-                  />
-                );
-              }
+                footer: () => amountConverter(savingReportTotal?.totalDeposit),
+                meta: {
+                  isNumeric: true,
+                },
+              },
+              {
+                header: 'Balance Amount',
+                accessorKey: 'balanceAmount',
+                cell: (props) => amountConverter(props.getValue() as string),
 
-              return null;
-            })()}
-          </Box>
-          <SavingReportFilters setFilter={setFilter} hasShownFilter={hasShownFilter} />
-        </Box>
-      </Box>
-    </FormProvider>
+                footer: () => amountConverter(savingReportTotal?.totalBalance),
+                meta: {
+                  isNumeric: true,
+                },
+              },
+            ]}
+          />
+        </Report.Content>
+        <Report.Filters>
+          <Report.Filter title="Type of Transaction">
+            <FormRadioGroup
+              name="filter.transactionType"
+              options={[
+                { label: 'All', value: SavingTransactionType.All },
+                { label: 'Deposit', value: SavingTransactionType.Deposit },
+                { label: 'Withdraw', value: SavingTransactionType.Withdraw },
+              ]}
+              direction="column"
+            />
+          </Report.Filter>
+          <Report.Filter title="Service">
+            <FormRadioGroup
+              name="filter.service"
+              options={[
+                { label: 'All', value: SavingServiceType.Interest },
+                { label: 'Interest', value: SavingServiceType.Charges },
+                { label: 'Charges', value: SavingServiceType.CustomerInitiated },
+              ]}
+              direction="column"
+            />
+          </Report.Filter>
+          <Report.Filter title="Amount Range">
+            <FormAmountFilter name="filter.amountRange" />
+          </Report.Filter>
+        </Report.Filters>
+      </Report.Body>
+    </Report>
   );
 };

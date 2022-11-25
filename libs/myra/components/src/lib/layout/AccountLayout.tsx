@@ -86,9 +86,11 @@ const reportColumn = [
   },
   {
     label: 'savingsIntrestTaxReport',
+    navigate: '/reports/cbs/savings/interest-tax/new',
   },
   {
     label: 'savingsIntrestStatement',
+    navigate: '/reports/cbs/savings/interest-statement/new',
   },
 ];
 export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {

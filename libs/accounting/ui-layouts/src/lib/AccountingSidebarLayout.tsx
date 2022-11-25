@@ -32,16 +32,16 @@ const accountingSidebarColumns = [
     link: '/accounting/accounting/cash-transfer/list',
     name: 'cash-transfer',
   },
-  {
-    title: 'accountingAccountingSidebarQuickPayment',
-    link: '/accounting/accounting/quick-payment/list',
-    name: 'quick-payment',
-  },
-  {
-    title: 'accountingAccountingSidebarQuickReceipt',
-    link: '/accounting/accounting/quick-receipt/list',
-    name: 'quick-receipt',
-  },
+  // {
+  //   title: 'accountingAccountingSidebarQuickPayment',
+  //   link: '/accounting/accounting/quick-payment/list',
+  //   name: 'quick-payment',
+  // },
+  // {
+  //   title: 'accountingAccountingSidebarQuickReceipt',
+  //   link: '/accounting/accounting/quick-receipt/list',
+  //   name: 'quick-receipt',
+  // },
   {
     title: 'accountingAccountingSidebarBankAccounts',
     link: '/accounting/accounting/bank-accounts/list',
@@ -54,9 +54,7 @@ const accountingSidebarColumns = [
   },
 ];
 
-export const AccountingSidebarLayout = ({
-  children,
-}: IAccountingSidebarLayoutProps) => {
+export const AccountingSidebarLayout = ({ children }: IAccountingSidebarLayoutProps) => {
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -70,12 +68,7 @@ export const AccountingSidebarLayout = ({
 
         <Popover placement="bottom-start" gutter={3}>
           <PopoverTrigger>
-            <Button
-              width="full"
-              size="lg"
-              justifyContent="start"
-              leftIcon={<AddIcon />}
-            >
+            <Button width="full" size="lg" justifyContent="start" leftIcon={<AddIcon />}>
               {t['accountingAccountingSidebarCreate']}
             </Button>
           </PopoverTrigger>
@@ -98,9 +91,7 @@ export const AccountingSidebarLayout = ({
                   alignItems="center"
                   _hover={{ bg: 'gray.100' }}
                   cursor="pointer"
-                  onClick={() =>
-                    router.push('/accounting/accounting/journal-vouchers/add')
-                  }
+                  onClick={() => router.push('/accounting/accounting/journal-vouchers/add')}
                 >
                   <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
                   <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
@@ -116,9 +107,7 @@ export const AccountingSidebarLayout = ({
                   alignItems="center"
                   _hover={{ bg: 'gray.100' }}
                   cursor="pointer"
-                  onClick={() =>
-                    router.push('/accounting/accounting/cash-transfer/add')
-                  }
+                  onClick={() => router.push('/accounting/accounting/cash-transfer/add')}
                 >
                   <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
                   <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
@@ -134,9 +123,7 @@ export const AccountingSidebarLayout = ({
                   alignItems="center"
                   _hover={{ bg: 'gray.100' }}
                   cursor="pointer"
-                  onClick={() =>
-                    router.push('/accounting/accounting/quick-payment/add')
-                  }
+                  onClick={() => router.push('/accounting/accounting/quick-payment/add')}
                 >
                   <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
                   <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
@@ -152,9 +139,7 @@ export const AccountingSidebarLayout = ({
                   alignItems="center"
                   _hover={{ bg: 'gray.100' }}
                   cursor="pointer"
-                  onClick={() =>
-                    router.push('/accounting/accounting/quick-receipt/add')
-                  }
+                  onClick={() => router.push('/accounting/accounting/quick-receipt/add')}
                 >
                   <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
                   <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
@@ -170,9 +155,7 @@ export const AccountingSidebarLayout = ({
                   alignItems="center"
                   _hover={{ bg: 'gray.100' }}
                   cursor="pointer"
-                  onClick={() =>
-                    router.push('/accounting/accounting/bank-accounts/add')
-                  }
+                  onClick={() => router.push('/accounting/accounting/bank-accounts/add')}
                 >
                   <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
                   <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
@@ -188,9 +171,7 @@ export const AccountingSidebarLayout = ({
                   alignItems="center"
                   _hover={{ bg: 'gray.100' }}
                   cursor="pointer"
-                  onClick={() =>
-                    router.push('/accounting/accounting/charts-of-accounts/add')
-                  }
+                  onClick={() => router.push('/accounting/accounting/charts-of-accounts/add')}
                 >
                   <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
                   <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
@@ -211,9 +192,7 @@ export const AccountingSidebarLayout = ({
           height="s48"
           width="full"
           justifyContent="start"
-          leftIcon={
-            <Icon as={AiOutlineSetting} size="md" color="primary.500" />
-          }
+          leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
         >
           {t['accountingAccountingSiderbarAccountingSettings']}
         </Button>

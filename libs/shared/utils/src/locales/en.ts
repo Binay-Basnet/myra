@@ -263,7 +263,6 @@ const en: Record<string, string> = {
   memberLayoutCooperative: 'Cooperative',
   memberLayoutCreateKYMFormForCoOperativeMembers: 'Create KYM form for Cooperative Members',
   memberLayoutCooperativeUnion: 'Cooperative Union',
-  memberLayoutCreateKYMFormForCooperativeUnion: 'Create KYM form for Corporatives Union Members',
 
   // share layout
   shareLayout: 'Share',
@@ -767,7 +766,6 @@ const en: Record<string, string> = {
 
   // kym coop union
   kymCoopUnionAddNewMembers: 'Add New Member',
-  kymCoopUnionInstitutionInformation: '1. Cooperative Information',
   kymCoopUnionNameOfInstitution: 'Name of Institution',
   kymCoopUnionInstitutionType: 'Institution Type',
   kymCoopUnionSelectInstitutionType: 'Select Institution Type',
@@ -2495,10 +2493,10 @@ const en: Record<string, string> = {
   accountOpenChequeIssue: 'Cheque Issue',
 
   // settings deposit product
-  depositProductAddDepositProducts: 'Add Deposit Products',
+  depositProductAddDepositProducts: 'Add Savings Products',
   depositProductProductName: 'Product Name ',
   depositProductEnterProductName: 'Enter Product Name',
-  depositProductNatureofDepositProduct: 'Nature of Deposit Product',
+  depositProductNatureofDepositProduct: 'Nature of Savings Product',
   depositProductSelectNatureofDepositProduct: 'Select Nature of Deposit Product',
   depositProductProductCode: 'Product Code',
   depositProductAddprefixintial: 'Add prefix & intial number. Eg. ASM506',
@@ -3352,7 +3350,7 @@ const en: Record<string, string> = {
   addDepositNewDeposit: 'New Deposit',
   addDepositAddBulkDeposit: 'Add Bulk Deposit',
   addDepositMember: 'Member',
-  addDepositSelectDepositAccount: 'Select Deposit Account',
+  addDepositSelectDepositAccount: 'Select Saving Account',
   addDepositVoucherId: 'Voucher ID',
   addDepositNoOfInstallments: 'No of Installments',
   addDepositViewAllInstallments: 'View all installments',
@@ -3819,11 +3817,26 @@ const en: Record<string, string> = {
   memberSettingsSetup: 'Setup',
 
   memberSettingssCorePreview: 'Core Preview',
+
+  // others page
+  others: 'Others',
   kymCoopLastAuditDate: 'Last Audit FY',
   serviceCenterServiceCenterContactNumber: 'Service Center Contact Number',
 
   bankAccountBankInformation: 'Bank Information',
   accountingAccountingTabMenuLoan: 'External Loan',
+
+  settingsBranchExtensionCounter: 'ExtensionCounter',
+
+  cash: 'Cash',
+  bank: 'Bank',
+  other: 'Other',
+  collateral: 'Collateral',
+  loanAgainstFd: 'Loan Against Fd',
+
+  bankAccountsAccountNo: 'Account No',
+  memberLayoutCreateKYMFormForCooperativeUnion: 'Create KYM form for Cooperative Union Members',
+  kymCoopUnionInstitutionInformation: '1. Cooperative Union Information',
 };
 
 export default en;
