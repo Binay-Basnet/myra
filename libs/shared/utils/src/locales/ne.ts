@@ -3385,6 +3385,9 @@ const ne: Record<string, string> = {
   memberSettingsMemberID: 'Member ID',
   memberSettingsCorePreview: 'Core Preview',
   memberSettingsSetup: 'Setup',
+
+  // others page
+  others: 'Others',
   kymCoopLastAuditDate: 'Last Audit FY',
   serviceCenterServiceCenterContactNumber: 'Service Center Contact Number',
 

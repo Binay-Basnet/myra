@@ -3819,6 +3819,9 @@ const en: Record<string, string> = {
   memberSettingsSetup: 'Setup',
 
   memberSettingssCorePreview: 'Core Preview',
+
+  // others page
+  others: 'Others',
   kymCoopLastAuditDate: 'Last Audit FY',
   serviceCenterServiceCenterContactNumber: 'Service Center Contact Number',
 
