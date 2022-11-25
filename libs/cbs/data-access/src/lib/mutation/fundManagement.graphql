@@ -1,0 +1,10 @@
+mutation addProfitToFundManagementData($data: FundManagementInput!) {
+  profitToFundManagement {
+    new(data: $data) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

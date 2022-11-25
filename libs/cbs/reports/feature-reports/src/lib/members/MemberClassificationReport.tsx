@@ -3,6 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import {
   MemberClassificationReportData,
+  PeriodInput,
   ReportEntry,
   ReportPeriodType,
   useGetMemberClassificationReportQuery,
@@ -47,7 +48,7 @@ const classificationKeys = {
 
 type MemberClassificationFilter = {
   classificationBy: ClassifyBy[];
-  period: ReportPeriodType;
+  period: PeriodInput;
 };
 
 export const MemberClassificationReport = () => {

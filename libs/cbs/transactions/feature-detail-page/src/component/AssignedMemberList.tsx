@@ -23,18 +23,22 @@ export const AssignedMemberList = ({ data }: AssignedMemberListProps) => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
+        id: '1',
         header: t['transDetailSN'],
         accessorFn: (row) => row?.account,
       },
       {
+        id: '2',
         header: t['transDetailMember'],
         accessorFn: (row) => row?.member,
       },
       {
+        id: '3',
         header: t['transDetailAccountName'],
         accessorFn: (row) => row?.account,
       },
       {
+        id: '4',
         header: t['transDetailAmount'],
         accessorFn: (row) => row?.amount,
       },

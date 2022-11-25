@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import { pickBy } from 'lodash';
 import debounce from 'lodash/debounce';
 
@@ -62,6 +63,8 @@ export const useIndividual = ({ methods }: IIndividualHookProps) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
+  const queryClient = useQueryClient();
+
   const { errors } = useAppSelector((state) => state.individual.basic);
   const hasPressedNext = useAppSelector((state) => state.individual.hasPressedNext);
 
@@ -105,7 +108,7 @@ export const useIndividual = ({ methods }: IIndividualHookProps) => {
 
   const { mutateAsync } = useSetMemberDataMutation({
     onSuccess: async () => {
-      await refetch();
+      await queryClient.invalidateQueries(['getIndividualKymEditData']);
       dispatch(setIndividualFormDirty(true));
     },
   });

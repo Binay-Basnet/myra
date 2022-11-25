@@ -5,7 +5,7 @@ import { useGetWithdrawListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, TablePopover, Text } from '@coop/shared/ui';
-import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [
 //   {
@@ -73,7 +73,7 @@ export const WithdrawList = () => {
       },
       {
         header: t['withdrawListAmount'],
-        accessorFn: (row) => row?.node?.amount,
+        accessorFn: (row) => (row?.node?.amount ? amountConverter(row?.node?.amount) : '-'),
       },
       {
         header: t['withdrawListPaymentMode'],

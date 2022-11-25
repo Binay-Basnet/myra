@@ -8,6 +8,7 @@ import {
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
 import { Box, Grid, Icon, Text } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
 import {
   MemberBasicInformation,
@@ -85,7 +86,7 @@ export const Overview = () => {
     date: data?.date,
     accountName: data?.accountName,
     paymentType: data?.paymentType,
-    amount: data?.amount,
+    amount: amountConverter(data?.amount as string),
   }));
   const newId = useGetNewIdMutation();
 
@@ -164,6 +165,11 @@ export const Overview = () => {
             height="400px"
             w="100%"
             options={{
+              chart: {
+                toolbar: {
+                  show: false,
+                },
+              },
               xaxis: {
                 type: 'datetime',
               },
@@ -214,6 +220,11 @@ export const Overview = () => {
             height="400px"
             w="100%"
             options={{
+              chart: {
+                toolbar: {
+                  show: false,
+                },
+              },
               xaxis: {
                 type: 'datetime',
               },

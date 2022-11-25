@@ -203,7 +203,6 @@ export const MemberListPage = () => {
     });
   }, [ID, mutateAsync]);
   const onCancel = () => {};
-
   return (
     <>
       <Box position="sticky" top="110px" zIndex={3}>

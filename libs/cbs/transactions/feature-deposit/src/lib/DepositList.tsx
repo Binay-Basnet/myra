@@ -5,7 +5,7 @@ import { DepositedBy, useGetDepositListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, TablePopover, Text } from '@coop/shared/ui';
-import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [
 //   {
@@ -85,7 +85,7 @@ export const DepositList = () => {
       {
         header: t['depositListAmount'],
 
-        accessorFn: (row) => row?.node?.amount,
+        accessorFn: (row) => amountConverter(row?.node?.amount),
         meta: {
           isNumeric: true,
         },

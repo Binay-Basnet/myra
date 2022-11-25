@@ -6,7 +6,7 @@ export const ReportOrganizationHeader = ({ reportType }: { reportType: Report })
   const user = useAppSelector((state) => state.auth.user);
 
   return (
-    <Box px="s32" py="s16" display="flex" alignItems="center" justifyContent="space-between">
+    <Box px="s16" py="s16" display="flex" alignItems="center" justifyContent="space-between">
       <Box display="flex" alignItems="center" gap="s16">
         <Box position="relative" w="s60" h="s60">
           <Avatar

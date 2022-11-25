@@ -57,6 +57,11 @@
       "@coop/cbs/members/details": ["libs/cbs/members/feature-details/src/index.ts"],
       "@coop/cbs/members/list": ["libs/cbs/members/feature-list/src/index.ts"],
       "@coop/cbs/members/profile": ["libs/cbs/members/feature-profile/src/index.ts"],
+      "@coop/cbs/others/fund-management": ["libs/cbs/others/feature-fund-management/src/index.ts"],
+      "@coop/cbs/others/share-dividend-posting": [
+        "libs/cbs/others/feature-share-dividend-posting/src/index.ts"
+      ],
+      "@coop/cbs/others/ui-layouts": ["libs/cbs/others/ui-layouts/src/index.ts"],
       "@coop/cbs/reports": ["libs/cbs/reports/feature-reports/src/index.ts"],
       "@coop/cbs/reports/components": ["libs/cbs/reports/ui-components/src/index.ts"],
       "@coop/cbs/reports/layout": ["libs/cbs/reports/ui-layouts/src/index.ts"],

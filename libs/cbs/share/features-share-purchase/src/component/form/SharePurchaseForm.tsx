@@ -219,6 +219,7 @@ export const SharePurchaseForm = () => {
       methods.setValue('memberId', String(redirectMemberId));
     }
   }, [redirectMemberId]);
+
   return (
     <>
       <FormProvider {...methods}>
@@ -312,7 +313,7 @@ export const SharePurchaseForm = () => {
                 handleSubmit={handleSubmit}
                 isDisabled={
                   paymentModes === SharePaymentMode.Cash && !disableDenomination
-                    ? !(Number(cashPaid) >= Number(totalAmount))
+                    ? !(Number(returnAmount) >= 0) || !(Number(cashPaid) >= Number(totalAmount))
                     : false
                 }
               />

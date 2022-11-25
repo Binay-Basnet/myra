@@ -99,7 +99,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>((p
       leftElement={!hideLock && <Icon as={IoLockClosed} color="gray.500" size="sm" />}
       rightElement={
         <Box onClick={handleClick} cursor="pointer" display="flex" alignItems="center">
-          <Icon as={show ? IoEyeOffOutline : IoEyeOutline} color="gray.500" />
+          <Icon as={show ? IoEyeOutline : IoEyeOffOutline} color="gray.500" />
         </Box>
       }
       {...(register && fieldName && register(fieldName, validation))}

@@ -31,7 +31,7 @@ import {
   FormTextArea,
 } from '@coop/shared/form';
 import { Box, FormAccountSelect, FormMemberSelect, Grid, GridItem, Text } from '@coop/shared/ui';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 // const sourceOfFundsList = [
 //   'Personal Savings',
@@ -340,7 +340,7 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
                   {t['depositPaymentTotal']}
                 </Text>
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  {totalCashPaid}
+                  {amountConverter(totalCashPaid)}
                 </Text>
               </Box>
 
@@ -349,7 +349,7 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
                   {t['depositPaymentReturn']}
                 </Text>
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  {returnAmount}
+                  {amountConverter(returnAmount)}
                 </Text>
               </Box>
 
@@ -358,7 +358,7 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
                   {t['depositPaymentGrandTotal']}
                 </Text>
                 <Text fontSize="r1" fontWeight={400} color="neutralColorLight.Gray-60">
-                  {totalCashPaid - returnAmount}
+                  {amountConverter(totalCashPaid - returnAmount)}
                 </Text>
               </Box>
             </Box>

@@ -18,6 +18,7 @@ import {
   FormInput,
   FormPhoneNumber,
   FormSelect,
+  FormSwitch,
 } from '@coop/shared/form';
 import { asyncToast, Box, ChakraModal, Grid } from '@coop/shared/ui';
 
@@ -108,8 +109,9 @@ export const NewUserModal = ({ isOpen, onClose, refetchUserList }: INewUserModal
       <FormProvider {...methods}>
         <form>
           <Box px="s12" py="s8" display="flex" flexDirection="column" gap="s24">
+            <FormSwitch name="isCoreEmployee" label="This user is a core employee" />
             <FormInput type="text" name="name" label="Name" />
-
+            <FormInput type="text" name="empCode" label="Employee Code" />
             <Grid templateColumns="repeat(2, 1fr)" rowGap="s24" columnGap="s20">
               <FormSelect name="gender" label="Gender" options={genderOptions} />
 

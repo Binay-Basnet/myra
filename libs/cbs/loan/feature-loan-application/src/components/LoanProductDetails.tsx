@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useGetLoanProductDetailsDataQuery } from '@coop/cbs/data-access';
 import { Box, Text } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
 interface IProductProps {
   productId: string;
@@ -70,15 +71,11 @@ export const LoanProductCard = ({ productId }: IProductProps) => {
             Loan Amount Limit
           </Text>
           <Text fontSize="s3" fontWeight="600">
-            {productData?.minimumLoanAmount}- {productData?.maxLoanAmount}
+            {amountConverter(productData?.minimumLoanAmount)}-{' '}
+            {amountConverter(productData?.maxLoanAmount)}
           </Text>
         </Box>
-        <Box display="flex" flexDirection="column" gap="s4">
-          <Text fontSize="s3" fontWeight="400">
-            Withdraw Amount Limit
-          </Text>
-          <Text fontSize="s3" fontWeight="600" />
-        </Box>
+
         <Box display="flex" flexDirection="column" gap="s4">
           <Text fontSize="s3" fontWeight="400">
             Tenure

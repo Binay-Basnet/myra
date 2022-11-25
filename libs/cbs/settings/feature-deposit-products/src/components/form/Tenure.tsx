@@ -34,7 +34,7 @@ export const Tenure = () => {
   const { t } = useTranslation();
   const { resetField, watch } = useFormContext();
   const [rightElement, setRightElement] = useState('days');
-  const minimumTenureUnit = watch('minTenureUnit');
+  const minimumTenureUnit = watch('tenureUnit');
   // const isTenureApplicable = watch('isTenureApplicable');
   // const depositNature = watch('nature');
 

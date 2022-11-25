@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 
 import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
 import { DetailsCard } from '@coop/shared/ui';
+import { amountConverter } from '@coop/shared/utils';
 
 import { UpcomingLoanPaymentTable } from './LoanPaymentUpcomingTable';
 
@@ -20,7 +21,7 @@ export const LoanPaymentTable = () => {
       accountName: data?.accountName,
       installmentNo: data?.installmentNo,
       interestRate: data?.interestRate,
-      amount: data?.amount,
+      amount: amountConverter(data?.amount as string) as string,
       paymentType: data?.paymentType,
     })) || [];
   return (

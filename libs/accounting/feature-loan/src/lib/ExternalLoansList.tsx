@@ -1,51 +1,48 @@
-import { useMemo } from 'react';
-import { useRouter } from 'next/router';
+import { useEffect, useMemo } from 'react';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
-import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
+import { ExternalLoanType } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, TablePopover, Text } from '@coop/shared/ui';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { TablePopover, Text } from '@coop/shared/ui';
+import { useTranslation } from '@coop/shared/utils';
+
+import { useExternalLoan } from '../hooks/useExternalLoan';
 
 /* eslint-disable-next-line */
 export interface AccountingFeatureLoanProps {}
 
+interface ILoanTypeProps {
+  loanType: string;
+  t: Record<string, string>;
+}
+
+const loanTypeSwitch = ({ loanType, t }: ILoanTypeProps) => {
+  if (loanType === ExternalLoanType.Collateral) {
+    return <Text>{t['collateral']} </Text>;
+  }
+  if (loanType === ExternalLoanType.LoanAgainstFd) {
+    return <Text>{t['loanAgainstFd']}</Text>;
+  }
+
+  return '-';
+};
+
 export const ExternalLoansList = () => {
   const { t } = useTranslation();
 
-  const router = useRouter();
+  const { externalLoanList, isExternalLoanLoading, refetchExternalLoan } = useExternalLoan();
 
-  const { data, isLoading } = useGetMemberListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    filter: {
-      objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
-    },
-  });
-
-  const rowData = useMemo(() => data?.members?.list?.edges ?? [], [data]);
+  const rowData = useMemo(() => externalLoanList ?? [], [externalLoanList]);
 
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
         header: 'Entry ID',
-        accessorFn: (row) => row?.node?.id,
+        accessorFn: (row) => row?.id,
       },
       {
-        accessorFn: (row) => row?.node?.name?.local,
+        accessorFn: (row) => row?.organizationName,
         header: 'Name of Organization',
-        cell: (props) => (
-          <Box display="flex" alignItems="center" gap="s12">
-            <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
-            <Text
-              fontSize="s3"
-              textTransform="capitalize"
-              textOverflow="ellipsis"
-              overflow="hidden"
-            >
-              {props.getValue() as string}
-            </Text>
-          </Box>
-        ),
 
         meta: {
           width: '60%',
@@ -53,21 +50,24 @@ export const ExternalLoansList = () => {
       },
       {
         header: 'Type',
-        accessorFn: (row) => row?.node?.code,
+        accessorFn: (row) => row?.loanType,
         meta: {
           width: '30%',
         },
+        cell: (props) =>
+          props?.row?.original &&
+          loanTypeSwitch({ loanType: props?.row?.original?.loanType ?? '', t }),
       },
       {
         header: 'Amount',
-        accessorFn: (row) => row?.node?.contact,
+        accessorFn: (row) => row?.amount,
         meta: {
           width: '30%',
         },
       },
       {
         header: 'Applied Date',
-        accessorFn: (row) => row?.node?.contact,
+        accessorFn: (row) => row?.date,
         meta: {
           width: '30%',
         },
@@ -76,9 +76,9 @@ export const ExternalLoansList = () => {
         id: '_actions',
         header: '',
         cell: (props) =>
-          props?.row?.original?.node && (
+          props?.row?.original && (
             <TablePopover
-              node={props?.row?.original?.node}
+              node={props?.row?.original}
               items={[
                 {
                   title: t['transDetailViewDetail'],
@@ -93,15 +93,16 @@ export const ExternalLoansList = () => {
     ],
     [t]
   );
+
+  useEffect(() => {
+    refetchExternalLoan();
+  }, [refetchExternalLoan]);
+
   return (
     <>
-      <AccountingPageHeader
-        heading="Investments"
-        buttonLabel="New Cash Transfer"
-        buttonHandler={() => router.push('/accounting/loan/external-loan/67/add')}
-      />
+      <AccountingPageHeader heading="Investments" />
 
-      <Table isLoading={isLoading} data={rowData} columns={columns} />
+      <Table isLoading={isExternalLoanLoading} data={rowData} columns={columns} />
     </>
   );
 };

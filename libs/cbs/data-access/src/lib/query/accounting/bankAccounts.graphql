@@ -1,0 +1,18 @@
+query getBankAccountList($filter: BankAccountFilter, $pagination: Pagination) {
+  accounting {
+    bankAccounts {
+      list(filter: $filter, pagination: $pagination) {
+        edges {
+          node {
+            id
+            bankId
+            bankName
+            displayName
+            accountNo
+            balance
+          }
+        }
+      }
+    }
+  }
+}

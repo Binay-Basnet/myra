@@ -64,7 +64,7 @@ export enum Report {
   CIB_CIC_MEMBER_LOAN_INFORMATION = 'CIB/CIC/Member loan information system(MLIB) Setup',
   LOAN_UTILIZATION_INSPECTION = 'Loan utilization inspection(eg. above 5 Lakh)',
 
-  TRANSACTION_BALANCE_SHEET = 'Balance Sheet',
+  TRANSACTION_TRIAL_SHEET = 'Trial Sheet',
   TRANSACTION_INCOME_STATEMENT = 'Income Statement',
   TRANSACTION_CASH_FLOW_STATEMENT = 'Cash Flow Statement',
   TRANSACTION_CHANGE_OF_EQUITY = 'Change of Equity',
@@ -74,6 +74,7 @@ export enum Report {
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
+  MB_CHANNEL_TRANSACTION_REPORT = 'Mobile Banking Channel Transaction Report',
   MB_DAILY_TRANSACTION_REPORT = 'Daily Transaction Report',
   MB_USER_REPORT = 'Mobile Banking User Report',
   MB_RENEWABLE_LIST = 'Renewable List/Expiry List',
@@ -92,6 +93,8 @@ export enum Report {
   BRANCH_WISE_FINANCIAL_REPORT = 'Branchwise financial Report',
   SERVICE_CENTER_LIST_REPORT = 'Service Center List Report',
   BRANCH_WISE_TARGET_VS_ACHIEVEMENT = 'Branchwise Target vs Achievement',
+
+  USER_LIST_REPORT = 'User List Report',
 }
 
 export const REPORTS = {
@@ -126,6 +129,7 @@ export const REPORTS = {
     {
       id: '2.5',
       report: Report.KYM_STATUS_REPORT,
+      link: 'kym-status',
     },
     {
       id: '2.6',
@@ -310,6 +314,11 @@ export const REPORTS = {
       report: Report.MB_FEE_AND_COMMISSION_REPORT,
     },
     {
+      id: '',
+      report: Report.MB_CHANNEL_TRANSACTION_REPORT,
+      link: 'transaction',
+    },
+    {
       id: '4.6',
       report: Report.MB_REGISTRATION_REPORT,
       link: 'registration',
@@ -347,7 +356,8 @@ export const REPORTS = {
   [ReportGroup.TRANSACTION_REPORT]: [
     {
       id: '7.1',
-      report: Report.TRANSACTION_BALANCE_SHEET,
+      report: Report.TRANSACTION_TRIAL_SHEET,
+      link: 'trial-sheet',
     },
     {
       id: '7.2',
@@ -406,6 +416,11 @@ export const REPORTS = {
       id: '9',
       report: Report.GENERAL_LEDGER_REPORT,
       link: 'ledger',
+    },
+    {
+      id: '10',
+      report: Report.USER_LIST_REPORT,
+      link: 'users',
     },
   ],
 };

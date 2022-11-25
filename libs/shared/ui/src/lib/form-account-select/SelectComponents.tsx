@@ -2,6 +2,8 @@ import { IoChevronDownSharp, IoSearch } from 'react-icons/io5';
 import { Box, Icon, Text } from '@chakra-ui/react';
 import { chakraComponents, GroupBase, SelectComponentsConfig } from 'chakra-react-select';
 
+import { amountConverter } from '@coop/shared/utils';
+
 export interface Option {
   label: string | number;
   value: string | number;
@@ -66,12 +68,12 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
 
         <Box display="flex" flexDirection="column" gap="s4" alignItems="flex-end">
           <Text fontSize="s3" fontWeight={500} color="neutralColorLight.Gray-80">
-            {props.data.accountInfo.balance}
+            {amountConverter(props.data.accountInfo.balance)}
           </Text>
 
           {props.data.accountInfo.fine !== '0' && (
             <Text fontSize="s3" fontWeight={500} color="danger.500">
-              Fine: {props.data.accountInfo.fine}
+              Fine: {amountConverter(props.data.accountInfo.fine)}
             </Text>
           )}
         </Box>

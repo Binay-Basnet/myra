@@ -337,7 +337,7 @@ export const AccountRow = ({ account, index }: AccountRowProps) => {
         ) : (
           <Box
             onClick={() =>
-              router.push(`/accounts/account-open/edit/${account?.id}?redirect=${router.asPath}`)
+              router.push(`/savings/account-open/edit/${account?.id}?redirect=${router.asPath}`)
             }
           >
             <Button variant="ghost">Update Details</Button>

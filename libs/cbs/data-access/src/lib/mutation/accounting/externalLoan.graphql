@@ -1,0 +1,44 @@
+mutation setExternalLoan($id: String, $data: ExternalLoanApplicationInput) {
+  accounting {
+    externalLoan {
+      loan {
+        new(id: $id, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setExternalAccount($id: String, $data: ExternalLoanAccountInput) {
+  accounting {
+    externalLoan {
+      account {
+        new(id: $id, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation setExternalPayment($id: String, $data: ExternalLoanPaymentInput) {
+  accounting {
+    externalLoan {
+      payment {
+        new(id: $id, data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}

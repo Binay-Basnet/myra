@@ -212,7 +212,6 @@ const ne: Record<string, string> = {
   memberLayoutCooperative: 'सहकारी',
   memberLayoutCreateKYMFormForCoOperativeMembers: '',
   memberLayoutCooperativeUnion: 'सहकारी संघ',
-  memberLayoutCreateKYMFormForCooperativeUnion: '',
   shareLayout: 'शेयर',
   shareLayoutNewShare: 'नयाँ शेयर',
   shareLayoutSelectShareType: 'सदस्य प्रकार छान्नुहोस',
@@ -638,7 +637,6 @@ const ne: Record<string, string> = {
   kymCoopFemale: 'महिला',
   // kym coop union': '',
   kymCoopUnionAddNewMembers: 'नयाँ सदस्य थप्नुहोस',
-  kymCoopUnionInstitutionInformation: '१. सहकारी जानकारी',
   kymCoopUnionBasicInformation: 'मूख्य जानकारी',
   kymCoopUnionNameOfInstitution: 'संस्थाको नाम',
   kymCoopUnionInstitutionType: 'संस्था प्रकार',
@@ -2188,10 +2186,10 @@ const ne: Record<string, string> = {
   accountOpenChequeIssue: 'Cheque Issue',
 
   // settings deposit product
-  depositProductAddDepositProducts: 'Add Deposit Products',
+  depositProductAddDepositProducts: 'Add Savings Products',
   depositProductProductName: 'Product Name ',
   depositProductEnterProductName: 'Enter Product Name',
-  depositProductNatureofDepositProduct: 'Nature of Deposit Product',
+  depositProductNatureofDepositProduct: 'Nature of Savings Product',
   depositProductSelectNatureofDepositProduct: 'Select Nature of Deposit Product',
   depositProductProductCode: 'Product Code',
   depositProductAddprefixintial: 'Add prefix & intial number. Eg. ASM506',
@@ -2975,7 +2973,7 @@ const ne: Record<string, string> = {
   addDepositNewDeposit: 'New Deposit',
   addDepositAddBulkDeposit: 'Add Bulk Deposit',
   addDepositMember: 'Member',
-  addDepositSelectDepositAccount: 'Select Deposit Account',
+  addDepositSelectDepositAccount: 'Select Saving Account',
   addDepositVoucherId: 'Voucher ID',
   addDepositNoOfInstallments: 'No of Installments',
   addDepositViewAllInstallments: 'View all installments',
@@ -3385,11 +3383,26 @@ const ne: Record<string, string> = {
   memberSettingsMemberID: 'Member ID',
   memberSettingsCorePreview: 'Core Preview',
   memberSettingsSetup: 'Setup',
+
+  // others page
+  others: 'Others',
   kymCoopLastAuditDate: 'Last Audit FY',
   serviceCenterServiceCenterContactNumber: 'Service Center Contact Number',
 
   bankAccountBankInformation: 'Bank Information',
   accountingAccountingTabMenuLoan: 'External Loan',
+
+  settingsBranchExtensionCounter: 'ExtensionCounter',
+
+  cash: 'Cash',
+  bank: 'Bank',
+  other: 'Other',
+  collateral: 'Collateral',
+  loanAgainstFd: 'Loan Against Fd',
+
+  bankAccountsAccountNo: 'Account No',
+  memberLayoutCreateKYMFormForCooperativeUnion: 'Create KYM form for Cooperative Union Members',
+  kymCoopUnionInstitutionInformation: '१. सहकारी जानकारी',
 };
 
 export default ne;

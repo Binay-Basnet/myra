@@ -1,7 +1,7 @@
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoCheckmarkDone } from 'react-icons/io5';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 
 import {
   AccountTypeFilter,
@@ -51,7 +51,7 @@ export const CbsMemberFeatureInactivations = () => {
   const isShareReturned = data?.members?.inactivateMember?.inactivateCheck?.isShareReturned;
 
   return (
-    (<Container p={0} minWidth="container.lg" bg="white" minH="calc(100vh - 110px)">
+    <Container p={0} minWidth="container.lg" bg="white" minH="calc(100vh - 110px)">
       <Box position="sticky" top="110px">
         <FormHeader title="Member Inactive" />
       </Box>
@@ -167,7 +167,7 @@ export const CbsMemberFeatureInactivations = () => {
           isMainButtonDisabled={!isAllAccountsClosed || !isShareReturned}
         />
       </Box>
-    </Container>)
+    </Container>
   );
 };
 
@@ -239,7 +239,7 @@ const AccountRow = ({ account, index }: AccountRowProps) => {
               const response = await mutateAsync({});
 
               router.push(
-                `/accounts/account-close/add/${response?.newId}?redirect=${router.asPath}&memberId=${memberId}&accountId=${account?.id}`
+                `/savings/account-close/add/${response?.newId}?redirect=${router.asPath}&memberId=${memberId}&accountId=${account?.id}`
               );
             }}
           >

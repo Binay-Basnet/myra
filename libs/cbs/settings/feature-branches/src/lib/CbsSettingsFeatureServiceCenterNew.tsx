@@ -111,6 +111,10 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
       label: t['settingsBranchCategoriesContact'],
       value: BranchCategory.ContactOffice,
     },
+    {
+      label: t['settingsBranchExtensionCounter'],
+      value: BranchCategory.ExtensionCounter,
+    },
   ];
 
   const submitForm = () => {
