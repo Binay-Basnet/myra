@@ -58,6 +58,7 @@ export const ShareStatementReport = () => {
           <Report.OrganizationHeader />
           <Report.Organization statementDate={filters?.period?.periodType} />
           <Report.Table<ShareStatement & { index: number }>
+            showFooter
             columns={[
               {
                 header: 'S.No.',

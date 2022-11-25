@@ -35,17 +35,19 @@ export const TrialSheetReport = () => {
   );
 
   const assetsReport = sortCoa(
-    data?.report?.trialSheetReport?.data?.assets as TrialSheetReportDataEntry[]
+    (data?.report?.trialSheetReport?.data?.assets ?? []) as TrialSheetReportDataEntry[]
   );
   const equityAndLiablities = sortCoa(
-    data?.report?.trialSheetReport?.data?.equityAndLiablities as TrialSheetReportDataEntry[]
+    (data?.report?.trialSheetReport?.data?.equityAndLiablities ?? []) as TrialSheetReportDataEntry[]
   );
   const incomeReport = sortCoa(
-    data?.report?.trialSheetReport?.data?.income as TrialSheetReportDataEntry[]
+    (data?.report?.trialSheetReport?.data?.income ?? []) as TrialSheetReportDataEntry[]
   );
   const expensesReport = sortCoa(
-    data?.report?.trialSheetReport?.data?.expenses as TrialSheetReportDataEntry[]
+    (data?.report?.trialSheetReport?.data?.expenses ?? []) as TrialSheetReportDataEntry[]
   );
+
+  console.log(data, expensesReport, data?.report?.trialSheetReport?.data?.expenses);
 
   return (
     <Report
@@ -89,46 +91,58 @@ export const TrialSheetReport = () => {
           <Report.OrganizationHeader />
           <Report.Organization statementDate={filters?.period?.periodType} />
 
-          <Box display="flex" py="s16" flexDir="column">
-            <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-              1. Equity and Liabilities
-            </Text>
-            <COATable
-              type="Liabilities"
-              total={data?.report?.trialSheetReport?.data?.totalLiablitiesIncome}
-              data={equityAndLiablities as TrialSheetReportDataEntry[]}
-            />
-          </Box>
-          <Box display="flex" py="s16" flexDir="column">
-            <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-              2. Assets
-            </Text>
-            <COATable
-              total={data?.report?.trialSheetReport?.data?.assetsTotal}
-              type="Assets"
-              data={assetsReport as TrialSheetReportDataEntry[]}
-            />
-          </Box>
-          <Box display="flex" py="s16" flexDir="column">
-            <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-              3. Expenses
-            </Text>
-            <COATable
-              total={data?.report?.trialSheetReport?.data?.expenseTotal}
-              type="Expenses"
-              data={expensesReport as TrialSheetReportDataEntry[]}
-            />
-          </Box>
-          <Box display="flex" py="s16" flexDir="column">
-            <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-              4. Income
-            </Text>
-            <COATable
-              total={data?.report?.trialSheetReport?.data?.incomeTotal}
-              type="Income"
-              data={incomeReport as TrialSheetReportDataEntry[]}
-            />
-          </Box>
+          {equityAndLiablities?.length !== 0 && (
+            <Box display="flex" py="s16" flexDir="column">
+              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                1. Equity and Liabilities
+              </Text>
+              <COATable
+                type="Liabilities"
+                total={data?.report?.trialSheetReport?.data?.totalLiablitiesIncome}
+                data={equityAndLiablities as TrialSheetReportDataEntry[]}
+              />
+            </Box>
+          )}
+
+          {assetsReport?.length !== 0 && (
+            <Box display="flex" py="s16" flexDir="column">
+              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                2. Assets
+              </Text>
+              <COATable
+                total={data?.report?.trialSheetReport?.data?.assetsTotal}
+                type="Assets"
+                data={assetsReport as TrialSheetReportDataEntry[]}
+              />
+            </Box>
+          )}
+
+          {expensesReport?.length !== 0 && (
+            <Box display="flex" py="s16" flexDir="column">
+              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                3. Expenses
+              </Text>
+
+              <COATable
+                total={data?.report?.trialSheetReport?.data?.expenseTotal}
+                type="Expenses"
+                data={expensesReport as TrialSheetReportDataEntry[]}
+              />
+            </Box>
+          )}
+
+          {incomeReport?.length !== 0 && (
+            <Box display="flex" py="s16" flexDir="column">
+              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                4. Income
+              </Text>
+              <COATable
+                total={data?.report?.trialSheetReport?.data?.incomeTotal}
+                type="Income"
+                data={incomeReport as TrialSheetReportDataEntry[]}
+              />
+            </Box>
+          )}
 
           <Box
             display="flex"
@@ -199,7 +213,7 @@ export const TrialSheetReport = () => {
           </Box>
         </Report.Content>
         <Report.Filters>
-          <Report.Filter title="Type of Transaction">
+          <Report.Filter title="Zero Balance">
             <FormRadioGroup
               name="filter.includeZero"
               options={[
@@ -221,40 +235,46 @@ interface ICOATableProps {
   total: string | null | undefined;
 }
 
-const COATable = ({ data, type, total }: ICOATableProps) => (
-  <Report.Table<TrialSheetReportDataEntry>
-    showFooter
-    data={data as TrialSheetReportDataEntry[]}
-    columns={[
-      {
-        header: 'General Ledger Name',
-        accessorKey: 'ledgerName',
-        cell: (props) => (
-          <Text
-            fontSize="r1"
-            fontWeight={props.row.original.ledgerId?.includes('.') ? '400' : '600'}
-            color="gray.700"
-          >
-            {props.row.original.ledgerId} - {props?.row?.original?.ledgerName?.local}
-          </Text>
-        ),
-        footer: () => <>Total {type}</>,
-        meta: {
-          width: '80%',
+const COATable = ({ data, type, total }: ICOATableProps) => {
+  if (data?.length === 0) {
+    return null;
+  }
+
+  return (
+    <Report.Table<TrialSheetReportDataEntry>
+      showFooter
+      data={data as TrialSheetReportDataEntry[]}
+      columns={[
+        {
+          header: 'General Ledger Name',
+          accessorKey: 'ledgerName',
+          cell: (props) => (
+            <Text
+              fontSize="r1"
+              fontWeight={props.row.original.ledgerId?.includes('.') ? '400' : '600'}
+              color="gray.700"
+            >
+              {props.row.original.ledgerId} - {props?.row?.original?.ledgerName?.local}
+            </Text>
+          ),
+          footer: () => <>Total {type}</>,
+          meta: {
+            width: '80%',
+          },
         },
-      },
-      {
-        header: 'Balance',
-        accessorKey: 'balance',
-        cell: (props) => amountConverter(props.getValue() as string),
-        footer: () => <>{amountConverter(total ?? 0)}</>,
-        meta: {
-          isNumeric: true,
+        {
+          header: 'Balance',
+          accessorKey: 'balance',
+          cell: (props) => amountConverter(props.getValue() as string),
+          footer: () => <>{amountConverter(total ?? 0)}</>,
+          meta: {
+            isNumeric: true,
+          },
         },
-      },
-    ]}
-  />
-);
+      ]}
+    />
+  );
+};
 
 const sortCoa = (data: TrialSheetReportDataEntry[]) =>
   data?.sort((a, b) =>
