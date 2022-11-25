@@ -165,6 +165,11 @@ export const Overview = () => {
             height="400px"
             w="100%"
             options={{
+              chart: {
+                toolbar: {
+                  show: false,
+                },
+              },
               xaxis: {
                 type: 'datetime',
               },
@@ -215,6 +220,11 @@ export const Overview = () => {
             height="400px"
             w="100%"
             options={{
+              chart: {
+                toolbar: {
+                  show: false,
+                },
+              },
               xaxis: {
                 type: 'datetime',
               },
