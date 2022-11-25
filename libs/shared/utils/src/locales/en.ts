@@ -263,7 +263,6 @@ const en: Record<string, string> = {
   memberLayoutCooperative: 'Cooperative',
   memberLayoutCreateKYMFormForCoOperativeMembers: 'Create KYM form for Cooperative Members',
   memberLayoutCooperativeUnion: 'Cooperative Union',
-  memberLayoutCreateKYMFormForCooperativeUnion: 'Create KYM form for Corporatives Union Members',
 
   // share layout
   shareLayout: 'Share',
@@ -767,7 +766,6 @@ const en: Record<string, string> = {
 
   // kym coop union
   kymCoopUnionAddNewMembers: 'Add New Member',
-  kymCoopUnionInstitutionInformation: '1. Cooperative Information',
   kymCoopUnionNameOfInstitution: 'Name of Institution',
   kymCoopUnionInstitutionType: 'Institution Type',
   kymCoopUnionSelectInstitutionType: 'Select Institution Type',
@@ -3837,6 +3835,8 @@ const en: Record<string, string> = {
   loanAgainstFd: 'Loan Against Fd',
 
   bankAccountsAccountNo: 'Account No',
+  memberLayoutCreateKYMFormForCooperativeUnion: 'Create KYM form for Cooperative Union Members',
+  kymCoopUnionInstitutionInformation: '1. Cooperative Union Information',
 };
 
 export default en;

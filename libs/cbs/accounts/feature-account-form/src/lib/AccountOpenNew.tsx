@@ -192,7 +192,7 @@ export const AccountOpenNew = () => {
 
   const productID = watch('productId');
   const defaultAccount = productOptions.find((d) => d?.value === productID);
-  const defaultAccountName = defaultAccount?.label;
+  const defaultAccountName = `${memberDetailData?.name} - ${defaultAccount?.label}`;
 
   const errors = newLog?.find((d) => d?.data?.id === productID);
 
