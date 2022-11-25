@@ -17,14 +17,23 @@ export const MyBranch = () => {
         <GridItem>
           <DetailCardStats
             title="Members to Approve"
+            hideCommas
             stats={myBranchData?.membersToApprove as number}
           />
         </GridItem>
         <GridItem>
-          <DetailCardStats title="Total Members" stats={myBranchData?.totalMembers as number} />
+          <DetailCardStats
+            title="Total Members"
+            hideCommas
+            stats={myBranchData?.totalMembers as number}
+          />
         </GridItem>
         <GridItem>
-          <DetailCardStats title="Total Accounts" stats={myBranchData?.totalAccounts as number} />
+          <DetailCardStats
+            title="Total Accounts"
+            hideCommas
+            stats={myBranchData?.totalAccounts as number}
+          />
         </GridItem>
       </Grid>
     </Box>

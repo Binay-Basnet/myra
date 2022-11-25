@@ -1,5 +1,7 @@
 import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
 
+import { amountConverter } from '@coop/shared/utils';
+
 import Box from '../box/Box';
 import Divider from '../divider/Divider';
 import Icon from '../icon/Icon';
@@ -9,6 +11,7 @@ import Text from '../text/Text';
 export interface DetailCardStatsProps {
   title: string;
   stats: number;
+  hideCommas?: boolean;
   meta?:
     | {
         growth: number;
@@ -19,7 +22,13 @@ export interface DetailCardStatsProps {
   children?: React.ReactNode;
 }
 
-export const DetailCardStats = ({ title, stats, meta, children }: DetailCardStatsProps) => (
+export const DetailCardStats = ({
+  title,
+  stats,
+  meta,
+  children,
+  hideCommas,
+}: DetailCardStatsProps) => (
   <Box
     borderRadius="br2"
     w="100%"
@@ -35,7 +44,7 @@ export const DetailCardStats = ({ title, stats, meta, children }: DetailCardStat
       </Text>
 
       <Text color="gray.800" fontSize="r3" fontWeight="SemiBold" lineHeight="150%">
-        {stats}
+        {hideCommas ? stats : amountConverter(stats)}
       </Text>
 
       {meta && (
