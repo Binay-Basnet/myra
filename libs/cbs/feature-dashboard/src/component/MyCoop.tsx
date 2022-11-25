@@ -14,16 +14,25 @@ export const MyCoop = () => {
       </Box>
       <Grid templateColumns="repeat(3,1fr)" gap="s16">
         <GridItem>
-          <DetailCardStats title="Total Members" stats={myCoopData?.totalMembers as number} />
+          <DetailCardStats
+            title="Total Members"
+            hideCommas
+            stats={myCoopData?.totalMembers as number}
+          />
         </GridItem>
         <GridItem>
           <DetailCardStats
             title="Total Share Issued"
+            hideCommas
             stats={myCoopData?.totalShareIssued as number}
           />
         </GridItem>
         <GridItem>
-          <DetailCardStats title="Total Branch" stats={myCoopData?.totalBranch as number} />
+          <DetailCardStats
+            hideCommas
+            title="Total Branch"
+            stats={myCoopData?.totalBranch as number}
+          />
         </GridItem>
       </Grid>
     </Box>
