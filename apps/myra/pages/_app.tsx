@@ -8,7 +8,7 @@ import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import { store } from '@coop/cbs/data-access';
+import { store, useInit } from '@coop/cbs/data-access';
 import { Box, Loader, Toaster } from '@coop/shared/ui';
 import { theme, useSnap } from '@coop/shared/utils';
 
@@ -44,8 +44,7 @@ const queryClient = new QueryClient({
 
 const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   useSnap();
-  // const { isLoading } = useInit();
-  const isLoading = false;
+  const { isLoading } = useInit();
 
   const getLayout = Component.getLayout || ((page) => page);
 
