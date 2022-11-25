@@ -31,7 +31,7 @@ export const ShareStatementReport = () => {
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
-      report={ReportEnum.SERVICE_CENTER_LIST_REPORT}
+      report={ReportEnum.SHARE_STATEMENT}
     >
       <Report.Header>
         <Report.PageHeader
@@ -58,6 +58,7 @@ export const ShareStatementReport = () => {
           <Report.OrganizationHeader />
           <Report.Organization statementDate={filters?.period?.periodType} />
           <Report.Table<ShareStatement & { index: number }>
+            showFooter
             columns={[
               {
                 header: 'S.No.',

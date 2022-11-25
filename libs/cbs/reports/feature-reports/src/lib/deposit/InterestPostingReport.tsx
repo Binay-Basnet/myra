@@ -18,11 +18,15 @@ export const InterestPostingReport = () => {
 
   const { data, isFetching } = useGetInterestStatementReportQuery(
     {
-      data: filters as InterestStatementFilter,
+      data: {
+        period: filters?.period,
+        accountId: filters?.accountId,
+        filter: filters?.filter,
+      } as InterestStatementFilter,
     },
     { enabled: !!filters }
   );
-  const interestStatementReport = data?.report?.interestStatementReport?.data;
+  const interestStatementReport = data?.report?.interestStatementReport?.data?.entries ?? [];
 
   return (
     <Report

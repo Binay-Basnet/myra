@@ -1,0 +1,9 @@
+query getPreviousYearFundManagement {
+  profitToFundManagement {
+    previousYear {
+      accountCode
+      amount
+      percent
+    }
+  }
+}

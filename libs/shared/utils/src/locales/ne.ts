@@ -2188,10 +2188,10 @@ const ne: Record<string, string> = {
   accountOpenChequeIssue: 'Cheque Issue',
 
   // settings deposit product
-  depositProductAddDepositProducts: 'Add Deposit Products',
+  depositProductAddDepositProducts: 'Add Savings Products',
   depositProductProductName: 'Product Name ',
   depositProductEnterProductName: 'Enter Product Name',
-  depositProductNatureofDepositProduct: 'Nature of Deposit Product',
+  depositProductNatureofDepositProduct: 'Nature of Savings Product',
   depositProductSelectNatureofDepositProduct: 'Select Nature of Deposit Product',
   depositProductProductCode: 'Product Code',
   depositProductAddprefixintial: 'Add prefix & intial number. Eg. ASM506',
@@ -2975,7 +2975,7 @@ const ne: Record<string, string> = {
   addDepositNewDeposit: 'New Deposit',
   addDepositAddBulkDeposit: 'Add Bulk Deposit',
   addDepositMember: 'Member',
-  addDepositSelectDepositAccount: 'Select Deposit Account',
+  addDepositSelectDepositAccount: 'Select Saving Account',
   addDepositVoucherId: 'Voucher ID',
   addDepositNoOfInstallments: 'No of Installments',
   addDepositViewAllInstallments: 'View all installments',
@@ -3385,6 +3385,9 @@ const ne: Record<string, string> = {
   memberSettingsMemberID: 'Member ID',
   memberSettingsCorePreview: 'Core Preview',
   memberSettingsSetup: 'Setup',
+
+  // others page
+  others: 'Others',
   kymCoopLastAuditDate: 'Last Audit FY',
   serviceCenterServiceCenterContactNumber: 'Service Center Contact Number',
 

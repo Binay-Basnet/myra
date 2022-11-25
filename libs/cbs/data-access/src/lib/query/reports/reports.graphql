@@ -341,6 +341,12 @@ query getTrialSheetReport($data: TrialSheetReportFilter!) {
           ledgerName
           under
         }
+
+        equityAndLiablitiesTotal
+        assetsTotal
+        expenseTotal
+        incomeTotal
+
         totalAssetExpense
         totalLiablitiesIncome
         totalProfitLoss
