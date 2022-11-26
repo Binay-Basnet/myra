@@ -1,7 +1,6 @@
 import { IoChevronForwardOutline, IoClose } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { Popover, Text } from '@chakra-ui/react';
-
 import {
   Grid,
   GridItem,

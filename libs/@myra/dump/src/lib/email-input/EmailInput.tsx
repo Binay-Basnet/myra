@@ -1,7 +1,6 @@
 import { forwardRef } from 'react';
 import { MdEmail } from 'react-icons/md';
 import { Input, InputGroup, InputLeftElement, InputProps } from '@chakra-ui/react';
-
 import { TextFields } from '@myra/dump';
 /* eslint-disable-next-line */
 export interface EmailInputProps extends InputProps {
@@ -26,10 +25,10 @@ export const EmailInput = forwardRef<HTMLInputElement, EmailInputProps>((props, 
           id={id}
           variant="outline"
           type="email"
-          fontSize={'s2'}
+          fontSize="s2"
           placeholder={placeholder ?? 'Enter your Email'}
           ref={ref}
-        ></Input>
+         />
       </InputGroup>
     </>
   );

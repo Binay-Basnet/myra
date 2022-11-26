@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Box, Grid, Text } from '@myra/dump';
 
 /* eslint-disable-next-line */

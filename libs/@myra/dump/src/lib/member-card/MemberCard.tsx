@@ -20,8 +20,8 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-
 import { AccountQRModal } from '@myra/dump';
+
 import { amountConverter } from '@coop/shared/utils';
 
 import { Avatar } from '../avatar/Avatar';

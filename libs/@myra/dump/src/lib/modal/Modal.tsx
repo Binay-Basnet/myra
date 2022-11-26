@@ -10,7 +10,6 @@ import {
   ModalOverlay,
   ModalProps as ChakraModalProps,
 } from '@chakra-ui/react';
-
 import { Button, Divider, Icon, IconButton, TextFields } from '@myra/dump';
 
 /* eslint-disable-next-line */
@@ -27,7 +26,7 @@ export interface ModalProps extends Omit<ChakraModalProps, 'isOpen' | 'onClose'>
   modalContentProps?: Record<string, string>;
 }
 
-export function Modal(props: ModalProps) {
+export const Modal = (props: ModalProps) => {
   const {
     open,
     onClose,
@@ -56,12 +55,12 @@ export function Modal(props: ModalProps) {
 
         <ModalCloseButton _focus={{}}>
           <IconButton
-            variant={'ghost'}
+            variant="ghost"
             aria-label="close"
             icon={<Icon as={IoCloseOutline} size="lg" />}
           />
         </ModalCloseButton>
-        {/* <ModalCloseButton  _focus={{ bg: 'none' }} />*/}
+        {/* <ModalCloseButton  _focus={{ bg: 'none' }} /> */}
         <ModalBody>{children}</ModalBody>
         {/* <Divider /> */}
         {footerPrimary1Props ||

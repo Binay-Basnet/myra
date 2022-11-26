@@ -9,8 +9,6 @@ import { BsBook, BsFacebook, BsHeart, BsInstagram, BsTwitter } from 'react-icons
 import { CgShortcut } from 'react-icons/cg';
 import { TbMessageDots } from 'react-icons/tb';
 import { useRouter } from 'next/router';
-import isEmpty from 'lodash/isEmpty';
-
 import {
   Box,
   Divider,
@@ -27,6 +25,8 @@ import {
   Text,
   UnorderedList,
 } from '@myra/dump';
+import isEmpty from 'lodash/isEmpty';
+
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */

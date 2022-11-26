@@ -67,7 +67,6 @@ import { forwardRef, useState } from 'react';
 import { FieldValues, RegisterOptions, UseFormRegister } from 'react-hook-form';
 import { IoEyeOffOutline, IoEyeOutline, IoLockClosed } from 'react-icons/io5';
 import { Box, InputProps } from '@chakra-ui/react';
-
 import { Icon, Input } from '@myra/dump';
 
 /* eslint-disable-next-line */

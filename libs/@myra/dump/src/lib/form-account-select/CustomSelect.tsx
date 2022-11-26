@@ -1,4 +1,5 @@
 import { Flex } from '@chakra-ui/react';
+import { TextFields } from '@myra/dump';
 import {
   ChakraStylesConfig,
   GroupBase,
@@ -6,8 +7,6 @@ import {
   Select as ChakraSelect,
   SelectComponentsConfig,
 } from 'chakra-react-select';
-
-import { TextFields } from '@myra/dump';
 
 import { components as customComponents } from './SelectComponents';
 import { chakraDefaultStyles } from './SelectStyles';

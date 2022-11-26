@@ -5,8 +5,7 @@ export interface ShortcutTabProps {
   shortcut: string;
 }
 
-export function ShortcutTab({ shortcut }: ShortcutTabProps) {
-  return (
+export const ShortcutTab = ({ shortcut }: ShortcutTabProps) => (
     <Box
       px="s10"
       py="s8"
@@ -19,7 +18,6 @@ export function ShortcutTab({ shortcut }: ShortcutTabProps) {
         {shortcut}
       </Text>
     </Box>
-  );
-}
+  )
 
 export default ShortcutTab;

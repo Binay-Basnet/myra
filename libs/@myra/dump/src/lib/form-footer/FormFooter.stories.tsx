@@ -1,6 +1,5 @@
-import { Meta, Story } from '@storybook/react';
-
 import { Button, Text } from '@myra/dump';
+import { Meta, Story } from '@storybook/react';
 
 import { FormFooter, FormFooterProps } from './FormFooter';
 

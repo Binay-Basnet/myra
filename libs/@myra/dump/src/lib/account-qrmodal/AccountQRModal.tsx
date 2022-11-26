@@ -1,9 +1,8 @@
 import { useRef } from 'react';
 import { BsDownload } from 'react-icons/bs';
 import { IoShareSocialSharp } from 'react-icons/io5';
-import { QRCodeSVG } from 'qrcode.react';
-
 import { Box, Button, ChakraModal, Icon, Text, TextFields } from '@myra/dump';
+import { QRCodeSVG } from 'qrcode.react';
 
 interface IAccountQRModalProps {
   open: boolean;

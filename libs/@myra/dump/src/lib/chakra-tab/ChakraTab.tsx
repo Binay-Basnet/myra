@@ -1,5 +1,4 @@
 import { chakra, Tab, TabList, Tabs, TabsProps } from '@chakra-ui/react';
-
 import { TextFields } from '@myra/dump';
 
 /* eslint-disable-next-line */
@@ -29,7 +28,7 @@ const TabElement = chakra(Tab, {
   },
 });
 
-export function ChakraTab(props: ChakraTabProps) {
+export const ChakraTab = (props: ChakraTabProps) => {
   const { tabList, orientation, onclick, tabWidth, ...rest } = props;
   return (
     <Tabs
@@ -38,7 +37,7 @@ export function ChakraTab(props: ChakraTabProps) {
       align={rest.align || 'start'}
       tabWidth={tabWidth || 'auto'}
       {...rest}
-      color={'gray.600'}
+      color="gray.600"
     >
       <TabList>
         {tabList?.map((item, index) => (

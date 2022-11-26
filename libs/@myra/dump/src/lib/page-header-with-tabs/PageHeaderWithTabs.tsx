@@ -1,5 +1,4 @@
 import { AddIcon } from '@chakra-ui/icons';
-
 import { Box, Button, PageHeaderTab, Text } from '@myra/dump';
 
 interface PageHeaderWithTabsProps {

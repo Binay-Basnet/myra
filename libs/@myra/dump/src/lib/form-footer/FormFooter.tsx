@@ -1,6 +1,6 @@
 import React from 'react';
-
 import { Box, Button, Text } from '@myra/dump';
+
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */

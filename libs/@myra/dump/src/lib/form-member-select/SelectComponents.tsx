@@ -1,8 +1,7 @@
 import { IoChevronDownSharp, IoSearch } from 'react-icons/io5';
 import { Box, Icon, Text } from '@chakra-ui/react';
-import { chakraComponents, GroupBase, SelectComponentsConfig } from 'chakra-react-select';
-
 import { Avatar } from '@myra-ui/foundations';
+import { chakraComponents, GroupBase, SelectComponentsConfig } from 'chakra-react-select';
 
 export interface Option {
   label: string | number;

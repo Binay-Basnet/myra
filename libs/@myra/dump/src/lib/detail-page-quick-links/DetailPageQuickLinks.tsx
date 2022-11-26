@@ -1,7 +1,6 @@
 import { IconType } from 'react-icons';
 import { IoAddOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
-
 import { Box, Grid, Icon, Text } from '@myra/dump';
 
 /* eslint-disable-next-line */

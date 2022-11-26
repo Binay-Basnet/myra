@@ -10,8 +10,8 @@ import {
   ModalOverlay,
   ModalProps as ChakraModalProps,
 } from '@chakra-ui/react';
-
 import { Button, Icon, IconButton, TextFields } from '@myra/dump';
+
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */

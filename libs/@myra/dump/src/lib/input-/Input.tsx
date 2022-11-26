@@ -8,7 +8,6 @@ import {
   InputRightAddon,
   InputRightElement,
 } from '@chakra-ui/react';
-
 import { TextFields } from '@myra/dump';
 
 /* eslint-disable-next-line */

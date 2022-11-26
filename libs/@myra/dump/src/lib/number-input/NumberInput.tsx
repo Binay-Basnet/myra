@@ -5,7 +5,6 @@ import {
   NumberInputField as ChakraNumberInputField,
   NumberInputProps as ChakraNumberInputProps,
 } from '@chakra-ui/react';
-
 import { TextFields } from '@myra/dump';
 
 /* eslint-disable-next-line */

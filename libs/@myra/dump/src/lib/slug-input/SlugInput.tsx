@@ -1,6 +1,5 @@
 import { forwardRef } from 'react';
 import { Input, InputGroup, InputLeftAddon, InputProps, InputRightAddon } from '@chakra-ui/react';
-
 import { TextFields } from '@myra/dump';
 
 export interface SlugInputProps extends InputProps {

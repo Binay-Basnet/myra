@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Box, Tags, Text } from '@myra/dump';
 
 export interface DetailCardContentProps {

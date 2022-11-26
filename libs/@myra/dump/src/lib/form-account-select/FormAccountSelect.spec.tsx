@@ -1,6 +1,5 @@
-import { render } from '@testing-library/react';
-
 import { FormAccountSelect } from '@myra/dump';
+import { render } from '@testing-library/react';
 
 describe('FormAccountSelect', () => {
   it('should render successfully', () => {

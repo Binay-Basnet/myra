@@ -1,7 +1,6 @@
 import { forwardRef } from 'react';
 import { HiPhone } from 'react-icons/hi';
 import { Input, InputGroup, InputLeftElement, InputProps } from '@chakra-ui/react';
-
 import { TextFields } from '@myra/dump';
 /* eslint-disable-next-line */
 export interface PhoneNumberProps extends InputProps {
@@ -28,7 +27,7 @@ export const PhoneNumber = forwardRef<HTMLInputElement, PhoneNumberProps>((props
           placeholder={placeholder}
           fontSize="s2"
           ref={ref}
-        ></Input>
+         />
       </InputGroup>
     </>
   );
