@@ -15,7 +15,7 @@ import {
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
 import { TabColumn } from '@coop/myra/components';
-import { Box, Button, Divider, GridItem, Icon, Modal, SettingsButton, Text } from '@coop/shared/ui';
+import { Box, Button, Divider, GridItem, Icon, Modal, SettingsButton, Text } from '@myra-ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 interface IMemberPageLayout {

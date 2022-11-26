@@ -12,7 +12,7 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormCheckboxGroup } from '@coop/shared/form';
-import { Box, GridItem } from '@coop/shared/ui';
+import { Box, GridItem } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 export const MBTransactionsReport = () => {

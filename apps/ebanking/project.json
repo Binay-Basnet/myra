@@ -14,6 +14,7 @@
       "executor": "@nrwl/next:build",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
+      "dependsOn": [],
       "options": {
         "root": "apps/ebanking",
         "outputPath": "dist/apps/ebanking"

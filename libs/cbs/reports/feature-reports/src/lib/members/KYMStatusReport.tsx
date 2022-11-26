@@ -14,7 +14,7 @@ import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { formatTableAddress } from '@coop/cbs/utils';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
-import { Box, GridItem } from '@coop/shared/ui';
+import { Box, GridItem } from '@myra-ui';
 
 const riskCategory = [
   { label: 'All', value: RiskCategoryFilter.All },

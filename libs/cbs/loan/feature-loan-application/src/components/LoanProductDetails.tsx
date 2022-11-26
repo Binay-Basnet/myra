@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { useGetLoanProductDetailsDataQuery } from '@coop/cbs/data-access';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 interface IProductProps {

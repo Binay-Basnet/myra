@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useGetAgentAssignedMemberListDataQuery } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Box, DetailPageContentCard, Text } from '@coop/shared/ui';
+import { Box, DetailPageContentCard, Text } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 import { AddMemberModal } from '../components';

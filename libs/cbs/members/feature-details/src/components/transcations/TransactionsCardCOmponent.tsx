@@ -1,5 +1,5 @@
 import { EbankingTransactionDirection } from '@coop/cbs/data-access';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 /*  will be used later */
 interface ITransactionCardProps {
   transactionItem: {

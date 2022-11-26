@@ -1,7 +1,7 @@
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { Box, Container, FormFooter, Icon, IconButton, Text } from '@coop/shared/ui';
+import { Box, Container, FormFooter, Icon, IconButton, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { AddInventoryForm } from '../component/form/AddInventoryForm';

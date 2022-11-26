@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import { LoanDetailsHeader } from '@coop/cbs/loan/details';
 import { DepositDetailPage } from '@coop/cbs/transactions/feature-detail-page';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
-import { MainLayout } from '@coop/shared/ui';
+import { MainLayout } from '@myra-ui';
 
 const DepositDetailsPage = () => (
   <>

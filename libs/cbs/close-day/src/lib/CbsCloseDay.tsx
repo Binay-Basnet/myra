@@ -1,12 +1,17 @@
-import {FormProvider, useForm} from 'react-hook-form';
-import {useQueryClient} from '@tanstack/react-query';
-import {useRouter} from 'next/router';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 
-import {EodOption, EodState, useGetEodStatusQuery, useSetEndOfDayDataMutation,} from '@coop/cbs/data-access';
-import {asyncToast, Box, Container, FormFooter, FormHeader} from '@coop/shared/ui';
-import {useTranslation} from '@coop/shared/utils';
+import {
+  EodOption,
+  EodState,
+  useGetEodStatusQuery,
+  useSetEndOfDayDataMutation,
+} from '@coop/cbs/data-access';
+import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
+import { useTranslation } from '@coop/shared/utils';
 
-import {DayClose} from '../component/DayClose';
+import { DayClose } from '../component/DayClose';
 
 /* eslint-disable-next-line */
 export interface CbsCloseDayProps {}

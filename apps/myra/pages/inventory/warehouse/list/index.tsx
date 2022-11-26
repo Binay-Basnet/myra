@@ -1,13 +1,10 @@
 import { ReactElement } from 'react';
 import { useRouter } from 'next/router';
 
-import {
-  WarehouseListTable,
-  WarehouseTreeView,
-} from '@coop/inventory/warehouse';
+import { WarehouseListTable, WarehouseTreeView } from '@coop/inventory/warehouse';
 import { WarehouseLayout } from '@coop/myra/components';
 import { InventoryWarehouseHeader } from '@coop/myra/inventory/ui-layout';
-import { Box, MainLayoutInventory } from '@coop/shared/ui';
+import { Box, MainLayoutInventory } from '@myra-ui';
 
 const InventoryWarehousePage = () => {
   const router = useRouter();
@@ -24,13 +21,11 @@ const InventoryWarehousePage = () => {
   ];
   return (
     <Box>
-      <InventoryWarehouseHeader
-        heading="warehouseLayoutWarehouse"
-        tabItems={tabList}
-      />
+      <InventoryWarehouseHeader heading="warehouseLayoutWarehouse" tabItems={tabList} />
       <Box mt="50px">
-        {(router.query['objState'] === 'listView' ||
-          !router.query['objState']) && <WarehouseListTable />}
+        {(router.query['objState'] === 'listView' || !router.query['objState']) && (
+          <WarehouseListTable />
+        )}
         {router.query['objState'] === 'treeView' && <WarehouseTreeView />}
       </Box>
     </Box>

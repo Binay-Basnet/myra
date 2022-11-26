@@ -25,7 +25,7 @@ import {
   PasswordInput,
   Text,
   TextFields,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 
 const validationSchema = yup.object({
   password: yup

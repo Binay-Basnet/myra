@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import Image from "next/legacy/image";
+import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Skeleton } from '@chakra-ui/react';
@@ -12,7 +12,7 @@ import {
   useGetAccountDetailsQuery,
   useGetEbankLoanAccountDetailsQuery,
 } from '@coop/ebanking/data-access';
-import { Box, Button, Divider, Grid, Icon, PathBar } from '@coop/shared/ui';
+import { Box, Button, Divider, Grid, Icon, PathBar } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 import { AccountDetail } from '../components/AccountDetail';

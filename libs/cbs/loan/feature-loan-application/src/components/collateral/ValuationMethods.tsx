@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Box, GridItem, Text } from '@coop/shared/ui';
+import { Box, GridItem, Text } from '@myra-ui';
 
 import { useLoanProductContext } from '../../hooks/useLoanProduct';
 

@@ -1,5 +1,5 @@
 import { FormFileInput, FormTextArea } from '@coop/shared/form';
-import { GridItem, Text } from '@coop/shared/ui';
+import { GridItem, Text } from '@myra-ui';
 
 export const ValuationDocuments = () => (
   <>

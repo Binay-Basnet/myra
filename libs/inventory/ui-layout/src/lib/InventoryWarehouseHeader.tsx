@@ -1,4 +1,4 @@
-import { Box, PageHeaderTab, Text } from '@coop/shared/ui';
+import { Box, PageHeaderTab, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface ITableListPageHeader {
@@ -9,10 +9,7 @@ interface ITableListPageHeader {
   }[];
 }
 
-export const InventoryWarehouseHeader = ({
-  tabItems,
-  heading,
-}: ITableListPageHeader) => {
+export const InventoryWarehouseHeader = ({ tabItems, heading }: ITableListPageHeader) => {
   const { t } = useTranslation();
   return (
     <Box

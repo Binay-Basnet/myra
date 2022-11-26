@@ -1,5 +1,5 @@
 import { AiOutlineDownload } from 'react-icons/ai';
-import Image from "next/legacy/image";
+import Image from 'next/legacy/image';
 import dayjs from 'dayjs';
 
 import { formatAddress } from '@coop/cbs/utils';
@@ -15,7 +15,7 @@ import {
   Divider,
   Icon,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 
 import { SettingsHeader } from '../components/SettingsHeader';
 

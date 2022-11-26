@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { useGetAgentDetailDataQuery, useGetAgentTodayListDataQuery } from '@coop/cbs/data-access';
-import { Box, Button, Grid, Text } from '@coop/shared/ui';
+import { Box, Button, Grid, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const AssignedMembersCard = () => {

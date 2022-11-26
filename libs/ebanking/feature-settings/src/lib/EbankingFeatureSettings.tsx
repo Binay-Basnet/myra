@@ -21,7 +21,7 @@ import {
   Icon,
   Text,
   TextFields,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 
 import { SettingsHeader } from '../components/SettingsHeader';
 

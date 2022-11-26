@@ -5,7 +5,7 @@ import {
   FormSectionType,
   useAddFileSizeToSectionMutation,
 } from '@coop/cbs/data-access';
-import { AccordionPanel, Box, Text, TextInput } from '@coop/shared/ui';
+import { AccordionPanel, Box, Text, TextInput } from '@myra-ui';
 
 interface FileSizeInputProps {
   section: FormSection;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 
-import { Box, PageHeaderWithTabs } from '@coop/shared/ui';
+import { Box, PageHeaderWithTabs } from '@myra-ui';
 
 import { ReportsInnerSidebar } from '../components/ReportsInnerSidebar';
 

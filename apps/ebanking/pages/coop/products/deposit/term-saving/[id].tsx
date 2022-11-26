@@ -7,7 +7,7 @@ import {
 } from '@coop/ebanking/data-access';
 import { TermSavingDetails } from '@coop/ebanking/products';
 import { EbankingAccountLayout } from '@coop/ebanking/ui-layout';
-import { Loader } from '@coop/shared/ui';
+import { Loader } from '@myra-ui';
 
 const ProductListPage = () => {
   const router = useRouter();

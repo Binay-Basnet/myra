@@ -1,6 +1,6 @@
 import { useAppSelector } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports/list';
-import { Avatar, Box, Text } from '@coop/shared/ui';
+import { Avatar, Box, Text } from '@myra-ui';
 
 export const ReportOrganizationHeader = ({ reportType }: { reportType: Report }) => {
   const user = useAppSelector((state) => state.auth.user);

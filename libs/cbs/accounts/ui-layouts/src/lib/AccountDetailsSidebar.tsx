@@ -2,14 +2,7 @@ import { IoCopyOutline, IoQrCodeOutline } from 'react-icons/io5';
 import { useDisclosure } from '@chakra-ui/react';
 
 import { NatureOfDepositProduct, useAccountDetails } from '@coop/cbs/data-access';
-import {
-  AccountQRModal,
-  Box,
-  DetailPageMemberCard,
-  DetailPageTabs,
-  Icon,
-  Text,
-} from '@coop/shared/ui';
+import { AccountQRModal, Box, DetailPageMemberCard, DetailPageTabs, Icon, Text } from '@myra-ui';
 import { amountConverter, copyToClipboard } from '@coop/shared/utils';
 
 const accountTypes = {

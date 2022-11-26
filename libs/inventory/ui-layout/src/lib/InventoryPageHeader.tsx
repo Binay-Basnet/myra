@@ -1,6 +1,6 @@
 import { AddIcon } from '@chakra-ui/icons';
 
-import { Box, Button, PageHeaderTab, Text } from '@coop/shared/ui';
+import { Box, Button, PageHeaderTab, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface ITablePageHeader {

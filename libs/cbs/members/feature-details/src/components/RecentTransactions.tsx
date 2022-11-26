@@ -4,7 +4,7 @@ import {
   MemberRecentTransactionViewTxnType,
   useGetMemberDetailsOverviewQuery,
 } from '@coop/cbs/data-access';
-import { Box, Tags, Text } from '@coop/shared/ui';
+import { Box, Tags, Text } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 export const RecentTransactions = () => {

@@ -7,7 +7,7 @@ import {
   useGetAvailableSlipsListQuery,
 } from '@coop/cbs/data-access';
 import { Table } from '@coop/shared/table';
-import { DetailsCard } from '@coop/shared/ui';
+import { DetailsCard } from '@myra-ui';
 
 export const AvailableWithdrawSlipList = () => {
   const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);

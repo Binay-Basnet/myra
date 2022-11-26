@@ -1,6 +1,6 @@
 import { IoAdd } from 'react-icons/io5';
 
-import { Box, Button, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, Icon, Text } from '@myra-ui';
 
 import { ChequeTable } from '../components';
 

@@ -16,7 +16,7 @@ import {
 } from '@coop/cbs/reports/components';
 import { Report } from '@coop/cbs/reports/list';
 import { Column, Table } from '@coop/shared/table';
-import { Box, Divider, Loader } from '@coop/shared/ui';
+import { Box, Divider, Loader } from '@myra-ui';
 
 type ClassifyBy =
   | 'All'

@@ -9,7 +9,7 @@ import {
   useAppSelector,
   useLoginToCooperativeMutation,
 } from '@coop/ebanking/data-access';
-import { Avatar, Box, Button, Input, Text, TextFields, toast } from '@coop/shared/ui';
+import { Avatar, Box, Button, Input, Text, TextFields, toast } from '@myra-ui';
 
 export const CoopConnectPage = () => {
   const methods = useForm();

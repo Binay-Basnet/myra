@@ -1,6 +1,6 @@
 import { IoCopyOutline } from 'react-icons/io5';
 
-import { Box, Icon, Text } from '@coop/shared/ui';
+import { Box, Icon, Text } from '@myra-ui';
 
 import { useLoanDetails } from '../../hooks/useLoanDetails';
 

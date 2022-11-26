@@ -8,7 +8,7 @@ import {
   useAddConditionOptionMutation,
 } from '@coop/cbs/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
-import { AccordionPanel, Text } from '@coop/shared/ui';
+import { AccordionPanel, Text } from '@myra-ui';
 
 import { KYMSettingsFormSection } from '../KYMSettingsFormSection';
 import { useGetPreDefinedFields } from '../../hooks/query/useGetPreDefinedFields';

@@ -9,7 +9,7 @@ import {
   FormSection,
   GridItem,
   SwitchTabs,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { JournalVouchersTable } from '../components';

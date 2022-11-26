@@ -1,7 +1,7 @@
-import {useMemo, useState} from 'react';
-import {FormProvider, useForm} from 'react-hook-form';
-import {useQueryClient} from '@tanstack/react-query';
-import {useRouter} from 'next/router';
+import { useMemo, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 import omit from 'lodash/omit';
 
 import {
@@ -22,9 +22,9 @@ import {
   FormMemberSelect,
   MemberCard,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 
-import {BulkDepositAccountsSummary, BulkDepositAccountsTable, Payment} from '../components';
+import { BulkDepositAccountsSummary, BulkDepositAccountsTable, Payment } from '../components';
 
 /* eslint-disable-next-line */
 export interface AddBulkDepositProps {}

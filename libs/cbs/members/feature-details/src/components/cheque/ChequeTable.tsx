@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
-import { DetailsCard } from '@coop/shared/ui';
+import { DetailsCard } from '@myra-ui';
 
 import { ReportTableComponent } from './ChequeTableComponent';
 

@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 
 import { AgentTransactionList } from '@coop/cbs/transactions/agent-transaction';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
-import { MainLayout } from '@coop/shared/ui';
+import { MainLayout } from '@myra-ui';
 
 const TransactionsAgentTransactionList = () => (
   // return (
@@ -11,7 +11,7 @@ const TransactionsAgentTransactionList = () => (
   //   </Box>
   // );
 
-  (<AgentTransactionList />)
+  <AgentTransactionList />
 );
 TransactionsAgentTransactionList.getLayout = function getLayout(page: ReactElement) {
   return (

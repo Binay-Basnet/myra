@@ -1,5 +1,5 @@
 import { InterestFormState } from '@coop/cbs/data-access';
-import { Box, DetailsCard } from '@coop/shared/ui';
+import { Box, DetailsCard } from '@myra-ui';
 
 export const ProductInterestRate = ({
   interestRate,

@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import { ShareHeader } from '@coop/ebanking/cards';
 import { Transaction_Direction, useGetEbankingShareHistoryQuery } from '@coop/ebanking/data-access';
 import { EbankingMainLayout } from '@coop/ebanking/ui-layout';
-import { Box, Divider, Text } from '@coop/shared/ui';
+import { Box, Divider, Text } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 const ShareInfoPage = () => {

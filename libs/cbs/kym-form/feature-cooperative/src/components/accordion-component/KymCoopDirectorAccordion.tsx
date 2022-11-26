@@ -16,16 +16,7 @@ import {
 } from '@coop/cbs/data-access';
 import { DynamicBoxGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormDatePicker, FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
-import {
-  Box,
-  Button,
-  Collapse,
-  FormSection,
-  GridItem,
-  Icon,
-  IconButton,
-  Text,
-} from '@coop/shared/ui';
+import { Box, Button, Collapse, FormSection, GridItem, Icon, IconButton, Text } from '@myra-ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { Bottomdirectorcoop } from './boardDirectorDocuments';

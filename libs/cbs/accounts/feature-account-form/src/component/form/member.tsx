@@ -6,21 +6,10 @@ import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { debounce } from 'lodash';
 
-import {
-  useGetMemberIndividualDataQuery,
-  useGetMemberListQuery,
-} from '@coop/cbs/data-access';
+import { useGetMemberIndividualDataQuery, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormSelect } from '@coop/shared/form';
-import {
-  Avatar,
-  Box,
-  Grid,
-  GridItem,
-  Icon,
-  Text,
-  TextFields,
-} from '@coop/shared/ui';
+import { Avatar, Box, Grid, GridItem, Icon, Text, TextFields } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const Member = () => {
@@ -46,8 +35,7 @@ export const Member = () => {
 
   const memberListData = memberList?.members?.list?.edges;
   const memberData =
-    memberListData &&
-    memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
+    memberListData && memberListData?.filter((item) => memberId === item?.node?.id)[0]?.node;
 
   const { data } = useGetMemberIndividualDataQuery({
     id: memberId,
@@ -65,12 +53,7 @@ export const Member = () => {
     ];
   }, [] as optionType[]);
   return (
-    <GroupContainer
-      scrollMarginTop={'200px'}
-      display="flex"
-      flexDirection={'column'}
-      gap="s16"
-    >
+    <GroupContainer scrollMarginTop={'200px'} display="flex" flexDirection={'column'} gap="s16">
       <Box
         w="100%"
         background="neutralColorLight.Gray-0"
@@ -100,11 +83,7 @@ export const Member = () => {
             borderRadius="br2"
             bg="gray.0"
           >
-            <Grid
-              templateRows="repeat(1,1fr)"
-              templateColumns="repeat(6,1fr)"
-              gap={2}
-            >
+            <Grid templateRows="repeat(1,1fr)" templateColumns="repeat(6,1fr)" gap={2}>
               <GridItem display="flex" alignSelf="center" colSpan={2} gap="s16">
                 <Box alignSelf="center">
                   <Avatar
@@ -114,42 +93,24 @@ export const Member = () => {
                   />
                 </Box>
                 <Box>
-                  <TextFields
-                    color="neutralColorLight.Gray-80"
-                    fontWeight="Medium"
-                    fontSize="s3"
-                  >
+                  <TextFields color="neutralColorLight.Gray-80" fontWeight="Medium" fontSize="s3">
                     {/* {data?.personalInformation?.name?.firstName}{' '}
                         {data?.personalInformation?.name?.middleName}{' '}
                         {data?.personalInformation?.name?.lastName} */}
                     {memberData?.name?.local}{' '}
                   </TextFields>
-                  <Text
-                    color="neutralColorLight.Gray-80"
-                    fontSize="s3"
-                    fontWeight="Regular"
-                  >
+                  <Text color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="Regular">
                     {t['shareReturnID']}: {memberData?.id}
                     {/* {data?.personalInformation?.panNumber} */}
                   </Text>
 
-                  <Text
-                    color="neutralColorLight.Gray-60"
-                    fontWeight="Regular"
-                    fontSize="s3"
-                  >
-                    {t['shareReturnMemberSince']}:{' '}
-                    {memberData?.dateJoined?.split(' ')[0]}
+                  <Text color="neutralColorLight.Gray-60" fontWeight="Regular" fontSize="s3">
+                    {t['shareReturnMemberSince']}: {memberData?.dateJoined?.split(' ')[0]}
                     {/* {data?.personalInformation?.dateOfBirth} */}
                   </Text>
 
-                  <Text
-                    color="neutralColorLight.Gray-60"
-                    fontWeight="Regular"
-                    fontSize="s3"
-                  >
-                    {t['shareReturnBranch']}:{' '}
-                    {/* {data?.address?.temporary?.state} */}
+                  <Text color="neutralColorLight.Gray-60" fontWeight="Regular" fontSize="s3">
+                    {t['shareReturnBranch']}: {/* {data?.address?.temporary?.state} */}
                     Tokha
                   </Text>
                 </Box>
@@ -163,11 +124,7 @@ export const Member = () => {
                 gap="s8"
               >
                 <Box display="flex">
-                  <Icon
-                    size="sm"
-                    as={BsFillTelephoneFill}
-                    color="primary.500"
-                  />
+                  <Icon size="sm" as={BsFillTelephoneFill} color="primary.500" />
                   <TextFields
                     ml="10px"
                     color="neutralColorLight.Gray-80"
@@ -202,24 +159,13 @@ export const Member = () => {
                     {/* {data?.address?.permanent?.district}
                         {','}
                         {data?.address?.permanent?.state} */}
-                    {memberData?.address?.locality?.local} ,{' '}
-                    {memberData?.address?.district?.local},
+                    {memberData?.address?.locality?.local} , {memberData?.address?.district?.local},
                   </TextFields>
                 </Box>
               </GridItem>
 
-              <GridItem
-                display="flex"
-                justifyContent="flex-end"
-                mr="s32"
-                colSpan={2}
-              >
-                <Text
-                  fontWeight="Medium"
-                  color="primary.500"
-                  fontSize="s2"
-                  mr="5px"
-                >
+              <GridItem display="flex" justifyContent="flex-end" mr="s32" colSpan={2}>
+                <Text fontWeight="Medium" color="primary.500" fontSize="s2" mr="5px">
                   {t['shareReturnViewProfile']}
                 </Text>
                 <Icon size="sm" as={RiShareBoxFill} color="primary.500" />

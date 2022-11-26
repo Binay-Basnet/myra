@@ -5,7 +5,7 @@ import {
   useAddGeneralMemberMutation,
   useGetGeneralMemberSettingsDataQuery,
 } from '@coop/cbs/data-access';
-import { asyncToast, Box, SettingsFooter, Text } from '@coop/shared/ui';
+import { asyncToast, Box, SettingsFooter, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { NewMemberCharge } from '../components/general/MemberCharge';

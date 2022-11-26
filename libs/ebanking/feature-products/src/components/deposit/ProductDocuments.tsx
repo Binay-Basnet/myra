@@ -3,7 +3,7 @@ import {
   InstitutionRequiredDocument,
   Maybe,
 } from '@coop/ebanking/data-access';
-import { Box, DetailsCard, Text } from '@coop/shared/ui';
+import { Box, DetailsCard, Text } from '@myra-ui';
 
 interface IProductDocuments {
   individualDocuments: Maybe<Maybe<IndividualRequiredDocument>[]> | undefined;

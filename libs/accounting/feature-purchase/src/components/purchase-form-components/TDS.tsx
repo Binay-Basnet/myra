@@ -1,11 +1,8 @@
 import { useFormContext } from 'react-hook-form';
 
-import {
-  BoxContainer,
-  InputGroupContainer,
-} from '@coop/accounting/ui-components';
+import { BoxContainer, InputGroupContainer } from '@coop/accounting/ui-components';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const TDS = () => {

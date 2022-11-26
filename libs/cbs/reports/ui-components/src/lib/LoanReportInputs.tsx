@@ -5,7 +5,7 @@ import {
   useGetMemberLoanAccountsQuery,
 } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { FormMemberSelect, GridItem } from '@coop/shared/ui';
+import { FormMemberSelect, GridItem } from '@myra-ui';
 
 import { ReportDateRange } from '../components';
 

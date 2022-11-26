@@ -26,7 +26,7 @@ import {
   Input,
   Loader,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 
 type TransactionFormFilters = {
   accounts: { label: string; value: string }[];

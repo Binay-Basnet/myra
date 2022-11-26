@@ -12,7 +12,7 @@ import {
   GridItem,
   Icon,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { CashTransferTable } from '../components';

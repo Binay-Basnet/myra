@@ -1,7 +1,7 @@
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { SubHeadingText } from '@coop/shared/components';
 import { FormSwitchTab } from '@coop/shared/form';
-import { Box } from '@coop/shared/ui';
+import { Box } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const YesNoOptions = [
@@ -13,12 +13,7 @@ export const Atm = () => {
   const { t } = useTranslation();
 
   return (
-    <GroupContainer
-      scrollMarginTop={'200px'}
-      display="flex"
-      flexDirection={'column'}
-      gap="s16"
-    >
+    <GroupContainer scrollMarginTop={'200px'} display="flex" flexDirection={'column'} gap="s16">
       <Box p="s16" bg="neutralColorLight.Gray-0">
         <Box
           display={'flex'}

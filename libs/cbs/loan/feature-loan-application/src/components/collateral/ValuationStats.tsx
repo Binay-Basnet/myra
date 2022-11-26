@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { GridItem, Text, TextFields } from '@coop/shared/ui';
+import { GridItem, Text, TextFields } from '@myra-ui';
 
 export const ValuationStats = () => {
   const { watch, setValue } = useFormContext();

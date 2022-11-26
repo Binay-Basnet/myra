@@ -12,7 +12,7 @@ import {
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
-import { FormSection } from '@coop/shared/ui';
+import { FormSection } from '@myra-ui';
 import { getKymSection } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';

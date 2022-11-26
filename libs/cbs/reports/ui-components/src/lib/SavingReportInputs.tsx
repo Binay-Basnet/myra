@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
 import { SavingStatementReportSettings } from '@coop/cbs/data-access';
-import { FormAccountSelect, FormMemberSelect, GridItem } from '@coop/shared/ui';
+import { FormAccountSelect, FormMemberSelect, GridItem } from '@myra-ui';
 
 import { ReportDateRange } from '../components';
 

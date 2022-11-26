@@ -3,7 +3,7 @@ import { Path } from 'react-hook-form';
 
 import { FormFieldType as FIELD_TYPE } from '@coop/cbs/data-access';
 import { FormEmailInput, FormInput } from '@coop/shared/form';
-import { InputProps } from '@coop/shared/ui';
+import { InputProps } from '@myra-ui';
 
 interface FormInputTypeProps<T> extends InputProps {
   formType?: FIELD_TYPE;

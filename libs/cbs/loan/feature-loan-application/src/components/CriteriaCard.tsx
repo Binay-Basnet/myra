@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { useGetProductCriteriaQuery } from '@coop/cbs/data-access';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 
 interface CriteriaProps {
   productId: string;

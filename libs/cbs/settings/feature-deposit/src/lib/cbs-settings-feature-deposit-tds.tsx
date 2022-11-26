@@ -5,7 +5,7 @@ import { debounce } from 'lodash';
 
 import { useGetDepositSettingsTdsQuery, useSetDepositTdsMutation } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
-import { Box, Text, TextFields } from '@coop/shared/ui';
+import { Box, Text, TextFields } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */

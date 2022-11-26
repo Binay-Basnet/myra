@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { useGetPreviousYearFundManagementQuery } from '@coop/cbs/data-access';
 import { Column } from '@coop/shared/editable-table';
 import { FormEditableTable } from '@coop/shared/form';
-import { GridItem } from '@coop/shared/ui';
+import { GridItem } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 import { TableOverview } from './TableOverview';

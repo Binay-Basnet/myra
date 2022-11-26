@@ -14,7 +14,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IPurchaseLayoutProps {
@@ -54,12 +54,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
 
         <Popover placement="bottom-start" gutter={3}>
           <PopoverTrigger>
-            <Button
-              width="full"
-              size="lg"
-              justifyContent="start"
-              leftIcon={<AddIcon />}
-            >
+            <Button width="full" size="lg" justifyContent="start" leftIcon={<AddIcon />}>
               {t['accountingPurchaseSidebarCreate']}
             </Button>
           </PopoverTrigger>
@@ -96,9 +91,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
                   cursor="pointer"
                   display="flex"
                   alignItems="center"
-                  onClick={() =>
-                    router.push('/accounting/purchase/expenses/add')
-                  }
+                  onClick={() => router.push('/accounting/purchase/expenses/add')}
                 >
                   <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
                   <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
@@ -114,9 +107,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
                   alignItems="center"
                   _hover={{ bg: 'gray.100' }}
                   cursor="pointer"
-                  onClick={() =>
-                    router.push('/accounting/purchase/debit-note/add')
-                  }
+                  onClick={() => router.push('/accounting/purchase/debit-note/add')}
                 >
                   <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
                   <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
@@ -132,9 +123,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
                   alignItems="center"
                   _hover={{ bg: 'gray.100' }}
                   cursor="pointer"
-                  onClick={() =>
-                    router.push('/accounting/purchase/supplier-payment/add')
-                  }
+                  onClick={() => router.push('/accounting/purchase/supplier-payment/add')}
                 >
                   <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
                   <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
@@ -155,9 +144,7 @@ export const PurchaseLayout = ({ children }: IPurchaseLayoutProps) => {
           height="s48"
           width="full"
           justifyContent="start"
-          leftIcon={
-            <Icon as={AiOutlineSetting} size="md" color="primary.500" />
-          }
+          leftIcon={<Icon as={AiOutlineSetting} size="md" color="primary.500" />}
         >
           {t['accountingPurchaseSidebarPurchaseSettings']}
         </Button>

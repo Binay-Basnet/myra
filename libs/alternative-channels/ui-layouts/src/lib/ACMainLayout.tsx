@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from '@chakra-ui/react';
 
-import { TopLevelHeader } from '@coop/shared/ui';
+import { TopLevelHeader } from '@myra-ui';
 
 import { TabMenu } from '../components/TabMenu';
 

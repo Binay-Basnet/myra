@@ -1,5 +1,5 @@
 import { FormInput } from '@coop/shared/form';
-import { FormSection } from '@coop/shared/ui';
+import { FormSection } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const DepositAmount = () => {
@@ -7,14 +7,8 @@ export const DepositAmount = () => {
 
   return (
     <FormSection header="depositProductDepositAmountLimit">
-      <FormInput
-        name="depositAmount.minAmount"
-        label={t['depositProductMinimumAmount']}
-      />
-      <FormInput
-        name="depositAmount.maxAmount"
-        label={t['depositProductMaximumAmount']}
-      />
+      <FormInput name="depositAmount.minAmount" label={t['depositProductMinimumAmount']} />
+      <FormInput name="depositAmount.maxAmount" label={t['depositProductMaximumAmount']} />
     </FormSection>
   );
 };

@@ -1,5 +1,5 @@
 import { FormEditableTable } from '@coop/shared/form';
-import { Box } from '@coop/shared/ui';
+import { Box } from '@myra-ui';
 
 type JournalVouchersTableType = {
   transferred_to: string;

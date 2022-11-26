@@ -8,21 +8,8 @@ import {
   DividerContainer,
   InputGroupContainer,
 } from '@coop/accounting/ui-components';
-import {
-  FormInput,
-  FormSelect,
-  FormSwitchTab,
-  FormTextArea,
-} from '@coop/shared/form';
-import {
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  Icon,
-  IconButton,
-  Text,
-} from '@coop/shared/ui';
+import { FormInput, FormSelect, FormSwitchTab, FormTextArea } from '@coop/shared/form';
+import { Box, Button, Container, FormFooter, Icon, IconButton, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { SupplierPaymentTable } from '../components';
@@ -91,11 +78,7 @@ export function AccountingFeaturePurchaseAddSupplierPayment() {
           top="110px"
           zIndex={8}
         >
-          <Text
-            fontSize="r2"
-            fontWeight="600"
-            color="neutralColorLight.Gray-80"
-          >
+          <Text fontSize="r2" fontWeight="600" color="neutralColorLight.Gray-80">
             {t['accountingSupplierPaymentAddNewSupplierPayment']}
           </Text>
           <IconButton
@@ -149,11 +132,7 @@ export function AccountingFeaturePurchaseAddSupplierPayment() {
                 </BoxContainer>
 
                 <BoxContainer>
-                  <Text
-                    fontSize={'s3'}
-                    fontWeight="500"
-                    color="neutralColorLight.Gray-80"
-                  >
+                  <Text fontSize={'s3'} fontWeight="500" color="neutralColorLight.Gray-80">
                     {t['accountingSupplierPaymentAddPaymentMode']}
                   </Text>
 
@@ -163,12 +142,8 @@ export function AccountingFeaturePurchaseAddSupplierPayment() {
                     <FormInput
                       name="paymentReferenceNo"
                       type="text"
-                      label={
-                        t['accountingSupplierPaymentAddPaymentReferenceNo']
-                      }
-                      __placeholder={
-                        t['accountingSupplierPaymentAddPaymentReferenceNo']
-                      }
+                      label={t['accountingSupplierPaymentAddPaymentReferenceNo']}
+                      __placeholder={t['accountingSupplierPaymentAddPaymentReferenceNo']}
                     />
                   </InputGroupContainer>
                 </BoxContainer>
@@ -187,9 +162,7 @@ export function AccountingFeaturePurchaseAddSupplierPayment() {
                       <FormSelect
                         name="tdsAccount"
                         label={t['accountingSupplierPaymentAddTDSAccount']}
-                        __placeholder={
-                          t['accountingSupplierPaymentAddTDSAccount']
-                        }
+                        __placeholder={t['accountingSupplierPaymentAddTDSAccount']}
                         options={[]}
                       />
 
@@ -232,12 +205,7 @@ export function AccountingFeaturePurchaseAddSupplierPayment() {
             draftButton={
               <Button type="submit" variant="ghost" shade="neutral">
                 <Icon as={BiSave} />
-                <Text
-                  alignSelf="center"
-                  fontWeight="Medium"
-                  fontSize="s2"
-                  ml="5px"
-                >
+                <Text alignSelf="center" fontWeight="Medium" fontSize="s2" ml="5px">
                   {t['saveDraft']}
                 </Text>
               </Button>

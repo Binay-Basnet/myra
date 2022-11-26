@@ -17,7 +17,7 @@ import {
   FormSelect,
   FormSwitchTab,
 } from '@coop/shared/form';
-import { Box, Button, FormSection, GridItem, Icon, SlugInput } from '@coop/shared/ui';
+import { Box, Button, FormSection, GridItem, Icon, SlugInput } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const NeosysClientForm = () => {

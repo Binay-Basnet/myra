@@ -7,11 +7,8 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-import { Input, Text, TextFields } from '@coop/shared/ui';
-import {
-  getKymSectionCoOperativeUnion,
-  useTranslation,
-} from '@coop/shared/utils';
+import { Input, Text, TextFields } from '@myra-ui';
+import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
 
 import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
 
@@ -39,9 +36,7 @@ export const CooperativeMemberInformation = ({
   const noOfFemaleMemberCurrent = isNaN(watch('noOfFemaleMemberCurrent'))
     ? 0
     : watch('noOfFemaleMemberCurrent');
-  const noOfInstitutionalMemberCurrent = isNaN(
-    watch('noOfInstitutionalMemberCurrent')
-  )
+  const noOfInstitutionalMemberCurrent = isNaN(watch('noOfInstitutionalMemberCurrent'))
     ? 0
     : watch('noOfInstitutionalMemberCurrent');
 
@@ -51,9 +46,7 @@ export const CooperativeMemberInformation = ({
   const noOfFemaleMemberTarget = isNaN(watch('noOfFemaleMemberTarget'))
     ? 0
     : watch('noOfFemaleMemberTarget');
-  const noOfInstitutionalMemberTarget = isNaN(
-    watch('noOfInstitutionalMemberTarget')
-  )
+  const noOfInstitutionalMemberTarget = isNaN(watch('noOfInstitutionalMemberTarget'))
     ? 0
     : watch('noOfInstitutionalMemberTarget');
 
@@ -97,42 +90,22 @@ export const CooperativeMemberInformation = ({
           setSection(kymSection);
         }}
       >
-        <GroupContainer
-          p="s20"
-          id="kymCoopUnionAccContactDetails"
-          scrollMarginTop={'200px'}
-        >
-          <Text
-            fontSize="r1"
-            fontWeight="semibold"
-            color="neutralColorLight.Gray-80"
-          >
+        <GroupContainer p="s20" id="kymCoopUnionAccContactDetails" scrollMarginTop={'200px'}>
+          <Text fontSize="r1" fontWeight="semibold" color="neutralColorLight.Gray-80">
             {t['kymCoopUnionCooperativeMemberInformation']}
           </Text>
 
           <ContainerWithDivider gap="s8">
             <InputGroupContainer>
-              <Text
-                fontSize="s3"
-                fontWeight={600}
-                color="neutralColorLight.Gray-80"
-              >
+              <Text fontSize="s3" fontWeight={600} color="neutralColorLight.Gray-80">
                 {t['kymCoopUnionMemberDetails']}
               </Text>
 
-              <Text
-                fontSize="s3"
-                fontWeight={600}
-                color="neutralColorLight.Gray-80"
-              >
+              <Text fontSize="s3" fontWeight={600} color="neutralColorLight.Gray-80">
                 {t['kymCoopUnionCurrent']}
               </Text>
 
-              <Text
-                fontSize="s3"
-                fontWeight={600}
-                color="neutralColorLight.Gray-80"
-              >
+              <Text fontSize="s3" fontWeight={600} color="neutralColorLight.Gray-80">
                 {t['kymCoopUnionTargetFiscalYear']}
               </Text>
             </InputGroupContainer>

@@ -1,7 +1,7 @@
 import { AiOutlineClockCircle } from 'react-icons/ai';
 import { IoMdCheckmark, IoMdClose } from 'react-icons/io';
 
-import { Box, Icon, TextFields } from '@coop/shared/ui';
+import { Box, Icon, TextFields } from '@myra-ui';
 
 interface EbankingChipProps {
   type: 'success' | 'failure' | 'pending';

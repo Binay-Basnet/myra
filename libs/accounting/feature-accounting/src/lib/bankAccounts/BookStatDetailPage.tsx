@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const BookStatDetailPage = () => {
@@ -65,10 +65,7 @@ export const BookStatDetailPage = () => {
         header: '',
         accessorKey: 'actions',
         cell: (cell) => (
-          <PopoverComponent
-            items={popoverTitle}
-            member={cell?.row?.original?.node}
-          />
+          <PopoverComponent items={popoverTitle} member={cell?.row?.original?.node} />
         ),
         meta: {
           width: '60px',
@@ -87,11 +84,7 @@ export const BookStatDetailPage = () => {
         p="s16"
         borderRadius="br2"
       >
-        <Text
-          fontSize="r1"
-          color="neutralColorLight.Gray-80"
-          fontWeight="SemiBold"
-        >
+        <Text fontSize="r1" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
           {t['bankAccountStatementBookStatement']}
         </Text>
       </Box>
@@ -105,6 +98,6 @@ export const BookStatDetailPage = () => {
       </Box>
     </Box>
   );
-}
+};
 
 export default BookStatDetailPage;

@@ -2,7 +2,7 @@ import { BsDownload } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 
 import { useAppSelector } from '@coop/ebanking/data-access';
-import { Avatar, Box, Button, Icon, Text, TextFields } from '@coop/shared/ui';
+import { Avatar, Box, Button, Icon, Text, TextFields } from '@myra-ui';
 
 export const SettingsHeader = () => {
   const router = useRouter();

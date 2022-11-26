@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 
 import { Member, useAppSelector } from '@coop/cbs/data-access';
 import { formatAddress } from '@coop/cbs/utils';
-import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
+import { Box, Grid, GridItem, Text } from '@myra-ui';
 
 interface ReportMemberProps {
   member: Partial<Member> | undefined | null;

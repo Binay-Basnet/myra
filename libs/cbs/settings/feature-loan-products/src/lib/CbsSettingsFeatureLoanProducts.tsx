@@ -6,7 +6,7 @@ import {
   useSetLoanGeneralSettingsMutation,
 } from '@coop/cbs/data-access';
 import { FormCheckbox } from '@coop/shared/form';
-import { asyncToast, Box, Divider, SettingsFooter, Text } from '@coop/shared/ui';
+import { asyncToast, Box, Divider, SettingsFooter, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { AcceptedCollateral } from '../components';

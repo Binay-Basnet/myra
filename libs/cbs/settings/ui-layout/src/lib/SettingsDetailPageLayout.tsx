@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 
-import { Box, PathBar } from '@coop/shared/ui';
+import { Box, PathBar } from '@myra-ui';
 
 import { DetailPageSideBar } from '../components/detailPage';
 

@@ -2,7 +2,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormEditableTable, FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
-import { Box, Divider, Grid, GridItem } from '@coop/shared/ui';
+import { Box, Divider, Grid, GridItem } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const WarehouseTransferForm = () => {

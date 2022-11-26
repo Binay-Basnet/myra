@@ -16,7 +16,7 @@ import {
 import { flexRender, SortingState } from '@tanstack/react-table';
 import qs from 'qs';
 
-import { Loader, NoDataState, Pagination, TableSearch, Text } from '@coop/shared/ui';
+import { Loader, NoDataState, Pagination, TableSearch, Text } from '@myra-ui';
 
 // eslint-disable-next-line import/no-cycle
 import { TableSelectionBar } from '../components';

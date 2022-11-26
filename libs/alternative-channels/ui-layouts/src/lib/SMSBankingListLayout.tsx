@@ -4,7 +4,7 @@ import { HiPlus } from 'react-icons/hi';
 import { useRouter } from 'next/router';
 
 import { TabColumn } from '@coop/myra/components';
-import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, Divider, Icon, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IAccountPageLayoutProps {

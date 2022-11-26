@@ -3,7 +3,7 @@ import { IoCheckmarkCircleOutline } from 'react-icons/io5';
 import { RiAlertLine } from 'react-icons/ri';
 import { Modal, ModalContent, ModalOverlay, useDisclosure } from '@chakra-ui/react';
 
-import { Box, Button, Icon, TextFields } from '@coop/shared/ui';
+import { Box, Button, Icon, TextFields } from '@myra-ui';
 
 interface TransferModalProps {
   status: 'success' | 'failure';

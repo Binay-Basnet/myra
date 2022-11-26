@@ -4,7 +4,7 @@ import { IoCloseOutline, IoCreateOutline } from 'react-icons/io5';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
 
-import { Box, Button, Icon, IconButton, Modal, Text } from '@coop/shared/ui';
+import { Box, Button, Icon, IconButton, Modal, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const Map = dynamic(() => import('./Map'), { ssr: false });

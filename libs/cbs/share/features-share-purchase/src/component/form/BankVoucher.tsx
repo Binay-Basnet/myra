@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { RootState, useAppSelector, useGetCoaBankListQuery } from '@coop/cbs/data-access';
 import { FormAmountInput, FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
-import { FormSection, GridItem } from '@coop/shared/ui';
+import { FormSection, GridItem } from '@myra-ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 type PurchaseProps = {
