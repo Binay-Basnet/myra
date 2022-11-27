@@ -1,4 +1,4 @@
-import { Box, DetailsCard, Text } from '@coop/shared/ui';
+import { Box, DetailsCard, Text } from '@myra-ui';
 
 interface IGeneralInfoCardProps {
   title: string;

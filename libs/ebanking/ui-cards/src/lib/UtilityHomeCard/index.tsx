@@ -1,6 +1,6 @@
 import { IconType } from 'react-icons';
 
-import { Box, Icon, TextFields } from '@coop/shared/ui';
+import { Box, Icon, TextFields } from '@myra-ui';
 
 interface UtilityHomeCardProps {
   icon: IconType | undefined;

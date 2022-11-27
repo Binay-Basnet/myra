@@ -4,7 +4,7 @@ import {
   useGetAccountListQuery,
   useGetEbankingLoanAccountsQuery,
 } from '@coop/ebanking/data-access';
-import { Box, Grid, Icon, TextFields } from '@coop/shared/ui';
+import { Box, Grid, Icon, TextFields } from '@myra-ui';
 
 export const AccountHeaderCard = () => {
   const { data: accountList } = useGetAccountListQuery({

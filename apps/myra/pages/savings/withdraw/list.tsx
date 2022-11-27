@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 
 import { WithdrawList } from '@coop/cbs/transactions/withdraw';
 import { AccountPagesLayout } from '@coop/myra/components';
-import { MainLayout } from '@coop/shared/ui';
+import { MainLayout } from '@myra-ui';
 
 const TransactionsWithdrawList = () => <WithdrawList />;
 

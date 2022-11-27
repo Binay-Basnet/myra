@@ -6,7 +6,7 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect, FormRadioGroup, FormSelect } from '@coop/shared/form';
-import { GridItem } from '@coop/shared/ui';
+import { GridItem } from '@myra-ui';
 
 type UserReportFilter = {
   branchId?: string;

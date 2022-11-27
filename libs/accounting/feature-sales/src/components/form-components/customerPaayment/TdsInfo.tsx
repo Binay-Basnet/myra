@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
 import { FormAmountInput, FormInput, FormSwitchTab } from '@coop/shared/form';
-import { FormSection, GridItem, Text } from '@coop/shared/ui';
+import { FormSection, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const TDS = () => {

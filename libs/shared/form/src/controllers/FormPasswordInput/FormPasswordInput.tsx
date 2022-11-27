@@ -1,7 +1,7 @@
 import { Controller, Path, useFormContext } from 'react-hook-form';
 import { UseControllerProps } from 'react-hook-form/dist/types/controller';
 
-import { InputProps, PasswordInput } from '@coop/shared/ui';
+import { InputProps, PasswordInput } from '@myra-ui';
 
 interface IFormPasswordInputProps<T> extends InputProps {
   name: Path<T> | string;

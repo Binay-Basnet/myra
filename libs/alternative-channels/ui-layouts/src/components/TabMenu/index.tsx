@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
 
-import { Icon } from '@coop/shared/ui';
+import { Icon } from '@myra-ui';
 import { en, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */

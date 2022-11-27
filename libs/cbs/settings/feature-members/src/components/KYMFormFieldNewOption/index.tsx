@@ -2,13 +2,9 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IoClose } from 'react-icons/io5';
 
-import {
-  FormField,
-  FormOption,
-  useUpsertNewOptionMutation,
-} from '@coop/cbs/data-access';
+import { FormField, FormOption, useUpsertNewOptionMutation } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
-import { Box, Icon } from '@coop/shared/ui';
+import { Box, Icon } from '@myra-ui';
 
 interface KYMFormFieldNewOptionProps {
   field: FormField;

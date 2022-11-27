@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Text, TextFields } from '@coop/shared/ui';
+import { Box, Text, TextFields } from '@myra-ui';
 
 interface CardContainerProps {
   children: React.ReactNode;

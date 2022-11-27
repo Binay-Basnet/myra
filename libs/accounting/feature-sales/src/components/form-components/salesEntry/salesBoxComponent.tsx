@@ -5,7 +5,7 @@ import { useDeepCompareEffect } from 'react-use';
 import { SalesSaleEntryInput } from '@coop/cbs/data-access';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormAmountInput, FormTextArea } from '@coop/shared/form';
-import { Box, GridItem, Text } from '@coop/shared/ui';
+import { Box, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const SalesBox = () => {

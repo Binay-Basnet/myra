@@ -2,12 +2,9 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 
 import { BoxContainer, DividerContainer } from '@coop/accounting/ui-components';
-import { Box, PageHeaderTab, Tags, Text } from '@coop/shared/ui';
+import { Box, PageHeaderTab, Tags, Text } from '@myra-ui';
 
-import {
-  SalesBox,
-  SalesDetails,
-} from '../components/form-components/salesEntry';
+import { SalesBox, SalesDetails } from '../components/form-components/salesEntry';
 
 const tabHeader = [
   { title: 'salesObjTabOverview', key: 'overview' },
@@ -35,10 +32,7 @@ export const SalesObject = () => {
       >
         <Breadcrumb fontWeight="medium" fontSize="sm">
           <BreadcrumbItem>
-            <BreadcrumbLink
-              href="/accounting/sales/list"
-              _focus={{ boxShadow: 'none' }}
-            >
+            <BreadcrumbLink href="/accounting/sales/list" _focus={{ boxShadow: 'none' }}>
               {' '}
               <Text fontSize={'r2'} fontWeight="500" color="gray.800">
                 Home

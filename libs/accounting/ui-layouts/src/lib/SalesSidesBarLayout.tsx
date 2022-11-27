@@ -12,7 +12,7 @@ import {
   Icon,
   PopOverComponentForButtonList,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface ISalesLayoutProps {

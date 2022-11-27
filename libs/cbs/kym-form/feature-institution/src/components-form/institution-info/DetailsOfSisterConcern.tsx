@@ -21,7 +21,7 @@ import {
 } from '@coop/cbs/data-access';
 import { DynamicBoxContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-import { Box, Button, FormSection, Grid, GridItem, Icon, IconButton } from '@coop/shared/ui';
+import { Box, Button, FormSection, Grid, GridItem, Icon, IconButton } from '@myra-ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 interface IAddSisterConcern {

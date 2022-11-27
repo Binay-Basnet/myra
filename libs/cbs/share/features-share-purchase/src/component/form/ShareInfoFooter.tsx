@@ -1,4 +1,4 @@
-import { Box, FormFooter, Text } from '@coop/shared/ui';
+import { Box, FormFooter, Text } from '@myra-ui';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type FooterProps = {

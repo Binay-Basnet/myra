@@ -9,7 +9,7 @@ import {
   useGetCoOperativeAccountOperatorEditDataQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
-import { Button, FormSection, GridItem, Icon } from '@coop/shared/ui';
+import { Button, FormSection, GridItem, Icon } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { AddOperator } from '../../accordion-component/KymCoopAccountOperator';

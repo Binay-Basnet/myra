@@ -8,7 +8,7 @@ import {
   useSetSettingsShareTransferMutation,
 } from '@coop/cbs/data-access';
 import { FormCheckbox, FormSelect } from '@coop/shared/form';
-import { asyncToast, Box, SettingsFooter, toast } from '@coop/shared/ui';
+import { asyncToast, Box, SettingsFooter, toast } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';
@@ -70,22 +70,13 @@ export const ShareSettingsTransfer = () => {
             subtitle={t['shareTransferSubtitle']}
           >
             <Box display="flex" flexDir="column" gap="s16">
-              <FormCheckbox
-                name="type"
-                label={t['shareTransferMemberToMember']}
-              />
+              <FormCheckbox name="type" label={t['shareTransferMemberToMember']} />
             </Box>
           </ShareSettingsCard>
 
-          <ShareSettingsCard
-            title={t['shareFund']}
-            subtitle={t['shareToAccountSubtitle']}
-          >
+          <ShareSettingsCard title={t['shareFund']} subtitle={t['shareToAccountSubtitle']}>
             <Box width="33%">
-              <FormSelect
-                name="accountForShareFund"
-                __placeholder={t['shareFundAccountName']}
-              />
+              <FormSelect name="accountForShareFund" __placeholder={t['shareFundAccountName']} />
             </Box>
           </ShareSettingsCard>
 
@@ -94,17 +85,11 @@ export const ShareSettingsTransfer = () => {
             subtitle={t['shareToFundLedgerMappingSubtitle']}
           >
             <Box width="33%">
-              <FormSelect
-                name="mappedShareLedger"
-                __placeholder={t['shareTransferLedgerName']}
-              />
+              <FormSelect name="mappedShareLedger" __placeholder={t['shareTransferLedgerName']} />
             </Box>
           </ShareSettingsCard>
         </Box>
-        <SettingsFooter
-          handleSave={handleSubmit}
-          handleDiscard={handleDiscard}
-        />
+        <SettingsFooter handleSave={handleSubmit} handleDiscard={handleDiscard} />
       </form>
     </FormProvider>
   );

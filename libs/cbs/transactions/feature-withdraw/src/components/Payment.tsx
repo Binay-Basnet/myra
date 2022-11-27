@@ -18,7 +18,7 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
+import { Box, Grid, GridItem, Text } from '@myra-ui';
 import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 const denominationsOptions = [

@@ -11,7 +11,7 @@ import {
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/settings/ui-containers';
 import { FormSelect } from '@coop/shared/form';
-import { Box, Button, MemberCard } from '@coop/shared/ui';
+import { Box, Button, MemberCard } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';

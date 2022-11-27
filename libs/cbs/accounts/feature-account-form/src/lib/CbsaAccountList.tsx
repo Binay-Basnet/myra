@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, PageHeader, TablePopover, Text } from '@coop/shared/ui';
+import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const ACCOUNT_TAB_ITEMS = [

@@ -2,7 +2,7 @@ import React from 'react';
 import { IoCheckmark, IoRepeat } from 'react-icons/io5';
 
 import { useGetAccountListQuery } from '@coop/ebanking/data-access';
-import { Box, Button, Icon, Popover, PopoverContent, PopoverTrigger, Text } from '@coop/shared/ui';
+import { Box, Button, Icon, Popover, PopoverContent, PopoverTrigger, Text } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 type Account = {

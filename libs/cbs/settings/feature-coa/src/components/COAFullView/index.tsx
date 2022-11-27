@@ -2,14 +2,7 @@ import { useMemo } from 'react';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 
 import { CoaView, useGetChartOfAccountsQuery, useGetCoaFullViewQuery } from '@coop/cbs/data-access';
-import {
-  Accordion,
-  AccordionButton,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  Text,
-} from '@coop/shared/ui';
+import { Accordion, AccordionButton, AccordionItem, AccordionPanel, Box, Text } from '@myra-ui';
 
 import Tree from '../Tree';
 import { arrayToTreeCOA } from '../../utils/arrayToTree';

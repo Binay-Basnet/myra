@@ -9,7 +9,7 @@ import {
   useSetKymDocumentDataMutation,
 } from '@coop/cbs/data-access';
 import { FormFileInput } from '@coop/shared/form';
-import { FormSection } from '@coop/shared/ui';
+import { FormSection } from '@myra-ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 interface IProps {

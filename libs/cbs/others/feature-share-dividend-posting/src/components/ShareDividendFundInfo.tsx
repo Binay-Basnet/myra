@@ -1,4 +1,4 @@
-import { Alert, Box, FormSection, GridItem, Text } from '@coop/shared/ui';
+import { Alert, Box, FormSection, GridItem, Text } from '@myra-ui';
 
 export const ShareDividendFundInfo = () => (
   <FormSection>

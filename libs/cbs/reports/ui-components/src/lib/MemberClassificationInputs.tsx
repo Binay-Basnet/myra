@@ -4,7 +4,7 @@ import { IoFilterOutline } from 'react-icons/io5';
 
 import { PeriodInput, ReportPeriodType } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { Box, Button, GridItem, Icon } from '@coop/shared/ui';
+import { Box, Button, GridItem, Icon } from '@myra-ui';
 
 type ClassifyBy =
   | 'All'

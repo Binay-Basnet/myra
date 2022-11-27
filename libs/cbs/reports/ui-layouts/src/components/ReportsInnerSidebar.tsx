@@ -2,7 +2,7 @@ import { Fragment, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { Tabs } from '@chakra-ui/react';
 
-import { Box, SidebarTabs } from '@coop/shared/ui';
+import { Box, SidebarTabs } from '@myra-ui';
 
 const REPORTS_INNER_TAB_LINKS = [
   {

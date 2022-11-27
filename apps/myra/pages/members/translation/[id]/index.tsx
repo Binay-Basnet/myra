@@ -13,7 +13,7 @@ import {
 } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormRadioGroup, FormSwitchTab } from '@coop/shared/form';
-import { Box, Container, FormFooter, FormHeader, Input, MainLayout, Text } from '@coop/shared/ui';
+import { Box, Container, FormFooter, FormHeader, Input, MainLayout, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const Translation = () => {

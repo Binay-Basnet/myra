@@ -1,5 +1,5 @@
 import { ValuationDocuments } from '@coop/cbs/loan';
-import { Grid, GridItem } from '@coop/shared/ui';
+import { Grid, GridItem } from '@myra-ui';
 
 import { LandDetails } from './LandDetails';
 import { ValuationInputs } from './ValuationInputs';

@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
 import { FormAmountInput, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
+import { Box, FormSection, Grid, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { SubHeadingText } from '../formui';

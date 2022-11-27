@@ -11,7 +11,7 @@ import {
   useSetSettingsShareDividendMutation,
 } from '@coop/cbs/data-access';
 import { FormInput, FormRadioGroup, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { asyncToast, Box, Icon, SettingsFooter, Text, toast } from '@coop/shared/ui';
+import { asyncToast, Box, Icon, SettingsFooter, Text, toast } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';

@@ -3,7 +3,7 @@ import { DeepPartial, FormProvider, useForm } from 'react-hook-form';
 
 import { ReportHeader as ReportPageHeader, ReportOrganization } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { Box } from '@coop/shared/ui';
+import { Box } from '@myra-ui';
 
 import {
   OrganizationHeader,

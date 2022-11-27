@@ -14,7 +14,7 @@ import {
   useGetDepositProductSettingsEditDataQuery,
   useSetDepositProductMutation,
 } from '@coop/cbs/data-access';
-import { asyncToast, Box, Container, FormFooter, FormHeader, Text } from '@coop/shared/ui';
+import { asyncToast, Box, Container, FormFooter, FormHeader, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import {

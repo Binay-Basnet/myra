@@ -2,7 +2,7 @@ import React from 'react';
 
 import { RequestStatus } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, PageHeader, TablePopover, Text } from '@coop/shared/ui';
+import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
 

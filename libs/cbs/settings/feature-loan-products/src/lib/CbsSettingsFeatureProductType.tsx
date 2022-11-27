@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { useGetLoanProductTypeQuery, useSetProductTypeMutation } from '@coop/cbs/data-access';
-import { asyncToast, Box, Divider, SettingsFooter } from '@coop/shared/ui';
+import { asyncToast, Box, Divider, SettingsFooter } from '@myra-ui';
 
 import { ProductSubTypeTable, ProductTypeTable } from '../components';
 

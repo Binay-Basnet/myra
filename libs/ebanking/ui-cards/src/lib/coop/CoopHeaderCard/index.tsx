@@ -2,7 +2,7 @@ import { FaUsers } from 'react-icons/fa';
 import { IoCashOutline } from 'react-icons/io5';
 
 import { useAppSelector, useGetCoopStatsQuery } from '@coop/ebanking/data-access';
-import { Avatar, Box, Grid, Icon, TextFields } from '@coop/shared/ui';
+import { Avatar, Box, Grid, Icon, TextFields } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 export const COOPHeaderCard = () => {

@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import { Alert, Box, GridItem, Text } from '@coop/shared/ui';
+import { Alert, Box, GridItem, Text } from '@myra-ui';
 
 import { useLoanProductContext } from '../../hooks/useLoanProduct';
 

@@ -14,7 +14,7 @@ import { AddIcon } from '@chakra-ui/icons';
 
 import { useGetNewIdMutation } from '@coop/cbs/data-access';
 import { FormInput, FormSwitch } from '@coop/shared/form';
-import { Box, Button, Collapse, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, Collapse, Icon, Text } from '@myra-ui';
 import { GRID2X3, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */

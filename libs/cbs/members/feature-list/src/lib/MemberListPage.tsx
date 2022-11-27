@@ -5,15 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { ObjState, useDeleteDraftMutation, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { formatTableAddress } from '@coop/cbs/utils';
 import { Column, Table } from '@coop/shared/table';
-import {
-  asyncToast,
-  Avatar,
-  Box,
-  ChakraModal,
-  PageHeader,
-  TablePopover,
-  Text,
-} from '@coop/shared/ui';
+import { asyncToast, Avatar, Box, ChakraModal, PageHeader, TablePopover, Text } from '@myra-ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 import { MEMBER_TAB_ITEMS } from '../constants/MEMBER_TAB_ITEMS';

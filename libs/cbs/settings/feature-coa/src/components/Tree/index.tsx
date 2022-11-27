@@ -1,4 +1,4 @@
-import { Box } from '@coop/shared/ui';
+import { Box } from '@myra-ui';
 
 import Accordion from './Accordion';
 import TreeDetails from './TreeDetails';

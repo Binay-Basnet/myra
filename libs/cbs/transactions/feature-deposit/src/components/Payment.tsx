@@ -30,7 +30,7 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { Box, FormAccountSelect, FormMemberSelect, Grid, GridItem, Text } from '@coop/shared/ui';
+import { Box, FormAccountSelect, FormMemberSelect, Grid, GridItem, Text } from '@myra-ui';
 import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 // const sourceOfFundsList = [

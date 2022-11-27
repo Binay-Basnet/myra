@@ -4,7 +4,7 @@ import { useDisclosure } from '@chakra-ui/react';
 
 import { RequestStatus, RequestType, useGetBlockChequeListQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Box, DetailCardContent, Grid, PageHeader, TablePopover, Text } from '@coop/shared/ui';
+import { Box, DetailCardContent, Grid, PageHeader, TablePopover, Text } from '@myra-ui';
 import { getRouterQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';

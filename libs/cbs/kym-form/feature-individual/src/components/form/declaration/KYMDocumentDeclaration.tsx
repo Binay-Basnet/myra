@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
-import { FormSection } from '@coop/shared/ui';
+import { FormSection } from '@myra-ui';
 // import { useTranslation } from '@coop/shared/utils';
 import { getKymSection } from '@coop/shared/utils';
 

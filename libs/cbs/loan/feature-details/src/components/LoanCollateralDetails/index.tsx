@@ -1,5 +1,5 @@
 import { Table } from '@coop/shared/table';
-import { DetailsCard } from '@coop/shared/ui';
+import { DetailsCard } from '@myra-ui';
 
 import { useLoanDetails } from '../../hooks/useLoanDetails';
 

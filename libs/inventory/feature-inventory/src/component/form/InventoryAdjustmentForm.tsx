@@ -2,7 +2,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormEditableTable, FormInput, FormTextArea } from '@coop/shared/form';
-import { Box, Divider } from '@coop/shared/ui';
+import { Box, Divider } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 type InventoryAdjustmentTable = {

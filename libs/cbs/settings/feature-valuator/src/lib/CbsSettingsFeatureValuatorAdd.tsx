@@ -31,7 +31,7 @@ import {
   GridItem,
   Text,
   TextFields,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const CbsSettingsFeatureValuatorAdd = () => {

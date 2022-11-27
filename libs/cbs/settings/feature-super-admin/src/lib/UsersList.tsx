@@ -5,7 +5,7 @@ import { Roles, useGetSettingsUserListDataQuery } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, Text } from '@coop/shared/ui';
+import { Avatar, Box, Text } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 import { NewUserModal } from '../components';

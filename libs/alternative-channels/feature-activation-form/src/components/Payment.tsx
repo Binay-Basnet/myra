@@ -17,7 +17,7 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { Box, FormAccountSelect, Grid, GridItem, Text } from '@coop/shared/ui';
+import { Box, FormAccountSelect, Grid, GridItem, Text } from '@myra-ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 const paymentModes = [

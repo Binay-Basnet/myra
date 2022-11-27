@@ -9,7 +9,7 @@ import {
 } from '@coop/cbs/data-access';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormNumberInput } from '@coop/shared/form';
-import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
+import { Box, FormSection, GridItem, Text } from '@myra-ui';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type IPurchaseInfo = {

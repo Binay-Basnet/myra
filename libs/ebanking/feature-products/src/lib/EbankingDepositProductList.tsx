@@ -7,7 +7,7 @@ import {
   NatureOfDepositProduct,
   useGetEbankingDepositProductsQuery,
 } from '@coop/ebanking/data-access';
-import { Box, PathBar, SwitchTabs, TextFields } from '@coop/shared/ui';
+import { Box, PathBar, SwitchTabs, TextFields } from '@myra-ui';
 
 import { ProductSelectCard } from '../components/ProductSelectCard';
 

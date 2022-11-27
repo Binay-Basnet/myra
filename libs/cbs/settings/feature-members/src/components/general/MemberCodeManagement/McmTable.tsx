@@ -8,7 +8,7 @@ import {
 } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
 import { Table } from '@coop/shared/table';
-import { asyncToast, Box, Button, ChakraModal, TextFields } from '@coop/shared/ui';
+import { asyncToast, Box, Button, ChakraModal, TextFields } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */

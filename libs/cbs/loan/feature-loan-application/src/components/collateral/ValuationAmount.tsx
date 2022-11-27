@@ -1,5 +1,5 @@
 import { FormNumberInput } from '@coop/shared/form';
-import { GridItem } from '@coop/shared/ui';
+import { GridItem } from '@myra-ui';
 
 export const ValuationAmount = () => (
   <>

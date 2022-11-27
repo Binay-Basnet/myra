@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
 import { AddWithdraw } from '@coop/cbs/transactions/withdraw';
-import { MainLayout } from '@coop/shared/ui';
+import { MainLayout } from '@myra-ui';
 
 const TransactionsAddWithdraw = () => <AddWithdraw />;
 

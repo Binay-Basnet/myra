@@ -4,7 +4,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 
 import { LoaderOverlay } from '@coop/ebanking/components';
 import { EbankingSendMoneyInput } from '@coop/ebanking/data-access';
-import { Box, Button, Icon, PathBar, Text } from '@coop/shared/ui';
+import { Box, Button, Icon, PathBar, Text } from '@myra-ui';
 
 import { SendMoneyForm } from '../components/send-money/SendMoneyForm';
 import { SendMoneyResult } from '../components/send-money/SendMoneyResult';

@@ -1,6 +1,6 @@
 import { Skeleton } from '@chakra-ui/react';
 
-import { AccordionPanel } from '@coop/shared/ui';
+import { AccordionPanel } from '@myra-ui';
 
 export const KYMLoadingState = () => (
   <AccordionPanel pb={0} display="flex" flexDirection="column" gap="s16">

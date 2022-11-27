@@ -1,7 +1,7 @@
 import { IoCopyOutline } from 'react-icons/io5';
 
 import { TransferType } from '@coop/cbs/data-access';
-import { Box, Icon, Tags, Text } from '@coop/shared/ui';
+import { Box, Icon, Tags, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 type SummaryProps = {

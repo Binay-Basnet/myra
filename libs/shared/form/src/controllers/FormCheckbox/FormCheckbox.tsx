@@ -1,6 +1,6 @@
 import { Controller, Path, useFormContext } from 'react-hook-form';
 
-import { Checkbox, CheckboxProps } from '@coop/shared/ui';
+import { Checkbox, CheckboxProps } from '@myra-ui';
 
 interface IFormCheckboxProps<T> extends CheckboxProps {
   name: Path<T>;

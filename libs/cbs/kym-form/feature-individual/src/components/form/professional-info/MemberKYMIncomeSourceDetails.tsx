@@ -20,7 +20,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormRadioGroup } from '@coop/shared/form';
-import { Box, Button, FormSection, GridItem, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, FormSection, GridItem, Icon, Text } from '@myra-ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { useIndividual } from '../../hooks/useIndividual';

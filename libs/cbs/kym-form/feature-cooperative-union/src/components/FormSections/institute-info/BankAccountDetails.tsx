@@ -1,15 +1,9 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
-import {
-  CoopUnionInstitutionInformationInput,
-  useGetBankListQuery,
-} from '@coop/cbs/data-access';
+import { CoopUnionInstitutionInformationInput, useGetBankListQuery } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { FormSection } from '@coop/shared/ui';
-import {
-  getKymSectionCoOperativeUnion,
-  useTranslation,
-} from '@coop/shared/utils';
+import { FormSection } from '@myra-ui';
+import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
 
 import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
 
@@ -17,9 +11,7 @@ interface IBankAccountDetailsProps {
   setSection: (section?: { section: string; subSection: string }) => void;
 }
 
-export const BankAccountDetails = ({
-  setSection,
-}: IBankAccountDetailsProps) => {
+export const BankAccountDetails = ({ setSection }: IBankAccountDetailsProps) => {
   const { t } = useTranslation();
   const { data: bankList } = useGetBankListQuery();
 
@@ -36,10 +28,7 @@ export const BankAccountDetails = ({
           setSection(kymSection);
         }}
       >
-        <FormSection
-          id="kymCoopUnionAccBankAccountDetails"
-          header="kymCoopUnionBankAccountDetails"
-        >
+        <FormSection id="kymCoopUnionAccBankAccountDetails" header="kymCoopUnionBankAccountDetails">
           <FormSelect
             name="nameOfBank"
             label={t['kymCoopUnionNameOfBank']}
@@ -48,17 +37,9 @@ export const BankAccountDetails = ({
               value: bank?.id,
             }))}
           />
-          <FormInput
-            type="text"
-            name="accountNumber"
-            label={t['kymCoopUnionAccountNumber']}
-          />
+          <FormInput type="text" name="accountNumber" label={t['kymCoopUnionAccountNumber']} />
 
-          <FormInput
-            type="text"
-            name="accountName"
-            label={t['kymCoopUnionAccountName']}
-          />
+          <FormInput type="text" name="accountName" label={t['kymCoopUnionAccountName']} />
         </FormSection>
       </form>
     </FormProvider>

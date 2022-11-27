@@ -4,12 +4,8 @@ import { useRouter } from 'next/router';
 import { KymInsInput } from '@coop/cbs/data-access';
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import { FormCheckbox, FormSwitchTab, FormTextArea } from '@coop/shared/form';
-import { Box, FormSection, Grid, GridItem } from '@coop/shared/ui';
-import {
-  getKymSection,
-  getKymSectionInstitution,
-  useTranslation,
-} from '@coop/shared/utils';
+import { Box, FormSection, Grid, GridItem } from '@myra-ui';
+import { getKymSection, getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useInstitution } from '../hooks/useInstitution';
 import { KymInsAccountOperationType } from '../../types';

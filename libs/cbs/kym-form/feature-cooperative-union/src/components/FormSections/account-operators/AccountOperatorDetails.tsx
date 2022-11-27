@@ -30,7 +30,7 @@ import {
   Icon,
   IconButton,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
 
 import { AccountOperatorTraining } from './accountOperatorTraining';

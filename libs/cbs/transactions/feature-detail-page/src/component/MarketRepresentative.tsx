@@ -1,4 +1,4 @@
-import { DetailCardContent, DetailsCard } from '@coop/shared/ui';
+import { DetailCardContent, DetailsCard } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { useTransactionDetailHooks } from '../hooks/useTransactionDetailHooks';

@@ -10,7 +10,7 @@ import {
   useGetAccountListQuery,
 } from '@coop/ebanking/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Button, GridItem, Icon, toast } from '@coop/shared/ui';
+import { Box, Button, GridItem, Icon, toast } from '@myra-ui';
 
 const purposes = [
   {

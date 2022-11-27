@@ -3,7 +3,7 @@ import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 
 import { useGetInventoryUnitOfMeasureQuery } from '@coop/cbs/data-access';
-import { Column, Table } from '@coop/shared/ui';
+import { Column, Table } from '@myra-ui';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
 

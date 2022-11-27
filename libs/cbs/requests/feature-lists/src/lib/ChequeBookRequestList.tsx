@@ -17,7 +17,7 @@ import {
   PageHeader,
   TablePopover,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { getRouterQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';

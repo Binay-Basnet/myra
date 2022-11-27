@@ -1,6 +1,6 @@
 import { Box, Text } from '@chakra-ui/react';
 
-import { Divider } from '@coop/shared/ui';
+import { Divider } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { VerticalSideBarForSettings } from '../components/VerticalSideBarForSettings';

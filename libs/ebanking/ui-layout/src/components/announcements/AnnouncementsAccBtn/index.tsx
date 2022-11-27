@@ -1,6 +1,6 @@
 import { IoChevronForward } from 'react-icons/io5';
 
-import { AccordionButton, Icon, Text } from '@coop/shared/ui';
+import { AccordionButton, Icon, Text } from '@myra-ui';
 
 interface IAnnouncementsAccBtn {
   isExpanded: boolean;

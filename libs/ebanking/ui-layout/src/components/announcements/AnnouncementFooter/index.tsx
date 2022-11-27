@@ -1,4 +1,4 @@
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 
 export const AnnouncementFooter = () => (
   <>

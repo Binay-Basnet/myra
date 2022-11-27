@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 
 import { FormInput, FormMap, FormSwitch } from '@coop/shared/form';
-import { Box, Button, Divider, Grid, GridItem, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, Divider, Grid, GridItem, Icon, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { TabColumn } from '../../tab/TabforMemberPage';

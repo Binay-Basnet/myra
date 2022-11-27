@@ -14,7 +14,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { asyncToast, Box, Button, Icon, SettingsFooter, Text } from '@coop/shared/ui';
+import { asyncToast, Box, Button, Icon, SettingsFooter, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IAddAccountServices {

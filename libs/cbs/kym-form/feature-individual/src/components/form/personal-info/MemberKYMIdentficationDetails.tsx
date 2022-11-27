@@ -11,7 +11,7 @@ import {
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
-import { Box, FormSection } from '@coop/shared/ui';
+import { Box, FormSection } from '@myra-ui';
 import { getKymSection } from '@coop/shared/utils';
 
 import { Citizenship, DrivingLicense, NationalID, Passport, VoterCard } from '../identifications';

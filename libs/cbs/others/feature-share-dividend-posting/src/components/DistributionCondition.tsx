@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { DividendDistributionCondition } from '@coop/cbs/data-access';
 import { FormNumberInput, FormSwitchTab } from '@coop/shared/form';
-import { Alert, Box, FormSection, GridItem, Text } from '@coop/shared/ui';
+import { Alert, Box, FormSection, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const months = [

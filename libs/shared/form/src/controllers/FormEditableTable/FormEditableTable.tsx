@@ -1,7 +1,7 @@
 import { Controller, Path, useFormContext } from 'react-hook-form';
 
 import { EditableTable, EditableTableProps } from '@coop/shared/editable-table';
-import { Box, TextFields } from '@coop/shared/ui';
+import { Box, TextFields } from '@myra-ui';
 
 interface RecordWithId {
   _id?: number;

@@ -3,7 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { LoaderOverlay } from '@coop/ebanking/components';
 import { useAppSelector } from '@coop/ebanking/data-access';
-import { Box, PathBar } from '@coop/shared/ui';
+import { Box, PathBar } from '@myra-ui';
 
 import { AccountTransferForm } from '../components/account-transfer/AccountTransfer';
 import { AccountTransferResult } from '../components/account-transfer/AccountTransferResult';

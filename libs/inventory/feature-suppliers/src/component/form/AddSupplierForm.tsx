@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { FormAccountInput, FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Grid, GridItem, Text } from '@coop/shared/ui';
+import { Box, Grid, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const AddSupplierForm = () => {
@@ -11,14 +11,7 @@ export const AddSupplierForm = () => {
   return (
     <FormProvider {...methods}>
       <form>
-        <Box
-          w="100%"
-          background="white"
-          p="s20"
-          display="flex"
-          flexDirection="column"
-          gap="s32"
-        >
+        <Box w="100%" background="white" p="s20" display="flex" flexDirection="column" gap="s32">
           <Grid templateColumns="repeat(3,1fr)" gap="s20">
             <GridItem colSpan={2}>
               <FormSelect
@@ -126,10 +119,7 @@ export const AddSupplierForm = () => {
             </Text>
             <Grid templateColumns="repeat(3,1fr)" gap="s20">
               <GridItem>
-                <FormAccountInput
-                  name="openingBalance"
-                  label={t['addSuppliersOpeningBalance']}
-                />
+                <FormAccountInput name="openingBalance" label={t['addSuppliersOpeningBalance']} />
               </GridItem>
               <GridItem>
                 <FormSelect

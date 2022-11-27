@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@chakra-ui/react';
 
 import { AccountingTabMenu } from '@coop/accounting/ui-components';
-import { TopLevelHeader } from '@coop/shared/ui';
+import { TopLevelHeader } from '@myra-ui';
 
 export interface AccountingLayoutProps {
   children: React.ReactNode;
@@ -19,6 +19,6 @@ export const AccountingLayout = (props: AccountingLayoutProps) => {
       <Box mt="110px">{children}</Box>
     </div>
   );
-}
+};
 
 export default AccountingLayout;

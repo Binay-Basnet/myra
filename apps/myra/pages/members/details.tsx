@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 
 import { MemberDetails } from '@coop/cbs/members/details';
 import { MemberPagesLayout } from '@coop/cbs/members/list';
-import { MainLayout } from '@coop/shared/ui';
+import { MainLayout } from '@myra-ui';
 
 const MemberDEtailsPage = () => <MemberDetails />;
 

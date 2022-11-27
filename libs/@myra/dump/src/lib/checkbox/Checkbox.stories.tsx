@@ -1,0 +1,28 @@
+import { Theme } from '@chakra-ui/react';
+import { getThemingArgTypes } from '@chakra-ui/storybook-addon';
+import { Meta, Story } from '@storybook/react';
+
+import { theme } from '@coop/shared/utils';
+
+import { Checkbox, CheckboxProps } from './Checkbox';
+// import { AddIcon } from '@chakra-ui/icons';
+
+export default {
+  component: Checkbox,
+  title: 'Old Dump /checkbox/Checkbox',
+  argTypes: getThemingArgTypes(theme as Theme, 'Checkbox'),
+} as Meta;
+
+const Template: Story<CheckboxProps> = (args) => <Checkbox {...args} />;
+
+export const Primary = Template.bind({});
+Primary.args = {
+  size: 'sm',
+  spacing: '8px',
+  children: 'Label',
+  defaultChecked: false,
+  isDisabled: false,
+  isInvalid: false,
+  // icon: <AddIcon />,
+  // iconColor: 'white.400',
+};

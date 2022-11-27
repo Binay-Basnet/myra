@@ -8,7 +8,7 @@ import {
   useGetPastSlipsListQuery,
 } from '@coop/cbs/data-access';
 import { Table } from '@coop/shared/table';
-import { Box, DetailsCard, Text } from '@coop/shared/ui';
+import { Box, DetailsCard, Text } from '@myra-ui';
 
 export const PastWithdrawSlipList = () => {
   const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);

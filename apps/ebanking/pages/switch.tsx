@@ -12,7 +12,7 @@ import {
   useLoginToCooperativeMutation,
 } from '@coop/ebanking/data-access';
 import { EbankingHeaderLayout } from '@coop/ebanking/ui-layout';
-import { Box, Button, PasswordInput, Text, TextFields } from '@coop/shared/ui';
+import { Box, Button, PasswordInput, Text, TextFields } from '@myra-ui';
 
 const Switch = () => {
   const methods = useForm();

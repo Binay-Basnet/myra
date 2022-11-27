@@ -1,5 +1,5 @@
 import { WithdrawPaymentType } from '@coop/cbs/data-access';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import {

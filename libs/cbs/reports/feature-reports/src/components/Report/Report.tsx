@@ -17,7 +17,7 @@ import {
   Icon,
   NoDataState,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 
 export const ReportHeader = ({ children }: { children: React.ReactNode }) => (
   <Box position="sticky" bg="white" top="110px" zIndex="10">

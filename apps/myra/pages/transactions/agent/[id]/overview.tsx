@@ -5,7 +5,7 @@ import {
   AgentDetailPageLayout,
   TransactionsSidebarLayout,
 } from '@coop/cbs/transactions/ui-layouts';
-import { MainLayout } from '@coop/shared/ui';
+import { MainLayout } from '@myra-ui';
 
 const TransactionAgentDetailOverview = () => <AgentDetailOverview />;
 

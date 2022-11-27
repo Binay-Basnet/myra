@@ -9,7 +9,7 @@ import {
   useGetSalesSaleEntryFormStateDataQuery,
   useSetSalesSaleEntryDataMutation,
 } from '@coop/cbs/data-access';
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@coop/shared/ui';
+import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { EntryTable, SalesBox, SalesDetails } from '../components/form-components/salesEntry';

@@ -1,6 +1,6 @@
 import { ExternalLoanType, useExternalLoanAccountListQuery } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { FormSection, GridItem, Text } from '@coop/shared/ui';
+import { FormSection, GridItem, Text } from '@myra-ui';
 import { getRouterQuery } from '@coop/shared/utils';
 
 export const ExternalLoanInfo = () => {

@@ -8,7 +8,7 @@ import { InfoCard } from '@coop/ebanking/cards';
 import { EmptyState } from '@coop/ebanking/components';
 import { EBankingServiceStatus, useGetComplaintsListQuery } from '@coop/ebanking/data-access';
 import { FormSwitchTab } from '@coop/shared/form';
-import { Box, Button, Divider, PathBar, Text, VStack } from '@coop/shared/ui';
+import { Box, Button, Divider, PathBar, Text, VStack } from '@myra-ui';
 import { getLoggedInUserId } from '@coop/shared/utils';
 
 const ComplaintsOptions = [

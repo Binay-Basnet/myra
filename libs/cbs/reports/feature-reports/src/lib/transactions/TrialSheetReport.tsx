@@ -9,7 +9,7 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
-import { Box, GridItem, Text } from '@coop/shared/ui';
+import { Box, GridItem, Text } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter'> & {

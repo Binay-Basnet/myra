@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, TopLevelHeader } from '@coop/shared/ui';
+import { Box, TopLevelHeader } from '@myra-ui';
 
 import { SettingsTabMenu } from './SettingsTabMenu';
 
