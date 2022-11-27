@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import { WarehouseTransfer } from '@coop/inventory/warehouse';
-import { MainLayoutInventory } from '@coop/shared/ui';
+import { MainLayoutInventory } from '@myra-ui';
 
 const AddWarehouseTransferPage = () => <WarehouseTransfer />;
 

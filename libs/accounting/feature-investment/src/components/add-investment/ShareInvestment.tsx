@@ -8,7 +8,7 @@ import {
   FormNumberInput,
   FormTextArea,
 } from '@coop/shared/form';
-import { FormSection, GridItem } from '@coop/shared/ui';
+import { FormSection, GridItem } from '@myra-ui';
 
 export const ShareInvestment = () => {
   const methods = useFormContext();

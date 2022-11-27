@@ -8,7 +8,7 @@ import {
   useGetSettingsUserListDataQuery,
 } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Button, FormSection, GridItem, Icon, IconButton } from '@coop/shared/ui';
+import { Box, Button, FormSection, GridItem, Icon, IconButton } from '@myra-ui';
 import { getRouterQuery } from '@coop/shared/utils';
 
 export const Collateral = () => {

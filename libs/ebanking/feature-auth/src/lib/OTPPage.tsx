@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { OtpFor, useResendOtpMutation, useVerifyOtpMutation } from '@coop/ebanking/data-access';
-import { asyncToast, Box, Button, Input, Text } from '@coop/shared/ui';
+import { asyncToast, Box, Button, Input, Text } from '@myra-ui';
 
 import { AuthContainer } from '../components/AuthContainer';
 import { SignUpStatus } from '../types/SignUpStatus';

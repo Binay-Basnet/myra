@@ -17,7 +17,7 @@ import {
   Select,
   SwitchTabs,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 
 /* eslint-disable-next-line */
 export interface TopLevelHeaderProps {}

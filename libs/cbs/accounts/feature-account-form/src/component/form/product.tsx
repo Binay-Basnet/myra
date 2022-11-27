@@ -13,7 +13,7 @@ import {
 } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormSelect } from '@coop/shared/form';
-import { Box, Grid, GridItem, Text, TextFields } from '@coop/shared/ui';
+import { Box, Grid, GridItem, Text, TextFields } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 type OptionType = { label: string; value: string };

@@ -1,5 +1,5 @@
 import { FormInput } from '@coop/shared/form';
-import { Box, Grid, GridItem } from '@coop/shared/ui';
+import { Box, Grid, GridItem } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const RegistrationDetailsOrganization = () => {

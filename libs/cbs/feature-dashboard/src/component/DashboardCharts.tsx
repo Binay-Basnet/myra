@@ -1,4 +1,4 @@
-import { Box, Grid, Text } from '@coop/shared/ui';
+import { Box, Grid, Text } from '@myra-ui';
 
 import { AgeCharts } from './AgeCharts';
 import { TypeCharts } from './TypeCharts';

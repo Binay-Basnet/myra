@@ -1,5 +1,5 @@
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
-import { Text } from '@coop/shared/ui';
+import { Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { KymAssestsAndtarget } from './assets';
@@ -16,12 +16,7 @@ export const EconomicDetails = (props: economicDetailsProps) => {
   const { setSection } = props;
 
   return (
-    <SectionContainer
-      p="s20"
-      borderBottom="1px solid"
-      borderBottomColor="border.layout"
-      gap="s32"
-    >
+    <SectionContainer p="s20" borderBottom="1px solid" borderBottomColor="border.layout" gap="s32">
       <Text fontSize="r3" fontWeight="600">
         {t['kymCoopUnionEco6EconomicDetails']}
       </Text>

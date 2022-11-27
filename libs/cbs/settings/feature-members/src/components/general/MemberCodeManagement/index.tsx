@@ -1,4 +1,4 @@
-import { Box, Divider, Text, VStack } from '@coop/shared/ui';
+import { Box, Divider, Text, VStack } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import McmTable from './McmTable';

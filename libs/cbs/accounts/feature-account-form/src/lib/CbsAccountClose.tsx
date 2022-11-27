@@ -33,7 +33,7 @@ import {
   MemberCard,
   Text,
   toast,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { Payment } from '../component/AccountCloseForm/payment';

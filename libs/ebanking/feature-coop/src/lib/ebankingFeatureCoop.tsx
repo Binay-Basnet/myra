@@ -18,7 +18,7 @@ import {
   useGetCoopDownloadsQuery,
   useGetCoopLoanServicesQuery,
 } from '@coop/ebanking/data-access';
-import { Box, Button, Divider, Grid, Icon, Text, VStack } from '@coop/shared/ui';
+import { Box, Button, Divider, Grid, Icon, Text, VStack } from '@myra-ui';
 
 /* eslint-disable-next-line */
 export interface EbankingFeatureCoopProps {}

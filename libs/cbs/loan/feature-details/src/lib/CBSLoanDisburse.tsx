@@ -30,7 +30,7 @@ import {
   Icon,
   MemberCard,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { featureCode } from '@coop/shared/utils';
 
 import CBSLoanDetails from './CbsLoanFeatureDetails';

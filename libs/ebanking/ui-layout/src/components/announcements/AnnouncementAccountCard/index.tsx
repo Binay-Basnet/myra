@@ -1,6 +1,6 @@
 import { MdOutlineStar } from 'react-icons/md';
 
-import { Box, Icon, Text } from '@coop/shared/ui';
+import { Box, Icon, Text } from '@myra-ui';
 
 interface IAnnouncementAccountCardProps {
   name: string;

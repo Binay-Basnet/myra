@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import { PrematurePenaltyDateType } from '@coop/cbs/data-access';
 import { BoxContainer } from '@coop/shared/components';
 import { FormAmountInput, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Alert, Box, FormSection, Grid, GridItem, Text, TextFields } from '@coop/shared/ui';
+import { Alert, Box, FormSection, Grid, GridItem, Text, TextFields } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const PrematurePenalty = () => {

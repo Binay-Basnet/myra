@@ -9,7 +9,7 @@ import {
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
 import { FormCheckbox } from '@coop/shared/form';
-import { Box, TextFields } from '@coop/shared/ui';
+import { Box, TextFields } from '@myra-ui';
 
 export const KYMDeclarationAgree = () => {
   const router = useRouter();
@@ -29,8 +29,7 @@ export const KYMDeclarationAgree = () => {
 
   useEffect(() => {
     if (editValues) {
-      const editValueData =
-        editValues?.members?.individual?.formState?.data?.formData;
+      const editValueData = editValues?.members?.individual?.formState?.data?.formData;
 
       reset({
         declarationAgreement: editValueData?.declaration?.declarationAgreement,

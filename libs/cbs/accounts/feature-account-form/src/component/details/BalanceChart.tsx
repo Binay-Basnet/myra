@@ -4,7 +4,7 @@ import format from 'date-fns/format';
 import subDays from 'date-fns/subDays';
 
 import { useAccountDetails, useGetAccountTransactionListsQuery } from '@coop/cbs/data-access';
-import { Box, DetailsCard, Text } from '@coop/shared/ui';
+import { Box, DetailsCard, Text } from '@myra-ui';
 import { amountConverter, getRouterQuery } from '@coop/shared/utils';
 
 const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });

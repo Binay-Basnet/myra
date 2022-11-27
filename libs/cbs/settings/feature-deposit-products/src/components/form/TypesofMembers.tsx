@@ -1,6 +1,6 @@
 import { KymMemberTypesEnum } from '@coop/cbs/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
-import { FormSection } from '@coop/shared/ui';
+import { FormSection } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const TypesOfMember = () => {

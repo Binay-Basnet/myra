@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { InterestAuthority, LoanAccountInput } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormFileInput, FormInput, FormRadioGroup } from '@coop/shared/form';
-import { Alert, Box, Text } from '@coop/shared/ui';
+import { Alert, Box, Text } from '@myra-ui';
 
 import { useLoanProductContext } from '../hooks/useLoanProduct';
 

@@ -11,7 +11,7 @@ import {
   Icon,
   PopOverComponentForButtonList,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 
 interface IExternalLoanSidebarLayoutProps {
   children: React.ReactNode;

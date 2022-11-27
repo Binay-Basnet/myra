@@ -1,5 +1,5 @@
 import { EbankingTransaction, EbankingTransactionDirection } from '@coop/ebanking/data-access';
-import { Box, Icon, TextFields } from '@coop/shared/ui';
+import { Box, Icon, TextFields } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 interface ITransactionCardProps {

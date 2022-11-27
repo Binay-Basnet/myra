@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { TransferType, useGetAccountTransferListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
 import { Column, Table } from '@coop/shared/table';
-import { TablePopover } from '@coop/shared/ui';
+import { TablePopover } from '@myra-ui';
 import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [

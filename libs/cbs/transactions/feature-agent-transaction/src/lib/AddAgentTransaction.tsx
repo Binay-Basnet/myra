@@ -9,7 +9,7 @@ import {
 } from '@coop/cbs/data-access';
 import { BoxContainer } from '@coop/cbs/transactions/ui-containers';
 import { FormAgentSelect, FormEditableTable } from '@coop/shared/form';
-import { asyncToast, Box, Container, FormFooter, FormHeader, Text } from '@coop/shared/ui';
+import { asyncToast, Box, Container, FormFooter, FormHeader, Text } from '@myra-ui';
 import { getRouterQuery } from '@coop/shared/utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

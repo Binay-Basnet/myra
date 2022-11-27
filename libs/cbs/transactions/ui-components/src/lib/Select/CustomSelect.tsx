@@ -7,7 +7,7 @@ import {
   SelectComponentsConfig,
 } from 'chakra-react-select';
 
-import { TextFields } from '@coop/shared/ui';
+import { TextFields } from '@myra-ui';
 
 import { components as customComponents } from './SelectComponents';
 import { chakraDefaultStyles } from './SelectStyles';
@@ -53,7 +53,7 @@ export const Select = ({
   //   }
   // }, [JSON.stringify(options)]);
 
-  (<Flex direction="column" gap="s4">
+  <Flex direction="column" gap="s4">
     <TextFields variant="formLabel" color="gray.700">
       {label}
     </TextFields>
@@ -104,7 +104,7 @@ export const Select = ({
         {helperText}
       </TextFields>
     )}
-  </Flex>)
+  </Flex>
 );
 
 export default Select;

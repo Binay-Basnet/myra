@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 
 /* eslint-disable-next-line */
 export interface ClientDetailHeaderProps {

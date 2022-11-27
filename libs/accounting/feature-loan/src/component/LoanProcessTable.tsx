@@ -1,5 +1,5 @@
 import { FormEditableTable } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 
 type LoanProcessTableType = {
   serviceName: string;

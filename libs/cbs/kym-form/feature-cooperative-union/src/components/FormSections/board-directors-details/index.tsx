@@ -1,5 +1,5 @@
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
-import { Text } from '@coop/shared/ui';
+import { Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoardDirectorInfo } from './BoardDirectorInfo';

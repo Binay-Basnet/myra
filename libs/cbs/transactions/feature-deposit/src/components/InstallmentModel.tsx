@@ -18,7 +18,7 @@ import {
   useGetInstallmentsListDataQuery,
   useSetAccountForgiveInstallmentDataMutation,
 } from '@coop/cbs/data-access';
-import { asyncToast, Box, Button, Divider, Text } from '@coop/shared/ui';
+import { asyncToast, Box, Button, Divider, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IInstallmentModelProps {

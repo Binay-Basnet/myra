@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { IoPrintOutline } from 'react-icons/io5';
 
 import { Column, Table } from '@coop/shared/table';
-import { Button, DetailsCard } from '@coop/shared/ui';
+import { Button, DetailsCard } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 type GlTransactionDetailProps = {

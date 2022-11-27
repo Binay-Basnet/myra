@@ -3,7 +3,7 @@ import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 
 import { useGetInventoryItemsQuery } from '@coop/cbs/data-access';
-import { Column, Table, TableListPageHeader } from '@coop/shared/ui';
+import { Column, Table, TableListPageHeader } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const InventoryRegisterTable = () => {

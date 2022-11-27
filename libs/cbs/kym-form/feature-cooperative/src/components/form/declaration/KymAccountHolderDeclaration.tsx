@@ -5,7 +5,7 @@ import { GridItem } from '@chakra-ui/react';
 import { KymCooperativeFormInput } from '@coop/cbs/data-access';
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import { FormInput } from '@coop/shared/form';
-import { Box, FormSection } from '@coop/shared/ui';
+import { Box, FormSection } from '@myra-ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { useCooperative } from '../../hooks/useCooperative';
@@ -94,7 +94,7 @@ const Documents = ({ setSection }: IDocProps) => {
     //     </Box>
     //   </GridItem>
     // </Grid>
-    (<FormSection header="kymCoopDOCUMENTDECLARATION" templateColumns={2}>
+    <FormSection header="kymCoopDOCUMENTDECLARATION" templateColumns={2}>
       <GridItem>
         <Box w="124px">
           <KYMDocumentField
@@ -119,6 +119,6 @@ const Documents = ({ setSection }: IDocProps) => {
           />
         </Box>
       </GridItem>
-    </FormSection>)
+    </FormSection>
   );
 };

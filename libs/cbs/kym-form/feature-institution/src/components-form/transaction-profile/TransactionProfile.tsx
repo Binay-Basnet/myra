@@ -6,7 +6,7 @@ import {
   useGetInstitutionKymOptionsQuery,
 } from '@coop/cbs/data-access';
 import { FormInput, FormRadioGroup } from '@coop/shared/form';
-import { FormSection, Grid, GridItem } from '@coop/shared/ui';
+import { FormSection, Grid, GridItem } from '@myra-ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useInstitution } from '../hooks/useInstitution';

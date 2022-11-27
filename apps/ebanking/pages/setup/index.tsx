@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import { useAppSelector } from '@coop/ebanking/data-access';
 import { EbankingHeaderLayout } from '@coop/ebanking/ui-layout';
-import { Box, Button, Icon, Text, TextFields } from '@coop/shared/ui';
+import { Box, Button, Icon, Text, TextFields } from '@myra-ui';
 
 const SetupPage = () => {
   const user = useAppSelector((state) => state.auth?.user);

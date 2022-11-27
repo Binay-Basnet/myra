@@ -1,5 +1,5 @@
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 interface IProps {

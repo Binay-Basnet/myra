@@ -10,7 +10,7 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormRadioGroup } from '@coop/shared/form';
-import { Box, FormMemberSelect, GridItem } from '@coop/shared/ui';
+import { Box, FormMemberSelect, GridItem } from '@myra-ui';
 
 export const ShareStatementReport = () => {
   const [filters, setFilters] = useState<ShareStatementReportSettings | null>(null);

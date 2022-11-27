@@ -10,7 +10,7 @@ import {
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, FormMemberSelect, FormSection, GridItem } from '@coop/shared/ui';
+import { Box, FormMemberSelect, FormSection, GridItem } from '@myra-ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { KYMBasiccoopDetailsFamilyMember } from './KYMBasiccoopDetailsFamilyMember';

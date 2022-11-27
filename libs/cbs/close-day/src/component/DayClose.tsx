@@ -4,7 +4,7 @@ import { Spinner } from '@chakra-ui/react';
 
 import { EodState, useGetEodStatusQuery } from '@coop/cbs/data-access';
 import { FormCheckbox } from '@coop/shared/form';
-import { Box, Button, Divider, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, Divider, Icon, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface INumberStatusProps {

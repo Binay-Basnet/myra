@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { Box, chakra, Tab, Tabs, Text } from '@chakra-ui/react';
 
 import { useGetAgentDetailDataQuery } from '@coop/cbs/data-access';
-import { Avatar, Divider, Icon, toast } from '@coop/shared/ui';
+import { Avatar, Divider, Icon, toast } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const TabCol = chakra(Tab, {

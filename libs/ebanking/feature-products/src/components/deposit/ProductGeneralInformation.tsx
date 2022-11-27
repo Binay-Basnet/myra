@@ -4,7 +4,7 @@ import {
   NatureOfDepositProduct,
   ProductCodeFormState,
 } from '@coop/ebanking/data-access';
-import { DetailCardContent, DetailsCard } from '@coop/shared/ui';
+import { DetailCardContent, DetailsCard } from '@myra-ui';
 
 interface IProductGeneralInformation {
   generalInformation: {

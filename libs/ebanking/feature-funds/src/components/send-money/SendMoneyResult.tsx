@@ -10,7 +10,7 @@ import {
   EbankingSendMoneyRecord,
   useGetAccountListQuery,
 } from '@coop/ebanking/data-access';
-import { Box, Button, Grid, Icon, Text, TextFields } from '@coop/shared/ui';
+import { Box, Button, Grid, Icon, Text, TextFields } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 import { CardBodyContainer, CardContainer, CardContent, CardHeader } from '../CardContainer';

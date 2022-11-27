@@ -2,7 +2,7 @@ import { SetStateAction, useEffect, useState } from 'react';
 import { Controller, Path, useFormContext } from 'react-hook-form';
 import { HStack, Input } from '@chakra-ui/react';
 
-import { Box, Select } from '@coop/shared/ui';
+import { Box, Select } from '@myra-ui';
 
 enum AmountConditions {
   amt_between = 'amt_between',

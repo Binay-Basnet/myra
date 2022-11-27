@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
 import { BulkDepositInput, ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 
 interface IBulkDepositAccountsSummaryProps {
   memberId: string;

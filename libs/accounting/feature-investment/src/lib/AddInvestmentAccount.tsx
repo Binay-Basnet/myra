@@ -19,7 +19,7 @@ import {
   FormHeader,
   FormSection,
   GridItem,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 
 const investmentTypeOptions = [
   { label: 'Share', value: InvestmentType.Share },

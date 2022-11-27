@@ -1,5 +1,5 @@
 import { FormAmountInput, FormInput } from '@coop/shared/form';
-import { Alert, FormSection, GridItem, Text } from '@coop/shared/ui';
+import { Alert, FormSection, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const WithdrawPenalty = () => {

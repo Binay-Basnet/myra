@@ -7,7 +7,7 @@ import { useDisclosure } from '@chakra-ui/react';
 import { LoanApproveOrCancel, useApproveLoanAccountMutation } from '@coop/cbs/data-access';
 import { CBSLoanDetails, LoanDetailsHeader } from '@coop/cbs/loan/details';
 import { FormTextArea } from '@coop/shared/form';
-import { asyncToast, Box, Button, ChakraModal, FormFooter } from '@coop/shared/ui';
+import { asyncToast, Box, Button, ChakraModal, FormFooter } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { useLoanDetails } from '../hooks/useLoanDetails';

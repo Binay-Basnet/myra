@@ -1,0 +1,30 @@
+{
+  "name": "@myra-ui-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/@myra-ui-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/@myra-ui-e2e/cypress.config.ts",
+        "devServerTarget": "@myra-ui:storybook",
+        "testingType": "e2e"
+      },
+      "configurations": {
+        "ci": {
+          "devServerTarget": "@myra-ui:storybook:ci"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/@myra-ui-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["@myra-ui"]
+}

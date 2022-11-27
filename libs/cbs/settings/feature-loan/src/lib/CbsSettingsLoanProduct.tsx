@@ -15,7 +15,7 @@ import {
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { FormTextArea } from '@coop/shared/form';
 import { Column, Table } from '@coop/shared/table';
-import { asyncToast, Box, ChakraModal, PageHeader, Text } from '@coop/shared/ui';
+import { asyncToast, Box, ChakraModal, PageHeader, Text } from '@myra-ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const LOAN_TAB_ITEMS = [

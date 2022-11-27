@@ -3,7 +3,7 @@ import { AiOutlineMobile } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
 import { login, useAppDispatch, useEBankingLoginMutation } from '@coop/ebanking/data-access';
-import { Box, Button, Checkbox, Icon, Input, PasswordInput, Text, toast } from '@coop/shared/ui';
+import { Box, Button, Checkbox, Icon, Input, PasswordInput, Text, toast } from '@myra-ui';
 
 import { AuthContainer } from '../components/AuthContainer';
 

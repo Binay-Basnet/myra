@@ -1,4 +1,4 @@
-import { DetailsCard, Text } from '@coop/shared/ui';
+import { DetailsCard, Text } from '@myra-ui';
 
 export const ProductDescription = ({ description }: { description: string | undefined | null }) => (
   <DetailsCard hasTable title="Description">

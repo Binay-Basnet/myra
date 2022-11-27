@@ -1,9 +1,9 @@
 import React from 'react';
 import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
-import Image from "next/legacy/image";
+import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 
-import { Avatar, Box, Collapse, Icon, TextFields, TopLevelHeader } from '@coop/shared/ui';
+import { Avatar, Box, Collapse, Icon, TextFields, TopLevelHeader } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export interface HomePageLayoutProps {

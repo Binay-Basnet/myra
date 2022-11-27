@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import { login, useAppDispatch, useLoginMutation } from '@coop/neosys-admin/data-access';
 import { FormInput, FormPasswordInput } from '@coop/shared/form';
-import { Box, Button, toast } from '@coop/shared/ui';
+import { Box, Button, toast } from '@myra-ui';
 
 export const Login = () => {
   const { mutateAsync, isLoading } = useLoginMutation();

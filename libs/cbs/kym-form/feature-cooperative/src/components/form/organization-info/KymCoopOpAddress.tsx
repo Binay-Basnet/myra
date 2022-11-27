@@ -3,7 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { KymCooperativeFormInput, useAllAdministrationQuery } from '@coop/cbs/data-access';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
-import { FormSection, GridItem } from '@coop/shared/ui';
+import { FormSection, GridItem } from '@myra-ui';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { useCooperative } from '../../hooks/useCooperative';

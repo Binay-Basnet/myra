@@ -31,7 +31,7 @@ import {
   FormMemberSelect,
   MemberCard,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 import { Payment } from '../components';

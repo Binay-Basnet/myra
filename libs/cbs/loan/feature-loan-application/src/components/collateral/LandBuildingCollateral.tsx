@@ -1,7 +1,7 @@
 import { BuildingType, ConstructionType } from '@coop/cbs/data-access';
 import { ValuationDocuments } from '@coop/cbs/loan';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Grid, GridItem } from '@coop/shared/ui';
+import { Grid, GridItem } from '@myra-ui';
 
 import { LandDetails } from './LandDetails';
 import { ValuationInputs } from './ValuationInputs';

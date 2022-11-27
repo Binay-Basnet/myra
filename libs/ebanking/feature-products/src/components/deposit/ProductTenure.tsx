@@ -1,5 +1,5 @@
 import { FrequencyTenure } from '@coop/ebanking/data-access';
-import { Box, DetailsCard } from '@coop/shared/ui';
+import { Box, DetailsCard } from '@myra-ui';
 
 interface ProductTenureProps {
   tenureUnit: FrequencyTenure | undefined | null;

@@ -1,5 +1,5 @@
 import { FormInput } from '@coop/shared/form';
-import { Box, Grid, Text } from '@coop/shared/ui';
+import { Box, Grid, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const Vehicle = () => {

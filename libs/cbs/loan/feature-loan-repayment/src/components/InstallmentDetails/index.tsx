@@ -1,5 +1,5 @@
 import { useGetLoanPreviewQuery } from '@coop/cbs/data-access';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 
 interface IProps {
   loanAccountId: string;

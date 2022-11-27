@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
 import { NewShareDividendPosting } from '@coop/cbs/others/share-dividend-posting';
-import { MainLayout } from '@coop/shared/ui';
+import { MainLayout } from '@myra-ui';
 
 const NewShareDividendPostingPage = () => <NewShareDividendPosting />;
 

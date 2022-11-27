@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Column, Table } from '@coop/shared/table';
-import { DetailsCard } from '@coop/shared/ui';
+import { DetailsCard } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 interface IProductLimits {

@@ -1,4 +1,4 @@
-import { Box, Container, FormHeader } from '@coop/shared/ui';
+import { Box, Container, FormHeader } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const KYMCoopUnionHeader = () => {

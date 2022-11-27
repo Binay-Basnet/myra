@@ -1,6 +1,6 @@
 import { IoArrowForwardOutline } from 'react-icons/io5';
 
-import { Avatar, Box, Icon, Text } from '@coop/shared/ui';
+import { Avatar, Box, Icon, Text } from '@myra-ui';
 
 type MemberInfoProps = {
   memberId?: string | undefined | null;

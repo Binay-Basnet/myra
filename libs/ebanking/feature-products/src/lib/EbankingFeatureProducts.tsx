@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import { InfoCard } from '@coop/ebanking/cards';
 import { useGetEbankingLoanProductTypeListQuery } from '@coop/ebanking/data-access';
-import { Box, PathBar, SwitchTabs, TextFields } from '@coop/shared/ui';
+import { Box, PathBar, SwitchTabs, TextFields } from '@myra-ui';
 
 import { ProductSelectCard } from '../components/ProductSelectCard';
 

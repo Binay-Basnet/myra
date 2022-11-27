@@ -1,7 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 
 import { NeosysPageHeaderTab } from '@coop/neosys-admin/ui-components';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 
 interface INeosysTableListPageHeader {
   heading: string;

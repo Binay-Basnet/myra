@@ -1,5 +1,5 @@
 import { useGetDashboardInfoQuery } from '@coop/cbs/data-access';
-import { Box, DetailCardStats, Grid, GridItem, Text } from '@coop/shared/ui';
+import { Box, DetailCardStats, Grid, GridItem, Text } from '@myra-ui';
 
 export const MyBranch = () => {
   const { data } = useGetDashboardInfoQuery();

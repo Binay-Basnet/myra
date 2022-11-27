@@ -7,7 +7,7 @@ import {
 } from '@coop/cbs/data-access';
 import { Column } from '@coop/shared/editable-table';
 import { FormEditableTable } from '@coop/shared/form';
-import { GridItem } from '@coop/shared/ui';
+import { GridItem } from '@myra-ui';
 
 import { TableOverview } from './TableOverview';
 import { CustomFundManagementInput, OtherFundDistributionTableType } from '../lib/type';

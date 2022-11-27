@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
-import { FormSection, Text } from '@coop/shared/ui';
+import { FormSection, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const Interest = () => {

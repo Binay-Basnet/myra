@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
 import { useSignUpMutation } from '@coop/ebanking/data-access';
-import { Box, Button, ChakraModal, Icon, Input, Text } from '@coop/shared/ui';
+import { Box, Button, ChakraModal, Icon, Input, Text } from '@myra-ui';
 
 import { AuthContainer } from '../components/AuthContainer';
 import { SignUpStatus } from '../types/SignUpStatus';

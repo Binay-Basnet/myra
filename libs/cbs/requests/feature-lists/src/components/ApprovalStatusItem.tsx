@@ -1,5 +1,5 @@
 import { RequestStatus } from '@coop/cbs/data-access';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 
 export const ApprovalStatusItem = ({ status }: { status?: RequestStatus }) => (
   <Box display="flex" alignItems="center" gap="s8">

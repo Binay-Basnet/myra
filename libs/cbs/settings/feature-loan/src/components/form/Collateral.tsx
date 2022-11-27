@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { LoanProductInput, useGetLoanGeneralSettingsQuery } from '@coop/cbs/data-access';
 import { FormCheckboxGroup, FormSwitchTab } from '@coop/shared/form';
-import { Box, FormSection, GridItem } from '@coop/shared/ui';
+import { Box, FormSection, GridItem } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { DepositSaving } from './DepositSaving';

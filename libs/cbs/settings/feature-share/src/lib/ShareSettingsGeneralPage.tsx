@@ -9,7 +9,7 @@ import {
   useSetSettingsShareGeneralMutation,
 } from '@coop/cbs/data-access';
 import { FormCheckbox, FormCheckboxGroup, FormInput } from '@coop/shared/form';
-import { asyncToast, Box, SettingsFooter, Text, toast } from '@coop/shared/ui';
+import { asyncToast, Box, SettingsFooter, Text, toast } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';

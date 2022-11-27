@@ -12,7 +12,7 @@ import {
   useUpdateDeclarationMutation,
 } from '@coop/cbs/data-access';
 import { FormTextArea } from '@coop/shared/form';
-import { AccordionPanel, Box } from '@coop/shared/ui';
+import { AccordionPanel, Box } from '@myra-ui';
 
 import { IncomeSourceDetailsComponent } from '../components/KYMIncomeSource';
 import { KYMCategory, KYMSearchTerm } from '../types';
@@ -696,12 +696,7 @@ export const Declaration = ({
           });
         }, 800)}
       >
-        <AccordionPanel
-          pb={'0'}
-          display="flex"
-          flexDirection="column"
-          gap="s16"
-        >
+        <AccordionPanel pb={'0'} display="flex" flexDirection="column" gap="s16">
           <Box>
             <FormTextArea
               label="English"

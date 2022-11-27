@@ -11,7 +11,7 @@ import {
   useGetEbankingLoanAccountsQuery,
   useGetHomeServiceListQuery,
 } from '@coop/ebanking/data-access';
-import { Box, Button, Divider, Grid, GridItem, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, Divider, Grid, GridItem, Icon, Text } from '@myra-ui';
 
 import { SERVICE_ICON_DICT, SERVICE_LINK_DICT } from '../constants/SERVICE_ICON';
 

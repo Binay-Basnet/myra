@@ -6,7 +6,7 @@ import {
   useGetIndividualKymOptionsQuery,
 } from '@coop/cbs/data-access';
 import { FormInput, FormRadioGroup } from '@coop/shared/form';
-import { Box, FormSection } from '@coop/shared/ui';
+import { Box, FormSection } from '@myra-ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { useIndividual } from '../../hooks/useIndividual';

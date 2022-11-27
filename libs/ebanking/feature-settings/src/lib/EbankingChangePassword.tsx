@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { InfoCard } from '@coop/ebanking/cards';
 import { useChangeMyraPasswordMutation } from '@coop/ebanking/data-access';
 import { FormInput } from '@coop/shared/form';
-import { asyncToast, Box, Button, PathBar } from '@coop/shared/ui';
+import { asyncToast, Box, Button, PathBar } from '@myra-ui';
 
 const validationSchema = yup.object({
   oldPassword: yup.string().required('No Password provided'),

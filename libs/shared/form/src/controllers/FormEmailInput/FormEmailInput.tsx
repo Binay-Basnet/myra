@@ -1,7 +1,7 @@
 import { Controller, Path, useFormContext } from 'react-hook-form';
 import { MdEmail } from 'react-icons/md';
 
-import { Icon, Input, InputProps } from '@coop/shared/ui';
+import { Icon, Input, InputProps } from '@myra-ui';
 
 interface IFormEmailInputProps<T> extends InputProps {
   name: Path<T>;

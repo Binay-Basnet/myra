@@ -1,5 +1,5 @@
 import { FormFileInput } from '@coop/shared/form';
-import { FormSection, GridItem } from '@coop/shared/ui';
+import { FormSection, GridItem } from '@myra-ui';
 
 export const Documents = () => (
   <FormSection header="File Uploads" templateColumns={4}>
