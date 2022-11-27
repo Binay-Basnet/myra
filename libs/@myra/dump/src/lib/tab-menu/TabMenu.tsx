@@ -31,55 +31,55 @@ const NAVBAR_TAB_OBJECT: Record<string, number> = {
 
 const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   {
-    title: 'Old Dump /members',
+    title: 'members',
     icon: IoPerson,
     link: '/members/list',
   },
   {
-    title: 'Old Dump /share',
+    title: 'share',
     icon: IoCubeOutline,
     link: '/share/balance',
   },
   {
-    title: 'Old Dump /savings',
+    title: 'savings',
     icon: ImStack,
     link: '/savings/list',
   },
 
   {
-    title: 'Old Dump /loan',
+    title: 'loan',
     icon: BsArrowLeftRight,
     link: '/loan/applications',
   },
 
   {
-    title: 'Old Dump /transactions',
+    title: 'transactions',
     icon: IoIosList,
     link: '/transactions/deposit/list',
   },
   {
-    title: 'Old Dump /transfer',
+    title: 'transfer',
     icon: AiOutlineSend,
     link: '/transfer/vault-transfer/list',
   },
 
   {
-    title: 'Old Dump /requests',
+    title: 'requests',
     icon: IoMailUnreadOutline,
     link: '/requests/member',
   },
   {
-    title: 'Old Dump /withdrawSlip',
+    title: 'withdrawSlip',
     icon: TbMailForward,
     link: '/withdraw/cheque-book',
   },
   {
-    title: 'Old Dump /reports',
+    title: 'reports',
     icon: BsFileText,
     link: '/reports/cbs/organizations',
   },
   {
-    title: 'Old Dump /others',
+    title: 'others',
     icon: IoPrismOutline,
     link: '/others/fund-management/list',
   },
