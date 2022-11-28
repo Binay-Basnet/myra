@@ -12,7 +12,7 @@ import {
   Icon,
   Text,
   TextFields,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { BiSave } from 'react-icons/bi';
 import { AccordionKymCoopForm } from '@coop/cbs/kym-form/formElements';

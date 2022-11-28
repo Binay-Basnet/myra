@@ -1,10 +1,10 @@
 import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
+import { TablePopover } from '@myra-ui';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { useGetBankAccountListQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { TablePopover } from '@coop/shared/ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const AccountingFeatureBankAccountsList = () => {

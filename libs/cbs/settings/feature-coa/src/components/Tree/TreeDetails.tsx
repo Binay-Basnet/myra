@@ -1,4 +1,4 @@
-import { Box } from '@coop/shared/ui';
+import { Box } from '@myra-ui';
 
 import { useAccordion } from './Accordion';
 import LeafNode from './LeafNode';
@@ -17,8 +17,7 @@ function TreeDetails({ data }: ICoaTreeDetailsProps) {
   return (
     <Box>
       {data?.map((d) => {
-        if (d.children.length !== 0)
-          return <Node current={d} data={d.children} />;
+        if (d.children.length !== 0) return <Node current={d} data={d.children} />;
         return <LeafNode data={d} />;
       })}
     </Box>

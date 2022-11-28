@@ -12,7 +12,7 @@ import {
   useGetBulkInstallmentsDataQuery,
 } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 type DepositAccountTable = {

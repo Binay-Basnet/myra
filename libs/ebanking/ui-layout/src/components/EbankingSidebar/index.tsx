@@ -1,7 +1,7 @@
-import Image from "next/legacy/image";
+import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 
 import { EbankingSidebarNavItem } from '../EbankingSidebarNavItem';
 import { SIDEBAR_NAV_ITEMS } from '../../constants/SIDEBAR_NAV_ITEMS';

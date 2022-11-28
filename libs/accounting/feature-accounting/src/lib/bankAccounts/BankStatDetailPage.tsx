@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Box, Button, Text } from '@coop/shared/ui';
+import { Box, Button, Text } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const BankStatDetailPage = () => {
@@ -63,10 +63,7 @@ export const BankStatDetailPage = () => {
         header: '',
         accessorKey: 'actions',
         cell: (cell) => (
-          <PopoverComponent
-            items={popoverTitle}
-            member={cell?.row?.original?.node}
-          />
+          <PopoverComponent items={popoverTitle} member={cell?.row?.original?.node} />
         ),
         meta: {
           width: '60px',
@@ -89,11 +86,7 @@ export const BankStatDetailPage = () => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Text
-          fontSize="r1"
-          color="neutralColorLight.Gray-80"
-          fontWeight="SemiBold"
-        >
+        <Text fontSize="r1" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
           {t['bankAccountStatementBankStatement']}
         </Text>
 
@@ -111,6 +104,6 @@ export const BankStatDetailPage = () => {
       </Box>
     </Box>
   );
-}
+};
 
 export default BankStatDetailPage;

@@ -23,7 +23,7 @@ import {
   Icon,
   Text,
   VStack,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 
 import { NumberStatus } from './CbsMembersFeatureActivations';
 

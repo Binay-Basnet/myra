@@ -1,7 +1,7 @@
 import { Control, Controller, useFormContext } from 'react-hook-form';
 import { UseControllerProps } from 'react-hook-form/dist/types/controller';
 
-import { TextAreaInput, TextAreaInputProps } from '@coop/shared/ui';
+import { TextAreaInput, TextAreaInputProps } from '@myra-ui';
 
 interface IFormInputProps extends TextAreaInputProps {
   control?: Control;

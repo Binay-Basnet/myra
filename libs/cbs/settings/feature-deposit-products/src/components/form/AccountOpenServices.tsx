@@ -1,6 +1,6 @@
 import { useGetCoaBankListQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
-import { FormSection, GridItem } from '@coop/shared/ui';
+import { FormSection, GridItem } from '@myra-ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 type AccountServiceTable = {

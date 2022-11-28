@@ -3,7 +3,7 @@ import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
-import { Box, Button, Divider, Icon, Input, Modal, Switch, Text } from '@coop/shared/ui';
+import { Box, Button, Divider, Icon, Input, Modal, Switch, Text } from '@myra-ui';
 
 import { TabColumn } from '../../tab/TabforMemberPage';
 

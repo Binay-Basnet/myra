@@ -8,7 +8,7 @@ import {
   useSetIssueNewSlipMutation,
 } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { Alert, asyncToast, ChakraModal, Grid, GridItem } from '@coop/shared/ui';
+import { Alert, asyncToast, ChakraModal, Grid, GridItem } from '@myra-ui';
 
 interface ICreateWithdrawSlipModalProps {
   isOpen: boolean;

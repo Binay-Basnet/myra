@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { FrequencyTenure } from '@coop/cbs/data-access';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
-import { FormSection, GridItem } from '@coop/shared/ui';
+import { FormSection, GridItem } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IRightElementProps {

@@ -1,5 +1,5 @@
 import { useGetDashboardDayInfoQuery } from '@coop/cbs/data-access';
-import { Box, DetailCardStats, Grid, GridItem, Text } from '@coop/shared/ui';
+import { Box, DetailCardStats, Grid, GridItem, Text } from '@myra-ui';
 
 export const MyDay = () => {
   const { data } = useGetDashboardDayInfoQuery();

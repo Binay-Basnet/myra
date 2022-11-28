@@ -98,6 +98,29 @@ export type AccountDetailsQueryResult = {
   error?: Maybe<QueryError>;
 };
 
+export type AccountOpeningReport = {
+  accountName?: Maybe<Scalars['String']>;
+  accountNumber?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  openedBy?: Maybe<Scalars['String']>;
+  openingDate?: Maybe<Scalars['Localized']>;
+};
+
+export type AccountOpeningReportInput = {
+  branchId: Scalars['String'];
+  filter?: InputMaybe<AccountOpeningReportInputFilter>;
+  period: PeriodInput;
+};
+
+export type AccountOpeningReportInputFilter = {
+  user: Scalars['String'];
+};
+
+export type AccountOpeningReportResult = {
+  data?: Maybe<Array<Maybe<AccountOpeningReport>>>;
+  error?: Maybe<QueryError>;
+};
+
 export enum AccountOperationType {
   Joint = 'JOINT',
   Single = 'SINGLE',
@@ -8858,6 +8881,24 @@ export enum NatureOfLoanProduct {
   Unprogressive = 'UNPROGRESSIVE',
 }
 
+export enum NatureOfTransaction {
+  AccountClose = 'ACCOUNT_CLOSE',
+  All = 'ALL',
+  AlternateChannel = 'ALTERNATE_CHANNEL',
+  Deposit = 'DEPOSIT',
+  Ebanking = 'EBANKING',
+  InterestBooking = 'INTEREST_BOOKING',
+  InterestPosting = 'INTEREST_POSTING',
+  LoanDisbursment = 'LOAN_DISBURSMENT',
+  LoanRepayment = 'LOAN_REPAYMENT',
+  Membership = 'MEMBERSHIP',
+  SharePurchase = 'SHARE_PURCHASE',
+  ShareReturn = 'SHARE_RETURN',
+  TellerTransfer = 'TELLER_TRANSFER',
+  Transfer = 'TRANSFER',
+  Withdraw = 'WITHDRAW',
+}
+
 export type NewBankAccountInput = {
   accountName?: InputMaybe<Scalars['String']>;
   accountNumber?: InputMaybe<Scalars['String']>;
@@ -9479,6 +9520,7 @@ export enum ReportPeriodType {
 }
 
 export type ReportQuery = {
+  accountOpeningReport?: Maybe<AccountOpeningReportResult>;
   activeInactiveMemberReport?: Maybe<ReportResult>;
   branchReport?: Maybe<BranchReportResult>;
   generalLedgerReport: GenderLedgerReportResult;
@@ -9493,10 +9535,16 @@ export type ReportQuery = {
   mbankingRegistrationReport?: Maybe<EbankingRegistrationReportResult>;
   memberClassificationReport: MemberClassificationReportResult;
   savingStatementReport?: Maybe<ReportResult>;
+  sharePurchaseRegisterReport?: Maybe<SharePurchaseRegisterResult>;
   shareStatementReport?: Maybe<ReportResult>;
   shareTransactionReport?: Maybe<ShareTransactionReportResult>;
+  thresholdTransactionReport: TtrReportResult;
   trialSheetReport: TrialSheetReportResult;
   userReport?: Maybe<UserReportResult>;
+};
+
+export type ReportQueryAccountOpeningReportArgs = {
+  data?: InputMaybe<AccountOpeningReportInput>;
 };
 
 export type ReportQueryActiveInactiveMemberReportArgs = {
@@ -9557,12 +9605,20 @@ export type ReportQuerySavingStatementReportArgs = {
   data: SavingStatementReportSettings;
 };
 
+export type ReportQuerySharePurchaseRegisterReportArgs = {
+  data?: InputMaybe<SharePurchaseRegisterReportFilter>;
+};
+
 export type ReportQueryShareStatementReportArgs = {
   data: ShareStatementReportSettings;
 };
 
 export type ReportQueryShareTransactionReportArgs = {
   data?: InputMaybe<ShareTransactionReportFilter>;
+};
+
+export type ReportQueryThresholdTransactionReportArgs = {
+  data: TtrReportFilter;
 };
 
 export type ReportQueryTrialSheetReportArgs = {
@@ -10329,6 +10385,35 @@ export type SharePurchaseInput = {
   totalAmount?: InputMaybe<Scalars['String']>;
 };
 
+export type SharePurchaseRegisterFilter = {
+  type?: InputMaybe<Share_Transaction_Direction>;
+};
+
+export type SharePurchaseRegisterReport = {
+  kittaNumFrom?: Maybe<Scalars['String']>;
+  kittaNumTo?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  particular?: Maybe<Scalars['String']>;
+  perShareAmount?: Maybe<Scalars['String']>;
+  totalAmount?: Maybe<Scalars['String']>;
+  totalKitta?: Maybe<Scalars['String']>;
+};
+
+export type SharePurchaseRegisterReportFilter = {
+  branchId?: InputMaybe<Scalars['String']>;
+  filter?: InputMaybe<SharePurchaseRegisterFilter>;
+  period: PeriodInput;
+};
+
+export type SharePurchaseRegisterResult = {
+  Summary?: Maybe<Scalars['Map']>;
+  data?: Maybe<Array<Maybe<SharePurchaseRegisterReport>>>;
+  error?: Maybe<QueryError>;
+  meta?: Maybe<Scalars['Map']>;
+};
+
 export type SharePurchaseResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<ShareQuery>;
@@ -10725,6 +10810,42 @@ export enum Transaction_Direction {
   Purchased = 'PURCHASED',
   Sold = 'SOLD',
 }
+
+export type TtrDataEntry = {
+  accountNo?: Maybe<Scalars['String']>;
+  address?: Maybe<Address>;
+  amount?: Maybe<Scalars['String']>;
+  branch?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  memberId?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['Localized']>;
+  nature?: Maybe<NatureOfTransaction>;
+  remarks?: Maybe<Scalars['String']>;
+  sourceOfFund?: Maybe<Scalars['String']>;
+};
+
+export type TtrFilter = {
+  amount?: InputMaybe<MinMaxFilter>;
+  fiscalYear?: InputMaybe<LocalizedDateFilter>;
+  member?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  natureOfTransactions?: InputMaybe<Array<InputMaybe<NatureOfTransaction>>>;
+};
+
+export type TtrReportData = {
+  perTranx?: Maybe<Array<Maybe<TtrDataEntry>>>;
+  yearly?: Maybe<Array<Maybe<TtrDataEntry>>>;
+};
+
+export type TtrReportFilter = {
+  branchId: Scalars['String'];
+  filter?: InputMaybe<TtrFilter>;
+  period: PeriodInput;
+};
+
+export type TtrReportResult = {
+  data?: Maybe<TtrReportData>;
+  error?: Maybe<QueryError>;
+};
 
 export enum TaxPayerOptions {
   Cooperative = 'COOPERATIVE',
@@ -17949,6 +18070,43 @@ export type GetUserReportQuery = {
         remarks?: string | null;
       } | null> | null;
     } | null;
+  };
+};
+
+export type GetTtrReportQueryVariables = Exact<{
+  data: TtrReportFilter;
+}>;
+
+export type GetTtrReportQuery = {
+  report: {
+    thresholdTransactionReport: {
+      data?: {
+        yearly?: Array<{
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          memberId?: string | null;
+          branch?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          nature?: NatureOfTransaction | null;
+          accountNo?: string | null;
+          amount?: string | null;
+          sourceOfFund?: string | null;
+          remarks?: string | null;
+          address?: AddressFragment | null;
+        } | null> | null;
+        perTranx?: Array<{
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          memberId?: string | null;
+          branch?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          nature?: NatureOfTransaction | null;
+          accountNo?: string | null;
+          amount?: string | null;
+          sourceOfFund?: string | null;
+          remarks?: string | null;
+          address?: AddressFragment | null;
+        } | null> | null;
+      } | null;
+    };
   };
 };
 
@@ -29324,6 +29482,56 @@ export const useGetUserReportQuery = <TData = GetUserReportQuery, TError = unkno
   useQuery<GetUserReportQuery, TError, TData>(
     variables === undefined ? ['getUserReport'] : ['getUserReport', variables],
     useAxios<GetUserReportQuery, GetUserReportQueryVariables>(GetUserReportDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetTtrReportDocument = `
+    query getTtrReport($data: TTRReportFilter!) {
+  report {
+    thresholdTransactionReport(data: $data) {
+      data {
+        yearly {
+          name
+          memberId
+          address {
+            ...Address
+          }
+          branch
+          date
+          nature
+          accountNo
+          amount
+          sourceOfFund
+          remarks
+        }
+        perTranx {
+          name
+          memberId
+          address {
+            ...Address
+          }
+          branch
+          date
+          nature
+          accountNo
+          amount
+          sourceOfFund
+          remarks
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}`;
+export const useGetTtrReportQuery = <TData = GetTtrReportQuery, TError = unknown>(
+  variables: GetTtrReportQueryVariables,
+  options?: UseQueryOptions<GetTtrReportQuery, TError, TData>
+) =>
+  useQuery<GetTtrReportQuery, TError, TData>(
+    ['getTtrReport', variables],
+    useAxios<GetTtrReportQuery, GetTtrReportQueryVariables>(GetTtrReportDocument).bind(
       null,
       variables
     ),

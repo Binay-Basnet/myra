@@ -4,13 +4,13 @@ import {
   AgentDetailPageLayout,
   TransactionsSidebarLayout,
 } from '@coop/cbs/transactions/ui-layouts';
-import { Box, MainLayout, WIPState } from '@coop/shared/ui';
+import { Box, MainLayout, WIPState } from '@myra-ui';
 
 const TransactionAgentActivity = () => (
-    <Box display="flex" justifyContent="center" alignItems="center">
-      <WIPState />
-    </Box>
-  );
+  <Box display="flex" justifyContent="center" alignItems="center">
+    <WIPState />
+  </Box>
+);
 
 TransactionAgentActivity.getLayout = function getLayout(page: ReactElement) {
   return (

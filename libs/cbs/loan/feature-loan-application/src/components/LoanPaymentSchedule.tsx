@@ -11,7 +11,7 @@ import {
 } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
 import { Table } from '@coop/shared/table';
-import { Alert, Box, Button, Icon, IconButton, Text } from '@coop/shared/ui';
+import { Alert, Box, Button, Icon, IconButton, Text } from '@myra-ui';
 
 export const LoanPaymentSchedule = () => {
   const {

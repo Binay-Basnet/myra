@@ -19,7 +19,7 @@ import {
 } from '@coop/cbs/data-access';
 import { DynamicBoxContainer, DynamicBoxGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Button, FormSection, Icon, IconButton } from '@coop/shared/ui';
+import { Box, Button, FormSection, Icon, IconButton } from '@myra-ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { useIndividual } from '../../hooks/useIndividual';

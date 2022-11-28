@@ -1,4 +1,4 @@
-import { ChakraModal, Text } from '@coop/shared/ui';
+import { ChakraModal, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IOverrideAlertModalProps {

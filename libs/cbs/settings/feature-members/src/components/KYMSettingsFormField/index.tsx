@@ -10,7 +10,7 @@ import {
   useMoveOptionMutation,
   useToggleFieldOtherOptionMutation,
 } from '@coop/cbs/data-access';
-import { AccordionPanel, Box, Button, Checkbox, Icon, Text } from '@coop/shared/ui';
+import { AccordionPanel, Box, Button, Checkbox, Icon, Text } from '@myra-ui';
 
 import { KYMFormFieldNewOption } from '../KYMFormFieldNewOption';
 import { KYMSettingsOption } from '../KYMSettingsOption';

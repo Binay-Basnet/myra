@@ -3,7 +3,7 @@ import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
-import { Box, Button, Divider, Text } from '@coop/shared/ui';
+import { Box, Button, Divider, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IClientsSidebarProps {

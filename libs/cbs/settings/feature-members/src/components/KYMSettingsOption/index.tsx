@@ -5,7 +5,7 @@ import { debounce } from 'lodash';
 
 import { FormField, FormOption, useUpsertNewOptionMutation } from '@coop/cbs/data-access';
 import { FormInput, FormSwitch } from '@coop/shared/form';
-import { Box, Icon, Text } from '@coop/shared/ui';
+import { Box, Icon, Text } from '@myra-ui';
 import { GRID2X3 } from '@coop/shared/utils';
 
 /** *************** KYM Settings Field Option Component Start **************** */

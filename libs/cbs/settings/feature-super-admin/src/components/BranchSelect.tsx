@@ -4,7 +4,7 @@ import { debounce } from 'lodash';
 
 import { Filter_Mode, useGetBranchListQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { SelectProps } from '@coop/shared/ui';
+import { SelectProps } from '@myra-ui';
 import { getRouterQuery } from '@coop/shared/utils';
 
 interface IBranchSelectProps extends SelectProps {

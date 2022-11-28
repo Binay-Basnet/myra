@@ -1,5 +1,5 @@
 /* eslint-disable-next-line */
-import { Text, Box } from '@coop/shared/ui';
+import { Text, Box } from '@myra-ui';
 
 export interface ShareSettingsHeaderProps {
   title: string;

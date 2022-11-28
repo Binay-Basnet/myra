@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Box } from '@coop/shared/ui';
+import { Box } from '@myra-ui';
 
 import { BoxContainer, SubHeadingText, SubText, TextBoxContainer, TopText } from '../formui';
 

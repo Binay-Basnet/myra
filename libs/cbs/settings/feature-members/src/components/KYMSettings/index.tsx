@@ -32,7 +32,7 @@ import {
   Select,
   Text,
   TextFields,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 
 import { KYMSettingsAccordionBtn } from '../KYMSettingsAccordionBtn';
 import { KYMSettingsField } from '../KYMSettingsField';
@@ -280,132 +280,134 @@ export const KYMCustomFieldAdd = ({ kymType }: { kymType: KYMCategory }) => {
   const { mutateAsync: addNewCustomField, isLoading: fieldLoading } =
     useUpsertCustomFieldMutation();
 
-  return (<>
-    <Box
-      as="form"
-      display="flex"
-      flexDir="column"
-      gap="s16"
-      onSubmit={methods.handleSubmit(async () => {
-        const { fieldType } = methods.getValues();
+  return (
+    <>
+      <Box
+        as="form"
+        display="flex"
+        flexDir="column"
+        gap="s16"
+        onSubmit={methods.handleSubmit(async () => {
+          const { fieldType } = methods.getValues();
 
-        if (fieldType === 'FormSection') {
-          const response = await addNewCustomSection({
-            data: {
+          if (fieldType === 'FormSection') {
+            const response = await addNewCustomSection({
               data: {
-                enabled: true,
-                category: kymType,
-                nameEn: methods.getValues().name,
+                data: {
+                  enabled: true,
+                  category: kymType,
+                  nameEn: methods.getValues().name,
+                },
               },
-            },
-          });
+            });
 
-          if (response) {
-            methods.reset();
-            queryClient.invalidateQueries(['getCustomFields']);
-            setHasNewField(false);
-          }
-        } else {
-          const response = await addNewCustomField({
-            data: {
+            if (response) {
+              methods.reset();
+              queryClient.invalidateQueries(['getCustomFields']);
+              setHasNewField(false);
+            }
+          } else {
+            const response = await addNewCustomField({
               data: {
-                nameEn: methods.getValues().name,
-                category: kymType,
-                enabled: true,
-                fieldType,
-                hasOtherField: false,
+                data: {
+                  nameEn: methods.getValues().name,
+                  category: kymType,
+                  enabled: true,
+                  fieldType,
+                  hasOtherField: false,
+                },
               },
-            },
-          });
-          if (response) {
-            methods.reset();
-            queryClient.invalidateQueries(['getCustomFields']);
-            setHasNewField(false);
+            });
+            if (response) {
+              methods.reset();
+              queryClient.invalidateQueries(['getCustomFields']);
+              setHasNewField(false);
+            }
           }
-        }
-      })}
-    >
-      {hasNewField && (
-        <FormProvider {...methods}>
-          <Box display="flex" alignItems="flex-start" gap="s16">
-            <Box w="50%">
-              <FormInput
-                name="name"
-                rules={{
-                  required: 'This field is required!',
+        })}
+      >
+        {hasNewField && (
+          <FormProvider {...methods}>
+            <Box display="flex" alignItems="flex-start" gap="s16">
+              <Box w="50%">
+                <FormInput
+                  name="name"
+                  rules={{
+                    required: 'This field is required!',
+                  }}
+                  __placeholder="Name of Custom Field"
+                />
+              </Box>
+              <Box w="50%">
+                <FormSelect
+                  name="fieldType"
+                  __placeholder="Select Field Type"
+                  rules={{
+                    required: 'This field is required!',
+                  }}
+                  options={[
+                    {
+                      label: 'Single Select',
+                      value: FormFieldType.SingleSelect,
+                    },
+                    {
+                      label: 'Multi Select',
+                      value: FormFieldType.MultipleSelect,
+                    },
+                    { label: 'Group Fields', value: 'FormSection' },
+                  ]}
+                />
+              </Box>
+
+              <Icon
+                onClick={async () => {
+                  setHasNewField(false);
                 }}
-                __placeholder="Name of Custom Field"
+                h="44px"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                as={IoClose}
+                size="md"
+                color="gray.500"
+                cursor="pointer"
+                _hover={{ color: 'gray.800' }}
               />
             </Box>
-            <Box w="50%">
-              <FormSelect
-                name="fieldType"
-                __placeholder="Select Field Type"
-                rules={{
-                  required: 'This field is required!',
-                }}
-                options={[
-                  {
-                    label: 'Single Select',
-                    value: FormFieldType.SingleSelect,
-                  },
-                  {
-                    label: 'Multi Select',
-                    value: FormFieldType.MultipleSelect,
-                  },
-                  { label: 'Group Fields', value: 'FormSection' },
-                ]}
-              />
-            </Box>
+          </FormProvider>
+        )}
 
-            <Icon
-              onClick={async () => {
-                setHasNewField(false);
-              }}
-              h="44px"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              as={IoClose}
-              size="md"
-              color="gray.500"
-              cursor="pointer"
-              _hover={{ color: 'gray.800' }}
-            />
-          </Box>
-        </FormProvider>
-      )}
-
-      {hasNewField ? (
+        {hasNewField ? (
+          <Button
+            size="md"
+            alignSelf="flex-start"
+            display="flex"
+            alignItems="center"
+            type="submit"
+            isLoading={isLoading || fieldLoading}
+          >
+            <Icon as={IoIosCheckmark} size="lg" />
+            <Box lineHeight={0}>Done</Box>
+          </Button>
+        ) : null}
+      </Box>
+      {!hasNewField && (
         <Button
           size="md"
+          variant="outline"
           alignSelf="flex-start"
           display="flex"
           alignItems="center"
-          type="submit"
-          isLoading={isLoading || fieldLoading}
+          gap="s8"
+          type="button"
+          onClick={() => {
+            setHasNewField((prev) => !prev);
+          }}
         >
-          <Icon as={IoIosCheckmark} size="lg" />
-          <Box lineHeight={0}>Done</Box>
+          <Icon as={AiOutlinePlus} />
+          <Box lineHeight={0}>Add New Field</Box>
         </Button>
-      ) : null}
-    </Box>
-    {!hasNewField && (
-      <Button
-        size="md"
-        variant="outline"
-        alignSelf="flex-start"
-        display="flex"
-        alignItems="center"
-        gap="s8"
-        type="button"
-        onClick={() => {
-          setHasNewField((prev) => !prev);
-        }}
-      >
-        <Icon as={AiOutlinePlus} />
-        <Box lineHeight={0}>Add New Field</Box>
-      </Button>
-    )}
-  </>);
+      )}
+    </>
+  );
 };

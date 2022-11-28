@@ -9,7 +9,7 @@ import {
   useGetAlternativeChannelListQuery,
 } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Box, ChakraModal, DetailCardContent, Grid, SwitchTabs } from '@coop/shared/ui';
+import { Box, ChakraModal, DetailCardContent, Grid, SwitchTabs } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 interface ACTableProps {

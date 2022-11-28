@@ -35,7 +35,7 @@ import {
   FormSection,
   Grid,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */

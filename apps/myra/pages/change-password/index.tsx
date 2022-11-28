@@ -13,7 +13,7 @@ import {
   Icon,
   PasswordInput,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const Container = ({ children }) => {

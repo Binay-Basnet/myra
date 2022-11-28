@@ -28,7 +28,7 @@ import {
   FormPhoneNumber,
   FormSelect,
 } from '@coop/shared/form';
-import { Box, FormSection, GridItem, TextFields } from '@coop/shared/ui';
+import { Box, FormSection, GridItem, TextFields } from '@myra-ui';
 import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';

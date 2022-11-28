@@ -1,5 +1,6 @@
 import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
+import { Box, Button, FormFooter, Icon, Text, toast } from '@myra-ui';
 
 import {
   addIndividualError,
@@ -8,7 +9,6 @@ import {
   useAppSelector,
   useGetKymFormStatusQuery,
 } from '@coop/cbs/data-access';
-import { Box, Button, FormFooter, Icon, Text, toast } from '@coop/shared/ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const KymIndividualFooter = () => {

@@ -11,7 +11,7 @@ import {
 } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormFileInput } from '@coop/shared/form';
-import { Grid } from '@coop/shared/ui';
+import { Grid } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 interface Iprops {

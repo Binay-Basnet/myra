@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 
 import { BlockChequeRequest } from '@coop/cbs/requests/lists';
 import { WithdrawSlipLayout } from '@coop/myra/components';
-import { MainLayout } from '@coop/shared/ui';
+import { MainLayout } from '@myra-ui';
 
 const BlockChequeRequestPage = () => <BlockChequeRequest />;
 

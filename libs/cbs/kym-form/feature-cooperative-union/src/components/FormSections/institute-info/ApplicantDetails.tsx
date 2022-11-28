@@ -5,11 +5,8 @@ import { GridItem } from '@chakra-ui/react';
 import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import { FormAddress, FormInput, FormSwitch } from '@coop/shared/form';
-import { Box, FormSection } from '@coop/shared/ui';
-import {
-  getKymSectionCoOperativeUnion,
-  useTranslation,
-} from '@coop/shared/utils';
+import { Box, FormSection } from '@myra-ui';
+import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
 
 import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
 
@@ -28,9 +25,7 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
 
   const { watch } = methods;
 
-  const isPermanentAndTemporaryAddressSame = watch(
-    'applicantIsPermanentAndTemporaryAddrSame'
-  );
+  const isPermanentAndTemporaryAddressSame = watch('applicantIsPermanentAndTemporaryAddrSame');
 
   return (
     <>
@@ -42,37 +37,18 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
             setSection(kymSection);
           }}
         >
-          <FormSection
-            id="Current Member Details"
-            header="kymCoopUnionApplicant"
-          >
+          <FormSection id="Current Member Details" header="kymCoopUnionApplicant">
             {' '}
-            <FormInput
-              type="text"
-              name="applicantName"
-              label={t['kymCoopUnionName']}
-            />
+            <FormInput type="text" name="applicantName" label={t['kymCoopUnionName']} />
             <FormInput
               type="text"
               name="applicantDesignationEn"
               label={t['kymCoopUnionDesignation']}
             />
             <Box></Box>
-            <FormInput
-              type="text"
-              name="applicantEmail"
-              label={t['kymCoopUnionEmailAddress']}
-            />
-            <FormInput
-              type="text"
-              name="applicantContactNo"
-              label={t['kymCoopUnionContactNo']}
-            />
-            <FormInput
-              type="text"
-              name="applicantPanNo"
-              label={t['kymCoopUnionPANNo']}
-            />
+            <FormInput type="text" name="applicantEmail" label={t['kymCoopUnionEmailAddress']} />
+            <FormInput type="text" name="applicantContactNo" label={t['kymCoopUnionContactNo']} />
+            <FormInput type="text" name="applicantPanNo" label={t['kymCoopUnionPANNo']} />
           </FormSection>
 
           <FormAddress
@@ -81,10 +57,7 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
             sectionId="kymAccIndPermanentAddress"
           />
 
-          <FormSection
-            id="kymAccIndTemporaryAddress"
-            header="kymIndTemporaryAddress"
-          >
+          <FormSection id="kymAccIndTemporaryAddress" header="kymIndTemporaryAddress">
             <GridItem colSpan={3}>
               <FormSwitch
                 name="applicantIsPermanentAndTemporaryAddrSame"

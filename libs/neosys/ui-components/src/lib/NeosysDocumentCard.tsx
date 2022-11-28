@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { AiOutlineEye } from 'react-icons/ai';
 import Image from 'next/image';
 
-import { Box, Icon, Modal, Text } from '@coop/shared/ui';
+import { Box, Icon, Modal, Text } from '@myra-ui';
 
 export interface INeosysDocumentCardProps {
   img: string;

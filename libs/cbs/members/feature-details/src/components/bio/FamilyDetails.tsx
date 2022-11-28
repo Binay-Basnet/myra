@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
-import { DetailCardContent, DetailsCard } from '@coop/shared/ui';
+import { DetailCardContent, DetailsCard } from '@myra-ui';
 
 export const MemberFamilyInfo = () => {
   const router = useRouter();

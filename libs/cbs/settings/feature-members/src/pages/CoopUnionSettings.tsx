@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 
 import { FormCategory } from '@coop/cbs/data-access';
-import { Box } from '@coop/shared/ui';
+import { Box } from '@myra-ui';
 
 import { KYMSettings } from '../components';
 import { COOP_UNION_FIELDS } from '../constants/KYM_FIELDS';

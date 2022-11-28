@@ -6,7 +6,7 @@ import {
   SettingsLayout,
   SettingsPageHeader,
 } from '@coop/cbs/settings/ui-layout';
-import { Box } from '@coop/shared/ui';
+import { Box } from '@myra-ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 const ChartsOfAccounts = () => {

@@ -11,7 +11,7 @@ import {
   useAppSelector,
   useGetCoopUnionSectionStatusQuery,
 } from '@coop/cbs/data-access';
-import { Box, Button, Container, FormFooter, Icon, Text, toast } from '@coop/shared/ui';
+import { Box, Button, Container, FormFooter, Icon, Text, toast } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const KYMCoopUnionFooter = () => {

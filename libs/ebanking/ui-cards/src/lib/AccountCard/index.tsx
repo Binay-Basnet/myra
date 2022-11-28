@@ -24,7 +24,7 @@ import {
   Switch,
   Text,
   TextFields,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 
 import { AccountQRModal } from '../AccountQRModal';
 
@@ -49,7 +49,7 @@ export const AccountCard = ({ isDefault, account, isLoan }: IAccountCardProps) =
   }, [isDefault]);
 
   return (
-    (<Box p="s16" display="flex" flexDir="column" gap="s8" bg="white" borderRadius="br2">
+    <Box p="s16" display="flex" flexDir="column" gap="s8" bg="white" borderRadius="br2">
       <Box display="flex" justifyContent="space-between" alignItems="flex-start">
         <Box
           display="flex"
@@ -193,6 +193,6 @@ export const AccountCard = ({ isDefault, account, isLoan }: IAccountCardProps) =
         {/*  Interest Rate: {account?.interestRate?.toFixed(2) ?? 'N/A'}% */}
         {/* </TextFields> */}
       </Box>
-    </Box>)
+    </Box>
   );
 };

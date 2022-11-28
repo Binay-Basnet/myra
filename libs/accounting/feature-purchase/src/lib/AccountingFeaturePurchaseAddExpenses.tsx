@@ -16,16 +16,7 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import {
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  GridItem,
-  Icon,
-  IconButton,
-  Text,
-} from '@coop/shared/ui';
+import { Box, Button, Container, FormFooter, GridItem, Icon, IconButton, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { ExpensesTable } from '../components';
@@ -75,11 +66,7 @@ export const AccountingFeaturePurchaseAddExpenses = () => {
           top="110px"
           zIndex={8}
         >
-          <Text
-            fontSize="r2"
-            fontWeight="600"
-            color="neutralColorLight.Gray-80"
-          >
+          <Text fontSize="r2" fontWeight="600" color="neutralColorLight.Gray-80">
             {t['accountingExpensesAddNewExpense']}
           </Text>
           <IconButton
@@ -105,11 +92,7 @@ export const AccountingFeaturePurchaseAddExpenses = () => {
                       />
                     </GridItem>
 
-                    <FormInput
-                      name="date"
-                      type="date"
-                      label={t['accountingExpensesAddDate']}
-                    />
+                    <FormInput name="date" type="date" label={t['accountingExpensesAddDate']} />
 
                     <FormInput
                       name="dueDate"
@@ -128,11 +111,7 @@ export const AccountingFeaturePurchaseAddExpenses = () => {
 
                 <ExpensesTable />
 
-                <Box
-                  display="grid"
-                  gap="s32"
-                  gridTemplateColumns="repeat(2,1fr)"
-                >
+                <Box display="grid" gap="s32" gridTemplateColumns="repeat(2,1fr)">
                   <FormTextArea
                     name="note"
                     label={t['accountingExpensesAddNotes']}
@@ -141,29 +120,17 @@ export const AccountingFeaturePurchaseAddExpenses = () => {
                   />
                   <FieldCardComponents rows="repeat(5,1fr)">
                     <GridItem display="flex" justifyContent="space-between">
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                      >
+                      <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
                         {t['accountingExpensesAddSubTotal']}
                       </Text>
 
-                      <Text
-                        color="neutralColorLight.Gray-50"
-                        fontWeight="Medium"
-                        fontSize="r1"
-                      >
+                      <Text color="neutralColorLight.Gray-50" fontWeight="Medium" fontSize="r1">
                         2,000.00
                       </Text>
                     </GridItem>
 
                     <GridItem display="flex" justifyContent="space-between">
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                      >
+                      <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
                         {t['accountingExpensesAddDiscount']}
                       </Text>
 
@@ -179,54 +146,30 @@ export const AccountingFeaturePurchaseAddExpenses = () => {
                     </GridItem>
 
                     <GridItem display="flex" justifyContent="space-between">
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                      >
+                      <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
                         {t['accountingExpensesAddTaxableTotal']}
                       </Text>
-                      <Text
-                        color="neutralColorLight.Gray-50"
-                        fontWeight="Medium"
-                        fontSize="r1"
-                      >
+                      <Text color="neutralColorLight.Gray-50" fontWeight="Medium" fontSize="r1">
                         5,000.00
                       </Text>
                     </GridItem>
 
                     <GridItem display="flex" justifyContent="space-between">
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                      >
+                      <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
                         {t['accountingExpensesAddVAT']}
                       </Text>
 
-                      <Text
-                        color="neutralColorLight.Gray-50"
-                        fontWeight="Medium"
-                        fontSize="r1"
-                      >
+                      <Text color="neutralColorLight.Gray-50" fontWeight="Medium" fontSize="r1">
                         2000
                       </Text>
                     </GridItem>
 
                     <GridItem display="flex" justifyContent="space-between">
-                      <Text
-                        color="neutralColorLight.Gray-80"
-                        fontWeight="500"
-                        fontSize="s3"
-                      >
+                      <Text color="neutralColorLight.Gray-80" fontWeight="500" fontSize="s3">
                         {t['accountingExpensesAddGrandTotal']}
                       </Text>
 
-                      <Text
-                        color="neutralColorLight.Gray-70"
-                        fontWeight="Medium"
-                        fontSize="r1"
-                      >
+                      <Text color="neutralColorLight.Gray-70" fontWeight="Medium" fontSize="r1">
                         12,000
                       </Text>
                     </GridItem>
@@ -246,9 +189,7 @@ export const AccountingFeaturePurchaseAddExpenses = () => {
                       <FormSelect
                         name="tdsAccount"
                         label={t['accountingExpensesAddTDSLedgerAccount']}
-                        __placeholder={
-                          t['accountingExpensesAddTDSLedgerAccount']
-                        }
+                        __placeholder={t['accountingExpensesAddTDSLedgerAccount']}
                         options={[]}
                       />
 
@@ -280,12 +221,7 @@ export const AccountingFeaturePurchaseAddExpenses = () => {
             draftButton={
               <Button type="submit" variant="ghost" shade="neutral">
                 <Icon as={BiSave} />
-                <Text
-                  alignSelf="center"
-                  fontWeight="Medium"
-                  fontSize="s2"
-                  ml="5px"
-                >
+                <Text alignSelf="center" fontWeight="Medium" fontSize="s2" ml="5px">
                   {t['saveDraft']}
                 </Text>
               </Button>
@@ -297,4 +233,4 @@ export const AccountingFeaturePurchaseAddExpenses = () => {
       </Box>
     </>
   );
-}
+};

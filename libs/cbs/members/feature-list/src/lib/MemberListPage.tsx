@@ -1,19 +1,11 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
+import { asyncToast, Avatar, Box, ChakraModal, PageHeader, TablePopover, Text } from '@myra-ui';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { ObjState, useDeleteDraftMutation, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { formatTableAddress } from '@coop/cbs/utils';
 import { Column, Table } from '@coop/shared/table';
-import {
-  asyncToast,
-  Avatar,
-  Box,
-  ChakraModal,
-  PageHeader,
-  TablePopover,
-  Text,
-} from '@coop/shared/ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 import { MEMBER_TAB_ITEMS } from '../constants/MEMBER_TAB_ITEMS';
@@ -44,12 +36,17 @@ export const MemberListPage = () => {
   const isDraft = router?.query['objState'] === 'DRAFT';
   const isSubmitted = router?.query['objState'] === 'VALIDATED';
 
-  const { data, isFetching, refetch } = useGetMemberListQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    filter: {
-      objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+  const { data, isFetching, refetch } = useGetMemberListQuery(
+    {
+      pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      filter: {
+        objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
+      },
     },
-  });
+    {
+      staleTime: 0,
+    }
+  );
 
   React.useEffect(() => {
     refetch();

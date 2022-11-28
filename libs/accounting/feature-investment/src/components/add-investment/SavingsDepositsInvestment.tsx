@@ -7,7 +7,7 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { FormSection, GridItem, Text } from '@coop/shared/ui';
+import { FormSection, GridItem, Text } from '@myra-ui';
 
 const savingInvestmentTypeOptions = [
   { label: 'Type 1', value: SavingInvestmentType.Type_1 },

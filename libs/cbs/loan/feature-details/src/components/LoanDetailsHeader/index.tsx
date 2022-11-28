@@ -1,4 +1,4 @@
-import { Box, DetailPageHeader } from '@coop/shared/ui';
+import { Box, DetailPageHeader } from '@myra-ui';
 
 import { useLoanDetails } from '../../hooks/useLoanDetails';
 

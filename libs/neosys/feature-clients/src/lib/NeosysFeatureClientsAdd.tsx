@@ -1,12 +1,12 @@
-import {FormProvider, useForm} from 'react-hook-form';
-import {useQueryClient} from '@tanstack/react-query';
-import {useRouter} from 'next/router';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 
-import {OrganizationClientInput, useAddNewClientMutation} from '@coop/neosys-admin/data-access';
-import {asyncToast, Box, Container, FormFooter, FormHeader} from '@coop/shared/ui';
-import {useTranslation} from '@coop/shared/utils';
+import { OrganizationClientInput, useAddNewClientMutation } from '@coop/neosys-admin/data-access';
+import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
+import { useTranslation } from '@coop/shared/utils';
 
-import {NeosysClientForm} from '../form/NeosysClientForm';
+import { NeosysClientForm } from '../form/NeosysClientForm';
 
 /* eslint-disable-next-line */
 export interface NeosysFeatureClientsAddProps {}
@@ -48,7 +48,7 @@ export const NeosysFeatureClientsAdd = () => {
   const { mutateAsync } = useAddNewClientMutation();
 
   return (
-    (<Container minW="container.xl" p="0" bg="white">
+    <Container minW="container.xl" p="0" bg="white">
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
         <FormHeader title={t['neoClientNewUser']} />
       </Box>
@@ -92,6 +92,6 @@ export const NeosysFeatureClientsAdd = () => {
           }}
         />
       </Box>
-    </Container>)
+    </Container>
   );
 };

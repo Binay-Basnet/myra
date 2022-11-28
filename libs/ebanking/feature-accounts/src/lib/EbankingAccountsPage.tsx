@@ -9,7 +9,7 @@ import {
   useGetAccountListQuery,
   useGetEbankingLoanAccountsQuery,
 } from '@coop/ebanking/data-access';
-import { Box, Divider, Grid, Icon, Text } from '@coop/shared/ui';
+import { Box, Divider, Grid, Icon, Text } from '@myra-ui';
 
 export const EbankingAccountsPage = () => {
   const router = useRouter();

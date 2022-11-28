@@ -8,7 +8,7 @@ import {
   useSaveAlternativeChargesMutation,
 } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
-import { asyncToast, Box, SettingsFooter, Text } from '@coop/shared/ui';
+import { asyncToast, Box, SettingsFooter, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 type ChargesEditTable = {

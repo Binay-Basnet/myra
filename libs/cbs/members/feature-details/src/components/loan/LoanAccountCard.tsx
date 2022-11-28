@@ -1,7 +1,7 @@
 import { IoCopyOutline, IoQrCode } from 'react-icons/io5';
 import { useDisclosure } from '@chakra-ui/react';
 
-import { AccountQRModal, Box, Divider, Icon, IconButton, Text } from '@coop/shared/ui';
+import { AccountQRModal, Box, Divider, Icon, IconButton, Text } from '@myra-ui';
 import { copyToClipboard } from '@coop/shared/utils';
 
 interface IAccountCardProps {

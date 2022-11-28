@@ -1,6 +1,6 @@
 import { useDisclosure } from '@chakra-ui/react';
 
-import { Button, ChakraModal, DetailsCard } from '@coop/shared/ui';
+import { Button, ChakraModal, DetailsCard } from '@myra-ui';
 
 import { LoanPaymentScheduleTable } from '../LoanPaymentScheduleTable';
 import { useLoanDetails } from '../../hooks/useLoanDetails';

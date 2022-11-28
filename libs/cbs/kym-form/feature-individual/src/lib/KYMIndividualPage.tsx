@@ -12,7 +12,7 @@ import {
   useGetIndividualKymOptionsQuery,
   useGetKymFormStatusQuery,
 } from '@coop/cbs/data-access';
-import { Box, Container, FormHeader, Text } from '@coop/shared/ui';
+import { Box, Container, FormHeader, Text } from '@myra-ui';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { AccorrdianAddMember } from '@coop/cbs/kym-form/formElements';
 import {

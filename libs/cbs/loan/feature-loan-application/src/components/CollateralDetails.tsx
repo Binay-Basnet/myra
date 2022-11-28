@@ -9,7 +9,7 @@ import {
   useGetLoanProductDetailsDataQuery,
 } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { Box, Button, ChakraModal, Divider, Icon, Text, TextFields, VStack } from '@coop/shared/ui';
+import { Box, Button, ChakraModal, Divider, Icon, Text, TextFields, VStack } from '@myra-ui';
 
 import { COLLATERAL_COMPS } from './collateral';
 

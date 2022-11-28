@@ -3,7 +3,7 @@ import { BsDownload } from 'react-icons/bs';
 import { IoShareSocialSharp } from 'react-icons/io5';
 import { QRCodeSVG } from 'qrcode.react';
 
-import { Box, Button, ChakraModal, Icon, Text, TextFields } from '@coop/shared/ui';
+import { Box, Button, ChakraModal, Icon, Text, TextFields } from '@myra-ui';
 
 interface IAccountQRModalProps {
   open: boolean;

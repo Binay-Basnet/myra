@@ -1,6 +1,6 @@
 import { DownloadIcon } from '@chakra-ui/icons';
 
-import { Box, Button, Icon } from '@coop/shared/ui';
+import { Box, Button, Icon } from '@myra-ui';
 
 import { EbankingChip } from '../EbankingChip';
 

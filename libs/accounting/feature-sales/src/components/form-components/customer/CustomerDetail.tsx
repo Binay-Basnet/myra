@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 
 import { FormAddress, FormInput, FormPhoneNumber } from '@coop/shared/form';
-import { Box, Button, FormSection, GridItem, Icon } from '@coop/shared/ui';
+import { Box, Button, FormSection, GridItem, Icon } from '@myra-ui';
 
 interface ICustomerDetailProps {
   setShowAdditionalDetails: Dispatch<SetStateAction<boolean>>;

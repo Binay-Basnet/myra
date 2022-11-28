@@ -2,7 +2,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { KymIndMemberInput } from '@coop/cbs/data-access';
 import { FormEmailInput, FormPhoneNumber } from '@coop/shared/form';
-import { FormSection } from '@coop/shared/ui';
+import { FormSection } from '@myra-ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { useIndividual } from '../../hooks/useIndividual';

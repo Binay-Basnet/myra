@@ -1,7 +1,7 @@
 import { IconType } from 'react-icons';
 import Link from 'next/link';
 
-import { Box, Icon, Text } from '@coop/shared/ui';
+import { Box, Icon, Text } from '@myra-ui';
 
 type SidebarNavItem = {
   label: string;

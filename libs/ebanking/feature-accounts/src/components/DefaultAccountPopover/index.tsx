@@ -8,7 +8,7 @@ import {
   useGetAccountListQuery,
   useSetDefaultAccountMutation,
 } from '@coop/ebanking/data-access';
-import { Box, Button, Icon, Popover, PopoverContent, PopoverTrigger, Text } from '@coop/shared/ui';
+import { Box, Button, Icon, Popover, PopoverContent, PopoverTrigger, Text } from '@myra-ui';
 
 export const DefaultAccountPopover = () => {
   const defaultAccount = useAppSelector((state) => state?.auth?.cooperative?.user?.defaultAccount);

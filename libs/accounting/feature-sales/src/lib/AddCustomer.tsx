@@ -9,7 +9,7 @@ import {
   useGetSalesCustomerFormStateDataQuery,
   useSetSalesCustomerDataMutation,
 } from '@coop/cbs/data-access';
-import { asyncToast, Box, Container, FormFooter, FormHeader } from '@coop/shared/ui';
+import { asyncToast, Box, Container, FormFooter, FormHeader } from '@myra-ui';
 
 import { AdditionalDetail, CustomerDetail } from '../components/form-components/customer';
 

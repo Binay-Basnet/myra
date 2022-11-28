@@ -9,7 +9,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { LoanReportInputs } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { Box } from '@coop/shared/ui';
+import { Box } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 export const LoanStatementReport = () => {

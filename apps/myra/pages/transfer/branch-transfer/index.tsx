@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
 import { TransferLayout } from '@coop/cbs/transactions/ui-layouts';
-import { Box, MainLayout, WIPState } from '@coop/shared/ui';
+import { Box, MainLayout, WIPState } from '@myra-ui';
 
 const BranchTransfer = () => (
   <Box display="flex" justifyContent="center" alignItems="center" pt="s32">

@@ -5,7 +5,7 @@ import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, Text } from '@coop/shared/ui';
+import { Avatar, Box, Text } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -49,11 +49,7 @@ export function AccountingFeaturePurchaseSupplierPayment() {
         cell: (props) => {
           return (
             <Box display="flex" alignItems="center" gap="s12">
-              <Avatar
-                name="Dan Abrahmov"
-                size="sm"
-                src="https://bit.ly/dan-abramov"
-              />
+              <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
               <Text
                 fontSize="s3"
                 textTransform="capitalize"
@@ -86,10 +82,7 @@ export function AccountingFeaturePurchaseSupplierPayment() {
         header: '',
         accessorKey: 'actions',
         cell: (cell) => (
-          <PopoverComponent
-            items={popoverTitle}
-            member={cell?.row?.original?.node}
-          />
+          <PopoverComponent items={popoverTitle} member={cell?.row?.original?.node} />
         ),
         meta: {
           width: '60px',
@@ -104,9 +97,7 @@ export function AccountingFeaturePurchaseSupplierPayment() {
       <AccountingPageHeader
         heading={t['accountingSupplierPaymentListSupplierPayment']}
         buttonLabel={t['accountingSupplierPaymentListSupplierPaymentNew']}
-        buttonHandler={() =>
-          router.push('/accounting/purchase/supplier-payment/add')
-        }
+        buttonHandler={() => router.push('/accounting/purchase/supplier-payment/add')}
       />
 
       <Table

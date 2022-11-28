@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-import { MainLayout } from '@coop/shared/ui';
+import { MainLayout } from '@myra-ui';
 
 const Accounts = () => <div style={{ marginTop: '150px' }}>Accounts share share</div>;
 

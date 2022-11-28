@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { Box } from '@coop/shared/ui';
+import { Box } from '@myra-ui';
 
 import { MemberDetailsPathBar, MemberDetailsSidebar } from '../components';
 import {

@@ -1,6 +1,6 @@
 import { FdInvestmentType } from '@coop/cbs/data-access';
 import { FormAmountInput, FormSelect } from '@coop/shared/form';
-import { Alert, Box, FormSection, GridItem, Text } from '@coop/shared/ui';
+import { Alert, Box, FormSection, GridItem, Text } from '@myra-ui';
 
 const fdTypeOptions = [
   { label: 'Type 1', value: FdInvestmentType.Type_1 },
@@ -20,7 +20,7 @@ export const FixedDepositTransaction = () => (
   //   value: item?.id as string,
   // }));
 
-  (<FormSection header="Fixed Deposit">
+  <FormSection header="Fixed Deposit">
     <FormSelect name="fd.type" label="Type" options={fdTypeOptions} />
     <FormAmountInput name="fd.amount" label="FD Amount" />
     <GridItem colSpan={3} display="none">
@@ -53,5 +53,5 @@ export const FixedDepositTransaction = () => (
         {/* </Box> */}
       </Alert>
     </GridItem>
-  </FormSection>)
+  </FormSection>
 );

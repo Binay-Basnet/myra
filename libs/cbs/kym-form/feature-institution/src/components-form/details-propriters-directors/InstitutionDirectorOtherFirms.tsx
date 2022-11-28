@@ -9,7 +9,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-import { Box, Button, Grid, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, Grid, Icon, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IAddDirector {

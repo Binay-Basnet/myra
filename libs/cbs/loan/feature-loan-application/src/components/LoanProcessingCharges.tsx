@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { LoanAccountInput } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 
 import { useLoanProductContext } from '../hooks/useLoanProduct';
 

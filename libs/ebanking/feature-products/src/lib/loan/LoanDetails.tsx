@@ -9,7 +9,7 @@ import {
   useGetEbankingLoanProductTypeListQuery,
 } from '@coop/ebanking/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Box, DetailCardContent, DetailsCard, PathBar, Text } from '@coop/shared/ui';
+import { Box, DetailCardContent, DetailsCard, PathBar, Text } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 import {
@@ -73,7 +73,7 @@ export const LoanDetails = () => {
   ];
 
   return (
-    (<Box display="flex" flexDirection="column" gap="s16">
+    <Box display="flex" flexDirection="column" gap="s16">
       <PathBar
         paths={[
           { label: 'Home', link: '/home' },
@@ -286,7 +286,7 @@ export const LoanDetails = () => {
           />
         </DetailsCard>
       )}
-    </Box>)
+    </Box>
   );
 };
 

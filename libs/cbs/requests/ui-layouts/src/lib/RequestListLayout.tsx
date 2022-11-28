@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { TabColumn } from '@coop/myra/components';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 
 interface IAccountPageLayoutProps {
   children: React.ReactNode;

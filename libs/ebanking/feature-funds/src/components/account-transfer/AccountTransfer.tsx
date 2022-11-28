@@ -5,7 +5,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { InfoCard } from '@coop/ebanking/cards';
 import { useAppSelector, useGetAccountListQuery } from '@coop/ebanking/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Button, GridItem, Icon } from '@coop/shared/ui';
+import { Box, Button, GridItem, Icon } from '@myra-ui';
 
 type PaymentStatus = 'form' | 'review' | 'success' | 'failure' | 'loading';
 

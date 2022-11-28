@@ -1,6 +1,6 @@
 import { Control, Controller, Path, useFormContext } from 'react-hook-form';
 
-import { AccountInput, InputProps } from '@coop/shared/ui';
+import { AccountInput, InputProps } from '@myra-ui';
 
 /* eslint-disable-next-line */
 interface FormAccountInputProps<T> extends InputProps {

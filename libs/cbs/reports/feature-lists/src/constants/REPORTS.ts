@@ -64,6 +64,7 @@ export enum Report {
   CIB_CIC_MEMBER_LOAN_INFORMATION = 'CIB/CIC/Member loan information system(MLIB) Setup',
   LOAN_UTILIZATION_INSPECTION = 'Loan utilization inspection(eg. above 5 Lakh)',
 
+  THRESHOLD_TRANSACTION_REPORT = 'Threshold Transaction ',
   TRANSACTION_TRIAL_SHEET = 'Trial Sheet',
   TRANSACTION_INCOME_STATEMENT = 'Income Statement',
   TRANSACTION_CASH_FLOW_STATEMENT = 'Cash Flow Statement',
@@ -204,6 +205,11 @@ export const REPORTS = {
     {
       id: '5.9',
       report: Report.AML_REPORTING,
+    },
+    {
+      id: '5.9.1',
+      report: Report.THRESHOLD_TRANSACTION_REPORT,
+      link: 'ttr',
     },
     {
       id: '5.10',

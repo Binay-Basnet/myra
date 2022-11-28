@@ -9,7 +9,7 @@ import {
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
-import { FormSection } from '@coop/shared/ui';
+import { FormSection } from '@myra-ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 interface IKYMFinancialTransactionDetailsProps {

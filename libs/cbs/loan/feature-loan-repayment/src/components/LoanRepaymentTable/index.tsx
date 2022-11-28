@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { LoanInstallment } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Text } from '@coop/shared/ui';
+import { Text } from '@myra-ui';
 
 interface ILoanPaymentScheduleTableProps {
   data: LoanInstallment[];

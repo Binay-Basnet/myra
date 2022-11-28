@@ -1,19 +1,13 @@
-import {
-  SettingsLayout,
-  SettingsUserLayout,
-} from '@coop/cbs/settings/ui-layout';
-import { Box, WIPState } from '@coop/shared/ui';
+import { SettingsLayout, SettingsUserLayout } from '@coop/cbs/settings/ui-layout';
+import { Box, WIPState } from '@myra-ui';
 
-const OtherUsers = () =>
+const OtherUsers = () => (
   //   return <OtherUsersList />;
 
-   (
-    <Box display="flex" justifyContent="center" alignItems="center">
-      <WIPState />
-    </Box>
-  )
-;
-
+  <Box display="flex" justifyContent="center" alignItems="center">
+    <WIPState />
+  </Box>
+);
 export default OtherUsers;
 OtherUsers.getLayout = function getLayout(page) {
   return (

@@ -10,7 +10,7 @@ import {
   PopOverComponentForButtonList,
   SettingsButton,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { TabColumn } from '../tab/TabforMemberPage';

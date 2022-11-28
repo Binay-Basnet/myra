@@ -8,7 +8,7 @@ import {
   useSetSettingsShareBonusMutation,
 } from '@coop/cbs/data-access';
 import { FormInput, FormRadioGroup } from '@coop/shared/form';
-import { asyncToast, Box, SettingsFooter, toast } from '@coop/shared/ui';
+import { asyncToast, Box, SettingsFooter, toast } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';
@@ -86,11 +86,7 @@ export const ShareSettingsBonusPage = () => {
               subtitle={t['shareBonusChooseWhoPaysTheTax']}
             >
               <Box display="flex" flexDir="column" gap="s16">
-                <FormRadioGroup
-                  options={taxpayerOpt}
-                  name="taxPayer"
-                  orientation="vertical"
-                />
+                <FormRadioGroup options={taxpayerOpt} name="taxPayer" orientation="vertical" />
               </Box>
             </ShareSettingsCard>
 
@@ -112,18 +108,11 @@ export const ShareSettingsBonusPage = () => {
               subtitle={t['shareAccountBonusShareDebited']}
             >
               <Box w="33%">
-                <FormInput
-                  name="accountMapping"
-                  size="sm"
-                  __placeholder={t['shareAccountName']}
-                />
+                <FormInput name="accountMapping" size="sm" __placeholder={t['shareAccountName']} />
               </Box>
             </ShareSettingsCard>
           </Box>
-          <SettingsFooter
-            handleSave={handleSubmit}
-            handleDiscard={handleDiscard}
-          />
+          <SettingsFooter handleSave={handleSubmit} handleDiscard={handleDiscard} />
         </form>
       </FormProvider>
     </>
