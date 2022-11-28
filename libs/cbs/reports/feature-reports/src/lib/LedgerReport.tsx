@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { GridItem } from '@myra-ui';
 
 import {
   GeneralLedgerFilter,
@@ -9,7 +10,6 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormCOASelect } from '@coop/shared/form';
-import { GridItem } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 export const LedgerReport = () => {
@@ -30,7 +30,7 @@ export const LedgerReport = () => {
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
-      report={ReportEnum.MB_REGISTRATION_REPORT}
+      report={ReportEnum.GENERAL_LEDGER_REPORT}
     >
       <Report.Header>
         <Report.PageHeader
