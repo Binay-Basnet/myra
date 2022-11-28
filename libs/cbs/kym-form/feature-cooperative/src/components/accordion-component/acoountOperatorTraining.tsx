@@ -8,7 +8,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormDatePicker, FormInput } from '@coop/shared/form';
-import { Box, Button, FormSection, GridItem, Icon } from '@coop/shared/ui';
+import { Box, Button, FormSection, GridItem, Icon } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IAddTraining {

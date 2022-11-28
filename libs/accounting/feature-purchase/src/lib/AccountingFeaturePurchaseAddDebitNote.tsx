@@ -10,16 +10,7 @@ import {
 } from '@coop/accounting/ui-components';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
-import {
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  GridItem,
-  Icon,
-  IconButton,
-  Text,
-} from '@coop/shared/ui';
+import { Box, Button, Container, FormFooter, GridItem, Icon, IconButton, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { DebitNoteTable } from '../components';
@@ -68,11 +59,7 @@ export const AccountingFeaturePurchaseAddDebitNote = () => {
           top="110px"
           zIndex={8}
         >
-          <Text
-            fontSize="r2"
-            fontWeight="600"
-            color="neutralColorLight.Gray-80"
-          >
+          <Text fontSize="r2" fontWeight="600" color="neutralColorLight.Gray-80">
             {t['accountingDebitNoteAddNewDebitNote']}
           </Text>
           <IconButton
@@ -100,26 +87,16 @@ export const AccountingFeaturePurchaseAddDebitNote = () => {
                       name="billReference"
                       type="text"
                       label={t['accountingDebitNoteAddBillReference']}
-                      __placeholder={
-                        t['accountingDebitNoteAddBillReferenceEnter']
-                      }
+                      __placeholder={t['accountingDebitNoteAddBillReferenceEnter']}
                     />
 
-                    <FormInput
-                      name="date"
-                      type="date"
-                      label={t['accountingDebitNoteAddDate']}
-                    />
+                    <FormInput name="date" type="date" label={t['accountingDebitNoteAddDate']} />
                   </InputGroupContainer>
                 </BoxContainer>
 
                 <DebitNoteTable />
 
-                <Box
-                  display="grid"
-                  gap="s32"
-                  gridTemplateColumns="repeat(2,1fr)"
-                >
+                <Box display="grid" gap="s32" gridTemplateColumns="repeat(2,1fr)">
                   <FormTextArea
                     name="note"
                     label={t['accountingDebitNoteAddNotes']}
@@ -128,72 +105,40 @@ export const AccountingFeaturePurchaseAddDebitNote = () => {
                   />
                   <FieldCardComponents rows="repeat(5,1fr)">
                     <GridItem display="flex" justifyContent="space-between">
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                      >
+                      <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
                         {t['accountingDebitNoteAddSubTotal']}
                       </Text>
 
-                      <Text
-                        color="neutralColorLight.Gray-50"
-                        fontWeight="Medium"
-                        fontSize="r1"
-                      >
+                      <Text color="neutralColorLight.Gray-50" fontWeight="Medium" fontSize="r1">
                         2,000.00
                       </Text>
                     </GridItem>
 
                     <GridItem display="flex" justifyContent="space-between">
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                      >
+                      <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
                         {t['accountingDebitNoteAddTaxableTotal']}
                       </Text>
-                      <Text
-                        color="neutralColorLight.Gray-50"
-                        fontWeight="Medium"
-                        fontSize="r1"
-                      >
+                      <Text color="neutralColorLight.Gray-50" fontWeight="Medium" fontSize="r1">
                         5,000.00
                       </Text>
                     </GridItem>
 
                     <GridItem display="flex" justifyContent="space-between">
-                      <Text
-                        color="neutralColorLight.Gray-60"
-                        fontWeight="Medium"
-                        fontSize="s3"
-                      >
+                      <Text color="neutralColorLight.Gray-60" fontWeight="Medium" fontSize="s3">
                         {t['accountingDebitNoteAddVAT']}
                       </Text>
 
-                      <Text
-                        color="neutralColorLight.Gray-50"
-                        fontWeight="Medium"
-                        fontSize="r1"
-                      >
+                      <Text color="neutralColorLight.Gray-50" fontWeight="Medium" fontSize="r1">
                         2000
                       </Text>
                     </GridItem>
 
                     <GridItem display="flex" justifyContent="space-between">
-                      <Text
-                        color="neutralColorLight.Gray-80"
-                        fontWeight="500"
-                        fontSize="s3"
-                      >
+                      <Text color="neutralColorLight.Gray-80" fontWeight="500" fontSize="s3">
                         {t['accountingDebitNoteAddGrandTotal']}
                       </Text>
 
-                      <Text
-                        color="neutralColorLight.Gray-70"
-                        fontWeight="Medium"
-                        fontSize="r1"
-                      >
+                      <Text color="neutralColorLight.Gray-70" fontWeight="Medium" fontSize="r1">
                         12,000
                       </Text>
                     </GridItem>
@@ -210,12 +155,7 @@ export const AccountingFeaturePurchaseAddDebitNote = () => {
             draftButton={
               <Button type="submit" variant="ghost">
                 <Icon as={BiSave} />
-                <Text
-                  alignSelf="center"
-                  fontWeight="Medium"
-                  fontSize="s2"
-                  ml="5px"
-                >
+                <Text alignSelf="center" fontWeight="Medium" fontSize="s2" ml="5px">
                   {t['saveDraft']}
                 </Text>
               </Button>
@@ -227,4 +167,4 @@ export const AccountingFeaturePurchaseAddDebitNote = () => {
       </Box>
     </>
   );
-}
+};

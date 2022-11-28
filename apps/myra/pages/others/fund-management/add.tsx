@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
 import { NewFundManagement } from '@coop/cbs/others/fund-management';
-import { MainLayout } from '@coop/shared/ui';
+import { MainLayout } from '@myra-ui';
 
 const FundManagementAddPage = () => <NewFundManagement />;
 

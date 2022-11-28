@@ -415,3 +415,41 @@ query getUserReport($data: UserReportFilter) {
     }
   }
 }
+
+query getTtrReport($data: TTRReportFilter!) {
+  report {
+    thresholdTransactionReport(data: $data) {
+      data {
+        yearly {
+          name
+          memberId
+          address {
+            ...Address
+          }
+
+          branch
+          date
+          nature
+          accountNo
+          amount
+          sourceOfFund
+          remarks
+        }
+        perTranx {
+          name
+          memberId
+          address {
+            ...Address
+          }
+          branch
+          date
+          nature
+          accountNo
+          amount
+          sourceOfFund
+          remarks
+        }
+      }
+    }
+  }
+}

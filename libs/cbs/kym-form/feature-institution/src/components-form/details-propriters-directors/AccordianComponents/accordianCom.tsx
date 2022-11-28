@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { FormAddress, FormDatePicker, FormInput, FormSwitch } from '@coop/shared/form';
-import { Box, FormSection, Text } from '@coop/shared/ui';
+import { Box, FormSection, Text } from '@myra-ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useDirector } from '../../hooks/useDirector';

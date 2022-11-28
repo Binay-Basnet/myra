@@ -1,7 +1,7 @@
 import { Control, Controller, Path, useFormContext } from 'react-hook-form';
 import { UseControllerProps } from 'react-hook-form/dist/types/controller';
 
-import { Input, InputProps } from '@coop/shared/ui';
+import { Input, InputProps } from '@myra-ui';
 
 interface IFormNumberInputProps<T> extends InputProps {
   name: Path<T>;

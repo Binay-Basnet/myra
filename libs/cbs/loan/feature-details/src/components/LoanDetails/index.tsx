@@ -1,4 +1,4 @@
-import { Box, DetailsCard } from '@coop/shared/ui';
+import { Box, DetailsCard } from '@myra-ui';
 
 import { useLoanDetails } from '../../hooks/useLoanDetails';
 

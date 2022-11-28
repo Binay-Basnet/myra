@@ -142,8 +142,12 @@
       "@coop/shared/form": ["libs/shared/form/src/index.ts"],
       "@coop/shared/map": ["libs/shared/map/src/index.ts"],
       "@coop/shared/table": ["libs/shared/table/src/index.ts"],
-      "@coop/shared/ui": ["libs/shared/ui/src/index.ts"],
-      "@coop/shared/utils": ["libs/shared/utils/src/index.ts"]
+      "@coop/shared/utils": ["libs/shared/utils/src/index.ts"],
+      "@myra-ui": ["libs/@myra/myra-ui/src/index.ts"],
+      "@myra-ui/forms": ["libs/@myra/forms/src/index.ts"],
+      "@myra-ui/foundations": ["libs/@myra/foundations/src/index.ts"],
+      "@myra-ui/theme": ["libs/@myra/theme/src/index.ts"],
+      "@myra/dump": ["libs/@myra/dump/src/index.ts"]
     },
     "jsx": "react"
   },

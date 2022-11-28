@@ -5,7 +5,7 @@ import { DatePicker } from '@raralabs/react-patro';
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
 import { FormDatePicker } from '@coop/shared/form';
 import { Table } from '@coop/shared/table';
-import { Box, Button } from '@coop/shared/ui';
+import { Box, Button } from '@myra-ui';
 
 type TableType = {
   id: number;

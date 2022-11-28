@@ -2,7 +2,7 @@ import { BiSave } from 'react-icons/bi';
 import { IoCloseOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
-import { Box, Button, Container, FormFooter, Icon, IconButton, Text } from '@coop/shared/ui';
+import { Box, Button, Container, FormFooter, Icon, IconButton, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { AddSupplierForm } from '../component/form/AddSupplierForm';

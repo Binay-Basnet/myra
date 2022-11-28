@@ -1,12 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
-import {
-  FormEmailInput,
-  FormInput,
-  FormPhoneNumber,
-  FormSelect,
-} from '@coop/shared/form';
-import { Box, Button, Grid, GridItem } from '@coop/shared/ui';
+import { FormEmailInput, FormInput, FormPhoneNumber, FormSelect } from '@coop/shared/form';
+import { Box, Button, Grid, GridItem } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const roles = [
@@ -75,9 +70,7 @@ export const NeosysUsersForm = () => {
             </Grid>
           </Box>
           <Box>
-            <Button variant="ghost">
-              {t['neoUsersViewEditFullPermission']}
-            </Button>
+            <Button variant="ghost">{t['neoUsersViewEditFullPermission']}</Button>
           </Box>
           {/* <Text fontSize="s3" fontWeight="Medium" color="primary.800">
         {t['neoUsersViewEditFullPermission']}

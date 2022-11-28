@@ -18,7 +18,7 @@ import {
 import { AsyncSelect, Select } from 'chakra-react-select';
 import _, { uniqueId } from 'lodash';
 
-import { Checkbox, Grid, GridItem } from '@coop/shared/ui';
+import { Checkbox, Grid, GridItem } from '@myra-ui';
 
 import { chakraDefaultStyles, searchBarStyle } from '../utils/ChakraSelectTheme';
 import { components } from '../utils/SelectComponents';

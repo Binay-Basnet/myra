@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { SharePaymentMode, ShareVoucherDepositedBy } from '@coop/cbs/data-access';
 import { ShareAccount, ShareCash } from '@coop/cbs/share/shared-ui';
 import { FormFileInput, FormInput, FormSwitchTab, FormTextArea } from '@coop/shared/form';
-import { Box, FormSection, Grid, GridItem, Text } from '@coop/shared/ui';
+import { Box, FormSection, Grid, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BankVoucher } from './BankVoucher';

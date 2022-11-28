@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box } from '@coop/shared/ui';
+import { Box } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { SettingsPageHeader } from './SettingsPageHeader';

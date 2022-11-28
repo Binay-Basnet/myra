@@ -10,7 +10,7 @@ import {
   useDeleteFieldMutation,
   useMoveFieldMutation,
 } from '@coop/cbs/data-access';
-import { AccordionPanel, Box, Button, Icon } from '@coop/shared/ui';
+import { AccordionPanel, Box, Button, Icon } from '@myra-ui';
 
 import { KYMFileSize } from '../KYMFileSize';
 import { KYMSectionNewOption } from '../KYMSectionNewOption';

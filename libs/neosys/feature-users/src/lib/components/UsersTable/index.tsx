@@ -4,7 +4,7 @@ import { Avatar, Flex } from '@chakra-ui/react';
 
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
-import { Column, Table, TableListPageHeader } from '@coop/shared/ui';
+import { Column, Table, TableListPageHeader } from '@myra-ui';
 import { getRouterQuery } from '@coop/shared/utils';
 
 export const UsersTable = () => {

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { ShareTransactionType, useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
-import { Box, Tags, Text } from '@coop/shared/ui';
+import { Box, Tags, Text } from '@myra-ui';
 
 export const ShareRegister = () => {
   const router = useRouter();

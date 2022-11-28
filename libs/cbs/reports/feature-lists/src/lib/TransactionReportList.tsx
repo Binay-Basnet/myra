@@ -1,5 +1,5 @@
 import { ReportLinkText } from '@coop/cbs/reports/list';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 
 import { ReportGroup, REPORTS } from '../constants/REPORTS';
 

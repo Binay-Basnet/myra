@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { DetailPageTabs } from '@coop/shared/ui';
+import { DetailPageTabs } from '@myra-ui';
 
 import { MemberInfo } from './MemberInfo';
 import { Summary } from './Summary';

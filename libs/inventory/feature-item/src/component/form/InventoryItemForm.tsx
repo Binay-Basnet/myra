@@ -10,7 +10,7 @@ import {
   GroupContainer,
 } from '@coop/neosys-admin/layout';
 import { FormEditableTable, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, Button, Divider, Grid, GridItem, Icon, Text } from '@coop/shared/ui';
+import { Box, Button, Divider, Grid, GridItem, Icon, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 type VarinatProductTable = {

@@ -14,7 +14,7 @@ import { RiNewspaperLine } from 'react-icons/ri';
 import { useRouter } from 'next/router';
 
 import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
-import { Box, ChakraModal, Grid, GridItem, QuickLinks, Text } from '@coop/shared/ui';
+import { Box, ChakraModal, Grid, GridItem, QuickLinks, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const QuickLinksComponent = () => {

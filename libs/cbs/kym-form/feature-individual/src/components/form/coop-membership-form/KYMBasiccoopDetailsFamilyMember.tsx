@@ -14,7 +14,7 @@ import {
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormSwitchTab } from '@coop/shared/form';
-import { FormMemberSelect, FormSection, GridItem } from '@coop/shared/ui';
+import { FormMemberSelect, FormSection, GridItem } from '@myra-ui';
 import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 import { FamilyMember } from './FamilyMember';

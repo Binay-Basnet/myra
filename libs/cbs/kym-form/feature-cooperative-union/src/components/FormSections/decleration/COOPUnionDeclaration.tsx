@@ -4,11 +4,8 @@ import { useRouter } from 'next/router';
 import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import { FormCheckbox } from '@coop/shared/form';
-import { Box, FormSection, TextFields } from '@coop/shared/ui';
-import {
-  getKymSectionCoOperativeUnion,
-  useTranslation,
-} from '@coop/shared/utils';
+import { Box, FormSection, TextFields } from '@myra-ui';
+import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
 
 import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
 

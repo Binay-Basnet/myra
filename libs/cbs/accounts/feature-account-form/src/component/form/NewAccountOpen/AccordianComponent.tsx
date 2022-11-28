@@ -8,7 +8,7 @@ import {
   useGetAccountOpenProductDetailsQuery,
   useGetAccountOpenProductPenaltyQuery,
 } from '@coop/cbs/data-access';
-import { Accordion, AccordionButton, AccordionItem, Box, Icon, Text } from '@coop/shared/ui';
+import { Accordion, AccordionButton, AccordionItem, Box, Icon, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { CriteriaCard } from './CriteriaCard';

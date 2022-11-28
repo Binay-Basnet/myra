@@ -8,6 +8,12 @@
     "-inventory--feature-item": "libs/inventory/feature-item",
     "-inventory--feature-suppliers": "libs/inventory/feature-suppliers",
     "-inventory--feature-warehouse": "libs/inventory/feature-warehouse",
+    "@myra-dump": "libs/@myra/dump",
+    "@myra-forms": "libs/@myra/forms",
+    "@myra-foundations": "libs/@myra/foundations",
+    "@myra-theme": "libs/@myra/theme",
+    "@myra-ui": "libs/@myra/myra-ui",
+    "@myra-ui-e2e": "apps/@myra-ui-e2e",
     "accounting-feature-accounting": "libs/accounting/feature-accounting",
     "accounting-feature-investment": "libs/accounting/feature-investment",
     "accounting-feature-loan": "libs/accounting/feature-loan",
@@ -92,7 +98,6 @@
     "myra": "apps/myra",
     "myra-components": "libs/myra/components",
     "myra-e2e": "apps/myra-e2e",
-    "myra-ui-e2e": "apps/myra-ui-e2e",
     "neosys-admin": "apps/neosys-admin",
     "neosys-admin-e2e": "apps/neosys-admin-e2e",
     "neosys-data-access": "libs/neosys/data-access",
@@ -106,7 +111,6 @@
     "shared-form": "libs/shared/form",
     "shared-map": "libs/shared/map",
     "shared-table": "libs/shared/table",
-    "shared-ui": "libs/shared/ui",
     "shared-utils": "libs/shared/utils"
   },
   "$schema": "./node_modules/nx/schemas/workspace-schema.json"

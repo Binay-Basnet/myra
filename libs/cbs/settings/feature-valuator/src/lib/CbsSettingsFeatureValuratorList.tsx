@@ -6,7 +6,7 @@ import { useGetNewIdMutation, useGetValuatorListQuery, ValuatorEdge } from '@coo
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { formatAddress } from '@coop/cbs/utils';
 import { Column, Table } from '@coop/shared/table';
-import { Box, TablePopover } from '@coop/shared/ui';
+import { Box, TablePopover } from '@myra-ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const CBSSettingsValuatorPopover = ({ cell }: CellContext<ValuatorEdge, unknown>) => {

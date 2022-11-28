@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { FormAmountInput, FormNumberInput } from '@coop/shared/form';
-import { FormSection, Text } from '@coop/shared/ui';
+import { FormSection, Text } from '@myra-ui';
 
 export const BasicFundManagement = () => {
   const { watch, setValue } = useFormContext();

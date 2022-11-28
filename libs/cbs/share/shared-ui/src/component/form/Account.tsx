@@ -9,7 +9,7 @@ import {
   FormAccountSelect,
   FormSection,
   GridItem,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 type AmountType = {

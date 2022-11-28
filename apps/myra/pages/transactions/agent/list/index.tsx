@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 
 import { AgentList } from '@coop/cbs/transactions/agent';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
-import { MainLayout } from '@coop/shared/ui';
+import { MainLayout } from '@myra-ui';
 
 const TransactionsAgentList = () => <AgentList />;
 

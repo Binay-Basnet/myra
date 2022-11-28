@@ -9,7 +9,7 @@ import {
   useGetSalesCustomerPaymentListDataQuery,
 } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { TablePopover } from '@coop/shared/ui';
+import { TablePopover } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const PayementMode = {

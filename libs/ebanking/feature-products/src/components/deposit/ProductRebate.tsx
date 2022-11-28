@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Maybe, Rebate } from '@coop/ebanking/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { DetailsCard } from '@coop/shared/ui';
+import { DetailsCard } from '@myra-ui';
 
 interface IProductRebateProps {
   rebateData: Maybe<Rebate> | undefined;

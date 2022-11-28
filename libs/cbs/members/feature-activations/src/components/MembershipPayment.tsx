@@ -43,7 +43,7 @@ import {
   Grid,
   GridItem,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 const denominationsOptions = [

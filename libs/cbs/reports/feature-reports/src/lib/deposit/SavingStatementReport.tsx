@@ -14,7 +14,7 @@ import { Report } from '@coop/cbs/reports';
 import { SavingReportInputs } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormAmountFilter, FormRadioGroup } from '@coop/shared/form';
-import { Box } from '@coop/shared/ui';
+import { Box } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 export const SavingStatementReport = () => {

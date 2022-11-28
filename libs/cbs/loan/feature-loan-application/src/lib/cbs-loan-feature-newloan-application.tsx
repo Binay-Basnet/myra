@@ -26,7 +26,7 @@ import {
   FormMemberSelect,
   MemberCard,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 
 import {
   AccordianComponent,

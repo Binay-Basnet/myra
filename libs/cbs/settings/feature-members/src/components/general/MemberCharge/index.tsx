@@ -1,6 +1,6 @@
 import { KymMemberTypesEnum, useGetLedgerMapingShareQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
-import { Box, Divider, GridItem, Text, VStack } from '@coop/shared/ui';
+import { Box, Divider, GridItem, Text, VStack } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 type NewChangeTable = {

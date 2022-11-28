@@ -1,7 +1,7 @@
 import { Control, Controller, Path, useFormContext } from 'react-hook-form';
 import { HiPhone } from 'react-icons/hi';
 
-import { Icon, Input, InputProps } from '@coop/shared/ui';
+import { Icon, Input, InputProps } from '@myra-ui';
 
 interface IFormPhoneInputProps<T> extends InputProps {
   name: Path<T>;

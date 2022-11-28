@@ -12,7 +12,7 @@ import {
   useGetMemberCheckQuery,
   useGetMemberIndividualDataQuery,
 } from '@coop/cbs/data-access';
-import { Alert, Button, Container, Divider, FormFooter, Icon, Text, VStack } from '@coop/shared/ui';
+import { Alert, Button, Container, Divider, FormFooter, Icon, Text, VStack } from '@myra-ui';
 
 import { MembershipPayment } from '../components/MembershipPayment';
 

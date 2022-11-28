@@ -1,4 +1,4 @@
-import { Box, DetailPageMemberCard, DetailPageTabs } from '@coop/shared/ui';
+import { Box, DetailPageMemberCard, DetailPageTabs } from '@myra-ui';
 
 import { LoanProductSummary } from '../LoanProductSummary';
 import { useLoanDetails } from '../../hooks/useLoanDetails';

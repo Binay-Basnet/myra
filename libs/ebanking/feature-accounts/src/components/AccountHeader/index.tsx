@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { AccountPopover } from '@coop/ebanking/accounts';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 
 type Account = {
   id: string;

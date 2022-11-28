@@ -6,7 +6,7 @@ import {
   FundManagementInput,
   useAddProfitToFundManagementDataMutation,
 } from '@coop/cbs/data-access';
-import { asyncToast, Box, Container, FormFooter, FormHeader, FormSection } from '@coop/shared/ui';
+import { asyncToast, Box, Container, FormFooter, FormHeader, FormSection } from '@myra-ui';
 
 import { CustomFundManagementInput } from './type';
 import {

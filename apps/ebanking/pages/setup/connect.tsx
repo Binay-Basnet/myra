@@ -19,7 +19,7 @@ import {
 } from '@coop/ebanking/data-access';
 import { EbankingHeaderLayout } from '@coop/ebanking/ui-layout';
 import { FormSelect } from '@coop/shared/form';
-import { Box, Button, ChakraModal, getError, Icon, Input, Text, TextFields } from '@coop/shared/ui';
+import { Box, Button, ChakraModal, getError, Icon, Input, Text, TextFields } from '@myra-ui';
 
 const SetupConnectPage = () => {
   const router = useRouter();

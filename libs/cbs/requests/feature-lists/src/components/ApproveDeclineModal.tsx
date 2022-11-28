@@ -6,7 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { RequestType, useApproveOrDeclineRequestMutation } from '@coop/cbs/data-access';
 import { FormCheckbox, FormTextArea } from '@coop/shared/form';
-import { asyncToast, Box, ChakraModal } from '@coop/shared/ui';
+import { asyncToast, Box, ChakraModal } from '@myra-ui';
 
 interface IApproveDeclineModalProps {
   requestType: RequestType;

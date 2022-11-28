@@ -1,6 +1,6 @@
 import { Control, Controller, Path, useFormContext } from 'react-hook-form';
 
-import { AmountInput, InputProps } from '@coop/shared/ui';
+import { AmountInput, InputProps } from '@myra-ui';
 
 /* eslint-disable-next-line */
 

@@ -1,6 +1,6 @@
 import { HStack } from '@chakra-ui/react';
 
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 
 const cellWidthObject = {
   lg: '50%',

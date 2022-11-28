@@ -9,7 +9,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormDatePicker, FormInput } from '@coop/shared/form';
-import { Box, Button, Icon, Text, TextFields } from '@coop/shared/ui';
+import { Box, Button, Icon, Text, TextFields } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IAddRelatedTrainingConcern {

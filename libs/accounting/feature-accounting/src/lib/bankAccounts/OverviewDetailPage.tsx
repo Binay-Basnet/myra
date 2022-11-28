@@ -5,7 +5,7 @@ import { DetailPageTopCard } from '@coop/accounting/ui-components';
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Box, Text, TextFields } from '@coop/shared/ui';
+import { Box, Text, TextFields } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const OverviewDetailPage = () => {
@@ -71,10 +71,7 @@ export const OverviewDetailPage = () => {
         header: '',
         accessorKey: 'actions',
         cell: (cell) => (
-          <PopoverComponent
-            items={popoverTitle}
-            member={cell?.row?.original?.node}
-          />
+          <PopoverComponent items={popoverTitle} member={cell?.row?.original?.node} />
         ),
         meta: {
           width: '60px',
@@ -88,19 +85,11 @@ export const OverviewDetailPage = () => {
     <Box display="flex" flexDirection="column" p="s16" gap="s16">
       <DetailPageTopCard>
         <Box display="flex" flexDirection="column" gap="s4">
-          <Text
-            fontSize="s3"
-            color="neutralColorLight.Gray-70"
-            fontWeight="Medium"
-          >
+          <Text fontSize="s3" color="neutralColorLight.Gray-70" fontWeight="Medium">
             {t['bankAccountsBookBalance']}
           </Text>
 
-          <Text
-            fontSize="l1"
-            color="neutralColorLight.Gray-70"
-            fontWeight="Medium"
-          >
+          <Text fontSize="l1" color="neutralColorLight.Gray-70" fontWeight="Medium">
             159,000 CR
           </Text>
 
@@ -110,18 +99,10 @@ export const OverviewDetailPage = () => {
         </Box>
 
         <Box display="flex" flexDirection="column" gap="s4">
-          <Text
-            fontSize="s3"
-            color="neutralColorLight.Gray-70"
-            fontWeight="Medium"
-          >
+          <Text fontSize="s3" color="neutralColorLight.Gray-70" fontWeight="Medium">
             {t['bankAccountsBankBalance']}
           </Text>
-          <Text
-            fontSize="l1"
-            color="neutralColorLight.Gray-70"
-            fontWeight="Medium"
-          >
+          <Text fontSize="l1" color="neutralColorLight.Gray-70" fontWeight="Medium">
             34,000
           </Text>
 
@@ -131,18 +112,10 @@ export const OverviewDetailPage = () => {
         </Box>
 
         <Box display="flex" flexDirection="column" gap="s4">
-          <Text
-            fontSize="s3"
-            color="neutralColorLight.Gray-70"
-            fontWeight="Medium"
-          >
+          <Text fontSize="s3" color="neutralColorLight.Gray-70" fontWeight="Medium">
             {t['bankAccountsDifferenceBalance']}
           </Text>
-          <Text
-            fontSize="l1"
-            color="neutralColorLight.Gray-70"
-            fontWeight="Medium"
-          >
+          <Text fontSize="l1" color="neutralColorLight.Gray-70" fontWeight="Medium">
             125,000
           </Text>
 
@@ -161,11 +134,7 @@ export const OverviewDetailPage = () => {
           display="flex"
           justifyContent="space-between"
         >
-          <Text
-            fontSize="r1"
-            color="neutralColorLight.Gray-80"
-            fontWeight="SemiBold"
-          >
+          <Text fontSize="r1" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
             {t['bankAccountsRecentTransactions']}
           </Text>
 
@@ -184,6 +153,6 @@ export const OverviewDetailPage = () => {
       </Box>
     </Box>
   );
-}
+};
 
 export default OverviewDetailPage;

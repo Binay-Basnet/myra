@@ -1,6 +1,6 @@
 import { useSearchCoaQuery } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { SelectProps } from '@coop/shared/ui';
+import { SelectProps } from '@myra-ui';
 
 interface IFormBranchSelectProps extends SelectProps {
   name: string;

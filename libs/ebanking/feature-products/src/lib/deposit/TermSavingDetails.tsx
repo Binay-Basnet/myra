@@ -5,7 +5,7 @@ import {
   DepositProductFormStateData,
   ServiceTypeFormState,
 } from '@coop/ebanking/data-access';
-import { Box, DetailsCard, PathBar } from '@coop/shared/ui';
+import { Box, DetailsCard, PathBar } from '@myra-ui';
 
 import {
   AccountCloseCharge,

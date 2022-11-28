@@ -1,6 +1,19 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import {
+  asyncToast,
+  Box,
+  Container,
+  FormHeader,
+  FormMemberSelect,
+  FormSection,
+  Grid,
+  GridItem,
+  Navbar,
+  ShareMemberCard,
+  TabMenu,
+} from '@myra-ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { omit } from 'lodash';
 
@@ -14,19 +27,6 @@ import {
   useGetIndividualMemberDetails,
   useGetShareChargesQuery,
 } from '@coop/cbs/data-access';
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormHeader,
-  FormMemberSelect,
-  FormSection,
-  Grid,
-  GridItem,
-  Navbar,
-  ShareMemberCard,
-  TabMenu,
-} from '@coop/shared/ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { ShareInfoFooter } from './ShareInfoFooter';

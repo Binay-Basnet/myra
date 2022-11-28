@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
 import { KYMInstitutionPage } from '@coop/cbs/kym-form/institution';
-import { MainLayout } from '@coop/shared/ui';
+import { MainLayout } from '@myra-ui';
 
 const AddInstutition = () => <KYMInstitutionPage />;
 

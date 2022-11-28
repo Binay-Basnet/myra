@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 
-import { Box } from '@coop/shared/ui';
+import { Box } from '@myra-ui';
 
 const AccordionContext = createContext<{
   isOpen: boolean;

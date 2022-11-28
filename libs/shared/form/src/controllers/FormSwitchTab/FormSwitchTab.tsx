@@ -1,6 +1,6 @@
 import { Controller, Path, useFormContext } from 'react-hook-form';
 
-import { SwitchTabs, SwitchTabsProps } from '@coop/shared/ui';
+import { SwitchTabs, SwitchTabsProps } from '@myra-ui';
 
 interface IFormSwitchTabsProps<T> extends Omit<SwitchTabsProps, 'onChange' | 'value' | 'id'> {
   name: Path<T>;

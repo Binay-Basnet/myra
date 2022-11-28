@@ -6,7 +6,7 @@ import {
   useGetMemberDetailsOverviewQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
-import { Box, Grid, Icon, Text } from '@coop/shared/ui';
+import { Box, Grid, Icon, Text } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 import { AccountList, UpcomingPaymentTable } from '../components';

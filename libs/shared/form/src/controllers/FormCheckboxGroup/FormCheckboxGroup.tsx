@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Control, Controller, Path, useFormContext } from 'react-hook-form';
 
-import { Box, Checkbox } from '@coop/shared/ui';
+import { Box, Checkbox } from '@myra-ui';
 
 import FormInput from '../FormInput/FormInput';
 

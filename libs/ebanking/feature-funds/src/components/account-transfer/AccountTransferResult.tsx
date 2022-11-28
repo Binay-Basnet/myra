@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import { TransactionHeaderCardWithChip, TransferModal } from '@coop/ebanking/cards';
 import { useAccountTransferMutation, useGetAccountListQuery } from '@coop/ebanking/data-access';
 import { AccountTransferFormType } from '@coop/ebanking/funds';
-import { Box, Button, Icon, Text, TextFields } from '@coop/shared/ui';
+import { Box, Button, Icon, Text, TextFields } from '@myra-ui';
 
 import { CardBodyContainer, CardContainer, CardContent, CardHeader } from '../CardContainer';
 

@@ -1,5 +1,5 @@
 import { FormInput } from '@coop/shared/form';
-import { Box, Divider, Grid, GridItem, Text, VStack } from '@coop/shared/ui';
+import { Box, Divider, Grid, GridItem, Text, VStack } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const MemberRiskLevel = () => {

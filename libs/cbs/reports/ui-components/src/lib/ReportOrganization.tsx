@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 
 import { ReportPeriodType, useAppSelector } from '@coop/cbs/data-access';
 import { formatAddress } from '@coop/cbs/utils';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 
 import { getPeriodDate } from '../utils/getPeriodDate';
 

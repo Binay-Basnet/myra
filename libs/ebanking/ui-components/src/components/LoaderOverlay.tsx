@@ -1,4 +1,4 @@
-import { Box, Loader } from '@coop/shared/ui';
+import { Box, Loader } from '@myra-ui';
 
 export const LoaderOverlay = () => (
   <Box

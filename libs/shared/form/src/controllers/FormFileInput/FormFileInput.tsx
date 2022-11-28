@@ -1,6 +1,6 @@
 import { Control, Controller, useFormContext } from 'react-hook-form';
 
-import { Box, FileInput, FileInputProps, TextFields } from '@coop/shared/ui';
+import { Box, FileInput, FileInputProps, TextFields } from '@myra-ui';
 
 interface FormFileInputProps extends FileInputProps {
   control?: Control;

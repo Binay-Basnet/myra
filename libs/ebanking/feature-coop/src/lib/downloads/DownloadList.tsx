@@ -3,7 +3,7 @@ import { BsDownload } from 'react-icons/bs';
 import { InfoCard } from '@coop/ebanking/cards';
 import { EmptyState } from '@coop/ebanking/components';
 import { useGetDownloadCoopListQuery } from '@coop/ebanking/data-access';
-import { Box, Button, Divider, Icon, PathBar, Text, VStack } from '@coop/shared/ui';
+import { Box, Button, Divider, Icon, PathBar, Text, VStack } from '@myra-ui';
 
 interface IDownloadListProps {
   category: string;

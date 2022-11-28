@@ -12,7 +12,7 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormCheckbox, FormSelect } from '@coop/shared/form';
-import { Box, GridItem } from '@coop/shared/ui';
+import { Box, GridItem } from '@myra-ui';
 
 type Filter = {
   filter: {

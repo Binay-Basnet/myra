@@ -3,7 +3,7 @@ import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { AccordionPanel } from '@chakra-ui/react';
 
 import { PenaltyType, useGetLoanProductDetailsDataQuery } from '@coop/cbs/data-access';
-import { Accordion, AccordionButton, AccordionItem, Box, Icon, Text } from '@coop/shared/ui';
+import { Accordion, AccordionButton, AccordionItem, Box, Icon, Text } from '@myra-ui';
 
 import { CriteriaCard } from './CriteriaCard';
 

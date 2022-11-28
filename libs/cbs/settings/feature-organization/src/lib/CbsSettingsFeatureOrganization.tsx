@@ -4,7 +4,7 @@ import debounce from 'lodash/debounce';
 import { KymMemberTypesEnum, useSetOrganizationDataMutation } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { FormFileInput, FormInput, FormRadioGroup } from '@coop/shared/form';
-import { Box, Button, Text } from '@coop/shared/ui';
+import { Box, Button, Text } from '@myra-ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import {

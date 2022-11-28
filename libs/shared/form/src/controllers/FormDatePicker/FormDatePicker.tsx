@@ -5,7 +5,7 @@ import format from 'date-fns/format';
 import NepaliDate from 'nepali-date-converter';
 
 import { DateType, RootState, useAppSelector } from '@coop/cbs/data-access';
-import { Box, InputProps, TextFields } from '@coop/shared/ui';
+import { Box, InputProps, TextFields } from '@myra-ui';
 
 interface IFormDatePickerProps<T> extends InputProps {
   name: Path<T> | string;

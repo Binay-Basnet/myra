@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { InfoCard } from '@coop/ebanking/cards';
 import { useAddNewComplaintMutation } from '@coop/ebanking/data-access';
 import { FormInput, FormTextArea } from '@coop/shared/form';
-import { asyncToast, Box, PathBar } from '@coop/shared/ui';
+import { asyncToast, Box, PathBar } from '@myra-ui';
 import { getLoggedInUserId } from '@coop/shared/utils';
 
 export const NewComplaint = () => {

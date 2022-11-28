@@ -1,5 +1,5 @@
 import { FormNumberInput, FormSelect } from '@coop/shared/form';
-import { FormSection, GridItem, Text } from '@coop/shared/ui';
+import { FormSection, GridItem, Text } from '@myra-ui';
 
 export const ShareDistribution = () => (
   <FormSection header="Share Distribution">

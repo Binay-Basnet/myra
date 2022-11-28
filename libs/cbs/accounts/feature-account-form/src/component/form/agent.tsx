@@ -1,6 +1,6 @@
 import { GroupContainer, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormBranchSelect } from '@coop/shared/form';
-import { Box } from '@coop/shared/ui';
+import { Box } from '@myra-ui';
 
 export const Agent = () => (
   <GroupContainer scrollMarginTop="200px" display="flex" flexDirection="column" gap="s16">

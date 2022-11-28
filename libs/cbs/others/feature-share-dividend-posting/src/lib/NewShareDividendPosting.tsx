@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { DividendDistributionCondition, DividendTransferTreatment } from '@coop/cbs/data-access';
-import { Box, Container, FormFooter, FormHeader } from '@coop/shared/ui';
+import { Box, Container, FormFooter, FormHeader } from '@myra-ui';
 
 import {
   AccountTransfer,

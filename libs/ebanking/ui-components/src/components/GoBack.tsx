@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { ChevronLeftIcon } from '@chakra-ui/icons';
 
-import { Button, Icon } from '@coop/shared/ui';
+import { Button, Icon } from '@myra-ui';
 
 interface GoBackProps {
   handleGoBack?: () => void;

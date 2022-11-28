@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Text, TextProps } from '@coop/shared/ui';
+import { Text, TextProps } from '@myra-ui';
 
 interface IGroupContainer extends TextProps {
   children: React.ReactNode;

@@ -1,5 +1,5 @@
 import { useGetAccountListQuery } from '@coop/ebanking/data-access';
-import { Accordion, AccordionItem, AccordionPanel } from '@coop/shared/ui';
+import { Accordion, AccordionItem, AccordionPanel } from '@myra-ui';
 
 import { AnnouncementAccountCard } from '../AnnouncementAccountCard';
 import { AnnouncementsAccBtn } from '../AnnouncementsAccBtn';

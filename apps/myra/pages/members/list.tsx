@@ -1,10 +1,7 @@
 import { ReactElement } from 'react';
 
-import {
-  MemberListPage as MemberList,
-  MemberPagesLayout,
-} from '@coop/cbs/members/list';
-import { MainLayout } from '@coop/shared/ui';
+import { MemberListPage as MemberList, MemberPagesLayout } from '@coop/cbs/members/list';
+import { MainLayout } from '@myra-ui';
 
 const MemberListPage = () => <MemberList />;
 

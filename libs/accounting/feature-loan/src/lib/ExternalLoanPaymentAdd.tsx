@@ -21,7 +21,7 @@ import {
   GridItem,
   Icon,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const ExternalLoanPaymentAdd = () => {

@@ -1,6 +1,6 @@
-import Image from "next/legacy/image";
+import Image from 'next/legacy/image';
 
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 
 interface IEmptyStateProps {
   title: string;

@@ -10,7 +10,7 @@ import {
   useSetBlockChequeRequestDataMutation,
 } from '@coop/ebanking/data-access';
 import { FormInput, FormTextArea } from '@coop/shared/form';
-import { asyncToast, Box, PathBar, Text } from '@coop/shared/ui';
+import { asyncToast, Box, PathBar, Text } from '@myra-ui';
 import { getLoggedInUserId } from '@coop/shared/utils';
 
 const formSchema = yup.object({

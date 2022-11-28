@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { CbsShareFeaturesSharePurchase } from '@coop/cbs/share';
-import { MainLayout } from '@coop/shared/ui';
+import { MainLayout } from '@myra-ui';
 
 const SharePurchase = () => <CbsShareFeaturesSharePurchase />;
 

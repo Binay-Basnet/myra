@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 
-import { Column, Table } from '@coop/shared/ui';
+import { Column, Table } from '@myra-ui';
 
 enum Gender {
   Female = 'FEMALE',

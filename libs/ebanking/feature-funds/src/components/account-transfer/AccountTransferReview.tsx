@@ -6,7 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { InfoCard } from '@coop/ebanking/cards';
 import { useAccountTransferMutation, useGetAccountListQuery } from '@coop/ebanking/data-access';
 import { AccountTransferFormType } from '@coop/ebanking/funds';
-import { Box, Button, Icon } from '@coop/shared/ui';
+import { Box, Button, Icon } from '@myra-ui';
 
 import { CardBodyContainer, CardContainer, CardContent, CardHeader } from '../CardContainer';
 
@@ -35,7 +35,7 @@ export const AccountTransferReview = ({
   }));
 
   return (
-    (<InfoCard
+    <InfoCard
       title="Payment Review"
       btn={
         <Button variant="ghost" gap="s4">
@@ -123,6 +123,6 @@ export const AccountTransferReview = ({
           </Button>
         </Box>
       </CardContainer>
-    </InfoCard>)
+    </InfoCard>
   );
 };
