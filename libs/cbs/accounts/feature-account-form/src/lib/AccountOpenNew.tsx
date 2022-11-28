@@ -1,6 +1,20 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import {
+  Alert,
+  asyncToast,
+  Box,
+  Button,
+  Container,
+  Divider,
+  FormFooter,
+  FormHeader,
+  FormMemberSelect,
+  Grid,
+  MemberCard,
+  Text,
+} from '@myra-ui';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
@@ -27,20 +41,6 @@ import {
   FormInput,
   FormSelect,
 } from '@coop/shared/form';
-import {
-  Alert,
-  asyncToast,
-  Box,
-  Button,
-  Container,
-  Divider,
-  FormFooter,
-  FormHeader,
-  FormMemberSelect,
-  Grid,
-  MemberCard,
-  Text,
-} from '@myra-ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import {
@@ -513,8 +513,11 @@ export const AccountOpenNew = () => {
                     {ProductData?.isForMinors && (
                       <FormSelect name="minor" label="Minor" options={minorOptions} />
                     )}
-                    {productType !== NatureOfDepositProduct?.Current &&
-                      productType !== NatureOfDepositProduct?.Saving && <Tenure />}
+                    {(productType === NatureOfDepositProduct?.RecurringSaving ||
+                      productType === NatureOfDepositProduct?.TermSavingOrFd ||
+                      (productType === NatureOfDepositProduct?.Saving && isMandatoryFlag)) && (
+                      <Tenure />
+                    )}
                     <Divider />
                     {productType !== NatureOfDepositProduct?.Current && <Interest />}
                     {(productType === NatureOfDepositProduct?.RecurringSaving ||
