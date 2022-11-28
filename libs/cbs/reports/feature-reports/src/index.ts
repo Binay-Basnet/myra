@@ -14,5 +14,6 @@ export * from './lib/mobile-banking/MBExpiryReport';
 export * from './lib/mobile-banking/MBRegistrationReport';
 export * from './lib/mobile-banking/MBTransactionReport';
 export * from './lib/service-center/ServiceCenterListReport';
+export * from './lib/share/ShareRegisterReport';
 export * from './lib/share/ShareStatementReport';
 export * from './lib/transactions/TrialSheetReport';
