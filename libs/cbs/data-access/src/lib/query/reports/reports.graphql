@@ -422,18 +422,11 @@ query getTtrReport($data: TTRReportFilter!) {
       data {
         yearly {
           name
+          memberId
           address {
-            state
-            district
-            localGovernment
-            wardNo
-            locality
-            houseNo
-            coordinates {
-              longitude
-              latitude
-            }
+            ...Address
           }
+
           branch
           date
           nature
@@ -444,17 +437,9 @@ query getTtrReport($data: TTRReportFilter!) {
         }
         perTranx {
           name
+          memberId
           address {
-            state
-            district
-            localGovernment
-            wardNo
-            locality
-            houseNo
-            coordinates {
-              longitude
-              latitude
-            }
+            ...Address
           }
           branch
           date
