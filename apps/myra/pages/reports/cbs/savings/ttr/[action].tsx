@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
 import { MainLayout } from '@myra-ui';
 
-import { SavingStatementReport } from '@coop/cbs/reports';
+import { TTRReport } from '@coop/cbs/reports';
 
-export const SavingStatementReportPage = () => <SavingStatementReport />;
+export const SavingStatementReportPage = () => <TTRReport />;
 
 export default SavingStatementReportPage;
 
