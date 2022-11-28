@@ -143,6 +143,7 @@ export const REPORTS = {
     {
       id: '3.1',
       report: Report.SHARE_REGISTER,
+      link: 'register',
     },
     {
       id: '3.2',

@@ -42,8 +42,8 @@ export const ShareRegisterReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Loan Reports', link: '/reports/cbs/share' },
-            { label: 'Loan Statement', link: '/reports/cbs/share/register/new' },
+            { label: 'Share Reports', link: '/reports/cbs/share' },
+            { label: 'Share Register', link: '/reports/cbs/share/register/new' },
           ]}
         />
         <Report.Inputs
@@ -69,7 +69,6 @@ export const ShareRegisterReport = () => {
           <Report.Organization statementDate={filters?.period?.periodType} />
           <Report.Table<SharePurchaseRegisterReport>
             hasSNo={false}
-            showFooter
             columns={[
               {
                 header: 'Member Id',
@@ -83,7 +82,6 @@ export const ShareRegisterReport = () => {
                 header: 'Particular',
                 accessorKey: 'particular',
               },
-
               {
                 header: 'Share Information',
                 columns: [
