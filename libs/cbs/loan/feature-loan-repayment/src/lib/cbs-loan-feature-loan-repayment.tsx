@@ -2,6 +2,19 @@ import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
+import {
+  asyncToast,
+  Box,
+  Button,
+  ChakraModal,
+  Container,
+  FormFooter,
+  FormHeader,
+  FormMemberSelect,
+  Grid,
+  MemberCard,
+  Text,
+} from '@myra-ui';
 import omit from 'lodash/omit';
 
 import {
@@ -17,19 +30,6 @@ import {
   useSetLoanRepaymentMutation,
 } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import {
-  asyncToast,
-  Box,
-  Button,
-  ChakraModal,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormMemberSelect,
-  Grid,
-  MemberCard,
-  Text,
-} from '@myra-ui';
 
 import { InstallmentData, LoanPaymentScheduleTable, LoanProductCard, Payment } from '../components';
 
@@ -84,6 +84,7 @@ export const LoanRepayment = () => {
   const cashPaid = watch('cash.cashPaid');
 
   const denominations = watch('cash.denominations');
+  // const amountPaid = watch('amountPaid');
 
   const denominationTotal = useMemo(
     () =>
@@ -185,8 +186,6 @@ export const LoanRepayment = () => {
     }
   );
 
-  const loanTotal =
-    loanPreview?.data?.loanAccount?.loanPreview?.data?.repaymentDetails?.totalInstallmentAmount;
   const loanData = loanPreview?.data?.loanAccount?.loanPreview?.data;
   const loanTry = loanData?.paymentSchedule?.installments;
   const nextInstallmentNumber = loanData?.repaymentDetails?.nextInstallmentNo as number;
@@ -287,7 +286,7 @@ export const LoanRepayment = () => {
                 )}
               </Box>
               <Box display={mode === '1' ? 'flex' : 'none'}>
-                <Payment loanTotal={loanTotal as string} totalDeposit={amountPaid as number} />
+                <Payment loanTotal={amountPaid as string} totalDeposit={amountPaid as number} />
               </Box>
             </form>
           </FormProvider>
