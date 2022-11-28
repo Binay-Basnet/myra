@@ -453,3 +453,21 @@ query getTtrReport($data: TTRReportFilter!) {
     }
   }
 }
+
+query getshareRegisterReport($data: SharePurchaseRegisterReportFilter!) {
+  report {
+    sharePurchaseRegisterReport(data: $data) {
+      data {
+        memberId
+        memberCode
+        name
+        particular
+        perShareAmount
+        kittaNumFrom
+        kittaNumTo
+        totalKitta
+        totalAmount
+      }
+    }
+  }
+}

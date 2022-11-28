@@ -7299,6 +7299,36 @@ export enum LoanApproveOrCancel {
   Cancel = 'CANCEL',
 }
 
+export type LoanBalanceFilter = {
+  branchId?: InputMaybe<Scalars['String']>;
+  maxOutstandingBalance?: InputMaybe<Scalars['String']>;
+  minOutstandingBalance?: InputMaybe<Scalars['String']>;
+  period?: InputMaybe<PeriodInput>;
+  productNameIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  productSubTypes?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  productTypes?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type LoanBalanceReport = {
+  lastPaymentDate?: Maybe<Scalars['String']>;
+  loanAccountId?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  outstandingBalance?: Maybe<Scalars['String']>;
+  productCode?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  productName?: Maybe<Scalars['String']>;
+  remainingBalance?: Maybe<Scalars['String']>;
+  remainingInterest?: Maybe<Scalars['String']>;
+};
+
+export type LoanBalanceReportResult = {
+  data?: Maybe<Array<Maybe<LoanBalanceReport>>>;
+  error?: Maybe<QueryError>;
+  totalOutstandingBalance?: Maybe<Scalars['String']>;
+  totalRemainingBalance?: Maybe<Scalars['String']>;
+};
+
 export type LoanBankDisbursement = {
   bankAccountId: Scalars['ID'];
   chequeNo: Scalars['String'];
@@ -7970,9 +8000,19 @@ export type LoanSettingsProductSubTypeData = {
 };
 
 export type LoanSettingsProductType = {
+  loanProducts?: Maybe<Array<Maybe<LoanProductMinimal>>>;
+  multipleProductSubTypes?: Maybe<Array<Maybe<LoanSettingsProductSubTypeData>>>;
   natureOfProduct?: Maybe<Array<Maybe<LoanSettingsNatureOfProductData>>>;
   productSubTypes?: Maybe<Array<Maybe<LoanSettingsProductSubTypeData>>>;
   productTypes?: Maybe<Array<Maybe<LoanSettingsProductTypeData>>>;
+};
+
+export type LoanSettingsProductTypeLoanProductsArgs = {
+  subTypeIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type LoanSettingsProductTypeMultipleProductSubTypesArgs = {
+  productTypeIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 export type LoanSettingsProductTypeProductSubTypesArgs = {
@@ -9529,6 +9569,7 @@ export type ReportQuery = {
   interestTaxReport: InterestTaxReportResult;
   kymStatusReport?: Maybe<KymStatusReportResult>;
   listReports: ReportListConnection;
+  loanBalanceReport: LoanBalanceReportResult;
   loanStatementReport?: Maybe<ReportResult>;
   mBankingExpiryReport?: Maybe<EbankingRegistrationReportResult>;
   mBankingTransactionReport?: Maybe<MBankingTransactionResult>;
@@ -9579,6 +9620,10 @@ export type ReportQueryListReportsArgs = {
   filter?: InputMaybe<ReportListFilter>;
   organizationId?: InputMaybe<Scalars['ID']>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type ReportQueryLoanBalanceReportArgs = {
+  filter: LoanBalanceFilter;
 };
 
 export type ReportQueryLoanStatementReportArgs = {
@@ -18107,6 +18152,28 @@ export type GetTtrReportQuery = {
         } | null> | null;
       } | null;
     };
+  };
+};
+
+export type GetshareRegisterReportQueryVariables = Exact<{
+  data: SharePurchaseRegisterReportFilter;
+}>;
+
+export type GetshareRegisterReportQuery = {
+  report: {
+    sharePurchaseRegisterReport?: {
+      data?: Array<{
+        memberId?: string | null;
+        memberCode?: string | null;
+        name?: string | null;
+        particular?: string | null;
+        perShareAmount?: string | null;
+        kittaNumFrom?: string | null;
+        kittaNumTo?: string | null;
+        totalKitta?: string | null;
+        totalAmount?: string | null;
+      } | null> | null;
+    } | null;
   };
 };
 
@@ -29535,6 +29602,39 @@ export const useGetTtrReportQuery = <TData = GetTtrReportQuery, TError = unknown
       null,
       variables
     ),
+    options
+  );
+export const GetshareRegisterReportDocument = `
+    query getshareRegisterReport($data: SharePurchaseRegisterReportFilter!) {
+  report {
+    sharePurchaseRegisterReport(data: $data) {
+      data {
+        memberId
+        memberCode
+        name
+        particular
+        perShareAmount
+        kittaNumFrom
+        kittaNumTo
+        totalKitta
+        totalAmount
+      }
+    }
+  }
+}
+    `;
+export const useGetshareRegisterReportQuery = <
+  TData = GetshareRegisterReportQuery,
+  TError = unknown
+>(
+  variables: GetshareRegisterReportQueryVariables,
+  options?: UseQueryOptions<GetshareRegisterReportQuery, TError, TData>
+) =>
+  useQuery<GetshareRegisterReportQuery, TError, TData>(
+    ['getshareRegisterReport', variables],
+    useAxios<GetshareRegisterReportQuery, GetshareRegisterReportQueryVariables>(
+      GetshareRegisterReportDocument
+    ).bind(null, variables),
     options
   );
 export const GetShareStatementDocument = `
