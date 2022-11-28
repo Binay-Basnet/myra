@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { TellerTransferType, useGetTellerTransactionListDataQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, PageHeader, Text } from '@coop/shared/ui';
+import { Avatar, Box, PageHeader, Text } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */

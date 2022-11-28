@@ -2,7 +2,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { KymInsInput } from '@coop/cbs/data-access';
 import { FormAddress, FormInput } from '@coop/shared/form';
-import { FormSection, GridItem } from '@coop/shared/ui';
+import { FormSection, GridItem } from '@myra-ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { useInstitution } from '../hooks/useInstitution';

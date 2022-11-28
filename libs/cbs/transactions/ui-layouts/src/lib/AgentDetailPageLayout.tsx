@@ -2,7 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 
 import { DetailPageSideBar } from '@coop/cbs/transactions/ui-components';
-import { Box, PathBar } from '@coop/shared/ui';
+import { Box, PathBar } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface AgentDetailPageLayoutProps {

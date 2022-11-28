@@ -1,5 +1,5 @@
 /* eslint-disable-next-line */
-import { VStack, Divider, Box, Text } from '@coop/shared/ui';
+import { VStack, Divider, Box, Text } from '@myra-ui';
 import React from 'react';
 
 export interface SettingsCardProps {

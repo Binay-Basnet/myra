@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
 import { CbsCloseDay } from '@coop/cbs/close-day';
-import { MainLayout } from '@coop/shared/ui';
+import { MainLayout } from '@myra-ui';
 
 const DayClosePage = () => <CbsCloseDay />;
 

@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import { ReportMainLayout, ReportsCbsLayout } from '@coop/cbs/reports/layout';
-import { MainLayout } from '@coop/shared/ui';
+import { MainLayout } from '@myra-ui';
 
 const EmployeeReports = () => <>Employee Reports</>;
 

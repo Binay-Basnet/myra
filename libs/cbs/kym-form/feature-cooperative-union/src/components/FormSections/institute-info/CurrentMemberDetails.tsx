@@ -1,23 +1,13 @@
-import {
-  GroupContainer,
-  InputGroupContainer,
-} from '@coop/cbs/kym-form/ui-containers';
+import { GroupContainer, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-import { Text } from '@coop/shared/ui';
+import { Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const CurrentMemberDetails = () => {
   const { t } = useTranslation();
   return (
-    <GroupContainer
-      id="kymCoopUnionAccCurrentMembers"
-      scrollMarginTop={'200px'}
-    >
-      <Text
-        fontSize="r1"
-        fontWeight="semibold"
-        color="neutralColorLight.Gray-80"
-      >
+    <GroupContainer id="kymCoopUnionAccCurrentMembers" scrollMarginTop={'200px'}>
+      <Text fontSize="r1" fontWeight="semibold" color="neutralColorLight.Gray-80">
         {t['kymCoopUnionCurrentMembers']}
       </Text>
       <InputGroupContainer>

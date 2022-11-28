@@ -1,4 +1,4 @@
-import { Box } from '@coop/shared/ui';
+import { Box } from '@myra-ui';
 
 import { AnnouncementBasicAccordion } from '../AnnouncementBasicAccordion';
 import { AnnouncementFooter } from '../AnnouncementFooter';

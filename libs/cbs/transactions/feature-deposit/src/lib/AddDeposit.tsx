@@ -34,7 +34,7 @@ import {
   Grid,
   MemberCard,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 import { InstallmentModel, Payment } from '../components';

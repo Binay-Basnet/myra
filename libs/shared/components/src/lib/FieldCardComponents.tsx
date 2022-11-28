@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid } from '@coop/shared/ui';
+import { Grid } from '@myra-ui';
 
 /* eslint-disable-next-line */
 export interface FieldCardComponentsProps {

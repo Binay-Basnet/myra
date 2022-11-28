@@ -9687,6 +9687,7 @@ export type ReportQuery = {
   memberClassificationReport: MemberClassificationReportResult;
   savingStatementReport?: Maybe<ReportResult>;
   shareStatementReport?: Maybe<ReportResult>;
+  shareTransactionReport?: Maybe<ShareTransactionReportResult>;
   trialSheetReport: TrialSheetReportResult;
   userReport?: Maybe<UserReportResult>;
 };
@@ -9766,6 +9767,11 @@ export type ReportQuerySavingStatementReportArgs = {
 
 export type ReportQueryShareStatementReportArgs = {
   data: ShareStatementReportSettings;
+};
+
+
+export type ReportQueryShareTransactionReportArgs = {
+  data?: InputMaybe<ShareTransactionReportFilter>;
 };
 
 
@@ -10788,6 +10794,48 @@ export type ShareTransactionChequePayment = {
   bankId: Scalars['ID'];
   chequeNo: Scalars['String'];
   note?: InputMaybe<Scalars['String']>;
+};
+
+export type ShareTransactionFilter = {
+  ageRange?: InputMaybe<MemberAgeRange>;
+  districtId?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  eductaion?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  gender?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  localGovernmentId?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  memberType?: InputMaybe<Array<InputMaybe<MemberType>>>;
+  occupation?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  provinceId?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+};
+
+export type ShareTransactionFooter = {
+  totalBalance?: Maybe<Scalars['String']>;
+  totalCr?: Maybe<Scalars['String']>;
+  totatDr?: Maybe<Scalars['String']>;
+};
+
+export type ShareTransactionReport = {
+  balance?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  particular?: Maybe<Scalars['String']>;
+  shareIssueCr?: Maybe<Scalars['String']>;
+  shareReturnDr?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['String']>;
+};
+
+export type ShareTransactionReportFilter = {
+  branchId?: InputMaybe<Scalars['String']>;
+  filter?: InputMaybe<ShareTransactionFilter>;
+  period: PeriodInput;
+};
+
+export type ShareTransactionReportResult = {
+  Summary?: Maybe<Scalars['Map']>;
+  data?: Maybe<Array<Maybe<ShareTransactionReport>>>;
+  error?: Maybe<QueryError>;
+  footer?: Maybe<ShareTransactionFooter>;
+  meta?: Maybe<Scalars['Map']>;
 };
 
 export enum ShareTransactionType {

@@ -24,7 +24,7 @@ import {
   Icon,
   IconButton,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { getKymSectionInstitution, useTranslation } from '@coop/shared/utils';
 
 import { DirectorsWithAffliation, DirectorTopPart, DocumentComponent } from './AccordianComponents';

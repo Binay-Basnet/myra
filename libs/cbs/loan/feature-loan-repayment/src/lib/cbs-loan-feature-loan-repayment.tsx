@@ -29,7 +29,7 @@ import {
   Grid,
   MemberCard,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 
 import { InstallmentData, LoanPaymentScheduleTable, LoanProductCard, Payment } from '../components';
 

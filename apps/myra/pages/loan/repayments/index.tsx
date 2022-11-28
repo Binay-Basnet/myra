@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 
 import { LoanListLayout } from '@coop/cbs/loan/layouts';
 import { CBSLoanRepaymentList } from '@coop/cbs/loan/repayment';
-import { MainLayout } from '@coop/shared/ui';
+import { MainLayout } from '@myra-ui';
 
 const LoanRepayments = () => <CBSLoanRepaymentList />;
 

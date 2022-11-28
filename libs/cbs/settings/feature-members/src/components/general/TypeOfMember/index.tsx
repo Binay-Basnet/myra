@@ -1,5 +1,5 @@
 import { FormCheckbox } from '@coop/shared/form';
-import { Box, Divider, Text, VStack } from '@coop/shared/ui';
+import { Box, Divider, Text, VStack } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const TypeOfMember = () => {

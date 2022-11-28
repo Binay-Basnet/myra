@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid, GridProps } from '@coop/shared/ui';
+import { Grid, GridProps } from '@myra-ui';
 
 interface IGroupContainer extends GridProps {
   children: React.ReactNode;

@@ -4,7 +4,7 @@ import { useGetCoaListQuery } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/settings/ui-containers';
 import { SubHeadingText, SubText } from '@coop/shared/components';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Alert, Box, FormSection, GridItem, Text } from '@coop/shared/ui';
+import { Alert, Box, FormSection, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, TextBoxContainer } from '../formui';

@@ -8,7 +8,7 @@ import {
   FormSelect,
   FormTextArea,
 } from '@coop/shared/form';
-import { FormSection, GridItem } from '@coop/shared/ui';
+import { FormSection, GridItem } from '@myra-ui';
 
 const shareTypeOptions = [
   { label: 'Share Bonus / Dividend', value: ShareInvestmentType.ShareBonusDividend },

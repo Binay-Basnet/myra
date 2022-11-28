@@ -19,7 +19,7 @@ import {
   PopoverTrigger,
   SwitchTabs,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 
 const languageList = [
   { label: 'EN', value: 'en' },

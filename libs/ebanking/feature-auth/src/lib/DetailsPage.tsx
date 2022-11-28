@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import { useSetPasswordMutation } from '@coop/ebanking/data-access';
-import { Box, Button, ChakraModal, Icon, Input, PasswordInput, Text } from '@coop/shared/ui';
+import { Box, Button, ChakraModal, Icon, Input, PasswordInput, Text } from '@myra-ui';
 
 import { AuthContainer } from '../components/AuthContainer';
 import { SignUpStatus } from '../types/SignUpStatus';

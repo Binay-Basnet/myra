@@ -11,7 +11,7 @@ import {
   useUpsertSectionOptionMutation,
 } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Box, Icon } from '@coop/shared/ui';
+import { Box, Icon } from '@myra-ui';
 
 import { GROUPED_FIELD_OPTIONS } from '../../constants/GROUP_FIELD_OPTIONS';
 import { UPLOAD_FIELD_OPTIONS } from '../../constants/UPLOAD_FIELD_OPTIONS';

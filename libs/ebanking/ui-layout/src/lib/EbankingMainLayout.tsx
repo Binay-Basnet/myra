@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box } from '@coop/shared/ui';
+import { Box } from '@myra-ui';
 
 import { DefaultAnnouncements } from '../components/announcements';
 import { EbankingHeader } from '../components/EbankingHeader';

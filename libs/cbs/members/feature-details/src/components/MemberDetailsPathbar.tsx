@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
-import { Box, DetailPageHeader } from '@coop/shared/ui';
+import { Box, DetailPageHeader } from '@myra-ui';
 
 interface PathBarProps {
   title: string;

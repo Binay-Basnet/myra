@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, chakra, Tab, Tabs, Text } from '@chakra-ui/react';
 
-import { Divider, Icon } from '@coop/shared/ui';
+import { Divider, Icon } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const TabCol = chakra(Tab, {

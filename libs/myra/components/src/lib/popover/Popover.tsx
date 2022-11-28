@@ -3,7 +3,7 @@ import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 
 import { KymMemberTypesEnum, Member } from '@coop/cbs/data-access';
-import { Box, Popover, PopoverBody, PopoverContent, PopoverTrigger, Text } from '@coop/shared/ui';
+import { Box, Popover, PopoverBody, PopoverContent, PopoverTrigger, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 type IRequiredMemberDetailType = {

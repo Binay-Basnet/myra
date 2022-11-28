@@ -15,7 +15,7 @@ import {
   PopoverTrigger,
   SettingsButton,
   Text,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IOthersPageLayoutProps {

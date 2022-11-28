@@ -1,5 +1,5 @@
 import { MemberRecentTransactionViewTxnType } from '@coop/cbs/data-access';
-import { Box, Tags, Text } from '@coop/shared/ui';
+import { Box, Tags, Text } from '@myra-ui';
 
 interface ITransactionview {
   date: string;

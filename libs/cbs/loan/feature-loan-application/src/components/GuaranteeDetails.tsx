@@ -18,7 +18,7 @@ import {
   Text,
   TextFields,
   VStack,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 
 import { useLoanProductContext } from '../hooks/useLoanProduct';
 

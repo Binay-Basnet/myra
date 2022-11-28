@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 
 import { SuppliersLayout } from '@coop/myra/components';
 import { SupplierTable } from '@coop/myra/inventory/suppliers';
-import { MainLayoutInventory } from '@coop/shared/ui';
+import { MainLayoutInventory } from '@myra-ui';
 
 const InventoryVendor = () => <SupplierTable />;
 

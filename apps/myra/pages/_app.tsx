@@ -5,11 +5,11 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import Script from 'next/script';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
+import { Box, Loader, Toaster } from '@myra-ui';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import { store } from '@coop/cbs/data-access';
-import { Box, Loader, Toaster } from '@coop/shared/ui';
+import { store, useInit } from '@coop/cbs/data-access';
 import { theme, useSnap } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
@@ -44,8 +44,7 @@ const queryClient = new QueryClient({
 
 const MainApp = ({ Component, pageProps }: AppPropsWithLayout) => {
   useSnap();
-  // const { isLoading } = useInit();
-  const isLoading = false;
+  const { isLoading } = useInit();
 
   const getLayout = Component.getLayout || ((page) => page);
 

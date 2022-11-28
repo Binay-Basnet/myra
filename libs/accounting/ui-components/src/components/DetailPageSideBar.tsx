@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, chakra, Image, Tab, Tabs, Text } from '@chakra-ui/react';
 
-import { Divider, Icon } from '@coop/shared/ui';
+import { Divider, Icon } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const TabCol = chakra(Tab, {
@@ -43,9 +43,7 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
     () =>
       tablinks.findIndex((link) => {
         const linkArray = link.to.split('/');
-        return (
-          pathArray[pathArray.length - 1] === linkArray[linkArray.length - 1]
-        );
+        return pathArray[pathArray.length - 1] === linkArray[linkArray.length - 1];
       }),
     [router.pathname]
   );
@@ -54,43 +52,22 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
     <Box display="flex" flexDirection="column" gap="s16">
       <Box display="flex" p="s16">
         <Box px="s16" py="s8">
-          <Image
-            height="48px"
-            width="34px"
-            src="/standard.png"
-            alt="title"
-          />
+          <Image height="48px" width="34px" src="/standard.png" alt="title" />
         </Box>
         <Box display="flex" gap="s10">
           <Box>
-            <Text
-              color="neutralColorLight.Gray-80"
-              fontWeight="SemiBold"
-              fontSize="r2"
-            >
+            <Text color="neutralColorLight.Gray-80" fontWeight="SemiBold" fontSize="r2">
               SC Saving Account
             </Text>
 
-            <Text
-              color="neutralColorLight.Gray-70"
-              fontWeight="Regular"
-              fontSize="s3"
-            >
+            <Text color="neutralColorLight.Gray-70" fontWeight="Regular" fontSize="s3">
               Standard Chartered Bank Nepal
             </Text>
             <Box display="flex" gap="s10" alignItems="center">
-              <Text
-                color="neutralColorLight.Gray-70"
-                fontWeight="Medium"
-                fontSize="s3"
-              >
+              <Text color="neutralColorLight.Gray-70" fontWeight="Medium" fontSize="s3">
                 09100003422490
               </Text>
-              <Icon
-                _hover={{ cursor: 'pointer' }}
-                size="sm"
-                as={IoCopyOutline}
-              />
+              <Icon _hover={{ cursor: 'pointer' }} size="sm" as={IoCopyOutline} />
             </Box>
           </Box>
         </Box>
@@ -100,12 +77,12 @@ export const DetailPageSideBar = ({ tablinks }: IVerticalSidebarProps) => {
 
       <Tabs p="s16" variant="unstyled" index={currentIndex}>
         {tablinks.map(({ title, to }, index) => (
-            <Link href={to} key={`${title}${index}`}>
-              <TabCol>
-                <Text>{t[title]}</Text>
-              </TabCol>
-            </Link>
-          ))}
+          <Link href={to} key={`${title}${index}`}>
+            <TabCol>
+              <Text>{t[title]}</Text>
+            </TabCol>
+          </Link>
+        ))}
       </Tabs>
     </Box>
   );

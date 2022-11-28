@@ -6,7 +6,7 @@ import {
   useGetCoopUnionKymOptionsQuery,
 } from '@coop/cbs/data-access';
 import { FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
-import { FormSection, GridItem } from '@coop/shared/ui';
+import { FormSection, GridItem } from '@myra-ui';
 import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
 
 import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';

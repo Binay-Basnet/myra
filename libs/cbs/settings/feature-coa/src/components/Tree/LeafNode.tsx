@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 
 import { useDeleteCoaMutation } from '@coop/cbs/data-access';
-import { asyncToast, Box, Button, Icon, Text } from '@coop/shared/ui';
+import { asyncToast, Box, Button, Icon, Text } from '@myra-ui';
 
 import NodeWrapper from './NodeWrapper';
 import { CoaTree } from '../../types';
@@ -20,7 +20,7 @@ const LeafNode = ({ data }: ITestProps) => {
   const { mutateAsync: deleteCOA } = useDeleteCoaMutation();
 
   return (
-    (<NodeWrapper>
+    <NodeWrapper>
       <Box display="flex" gap="s8" ml="-3px" alignItems="center" cursor="pointer">
         <Icon size="sm" as={MdOutlineCircle} color="gray.500" />
         <Box display="flex" alignItems="center" gap="s8" role="group">
@@ -74,7 +74,7 @@ const LeafNode = ({ data }: ITestProps) => {
           ) : null}
         </Box>
       </Box>
-    </NodeWrapper>)
+    </NodeWrapper>
   );
 };
 

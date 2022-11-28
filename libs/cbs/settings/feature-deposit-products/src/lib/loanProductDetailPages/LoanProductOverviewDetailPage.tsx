@@ -1,5 +1,5 @@
 import { DetailPageContentCard } from '@coop/cbs/settings/ui-layout';
-import { Box, ListItem, Text, UnorderedList } from '@coop/shared/ui';
+import { Box, ListItem, Text, UnorderedList } from '@myra-ui';
 
 export const LoanProductOverviewDetailPage = () => (
   <Box display="flex" flexDirection="column" p="s16" gap="s16">

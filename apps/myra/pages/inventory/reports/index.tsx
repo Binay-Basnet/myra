@@ -1,13 +1,13 @@
 import { ReactElement } from 'react';
 
 import { InventoryTabLayout } from '@coop/myra/components';
-import { Box, MainLayoutInventory, WIPState } from '@coop/shared/ui';
+import { Box, MainLayoutInventory, WIPState } from '@myra-ui';
 
 const InventoryReports = () => (
-    <Box display="flex" justifyContent="center" alignItems="center">
-      <WIPState />
-    </Box>
-  );
+  <Box display="flex" justifyContent="center" alignItems="center">
+    <WIPState />
+  </Box>
+);
 
 InventoryReports.getLayout = function getLayout(page: ReactElement) {
   return (

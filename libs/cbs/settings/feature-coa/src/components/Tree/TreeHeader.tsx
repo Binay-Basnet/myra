@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 import { Text } from '@chakra-ui/react';
 
-import { Box, Button, Icon } from '@coop/shared/ui';
+import { Box, Button, Icon } from '@myra-ui';
 
 import { useAccordion } from './Accordion';
 import { CoaTree } from '../../types';

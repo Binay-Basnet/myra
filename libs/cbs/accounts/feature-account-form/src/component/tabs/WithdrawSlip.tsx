@@ -1,7 +1,7 @@
 import { AddIcon } from '@chakra-ui/icons';
 import { useDisclosure } from '@chakra-ui/react';
 
-import { Button } from '@coop/shared/ui';
+import { Button } from '@myra-ui';
 
 import {
   AvailableWithdrawSlipList,
@@ -16,7 +16,7 @@ export const WithdrawSlip = () => {
   return (
     //   const router = useRouter();
 
-    (<>
+    <>
       <TabHeader
         heading="Withdraw Slip"
         headerButton={
@@ -28,6 +28,6 @@ export const WithdrawSlip = () => {
       <AvailableWithdrawSlipList />
       <PastWithdrawSlipList />
       <CreateWithdrawSlipModal isOpen={isOpen} onClose={onClose} />
-    </>)
+    </>
   );
 };

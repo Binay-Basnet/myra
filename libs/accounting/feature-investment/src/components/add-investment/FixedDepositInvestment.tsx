@@ -8,7 +8,7 @@ import {
   FormSelect,
   FormTextArea,
 } from '@coop/shared/form';
-import { Box, FormSection, GridItem, Text } from '@coop/shared/ui';
+import { Box, FormSection, GridItem, Text } from '@myra-ui';
 import { featureCode } from '@coop/shared/utils';
 
 const fdInvestmentTypeOptions = [

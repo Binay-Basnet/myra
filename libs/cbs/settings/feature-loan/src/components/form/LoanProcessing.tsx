@@ -1,6 +1,6 @@
 import { useGetCoaBankListQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
-import { Box, FormSection, GridItem } from '@coop/shared/ui';
+import { Box, FormSection, GridItem } from '@myra-ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 type LoanProcessingTable = {

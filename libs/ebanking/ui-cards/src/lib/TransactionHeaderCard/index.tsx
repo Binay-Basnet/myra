@@ -1,7 +1,7 @@
 import { AiOutlineStock } from 'react-icons/ai';
 
 import { useGetTotalExpenseQuery } from '@coop/ebanking/data-access';
-import { Box, Grid, Icon, TextFields } from '@coop/shared/ui';
+import { Box, Grid, Icon, TextFields } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 export const TransactionHeaderCard = () => {

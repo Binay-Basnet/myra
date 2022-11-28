@@ -1,4 +1,4 @@
-import { DetailCardContent, DetailsCard } from '@coop/shared/ui';
+import { DetailCardContent, DetailsCard } from '@myra-ui';
 
 import { useLoanDetails } from '../../hooks/useLoanDetails';
 
@@ -8,8 +8,14 @@ export const LoanGeneralInformation = () => {
   return (
     <DetailsCard title="General Information">
       <DetailCardContent title="Loan Type" subtitle={loanPreview?.generalInformation?.loanType} />
-      <DetailCardContent title="Loan SubType" subtitle={loanPreview?.generalInformation?.loanSubType} />
-      <DetailCardContent title="Loan Product" subtitle={loanPreview?.generalInformation?.loanProduct} />
+      <DetailCardContent
+        title="Loan SubType"
+        subtitle={loanPreview?.generalInformation?.loanSubType}
+      />
+      <DetailCardContent
+        title="Loan Product"
+        subtitle={loanPreview?.generalInformation?.loanProduct}
+      />
       <DetailCardContent
         title="Nature of Loan Product"
         subtitle={loanPreview?.generalInformation?.natureOfLoanProduct?.toLowerCase()}

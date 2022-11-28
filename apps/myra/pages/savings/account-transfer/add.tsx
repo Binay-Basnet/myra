@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
 import { NewAccountTransfer } from '@coop/cbs/transactions/account-transfer';
-import { MainLayout } from '@coop/shared/ui';
+import { MainLayout } from '@myra-ui';
 
 const TransactionsAddAccountTransfer = () => (
   <NewAccountTransfer />

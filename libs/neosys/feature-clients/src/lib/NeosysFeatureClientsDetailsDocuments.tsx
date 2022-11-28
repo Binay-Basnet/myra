@@ -1,7 +1,7 @@
 import { EditIcon } from '@chakra-ui/icons';
 
 import { NeosysDocumentCard } from '@coop/neosys-admin/ui-components';
-import { Box, Button, Grid } from '@coop/shared/ui';
+import { Box, Button, Grid } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { ClientDetailHeader } from './components';

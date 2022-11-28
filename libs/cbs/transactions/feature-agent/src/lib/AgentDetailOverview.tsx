@@ -10,7 +10,7 @@ import {
 } from '@coop/cbs/data-access';
 import { AssignedMembersCard } from '@coop/cbs/transactions/ui-components';
 import { FormEditableTable } from '@coop/shared/form';
-import { Alert, asyncToast, Box, Button, DetailPageContentCard, Text } from '@coop/shared/ui';
+import { Alert, asyncToast, Box, Button, DetailPageContentCard, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */

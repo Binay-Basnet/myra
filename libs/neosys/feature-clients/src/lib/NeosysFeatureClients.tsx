@@ -3,7 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useCreateDbMutation, useGetClientsListQuery } from '@coop/neosys-admin/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { asyncToast, Avatar, Box, PageHeader, TablePopover, Text, toast } from '@coop/shared/ui';
+import { asyncToast, Avatar, Box, PageHeader, TablePopover, Text, toast } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const CLIENTS_TAB_ITEMS = [

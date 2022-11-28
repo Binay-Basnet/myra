@@ -9,7 +9,7 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { Box, Divider, GridItem, Text } from '@coop/shared/ui';
+import { Box, Divider, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const AddInventoryForm = () => {

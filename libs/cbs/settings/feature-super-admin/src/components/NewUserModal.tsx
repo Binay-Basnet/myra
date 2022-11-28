@@ -20,7 +20,7 @@ import {
   FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
-import { asyncToast, Box, ChakraModal, Grid } from '@coop/shared/ui';
+import { asyncToast, Box, ChakraModal, Grid } from '@myra-ui';
 
 interface INewUserModalProps {
   isOpen: boolean;

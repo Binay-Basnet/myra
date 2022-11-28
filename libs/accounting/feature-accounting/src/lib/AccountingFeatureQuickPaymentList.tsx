@@ -5,7 +5,7 @@ import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
 import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, Text } from '@coop/shared/ui';
+import { Avatar, Box, Text } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */

@@ -1,4 +1,4 @@
-import { Text } from '@coop/shared/ui';
+import { Text } from '@myra-ui';
 
 import { ReportTable } from '../components';
 

@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { ValuationDocuments } from '@coop/cbs/loan';
 import { FormInput } from '@coop/shared/form';
-import { Grid, GridItem, Text } from '@coop/shared/ui';
+import { Grid, GridItem, Text } from '@myra-ui';
 
 import { ValuationRange } from './ValuationRange';
 import { ValuationStats } from './ValuationStats';

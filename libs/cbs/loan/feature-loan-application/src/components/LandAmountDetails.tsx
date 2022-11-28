@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { LoanAccountInput } from '@coop/cbs/data-access';
 import { FormNumberInput, FormTextArea } from '@coop/shared/form';
-import { Box, Button, Divider, Text, TextFields } from '@coop/shared/ui';
+import { Box, Button, Divider, Text, TextFields } from '@myra-ui';
 
 export const LoanAmountDetails = () => {
   const { watch, getValues } = useFormContext<LoanAccountInput>();

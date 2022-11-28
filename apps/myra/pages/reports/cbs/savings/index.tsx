@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { ReportMainLayout, ReportsCbsLayout } from '@coop/cbs/reports/layout';
 import { SavingReportList, ShareReportTable } from '@coop/cbs/reports/list';
-import { MainLayout } from '@coop/shared/ui';
+import { MainLayout } from '@myra-ui';
 
 const ShareReport = () => {
   const router = useRouter();

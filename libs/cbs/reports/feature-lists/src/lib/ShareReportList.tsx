@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { PopoverComponent } from '@coop/myra/components';
 import { Table } from '@coop/shared/table';
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 import { featureCode } from '@coop/shared/utils';
 
 import { ReportGroup, REPORTS } from '../constants/REPORTS';

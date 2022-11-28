@@ -1,6 +1,6 @@
 import { Flex } from '@chakra-ui/react';
 
-import { Box, PageHeaderTab, Text } from '@coop/shared/ui';
+import { Box, PageHeaderTab, Text } from '@myra-ui';
 
 interface ITableListPageHeader {
   heading: string;

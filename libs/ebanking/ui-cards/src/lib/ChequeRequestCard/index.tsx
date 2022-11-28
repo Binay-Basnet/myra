@@ -7,7 +7,7 @@ import {
   EBankingChequeRequestType,
   EbankingServiceRequestType,
 } from '@coop/ebanking/data-access';
-import { Box, Icon, Text } from '@coop/shared/ui';
+import { Box, Icon, Text } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 const iconDict = {

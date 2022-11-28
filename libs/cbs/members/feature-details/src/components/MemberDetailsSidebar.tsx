@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Avatar } from '@chakra-ui/react';
 
 import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
-import { Box, DetailPageTabs, Icon, Tags, Text } from '@coop/shared/ui';
+import { Box, DetailPageTabs, Icon, Tags, Text } from '@myra-ui';
 import { copyToClipboard } from '@coop/shared/utils';
 
 export const MemberDetailsSidebar = () => {

@@ -23,7 +23,7 @@ import {
   FormHeader,
   FormSection,
   GridItem,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 
 import { FixedDepositInvestment, SavingsDepositsInvestment, ShareInvestment } from '../components';
 

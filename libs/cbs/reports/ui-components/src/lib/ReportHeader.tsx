@@ -12,7 +12,7 @@ import {
   useGetNewIdMutation,
   useSaveNewReportMutation,
 } from '@coop/cbs/data-access';
-import { asyncToast, Box, Button, Icon, Input, Modal, TextFields } from '@coop/shared/ui';
+import { asyncToast, Box, Button, Icon, Input, Modal, TextFields } from '@myra-ui';
 
 type Path = {
   link?: string;

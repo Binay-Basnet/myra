@@ -12,7 +12,7 @@ import {
   useUpsertSectionOptionMutation,
 } from '@coop/cbs/data-access';
 import { FormInput, FormSelect, FormSwitch } from '@coop/shared/form';
-import { Box, Icon, Text } from '@coop/shared/ui';
+import { Box, Icon, Text } from '@myra-ui';
 import { GRID2X3 } from '@coop/shared/utils';
 
 import { GROUPED_FIELD_OPTIONS } from '../../constants/GROUP_FIELD_OPTIONS';

@@ -1,7 +1,7 @@
-import Image from "next/legacy/image";
+import Image from 'next/legacy/image';
 
 import { useAppSelector } from '@coop/ebanking/data-access';
-import { Box } from '@coop/shared/ui';
+import { Box } from '@myra-ui';
 
 import { HeaderRightSection } from '../components/EbankingHeader';
 

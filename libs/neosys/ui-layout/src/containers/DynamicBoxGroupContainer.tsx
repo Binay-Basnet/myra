@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, BoxProps } from '@coop/shared/ui';
+import { Box, BoxProps } from '@myra-ui';
 
 interface IGroupContainer extends BoxProps {
   children: React.ReactNode;

@@ -3,7 +3,7 @@ import { Control, Controller, FieldValues, useFormContext } from 'react-hook-for
 import { ControllerRenderProps, UseControllerProps } from 'react-hook-form/dist/types/controller';
 import { get } from 'lodash';
 
-import { Select, SelectProps } from '@coop/shared/ui';
+import { Select, SelectProps } from '@myra-ui';
 
 interface IFormSelectProps<T> extends SelectProps {
   control?: Control<T>;

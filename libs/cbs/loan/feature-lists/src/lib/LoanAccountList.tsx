@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { LoanObjState, useGetLoanListQuery } from '@coop/cbs/data-access';
-import { PageHeader } from '@coop/shared/ui';
+import { PageHeader } from '@myra-ui';
 import { getRouterQuery } from '@coop/shared/utils';
 
 import { LoanTable } from '../components/LoanTable';

@@ -1,7 +1,7 @@
 import { IconType } from 'react-icons';
 import Link from 'next/link';
 
-import { Box, Icon, TextFields } from '@coop/shared/ui';
+import { Box, Icon, TextFields } from '@myra-ui';
 
 interface ICoopCardProps {
   icon?: IconType;

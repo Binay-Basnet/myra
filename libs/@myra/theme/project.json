@@ -1,0 +1,44 @@
+{
+  "name": "@myra-theme",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/@myra/theme/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lib-build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/@myra/theme",
+        "tsConfig": "libs/@myra/theme/tsconfig.lib.json",
+        "project": "libs/@myra/theme/package.json",
+        "entryFile": "libs/@myra/theme/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "compiler": "babel",
+        "assets": [
+          {
+            "glob": "libs/@myra/theme/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/@myra/theme/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/@myra/theme/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

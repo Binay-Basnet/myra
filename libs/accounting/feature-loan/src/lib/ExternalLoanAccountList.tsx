@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { formatTableAddress } from '@coop/cbs/utils';
 import { Column, Table } from '@coop/shared/table';
-import { TablePopover } from '@coop/shared/ui';
+import { TablePopover } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { useExternalLoan } from '../hooks/useExternalLoan';

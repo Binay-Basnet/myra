@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { InfoCard } from '@coop/ebanking/cards';
 import { useChangeCoopPinMutation } from '@coop/ebanking/data-access';
 import { FormInput } from '@coop/shared/form';
-import { asyncToast, Box, Button, PathBar } from '@coop/shared/ui';
+import { asyncToast, Box, Button, PathBar } from '@myra-ui';
 
 const validationSchema = yup.object({
   oldPin: yup.string().required('No Pin provided'),

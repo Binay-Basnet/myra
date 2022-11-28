@@ -2,11 +2,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import { FormAddress, FormInput } from '@coop/shared/form';
-import { FormSection, GridItem } from '@coop/shared/ui';
-import {
-  getKymSectionCoOperativeUnion,
-  useTranslation,
-} from '@coop/shared/utils';
+import { FormSection, GridItem } from '@myra-ui';
+import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
 
 import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
 
@@ -30,21 +27,10 @@ export const RegisteredDetails = ({ setSection }: IRegisteredDetailsProps) => {
           setSection(kymSection);
         }}
       >
-        <FormSection
-          id="kymCoopUnionAccRegisteredDetails"
-          header="kymCoopUnionRegisteredDetails"
-        >
-          <FormInput
-            type="number"
-            name="regdNo"
-            label={t['kymCoopUnionRegisteredNumber']}
-          />
+        <FormSection id="kymCoopUnionAccRegisteredDetails" header="kymCoopUnionRegisteredDetails">
+          <FormInput type="number" name="regdNo" label={t['kymCoopUnionRegisteredNumber']} />
           <GridItem colSpan={2}>
-            <FormInput
-              type="text"
-              name="issuingOffice"
-              label={t['kymCoopUnionIssuingOffice']}
-            />
+            <FormInput type="text" name="issuingOffice" label={t['kymCoopUnionIssuingOffice']} />
           </GridItem>
 
           <FormAddress name="regdAddress" />

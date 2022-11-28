@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { useAllAdministrationQuery } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput, FormMap, FormSelect } from '@coop/shared/form';
-import { Box } from '@coop/shared/ui';
+import { Box } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const AddressOrganization = () => {

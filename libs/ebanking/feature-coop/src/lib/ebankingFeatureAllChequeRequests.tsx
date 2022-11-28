@@ -23,7 +23,7 @@ import {
   PopoverTrigger,
   Text,
   VStack,
-} from '@coop/shared/ui';
+} from '@myra-ui';
 import { getLoggedInUserId, useTranslation } from '@coop/shared/utils';
 
 const ChequeStatusOptions = [

@@ -1,7 +1,7 @@
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { TextBoxContainer, TopText } from '@coop/shared/components';
 import { FormEditableTable } from '@coop/shared/form';
-import { Box } from '@coop/shared/ui';
+import { Box } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 type AccountServiceTable = {

@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import { AccorrdianAddCOOPUnion } from '@coop/cbs/kym-form/formElements';
-import { Box, Container } from '@coop/shared/ui';
+import { Box, Container } from '@myra-ui';
 
 import { KYMCoopUnionForm } from '../KYMCoopUnionForm';
 

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { Box, Text } from '@coop/shared/ui';
+import { Box, Text } from '@myra-ui';
 
 interface IProductSelectCardProps {
   label: string;

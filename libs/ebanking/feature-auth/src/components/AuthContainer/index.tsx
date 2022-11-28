@@ -1,8 +1,8 @@
-import Image from "next/legacy/image";
+import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 
 import { GoBack } from '@coop/ebanking/components';
-import { Box, LocaleSwitcher, Text } from '@coop/shared/ui';
+import { Box, LocaleSwitcher, Text } from '@myra-ui';
 
 interface IAuthContainerProps {
   children: React.ReactNode;

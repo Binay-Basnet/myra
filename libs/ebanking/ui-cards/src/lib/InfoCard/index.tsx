@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Button, Divider, Text, VStack } from '@coop/shared/ui';
+import { Box, Button, Divider, Text, VStack } from '@myra-ui';
 
 export interface InfoCardProps {
   title?: string;

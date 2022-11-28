@@ -14,7 +14,7 @@ import {
   useSetKymIndividualIdentificationDataMutation,
 } from '@coop/cbs/data-access';
 import { FormDatePicker, FormInput } from '@coop/shared/form';
-import { Box, FormSection, Text } from '@coop/shared/ui';
+import { Box, FormSection, Text } from '@myra-ui';
 import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 interface IDrivingLicenseProps {

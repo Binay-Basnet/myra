@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import { InventoryFeatureSuppliers } from '@coop/myra/inventory/suppliers';
-import { MainLayoutInventory } from '@coop/shared/ui';
+import { MainLayoutInventory } from '@myra-ui';
 
 const AddNewSuppliersPage = () => <InventoryFeatureSuppliers />;
 

@@ -3,7 +3,7 @@ import { IoList, IoLogoMicrosoft } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
 import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
-import { Button, DetailsCard, Icon } from '@coop/shared/ui';
+import { Button, DetailsCard, Icon } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 import { LoanAccountCard } from './LoanAccountCard';

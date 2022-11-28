@@ -2,7 +2,7 @@ import { AiOutlineStock } from 'react-icons/ai';
 import { TbSum } from 'react-icons/tb';
 
 import { useGetShareSummaryQuery } from '@coop/ebanking/data-access';
-import { Box, Grid, Icon, TextFields } from '@coop/shared/ui';
+import { Box, Grid, Icon, TextFields } from '@myra-ui';
 
 export const ShareHeader = () => {
   const { data: shareSummary } = useGetShareSummaryQuery();

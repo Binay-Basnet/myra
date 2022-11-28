@@ -1,5 +1,5 @@
 import { NatureOfDepositProduct, useAccountDetails } from '@coop/cbs/data-access';
-import { DetailPageQuickLinks } from '@coop/shared/ui';
+import { DetailPageQuickLinks } from '@myra-ui';
 
 import {
   AccountStatistics,
