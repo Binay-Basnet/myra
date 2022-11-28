@@ -78,7 +78,7 @@ const whatsNewData = {
     ],
   },
   knownBugs: {
-    title: 'Old Dump /Known Bugs',
+    title: 'Known Bugs',
     data: [
       'Share Balance Export in excel.',
       'Family Member in this institution and relationship should have multiple selecting options.',
