@@ -1,8 +1,8 @@
 import { IoCopyOutline } from 'react-icons/io5';
+import { Box, Icon, Tags, Text } from '@myra-ui';
 
 import { TransferType } from '@coop/cbs/data-access';
-import { Box, Icon, Tags, Text } from '@myra-ui';
-import { useTranslation } from '@coop/shared/utils';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type SummaryProps = {
   summary: {
@@ -63,7 +63,7 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
             </Box>
             <Box gap="s4" display="flex" flexDirection="column">
               <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
-                {summary.amount}
+                {amountConverter(summary.amount ?? 0)}
               </Text>
               <Tags
                 type="chip"
@@ -89,7 +89,7 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
 
           <Box display="flex" flexDirection="column">
             <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
-              {summary.amount}
+              {amountConverter(summary.amount ?? 0)}
             </Text>
           </Box>
         </>
