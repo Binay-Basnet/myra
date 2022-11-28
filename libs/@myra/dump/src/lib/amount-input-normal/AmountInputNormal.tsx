@@ -22,7 +22,7 @@ export const AmountInputNormal = forwardRef<HTMLInputElement, AmountInputNormalP
           {label ?? 'Quantity'}
         </TextFields>
         <InputGroup h="44px">
-          <Input variant={'outline'} type="number" fontSize={'s2'} ref={ref} {...rest} />
+          <Input variant="outline" type="number" fontSize="s2" ref={ref} {...rest} />
         </InputGroup>
       </>
     );

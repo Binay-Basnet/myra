@@ -1,19 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { useQueryClient } from '@tanstack/react-query';
-import { omit } from 'lodash';
-
-import {
-  CashValue,
-  Share_Transaction_Direction,
-  SharePaymentMode,
-  SharePurchaseInput,
-  ShareVoucherDepositedBy,
-  useAddSharePurchaseMutation,
-  useGetIndividualMemberDetails,
-  useGetShareChargesQuery,
-} from '@coop/cbs/data-access';
 import {
   asyncToast,
   Box,
@@ -27,6 +14,19 @@ import {
   ShareMemberCard,
   TabMenu,
 } from '@myra-ui';
+import { useQueryClient } from '@tanstack/react-query';
+import { omit } from 'lodash';
+
+import {
+  CashValue,
+  Share_Transaction_Direction,
+  SharePaymentMode,
+  SharePurchaseInput,
+  ShareVoucherDepositedBy,
+  useAddSharePurchaseMutation,
+  useGetIndividualMemberDetails,
+  useGetShareChargesQuery,
+} from '@coop/cbs/data-access';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { ShareInfoFooter } from './ShareInfoFooter';

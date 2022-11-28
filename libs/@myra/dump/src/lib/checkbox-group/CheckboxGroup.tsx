@@ -16,7 +16,7 @@ export interface CheckboxGroupProps extends ChakraCheckboxProps {
   variant: 'simple' | 'fullWidth';
 }
 
-export function CheckboxGroup(props: CheckboxGroupProps) {
+export const CheckboxGroup = (props: CheckboxGroupProps) => {
   const { checkList, spacing, variant, direction, ...rest } = props;
   return (
     <ChakraCheckboxGroup>
@@ -44,6 +44,6 @@ export function CheckboxGroup(props: CheckboxGroupProps) {
       )}
     </ChakraCheckboxGroup>
   );
-}
+};
 
 export default CheckboxGroup;

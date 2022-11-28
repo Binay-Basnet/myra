@@ -1,8 +1,6 @@
 import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-
-import { TabColumn } from '@coop/myra/components';
 import {
   AddButtonList,
   Box,
@@ -12,6 +10,8 @@ import {
   PopOverComponentForButtonList,
   Text,
 } from '@myra-ui';
+
+import { TabColumn } from '@coop/myra/components';
 
 interface IExternalLoanSidebarLayoutProps {
   children: React.ReactNode;
@@ -31,7 +31,7 @@ const externalLoanSidebarColumns = [
     addLink: '/accounting/loan/external-loan-accounts/new/add',
   },
   {
-    title: 'Externa Loan Payment',
+    title: 'External Loan Payment',
     link: '/accounting/loan/external-loan-payment/list',
     name: 'external-loan-payment',
     addLink: '/accounting/loan/external-loan-payment/new/add',
@@ -48,7 +48,7 @@ const addButtoncolumns = [
     link: '/accounting/loan/external-loan-accounts/new/add',
   },
   {
-    title: 'Externa Loan Payment',
+    title: 'External Loan Payment',
     link: '/accounting/loan/external-loan-payment/new/add',
   },
 ];
