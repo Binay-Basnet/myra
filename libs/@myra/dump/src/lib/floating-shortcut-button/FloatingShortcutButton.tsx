@@ -39,7 +39,7 @@ interface WhatsNewModalProps {
 
 const whatsNewData = {
   features: {
-    title: 'Old Dump /New Features',
+    title: 'New Features',
     data: [
       'Accounting : External Loan',
       'Accounting : Bank Accounts',
@@ -66,7 +66,7 @@ const whatsNewData = {
     ],
   },
   bugsSquashed: {
-    title: 'Old Dump /Bug Squashed',
+    title: 'Bug Squashed',
     data: [
       'Member code is generated with setup code.',
       'Unit field is missing in Loan Repayment Start Grace Duration',
