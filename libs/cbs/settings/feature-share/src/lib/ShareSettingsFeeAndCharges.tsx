@@ -1,15 +1,16 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { asyncToast, Box, SettingsFooter, Text, toast } from '@myra-ui';
 
 import {
   ShareChargeType,
-  useGetLedgerMapingShareQuery,
+  ShareIssueChargesInput,
   useGetSettingsShareIssueChargesDataQuery,
   useSetSettingsShareIssueChargesMutation,
 } from '@coop/cbs/data-access';
+import { COASelectModal } from '@coop/cbs/utils';
 import { FormEditableTable } from '@coop/shared/form';
-import { asyncToast, Box, SettingsFooter, Text, toast } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsHeader from '../components/ShareSettingsHeader/ShareSettingsHeader';
@@ -44,14 +45,8 @@ const type = [
 
 export const ShareSettingsFeeAndCharges = () => {
   const { t } = useTranslation();
-  const methods = useForm({});
-  const { data: ledgerQuery } = useGetLedgerMapingShareQuery();
-  const ledgerData = ledgerQuery?.settings?.general?.chartsOfAccount?.accountsUnder?.data;
+  const methods = useForm<ShareIssueChargesInput>({});
 
-  const ledgerOptions = ledgerData?.map((data) => ({
-    label: data?.name?.local as string,
-    value: data?.id as string,
-  }));
   const { reset, getValues } = methods;
   const router = useRouter();
   const { mutateAsync } = useSetSettingsShareIssueChargesMutation();
@@ -65,6 +60,11 @@ export const ShareSettingsFeeAndCharges = () => {
   }, [settingsFeesAndChargesData]);
   const handleSubmit = () => {
     const values = getValues();
+    const shareCertificate = values?.shareCertificate?.map((s) => ({
+      ...s,
+      charge: String(s?.charge),
+    }));
+    const other = values?.other?.map((s) => ({ ...s, charge: String(s?.charge) }));
 
     asyncToast({
       id: 'share-settings-fees-id',
@@ -76,7 +76,8 @@ export const ShareSettingsFeeAndCharges = () => {
       promise: mutateAsync(
         {
           data: {
-            ...values,
+            other,
+            shareCertificate,
           },
         },
         { onSuccess: () => refetch() }
@@ -120,8 +121,8 @@ export const ShareSettingsFeeAndCharges = () => {
                     {
                       accessor: 'ledgerMapping',
                       header: t['shareSettingsFeesLedgerMapping'],
-                      fieldType: 'select',
-                      selectOptions: ledgerOptions,
+                      fieldType: 'modal',
+                      modal: COASelectModal,
                     },
                     {
                       accessor: 'minShare',
@@ -137,6 +138,7 @@ export const ShareSettingsFeeAndCharges = () => {
                     },
                     {
                       accessor: 'charge',
+                      isNumeric: true,
                       header: t['shareSettingsFeesCharge'],
                     },
                   ]}
@@ -168,8 +170,8 @@ export const ShareSettingsFeeAndCharges = () => {
                     {
                       accessor: 'ledgerMapping',
                       header: t['shareSettingsFeesLedgerMapping'],
-                      fieldType: 'select',
-                      selectOptions: ledgerOptions,
+                      fieldType: 'modal',
+                      modal: COASelectModal,
                     },
                     {
                       accessor: 'minShare',
@@ -185,6 +187,7 @@ export const ShareSettingsFeeAndCharges = () => {
                     },
                     {
                       accessor: 'charge',
+                      isNumeric: true,
                       header: t['shareSettingsFeesCharge'],
                     },
                   ]}

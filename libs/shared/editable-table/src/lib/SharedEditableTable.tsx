@@ -14,11 +14,11 @@ import {
   Input,
   Text,
   Textarea,
+  useDisclosure,
 } from '@chakra-ui/react';
+import { Checkbox, Grid, GridItem } from '@myra-ui';
 import { AsyncSelect, Select } from 'chakra-react-select';
 import _, { uniqueId } from 'lodash';
-
-import { Checkbox, Grid, GridItem } from '@myra-ui';
 
 import { chakraDefaultStyles, searchBarStyle } from '../utils/ChakraSelectTheme';
 import { components } from '../utils/SelectComponents';
@@ -27,6 +27,17 @@ export const isArrayEqual = <T,>(x: T[], y: T[]) => _(x).xorWith(y, _.isEqual).i
 
 interface RecordWithId {
   _id?: number;
+}
+
+interface ModalProps {
+  modal: {
+    isOpen: boolean;
+    onClose: () => void;
+    onToggle: () => void;
+  };
+  defaultValue: string | undefined | null;
+  trigger: (props: { id: string; name: string; under: string } | null) => React.ReactNode;
+  onChange: (newValue: string) => void;
 }
 
 export type Column<T extends RecordWithId & Record<string, string | number | boolean>> = {
@@ -43,7 +54,8 @@ export type Column<T extends RecordWithId & Record<string, string | number | boo
     | 'search'
     | 'date'
     | 'select'
-    | 'checkbox';
+    | 'checkbox'
+    | 'modal';
   selectOptions?: { label: string; value: string }[];
   searchOptions?: { label: string; value: string }[];
 
@@ -52,6 +64,7 @@ export type Column<T extends RecordWithId & Record<string, string | number | boo
   isNumeric?: boolean;
 
   cell?: (row: T) => React.ReactNode;
+  modal?: React.ComponentType<ModalProps>;
 
   cellWidth?: 'auto' | 'lg' | 'md' | 'sm';
   colSpan?: number;
@@ -645,7 +658,10 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number | 
   dispatch,
   data,
 }: EditableCellProps<T>) => {
+  const modalProps = useDisclosure();
   const [asyncOptions, setAsyncOptions] = useState<{ label: string; value: string }[]>([]);
+
+  const Modal = column.modal;
 
   useEffect(() => {
     async function getAsyncOptions() {
@@ -699,7 +715,38 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number | 
           : String(data[column.accessor] ? data[column.accessor] : '')
       }
     >
-      {column.fieldType === 'checkbox' ? null : column.cell ? (
+      {column.fieldType === 'modal' ? (
+        Modal ? (
+          <Modal
+            defaultValue={data[column.accessor] as string}
+            trigger={(props) => (
+              <Text
+                _hover={{ bg: 'gray.100' }}
+                color={!props ? 'primary.500' : 'gray.700'}
+                cursor="pointer"
+                px="s8"
+                w="100%"
+                h="100%"
+                display="flex"
+                alignItems="center"
+              >
+                {props ? `${props.id} - ${props.name}` : 'Search for Ledger'}
+              </Text>
+            )}
+            modal={modalProps}
+            onChange={(newValue) => {
+              dispatch({
+                type: EditableTableActionKind.EDIT,
+                payload: {
+                  data,
+                  newValue,
+                  column,
+                },
+              });
+            }}
+          />
+        ) : null
+      ) : column.fieldType === 'checkbox' ? null : column.cell ? (
         <Box px="s8" width="100%" cursor="not-allowed">
           {column.cell(data)}
         </Box>
