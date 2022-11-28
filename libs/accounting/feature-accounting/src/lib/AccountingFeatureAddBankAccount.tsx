@@ -1,14 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
-
-import {
-  AccountingBankAccountType,
-  NewBankAccountInput,
-  useGetBankListQuery,
-  useSetBankAccountsMutation,
-} from '@coop/cbs/data-access';
-import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
 import {
   asyncToast,
   Box,
@@ -21,6 +13,14 @@ import {
   Icon,
   Text,
 } from '@myra-ui';
+
+import {
+  AccountingBankAccountType,
+  NewBankAccountInput,
+  useGetBankListQuery,
+  useSetBankAccountsMutation,
+} from '@coop/cbs/data-access';
+import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -124,7 +124,8 @@ export const AccountingFeatureAddBankAccount = () => {
                 />
                 <FormInput
                   name="openingBalance"
-                  type="text"
+                  type="number"
+                  textAlign="right"
                   label={t['accountingBankAccountAddOpeningBalance']}
                 />
 

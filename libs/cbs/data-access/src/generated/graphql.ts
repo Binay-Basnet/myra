@@ -18010,6 +18010,57 @@ export type GetUserReportQuery = {
   };
 };
 
+export type GetTtrReportQueryVariables = Exact<{
+  data: TtrReportFilter;
+}>;
+
+export type GetTtrReportQuery = {
+  report: {
+    thresholdTransactionReport: {
+      data?: {
+        yearly?: Array<{
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          branch?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          nature?: NatureOfTransaction | null;
+          accountNo?: string | null;
+          amount?: string | null;
+          sourceOfFund?: string | null;
+          remarks?: string | null;
+          address?: {
+            state?: Record<'local' | 'en' | 'np', string> | null;
+            district?: Record<'local' | 'en' | 'np', string> | null;
+            localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+            wardNo?: string | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+        } | null> | null;
+        perTranx?: Array<{
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          branch?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          nature?: NatureOfTransaction | null;
+          accountNo?: string | null;
+          amount?: string | null;
+          sourceOfFund?: string | null;
+          remarks?: string | null;
+          address?: {
+            state?: Record<'local' | 'en' | 'np', string> | null;
+            district?: Record<'local' | 'en' | 'np', string> | null;
+            localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+            wardNo?: string | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
 export type GetShareStatementQueryVariables = Exact<{
   data: ShareStatementReportSettings;
 }>;
@@ -29382,6 +29433,72 @@ export const useGetUserReportQuery = <TData = GetUserReportQuery, TError = unkno
   useQuery<GetUserReportQuery, TError, TData>(
     variables === undefined ? ['getUserReport'] : ['getUserReport', variables],
     useAxios<GetUserReportQuery, GetUserReportQueryVariables>(GetUserReportDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetTtrReportDocument = `
+    query getTtrReport($data: TTRReportFilter!) {
+  report {
+    thresholdTransactionReport(data: $data) {
+      data {
+        yearly {
+          name
+          address {
+            state
+            district
+            localGovernment
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          branch
+          date
+          nature
+          accountNo
+          amount
+          sourceOfFund
+          remarks
+        }
+        perTranx {
+          name
+          address {
+            state
+            district
+            localGovernment
+            wardNo
+            locality
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+          branch
+          date
+          nature
+          accountNo
+          amount
+          sourceOfFund
+          remarks
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetTtrReportQuery = <TData = GetTtrReportQuery, TError = unknown>(
+  variables: GetTtrReportQueryVariables,
+  options?: UseQueryOptions<GetTtrReportQuery, TError, TData>
+) =>
+  useQuery<GetTtrReportQuery, TError, TData>(
+    ['getTtrReport', variables],
+    useAxios<GetTtrReportQuery, GetTtrReportQueryVariables>(GetTtrReportDocument).bind(
       null,
       variables
     ),

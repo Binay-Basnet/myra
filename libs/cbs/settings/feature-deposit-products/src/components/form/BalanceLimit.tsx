@@ -1,5 +1,6 @@
-import { FormAmountInput } from '@coop/shared/form';
 import { FormSection } from '@myra-ui';
+
+import { FormAmountInput } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 export const BalanceLimit = () => {
