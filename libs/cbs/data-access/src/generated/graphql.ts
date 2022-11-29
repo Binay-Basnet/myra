@@ -18262,6 +18262,32 @@ export type GetshareRegisterReportQuery = {
   };
 };
 
+export type GetShareTransactionReportQueryVariables = Exact<{
+  data?: InputMaybe<ShareTransactionReportFilter>;
+}>;
+
+export type GetShareTransactionReportQuery = {
+  report: {
+    shareTransactionReport?: {
+      data?: Array<{
+        transactionDate?: string | null;
+        memberId?: string | null;
+        memberCode?: string | null;
+        name?: string | null;
+        particular?: string | null;
+        shareReturnDr?: string | null;
+        shareIssueCr?: string | null;
+        balance?: string | null;
+      } | null> | null;
+      footer?: {
+        totalCr?: string | null;
+        totatDr?: string | null;
+        totalBalance?: string | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetAccountOpeningReportQueryVariables = Exact<{
   data?: InputMaybe<AccountOpeningReportInput>;
 }>;
@@ -29761,6 +29787,45 @@ export const useGetshareRegisterReportQuery = <
     ['getshareRegisterReport', variables],
     useAxios<GetshareRegisterReportQuery, GetshareRegisterReportQueryVariables>(
       GetshareRegisterReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetShareTransactionReportDocument = `
+    query getShareTransactionReport($data: ShareTransactionReportFilter) {
+  report {
+    shareTransactionReport(data: $data) {
+      data {
+        transactionDate
+        memberId
+        memberCode
+        name
+        particular
+        shareReturnDr
+        shareIssueCr
+        balance
+      }
+      footer {
+        totalCr
+        totatDr
+        totalBalance
+      }
+    }
+  }
+}
+    `;
+export const useGetShareTransactionReportQuery = <
+  TData = GetShareTransactionReportQuery,
+  TError = unknown
+>(
+  variables?: GetShareTransactionReportQueryVariables,
+  options?: UseQueryOptions<GetShareTransactionReportQuery, TError, TData>
+) =>
+  useQuery<GetShareTransactionReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getShareTransactionReport']
+      : ['getShareTransactionReport', variables],
+    useAxios<GetShareTransactionReportQuery, GetShareTransactionReportQueryVariables>(
+      GetShareTransactionReportDocument
     ).bind(null, variables),
     options
   );

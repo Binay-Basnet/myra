@@ -155,6 +155,7 @@ export const REPORTS = {
     {
       id: '3.3',
       report: Report.SHARE_TRANSACTION_REPORT,
+      link: 'transaction',
     },
     {
       id: '3.4',
