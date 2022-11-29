@@ -471,3 +471,25 @@ query getshareRegisterReport($data: SharePurchaseRegisterReportFilter!) {
     }
   }
 }
+
+query getShareTransactionReport($data: ShareTransactionReportFilter) {
+  report {
+    shareTransactionReport(data: $data) {
+      data {
+        transactionDate
+        memberId
+        memberCode
+        name
+        particular
+        shareReturnDr
+        shareIssueCr
+        balance
+      }
+      footer {
+        totalCr
+        totatDr
+        totalBalance
+      }
+    }
+  }
+}

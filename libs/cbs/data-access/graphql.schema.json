@@ -63017,47 +63017,11 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "branchId",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "maxOutstandingBalance",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "minOutstandingBalance",
-            "description": null,
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "period",
+            "name": "outstandingBalance",
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "PeriodInput",
+              "name": "MinMaxFilter",
               "ofType": null
             },
             "defaultValue": null,
@@ -63107,6 +63071,53 @@
                 "name": "String",
                 "ofType": null
               }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "LoanBalanceFilterData",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "branchId",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "filter",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "LoanBalanceFilter",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "period",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "PeriodInput",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -83066,14 +83077,14 @@
             "description": null,
             "args": [
               {
-                "name": "filter",
+                "name": "data",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "LoanBalanceFilter",
+                    "name": "LoanBalanceFilterData",
                     "ofType": null
                   }
                 },
@@ -90071,7 +90082,7 @@
             "description": null,
             "type": {
               "kind": "ENUM",
-              "name": "SHARE_TRANSACTION_DIRECTION",
+              "name": "ShareTransactionType",
               "ofType": null
             },
             "defaultValue": null,
@@ -92434,7 +92445,7 @@
             "deprecationReason": null
           },
           {
-            "name": "eductaion",
+            "name": "education",
             "description": null,
             "type": {
               "kind": "LIST",
@@ -92474,22 +92485,6 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "Int",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "memberType",
-            "description": null,
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "MemberType",
                 "ofType": null
               }
             },

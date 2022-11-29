@@ -7328,13 +7328,16 @@ export enum LoanApproveOrCancel {
 }
 
 export type LoanBalanceFilter = {
-  branchId?: InputMaybe<Scalars['String']>;
-  maxOutstandingBalance?: InputMaybe<Scalars['String']>;
-  minOutstandingBalance?: InputMaybe<Scalars['String']>;
-  period?: InputMaybe<PeriodInput>;
+  outstandingBalance?: InputMaybe<MinMaxFilter>;
   productNameIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   productSubTypes?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   productTypes?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type LoanBalanceFilterData = {
+  branchId?: InputMaybe<Scalars['String']>;
+  filter?: InputMaybe<LoanBalanceFilter>;
+  period?: InputMaybe<PeriodInput>;
 };
 
 export type LoanBalanceReport = {
@@ -9662,7 +9665,7 @@ export type ReportQueryListReportsArgs = {
 };
 
 export type ReportQueryLoanBalanceReportArgs = {
-  filter: LoanBalanceFilter;
+  data: LoanBalanceFilterData;
 };
 
 export type ReportQueryLoanStatementReportArgs = {
@@ -10470,7 +10473,7 @@ export type SharePurchaseInput = {
 };
 
 export type SharePurchaseRegisterFilter = {
-  type?: InputMaybe<Share_Transaction_Direction>;
+  type?: InputMaybe<ShareTransactionType>;
 };
 
 export type SharePurchaseRegisterReport = {
@@ -10738,10 +10741,9 @@ export type ShareTransactionChequePayment = {
 export type ShareTransactionFilter = {
   ageRange?: InputMaybe<MemberAgeRange>;
   districtId?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
-  eductaion?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  education?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   gender?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   localGovernmentId?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
-  memberType?: InputMaybe<Array<InputMaybe<MemberType>>>;
   occupation?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   provinceId?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
 };
@@ -18212,6 +18214,32 @@ export type GetshareRegisterReportQuery = {
         totalKitta?: string | null;
         totalAmount?: string | null;
       } | null> | null;
+    } | null;
+  };
+};
+
+export type GetShareTransactionReportQueryVariables = Exact<{
+  data?: InputMaybe<ShareTransactionReportFilter>;
+}>;
+
+export type GetShareTransactionReportQuery = {
+  report: {
+    shareTransactionReport?: {
+      data?: Array<{
+        transactionDate?: string | null;
+        memberId?: string | null;
+        memberCode?: string | null;
+        name?: string | null;
+        particular?: string | null;
+        shareReturnDr?: string | null;
+        shareIssueCr?: string | null;
+        balance?: string | null;
+      } | null> | null;
+      footer?: {
+        totalCr?: string | null;
+        totatDr?: string | null;
+        totalBalance?: string | null;
+      } | null;
     } | null;
   };
 };
@@ -29673,6 +29701,45 @@ export const useGetshareRegisterReportQuery = <
     ['getshareRegisterReport', variables],
     useAxios<GetshareRegisterReportQuery, GetshareRegisterReportQueryVariables>(
       GetshareRegisterReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetShareTransactionReportDocument = `
+    query getShareTransactionReport($data: ShareTransactionReportFilter) {
+  report {
+    shareTransactionReport(data: $data) {
+      data {
+        transactionDate
+        memberId
+        memberCode
+        name
+        particular
+        shareReturnDr
+        shareIssueCr
+        balance
+      }
+      footer {
+        totalCr
+        totatDr
+        totalBalance
+      }
+    }
+  }
+}
+    `;
+export const useGetShareTransactionReportQuery = <
+  TData = GetShareTransactionReportQuery,
+  TError = unknown
+>(
+  variables?: GetShareTransactionReportQueryVariables,
+  options?: UseQueryOptions<GetShareTransactionReportQuery, TError, TData>
+) =>
+  useQuery<GetShareTransactionReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getShareTransactionReport']
+      : ['getShareTransactionReport', variables],
+    useAxios<GetShareTransactionReportQuery, GetShareTransactionReportQueryVariables>(
+      GetShareTransactionReportDocument
     ).bind(null, variables),
     options
   );
