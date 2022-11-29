@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { asyncToast, Box, SettingsFooter, Text } from '@myra-ui';
 
 import {
   AlternativeChannelServiceType,
-  useGetAcFeeCoaQuery,
   useGetAlternativeFeeAndChargesQuery,
   useSaveAlternativeChargesMutation,
 } from '@coop/cbs/data-access';
+import { COASelectModal } from '@coop/shared/components';
 import { FormEditableTable } from '@coop/shared/form';
-import { asyncToast, Box, SettingsFooter, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 type ChargesEditTable = {
@@ -22,15 +22,6 @@ export const AlternativeChannels = () => {
   const { t } = useTranslation();
 
   const methods = useForm<{ charges: ChargesEditTable[] }>();
-
-  const { data: coa } = useGetAcFeeCoaQuery({});
-
-  const coaData = coa?.settings.chartsOfAccount?.accountsUnder?.data;
-
-  const coaList = coaData?.map((item) => ({
-    label: item?.name?.en as string,
-    value: item?.id as string,
-  }));
 
   const { data: acChargesData } = useGetAlternativeFeeAndChargesQuery();
   const { mutateAsync: saveChanges, isLoading } = useSaveAlternativeChargesMutation();
@@ -88,9 +79,9 @@ export const AlternativeChannels = () => {
               {
                 accessor: 'ledgerId',
                 header: 'Ledger Name',
-                fieldType: 'select',
                 cellWidth: 'auto',
-                selectOptions: coaList,
+                fieldType: 'modal',
+                modal: COASelectModal,
               },
               {
                 accessor: 'amount',

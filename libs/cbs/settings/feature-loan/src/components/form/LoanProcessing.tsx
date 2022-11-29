@@ -1,7 +1,8 @@
-import { useGetCoaBankListQuery } from '@coop/cbs/data-access';
-import { FormEditableTable } from '@coop/shared/form';
 import { Box, FormSection, GridItem } from '@myra-ui';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+
+import { COASelectModal } from '@coop/shared/components';
+import { FormEditableTable } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 type LoanProcessingTable = {
   serviceName: string;
@@ -11,17 +12,6 @@ type LoanProcessingTable = {
 
 export const LoanProcessing = () => {
   const { t } = useTranslation();
-
-  const { data } = useGetCoaBankListQuery({
-    accountCode: featureCode.ledgerAccountCode as string[],
-  });
-
-  const ledgerData = data?.settings?.chartsOfAccount?.accountsUnder?.data;
-
-  const ledgerName = ledgerData?.map((item) => ({
-    label: item?.name?.local as string,
-    value: item?.id as string,
-  }));
 
   return (
     <FormSection
@@ -42,9 +32,9 @@ export const LoanProcessing = () => {
               {
                 accessor: 'ledgerName',
                 header: t['loanAccServiceTableLedgerName'],
-                fieldType: 'select',
                 cellWidth: 'auto',
-                selectOptions: ledgerName,
+                fieldType: 'modal',
+                modal: COASelectModal,
               },
               {
                 accessor: 'amount',
