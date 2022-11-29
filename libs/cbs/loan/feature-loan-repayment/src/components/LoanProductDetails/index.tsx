@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import { Box, Text } from '@myra-ui';
 
 import { LoanProductInstallment, useGetLoanPreviewQuery } from '@coop/cbs/data-access';
-import { Box, Text } from '@myra-ui';
 
 interface IProductProps {
   loanAccountId: string;

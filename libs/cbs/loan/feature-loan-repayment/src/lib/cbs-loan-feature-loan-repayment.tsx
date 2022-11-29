@@ -310,7 +310,6 @@ export const LoanRepayment = () => {
                   address: memberDetailData?.address,
                 }}
                 signaturePath={memberSignatureUrl}
-                showSignaturePreview={false}
                 citizenshipPath={memberCitizenshipUrl}
               />
             </Box>

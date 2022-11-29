@@ -1,10 +1,11 @@
+import { Box, Text } from '@myra-ui';
+
 import { CooperativeSettings } from '@coop/cbs/settings/members';
 import {
   SettingsGeneralLayout,
   SettingsLayout,
   SettingsMemberLayout,
 } from '@coop/cbs/settings/ui-layout';
-import { Box, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const KYMCoperative = () => {
