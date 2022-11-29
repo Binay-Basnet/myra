@@ -493,3 +493,37 @@ query getShareTransactionReport($data: ShareTransactionReportFilter) {
     }
   }
 }
+
+query getAccountOpeningReport($data: AccountOpeningReportInput) {
+  report {
+    accountOpeningReport(data: $data) {
+      data {
+        accountName
+        accountNumber
+        memberId
+        openedBy
+        openingDate
+      }
+    }
+  }
+}
+
+query getLoanBalanceReport($data: LoanBalanceFilterData!) {
+  report {
+    loanBalanceReport(data: $data) {
+      data {
+        memberId
+        loanAccountId
+        memberName
+        productName
+        productCode
+        outstandingBalance
+        remainingBalance
+        remainingInterest
+        lastPaymentDate
+      }
+      totalOutstandingBalance
+      totalRemainingBalance
+    }
+  }
+}

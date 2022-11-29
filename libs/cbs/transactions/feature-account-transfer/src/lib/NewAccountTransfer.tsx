@@ -1,6 +1,17 @@
 import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import {
+  asyncToast,
+  Box,
+  Container,
+  FormAccountSelect,
+  FormFooter,
+  FormHeader,
+  FormMemberSelect,
+  MemberCard,
+  Text,
+} from '@myra-ui';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
@@ -27,17 +38,6 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormAccountSelect,
-  FormFooter,
-  FormHeader,
-  FormMemberSelect,
-  MemberCard,
-  Text,
-} from '@myra-ui';
 import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -373,7 +373,6 @@ export const NewAccountTransfer = () => {
                           }}
                           // notice="KYM needs to be updated"
                           signaturePath={destMemberSignatureUrl}
-                          showSignaturePreview={false}
                           citizenshipPath={destMemberCitizenshipUrl}
                         />
                       </Box>

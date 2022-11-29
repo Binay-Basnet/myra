@@ -1,6 +1,19 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import {
+  Alert,
+  asyncToast,
+  Box,
+  Button,
+  Container,
+  FormAccountSelect,
+  FormFooter,
+  FormHeader,
+  FormMemberSelect,
+  MemberCard,
+  Text,
+} from '@myra-ui';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
@@ -19,19 +32,6 @@ import {
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
 import { FormAmountInput, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import {
-  Alert,
-  asyncToast,
-  Box,
-  Button,
-  Container,
-  FormAccountSelect,
-  FormFooter,
-  FormHeader,
-  FormMemberSelect,
-  MemberCard,
-  Text,
-} from '@myra-ui';
 import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 import { Payment } from '../components';
@@ -389,7 +389,7 @@ export const AddWithdraw = () => {
                       }}
                       // notice="KYM needs to be updated"
                       signaturePath={memberSignatureUrl}
-                      showSignaturePreview={false}
+                      showSignaturePreview
                       citizenshipPath={memberCitizenshipUrl}
                       accountInfo={
                         selectedAccount

@@ -1,6 +1,20 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import {
+  asyncToast,
+  Box,
+  Button,
+  Container,
+  Divider,
+  FormAccountSelect,
+  FormFooter,
+  FormHeader,
+  FormMemberSelect,
+  Grid,
+  MemberCard,
+  Text,
+} from '@myra-ui';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
@@ -21,20 +35,6 @@ import {
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
 import { FormAmountInput, FormInput } from '@coop/shared/form';
-import {
-  asyncToast,
-  Box,
-  Button,
-  Container,
-  Divider,
-  FormAccountSelect,
-  FormFooter,
-  FormHeader,
-  FormMemberSelect,
-  Grid,
-  MemberCard,
-  Text,
-} from '@myra-ui';
 import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 import { InstallmentModel, Payment } from '../components';
@@ -565,7 +565,6 @@ export const AddDeposit = () => {
                       }}
                       // notice="KYM needs to be updated"
                       signaturePath={memberSignatureUrl}
-                      showSignaturePreview={false}
                       citizenshipPath={memberCitizenshipUrl}
                       accountInfo={
                         selectedAccount
