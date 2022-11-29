@@ -141,7 +141,7 @@ export const AddWithdraw = () => {
     () =>
       accountListData?.account?.list?.edges?.find((account) => account.node?.id === accountId)
         ?.node,
-    [accountId]
+    [accountId, accountListData]
   );
 
   const [mode, setMode] = useState<number>(0); // 0: form 1: payment

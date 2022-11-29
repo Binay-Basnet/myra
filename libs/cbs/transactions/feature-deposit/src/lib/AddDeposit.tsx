@@ -135,7 +135,7 @@ export const AddDeposit = () => {
     () =>
       accountListData?.account?.list?.edges?.find((account) => account.node?.id === accountId)
         ?.node,
-    [accountId]
+    [accountId, accountListData]
   );
 
   const FINE = useMemo(() => selectedAccount?.dues?.fine ?? '0', [selectedAccount]);

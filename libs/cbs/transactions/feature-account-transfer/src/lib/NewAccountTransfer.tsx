@@ -156,7 +156,7 @@ export const NewAccountTransfer = () => {
     () =>
       accountListData?.account?.list?.edges?.find((account) => account.node?.id === srcAccountId)
         ?.node,
-    [srcAccountId]
+    [srcAccountId, accountListData]
   );
 
   const amountToBeDeposited = watch('amount') ?? 0;
