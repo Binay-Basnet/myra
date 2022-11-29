@@ -2,21 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import rhtoast from 'react-hot-toast';
 import { useRouter } from 'next/router';
-import { useQueryClient } from '@tanstack/react-query';
-import omit from 'lodash/omit';
-
-import {
-  AccountClosePaymentMode,
-  AccountCloseReason,
-  CashValue,
-  DepositAccountClose,
-  NatureOfDepositProduct,
-  ObjState,
-  useGetAccountTableListQuery,
-  useGetIndividualMemberDetails,
-  useSetAccountCloseDataMutation,
-} from '@coop/cbs/data-access';
-import { FormAmountInput, FormInput, FormRadioGroup, FormTextArea } from '@coop/shared/form';
 import {
   asyncToast,
   Box,
@@ -34,6 +19,21 @@ import {
   Text,
   toast,
 } from '@myra-ui';
+import { useQueryClient } from '@tanstack/react-query';
+import omit from 'lodash/omit';
+
+import {
+  AccountClosePaymentMode,
+  AccountCloseReason,
+  CashValue,
+  DepositAccountClose,
+  NatureOfDepositProduct,
+  ObjState,
+  useGetAccountTableListQuery,
+  useGetIndividualMemberDetails,
+  useSetAccountCloseDataMutation,
+} from '@coop/cbs/data-access';
+import { FormAmountInput, FormInput, FormRadioGroup, FormTextArea } from '@coop/shared/form';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { Payment } from '../component/AccountCloseForm/payment';
@@ -595,7 +595,6 @@ export const CbsAccountClose = () => {
                   }}
                   // notice="KYM needs to be updated"
                   signaturePath={memberSignatureUrl}
-                  showSignaturePreview={false}
                   citizenshipPath={memberCitizenshipUrl}
                   accountInfo={
                     selectedAccount
