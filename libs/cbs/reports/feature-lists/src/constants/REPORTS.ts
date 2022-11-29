@@ -47,6 +47,7 @@ export enum Report {
   CHEQUE_WITHDRAW_RECORD = 'Cheque/Withdraw Record',
   BALANCE_CERTIFICATE = 'Balance Certificate (Deposit)',
   INTEREST_TAX_REPORT = 'Interest Tax Report',
+  ACCOUNT_OPENING_REPORT = 'Account Opening Report',
 
   LOAN_INDIVIDUAL_STATEMENT = 'Loan Individual Statement',
   LOAN_CONSOLIDATED_REPORT = 'Loan Consolidated Report',
@@ -63,6 +64,7 @@ export enum Report {
   MEMBER_LOAN_INFORMATION_SYSTEM = 'Member Loan Information System (MLIB) Setup',
   CIB_CIC_MEMBER_LOAN_INFORMATION = 'CIB/CIC/Member loan information system(MLIB) Setup',
   LOAN_UTILIZATION_INSPECTION = 'Loan utilization inspection(eg. above 5 Lakh)',
+  LOAN_BALANCE_REPORT = 'Loan Balance Report',
 
   THRESHOLD_TRANSACTION_REPORT = 'Threshold Transaction ',
   TRANSACTION_TRIAL_SHEET = 'Trial Sheet',
@@ -232,6 +234,11 @@ export const REPORTS = {
       id: '5.14',
       report: Report.INTEREST_TAX_REPORT,
       link: 'interest-tax',
+    },
+    {
+      id: '5.15',
+      report: Report.ACCOUNT_OPENING_REPORT,
+      link: 'account-opening',
     },
   ],
 
@@ -428,6 +435,11 @@ export const REPORTS = {
       id: '10',
       report: Report.USER_LIST_REPORT,
       link: 'users',
+    },
+    {
+      id: '11',
+      report: Report.LOAN_BALANCE_REPORT,
+      link: 'loan-balance',
     },
   ],
 };

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { GridItem } from '@myra-ui';
 
 import {
-  Share_Transaction_Direction,
   SharePurchaseRegisterReport,
   SharePurchaseRegisterReportFilter,
   ShareTransactionType,
@@ -30,7 +29,7 @@ export const ShareRegisterReport = () => {
     <Report
       defaultFilters={{
         filter: {
-          type: Share_Transaction_Direction?.Purchase,
+          type: ShareTransactionType.All,
         },
       }}
       data={shareRegisterData as SharePurchaseRegisterReport[]}
@@ -49,7 +48,7 @@ export const ShareRegisterReport = () => {
         <Report.Inputs
           defaultFilters={{
             filter: {
-              type: Share_Transaction_Direction?.Purchase,
+              type: ShareTransactionType?.All,
             },
           }}
           setFilters={setFilters}
