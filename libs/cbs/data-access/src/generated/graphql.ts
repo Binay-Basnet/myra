@@ -2342,6 +2342,7 @@ export type DepositCash = {
 };
 
 export enum DepositFrequency {
+  Daily = 'DAILY',
   HalfYearly = 'HALF_YEARLY',
   Monthly = 'MONTHLY',
   Quarterly = 'QUARTERLY',

@@ -20702,6 +20702,12 @@
         "interfaces": null,
         "enumValues": [
           {
+            "name": "DAILY",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "HALF_YEARLY",
             "description": null,
             "isDeprecated": false,
