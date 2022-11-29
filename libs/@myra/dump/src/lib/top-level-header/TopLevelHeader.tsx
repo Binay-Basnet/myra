@@ -5,21 +5,6 @@ import { CgMenuGridO } from 'react-icons/cg';
 import Image from 'next/legacy/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { format } from 'date-fns';
-
-import {
-  DateType,
-  Language,
-  logout,
-  RootState,
-  setPreference,
-  useAppDispatch,
-  useAppSelector,
-  useGetEndOfDayDateDataQuery,
-  useSetEndOfDayDataMutation,
-  useSetPreferenceMutation,
-} from '@coop/cbs/data-access';
-import {Avatar} from "@myra-ui/foundations";
 import {
   asyncToast,
   Box,
@@ -38,6 +23,21 @@ import {
   SwitchTabs,
   Text,
 } from '@myra/dump';
+import { Avatar } from '@myra-ui/foundations';
+import { format } from 'date-fns';
+
+import {
+  DateType,
+  Language,
+  logout,
+  RootState,
+  setPreference,
+  useAppDispatch,
+  useAppSelector,
+  useGetEndOfDayDateDataQuery,
+  useSetEndOfDayDataMutation,
+  useSetPreferenceMutation,
+} from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
 import SearchBar from '../search-bar/SearchBar';

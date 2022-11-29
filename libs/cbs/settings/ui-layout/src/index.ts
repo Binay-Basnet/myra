@@ -2,6 +2,7 @@ export * from './components/detailPage';
 export * from './lib/SettingsAlternativeChannelLayout';
 export * from './lib/SettingsDepositLayout';
 export * from './lib/SettingsDetailPageLayout';
+export * from './lib/SettingsDocumentsLayout';
 export * from './lib/SettingsGeneralLayout';
 export * from './lib/SettingsLayout';
 export * from './lib/SettingsLoanLayout';

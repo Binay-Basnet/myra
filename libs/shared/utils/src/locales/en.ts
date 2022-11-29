@@ -3837,6 +3837,12 @@ const en: Record<string, string> = {
   bankAccountsAccountNo: 'Account No',
   memberLayoutCreateKYMFormForCooperativeUnion: 'Create KYM form for Cooperative Union Members',
   kymCoopUnionInstitutionInformation: '1. Cooperative Union Information',
+  settingsDocuments: 'Document',
+  settingsDocumentsAllDocuments: 'All Documents',
+  settingsDocumentsKYM: 'KYM',
+  settingsDocumentsLoan: 'Loan',
+  settingsDocumentsDeposit: 'Deposit',
+  settingsDocumentsTransaction: 'Transaction',
 };
 
 export default en;
