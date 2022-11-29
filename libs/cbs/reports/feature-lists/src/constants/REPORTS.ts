@@ -98,6 +98,7 @@ export enum Report {
   BRANCH_WISE_TARGET_VS_ACHIEVEMENT = 'Branchwise Target vs Achievement',
 
   USER_LIST_REPORT = 'User List Report',
+  SAVING_BALANCE_REPORT = 'Saving Balance [Individual]',
 }
 
 export const REPORTS = {
@@ -441,6 +442,11 @@ export const REPORTS = {
       id: '11',
       report: Report.LOAN_BALANCE_REPORT,
       link: 'loan-balance',
+    },
+    {
+      id: '',
+      report: Report.SAVING_BALANCE_REPORT,
+      link: 'saving-balance',
     },
   ],
 };

@@ -21,6 +21,7 @@ import {
   FormCheckboxGroup,
   FormSelect,
 } from '@coop/shared/form';
+import { amountConverter } from '@coop/shared/utils';
 
 type Filter = {
   branchId: string;
@@ -194,6 +195,7 @@ export const ShareTransactionsReport = () => {
                     header: 'Share Return Amount Dr.',
                     footer: () => footerData?.totatDr,
                     accessorKey: 'shareReturnDr',
+                    cell: (props) => amountConverter(props.getValue() as string),
                     meta: {
                       isNumeric: true,
                     },
@@ -202,6 +204,7 @@ export const ShareTransactionsReport = () => {
                     header: 'Share Issue Amount Cr.',
                     accessorKey: 'shareIssueCr',
                     footer: () => footerData?.totalCr,
+                    cell: (props) => amountConverter(props.getValue() as string),
                     meta: {
                       isNumeric: true,
                     },
@@ -209,6 +212,7 @@ export const ShareTransactionsReport = () => {
                   {
                     header: 'Balance',
                     accessorKey: 'balance',
+                    cell: (props) => amountConverter(props.getValue() as string),
                     footer: () => footerData?.totalBalance,
 
                     meta: {

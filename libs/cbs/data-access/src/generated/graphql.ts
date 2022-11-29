@@ -93,6 +93,27 @@ export enum AccountCloseReason {
   PersonalReason = 'PERSONAL_REASON',
 }
 
+export type AccountClosingReport = {
+  accountName?: Maybe<Scalars['String']>;
+  accountNumber?: Maybe<Scalars['String']>;
+  closedBalance?: Maybe<Scalars['String']>;
+  closedBy?: Maybe<Scalars['String']>;
+  closingDate?: Maybe<Scalars['Localized']>;
+  memberId?: Maybe<Scalars['String']>;
+  openingDate?: Maybe<Scalars['Localized']>;
+};
+
+export type AccountClosingReportInput = {
+  branchId: Scalars['String'];
+  filter?: InputMaybe<AccountOpeningReportInputFilter>;
+  period: PeriodInput;
+};
+
+export type AccountClosingReportResult = {
+  data?: Maybe<Array<Maybe<AccountClosingReport>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type AccountDetailsQueryResult = {
   data?: Maybe<MemberAccountDetails>;
   error?: Maybe<QueryError>;
@@ -2342,6 +2363,7 @@ export type DepositCash = {
 };
 
 export enum DepositFrequency {
+  Daily = 'DAILY',
   HalfYearly = 'HALF_YEARLY',
   Monthly = 'MONTHLY',
   Quarterly = 'QUARTERLY',
@@ -9603,6 +9625,7 @@ export enum ReportPeriodType {
 }
 
 export type ReportQuery = {
+  accountClosingReport?: Maybe<AccountClosingReportResult>;
   accountOpeningReport?: Maybe<AccountOpeningReportResult>;
   activeInactiveMemberReport?: Maybe<ReportResult>;
   bankGLStatementReport: BankGlStatementResult;
@@ -9627,6 +9650,10 @@ export type ReportQuery = {
   thresholdTransactionReport: TtrReportResult;
   trialSheetReport: TrialSheetReportResult;
   userReport?: Maybe<UserReportResult>;
+};
+
+export type ReportQueryAccountClosingReportArgs = {
+  data?: InputMaybe<AccountClosingReportInput>;
 };
 
 export type ReportQueryAccountOpeningReportArgs = {
@@ -18269,6 +18296,7 @@ export type GetShareTransactionReportQueryVariables = Exact<{
 export type GetShareTransactionReportQuery = {
   report: {
     shareTransactionReport?: {
+      Summary?: Record<string, string> | null;
       data?: Array<{
         transactionDate?: string | null;
         memberId?: string | null;
@@ -18325,6 +18353,30 @@ export type GetLoanBalanceReportQuery = {
         remainingBalance?: string | null;
         remainingInterest?: string | null;
         lastPaymentDate?: string | null;
+      } | null> | null;
+    };
+  };
+};
+
+export type GetSavingsBalanceReportQueryVariables = Exact<{
+  data: SavingsBalanceFilterData;
+}>;
+
+export type GetSavingsBalanceReportQuery = {
+  report: {
+    savingsBalanceReport: {
+      totalBalance?: string | null;
+      data?: Array<{
+        accountId?: string | null;
+        memberId?: string | null;
+        memberCode?: string | null;
+        memberName?: Record<'local' | 'en' | 'np', string> | null;
+        productId?: string | null;
+        productName?: string | null;
+        productCode?: string | null;
+        accountOpeningDate?: string | null;
+        memberType?: KymMemberTypesEnum | null;
+        balance?: string | null;
       } | null> | null;
     };
   };
@@ -29809,6 +29861,7 @@ export const GetShareTransactionReportDocument = `
         totatDr
         totalBalance
       }
+      Summary
     }
   }
 }
@@ -29887,6 +29940,41 @@ export const useGetLoanBalanceReportQuery = <TData = GetLoanBalanceReportQuery, 
     ['getLoanBalanceReport', variables],
     useAxios<GetLoanBalanceReportQuery, GetLoanBalanceReportQueryVariables>(
       GetLoanBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSavingsBalanceReportDocument = `
+    query getSavingsBalanceReport($data: SavingsBalanceFilterData!) {
+  report {
+    savingsBalanceReport(data: $data) {
+      data {
+        accountId
+        memberId
+        memberCode
+        memberName
+        productId
+        productName
+        productCode
+        accountOpeningDate
+        memberType
+        balance
+      }
+      totalBalance
+    }
+  }
+}
+    `;
+export const useGetSavingsBalanceReportQuery = <
+  TData = GetSavingsBalanceReportQuery,
+  TError = unknown
+>(
+  variables: GetSavingsBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetSavingsBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetSavingsBalanceReportQuery, TError, TData>(
+    ['getSavingsBalanceReport', variables],
+    useAxios<GetSavingsBalanceReportQuery, GetSavingsBalanceReportQueryVariables>(
+      GetSavingsBalanceReportDocument
     ).bind(null, variables),
     options
   );

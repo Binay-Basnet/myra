@@ -183,7 +183,7 @@ export const TTRReport = () => {
             </Box>
             <Box display="flex" py="s8" flexDir="column">
               <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                Yearly Transaction (above 30 Lakh){' '}
+                Each Transaction (above 10 Lakh){' '}
               </Text>
               <Report.Table<TtrDataEntry & { index: number }>
                 data={eachTransReport?.map((d, index) => ({ ...d, index: index + 1 }))}

@@ -490,6 +490,7 @@ query getShareTransactionReport($data: ShareTransactionReportFilter) {
         totatDr
         totalBalance
       }
+      Summary
     }
   }
 }
@@ -524,6 +525,26 @@ query getLoanBalanceReport($data: LoanBalanceFilterData!) {
       }
       totalOutstandingBalance
       totalRemainingBalance
+    }
+  }
+}
+
+query getSavingsBalanceReport($data: SavingsBalanceFilterData!) {
+  report {
+    savingsBalanceReport(data: $data) {
+      data {
+        accountId
+        memberId
+        memberCode
+        memberName
+        productId
+        productName
+        productCode
+        accountOpeningDate
+        memberType
+        balance
+      }
+      totalBalance
     }
   }
 }
