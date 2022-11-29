@@ -9,7 +9,7 @@ import {
   useGetSettingsShareIssueChargesDataQuery,
   useSetSettingsShareIssueChargesMutation,
 } from '@coop/cbs/data-access';
-import { COASelectModal } from '@coop/cbs/utils';
+import { COASelectModal } from '@coop/shared/components';
 import { FormEditableTable } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 

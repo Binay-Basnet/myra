@@ -14,7 +14,6 @@ import {
   Input,
   Text,
   Textarea,
-  useDisclosure,
 } from '@chakra-ui/react';
 import { Checkbox, Grid, GridItem } from '@myra-ui';
 import { AsyncSelect, Select } from 'chakra-react-select';
@@ -30,11 +29,6 @@ interface RecordWithId {
 }
 
 interface ModalProps {
-  modal: {
-    isOpen: boolean;
-    onClose: () => void;
-    onToggle: () => void;
-  };
   defaultValue: string | undefined | null;
   trigger: (props: { id: string; name: string; under: string } | null) => React.ReactNode;
   onChange: (newValue: string) => void;
@@ -658,7 +652,6 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number | 
   dispatch,
   data,
 }: EditableCellProps<T>) => {
-  const modalProps = useDisclosure();
   const [asyncOptions, setAsyncOptions] = useState<{ label: string; value: string }[]>([]);
 
   const Modal = column.modal;
@@ -733,7 +726,6 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number | 
                 {props ? `${props.id} - ${props.name}` : 'Search for Ledger'}
               </Text>
             )}
-            modal={modalProps}
             onChange={(newValue) => {
               dispatch({
                 type: EditableTableActionKind.EDIT,

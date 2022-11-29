@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
+import { useDisclosure } from '@chakra-ui/react';
 import {
   Accordion,
   AccordionButton,
@@ -16,23 +17,13 @@ import { GetCoaFullViewQuery, useGetCoaFullViewQuery } from '@coop/cbs/data-acce
 import { BaseType, MultiTree } from './Tree';
 
 interface ICOASelectModalProps {
-  modal: {
-    isOpen: boolean;
-    onClose: () => void;
-    onToggle: () => void;
-  };
   trigger: (props: { id: string; name: string; under: string } | null) => React.ReactNode;
   defaultValue: string | undefined | null;
   onChange: (newValue: string) => void;
 }
 
-export const COASelectModal = ({
-  modal,
-  onChange,
-  trigger,
-  defaultValue,
-}: ICOASelectModalProps) => {
-  const { isOpen, onClose, onToggle } = modal;
+export const COASelectModal = ({ onChange, trigger, defaultValue }: ICOASelectModalProps) => {
+  const { isOpen, onClose, onToggle } = useDisclosure();
 
   const [accordionIndices, setAccordionIndices] = useState<number[]>([]);
   const [value, setValue] = useState<BaseType | null>(null);

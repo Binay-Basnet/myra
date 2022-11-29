@@ -1056,6 +1056,28 @@ export type BankDepositData = {
   voucherId: Scalars['String'];
 };
 
+export type BankGlDataEntry = {
+  balance?: Maybe<Scalars['String']>;
+  chequeNo?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  depositAmount?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['Localized']>;
+  particular?: Maybe<Scalars['String']>;
+  remarks?: Maybe<Scalars['String']>;
+  withdrawAmount?: Maybe<Scalars['String']>;
+};
+
+export type BankGlStatementFilter = {
+  branchId: Scalars['String'];
+  filter?: InputMaybe<GlStatementFilter>;
+  period: PeriodInput;
+};
+
+export type BankGlStatementResult = {
+  data?: Maybe<Array<Maybe<BankGlDataEntry>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type BankGetResult = {
   data?: Maybe<Bank>;
   error?: Maybe<QueryError>;
@@ -4120,6 +4142,12 @@ export type FundManagementResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<FundManagementQuery>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type GlStatementFilter = {
+  amount?: InputMaybe<MinMaxFilter>;
+  bank?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  natureOfTransactions?: InputMaybe<NatureOfBankTransaction>;
 };
 
 export type GenderLedgerReportResult = {
@@ -8909,6 +8937,12 @@ export type Name = {
   middleName?: Maybe<Scalars['String']>;
 };
 
+export enum NatureOfBankTransaction {
+  All = 'ALL',
+  Deposit = 'DEPOSIT',
+  Withdraw = 'WITHDRAW',
+}
+
 export enum NatureOfDepositProduct {
   Current = 'CURRENT',
   RecurringSaving = 'RECURRING_SAVING',
@@ -9562,6 +9596,7 @@ export enum ReportPeriodType {
 export type ReportQuery = {
   accountOpeningReport?: Maybe<AccountOpeningReportResult>;
   activeInactiveMemberReport?: Maybe<ReportResult>;
+  bankGLStatementReport: BankGlStatementResult;
   branchReport?: Maybe<BranchReportResult>;
   generalLedgerReport: GenderLedgerReportResult;
   getReport?: Maybe<SavedReportResponse>;
@@ -9590,6 +9625,10 @@ export type ReportQueryAccountOpeningReportArgs = {
 
 export type ReportQueryActiveInactiveMemberReportArgs = {
   data?: InputMaybe<ActiveInactiveMemberReportData>;
+};
+
+export type ReportQueryBankGlStatementReportArgs = {
+  data: BankGlStatementFilter;
 };
 
 export type ReportQueryBranchReportArgs = {

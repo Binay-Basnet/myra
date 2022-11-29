@@ -1,4 +1,4 @@
-import { COASelectModal } from '@coop/cbs/utils';
+import { COASelectModal } from '@coop/shared/components';
 import { EditableTable } from '@coop/shared/editable-table';
 
 const Temp = () => (
