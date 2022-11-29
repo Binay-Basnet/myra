@@ -18218,6 +18218,48 @@ export type GetshareRegisterReportQuery = {
   };
 };
 
+export type GetAccountOpeningReportQueryVariables = Exact<{
+  data?: InputMaybe<AccountOpeningReportInput>;
+}>;
+
+export type GetAccountOpeningReportQuery = {
+  report: {
+    accountOpeningReport?: {
+      data?: Array<{
+        accountName?: string | null;
+        accountNumber?: string | null;
+        memberId?: string | null;
+        openedBy?: string | null;
+        openingDate?: Record<'local' | 'en' | 'np', string> | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
+export type GetLoanBalanceReportQueryVariables = Exact<{
+  data: LoanBalanceFilterData;
+}>;
+
+export type GetLoanBalanceReportQuery = {
+  report: {
+    loanBalanceReport: {
+      totalOutstandingBalance?: string | null;
+      totalRemainingBalance?: string | null;
+      data?: Array<{
+        memberId?: string | null;
+        loanAccountId?: string | null;
+        memberName?: Record<'local' | 'en' | 'np', string> | null;
+        productName?: string | null;
+        productCode?: string | null;
+        outstandingBalance?: string | null;
+        remainingBalance?: string | null;
+        remainingInterest?: string | null;
+        lastPaymentDate?: string | null;
+      } | null> | null;
+    };
+  };
+};
+
 export type GetShareStatementQueryVariables = Exact<{
   data: ShareStatementReportSettings;
 }>;
@@ -29675,6 +29717,67 @@ export const useGetshareRegisterReportQuery = <
     ['getshareRegisterReport', variables],
     useAxios<GetshareRegisterReportQuery, GetshareRegisterReportQueryVariables>(
       GetshareRegisterReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountOpeningReportDocument = `
+    query getAccountOpeningReport($data: AccountOpeningReportInput) {
+  report {
+    accountOpeningReport(data: $data) {
+      data {
+        accountName
+        accountNumber
+        memberId
+        openedBy
+        openingDate
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountOpeningReportQuery = <
+  TData = GetAccountOpeningReportQuery,
+  TError = unknown
+>(
+  variables?: GetAccountOpeningReportQueryVariables,
+  options?: UseQueryOptions<GetAccountOpeningReportQuery, TError, TData>
+) =>
+  useQuery<GetAccountOpeningReportQuery, TError, TData>(
+    variables === undefined ? ['getAccountOpeningReport'] : ['getAccountOpeningReport', variables],
+    useAxios<GetAccountOpeningReportQuery, GetAccountOpeningReportQueryVariables>(
+      GetAccountOpeningReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanBalanceReportDocument = `
+    query getLoanBalanceReport($data: LoanBalanceFilterData!) {
+  report {
+    loanBalanceReport(data: $data) {
+      data {
+        memberId
+        loanAccountId
+        memberName
+        productName
+        productCode
+        outstandingBalance
+        remainingBalance
+        remainingInterest
+        lastPaymentDate
+      }
+      totalOutstandingBalance
+      totalRemainingBalance
+    }
+  }
+}
+    `;
+export const useGetLoanBalanceReportQuery = <TData = GetLoanBalanceReportQuery, TError = unknown>(
+  variables: GetLoanBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetLoanBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanBalanceReportQuery, TError, TData>(
+    ['getLoanBalanceReport', variables],
+    useAxios<GetLoanBalanceReportQuery, GetLoanBalanceReportQueryVariables>(
+      GetLoanBalanceReportDocument
     ).bind(null, variables),
     options
   );
