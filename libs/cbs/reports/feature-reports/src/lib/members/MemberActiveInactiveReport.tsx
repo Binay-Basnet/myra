@@ -127,7 +127,7 @@ export const MemberActiveInactiveReport = () => {
                       accessorFn: (row) => row?.age,
                     },
                     {
-                      header: 'Contact No.',
+                      header: 'Gender',
                       accessorFn: (row) => row?.gender,
                     },
                     {
@@ -189,7 +189,7 @@ export const MemberActiveInactiveReport = () => {
                       accessorFn: (row) => row?.address,
                     },
                     {
-                      header: 'DOB',
+                      header: 'DOE',
                       accessorFn: (row) => row?.dob?.local,
                       cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
                     },
@@ -198,15 +198,18 @@ export const MemberActiveInactiveReport = () => {
                       accessorFn: (row) => row?.age,
                     },
                     {
-                      header: 'Contact No.',
-                      accessorFn: (row) => row?.gender,
+                      header: 'Member Type',
+                      accessorFn: (row) => row?.gender?.toLowerCase(),
+                      cell: (props) => (
+                        <Box textTransform="capitalize">{props.getValue() as string}</Box>
+                      ),
                     },
                     {
                       header: 'PAN No.',
                       accessorFn: (row) => row?.pan,
                     },
                     {
-                      header: 'Occupation',
+                      header: 'Nature',
                       accessorFn: (row) => row?.occupation,
                     },
                     {
