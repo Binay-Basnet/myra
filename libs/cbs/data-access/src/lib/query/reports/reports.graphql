@@ -580,3 +580,47 @@ query getBankGLStatementReport($data: BankGLStatementFilter!) {
     }
   }
 }
+query getTransactionTellerReport($data: TellerReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        tellerReport(data: $data) {
+          data {
+            headTeller {
+              entries {
+                tellerId
+                name
+                inTransit
+                stack
+                inAmount
+                outAmount
+                balance
+              }
+              inTransitTotal
+              stackTotal
+              inAmountTotal
+              outAmountTotal
+              balanceTotal
+            }
+            teller {
+              entries {
+                tellerId
+                name
+                inTransit
+                stack
+                inAmount
+                outAmount
+                balance
+              }
+              inTransitTotal
+              stackTotal
+              inAmountTotal
+              outAmountTotal
+              balanceTotal
+            }
+          }
+        }
+      }
+    }
+  }
+}

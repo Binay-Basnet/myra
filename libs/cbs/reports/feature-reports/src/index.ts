@@ -22,4 +22,5 @@ export * from './lib/share/ShareRegisterReport';
 export * from './lib/share/ShareStatementReport';
 export * from './lib/share/ShareTransactionReport';
 export * from './lib/transactions/BankGLStatementReport';
+export * from './lib/transactions/TellerReport';
 export * from './lib/transactions/TrialSheetReport';

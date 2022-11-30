@@ -168,7 +168,7 @@ export const ShareTransactionsReport = () => {
                   },
                   {
                     header: 'Member ID',
-                    accessorKey: 'memberId',
+                    accessorKey: 'memberCode',
                     meta: {
                       Footer: {
                         display: 'none',

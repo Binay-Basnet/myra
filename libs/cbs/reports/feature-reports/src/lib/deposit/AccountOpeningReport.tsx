@@ -5,7 +5,6 @@ import dayjs from 'dayjs';
 import {
   AccountOpeningReport,
   AccountOpeningReportInput,
-  Roles,
   useGetAccountOpeningReportQuery,
   useGetSettingsUserListDataQuery,
 } from '@coop/cbs/data-access';
@@ -17,7 +16,7 @@ import { FormBranchSelect, FormSelect } from '@coop/shared/form';
 export const AccountOpenReport = () => {
   const [filters, setFilters] = useState<AccountOpeningReportInput | null>(null);
   const { data: userListData } = useGetSettingsUserListDataQuery({
-    filter: { role: [Roles.Agent] },
+    // filter: { role: [Roles.Agent] },
     paginate: { after: '', first: -1 },
   });
 
