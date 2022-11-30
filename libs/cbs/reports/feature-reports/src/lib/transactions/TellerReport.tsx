@@ -172,88 +172,90 @@ export const TellerReport = () => {
                 />
               </Box>
             )}
-            <Box display="flex" py="s8" flexDir="column">
-              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                Teller
-              </Text>
-              <Report.Table<TellerDataEntry & { index: number }>
-                data={allTellerData?.map((d, index) => ({ ...d, index: index + 1 }))}
-                showFooter
-                columns={[
-                  {
-                    header: 'Teller Name',
-                    footer: () => <Box textAlign="right">Total </Box>,
-                    accessorKey: 'name',
-                    meta: {
-                      width: '60px',
-                      Footer: {
-                        colspan: 2,
+            {allTellerData && (
+              <Box display="flex" py="s8" flexDir="column">
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  Teller
+                </Text>
+                <Report.Table<TellerDataEntry & { index: number }>
+                  data={allTellerData?.map((d, index) => ({ ...d, index: index + 1 }))}
+                  showFooter
+                  columns={[
+                    {
+                      header: 'Teller Name',
+                      footer: () => <Box textAlign="right">Total </Box>,
+                      accessorKey: 'name',
+                      meta: {
+                        width: '60px',
+                        Footer: {
+                          colspan: 2,
+                        },
                       },
                     },
-                  },
-                  {
-                    header: 'Currency',
-                    accessorKey: 'index',
-                    cell: () => <Box> NPR </Box>,
-                    meta: {
-                      Footer: {
-                        display: 'none',
+                    {
+                      header: 'Currency',
+                      accessorKey: 'index',
+                      cell: () => <Box> NPR </Box>,
+                      meta: {
+                        Footer: {
+                          display: 'none',
+                        },
                       },
                     },
-                  },
-                  {
-                    header: 'In Transit Amount',
-                    accessorKey: 'inTransit',
-                    cell: (props) => props.getValue(),
+                    {
+                      header: 'In Transit Amount',
+                      accessorKey: 'inTransit',
+                      cell: (props) => props.getValue(),
 
-                    footer: () => amountConverter(allTellerStats?.inTransitTotal as string),
-                    meta: {
-                      width: '100%',
+                      footer: () => amountConverter(allTellerStats?.inTransitTotal as string),
+                      meta: {
+                        width: '100%',
+                      },
                     },
-                  },
-                  {
-                    header: 'Stack Amount',
-                    footer: () => amountConverter(allTellerStats?.stackTotal as string),
-                    cell: (props) => props.getValue(),
+                    {
+                      header: 'Stack Amount',
+                      footer: () => amountConverter(allTellerStats?.stackTotal as string),
+                      cell: (props) => props.getValue(),
 
-                    accessorKey: 'stack',
-                    meta: {
-                      isNumeric: true,
+                      accessorKey: 'stack',
+                      meta: {
+                        isNumeric: true,
+                      },
                     },
-                  },
-                  {
-                    header: 'In Amount',
-                    footer: () => amountConverter(allTellerStats?.inAmountTotal as string),
-                    cell: (props) => amountConverter(props.getValue() as string),
+                    {
+                      header: 'In Amount',
+                      footer: () => amountConverter(allTellerStats?.inAmountTotal as string),
+                      cell: (props) => amountConverter(props.getValue() as string),
 
-                    accessorKey: 'inAmount',
-                    meta: {
-                      isNumeric: true,
+                      accessorKey: 'inAmount',
+                      meta: {
+                        isNumeric: true,
+                      },
                     },
-                  },
-                  {
-                    header: 'Out Amount',
-                    footer: () => amountConverter(allTellerStats?.outAmountTotal as string),
-                    cell: (props) => amountConverter(props.getValue() as string),
+                    {
+                      header: 'Out Amount',
+                      footer: () => amountConverter(allTellerStats?.outAmountTotal as string),
+                      cell: (props) => amountConverter(props.getValue() as string),
 
-                    accessorKey: 'outAmount',
-                    meta: {
-                      isNumeric: true,
+                      accessorKey: 'outAmount',
+                      meta: {
+                        isNumeric: true,
+                      },
                     },
-                  },
-                  {
-                    header: 'Balance',
-                    footer: () => amountConverter(allTellerStats?.balanceTotal as string),
-                    cell: (props) => amountConverter(props.getValue() as string),
+                    {
+                      header: 'Balance',
+                      footer: () => amountConverter(allTellerStats?.balanceTotal as string),
+                      cell: (props) => amountConverter(props.getValue() as string),
 
-                    accessorKey: 'balance',
-                    meta: {
-                      isNumeric: true,
+                      accessorKey: 'balance',
+                      meta: {
+                        isNumeric: true,
+                      },
                     },
-                  },
-                ]}
-              />
-            </Box>
+                  ]}
+                />
+              </Box>
+            )}
           </Box>
         </Report.Content>
         <Report.Filters>
