@@ -75,6 +75,7 @@ export enum Report {
   TRANSACTION_APPROPRIATE_OF_PROFIT = 'Appropriation of Profit',
   TRANSACTION_BANK_GL_BALANCE = 'Bank GL Balance',
   TRANSACTION_BANK_GL_REPORT = 'Bank GL Statement',
+  TRANSACTION_TELLER_REPORT = 'Teller Report',
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
@@ -385,6 +386,11 @@ export const REPORTS = {
     {
       id: '7.2',
       report: Report.TRANSACTION_INCOME_STATEMENT,
+    },
+    {
+      id: '7.2.7',
+      report: Report.TRANSACTION_TELLER_REPORT,
+      link: 'teller',
     },
     {
       id: '7.3',
