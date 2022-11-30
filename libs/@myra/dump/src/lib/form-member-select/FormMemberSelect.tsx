@@ -47,6 +47,7 @@ export const FormMemberSelect = ({
     },
     {
       staleTime: 0,
+      enabled: IDMember !== 'undefined',
     }
   );
 
