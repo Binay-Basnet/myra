@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { asyncToast, Box, Container, FormFooter, FormHeader, Text } from '@myra-ui';
 import omit from 'lodash/omit';
 
 import {
@@ -15,7 +16,6 @@ import {
   useGetLoanProductEditDataQuery,
   useSetLoanProductMutation,
 } from '@coop/cbs/data-access';
-import { asyncToast, Box, Container, FormFooter, FormHeader, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
@@ -121,6 +121,7 @@ export const SettingsLoanProductForm = () => {
       tenureUnit: FrequencyTenure.Day,
       penaltyType: PenaltyType.RemainingPrincipal,
       isPrematurePenaltyApplicable: false,
+      postingFrequency: LoanProductInstallment.Daily,
     },
   });
 

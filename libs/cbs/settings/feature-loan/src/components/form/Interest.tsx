@@ -1,9 +1,9 @@
 import { useFormContext } from 'react-hook-form';
+import { Box, FormSection, GridItem, Text } from '@myra-ui';
 
-import { DepositFrequency, LoanProductInput } from '@coop/cbs/data-access';
+import { LoanProductInput, LoanProductInstallment } from '@coop/cbs/data-access';
 import { SubText } from '@coop/shared/components';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, FormSection, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { SubHeadingText } from '../formui';
@@ -24,20 +24,24 @@ export const Interest = () => {
 
   const postingFrequency = [
     {
+      label: t['daily'],
+      value: LoanProductInstallment.Daily,
+    },
+    {
       label: t['monthly'],
-      value: DepositFrequency.Monthly,
+      value: LoanProductInstallment.Monthly,
     },
     {
       label: t['quaterly'],
-      value: DepositFrequency.Quarterly,
+      value: LoanProductInstallment.Quarterly,
     },
     {
       label: t['halfYearly'],
-      value: DepositFrequency.HalfYearly,
+      value: LoanProductInstallment.HalfYearly,
     },
     {
       label: t['yearly'],
-      value: DepositFrequency.Yearly,
+      value: LoanProductInstallment.Yearly,
     },
   ];
 

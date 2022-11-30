@@ -7,13 +7,13 @@ export interface RadioButtonProps extends ChakraRadioProps {
   children?: React.ReactNode;
 }
 
-export function RadioButton(props: RadioButtonProps) {
+export const RadioButton = (props: RadioButtonProps) => {
   const { children, spacing, ...rest } = props;
   return (
     <ChakraRadio spacing={spacing} {...rest}>
       {children}
     </ChakraRadio>
   );
-}
+};
 
 export default RadioButton;
