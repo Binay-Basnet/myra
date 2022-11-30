@@ -48,6 +48,7 @@ export enum Report {
   BALANCE_CERTIFICATE = 'Balance Certificate (Deposit)',
   INTEREST_TAX_REPORT = 'Interest Tax Report',
   ACCOUNT_OPENING_REPORT = 'Account Opening Report',
+  ACCOUNT_CLOSING_REPORT = 'Account Closing Report',
 
   LOAN_INDIVIDUAL_STATEMENT = 'Loan Individual Statement',
   LOAN_CONSOLIDATED_REPORT = 'Loan Consolidated Report',
@@ -182,6 +183,12 @@ export const REPORTS = {
       id: '5.2',
       report: Report.DEPOSIT_CONSOLIDATED_REPORT,
     },
+    {
+      id: '5.2.e',
+      report: Report.ACCOUNT_CLOSING_REPORT,
+      link: 'account-closing',
+    },
+
     {
       id: '5.3',
       report: Report.DEPOSIT_DAILY_TRANSACTION_REPORT,

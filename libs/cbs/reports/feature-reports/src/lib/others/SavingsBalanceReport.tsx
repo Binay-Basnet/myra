@@ -168,7 +168,7 @@ export const SavingBalanceReport = () => {
                 cell: (props) => (
                   <Box textTransform="capitalize">
                     {' '}
-                    {props?.cell?.row?.original?.memberType?.toLowerCase()?.replace(/_/g, ' ')}
+                    {props?.row?.original?.memberType?.toLowerCase()?.replace(/_/g, ' ')}
                   </Box>
                 ),
                 meta: {

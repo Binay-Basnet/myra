@@ -545,13 +545,12 @@ query getMemberLinkedAccounts(
   }
 }
 
-
 query getMultipleSubProducts($productTypeIds: [String]) {
   settings {
     general {
       loan {
         productType {
-          multipleProductSubTypes(productTypeIds: $productTypeIds){
+          multipleProductSubTypes(productTypeIds: $productTypeIds) {
             id
             productSubType
           }
@@ -561,12 +560,12 @@ query getMultipleSubProducts($productTypeIds: [String]) {
   }
 }
 
-query getLoanProductsFromSubType($subTypeIds: [String]){
+query getLoanProductsFromSubType($subTypeIds: [String]) {
   settings {
     general {
       loan {
         productType {
-          loanProducts(subTypeIds: $subTypeIds){
+          loanProducts(subTypeIds: $subTypeIds) {
             id
             productName
           }
