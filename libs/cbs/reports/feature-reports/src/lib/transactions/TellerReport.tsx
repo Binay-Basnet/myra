@@ -63,7 +63,7 @@ export const TellerReport = () => {
   return (
     <Report
       defaultFilters={{}}
-      data={headTellerData as TellerDataEntry[]}
+      data={(headTellerData ?? allTellerData) as TellerDataEntry[]}
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
