@@ -13,6 +13,7 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect, FormRadioGroup, FormSelect } from '@coop/shared/form';
+import { amountConverter } from '@coop/shared/utils';
 
 type Filter = {
   branchId: string;
@@ -121,14 +122,17 @@ export const TellerReport = () => {
                   {
                     header: 'In Transit Amount',
                     accessorKey: 'inTransit',
-                    footer: () => headTellerStats?.inTransitTotal,
+                    cell: (props) => props.getValue(),
+                    footer: () => amountConverter(headTellerStats?.inTransitTotal as string),
                     meta: {
                       width: '100%',
                     },
                   },
                   {
                     header: 'Stack Amount',
-                    footer: () => headTellerStats?.stackTotal,
+                    cell: (props) => props.getValue(),
+
+                    footer: () => amountConverter(headTellerStats?.stackTotal as string),
 
                     accessorKey: 'stack',
                     meta: {
@@ -137,7 +141,8 @@ export const TellerReport = () => {
                   },
                   {
                     header: 'In Amount',
-                    footer: () => headTellerStats?.inAmountTotal,
+                    cell: (props) => amountConverter(props.getValue() as string),
+                    footer: () => amountConverter(headTellerStats?.inAmountTotal as string),
 
                     accessorKey: 'inAmount',
                     meta: {
@@ -146,8 +151,8 @@ export const TellerReport = () => {
                   },
                   {
                     header: 'Out Amount',
-                    footer: () => headTellerStats?.outAmountTotal,
-
+                    footer: () => amountConverter(headTellerStats?.outAmountTotal as string),
+                    cell: (props) => amountConverter(props.getValue() as string),
                     accessorKey: 'outAmount',
                     meta: {
                       isNumeric: true,
@@ -155,7 +160,8 @@ export const TellerReport = () => {
                   },
                   {
                     header: 'Balance',
-                    footer: () => headTellerStats?.balanceTotal,
+                    footer: () => amountConverter(headTellerStats?.balanceTotal as string),
+                    cell: (props) => amountConverter(props.getValue() as string),
                     accessorKey: 'balance',
                     meta: {
                       isNumeric: true,
@@ -196,14 +202,17 @@ export const TellerReport = () => {
                   {
                     header: 'In Transit Amount',
                     accessorKey: 'inTransit',
-                    footer: () => allTellerStats?.inTransitTotal,
+                    cell: (props) => props.getValue(),
+
+                    footer: () => amountConverter(allTellerStats?.inTransitTotal as string),
                     meta: {
                       width: '100%',
                     },
                   },
                   {
                     header: 'Stack Amount',
-                    footer: () => allTellerStats?.stackTotal,
+                    footer: () => amountConverter(allTellerStats?.stackTotal as string),
+                    cell: (props) => props.getValue(),
 
                     accessorKey: 'stack',
                     meta: {
@@ -212,7 +221,8 @@ export const TellerReport = () => {
                   },
                   {
                     header: 'In Amount',
-                    footer: () => allTellerStats?.inAmountTotal,
+                    footer: () => amountConverter(allTellerStats?.inAmountTotal as string),
+                    cell: (props) => amountConverter(props.getValue() as string),
 
                     accessorKey: 'inAmount',
                     meta: {
@@ -221,7 +231,8 @@ export const TellerReport = () => {
                   },
                   {
                     header: 'Out Amount',
-                    footer: () => allTellerStats?.outAmountTotal,
+                    footer: () => amountConverter(allTellerStats?.outAmountTotal as string),
+                    cell: (props) => amountConverter(props.getValue() as string),
 
                     accessorKey: 'outAmount',
                     meta: {
@@ -230,7 +241,8 @@ export const TellerReport = () => {
                   },
                   {
                     header: 'Balance',
-                    footer: () => allTellerStats?.balanceTotal,
+                    footer: () => amountConverter(allTellerStats?.balanceTotal as string),
+                    cell: (props) => amountConverter(props.getValue() as string),
 
                     accessorKey: 'balance',
                     meta: {
@@ -243,6 +255,16 @@ export const TellerReport = () => {
           </Box>
         </Report.Content>
         <Report.Filters>
+          <Report.Filter title="Teller Wise">
+            <FormSelect
+              isMulti
+              options={userList?.map((user) => ({
+                label: user.node?.name as string,
+                value: user.node?.id as string,
+              }))}
+              name="filter.tellerId"
+            />
+          </Report.Filter>
           <Report.Filter title="Type of Teller">
             <FormRadioGroup
               name="filter.tellerType"
@@ -252,16 +274,6 @@ export const TellerReport = () => {
                 { label: 'Teller', value: TellerType?.Teller },
               ]}
               direction="column"
-            />
-          </Report.Filter>
-          <Report.Filter title="Teller Wise">
-            <FormSelect
-              isMulti
-              options={userList?.map((user) => ({
-                label: user.node?.name as string,
-                value: user.node?.id as string,
-              }))}
-              name="filter.tellerId"
             />
           </Report.Filter>
         </Report.Filters>

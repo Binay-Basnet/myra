@@ -93429,12 +93429,12 @@
         "description": null,
         "fields": [
           {
-            "name": "Summary",
+            "name": "avgSharePerMember",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "Map",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -93481,12 +93481,12 @@
             "deprecationReason": null
           },
           {
-            "name": "meta",
+            "name": "totalShareIssued",
             "description": null,
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "Map",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
