@@ -548,3 +548,20 @@ query getSavingsBalanceReport($data: SavingsBalanceFilterData!) {
     }
   }
 }
+
+query getBankGLStatementReport($data: BankGLStatementFilter!) {
+  report {
+    bankGLStatementReport(data: $data) {
+      data {
+        date
+        name
+        particular
+        chequeNo
+        depositAmount
+        withdrawAmount
+        balance
+        remarks
+      }
+    }
+  }
+}

@@ -16986,6 +16986,41 @@ export type GetMemberLinkedAccountsQuery = {
   };
 };
 
+export type GetMultipleSubProductsQueryVariables = Exact<{
+  productTypeIds?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
+}>;
+
+export type GetMultipleSubProductsQuery = {
+  settings: {
+    general?: {
+      loan?: {
+        productType?: {
+          multipleProductSubTypes?: Array<{
+            id?: string | null;
+            productSubType?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanProductsFromSubTypeQueryVariables = Exact<{
+  subTypeIds?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
+}>;
+
+export type GetLoanProductsFromSubTypeQuery = {
+  settings: {
+    general?: {
+      loan?: {
+        productType?: {
+          loanProducts?: Array<{ id: string; productName: string } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetMemberListQueryVariables = Exact<{
   pagination: Pagination;
   filter?: InputMaybe<KymMemberDataFilter>;
@@ -18377,6 +18412,27 @@ export type GetSavingsBalanceReportQuery = {
         accountOpeningDate?: string | null;
         memberType?: KymMemberTypesEnum | null;
         balance?: string | null;
+      } | null> | null;
+    };
+  };
+};
+
+export type GetBankGlStatementReportQueryVariables = Exact<{
+  data: BankGlStatementFilter;
+}>;
+
+export type GetBankGlStatementReportQuery = {
+  report: {
+    bankGLStatementReport: {
+      data?: Array<{
+        date?: Record<'local' | 'en' | 'np', string> | null;
+        name?: Record<'local' | 'en' | 'np', string> | null;
+        particular?: string | null;
+        chequeNo?: string | null;
+        depositAmount?: string | null;
+        withdrawAmount?: string | null;
+        balance?: string | null;
+        remarks?: string | null;
       } | null> | null;
     };
   };
@@ -28073,6 +28129,68 @@ export const useGetMemberLinkedAccountsQuery = <
     ).bind(null, variables),
     options
   );
+export const GetMultipleSubProductsDocument = `
+    query getMultipleSubProducts($productTypeIds: [String]) {
+  settings {
+    general {
+      loan {
+        productType {
+          multipleProductSubTypes(productTypeIds: $productTypeIds) {
+            id
+            productSubType
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMultipleSubProductsQuery = <
+  TData = GetMultipleSubProductsQuery,
+  TError = unknown
+>(
+  variables?: GetMultipleSubProductsQueryVariables,
+  options?: UseQueryOptions<GetMultipleSubProductsQuery, TError, TData>
+) =>
+  useQuery<GetMultipleSubProductsQuery, TError, TData>(
+    variables === undefined ? ['getMultipleSubProducts'] : ['getMultipleSubProducts', variables],
+    useAxios<GetMultipleSubProductsQuery, GetMultipleSubProductsQueryVariables>(
+      GetMultipleSubProductsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanProductsFromSubTypeDocument = `
+    query getLoanProductsFromSubType($subTypeIds: [String]) {
+  settings {
+    general {
+      loan {
+        productType {
+          loanProducts(subTypeIds: $subTypeIds) {
+            id
+            productName
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProductsFromSubTypeQuery = <
+  TData = GetLoanProductsFromSubTypeQuery,
+  TError = unknown
+>(
+  variables?: GetLoanProductsFromSubTypeQueryVariables,
+  options?: UseQueryOptions<GetLoanProductsFromSubTypeQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductsFromSubTypeQuery, TError, TData>(
+    variables === undefined
+      ? ['getLoanProductsFromSubType']
+      : ['getLoanProductsFromSubType', variables],
+    useAxios<GetLoanProductsFromSubTypeQuery, GetLoanProductsFromSubTypeQueryVariables>(
+      GetLoanProductsFromSubTypeDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetMemberListDocument = `
     query getMemberList($pagination: Pagination!, $filter: KymMemberDataFilter) {
   members {
@@ -29975,6 +30093,38 @@ export const useGetSavingsBalanceReportQuery = <
     ['getSavingsBalanceReport', variables],
     useAxios<GetSavingsBalanceReportQuery, GetSavingsBalanceReportQueryVariables>(
       GetSavingsBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetBankGlStatementReportDocument = `
+    query getBankGLStatementReport($data: BankGLStatementFilter!) {
+  report {
+    bankGLStatementReport(data: $data) {
+      data {
+        date
+        name
+        particular
+        chequeNo
+        depositAmount
+        withdrawAmount
+        balance
+        remarks
+      }
+    }
+  }
+}
+    `;
+export const useGetBankGlStatementReportQuery = <
+  TData = GetBankGlStatementReportQuery,
+  TError = unknown
+>(
+  variables: GetBankGlStatementReportQueryVariables,
+  options?: UseQueryOptions<GetBankGlStatementReportQuery, TError, TData>
+) =>
+  useQuery<GetBankGlStatementReportQuery, TError, TData>(
+    ['getBankGLStatementReport', variables],
+    useAxios<GetBankGlStatementReportQuery, GetBankGlStatementReportQueryVariables>(
+      GetBankGlStatementReportDocument
     ).bind(null, variables),
     options
   );

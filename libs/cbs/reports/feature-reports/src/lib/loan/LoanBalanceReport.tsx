@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { Box, GridItem } from '@myra-ui';
 import dayjs from 'dayjs';
 
@@ -6,11 +7,14 @@ import {
   LoanBalanceFilterData,
   LoanBalanceReport as LoanBalanceReportType,
   useGetLoanBalanceReportQuery,
+  useGetLoanProductsFromSubTypeQuery,
+  useGetLoanProductTypeQuery,
+  useGetMultipleSubProductsQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormBranchSelect } from '@coop/shared/form';
+import { FormAmountFilter, FormBranchSelect, FormCheckboxGroup } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 export const LoanBalanceReport = () => {
@@ -40,7 +44,7 @@ export const LoanBalanceReport = () => {
         <Report.PageHeader
           paths={[
             { label: 'Other Reports', link: '/reports/cbs/others' },
-            { label: 'Loan Statement', link: '/reports/cbs/others/loan-balance/new' },
+            { label: 'Loan Balance Report', link: '/reports/cbs/others/loan-balance/new' },
           ]}
         />
         <Report.Inputs defaultFilters={null} setFilters={setFilters}>
@@ -67,7 +71,7 @@ export const LoanBalanceReport = () => {
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 4,
+                    colspan: 6,
                   },
                 },
               },
@@ -113,8 +117,10 @@ export const LoanBalanceReport = () => {
               {
                 header: 'Product Code',
                 accessorKey: 'productCode',
-                footer: () => <>Total Balance </>,
                 meta: {
+                  Footer: {
+                    display: 'none',
+                  },
                   isNumeric: true,
                 },
               },
@@ -138,6 +144,14 @@ export const LoanBalanceReport = () => {
                 },
               },
               {
+                header: 'Remaining Interest',
+                accessorKey: 'remainingInterest',
+                cell: (props) => amountConverter((props.getValue() || 0) as string),
+                meta: {
+                  isNumeric: true,
+                },
+              },
+              {
                 header: 'Last Payment Date',
                 accessorKey: 'lastPaymentDate',
                 cell: ({ cell }) => dayjs(cell.row.original.lastPaymentDate).format('YYYY-MM-DD'),
@@ -148,7 +162,75 @@ export const LoanBalanceReport = () => {
             ]}
           />
         </Report.Content>
+
+        <Report.Filters>
+          <ReportFilter />
+        </Report.Filters>
       </Report.Body>
     </Report>
+  );
+};
+
+const ReportFilter = () => {
+  const { watch } = useFormContext<LoanBalanceFilterData>();
+  const productTypeIds = watch('filter.productTypes');
+  const productSubTypeIds = watch('filter.productSubTypes');
+
+  const { data: loanProductTypeData } = useGetLoanProductTypeQuery();
+  const { data: loanSubProductTypeData } = useGetMultipleSubProductsQuery({
+    productTypeIds: productTypeIds || [],
+  });
+  const { data: loanProductData } = useGetLoanProductsFromSubTypeQuery({
+    subTypeIds: productSubTypeIds || [],
+  });
+
+  const loanProductType = loanProductTypeData?.settings?.general?.loan?.productType?.productTypes;
+  const loanSubProductType =
+    loanSubProductTypeData?.settings?.general?.loan?.productType?.multipleProductSubTypes;
+  const loanProduct = loanProductData?.settings?.general?.loan?.productType?.loanProducts;
+
+  return (
+    <>
+      <Report.Filter title="Product Type">
+        <FormCheckboxGroup
+          name="filter.productTypes"
+          list={loanProductType?.map((product) => ({
+            label: product?.productType as string,
+            value: product?.id as string,
+          }))}
+          orientation="column"
+        />
+      </Report.Filter>
+
+      {loanSubProductType && loanSubProductType?.length !== 0 && (
+        <Report.Filter title="Product Sub Type">
+          <FormCheckboxGroup
+            name="filter.productSubTypes"
+            list={loanSubProductType?.map((product) => ({
+              label: product?.productSubType as string,
+              value: product?.id as string,
+            }))}
+            orientation="column"
+          />
+        </Report.Filter>
+      )}
+
+      {loanProduct && loanProduct?.length !== 0 && (
+        <Report.Filter title="Product Name">
+          <FormCheckboxGroup
+            name="filter.productNameIds"
+            list={loanProduct?.map((product) => ({
+              label: product?.productName as string,
+              value: product?.id as string,
+            }))}
+            orientation="column"
+          />
+        </Report.Filter>
+      )}
+
+      <Report.Filter title="Outstanding Balance">
+        <FormAmountFilter name="filter.outstandingBalance" />
+      </Report.Filter>
+    </>
   );
 };
