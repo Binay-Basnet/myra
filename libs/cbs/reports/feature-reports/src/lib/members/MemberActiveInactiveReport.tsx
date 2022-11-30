@@ -199,7 +199,7 @@ export const MemberActiveInactiveReport = () => {
                     },
                     {
                       header: 'Member Type',
-                      accessorFn: (row) => row?.gender?.toLowerCase(),
+                      accessorFn: (row) => row?.gender?.toLowerCase()?.replace('_', ' '),
                       cell: (props) => (
                         <Box textTransform="capitalize">{props.getValue() as string}</Box>
                       ),
