@@ -1,14 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
-
-import {
-  ExternalLoanPaymentInput,
-  ExternalLoanPaymentMethod,
-  useExternalLoanListQuery,
-  useSetExternalPaymentMutation,
-} from '@coop/cbs/data-access';
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
   Alert,
   asyncToast,
@@ -22,6 +14,14 @@ import {
   Icon,
   Text,
 } from '@myra-ui';
+
+import {
+  ExternalLoanPaymentInput,
+  ExternalLoanPaymentMethod,
+  useExternalLoanListQuery,
+  useSetExternalPaymentMutation,
+} from '@coop/cbs/data-access';
+import { FormAmountInput, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const ExternalLoanPaymentAdd = () => {
@@ -118,7 +118,7 @@ export const ExternalLoanPaymentAdd = () => {
               </FormSection>
 
               <FormSection>
-                <FormInput
+                <FormAmountInput
                   name="installmentAmount"
                   label="Installment Amount"
                   type="number"
@@ -132,7 +132,12 @@ export const ExternalLoanPaymentAdd = () => {
                   type="number"
                   textAlign="right"
                 />
-                <FormInput name="amountPaid" label="Amount Paid" type="number" textAlign="right" />
+                <FormAmountInput
+                  name="amountPaid"
+                  label="Amount Paid"
+                  type="number"
+                  textAlign="right"
+                />
 
                 <GridItem colSpan={3}>
                   <FormSwitchTab

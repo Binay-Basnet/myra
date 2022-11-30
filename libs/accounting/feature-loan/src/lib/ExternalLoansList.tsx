@@ -1,9 +1,9 @@
 import { useEffect, useMemo } from 'react';
+import { TablePopover, Text } from '@myra-ui';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { ExternalLoanType } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { TablePopover, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { useExternalLoan } from '../hooks/useExternalLoan';
@@ -100,7 +100,7 @@ export const ExternalLoansList = () => {
 
   return (
     <>
-      <AccountingPageHeader heading="Investments" />
+      <AccountingPageHeader heading="External Loan" />
 
       <Table isLoading={isExternalLoanLoading} data={rowData} columns={columns} />
     </>

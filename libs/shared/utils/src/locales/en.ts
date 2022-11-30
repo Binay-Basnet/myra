@@ -213,7 +213,6 @@ const en: Record<string, string> = {
   accountNavDraft: 'Draft',
 
   accountList: 'Saving Accounts',
-  accountClose: 'Closed Accounts',
   accountReport: 'Account Reports',
 
   // Inventory Page TODO ( Update Translations )
@@ -3843,6 +3842,7 @@ const en: Record<string, string> = {
   settingsDocumentsLoan: 'Loan',
   settingsDocumentsDeposit: 'Deposit',
   settingsDocumentsTransaction: 'Transaction',
+  accountClose: 'Closed Account',
 };
 
 export default en;

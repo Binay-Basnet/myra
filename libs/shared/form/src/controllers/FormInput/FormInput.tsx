@@ -1,8 +1,7 @@
 import { Control, Controller, useFormContext } from 'react-hook-form';
 import { UseControllerProps } from 'react-hook-form/dist/types/controller';
-import { get } from 'lodash';
-
 import { Input, InputProps } from '@myra-ui';
+import { get } from 'lodash';
 
 interface IFormInputProps<T> extends InputProps {
   name: string;

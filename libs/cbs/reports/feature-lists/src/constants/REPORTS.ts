@@ -405,6 +405,7 @@ export const REPORTS = {
     {
       id: '7.7',
       report: Report.TRANSACTION_BANK_GL_REPORT,
+      link: 'bank-gl-statement',
     },
   ],
   [ReportGroup.BRANCHLESS_BANKING]: [

@@ -141,7 +141,7 @@ export const AddWithdraw = () => {
     () =>
       accountListData?.account?.list?.edges?.find((account) => account.node?.id === accountId)
         ?.node,
-    [accountId]
+    [accountId, accountListData]
   );
 
   const [mode, setMode] = useState<number>(0); // 0: form 1: payment
@@ -251,12 +251,20 @@ export const AddWithdraw = () => {
   };
   //  get redirect id from url
   const redirectMemberId = router.query['memberId'];
+  const redirectAccountId = router.query['accountId'];
+
   // redirect from member details
   useEffect(() => {
     if (redirectMemberId) {
       methods.setValue('memberId', String(redirectMemberId));
     }
   }, [redirectMemberId]);
+
+  useEffect(() => {
+    if (redirectAccountId && memberId) {
+      methods.setValue('accountId', String(redirectAccountId));
+    }
+  }, [memberId, redirectAccountId]);
 
   return (
     <>

@@ -77,6 +77,8 @@ export const AddDeposit = () => {
 
   const redirectMemberId = router.query['memberId'];
 
+  const redirectAccountId = router.query['accountId'];
+
   const queryClient = useQueryClient();
 
   const { t } = useTranslation();
@@ -133,7 +135,7 @@ export const AddDeposit = () => {
     () =>
       accountListData?.account?.list?.edges?.find((account) => account.node?.id === accountId)
         ?.node,
-    [accountId]
+    [accountId, accountListData]
   );
 
   const FINE = useMemo(() => selectedAccount?.dues?.fine ?? '0', [selectedAccount]);
@@ -361,6 +363,12 @@ export const AddDeposit = () => {
       methods.setValue('memberId', String(redirectMemberId));
     }
   }, [redirectMemberId]);
+
+  useEffect(() => {
+    if (redirectAccountId && memberId) {
+      methods.setValue('accountId', String(redirectAccountId));
+    }
+  }, [memberId, redirectAccountId]);
 
   return (
     <>

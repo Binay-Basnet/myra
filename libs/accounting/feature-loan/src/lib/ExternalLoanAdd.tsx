@@ -1,16 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
-
-import {
-  ExternalLoanApplicationInput,
-  ExternalLoanPaymentMethod,
-  FrequencyTenure,
-  InstallmentFrequency,
-  LoanRepaymentScheme,
-  useSetExternalLoanMutation,
-} from '@coop/cbs/data-access';
-import { FormSwitchTab } from '@coop/shared/form';
 import {
   asyncToast,
   Box,
@@ -23,6 +13,16 @@ import {
   Icon,
   Text,
 } from '@myra-ui';
+
+import {
+  ExternalLoanApplicationInput,
+  ExternalLoanPaymentMethod,
+  FrequencyTenure,
+  InstallmentFrequency,
+  LoanRepaymentScheme,
+  useSetExternalLoanMutation,
+} from '@coop/cbs/data-access';
+import { FormSwitchTab } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import {

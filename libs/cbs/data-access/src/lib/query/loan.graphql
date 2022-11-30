@@ -544,3 +544,34 @@ query getMemberLinkedAccounts(
     }
   }
 }
+
+
+query getMultipleSubProducts($productTypeIds: [String]) {
+  settings {
+    general {
+      loan {
+        productType {
+          multipleProductSubTypes(productTypeIds: $productTypeIds){
+            id
+            productSubType
+          }
+        }
+      }
+    }
+  }
+}
+
+query getLoanProductsFromSubType($subTypeIds: [String]){
+  settings {
+    general {
+      loan {
+        productType {
+          loanProducts(subTypeIds: $subTypeIds){
+            id
+            productName
+          }
+        }
+      }
+    }
+  }
+}

@@ -156,7 +156,7 @@ export const NewAccountTransfer = () => {
     () =>
       accountListData?.account?.list?.edges?.find((account) => account.node?.id === srcAccountId)
         ?.node,
-    [srcAccountId]
+    [srcAccountId, accountListData]
   );
 
   const amountToBeDeposited = watch('amount') ?? 0;
@@ -189,12 +189,21 @@ export const NewAccountTransfer = () => {
   };
   //  get redirect id from url
   const redirectMemberId = router.query['memberId'];
+  const redirectSrcAccountId = router.query['srcAccountId'];
+
   // redirect from member details
   useEffect(() => {
     if (redirectMemberId) {
       methods.setValue('memberId', String(redirectMemberId));
     }
   }, [redirectMemberId]);
+
+  useEffect(() => {
+    if (redirectSrcAccountId && memberId) {
+      methods.setValue('srcAccountId', String(redirectSrcAccountId));
+    }
+  }, [memberId, redirectSrcAccountId]);
+
   return (
     <>
       <Container minW="container.xl" height="fit-content">
