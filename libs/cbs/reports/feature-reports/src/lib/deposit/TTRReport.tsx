@@ -157,7 +157,7 @@ export const TTRReport = () => {
                     cell: (props) => (
                       <Box textTransform="capitalize">
                         {' '}
-                        {props?.cell?.row?.original?.nature?.toLowerCase()?.replace(/_/g, ' ')}
+                        {props?.row?.original?.nature?.toLowerCase()?.replace(/_/g, ' ')}
                       </Box>
                     ),
                   },

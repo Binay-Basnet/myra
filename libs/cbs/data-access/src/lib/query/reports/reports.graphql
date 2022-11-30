@@ -548,3 +548,19 @@ query getSavingsBalanceReport($data: SavingsBalanceFilterData!) {
     }
   }
 }
+
+query getAccountClosingReport($data: AccountClosingReportInput) {
+  report {
+    accountClosingReport(data: $data) {
+      data {
+        memberId
+        accountNumber
+        accountName
+        openingDate
+        closingDate
+        closedBalance
+        closedBy
+      }
+    }
+  }
+}

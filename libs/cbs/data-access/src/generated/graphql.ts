@@ -838,6 +838,10 @@ export type AuditLogQuery = {
 
 export type AuditLogResult = AuditLogHumanizeResult | RawAuditLog;
 
+export type AuditTransactionReport = {
+  temp?: Maybe<Scalars['String']>;
+};
+
 export type AuthMutation = {
   login?: Maybe<LoginResult>;
   token?: Maybe<AuthTokenResult>;
@@ -3563,6 +3567,14 @@ export type FamilyMemberDetails = {
   relationship?: Maybe<Scalars['String']>;
 };
 
+export type FianancialTransactionReport = {
+  tellerReport: TellerReportResult;
+};
+
+export type FianancialTransactionReportTellerReportArgs = {
+  data: TellerReportFilter;
+};
+
 export type FieldDetailsQueryResult = {
   data?: Maybe<FormField>;
   error?: Maybe<QueryError>;
@@ -4203,7 +4215,7 @@ export type GeneralBranchSettingsQueryListArgs = {
 
 export type GeneralLedgerFilter = {
   ledgerId: Scalars['ID'];
-  period?: InputMaybe<PeriodInput>;
+  period: PeriodInput;
 };
 
 export type GeneralLedgerReportEntry = {
@@ -4600,7 +4612,7 @@ export type InterestRateType = {
 export type InterestStatementFilter = {
   accountId: Scalars['ID'];
   filter?: InputMaybe<InterestStatementRangeFilter>;
-  period?: InputMaybe<PeriodInput>;
+  period: PeriodInput;
 };
 
 export type InterestStatementRangeFilter = {
@@ -4629,7 +4641,7 @@ export type InterestTaxReportEntry = {
 
 export type InterestTaxReportFilter = {
   filter?: InputMaybe<InterestTaxFilter>;
-  period?: InputMaybe<PeriodInput>;
+  period: PeriodInput;
 };
 
 export type InterestTaxReportResult = {
@@ -9648,6 +9660,7 @@ export type ReportQuery = {
   shareStatementReport?: Maybe<ReportResult>;
   shareTransactionReport?: Maybe<ShareTransactionReportResult>;
   thresholdTransactionReport: TtrReportResult;
+  transactionReport: TransactionReport;
   trialSheetReport: TrialSheetReportResult;
   userReport?: Maybe<UserReportResult>;
 };
@@ -11035,6 +11048,37 @@ export type TellerActivityListEdges = {
   node?: Maybe<TellerActivityEntry>;
 };
 
+export type TellerDataEntry = {
+  balance?: Maybe<Scalars['String']>;
+  inAmount?: Maybe<Scalars['String']>;
+  inTransit?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  outAmount?: Maybe<Scalars['String']>;
+  stack?: Maybe<Scalars['String']>;
+  tellerId?: Maybe<Scalars['String']>;
+};
+
+export type TellerFilter = {
+  tellerId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  tellerType?: InputMaybe<TellerType>;
+};
+
+export type TellerReportData = {
+  headTeller?: Maybe<Array<Maybe<TellerDataEntry>>>;
+  teller?: Maybe<Array<Maybe<TellerDataEntry>>>;
+};
+
+export type TellerReportFilter = {
+  branchId: Scalars['String'];
+  filter?: InputMaybe<TellerFilter>;
+  period: PeriodInput;
+};
+
+export type TellerReportResult = {
+  data?: Maybe<TellerReportData>;
+  error?: Maybe<QueryError>;
+};
+
 export type TellerTransactionFilter = {
   type?: InputMaybe<Array<InputMaybe<TellerTransferType>>>;
 };
@@ -11061,6 +11105,12 @@ export enum TellerTransferType {
   CashToVault = 'CASH_TO_VAULT',
   TellerTransfer = 'TELLER_TRANSFER',
   VaultToCash = 'VAULT_TO_CASH',
+}
+
+export enum TellerType {
+  All = 'ALL',
+  HeadTeller = 'HEAD_TELLER',
+  Teller = 'TELLER',
 }
 
 export type TestDbResult = {
@@ -11239,6 +11289,11 @@ export type TransactionQueryViewWithdrawArgs = {
   transactionId: Scalars['ID'];
 };
 
+export type TransactionReport = {
+  audit: AuditTransactionReport;
+  financial: FianancialTransactionReport;
+};
+
 export enum TransactionState {
   Active = 'ACTIVE',
   Submitted = 'SUBMITTED',
@@ -11330,7 +11385,7 @@ export type TrialSheetReportDataEntry = {
 export type TrialSheetReportFilter = {
   branchId: Scalars['String'];
   filter?: InputMaybe<TrialSheetFilter>;
-  period?: InputMaybe<PeriodInput>;
+  period: PeriodInput;
 };
 
 export type TrialSheetReportResult = {
@@ -18379,6 +18434,26 @@ export type GetSavingsBalanceReportQuery = {
         balance?: string | null;
       } | null> | null;
     };
+  };
+};
+
+export type GetAccountClosingReportQueryVariables = Exact<{
+  data?: InputMaybe<AccountClosingReportInput>;
+}>;
+
+export type GetAccountClosingReportQuery = {
+  report: {
+    accountClosingReport?: {
+      data?: Array<{
+        memberId?: string | null;
+        accountNumber?: string | null;
+        accountName?: string | null;
+        openingDate?: Record<'local' | 'en' | 'np', string> | null;
+        closingDate?: Record<'local' | 'en' | 'np', string> | null;
+        closedBalance?: string | null;
+        closedBy?: string | null;
+      } | null> | null;
+    } | null;
   };
 };
 
@@ -29975,6 +30050,37 @@ export const useGetSavingsBalanceReportQuery = <
     ['getSavingsBalanceReport', variables],
     useAxios<GetSavingsBalanceReportQuery, GetSavingsBalanceReportQueryVariables>(
       GetSavingsBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountClosingReportDocument = `
+    query getAccountClosingReport($data: AccountClosingReportInput) {
+  report {
+    accountClosingReport(data: $data) {
+      data {
+        memberId
+        accountNumber
+        accountName
+        openingDate
+        closingDate
+        closedBalance
+        closedBy
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountClosingReportQuery = <
+  TData = GetAccountClosingReportQuery,
+  TError = unknown
+>(
+  variables?: GetAccountClosingReportQueryVariables,
+  options?: UseQueryOptions<GetAccountClosingReportQuery, TError, TData>
+) =>
+  useQuery<GetAccountClosingReportQuery, TError, TData>(
+    variables === undefined ? ['getAccountClosingReport'] : ['getAccountClosingReport', variables],
+    useAxios<GetAccountClosingReportQuery, GetAccountClosingReportQueryVariables>(
+      GetAccountClosingReportDocument
     ).bind(null, variables),
     options
   );

@@ -1,5 +1,6 @@
 export * from './components/Report/useReport';
 export * from './lib/CbsReportsFeatureReports';
+export * from './lib/deposit/AccountClosingReport';
 export * from './lib/deposit/AccountOpeningReport';
 export * from './lib/deposit/InterestPostingReport';
 export * from './lib/deposit/InterestTaxReport';

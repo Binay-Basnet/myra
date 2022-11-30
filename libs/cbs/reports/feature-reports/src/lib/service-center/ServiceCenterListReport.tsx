@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Box, GridItem } from '@myra-ui';
 
 import {
   PeriodInput,
@@ -12,7 +13,6 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormCheckbox, FormSelect } from '@coop/shared/form';
-import { Box, GridItem } from '@myra-ui';
 
 type Filter = {
   filter: {
@@ -164,6 +164,12 @@ export const ServiceCenterListReport = () => {
                   {
                     header: 'Is Extension Counter',
                     accessorKey: 'isExtensionCounter',
+                    cell: (props) => (
+                      <Box textTransform="capitalize">
+                        {' '}
+                        {props?.row?.original?.isExtensionCounter === true ? 'Yes' : 'No'}
+                      </Box>
+                    ),
                   },
                   {
                     header: 'Service Center Opening Date',
@@ -172,6 +178,12 @@ export const ServiceCenterListReport = () => {
                   {
                     header: 'Service Center Status',
                     accessorKey: 'branchStatus',
+                    cell: (props) => (
+                      <Box textTransform="capitalize">
+                        {' '}
+                        {props?.row?.original?.branchStatus === true ? 'Active' : 'InActive'}
+                      </Box>
+                    ),
                   },
                   {
                     header: 'Remarks',
