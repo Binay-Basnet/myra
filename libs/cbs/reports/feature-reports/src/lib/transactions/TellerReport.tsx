@@ -91,85 +91,87 @@ export const TellerReport = () => {
           <Report.OrganizationHeader />
           <Report.Organization statementDate={filters?.period?.periodType} />
           <Box display="flex" py="s32" flexDir="column">
-            <Box display="flex" py="s8" flexDir="column">
-              <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                Head Teller
-              </Text>
-              <Report.Table<TellerDataEntry & { index: number }>
-                showFooter
-                columns={[
-                  {
-                    header: 'Head Teller Name',
-                    footer: () => <Box textAlign="right">Total </Box>,
-                    accessorKey: 'name',
-                    meta: {
-                      width: '60px',
-                      Footer: {
-                        colspan: 2,
+            {headTellerData && (
+              <Box display="flex" py="s8" flexDir="column">
+                <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
+                  Head Teller
+                </Text>
+                <Report.Table<TellerDataEntry & { index: number }>
+                  showFooter
+                  columns={[
+                    {
+                      header: 'Head Teller Name',
+                      footer: () => <Box textAlign="right">Total </Box>,
+                      accessorKey: 'name',
+                      meta: {
+                        width: '60px',
+                        Footer: {
+                          colspan: 2,
+                        },
                       },
                     },
-                  },
-                  {
-                    header: 'Currency',
-                    accessorKey: 'index',
-                    cell: () => <Box> NPR </Box>,
-                    meta: {
-                      Footer: {
-                        display: 'none',
+                    {
+                      header: 'Currency',
+                      accessorKey: 'index',
+                      cell: () => <Box> NPR </Box>,
+                      meta: {
+                        Footer: {
+                          display: 'none',
+                        },
                       },
                     },
-                  },
-                  {
-                    header: 'In Transit Amount',
-                    accessorKey: 'inTransit',
-                    cell: (props) => props.getValue(),
-                    footer: () => amountConverter(headTellerStats?.inTransitTotal as string),
-                    meta: {
-                      width: '100%',
+                    {
+                      header: 'In Transit Amount',
+                      accessorKey: 'inTransit',
+                      cell: (props) => props.getValue(),
+                      footer: () => amountConverter(headTellerStats?.inTransitTotal as string),
+                      meta: {
+                        width: '100%',
+                      },
                     },
-                  },
-                  {
-                    header: 'Stack Amount',
-                    cell: (props) => props.getValue(),
+                    {
+                      header: 'Stack Amount',
+                      cell: (props) => props.getValue(),
 
-                    footer: () => amountConverter(headTellerStats?.stackTotal as string),
+                      footer: () => amountConverter(headTellerStats?.stackTotal as string),
 
-                    accessorKey: 'stack',
-                    meta: {
-                      isNumeric: true,
+                      accessorKey: 'stack',
+                      meta: {
+                        isNumeric: true,
+                      },
                     },
-                  },
-                  {
-                    header: 'In Amount',
-                    cell: (props) => amountConverter(props.getValue() as string),
-                    footer: () => amountConverter(headTellerStats?.inAmountTotal as string),
+                    {
+                      header: 'In Amount',
+                      cell: (props) => amountConverter(props.getValue() as string),
+                      footer: () => amountConverter(headTellerStats?.inAmountTotal as string),
 
-                    accessorKey: 'inAmount',
-                    meta: {
-                      isNumeric: true,
+                      accessorKey: 'inAmount',
+                      meta: {
+                        isNumeric: true,
+                      },
                     },
-                  },
-                  {
-                    header: 'Out Amount',
-                    footer: () => amountConverter(headTellerStats?.outAmountTotal as string),
-                    cell: (props) => amountConverter(props.getValue() as string),
-                    accessorKey: 'outAmount',
-                    meta: {
-                      isNumeric: true,
+                    {
+                      header: 'Out Amount',
+                      footer: () => amountConverter(headTellerStats?.outAmountTotal as string),
+                      cell: (props) => amountConverter(props.getValue() as string),
+                      accessorKey: 'outAmount',
+                      meta: {
+                        isNumeric: true,
+                      },
                     },
-                  },
-                  {
-                    header: 'Balance',
-                    footer: () => amountConverter(headTellerStats?.balanceTotal as string),
-                    cell: (props) => amountConverter(props.getValue() as string),
-                    accessorKey: 'balance',
-                    meta: {
-                      isNumeric: true,
+                    {
+                      header: 'Balance',
+                      footer: () => amountConverter(headTellerStats?.balanceTotal as string),
+                      cell: (props) => amountConverter(props.getValue() as string),
+                      accessorKey: 'balance',
+                      meta: {
+                        isNumeric: true,
+                      },
                     },
-                  },
-                ]}
-              />
-            </Box>
+                  ]}
+                />
+              </Box>
+            )}
             <Box display="flex" py="s8" flexDir="column">
               <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
                 Teller
