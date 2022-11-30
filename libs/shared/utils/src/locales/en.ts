@@ -3843,6 +3843,8 @@ const en: Record<string, string> = {
   settingsDocumentsDeposit: 'Deposit',
   settingsDocumentsTransaction: 'Transaction',
   accountClose: 'Closed Account',
+  bankAccountCurrent: 'Current',
+  bankAccountSaving: 'Saving',
 };
 
 export default en;

@@ -1,7 +1,8 @@
+import { Alert, FormSection, Grid, GridItem, Text } from '@myra-ui';
+
 import { PrematurePenaltyDateType } from '@coop/cbs/data-access';
 import { BoxContainer } from '@coop/shared/components';
 import { FormAmountInput, FormInput, FormSelect } from '@coop/shared/form';
-import { Alert, FormSection, Grid, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const PrematuredPenalty = () => {
@@ -72,6 +73,7 @@ export const PrematuredPenalty = () => {
               textAlign="right"
             />
             <FormAmountInput
+              type="number"
               name="prematurePenalty.penaltyAmount"
               label={t['depositProductPenaltyAmount']}
             />
@@ -103,6 +105,7 @@ export const PrematuredPenalty = () => {
                 textAlign="right"
               />
               <FormAmountInput
+              type="number"
                 name="prematurePenalty.penaltyAmount"
                 label={t['depositProductPenaltyAmount']}
               />

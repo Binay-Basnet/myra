@@ -1,3 +1,4 @@
+import { useFormContext } from 'react-hook-form';
 import { FormSection, GridItem, Text } from '@myra-ui';
 
 import { ExternalLoanType, useExternalLoanAccountListQuery } from '@coop/cbs/data-access';
@@ -5,6 +6,9 @@ import { FormAmountInput, FormInput, FormSelect } from '@coop/shared/form';
 import { getRouterQuery } from '@coop/shared/utils';
 
 export const ExternalLoanInfo = () => {
+  const { watch } = useFormContext();
+  const appliedAmount = watch('appliedAmount');
+
   const { data } = useExternalLoanAccountListQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
   });
@@ -43,8 +47,19 @@ export const ExternalLoanInfo = () => {
       </FormSection>
 
       <FormSection divider={false}>
-        <FormAmountInput name="appliedAmount" type="text" label="Applied Amount" />
-        <FormAmountInput name="approvedAmount" type="text" label="Approved Amount" />
+        <FormAmountInput name="appliedAmount" type="number" label="Applied Amount" />
+        <FormAmountInput
+          rules={{
+            max: {
+              value: appliedAmount,
+              message: 'Approved amount should not exceed Applied amount ',
+            },
+          }}
+          name="approvedAmount"
+          type="number"
+          label="Approved Amount"
+        />
+
         <FormInput name="loanNumber" type="text" label="Loan Number" />
       </FormSection>
 

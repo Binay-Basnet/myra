@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { Box, FormAccountSelect, Grid, GridItem, Text } from '@myra-ui';
 
 import { LoanRepaymentMethod, ObjState, useGetCoaBankListQuery } from '@coop/cbs/data-access';
 import { BoxContainer, ContainerWithDivider } from '@coop/cbs/transactions/ui-containers';
@@ -11,7 +12,6 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { Box, FormAccountSelect, Grid, GridItem, Text } from '@myra-ui';
 import { featureCode } from '@coop/shared/utils';
 
 const paymentModes = [
@@ -260,6 +260,7 @@ export const Payment = ({ totalDeposit, loanTotal }: PaymentProps) => {
 
             <GridItem colSpan={1}>
               <FormAmountInput
+              type="number"
                 defaultValue={loanTotal}
                 name="amount"
                 isDisabled

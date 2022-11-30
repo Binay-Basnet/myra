@@ -1,5 +1,6 @@
-import { FormAmountInput, FormInput } from '@coop/shared/form';
 import { Alert, FormSection, GridItem, Text } from '@myra-ui';
+
+import { FormAmountInput, FormInput } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 export const WithdrawPenalty = () => {
@@ -32,6 +33,7 @@ export const WithdrawPenalty = () => {
         type="number"
       />
       <FormAmountInput
+        type="number"
         name="withdrawPenalty.penaltyAmount"
         label={t['depositProductPenaltyAmount']}
       />

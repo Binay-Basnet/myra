@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { Box, FormSection, GridItem, TextFields } from '@myra-ui';
 import { isEmpty, isEqual } from 'lodash';
 import debounce from 'lodash/debounce';
 import pickBy from 'lodash/pickBy';
@@ -28,7 +29,6 @@ import {
   FormPhoneNumber,
   FormSelect,
 } from '@coop/shared/form';
-import { Box, FormSection, GridItem, TextFields } from '@myra-ui';
 import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
@@ -216,7 +216,11 @@ const MainOccupation = ({ setKymCurrentSection }: IMainOccupationProps) => {
 
           <FormInput type="number" name="panVatNo" label={t['kymIndPanVATNo']} />
           <FormInput type="text" name="address" label={t['kymIndAddress']} />
-          <FormAmountInput name="estimatedAnnualIncome" label={t['kymIndEstimatedAnnualIncome']} />
+          <FormAmountInput
+            type="number"
+            name="estimatedAnnualIncome"
+            label={t['kymIndEstimatedAnnualIncome']}
+          />
 
           <GridItem colSpan={3} display="flex" gap="9px" alignItems="center">
             <FormCheckbox name="isOwner" />

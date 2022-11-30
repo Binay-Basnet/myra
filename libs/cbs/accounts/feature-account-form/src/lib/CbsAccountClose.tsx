@@ -502,7 +502,12 @@ export const CbsAccountClose = () => {
                               Adjusted Interest
                             </Text>
                             <Box>
-                              <FormAmountInput size="sm" name="adjustedInterest" isDisabled />
+                              <FormAmountInput
+                                type="number"
+                                size="sm"
+                                name="adjustedInterest"
+                                isDisabled
+                              />
                             </Box>
                           </Box>
 
@@ -538,6 +543,7 @@ export const CbsAccountClose = () => {
                                     {serviceName}
                                   </Text>
                                   <FormAmountInput
+                                    type="number"
                                     size="sm"
                                     name={`serviceCharge.${serviceName}`}
                                   />

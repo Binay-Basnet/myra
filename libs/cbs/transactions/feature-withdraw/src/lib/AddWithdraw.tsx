@@ -332,7 +332,12 @@ export const AddWithdraw = () => {
                   )}
 
                   {memberId && accountId && (
-                    <FormAmountInput min={0} name="amount" label={t['addWithdrawWithdrawAmount']} />
+                    <FormAmountInput
+                      type="number"
+                      min={0}
+                      name="amount"
+                      label={t['addWithdrawWithdrawAmount']}
+                    />
                   )}
 
                   {memberId && accountId && (

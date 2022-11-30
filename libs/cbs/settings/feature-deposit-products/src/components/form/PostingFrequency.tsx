@@ -1,5 +1,3 @@
-// import debounce from 'lodash/debounce';
-
 import { Box, FormSection, GridItem } from '@myra-ui';
 
 import { DepositFrequency } from '@coop/cbs/data-access';

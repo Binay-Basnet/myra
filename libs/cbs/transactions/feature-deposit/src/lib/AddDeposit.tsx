@@ -446,6 +446,7 @@ export const AddDeposit = () => {
                           <FormInput name="voucherId" label={t['addDepositVoucherId']} />
 
                           <FormAmountInput
+                            type="number"
                             name="amount"
                             min={0}
                             label={t['addDepositAmountToBeDeposited']}
@@ -474,6 +475,7 @@ export const AddDeposit = () => {
                           <FormInput name="voucherId" label={t['addDepositVoucherId']} />
 
                           <FormAmountInput
+                            type="number"
                             name="amount"
                             label={t['addDepositAmountToBeDeposited']}
                           />

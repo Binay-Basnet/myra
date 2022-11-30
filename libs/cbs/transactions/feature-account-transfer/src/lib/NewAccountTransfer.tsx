@@ -307,6 +307,7 @@ export const NewAccountTransfer = () => {
                       <BoxContainer>
                         <InputGroupContainer>
                           <FormAmountInput
+                            type="number"
                             name="amount"
                             label={t['newAccountTransferTransferAmount']}
                           />

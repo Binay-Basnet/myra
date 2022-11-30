@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+import { FormSection, GridItem } from '@myra-ui';
 
 import { ShareInvestmentType } from '@coop/cbs/data-access';
 import {
@@ -8,7 +9,6 @@ import {
   FormSelect,
   FormTextArea,
 } from '@coop/shared/form';
-import { FormSection, GridItem } from '@myra-ui';
 
 const shareTypeOptions = [
   { label: 'Share Bonus / Dividend', value: ShareInvestmentType.ShareBonusDividend },
@@ -30,13 +30,13 @@ export const ShareTransaction = () => {
 
       {shareType === ShareInvestmentType.ShareBonusDividend && (
         <>
-          <FormAmountInput name="share.bonusAmount" label="Bonus Amount" />
+          <FormAmountInput type="number" name="share.bonusAmount" label="Bonus Amount" />
 
-          <FormAmountInput name="share.dividendAmount" label="Dividend Amount" />
+          <FormAmountInput type="number" name="share.dividendAmount" label="Dividend Amount" />
 
           <FormNumberInput name="share.shareQuantity" label="Share Quantity" />
 
-          <FormAmountInput name="share.totalAmount" label="Total Amount" />
+          <FormAmountInput type="number" name="share.totalAmount" label="Total Amount" />
         </>
       )}
 
@@ -46,7 +46,11 @@ export const ShareTransaction = () => {
 
           <FormNumberInput name="share.sharePerKitta" label="Share Per Kitta" />
 
-          <FormAmountInput name="share.totalShareReturnAmount" label="Total Share Return Amount" />
+          <FormAmountInput
+            type="number"
+            name="share.totalShareReturnAmount"
+            label="Total Share Return Amount"
+          />
         </>
       )}
 

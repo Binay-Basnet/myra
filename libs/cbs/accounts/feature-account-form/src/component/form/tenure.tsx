@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { Alert, Box } from '@myra-ui';
 
 import { FrequencyTenure, useGetAccountOpenProductDetailsQuery } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { SubHeadingText } from '@coop/shared/components';
 import { FormInput } from '@coop/shared/form';
-import { Alert, Box } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IRightElementProps {

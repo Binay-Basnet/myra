@@ -42,6 +42,7 @@ export const ExternalLoanAdd = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const methods = useForm<ExternalLoanApplicationInput>({
+    mode: 'onChange',
     defaultValues: {
       tenureUnit: FrequencyTenure.Day,
       insurance: false,

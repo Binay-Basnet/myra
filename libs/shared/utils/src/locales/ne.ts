@@ -3404,6 +3404,8 @@ const ne: Record<string, string> = {
   memberLayoutCreateKYMFormForCooperativeUnion: 'Create KYM form for Cooperative Union Members',
   kymCoopUnionInstitutionInformation: '१. सहकारी जानकारी',
   settingsDocuments: 'Document',
+  bankAccountCurrent: 'Current',
+  bankAccountSaving: 'Saving',
 };
 
 export default ne;
