@@ -11296,14 +11296,23 @@ export type TellerDataEntry = {
   tellerId?: Maybe<Scalars['String']>;
 };
 
+export type TellerDataHolder = {
+  balanceTotal?: Maybe<Scalars['String']>;
+  entries?: Maybe<Array<Maybe<TellerDataEntry>>>;
+  inAmountTotal?: Maybe<Scalars['String']>;
+  inTransitTotal?: Maybe<Scalars['String']>;
+  outAmountTotal?: Maybe<Scalars['String']>;
+  stackTotal?: Maybe<Scalars['String']>;
+};
+
 export type TellerFilter = {
   tellerId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   tellerType?: InputMaybe<TellerType>;
 };
 
 export type TellerReportData = {
-  headTeller?: Maybe<Array<Maybe<TellerDataEntry>>>;
-  teller?: Maybe<Array<Maybe<TellerDataEntry>>>;
+  headTeller?: Maybe<TellerDataHolder>;
+  teller?: Maybe<TellerDataHolder>;
 };
 
 export type TellerReportFilter = {
@@ -13840,7 +13849,7 @@ export type GetActiveInactiveMemberReportQueryVariables = Exact<{
 }>;
 
 
-export type GetActiveInactiveMemberReportQuery = { report: { activeInactiveMemberReport?: { statement?: { reportStatement?: Array<{ memberId?: string | null, memberName?: string | null, district?: string | null, wardNo?: string | null, address?: string | null, dob?: Record<"local"|"en"|"np",string> | null, age?: number | null, contactNo?: string | null, gender?: string | null, pan?: string | null, occupation?: string | null, memberRegistrationDate?: Record<"local"|"en"|"np",string> | null, status?: MemberStatus | null } | null> | null } | {} | null } | null } };
+export type GetActiveInactiveMemberReportQuery = { report: { activeInactiveMemberReport?: { statement?: { summary?: { activeTotal?: number | null, inactiveTotal?: number | null, totalMember?: number | null } | null, reportStatement?: Array<{ memberId?: string | null, memberName?: string | null, district?: string | null, wardNo?: string | null, address?: string | null, dob?: Record<"local"|"en"|"np",string> | null, age?: number | null, contactNo?: string | null, gender?: string | null, pan?: string | null, occupation?: string | null, memberRegistrationDate?: Record<"local"|"en"|"np",string> | null, status?: MemberStatus | null, memberType?: KymMemberTypesEnum | null } | null> | null } | {} | null } | null } };
 
 export type GetTrialSheetReportQueryVariables = Exact<{
   data: TrialSheetReportFilter;
@@ -22649,6 +22658,11 @@ export const GetActiveInactiveMemberReportDocument = `
     activeInactiveMemberReport(data: $data) {
       statement {
         ... on ActiveInactiveMemberReport {
+          summary {
+            activeTotal
+            inactiveTotal
+            totalMember
+          }
           reportStatement {
             memberId
             memberName
@@ -22663,6 +22677,7 @@ export const GetActiveInactiveMemberReportDocument = `
             occupation
             memberRegistrationDate
             status
+            memberType
           }
         }
       }
