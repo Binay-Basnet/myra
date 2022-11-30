@@ -1,6 +1,5 @@
-import { Box, FormSection, Grid, GridItem, Text } from '@myra-ui';
-
 import { FormAmountInput } from '@coop/shared/form';
+import { Box, FormSection, Grid, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer } from '../formui';

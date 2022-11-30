@@ -1,19 +1,14 @@
 // import debounce from 'lodash/debounce';
 
-import { Box, FormSection, GridItem } from '@myra-ui';
-
 import { DepositFrequency } from '@coop/cbs/data-access';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
+import { Box, FormSection, GridItem } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const PostingFrequency = () => {
   const { t } = useTranslation();
 
   const postingFrequency = [
-    {
-      label: t['daily'],
-      value: DepositFrequency.Daily,
-    },
     {
       label: t['monthly'],
       value: DepositFrequency.Monthly,
