@@ -10856,11 +10856,11 @@ export type ShareTransactionReportFilter = {
 };
 
 export type ShareTransactionReportResult = {
-  Summary?: Maybe<Scalars['Map']>;
+  avgSharePerMember?: Maybe<Scalars['String']>;
   data?: Maybe<Array<Maybe<ShareTransactionReport>>>;
   error?: Maybe<QueryError>;
   footer?: Maybe<ShareTransactionFooter>;
-  meta?: Maybe<Scalars['Map']>;
+  totalShareIssued?: Maybe<Scalars['String']>;
 };
 
 export enum ShareTransactionType {
@@ -18401,7 +18401,8 @@ export type GetShareTransactionReportQueryVariables = Exact<{
 export type GetShareTransactionReportQuery = {
   report: {
     shareTransactionReport?: {
-      Summary?: Record<string, string> | null;
+      totalShareIssued?: string | null;
+      avgSharePerMember?: string | null;
       data?: Array<{
         transactionDate?: string | null;
         memberId?: string | null;
@@ -30124,7 +30125,8 @@ export const GetShareTransactionReportDocument = `
         totatDr
         totalBalance
       }
-      Summary
+      totalShareIssued
+      avgSharePerMember
     }
   }
 }

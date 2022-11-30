@@ -88,6 +88,8 @@ export const ShareTransactionsReport = () => {
 
   const shareData = data?.report?.shareTransactionReport?.data;
   const footerData = data?.report?.shareTransactionReport?.footer;
+  const totalShare = data?.report?.shareTransactionReport?.totalShareIssued;
+  const averageSharePerMember = data?.report?.shareTransactionReport?.avgSharePerMember;
 
   const { data: provinceData } = useGetAllProvinceQuery();
   const { data: districtsData } = useGetAllDistrictsQuery();
@@ -223,6 +225,54 @@ export const ShareTransactionsReport = () => {
               },
             ]}
           />
+          <Box
+            display="flex"
+            flexDir="column"
+            borderRadius="br2"
+            border="1px"
+            mb="s16"
+            mx="s16"
+            borderColor="border.element"
+          >
+            <Box h="40px" display="flex" borderBottom="1px" borderBottomColor="border.element">
+              <Box
+                display="flex"
+                alignItems="center"
+                w="80%"
+                h="100%"
+                px="s12"
+                borderRight="1px"
+                borderRightColor="border.element"
+                fontSize="r1"
+                fontWeight={600}
+                color="gray.700"
+              >
+                Total Share Issued
+              </Box>
+              <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
+                {totalShare}
+              </Box>
+            </Box>
+            <Box h="40px" display="flex" borderBottom="1px" borderBottomColor="border.element">
+              <Box
+                display="flex"
+                alignItems="center"
+                w="80%"
+                h="100%"
+                px="s12"
+                borderRight="1px"
+                borderRightColor="border.element"
+                fontSize="r1"
+                fontWeight={600}
+                color="gray.700"
+              >
+                Average Share Per Member{' '}
+              </Box>
+              <Box px="s12" w="20%" display="flex" alignItems="center" justifyContent="end">
+                {averageSharePerMember}{' '}
+              </Box>
+            </Box>
+          </Box>
         </Report.Content>
         <Report.Filters>
           <Report.Filter title="Gender">

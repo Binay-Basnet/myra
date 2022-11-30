@@ -496,7 +496,8 @@ query getShareTransactionReport($data: ShareTransactionReportFilter) {
         totatDr
         totalBalance
       }
-      Summary
+      totalShareIssued
+      avgSharePerMember
     }
   }
 }
