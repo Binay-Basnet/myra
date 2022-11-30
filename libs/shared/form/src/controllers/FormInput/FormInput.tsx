@@ -1,16 +1,18 @@
 import { Control, Controller, useFormContext } from 'react-hook-form';
 import { UseControllerProps } from 'react-hook-form/dist/types/controller';
+import { Input, InputProps } from '@myra-ui';
 import { get } from 'lodash';
 
-import { Input, InputProps } from '@myra-ui';
-
-interface IFormInputProps<T> extends InputProps {
+interface IFormInputProps<T extends Record<string, unknown>> extends InputProps {
   name: string;
   control?: Control<T>;
   rules?: UseControllerProps['rules'];
 }
 
-export const FormInput = <T,>({ name, ...rest }: IFormInputProps<T>) => {
+export const FormInput = <T extends Record<string, unknown>>({
+  name,
+  ...rest
+}: IFormInputProps<T>) => {
   const methods = useFormContext();
 
   const {

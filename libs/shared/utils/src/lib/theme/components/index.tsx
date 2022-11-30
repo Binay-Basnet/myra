@@ -1,10 +1,10 @@
 import Accordion from './accordion';
 import Alert from './alert';
 import Button from './button';
-import Checkbox from './checkbox';
+import { checkboxTheme } from './checkbox';
 import Input from './input';
 import Modal from './modal';
-import Radio from './radio';
+import { radioTheme } from './radio';
 import Switch from './switches';
 import Table from './table';
 import Tags from './tags';
@@ -14,10 +14,10 @@ export const components = {
   Accordion,
   Alert,
   Button,
-  Checkbox,
+  Checkbox: checkboxTheme,
   Input,
   Modal,
-  Radio,
+  Radio: radioTheme,
   Switch,
   Table,
   Tags,

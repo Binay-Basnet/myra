@@ -1,6 +1,7 @@
-import { ExternalLoanType, useExternalLoanAccountListQuery } from '@coop/cbs/data-access';
-import { FormInput, FormSelect } from '@coop/shared/form';
 import { FormSection, GridItem, Text } from '@myra-ui';
+
+import { ExternalLoanType, useExternalLoanAccountListQuery } from '@coop/cbs/data-access';
+import { FormAmountInput, FormInput, FormSelect } from '@coop/shared/form';
 import { getRouterQuery } from '@coop/shared/utils';
 
 export const ExternalLoanInfo = () => {
@@ -42,8 +43,8 @@ export const ExternalLoanInfo = () => {
       </FormSection>
 
       <FormSection divider={false}>
-        <FormInput name="appliedAmount" type="text" label="Applied Amount" />
-        <FormInput name="approvedAmount" type="text" label="Approved Amount" />
+        <FormAmountInput name="appliedAmount" type="text" label="Applied Amount" />
+        <FormAmountInput name="approvedAmount" type="text" label="Approved Amount" />
         <FormInput name="loanNumber" type="text" label="Loan Number" />
       </FormSection>
 
