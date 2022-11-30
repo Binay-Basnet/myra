@@ -17,7 +17,6 @@ const Template: Story<RadioGroupProps> = (args) => <RadioGroup {...args} />;
 export const Primary = Template.bind({});
 Primary.args = {
   size: 'md',
-  colorScheme: 'cyan',
   isDisabled: false,
   spacing: 4,
   direction: 'row',

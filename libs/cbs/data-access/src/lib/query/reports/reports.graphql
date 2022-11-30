@@ -292,6 +292,11 @@ query getActiveInactiveMemberReport($data: ActiveInactiveMemberReportData) {
     activeInactiveMemberReport(data: $data) {
       statement {
         ... on ActiveInactiveMemberReport {
+          summary {
+            activeTotal
+            inactiveTotal
+            totalMember
+          }
           reportStatement {
             memberId
             memberName
@@ -306,6 +311,7 @@ query getActiveInactiveMemberReport($data: ActiveInactiveMemberReportData) {
             occupation
             memberRegistrationDate
             status
+            memberType
           }
         }
       }

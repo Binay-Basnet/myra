@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Control, Controller, Path, useFormContext } from 'react-hook-form';
 import { RiErrorWarningLine } from 'react-icons/ri';
 import { Box, Checkbox, Icon, TextFields } from '@myra-ui';
+import { get } from 'lodash';
 
 import FormInput from '../FormInput/FormInput';
 
@@ -29,7 +30,7 @@ export const FormCheckboxGroup = <T extends Record<string, string[]>>({
     control,
   } = methods;
 
-  const error = errors[name];
+  const errorText = get(errors, name)?.message as string;
 
   useEffect(() => {
     if (!hasOtherField) {
@@ -56,7 +57,7 @@ export const FormCheckboxGroup = <T extends Record<string, string[]>>({
                   flexDir: orientation,
                   flexWrap: 'wrap',
                   columnGap: 's48',
-                  rowGap: 's16',
+                  rowGap: 's8',
                 })}
           >
             {list?.map((item) => (
@@ -64,11 +65,7 @@ export const FormCheckboxGroup = <T extends Record<string, string[]>>({
                 id={name}
                 key={item.value}
                 label={item.label}
-                // _checked={{
-                //   border: error ? '2px solid' : '1px solid',
-                //   borderColor: error ? 'danger.500' : 'primary.500',
-                //   bg: error ? 'danger.100' : 'primary.100',
-                // }}
+                isInvalid={!!errorText}
                 isChecked={value?.includes(item.value)}
                 onChange={() => {
                   if (!value) {
@@ -104,11 +101,11 @@ export const FormCheckboxGroup = <T extends Record<string, string[]>>({
               </Box>
             ) : null}
           </Box>
-          {error && (
+          {errorText && (
             <Box display="flex" gap="s10">
               <Icon color="danger.500" as={RiErrorWarningLine} />
               <TextFields variant="formHelper" color="danger.500">
-                {(error?.message as string) ?? 'Choose at least one option'}
+                {errorText || 'Choose at least one option'}
               </TextFields>
             </Box>
           )}

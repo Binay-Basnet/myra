@@ -6,18 +6,20 @@ import {
   BankGlStatementFilter,
   NatureOfBankTransaction,
   useGetBankGlStatementReportQuery,
-  useGetBankListQuery,
+  useGetCoaAccountsUnderListQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormAmountFilter, FormBranchSelect, FormRadioGroup, FormSelect } from '@coop/shared/form';
-import { amountConverter } from '@coop/shared/utils';
+import { amountConverter, featureCode } from '@coop/shared/utils';
 
 export const BankGLStatementReport = () => {
   const [filters, setFilters] = useState<BankGlStatementFilter | null>(null);
 
-  const { data: bankListData } = useGetBankListQuery();
+  const { data: bankListData } = useGetCoaAccountsUnderListQuery({
+    accountCode: featureCode.accountCode,
+  });
   const { data, isFetching } = useGetBankGlStatementReportQuery(
     {
       data: filters as BankGlStatementFilter,
@@ -89,6 +91,10 @@ export const BankGLStatementReport = () => {
                 accessorKey: 'particular',
               },
               {
+                header: 'Bank',
+                accessorKey: 'name',
+              },
+              {
                 header: 'Cheque No',
                 accessorKey: 'chequeNo',
               },
@@ -138,10 +144,12 @@ export const BankGLStatementReport = () => {
           <Report.Filter title="Bank">
             <FormSelect
               isMulti
-              options={bankListData?.bank?.bank?.list?.map((bank) => ({
-                label: bank?.name as string,
-                value: bank?.id as string,
-              }))}
+              options={bankListData?.settings?.chartsOfAccount?.accountsUnder?.data?.map(
+                (bank) => ({
+                  label: bank?.name?.local as string,
+                  value: bank?.id as string,
+                })
+              )}
               name="bank"
             />
           </Report.Filter>

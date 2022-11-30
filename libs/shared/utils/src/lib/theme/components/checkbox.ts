@@ -1,18 +1,25 @@
 import { checkboxAnatomy as parts } from '@chakra-ui/anatomy';
-import type {
-  PartsStyleFunction,
-  PartsStyleObject,
-  SystemStyleFunction,
-  SystemStyleObject,
-} from '@chakra-ui/theme-tools';
+import { createMultiStyleConfigHelpers, cssVar, defineStyle } from '@chakra-ui/styled-system';
 import { mode } from '@chakra-ui/theme-tools';
 
-const baseStyleControl: SystemStyleFunction = (props) => {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const isFunction = (value: any): value is Function => typeof value === 'function';
+
+export function runIfFn<T, U>(valueOrFn: T | ((...fnArgs: U[]) => T), ...args: U[]): T {
+  return isFunction(valueOrFn) ? valueOrFn(...args) : valueOrFn;
+}
+
+const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpers(parts.keys);
+
+const $size = cssVar('myra');
+
+const baseStyleControl = defineStyle((props) => {
   const { colorScheme: c } = props;
 
   return {
-    w: '100%',
-    transitionProperty: 'box-shadow',
+    w: $size.reference,
+    h: $size.reference,
+    transitionProperty: 'border',
     transitionDuration: 'normal',
     border: '2px solid',
     borderRadius: 'br2',
@@ -20,9 +27,9 @@ const baseStyleControl: SystemStyleFunction = (props) => {
     color: 'primary.0',
 
     _checked: {
-      bg: mode(`primary.500`, `primary.500`)(props),
-      borderColor: mode(`primary.500`, `primary.500`)(props),
-      borderRadius: '4px',
+      bg: mode(`${c}.500`, `${c}.200`)(props),
+      borderColor: mode(`${c}.500`, `${c}.200`)(props),
+      color: mode('white', 'gray.900')(props),
 
       _hover: {
         bg: mode(`${c}.600`, `${c}.300`)(props),
@@ -30,9 +37,13 @@ const baseStyleControl: SystemStyleFunction = (props) => {
       },
 
       _disabled: {
-        borderColor: mode('disabled.disabled', 'transparent')(props),
-        bg: mode('disabled.disabled', 'whiteAlpha.300')(props),
-        color: mode('neutralColorLightGray.0', 'whiteAlpha.500')(props),
+        borderColor: mode('gray.200', 'transparent')(props),
+        bg: mode('gray.200', 'whiteAlpha.300')(props),
+        color: mode('gray.500', 'whiteAlpha.500')(props),
+      },
+      _invalid: {
+        borderColor: mode('danger.500', 'danger.300')(props),
+        bg: mode('danger.500', 'danger.900')(props),
       },
     },
 
@@ -43,8 +54,8 @@ const baseStyleControl: SystemStyleFunction = (props) => {
     },
 
     _disabled: {
-      bg: 'none',
-      borderColor: mode('disabled.disabled', 'solid')(props),
+      bg: mode('gray.100', 'whiteAlpha.100')(props),
+      borderColor: mode('gray.100', 'transparent')(props),
     },
 
     _focus: {
@@ -55,55 +66,62 @@ const baseStyleControl: SystemStyleFunction = (props) => {
     },
 
     _invalid: {
-      bg: 'danger.0',
       borderColor: mode('danger.500', 'danger.300')(props),
-
-      _checked: {
-        bg: mode(`danger.500`, `danger.200`)(props),
-        borderColor: mode(`danger.500`, `danger.200`)(props),
-        color: mode('white', 'gray.900')(props),
+      bg: mode('danger.0', 'danger.100')(props),
+      _focus: {
+        outline: `2px solid`,
+        outlineColor: 'danger.300',
+        outlineOffset: '1px',
+        boxShadow: 'none',
       },
     },
   };
-};
-
-const baseStyleContainer: SystemStyleObject = {
-  _disabled: { cursor: 'not-allowed' },
-};
-
-const baseStyleLabel: SystemStyleObject = {
-  userSelect: 'none',
-  _disabled: { opacity: 0.4 },
-};
-
-const baseStyleIcon: SystemStyleObject = {
-  transitionProperty: 'transform',
-  transitionDuration: 'normal',
-};
-
-const baseStyle: PartsStyleFunction<typeof parts> = (props) => ({
-  icon: baseStyleIcon,
-  container: baseStyleContainer,
-  control: baseStyleControl(props),
-  label: baseStyleLabel,
 });
 
-const sizes: Record<string, PartsStyleObject<typeof parts>> = {
-  default: {
-    control: { w: '18px', h: '18px' },
-    label: { fontSize: 'md' },
-    icon: { fontSize: '0.625rem' },
-  },
+const baseStyleContainer = defineStyle({
+  _disabled: { cursor: 'not-allowed' },
+});
+
+const baseStyleLabel = defineStyle({
+  userSelect: 'none',
+  _disabled: { opacity: 0.4 },
+});
+
+const baseStyleIcon = defineStyle({
+  transitionProperty: 'transform',
+  transitionDuration: 'normal',
+});
+
+const baseStyle = definePartsStyle((props) => ({
+  icon: baseStyleIcon,
+  container: baseStyleContainer,
+  control: runIfFn(baseStyleControl, props),
+  label: baseStyleLabel,
+}));
+
+const sizes = {
+  sm: definePartsStyle({
+    control: { [$size.variable]: 'sizes.3' },
+    label: { fontSize: 'sm' },
+    icon: { fontSize: '3xs' },
+  }),
+  md: definePartsStyle({
+    control: { [$size.variable]: '18px' },
+    label: { fontSize: 's3', fontWeight: 'medium' },
+    icon: { fontSize: 's1' },
+  }),
+  lg: definePartsStyle({
+    control: { [$size.variable]: 'sizes.5' },
+    label: { fontSize: 'lg' },
+    icon: { fontSize: '2xs' },
+  }),
 };
 
-const defaultProps = {
-  size: 'default',
-  colorScheme: 'primary.500',
-};
-
-export default {
-  parts: parts.keys,
+export const checkboxTheme = defineMultiStyleConfig({
   baseStyle,
   sizes,
-  defaultProps,
-};
+  defaultProps: {
+    size: 'md',
+    colorScheme: 'primary',
+  },
+});

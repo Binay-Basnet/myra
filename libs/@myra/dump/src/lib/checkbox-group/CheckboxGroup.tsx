@@ -11,17 +11,16 @@ import {
 export interface CheckboxGroupProps extends ChakraCheckboxProps {
   colorScheme?: string;
   checkList?: string[];
-  spacing: number;
   direction: 'column' | 'column-reverse' | 'row' | 'row-reverse';
   variant: 'simple' | 'fullWidth';
 }
 
 export const CheckboxGroup = (props: CheckboxGroupProps) => {
-  const { checkList, spacing, variant, direction, ...rest } = props;
+  const { checkList, variant, direction, ...rest } = props;
   return (
     <ChakraCheckboxGroup>
       {variant === 'simple' && (
-        <Stack spacing={spacing} direction={direction}>
+        <Stack spacing="s8" direction={direction}>
           {checkList?.map((item) => (
             <Checkbox id={item} value={item} {...rest}>
               {item}
@@ -33,7 +32,7 @@ export const CheckboxGroup = (props: CheckboxGroupProps) => {
       {variant === 'fullWidth' && (
         <Box>
           {checkList?.map((item) => (
-            <Flex justifyContent="space-between">
+            <Flex gap="s8" justifyContent="space-between">
               <Box>{item}</Box>
               <Box>
                 <Checkbox id={item} value={item} {...rest} />
