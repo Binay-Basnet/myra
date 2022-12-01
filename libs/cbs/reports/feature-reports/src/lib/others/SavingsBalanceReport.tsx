@@ -97,12 +97,12 @@ export const SavingBalanceReport = () => {
             columns={[
               {
                 header: 'S.No.',
-                footer: () => <Box textAlign="right"> Balance</Box>,
+                footer: () => <Box textAlign="right"> Total</Box>,
                 accessorKey: 'index',
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 7,
+                    colspan: 8,
                   },
                 },
               },
@@ -181,7 +181,7 @@ export const SavingBalanceReport = () => {
                 header: 'Balance Amount',
                 accessorKey: 'balance',
                 cell: (props) => amountConverter(props.getValue() as string),
-                footer: () => totalBalance,
+                footer: () => amountConverter(totalBalance as string),
                 meta: {
                   isNumeric: true,
                 },

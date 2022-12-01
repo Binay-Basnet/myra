@@ -56,13 +56,16 @@ export const CashLedgersReport = () => {
   );
 
   const summaryData = data?.report?.cashLedgerReport?.summary;
+  const summaryLength = summaryData?.length;
   const openingBalance = data?.report?.cashLedgerReport?.openingBalance;
   const closingBalance = data?.report?.cashLedgerReport?.closingBalance;
   const detailsData = data?.report?.cashLedgerReport?.details;
+  const detailsLength = detailsData?.length;
+
   return (
     <Report
       defaultFilters={{}}
-      data={(summaryData ?? detailsData) as CashLedgerReport[]}
+      data={(summaryLength !== 0 ? summaryData : detailsData) as CashLedgerReport[]}
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
@@ -90,7 +93,7 @@ export const CashLedgersReport = () => {
           <Report.OrganizationHeader />
           <Report.Organization statementDate={filters?.period?.periodType} />
           <Box display="flex" py="s32" flexDir="column">
-            {summaryData && (
+            {summaryData && summaryLength !== 0 && (
               <Box display="flex" py="s8" flexDir="column">
                 <Box display="flex" flexDirection="row" justifyContent="space-between">
                   <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
@@ -100,7 +103,7 @@ export const CashLedgersReport = () => {
                     Opening Balance: {openingBalance ? amountConverter(openingBalance) : '-'}
                   </Text>
                 </Box>
-                <Report.Table<CashLedgerReport & { index: number }>
+                <Report.Table<CashLedgerReport>
                   showFooter
                   columns={[
                     {
@@ -131,7 +134,7 @@ export const CashLedgersReport = () => {
                       ),
                       meta: {
                         Footer: {
-                          colspan: 6,
+                          colspan: 5,
                         },
                       },
                     },
@@ -172,6 +175,10 @@ export const CashLedgersReport = () => {
                       header: 'Balance',
                       cell: (props) => amountConverter(props.getValue() as string),
                       accessorKey: 'balance',
+                      footer: () => {
+                        openingBalance ? amountConverter(openingBalance) : '-';
+                      },
+
                       meta: {
                         isNumeric: true,
                         Footer: {
@@ -183,7 +190,7 @@ export const CashLedgersReport = () => {
                 />
               </Box>
             )}
-            {detailsData && (
+            {detailsData && detailsLength !== 0 && (
               <Box display="flex" py="s8" flexDir="column">
                 <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
                   Cash Ledger Report(Details)
