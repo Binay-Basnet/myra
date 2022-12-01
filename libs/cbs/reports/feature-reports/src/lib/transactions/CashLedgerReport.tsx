@@ -78,7 +78,8 @@ export const CashLedgersReport = () => {
             { label: 'Cash Ledger', link: '/reports/cbs/transactions/cash-ledger/new' },
           ]}
         />
-        <Report.Inputs defaultFilters={{}} setFilters={setFilters}>
+        <Report.Inputs>
+          {' '}
           <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Branch" />
           </GridItem>

@@ -67,7 +67,7 @@ export const LoanBalanceReport = () => {
               {
                 header: 'S.No.',
                 accessorKey: 'index',
-                footer: () => <Box textAlign="right">Closing Balance</Box>,
+                footer: () => <Box textAlign="right">Total Balance</Box>,
                 meta: {
                   width: '60px',
                   Footer: {
