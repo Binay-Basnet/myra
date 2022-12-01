@@ -99473,7 +99473,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "Boolean",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -99485,7 +99485,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "Boolean",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,

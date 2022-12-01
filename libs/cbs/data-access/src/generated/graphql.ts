@@ -11617,8 +11617,8 @@ export type UserQuery = {
 };
 
 export type UserReport = {
-  accessForBranch?: Maybe<Scalars['Boolean']>;
-  accessForGroup?: Maybe<Scalars['Boolean']>;
+  accessForBranch?: Maybe<Scalars['String']>;
+  accessForGroup?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Scalars['String']>;
   createdDate?: Maybe<Scalars['String']>;
   empCode?: Maybe<Scalars['String']>;
@@ -18440,8 +18440,8 @@ export type GetUserReportQuery = {
         empCode?: string | null;
         username?: string | null;
         usernameCode?: string | null;
-        accessForBranch?: boolean | null;
-        accessForGroup?: boolean | null;
+        accessForBranch?: string | null;
+        accessForGroup?: string | null;
         role?: string | null;
         createdDate?: string | null;
         createdBy?: string | null;
@@ -18722,6 +18722,63 @@ export type GetCashLedgerReportQuery = {
         cashCr?: string | null;
         balance?: string | null;
       } | null> | null;
+    } | null;
+  };
+};
+
+export type GetMemberRegistrationReportQueryVariables = Exact<{
+  data?: InputMaybe<MemberRegistrationReportData>;
+}>;
+
+export type GetMemberRegistrationReportQuery = {
+  report: {
+    memberRegistrationReport?: {
+      data?: {
+        individual?: Array<{
+          memberId?: string | null;
+          memberCode?: string | null;
+          name?: string | null;
+          dob?: Record<'local' | 'en' | 'np', string> | null;
+          grandFatherName?: string | null;
+          fatherName?: string | null;
+          SpouseName?: string | null;
+          profession?: string | null;
+          fingerPrint?: boolean | null;
+          photo?: boolean | null;
+          contactNo?: string | null;
+          email?: string | null;
+          other?: string | null;
+          address?: AddressFragment | null;
+          shareInfo?: {
+            perShareAmount?: string | null;
+            kitta?: string | null;
+            amount?: string | null;
+          } | null;
+        } | null> | null;
+        other?: Array<{
+          memberId?: string | null;
+          memberCode?: string | null;
+          name?: string | null;
+          doe?: Record<'local' | 'en' | 'np', string> | null;
+          typeOfInstitution?: string | null;
+          workingArea?: string | null;
+          totalMember?: string | null;
+          balanceSheet?: string | null;
+          post?: string | null;
+          authPersonName?: string | null;
+          logo?: boolean | null;
+          stamp?: boolean | null;
+          contactNo?: string | null;
+          email?: string | null;
+          other?: string | null;
+          address?: AddressFragment | null;
+          shareInfo?: {
+            perShareAmount?: string | null;
+            kitta?: string | null;
+            amount?: string | null;
+          } | null;
+        } | null> | null;
+      } | null;
     } | null;
   };
 };
@@ -30550,6 +30607,80 @@ export const useGetCashLedgerReportQuery = <TData = GetCashLedgerReportQuery, TE
     variables === undefined ? ['getCashLedgerReport'] : ['getCashLedgerReport', variables],
     useAxios<GetCashLedgerReportQuery, GetCashLedgerReportQueryVariables>(
       GetCashLedgerReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberRegistrationReportDocument = `
+    query getMemberRegistrationReport($data: MemberRegistrationReportData) {
+  report {
+    memberRegistrationReport(data: $data) {
+      data {
+        individual {
+          memberId
+          memberCode
+          name
+          address {
+            ...Address
+          }
+          dob
+          grandFatherName
+          fatherName
+          SpouseName
+          profession
+          shareInfo {
+            perShareAmount
+            kitta
+            amount
+          }
+          fingerPrint
+          photo
+          contactNo
+          email
+          other
+        }
+        other {
+          memberId
+          memberCode
+          name
+          address {
+            ...Address
+          }
+          doe
+          typeOfInstitution
+          workingArea
+          totalMember
+          balanceSheet
+          shareInfo {
+            perShareAmount
+            kitta
+            amount
+          }
+          post
+          authPersonName
+          logo
+          stamp
+          contactNo
+          email
+          other
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}`;
+export const useGetMemberRegistrationReportQuery = <
+  TData = GetMemberRegistrationReportQuery,
+  TError = unknown
+>(
+  variables?: GetMemberRegistrationReportQueryVariables,
+  options?: UseQueryOptions<GetMemberRegistrationReportQuery, TError, TData>
+) =>
+  useQuery<GetMemberRegistrationReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getMemberRegistrationReport']
+      : ['getMemberRegistrationReport', variables],
+    useAxios<GetMemberRegistrationReportQuery, GetMemberRegistrationReportQueryVariables>(
+      GetMemberRegistrationReportDocument
     ).bind(null, variables),
     options
   );

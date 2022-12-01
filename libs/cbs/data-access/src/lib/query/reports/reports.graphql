@@ -658,3 +658,60 @@ query getCashLedgerReport($data: CashLedgerReportFilterData) {
     }
   }
 }
+
+query getMemberRegistrationReport($data: MemberRegistrationReportData) {
+  report {
+    memberRegistrationReport(data: $data) {
+      data {
+        individual {
+          memberId
+          memberCode
+          name
+          address {
+            ...Address
+          }
+          dob
+          grandFatherName
+          fatherName
+          SpouseName
+          profession
+          shareInfo {
+            perShareAmount
+            kitta
+            amount
+          }
+          fingerPrint
+          photo
+          contactNo
+          email
+          other
+        }
+        other {
+          memberId
+          memberCode
+          name
+          address {
+            ...Address
+          }
+          doe
+          typeOfInstitution
+          workingArea
+          totalMember
+          balanceSheet
+          shareInfo {
+            perShareAmount
+            kitta
+            amount
+          }
+          post
+          authPersonName
+          logo
+          stamp
+          contactNo
+          email
+          other
+        }
+      }
+    }
+  }
+}
