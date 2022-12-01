@@ -18695,6 +18695,37 @@ export type GetTransactionTellerReportQuery = {
   };
 };
 
+export type GetCashLedgerReportQueryVariables = Exact<{
+  data?: InputMaybe<CashLedgerReportFilterData>;
+}>;
+
+export type GetCashLedgerReportQuery = {
+  report: {
+    cashLedgerReport?: {
+      openingBalance?: string | null;
+      closingBalance?: string | null;
+      summary?: Array<{
+        date?: Record<'local' | 'en' | 'np', string> | null;
+        ledgerCode?: string | null;
+        particular?: string | null;
+        voucherNo?: string | null;
+        cashDr?: string | null;
+        cashCr?: string | null;
+        balance?: string | null;
+      } | null> | null;
+      details?: Array<{
+        date?: Record<'local' | 'en' | 'np', string> | null;
+        ledgerCode?: string | null;
+        particular?: string | null;
+        voucherNo?: string | null;
+        cashDr?: string | null;
+        cashCr?: string | null;
+        balance?: string | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
 export type GetShareStatementQueryVariables = Exact<{
   data: ShareStatementReportSettings;
 }>;
@@ -30480,6 +30511,45 @@ export const useGetTransactionTellerReportQuery = <
     ['getTransactionTellerReport', variables],
     useAxios<GetTransactionTellerReportQuery, GetTransactionTellerReportQueryVariables>(
       GetTransactionTellerReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetCashLedgerReportDocument = `
+    query getCashLedgerReport($data: CashLedgerReportFilterData) {
+  report {
+    cashLedgerReport(data: $data) {
+      openingBalance
+      closingBalance
+      summary {
+        date
+        ledgerCode
+        particular
+        voucherNo
+        cashDr
+        cashCr
+        balance
+      }
+      details {
+        date
+        ledgerCode
+        particular
+        voucherNo
+        cashDr
+        cashCr
+        balance
+      }
+    }
+  }
+}
+    `;
+export const useGetCashLedgerReportQuery = <TData = GetCashLedgerReportQuery, TError = unknown>(
+  variables?: GetCashLedgerReportQueryVariables,
+  options?: UseQueryOptions<GetCashLedgerReportQuery, TError, TData>
+) =>
+  useQuery<GetCashLedgerReportQuery, TError, TData>(
+    variables === undefined ? ['getCashLedgerReport'] : ['getCashLedgerReport', variables],
+    useAxios<GetCashLedgerReportQuery, GetCashLedgerReportQueryVariables>(
+      GetCashLedgerReportDocument
     ).bind(null, variables),
     options
   );

@@ -90,7 +90,7 @@ export const AccountCloseReport = () => {
               {
                 header: 'Account Closing Date',
                 accessorKey: 'closingDate',
-                cell: ({ cell }) => dayjs(cell.row.original.openingDate?.en).format('YYYY-MM-DD'),
+                cell: ({ cell }) => dayjs(cell.row.original.closingDate?.en).format('YYYY-MM-DD'),
               },
               {
                 header: 'Closed Balance',
