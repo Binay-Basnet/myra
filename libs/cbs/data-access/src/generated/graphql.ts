@@ -14396,6 +14396,7 @@ export type GetAccountTableListQuery = {
             minimumBalance?: string | null;
             isMandatorySaving?: boolean | null;
             withdrawRestricted?: boolean | null;
+            interest?: number | null;
             accountClosingCharge?: Array<{
               serviceName?: string | null;
               ledgerName?: string | null;
@@ -24829,6 +24830,7 @@ export const GetAccountTableListDocument = `
               penaltyAmount
               penaltyRate
             }
+            interest
           }
           dues {
             fine

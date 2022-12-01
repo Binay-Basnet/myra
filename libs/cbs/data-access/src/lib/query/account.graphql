@@ -306,6 +306,7 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
               penaltyAmount
               penaltyRate
             }
+            interest
           }
           dues {
             fine
