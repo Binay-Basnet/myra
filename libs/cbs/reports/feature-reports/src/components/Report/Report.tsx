@@ -10,6 +10,7 @@ import {
   AccordionItem,
   Box,
   Button,
+  GridItem,
   Icon,
   NoDataState,
   Text,
@@ -342,3 +343,34 @@ export const ReportTable = <T extends Record<string, unknown>>({
     </Box>
   );
 };
+
+interface IReportMetaProps {
+  metaData: Record<string, string>;
+}
+
+export const ReportMeta = ({ metaData }: IReportMetaProps) => (
+  <Box px="s16" pt="s16" display="flex" justifyContent="space-between">
+    <Box w="50%" display="flex" flexWrap="wrap">
+      <Box w="70%" display="grid" gridTemplateColumns="repeat(2, 1fr)">
+        <GridItem>
+          <Box display="flex" flexDir="column">
+            {Object.keys(metaData)?.map((label) => (
+              <Text fontSize="r1" color="gray.700" key={label}>
+                {label}:
+              </Text>
+            ))}
+          </Box>
+        </GridItem>
+        <GridItem>
+          <Box display="flex" flexDir="column" fontWeight="500">
+            {Object.values(metaData)?.map((value) => (
+              <Text fontSize="r1" color="gray.700" key={value}>
+                {value}
+              </Text>
+            ))}
+          </Box>
+        </GridItem>
+      </Box>
+    </Box>
+  </Box>
+);

@@ -5,10 +5,11 @@ import {
   ShareStatement,
   ShareStatementReportSettings,
   ShareTransactionType,
+  useAppSelector,
   useGetShareStatementQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
-import { ReportDateRange } from '@coop/cbs/reports/components';
+import { ReportDateRange, ReportMember } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormRadioGroup } from '@coop/shared/form';
 
@@ -19,6 +20,17 @@ export const ShareStatementReport = () => {
     { data: filters as ShareStatementReportSettings },
     { enabled: !!filters }
   );
+
+  const shareMember = data?.report?.shareStatementReport?.member;
+  const branch = useAppSelector((state) => state?.auth?.user?.branch);
+
+  // const member = {
+  //   'Name of member': shareMember?.name?.local as string,
+  //   Address: formatAddress(shareMember?.address) as string,
+  //   'Branch Name': branch?.name as string,
+  //   'Membership No': shareMember?.code as string,
+  //   'Membership Date': dayjs(shareMember?.dateJoined).format('YYYY-MM-DD') as string,
+  // };
 
   const shareData = data?.report?.shareStatementReport?.statement;
   const shareReport = shareData && 'shareStatement' in shareData ? shareData.shareStatement : [];
@@ -54,6 +66,7 @@ export const ShareStatementReport = () => {
         <Report.Content>
           <Report.OrganizationHeader />
           <Report.Organization statementDate={filters?.period?.periodType} />
+          <ReportMember member={shareMember} />
           <Report.Table<ShareStatement & { index: number }>
             showFooter
             columns={[
