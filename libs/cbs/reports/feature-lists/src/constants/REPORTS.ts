@@ -68,7 +68,7 @@ export enum Report {
   LOAN_BALANCE_REPORT = 'Loan Balance Report',
 
   THRESHOLD_TRANSACTION_REPORT = 'Threshold Transaction ',
-  TRANSACTION_TRIAL_SHEET = 'Trial Sheet',
+  TRANSACTION_TRIAL_SHEET = 'Trial Balance',
   TRANSACTION_INCOME_STATEMENT = 'Income Statement',
   TRANSACTION_CASH_FLOW_STATEMENT = 'Cash Flow Statement',
   TRANSACTION_CHANGE_OF_EQUITY = 'Change of Equity',
