@@ -1,10 +1,5 @@
-import React from 'react';
-
 import { CbsSettingsFeatureOrganization } from '@coop/cbs/settings/organization';
-import {
-  SettingsGeneralLayout,
-  SettingsLayout,
-} from '@coop/cbs/settings/ui-layout';
+import { SettingsGeneralLayout, SettingsLayout } from '@coop/cbs/settings/ui-layout';
 
 const Organization = () => <CbsSettingsFeatureOrganization />;
 

@@ -1,6 +1,8 @@
-import { KymMemberTypesEnum, useGetLedgerMapingShareQuery } from '@coop/cbs/data-access';
-import { FormEditableTable } from '@coop/shared/form';
 import { Box, Divider, GridItem, Text, VStack } from '@myra-ui';
+
+import { KymMemberTypesEnum } from '@coop/cbs/data-access';
+import { COASelectModal } from '@coop/shared/components';
+import { FormEditableTable } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 type NewChangeTable = {
@@ -30,14 +32,6 @@ export const NewMemberCharge = () => {
       value: KymMemberTypesEnum.CooperativeUnion,
     },
   ];
-
-  const { data: ledgerQuery } = useGetLedgerMapingShareQuery();
-  const ledgerData = ledgerQuery?.settings?.general?.chartsOfAccount?.accountsUnder?.data;
-
-  const ledgerOptions = ledgerData?.map((data) => ({
-    label: data?.name?.local as string,
-    value: data?.id as string,
-  }));
 
   return (
     <VStack
@@ -77,8 +71,8 @@ export const NewMemberCharge = () => {
                 {
                   accessor: 'ledgerId',
                   header: t['memberSettingsLedgerMapping'],
-                  fieldType: 'select',
-                  selectOptions: ledgerOptions,
+                  fieldType: 'modal',
+                  modal: COASelectModal,
                   cellWidth: 'auto',
                 },
                 {

@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { Box, FormAccountSelect, FormMemberSelect, Grid, GridItem, Text } from '@myra-ui';
 
 import {
   DepositAccount,
@@ -30,7 +31,6 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { Box, FormAccountSelect, FormMemberSelect, Grid, GridItem, Text } from '@myra-ui';
 import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 // const sourceOfFundsList = [
@@ -221,7 +221,11 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
 
             <FormInput name="bankVoucher.voucherId" label={t['addDepositVoucherId']} />
 
-            <FormAmountInput name="bankVoucher.amount" label={t['depositPaymentAmount']} />
+            <FormAmountInput
+              type="number"
+              name="bankVoucher.amount"
+              label={t['depositPaymentAmount']}
+            />
 
             <FormDatePicker
               name="bankVoucher.depositedAt"
@@ -268,14 +272,18 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
               options={availableSlipListOptions}
             />
 
-            <FormAmountInput name="withdrawSlip.amount" label={t['depositPaymentAmount']} />
+            <FormAmountInput
+              type="number"
+              name="withdrawSlip.amount"
+              label={t['depositPaymentAmount']}
+            />
           </InputGroupContainer>
         )}
 
         {selectedPaymentMode === DepositPaymentType.Cash && (
           <>
             <InputGroupContainer>
-              <FormAmountInput name="cash.cashPaid" label={t['depositPaymentCash']} />
+              <FormAmountInput type="number" name="cash.cashPaid" label={t['depositPaymentCash']} />
             </InputGroupContainer>
 
             <FormSwitch

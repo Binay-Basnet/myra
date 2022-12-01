@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { Skeleton } from '@chakra-ui/react';
+import { FormSection } from '@myra-ui';
 import debounce from 'lodash/debounce';
 
 import {
@@ -12,7 +13,6 @@ import {
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
-import { FormSection } from '@myra-ui';
 import { getKymSection } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';

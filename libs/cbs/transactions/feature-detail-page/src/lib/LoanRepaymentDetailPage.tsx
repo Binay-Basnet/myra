@@ -1,5 +1,6 @@
 import { Box, Text } from '@myra-ui';
-import { useTranslation } from '@coop/shared/utils';
+
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import {
   GlTransaction,
@@ -56,8 +57,8 @@ export const LoanRepaymentDetailPage = () => {
         />
         <GlTransaction
           data={glTransData ?? []}
-          totalCredit={loanRepaymentDetailData?.totalCredit as string}
-          totalDebit={loanRepaymentDetailData?.totalDebit as string}
+          totalCredit={String(amountConverter(loanRepaymentDetailData?.totalCredit ?? 0))}
+          totalDebit={String(amountConverter(loanRepaymentDetailData?.totalDebit ?? 0))}
         />
       </Box>
     </>

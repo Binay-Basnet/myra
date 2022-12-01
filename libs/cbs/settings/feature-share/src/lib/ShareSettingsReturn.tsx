@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { asyncToast, Box, SettingsFooter, Text, toast } from '@myra-ui';
 
 import {
   ShareChargeType,
-  useGetLedgerMapingShareQuery,
   useGetSettingsShareReturnChargesDataQuery,
   useSetSettingsShareReturnChargesMutation,
 } from '@coop/cbs/data-access';
+import { COASelectModal } from '@coop/shared/components';
 import { FormEditableTable } from '@coop/shared/form';
-import { asyncToast, Box, SettingsFooter, Text, toast } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsHeader from '../components/ShareSettingsHeader/ShareSettingsHeader';
@@ -43,13 +43,6 @@ export const ShareSettingsReturn = () => {
   const { mutateAsync } = useSetSettingsShareReturnChargesMutation();
   const { data, refetch } = useGetSettingsShareReturnChargesDataQuery();
   const settingsFeesAndChargesData = data?.settings?.general?.share?.shareReturnCharges;
-  const { data: ledgerQuery } = useGetLedgerMapingShareQuery();
-  const ledgerData = ledgerQuery?.settings?.general?.chartsOfAccount?.accountsUnder?.data;
-
-  const ledgerOptions = ledgerData?.map((item) => ({
-    label: item?.name?.local as string,
-    value: item?.id as string,
-  }));
 
   useEffect(() => {
     if (settingsFeesAndChargesData) {
@@ -117,8 +110,8 @@ export const ShareSettingsReturn = () => {
                     {
                       accessor: 'ledgerMapping',
                       header: t['shareSettingsFeesLedgerMapping'],
-                      fieldType: 'select',
-                      selectOptions: ledgerOptions,
+                      fieldType: 'modal',
+                      modal: COASelectModal,
                     },
                     {
                       accessor: 'minShare',

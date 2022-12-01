@@ -93,6 +93,27 @@ export enum AccountCloseReason {
   PersonalReason = 'PERSONAL_REASON',
 }
 
+export type AccountClosingReport = {
+  accountName?: Maybe<Scalars['String']>;
+  accountNumber?: Maybe<Scalars['String']>;
+  closedBalance?: Maybe<Scalars['String']>;
+  closedBy?: Maybe<Scalars['String']>;
+  closingDate?: Maybe<Scalars['Localized']>;
+  memberId?: Maybe<Scalars['String']>;
+  openingDate?: Maybe<Scalars['Localized']>;
+};
+
+export type AccountClosingReportInput = {
+  branchId: Scalars['String'];
+  filter?: InputMaybe<AccountOpeningReportInputFilter>;
+  period: PeriodInput;
+};
+
+export type AccountClosingReportResult = {
+  data?: Maybe<Array<Maybe<AccountClosingReport>>>;
+  error?: Maybe<QueryError>;
+};
+
 export type AccountDetailsQueryResult = {
   data?: Maybe<MemberAccountDetails>;
   error?: Maybe<QueryError>;
@@ -314,6 +335,7 @@ export type AccountingMutation = {
   bankAccounts: BankAccountMutation;
   externalLoan: ExternalLoanMutation;
   investment: AccountingInvestmentMutation;
+  journalVoucher: JournalVoucherMutation;
   sales: AccountingSalesMutation;
 };
 
@@ -817,6 +839,10 @@ export type AuditLogQuery = {
 
 export type AuditLogResult = AuditLogHumanizeResult | RawAuditLog;
 
+export type AuditTransactionReport = {
+  temp?: Maybe<Scalars['String']>;
+};
+
 export type AuthMutation = {
   login?: Maybe<LoginResult>;
   token?: Maybe<AuthTokenResult>;
@@ -1054,6 +1080,28 @@ export type BankDepositData = {
   depositedBy: PaymentDepositedBy;
   depositedDate: Scalars['String'];
   voucherId: Scalars['String'];
+};
+
+export type BankGlDataEntry = {
+  balance?: Maybe<Scalars['String']>;
+  chequeNo?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  depositAmount?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['Localized']>;
+  particular?: Maybe<Scalars['String']>;
+  remarks?: Maybe<Scalars['String']>;
+  withdrawAmount?: Maybe<Scalars['String']>;
+};
+
+export type BankGlStatementFilter = {
+  branchId: Scalars['String'];
+  filter?: InputMaybe<GlStatementFilter>;
+  period: PeriodInput;
+};
+
+export type BankGlStatementResult = {
+  data?: Maybe<Array<Maybe<BankGlDataEntry>>>;
+  error?: Maybe<QueryError>;
 };
 
 export type BankGetResult = {
@@ -1364,6 +1412,47 @@ export type CashInHandData = {
   percent?: Maybe<Scalars['String']>;
   todayValue?: Maybe<Scalars['String']>;
 };
+
+export type CashLedgerReport = {
+  balance?: Maybe<Scalars['String']>;
+  cashCr?: Maybe<Scalars['String']>;
+  cashDr?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  ledgerCode?: Maybe<Scalars['String']>;
+  particular?: Maybe<Scalars['String']>;
+  voucherNo?: Maybe<Scalars['String']>;
+};
+
+export type CashLedgerReportFilter = {
+  ledgerWise?: InputMaybe<CashLedgerWiseFilter>;
+  transactionWise?: InputMaybe<CashLedgerTransactionWiseFilter>;
+  userIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type CashLedgerReportFilterData = {
+  branchId?: InputMaybe<Scalars['String']>;
+  filter?: InputMaybe<CashLedgerReportFilter>;
+  period?: InputMaybe<PeriodInput>;
+};
+
+export type CashLedgerReportResult = {
+  closingBalance?: Maybe<Scalars['String']>;
+  details?: Maybe<Array<Maybe<CashLedgerReport>>>;
+  openingBalance?: Maybe<Scalars['String']>;
+  summary?: Maybe<Array<Maybe<CashLedgerReport>>>;
+};
+
+export enum CashLedgerTransactionWiseFilter {
+  All = 'ALL',
+  CashPayment = 'CASH_PAYMENT',
+  CashReceived = 'CASH_RECEIVED',
+}
+
+export enum CashLedgerWiseFilter {
+  All = 'ALL',
+  Details = 'DETAILS',
+  Summary = 'SUMMARY',
+}
 
 export enum CashValue {
   Cash_1 = 'CASH_1',
@@ -2320,6 +2409,7 @@ export type DepositCash = {
 };
 
 export enum DepositFrequency {
+  Daily = 'DAILY',
   HalfYearly = 'HALF_YEARLY',
   Monthly = 'MONTHLY',
   Quarterly = 'QUARTERLY',
@@ -3519,6 +3609,14 @@ export type FamilyMemberDetails = {
   relationship?: Maybe<Scalars['String']>;
 };
 
+export type FianancialTransactionReport = {
+  tellerReport: TellerReportResult;
+};
+
+export type FianancialTransactionReportTellerReportArgs = {
+  data: TellerReportFilter;
+};
+
 export type FieldDetailsQueryResult = {
   data?: Maybe<FormField>;
   error?: Maybe<QueryError>;
@@ -4122,6 +4220,12 @@ export type FundManagementResult = {
   recordId?: Maybe<Scalars['String']>;
 };
 
+export type GlStatementFilter = {
+  amount?: InputMaybe<MinMaxFilter>;
+  bank?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  natureOfTransactions?: InputMaybe<NatureOfBankTransaction>;
+};
+
 export type GenderLedgerReportResult = {
   data?: Maybe<Array<Maybe<GeneralLedgerReportEntry>>>;
   error?: Maybe<QueryError>;
@@ -4153,7 +4257,7 @@ export type GeneralBranchSettingsQueryListArgs = {
 
 export type GeneralLedgerFilter = {
   ledgerId: Scalars['ID'];
-  period?: InputMaybe<PeriodInput>;
+  period: PeriodInput;
 };
 
 export type GeneralLedgerReportEntry = {
@@ -4550,7 +4654,7 @@ export type InterestRateType = {
 export type InterestStatementFilter = {
   accountId: Scalars['ID'];
   filter?: InputMaybe<InterestStatementRangeFilter>;
-  period?: InputMaybe<PeriodInput>;
+  period: PeriodInput;
 };
 
 export type InterestStatementRangeFilter = {
@@ -4579,7 +4683,7 @@ export type InterestTaxReportEntry = {
 
 export type InterestTaxReportFilter = {
   filter?: InputMaybe<InterestTaxFilter>;
-  period?: InputMaybe<PeriodInput>;
+  period: PeriodInput;
 };
 
 export type InterestTaxReportResult = {
@@ -5007,6 +5111,44 @@ export enum InvestmentType {
 
 export type JournalChartsOfAccount = {
   journalCode: Scalars['String'];
+};
+
+export type JournalVoucherEntry = {
+  accountId?: InputMaybe<Scalars['String']>;
+  crAmount?: InputMaybe<Scalars['String']>;
+  drAmount?: InputMaybe<Scalars['String']>;
+};
+
+export type JournalVoucherInput = {
+  chequeNo?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['String']>;
+  entries?: InputMaybe<Array<InputMaybe<JournalVoucherEntry>>>;
+  notes?: InputMaybe<Scalars['String']>;
+  paymentMode?: InputMaybe<JournalVoucherPaymentMode>;
+  reference?: InputMaybe<Scalars['String']>;
+};
+
+export type JournalVoucherMutation = {
+  new?: Maybe<JournalVoucherResult>;
+};
+
+export type JournalVoucherMutationNewArgs = {
+  data?: InputMaybe<JournalVoucherInput>;
+};
+
+export enum JournalVoucherPaymentMode {
+  Cash = 'CASH',
+  Cheque = 'CHEQUE',
+}
+
+export type JournalVoucherQuery = {
+  list?: Maybe<Scalars['Any']>;
+};
+
+export type JournalVoucherResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<JournalVoucherQuery>;
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export type KymAddress = {
@@ -7294,10 +7436,131 @@ export type LoanAccountSearchFilter = {
   query?: InputMaybe<Scalars['String']>;
 };
 
+export type LoanAgingFilters = {
+  disbursePrincipal?: InputMaybe<MinMaxFilter>;
+  loanSubType?: InputMaybe<Scalars['String']>;
+  loanType?: InputMaybe<Scalars['String']>;
+  paymentMode?: InputMaybe<LoanAgingPaymentMode>;
+  remainingPrincipal?: InputMaybe<MinMaxFilter>;
+};
+
+export enum LoanAgingPaymentMode {
+  All = 'ALL',
+  HalfYearly = 'HALF_YEARLY',
+  Monthly = 'MONTHLY',
+  Quarterly = 'QUARTERLY',
+  Yearly = 'YEARLY',
+}
+
+export enum LoanAgingPeriod {
+  AboveTwelveMonths = 'ABOVE_TWELVE_MONTHS',
+  All = 'ALL',
+  Below_30Days = 'BELOW_30_DAYS',
+  CustomPeriod = 'CUSTOM_PERIOD',
+  OneTwelveMonths = 'ONE_TWELVE_MONTHS',
+  ThisFiscalYearToDate = 'THIS_FISCAL_YEAR_TO_DATE',
+  ThreeMonths = 'THREE_MONTHS',
+  TwoMonths = 'TWO_MONTHS',
+}
+
+export type LoanAgingPeriodInput = {
+  customPeriod?: InputMaybe<LocalizedDateFilter>;
+  periodType: LoanAgingPeriod;
+};
+
+export type LoanAgingStatementData = {
+  report?: Maybe<Array<Maybe<LoanAgingStatementReport>>>;
+  summary?: Maybe<LoanAgingStatementSummary>;
+};
+
+export type LoanAgingStatementInput = {
+  branchId?: InputMaybe<Scalars['String']>;
+  filter?: InputMaybe<LoanAgingFilters>;
+  period?: InputMaybe<LoanAgingPeriodInput>;
+};
+
+export type LoanAgingStatementReport = {
+  address?: Maybe<Scalars['String']>;
+  disbursePrincipal?: Maybe<Scalars['String']>;
+  goodAmount?: Maybe<Scalars['String']>;
+  installmentAmount?: Maybe<Scalars['String']>;
+  installmentLateDays?: Maybe<Scalars['Int']>;
+  issueDate?: Maybe<Scalars['Localized']>;
+  lastInterestPaidDate?: Maybe<Scalars['Localized']>;
+  lastPrincipalPaidDate?: Maybe<Scalars['Localized']>;
+  loanMaturityDate?: Maybe<Scalars['Localized']>;
+  loanNo?: Maybe<Scalars['String']>;
+  loanType?: Maybe<Scalars['String']>;
+  matured1To12Months?: Maybe<Scalars['String']>;
+  matured1To30Days?: Maybe<Scalars['String']>;
+  maturedAbove12Months?: Maybe<Scalars['String']>;
+  memberNo?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  paymentMode?: Maybe<Scalars['String']>;
+  phoneNo?: Maybe<Scalars['String']>;
+  remainingInstallmentAmount?: Maybe<Scalars['String']>;
+  remainingInterest?: Maybe<Scalars['String']>;
+  remainingPenalty?: Maybe<Scalars['String']>;
+  remainingPrincipal?: Maybe<Scalars['String']>;
+  totalDueAmount?: Maybe<Scalars['String']>;
+};
+
+export type LoanAgingStatementReportResult = {
+  data?: Maybe<LoanAgingStatementData>;
+  error?: Maybe<QueryError>;
+};
+
+export type LoanAgingStatementSummary = {
+  disbursePrincipalTotal?: Maybe<Scalars['String']>;
+  dueAmountTotal?: Maybe<Scalars['String']>;
+  goodAmountTotal?: Maybe<Scalars['String']>;
+  installmentAmountTotal?: Maybe<Scalars['String']>;
+  matured1To12MonthsTotal?: Maybe<Scalars['String']>;
+  matured1To30DaysTotal?: Maybe<Scalars['String']>;
+  maturedAbove12MonthsTotal?: Maybe<Scalars['String']>;
+  remainingInstallmentAmountTotal?: Maybe<Scalars['String']>;
+  remainingInterestTotal?: Maybe<Scalars['String']>;
+  remainingPenaltyTotal?: Maybe<Scalars['String']>;
+  remainingPrincipalTotal?: Maybe<Scalars['String']>;
+};
+
 export enum LoanApproveOrCancel {
   Approve = 'APPROVE',
   Cancel = 'CANCEL',
 }
+
+export type LoanBalanceFilter = {
+  outstandingBalance?: InputMaybe<MinMaxFilter>;
+  productNameIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  productSubTypes?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  productTypes?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type LoanBalanceFilterData = {
+  branchId?: InputMaybe<Scalars['String']>;
+  filter?: InputMaybe<LoanBalanceFilter>;
+  period?: InputMaybe<PeriodInput>;
+};
+
+export type LoanBalanceReport = {
+  lastPaymentDate?: Maybe<Scalars['String']>;
+  loanAccountId?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  outstandingBalance?: Maybe<Scalars['String']>;
+  productCode?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  productName?: Maybe<Scalars['String']>;
+  remainingBalance?: Maybe<Scalars['String']>;
+  remainingInterest?: Maybe<Scalars['String']>;
+};
+
+export type LoanBalanceReportResult = {
+  data?: Maybe<Array<Maybe<LoanBalanceReport>>>;
+  error?: Maybe<QueryError>;
+  totalOutstandingBalance?: Maybe<Scalars['String']>;
+  totalRemainingBalance?: Maybe<Scalars['String']>;
+};
 
 export type LoanBankDisbursement = {
   bankAccountId: Scalars['ID'];
@@ -7970,9 +8233,19 @@ export type LoanSettingsProductSubTypeData = {
 };
 
 export type LoanSettingsProductType = {
+  loanProducts?: Maybe<Array<Maybe<LoanProductMinimal>>>;
+  multipleProductSubTypes?: Maybe<Array<Maybe<LoanSettingsProductSubTypeData>>>;
   natureOfProduct?: Maybe<Array<Maybe<LoanSettingsNatureOfProductData>>>;
   productSubTypes?: Maybe<Array<Maybe<LoanSettingsProductSubTypeData>>>;
   productTypes?: Maybe<Array<Maybe<LoanSettingsProductTypeData>>>;
+};
+
+export type LoanSettingsProductTypeLoanProductsArgs = {
+  subTypeIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type LoanSettingsProductTypeMultipleProductSubTypesArgs = {
+  productTypeIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 export type LoanSettingsProductTypeProductSubTypesArgs = {
@@ -8361,6 +8634,24 @@ export type MemberInactiveResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type MemberIndividualData = {
+  SpouseName?: Maybe<Scalars['String']>;
+  address?: Maybe<Address>;
+  contactNo?: Maybe<Scalars['String']>;
+  dob?: Maybe<Scalars['Localized']>;
+  email?: Maybe<Scalars['String']>;
+  fatherName?: Maybe<Scalars['String']>;
+  fingerPrint?: Maybe<Scalars['Boolean']>;
+  grandFatherName?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  other?: Maybe<Scalars['String']>;
+  photo?: Maybe<Scalars['Boolean']>;
+  profession?: Maybe<Scalars['String']>;
+  shareInfo?: Maybe<ShareInformation>;
+};
+
 export type MemberMutation = {
   activateMember?: Maybe<MemberActivateMutation>;
   cooperative?: Maybe<KymCooperativeMutation>;
@@ -8412,6 +8703,26 @@ export type MemberMutationOfficialUseArgs = {
 export type MemberMutationTranslateArgs = {
   data: TranslateInput;
   memberId: Scalars['ID'];
+};
+
+export type MemberOtherData = {
+  address?: Maybe<Address>;
+  authPersonName?: Maybe<Scalars['String']>;
+  balanceSheet?: Maybe<Scalars['String']>;
+  contactNo?: Maybe<Scalars['String']>;
+  doe?: Maybe<Scalars['Localized']>;
+  email?: Maybe<Scalars['String']>;
+  logo?: Maybe<Scalars['Boolean']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  other?: Maybe<Scalars['String']>;
+  post?: Maybe<Scalars['String']>;
+  shareInfo?: Maybe<ShareInformation>;
+  stamp?: Maybe<Scalars['Boolean']>;
+  totalMember?: Maybe<Scalars['String']>;
+  typeOfInstitution?: Maybe<Scalars['String']>;
+  workingArea?: Maybe<Scalars['String']>;
 };
 
 export type MemberOverviewAccountsView = {
@@ -8542,6 +8853,28 @@ export enum MemberRecentTransactionViewTxnType {
   Debit = 'DEBIT',
 }
 
+export type MemberRegFilters = {
+  gender?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  institutionType?: InputMaybe<Scalars['ID']>;
+  memberType?: InputMaybe<Array<InputMaybe<MemberType>>>;
+  occupation?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+};
+
+export type MemberRegistrationReport = {
+  individual?: Maybe<Array<Maybe<MemberIndividualData>>>;
+  other?: Maybe<Array<Maybe<MemberOtherData>>>;
+};
+
+export type MemberRegistrationReportData = {
+  filter?: InputMaybe<MemberRegFilters>;
+  period: PeriodInput;
+};
+
+export type MemberRegistrationReportResult = {
+  data?: Maybe<MemberRegistrationReport>;
+  error?: Maybe<QueryError>;
+};
+
 export type MemberReportFilters = {
   ageRange?: InputMaybe<MemberAgeRange>;
   gender?: InputMaybe<Scalars['ID']>;
@@ -8633,6 +8966,12 @@ export type MinMaxFilter = {
   max?: InputMaybe<Scalars['String']>;
   min?: InputMaybe<Scalars['String']>;
 };
+
+export enum MinorWiseFilter {
+  All = 'ALL',
+  MinorProduct = 'MINOR_PRODUCT',
+  NotMinorProduct = 'NOT_MINOR_PRODUCT',
+}
 
 export type MonthlyDividendRate = {
   eightMonth?: Maybe<Scalars['Float']>;
@@ -8868,6 +9207,12 @@ export type Name = {
   lastName?: Maybe<Scalars['String']>;
   middleName?: Maybe<Scalars['String']>;
 };
+
+export enum NatureOfBankTransaction {
+  All = 'ALL',
+  Deposit = 'DEPOSIT',
+  Withdraw = 'WITHDRAW',
+}
 
 export enum NatureOfDepositProduct {
   Current = 'CURRENT',
@@ -9520,27 +9865,39 @@ export enum ReportPeriodType {
 }
 
 export type ReportQuery = {
+  accountClosingReport?: Maybe<AccountClosingReportResult>;
   accountOpeningReport?: Maybe<AccountOpeningReportResult>;
   activeInactiveMemberReport?: Maybe<ReportResult>;
+  bankGLStatementReport: BankGlStatementResult;
   branchReport?: Maybe<BranchReportResult>;
+  cashLedgerReport?: Maybe<CashLedgerReportResult>;
   generalLedgerReport: GenderLedgerReportResult;
   getReport?: Maybe<SavedReportResponse>;
   interestStatementReport: InterestPostingReportResult;
   interestTaxReport: InterestTaxReportResult;
   kymStatusReport?: Maybe<KymStatusReportResult>;
   listReports: ReportListConnection;
+  loanAgingStatementReport?: Maybe<LoanAgingStatementReportResult>;
+  loanBalanceReport: LoanBalanceReportResult;
   loanStatementReport?: Maybe<ReportResult>;
   mBankingExpiryReport?: Maybe<EbankingRegistrationReportResult>;
   mBankingTransactionReport?: Maybe<MBankingTransactionResult>;
   mbankingRegistrationReport?: Maybe<EbankingRegistrationReportResult>;
   memberClassificationReport: MemberClassificationReportResult;
+  memberRegistrationReport?: Maybe<MemberRegistrationReportResult>;
   savingStatementReport?: Maybe<ReportResult>;
+  savingsBalanceReport: SavingsBalanceReportResult;
   sharePurchaseRegisterReport?: Maybe<SharePurchaseRegisterResult>;
   shareStatementReport?: Maybe<ReportResult>;
   shareTransactionReport?: Maybe<ShareTransactionReportResult>;
   thresholdTransactionReport: TtrReportResult;
+  transactionReport: TransactionReport;
   trialSheetReport: TrialSheetReportResult;
   userReport?: Maybe<UserReportResult>;
+};
+
+export type ReportQueryAccountClosingReportArgs = {
+  data?: InputMaybe<AccountClosingReportInput>;
 };
 
 export type ReportQueryAccountOpeningReportArgs = {
@@ -9551,8 +9908,16 @@ export type ReportQueryActiveInactiveMemberReportArgs = {
   data?: InputMaybe<ActiveInactiveMemberReportData>;
 };
 
+export type ReportQueryBankGlStatementReportArgs = {
+  data: BankGlStatementFilter;
+};
+
 export type ReportQueryBranchReportArgs = {
   data?: InputMaybe<BranchReportFilter>;
+};
+
+export type ReportQueryCashLedgerReportArgs = {
+  data?: InputMaybe<CashLedgerReportFilterData>;
 };
 
 export type ReportQueryGeneralLedgerReportArgs = {
@@ -9581,6 +9946,14 @@ export type ReportQueryListReportsArgs = {
   pagination?: InputMaybe<Pagination>;
 };
 
+export type ReportQueryLoanAgingStatementReportArgs = {
+  data?: InputMaybe<LoanAgingStatementInput>;
+};
+
+export type ReportQueryLoanBalanceReportArgs = {
+  data: LoanBalanceFilterData;
+};
+
 export type ReportQueryLoanStatementReportArgs = {
   data: LoanStatementReportSettings;
 };
@@ -9601,8 +9974,16 @@ export type ReportQueryMemberClassificationReportArgs = {
   data: MemberClassificationFilter;
 };
 
+export type ReportQueryMemberRegistrationReportArgs = {
+  data?: InputMaybe<MemberRegistrationReportData>;
+};
+
 export type ReportQuerySavingStatementReportArgs = {
   data: SavingStatementReportSettings;
+};
+
+export type ReportQuerySavingsBalanceReportArgs = {
+  data: SavingsBalanceFilterData;
 };
 
 export type ReportQuerySharePurchaseRegisterReportArgs = {
@@ -10088,6 +10469,39 @@ export enum SavingTransactionType {
   Withdraw = 'WITHDRAW',
 }
 
+export type SavingsBalanceFilter = {
+  amount?: InputMaybe<MinMaxFilter>;
+  memberIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  memberType?: InputMaybe<Array<InputMaybe<KymMemberTypesEnum>>>;
+  minorWise?: InputMaybe<MinorWiseFilter>;
+  productTypes?: InputMaybe<Array<InputMaybe<NatureOfDepositProduct>>>;
+};
+
+export type SavingsBalanceFilterData = {
+  branchId?: InputMaybe<Scalars['String']>;
+  filter?: InputMaybe<SavingsBalanceFilter>;
+  period?: InputMaybe<PeriodInput>;
+};
+
+export type SavingsBalanceReport = {
+  accountId?: Maybe<Scalars['String']>;
+  accountOpeningDate?: Maybe<Scalars['String']>;
+  balance?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  memberType?: Maybe<KymMemberTypesEnum>;
+  productCode?: Maybe<Scalars['String']>;
+  productId?: Maybe<Scalars['String']>;
+  productName?: Maybe<Scalars['String']>;
+};
+
+export type SavingsBalanceReportResult = {
+  data?: Maybe<Array<Maybe<SavingsBalanceReport>>>;
+  error?: Maybe<QueryError>;
+  totalBalance?: Maybe<Scalars['String']>;
+};
+
 export type SearchFilterData = {
   filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
@@ -10302,6 +10716,12 @@ export type ShareInfoView = {
   totalCount?: Maybe<Scalars['String']>;
 };
 
+export type ShareInformation = {
+  amount?: Maybe<Scalars['String']>;
+  kitta?: Maybe<Scalars['String']>;
+  perShareAmount?: Maybe<Scalars['String']>;
+};
+
 export type ShareInvestment = {
   certificateNo: Scalars['String'];
   count: Scalars['Int'];
@@ -10386,7 +10806,7 @@ export type SharePurchaseInput = {
 };
 
 export type SharePurchaseRegisterFilter = {
-  type?: InputMaybe<Share_Transaction_Direction>;
+  type?: InputMaybe<ShareTransactionType>;
 };
 
 export type SharePurchaseRegisterReport = {
@@ -10654,10 +11074,9 @@ export type ShareTransactionChequePayment = {
 export type ShareTransactionFilter = {
   ageRange?: InputMaybe<MemberAgeRange>;
   districtId?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
-  eductaion?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  education?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   gender?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   localGovernmentId?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
-  memberType?: InputMaybe<Array<InputMaybe<MemberType>>>;
   occupation?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   provinceId?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
 };
@@ -10686,11 +11105,11 @@ export type ShareTransactionReportFilter = {
 };
 
 export type ShareTransactionReportResult = {
-  Summary?: Maybe<Scalars['Map']>;
+  avgSharePerMember?: Maybe<Scalars['String']>;
   data?: Maybe<Array<Maybe<ShareTransactionReport>>>;
   error?: Maybe<QueryError>;
   footer?: Maybe<ShareTransactionFooter>;
-  meta?: Maybe<Scalars['Map']>;
+  totalShareIssued?: Maybe<Scalars['String']>;
 };
 
 export enum ShareTransactionType {
@@ -10878,6 +11297,46 @@ export type TellerActivityListEdges = {
   node?: Maybe<TellerActivityEntry>;
 };
 
+export type TellerDataEntry = {
+  balance?: Maybe<Scalars['String']>;
+  inAmount?: Maybe<Scalars['String']>;
+  inTransit?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  outAmount?: Maybe<Scalars['String']>;
+  stack?: Maybe<Scalars['String']>;
+  tellerId?: Maybe<Scalars['String']>;
+};
+
+export type TellerDataHolder = {
+  balanceTotal?: Maybe<Scalars['String']>;
+  entries?: Maybe<Array<Maybe<TellerDataEntry>>>;
+  inAmountTotal?: Maybe<Scalars['String']>;
+  inTransitTotal?: Maybe<Scalars['String']>;
+  outAmountTotal?: Maybe<Scalars['String']>;
+  stackTotal?: Maybe<Scalars['String']>;
+};
+
+export type TellerFilter = {
+  tellerId?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  tellerType?: InputMaybe<TellerType>;
+};
+
+export type TellerReportData = {
+  headTeller?: Maybe<TellerDataHolder>;
+  teller?: Maybe<TellerDataHolder>;
+};
+
+export type TellerReportFilter = {
+  branchId: Scalars['String'];
+  filter?: InputMaybe<TellerFilter>;
+  period: PeriodInput;
+};
+
+export type TellerReportResult = {
+  data?: Maybe<TellerReportData>;
+  error?: Maybe<QueryError>;
+};
+
 export type TellerTransactionFilter = {
   type?: InputMaybe<Array<InputMaybe<TellerTransferType>>>;
 };
@@ -10904,6 +11363,12 @@ export enum TellerTransferType {
   CashToVault = 'CASH_TO_VAULT',
   TellerTransfer = 'TELLER_TRANSFER',
   VaultToCash = 'VAULT_TO_CASH',
+}
+
+export enum TellerType {
+  All = 'ALL',
+  HeadTeller = 'HEAD_TELLER',
+  Teller = 'TELLER',
 }
 
 export type TestDbResult = {
@@ -11082,6 +11547,11 @@ export type TransactionQueryViewWithdrawArgs = {
   transactionId: Scalars['ID'];
 };
 
+export type TransactionReport = {
+  audit: AuditTransactionReport;
+  financial: FianancialTransactionReport;
+};
+
 export enum TransactionState {
   Active = 'ACTIVE',
   Submitted = 'SUBMITTED',
@@ -11173,7 +11643,7 @@ export type TrialSheetReportDataEntry = {
 export type TrialSheetReportFilter = {
   branchId: Scalars['String'];
   filter?: InputMaybe<TrialSheetFilter>;
-  period?: InputMaybe<PeriodInput>;
+  period: PeriodInput;
 };
 
 export type TrialSheetReportResult = {
@@ -11279,8 +11749,8 @@ export type UserQuery = {
 };
 
 export type UserReport = {
-  accessForBranch?: Maybe<Scalars['Boolean']>;
-  accessForGroup?: Maybe<Scalars['Boolean']>;
+  accessForBranch?: Maybe<Scalars['String']>;
+  accessForGroup?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Scalars['String']>;
   createdDate?: Maybe<Scalars['String']>;
   empCode?: Maybe<Scalars['String']>;
@@ -14058,6 +14528,7 @@ export type GetAccountTableListQuery = {
             minimumBalance?: string | null;
             isMandatorySaving?: boolean | null;
             withdrawRestricted?: boolean | null;
+            interest?: number | null;
             accountClosingCharge?: Array<{
               serviceName?: string | null;
               ledgerName?: string | null;
@@ -16829,6 +17300,41 @@ export type GetMemberLinkedAccountsQuery = {
   };
 };
 
+export type GetMultipleSubProductsQueryVariables = Exact<{
+  productTypeIds?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
+}>;
+
+export type GetMultipleSubProductsQuery = {
+  settings: {
+    general?: {
+      loan?: {
+        productType?: {
+          multipleProductSubTypes?: Array<{
+            id?: string | null;
+            productSubType?: string | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanProductsFromSubTypeQueryVariables = Exact<{
+  subTypeIds?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
+}>;
+
+export type GetLoanProductsFromSubTypeQuery = {
+  settings: {
+    general?: {
+      loan?: {
+        productType?: {
+          loanProducts?: Array<{ id: string; productName: string } | null> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetMemberListQueryVariables = Exact<{
   pagination: Pagination;
   filter?: InputMaybe<KymMemberDataFilter>;
@@ -17936,6 +18442,11 @@ export type GetActiveInactiveMemberReportQuery = {
     activeInactiveMemberReport?: {
       statement?:
         | {
+            summary?: {
+              activeTotal?: number | null;
+              inactiveTotal?: number | null;
+              totalMember?: number | null;
+            } | null;
             reportStatement?: Array<{
               memberId?: string | null;
               memberName?: string | null;
@@ -17950,6 +18461,7 @@ export type GetActiveInactiveMemberReportQuery = {
               occupation?: string | null;
               memberRegistrationDate?: Record<'local' | 'en' | 'np', string> | null;
               status?: MemberStatus | null;
+              memberType?: KymMemberTypesEnum | null;
             } | null> | null;
           }
         | {}
@@ -18061,8 +18573,8 @@ export type GetUserReportQuery = {
         empCode?: string | null;
         username?: string | null;
         usernameCode?: string | null;
-        accessForBranch?: boolean | null;
-        accessForGroup?: boolean | null;
+        accessForBranch?: string | null;
+        accessForGroup?: string | null;
         role?: string | null;
         createdDate?: string | null;
         createdBy?: string | null;
@@ -18107,6 +18619,300 @@ export type GetTtrReportQuery = {
         } | null> | null;
       } | null;
     };
+  };
+};
+
+export type GetshareRegisterReportQueryVariables = Exact<{
+  data: SharePurchaseRegisterReportFilter;
+}>;
+
+export type GetshareRegisterReportQuery = {
+  report: {
+    sharePurchaseRegisterReport?: {
+      data?: Array<{
+        memberId?: string | null;
+        memberCode?: string | null;
+        name?: string | null;
+        particular?: string | null;
+        perShareAmount?: string | null;
+        kittaNumFrom?: string | null;
+        kittaNumTo?: string | null;
+        totalKitta?: string | null;
+        totalAmount?: string | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
+export type GetShareTransactionReportQueryVariables = Exact<{
+  data?: InputMaybe<ShareTransactionReportFilter>;
+}>;
+
+export type GetShareTransactionReportQuery = {
+  report: {
+    shareTransactionReport?: {
+      totalShareIssued?: string | null;
+      avgSharePerMember?: string | null;
+      data?: Array<{
+        transactionDate?: string | null;
+        memberId?: string | null;
+        memberCode?: string | null;
+        name?: string | null;
+        particular?: string | null;
+        shareReturnDr?: string | null;
+        shareIssueCr?: string | null;
+        balance?: string | null;
+      } | null> | null;
+      footer?: {
+        totalCr?: string | null;
+        totatDr?: string | null;
+        totalBalance?: string | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetAccountOpeningReportQueryVariables = Exact<{
+  data?: InputMaybe<AccountOpeningReportInput>;
+}>;
+
+export type GetAccountOpeningReportQuery = {
+  report: {
+    accountOpeningReport?: {
+      data?: Array<{
+        accountName?: string | null;
+        accountNumber?: string | null;
+        memberId?: string | null;
+        openedBy?: string | null;
+        openingDate?: Record<'local' | 'en' | 'np', string> | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
+export type GetLoanBalanceReportQueryVariables = Exact<{
+  data: LoanBalanceFilterData;
+}>;
+
+export type GetLoanBalanceReportQuery = {
+  report: {
+    loanBalanceReport: {
+      totalOutstandingBalance?: string | null;
+      totalRemainingBalance?: string | null;
+      data?: Array<{
+        memberId?: string | null;
+        loanAccountId?: string | null;
+        memberName?: Record<'local' | 'en' | 'np', string> | null;
+        productName?: string | null;
+        productCode?: string | null;
+        outstandingBalance?: string | null;
+        remainingBalance?: string | null;
+        remainingInterest?: string | null;
+        lastPaymentDate?: string | null;
+      } | null> | null;
+    };
+  };
+};
+
+export type GetSavingsBalanceReportQueryVariables = Exact<{
+  data: SavingsBalanceFilterData;
+}>;
+
+export type GetSavingsBalanceReportQuery = {
+  report: {
+    savingsBalanceReport: {
+      totalBalance?: string | null;
+      data?: Array<{
+        accountId?: string | null;
+        memberId?: string | null;
+        memberCode?: string | null;
+        memberName?: Record<'local' | 'en' | 'np', string> | null;
+        productId?: string | null;
+        productName?: string | null;
+        productCode?: string | null;
+        accountOpeningDate?: string | null;
+        memberType?: KymMemberTypesEnum | null;
+        balance?: string | null;
+      } | null> | null;
+    };
+  };
+};
+
+export type GetAccountClosingReportQueryVariables = Exact<{
+  data?: InputMaybe<AccountClosingReportInput>;
+}>;
+
+export type GetAccountClosingReportQuery = {
+  report: {
+    accountClosingReport?: {
+      data?: Array<{
+        memberId?: string | null;
+        accountNumber?: string | null;
+        accountName?: string | null;
+        openingDate?: Record<'local' | 'en' | 'np', string> | null;
+        closingDate?: Record<'local' | 'en' | 'np', string> | null;
+        closedBalance?: string | null;
+        closedBy?: string | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
+export type GetBankGlStatementReportQueryVariables = Exact<{
+  data: BankGlStatementFilter;
+}>;
+
+export type GetBankGlStatementReportQuery = {
+  report: {
+    bankGLStatementReport: {
+      data?: Array<{
+        date?: Record<'local' | 'en' | 'np', string> | null;
+        name?: Record<'local' | 'en' | 'np', string> | null;
+        particular?: string | null;
+        chequeNo?: string | null;
+        depositAmount?: string | null;
+        withdrawAmount?: string | null;
+        balance?: string | null;
+        remarks?: string | null;
+      } | null> | null;
+    };
+  };
+};
+
+export type GetTransactionTellerReportQueryVariables = Exact<{
+  data: TellerReportFilter;
+}>;
+
+export type GetTransactionTellerReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        tellerReport: {
+          data?: {
+            headTeller?: {
+              inTransitTotal?: string | null;
+              stackTotal?: string | null;
+              inAmountTotal?: string | null;
+              outAmountTotal?: string | null;
+              balanceTotal?: string | null;
+              entries?: Array<{
+                tellerId?: string | null;
+                name?: string | null;
+                inTransit?: string | null;
+                stack?: string | null;
+                inAmount?: string | null;
+                outAmount?: string | null;
+                balance?: string | null;
+              } | null> | null;
+            } | null;
+            teller?: {
+              inTransitTotal?: string | null;
+              stackTotal?: string | null;
+              inAmountTotal?: string | null;
+              outAmountTotal?: string | null;
+              balanceTotal?: string | null;
+              entries?: Array<{
+                tellerId?: string | null;
+                name?: string | null;
+                inTransit?: string | null;
+                stack?: string | null;
+                inAmount?: string | null;
+                outAmount?: string | null;
+                balance?: string | null;
+              } | null> | null;
+            } | null;
+          } | null;
+        };
+      };
+    };
+  };
+};
+
+export type GetCashLedgerReportQueryVariables = Exact<{
+  data?: InputMaybe<CashLedgerReportFilterData>;
+}>;
+
+export type GetCashLedgerReportQuery = {
+  report: {
+    cashLedgerReport?: {
+      openingBalance?: string | null;
+      closingBalance?: string | null;
+      summary?: Array<{
+        date?: Record<'local' | 'en' | 'np', string> | null;
+        ledgerCode?: string | null;
+        particular?: string | null;
+        voucherNo?: string | null;
+        cashDr?: string | null;
+        cashCr?: string | null;
+        balance?: string | null;
+      } | null> | null;
+      details?: Array<{
+        date?: Record<'local' | 'en' | 'np', string> | null;
+        ledgerCode?: string | null;
+        particular?: string | null;
+        voucherNo?: string | null;
+        cashDr?: string | null;
+        cashCr?: string | null;
+        balance?: string | null;
+      } | null> | null;
+    } | null;
+  };
+};
+
+export type GetMemberRegistrationReportQueryVariables = Exact<{
+  data?: InputMaybe<MemberRegistrationReportData>;
+}>;
+
+export type GetMemberRegistrationReportQuery = {
+  report: {
+    memberRegistrationReport?: {
+      data?: {
+        individual?: Array<{
+          memberId?: string | null;
+          memberCode?: string | null;
+          name?: string | null;
+          dob?: Record<'local' | 'en' | 'np', string> | null;
+          grandFatherName?: string | null;
+          fatherName?: string | null;
+          SpouseName?: string | null;
+          profession?: string | null;
+          fingerPrint?: boolean | null;
+          photo?: boolean | null;
+          contactNo?: string | null;
+          email?: string | null;
+          other?: string | null;
+          address?: AddressFragment | null;
+          shareInfo?: {
+            perShareAmount?: string | null;
+            kitta?: string | null;
+            amount?: string | null;
+          } | null;
+        } | null> | null;
+        other?: Array<{
+          memberId?: string | null;
+          memberCode?: string | null;
+          name?: string | null;
+          doe?: Record<'local' | 'en' | 'np', string> | null;
+          typeOfInstitution?: string | null;
+          workingArea?: string | null;
+          totalMember?: string | null;
+          balanceSheet?: string | null;
+          post?: string | null;
+          authPersonName?: string | null;
+          logo?: boolean | null;
+          stamp?: boolean | null;
+          contactNo?: string | null;
+          email?: string | null;
+          other?: string | null;
+          address?: AddressFragment | null;
+          shareInfo?: {
+            perShareAmount?: string | null;
+            kitta?: string | null;
+            amount?: string | null;
+          } | null;
+        } | null> | null;
+      } | null;
+    } | null;
   };
 };
 
@@ -24213,6 +25019,7 @@ export const GetAccountTableListDocument = `
               penaltyAmount
               penaltyRate
             }
+            interest
           }
           dues {
             fine
@@ -27801,6 +28608,68 @@ export const useGetMemberLinkedAccountsQuery = <
     ).bind(null, variables),
     options
   );
+export const GetMultipleSubProductsDocument = `
+    query getMultipleSubProducts($productTypeIds: [String]) {
+  settings {
+    general {
+      loan {
+        productType {
+          multipleProductSubTypes(productTypeIds: $productTypeIds) {
+            id
+            productSubType
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMultipleSubProductsQuery = <
+  TData = GetMultipleSubProductsQuery,
+  TError = unknown
+>(
+  variables?: GetMultipleSubProductsQueryVariables,
+  options?: UseQueryOptions<GetMultipleSubProductsQuery, TError, TData>
+) =>
+  useQuery<GetMultipleSubProductsQuery, TError, TData>(
+    variables === undefined ? ['getMultipleSubProducts'] : ['getMultipleSubProducts', variables],
+    useAxios<GetMultipleSubProductsQuery, GetMultipleSubProductsQueryVariables>(
+      GetMultipleSubProductsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanProductsFromSubTypeDocument = `
+    query getLoanProductsFromSubType($subTypeIds: [String]) {
+  settings {
+    general {
+      loan {
+        productType {
+          loanProducts(subTypeIds: $subTypeIds) {
+            id
+            productName
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProductsFromSubTypeQuery = <
+  TData = GetLoanProductsFromSubTypeQuery,
+  TError = unknown
+>(
+  variables?: GetLoanProductsFromSubTypeQueryVariables,
+  options?: UseQueryOptions<GetLoanProductsFromSubTypeQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductsFromSubTypeQuery, TError, TData>(
+    variables === undefined
+      ? ['getLoanProductsFromSubType']
+      : ['getLoanProductsFromSubType', variables],
+    useAxios<GetLoanProductsFromSubTypeQuery, GetLoanProductsFromSubTypeQueryVariables>(
+      GetLoanProductsFromSubTypeDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetMemberListDocument = `
     query getMemberList($pagination: Pagination!, $filter: KymMemberDataFilter) {
   members {
@@ -29297,6 +30166,11 @@ export const GetActiveInactiveMemberReportDocument = `
     activeInactiveMemberReport(data: $data) {
       statement {
         ... on ActiveInactiveMemberReport {
+          summary {
+            activeTotal
+            inactiveTotal
+            totalMember
+          }
           reportStatement {
             memberId
             memberName
@@ -29311,6 +30185,7 @@ export const GetActiveInactiveMemberReportDocument = `
             occupation
             memberRegistrationDate
             status
+            memberType
           }
         }
       }
@@ -29535,6 +30410,412 @@ export const useGetTtrReportQuery = <TData = GetTtrReportQuery, TError = unknown
       null,
       variables
     ),
+    options
+  );
+export const GetshareRegisterReportDocument = `
+    query getshareRegisterReport($data: SharePurchaseRegisterReportFilter!) {
+  report {
+    sharePurchaseRegisterReport(data: $data) {
+      data {
+        memberId
+        memberCode
+        name
+        particular
+        perShareAmount
+        kittaNumFrom
+        kittaNumTo
+        totalKitta
+        totalAmount
+      }
+    }
+  }
+}
+    `;
+export const useGetshareRegisterReportQuery = <
+  TData = GetshareRegisterReportQuery,
+  TError = unknown
+>(
+  variables: GetshareRegisterReportQueryVariables,
+  options?: UseQueryOptions<GetshareRegisterReportQuery, TError, TData>
+) =>
+  useQuery<GetshareRegisterReportQuery, TError, TData>(
+    ['getshareRegisterReport', variables],
+    useAxios<GetshareRegisterReportQuery, GetshareRegisterReportQueryVariables>(
+      GetshareRegisterReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetShareTransactionReportDocument = `
+    query getShareTransactionReport($data: ShareTransactionReportFilter) {
+  report {
+    shareTransactionReport(data: $data) {
+      data {
+        transactionDate
+        memberId
+        memberCode
+        name
+        particular
+        shareReturnDr
+        shareIssueCr
+        balance
+      }
+      footer {
+        totalCr
+        totatDr
+        totalBalance
+      }
+      totalShareIssued
+      avgSharePerMember
+    }
+  }
+}
+    `;
+export const useGetShareTransactionReportQuery = <
+  TData = GetShareTransactionReportQuery,
+  TError = unknown
+>(
+  variables?: GetShareTransactionReportQueryVariables,
+  options?: UseQueryOptions<GetShareTransactionReportQuery, TError, TData>
+) =>
+  useQuery<GetShareTransactionReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getShareTransactionReport']
+      : ['getShareTransactionReport', variables],
+    useAxios<GetShareTransactionReportQuery, GetShareTransactionReportQueryVariables>(
+      GetShareTransactionReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountOpeningReportDocument = `
+    query getAccountOpeningReport($data: AccountOpeningReportInput) {
+  report {
+    accountOpeningReport(data: $data) {
+      data {
+        accountName
+        accountNumber
+        memberId
+        openedBy
+        openingDate
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountOpeningReportQuery = <
+  TData = GetAccountOpeningReportQuery,
+  TError = unknown
+>(
+  variables?: GetAccountOpeningReportQueryVariables,
+  options?: UseQueryOptions<GetAccountOpeningReportQuery, TError, TData>
+) =>
+  useQuery<GetAccountOpeningReportQuery, TError, TData>(
+    variables === undefined ? ['getAccountOpeningReport'] : ['getAccountOpeningReport', variables],
+    useAxios<GetAccountOpeningReportQuery, GetAccountOpeningReportQueryVariables>(
+      GetAccountOpeningReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanBalanceReportDocument = `
+    query getLoanBalanceReport($data: LoanBalanceFilterData!) {
+  report {
+    loanBalanceReport(data: $data) {
+      data {
+        memberId
+        loanAccountId
+        memberName
+        productName
+        productCode
+        outstandingBalance
+        remainingBalance
+        remainingInterest
+        lastPaymentDate
+      }
+      totalOutstandingBalance
+      totalRemainingBalance
+    }
+  }
+}
+    `;
+export const useGetLoanBalanceReportQuery = <TData = GetLoanBalanceReportQuery, TError = unknown>(
+  variables: GetLoanBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetLoanBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanBalanceReportQuery, TError, TData>(
+    ['getLoanBalanceReport', variables],
+    useAxios<GetLoanBalanceReportQuery, GetLoanBalanceReportQueryVariables>(
+      GetLoanBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSavingsBalanceReportDocument = `
+    query getSavingsBalanceReport($data: SavingsBalanceFilterData!) {
+  report {
+    savingsBalanceReport(data: $data) {
+      data {
+        accountId
+        memberId
+        memberCode
+        memberName
+        productId
+        productName
+        productCode
+        accountOpeningDate
+        memberType
+        balance
+      }
+      totalBalance
+    }
+  }
+}
+    `;
+export const useGetSavingsBalanceReportQuery = <
+  TData = GetSavingsBalanceReportQuery,
+  TError = unknown
+>(
+  variables: GetSavingsBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetSavingsBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetSavingsBalanceReportQuery, TError, TData>(
+    ['getSavingsBalanceReport', variables],
+    useAxios<GetSavingsBalanceReportQuery, GetSavingsBalanceReportQueryVariables>(
+      GetSavingsBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountClosingReportDocument = `
+    query getAccountClosingReport($data: AccountClosingReportInput) {
+  report {
+    accountClosingReport(data: $data) {
+      data {
+        memberId
+        accountNumber
+        accountName
+        openingDate
+        closingDate
+        closedBalance
+        closedBy
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountClosingReportQuery = <
+  TData = GetAccountClosingReportQuery,
+  TError = unknown
+>(
+  variables?: GetAccountClosingReportQueryVariables,
+  options?: UseQueryOptions<GetAccountClosingReportQuery, TError, TData>
+) =>
+  useQuery<GetAccountClosingReportQuery, TError, TData>(
+    variables === undefined ? ['getAccountClosingReport'] : ['getAccountClosingReport', variables],
+    useAxios<GetAccountClosingReportQuery, GetAccountClosingReportQueryVariables>(
+      GetAccountClosingReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetBankGlStatementReportDocument = `
+    query getBankGLStatementReport($data: BankGLStatementFilter!) {
+  report {
+    bankGLStatementReport(data: $data) {
+      data {
+        date
+        name
+        particular
+        chequeNo
+        depositAmount
+        withdrawAmount
+        balance
+        remarks
+      }
+    }
+  }
+}
+    `;
+export const useGetBankGlStatementReportQuery = <
+  TData = GetBankGlStatementReportQuery,
+  TError = unknown
+>(
+  variables: GetBankGlStatementReportQueryVariables,
+  options?: UseQueryOptions<GetBankGlStatementReportQuery, TError, TData>
+) =>
+  useQuery<GetBankGlStatementReportQuery, TError, TData>(
+    ['getBankGLStatementReport', variables],
+    useAxios<GetBankGlStatementReportQuery, GetBankGlStatementReportQueryVariables>(
+      GetBankGlStatementReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetTransactionTellerReportDocument = `
+    query getTransactionTellerReport($data: TellerReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        tellerReport(data: $data) {
+          data {
+            headTeller {
+              entries {
+                tellerId
+                name
+                inTransit
+                stack
+                inAmount
+                outAmount
+                balance
+              }
+              inTransitTotal
+              stackTotal
+              inAmountTotal
+              outAmountTotal
+              balanceTotal
+            }
+            teller {
+              entries {
+                tellerId
+                name
+                inTransit
+                stack
+                inAmount
+                outAmount
+                balance
+              }
+              inTransitTotal
+              stackTotal
+              inAmountTotal
+              outAmountTotal
+              balanceTotal
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetTransactionTellerReportQuery = <
+  TData = GetTransactionTellerReportQuery,
+  TError = unknown
+>(
+  variables: GetTransactionTellerReportQueryVariables,
+  options?: UseQueryOptions<GetTransactionTellerReportQuery, TError, TData>
+) =>
+  useQuery<GetTransactionTellerReportQuery, TError, TData>(
+    ['getTransactionTellerReport', variables],
+    useAxios<GetTransactionTellerReportQuery, GetTransactionTellerReportQueryVariables>(
+      GetTransactionTellerReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetCashLedgerReportDocument = `
+    query getCashLedgerReport($data: CashLedgerReportFilterData) {
+  report {
+    cashLedgerReport(data: $data) {
+      openingBalance
+      closingBalance
+      summary {
+        date
+        ledgerCode
+        particular
+        voucherNo
+        cashDr
+        cashCr
+        balance
+      }
+      details {
+        date
+        ledgerCode
+        particular
+        voucherNo
+        cashDr
+        cashCr
+        balance
+      }
+    }
+  }
+}
+    `;
+export const useGetCashLedgerReportQuery = <TData = GetCashLedgerReportQuery, TError = unknown>(
+  variables?: GetCashLedgerReportQueryVariables,
+  options?: UseQueryOptions<GetCashLedgerReportQuery, TError, TData>
+) =>
+  useQuery<GetCashLedgerReportQuery, TError, TData>(
+    variables === undefined ? ['getCashLedgerReport'] : ['getCashLedgerReport', variables],
+    useAxios<GetCashLedgerReportQuery, GetCashLedgerReportQueryVariables>(
+      GetCashLedgerReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberRegistrationReportDocument = `
+    query getMemberRegistrationReport($data: MemberRegistrationReportData) {
+  report {
+    memberRegistrationReport(data: $data) {
+      data {
+        individual {
+          memberId
+          memberCode
+          name
+          address {
+            ...Address
+          }
+          dob
+          grandFatherName
+          fatherName
+          SpouseName
+          profession
+          shareInfo {
+            perShareAmount
+            kitta
+            amount
+          }
+          fingerPrint
+          photo
+          contactNo
+          email
+          other
+        }
+        other {
+          memberId
+          memberCode
+          name
+          address {
+            ...Address
+          }
+          doe
+          typeOfInstitution
+          workingArea
+          totalMember
+          balanceSheet
+          shareInfo {
+            perShareAmount
+            kitta
+            amount
+          }
+          post
+          authPersonName
+          logo
+          stamp
+          contactNo
+          email
+          other
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}`;
+export const useGetMemberRegistrationReportQuery = <
+  TData = GetMemberRegistrationReportQuery,
+  TError = unknown
+>(
+  variables?: GetMemberRegistrationReportQueryVariables,
+  options?: UseQueryOptions<GetMemberRegistrationReportQuery, TError, TData>
+) =>
+  useQuery<GetMemberRegistrationReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getMemberRegistrationReport']
+      : ['getMemberRegistrationReport', variables],
+    useAxios<GetMemberRegistrationReportQuery, GetMemberRegistrationReportQueryVariables>(
+      GetMemberRegistrationReportDocument
+    ).bind(null, variables),
     options
   );
 export const GetShareStatementDocument = `

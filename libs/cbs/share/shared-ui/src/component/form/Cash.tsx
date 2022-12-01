@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
+import { Box, FormSection, GridItem, Text } from '@myra-ui';
 
 import { FormAmountInput, FormEditableTable, FormSwitch } from '@coop/shared/form';
-import { Box, FormSection, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 type PaymentTableType = {
@@ -47,7 +47,7 @@ export const Cash = ({
   return (
     <FormSection templateColumns={2}>
       <GridItem colSpan={1}>
-        <FormAmountInput name="cash.cashPaid" label={t['sharePurchaseCash']} />
+        <FormAmountInput type="number" name="cash.cashPaid" label={t['sharePurchaseCash']} />
       </GridItem>
 
       <GridItem colSpan={2}>

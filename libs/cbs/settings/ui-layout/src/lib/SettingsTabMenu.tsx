@@ -3,8 +3,8 @@ import { IoApps, IoArrowDownOutline, IoGridOutline, IoPerson } from 'react-icons
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
-
 import { Icon } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 const demoTabs: { title: string; icon: IconType; link: string }[] = [

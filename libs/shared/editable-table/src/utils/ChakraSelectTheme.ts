@@ -98,7 +98,6 @@ export const chakraDefaultStyles: ChakraStylesConfig<any> | undefined = {
     transform: 'none',
     top: '0%',
     px: 's8',
-    mt: '3px',
   }),
 
   indicatorsContainer: (provided) => ({

@@ -1,20 +1,29 @@
 import { Controller, Path, useFormContext } from 'react-hook-form';
 import { UseControllerProps } from 'react-hook-form/dist/types/controller';
+import { Box, InputProps, TextFields } from '@myra-ui';
 import { DatePicker } from '@raralabs/react-patro';
 import format from 'date-fns/format';
 import NepaliDate from 'nepali-date-converter';
 
 import { DateType, RootState, useAppSelector } from '@coop/cbs/data-access';
-import { Box, InputProps, TextFields } from '@myra-ui';
 
 interface IFormDatePickerProps<T> extends InputProps {
   name: Path<T> | string;
   label?: string;
   rules?: UseControllerProps['rules'];
   maxToday?: boolean;
+  maxDate?: string;
+  minDate?: string;
 }
 
-export const FormDatePicker = <T,>({ name, label, maxToday, ...rest }: IFormDatePickerProps<T>) => {
+export const FormDatePicker = <T,>({
+  name,
+  label,
+  maxToday,
+  maxDate,
+  minDate,
+  ...rest
+}: IFormDatePickerProps<T>) => {
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
 
   const methods = useFormContext();
@@ -59,8 +68,9 @@ export const FormDatePicker = <T,>({ name, label, maxToday, ...rest }: IFormDate
                 ? preference?.date === DateType.Bs
                   ? new NepaliDate(new Date()).format('YYYY-MM-DD')
                   : format(new Date(), 'yyyy-MM-dd')
-                : null
+                : maxDate || null
             }
+            minDate={minDate ?? null}
             {...rest}
             {...fieldProps}
           />

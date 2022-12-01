@@ -1,8 +1,8 @@
 import { ReactElement } from 'react';
+import { MainLayout } from '@myra-ui';
 
 import { CBSAccountCloseList } from '@coop/cbs/accounts/account-form';
 import { AccountPagesLayout } from '@coop/myra/components';
-import { MainLayout } from '@myra-ui';
 
 const AccountClose = () => <CBSAccountCloseList />;
 

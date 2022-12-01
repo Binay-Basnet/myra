@@ -1,8 +1,8 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { Box } from '@myra-ui';
 
-import { DetailPageSideBar } from '@coop/cbs/transactions/ui-components';
-import { Box, PathBar } from '@myra-ui';
+import { DetailPageSideBar, TransactionDetailPathBar } from '@coop/cbs/transactions/ui-components';
 import { useTranslation } from '@coop/shared/utils';
 
 interface AgentDetailPageLayoutProps {
@@ -42,20 +42,7 @@ export const AgentDetailPageLayout = ({ children }: AgentDetailPageLayoutProps) 
 
   return (
     <>
-      <Box bg="white" zIndex="10" top="110px" position="sticky">
-        <PathBar
-          paths={[
-            {
-              label: t['agentDetailPageLayoutMarketRepresentativeList'],
-              link: '/transactions/agent/list',
-            },
-            {
-              label: t['agentDetailPageLayoutMarketRepresentativeDetail'],
-              link: router.asPath,
-            },
-          ]}
-        />
-      </Box>
+      <TransactionDetailPathBar title="Market Representative List" />
       <Box
         w="250px"
         position="fixed"

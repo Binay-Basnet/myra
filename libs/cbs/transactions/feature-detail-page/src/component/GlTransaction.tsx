@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import { IoPrintOutline } from 'react-icons/io5';
+import { Button, DetailsCard } from '@myra-ui';
 
 import { Column, Table } from '@coop/shared/table';
-import { Button, DetailsCard } from '@myra-ui';
-import { useTranslation } from '@coop/shared/utils';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type GlTransactionDetailProps = {
   data:
@@ -36,12 +36,12 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
       {
         header: t['transDetailDebit'],
         footer: totalDebit,
-        accessorFn: (row) => row?.debit,
+        accessorFn: (row) => amountConverter(row?.debit ?? 0),
       },
       {
         header: t['transDetailCredit'],
         footer: totalCredit,
-        accessorFn: (row) => row?.credit,
+        accessorFn: (row) => amountConverter(row?.credit ?? 0),
       },
     ],
     [totalDebit, totalCredit]

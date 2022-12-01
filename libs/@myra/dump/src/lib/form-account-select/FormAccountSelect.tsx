@@ -39,7 +39,7 @@ export const FormAccountSelect = ({
     },
     {
       staleTime: 0,
-      enabled: !!memberId,
+      enabled: !!memberId && memberId !== 'undefined',
     }
   );
 

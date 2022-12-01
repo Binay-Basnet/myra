@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { Box, FormSection, GridItem, TextFields } from '@myra-ui';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
 import pickBy from 'lodash/pickBy';
@@ -23,7 +24,6 @@ import {
   FormPhoneNumber,
   FormSelect,
 } from '@coop/shared/form';
-import { Box, FormSection, GridItem, TextFields } from '@myra-ui';
 import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
@@ -201,6 +201,7 @@ const HusbandWifeOccupation = ({ setKymCurrentSection }: IHusbandWifeOccupationP
           />
           <FormInput type="text" name="address" id="spouseAddress" label={t['kymIndAddress']} />
           <FormAmountInput
+            type="number"
             id="spouseEstimatedAnnualIncome"
             name="estimatedAnnualIncome"
             label={t['kymIndEstimatedAnnualIncome']}

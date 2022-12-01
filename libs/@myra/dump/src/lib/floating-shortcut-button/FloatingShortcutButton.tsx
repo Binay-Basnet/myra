@@ -63,6 +63,16 @@ const whatsNewData = {
       '13. Trial Balance',
       '14. Mobile App Transaction',
       '15. User List',
+      '16. Account Closing Report',
+      '17. Account Opening Report',
+      '18. Cash Book / Cash Register',
+      '19. Teller Report',
+      '20. Saving Balance',
+      '21. Loan Balance',
+      '22. Member Register',
+      '23. Share Transactions',
+      '24. Share Return / Purchase Register',
+      '25. Bank GL Statement',
     ],
   },
   bugsSquashed: {
@@ -78,7 +88,7 @@ const whatsNewData = {
     ],
   },
   knownBugs: {
-    title: 'Old Dump /Known Bugs',
+    title: 'Known Bugs',
     data: [
       'Share Balance Export in excel.',
       'Family Member in this institution and relationship should have multiple selecting options.',

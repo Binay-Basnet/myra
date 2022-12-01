@@ -10,6 +10,9 @@ const nextConfig = {
   experimental: {
     outputFileTracingRoot: path.join(__dirname, '../../'),
   },
+  // typescript: {
+  //   ignoreBuildErrors: true,
+  // },
   reactStrictMode: false,
 
   webpack: (config) => {
@@ -38,6 +41,7 @@ const nextConfig = {
   // },
   images: {
     domains: ['images.unsplash.com', 'cdn.raralabs.live'],
+    // unoptimized: true,
   },
   i18n: {
     locales: ['en', 'ne'],

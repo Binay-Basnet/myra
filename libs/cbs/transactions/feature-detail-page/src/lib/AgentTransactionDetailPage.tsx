@@ -1,4 +1,5 @@
 import { Box, Text } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 import { AssignedMemberList, SideBar, TransactionDetails } from '../component';

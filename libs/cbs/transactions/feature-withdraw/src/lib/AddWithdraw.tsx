@@ -1,6 +1,19 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import {
+  Alert,
+  asyncToast,
+  Box,
+  Button,
+  Container,
+  FormAccountSelect,
+  FormFooter,
+  FormHeader,
+  FormMemberSelect,
+  MemberCard,
+  Text,
+} from '@myra-ui';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
@@ -19,19 +32,6 @@ import {
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
 import { FormAmountInput, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import {
-  Alert,
-  asyncToast,
-  Box,
-  Button,
-  Container,
-  FormAccountSelect,
-  FormFooter,
-  FormHeader,
-  FormMemberSelect,
-  MemberCard,
-  Text,
-} from '@myra-ui';
 import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 import { Payment } from '../components';
@@ -141,7 +141,7 @@ export const AddWithdraw = () => {
     () =>
       accountListData?.account?.list?.edges?.find((account) => account.node?.id === accountId)
         ?.node,
-    [accountId]
+    [accountId, accountListData]
   );
 
   const [mode, setMode] = useState<number>(0); // 0: form 1: payment
@@ -251,12 +251,20 @@ export const AddWithdraw = () => {
   };
   //  get redirect id from url
   const redirectMemberId = router.query['memberId'];
+  const redirectAccountId = router.query['accountId'];
+
   // redirect from member details
   useEffect(() => {
     if (redirectMemberId) {
       methods.setValue('memberId', String(redirectMemberId));
     }
   }, [redirectMemberId]);
+
+  useEffect(() => {
+    if (redirectAccountId && memberId) {
+      methods.setValue('accountId', String(redirectAccountId));
+    }
+  }, [memberId, redirectAccountId]);
 
   return (
     <>
@@ -324,7 +332,12 @@ export const AddWithdraw = () => {
                   )}
 
                   {memberId && accountId && (
-                    <FormAmountInput min={0} name="amount" label={t['addWithdrawWithdrawAmount']} />
+                    <FormAmountInput
+                      type="number"
+                      min={0}
+                      name="amount"
+                      label={t['addWithdrawWithdrawAmount']}
+                    />
                   )}
 
                   {memberId && accountId && (
@@ -389,7 +402,7 @@ export const AddWithdraw = () => {
                       }}
                       // notice="KYM needs to be updated"
                       signaturePath={memberSignatureUrl}
-                      showSignaturePreview={false}
+                      showSignaturePreview
                       citizenshipPath={memberCitizenshipUrl}
                       accountInfo={
                         selectedAccount

@@ -1,6 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import {
+  Alert,
+  asyncToast,
+  Box,
+  Container,
+  FormFooter,
+  FormHeader,
+  FormMemberSelect,
+  MemberCard,
+  Text,
+} from '@myra-ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { omit } from 'lodash';
 
@@ -16,17 +27,6 @@ import {
   useSendLoanApplicationForApprovalMutation,
 } from '@coop/cbs/data-access';
 import { FormInput, FormNumberInput, FormSelect, FormTextArea } from '@coop/shared/form';
-import {
-  Alert,
-  asyncToast,
-  Box,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormMemberSelect,
-  MemberCard,
-  Text,
-} from '@myra-ui';
 
 import {
   AccordianComponent,
@@ -215,23 +215,29 @@ export const NewLoanApplication = () => {
   }, [redirectMemberId]);
 
   // saving accounts check list
-  const { data: linkedAccountData } = useGetMemberLinkedAccountsQuery(
-    {
-      memberId: String(memberId),
+  const { data: linkedAccountData, isFetching: isLinkAccDataFetching } =
+    useGetMemberLinkedAccountsQuery(
+      {
+        memberId: String(memberId),
 
-      filter: [NatureOfDepositProduct?.Current, NatureOfDepositProduct?.Saving],
-      includeActiveAccountsOnly: true,
-    },
-    {
-      enabled: triggerAccountlist,
-    }
-  );
+        filter: [NatureOfDepositProduct?.Current, NatureOfDepositProduct?.Saving],
+        includeActiveAccountsOnly: true,
+      },
+      {
+        enabled: triggerAccountlist,
+      }
+    );
   const loanLinkedData = linkedAccountData?.members?.getAllAccounts?.data?.depositAccount;
   useEffect(() => {
     if (memberId) {
       setTriggerAccountList(true);
     }
   }, [memberId]);
+  useEffect(() => {
+    resetField('productType');
+    resetField('productSubType');
+    resetField('productId');
+  }, [loanLinkedData, resetField]);
   return (
     <Container minW="container.xl" p="0" bg="white">
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
@@ -250,7 +256,7 @@ export const NewLoanApplication = () => {
               <Box display="flex" flexDirection="column" gap="s32" p="s20" w="100%">
                 <Box display="flex" flexDir="column" gap="s16">
                   <FormMemberSelect name="memberId" label="Member Id" isDisabled={!!id} />
-                  {memberId && !loanLinkedData && (
+                  {memberId && !loanLinkedData && !isLinkAccDataFetching && (
                     <Alert status="error"> Member does not have a Saving Account </Alert>
                   )}
                   {memberId && loanLinkedData && (
@@ -363,7 +369,6 @@ export const NewLoanApplication = () => {
                   address: memberDetailData?.address,
                 }}
                 signaturePath={memberSignatureUrl}
-                showSignaturePreview={false}
                 citizenshipPath={memberCitizenshipUrl}
               />
             </Box>

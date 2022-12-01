@@ -1,6 +1,7 @@
-import { ObjState, TransferType } from '@coop/cbs/data-access';
 import { DetailCardContent, DetailsCard } from '@myra-ui';
-import { useTranslation } from '@coop/shared/utils';
+
+import { ObjState, TransferType } from '@coop/cbs/data-access';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import { useTransactionDetailHooks } from '../hooks/useTransactionDetailHooks';
 
@@ -40,13 +41,19 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailAmountDeposited']}
-            subtitle={depositDetailData?.amount}
+            subtitle={amountConverter(depositDetailData?.amount ?? 0)}
           />
-          <DetailCardContent title={t['transDetailFine']} subtitle={depositDetailData?.fine} />
-          <DetailCardContent title={t['transDetailRebate']} subtitle={depositDetailData?.rebate} />
+          <DetailCardContent
+            title={t['transDetailFine']}
+            subtitle={amountConverter(depositDetailData?.fine ?? 0)}
+          />
+          <DetailCardContent
+            title={t['transDetailRebate']}
+            subtitle={amountConverter(depositDetailData?.rebate ?? 0)}
+          />
           <DetailCardContent
             title={t['transDetailTotalDepositAmount']}
-            subtitle={depositDetailData?.totalDepositedAmount}
+            subtitle={amountConverter(depositDetailData?.totalDepositedAmount ?? 0)}
           />
           {depositDetailData?.status === ObjState?.Active && (
             <DetailCardContent title={t['transDetailStatus']} status />
@@ -77,12 +84,15 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailWithdrawAmount']}
-            subtitle={withdrawDetailData?.withdrawAmount}
+            subtitle={amountConverter(withdrawDetailData?.withdrawAmount ?? 0)}
           />
-          <DetailCardContent title={t['transDetailFine']} subtitle={withdrawDetailData?.fine} />
+          <DetailCardContent
+            title={t['transDetailFine']}
+            subtitle={amountConverter(withdrawDetailData?.fine ?? 0)}
+          />
           <DetailCardContent
             title={t['transDetailTotalWithdrawAmount']}
-            subtitle={withdrawDetailData?.totalWithdrawnAmount}
+            subtitle={amountConverter(withdrawDetailData?.totalWithdrawnAmount ?? 0)}
           />
           {withdrawDetailData?.status === ObjState?.Active && (
             <DetailCardContent title={t['transDetailStatus']} status />
@@ -130,7 +140,7 @@ export const TransactionDetails = ({ detailPage }: TransactionDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailTransferAmount']}
-            subtitle={accountTransferDetailData?.transferAmount}
+            subtitle={amountConverter(accountTransferDetailData?.transferAmount ?? 0)}
           />
           {accountTransferDetailData?.objState === ObjState?.Active && (
             <DetailCardContent title={t['transDetailStatus']} status />

@@ -1,7 +1,8 @@
-import { useGetCoaBankListQuery } from '@coop/cbs/data-access';
-import { FormEditableTable } from '@coop/shared/form';
 import { GridItem } from '@myra-ui';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+
+import { COASelectModal } from '@coop/shared/components';
+import { FormEditableTable } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 type AllowChequeTable = {
   serviceName: string;
@@ -11,16 +12,6 @@ type AllowChequeTable = {
 
 export const AllowChequeIssue = () => {
   const { t } = useTranslation();
-
-  const { data } = useGetCoaBankListQuery({
-    accountCode: featureCode.ledgerAccountCode as string[],
-  });
-
-  const ledgerData = data?.settings?.chartsOfAccount?.accountsUnder?.data;
-  const legderOptions = ledgerData?.map((item) => ({
-    label: item?.name?.local as string,
-    value: item?.id as string,
-  }));
 
   const chequeList = [{ label: 'Cheque issue charge', value: 'Cheque issue charge' }];
 
@@ -40,9 +31,9 @@ export const AllowChequeIssue = () => {
           {
             accessor: 'ledgerName',
             header: t['depositProductAccServiceTableLedgerName'],
-            fieldType: 'select',
             cellWidth: 'auto',
-            selectOptions: legderOptions,
+            fieldType: 'modal',
+            modal: COASelectModal,
           },
           {
             accessor: 'amount',

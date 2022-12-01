@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { Box, GridItem, Text } from '@myra-ui';
 
 import {
+  PeriodInput,
   TrialSheetReportDataEntry,
   TrialSheetReportFilter,
   useGetTrialSheetReportQuery,
@@ -9,7 +11,6 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
-import { Box, GridItem, Text } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 type TrialSheetReportFilters = Omit<TrialSheetReportFilter, 'filter'> & {
@@ -25,7 +26,7 @@ export const TrialSheetReport = () => {
     {
       data: {
         branchId: filters?.branchId as string,
-        period: filters?.period,
+        period: filters?.period as PeriodInput,
         filter: {
           includeZero: filters?.filter?.includeZero === 'include',
         },
@@ -68,14 +69,7 @@ export const TrialSheetReport = () => {
           ]}
         />
 
-        <Report.Inputs
-          defaultFilters={{
-            filter: {
-              includeZero: 'include',
-            },
-          }}
-          setFilters={setFilters}
-        >
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Branch" />
           </GridItem>

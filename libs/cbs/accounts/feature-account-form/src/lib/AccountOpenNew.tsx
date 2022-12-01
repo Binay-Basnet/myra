@@ -560,7 +560,11 @@ export const AccountOpenNew = () => {
                       </Box>
                     )}
                     <Grid templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
-                      <FormAmountInput name="initialDepositAmount" label="Initial Deposit Amount" />
+                      <FormAmountInput
+                        type="number"
+                        name="initialDepositAmount"
+                        label="Initial Deposit Amount"
+                      />
                     </Grid>
                     {/* <Agent /> */}
                     <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
@@ -611,7 +615,6 @@ export const AccountOpenNew = () => {
                   address: memberDetailData?.address,
                 }}
                 signaturePath={memberSignatureUrl}
-                showSignaturePreview={false}
                 citizenshipPath={memberCitizenshipUrl}
               />
             </Box>

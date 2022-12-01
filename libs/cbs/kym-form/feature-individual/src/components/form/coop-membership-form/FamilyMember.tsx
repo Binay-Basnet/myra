@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { Box, Button, MemberCard } from '@myra-ui';
 import debounce from 'lodash/debounce';
 
 import {
@@ -11,7 +12,6 @@ import {
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/settings/ui-containers';
 import { FormSelect } from '@coop/shared/form';
-import { Box, Button, MemberCard } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
@@ -107,7 +107,6 @@ export const FamilyMember = ({
               address: memberDetailData?.address,
             }}
             signaturePath={memberSignatureUrl}
-            showSignaturePreview={false}
             citizenshipPath={memberCitizenshipUrl}
           />
         </Box>

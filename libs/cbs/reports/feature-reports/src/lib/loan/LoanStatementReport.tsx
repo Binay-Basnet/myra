@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Box } from '@myra-ui';
 import dayjs from 'dayjs';
 
 import {
@@ -9,7 +10,6 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { LoanReportInputs } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { Box } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 export const LoanStatementReport = () => {
@@ -41,7 +41,7 @@ export const LoanStatementReport = () => {
             { label: 'Loan Statement', link: '/reports/cbs/loan/statement/new' },
           ]}
         />
-        <Report.Inputs defaultFilters={null} setFilters={setFilters}>
+        <Report.Inputs>
           <LoanReportInputs />
         </Report.Inputs>
       </Report.Header>

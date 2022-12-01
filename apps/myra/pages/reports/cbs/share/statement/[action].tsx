@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
+import { MainLayout } from '@myra-ui';
 
 import { ShareStatementReport } from '@coop/cbs/reports';
-import { MainLayout } from '@myra-ui';
 
 const NewShareStatementReport = () => <ShareStatementReport />;
 

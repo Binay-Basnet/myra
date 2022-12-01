@@ -1,6 +1,7 @@
-import { WithdrawPaymentType } from '@coop/cbs/data-access';
 import { Box, Text } from '@myra-ui';
-import { useTranslation } from '@coop/shared/utils';
+
+import { WithdrawPaymentType } from '@coop/cbs/data-access';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import {
   GlTransaction,
@@ -56,8 +57,8 @@ export const WithdrawDetailPage = () => {
           teller={withdrawDetailData?.teller as string}
         />
         <GlTransaction
-          totalDebit={withdrawDetailData?.totalDebit as string}
-          totalCredit={withdrawDetailData?.totalCredit as string}
+          totalDebit={String(amountConverter(withdrawDetailData?.totalDebit ?? 0))}
+          totalCredit={String(amountConverter(withdrawDetailData?.totalCredit ?? 0))}
           data={tableData ?? []}
         />
       </Box>

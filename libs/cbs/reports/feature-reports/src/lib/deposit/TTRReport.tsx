@@ -94,14 +94,7 @@ export const TTRReport = () => {
             { label: 'TTR Report', link: '/reports/cbs/savings/ttr/new' },
           ]}
         />
-        <Report.Inputs
-          defaultFilters={{
-            filter: {
-              natureOfTransactions: [NatureOfTransaction?.All],
-            },
-          }}
-          setFilters={setFilters}
-        >
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Branch" />
           </GridItem>
@@ -157,7 +150,7 @@ export const TTRReport = () => {
                     cell: (props) => (
                       <Box textTransform="capitalize">
                         {' '}
-                        {props?.cell?.row?.original?.nature?.toLowerCase()?.replace(/_/g, ' ')}
+                        {props?.row?.original?.nature?.toLowerCase()?.replace(/_/g, ' ')}
                       </Box>
                     ),
                   },
@@ -183,7 +176,7 @@ export const TTRReport = () => {
             </Box>
             <Box display="flex" py="s8" flexDir="column">
               <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>
-                Yearly Transaction (above 30 Lakh){' '}
+                Each Transaction (above 10 Lakh){' '}
               </Text>
               <Report.Table<TtrDataEntry & { index: number }>
                 data={eachTransReport?.map((d, index) => ({ ...d, index: index + 1 }))}

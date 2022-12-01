@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Box } from '@myra-ui';
 import dayjs from 'dayjs';
 
 import {
@@ -14,7 +15,6 @@ import { Report } from '@coop/cbs/reports';
 import { SavingReportInputs } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormAmountFilter, FormRadioGroup } from '@coop/shared/form';
-import { Box } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 export const SavingStatementReport = () => {
@@ -54,15 +54,7 @@ export const SavingStatementReport = () => {
             { label: 'Saving Statement', link: '/reports/cbs/savings/statement/new' },
           ]}
         />
-        <Report.Inputs
-          defaultFilters={{
-            filter: {
-              service: SavingServiceType.Charges,
-              transactionType: SavingTransactionType.All,
-            },
-          }}
-          setFilters={setFilters}
-        >
+        <Report.Inputs>
           <SavingReportInputs />
         </Report.Inputs>
       </Report.Header>

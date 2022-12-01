@@ -77,7 +77,7 @@ export const MemberCard = ({
   memberDetails,
   notice,
   signaturePath,
-  showSignaturePreview = true,
+  showSignaturePreview = false,
   citizenshipPath,
   accountInfo,
   cardBg = 'white',
