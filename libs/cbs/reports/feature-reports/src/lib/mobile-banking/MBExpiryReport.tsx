@@ -42,7 +42,7 @@ export const MBExpiryReport = () => {
             },
           ]}
         />
-        <Report.Inputs defaultFilters={null} setFilters={setFilters}>
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Branch" />
           </GridItem>

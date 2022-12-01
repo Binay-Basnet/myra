@@ -76,7 +76,7 @@ export const TellerReport = () => {
             { label: 'Teller Report', link: '/reports/cbs/transactions/teller/new' },
           ]}
         />
-        <Report.Inputs defaultFilters={{}} setFilters={setFilters}>
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Branch" />
           </GridItem>

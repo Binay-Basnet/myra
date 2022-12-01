@@ -59,15 +59,7 @@ export const MemberActiveInactiveReport = () => {
             { label: 'Active/Inactive Member', link: '/reports/cbs/members/activations/new' },
           ]}
         />
-        <Report.Inputs
-          defaultFilters={{
-            filter: {
-              memberType: MemberType.All,
-              status: MemberStatus.All,
-            },
-          }}
-          setFilters={setFilters}
-        >
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Branch" />
           </GridItem>

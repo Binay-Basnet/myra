@@ -81,7 +81,7 @@ export const ServiceCenterListReport = () => {
             },
           ]}
         />
-        <Report.Inputs setFilters={setFilters} defaultFilters={null}>
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <ReportDateRange label="Branch Established Date" />
           </GridItem>

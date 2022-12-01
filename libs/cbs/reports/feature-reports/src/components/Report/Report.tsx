@@ -252,16 +252,12 @@ export const ReportFilter = ({ title, children }: IReportFilterProps) => (
 
 export const ReportInputs = <T extends FieldValues | null>({
   children,
-  setFilters,
-  defaultFilters,
 }: {
   children: React.ReactNode;
-  defaultFilters: Partial<T>;
-  setFilters: React.Dispatch<React.SetStateAction<T>>;
 }) => {
   const { getValues, watch } = useFormContext<NonNullable<T>>();
 
-  const { isFilterShown, setIsFilterShown } = useReport();
+  const { isFilterShown, setIsFilterShown, defaultFilters, setFilters } = useReport();
 
   // console.log(
   //   Object.keys(omit(getValues(), ['filter', 'period'])).some((field) => !!watch()[field])

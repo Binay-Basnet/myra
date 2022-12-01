@@ -52,14 +52,7 @@ export const BankGLStatementReport = () => {
             },
           ]}
         />
-        <Report.Inputs
-          defaultFilters={{
-            filter: {
-              natureOfTransactions: NatureOfBankTransaction.All,
-            },
-          }}
-          setFilters={setFilters}
-        >
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Branch" />
           </GridItem>

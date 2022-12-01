@@ -94,14 +94,7 @@ export const TTRReport = () => {
             { label: 'TTR Report', link: '/reports/cbs/savings/ttr/new' },
           ]}
         />
-        <Report.Inputs
-          defaultFilters={{
-            filter: {
-              natureOfTransactions: [NatureOfTransaction?.All],
-            },
-          }}
-          setFilters={setFilters}
-        >
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Branch" />
           </GridItem>

@@ -45,14 +45,7 @@ export const ShareRegisterReport = () => {
             { label: 'Share Register', link: '/reports/cbs/share/register/new' },
           ]}
         />
-        <Report.Inputs
-          defaultFilters={{
-            filter: {
-              type: ShareTransactionType?.All,
-            },
-          }}
-          setFilters={setFilters}
-        >
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Branch" />
           </GridItem>

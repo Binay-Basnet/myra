@@ -45,7 +45,7 @@ export const AccountOpenReport = () => {
             { label: 'Account Opening Report', link: '/reports/cbs/savings/account-opening/new' },
           ]}
         />
-        <Report.Inputs defaultFilters={null} setFilters={setFilters}>
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Select Branch" />
           </GridItem>

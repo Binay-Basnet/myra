@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { GridItem } from '@myra-ui';
 import dayjs from 'dayjs';
 
 import { PeriodInput, RolesFilter, useGetUserReportQuery, UserReport } from '@coop/cbs/data-access';
@@ -6,7 +7,6 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect, FormRadioGroup, FormSelect } from '@coop/shared/form';
-import { GridItem } from '@myra-ui';
 
 type UserReportFilter = {
   branchId?: string;
@@ -61,15 +61,7 @@ export const UsersReport = () => {
             { label: 'User List Report', link: '/reports/cbs/others/users/new' },
           ]}
         />
-        <Report.Inputs
-          defaultFilters={{
-            filter: {
-              isCoreEmployee: 'no',
-              role: [],
-            },
-          }}
-          setFilters={setFilters}
-        >
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Branch" />
           </GridItem>

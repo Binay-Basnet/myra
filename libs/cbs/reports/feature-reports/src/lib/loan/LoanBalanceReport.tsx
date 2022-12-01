@@ -47,7 +47,7 @@ export const LoanBalanceReport = () => {
             { label: 'Loan Balance Report', link: '/reports/cbs/others/loan-balance/new' },
           ]}
         />
-        <Report.Inputs defaultFilters={null} setFilters={setFilters}>
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Select Branch" />
           </GridItem>

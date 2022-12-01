@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Box, FormMemberSelect, GridItem } from '@myra-ui';
 
 import {
   ShareStatement,
@@ -10,7 +11,6 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormRadioGroup } from '@coop/shared/form';
-import { Box, FormMemberSelect, GridItem } from '@myra-ui';
 
 export const ShareStatementReport = () => {
   const [filters, setFilters] = useState<ShareStatementReportSettings | null>(null);
@@ -40,10 +40,7 @@ export const ShareStatementReport = () => {
             { label: 'Share Reports', link: '/reports/cbs/share/statement/new' },
           ]}
         />
-        <Report.Inputs
-          defaultFilters={{ filter: ShareTransactionType.All }}
-          setFilters={setFilters}
-        >
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormMemberSelect name="memberId" label="Member Search" />
           </GridItem>

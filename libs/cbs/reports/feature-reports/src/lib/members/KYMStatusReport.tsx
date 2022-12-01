@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Box, GridItem } from '@myra-ui';
 import dayjs from 'dayjs';
 
 import {
@@ -14,7 +15,6 @@ import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { formatTableAddress } from '@coop/cbs/utils';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
-import { Box, GridItem } from '@myra-ui';
 
 const riskCategory = [
   { label: 'All', value: RiskCategoryFilter.All },
@@ -58,7 +58,7 @@ export const KYMStatusReport = () => {
             },
           ]}
         />
-        <Report.Inputs defaultFilters={null} setFilters={setFilters}>
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Branch" />
           </GridItem>

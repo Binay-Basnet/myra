@@ -78,7 +78,7 @@ export const SavingBalanceReport = () => {
             { label: 'Saving Balance Report', link: '/reports/cbs/others/saving-balance/new' },
           ]}
         />
-        <Report.Inputs defaultFilters={null} setFilters={setFilters}>
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Branch" />
           </GridItem>

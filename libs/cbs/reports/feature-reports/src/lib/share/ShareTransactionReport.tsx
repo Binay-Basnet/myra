@@ -136,7 +136,7 @@ export const ShareTransactionsReport = () => {
             { label: 'Share Reports', link: '/reports/cbs/share/transaction/new' },
           ]}
         />
-        <Report.Inputs defaultFilters={null} setFilters={setFilters}>
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Branch" />
           </GridItem>

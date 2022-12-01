@@ -45,7 +45,7 @@ export const AccountCloseReport = () => {
             { label: 'Account Closing Report', link: '/reports/cbs/savings/account-closing/new' },
           ]}
         />
-        <Report.Inputs defaultFilters={null} setFilters={setFilters}>
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Select Branch" />
           </GridItem>

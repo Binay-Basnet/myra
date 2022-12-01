@@ -42,7 +42,7 @@ export const InterestTaxReport = () => {
             },
           ]}
         />
-        <Report.Inputs defaultFilters={null} setFilters={setFilters}>
+        <Report.Inputs>
           <ReportDateRange label="Tax Deduct Date Period" />
         </Report.Inputs>
       </Report.Header>
