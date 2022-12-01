@@ -2,7 +2,6 @@ import React from 'react';
 
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanPaymentScheduleTableProps {
   data:
@@ -24,7 +23,7 @@ const accountTypes = {
   [NatureOfDepositProduct.Current]: 'Current Account',
 };
 
-export const AccountTable = ({ data }: ILoanPaymentScheduleTableProps) => {
+export const ClosedAccountTable = ({ data }: ILoanPaymentScheduleTableProps) => {
   const columns = React.useMemo<Column<typeof data[0]>[]>(
     () => [
       {
@@ -40,14 +39,7 @@ export const AccountTable = ({ data }: ILoanPaymentScheduleTableProps) => {
         header: 'Account Name',
         accessorKey: 'accountName',
       },
-      {
-        header: 'Balance',
-        accessorKey: 'totalBalance',
-        meta: {
-          isNumeric: true,
-        },
-        accessorFn: (row) => (row?.totalBalance ? amountConverter(row?.totalBalance ?? 0) : null),
-      },
+
       {
         header: 'Interest',
         accessorKey: 'interestRate',

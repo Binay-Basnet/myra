@@ -1,8 +1,8 @@
 import { ReactElement } from 'react';
+import { MainLayout } from '@myra-ui';
 
 import { MemberDetails } from '@coop/cbs/members/details';
 import { MemberPagesLayout } from '@coop/cbs/members/list';
-import { MainLayout } from '@myra-ui';
 
 const MemberDEtailsPage = () => <MemberDetails />;
 

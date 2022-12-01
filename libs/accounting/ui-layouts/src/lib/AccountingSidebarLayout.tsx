@@ -31,18 +31,18 @@ const accountingSidebarColumns = [
     name: 'cash-transfer',
     addLink: '/accounting/accounting/cash-transfer/add',
   },
-  {
-    title: 'accountingAccountingSidebarQuickPayment',
-    link: '/accounting/accounting/quick-payment/list',
-    name: 'quick-payment',
-    addLink: '/accounting/accounting/quick-payment/add',
-  },
-  {
-    title: 'accountingAccountingSidebarQuickReceipt',
-    link: '/accounting/accounting/quick-receipt/list',
-    name: 'quick-receipt',
-    addLink: '/accounting/accounting/quick-receipt/add',
-  },
+  // {
+  //   title: 'accountingAccountingSidebarQuickPayment',
+  //   link: '/accounting/accounting/quick-payment/list',
+  //   name: 'quick-payment',
+  //   addLink: '/accounting/accounting/quick-payment/add',
+  // },
+  // {
+  //   title: 'accountingAccountingSidebarQuickReceipt',
+  //   link: '/accounting/accounting/quick-receipt/list',
+  //   name: 'quick-receipt',
+  //   addLink: '/accounting/accounting/quick-receipt/add',
+  // },
   {
     title: 'accountingAccountingSidebarBankAccounts',
     link: '/accounting/accounting/bank-accounts/list',
@@ -70,15 +70,15 @@ export const AccountingSidebarLayout = ({ children }: IAccountingSidebarLayoutPr
       title: t['accountingAccountingSidebarCashTransfer'],
       link: '/accounting/accounting/cash-transfer/add',
     },
-    {
-      title: t['accountingAccountingSidebarQuickPayment'],
-      link: '/accounting/accounting/quick-payment/add',
-    },
+    // {
+    //   title: t['accountingAccountingSidebarQuickPayment'],
+    //   link: '/accounting/accounting/quick-payment/add',
+    // },
 
-    {
-      title: t['accountingAccountingSidebarQuickReceipt'],
-      link: '/accounting/accounting/quick-receipt/add',
-    },
+    // {
+    //   title: t['accountingAccountingSidebarQuickReceipt'],
+    //   link: '/accounting/accounting/quick-receipt/add',
+    // },
     {
       title: t['accountingAccountingSidebarBankAccounts'],
       link: '/accounting/accounting/bank-accounts/add',
