@@ -127,6 +127,7 @@ export const REPORTS = {
     {
       id: '2.3',
       report: Report.MEMBER_REGISTER_REPORT,
+      link: 'register',
     },
     {
       id: '2.4',

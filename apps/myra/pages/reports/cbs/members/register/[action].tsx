@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
 import { MainLayout } from '@myra-ui';
 
-import { KYMStatusReport } from '@coop/cbs/reports';
+import { MemberRegisterReport } from '@coop/cbs/reports';
 
-const MBankingExpiryReport = () => <KYMStatusReport />;
+const MBankingExpiryReport = () => <MemberRegisterReport />;
 
 export default MBankingExpiryReport;
 
