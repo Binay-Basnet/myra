@@ -335,6 +335,7 @@ export type AccountingMutation = {
   bankAccounts: BankAccountMutation;
   externalLoan: ExternalLoanMutation;
   investment: AccountingInvestmentMutation;
+  journalVoucher: JournalVoucherMutation;
   sales: AccountingSalesMutation;
 };
 
@@ -5112,6 +5113,44 @@ export type JournalChartsOfAccount = {
   journalCode: Scalars['String'];
 };
 
+export type JournalVoucherEntry = {
+  accountId?: InputMaybe<Scalars['String']>;
+  crAmount?: InputMaybe<Scalars['String']>;
+  drAmount?: InputMaybe<Scalars['String']>;
+};
+
+export type JournalVoucherInput = {
+  chequeNo?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['String']>;
+  entries?: InputMaybe<Array<InputMaybe<JournalVoucherEntry>>>;
+  notes?: InputMaybe<Scalars['String']>;
+  paymentMode?: InputMaybe<JournalVoucherPaymentMode>;
+  reference?: InputMaybe<Scalars['String']>;
+};
+
+export type JournalVoucherMutation = {
+  new?: Maybe<JournalVoucherResult>;
+};
+
+export type JournalVoucherMutationNewArgs = {
+  data?: InputMaybe<JournalVoucherInput>;
+};
+
+export enum JournalVoucherPaymentMode {
+  Cash = 'CASH',
+  Cheque = 'CHEQUE',
+}
+
+export type JournalVoucherQuery = {
+  list?: Maybe<Scalars['Any']>;
+};
+
+export type JournalVoucherResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<JournalVoucherQuery>;
+  recordId?: Maybe<Scalars['String']>;
+};
+
 export type KymAddress = {
   coordinates?: Maybe<Coordinate>;
   districtId?: Maybe<Scalars['Int']>;
@@ -7395,6 +7434,94 @@ export type LoanAccountSearchFilter = {
   id?: InputMaybe<Scalars['ID']>;
   objectState?: InputMaybe<LoanObjState>;
   query?: InputMaybe<Scalars['String']>;
+};
+
+export type LoanAgingFilters = {
+  disbursePrincipal?: InputMaybe<MinMaxFilter>;
+  loanSubType?: InputMaybe<Scalars['String']>;
+  loanType?: InputMaybe<Scalars['String']>;
+  paymentMode?: InputMaybe<LoanAgingPaymentMode>;
+  remainingPrincipal?: InputMaybe<MinMaxFilter>;
+};
+
+export enum LoanAgingPaymentMode {
+  All = 'ALL',
+  HalfYearly = 'HALF_YEARLY',
+  Monthly = 'MONTHLY',
+  Quarterly = 'QUARTERLY',
+  Yearly = 'YEARLY',
+}
+
+export enum LoanAgingPeriod {
+  AboveTwelveMonths = 'ABOVE_TWELVE_MONTHS',
+  All = 'ALL',
+  Below_30Days = 'BELOW_30_DAYS',
+  CustomPeriod = 'CUSTOM_PERIOD',
+  OneTwelveMonths = 'ONE_TWELVE_MONTHS',
+  ThisFiscalYearToDate = 'THIS_FISCAL_YEAR_TO_DATE',
+  ThreeMonths = 'THREE_MONTHS',
+  TwoMonths = 'TWO_MONTHS',
+}
+
+export type LoanAgingPeriodInput = {
+  customPeriod?: InputMaybe<LocalizedDateFilter>;
+  periodType: LoanAgingPeriod;
+};
+
+export type LoanAgingStatementData = {
+  report?: Maybe<Array<Maybe<LoanAgingStatementReport>>>;
+  summary?: Maybe<LoanAgingStatementSummary>;
+};
+
+export type LoanAgingStatementInput = {
+  branchId?: InputMaybe<Scalars['String']>;
+  filter?: InputMaybe<LoanAgingFilters>;
+  period?: InputMaybe<LoanAgingPeriodInput>;
+};
+
+export type LoanAgingStatementReport = {
+  address?: Maybe<Scalars['String']>;
+  disbursePrincipal?: Maybe<Scalars['String']>;
+  goodAmount?: Maybe<Scalars['String']>;
+  installmentAmount?: Maybe<Scalars['String']>;
+  installmentLateDays?: Maybe<Scalars['Int']>;
+  issueDate?: Maybe<Scalars['Localized']>;
+  lastInterestPaidDate?: Maybe<Scalars['Localized']>;
+  lastPrincipalPaidDate?: Maybe<Scalars['Localized']>;
+  loanMaturityDate?: Maybe<Scalars['Localized']>;
+  loanNo?: Maybe<Scalars['String']>;
+  loanType?: Maybe<Scalars['String']>;
+  matured1To12Months?: Maybe<Scalars['String']>;
+  matured1To30Days?: Maybe<Scalars['String']>;
+  maturedAbove12Months?: Maybe<Scalars['String']>;
+  memberNo?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  paymentMode?: Maybe<Scalars['String']>;
+  phoneNo?: Maybe<Scalars['String']>;
+  remainingInstallmentAmount?: Maybe<Scalars['String']>;
+  remainingInterest?: Maybe<Scalars['String']>;
+  remainingPenalty?: Maybe<Scalars['String']>;
+  remainingPrincipal?: Maybe<Scalars['String']>;
+  totalDueAmount?: Maybe<Scalars['String']>;
+};
+
+export type LoanAgingStatementReportResult = {
+  data?: Maybe<LoanAgingStatementData>;
+  error?: Maybe<QueryError>;
+};
+
+export type LoanAgingStatementSummary = {
+  disbursePrincipalTotal?: Maybe<Scalars['String']>;
+  dueAmountTotal?: Maybe<Scalars['String']>;
+  goodAmountTotal?: Maybe<Scalars['String']>;
+  installmentAmountTotal?: Maybe<Scalars['String']>;
+  matured1To12MonthsTotal?: Maybe<Scalars['String']>;
+  matured1To30DaysTotal?: Maybe<Scalars['String']>;
+  maturedAbove12MonthsTotal?: Maybe<Scalars['String']>;
+  remainingInstallmentAmountTotal?: Maybe<Scalars['String']>;
+  remainingInterestTotal?: Maybe<Scalars['String']>;
+  remainingPenaltyTotal?: Maybe<Scalars['String']>;
+  remainingPrincipalTotal?: Maybe<Scalars['String']>;
 };
 
 export enum LoanApproveOrCancel {
@@ -9750,6 +9877,7 @@ export type ReportQuery = {
   interestTaxReport: InterestTaxReportResult;
   kymStatusReport?: Maybe<KymStatusReportResult>;
   listReports: ReportListConnection;
+  loanAgingStatementReport?: Maybe<LoanAgingStatementReportResult>;
   loanBalanceReport: LoanBalanceReportResult;
   loanStatementReport?: Maybe<ReportResult>;
   mBankingExpiryReport?: Maybe<EbankingRegistrationReportResult>;
@@ -9816,6 +9944,10 @@ export type ReportQueryListReportsArgs = {
   filter?: InputMaybe<ReportListFilter>;
   organizationId?: InputMaybe<Scalars['ID']>;
   pagination?: InputMaybe<Pagination>;
+};
+
+export type ReportQueryLoanAgingStatementReportArgs = {
+  data?: InputMaybe<LoanAgingStatementInput>;
 };
 
 export type ReportQueryLoanBalanceReportArgs = {
