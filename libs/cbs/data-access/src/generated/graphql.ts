@@ -1412,6 +1412,47 @@ export type CashInHandData = {
   todayValue?: Maybe<Scalars['String']>;
 };
 
+export type CashLedgerReport = {
+  balance?: Maybe<Scalars['String']>;
+  cashCr?: Maybe<Scalars['String']>;
+  cashDr?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  ledgerCode?: Maybe<Scalars['String']>;
+  particular?: Maybe<Scalars['String']>;
+  voucherNo?: Maybe<Scalars['String']>;
+};
+
+export type CashLedgerReportFilter = {
+  ledgerWise?: InputMaybe<CashLedgerWiseFilter>;
+  transactionWise?: InputMaybe<CashLedgerTransactionWiseFilter>;
+  userIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type CashLedgerReportFilterData = {
+  branchId?: InputMaybe<Scalars['String']>;
+  filter?: InputMaybe<CashLedgerReportFilter>;
+  period?: InputMaybe<PeriodInput>;
+};
+
+export type CashLedgerReportResult = {
+  closingBalance?: Maybe<Scalars['String']>;
+  details?: Maybe<Array<Maybe<CashLedgerReport>>>;
+  openingBalance?: Maybe<Scalars['String']>;
+  summary?: Maybe<Array<Maybe<CashLedgerReport>>>;
+};
+
+export enum CashLedgerTransactionWiseFilter {
+  All = 'ALL',
+  CashPayment = 'CASH_PAYMENT',
+  CashReceived = 'CASH_RECEIVED',
+}
+
+export enum CashLedgerWiseFilter {
+  All = 'ALL',
+  Details = 'DETAILS',
+  Summary = 'SUMMARY',
+}
+
 export enum CashValue {
   Cash_1 = 'CASH_1',
   Cash_2 = 'CASH_2',
@@ -8466,6 +8507,24 @@ export type MemberInactiveResult = {
   recordId?: Maybe<Scalars['ID']>;
 };
 
+export type MemberIndividualData = {
+  SpouseName?: Maybe<Scalars['String']>;
+  address?: Maybe<Address>;
+  contactNo?: Maybe<Scalars['String']>;
+  dob?: Maybe<Scalars['Localized']>;
+  email?: Maybe<Scalars['String']>;
+  fatherName?: Maybe<Scalars['String']>;
+  fingerPrint?: Maybe<Scalars['Boolean']>;
+  grandFatherName?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  other?: Maybe<Scalars['String']>;
+  photo?: Maybe<Scalars['Boolean']>;
+  profession?: Maybe<Scalars['String']>;
+  shareInfo?: Maybe<ShareInformation>;
+};
+
 export type MemberMutation = {
   activateMember?: Maybe<MemberActivateMutation>;
   cooperative?: Maybe<KymCooperativeMutation>;
@@ -8517,6 +8576,26 @@ export type MemberMutationOfficialUseArgs = {
 export type MemberMutationTranslateArgs = {
   data: TranslateInput;
   memberId: Scalars['ID'];
+};
+
+export type MemberOtherData = {
+  address?: Maybe<Address>;
+  authPersonName?: Maybe<Scalars['String']>;
+  balanceSheet?: Maybe<Scalars['String']>;
+  contactNo?: Maybe<Scalars['String']>;
+  doe?: Maybe<Scalars['Localized']>;
+  email?: Maybe<Scalars['String']>;
+  logo?: Maybe<Scalars['Boolean']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  other?: Maybe<Scalars['String']>;
+  post?: Maybe<Scalars['String']>;
+  shareInfo?: Maybe<ShareInformation>;
+  stamp?: Maybe<Scalars['Boolean']>;
+  totalMember?: Maybe<Scalars['String']>;
+  typeOfInstitution?: Maybe<Scalars['String']>;
+  workingArea?: Maybe<Scalars['String']>;
 };
 
 export type MemberOverviewAccountsView = {
@@ -8646,6 +8725,28 @@ export enum MemberRecentTransactionViewTxnType {
   Credit = 'CREDIT',
   Debit = 'DEBIT',
 }
+
+export type MemberRegFilters = {
+  gender?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  institutionType?: InputMaybe<Scalars['ID']>;
+  memberType?: InputMaybe<Array<InputMaybe<MemberType>>>;
+  occupation?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+};
+
+export type MemberRegistrationReport = {
+  individual?: Maybe<Array<Maybe<MemberIndividualData>>>;
+  other?: Maybe<Array<Maybe<MemberOtherData>>>;
+};
+
+export type MemberRegistrationReportData = {
+  filter?: InputMaybe<MemberRegFilters>;
+  period: PeriodInput;
+};
+
+export type MemberRegistrationReportResult = {
+  data?: Maybe<MemberRegistrationReport>;
+  error?: Maybe<QueryError>;
+};
 
 export type MemberReportFilters = {
   ageRange?: InputMaybe<MemberAgeRange>;
@@ -9642,6 +9743,7 @@ export type ReportQuery = {
   activeInactiveMemberReport?: Maybe<ReportResult>;
   bankGLStatementReport: BankGlStatementResult;
   branchReport?: Maybe<BranchReportResult>;
+  cashLedgerReport?: Maybe<CashLedgerReportResult>;
   generalLedgerReport: GenderLedgerReportResult;
   getReport?: Maybe<SavedReportResponse>;
   interestStatementReport: InterestPostingReportResult;
@@ -9654,6 +9756,7 @@ export type ReportQuery = {
   mBankingTransactionReport?: Maybe<MBankingTransactionResult>;
   mbankingRegistrationReport?: Maybe<EbankingRegistrationReportResult>;
   memberClassificationReport: MemberClassificationReportResult;
+  memberRegistrationReport?: Maybe<MemberRegistrationReportResult>;
   savingStatementReport?: Maybe<ReportResult>;
   savingsBalanceReport: SavingsBalanceReportResult;
   sharePurchaseRegisterReport?: Maybe<SharePurchaseRegisterResult>;
@@ -9683,6 +9786,10 @@ export type ReportQueryBankGlStatementReportArgs = {
 
 export type ReportQueryBranchReportArgs = {
   data?: InputMaybe<BranchReportFilter>;
+};
+
+export type ReportQueryCashLedgerReportArgs = {
+  data?: InputMaybe<CashLedgerReportFilterData>;
 };
 
 export type ReportQueryGeneralLedgerReportArgs = {
@@ -9733,6 +9840,10 @@ export type ReportQueryMbankingRegistrationReportArgs = {
 
 export type ReportQueryMemberClassificationReportArgs = {
   data: MemberClassificationFilter;
+};
+
+export type ReportQueryMemberRegistrationReportArgs = {
+  data?: InputMaybe<MemberRegistrationReportData>;
 };
 
 export type ReportQuerySavingStatementReportArgs = {
@@ -10471,6 +10582,12 @@ export type ShareInfoView = {
   returnedCount?: Maybe<Scalars['String']>;
   totalBalance?: Maybe<Scalars['String']>;
   totalCount?: Maybe<Scalars['String']>;
+};
+
+export type ShareInformation = {
+  amount?: Maybe<Scalars['String']>;
+  kitta?: Maybe<Scalars['String']>;
+  perShareAmount?: Maybe<Scalars['String']>;
 };
 
 export type ShareInvestment = {
@@ -18575,6 +18692,37 @@ export type GetTransactionTellerReportQuery = {
         };
       };
     };
+  };
+};
+
+export type GetCashLedgerReportQueryVariables = Exact<{
+  data?: InputMaybe<CashLedgerReportFilterData>;
+}>;
+
+export type GetCashLedgerReportQuery = {
+  report: {
+    cashLedgerReport?: {
+      openingBalance?: string | null;
+      closingBalance?: string | null;
+      summary?: Array<{
+        date?: Record<'local' | 'en' | 'np', string> | null;
+        ledgerCode?: string | null;
+        particular?: string | null;
+        voucherNo?: string | null;
+        cashDr?: string | null;
+        cashCr?: string | null;
+        balance?: string | null;
+      } | null> | null;
+      details?: Array<{
+        date?: Record<'local' | 'en' | 'np', string> | null;
+        ledgerCode?: string | null;
+        particular?: string | null;
+        voucherNo?: string | null;
+        cashDr?: string | null;
+        cashCr?: string | null;
+        balance?: string | null;
+      } | null> | null;
+    } | null;
   };
 };
 
@@ -30363,6 +30511,45 @@ export const useGetTransactionTellerReportQuery = <
     ['getTransactionTellerReport', variables],
     useAxios<GetTransactionTellerReportQuery, GetTransactionTellerReportQueryVariables>(
       GetTransactionTellerReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetCashLedgerReportDocument = `
+    query getCashLedgerReport($data: CashLedgerReportFilterData) {
+  report {
+    cashLedgerReport(data: $data) {
+      openingBalance
+      closingBalance
+      summary {
+        date
+        ledgerCode
+        particular
+        voucherNo
+        cashDr
+        cashCr
+        balance
+      }
+      details {
+        date
+        ledgerCode
+        particular
+        voucherNo
+        cashDr
+        cashCr
+        balance
+      }
+    }
+  }
+}
+    `;
+export const useGetCashLedgerReportQuery = <TData = GetCashLedgerReportQuery, TError = unknown>(
+  variables?: GetCashLedgerReportQueryVariables,
+  options?: UseQueryOptions<GetCashLedgerReportQuery, TError, TData>
+) =>
+  useQuery<GetCashLedgerReportQuery, TError, TData>(
+    variables === undefined ? ['getCashLedgerReport'] : ['getCashLedgerReport', variables],
+    useAxios<GetCashLedgerReportQuery, GetCashLedgerReportQueryVariables>(
+      GetCashLedgerReportDocument
     ).bind(null, variables),
     options
   );
