@@ -2,12 +2,13 @@ import { useFormContext } from 'react-hook-form';
 import { FormSection, GridItem, Text } from '@myra-ui';
 
 import { ExternalLoanType, useExternalLoanAccountListQuery } from '@coop/cbs/data-access';
-import { FormAmountInput, FormInput, FormSelect } from '@coop/shared/form';
+import { FormAmountInput, FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 import { getRouterQuery } from '@coop/shared/utils';
 
 export const ExternalLoanInfo = () => {
   const { watch } = useFormContext();
   const appliedAmount = watch('appliedAmount');
+  const loanAppliedDate = watch('loanAppliedDate');
 
   const { data } = useExternalLoanAccountListQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
@@ -42,8 +43,12 @@ export const ExternalLoanInfo = () => {
         </GridItem>
         <FormSelect name="typeOfLoan" label="Type of Loan" options={loanTypeList} />
 
-        <FormInput name="loanAppliedDate" type="date" label="Loan Applied Date" />
-        <FormInput name="loanApprovedDate" type="date" label="Loan Approved Date" />
+        <FormDatePicker name="loanAppliedDate" label="Loan Applied Date" />
+        <FormDatePicker
+          maxDate={loanAppliedDate}
+          name="loanApprovedDate"
+          label="Loan Approved Date"
+        />
       </FormSection>
 
       <FormSection divider={false}>

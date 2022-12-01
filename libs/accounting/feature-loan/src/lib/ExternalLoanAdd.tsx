@@ -17,6 +17,7 @@ import {
 import {
   ExternalLoanApplicationInput,
   ExternalLoanPaymentMethod,
+  ExternalLoanType,
   FrequencyTenure,
   InstallmentFrequency,
   LoanRepaymentScheme,
@@ -29,6 +30,7 @@ import {
   Collateral,
   Documents,
   ExternalLoanInfo,
+  FixDeposit,
   Installment,
   Insurance,
   LoanProcessTable,
@@ -55,6 +57,7 @@ export const ExternalLoanAdd = () => {
   const { getValues, watch } = methods;
 
   const insurance = watch('insurance');
+  const typeOfLoan = watch('typeOfLoan');
 
   const { mutateAsync } = useSetExternalLoanMutation();
 
@@ -108,7 +111,8 @@ export const ExternalLoanAdd = () => {
 
               <Installment />
 
-              <Collateral />
+              {typeOfLoan === ExternalLoanType.Collateral && <Collateral />}
+              {typeOfLoan === ExternalLoanType.LoanAgainstFd && <FixDeposit />}
 
               <FormSection>
                 <GridItem colSpan={3}>
