@@ -3,6 +3,7 @@ import { AiFillCheckCircle, AiOutlinePlus } from 'react-icons/ai';
 import { IoCheckmarkDone } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { Box } from '@chakra-ui/react';
+import { Alert, Button, Container, Divider, FormFooter, Icon, Text, VStack } from '@myra-ui';
 import { useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -12,7 +13,6 @@ import {
   useGetMemberCheckQuery,
   useGetMemberIndividualDataQuery,
 } from '@coop/cbs/data-access';
-import { Alert, Button, Container, Divider, FormFooter, Icon, Text, VStack } from '@myra-ui';
 
 import { MembershipPayment } from '../components/MembershipPayment';
 
@@ -311,7 +311,7 @@ export const AccountRow = ({ account, index }: AccountRowProps) => {
             </Text>
           </Box>
 
-          {showAlert && (
+          {showAlert && !hasFilledDetails && (
             <Alert
               hideCloseIcon
               status="warning"
