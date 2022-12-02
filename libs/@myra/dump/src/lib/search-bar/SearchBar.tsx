@@ -120,7 +120,7 @@ export const SearchBar = () => {
   const recentSearch = recentSearches?.reverse().slice(0, 4);
 
   const { mutateAsync: getNewId } = useGetNewIdMutation();
-  const { data: globalSearchData, isLoading } = useGetGlobalSearchQuery(
+  const { data: globalSearchData, isInitialLoading } = useGetGlobalSearchQuery(
     {
       filter: { filterMode: Filter_Mode.Or, query: debouncedValue, page: debouncedValue },
       pagination: { after: '', first: 4 },
@@ -298,7 +298,7 @@ export const SearchBar = () => {
             gap="s8"
             maxH="400px"
           >
-            {isLoading && (
+            {isInitialLoading && (
               <Box>
                 <Loader height={80} />
               </Box>
