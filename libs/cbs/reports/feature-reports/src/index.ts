@@ -7,6 +7,7 @@ export * from './lib/deposit/InterestTaxReport';
 export * from './lib/deposit/SavingStatementReport';
 export * from './lib/deposit/TTRReport';
 export * from './lib/LedgerReport';
+export * from './lib/loan/LoanAgeingStatementReport';
 export * from './lib/loan/LoanBalanceReport';
 export * from './lib/loan/LoanStatementReport';
 export * from './lib/members/KYMStatusReport';

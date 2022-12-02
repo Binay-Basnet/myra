@@ -267,6 +267,7 @@ export const REPORTS = {
     {
       id: '6.3',
       report: Report.LOAN_AGING_REPORT,
+      link: 'ageing',
     },
     {
       id: '6.4',
