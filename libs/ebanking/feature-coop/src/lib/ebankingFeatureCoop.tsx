@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Skeleton } from '@chakra-ui/react';
+import { Box, Button, Divider, Grid, Icon, Text, VStack } from '@myra-ui';
 
 import { DefaultAccountPopover } from '@coop/ebanking/accounts';
 import { CoopCard, CoopDownloadCard, COOPHeaderCard, InfoCard } from '@coop/ebanking/cards';
@@ -18,21 +19,17 @@ import {
   useGetCoopDownloadsQuery,
   useGetCoopLoanServicesQuery,
 } from '@coop/ebanking/data-access';
-import { Box, Button, Divider, Grid, Icon, Text, VStack } from '@myra-ui';
-
-/* eslint-disable-next-line */
-export interface EbankingFeatureCoopProps {}
 
 const CHEQUE_SERVICE_DICT: Record<string, { icon: IconType; link: string }> = {
-  'Request chequebook': {
+  'Request Withdraw slip': {
     link: '/coop/cheque/request',
     icon: FiBook,
   },
-  'Withdraw via collector': {
+  'Withdraw via market representative': {
     icon: IoCashOutline,
     link: '/coop/cheque/withdraw',
   },
-  'Block Cheque': {
+  'Block Withdraw Slip': {
     icon: ImBlocked,
     link: '/coop/cheque/block',
   },

@@ -63,7 +63,7 @@ export const MemberRegisterReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Member Reports', link: '/reports/cbs/savings' },
+            { label: 'Member Reports', link: '/reports/cbs/members' },
             { label: 'Member Register', link: '/reports/cbs/members/register/new' },
           ]}
         />
@@ -141,11 +141,13 @@ export const MemberRegisterReport = () => {
                     {
                       header: 'FingerPrint',
                       accessorKey: 'fingerPrint',
+                      cell: (props) => (props?.getValue() ? 'Yes' : 'No'),
                     },
 
                     {
                       header: 'Photo',
                       accessorKey: 'photo',
+                      cell: (props) => (props?.getValue() ? 'Yes' : 'No'),
                     },
 
                     {
@@ -250,6 +252,7 @@ export const MemberRegisterReport = () => {
                     {
                       header: 'Stamp',
                       accessorKey: 'stamp',
+                      cell: (props) => (props?.getValue() ? 'Yes' : 'No'),
                     },
 
                     {

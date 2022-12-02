@@ -1,17 +1,8 @@
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { useRouter } from 'next/router';
 import { Box, Input, InputGroup, InputLeftElement, Popover, Text } from '@chakra-ui/react';
+import { DEFAULT_PAGE_SIZE, PopoverTrigger } from '@myra/dump';
 import qs from 'qs';
-
-import {
-  DEFAULT_PAGE_SIZE,
-  Grid,
-  GridItem,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
-  TextFields,
-} from '@myra/dump';
 
 import Button from '../button/Button';
 import Icon from '../icon/Icon';
@@ -193,7 +184,7 @@ export const TableSearch = ({ placeholder, pagination, size, setSize }: TableSea
             </Button>
           </Box>
         </PopoverTrigger>
-        <PopoverContent minWidth="180px" w="180px" color="white" _focus={{ boxShadow: 'none' }}>
+        {/*   <PopoverContent minWidth="180px" w="180px" color="white" _focus={{ boxShadow: 'none' }}>
           <PopoverBody px="0" py="s8">
             <Grid>
               <GridItem px="s16" py="s8" _hover={{ bg: 'gray.100' }} cursor="pointer">
@@ -208,7 +199,7 @@ export const TableSearch = ({ placeholder, pagination, size, setSize }: TableSea
               </GridItem>
             </Grid>
           </PopoverBody>
-        </PopoverContent>
+        </PopoverContent> */}
       </Popover>
     </Box>
   );

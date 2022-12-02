@@ -12,9 +12,9 @@ import { FiSettings } from 'react-icons/fi';
 import { IoMdPersonAdd } from 'react-icons/io';
 import { RiNewspaperLine } from 'react-icons/ri';
 import { useRouter } from 'next/router';
+import { Box, ChakraModal, Grid, GridItem, QuickLinks, Text } from '@myra-ui';
 
 import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
-import { Box, ChakraModal, Grid, GridItem, QuickLinks, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const QuickLinksComponent = () => {
@@ -110,9 +110,9 @@ export const QuickLinksComponent = () => {
   const [openModal, setOpenModal] = useState(false);
   const [characters, setCharacters] = useState(quickLinksList);
 
-  const onOpenModal = () => {
-    setOpenModal(true);
-  };
+  // const onOpenModal = () => {
+  //   setOpenModal(true);
+  // };
 
   const onCloseModal = () => {
     setOpenModal(false);
@@ -134,7 +134,7 @@ export const QuickLinksComponent = () => {
         <Text fontSize="s3" color="gray.600" fontWeight="SemiBold" textTransform="uppercase">
           {t['quickLinks']}
         </Text>
-        <Text
+        {/*  <Text
           pb="0"
           fontSize="s3"
           fontWeight="semibold"
@@ -149,7 +149,7 @@ export const QuickLinksComponent = () => {
           }}
         >
           {t['editLinks']}
-        </Text>
+        </Text> */}
       </Box>
 
       <Grid templateColumns="repeat(3,1fr)" columnGap="s16" rowGap="s16">

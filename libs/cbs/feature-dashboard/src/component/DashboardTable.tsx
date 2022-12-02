@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
+import { DetailsCard } from '@myra-ui';
 
 import { useGetDashboardInfoQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@coop/shared/table';
-import { Button, DetailsCard } from '@myra-ui';
 
 export const DashboardTable = () => {
   const { data } = useGetDashboardInfoQuery();
@@ -61,7 +61,7 @@ export const DashboardTable = () => {
     <DetailsCard
       title="Pending Requests"
       hasTable
-      leftBtn={<Button variant="ghost">View All Requests</Button>}
+      // leftBtn={<Button variant="ghost">View All Requests</Button>}
     >
       <Table isStatic showFooter isLoading={false} data={dataList ?? []} columns={columns} />
     </DetailsCard>

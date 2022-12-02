@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
-import { IoPrintOutline } from 'react-icons/io5';
-import { Button, DetailsCard } from '@myra-ui';
+import { DetailsCard } from '@myra-ui';
 
 import { Column, Table } from '@coop/shared/table';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
@@ -50,11 +49,11 @@ export const GlTransaction = ({ data, totalDebit, totalCredit }: GlTransactionDe
     <DetailsCard
       title={t['transDetailGLTransactions']}
       hasTable
-      leftBtn={
-        <Button variant="ghost" leftIcon={<IoPrintOutline />}>
-          {t['transDetailPrintPdf']}
-        </Button>
-      }
+      // leftBtn={
+      //   <Button variant="ghost" leftIcon={<IoPrintOutline />}>
+      //     {t['transDetailPrintPdf']}
+      //   </Button>
+      // }
     >
       <Table showFooter isStatic isLoading={false} data={rowData ?? []} columns={columns} />
     </DetailsCard>
