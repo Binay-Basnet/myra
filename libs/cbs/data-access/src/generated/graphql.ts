@@ -18961,6 +18961,57 @@ export type GetMemberRegistrationReportQuery = {
   };
 };
 
+export type GetLoanAgingStatementReportQueryVariables = Exact<{
+  data?: InputMaybe<LoanAgingStatementInput>;
+}>;
+
+export type GetLoanAgingStatementReportQuery = {
+  report: {
+    loanAgingStatementReport?: {
+      data?: {
+        report?: Array<{
+          memberNo?: string | null;
+          loanNo?: string | null;
+          name?: string | null;
+          address?: string | null;
+          phoneNo?: string | null;
+          loanType?: string | null;
+          paymentMode?: string | null;
+          issueDate?: Record<'local' | 'en' | 'np', string> | null;
+          loanMaturityDate?: Record<'local' | 'en' | 'np', string> | null;
+          disbursePrincipal?: string | null;
+          remainingPrincipal?: string | null;
+          installmentAmount?: string | null;
+          remainingInstallmentAmount?: string | null;
+          remainingInterest?: string | null;
+          remainingPenalty?: string | null;
+          totalDueAmount?: string | null;
+          goodAmount?: string | null;
+          matured1To30Days?: string | null;
+          matured1To12Months?: string | null;
+          maturedAbove12Months?: string | null;
+          lastPrincipalPaidDate?: Record<'local' | 'en' | 'np', string> | null;
+          lastInterestPaidDate?: Record<'local' | 'en' | 'np', string> | null;
+          installmentLateDays?: number | null;
+        } | null> | null;
+        summary?: {
+          disbursePrincipalTotal?: string | null;
+          remainingPrincipalTotal?: string | null;
+          installmentAmountTotal?: string | null;
+          remainingInstallmentAmountTotal?: string | null;
+          remainingInterestTotal?: string | null;
+          remainingPenaltyTotal?: string | null;
+          dueAmountTotal?: string | null;
+          goodAmountTotal?: string | null;
+          matured1To30DaysTotal?: string | null;
+          matured1To12MonthsTotal?: string | null;
+          maturedAbove12MonthsTotal?: string | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetShareStatementQueryVariables = Exact<{
   data: ShareStatementReportSettings;
 }>;
@@ -30860,6 +30911,70 @@ export const useGetMemberRegistrationReportQuery = <
       : ['getMemberRegistrationReport', variables],
     useAxios<GetMemberRegistrationReportQuery, GetMemberRegistrationReportQueryVariables>(
       GetMemberRegistrationReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanAgingStatementReportDocument = `
+    query getLoanAgingStatementReport($data: LoanAgingStatementInput) {
+  report {
+    loanAgingStatementReport(data: $data) {
+      data {
+        report {
+          memberNo
+          loanNo
+          name
+          address
+          phoneNo
+          loanType
+          paymentMode
+          issueDate
+          loanMaturityDate
+          disbursePrincipal
+          remainingPrincipal
+          installmentAmount
+          remainingInstallmentAmount
+          remainingInterest
+          remainingPenalty
+          totalDueAmount
+          goodAmount
+          matured1To30Days
+          matured1To12Months
+          maturedAbove12Months
+          lastPrincipalPaidDate
+          lastInterestPaidDate
+          installmentLateDays
+        }
+        summary {
+          disbursePrincipalTotal
+          remainingPrincipalTotal
+          installmentAmountTotal
+          remainingInstallmentAmountTotal
+          remainingInterestTotal
+          remainingPenaltyTotal
+          dueAmountTotal
+          goodAmountTotal
+          matured1To30DaysTotal
+          matured1To12MonthsTotal
+          maturedAbove12MonthsTotal
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanAgingStatementReportQuery = <
+  TData = GetLoanAgingStatementReportQuery,
+  TError = unknown
+>(
+  variables?: GetLoanAgingStatementReportQueryVariables,
+  options?: UseQueryOptions<GetLoanAgingStatementReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanAgingStatementReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getLoanAgingStatementReport']
+      : ['getLoanAgingStatementReport', variables],
+    useAxios<GetLoanAgingStatementReportQuery, GetLoanAgingStatementReportQueryVariables>(
+      GetLoanAgingStatementReportDocument
     ).bind(null, variables),
     options
   );
