@@ -452,6 +452,11 @@ export type AccountsTransactionFilter = {
   memberIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
+export type AccountsUnderLeafNode = {
+  accountId?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+};
+
 export type ActiveInactiveMemberReport = {
   branchDetails?: Maybe<Branch>;
   branchID: Scalars['ID'];
@@ -1538,6 +1543,7 @@ export type ChartsOfAccountSettingsMutation = {
 export type ChartsOfAccountSettingsQuery = {
   accounts: ChartsOfAccountResult;
   accountsUnder?: Maybe<CoaMinimalResult>;
+  accountsUnderLeaf?: Maybe<Array<Maybe<AccountsUnderLeafNode>>>;
   class?: Maybe<ChartsOfAccountClassResult>;
   fullView: CoaFullView;
   search?: Maybe<CoaMinimalResult>;
@@ -1549,6 +1555,10 @@ export type ChartsOfAccountSettingsQueryAccountsArgs = {
 
 export type ChartsOfAccountSettingsQueryAccountsUnderArgs = {
   accountCode?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type ChartsOfAccountSettingsQueryAccountsUnderLeafArgs = {
+  parentId: Scalars['String'];
 };
 
 export type ChartsOfAccountSettingsQuerySearchArgs = {
@@ -2335,6 +2345,12 @@ export enum DefaultAccountType {
 }
 
 export type Denomination = {
+  quantity: Scalars['Int'];
+  value: CashValue;
+};
+
+export type DenominationValue = {
+  amount?: Maybe<Scalars['String']>;
   quantity: Scalars['Int'];
   value: CashValue;
 };
@@ -3611,10 +3627,15 @@ export type FamilyMemberDetails = {
 
 export type FianancialTransactionReport = {
   tellerReport: TellerReportResult;
+  vaultBalanceReport: VaultBalanceReportResult;
 };
 
 export type FianancialTransactionReportTellerReportArgs = {
   data: TellerReportFilter;
+};
+
+export type FianancialTransactionReportVaultBalanceReportArgs = {
+  data: VaultBalanceReportFilter;
 };
 
 export type FieldDetailsQueryResult = {
@@ -11904,6 +11925,30 @@ export enum ValuatorType {
   Individual = 'INDIVIDUAL',
   Organization = 'ORGANIZATION',
 }
+
+export type VaultBalanceDataEntry = {
+  amountTotal?: Maybe<Scalars['String']>;
+  denomination?: Maybe<Array<Maybe<DenominationValue>>>;
+  noneAmount?: Maybe<Scalars['String']>;
+  noteTotal?: Maybe<Scalars['String']>;
+};
+
+export type VaultBalanceReportData = {
+  closing?: Maybe<VaultBalanceDataEntry>;
+  opening?: Maybe<VaultBalanceDataEntry>;
+  vaultIn?: Maybe<VaultBalanceDataEntry>;
+  vaultOut?: Maybe<VaultBalanceDataEntry>;
+};
+
+export type VaultBalanceReportFilter = {
+  branchId: Scalars['String'];
+  date?: InputMaybe<LocalizedDateFilter>;
+};
+
+export type VaultBalanceReportResult = {
+  data?: Maybe<VaultBalanceReportData>;
+  error?: Maybe<QueryError>;
+};
 
 export enum Week {
   Friday = 'FRIDAY',

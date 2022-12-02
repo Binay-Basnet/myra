@@ -1,20 +1,14 @@
 import { useState } from 'react';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
-import {
-  AiFillInfoCircle,
-  AiOutlineBarcode,
-  AiOutlineUnorderedList,
-  AiOutlineUser,
-  AiOutlineUserAdd,
-} from 'react-icons/ai';
-import { BsLockFill } from 'react-icons/bs';
-import { FiSettings } from 'react-icons/fi';
+import { AiOutlineUnorderedList } from 'react-icons/ai';
+import { BsArrowLeftRight, BsFileText } from 'react-icons/bs';
+import { ImStack } from 'react-icons/im';
 import { IoMdPersonAdd } from 'react-icons/io';
-import { RiNewspaperLine } from 'react-icons/ri';
+import { IoCubeOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
+import { Box, ChakraModal, Grid, GridItem, QuickLinks, Text } from '@myra-ui';
 
 import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
-import { Box, ChakraModal, Grid, GridItem, QuickLinks, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const QuickLinksComponent = () => {
@@ -34,76 +28,55 @@ export const QuickLinksComponent = () => {
     },
     {
       id: 'b',
-      text: 'Ledgers',
-      icon: RiNewspaperLine,
-      onclick: () =>
-        newId
-          .mutateAsync({ idType: Id_Type.Kymindividual })
-          .then((res) => router.push(`/members/individual/add/${res?.newId}`)),
+      text: 'Add New Deposit',
+      icon: ImStack,
+      onclick: () => router.push('/savings/deposit/add'),
     },
     {
       id: 'c',
-      text: 'Applications',
-      icon: AiOutlineBarcode,
-      onclick: () =>
-        newId
-          .mutateAsync({ idType: Id_Type.Kymindividual })
-          .then((res) => router.push(`/members/individual/add/${res?.newId}`)),
+      text: 'Add New Withdraw',
+      icon: BsArrowLeftRight,
+      onclick: () => router.push('/savings/withdraw/add'),
     },
     {
       id: 'd',
-      text: 'List Pages',
+      text: 'Add Journal Voucher',
       icon: AiOutlineUnorderedList,
-      onclick: () =>
-        newId
-          .mutateAsync({ idType: Id_Type.Kymindividual })
-          .then((res) => router.push(`/members/individual/add/${res?.newId}`)),
+      onclick: () => router.push('/transactions/journal-vouchers/add'),
     },
     {
       id: 'e',
-      text: 'Items',
-      icon: BsLockFill,
-      onclick: () =>
-        newId
-          .mutateAsync({ idType: Id_Type.Kymindividual })
-          .then((res) => router.push(`/members/individual/add/${res?.newId}`)),
+      text: 'New Share Issue',
+      icon: IoCubeOutline,
+      onclick: () => router.push('/share/share-issue'),
     },
     {
       id: 'f',
-      text: 'Settings',
-      icon: FiSettings,
-      onclick: () =>
-        newId
-          .mutateAsync({ idType: Id_Type.Kymindividual })
-          .then((res) => router.push(`/members/individual/add/${res?.newId}`)),
+      text: 'Share Return',
+      icon: IoCubeOutline,
+      onclick: () => router.push('/share/share-return'),
     },
     {
       id: 'g',
-      text: 'Ram Krishna',
+      text: 'New Saving Account',
       subText: 'Member Profile',
-      icon: AiOutlineUser,
+      icon: ImStack,
       onclick: () =>
         newId
           .mutateAsync({ idType: Id_Type.Kymindividual })
-          .then((res) => router.push(`/members/individual/add/${res?.newId}`)),
+          .then((res) => router.push(`/savings/account-open/add/${res?.newId}`)),
     },
     {
       id: 'h',
-      text: 'Form Pages',
-      icon: AiOutlineUserAdd,
-      onclick: () =>
-        newId
-          .mutateAsync({ idType: Id_Type.Kymindividual })
-          .then((res) => router.push(`/members/individual/add/${res?.newId}`)),
+      text: 'New Loan Account',
+      icon: BsArrowLeftRight,
+      onclick: () => router.push('/loan/apply'),
     },
     {
       id: 'i',
       text: 'Reports',
-      icon: AiFillInfoCircle,
-      onclick: () =>
-        newId
-          .mutateAsync({ idType: Id_Type.Kymindividual })
-          .then((res) => router.push(`/members/individual/add/${res?.newId}`)),
+      icon: BsFileText,
+      onclick: () => router.push('/reports/cbs/organizations'),
     },
   ];
 
