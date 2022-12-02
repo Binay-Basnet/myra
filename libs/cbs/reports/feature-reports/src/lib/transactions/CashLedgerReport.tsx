@@ -265,8 +265,9 @@ export const CashLedgersReport = () => {
                     },
                     {
                       header: 'Cash Recieved Cr.',
-                      cell: (props) => amountConverter(props.getValue() as string),
                       accessorKey: 'cashCr',
+                      cell: (props) => amountConverter(props.getValue() as string),
+
                       meta: {
                         isNumeric: true,
                         Footer: {

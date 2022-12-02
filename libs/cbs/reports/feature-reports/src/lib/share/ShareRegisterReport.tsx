@@ -85,7 +85,7 @@ export const ShareRegisterReport = () => {
                     },
                   },
                   {
-                    header: 'Kitta Number Form ',
+                    header: 'Kitta Number From ',
                     accessorKey: 'kittaNumFrom',
                     meta: {
                       isNumeric: true,

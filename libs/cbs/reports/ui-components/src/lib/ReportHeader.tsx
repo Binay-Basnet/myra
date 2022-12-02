@@ -1,10 +1,10 @@
 import { Fragment, useState } from 'react';
 import { useForm, useFormContext } from 'react-hook-form';
-import { BsPinAngle } from 'react-icons/bs';
 import { GrClose } from 'react-icons/gr';
 import { IoChevronForward, IoSaveOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { IconButton } from '@chakra-ui/react';
+import { asyncToast, Box, Button, Icon, Input, Modal, TextFields } from '@myra-ui';
 import { useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -12,7 +12,6 @@ import {
   useGetNewIdMutation,
   useSaveNewReportMutation,
 } from '@coop/cbs/data-access';
-import { asyncToast, Box, Button, Icon, Input, Modal, TextFields } from '@myra-ui';
 
 type Path = {
   link?: string;
@@ -81,13 +80,13 @@ export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
             </Fragment>
           ))}
         </Box>
-        <Icon as={BsPinAngle} color="gray.700" pr="" />
+        {/* <Icon as={BsPinAngle} color="gray.700" pr="" /> */}
       </Box>
       <Box display="flex" alignItems="center" gap="s16">
-        <Button variant="ghost" shade="neutral" gap="s8">
-          <Icon as={ExportIcon} />
-          Export
-        </Button>
+        {/* <Button variant="ghost" shade="neutral" gap="s8"> */}
+        {/*   <Icon as={ExportIcon} /> */}
+        {/*   Export */}
+        {/* </Button> */}
 
         <Button
           variant="ghost"
@@ -162,21 +161,21 @@ export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
   );
 };
 
-const ExportIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-    <path
-      d="M13.125 6.875H14.6875C15.1019 6.875 15.4993 7.03962 15.7924 7.33265C16.0854 7.62567 16.25 8.0231 16.25 8.4375V16.5625C16.25 16.9769 16.0854 17.3743 15.7924 17.6674C15.4993 17.9604 15.1019 18.125 14.6875 18.125H5.3125C4.8981 18.125 4.50067 17.9604 4.20765 17.6674C3.91462 17.3743 3.75 16.9769 3.75 16.5625V8.4375C3.75 8.0231 3.91462 7.62567 4.20765 7.33265C4.50067 7.03962 4.8981 6.875 5.3125 6.875H6.875"
-      stroke="#343C46"
-      strokeWidth="1.25"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M6.875 10.625L10 13.75L13.125 10.625M10 1.875V13.125"
-      stroke="#343C46"
-      strokeWidth="1.25"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
+// const ExportIcon = () => (
+//   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+//     <path
+//       d="M13.125 6.875H14.6875C15.1019 6.875 15.4993 7.03962 15.7924 7.33265C16.0854 7.62567 16.25 8.0231 16.25 8.4375V16.5625C16.25 16.9769 16.0854 17.3743 15.7924 17.6674C15.4993 17.9604 15.1019 18.125 14.6875 18.125H5.3125C4.8981 18.125 4.50067 17.9604 4.20765 17.6674C3.91462 17.3743 3.75 16.9769 3.75 16.5625V8.4375C3.75 8.0231 3.91462 7.62567 4.20765 7.33265C4.50067 7.03962 4.8981 6.875 5.3125 6.875H6.875"
+//       stroke="#343C46"
+//       strokeWidth="1.25"
+//       strokeLinecap="round"
+//       strokeLinejoin="round"
+//     />
+//     <path
+//       d="M6.875 10.625L10 13.75L13.125 10.625M10 1.875V13.125"
+//       stroke="#343C46"
+//       strokeWidth="1.25"
+//       strokeLinecap="round"
+//       strokeLinejoin="round"
+//     />
+//   </svg>
+// );

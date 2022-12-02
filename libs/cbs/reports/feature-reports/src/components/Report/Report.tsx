@@ -253,8 +253,10 @@ export const ReportFilter = ({ title, children }: IReportFilterProps) => (
 
 export const ReportInputs = <T extends FieldValues | null>({
   children,
+  hideDate,
 }: {
   children: React.ReactNode;
+  hideDate?: boolean;
 }) => {
   const { getValues, watch } = useFormContext<NonNullable<T>>();
 
@@ -273,7 +275,7 @@ export const ReportInputs = <T extends FieldValues | null>({
       <Box display="flex" gap="s16">
         <Button
           // TODO! Fix this
-          isDisabled={!watch()?.['period']?.['periodType']}
+          isDisabled={hideDate ? false : !watch()?.['period']?.['periodType']}
           size="lg"
           onClick={() => {
             setFilters({

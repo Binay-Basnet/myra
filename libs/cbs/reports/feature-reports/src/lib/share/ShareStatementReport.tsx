@@ -5,7 +5,6 @@ import {
   ShareStatement,
   ShareStatementReportSettings,
   ShareTransactionType,
-  useAppSelector,
   useGetShareStatementQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
@@ -22,7 +21,7 @@ export const ShareStatementReport = () => {
   );
 
   const shareMember = data?.report?.shareStatementReport?.member;
-  const branch = useAppSelector((state) => state?.auth?.user?.branch);
+  // const branch = useAppSelector((state) => state?.auth?.user?.branch);
 
   // const member = {
   //   'Name of member': shareMember?.name?.local as string,
@@ -49,7 +48,7 @@ export const ShareStatementReport = () => {
         <Report.PageHeader
           paths={[
             { label: 'Share Reports', link: '/reports/cbs/share' },
-            { label: 'Share Reports', link: '/reports/cbs/share/statement/new' },
+            { label: 'Share Statement', link: '/reports/cbs/share/statement/new' },
           ]}
         />
         <Report.Inputs>

@@ -83,9 +83,9 @@ export const QuickLinksComponent = () => {
   const [openModal, setOpenModal] = useState(false);
   const [characters, setCharacters] = useState(quickLinksList);
 
-  const onOpenModal = () => {
-    setOpenModal(true);
-  };
+  // const onOpenModal = () => {
+  //   setOpenModal(true);
+  // };
 
   const onCloseModal = () => {
     setOpenModal(false);
@@ -107,7 +107,7 @@ export const QuickLinksComponent = () => {
         <Text fontSize="s3" color="gray.600" fontWeight="SemiBold" textTransform="uppercase">
           {t['quickLinks']}
         </Text>
-        <Text
+        {/*  <Text
           pb="0"
           fontSize="s3"
           fontWeight="semibold"
@@ -122,7 +122,7 @@ export const QuickLinksComponent = () => {
           }}
         >
           {t['editLinks']}
-        </Text>
+        </Text> */}
       </Box>
 
       <Grid templateColumns="repeat(3,1fr)" columnGap="s16" rowGap="s16">
