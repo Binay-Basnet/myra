@@ -31,6 +31,7 @@
     "@fontsource/inter": "^4.5.10",
     "@hookform/resolvers": "^2.9.9",
     "@nrwl/next": "15.0.13",
+    "@nrwl/tao": "^15.2.4",
     "@raralabs/react-patro": "^1.0.1",
     "@raralabs/web-feedback": "^2.0.4",
     "@reduxjs/toolkit": "1.8.4",
@@ -73,6 +74,7 @@
     "regenerator-runtime": "0.13.7",
     "storybook-addon-next-router": "^4.0.0",
     "to-words": "^3.3.0",
+    "tsconfig-paths-webpack-plugin": "^4.0.0",
     "tslib": "^2.3.0",
     "yup": "^0.32.11"
   },
