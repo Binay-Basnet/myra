@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { InvestmentType, useGetInvestmentAccountsListDataQuery } from '@coop/cbs/data-access';
 import { formatTableAddress } from '@coop/cbs/utils';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 import { TablePopover } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 

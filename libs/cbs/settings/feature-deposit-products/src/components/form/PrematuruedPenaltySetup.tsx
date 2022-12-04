@@ -50,7 +50,7 @@ export const PrematuredPenalty = () => {
       <GridItem colSpan={3}>
         <BoxContainer>
           {/* <Box display="flex" justifyContent="space-between">
-            <TextFields>{t['prematurePenaltyEnable']}</TextFields>
+            <Text>{t['prematurePenaltyEnable']}</Text>
             <FormSwitchTab name="isPrematurePenaltyApplicable" options={enableSwitch} />
           </Box> */}
 

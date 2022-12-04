@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
 
 import { useGetLoanRepaymentListQuery } from '@coop/cbs/data-access';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 import { amountConverter, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const CBSLoanRepaymentList = () => {

@@ -7,6 +7,8 @@ import { useDisclosure } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
+import { Box, Button, Modal, getError, Icon, Input, PasswordInput, Text } from '@myra-ui';
+
 import { GoBack } from '@coop/ebanking/components';
 import {
   OtpFor,
@@ -15,17 +17,6 @@ import {
   useVerifyOtpMutation,
 } from '@coop/ebanking/data-access';
 import { EbankingHeaderLayout } from '@coop/ebanking/ui-layout';
-import {
-  Box,
-  Button,
-  ChakraModal,
-  getError,
-  Icon,
-  Input,
-  PasswordInput,
-  Text,
-  TextFields,
-} from '@myra-ui';
 
 const validationSchema = yup.object({
   password: yup
@@ -76,10 +67,10 @@ const ForgetPasswordPage = () => {
                   <Text fontSize="r3" color="primary.500" fontWeight="600">
                     Password Recovery
                   </Text>
-                  <TextFields variant="bodyRegular" color="gray.700">
+                  <Text variant="bodyRegular" color="gray.700">
                     Enter the mobile number registered to this account to continue with password
                     recovery.
-                  </TextFields>
+                  </Text>
                 </Box>
 
                 <Input
@@ -136,9 +127,9 @@ const ForgetPasswordPage = () => {
                   <Text fontSize="r3" color="primary.500" fontWeight="600">
                     OTP Verification
                   </Text>
-                  <TextFields variant="bodyRegular" color="gray.700">
+                  <Text variant="bodyRegular" color="gray.700">
                     Enter the OTP sent to your registered mobile number to continue
-                  </TextFields>
+                  </Text>
                 </Box>
 
                 <Input
@@ -186,9 +177,9 @@ const ForgetPasswordPage = () => {
                   <Text fontSize="r3" color="primary.500" fontWeight="600">
                     Password Recovery
                   </Text>
-                  <TextFields variant="bodyRegular" color="gray.700">
+                  <Text variant="bodyRegular" color="gray.700">
                     Please enter your new password to proceed.
-                  </TextFields>
+                  </Text>
                 </Box>
 
                 <Box display="flex" flexDir="column" gap="s16">
@@ -234,7 +225,7 @@ const ForgetPasswordPage = () => {
         return null;
       })()}
 
-      <ChakraModal width="sm" hasCloseBtn={false} open={isOpen} onClose={onClose}>
+      <Modal width="sm" hasCloseBtn={false} open={isOpen} onClose={onClose}>
         <Box display="flex" flexDir="column" alignItems="center" gap="s24" py="s32">
           <Box display="flex" flexDir="column" alignItems="center" gap="s12">
             <Icon as={IoMdCheckmarkCircleOutline} size="xl" color="primary.500" />
@@ -253,9 +244,9 @@ const ForgetPasswordPage = () => {
             Continue
           </Button>
         </Box>
-      </ChakraModal>
+      </Modal>
 
-      <ChakraModal
+      <Modal
         closeOnOverlayClick={false}
         width="sm"
         hasCloseBtn={false}
@@ -282,7 +273,7 @@ const ForgetPasswordPage = () => {
             Go Back
           </Button>
         </Box>
-      </ChakraModal>
+      </Modal>
     </FormProvider>
   );
 };

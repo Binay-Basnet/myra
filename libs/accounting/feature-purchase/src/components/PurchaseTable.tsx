@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 
-import { Column } from '@coop/shared/editable-table';
+import { Column } from '@myra-ui/editable-table';
 import { FormEditableTable } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 

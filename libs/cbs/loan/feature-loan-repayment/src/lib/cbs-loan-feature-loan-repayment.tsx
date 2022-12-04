@@ -2,20 +2,20 @@ import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
+import omit from 'lodash/omit';
+
 import {
   asyncToast,
   Box,
   Button,
-  ChakraModal,
+  Modal,
   Container,
   FormFooter,
   FormHeader,
-  FormMemberSelect,
   Grid,
   MemberCard,
   Text,
 } from '@myra-ui';
-import omit from 'lodash/omit';
 
 import {
   CashValue,
@@ -29,7 +29,7 @@ import {
   useGetMemberLoanAccountsQuery,
   useSetLoanRepaymentMutation,
 } from '@coop/cbs/data-access';
-import { FormInput, FormSelect } from '@coop/shared/form';
+import { FormInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
 
 import { InstallmentData, LoanPaymentScheduleTable, LoanProductCard, Payment } from '../components';
 
@@ -263,7 +263,7 @@ export const LoanRepayment = () => {
                       data={loanPaymentScheduleSplice as LoanInstallment[]}
                       total={loanData?.paymentSchedule?.total as string}
                     />
-                    <ChakraModal
+                    <Modal
                       onClose={onClose}
                       open={isOpen}
                       title="Payment Schedule"
@@ -275,7 +275,7 @@ export const LoanRepayment = () => {
                         data={loanPaymentSchedule as LoanInstallment[]}
                         total={loanData?.paymentSchedule?.total as string}
                       />
-                    </ChakraModal>
+                    </Modal>
                     <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
                       <FormInput name="amountPaid" label="Amount to Pay" textAlign="right" />
                     </Grid>

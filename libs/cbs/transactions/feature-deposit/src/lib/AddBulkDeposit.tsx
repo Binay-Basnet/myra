@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
+import omit from 'lodash/omit';
+
 import {
   asyncToast,
   Box,
@@ -8,12 +11,9 @@ import {
   Container,
   FormFooter,
   FormHeader,
-  FormMemberSelect,
   MemberCard,
   Text,
 } from '@myra-ui';
-import { useQueryClient } from '@tanstack/react-query';
-import omit from 'lodash/omit';
 
 import {
   BulkDepositInput,
@@ -23,6 +23,7 @@ import {
   useGetIndividualMemberDetails,
   useSetBulkDepositDataMutation,
 } from '@coop/cbs/data-access';
+import { FormMemberSelect } from '@coop/shared/form';
 
 import { BulkDepositAccountsSummary, BulkDepositAccountsTable, Payment } from '../components';
 

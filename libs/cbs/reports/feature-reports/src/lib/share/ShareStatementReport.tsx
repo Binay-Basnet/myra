@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Box, FormMemberSelect, GridItem } from '@myra-ui';
+
+import { Box, GridItem } from '@myra-ui';
 
 import {
   ShareStatement,
@@ -10,7 +11,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange, ReportMember } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormRadioGroup } from '@coop/shared/form';
+import { FormMemberSelect, FormRadioGroup } from '@coop/shared/form';
 
 export const ShareStatementReport = () => {
   const [filters, setFilters] = useState<ShareStatementReportSettings | null>(null);

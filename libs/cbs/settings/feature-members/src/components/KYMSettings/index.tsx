@@ -7,6 +7,18 @@ import { useQueryClient } from '@tanstack/react-query';
 import { debounce } from 'lodash';
 
 import {
+  Accordion,
+  AccordionButton,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Button,
+  Icon,
+  Select,
+  Text,
+} from '@myra-ui';
+
+import {
   FormCategory,
   FormElement,
   FormField,
@@ -21,18 +33,6 @@ import {
   useUpsertCustomSectionMutation,
 } from '@coop/cbs/data-access';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import {
-  Accordion,
-  AccordionButton,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  Button,
-  Icon,
-  Select,
-  Text,
-  TextFields,
-} from '@myra-ui';
 
 import { KYMSettingsAccordionBtn } from '../KYMSettingsAccordionBtn';
 import { KYMSettingsField } from '../KYMSettingsField';
@@ -224,9 +224,9 @@ export const KYMCustomField = ({ kymType, section }: KYMCustomFieldProps) => {
                 ]}
                 isDisabled
               />
-              <TextFields variant="formHelper" mt="s4" color="gray.800">
+              <Text variant="formHelper" mt="s4" color="gray.800">
                 Users can select only one option from the list
-              </TextFields>
+              </Text>
             </Box>
           </Box>
         </FormProvider>

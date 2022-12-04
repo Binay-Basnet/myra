@@ -1,1 +1,2 @@
-export * from './lib/MyraTheme';
+export * from './lib/neosystheme';
+export * from './lib/theme';

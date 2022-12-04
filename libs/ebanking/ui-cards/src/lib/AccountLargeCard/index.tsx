@@ -1,17 +1,10 @@
 import { useEffect, useState } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IoCopyOutline, IoQrCodeOutline } from 'react-icons/io5';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
 
-import {
-  EbankingAccount,
-  updateDefaultAccountInCoop,
-  useAppDispatch,
-  useAppSelector,
-  useSetDefaultAccountMutation,
-} from '@coop/ebanking/data-access';
 import {
   asyncToast,
   Box,
@@ -23,8 +16,15 @@ import {
   PopoverTrigger,
   Switch,
   Text,
-  TextFields,
 } from '@myra-ui';
+
+import {
+  EbankingAccount,
+  updateDefaultAccountInCoop,
+  useAppDispatch,
+  useAppSelector,
+  useSetDefaultAccountMutation,
+} from '@coop/ebanking/data-access';
 
 import { AccountQRModal } from '../AccountQRModal';
 
@@ -59,13 +59,13 @@ export const AccountLargeCard = ({ isDefault, account }: IAccountCardProps) => {
             router.push(`/accounts/${account.id}?name=${account.name}`);
           }}
         >
-          <TextFields variant="tableHeader" color="primary.500">
+          <Text variant="tableHeader" color="primary.500">
             {account.name}{' '}
-          </TextFields>
+          </Text>
           <Box display="flex" alignItems="center" gap="s8">
-            <TextFields variant="bodyRegular" color="gray.500">
+            <Text variant="bodyRegular" color="gray.500">
               {account.accountNumber}
-            </TextFields>
+            </Text>
             <Icon
               as={IoCopyOutline}
               _hover={{ color: 'gray.800' }}
@@ -155,18 +155,18 @@ export const AccountLargeCard = ({ isDefault, account }: IAccountCardProps) => {
         </Box>
       </Box>
       <Box display="flex" flexDir="column" gap="s8">
-        <TextFields variant="formHelper" color="gray.700">
+        <Text variant="formHelper" color="gray.700">
           {account?.accountSubType}
-        </TextFields>
-        <TextFields variant="formHelper" color="gray.500" textTransform="capitalize">
+        </Text>
+        <Text variant="formHelper" color="gray.500" textTransform="capitalize">
           {account?.accountType.toLowerCase()}
-        </TextFields>
+        </Text>
       </Box>
       <Divider />
       <Box display="flex" alignItems="center" justifyContent="space-between" mt="s8">
-        <TextFields variant="pageHeader" color="gray.800">
+        <Text variant="pageHeader" color="gray.800">
           NRs. {Number(account.balance).toLocaleString('en-IN') ?? '-'}
-        </TextFields>
+        </Text>
 
         {account?.isDefault ? (
           <Box
@@ -178,17 +178,17 @@ export const AccountLargeCard = ({ isDefault, account }: IAccountCardProps) => {
             justifyContent="center"
             px="s4"
           >
-            <TextFields variant="bodySmall" color="primary.500">
+            <Text variant="bodySmall" color="primary.500">
               Default Account
-            </TextFields>
+            </Text>
           </Box>
         ) : (
           <Box h="s24" />
         )}
 
-        {/* <TextFields variant="bodyRegular" color="gray.600"> */}
+        {/* <Text variant="bodyRegular" color="gray.600"> */}
         {/*  Interest Rate: {account?.interestRate?.toFixed(2) ?? 'N/A'}% */}
-        {/* </TextFields> */}
+        {/* </Text> */}
       </Box>
     </Box>
   );

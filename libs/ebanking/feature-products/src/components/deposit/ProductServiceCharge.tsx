@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Maybe, ServiceTypeFormState } from '@coop/ebanking/data-access';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 import { DetailsCard } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 

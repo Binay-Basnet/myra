@@ -2,7 +2,7 @@
 import { RouterContext } from 'next/dist/shared/lib/router-context';
 import { ChakraProvider } from '@chakra-ui/react';
 
-import { theme } from '@coop/shared/utils';
+import { theme } from '../../theme/src/index';
 
 const withThemeProvider = (Story, context) => {
   return (

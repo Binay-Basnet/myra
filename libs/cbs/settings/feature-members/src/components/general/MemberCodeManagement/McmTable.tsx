@@ -1,14 +1,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { asyncToast, Box, Button, Modal, Text } from '@myra-ui';
+
 import {
   GeneralMemberInput,
   useAddGeneralMemberMutation,
   useGetGeneralMemberSettingsDataQuery,
 } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
-import { Table } from '@coop/shared/table';
-import { asyncToast, Box, Button, ChakraModal, TextFields } from '@myra-ui';
+import { Table } from '@myra-ui/table';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -93,7 +94,7 @@ export const McmTable = () => {
 
   return (
     <>
-      <ChakraModal
+      <Modal
         open={openModal}
         onClose={onCloseModal}
         isCentered
@@ -110,16 +111,16 @@ export const McmTable = () => {
           </Box>
 
           <Box borderRadius="br2" px="s16" py="s8" bg="background.500" w="250px">
-            <TextFields fontSize="s2" fontWeight="Regular" color="neutralColorLight.Gray-70">
+            <Text fontSize="s2" fontWeight="Regular" color="neutralColorLight.Gray-70">
               {t['memberSettingssCorePreview']}
-            </TextFields>
-            <TextFields fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-70">
+            </Text>
+            <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-70">
               {values['memberCode']?.prefix as string}
               {corePrev?.toString()}
-            </TextFields>
+            </Text>
           </Box>
         </Box>
-      </ChakraModal>
+      </Modal>
       <Table
         data={memberSetData ? tableData : staticTableData}
         isStatic

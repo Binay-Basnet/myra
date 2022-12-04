@@ -1,5 +1,6 @@
+import { Box, Text } from '@myra-ui';
+
 import { DetailPageContentCard } from '@coop/cbs/settings/ui-layout';
-import { Box, ListItem, Text, UnorderedList } from '@myra-ui';
 
 export const LoanProductOverviewDetailPage = () => (
   <Box display="flex" flexDirection="column" p="s16" gap="s16">
@@ -44,8 +45,8 @@ export const LoanProductOverviewDetailPage = () => (
       <Box p="s16">
         <Box px="s16" display="grid" gridTemplateColumns="repeat(2,1fr)">
           <Box>
-            <UnorderedList>
-              <ListItem>
+            <ul>
+              <li>
                 <Text fontSize="r1" color="neutralColorLight.Gray-70" fontWeight="Regular">
                   Minimum Age:
                   <Text
@@ -57,9 +58,9 @@ export const LoanProductOverviewDetailPage = () => (
                     12
                   </Text>
                 </Text>
-              </ListItem>
+              </li>
 
-              <ListItem>
+              <li>
                 <Text fontSize="r1" color="neutralColorLight.Gray-70" fontWeight="Regular">
                   Maximum Age:
                   <Text
@@ -71,9 +72,9 @@ export const LoanProductOverviewDetailPage = () => (
                     35
                   </Text>
                 </Text>
-              </ListItem>
+              </li>
 
-              <ListItem>
+              <li>
                 <Text fontSize="r1" color="neutralColorLight.Gray-70" fontWeight="Regular">
                   Gender:
                   <Text
@@ -85,9 +86,9 @@ export const LoanProductOverviewDetailPage = () => (
                     Male, Female
                   </Text>
                 </Text>
-              </ListItem>
+              </li>
 
-              <ListItem>
+              <li>
                 <Text fontSize="r1" color="neutralColorLight.Gray-70" fontWeight="Regular">
                   Marital Status:
                   <Text
@@ -99,9 +100,9 @@ export const LoanProductOverviewDetailPage = () => (
                     Married
                   </Text>
                 </Text>
-              </ListItem>
+              </li>
 
-              <ListItem>
+              <li>
                 <Text fontSize="r1" color="neutralColorLight.Gray-70" fontWeight="Regular">
                   Occupation Detail:
                   <Text
@@ -113,9 +114,9 @@ export const LoanProductOverviewDetailPage = () => (
                     Business, Agriculture
                   </Text>
                 </Text>
-              </ListItem>
+              </li>
 
-              <ListItem>
+              <li>
                 <Text fontSize="r1" color="neutralColorLight.Gray-70" fontWeight="Regular">
                   Education Qualification:
                   <Text
@@ -127,13 +128,13 @@ export const LoanProductOverviewDetailPage = () => (
                     SEE
                   </Text>
                 </Text>
-              </ListItem>
-            </UnorderedList>
+              </li>
+            </ul>
           </Box>
 
           <Box>
-            <UnorderedList>
-              <ListItem>
+            <ul>
+              <li>
                 <Text fontSize="r1" color="neutralColorLight.Gray-70" fontWeight="Regular">
                   Foreign Employment:
                   <Text
@@ -145,9 +146,9 @@ export const LoanProductOverviewDetailPage = () => (
                     No
                   </Text>
                 </Text>
-              </ListItem>
+              </li>
 
-              <ListItem>
+              <li>
                 <Text fontSize="r1" color="neutralColorLight.Gray-70" fontWeight="Regular">
                   Nature of Business (Institutions):
                   <Text
@@ -159,9 +160,9 @@ export const LoanProductOverviewDetailPage = () => (
                     Club
                   </Text>
                 </Text>
-              </ListItem>
+              </li>
 
-              <ListItem>
+              <li>
                 <Text fontSize="r1" color="neutralColorLight.Gray-70" fontWeight="Regular">
                   Nature of Business ( COOP Union):
                   <Text
@@ -173,9 +174,9 @@ export const LoanProductOverviewDetailPage = () => (
                     Club
                   </Text>
                 </Text>
-              </ListItem>
+              </li>
 
-              <ListItem>
+              <li>
                 <Text fontSize="r1" color="neutralColorLight.Gray-70" fontWeight="Regular">
                   Cooperative Type:
                   <Text
@@ -187,9 +188,9 @@ export const LoanProductOverviewDetailPage = () => (
                     Saving & Loan
                   </Text>
                 </Text>
-              </ListItem>
+              </li>
 
-              <ListItem>
+              <li>
                 <Text fontSize="r1" color="neutralColorLight.Gray-70" fontWeight="Regular">
                   Ethinicity:
                   <Text
@@ -201,8 +202,8 @@ export const LoanProductOverviewDetailPage = () => (
                     Buddhist
                   </Text>
                 </Text>
-              </ListItem>
-            </UnorderedList>
+              </li>
+            </ul>
           </Box>
         </Box>
       </Box>

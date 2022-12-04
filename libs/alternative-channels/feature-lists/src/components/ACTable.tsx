@@ -8,8 +8,8 @@ import {
   AlternativeChannelStatus,
   useGetAlternativeChannelListQuery,
 } from '@coop/cbs/data-access';
-import { Column, Table } from '@coop/shared/table';
-import { Box, ChakraModal, DetailCardContent, Grid, SwitchTabs } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+import { Box, Modal, DetailCardContent, Grid, SwitchTabs } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 interface ACTableProps {
@@ -104,7 +104,7 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
         }}
       />
 
-      <ChakraModal
+      <Modal
         width="2xl"
         primaryButtonLabel={t['saveChanges']}
         secondaryButtonLabel={t['discardChanges']}
@@ -136,7 +136,7 @@ export const ACTable = ({ serviceType }: ACTableProps) => {
             label={t['acServiceStatus']}
           />
         </Grid>
-      </ChakraModal>
+      </Modal>
     </Box>
   );
 };

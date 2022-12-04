@@ -2,17 +2,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from '@coop/shared/utils';
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  FormFooter,
-  FormHeader,
-  Icon,
-  Text,
-  TextFields,
-} from '@myra-ui';
+import { Box, Button, Checkbox, Container, FormFooter, FormHeader, Icon, Text } from '@myra-ui';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { BiSave } from 'react-icons/bi';
 import { AccordionKymCoopForm } from '@coop/cbs/kym-form/formElements';
@@ -115,12 +105,12 @@ export const KYMCooperativePage = () => {
 
             <Box p="s20" display="flex" gap="s16" alignItems="start">
               <Checkbox fontSize="s3" />
-              <TextFields variant="formInput" mt="-6px">
+              <Text variant="formInput" mt="-6px">
                 I/We agree to the&nbsp;
-                <TextFields as="span" variant="link">
+                <Text as="span" variant="link">
                   Terms and condition.
-                </TextFields>
-              </TextFields>
+                </Text>
+              </Text>
             </Box>
           </Box>
         </Box>

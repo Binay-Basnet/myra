@@ -1,4 +1,3 @@
-
 const rootMain = require('../../../../.storybook/main');
 const { addons: rootAddons, stories: rootStories, webpackFinal: rootWebpackFinal } = rootMain;
 

@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { DetailsCard } from '@myra-ui';
 
 import { useGetDashboardInfoQuery } from '@coop/cbs/data-access';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 
 export const DashboardTable = () => {
   const { data } = useGetDashboardInfoQuery();

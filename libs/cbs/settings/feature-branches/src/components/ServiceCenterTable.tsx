@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { Id_Type, useGetBranchListQuery, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 import { TablePopover } from '@myra-ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 

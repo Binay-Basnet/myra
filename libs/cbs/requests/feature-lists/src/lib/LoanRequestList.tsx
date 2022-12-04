@@ -4,7 +4,7 @@ import { useDisclosure } from '@chakra-ui/react';
 import { Box, DetailCardContent, Grid, PageHeader, TablePopover, Text } from '@myra-ui';
 
 import { RequestStatus, useGetLoanRequestsQuery } from '@coop/cbs/data-access';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 import { amountConverter, getRouterQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';

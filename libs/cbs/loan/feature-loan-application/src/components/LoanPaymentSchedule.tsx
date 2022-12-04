@@ -10,7 +10,7 @@ import {
   useGetLoanInstallmentsQuery,
 } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
-import { Table } from '@coop/shared/table';
+import { Table } from '@myra-ui/table';
 import { Alert, Box, Button, Icon, IconButton, Text } from '@myra-ui';
 
 export const LoanPaymentSchedule = () => {

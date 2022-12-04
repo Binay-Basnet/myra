@@ -1,6 +1,6 @@
 import { DetailsCard } from '@myra-ui';
 
-import { Table } from '@coop/shared/table';
+import { Table } from '@myra-ui/table';
 import { amountConverter } from '@coop/shared/utils';
 
 import { useLoanDetails } from '../../hooks/useLoanDetails';

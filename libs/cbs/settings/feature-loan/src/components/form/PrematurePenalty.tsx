@@ -1,5 +1,6 @@
 import { useFormContext } from 'react-hook-form';
-import { Alert, Box, FormSection, Grid, GridItem, Text, TextFields } from '@myra-ui';
+
+import { Alert, Box, FormSection, Grid, GridItem, Text } from '@myra-ui';
 
 import { PrematurePenaltyDateType } from '@coop/cbs/data-access';
 import { BoxContainer } from '@coop/shared/components';
@@ -52,7 +53,7 @@ export const PrematurePenalty = () => {
       <GridItem colSpan={3}>
         <BoxContainer>
           <Box display="flex" justifyContent="space-between">
-            <TextFields>{t['prematurePenaltyEnable']}</TextFields>
+            <Text>{t['prematurePenaltyEnable']}</Text>
             <FormSwitchTab name="isPrematurePenaltyApplicable" options={enableSwitch} />
           </Box>
 

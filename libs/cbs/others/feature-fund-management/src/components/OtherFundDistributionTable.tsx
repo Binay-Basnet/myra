@@ -5,7 +5,7 @@ import {
   useGetCoaAccountsUnderListQuery,
   useGetPreviousYearFundManagementQuery,
 } from '@coop/cbs/data-access';
-import { Column } from '@coop/shared/editable-table';
+import { Column } from '@myra-ui/editable-table';
 import { FormEditableTable } from '@coop/shared/form';
 import { GridItem } from '@myra-ui';
 

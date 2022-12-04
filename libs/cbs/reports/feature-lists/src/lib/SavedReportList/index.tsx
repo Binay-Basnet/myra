@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { useGetAllSavedReportsQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 import { Box, PageHeader } from '@myra-ui';
 import { getRouterQuery } from '@coop/shared/utils';
 

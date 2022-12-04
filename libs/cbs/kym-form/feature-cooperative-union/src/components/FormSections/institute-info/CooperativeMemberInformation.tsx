@@ -1,5 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { Input, Text } from '@myra-ui';
+
 import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import {
   ContainerWithDivider,
@@ -7,7 +9,6 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormInput } from '@coop/shared/form';
-import { Input, Text, TextFields } from '@myra-ui';
 import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
 
 import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
@@ -90,7 +91,7 @@ export const CooperativeMemberInformation = ({
           setSection(kymSection);
         }}
       >
-        <GroupContainer p="s20" id="kymCoopUnionAccContactDetails" scrollMarginTop={'200px'}>
+        <GroupContainer p="s20" id="kymCoopUnionAccContactDetails" scrollMarginTop="200px">
           <Text fontSize="r1" fontWeight="semibold" color="neutralColorLight.Gray-80">
             {t['kymCoopUnionCooperativeMemberInformation']}
           </Text>
@@ -110,9 +111,9 @@ export const CooperativeMemberInformation = ({
               </Text>
             </InputGroupContainer>
             <InputGroupContainer>
-              <TextFields variant="formHelper" margin="auto 0">
+              <Text variant="formHelper" margin="auto 0">
                 {t['kymCoopUnionNoMaleMembers']}
-              </TextFields>
+              </Text>
 
               <FormInput
                 type="number"
@@ -130,9 +131,9 @@ export const CooperativeMemberInformation = ({
             </InputGroupContainer>
 
             <InputGroupContainer>
-              <TextFields variant="formHelper" margin="auto 0">
+              <Text variant="formHelper" margin="auto 0">
                 {t['kymCoopUnionNoFemaleMembers']}
-              </TextFields>
+              </Text>
 
               <FormInput
                 type="number"
@@ -150,9 +151,9 @@ export const CooperativeMemberInformation = ({
             </InputGroupContainer>
 
             <InputGroupContainer>
-              <TextFields variant="formHelper" margin="auto 0">
+              <Text variant="formHelper" margin="auto 0">
                 {t['kymCoopUnionNoInstitutionalMembers']}
-              </TextFields>
+              </Text>
 
               <FormInput
                 type="number"
@@ -170,9 +171,9 @@ export const CooperativeMemberInformation = ({
             </InputGroupContainer>
 
             <InputGroupContainer>
-              <TextFields variant="formLabel" margin="auto 0">
+              <Text variant="formLabel" margin="auto 0">
                 {t['kymCoopUnionTotalCurrentMembers']}
-              </TextFields>
+              </Text>
 
               <Input
                 type="number"

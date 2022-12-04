@@ -18,7 +18,7 @@ import {
 
 import { useReport } from '@coop/cbs/reports';
 import { ReportOrganizationHeader } from '@coop/cbs/reports/components';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 
 export const ReportHeader = ({ children }: { children: React.ReactNode }) => (
   <Box position="sticky" bg="white" top="110px" zIndex="10">

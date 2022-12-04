@@ -4,8 +4,9 @@ import { GrClose } from 'react-icons/gr';
 import { IoChevronForward, IoSaveOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { IconButton } from '@chakra-ui/react';
-import { asyncToast, Box, Button, Icon, Input, Modal, TextFields } from '@myra-ui';
 import { useQueryClient } from '@tanstack/react-query';
+
+import { asyncToast, Box, Button, Icon, Input, Modal, Text } from '@myra-ui';
 
 import {
   ShareStatementReportSettings,
@@ -56,7 +57,7 @@ export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
         <Box display="flex" alignItems="center" gap="s8">
           {paths.map((path, index) => (
             <Fragment key={path?.label}>
-              <TextFields
+              <Text
                 variant={router.pathname === path.link ? 'pageHeader' : 'bodyLarge'}
                 cursor="pointer"
                 onClick={() => {
@@ -66,7 +67,7 @@ export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
                 }}
               >
                 {path.label}
-              </TextFields>
+              </Text>
               {paths.length !== index + 1 && (
                 <Icon
                   as={IoChevronForward}

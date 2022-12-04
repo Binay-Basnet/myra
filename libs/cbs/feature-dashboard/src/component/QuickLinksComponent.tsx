@@ -6,7 +6,7 @@ import { ImStack } from 'react-icons/im';
 import { IoMdPersonAdd } from 'react-icons/io';
 import { IoCubeOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
-import { Box, ChakraModal, Grid, GridItem, QuickLinks, Text } from '@myra-ui';
+import { Box, Modal, Grid, GridItem, QuickLinks, Text } from '@myra-ui';
 
 import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
@@ -138,7 +138,7 @@ export const QuickLinksComponent = () => {
         ))}
       </Grid>
 
-      <ChakraModal
+      <Modal
         open={openModal}
         onClose={onCloseModal}
         isCentered
@@ -184,7 +184,7 @@ export const QuickLinksComponent = () => {
             )}
           </Droppable>
         </DragDropContext>
-      </ChakraModal>
+      </Modal>
     </Box>
   );
 };
