@@ -3,13 +3,14 @@ import { FormProvider, useFieldArray, useForm, useFormContext } from 'react-hook
 import { AiOutlinePlus } from 'react-icons/ai';
 import { omit } from 'lodash';
 
+import { Box, Button, Modal, Divider, Icon, Text, VStack } from '@myra-ui';
+
 import {
   LoanProduct,
   useGetCollateralListQuery,
   useGetLoanProductDetailsDataQuery,
 } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { Box, Button, ChakraModal, Divider, Icon, Text, TextFields, VStack } from '@myra-ui';
 
 import { COLLATERAL_COMPS } from './collateral';
 
@@ -73,9 +74,9 @@ export const CollateralDetails = () => {
   return (
     <>
       <Box display="flex" flexDir="column" gap="s16">
-        <TextFields variant="formLabel" color="gray.700">
+        <Text variant="formLabel" color="gray.700">
           Collateral Details
-        </TextFields>
+        </Text>
         <Box>
           <Button
             variant="outline"
@@ -91,7 +92,7 @@ export const CollateralDetails = () => {
         </Box>
       </Box>
 
-      <ChakraModal
+      <Modal
         width="3xl"
         open={isModal}
         title="Add Collateral"
@@ -146,7 +147,7 @@ export const CollateralDetails = () => {
             )}
           </Box>
         </FormProvider>
-      </ChakraModal>
+      </Modal>
 
       {fields?.length !== 0 && (
         <Box mt="-s16" border="1px" borderColor="border.layout" borderRadius="br2">

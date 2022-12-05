@@ -2,6 +2,8 @@ import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
+import { asyncToast, Box, Container, FormFooter, FormHeader, GridItem, Text } from '@myra-ui';
+
 import {
   BranchCategory,
   BranchInput,
@@ -14,16 +16,6 @@ import {
 } from '@coop/cbs/data-access';
 import { ContainerWithDivider, InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormDatePicker, FormInput, FormMap, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormFooter,
-  FormHeader,
-  GridItem,
-  Text,
-  TextFields,
-} from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const CbsSettingsFeatureServiceCenterNew = () => {
@@ -217,9 +209,9 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                     </Box>
 
                     <Box>
-                      <TextFields variant="tableHeader" color="gray.700" mb="s16">
+                      <Text variant="tableHeader" color="gray.700" mb="s16">
                         {t['serviceCenterAddress']}
-                      </TextFields>
+                      </Text>
                       <Box gap="s16" display="flex" flexDirection="column">
                         <InputGroupContainer>
                           <FormSelect
@@ -261,9 +253,9 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                     </Box>
 
                     <Box display="flex" flexDirection="column" gap="s20">
-                      <TextFields variant="tableHeader" color="gray.700">
+                      <Text variant="tableHeader" color="gray.700">
                         {t['serviceCenterManager']}
-                      </TextFields>
+                      </Text>
                       <InputGroupContainer>
                         <FormInput name="phoneNumber" label={t['settingsBranchPhoneNumber']} />
                         <FormInput name="email" label={t['settingsBranchEmail']} />
@@ -271,9 +263,9 @@ export const CbsSettingsFeatureServiceCenterNew = () => {
                     </Box>
 
                     <Box display="flex" flexDirection="column" gap="s16">
-                      <TextFields variant="tableHeader" color="gray.700">
+                      <Text variant="tableHeader" color="gray.700">
                         {t['settingsBranchABBSTransaction']}
-                      </TextFields>
+                      </Text>
 
                       <FormSwitchTab
                         label={t['settingsBranchStatus']}

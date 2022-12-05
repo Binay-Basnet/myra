@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
+
+import { asyncToast, Box, Container, FormFooter, FormHeader, Grid, GridItem, Text } from '@myra-ui';
 
 import {
   RootState,
@@ -21,17 +23,6 @@ import {
   FormPhoneNumber,
   FormSelect,
 } from '@coop/shared/form';
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormFooter,
-  FormHeader,
-  Grid,
-  GridItem,
-  Text,
-  TextFields,
-} from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const CbsSettingsFeatureValuatorAdd = () => {
@@ -116,9 +107,9 @@ export const CbsSettingsFeatureValuatorAdd = () => {
               <Box px="s20" py="s24">
                 <ContainerWithDivider>
                   <Box display="flex" flexDirection="column" gap="s16">
-                    <TextFields variant="tableHeader" color="gray.700">
+                    <Text variant="tableHeader" color="gray.700">
                       {t['settingsGeneralValuatorFormValuatorSetup']}
-                    </TextFields>
+                    </Text>
                     <InputGroupContainer>
                       <GridItem colSpan={2}>
                         <FormInput
@@ -208,9 +199,9 @@ export const CbsSettingsFeatureValuatorAdd = () => {
                   </Box>
 
                   <Box display="flex" flexDirection="column" gap="s16">
-                    <TextFields variant="tableHeader" color="gray.700">
+                    <Text variant="tableHeader" color="gray.700">
                       {t['settingsGeneralValuatorFormContactDetails']}
-                    </TextFields>
+                    </Text>
 
                     <InputGroupContainer>
                       <FormPhoneNumber
@@ -228,18 +219,18 @@ export const CbsSettingsFeatureValuatorAdd = () => {
                   </Box>
 
                   <Box display="flex" flexDirection="column" gap="s16">
-                    <TextFields variant="tableHeader" color="gray.700">
+                    <Text variant="tableHeader" color="gray.700">
                       {t['settingsGeneralValuatorFormAddress']}
-                    </TextFields>
+                    </Text>
                     <InputGroupContainer>
                       <FormAddress name="address" />
                     </InputGroupContainer>
                   </Box>
 
                   <Box display="flex" flexDirection="column" gap="s16">
-                    <TextFields variant="tableHeader" color="gray.700">
+                    <Text variant="tableHeader" color="gray.700">
                       {t['settingsGeneralValuatorFormDocumentsDeclaration']}
-                    </TextFields>
+                    </Text>
 
                     <Grid templateColumns="repeat(2, 1fr)" rowGap="s32" columnGap="s20">
                       <FormFileInput

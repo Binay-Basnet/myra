@@ -1,19 +1,10 @@
 import { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormAccountSelect,
-  FormFooter,
-  FormHeader,
-  FormMemberSelect,
-  MemberCard,
-  Text,
-} from '@myra-ui';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
+
+import { asyncToast, Box, Container, FormFooter, FormHeader, MemberCard, Text } from '@myra-ui';
 
 import {
   NatureOfDepositProduct,
@@ -32,8 +23,10 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/transactions/ui-containers';
 import {
+  FormAccountSelect,
   FormAmountInput,
   FormInput,
+  FormMemberSelect,
   FormSelect,
   FormSwitchTab,
   FormTextArea,

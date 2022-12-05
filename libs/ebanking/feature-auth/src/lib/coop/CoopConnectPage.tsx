@@ -3,13 +3,14 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 
+import { Avatar, Box, Button, Input, Text, toast } from '@myra-ui';
+
 import { GoBack } from '@coop/ebanking/components';
 import {
   switchCooperative,
   useAppSelector,
   useLoginToCooperativeMutation,
 } from '@coop/ebanking/data-access';
-import { Avatar, Box, Button, Input, Text, TextFields, toast } from '@myra-ui';
 
 export const CoopConnectPage = () => {
   const methods = useForm();
@@ -74,9 +75,9 @@ export const CoopConnectPage = () => {
                 <Text fontSize="r3" color="primary.500" fontWeight="600">
                   Select Your Coop
                 </Text>
-                <TextFields variant="bodyRegular" color="gray.700">
+                <Text variant="bodyRegular" color="gray.700">
                   Please select your COOP from following list to proceed.
-                </TextFields>
+                </Text>
               </Box>
 
               <Box display="flex" flexDir="column" gap="s16">
@@ -135,9 +136,9 @@ export const CoopConnectPage = () => {
                   <Text fontSize="r3" color="primary.500" fontWeight="600">
                     COOP Login Pin
                   </Text>
-                  <TextFields variant="bodyRegular" color="gray.700">
+                  <Text variant="bodyRegular" color="gray.700">
                     Enter 4-digit pin to continue with login page
-                  </TextFields>
+                  </Text>
                 </Box>
                 <FormProvider {...methods}>
                   <Box display="flex" flexDir="column" gap="s20">

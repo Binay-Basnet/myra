@@ -1,7 +1,8 @@
 import { AiOutlineStock } from 'react-icons/ai';
 
+import { Box, Grid, Icon, Text } from '@myra-ui';
+
 import { useGetTotalExpenseQuery } from '@coop/ebanking/data-access';
-import { Box, Grid, Icon, TextFields } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 export const TransactionHeaderCard = () => {
@@ -19,7 +20,7 @@ export const TransactionHeaderCard = () => {
       gap="s24"
       borderRadius="br2"
     >
-      <TextFields variant="stickyCardHeader">Transaction History</TextFields>
+      <Text variant="stickyCardHeader">Transaction History</Text>
 
       <Grid templateColumns="repeat(2, 1fr)" gap="s16">
         <Box display="flex" alignItems="center" gap="s12">
@@ -35,10 +36,10 @@ export const TransactionHeaderCard = () => {
             <Icon as={AiOutlineStock} color="primary.500" size="lg" />
           </Box>
           <Box display="flex" flexDir="column">
-            <TextFields color="primary.200" variant="tableHeader">
+            <Text color="primary.200" variant="tableHeader">
               Total expenses this month
-            </TextFields>
-            <TextFields variant="stickyCardHeader">{amountConverter(totalExpense ?? 0)}</TextFields>
+            </Text>
+            <Text variant="stickyCardHeader">{amountConverter(totalExpense ?? 0)}</Text>
           </Box>
         </Box>
       </Grid>

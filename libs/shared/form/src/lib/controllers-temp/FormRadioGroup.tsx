@@ -1,7 +1,8 @@
 import { Control, Controller, useFormContext } from 'react-hook-form';
 import { Box } from '@chakra-ui/react';
-import { RadioGroup, RadioGroupProps, TextFields } from '@myra-ui';
 import { get } from 'lodash';
+
+import { RadioGroup, RadioGroupProps, Text } from '@myra-ui';
 
 interface IFormSelectProps extends RadioGroupProps {
   control?: Control;
@@ -25,7 +26,7 @@ export const FormRadioGroup = ({ name, label, ...rest }: IFormSelectProps) => {
       name={name}
       render={({ field: { onChange, value } }) => (
         <Box display="flex" flexDirection="column" gap="s16">
-          {label && <TextFields variant="formLabel">{label}</TextFields>}
+          {label && <Text variant="formLabel">{label}</Text>}
           <RadioGroup
             {...rest}
             value={value}

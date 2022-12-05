@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { GridItem, Text, TextFields } from '@myra-ui';
+import { GridItem, Text } from '@myra-ui';
 
 export const ValuationStats = () => {
   const { watch, setValue } = useFormContext();
@@ -44,9 +44,9 @@ export const ValuationStats = () => {
       bg="background.500"
       borderRadius="br2"
     >
-      <TextFields variant="formLabel" color="gray.600">
+      <Text variant="formLabel" color="gray.600">
         Collateral Valuation
-      </TextFields>
+      </Text>
 
       {valuationMethod && validationPer && (
         <Text color="gray.700" fontSize="r1" fontWeight="600">

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
 import { RequestStatus, RequestType, useGetWithdrawViaCollectorQuery } from '@coop/cbs/data-access';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 import { Box, DetailCardContent, Grid, PageHeader, TablePopover, Text } from '@myra-ui';
 import { amountConverter, getRouterQuery } from '@coop/shared/utils';
 

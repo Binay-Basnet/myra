@@ -16,7 +16,7 @@ import {
   ReportOrganizationHeader,
 } from '@coop/cbs/reports/components';
 import { Report } from '@coop/cbs/reports/list';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 
 type ClassifyBy =
   | 'All'

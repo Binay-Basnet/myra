@@ -3,6 +3,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 
+import { Box, FormSection, GridItem, Text } from '@myra-ui';
+
 import {
   FormFieldSearchTerm,
   KymIndMemberInput,
@@ -17,7 +19,6 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { Box, FormSection, GridItem, TextFields } from '@myra-ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
@@ -137,9 +138,9 @@ export const KYMDeclaration = ({ setKymCurrentSection }: IKYMDeclarationProps) =
       >
         <Box display="flex" flexDirection="column" id="Next to Kin" scrollMarginTop="200px">
           <Box p="s20" pb="0">
-            <TextFields variant="bodyRegular" fontWeight="SemiBold">
+            <Text variant="bodyRegular" fontWeight="SemiBold">
               {t['kynIndNominee']}
-            </TextFields>
+            </Text>
           </Box>
 
           <FormSection id="kymAccIndBeneficialOwner">

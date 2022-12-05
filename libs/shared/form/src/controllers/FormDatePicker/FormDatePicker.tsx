@@ -1,9 +1,10 @@
 import { Controller, Path, useFormContext } from 'react-hook-form';
 import { UseControllerProps } from 'react-hook-form/dist/types/controller';
-import { Box, InputProps, TextFields } from '@myra-ui';
 import { DatePicker } from '@raralabs/react-patro';
 import format from 'date-fns/format';
 import NepaliDate from 'nepali-date-converter';
+
+import { Box, InputProps, Text } from '@myra-ui';
 
 import { DateType, RootState, useAppSelector } from '@coop/cbs/data-access';
 
@@ -42,9 +43,9 @@ export const FormDatePicker = <T,>({
       render={({ field: { onChange, value, ...fieldProps } }) => (
         <Box display="flex" flexDirection="column" gap="s4">
           {label && (
-            <TextFields variant="formLabel" color="gray.700">
+            <Text variant="formLabel" color="gray.700">
               {label}
-            </TextFields>
+            </Text>
           )}
 
           <DatePicker
@@ -75,9 +76,9 @@ export const FormDatePicker = <T,>({
             {...fieldProps}
           />
           {errors[name] ? (
-            <TextFields variant="formHelper" color="danger.500">
+            <Text variant="formHelper" color="danger.500">
               {errors[name]?.message as string}
-            </TextFields>
+            </Text>
           ) : null}
         </Box>
       )}

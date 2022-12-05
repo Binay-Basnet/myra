@@ -1,7 +1,7 @@
 import { Controller, Path, useFormContext } from 'react-hook-form';
 import dynamic from 'next/dynamic';
 
-const MapComponent = dynamic(() => import('@coop/shared/map'), {
+const MapComponent = dynamic(() => import('@myra-ui/map'), {
   ssr: false,
 });
 

@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useCreateDbMutation, useGetClientsListQuery } from '@coop/neosys-admin/data-access';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 import { asyncToast, Avatar, Box, PageHeader, TablePopover, Text, toast } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 

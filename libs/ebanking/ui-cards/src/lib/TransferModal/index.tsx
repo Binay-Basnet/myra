@@ -3,7 +3,7 @@ import { IoCheckmarkCircleOutline } from 'react-icons/io5';
 import { RiAlertLine } from 'react-icons/ri';
 import { Modal, ModalContent, ModalOverlay, useDisclosure } from '@chakra-ui/react';
 
-import { Box, Button, Icon, TextFields } from '@myra-ui';
+import { Box, Button, Icon, Text } from '@myra-ui';
 
 interface TransferModalProps {
   status: 'success' | 'failure';
@@ -40,9 +40,9 @@ export const TransferModal = ({ status }: TransferModalProps) => {
             size="xl"
             stroke="white"
           />
-          <TextFields variant="pageHeader">
+          <Text variant="pageHeader">
             {status === 'success' ? 'Transfer Successful' : 'Transfer Failed'}{' '}
-          </TextFields>
+          </Text>
         </Box>
         <Button
           w="100px"

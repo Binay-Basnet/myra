@@ -1,6 +1,6 @@
 import { Control, Controller, useFormContext } from 'react-hook-form';
 
-import { Box, FileInput, FileInputProps, TextFields } from '@myra-ui';
+import { Box, FileInput, FileInputProps, Text } from '@myra-ui';
 
 interface FormFileInputProps extends FileInputProps {
   control?: Control;
@@ -22,9 +22,9 @@ export const FormFileInput = ({ name, label, ...rest }: FormFileInputProps) => {
   return (
     <Box display="flex" flexDir="column" gap="s4">
       {label && (
-        <TextFields variant="formLabel" color="gray.700" whiteSpace="nowrap">
+        <Text variant="formLabel" color="gray.700" whiteSpace="nowrap">
           {label}
-        </TextFields>
+        </Text>
       )}
 
       <Controller

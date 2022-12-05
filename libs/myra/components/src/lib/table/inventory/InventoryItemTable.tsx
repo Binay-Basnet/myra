@@ -14,48 +14,40 @@ export const InventoryItemTable = () => {
 
   const rowItems = data?.inventory.items?.list?.edges ?? [];
 
-  const columns = useMemo<Column<typeof rowItems[0]>[]>(
+  const columns = useMemo<Column<typeof rowItems[0] | any>[]>(
     () => [
       {
-        Header: t['itemListID'],
-        accessor: 'node.id',
-        maxWidth: 4,
+        header: t['itemListID'],
+        accessorFn: ({ row }) => row?.node.id,
       },
 
       {
-        Header: t['itemListName'],
-        accessor: 'node.name',
-        width: '80%',
+        header: t['itemListName'],
+        accessorFn: ({ row }) => row?.node.name,
       },
       {
-        Header: t['itemListType'],
-        accessor: 'node.type',
-        width: '40%',
+        header: t['itemListType'],
+        accessorFn: ({ row }) => row?.node.type,
       },
 
       {
-        Header: t['itemListUnitPrice'],
-        accessor: 'node.unitPrice',
-        Cell: ({ value }) => <span>{Number(value).toFixed(2)}</span>,
+        header: t['itemListUnitPrice'],
+        accessorFn: ({ row }) => row?.node.unitPrice,
       },
 
       {
         id: 'total-cost',
-        Header: t['itemListTotalCost'],
-        accessor: 'node.unitPrice',
-        Cell: ({ value, row }) => (
-          <span>{Number(value * row.original.node.itemQuantity).toFixed(2)}</span>
-        ),
+        header: t['itemListTotalCost'],
+        accessorFn: ({ row }) => row?.node.unitPrice,
       },
 
       {
-        Header: t['itemListItemQuantity'],
-        accessor: 'node.itemQuantity',
-        Cell: ({ value }) => <span>{Number(value).toFixed(2)}</span>,
+        header: t['itemListItemQuantity'],
+        accessorFn: ({ row }) => row?.node.itemQuantity,
       },
       {
-        accessor: 'actions',
-        Cell: () => (
+        accessorKey: 'actions',
+        cell: () => (
           <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
         ),
       },
@@ -67,7 +59,7 @@ export const InventoryItemTable = () => {
     <>
       <TableListPageHeader heading="items" />
 
-      <Table isLoading={isFetching} data={rowItems} columns={columns} sort />
+      <Table isLoading={isFetching} data={rowItems} columns={columns} />
     </>
   );
 };

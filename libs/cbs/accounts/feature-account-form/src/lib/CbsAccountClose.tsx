@@ -2,6 +2,9 @@ import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import rhtoast from 'react-hot-toast';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
+import omit from 'lodash/omit';
+
 import {
   asyncToast,
   Box,
@@ -9,18 +12,14 @@ import {
   Container,
   Divider,
   findError,
-  FormAccountSelect,
   FormFooter,
   FormHeader,
-  FormMemberSelect,
   getError,
   Grid,
   MemberCard,
   Text,
   toast,
 } from '@myra-ui';
-import { useQueryClient } from '@tanstack/react-query';
-import omit from 'lodash/omit';
 
 import {
   AccountClosePaymentMode,
@@ -33,7 +32,14 @@ import {
   useGetIndividualMemberDetails,
   useSetAccountCloseDataMutation,
 } from '@coop/cbs/data-access';
-import { FormAmountInput, FormInput, FormRadioGroup, FormTextArea } from '@coop/shared/form';
+import {
+  FormAccountSelect,
+  FormAmountInput,
+  FormInput,
+  FormMemberSelect,
+  FormRadioGroup,
+  FormTextArea,
+} from '@coop/shared/form';
 import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 import { Payment } from '../component/AccountCloseForm/payment';
@@ -183,7 +189,7 @@ export const CbsAccountClose = () => {
 
   useEffect(() => {
     let tempCharge = 0;
-    selectedAccount?.product?.accountClosingCharge?.forEach(({ serviceName, amount }) => {
+    selectedAccount?.product?.accountClosingCharge?.forEach(({ serviceName, amount }: any) => {
       setValue(`serviceCharge.${serviceName}`, amount);
 
       tempCharge += Number(amount ?? 0);
@@ -531,7 +537,7 @@ export const CbsAccountClose = () => {
                               Other Charges
                             </Text>
                             {selectedAccount.product?.accountClosingCharge?.map(
-                              ({ serviceName }) => (
+                              ({ serviceName }: any) => (
                                 <Box
                                   // h="36px"
                                   display="flex"

@@ -6,7 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { RequestType, useApproveOrDeclineRequestMutation } from '@coop/cbs/data-access';
 import { FormCheckbox, FormDatePicker, FormTextArea } from '@coop/shared/form';
-import { asyncToast, Box, ChakraModal } from '@myra-ui';
+import { asyncToast, Box, Modal } from '@myra-ui';
 
 interface IApproveDeclineModalProps {
   queryKey: string;
@@ -44,7 +44,7 @@ export const LoanApproveOrDeclineModal = ({
 
   return (
     <>
-      <ChakraModal
+      <Modal
         open={declineIsOpen}
         onClose={declineIsOnClose}
         primaryButtonHandler={async () => {
@@ -91,9 +91,9 @@ export const LoanApproveOrDeclineModal = ({
             <FormCheckbox name="notifyMember" label="Notify Member" />
           </Box>
         </FormProvider>
-      </ChakraModal>
+      </Modal>
 
-      <ChakraModal
+      <Modal
         width="2xl"
         primaryButtonLabel={status ? 'Schedule' : undefined}
         primaryButtonHandler={async () => {
@@ -140,7 +140,7 @@ export const LoanApproveOrDeclineModal = ({
             <FormDatePicker label="Purposed Meeting Date" name="purposedDate" />
           </Box>
         </FormProvider>
-      </ChakraModal>
+      </Modal>
     </>
   );
 };

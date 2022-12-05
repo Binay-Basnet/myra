@@ -6,6 +6,8 @@ import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
+import { Box, Button, Modal, getError, Icon, Input, Text } from '@myra-ui';
+
 import { GoBack } from '@coop/ebanking/components';
 import {
   authenticate,
@@ -19,7 +21,6 @@ import {
 } from '@coop/ebanking/data-access';
 import { EbankingHeaderLayout } from '@coop/ebanking/ui-layout';
 import { FormSelect } from '@coop/shared/form';
-import { Box, Button, ChakraModal, getError, Icon, Input, Text, TextFields } from '@myra-ui';
 
 const SetupConnectPage = () => {
   const router = useRouter();
@@ -100,10 +101,10 @@ const SetupConnectPage = () => {
         <Text fontSize="r3" color="primary.500" fontWeight="600">
           Connect to an existing COOP
         </Text>
-        <TextFields variant="bodyRegular" color="gray.700">
+        <Text variant="bodyRegular" color="gray.700">
           If you are already a member of a COOP, you can start using Myra if you have signed up for
           mobile banking.
-        </TextFields>
+        </Text>
       </Box>
 
       <FormProvider {...methods}>
@@ -152,7 +153,7 @@ const SetupConnectPage = () => {
         Check for account
       </Button>
 
-      <ChakraModal
+      <Modal
         width="sm"
         hasCloseBtn={false}
         open={isOpen}
@@ -181,9 +182,9 @@ const SetupConnectPage = () => {
             Continue
           </Button>
         </Box>
-      </ChakraModal>
+      </Modal>
 
-      <ChakraModal
+      <Modal
         closeOnOverlayClick={false}
         width="sm"
         hasCloseBtn={false}
@@ -209,7 +210,7 @@ const SetupConnectPage = () => {
             Go Back
           </Button>
         </Box>
-      </ChakraModal>
+      </Modal>
     </FormProvider>
   );
 };

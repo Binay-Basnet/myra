@@ -1,5 +1,5 @@
 import { useDisclosure } from '@chakra-ui/react';
-import { Button, ChakraModal, DetailsCard } from '@myra-ui';
+import { Button, Modal, DetailsCard } from '@myra-ui';
 
 import { amountConverter } from '@coop/shared/utils';
 
@@ -32,7 +32,7 @@ export const LoanPaymentSchedule = () => {
         total={String(amountConverter(loanPreview?.paymentSchedule?.total ?? 0))}
       />
 
-      <ChakraModal
+      <Modal
         onClose={onClose}
         open={isOpen}
         title="Payment Schedule"
@@ -44,7 +44,7 @@ export const LoanPaymentSchedule = () => {
           data={loanPreview?.paymentSchedule.installments}
           total={String(amountConverter(loanPreview?.paymentSchedule?.total ?? 0))}
         />
-      </ChakraModal>
+      </Modal>
     </DetailsCard>
   );
 };

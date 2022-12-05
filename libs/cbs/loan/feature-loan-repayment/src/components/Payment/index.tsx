@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { Box, FormAccountSelect, Grid, GridItem, Text } from '@myra-ui';
+import { Box, Grid, GridItem, Text } from '@myra-ui';
+import { FormAccountSelect } from '@coop/shared/form';
 
 import { LoanRepaymentMethod, ObjState, useGetCoaBankListQuery } from '@coop/cbs/data-access';
 import { BoxContainer, ContainerWithDivider } from '@coop/cbs/transactions/ui-containers';

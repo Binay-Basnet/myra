@@ -1,7 +1,8 @@
 import { Controller, Path, useFormContext } from 'react-hook-form';
 
-import { EditableTable, EditableTableProps } from '@coop/shared/editable-table';
-import { Box, TextFields } from '@myra-ui';
+import { Box, Text } from '@myra-ui';
+
+import { EditableTable, EditableTableProps } from '@myra-ui/editable-table';
 
 interface RecordWithId {
   _id?: number;
@@ -35,9 +36,9 @@ export const FormEditableTable = <
       render={({ field: { onChange, value } }) => (
         <Box display="flex" flexDirection="column" gap="s4">
           {label && (
-            <TextFields variant="formLabel" color="gray.700">
+            <Text variant="formLabel" color="gray.700">
               {label}
-            </TextFields>
+            </Text>
           )}
           <EditableTable defaultData={(value as T[]) ?? []} onChange={onChange} {...rest} />
         </Box>

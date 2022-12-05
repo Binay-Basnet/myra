@@ -1,7 +1,8 @@
 import { useFormContext } from 'react-hook-form';
 
-import { Box, FormAccountSelect, Text } from '@myra-ui';
+import { Box, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
+import { FormAccountSelect } from '@coop/shared/form';
 
 export const LinkedAccounts = () => {
   const { t } = useTranslation();

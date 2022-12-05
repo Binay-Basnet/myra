@@ -3,9 +3,10 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { debounce } from 'lodash';
 
+import { Box, Text } from '@myra-ui';
+
 import { useGetDepositSettingsTdsQuery, useSetDepositTdsMutation } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
-import { Box, Text, TextFields } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -48,15 +49,15 @@ export const CbsSettingsFeatureDepositTDS = () => {
       <Box display="flex" flexDirection="row" h="fit-content">
         <Box p="s16" flex={1}>
           <Box borderBottom="1px" borderBottomColor="border.layout" py="s8" w="100%">
-            <TextFields variant="pageHeader" color="neutralColorLight.Gray-80">
+            <Text variant="pageHeader" color="neutralColorLight.Gray-80">
               {t['settingsDepositTds']}
-            </TextFields>
+            </Text>
           </Box>
           <Box mt="s12">
             <Box pl="s12" py="s12" border="1px" borderColor="border.layout" w="100%">
-              <TextFields variant="tableHeader" color="neutralColorLight.Gray-80">
+              <Text variant="tableHeader" color="neutralColorLight.Gray-80">
                 {t['settingsDepositTdsAgainst']}
-              </TextFields>
+              </Text>
             </Box>
             <Box p="s12" border="1px" borderColor="border.layout" w="100%">
               <FormProvider {...methods}>
@@ -77,9 +78,9 @@ export const CbsSettingsFeatureDepositTDS = () => {
                       </Text>
                     </Box>
                     <Box display="flex" columnGap="s8" alignItems="center">
-                      <TextFields variant="bodyRegular" p="7.5px 12px" flexBasis="65%">
+                      <Text variant="bodyRegular" p="7.5px 12px" flexBasis="65%">
                         {t['settingsDepositIndividual']}
-                      </TextFields>
+                      </Text>
                       <Box flexBasis="35%">
                         <FormInput name="individual" type="text" control={control} />
                       </Box>
@@ -90,9 +91,9 @@ export const CbsSettingsFeatureDepositTDS = () => {
                       justifyContent="space-between"
                       alignItems="center"
                     >
-                      <TextFields variant="bodyRegular" p="7.5px 12px" flexBasis="65%">
+                      <Text variant="bodyRegular" p="7.5px 12px" flexBasis="65%">
                         {t['settingsDepositInstitutional']}
-                      </TextFields>
+                      </Text>
                       <Box flexBasis="35%">
                         <FormInput name="institution" type="text" control={control} />
                       </Box>
@@ -103,9 +104,9 @@ export const CbsSettingsFeatureDepositTDS = () => {
                       justifyContent="space-between"
                       alignItems="center"
                     >
-                      <TextFields variant="bodyRegular" p="7.5px 12px" flexBasis="65%">
+                      <Text variant="bodyRegular" p="7.5px 12px" flexBasis="65%">
                         {t['settingsDepositCooperative']}
-                      </TextFields>
+                      </Text>
                       <Box flexBasis="35%">
                         <FormInput name="cooperative" type="text" control={control} />
                       </Box>
@@ -116,9 +117,9 @@ export const CbsSettingsFeatureDepositTDS = () => {
                       justifyContent="space-between"
                       alignItems="center"
                     >
-                      <TextFields variant="bodyRegular" p="7.5px 12px" flexBasis="65%">
+                      <Text variant="bodyRegular" p="7.5px 12px" flexBasis="65%">
                         {t['settingsDepositCooperativeUnion']}
-                      </TextFields>
+                      </Text>
                       <Box flexBasis="35%">
                         <FormInput name="coopUnion" type="text" control={control} />
                       </Box>
