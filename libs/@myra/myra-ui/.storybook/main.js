@@ -9,9 +9,9 @@ module.exports = {
   core: { ...rootMain.core, builder: 'webpack5' },
   stories: [
     ...rootStories,
-    '../..',
     '../src/lib/**/*.stories.mdx',
     '../src/lib/**/*.stories.@(js|jsx|ts|tsx)',
+    '../..',
   ],
 
   webpackFinal: async (config) => {
