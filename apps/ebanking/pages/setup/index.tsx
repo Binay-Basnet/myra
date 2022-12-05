@@ -2,9 +2,10 @@ import { ReactElement } from 'react';
 import { IoIosInformationCircle } from 'react-icons/io';
 import { useRouter } from 'next/router';
 
+import { Box, Button, Icon, Text } from '@myra-ui';
+
 import { useAppSelector } from '@coop/ebanking/data-access';
 import { EbankingHeaderLayout } from '@coop/ebanking/ui-layout';
-import { Box, Button, Icon, Text, TextFields } from '@myra-ui';
 
 const SetupPage = () => {
   const user = useAppSelector((state) => state.auth?.user);
@@ -18,9 +19,9 @@ const SetupPage = () => {
       </Text>
       <Box display="flex" flexDir="column" gap="s24">
         <Box display="flex" flexDir="column" gap="s16">
-          <TextFields variant="bodyRegular" color="gray.700">
+          <Text variant="bodyRegular" color="gray.700">
             Start using Myra by connecting your cooperative.
-          </TextFields>
+          </Text>
           <Button variant="outline" width="100%" onClick={() => router.push('/setup/connect')}>
             Connect to an existing COOP
           </Button>
@@ -33,9 +34,9 @@ const SetupPage = () => {
           <Box h="1px" bg="#DCDCDC" w="100%" />
         </Box>
         <Box display="flex" flexDir="column" gap="s16">
-          <TextFields variant="bodyRegular" color="gray.700">
+          <Text variant="bodyRegular" color="gray.700">
             Apply for a membership to any cooperative of your choice.
-          </TextFields>
+          </Text>
           <Button variant="outline" width="100%">
             Apply for COOP membership
           </Button>

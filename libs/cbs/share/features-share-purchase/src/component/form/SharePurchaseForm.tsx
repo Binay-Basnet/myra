@@ -5,6 +5,18 @@ import { useQueryClient } from '@tanstack/react-query';
 import { omit } from 'lodash';
 
 import {
+  asyncToast,
+  Box,
+  Container,
+  FormHeader,
+  FormSection,
+  Grid,
+  GridItem,
+  ShareMemberCard,
+  TabMenu,
+} from '@myra-ui';
+
+import {
   CashValue,
   Share_Transaction_Direction,
   SharePaymentMode,
@@ -14,32 +26,13 @@ import {
   useGetIndividualMemberDetails,
   useGetShareChargesQuery,
 } from '@coop/cbs/data-access';
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormHeader,
-  FormMemberSelect,
-  FormSection,
-  Grid,
-  GridItem,
-  Navbar,
-  ShareMemberCard,
-  TabMenu,
-} from '@myra-ui';
+import { FormMemberSelect } from '@coop/shared/form';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { ShareInfoFooter } from './ShareInfoFooter';
 import { SharePaymentFooter } from './SharePaymentFooter';
 import { SharePurchaseInfo } from './SharePurchaseInfo';
 import { SharePurchasePayment } from './SharePurchasePayment';
-
-const Header = () => (
-  <>
-    <Navbar />
-    <TabMenu />
-  </>
-);
 
 const cashOptions: Record<string, string> = {
   '1000': CashValue.Cash_1000,
@@ -224,15 +217,6 @@ export const SharePurchaseForm = () => {
     <>
       <FormProvider {...methods}>
         <form>
-          <Box
-            position="fixed"
-            width="100%"
-            top={0}
-            zIndex={2}
-            backdropFilter="saturate(180%) blur(5px)"
-          >
-            <Header />
-          </Box>
           <Container minW="container.xl" p="0" mb="60px">
             <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
               <FormHeader

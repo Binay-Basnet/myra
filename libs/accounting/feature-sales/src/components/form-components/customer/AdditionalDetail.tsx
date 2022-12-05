@@ -1,5 +1,6 @@
-import { FormAmountInput, FormEmailInput, FormInput } from '@coop/shared/form';
 import { FormSection } from '@myra-ui';
+
+import { FormAmountInput, FormEmailInput, FormInput } from '@coop/shared/form';
 
 export const AdditionalDetail = () => (
   <FormSection>
@@ -7,8 +8,8 @@ export const AdditionalDetail = () => (
 
     <FormInput name="creditTerms" label="Credit Terms" />
 
-    <FormAmountInput name="creditLimit" label="Credit Limit" />
+    <FormAmountInput type="number" name="creditLimit" label="Credit Limit" />
 
-    <FormAmountInput name="openingBalance" label="Opening Balance" />
+    <FormAmountInput type="number" name="openingBalance" label="Opening Balance" />
   </FormSection>
 );

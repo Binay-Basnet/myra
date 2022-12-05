@@ -5,6 +5,19 @@ import { useDisclosure } from '@chakra-ui/react';
 import omit from 'lodash/omit';
 
 import {
+  asyncToast,
+  Box,
+  Button,
+  Modal,
+  Container,
+  FormFooter,
+  FormHeader,
+  Grid,
+  MemberCard,
+  Text,
+} from '@myra-ui';
+
+import {
   CashValue,
   LoanInstallment,
   LoanRepaymentAccountMode,
@@ -16,20 +29,7 @@ import {
   useGetMemberLoanAccountsQuery,
   useSetLoanRepaymentMutation,
 } from '@coop/cbs/data-access';
-import { FormInput, FormSelect } from '@coop/shared/form';
-import {
-  asyncToast,
-  Box,
-  Button,
-  ChakraModal,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormMemberSelect,
-  Grid,
-  MemberCard,
-  Text,
-} from '@myra-ui';
+import { FormInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
 
 import { InstallmentData, LoanPaymentScheduleTable, LoanProductCard, Payment } from '../components';
 
@@ -84,6 +84,7 @@ export const LoanRepayment = () => {
   const cashPaid = watch('cash.cashPaid');
 
   const denominations = watch('cash.denominations');
+  // const amountPaid = watch('amountPaid');
 
   const denominationTotal = useMemo(
     () =>
@@ -185,8 +186,6 @@ export const LoanRepayment = () => {
     }
   );
 
-  const loanTotal =
-    loanPreview?.data?.loanAccount?.loanPreview?.data?.repaymentDetails?.totalInstallmentAmount;
   const loanData = loanPreview?.data?.loanAccount?.loanPreview?.data;
   const loanTry = loanData?.paymentSchedule?.installments;
   const nextInstallmentNumber = loanData?.repaymentDetails?.nextInstallmentNo as number;
@@ -264,7 +263,7 @@ export const LoanRepayment = () => {
                       data={loanPaymentScheduleSplice as LoanInstallment[]}
                       total={loanData?.paymentSchedule?.total as string}
                     />
-                    <ChakraModal
+                    <Modal
                       onClose={onClose}
                       open={isOpen}
                       title="Payment Schedule"
@@ -276,7 +275,7 @@ export const LoanRepayment = () => {
                         data={loanPaymentSchedule as LoanInstallment[]}
                         total={loanData?.paymentSchedule?.total as string}
                       />
-                    </ChakraModal>
+                    </Modal>
                     <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
                       <FormInput name="amountPaid" label="Amount to Pay" textAlign="right" />
                     </Grid>
@@ -287,7 +286,7 @@ export const LoanRepayment = () => {
                 )}
               </Box>
               <Box display={mode === '1' ? 'flex' : 'none'}>
-                <Payment loanTotal={loanTotal as string} totalDeposit={amountPaid as number} />
+                <Payment loanTotal={amountPaid as string} totalDeposit={amountPaid as number} />
               </Box>
             </form>
           </FormProvider>
@@ -311,7 +310,6 @@ export const LoanRepayment = () => {
                   address: memberDetailData?.address,
                 }}
                 signaturePath={memberSignatureUrl}
-                showSignaturePreview={false}
                 citizenshipPath={memberCitizenshipUrl}
               />
             </Box>

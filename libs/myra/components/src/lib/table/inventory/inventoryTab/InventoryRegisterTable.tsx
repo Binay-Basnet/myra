@@ -3,7 +3,7 @@ import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 
 import { useGetInventoryItemsQuery } from '@coop/cbs/data-access';
-import { Column, Table, TableListPageHeader } from '@myra-ui';
+import { Column, PageHeader, Table } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const InventoryRegisterTable = () => {
@@ -15,41 +15,45 @@ export const InventoryRegisterTable = () => {
   const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
       {
-        Header: t['inRegItemID'],
-        accessor: 'node.id',
+        header: t['inRegItemID'],
+        accessorFn: (row) => row?.node.id,
         maxWidth: 4,
       },
       {
-        Header: t['inRegName'],
-        accessor: 'node.name',
+        header: t['inRegName'],
+        accessorFn: (row) => row?.node.name,
         width: '80%',
       },
       {
-        Header: t['inRegType'],
-        accessor: 'node.type',
-        width: '40%',
+        header: t['inRegType'],
+        accessorFn: (row) => row?.node.type,
+        meta: {
+          width: '40%',
+        },
       },
       {
-        Header: t['inRegUnitPrice'],
-        accessor: 'node.unitPrice',
-        Cell: ({ value }) => <span>{Number(value).toFixed(2)}</span>,
+        header: t['inRegUnitPrice'],
+        accessorFn: (row) => row?.node.unitPrice,
+        cell: (props) => <span>{Number(props.getValue()).toFixed(2)}</span>,
       },
       {
         id: 'total-cost',
-        Header: t['inRegTotalCost'],
-        accessor: 'node.unitPrice',
-        Cell: ({ value, row }) => (
-          <span>{Number(value * row.original.node.itemQuantity).toFixed(2)}</span>
+        header: t['inRegTotalCost'],
+        accessorFn: (row) => row?.node.unitPrice,
+        cell: ({ row, getValue }) => (
+          <span>
+            {Number((getValue() as number) * (row?.original?.node?.itemQuantity || 0)).toFixed(2)}
+          </span>
         ),
       },
       {
-        Header: t['inRegItemQuantity'],
-        accessor: 'node.itemQuantity',
-        Cell: ({ value }) => <span>{Number(value).toFixed(2)}</span>,
+        header: t['inRegItemQuantity'],
+        accessorFn: (row) => row?.node.itemQuantity,
+        cell: (props) => <span>{Number(props.getValue()).toFixed(2)}</span>,
       },
       {
-        accessor: 'actions',
-        Cell: () => (
+        accessorKey: 'actions',
+        cell: () => (
           <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
         ),
       },
@@ -59,9 +63,9 @@ export const InventoryRegisterTable = () => {
 
   return (
     <>
-      <TableListPageHeader heading={t['inventory']} />
+      <PageHeader heading={t['inventory']} />
 
-      <Table isLoading={isFetching} data={rowItems} columns={columns} sort />
+      <Table isLoading={isFetching} data={rowItems} columns={columns} />
     </>
   );
 };

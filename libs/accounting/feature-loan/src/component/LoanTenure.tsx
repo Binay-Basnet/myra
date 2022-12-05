@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { FormSection, GridItem } from '@myra-ui';
 
 import { FrequencyTenure } from '@coop/cbs/data-access';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
-import { FormSection, GridItem } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IRightElementProps {
@@ -32,7 +32,7 @@ const inputRightElementText = (props: IRightElementProps) => {
 export const LoanTenure = () => {
   const { t } = useTranslation();
   const methods = useFormContext();
-  const { resetField, watch } = methods;
+  const { watch } = methods;
   const tenureUnit = watch('tenureUnit');
 
   const [rightElement, setRightElement] = useState('days');
@@ -45,7 +45,6 @@ export const LoanTenure = () => {
   ];
 
   useEffect(() => {
-    resetField('tenure');
     setRightElement(tenureUnit);
   }, [tenureUnit]);
 

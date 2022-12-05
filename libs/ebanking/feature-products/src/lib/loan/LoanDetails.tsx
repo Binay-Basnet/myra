@@ -8,7 +8,7 @@ import {
   useGetEbankingLoanProductSubTypeQuery,
   useGetEbankingLoanProductTypeListQuery,
 } from '@coop/ebanking/data-access';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 import { Box, DetailCardContent, DetailsCard, PathBar, Text } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 

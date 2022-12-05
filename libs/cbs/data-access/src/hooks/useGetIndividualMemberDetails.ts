@@ -23,14 +23,14 @@ export const useGetIndividualMemberDetails = ({
 }: IUseGetIndividualMemberDetailsProps) => {
   const { data: memberDetailQueryData } = useGetMemberIndividualDataQuery(
     { id: memberId },
-    { enabled: !!memberId }
+    { enabled: !!memberId && memberId !== 'undefined' }
   );
 
   const { data: identificationListData } = useGetIndividualKymIdentificationListQuery(
     {
       id: String(memberId),
     },
-    { enabled: !!memberId }
+    { enabled: !!memberId && memberId !== 'undefined' }
   );
 
   const memberDetailData = useMemo(() => {
@@ -66,7 +66,7 @@ export const useGetIndividualMemberDetails = ({
     {
       memberId,
     },
-    { enabled: !!memberId }
+    { enabled: !!memberId && memberId !== 'undefined' }
   );
 
   const memberSignatureUrl = useMemo(() => {

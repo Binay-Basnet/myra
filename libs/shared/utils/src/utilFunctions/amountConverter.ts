@@ -1,5 +1,5 @@
 export const amountConverter = (amount: number | string) => {
-  const parsedAmount = typeof amount === 'string' ? parseInt(amount, 10) : amount;
+  const parsedAmount = typeof amount === 'string' ? parseFloat(amount) : amount;
 
   return (
     parsedAmount &&

@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { Box, Grid, GridItem, Text } from '@myra-ui';
+import { FormAccountSelect } from '@coop/shared/form';
 
 import {
   AccountClosePaymentMode,
@@ -18,7 +20,6 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { Box, FormAccountSelect, Grid, GridItem, Text } from '@myra-ui';
 import { featureCode } from '@coop/shared/utils';
 
 const paymentModes = [
@@ -125,7 +126,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
               />
             </GridItem>
 
-            <FormAmountInput name="accountTransfer.amount" label="Amount" />
+            <FormAmountInput type="number" name="accountTransfer.amount" label="Amount" />
 
             {/* <FormDatePicker name="accountTransfer.depositedDate" label="Deposited Date" />
 
@@ -142,7 +143,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
               <FormSelect name="bankCheque.bank" label="Bank Name" options={bankList} />
             </GridItem>
             <FormInput name="bankCheque.cheque_no" label="Cheque No" placeholder="Cheque No" />
-            <FormAmountInput name="bankCheque.amount" label="Amount" />
+            <FormAmountInput type="number" name="bankCheque.amount" label="Amount" />
             <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
               <FormTextArea name="bankCheque.note" label="Note" />
             </GridItem>

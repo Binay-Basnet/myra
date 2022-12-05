@@ -1,6 +1,7 @@
-import { WithdrawPaymentType } from '@coop/cbs/data-access';
 import { DetailCardContent, DetailsCard } from '@myra-ui';
-import { useTranslation } from '@coop/shared/utils';
+
+import { WithdrawPaymentType } from '@coop/cbs/data-access';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import { useTransactionDetailHooks } from '../hooks/useTransactionDetailHooks';
 
@@ -49,7 +50,7 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailAmount']}
-            subtitle={withdrawDetailData?.withdrawAmount}
+            subtitle={amountConverter(withdrawDetailData?.withdrawAmount ?? 0)}
           />
           <DetailCardContent
             title={t['transDetailWithdrawnBy']}
@@ -71,7 +72,7 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
             />
             <DetailCardContent
               title={t['transDetailAmount']}
-              subtitle={withdrawDetailData?.withdrawAmount}
+              subtitle={amountConverter(withdrawDetailData?.withdrawAmount ?? 0)}
             />
             <DetailCardContent
               title={t['transDetailWithdrawnBy']}
@@ -88,7 +89,7 @@ export const PaymentDetails = ({ detailPage }: PaymentDetailProps) => {
           />
           <DetailCardContent
             title={t['transDetailAmount']}
-            subtitle={loanRepaymentDetailData?.totalRepaymentAmount}
+            subtitle={amountConverter(loanRepaymentDetailData?.totalRepaymentAmount ?? 0)}
           />
         </>
       )}

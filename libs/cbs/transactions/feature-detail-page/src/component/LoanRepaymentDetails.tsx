@@ -1,5 +1,6 @@
 import { DetailCardContent, DetailsCard } from '@myra-ui';
-import { useTranslation } from '@coop/shared/utils';
+
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import { useTransactionDetailHooks } from '../hooks/useTransactionDetailHooks';
 
@@ -23,12 +24,12 @@ export const LoanRepaymentDetails = () => {
       />
       <DetailCardContent
         title={t['transDetailInstallmentAmount']}
-        subtitle={loanRepaymentDetailData?.installmentAmount}
+        subtitle={amountConverter(loanRepaymentDetailData?.installmentAmount ?? 0)}
       />
       <DetailCardContent title={t['transDetailFine']} subtitle={loanRepaymentDetailData?.fine} />
       <DetailCardContent
         title={t['transDetailTotalRepaymentAmount']}
-        subtitle={loanRepaymentDetailData?.totalRepaymentAmount}
+        subtitle={amountConverter(loanRepaymentDetailData?.totalRepaymentAmount ?? 0)}
       />
       <DetailCardContent title={t['transDetailStatus']} status />
     </DetailsCard>

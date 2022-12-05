@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
-
-import { Column, Table } from '@coop/shared/table';
 import { DetailsCard } from '@myra-ui';
-import { useTranslation } from '@coop/shared/utils';
+
+import { Column, Table } from '@myra-ui/table';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type InstallmentDetailsProps = {
   data:
@@ -41,12 +41,12 @@ export const InstallmentDetails = ({ data }: InstallmentDetailsProps) => {
       {
         id: '4',
         header: t['transDetailPrincipalAmount'],
-        accessorFn: (row) => row?.principalAmount,
+        accessorFn: (row) => amountConverter(row?.principalAmount ?? 0),
       },
       {
         id: '5',
         header: t['transDetailInterestAmount'],
-        accessorFn: (row) => row?.interestAmount,
+        accessorFn: (row) => amountConverter(row?.interestAmount ?? 0),
       },
     ],
     []

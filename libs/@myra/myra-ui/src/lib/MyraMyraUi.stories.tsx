@@ -1,9 +1,10 @@
-import type { ComponentStory, ComponentMeta } from '@storybook/react';
+import type { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { MyraMyraUi } from './MyraMyraUi';
 
 const Story: ComponentMeta<typeof MyraMyraUi> = {
   component: MyraMyraUi,
-  title: 'MyraMyraUi',
+  title: 'Myra UI',
 };
 export default Story;
 

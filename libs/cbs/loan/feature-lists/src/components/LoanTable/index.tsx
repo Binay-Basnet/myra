@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { GetLoanListQuery, LoanAccountEdge, LoanObjState } from '@coop/cbs/data-access';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 import { Avatar, Box, TablePopover, Text } from '@myra-ui';
 
 interface ILoanTable {

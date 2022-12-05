@@ -1,6 +1,16 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import {
+  asyncToast,
+  Box,
+  Container,
+  FormFooter,
+  FormHeader,
+  FormSection,
+  Grid,
+  Text,
+} from '@myra-ui';
 import omit from 'lodash/omit';
 
 import {
@@ -26,16 +36,6 @@ import {
   FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormSection,
-  Grid,
-  Text,
-} from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */

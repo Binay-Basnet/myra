@@ -1,16 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
-
-import {
-  ExternalLoanApplicationInput,
-  ExternalLoanPaymentMethod,
-  FrequencyTenure,
-  InstallmentFrequency,
-  LoanRepaymentScheme,
-  useSetExternalLoanMutation,
-} from '@coop/cbs/data-access';
-import { FormSwitchTab } from '@coop/shared/form';
 import {
   asyncToast,
   Box,
@@ -23,12 +13,24 @@ import {
   Icon,
   Text,
 } from '@myra-ui';
+
+import {
+  ExternalLoanApplicationInput,
+  ExternalLoanPaymentMethod,
+  ExternalLoanType,
+  FrequencyTenure,
+  InstallmentFrequency,
+  LoanRepaymentScheme,
+  useSetExternalLoanMutation,
+} from '@coop/cbs/data-access';
+import { FormSwitchTab } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
   Collateral,
   Documents,
   ExternalLoanInfo,
+  FixDeposit,
   Installment,
   Insurance,
   LoanProcessTable,
@@ -42,6 +44,7 @@ export const ExternalLoanAdd = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const methods = useForm<ExternalLoanApplicationInput>({
+    mode: 'onChange',
     defaultValues: {
       tenureUnit: FrequencyTenure.Day,
       insurance: false,
@@ -54,6 +57,7 @@ export const ExternalLoanAdd = () => {
   const { getValues, watch } = methods;
 
   const insurance = watch('insurance');
+  const typeOfLoan = watch('typeOfLoan');
 
   const { mutateAsync } = useSetExternalLoanMutation();
 
@@ -107,7 +111,8 @@ export const ExternalLoanAdd = () => {
 
               <Installment />
 
-              <Collateral />
+              {typeOfLoan === ExternalLoanType.Collateral && <Collateral />}
+              {typeOfLoan === ExternalLoanType.LoanAgainstFd && <FixDeposit />}
 
               <FormSection>
                 <GridItem colSpan={3}>

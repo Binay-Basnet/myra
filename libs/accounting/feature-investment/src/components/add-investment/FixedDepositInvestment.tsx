@@ -1,3 +1,5 @@
+import { Box, FormSection, GridItem, Text } from '@myra-ui';
+
 import { InputGroupContainer } from '@coop/accounting/ui-components';
 import { FdInvestmentType, useGetCoaBankListQuery } from '@coop/cbs/data-access';
 import {
@@ -8,7 +10,6 @@ import {
   FormSelect,
   FormTextArea,
 } from '@coop/shared/form';
-import { Box, FormSection, GridItem, Text } from '@myra-ui';
 import { featureCode } from '@coop/shared/utils';
 
 const fdInvestmentTypeOptions = [
@@ -33,7 +34,7 @@ export const FixedDepositInvestment = () => {
     <FormSection header="Fixed Deposit">
       <FormSelect name="fd.type" label="FD Type" options={fdInvestmentTypeOptions} />
 
-      <FormAmountInput name="fd.fdAmount" label="FD Amount" />
+      <FormAmountInput type="number" name="fd.fdAmount" label="FD Amount" />
 
       <FormNumberInput
         name="fd.rate"

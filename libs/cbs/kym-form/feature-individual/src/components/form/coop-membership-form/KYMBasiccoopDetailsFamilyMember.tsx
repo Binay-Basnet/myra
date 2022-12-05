@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import { isEqual } from 'lodash';
 import debounce from 'lodash/debounce';
 
+import { FormSection, GridItem } from '@myra-ui';
+
 import {
   Id_Type,
   useDeleteMemberFamilyDetailsMutation,
@@ -13,8 +15,7 @@ import {
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormSwitchTab } from '@coop/shared/form';
-import { FormMemberSelect, FormSection, GridItem } from '@myra-ui';
+import { FormMemberSelect, FormSwitchTab } from '@coop/shared/form';
 import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 import { FamilyMember } from './FamilyMember';

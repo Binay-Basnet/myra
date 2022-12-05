@@ -2,7 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 
 import { PopoverComponent } from '@coop/myra/components';
-import { Table } from '@coop/shared/table';
+import { Table } from '@myra-ui/table';
 import { Box, Text } from '@myra-ui';
 import { featureCode } from '@coop/shared/utils';
 

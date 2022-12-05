@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
 
 import { Icon } from '@myra-ui';
+
 import { en, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -18,7 +19,7 @@ const NAVBAR_TAB_OBJECT: Record<string, number> = {
 
 const demotabs: { title: keyof typeof en; icon: IconType; link: string }[] = [
   {
-    title: 'acMobileBanking',
+    title: 'acMBanking',
     icon: IoPhonePortraitSharp,
     link: '/alternative-channels/mBanking/users',
   },

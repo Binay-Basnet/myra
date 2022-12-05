@@ -1,11 +1,12 @@
 import { debounce } from 'lodash';
 
+import { AccordionPanel, Box, Input, Text } from '@myra-ui';
+
 import {
   FormSection,
   FormSectionType,
   useAddFileSizeToSectionMutation,
 } from '@coop/cbs/data-access';
-import { AccordionPanel, Box, Text, TextInput } from '@myra-ui';
 
 interface FileSizeInputProps {
   section: FormSection;
@@ -25,7 +26,7 @@ export const KYMFileSize = ({ section }: FileSizeInputProps) => {
           <Text fontSize="r1" color="gray.800" mb="s4">
             Max File Upload Size (in KB)
           </Text>
-          <TextInput
+          <Input
             defaultValue={section?.maxSize ?? undefined}
             onChange={debounce(async (e) => {
               await addFileSize({

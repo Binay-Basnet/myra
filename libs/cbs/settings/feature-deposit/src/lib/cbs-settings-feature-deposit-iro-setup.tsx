@@ -3,9 +3,10 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { debounce } from 'lodash';
 
+import { Box, Text } from '@myra-ui';
+
 import { useGetDepositSettingsIroQuery, useSetDepositIroMutation } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
-import { Box, Text, TextFields } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -47,18 +48,18 @@ export const CbsSettingsFeatureDepositIROSetup = () => {
       <Box display="flex" flexDirection="row" h="fit-content">
         <Box p="s16" flex={1}>
           <Box borderBottom="1px" borderBottomColor="border.layout" py="s8" w="100%">
-            <TextFields variant="pageHeader" color="neutralColorLight.Gray-80">
+            <Text variant="pageHeader" color="neutralColorLight.Gray-80">
               {t['settingsDepositIro']}
-            </TextFields>
+            </Text>
             <Text variant="formInput" fontSize="r1" fontWeight="400" color="gray.400">
               {t['settingsDepositIroSetup']}
             </Text>
           </Box>
           <Box mt="s12">
             <Box pl="s12" py="s12" border="1px" borderColor="border.layout" w="100%">
-              <TextFields variant="tableHeader" color="neutralColorLight.Gray-80">
+              <Text variant="tableHeader" color="neutralColorLight.Gray-80">
                 {t['settingsDepositIro']}
-              </TextFields>
+              </Text>
             </Box>
             <Box p="s12" border="1px" borderColor="border.layout" w="100%">
               <FormProvider {...methods}>

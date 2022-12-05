@@ -1,6 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { asyncToast, Box, Container, FormFooter, FormHeader, Grid, Text } from '@myra-ui';
+import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
 import {
@@ -12,7 +13,6 @@ import {
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormAmountInput, FormEditableTable, FormInput, FormSwitchTab } from '@coop/shared/form';
-import { asyncToast, Box, Container, FormFooter, FormHeader, Grid, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -162,7 +162,7 @@ export const AddVaultTransfer = () => {
 
                   <Box display="flex" flexDirection="column" gap="s16" py="s20">
                     <InputGroupContainer>
-                      <FormAmountInput name="amount" label="Cash Amount" />
+                      <FormAmountInput type="number" name="amount" label="Cash Amount" />
                     </InputGroupContainer>
 
                     <FormEditableTable<PaymentTableType>

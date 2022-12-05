@@ -5,6 +5,8 @@ import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
 import pickBy from 'lodash/pickBy';
 
+import { Box, FormSection, GridItem, Text } from '@myra-ui';
+
 import {
   FormFieldSearchTerm,
   RootState,
@@ -23,7 +25,6 @@ import {
   FormPhoneNumber,
   FormSelect,
 } from '@coop/shared/form';
-import { Box, FormSection, GridItem, TextFields } from '@myra-ui';
 import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
@@ -201,6 +202,7 @@ const HusbandWifeOccupation = ({ setKymCurrentSection }: IHusbandWifeOccupationP
           />
           <FormInput type="text" name="address" id="spouseAddress" label={t['kymIndAddress']} />
           <FormAmountInput
+            type="number"
             id="spouseEstimatedAnnualIncome"
             name="estimatedAnnualIncome"
             label={t['kymIndEstimatedAnnualIncome']}
@@ -219,7 +221,7 @@ const HusbandWifeOccupation = ({ setKymCurrentSection }: IHusbandWifeOccupationP
 
           <GridItem colSpan={3} display="flex" gap="9px" alignItems="center">
             <FormCheckbox name="isOwner" id="spouseIsOwner" />
-            <TextFields variant="formLabel">{t['kymIndAreyouowner']}</TextFields>
+            <Text variant="formLabel">{t['kymIndAreyouowner']}</Text>
           </GridItem>
 
           {isOwner && (

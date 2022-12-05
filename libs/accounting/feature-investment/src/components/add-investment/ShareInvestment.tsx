@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { FormSection, GridItem } from '@myra-ui';
 
 import {
   FormAmountInput,
@@ -8,7 +9,6 @@ import {
   FormNumberInput,
   FormTextArea,
 } from '@coop/shared/form';
-import { FormSection, GridItem } from '@myra-ui';
 
 export const ShareInvestment = () => {
   const methods = useFormContext();
@@ -28,7 +28,12 @@ export const ShareInvestment = () => {
 
       <FormNumberInput name="share.rate" label="Rate Per Share" />
 
-      <FormAmountInput name="share.purchaseAmount" label="Total Purchase Amount" isDisabled />
+      <FormAmountInput
+        type="number"
+        name="share.purchaseAmount"
+        label="Total Purchase Amount"
+        isDisabled
+      />
 
       <FormInput name="share.certificateNo" label="Share Certificate Number" />
 

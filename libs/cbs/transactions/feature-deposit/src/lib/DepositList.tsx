@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
+import { Avatar, Box, TablePopover, Text } from '@myra-ui';
 
 import { DepositedBy, useGetDepositListDataQuery } from '@coop/cbs/data-access';
 import { TransactionPageHeader } from '@coop/cbs/transactions/ui-components';
-import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box, TablePopover, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [
@@ -68,6 +68,14 @@ export const DepositList = () => {
           width: '60%',
         },
       },
+      {
+        header: t['depositListAmount'],
+
+        accessorFn: (row) => amountConverter(row?.node?.amount),
+        meta: {
+          isNumeric: true,
+        },
+      },
 
       {
         header: t['depositListPaymentMode'],
@@ -82,14 +90,7 @@ export const DepositList = () => {
         header: t['depositListDepositDate'],
         accessorFn: (row) => row?.node?.date?.split(' ')[0] ?? 'N/A',
       },
-      {
-        header: t['depositListAmount'],
 
-        accessorFn: (row) => amountConverter(row?.node?.amount),
-        meta: {
-          isNumeric: true,
-        },
-      },
       {
         id: '_actions',
         header: '',

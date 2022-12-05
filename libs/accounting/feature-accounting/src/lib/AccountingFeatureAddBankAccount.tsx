@@ -1,6 +1,14 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
+import {
+  asyncToast,
+  Box,
+  Container,
+  FormFooter,
+  FormHeader,
+  FormSection,
+  GridItem,
+} from '@myra-ui';
 
 import {
   AccountingBankAccountType,
@@ -8,19 +16,7 @@ import {
   useGetBankListQuery,
   useSetBankAccountsMutation,
 } from '@coop/cbs/data-access';
-import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
-import {
-  asyncToast,
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormSection,
-  GridItem,
-  Icon,
-  Text,
-} from '@myra-ui';
+import { FormAmountInput, FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -35,11 +31,11 @@ export const AccountingFeatureAddBankAccount = () => {
 
   const accountTypeList = [
     {
-      label: 'Current',
+      label: t['bankAccountCurrent'],
       value: AccountingBankAccountType.Current,
     },
     {
-      label: 'Saving',
+      label: t['bankAccountSaving'],
       value: AccountingBankAccountType.Saving,
     },
   ];
@@ -122,9 +118,10 @@ export const AccountingFeatureAddBankAccount = () => {
                   label={t['accountingBankAccountAddAccountType']}
                   options={accountTypeList}
                 />
-                <FormInput
+                <FormAmountInput
                   name="openingBalance"
-                  type="text"
+                  type="number"
+                  textAlign="right"
                   label={t['accountingBankAccountAddOpeningBalance']}
                 />
 
@@ -142,25 +139,7 @@ export const AccountingFeatureAddBankAccount = () => {
       </Container>
       <Box bottom="0" position="fixed" width="100%" bg="gray.100">
         <Container minW="container.lg" height="fit-content">
-          <FormFooter
-            status={
-              <Box display="flex" gap="s8">
-                <Text as="i" fontSize="r1">
-                  {t['formDetails']}
-                </Text>
-              </Box>
-            }
-            draftButton={
-              <Button type="submit" variant="ghost" shade="neutral">
-                <Icon as={BiSave} />
-                <Text alignSelf="center" fontWeight="Medium" fontSize="s2" ml="5px">
-                  {t['saveDraft']}
-                </Text>
-              </Button>
-            }
-            mainButtonLabel={t['save']}
-            mainButtonHandler={submitForm}
-          />
+          <FormFooter mainButtonLabel={t['save']} mainButtonHandler={submitForm} />
         </Container>
       </Box>
     </>

@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
-
-import { Column, Table } from '@coop/shared/table';
 import { DetailsCard } from '@myra-ui';
-import { useTranslation } from '@coop/shared/utils';
+
+import { Column, Table } from '@myra-ui/table';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type AssignedMemberListProps = {
   data:
@@ -40,7 +40,7 @@ export const AssignedMemberList = ({ data }: AssignedMemberListProps) => {
       {
         id: '4',
         header: t['transDetailAmount'],
-        accessorFn: (row) => row?.amount,
+        accessorFn: (row) => amountConverter(row?.amount ?? 0),
       },
     ],
     []

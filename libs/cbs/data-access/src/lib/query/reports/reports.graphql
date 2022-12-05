@@ -292,6 +292,11 @@ query getActiveInactiveMemberReport($data: ActiveInactiveMemberReportData) {
     activeInactiveMemberReport(data: $data) {
       statement {
         ... on ActiveInactiveMemberReport {
+          summary {
+            activeTotal
+            inactiveTotal
+            totalMember
+          }
           reportStatement {
             memberId
             memberName
@@ -306,6 +311,7 @@ query getActiveInactiveMemberReport($data: ActiveInactiveMemberReportData) {
             occupation
             memberRegistrationDate
             status
+            memberType
           }
         }
       }
@@ -422,18 +428,11 @@ query getTtrReport($data: TTRReportFilter!) {
       data {
         yearly {
           name
+          memberId
           address {
-            state
-            district
-            localGovernment
-            wardNo
-            locality
-            houseNo
-            coordinates {
-              longitude
-              latitude
-            }
+            ...Address
           }
+
           branch
           date
           nature
@@ -444,17 +443,9 @@ query getTtrReport($data: TTRReportFilter!) {
         }
         perTranx {
           name
+          memberId
           address {
-            state
-            district
-            localGovernment
-            wardNo
-            locality
-            houseNo
-            coordinates {
-              longitude
-              latitude
-            }
+            ...Address
           }
           branch
           date
@@ -463,6 +454,325 @@ query getTtrReport($data: TTRReportFilter!) {
           amount
           sourceOfFund
           remarks
+        }
+      }
+    }
+  }
+}
+
+query getshareRegisterReport($data: SharePurchaseRegisterReportFilter!) {
+  report {
+    sharePurchaseRegisterReport(data: $data) {
+      data {
+        memberId
+        memberCode
+        name
+        particular
+        perShareAmount
+        kittaNumFrom
+        kittaNumTo
+        totalKitta
+        totalAmount
+      }
+    }
+  }
+}
+
+query getShareTransactionReport($data: ShareTransactionReportFilter) {
+  report {
+    shareTransactionReport(data: $data) {
+      data {
+        transactionDate
+        memberId
+        memberCode
+        name
+        particular
+        shareReturnDr
+        shareIssueCr
+        balance
+      }
+      footer {
+        totalCr
+        totatDr
+        totalBalance
+      }
+      totalShareIssued
+      avgSharePerMember
+    }
+  }
+}
+
+query getAccountOpeningReport($data: AccountOpeningReportInput) {
+  report {
+    accountOpeningReport(data: $data) {
+      data {
+        accountName
+        accountNumber
+        memberId
+        openedBy
+        openingDate
+      }
+    }
+  }
+}
+
+query getLoanBalanceReport($data: LoanBalanceFilterData!) {
+  report {
+    loanBalanceReport(data: $data) {
+      data {
+        memberId
+        loanAccountId
+        memberName
+        productName
+        productCode
+        outstandingBalance
+        remainingBalance
+        remainingInterest
+        lastPaymentDate
+      }
+      totalOutstandingBalance
+      totalRemainingBalance
+    }
+  }
+}
+
+query getSavingsBalanceReport($data: SavingsBalanceFilterData!) {
+  report {
+    savingsBalanceReport(data: $data) {
+      data {
+        accountId
+        memberId
+        memberCode
+        memberName
+        productId
+        productName
+        productCode
+        accountOpeningDate
+        memberType
+        balance
+      }
+      totalBalance
+    }
+  }
+}
+
+query getAccountClosingReport($data: AccountClosingReportInput) {
+  report {
+    accountClosingReport(data: $data) {
+      data {
+        memberId
+        accountNumber
+        accountName
+        openingDate
+        closingDate
+        closedBalance
+        closedBy
+      }
+    }
+  }
+}
+query getBankGLStatementReport($data: BankGLStatementFilter!) {
+  report {
+    bankGLStatementReport(data: $data) {
+      data {
+        date
+        name
+        particular
+        chequeNo
+        depositAmount
+        withdrawAmount
+        balance
+        remarks
+      }
+    }
+  }
+}
+query getTransactionTellerReport($data: TellerReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        tellerReport(data: $data) {
+          data {
+            headTeller {
+              entries {
+                tellerId
+                name
+                inTransit
+                stack
+                inAmount
+                outAmount
+                balance
+              }
+              inTransitTotal
+              stackTotal
+              inAmountTotal
+              outAmountTotal
+              balanceTotal
+            }
+            teller {
+              entries {
+                tellerId
+                name
+                inTransit
+                stack
+                inAmount
+                outAmount
+                balance
+              }
+              inTransitTotal
+              stackTotal
+              inAmountTotal
+              outAmountTotal
+              balanceTotal
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getCashLedgerReport($data: CashLedgerReportFilterData) {
+  report {
+    cashLedgerReport(data: $data) {
+      openingBalance
+      closingBalance
+      summary {
+        date
+        ledgerCode
+        particular
+        voucherNo
+        cashDr
+        cashCr
+        balance
+      }
+      details {
+        date
+        ledgerCode
+        particular
+        voucherNo
+        cashDr
+        cashCr
+        balance
+      }
+    }
+  }
+}
+
+query getMemberRegistrationReport($data: MemberRegistrationReportData) {
+  report {
+    memberRegistrationReport(data: $data) {
+      data {
+        individual {
+          memberId
+          memberCode
+          name
+          address {
+            ...Address
+          }
+          dob
+          grandFatherName
+          fatherName
+          SpouseName
+          profession
+          shareInfo {
+            perShareAmount
+            kitta
+            amount
+          }
+          fingerPrint
+          photo
+          contactNo
+          email
+          other
+        }
+        other {
+          memberId
+          memberCode
+          name
+          address {
+            ...Address
+          }
+          doe
+          typeOfInstitution
+          workingArea
+          totalMember
+          balanceSheet
+          shareInfo {
+            perShareAmount
+            kitta
+            amount
+          }
+          post
+          authPersonName
+          logo
+          stamp
+          contactNo
+          email
+          other
+        }
+      }
+    }
+  }
+}
+
+query getAccountClosingReport($data: AccountClosingReportInput) {
+  report {
+    accountClosingReport(data: $data) {
+      data {
+        memberId
+        accountNumber
+        accountName
+        openingDate
+        closingDate
+        closedBalance
+        closedBy
+      }
+    }
+  }
+}
+
+query getLoanAgingStatementReport($data: LoanAgingStatementInput) {
+  report {
+    loanAgingStatementReport(data: $data) {
+      data {
+        report {
+          memberNo
+          loanNo
+          name
+          address
+          phoneNo
+          loanType
+          paymentMode
+          issueDate
+          loanMaturityDate
+          disbursePrincipal
+          remainingPrincipal
+          installmentAmount
+          remainingInstallmentAmount
+          remainingInterest
+          remainingPenalty
+          totalDueAmount
+          goodAmount
+          matured1To30Days
+          matured1To12Months
+          maturedAbove12Months
+          lastPrincipalPaidDate
+          lastInterestPaidDate
+          installmentLateDays
+        }
+        summary {
+          disbursePrincipalTotal
+          remainingPrincipalTotal
+          installmentAmountTotal
+          remainingInstallmentAmountTotal
+          remainingInterestTotal
+          remainingPenaltyTotal
+          dueAmountTotal
+          goodAmountTotal
+          matured1To30DaysTotal
+          matured1To12MonthsTotal
+          maturedAbove12MonthsTotal
         }
       }
     }

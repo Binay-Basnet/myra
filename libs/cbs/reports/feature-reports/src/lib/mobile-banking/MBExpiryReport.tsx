@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { GridItem } from '@myra-ui';
 import dayjs from 'dayjs';
 
 import {
@@ -10,7 +11,6 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect } from '@coop/shared/form';
-import { GridItem } from '@myra-ui';
 
 export const MBExpiryReport = () => {
   const [filters, setFilters] = useState<EbankingReportFilter | null>(null);
@@ -42,12 +42,12 @@ export const MBExpiryReport = () => {
             },
           ]}
         />
-        <Report.Inputs defaultFilters={null} setFilters={setFilters}>
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Branch" />
           </GridItem>
           <GridItem colSpan={1}>
-            <ReportDateRange label="Branch Established Date" />
+            <ReportDateRange label="Date Period" />
           </GridItem>
         </Report.Inputs>
       </Report.Header>

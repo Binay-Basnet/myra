@@ -47,6 +47,8 @@ export enum Report {
   CHEQUE_WITHDRAW_RECORD = 'Cheque/Withdraw Record',
   BALANCE_CERTIFICATE = 'Balance Certificate (Deposit)',
   INTEREST_TAX_REPORT = 'Interest Tax Report',
+  ACCOUNT_OPENING_REPORT = 'Account Opening Report',
+  ACCOUNT_CLOSING_REPORT = 'Account Closing Report',
 
   LOAN_INDIVIDUAL_STATEMENT = 'Loan Individual Statement',
   LOAN_CONSOLIDATED_REPORT = 'Loan Consolidated Report',
@@ -63,14 +65,18 @@ export enum Report {
   MEMBER_LOAN_INFORMATION_SYSTEM = 'Member Loan Information System (MLIB) Setup',
   CIB_CIC_MEMBER_LOAN_INFORMATION = 'CIB/CIC/Member loan information system(MLIB) Setup',
   LOAN_UTILIZATION_INSPECTION = 'Loan utilization inspection(eg. above 5 Lakh)',
+  LOAN_BALANCE_REPORT = 'Loan Balance Report',
 
-  TRANSACTION_TRIAL_SHEET = 'Trial Sheet',
+  THRESHOLD_TRANSACTION_REPORT = 'Threshold Transaction ',
+  TRANSACTION_TRIAL_SHEET = 'Trial Balance',
   TRANSACTION_INCOME_STATEMENT = 'Income Statement',
   TRANSACTION_CASH_FLOW_STATEMENT = 'Cash Flow Statement',
   TRANSACTION_CHANGE_OF_EQUITY = 'Change of Equity',
   TRANSACTION_APPROPRIATE_OF_PROFIT = 'Appropriation of Profit',
   TRANSACTION_BANK_GL_BALANCE = 'Bank GL Balance',
   TRANSACTION_BANK_GL_REPORT = 'Bank GL Statement',
+  TRANSACTION_TELLER_REPORT = 'Teller Report',
+  TRANSACTION_CASH_LEDGER = 'Cash Ledger Report',
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
@@ -95,6 +101,7 @@ export enum Report {
   BRANCH_WISE_TARGET_VS_ACHIEVEMENT = 'Branchwise Target vs Achievement',
 
   USER_LIST_REPORT = 'User List Report',
+  SAVING_BALANCE_REPORT = 'Saving Balance [Individual]',
 }
 
 export const REPORTS = {
@@ -120,6 +127,7 @@ export const REPORTS = {
     {
       id: '2.3',
       report: Report.MEMBER_REGISTER_REPORT,
+      link: 'register',
     },
     {
       id: '2.4',
@@ -142,6 +150,7 @@ export const REPORTS = {
     {
       id: '3.1',
       report: Report.SHARE_REGISTER,
+      link: 'register',
     },
     {
       id: '3.2',
@@ -151,6 +160,7 @@ export const REPORTS = {
     {
       id: '3.3',
       report: Report.SHARE_TRANSACTION_REPORT,
+      link: 'transaction',
     },
     {
       id: '3.4',
@@ -176,6 +186,12 @@ export const REPORTS = {
       id: '5.2',
       report: Report.DEPOSIT_CONSOLIDATED_REPORT,
     },
+    {
+      id: '5.2.e',
+      report: Report.ACCOUNT_CLOSING_REPORT,
+      link: 'account-closing',
+    },
+
     {
       id: '5.3',
       report: Report.DEPOSIT_DAILY_TRANSACTION_REPORT,
@@ -206,6 +222,11 @@ export const REPORTS = {
       report: Report.AML_REPORTING,
     },
     {
+      id: '5.9.1',
+      report: Report.THRESHOLD_TRANSACTION_REPORT,
+      link: 'ttr',
+    },
+    {
       id: '5.10',
       report: Report.TARGET_VS_ACHIEVEMENT_REPORT,
     },
@@ -226,6 +247,11 @@ export const REPORTS = {
       report: Report.INTEREST_TAX_REPORT,
       link: 'interest-tax',
     },
+    {
+      id: '5.15',
+      report: Report.ACCOUNT_OPENING_REPORT,
+      link: 'account-opening',
+    },
   ],
 
   [ReportGroup.LOAN]: [
@@ -241,6 +267,7 @@ export const REPORTS = {
     {
       id: '6.3',
       report: Report.LOAN_AGING_REPORT,
+      link: 'ageing',
     },
     {
       id: '6.4',
@@ -364,6 +391,17 @@ export const REPORTS = {
       report: Report.TRANSACTION_INCOME_STATEMENT,
     },
     {
+      id: '7.2.5.b',
+      report: Report.TRANSACTION_CASH_LEDGER,
+      link: 'cash-ledger',
+    },
+
+    {
+      id: '7.2.7',
+      report: Report.TRANSACTION_TELLER_REPORT,
+      link: 'teller',
+    },
+    {
       id: '7.3',
       report: Report.TRANSACTION_CASH_FLOW_STATEMENT,
     },
@@ -382,6 +420,7 @@ export const REPORTS = {
     {
       id: '7.7',
       report: Report.TRANSACTION_BANK_GL_REPORT,
+      link: 'bank-gl-statement',
     },
   ],
   [ReportGroup.BRANCHLESS_BANKING]: [
@@ -421,6 +460,16 @@ export const REPORTS = {
       id: '10',
       report: Report.USER_LIST_REPORT,
       link: 'users',
+    },
+    {
+      id: '11',
+      report: Report.LOAN_BALANCE_REPORT,
+      link: 'loan-balance',
+    },
+    {
+      id: '',
+      report: Report.SAVING_BALANCE_REPORT,
+      link: 'saving-balance',
     },
   ],
 };

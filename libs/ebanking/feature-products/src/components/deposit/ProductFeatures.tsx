@@ -1,4 +1,4 @@
-import { Table } from '@coop/shared/table';
+import { Table } from '@myra-ui/table';
 
 interface IProductFeaturesProps {
   features: {

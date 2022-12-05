@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { useGetAgentListDataQuery } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 import { Avatar, Box, PageHeader, Text } from '@myra-ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 

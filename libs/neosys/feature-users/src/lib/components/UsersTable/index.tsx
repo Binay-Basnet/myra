@@ -4,7 +4,7 @@ import { Avatar, Flex } from '@chakra-ui/react';
 
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
-import { Column, Table, TableListPageHeader } from '@myra-ui';
+import { Column, PageHeader, Table } from '@myra-ui';
 import { getRouterQuery } from '@coop/shared/utils';
 
 export const UsersTable = () => {
@@ -27,46 +27,43 @@ export const UsersTable = () => {
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
-        Header: 'User',
-        accessor: 'node.name.local',
+        id: '1',
+        header: 'User',
+        accessorFn: (row) => row?.node?.name,
 
-        width: '60%',
-
-        disableSortBy: false,
-        disableFilters: false,
-
-        Cell: ({ value }) => (
+        cell: ({ getValue }) => (
           <Flex alignItems="center" gap="2">
             <Avatar name="Dan Abrahmov" size="sm" src="https://bit.ly/dan-abramov" />
-            <span>{value}</span>
+            <span>{getValue() as string}</span>
           </Flex>
         ),
       },
 
       {
-        Header: 'Role',
-        accessor: 'node.address.locality.local',
-        width: '20%',
+        id: '2',
 
-        Cell: ({ value, row }) => (
+        header: 'Role',
+        accessorFn: (row) => row?.node?.address?.locality?.local,
+
+        cell: ({ getValue, row }) => (
           <span>
-            {value}, {row?.original?.node?.address?.locality?.local}
+            {getValue() as string}, {row?.original?.node?.address?.locality?.local}
           </span>
         ),
       },
       {
-        Header: 'Phone Number',
-        accessor: 'node.contact',
-        disableSortBy: false,
-        disableFilters: false,
+        id: '3',
+        header: 'Phone Number',
+        accessorFn: (row) => row?.node?.contact,
 
-        Cell: ({ value }) => <span>{value}</span>,
+        cell: ({ getValue }) => <span>{getValue() as string}</span>,
       },
       {
-        Header: '',
+        id: '4',
+
+        header: '',
         accessor: 'actions',
-        Cell: () => <PopoverComponent title={popoverTitle} />,
-        disableFilters: true,
+        cell: () => <PopoverComponent title={popoverTitle} />,
       },
     ],
     []
@@ -92,23 +89,9 @@ export const UsersTable = () => {
 
   return (
     <>
-      <TableListPageHeader heading="Users List" tabItems={memberRows} />
+      <PageHeader heading="Users List" tabItems={memberRows} />
 
-      <Table
-        isLoading={isFetching}
-        data={rowData}
-        columns={columns}
-        sort
-        disableSortAll
-        filter
-        disableFilterAll
-        searchPlaceholder="Search Users"
-        // pagination={{
-        //   total: 1200,
-        //   endCursor: data?.members?.list.pageInfo?.startCursor ?? '',
-        //   startCursor: data?.members?.list.pageInfo?.endCursor ?? '',
-        // }}
-      />
+      <Table isLoading={isFetching} data={rowData} columns={columns} />
     </>
   );
 };

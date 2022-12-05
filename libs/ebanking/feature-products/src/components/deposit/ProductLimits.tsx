@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 import { DetailsCard } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 

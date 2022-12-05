@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { Box, Grid, GridItem, Text } from '@myra-ui';
+
 import {
   FormCategory,
   FormFieldSearchTerm,
@@ -13,7 +15,6 @@ import {
 } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormSelect } from '@coop/shared/form';
-import { Box, Grid, GridItem, Text, TextFields } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 type OptionType = { label: string; value: string };
@@ -155,7 +156,6 @@ export const Product = () => {
           <FormSelect
             name="productId"
             label={t['accProductName']}
-            __placeholder={t['accSelectProduct']}
             isLoading={isFetching}
             options={productOptions}
           />
@@ -211,30 +211,30 @@ export const Product = () => {
                 productData?.nature !== NatureOfDepositProduct?.Current && (
                   <GridItem display="flex" flexDirection="column">
                     <Box display="flex" flexDirection="column" gap="s4">
-                      <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
+                      <Text color="primary.800" fontSize="s3" fontWeight="Medium">
                         {/* {t['accInterestRate']} */}
                         Tenure
-                      </TextFields>
+                      </Text>
                       <Box pl="s24">
                         <ul>
                           <li>
-                            <TextFields
+                            <Text
                               color="neutralColorLight.Gray-70"
                               fontSize="s2"
                               fontWeight="Regular"
                             >
                               Minimum: {productData?.minTenureUnitNumber} {productData?.tenureUnit}
-                            </TextFields>
+                            </Text>
                           </li>
                           <li>
-                            <TextFields
+                            <Text
                               color="neutralColorLight.Gray-70"
                               fontSize="s2"
                               fontWeight="Regular"
                             >
                               Maximum: : {productData?.maxTenureUnitNumber}{' '}
                               {productData?.tenureUnit}
-                            </TextFields>
+                            </Text>
                           </li>
                         </ul>
                       </Box>
@@ -244,38 +244,30 @@ export const Product = () => {
 
               <GridItem display="flex" flexDirection="column">
                 <Box display="flex" flexDirection="column" gap="s4">
-                  <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
+                  <Text color="primary.800" fontSize="s3" fontWeight="Medium">
                     {/* {t['accInterestRate']} */}
                     Deposit Amount Limit
-                  </TextFields>
+                  </Text>
                   <Box pl="s24">
                     <ul>
                       <li>
-                        <TextFields
-                          color="neutralColorLight.Gray-70"
-                          fontSize="s2"
-                          fontWeight="Regular"
-                        >
+                        <Text color="neutralColorLight.Gray-70" fontSize="s2" fontWeight="Regular">
                           Minimum:
                           {productData?.nature !== NatureOfDepositProduct?.Saving &&
                           productData?.nature !== NatureOfDepositProduct?.Current
                             ? productData?.depositAmount?.minAmount
                             : productData?.balanceLimit?.minAmount}
-                        </TextFields>
+                        </Text>
                       </li>
 
                       <li>
-                        <TextFields
-                          color="neutralColorLight.Gray-70"
-                          fontSize="s2"
-                          fontWeight="Regular"
-                        >
+                        <Text color="neutralColorLight.Gray-70" fontSize="s2" fontWeight="Regular">
                           Maximum:{' '}
                           {productData?.nature !== NatureOfDepositProduct?.Saving &&
                           productData?.nature !== NatureOfDepositProduct?.Current
                             ? productData?.depositAmount?.minAmount
                             : productData?.balanceLimit?.maxAmount}
-                        </TextFields>
+                        </Text>
                       </li>
                     </ul>
                   </Box>
@@ -284,30 +276,22 @@ export const Product = () => {
 
               <GridItem display="flex" flexDirection="column">
                 <Box display="flex" flexDirection="column" gap="s4">
-                  <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
+                  <Text color="primary.800" fontSize="s3" fontWeight="Medium">
                     {/* {t['accInterestRate']} */}
                     Transaction Limit
-                  </TextFields>
+                  </Text>
                   <Box pl="s24">
                     <ul>
                       <li>
-                        <TextFields
-                          color="neutralColorLight.Gray-70"
-                          fontSize="s2"
-                          fontWeight="Regular"
-                        >
+                        <Text color="neutralColorLight.Gray-70" fontSize="s2" fontWeight="Regular">
                           Minimum: {productData?.depositAmount?.minAmount}
-                        </TextFields>
+                        </Text>
                       </li>
 
                       <li>
-                        <TextFields
-                          color="neutralColorLight.Gray-70"
-                          fontSize="s2"
-                          fontWeight="Regular"
-                        >
+                        <Text color="neutralColorLight.Gray-70" fontSize="s2" fontWeight="Regular">
                           Maximum: {productData?.depositAmount?.maxAmount}
-                        </TextFields>
+                        </Text>
                       </li>
                     </ul>
                   </Box>
@@ -317,15 +301,15 @@ export const Product = () => {
               {productData?.criteria && (
                 <>
                   <GridItem display="flex" flexDirection="column">
-                    <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
+                    <Text color="primary.800" fontSize="s3" fontWeight="Medium">
                       {/* {t['accInterestRate']} */}
                       Criteria
-                    </TextFields>
+                    </Text>
                     <Box display="flex" flexDirection="column" gap="s4">
                       <Box display="flex" flexDirection="column" gap="s16" pl="s24">
                         <ul>
                           <li>
-                            <TextFields
+                            <Text
                               color="neutralColorLight.Gray-70"
                               fontSize="s2"
                               fontWeight="Regular"
@@ -335,11 +319,11 @@ export const Product = () => {
                                 {' '}
                                 Mininum: {productData?.minAge} : Maximum {productData?.maxAge}
                               </b>
-                            </TextFields>
+                            </Text>
                           </li>
                           {productData?.genderId && (
                             <li>
-                              <TextFields
+                              <Text
                                 color="neutralColorLight.Gray-70"
                                 fontSize="s2"
                                 display="flex"
@@ -353,7 +337,7 @@ export const Product = () => {
                                     {item}
                                   </Text>
                                 ))}
-                              </TextFields>
+                              </Text>
                             </li>
                           )}
                         </ul>
@@ -361,7 +345,7 @@ export const Product = () => {
                         <ul>
                           {productData?.foreignEmployment && (
                             <li>
-                              <TextFields
+                              <Text
                                 color="neutralColorLight.Gray-70"
                                 fontSize="s2"
                                 fontWeight="Regular"
@@ -371,13 +355,13 @@ export const Product = () => {
                               >
                                 Foreign Employment:{' '}
                                 <b>{productData?.foreignEmployment ? 'true' : 'false'}</b>
-                              </TextFields>
+                              </Text>
                             </li>
                           )}
 
                           {productData?.typeOfMember?.includes(KymMemberTypesEnum.Institution) && (
                             <li>
-                              <TextFields
+                              <Text
                                 color="neutralColorLight.Gray-70"
                                 fontSize="s2"
                                 fontWeight="Regular"
@@ -388,7 +372,7 @@ export const Product = () => {
                                     {item}
                                   </Text>
                                 ))}
-                              </TextFields>
+                              </Text>
                             </li>
                           )}
                         </ul>
@@ -405,7 +389,7 @@ export const Product = () => {
                         <ul>
                           {productData?.maritalStatusId && (
                             <li>
-                              <TextFields
+                              <Text
                                 color="neutralColorLight.Gray-70"
                                 fontSize="s2"
                                 fontWeight="Regular"
@@ -420,12 +404,12 @@ export const Product = () => {
                                     {item}
                                   </Text>
                                 ))}
-                              </TextFields>
+                              </Text>
                             </li>
                           )}
                           {productData?.occupation && (
                             <li>
-                              <TextFields
+                              <Text
                                 color="neutralColorLight.Gray-70"
                                 fontSize="s2"
                                 fontWeight="Regular"
@@ -439,7 +423,7 @@ export const Product = () => {
                                     {item}
                                   </Text>
                                 ))}
-                              </TextFields>
+                              </Text>
                             </li>
                           )}
                         </ul>
@@ -449,7 +433,7 @@ export const Product = () => {
                             KymMemberTypesEnum?.CooperativeUnion
                           ) && (
                             <li>
-                              <TextFields
+                              <Text
                                 color="neutralColorLight.Gray-70"
                                 fontSize="s2"
                                 fontWeight="Regular"
@@ -460,12 +444,12 @@ export const Product = () => {
                                     {item}
                                   </Text>
                                 ))}
-                              </TextFields>
+                              </Text>
                             </li>
                           )}
                           {productData?.typeOfMember?.includes(KymMemberTypesEnum?.Cooperative) && (
                             <li>
-                              <TextFields
+                              <Text
                                 color="neutralColorLight.Gray-70"
                                 fontSize="s2"
                                 fontWeight="Regular"
@@ -479,7 +463,7 @@ export const Product = () => {
                                     {item}
                                   </Text>
                                 ))}
-                              </TextFields>
+                              </Text>
                             </li>
                           )}
                         </ul>
@@ -491,7 +475,7 @@ export const Product = () => {
                       <Box display="flex" flexDirection="column" gap="s16" pl="s24">
                         <ul>
                           <li>
-                            <TextFields
+                            <Text
                               color="neutralColorLight.Gray-70"
                               fontSize="s2"
                               fontWeight="Regular"
@@ -502,11 +486,11 @@ export const Product = () => {
                                   {item}
                                 </Text>
                               ))}
-                            </TextFields>
+                            </Text>
                           </li>
 
                           <li>
-                            <TextFields
+                            <Text
                               color="neutralColorLight.Gray-70"
                               fontSize="s2"
                               fontWeight="Regular"
@@ -517,7 +501,7 @@ export const Product = () => {
                                   {item}
                                 </Text>
                               ))}
-                            </TextFields>
+                            </Text>
                           </li>
                         </ul>
                       </Box>
@@ -527,18 +511,14 @@ export const Product = () => {
               )}
 
               <GridItem display="flex" flexDirection="column">
-                <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
+                <Text color="primary.800" fontSize="s3" fontWeight="Medium">
                   {t['accRequiredDocument']}
-                </TextFields>
+                </Text>
                 <Box pl="s24" display="grid">
                   <ul>
                     {productData?.individualDocuments?.map((item) => (
                       <li key={`${item}`}>
-                        <TextFields
-                          color="neutralColorLight.Gray-70"
-                          fontSize="s2"
-                          fontWeight="Regular"
-                        >
+                        <Text color="neutralColorLight.Gray-70" fontSize="s2" fontWeight="Regular">
                           {item === IndividualRequiredDocument?.Fingerprint
                             ? 'FingerPrint'
                             : item === IndividualRequiredDocument?.Form
@@ -548,7 +528,7 @@ export const Product = () => {
                             : item === IndividualRequiredDocument?.Photo
                             ? 'Photo'
                             : 'Signature'}
-                        </TextFields>
+                        </Text>
                       </li>
                     ))}
                   </ul>
@@ -560,77 +540,77 @@ export const Product = () => {
                   <>
                     {' '}
                     <GridItem display="flex" flexDirection="column">
-                      <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
+                      <Text color="primary.800" fontSize="s3" fontWeight="Medium">
                         {t['accPenalty']}
-                      </TextFields>
+                      </Text>
                       <Box pl="s24">
                         <ul>
                           <li>
-                            <TextFields
+                            <Text
                               color="neutralColorLight.Gray-70"
                               fontSize="s2"
                               fontWeight="Regular"
                             >
                               Penalty {productData?.penaltyData?.penaltyRate} %
-                            </TextFields>
+                            </Text>
                           </li>
                           {/*
                       <li>
-                        <TextFields
+                        <Text
                           color="neutralColorLight.Gray-70"
                           fontSize="s2"
                           fontWeight="Regular"
                         >
                           Penalty 2
-                        </TextFields>
+                        </Text>
                       </li>
 
                       <li>
-                        <TextFields
+                        <Text
                           color="neutralColorLight.Gray-70"
                           fontSize="s2"
                           fontWeight="Regular"
                         >
                           Penalty 3
-                        </TextFields>
+                        </Text>
                       </li> */}
                         </ul>
                       </Box>
                     </GridItem>
                     <GridItem display="flex" flexDirection="column" gap="s4">
-                      <TextFields color="primary.800" fontSize="s3" fontWeight="Medium">
+                      <Text color="primary.800" fontSize="s3" fontWeight="Medium">
                         {t['accRebate']}
-                      </TextFields>
+                      </Text>
                       <Box pl="s24">
                         <ul>
                           <li>
-                            <TextFields
+                            <Text
                               color="neutralColorLight.Gray-70"
                               fontSize="s2"
                               fontWeight="Regular"
                             >
                               Rebate {productData?.rebateData?.rebateAmount} %
-                            </TextFields>
+                            </Text>
                           </li>
                           {/*
                       <li>
-                        <TextFields
+                        <Text
                           color="neutralColorLight.Gray-70"
                           fontSize="s2"
                           fontWeight="Regular"
                         >
                           Rebate 2
-                        </TextFields>
+                        </Text>
                       </li>
 
                       <li>
-                        <TextFields
+                        <Text
                           color="neutralColorLight.Gray-70"
                           fontSize="s2"
                           fontWeight="Regular"
                         >
                           Rebate 3
-                        </TextFields>
+                        </Text>
                       </li> */}
                         </ul>
                       </Box>

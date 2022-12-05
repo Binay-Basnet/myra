@@ -3,7 +3,8 @@ import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
 import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 
-import { Avatar, Box, Collapse, Icon, TextFields, TopLevelHeader } from '@myra-ui';
+import { Avatar, Box, Collapse, Icon, Text, TopLevelHeader } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 export interface HomePageLayoutProps {
@@ -106,15 +107,9 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
       >
         {' '}
         <Box display="flex" flexDir="column" gap="s16">
-          <TextFields
-            px="s16"
-            fontSize="s3"
-            color="gray.600"
-            fontWeight="600"
-            textTransform="uppercase"
-          >
+          <Text px="s16" fontSize="s3" color="gray.600" fontWeight="600" textTransform="uppercase">
             {t['yourMyraApplication']}
-          </TextFields>
+          </Text>
 
           <Box display="flex" alignItems="center" flexDir="column">
             {myraAppn.map((item) => (
@@ -136,9 +131,9 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
                 <Box flexShrink={0} display="flex" justifyContent="center" alignItems="center">
                   <Image width="32" height="32" src={item.img} alt={t[item.title]} />
                 </Box>
-                <TextFields fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">
+                <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">
                   {t[item.title]}
-                </TextFields>
+                </Text>
               </Box>
             ))}
           </Box>
@@ -153,7 +148,7 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
             cursor="pointer"
             onClick={() => setIsOpen(!isOpen)}
           >
-            <TextFields
+            <Text
               px="s16"
               fontSize="s3"
               color="gray.600"
@@ -161,7 +156,7 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
               textTransform="uppercase"
             >
               {t['moreFromMyra']}
-            </TextFields>
+            </Text>
             {isOpen ? (
               <Icon size="sm" as={IoIosArrowDown} />
             ) : (
@@ -171,7 +166,7 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
           <Collapse in={isOpen} style={{ marginTop: '0px' }}>
             <Box gap="s32" py="s8" display="flex" alignItems="center" flexDir="column">
               <Box width="100%">
-                <TextFields
+                <Text
                   px="s16"
                   fontSize="r1"
                   fontWeight="Medium"
@@ -179,7 +174,7 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
                   color="neutralColorLight.Gray-60"
                 >
                   Not Subscribed
-                </TextFields>
+                </Text>
                 {notSubscribed.map((ns) => (
                   <Box
                     key={ns?.link}
@@ -211,18 +206,14 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
                         // alt="corebanking"
                       />
                     </Box>
-                    <TextFields
-                      fontSize="r1"
-                      fontWeight="Regular"
-                      color="neutralColorLight.Gray-80"
-                    >
+                    <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">
                       {t[ns.title]}
-                    </TextFields>
+                    </Text>
                   </Box>
                 ))}
               </Box>
               <Box width="100%">
-                <TextFields
+                <Text
                   px="s16"
                   fontSize="r1"
                   fontWeight="Medium"
@@ -230,7 +221,7 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
                   color="neutralColorLight.Gray-60"
                 >
                   Coming Soon
-                </TextFields>
+                </Text>
                 {comingSoon.map((ns) => (
                   <Box
                     key={ns?.link}
@@ -262,13 +253,9 @@ export const HomePageLayout = (props: HomePageLayoutProps) => {
                         // alt="corebanking"
                       />
                     </Box>
-                    <TextFields
-                      fontSize="r1"
-                      fontWeight="Regular"
-                      color="neutralColorLight.Gray-80"
-                    >
+                    <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">
                       {t[ns.title]}
-                    </TextFields>
+                    </Text>
                   </Box>
                 ))}
               </Box>

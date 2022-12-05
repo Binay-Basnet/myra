@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Column, Table } from '@coop/shared/table';
+import { NatureOfDepositProduct } from '@coop/cbs/data-access';
+import { Column, Table } from '@myra-ui/table';
+import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanPaymentScheduleTableProps {
   data:
@@ -8,12 +10,19 @@ interface ILoanPaymentScheduleTableProps {
         sn: number;
         accountType: string | null | undefined;
         accountName: string | null | undefined;
-        totalBalance: string | 0;
-        interestRate: string | null | undefined;
+        totalBalance?: string | number | null | undefined;
+        interestRate: string | number | null | undefined;
       }[];
 
   //   data: MemberPaymentView[] | null | undefined;
 }
+
+const accountTypes = {
+  [NatureOfDepositProduct.Saving]: 'Saving Account',
+  [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
+  [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
+  [NatureOfDepositProduct.Current]: 'Current Account',
+};
 
 export const AccountTable = ({ data }: ILoanPaymentScheduleTableProps) => {
   const columns = React.useMemo<Column<typeof data[0]>[]>(
@@ -25,6 +34,7 @@ export const AccountTable = ({ data }: ILoanPaymentScheduleTableProps) => {
       {
         header: 'Account Type',
         accessorKey: 'accountType',
+        accessorFn: (row) => accountTypes[row?.accountType as NatureOfDepositProduct],
       },
       {
         header: 'Account Name',
@@ -36,6 +46,7 @@ export const AccountTable = ({ data }: ILoanPaymentScheduleTableProps) => {
         meta: {
           isNumeric: true,
         },
+        accessorFn: (row) => (row?.totalBalance ? amountConverter(row?.totalBalance ?? 0) : null),
       },
       {
         header: 'Interest',

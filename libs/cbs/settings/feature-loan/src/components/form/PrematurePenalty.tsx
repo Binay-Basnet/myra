@@ -1,9 +1,10 @@
 import { useFormContext } from 'react-hook-form';
 
+import { Alert, Box, FormSection, Grid, GridItem, Text } from '@myra-ui';
+
 import { PrematurePenaltyDateType } from '@coop/cbs/data-access';
 import { BoxContainer } from '@coop/shared/components';
 import { FormAmountInput, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Alert, Box, FormSection, Grid, GridItem, Text, TextFields } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const PrematurePenalty = () => {
@@ -52,7 +53,7 @@ export const PrematurePenalty = () => {
       <GridItem colSpan={3}>
         <BoxContainer>
           <Box display="flex" justifyContent="space-between">
-            <TextFields>{t['prematurePenaltyEnable']}</TextFields>
+            <Text>{t['prematurePenaltyEnable']}</Text>
             <FormSwitchTab name="isPrematurePenaltyApplicable" options={enableSwitch} />
           </Box>
 
@@ -83,6 +84,7 @@ export const PrematurePenalty = () => {
                 textAlign="right"
               />
               <FormAmountInput
+                type="number"
                 name="prematurePenaltySetup.penaltyAmount"
                 label={t['depositProductPenaltyAmount']}
               />

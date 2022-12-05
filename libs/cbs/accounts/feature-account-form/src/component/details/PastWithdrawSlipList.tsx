@@ -7,7 +7,7 @@ import {
   useAppSelector,
   useGetPastSlipsListQuery,
 } from '@coop/cbs/data-access';
-import { Table } from '@coop/shared/table';
+import { Table } from '@myra-ui/table';
 import { Box, DetailsCard, Text } from '@myra-ui';
 
 export const PastWithdrawSlipList = () => {

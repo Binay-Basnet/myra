@@ -1,5 +1,7 @@
 import { Box, DetailsCard } from '@myra-ui';
 
+import { amountConverter } from '@coop/shared/utils';
+
 import { useLoanDetails } from '../../hooks/useLoanDetails';
 
 export const LoanDetails = () => {
@@ -10,20 +12,24 @@ export const LoanDetails = () => {
       <Box px="s16" fontSize="r1">
         <ul>
           <li>
-            Applied Loan Amount: <b>{loanPreview?.loanDetails?.appliedLoanAmount}</b>
+            Applied Loan Amount:{' '}
+            <b>{amountConverter(loanPreview?.loanDetails?.appliedLoanAmount ?? 0)}</b>
           </li>
           <li>
-            Total Collateral Valuation: <b>{loanPreview?.loanDetails?.totalCollateralValuation}</b>
+            Total Collateral Valuation:{' '}
+            <b>{amountConverter(loanPreview?.loanDetails?.totalCollateralValuation ?? 0)}</b>
           </li>
           <li>
-            Total Guarantee Valuation: <b>{loanPreview?.loanDetails?.totalGuaranteeValuation}</b>
+            Total Guarantee Valuation:{' '}
+            <b>{amountConverter(loanPreview?.loanDetails?.totalGuaranteeValuation ?? 0)}</b>
           </li>
           <li>
             Total Processing Charges:{' '}
-            <b>{loanPreview?.loanDetails?.totalProcessingChargesValuation}</b>
+            <b>{amountConverter(loanPreview?.loanDetails?.totalProcessingChargesValuation ?? 0)}</b>
           </li>
           <li>
-            Total Sanctioned Amount: <b>{loanPreview?.loanDetails?.totalSanctionedAmount}</b>
+            Total Sanctioned Amount:{' '}
+            <b>{amountConverter(loanPreview?.loanDetails?.totalSanctionedAmount ?? 0)}</b>
           </li>
         </ul>
       </Box>

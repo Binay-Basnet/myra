@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
+import { Box, Text } from '@myra-ui';
+
 import { DetailPageTopCard } from '@coop/accounting/ui-components';
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
-import { Column, Table } from '@coop/shared/table';
-import { Box, Text, TextFields } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const OverviewDetailPage = () => {
@@ -93,9 +94,9 @@ export const OverviewDetailPage = () => {
             159,000 CR
           </Text>
 
-          <TextFields variant="link" onClick={() => router.push('/')}>
+          <Text variant="link" onClick={() => router.push('/')}>
             {t['bankAccountsViewLedger']}
-          </TextFields>
+          </Text>
         </Box>
 
         <Box display="flex" flexDirection="column" gap="s4">
@@ -106,9 +107,9 @@ export const OverviewDetailPage = () => {
             34,000
           </Text>
 
-          <TextFields variant="link" onClick={() => router.push('/')}>
+          <Text variant="link" onClick={() => router.push('/')}>
             {t['bankAccountsViewBankStatement']}
-          </TextFields>
+          </Text>
         </Box>
 
         <Box display="flex" flexDirection="column" gap="s4">
@@ -119,9 +120,9 @@ export const OverviewDetailPage = () => {
             125,000
           </Text>
 
-          <TextFields variant="link" onClick={() => router.push('/')}>
+          <Text variant="link" onClick={() => router.push('/')}>
             {t['bankAccountsGoReconciliation']}
-          </TextFields>
+          </Text>
         </Box>
       </DetailPageTopCard>
 
@@ -138,9 +139,9 @@ export const OverviewDetailPage = () => {
             {t['bankAccountsRecentTransactions']}
           </Text>
 
-          <TextFields variant="link" onClick={() => router.push('/')}>
+          <Text variant="link" onClick={() => router.push('/')}>
             {t['bankAccountsViewAllTransactions']}
-          </TextFields>
+          </Text>
         </Box>
 
         <Table

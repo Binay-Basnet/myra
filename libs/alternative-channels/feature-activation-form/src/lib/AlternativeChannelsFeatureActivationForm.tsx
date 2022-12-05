@@ -1,9 +1,23 @@
 import { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { IoSyncCircleOutline } from 'react-icons/io5';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import { omit } from 'lodash';
+
+import {
+  Alert,
+  asyncToast,
+  Box,
+  Button,
+  Container,
+  FormFooter,
+  FormHeader,
+  FormSection,
+  GridItem,
+  Icon,
+  Text,
+} from '@myra-ui';
 
 import {
   AlternativeChannelPaymentMode,
@@ -14,21 +28,7 @@ import {
   useGetActivatedServiceQuery,
   useGetAlternativeFeeAndChargesQuery,
 } from '@coop/cbs/data-access';
-import { FormInput, FormSelect } from '@coop/shared/form';
-import {
-  Alert,
-  asyncToast,
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormMemberSelect,
-  FormSection,
-  GridItem,
-  Icon,
-  Text,
-} from '@myra-ui';
+import { FormInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import Payment from '../components/Payment';

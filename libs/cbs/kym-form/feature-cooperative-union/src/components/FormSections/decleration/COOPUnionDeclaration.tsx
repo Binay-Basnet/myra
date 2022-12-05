@@ -1,10 +1,11 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
+import { Box, FormSection, Text } from '@myra-ui';
+
 import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import { FormCheckbox } from '@coop/shared/form';
-import { Box, FormSection, TextFields } from '@myra-ui';
 import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
 
 import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
@@ -94,7 +95,7 @@ export const DocumentDeclarationInstitutionCOOPUnion = ({
         gap="s16"
         alignItems="start"
         id="kymCoopUnionAccAccountHolderDeclaration"
-        scrollMarginTop={'200px'}
+        scrollMarginTop="200px"
       >
         <FormProvider {...methods}>
           <form
@@ -106,12 +107,12 @@ export const DocumentDeclarationInstitutionCOOPUnion = ({
           >
             <Box p="s20" display="flex" gap="s16" alignItems="center">
               <FormCheckbox name="declarationAgreement" fontSize="s3" />
-              <TextFields variant="formInput" mt="-6px">
+              <Text variant="formInput" mt="-6px">
                 I/We agree to the&nbsp;
-                <TextFields as="span" variant="link">
+                <Text as="span" variant="link">
                   Terms and condition.
-                </TextFields>
-              </TextFields>
+                </Text>
+              </Text>
             </Box>
           </form>
         </FormProvider>

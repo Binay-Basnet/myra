@@ -1,6 +1,8 @@
 import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { Box, Grid, GridItem, Text } from '@myra-ui';
+
 import {
   DepositedBy,
   DepositPaymentType,
@@ -16,6 +18,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/transactions/ui-containers';
 import {
+  FormAccountSelect,
   FormAgentSelect,
   FormAmountInput,
   FormCheckbox,
@@ -23,12 +26,12 @@ import {
   FormEditableTable,
   FormFileInput,
   FormInput,
+  FormMemberSelect,
   FormSelect,
   FormSwitch,
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { Box, FormAccountSelect, FormMemberSelect, Grid, GridItem, Text } from '@myra-ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 // const sourceOfFundsList = [
@@ -212,6 +215,7 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
             />
 
             <FormAmountInput
+              type="number"
               name="openingPayment.bankVoucher.amount"
               label={t['depositPaymentAmount']}
             />
@@ -261,6 +265,7 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
             />
 
             <FormAmountInput
+              type="number"
               name="openingPayment.withdrawSlip.amount"
               label={t['depositPaymentAmount']}
             />
@@ -271,6 +276,7 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
           <>
             <InputGroupContainer>
               <FormAmountInput
+                type="number"
                 name="openingPayment.cash.cashPaid"
                 label={t['depositPaymentCash']}
               />

@@ -1,10 +1,10 @@
 import { useFormContext } from 'react-hook-form';
+import { Alert, Box, FormSection, GridItem, Text } from '@myra-ui';
 
 import { PenaltyType } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { SubHeadingText, SubText } from '@coop/shared/components';
 import { FormAmountInput, FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Alert, Box, FormSection, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, TextBoxContainer } from '../formui';
@@ -80,7 +80,11 @@ export const Penalty = () => {
                       </Text>
                     }
                   />
-                  <FormAmountInput name="penaltyAmount" label={t['loanProductPenaltyAmount']} />
+                  <FormAmountInput
+                    type="number"
+                    name="penaltyAmount"
+                    label={t['loanProductPenaltyAmount']}
+                  />
 
                   <GridItem colSpan={3}>
                     <Alert status="warning">

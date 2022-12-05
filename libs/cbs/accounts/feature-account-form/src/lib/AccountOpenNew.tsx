@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
+import omit from 'lodash/omit';
+
 import {
   Alert,
   asyncToast,
@@ -10,13 +13,10 @@ import {
   Divider,
   FormFooter,
   FormHeader,
-  FormMemberSelect,
   Grid,
   MemberCard,
   Text,
 } from '@myra-ui';
-import { useQueryClient } from '@tanstack/react-query';
-import omit from 'lodash/omit';
 
 import {
   CashValue,
@@ -39,6 +39,7 @@ import {
   FormAmountInput,
   FormCheckbox,
   FormInput,
+  FormMemberSelect,
   FormSelect,
 } from '@coop/shared/form';
 import { featureCode, useTranslation } from '@coop/shared/utils';
@@ -513,11 +514,8 @@ export const AccountOpenNew = () => {
                     {ProductData?.isForMinors && (
                       <FormSelect name="minor" label="Minor" options={minorOptions} />
                     )}
-                    {(productType === NatureOfDepositProduct?.RecurringSaving ||
-                      productType === NatureOfDepositProduct?.TermSavingOrFd ||
-                      (productType === NatureOfDepositProduct?.Saving && isMandatoryFlag)) && (
-                      <Tenure />
-                    )}
+                    {productType !== NatureOfDepositProduct?.Current &&
+                      productType !== NatureOfDepositProduct?.Saving && <Tenure />}
                     <Divider />
                     {productType !== NatureOfDepositProduct?.Current && <Interest />}
                     {(productType === NatureOfDepositProduct?.RecurringSaving ||
@@ -563,7 +561,11 @@ export const AccountOpenNew = () => {
                       </Box>
                     )}
                     <Grid templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
-                      <FormAmountInput name="initialDepositAmount" label="Initial Deposit Amount" />
+                      <FormAmountInput
+                        type="number"
+                        name="initialDepositAmount"
+                        label="Initial Deposit Amount"
+                      />
                     </Grid>
                     {/* <Agent /> */}
                     <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
@@ -614,7 +616,6 @@ export const AccountOpenNew = () => {
                   address: memberDetailData?.address,
                 }}
                 signaturePath={memberSignatureUrl}
-                showSignaturePreview={false}
                 citizenshipPath={memberCitizenshipUrl}
               />
             </Box>

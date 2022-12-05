@@ -3,7 +3,7 @@ import { BsDownload } from 'react-icons/bs';
 import { IoShareSocialSharp } from 'react-icons/io5';
 import { QRCodeSVG } from 'qrcode.react';
 
-import { Box, Button, ChakraModal, Icon, Text, TextFields } from '@myra-ui';
+import { Box, Button, Modal, Icon, Text } from '@myra-ui';
 
 interface IAccountQRModalProps {
   open: boolean;
@@ -21,11 +21,11 @@ export const AccountQRModal = ({ open, onClose, account }: IAccountQRModalProps)
   if (typeof window === 'undefined') return null;
 
   return (
-    <ChakraModal open={open} title="My QR Code" onClose={onClose}>
+    <Modal open={open} title="My QR Code" onClose={onClose}>
       <Box as="div" display="flex" flexDir="column" alignItems="center" gap="s16">
-        <TextFields variant="bodyLarge" color="gray.900">
+        <Text variant="bodyLarge" color="gray.900">
           Use your QR code to accept payments
-        </TextFields>
+        </Text>
 
         <Box ref={ref} display="flex" flexDir="column" alignItems="center" gap="s16">
           <Box p="s8">
@@ -80,6 +80,6 @@ export const AccountQRModal = ({ open, onClose, account }: IAccountQRModalProps)
           </Button>
         </Box>
       </Box>
-    </ChakraModal>
+    </Modal>
   );
 };

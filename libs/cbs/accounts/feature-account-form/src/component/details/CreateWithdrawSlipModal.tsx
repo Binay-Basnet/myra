@@ -8,7 +8,7 @@ import {
   useSetIssueNewSlipMutation,
 } from '@coop/cbs/data-access';
 import { FormSelect } from '@coop/shared/form';
-import { Alert, asyncToast, ChakraModal, Grid, GridItem } from '@myra-ui';
+import { Alert, asyncToast, Modal, Grid, GridItem } from '@myra-ui';
 
 interface ICreateWithdrawSlipModalProps {
   isOpen: boolean;
@@ -77,7 +77,7 @@ export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlip
   };
 
   return (
-    <ChakraModal
+    <Modal
       open={isOpen}
       onClose={onClose}
       width="xl"
@@ -105,6 +105,6 @@ export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlip
           </Grid>
         </form>
       </FormProvider>
-    </ChakraModal>
+    </Modal>
   );
 };

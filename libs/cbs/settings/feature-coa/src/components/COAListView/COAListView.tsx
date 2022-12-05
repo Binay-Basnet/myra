@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { CoaView, useDeleteCoaMutation, useGetCoaFullViewQuery } from '@coop/cbs/data-access';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 import { asyncToast, TablePopover } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 

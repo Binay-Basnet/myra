@@ -1,5 +1,6 @@
 import { Box, Text } from '@myra-ui';
-import { useTranslation } from '@coop/shared/utils';
+
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 import { GlTransaction, OtherDetails, SideBar, TransactionDetails } from '../component';
 import { useTransactionDetailHooks } from '../hooks/useTransactionDetailHooks';
@@ -44,8 +45,8 @@ export const AccountTransferDetailPage = () => {
           teller={accountTransferDetailData?.teller as string}
         />
         <GlTransaction
-          totalDebit={accountTransferDetailData?.totalDebit as string}
-          totalCredit={accountTransferDetailData?.totalCredit as string}
+          totalDebit={String(amountConverter(accountTransferDetailData?.totalDebit ?? 0))}
+          totalCredit={String(amountConverter(accountTransferDetailData?.totalCredit ?? 0))}
           data={tableData}
         />
       </Box>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 
-import { Box, PageHeaderWithTabs } from '@myra-ui';
+import { Box, PageHeader } from '@myra-ui';
 
 import { ReportsInnerSidebar } from '../components/ReportsInnerSidebar';
 
@@ -14,7 +14,7 @@ export const ReportsCbsLayout = ({ children }: ReportsCbsLayoutProps) => {
 
   return (
     <>
-      <PageHeaderWithTabs
+      <PageHeader
         heading="Core Banking System Reports"
         tabItems={[
           {

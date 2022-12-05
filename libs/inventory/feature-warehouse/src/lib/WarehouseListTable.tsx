@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { useGetInventoryItemGroupQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 import { useTranslation } from '@coop/shared/utils';
 
 const popoverTitle = [
