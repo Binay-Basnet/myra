@@ -1,3 +1,4 @@
+import { ChangeEventHandler, MouseEventHandler } from 'react';
 import { ColumnDef, Row, RowData, Table } from '@tanstack/react-table';
 
 declare module '@tanstack/table-core' {
@@ -50,6 +51,8 @@ export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
   // Sorting Props
   enableSorting?: boolean;
   manualSorting?: boolean;
+  onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
+  nClick?: MouseEventHandler<HTMLInputElement> | undefined;
 }
 
 export type TableInstance<T> = Table<T>;

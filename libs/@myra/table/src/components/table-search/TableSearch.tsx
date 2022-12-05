@@ -1,3 +1,4 @@
+import { ChangeEventHandler, MouseEventHandler } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { useRouter } from 'next/router';
 import { Input, InputGroup, InputLeftElement, Popover, Text } from '@chakra-ui/react';
@@ -62,9 +63,18 @@ export type TableSearchProps = {
   };
   size: 'default' | 'compact' | 'report' | 'small';
   setSize: (size: 'default' | 'compact') => void;
+  onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
+  onClick?: MouseEventHandler<HTMLInputElement> | undefined;
 };
 
-export const TableSearch = ({ placeholder, pagination, size, setSize }: TableSearchProps) => {
+export const TableSearch = ({
+  placeholder,
+  pagination,
+  size,
+  setSize,
+  onChange,
+  onClick,
+}: TableSearchProps) => {
   const router = useRouter();
 
   const paginationParams = qs.parse(router?.query['paginate'] as string);
@@ -96,6 +106,8 @@ export const TableSearch = ({ placeholder, pagination, size, setSize }: TableSea
           }}
           _focus={{ border: 'solid 1px', borderColor: 'primary.300' }}
           _active={{ border: 'solid 1px', borderColor: 'primary.500' }}
+          onChange={onChange}
+          onClick={onClick}
         />
       </InputGroup>
       <Box
