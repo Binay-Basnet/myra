@@ -1,20 +1,5 @@
-import { COASelectModal } from '@coop/shared/components';
-import { EditableTable } from '@myra-ui/editable-table';
+import { VaultBalanceReport } from '@coop/cbs/reports';
 
-const Temp = () => (
-  <EditableTable
-    debug
-    defaultData={[{ ledger: '20.1' }]}
-    columns={[
-      {
-        accessor: 'ledger',
-        cellWidth: 'auto',
-        header: 'Ledger',
-        fieldType: 'modal',
-        modal: COASelectModal,
-      },
-    ]}
-  />
-);
+const Temp = () => <VaultBalanceReport />;
 
 export default Temp;

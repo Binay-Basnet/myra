@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { GetLoanListQuery, LoanAccountEdge, LoanObjState } from '@coop/cbs/data-access';
-import { Column, Table } from '@myra-ui/table';
 import { Avatar, Box, TablePopover, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
+import { GetLoanListQuery, LoanAccountEdge, LoanObjState } from '@coop/cbs/data-access';
 
 interface ILoanTable {
   data: GetLoanListQuery | undefined;
@@ -69,7 +70,7 @@ export const LoanTable = ({ data, isLoading, type, viewLink }: ILoanTable) => {
         accessorFn: (row) => row?.node?.product.productName,
       },
       {
-        header: 'Applied Date',
+        header: 'Account Open Date',
         accessorFn: (row) => row?.node?.createdAt,
         cell: (props) => <span>{props?.row?.original?.node?.createdAt.split('T')[0]} </span>,
       },
