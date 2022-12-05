@@ -75,6 +75,9 @@ export const SharePurchaseForm = () => {
       bankVoucher: {
         depositedBy: ShareVoucherDepositedBy.Self,
       },
+      cash: {
+        disableDenomination: true,
+      },
     },
   });
   const { watch, getValues } = methods;

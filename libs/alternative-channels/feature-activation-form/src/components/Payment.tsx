@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { Divider } from '@chakra-ui/react';
 
+import { Box, Grid, GridItem, Text } from '@myra-ui';
+
 import {
   AlternativeChannelDepositedBy,
   AlternativeChannelPaymentMode,
@@ -10,6 +12,7 @@ import {
 } from '@coop/cbs/data-access';
 import { BoxContainer, ContainerWithDivider } from '@coop/cbs/transactions/ui-containers';
 import {
+  FormAccountSelect,
   FormEditableTable,
   FormInput,
   FormSelect,
@@ -17,9 +20,7 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { Box, Grid, GridItem, Text } from '@myra-ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
-import { FormAccountSelect } from '@coop/shared/form';
 
 const paymentModes = [
   {
@@ -151,11 +152,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
               <FormInput name="cash.cashPaid" type="number" label="Cash" textAlign="right" />
             </Grid>
 
-            <FormSwitch
-              name="cash.disableDenomination"
-              label="Disable Denomination"
-              defaultChecked={false}
-            />
+            <FormSwitch name="cash.disableDenomination" label="Disable Denomination" />
             {!disableDenomination && (
               <FormEditableTable<PaymentTableType>
                 name="cash.denominations"

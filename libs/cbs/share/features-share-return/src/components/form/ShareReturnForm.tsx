@@ -66,6 +66,9 @@ export const ShareReturnForm = () => {
     mode: 'onChange',
     defaultValues: {
       paymentMode: SharePaymentMode.Cash,
+      cash: {
+        disableDenomination: true,
+      },
     },
   });
   const { watch, getValues, reset } = methods;
