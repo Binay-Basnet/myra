@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { useCreateDbMutation, useGetClientsListQuery } from '@coop/neosys-admin/data-access';
-import { Column, Table } from '@myra-ui/table';
 import { asyncToast, Avatar, Box, PageHeader, TablePopover, Text, toast } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
+import { useCreateDbMutation, useGetClientsListQuery } from '@coop/neosys-admin/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
 export const CLIENTS_TAB_ITEMS = [

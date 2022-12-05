@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+
 import { Box, FormSection, GridItem, Text } from '@myra-ui';
 
 import { LoanProductInput, LoanProductInstallment } from '@coop/cbs/data-access';
@@ -68,6 +69,12 @@ export const Interest = () => {
             %
           </Text>
         }
+        rules={{
+          max: {
+            value: minValueStr,
+            message: 'Maximum interest rate should be greater than minimum interest rate',
+          },
+        }}
       />
       <FormInput
         name="interest.defaultRate"

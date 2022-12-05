@@ -2,11 +2,12 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { CellContext } from '@tanstack/react-table';
 
+import { Box, TablePopover } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
 import { useGetNewIdMutation, useGetValuatorListQuery, ValuatorEdge } from '@coop/cbs/data-access';
 import { SettingsPageHeader } from '@coop/cbs/settings/ui-layout';
 import { formatAddress } from '@coop/cbs/utils';
-import { Column, Table } from '@myra-ui/table';
-import { Box, TablePopover } from '@myra-ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const CBSSettingsValuatorPopover = ({ cell }: CellContext<ValuatorEdge, unknown>) => {

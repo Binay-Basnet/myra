@@ -1,9 +1,15 @@
-import { FormInput } from '@coop/shared/form';
+import { useFormContext } from 'react-hook-form';
+
 import { FormSection } from '@myra-ui';
+
+import { FormInput } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 export const LoanRepayment = () => {
   const { t } = useTranslation();
+  const method = useFormContext();
+  const { watch } = method;
+  const principalMaxGraceNumber = watch('principalMaxGraceNumber');
 
   return (
     <FormSection header="loanProductLoanRepaymentStartGraceDuration">
@@ -16,6 +22,12 @@ export const LoanRepayment = () => {
         name="interestMaxGraceNumber"
         textAlign="right"
         label={t['loanProductMaxInstallmentInterest']}
+        rules={{
+          max: {
+            value: principalMaxGraceNumber,
+            message: 'Maximum principal grace amount should be greater than minimum amount',
+          },
+        }}
       />
     </FormSection>
   );

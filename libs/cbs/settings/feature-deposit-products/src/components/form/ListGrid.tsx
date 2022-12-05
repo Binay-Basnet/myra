@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import isEmpty from 'lodash/isEmpty';
 
+import { Box, FormSection, Text } from '@myra-ui';
+
 import {
   CriteriaSection,
   FormCategory,
@@ -9,7 +11,6 @@ import {
   useGetSettingsOptionsFieldsQuery,
 } from '@coop/cbs/data-access';
 import { FormCheckboxGroup, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, FormSection, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer } from '../formui';
@@ -18,6 +19,7 @@ export const GridItems = () => {
   const { watch, resetField } = useFormContext();
   const criteria = watch('criteria');
   const memberType = watch('typeOfMember');
+  const minAge = watch('minAge');
 
   useEffect(() => {
     if (!criteria?.includes(CriteriaSection.Age)) {
@@ -159,12 +161,20 @@ export const GridItems = () => {
   }
   return (
     <FormSection>
-      {' '}
       {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && criteria?.includes('AGE') && (
         <FormInput name="minAge" label={t['depositProductMinAge']} />
       )}
       {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && criteria?.includes('AGE') && (
-        <FormInput name="maxAge" label={t['depositProductMaxAge']} />
+        <FormInput
+          rules={{
+            max: {
+              value: minAge,
+              message: 'Max age should be greater than min age',
+            },
+          }}
+          name="maxAge"
+          label={t['depositProductMaxAge']}
+        />
       )}
       {memberType && memberType?.indexOf('INDIVIDUAL') !== -1 && criteria?.includes('GENDER') && (
         <FormSelect

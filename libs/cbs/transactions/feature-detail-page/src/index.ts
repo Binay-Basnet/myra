@@ -1,3 +1,4 @@
+export * from './hooks/useTransactionDetailHooks';
 export * from './lib/AccountTransferDetailPage';
 export * from './lib/AgentTransactionDetailPage';
 export * from './lib/DepositDetailPage';

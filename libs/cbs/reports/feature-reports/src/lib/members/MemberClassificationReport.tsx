@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+
 import { Box, Divider, Loader } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import {
   MemberClassificationReportData,
@@ -16,7 +18,6 @@ import {
   ReportOrganizationHeader,
 } from '@coop/cbs/reports/components';
 import { Report } from '@coop/cbs/reports/list';
-import { Column, Table } from '@myra-ui/table';
 
 type ClassifyBy =
   | 'All'

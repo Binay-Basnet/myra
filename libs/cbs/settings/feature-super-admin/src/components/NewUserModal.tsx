@@ -1,6 +1,8 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
+import { asyncToast, Box, Grid, Modal } from '@myra-ui';
+
 import {
   Id_Type,
   MyraUserInput,
@@ -20,7 +22,6 @@ import {
   FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
-import { asyncToast, Box, Modal, Grid } from '@myra-ui';
 
 interface INewUserModalProps {
   isOpen: boolean;

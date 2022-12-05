@@ -12045,6 +12045,7 @@ export type WithdrawSlipMutation = {
 
 export type WithdrawSlipMutationCancelSlipArgs = {
   accountId: Scalars['ID'];
+  reason?: InputMaybe<Scalars['String']>;
   slipNumber?: InputMaybe<Scalars['Int']>;
   slipRange?: InputMaybe<SlipRangeInput>;
 };
@@ -13217,6 +13218,28 @@ export type ApproveOrDeclineRequestMutation = {
   requests: {
     requestApproveOrDecline?: {
       requestId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
+export type CancelWithdrawSlipRequestMutationVariables = Exact<{
+  accountId: Scalars['ID'];
+  slipNumber?: InputMaybe<Scalars['Int']>;
+  slipRange?: InputMaybe<SlipRangeInput>;
+  reason?: InputMaybe<Scalars['String']>;
+}>;
+
+export type CancelWithdrawSlipRequestMutation = {
+  withdrawSlip: {
+    cancelSlip?: {
+      recordId: string;
       error?:
         | MutationError_AuthorizationError_Fragment
         | MutationError_BadRequestError_Fragment
@@ -23250,6 +23273,43 @@ export const useApproveOrDeclineRequestMutation = <TError = unknown, TContext = 
     ['approveOrDeclineRequest'],
     useAxios<ApproveOrDeclineRequestMutation, ApproveOrDeclineRequestMutationVariables>(
       ApproveOrDeclineRequestDocument
+    ),
+    options
+  );
+export const CancelWithdrawSlipRequestDocument = `
+    mutation cancelWithdrawSlipRequest($accountId: ID!, $slipNumber: Int, $slipRange: SlipRangeInput, $reason: String) {
+  withdrawSlip {
+    cancelSlip(
+      accountId: $accountId
+      slipNumber: $slipNumber
+      slipRange: $slipRange
+      reason: $reason
+    ) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useCancelWithdrawSlipRequestMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    CancelWithdrawSlipRequestMutation,
+    TError,
+    CancelWithdrawSlipRequestMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    CancelWithdrawSlipRequestMutation,
+    TError,
+    CancelWithdrawSlipRequestMutationVariables,
+    TContext
+  >(
+    ['cancelWithdrawSlipRequest'],
+    useAxios<CancelWithdrawSlipRequestMutation, CancelWithdrawSlipRequestMutationVariables>(
+      CancelWithdrawSlipRequestDocument
     ),
     options
   );

@@ -16,9 +16,9 @@ import {
 import { flexRender, SortingState } from '@tanstack/react-table';
 import qs from 'qs';
 
-import { Loader, Pagination } from '@myra-ui/components';
+import { Loader, Modal, Pagination } from '@myra-ui/components';
 import { Text } from '@myra-ui/foundations';
-import { NoDataState } from '@myra-ui/templates';
+import { NoDataState, WIPState } from '@myra-ui/templates';
 
 // eslint-disable-next-line import/no-cycle
 import { TableSearch, TableSelectionBar } from '../components';
@@ -48,6 +48,11 @@ export const Table = <T extends Record<string, unknown>>({
   const [tableSize, setTableSize] = React.useState(size);
   const [rowSelection, setRowSelection] = React.useState({});
   const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
 
   const table = useTable<T>({
     columns,
@@ -84,12 +89,18 @@ export const Table = <T extends Record<string, unknown>>({
         <TableSelectionBar tableInstance={table} columns={columns as Column<T>[]} />
       </Collapse>
       {!isStatic && (
-        <TableSearch
-          placeholder={searchPlaceholder}
-          pagination={pagination}
-          size={tableSize}
-          setSize={setTableSize}
-        />
+        <>
+          <TableSearch
+            placeholder={searchPlaceholder}
+            pagination={pagination}
+            size={tableSize}
+            setSize={setTableSize}
+            onClick={() => setIsModalOpen(true)}
+          />
+          <Modal open={isModalOpen} onClose={handleModalClose} isCentered width="3xl">
+            <WIPState />
+          </Modal>
+        </>
       )}
 
       <TableContainer

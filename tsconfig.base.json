@@ -13,7 +13,10 @@
     "target": "es2015",
     "module": "esnext",
     "strict": true,
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
@@ -23,136 +26,347 @@
       "@coop/ac/activation-form": [
         "libs/alternative-channels/feature-activation-form/src/index.ts"
       ],
-      "@coop/ac/layouts": ["libs/alternative-channels/ui-layouts/src/index.ts"],
-      "@coop/ac/lists": ["libs/alternative-channels/feature-lists/src/index.ts"],
-      "@coop/accounting/accounting": ["libs/accounting/feature-accounting/src/index.ts"],
-      "@coop/accounting/investment": ["libs/accounting/feature-investment/src/index.ts"],
-      "@coop/accounting/purchase": ["libs/accounting/feature-purchase/src/index.ts"],
-      "@coop/accounting/sales": ["libs/accounting/feature-sales/src/index.ts"],
-      "@coop/accounting/ui-components": ["libs/accounting/ui-components/src/index.ts"],
-      "@coop/accounting/ui-layouts": ["libs/accounting/ui-layouts/src/index.ts"],
-      "@coop/accouting/loan": ["libs/accounting/feature-loan/src/index.ts"],
-      "@coop/cbs/accounts/account-form": ["libs/cbs/accounts/feature-account-form/src/index.ts"],
-      "@coop/cbs/accounts/ui-components": ["libs/cbs/accounts/ui-components/src/index.ts"],
-      "@coop/cbs/accounts/ui-layouts": ["libs/cbs/accounts/ui-layouts/src/index.ts"],
-      "@coop/cbs/audit-log": ["libs/cbs/settings/feature-audit-log/src/index.ts"],
-      "@coop/cbs/close-day": ["libs/cbs/close-day/src/index.ts"],
-      "@coop/cbs/dashboard": ["libs/cbs/feature-dashboard/src/index.ts"],
-      "@coop/cbs/data-access": ["libs/cbs/data-access/src/index.ts"],
-      "@coop/cbs/kym-form/cooperative": ["libs/cbs/kym-form/feature-cooperative/src/index.ts"],
+      "@coop/ac/layouts": [
+        "libs/alternative-channels/ui-layouts/src/index.ts"
+      ],
+      "@coop/ac/lists": [
+        "libs/alternative-channels/feature-lists/src/index.ts"
+      ],
+      "@coop/accounting/accounting": [
+        "libs/accounting/feature-accounting/src/index.ts"
+      ],
+      "@coop/accounting/investment": [
+        "libs/accounting/feature-investment/src/index.ts"
+      ],
+      "@coop/accounting/purchase": [
+        "libs/accounting/feature-purchase/src/index.ts"
+      ],
+      "@coop/accounting/sales": [
+        "libs/accounting/feature-sales/src/index.ts"
+      ],
+      "@coop/accounting/ui-components": [
+        "libs/accounting/ui-components/src/index.ts"
+      ],
+      "@coop/accounting/ui-layouts": [
+        "libs/accounting/ui-layouts/src/index.ts"
+      ],
+      "@coop/accouting/loan": [
+        "libs/accounting/feature-loan/src/index.ts"
+      ],
+      "@coop/cbs/accounts/account-form": [
+        "libs/cbs/accounts/feature-account-form/src/index.ts"
+      ],
+      "@coop/cbs/accounts/ui-components": [
+        "libs/cbs/accounts/ui-components/src/index.ts"
+      ],
+      "@coop/cbs/accounts/ui-layouts": [
+        "libs/cbs/accounts/ui-layouts/src/index.ts"
+      ],
+      "@coop/cbs/audit-log": [
+        "libs/cbs/settings/feature-audit-log/src/index.ts"
+      ],
+      "@coop/cbs/close-day": [
+        "libs/cbs/close-day/src/index.ts"
+      ],
+      "@coop/cbs/dashboard": [
+        "libs/cbs/feature-dashboard/src/index.ts"
+      ],
+      "@coop/cbs/data-access": [
+        "libs/cbs/data-access/src/index.ts"
+      ],
+      "@coop/cbs/kym-form/cooperative": [
+        "libs/cbs/kym-form/feature-cooperative/src/index.ts"
+      ],
       "@coop/cbs/kym-form/cooperative-union": [
         "libs/cbs/kym-form/feature-cooperative-union/src/index.ts"
       ],
       "@coop/cbs/kym-form/feature-individual": [
         "libs/cbs/kym-form/feature-individual/src/index.ts"
       ],
-      "@coop/cbs/kym-form/formElements": ["libs/cbs/kym-form/ui-form-elements/src/index.ts"],
-      "@coop/cbs/kym-form/institution": ["libs/cbs/kym-form/feature-institution/src/index.ts"],
-      "@coop/cbs/kym-form/ui-containers": ["libs/cbs/kym-form/ui-containers/src/index.ts"],
-      "@coop/cbs/loan": ["libs/cbs/loan/feature-loan-application/src/index.ts"],
-      "@coop/cbs/loan/details": ["libs/cbs/loan/feature-details/src/index.ts"],
-      "@coop/cbs/loan/layouts": ["libs/cbs/loan/ui-layouts/src/index.ts"],
-      "@coop/cbs/loan/lists": ["libs/cbs/loan/feature-lists/src/index.ts"],
-      "@coop/cbs/loan/repayment": ["libs/cbs/loan/feature-loan-repayment/src/index.ts"],
-      "@coop/cbs/members/details": ["libs/cbs/members/feature-details/src/index.ts"],
-      "@coop/cbs/members/list": ["libs/cbs/members/feature-list/src/index.ts"],
-      "@coop/cbs/members/profile": ["libs/cbs/members/feature-profile/src/index.ts"],
-      "@coop/cbs/others/fund-management": ["libs/cbs/others/feature-fund-management/src/index.ts"],
+      "@coop/cbs/kym-form/formElements": [
+        "libs/cbs/kym-form/ui-form-elements/src/index.ts"
+      ],
+      "@coop/cbs/kym-form/institution": [
+        "libs/cbs/kym-form/feature-institution/src/index.ts"
+      ],
+      "@coop/cbs/kym-form/ui-containers": [
+        "libs/cbs/kym-form/ui-containers/src/index.ts"
+      ],
+      "@coop/cbs/loan": [
+        "libs/cbs/loan/feature-loan-application/src/index.ts"
+      ],
+      "@coop/cbs/loan/details": [
+        "libs/cbs/loan/feature-details/src/index.ts"
+      ],
+      "@coop/cbs/loan/layouts": [
+        "libs/cbs/loan/ui-layouts/src/index.ts"
+      ],
+      "@coop/cbs/loan/lists": [
+        "libs/cbs/loan/feature-lists/src/index.ts"
+      ],
+      "@coop/cbs/loan/repayment": [
+        "libs/cbs/loan/feature-loan-repayment/src/index.ts"
+      ],
+      "@coop/cbs/members/details": [
+        "libs/cbs/members/feature-details/src/index.ts"
+      ],
+      "@coop/cbs/members/list": [
+        "libs/cbs/members/feature-list/src/index.ts"
+      ],
+      "@coop/cbs/members/profile": [
+        "libs/cbs/members/feature-profile/src/index.ts"
+      ],
+      "@coop/cbs/others/fund-management": [
+        "libs/cbs/others/feature-fund-management/src/index.ts"
+      ],
       "@coop/cbs/others/share-dividend-posting": [
         "libs/cbs/others/feature-share-dividend-posting/src/index.ts"
       ],
-      "@coop/cbs/others/ui-layouts": ["libs/cbs/others/ui-layouts/src/index.ts"],
-      "@coop/cbs/reports": ["libs/cbs/reports/feature-reports/src/index.ts"],
-      "@coop/cbs/reports/components": ["libs/cbs/reports/ui-components/src/index.ts"],
-      "@coop/cbs/reports/layout": ["libs/cbs/reports/ui-layouts/src/index.ts"],
-      "@coop/cbs/reports/list": ["libs/cbs/reports/feature-lists/src/index.ts"],
-      "@coop/cbs/requests/details": ["libs/cbs/requests/feature-details/src/index.ts"],
-      "@coop/cbs/requests/layout": ["libs/cbs/requests/ui-layouts/src/index.ts"],
-      "@coop/cbs/requests/lists": ["libs/cbs/requests/feature-lists/src/index.ts"],
-      "@coop/cbs/settings//feature-loan": ["libs/cbs/settings/feature-loan/src/index.ts"],
-      "@coop/cbs/settings/branches": ["libs/cbs/settings/feature-branches/src/index.ts"],
-      "@coop/cbs/settings/coa": ["libs/cbs/settings/feature-coa/src/index.ts"],
-      "@coop/cbs/settings/deposit": ["libs/cbs/settings/feature-deposit/src/index.ts"],
+      "@coop/cbs/others/ui-layouts": [
+        "libs/cbs/others/ui-layouts/src/index.ts"
+      ],
+      "@coop/cbs/reports": [
+        "libs/cbs/reports/feature-reports/src/index.ts"
+      ],
+      "@coop/cbs/reports/components": [
+        "libs/cbs/reports/ui-components/src/index.ts"
+      ],
+      "@coop/cbs/reports/layout": [
+        "libs/cbs/reports/ui-layouts/src/index.ts"
+      ],
+      "@coop/cbs/reports/list": [
+        "libs/cbs/reports/feature-lists/src/index.ts"
+      ],
+      "@coop/cbs/requests/details": [
+        "libs/cbs/requests/feature-details/src/index.ts"
+      ],
+      "@coop/cbs/requests/layout": [
+        "libs/cbs/requests/ui-layouts/src/index.ts"
+      ],
+      "@coop/cbs/requests/lists": [
+        "libs/cbs/requests/feature-lists/src/index.ts"
+      ],
+      "@coop/cbs/settings//feature-loan": [
+        "libs/cbs/settings/feature-loan/src/index.ts"
+      ],
+      "@coop/cbs/settings/branches": [
+        "libs/cbs/settings/feature-branches/src/index.ts"
+      ],
+      "@coop/cbs/settings/coa": [
+        "libs/cbs/settings/feature-coa/src/index.ts"
+      ],
+      "@coop/cbs/settings/deposit": [
+        "libs/cbs/settings/feature-deposit/src/index.ts"
+      ],
       "@coop/cbs/settings/deposit-products": [
         "libs/cbs/settings/feature-deposit-products/src/index.ts"
       ],
-      "@coop/cbs/settings/documents": ["libs/cbs/settings/feature-documents/src/index.ts"],
-      "@coop/cbs/settings/loan-products": ["libs/cbs/settings/feature-loan-products/src/index.ts"],
-      "@coop/cbs/settings/members": ["libs/cbs/settings/feature-members/src/index.ts"],
-      "@coop/cbs/settings/organization": ["libs/cbs/settings/feature-organization/src/index.ts"],
-      "@coop/cbs/settings/share": ["libs/cbs/settings/feature-share/src/index.ts"],
-      "@coop/cbs/settings/super-admin": ["libs/cbs/settings/feature-super-admin/src/index.ts"],
-      "@coop/cbs/settings/ui-containers": ["libs/cbs/settings/ui-containers/src/index.ts"],
-      "@coop/cbs/settings/ui-layout": ["libs/cbs/settings/ui-layout/src/index.ts"],
-      "@coop/cbs/settings/valuator": ["libs/cbs/settings/feature-valuator/src/index.ts"],
-      "@coop/cbs/share": ["libs/cbs/share/features-share-purchase/src/index.ts"],
-      "@coop/cbs/share-return": ["libs/cbs/share/features-share-return/src/index.ts"],
-      "@coop/cbs/share/shared-ui": ["libs/cbs/share/shared-ui/src/index.ts"],
+      "@coop/cbs/settings/documents": [
+        "libs/cbs/settings/feature-documents/src/index.ts"
+      ],
+      "@coop/cbs/settings/loan-product": [
+        "libs/cbs/settings/feature-loan-product-detail/src/index.ts"
+      ],
+      "@coop/cbs/settings/loan-products": [
+        "libs/cbs/settings/feature-loan-products/src/index.ts"
+      ],
+      "@coop/cbs/settings/members": [
+        "libs/cbs/settings/feature-members/src/index.ts"
+      ],
+      "@coop/cbs/settings/organization": [
+        "libs/cbs/settings/feature-organization/src/index.ts"
+      ],
+      "@coop/cbs/settings/share": [
+        "libs/cbs/settings/feature-share/src/index.ts"
+      ],
+      "@coop/cbs/settings/super-admin": [
+        "libs/cbs/settings/feature-super-admin/src/index.ts"
+      ],
+      "@coop/cbs/settings/ui-containers": [
+        "libs/cbs/settings/ui-containers/src/index.ts"
+      ],
+      "@coop/cbs/settings/ui-layout": [
+        "libs/cbs/settings/ui-layout/src/index.ts"
+      ],
+      "@coop/cbs/settings/valuator": [
+        "libs/cbs/settings/feature-valuator/src/index.ts"
+      ],
+      "@coop/cbs/share": [
+        "libs/cbs/share/features-share-purchase/src/index.ts"
+      ],
+      "@coop/cbs/share-return": [
+        "libs/cbs/share/features-share-return/src/index.ts"
+      ],
+      "@coop/cbs/share/shared-ui": [
+        "libs/cbs/share/shared-ui/src/index.ts"
+      ],
       "@coop/cbs/transactions/account-transfer": [
         "libs/cbs/transactions/feature-account-transfer/src/index.ts"
       ],
-      "@coop/cbs/transactions/agent": ["libs/cbs/transactions/feature-agent/src/index.ts"],
+      "@coop/cbs/transactions/agent": [
+        "libs/cbs/transactions/feature-agent/src/index.ts"
+      ],
       "@coop/cbs/transactions/agent-transaction": [
         "libs/cbs/transactions/feature-agent-transaction/src/index.ts"
       ],
-      "@coop/cbs/transactions/deposit": ["libs/cbs/transactions/feature-deposit/src/index.ts"],
+      "@coop/cbs/transactions/deposit": [
+        "libs/cbs/transactions/feature-deposit/src/index.ts"
+      ],
       "@coop/cbs/transactions/feature-detail-page": [
         "libs/cbs/transactions/feature-detail-page/src/index.ts"
       ],
       "@coop/cbs/transactions/loan-payment": [
         "libs/cbs/transactions/feature-loan-payment/src/index.ts"
       ],
-      "@coop/cbs/transactions/ui-components": ["libs/cbs/transactions/ui-components/src/index.ts"],
-      "@coop/cbs/transactions/ui-containers": ["libs/cbs/transactions/ui-containers/src/index.ts"],
-      "@coop/cbs/transactions/ui-layouts": ["libs/cbs/transactions/ui-layouts/src/index.ts"],
-      "@coop/cbs/transactions/withdraw": ["libs/cbs/transactions/feature-withdraw/src/index.ts"],
-      "@coop/cbs/transfer": ["libs/cbs/transfer/src/index.ts"],
-      "@coop/cbs/utils": ["libs/cbs/utils/src/index.ts"],
-      "@coop/ebanking/accounts": ["libs/ebanking/feature-accounts/src/index.ts"],
-      "@coop/ebanking/auth": ["libs/ebanking/feature-auth/src/index.ts"],
-      "@coop/ebanking/cards": ["libs/ebanking/ui-cards/src/index.ts"],
-      "@coop/ebanking/components": ["libs/ebanking/ui-components/src/index.ts"],
-      "@coop/ebanking/coop": ["libs/ebanking/feature-coop/src/index.ts"],
-      "@coop/ebanking/data-access": ["libs/ebanking/data-access/src/index.ts"],
-      "@coop/ebanking/funds": ["libs/ebanking/feature-funds/src/index.ts"],
-      "@coop/ebanking/home": ["libs/ebanking/feature-home/src/index.ts"],
-      "@coop/ebanking/products": ["libs/ebanking/feature-products/src/index.ts"],
-      "@coop/ebanking/settings": ["libs/ebanking/feature-settings/src/index.ts"],
-      "@coop/ebanking/ui-layout": ["libs/ebanking/ui-layout/src/index.ts"],
-      "@coop/inventory/inventory": ["libs/inventory/feature-inventory/src/index.ts"],
-      "@coop/inventory/warehouse": ["libs/inventory/feature-warehouse/src/index.ts"],
-      "@coop/members/activations": ["libs/cbs/members/feature-activations/src/index.ts"],
-      "@coop/myra/components": ["libs/myra/components/src/index.ts"],
-      "@coop/myra/inventory/item": ["libs/inventory/feature-item/src/index.ts"],
-      "@coop/myra/inventory/suppliers": ["libs/inventory/feature-suppliers/src/index.ts"],
-      "@coop/myra/inventory/ui-layout": ["libs/inventory/ui-layout/src/index.ts"],
-      "@coop/myra/jsonData": ["libs/myra/jsonData/index.ts"],
-      "@coop/myra/locales": ["libs/myra/locales/index.ts"],
-      "@coop/myra/types": ["libs/myra/types/index.ts"],
-      "@coop/neosys-admin/clients": ["libs/neosys/feature-clients/src/index.ts"],
-      "@coop/neosys-admin/data-access": ["libs/neosys/data-access/src/index.ts"],
-      "@coop/neosys-admin/layout": ["libs/neosys/ui-layout/src/index.ts"],
-      "@coop/neosys-admin/settings": ["libs/neosys/feature-settings/src/index.ts"],
-      "@coop/neosys-admin/ui-components": ["libs/neosys/ui-components/src/index.ts"],
-      "@coop/neosys-admin/users": ["libs/neosys/feature-users/src/index.ts"],
+      "@coop/cbs/transactions/ui-components": [
+        "libs/cbs/transactions/ui-components/src/index.ts"
+      ],
+      "@coop/cbs/transactions/ui-containers": [
+        "libs/cbs/transactions/ui-containers/src/index.ts"
+      ],
+      "@coop/cbs/transactions/ui-layouts": [
+        "libs/cbs/transactions/ui-layouts/src/index.ts"
+      ],
+      "@coop/cbs/transactions/withdraw": [
+        "libs/cbs/transactions/feature-withdraw/src/index.ts"
+      ],
+      "@coop/cbs/transfer": [
+        "libs/cbs/transfer/src/index.ts"
+      ],
+      "@coop/cbs/utils": [
+        "libs/cbs/utils/src/index.ts"
+      ],
+      "@coop/ebanking/accounts": [
+        "libs/ebanking/feature-accounts/src/index.ts"
+      ],
+      "@coop/ebanking/auth": [
+        "libs/ebanking/feature-auth/src/index.ts"
+      ],
+      "@coop/ebanking/cards": [
+        "libs/ebanking/ui-cards/src/index.ts"
+      ],
+      "@coop/ebanking/components": [
+        "libs/ebanking/ui-components/src/index.ts"
+      ],
+      "@coop/ebanking/coop": [
+        "libs/ebanking/feature-coop/src/index.ts"
+      ],
+      "@coop/ebanking/data-access": [
+        "libs/ebanking/data-access/src/index.ts"
+      ],
+      "@coop/ebanking/funds": [
+        "libs/ebanking/feature-funds/src/index.ts"
+      ],
+      "@coop/ebanking/home": [
+        "libs/ebanking/feature-home/src/index.ts"
+      ],
+      "@coop/ebanking/products": [
+        "libs/ebanking/feature-products/src/index.ts"
+      ],
+      "@coop/ebanking/settings": [
+        "libs/ebanking/feature-settings/src/index.ts"
+      ],
+      "@coop/ebanking/ui-layout": [
+        "libs/ebanking/ui-layout/src/index.ts"
+      ],
+      "@coop/inventory/inventory": [
+        "libs/inventory/feature-inventory/src/index.ts"
+      ],
+      "@coop/inventory/warehouse": [
+        "libs/inventory/feature-warehouse/src/index.ts"
+      ],
+      "@coop/members/activations": [
+        "libs/cbs/members/feature-activations/src/index.ts"
+      ],
+      "@coop/myra/components": [
+        "libs/myra/components/src/index.ts"
+      ],
+      "@coop/myra/inventory/item": [
+        "libs/inventory/feature-item/src/index.ts"
+      ],
+      "@coop/myra/inventory/suppliers": [
+        "libs/inventory/feature-suppliers/src/index.ts"
+      ],
+      "@coop/myra/inventory/ui-layout": [
+        "libs/inventory/ui-layout/src/index.ts"
+      ],
+      "@coop/myra/jsonData": [
+        "libs/myra/jsonData/index.ts"
+      ],
+      "@coop/myra/locales": [
+        "libs/myra/locales/index.ts"
+      ],
+      "@coop/myra/types": [
+        "libs/myra/types/index.ts"
+      ],
+      "@coop/neosys-admin/clients": [
+        "libs/neosys/feature-clients/src/index.ts"
+      ],
+      "@coop/neosys-admin/data-access": [
+        "libs/neosys/data-access/src/index.ts"
+      ],
+      "@coop/neosys-admin/layout": [
+        "libs/neosys/ui-layout/src/index.ts"
+      ],
+      "@coop/neosys-admin/settings": [
+        "libs/neosys/feature-settings/src/index.ts"
+      ],
+      "@coop/neosys-admin/ui-components": [
+        "libs/neosys/ui-components/src/index.ts"
+      ],
+      "@coop/neosys-admin/users": [
+        "libs/neosys/feature-users/src/index.ts"
+      ],
       "@coop/settings/alternative-channels": [
         "libs/cbs/settings/feature-alternative-channels/src/index.ts"
       ],
-      "@coop/shared/components": ["libs/shared/components/src/index.ts"],
-      "@coop/shared/form": ["libs/shared/form/src/index.ts"],
-      "@coop/shared/utils": ["libs/shared/utils/src/index.ts"],
-      "@myra-ui": ["libs/@myra/myra-ui/src/index.ts"],
-      "@myra-ui/components": ["libs/@myra/components/src/index.ts"],
-      "@myra-ui/editable-table": ["libs/@myra/editable-table/src/index.ts"],
-      "@myra-ui/forms": ["libs/@myra/forms/src/index.ts"],
-      "@myra-ui/foundations": ["libs/@myra/foundations/src/index.ts"],
-      "@myra-ui/map": ["libs/@myra/map/src/index.ts"],
-      "@myra-ui/table": ["libs/@myra/table/src/index.ts"],
-      "@myra-ui/templates": ["libs/@myra/templates/src/index.ts"],
-      "@myra-ui/theme": ["libs/@myra/theme/src/index.ts"],
-      "@myra/dump": ["libs/@myra/dump/src/index.ts"]
+      "@coop/settings/saving-product": [
+        "libs/cbs/settings/feature-saving-product-detail/src/index.ts"
+      ],
+      "@coop/shared/components": [
+        "libs/shared/components/src/index.ts"
+      ],
+      "@coop/shared/form": [
+        "libs/shared/form/src/index.ts"
+      ],
+      "@coop/shared/utils": [
+        "libs/shared/utils/src/index.ts"
+      ],
+      "@myra-ui": [
+        "libs/@myra/myra-ui/src/index.ts"
+      ],
+      "@myra-ui/components": [
+        "libs/@myra/components/src/index.ts"
+      ],
+      "@myra-ui/editable-table": [
+        "libs/@myra/editable-table/src/index.ts"
+      ],
+      "@myra-ui/forms": [
+        "libs/@myra/forms/src/index.ts"
+      ],
+      "@myra-ui/foundations": [
+        "libs/@myra/foundations/src/index.ts"
+      ],
+      "@myra-ui/map": [
+        "libs/@myra/map/src/index.ts"
+      ],
+      "@myra-ui/table": [
+        "libs/@myra/table/src/index.ts"
+      ],
+      "@myra-ui/templates": [
+        "libs/@myra/templates/src/index.ts"
+      ],
+      "@myra-ui/theme": [
+        "libs/@myra/theme/src/index.ts"
+      ],
+      "@myra/dump": [
+        "libs/@myra/dump/src/index.ts"
+      ]
     },
     "jsx": "react"
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { ServiceTypeFormState } from '@coop/ebanking/data-access';
 import { Column, Table } from '@myra-ui/table';
+
+import { ServiceTypeFormState } from '@coop/ebanking/data-access';
 import { amountConverter } from '@coop/shared/utils';
 
 interface IProductChargesProps {

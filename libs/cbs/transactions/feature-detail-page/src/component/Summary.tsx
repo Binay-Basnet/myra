@@ -1,4 +1,5 @@
 import { IoCopyOutline } from 'react-icons/io5';
+
 import { Box, Icon, Tags, Text } from '@myra-ui';
 
 import { TransferType } from '@coop/cbs/data-access';
@@ -56,21 +57,25 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
                 </Text>
               ) : (
                 <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">
-                  {t['transDetailDeposit']} -{' '}
+                  {t['transDetailDeposit']} -
                   {summary.method === 'AGENT' ? agentSlug[summary.method] : summary.method}
                 </Text>
               )}
             </Box>
             <Box gap="s4" display="flex" flexDirection="column">
-              <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
-                {amountConverter(summary.amount ?? 0)}
-              </Text>
-              <Tags
-                type="chip"
-                label={summary.paymentMode ?? ''}
-                tagColor="primary.100"
-                labelColor="success.500"
-              />
+              <Box display="flex" justifyContent="flex-end">
+                <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
+                  {amountConverter(summary.amount ?? 0)}
+                </Text>
+              </Box>
+              <Box w="100px" display="flex" justifyContent="flex-end">
+                <Tags
+                  type="chip"
+                  label={summary.paymentMode ?? ''}
+                  tagColor="primary.100"
+                  labelColor="success.500"
+                />
+              </Box>
             </Box>
           </Box>
         </Box>

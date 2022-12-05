@@ -2,9 +2,10 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { Avatar, Flex } from '@chakra-ui/react';
 
+import { Column, PageHeader, Table } from '@myra-ui';
+
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
-import { Column, PageHeader, Table } from '@myra-ui';
 import { getRouterQuery } from '@coop/shared/utils';
 
 export const UsersTable = () => {

@@ -3800,7 +3800,7 @@ const en: Record<string, string> = {
   withdrawSlip: 'Withdraw Slip',
   withdrawSlipBook: 'Withdraw Slip',
   withdrawSlipRequests: 'Withdraw Slip Requests',
-  withdrawSlipBlockRequests: 'Block Withdraw Slip',
+  withdrawSlipBlockRequests: 'Block Withdraw Slip Requests',
 
   loanProductRemainingPrincipal: 'Remaining Principal',
   loanProductPenalInterest: 'Penal Interest',
