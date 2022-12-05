@@ -778,3 +778,56 @@ query getLoanAgingStatementReport($data: LoanAgingStatementInput) {
     }
   }
 }
+
+query getValutBalanceReport($data: VaultBalanceReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        vaultBalanceReport(data: $data) {
+          data {
+            opening {
+              denomination {
+                value
+                quantity
+                amount
+              }
+              noneAmount
+              noteTotal
+              amountTotal
+            }
+            vaultIn {
+              denomination {
+                value
+                quantity
+                amount
+              }
+              noneAmount
+              noteTotal
+              amountTotal
+            }
+            vaultOut {
+              denomination {
+                value
+                quantity
+                amount
+              }
+              noneAmount
+              noteTotal
+              amountTotal
+            }
+            closing {
+              denomination {
+                value
+                quantity
+                amount
+              }
+              noneAmount
+              noteTotal
+              amountTotal
+            }
+          }
+        }
+      }
+    }
+  }
+}
