@@ -1,5 +1,6 @@
 import { IoCopyOutline, IoQrCode } from 'react-icons/io5';
 import { useDisclosure } from '@chakra-ui/react';
+
 import { AccountQRModal, Box, Divider, Icon, IconButton, Text } from '@myra-ui';
 
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
+import { Box, DetailsCard, PathBar } from '@myra-ui';
 
 import { DepositProductCriteria, DepositProductFormStateData } from '@coop/ebanking/data-access';
-import { Box, DetailsCard, PathBar } from '@myra-ui';
 
 import {
   AccountCloseCharge,

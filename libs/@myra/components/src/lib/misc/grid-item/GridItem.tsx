@@ -4,7 +4,7 @@ export interface GridItemProps extends ChakraProps {
   children?: React.ReactNode;
 }
 
-export function GridItem(props: GridItemProps) {
+export const GridItem = (props: GridItemProps) => {
   const { children, ...rest } = props;
   return <ChakraGridItem {...rest}> {children} </ChakraGridItem>;
 }

@@ -1,10 +1,11 @@
 import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
+import { Avatar, Box } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
 import { useGetShareBalanceListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
-import { Column, Table } from '@myra-ui/table';
-import { Avatar, Box } from '@myra-ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const ShareBalanceTable = () => {

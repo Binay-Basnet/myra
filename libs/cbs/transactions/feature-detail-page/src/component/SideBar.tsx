@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-
 import { DetailPageTabs } from '@myra-ui';
 
 import { MemberInfo } from './MemberInfo';

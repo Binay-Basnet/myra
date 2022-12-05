@@ -1,5 +1,6 @@
-import { COASelectModal } from '@coop/shared/components';
 import { EditableTable } from '@myra-ui/editable-table';
+
+import { COASelectModal } from '@coop/shared/components';
 
 const Temp = () => (
   <EditableTable

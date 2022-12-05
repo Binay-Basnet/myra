@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 
+import { Box, DetailPageContentCard, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
 import { useGetAgentAssignedMemberListDataQuery } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
-import { Column, Table } from '@myra-ui/table';
-import { Box, DetailPageContentCard, Text } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 import { AddMemberModal } from '../components';

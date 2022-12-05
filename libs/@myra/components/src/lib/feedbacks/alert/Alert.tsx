@@ -27,6 +27,7 @@ export interface AlertProps {
   showAlert?: boolean;
   bottomButtonlabel?: string;
   bottomButtonHandler?: () => void;
+  buttonVariant?: 'link' | 'outline' | 'solid' | 'ghost' | 'unstyled' | undefined;
   children?: React.ReactNode;
 }
 
@@ -56,18 +57,19 @@ export const Alert = ({
   bottomButtonlabel,
   bottomButtonHandler,
   hideCloseIcon,
+  buttonVariant,
 }: AlertProps) => {
   const [isAlertShown, setIsAlertShown] = useState(showAlert);
 
   return (
     <Collapse in={isAlertShown}>
       <ChakraAlert variant={status}>
-        <Box display="flex" alignItems="center" justifyContent="space-between" width="100%">
-          <Box display="flex" flexDirection="column" gap="s8">
-            <Box display="flex">
+        <Box display="flex" justifyContent="space-between" width="100%">
+          <Box width="100%" display="flex" flexDirection="column" gap="s8">
+            <Box width="100%" display="flex">
               <AlertIcon as={ICON_DICT[status]} />
 
-              <Box display="flex" flexDir="column" gap="s8">
+              <Box width="100%" display="flex" flexDir="column" gap="s8">
                 {title && <AlertTitle>{title}</AlertTitle>}
                 {(subtitle || children) && (
                   <AlertDescription>
@@ -80,7 +82,7 @@ export const Alert = ({
             {bottomButtonlabel && (
               <Box display="flex" flexDirection="row" justifyContent="flex-start">
                 <Button
-                  variant="link"
+                  variant={buttonVariant ?? 'link'}
                   shade={status === 'error' ? 'danger' : 'primary'}
                   onClick={bottomButtonHandler}
                 >

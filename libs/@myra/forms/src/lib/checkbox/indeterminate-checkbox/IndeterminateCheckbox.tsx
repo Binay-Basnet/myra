@@ -18,7 +18,7 @@ export interface IndeterminateCheckboxProps extends ChakraCheckboxProps {
   ref: React.RefObject<HTMLInputElement>;
 }
 
-export function IndeterminateCheckbox(props: IndeterminateCheckboxProps) {
+export const IndeterminateCheckbox = (props: IndeterminateCheckboxProps) => {
   const { children, checkList, pl, mt, spacing, isIndeterminate, direction, ref, ...rest } = props;
 
   const defaultRef = useRef<HTMLInputElement>(null);

@@ -1,7 +1,9 @@
 import { useCallback, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+
 import { asyncToast, Modal, PageHeader } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import {
   AccountTypeFilter,
@@ -16,7 +18,6 @@ import {
 } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { FormTextArea } from '@coop/shared/form';
-import { Column, Table } from '@myra-ui/table';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const DEPOSIT_TAB_ITEMS = [

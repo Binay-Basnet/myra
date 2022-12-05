@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { AccountingLayout, SalesLayout } from '@coop/accounting/ui-layouts';
 import { Box, WIPState } from '@myra-ui';
+
+import { AccountingLayout, SalesLayout } from '@coop/accounting/ui-layouts';
 
 const SalesSettings = () => (
   <Box display="flex" justifyContent="center" alignItems="center">

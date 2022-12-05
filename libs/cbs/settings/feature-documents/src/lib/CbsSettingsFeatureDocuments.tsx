@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Modal, Grid, GridItem, PageHeader, TablePopover } from '@myra-ui';
+
+import { Grid, GridItem, Modal, PageHeader, TablePopover } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import { useGetDepositProductSettingsListQuery } from '@coop/cbs/data-access';
 import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
-import { Column, Table } from '@myra-ui/table';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */

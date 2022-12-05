@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { Box, FormSection, Text } from '@myra-ui';
 
 import {
   CriteriaSection,
@@ -8,7 +9,6 @@ import {
   useGetSettingsOptionsFieldsQuery,
 } from '@coop/cbs/data-access';
 import { FormCheckboxGroup, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, FormSection, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer } from '../formui';
@@ -18,6 +18,7 @@ export const GridItems = () => {
   const { watch, resetField } = useFormContext();
   const criteria = watch('criteria');
   const memberType = watch('typeOfMember');
+  const minAge = watch('minAge');
 
   const CheckboxYesNo = [
     { label: t['yes'], value: true },
@@ -159,7 +160,16 @@ export const GridItems = () => {
           memberType?.indexOf('INDIVIDUAL') !== -1 &&
           criteria &&
           criteria.indexOf('AGE') !== -1 && (
-            <FormInput name="maxAge" label={t['loanProductMaxAge']} />
+            <FormInput
+              rules={{
+                max: {
+                  value: minAge,
+                  message: 'Max age should be greater than min age',
+                },
+              }}
+              name="maxAge"
+              label={t['loanProductMaxAge']}
+            />
           )}
         {memberType &&
           memberType?.indexOf('INDIVIDUAL') !== -1 &&

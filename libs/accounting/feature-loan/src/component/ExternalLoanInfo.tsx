@@ -69,8 +69,8 @@ export const ExternalLoanInfo = () => {
       </FormSection>
 
       <FormSection>
-        <FormInput name="effectiveStartDate" type="date" label="Effective Start Date" />
-        <FormInput name="maturityDate" type="date" label="Maturity Date" />
+        <FormDatePicker name="effectiveStartDate" label="Effective Start Date" />
+        <FormDatePicker name="maturityDate" label="Maturity Date" />
         <FormInput
           name="interestRate"
           type="number"

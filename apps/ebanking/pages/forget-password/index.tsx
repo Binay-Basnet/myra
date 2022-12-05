@@ -7,7 +7,7 @@ import { useDisclosure } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { Box, Button, Modal, getError, Icon, Input, PasswordInput, Text } from '@myra-ui';
+import { Box, Button, getError, Icon, Input, Modal, PasswordInput, Text } from '@myra-ui';
 
 import { GoBack } from '@coop/ebanking/components';
 import {

@@ -79,6 +79,7 @@ export const SettingsDepositProductsAdd = () => {
   const { mutateAsync } = useSetDepositProductMutation();
 
   const methods = useForm<DepositForm>({
+    mode: 'onChange',
     defaultValues: {
       depositFrequency: Frequency.Daily,
       transactionAllowed: DepositFreq.Monthly,

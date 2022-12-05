@@ -1,8 +1,9 @@
 import { ReactElement } from 'react';
 
+import { MainLayout, PageHeader } from '@myra-ui';
+
 import { LoanListLayout } from '@coop/cbs/loan/layouts';
 import { LoanProductTable } from '@coop/cbs/settings//feature-loan';
-import { MainLayout, PageHeader } from '@myra-ui';
 
 const LoanRepayments = () => (
   <>

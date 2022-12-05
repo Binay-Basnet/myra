@@ -13,7 +13,6 @@ import {
   Grid,
   GridItem,
   ShareMemberCard,
-  TabMenu,
 } from '@myra-ui';
 
 import {

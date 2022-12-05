@@ -8,7 +8,7 @@ describe('MainLayoutInventory', () => {
   it('should render successfully', () => {
     const { baseElement } = render(
       <RouterContext.Provider value={createMockRouter({ query: { id: '22' } })}>
-        <MainLayoutInventory children={'Hello'} />
+        <MainLayoutInventory children="Hello" />
       </RouterContext.Provider>
     );
     expect(baseElement).toBeTruthy();

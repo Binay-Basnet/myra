@@ -2,6 +2,9 @@ import { useCallback, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
+import { asyncToast, Box, Modal, PageHeader, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
 import {
   AccountTypeFilter,
   DepositProductStatus,
@@ -14,8 +17,6 @@ import {
 } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { FormTextArea } from '@coop/shared/form';
-import { Column, Table } from '@myra-ui/table';
-import { asyncToast, Box, Modal, PageHeader, Text } from '@myra-ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const LOAN_TAB_ITEMS = [
