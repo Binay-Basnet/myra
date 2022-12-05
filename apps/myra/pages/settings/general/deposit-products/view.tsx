@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+
 import { MainLayout } from '@myra-ui';
 
 import { DetailPathBar, SavingDetailPageSidebarLayout } from '@coop/cbs/settings/ui-layout';

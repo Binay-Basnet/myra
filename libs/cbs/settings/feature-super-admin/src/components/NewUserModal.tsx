@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
-import { asyncToast, Box, Grid,Modal } from '@myra-ui';
+import { asyncToast, Box, Grid, Modal } from '@myra-ui';
 
 import {
   Id_Type,

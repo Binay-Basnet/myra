@@ -1,5 +1,6 @@
 import { Box, DetailPageHeader } from '@myra-ui';
-import { useTransactionDetailHooks } from 'libs/cbs/transactions/feature-detail-page/src/hooks/useTransactionDetailHooks';
+
+import { useTransactionDetailHooks } from '@coop/cbs/transactions/feature-detail-page';
 
 export interface PathBarProps {
   title: string;

@@ -2,18 +2,19 @@ import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
 import {
   asyncToast,
   Box,
   Button,
-  Modal,
   Container,
   FormFooter,
   FormHeader,
   Grid,
   MemberCard,
+  Modal,
   Text,
 } from '@myra-ui';
 
@@ -60,6 +61,8 @@ const cashOptions: Record<string, string> = {
 
 export const LoanRepayment = () => {
   const [triggerQuery, setTriggerQuery] = useState(false);
+  const queryClient = useQueryClient();
+
   const { isOpen, onClose, onToggle } = useDisclosure();
 
   const [triggerLoanQuery, setTriggerLoanQuery] = useState(false);
@@ -169,7 +172,10 @@ export const LoanRepayment = () => {
         success: 'Loan has been Repayed',
         loading: 'Repaying Loan',
       },
-      onSuccess: () => router.push('/loan/accounts'),
+      onSuccess: () => {
+        queryClient.invalidateQueries(['getLoanPreview']);
+        router.push('/loan/accounts');
+      },
       promise: mutateAsync({
         data: {
           ...(filteredValues as LoanRepaymentInput),
@@ -261,6 +267,7 @@ export const LoanRepayment = () => {
                     </Box>
                     <LoanPaymentScheduleTable
                       data={loanPaymentScheduleSplice as LoanInstallment[]}
+                      nextInstallmentNumber={nextInstallmentNumber}
                       total={loanData?.paymentSchedule?.total as string}
                     />
                     <Modal
@@ -273,6 +280,7 @@ export const LoanRepayment = () => {
                     >
                       <LoanPaymentScheduleTable
                         data={loanPaymentSchedule as LoanInstallment[]}
+                        nextInstallmentNumber={nextInstallmentNumber}
                         total={loanData?.paymentSchedule?.total as string}
                       />
                     </Modal>

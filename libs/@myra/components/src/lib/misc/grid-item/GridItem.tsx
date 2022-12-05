@@ -7,6 +7,6 @@ export interface GridItemProps extends ChakraProps {
 export const GridItem = (props: GridItemProps) => {
   const { children, ...rest } = props;
   return <ChakraGridItem {...rest}> {children} </ChakraGridItem>;
-}
+};
 
 export default GridItem;

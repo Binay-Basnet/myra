@@ -50,6 +50,6 @@ export const IndeterminateCheckbox = (props: IndeterminateCheckboxProps) => {
       </Stack>
     </>
   );
-}
+};
 
 export default IndeterminateCheckbox;
