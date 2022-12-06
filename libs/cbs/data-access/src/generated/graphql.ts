@@ -3211,6 +3211,7 @@ export type EodSatusResult = {
   dormancy?: Maybe<EodState>;
   interestBooking?: Maybe<EodState>;
   interestPosting?: Maybe<EodState>;
+  loanInterestBooking?: Maybe<EodState>;
   maturity?: Maybe<EodState>;
   transactionDate?: Maybe<EodState>;
 };
@@ -5143,7 +5144,7 @@ export type JournalVoucherEntry = {
 
 export type JournalVoucherInput = {
   chequeNo?: InputMaybe<Scalars['String']>;
-  date?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['Localized']>;
   entries?: InputMaybe<Array<InputMaybe<JournalVoucherEntry>>>;
   notes?: InputMaybe<Scalars['String']>;
   paymentMode?: InputMaybe<JournalVoucherPaymentMode>;

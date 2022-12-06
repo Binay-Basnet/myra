@@ -28607,6 +28607,18 @@
             "deprecationReason": null
           },
           {
+            "name": "loanInterestBooking",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "EODState",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "maturity",
             "description": null,
             "args": [],
@@ -43856,7 +43868,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Localized",
               "ofType": null
             },
             "defaultValue": null,
