@@ -19,17 +19,13 @@ const flexBasisFunc = (width: string) => {
 };
 
 export type TableOverviewColumnType = {
-  label: string | number;
+  label: string;
   width: 'auto' | 'lg' | 'md' | 'sm';
   isNumeric: boolean;
 };
 
 interface ITableOverviewProps {
-  columns: {
-    label: string | number;
-    width: 'auto' | 'lg' | 'md' | 'sm';
-    isNumeric: boolean;
-  }[];
+  columns: TableOverviewColumnType[];
 }
 
 export const TableOverview = ({ columns }: ITableOverviewProps) => (

@@ -80,3 +80,14 @@ query getCOAAccountsUnderList($accountCode: [String]) {
     }
   }
 }
+
+query getCOAAccountsUnderLeafList($parentId: String!) {
+  settings {
+    chartsOfAccount {
+      accountsUnderLeaf(parentId: $parentId) {
+        accountId
+        name
+      }
+    }
+  }
+}

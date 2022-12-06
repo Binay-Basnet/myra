@@ -10,7 +10,7 @@ import {
 } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 
-import { TableOverview } from './TableOverview';
+import { TableOverview, TableOverviewColumnType } from './TableOverview';
 import { CustomFundManagementInput, OtherFundDistributionTableType } from '../lib/type';
 
 export const OtherFundDistributionTable = () => {
@@ -88,7 +88,7 @@ export const OtherFundDistributionTable = () => {
 
   const otherFunds = watch('otherFunds');
 
-  const otherFundsSummary = useMemo(
+  const otherFundsSummary: TableOverviewColumnType[] = useMemo(
     () => [
       { label: 'Total', width: 'auto', isNumeric: true },
       {
