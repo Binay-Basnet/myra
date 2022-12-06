@@ -9,13 +9,14 @@ import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 import { Grid } from '@chakra-ui/react';
 
+import { Box, Button, Divider, GridItem, Icon, Modal, SettingsButton, Text } from '@myra-ui';
+
 import {
   Id_Type,
   useGetGeneralMemberSettingsDataQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
 import { TabColumn } from '@coop/myra/components';
-import { Box, Button, Divider, GridItem, Icon, Modal, SettingsButton, Text } from '@myra-ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 interface IMemberPageLayout {
@@ -231,6 +232,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
             open={openModal}
             onClose={onCloseModal}
             isCentered
+            width="2xl"
             title={
               <Text fontSize="r2" color="neutralColorLight.Gray-80" fontWeight="SemiBold">
                 {t['memberLayoutSelectMemberType']}

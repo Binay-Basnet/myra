@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { GridItem } from '@myra-ui';
 import dayjs from 'dayjs';
+
+import { GridItem } from '@myra-ui';
 
 import {
   EbankingReportFilter,
@@ -78,7 +79,7 @@ export const MBRegistrationReport = () => {
                 accessorFn: (row) => row?.mobileNo,
               },
               {
-                header: 'Registered Branch (Code)',
+                header: 'Registered Service Center(Code)',
                 accessorFn: (row) => row?.branchCode,
               },
               {
