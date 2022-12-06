@@ -24,7 +24,7 @@ type VaultBalanceReportDataType = {
   };
 };
 
-const cashOptions = ['1,000', '500', '100', '50', '25', '20', '10', '5', '2', '1'];
+const cashOptions = ['1,000', '500', '100', '50', '25', '20', '10', '5', '2', '1', 'None'];
 
 export const VaultBalanceReport = () => {
   const [filters, setFilters] = useState<VaultBalanceReportFilter | null>(null);
@@ -62,10 +62,27 @@ export const VaultBalanceReport = () => {
         closingVal: closingBalance?.denomination?.[index]?.amount,
       },
     })) || [];
+  const noneArray = {
+    value: cashOptions?.[10],
+    quantity: {
+      opening: 0,
+      inVault: 0,
+      outVault: 0,
+      closingVal: 0,
+    },
+    amount: {
+      opening: openingBalance?.noneAmount,
+      inVault: vaultInBalance?.noneAmount,
+      outVault: vaultOutBalance?.noneAmount,
+      closingVal: closingBalance?.noneAmount,
+    },
+  };
+  // const combinedArray = arrayNew?.push(noneArray)
+  const combinedArray = [...arrayNew, noneArray];
   return (
     <Report
       defaultFilters={{}}
-      data={arrayNew as VaultBalanceReportDataType[]}
+      data={combinedArray as VaultBalanceReportDataType[]}
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
@@ -98,24 +115,27 @@ export const VaultBalanceReport = () => {
             columns={[
               {
                 header: 'Opening Cash Balance',
-                footer: () => <Box textAlign="right">Total</Box>,
-                meta: {
-                  Footer: {
-                    colspan: 1,
-                  },
-                },
+                id: 'Opening Cash Balance',
 
                 columns: [
                   {
                     header: 'Opening',
+                    id: 'Opening column ',
                     columns: [
                       {
                         header: 'Deno',
                         accessorKey: 'value',
+                        footer: () => <Box textAlign="right">Total</Box>,
+                        meta: {
+                          Footer: {
+                            colspan: 1,
+                          },
+                        },
                       },
                       {
                         header: 'Count',
-
+                        id: 'opening count',
+                        footer: () => amountConverter(openingBalance?.noteTotal as string),
                         accessorFn: (row) => row?.quantity?.opening,
 
                         meta: {
@@ -124,6 +144,9 @@ export const VaultBalanceReport = () => {
                       },
                       {
                         header: 'Amount',
+                        id: 'opening Amount',
+                        footer: () => amountConverter(openingBalance?.amountTotal as string),
+
                         accessorFn: (row) => row?.amount?.opening,
 
                         cell: (props) => amountConverter(props.getValue() as string),
@@ -138,13 +161,16 @@ export const VaultBalanceReport = () => {
               },
               {
                 header: 'Today’s Transaction',
-
+                id: "today's transaction",
                 columns: [
                   {
                     header: 'Vault In',
+
                     columns: [
                       {
                         header: 'Count',
+                        id: 'vault In Count',
+                        footer: () => amountConverter(vaultInBalance?.noteTotal as string),
 
                         accessorFn: (row) => row?.quantity?.inVault,
 
@@ -154,7 +180,10 @@ export const VaultBalanceReport = () => {
                       },
                       {
                         header: 'Amount',
+                        id: 'vault in Amount',
+
                         accessorFn: (row) => row?.amount?.inVault,
+                        footer: () => amountConverter(vaultInBalance?.amountTotal as string),
 
                         cell: (props) => amountConverter(props.getValue() as string),
 
@@ -166,9 +195,12 @@ export const VaultBalanceReport = () => {
                   },
                   {
                     header: 'Vault Out',
+                    id: 'vault Out Count',
                     columns: [
                       {
                         header: 'Count',
+                        id: 'vault out Count',
+                        footer: () => amountConverter(vaultOutBalance?.noteTotal as string),
 
                         accessorFn: (row) => row?.quantity?.outVault,
 
@@ -179,6 +211,8 @@ export const VaultBalanceReport = () => {
                       {
                         header: 'Amount',
                         accessorFn: (row) => row?.amount?.outVault,
+                        id: 'vault out Amount',
+                        footer: () => amountConverter(vaultOutBalance?.amountTotal as string),
 
                         cell: (props) => amountConverter(props.getValue() as string),
 
@@ -196,9 +230,12 @@ export const VaultBalanceReport = () => {
                 columns: [
                   {
                     header: 'Closing',
+                    id: 'Closing column',
                     columns: [
                       {
                         header: 'Count',
+                        id: 'closing count',
+                        footer: () => amountConverter(closingBalance?.noneAmount as string),
 
                         accessorFn: (row) => row?.quantity?.closingVal,
 
@@ -208,7 +245,9 @@ export const VaultBalanceReport = () => {
                       },
                       {
                         header: 'Amount',
+                        id: 'closing Amount',
                         accessorFn: (row) => row?.amount?.closingVal,
+                        footer: () => amountConverter(closingBalance?.amountTotal as string),
 
                         cell: (props) => amountConverter(props.getValue() as string),
 
