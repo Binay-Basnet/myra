@@ -1,11 +1,12 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
-import { asyncToast, Avatar, Box, ChakraModal, PageHeader, TablePopover, Text } from '@myra-ui';
 import { useQueryClient } from '@tanstack/react-query';
+
+import { asyncToast, Avatar, Box, Modal, PageHeader, TablePopover, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import { ObjState, useDeleteDraftMutation, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { formatTableAddress } from '@coop/cbs/utils';
-import { Column, Table } from '@coop/shared/table';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 import { MEMBER_TAB_ITEMS } from '../constants/MEMBER_TAB_ITEMS';
@@ -223,7 +224,7 @@ export const MemberListPage = () => {
           pageInfo: data?.members?.list?.pageInfo,
         }}
       />
-      <ChakraModal
+      <Modal
         open={openModal}
         onClose={onCloseModal}
         primaryButtonLabel="yes"
@@ -233,7 +234,7 @@ export const MemberListPage = () => {
         secondaryButtonHandler={onCancel}
       >
         {t['memberDeleteConfirm']}
-      </ChakraModal>
+      </Modal>
     </>
   );
 };

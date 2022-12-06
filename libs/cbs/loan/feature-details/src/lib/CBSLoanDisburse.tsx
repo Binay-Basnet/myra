@@ -9,7 +9,6 @@ import {
   Button,
   Container,
   Divider,
-  FormAccountSelect,
   FormFooter,
   FormHeader,
   Grid,
@@ -20,6 +19,7 @@ import {
 } from '@myra-ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { omit } from 'lodash';
+import { FormAccountSelect } from '@coop/shared/form';
 
 import {
   LoanDisbursementInput,

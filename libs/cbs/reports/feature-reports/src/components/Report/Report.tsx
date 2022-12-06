@@ -4,6 +4,7 @@ import { IoFilterOutline } from 'react-icons/io5';
 import { TbArrowsDiagonalMinimize2 } from 'react-icons/tb';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { AccordionPanel, Spinner } from '@chakra-ui/react';
+
 import {
   Accordion,
   AccordionButton,
@@ -15,10 +16,10 @@ import {
   NoDataState,
   Text,
 } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import { useReport } from '@coop/cbs/reports';
 import { ReportOrganizationHeader } from '@coop/cbs/reports/components';
-import { Column, Table } from '@coop/shared/table';
 
 export const ReportHeader = ({ children }: { children: React.ReactNode }) => (
   <Box position="sticky" bg="white" top="110px" zIndex="10">
@@ -253,8 +254,10 @@ export const ReportFilter = ({ title, children }: IReportFilterProps) => (
 
 export const ReportInputs = <T extends FieldValues | null>({
   children,
+  hideDate,
 }: {
   children: React.ReactNode;
+  hideDate?: boolean;
 }) => {
   const { getValues, watch } = useFormContext<NonNullable<T>>();
 
@@ -273,7 +276,7 @@ export const ReportInputs = <T extends FieldValues | null>({
       <Box display="flex" gap="s16">
         <Button
           // TODO! Fix this
-          isDisabled={!watch()?.['period']?.['periodType']}
+          isDisabled={hideDate ? false : !watch()?.['period']?.['periodType']}
           size="lg"
           onClick={() => {
             setFilters({

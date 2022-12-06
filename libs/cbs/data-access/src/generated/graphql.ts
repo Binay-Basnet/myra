@@ -452,6 +452,11 @@ export type AccountsTransactionFilter = {
   memberIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
+export type AccountsUnderLeafNode = {
+  accountId?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+};
+
 export type ActiveInactiveMemberReport = {
   branchDetails?: Maybe<Branch>;
   branchID: Scalars['ID'];
@@ -1538,6 +1543,7 @@ export type ChartsOfAccountSettingsMutation = {
 export type ChartsOfAccountSettingsQuery = {
   accounts: ChartsOfAccountResult;
   accountsUnder?: Maybe<CoaMinimalResult>;
+  accountsUnderLeaf?: Maybe<Array<Maybe<AccountsUnderLeafNode>>>;
   class?: Maybe<ChartsOfAccountClassResult>;
   fullView: CoaFullView;
   search?: Maybe<CoaMinimalResult>;
@@ -1549,6 +1555,10 @@ export type ChartsOfAccountSettingsQueryAccountsArgs = {
 
 export type ChartsOfAccountSettingsQueryAccountsUnderArgs = {
   accountCode?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+export type ChartsOfAccountSettingsQueryAccountsUnderLeafArgs = {
+  parentId: Scalars['String'];
 };
 
 export type ChartsOfAccountSettingsQuerySearchArgs = {
@@ -2335,6 +2345,12 @@ export enum DefaultAccountType {
 }
 
 export type Denomination = {
+  quantity: Scalars['Int'];
+  value: CashValue;
+};
+
+export type DenominationValue = {
+  amount?: Maybe<Scalars['String']>;
   quantity: Scalars['Int'];
   value: CashValue;
 };
@@ -3611,10 +3627,15 @@ export type FamilyMemberDetails = {
 
 export type FianancialTransactionReport = {
   tellerReport: TellerReportResult;
+  vaultBalanceReport: VaultBalanceReportResult;
 };
 
 export type FianancialTransactionReportTellerReportArgs = {
   data: TellerReportFilter;
+};
+
+export type FianancialTransactionReportVaultBalanceReportArgs = {
+  data: VaultBalanceReportFilter;
 };
 
 export type FieldDetailsQueryResult = {
@@ -5116,6 +5137,7 @@ export type JournalChartsOfAccount = {
 export type JournalVoucherEntry = {
   accountId?: InputMaybe<Scalars['String']>;
   crAmount?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
   drAmount?: InputMaybe<Scalars['String']>;
 };
 
@@ -8429,6 +8451,7 @@ export type MemberAccountDetails = {
   insurance?: Maybe<Scalars['Boolean']>;
   interestAccrued?: Maybe<Scalars['String']>;
   interestEarned?: Maybe<Scalars['String']>;
+  interestRate?: Maybe<Scalars['Float']>;
   isForMinors?: Maybe<Scalars['Boolean']>;
   isMandatory?: Maybe<Scalars['Boolean']>;
   member?: Maybe<Member>;
@@ -11905,6 +11928,30 @@ export enum ValuatorType {
   Organization = 'ORGANIZATION',
 }
 
+export type VaultBalanceDataEntry = {
+  amountTotal?: Maybe<Scalars['String']>;
+  denomination?: Maybe<Array<Maybe<DenominationValue>>>;
+  noneAmount?: Maybe<Scalars['String']>;
+  noteTotal?: Maybe<Scalars['String']>;
+};
+
+export type VaultBalanceReportData = {
+  closing?: Maybe<VaultBalanceDataEntry>;
+  opening?: Maybe<VaultBalanceDataEntry>;
+  vaultIn?: Maybe<VaultBalanceDataEntry>;
+  vaultOut?: Maybe<VaultBalanceDataEntry>;
+};
+
+export type VaultBalanceReportFilter = {
+  branchId: Scalars['String'];
+  date?: InputMaybe<LocalizedDateFilter>;
+};
+
+export type VaultBalanceReportResult = {
+  data?: Maybe<VaultBalanceReportData>;
+  error?: Maybe<QueryError>;
+};
+
 export enum Week {
   Friday = 'FRIDAY',
   Monday = 'MONDAY',
@@ -11998,6 +12045,7 @@ export type WithdrawSlipMutation = {
 
 export type WithdrawSlipMutationCancelSlipArgs = {
   accountId: Scalars['ID'];
+  reason?: InputMaybe<Scalars['String']>;
   slipNumber?: InputMaybe<Scalars['Int']>;
   slipRange?: InputMaybe<SlipRangeInput>;
 };
@@ -13170,6 +13218,28 @@ export type ApproveOrDeclineRequestMutation = {
   requests: {
     requestApproveOrDecline?: {
       requestId?: string | null;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    } | null;
+  };
+};
+
+export type CancelWithdrawSlipRequestMutationVariables = Exact<{
+  accountId: Scalars['ID'];
+  slipNumber?: InputMaybe<Scalars['Int']>;
+  slipRange?: InputMaybe<SlipRangeInput>;
+  reason?: InputMaybe<Scalars['String']>;
+}>;
+
+export type CancelWithdrawSlipRequestMutation = {
+  withdrawSlip: {
+    cancelSlip?: {
+      recordId: string;
       error?:
         | MutationError_AuthorizationError_Fragment
         | MutationError_BadRequestError_Fragment
@@ -18916,6 +18986,114 @@ export type GetMemberRegistrationReportQuery = {
   };
 };
 
+export type GetLoanAgingStatementReportQueryVariables = Exact<{
+  data?: InputMaybe<LoanAgingStatementInput>;
+}>;
+
+export type GetLoanAgingStatementReportQuery = {
+  report: {
+    loanAgingStatementReport?: {
+      data?: {
+        report?: Array<{
+          memberNo?: string | null;
+          loanNo?: string | null;
+          name?: string | null;
+          address?: string | null;
+          phoneNo?: string | null;
+          loanType?: string | null;
+          paymentMode?: string | null;
+          issueDate?: Record<'local' | 'en' | 'np', string> | null;
+          loanMaturityDate?: Record<'local' | 'en' | 'np', string> | null;
+          disbursePrincipal?: string | null;
+          remainingPrincipal?: string | null;
+          installmentAmount?: string | null;
+          remainingInstallmentAmount?: string | null;
+          remainingInterest?: string | null;
+          remainingPenalty?: string | null;
+          totalDueAmount?: string | null;
+          goodAmount?: string | null;
+          matured1To30Days?: string | null;
+          matured1To12Months?: string | null;
+          maturedAbove12Months?: string | null;
+          lastPrincipalPaidDate?: Record<'local' | 'en' | 'np', string> | null;
+          lastInterestPaidDate?: Record<'local' | 'en' | 'np', string> | null;
+          installmentLateDays?: number | null;
+        } | null> | null;
+        summary?: {
+          disbursePrincipalTotal?: string | null;
+          remainingPrincipalTotal?: string | null;
+          installmentAmountTotal?: string | null;
+          remainingInstallmentAmountTotal?: string | null;
+          remainingInterestTotal?: string | null;
+          remainingPenaltyTotal?: string | null;
+          dueAmountTotal?: string | null;
+          goodAmountTotal?: string | null;
+          matured1To30DaysTotal?: string | null;
+          matured1To12MonthsTotal?: string | null;
+          maturedAbove12MonthsTotal?: string | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetValutBalanceReportQueryVariables = Exact<{
+  data: VaultBalanceReportFilter;
+}>;
+
+export type GetValutBalanceReportQuery = {
+  report: {
+    transactionReport: {
+      financial: {
+        vaultBalanceReport: {
+          data?: {
+            opening?: {
+              noneAmount?: string | null;
+              noteTotal?: string | null;
+              amountTotal?: string | null;
+              denomination?: Array<{
+                value: CashValue;
+                quantity: number;
+                amount?: string | null;
+              } | null> | null;
+            } | null;
+            vaultIn?: {
+              noneAmount?: string | null;
+              noteTotal?: string | null;
+              amountTotal?: string | null;
+              denomination?: Array<{
+                value: CashValue;
+                quantity: number;
+                amount?: string | null;
+              } | null> | null;
+            } | null;
+            vaultOut?: {
+              noneAmount?: string | null;
+              noteTotal?: string | null;
+              amountTotal?: string | null;
+              denomination?: Array<{
+                value: CashValue;
+                quantity: number;
+                amount?: string | null;
+              } | null> | null;
+            } | null;
+            closing?: {
+              noneAmount?: string | null;
+              noteTotal?: string | null;
+              amountTotal?: string | null;
+              denomination?: Array<{
+                value: CashValue;
+                quantity: number;
+                amount?: string | null;
+              } | null> | null;
+            } | null;
+          } | null;
+        };
+      };
+    };
+  };
+};
+
 export type GetShareStatementQueryVariables = Exact<{
   data: ShareStatementReportSettings;
 }>;
@@ -23095,6 +23273,43 @@ export const useApproveOrDeclineRequestMutation = <TError = unknown, TContext = 
     ['approveOrDeclineRequest'],
     useAxios<ApproveOrDeclineRequestMutation, ApproveOrDeclineRequestMutationVariables>(
       ApproveOrDeclineRequestDocument
+    ),
+    options
+  );
+export const CancelWithdrawSlipRequestDocument = `
+    mutation cancelWithdrawSlipRequest($accountId: ID!, $slipNumber: Int, $slipRange: SlipRangeInput, $reason: String) {
+  withdrawSlip {
+    cancelSlip(
+      accountId: $accountId
+      slipNumber: $slipNumber
+      slipRange: $slipRange
+      reason: $reason
+    ) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useCancelWithdrawSlipRequestMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    CancelWithdrawSlipRequestMutation,
+    TError,
+    CancelWithdrawSlipRequestMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    CancelWithdrawSlipRequestMutation,
+    TError,
+    CancelWithdrawSlipRequestMutationVariables,
+    TContext
+  >(
+    ['cancelWithdrawSlipRequest'],
+    useAxios<CancelWithdrawSlipRequestMutation, CancelWithdrawSlipRequestMutationVariables>(
+      CancelWithdrawSlipRequestDocument
     ),
     options
   );
@@ -30815,6 +31030,135 @@ export const useGetMemberRegistrationReportQuery = <
       : ['getMemberRegistrationReport', variables],
     useAxios<GetMemberRegistrationReportQuery, GetMemberRegistrationReportQueryVariables>(
       GetMemberRegistrationReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanAgingStatementReportDocument = `
+    query getLoanAgingStatementReport($data: LoanAgingStatementInput) {
+  report {
+    loanAgingStatementReport(data: $data) {
+      data {
+        report {
+          memberNo
+          loanNo
+          name
+          address
+          phoneNo
+          loanType
+          paymentMode
+          issueDate
+          loanMaturityDate
+          disbursePrincipal
+          remainingPrincipal
+          installmentAmount
+          remainingInstallmentAmount
+          remainingInterest
+          remainingPenalty
+          totalDueAmount
+          goodAmount
+          matured1To30Days
+          matured1To12Months
+          maturedAbove12Months
+          lastPrincipalPaidDate
+          lastInterestPaidDate
+          installmentLateDays
+        }
+        summary {
+          disbursePrincipalTotal
+          remainingPrincipalTotal
+          installmentAmountTotal
+          remainingInstallmentAmountTotal
+          remainingInterestTotal
+          remainingPenaltyTotal
+          dueAmountTotal
+          goodAmountTotal
+          matured1To30DaysTotal
+          matured1To12MonthsTotal
+          maturedAbove12MonthsTotal
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanAgingStatementReportQuery = <
+  TData = GetLoanAgingStatementReportQuery,
+  TError = unknown
+>(
+  variables?: GetLoanAgingStatementReportQueryVariables,
+  options?: UseQueryOptions<GetLoanAgingStatementReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanAgingStatementReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getLoanAgingStatementReport']
+      : ['getLoanAgingStatementReport', variables],
+    useAxios<GetLoanAgingStatementReportQuery, GetLoanAgingStatementReportQueryVariables>(
+      GetLoanAgingStatementReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetValutBalanceReportDocument = `
+    query getValutBalanceReport($data: VaultBalanceReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        vaultBalanceReport(data: $data) {
+          data {
+            opening {
+              denomination {
+                value
+                quantity
+                amount
+              }
+              noneAmount
+              noteTotal
+              amountTotal
+            }
+            vaultIn {
+              denomination {
+                value
+                quantity
+                amount
+              }
+              noneAmount
+              noteTotal
+              amountTotal
+            }
+            vaultOut {
+              denomination {
+                value
+                quantity
+                amount
+              }
+              noneAmount
+              noteTotal
+              amountTotal
+            }
+            closing {
+              denomination {
+                value
+                quantity
+                amount
+              }
+              noneAmount
+              noteTotal
+              amountTotal
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetValutBalanceReportQuery = <TData = GetValutBalanceReportQuery, TError = unknown>(
+  variables: GetValutBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetValutBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetValutBalanceReportQuery, TError, TData>(
+    ['getValutBalanceReport', variables],
+    useAxios<GetValutBalanceReportQuery, GetValutBalanceReportQueryVariables>(
+      GetValutBalanceReportDocument
     ).bind(null, variables),
     options
   );

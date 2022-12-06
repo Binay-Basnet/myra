@@ -1,17 +1,17 @@
 import { useState } from 'react';
-import { Box, FormMemberSelect, GridItem } from '@myra-ui';
+
+import { Box, GridItem } from '@myra-ui';
 
 import {
   ShareStatement,
   ShareStatementReportSettings,
   ShareTransactionType,
-  useAppSelector,
   useGetShareStatementQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange, ReportMember } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormRadioGroup } from '@coop/shared/form';
+import { FormMemberSelect, FormRadioGroup } from '@coop/shared/form';
 
 export const ShareStatementReport = () => {
   const [filters, setFilters] = useState<ShareStatementReportSettings | null>(null);
@@ -22,7 +22,7 @@ export const ShareStatementReport = () => {
   );
 
   const shareMember = data?.report?.shareStatementReport?.member;
-  const branch = useAppSelector((state) => state?.auth?.user?.branch);
+  // const branch = useAppSelector((state) => state?.auth?.user?.branch);
 
   // const member = {
   //   'Name of member': shareMember?.name?.local as string,
@@ -49,7 +49,7 @@ export const ShareStatementReport = () => {
         <Report.PageHeader
           paths={[
             { label: 'Share Reports', link: '/reports/cbs/share' },
-            { label: 'Share Reports', link: '/reports/cbs/share/statement/new' },
+            { label: 'Share Statement', link: '/reports/cbs/share/statement/new' },
           ]}
         />
         <Report.Inputs>

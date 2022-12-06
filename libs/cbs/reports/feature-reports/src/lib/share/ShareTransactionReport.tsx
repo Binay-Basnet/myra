@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { Box, GridItem } from '@myra-ui';
 
 import {
@@ -133,7 +134,7 @@ export const ShareTransactionsReport = () => {
         <Report.PageHeader
           paths={[
             { label: 'Share Reports', link: '/reports/cbs/share' },
-            { label: 'Share Reports', link: '/reports/cbs/share/transaction/new' },
+            { label: 'Share Transaction Report', link: '/reports/cbs/share/transaction/new' },
           ]}
         />
         <Report.Inputs>

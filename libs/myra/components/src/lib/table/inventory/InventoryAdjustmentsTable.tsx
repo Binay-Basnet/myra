@@ -2,9 +2,9 @@ import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 
+import { Column, PageHeader, Table } from '@myra-ui';
+
 import { useGetInventoryItemsQuery } from '@coop/cbs/data-access';
-import { InventoryPageHeader } from '@coop/myra/inventory/ui-layout';
-import { Column, Table } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const InventoryAdjustmentsTable = () => {
@@ -16,22 +16,24 @@ export const InventoryAdjustmentsTable = () => {
   const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
       {
-        Header: t['itemUnitsDate'],
-        accessor: 'node.name',
+        header: t['itemUnitsDate'],
+        accessorFn: (row) => row?.node.name,
       },
       {
-        Header: t['itemUnitsEntryNo'],
-        accessor: 'node.type',
+        header: t['itemUnitsEntryNo'],
+        accessorFn: (row) => row?.node.type,
       },
 
       {
-        Header: t['itemUnitsReference'],
-        accessor: 'node.unitPrice',
-        width: '50%',
+        header: t['itemUnitsReference'],
+        accessorFn: (row) => row?.node.unitPrice,
+        meta: {
+          width: '50%',
+        },
       },
       {
-        accessor: 'actions',
-        Cell: () => (
+        accessorKey: 'actions',
+        cell: () => (
           <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
         ),
       },
@@ -41,9 +43,9 @@ export const InventoryAdjustmentsTable = () => {
 
   return (
     <>
-      <InventoryPageHeader heading="itemUnitInventoryAdjustment" />
+      <PageHeader heading="itemUnitInventoryAdjustment" />
 
-      <Table isLoading={isFetching} data={rowItems} columns={columns} sort />
+      <Table isLoading={isFetching} data={rowItems} columns={columns} />
     </>
   );
 };

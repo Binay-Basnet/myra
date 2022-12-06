@@ -2,6 +2,8 @@ import { useFieldArray } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseIcon } from '@chakra-ui/icons';
 
+import { Box, Button, Icon, Text } from '@myra-ui';
+
 import {
   DynamicBoxContainer,
   DynamicBoxGroupContainer,
@@ -9,7 +11,6 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/kym-form/ui-containers';
 import { FormDatePicker, FormInput } from '@coop/shared/form';
-import { Box, Button, Icon, Text, TextFields } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IAddRelatedTrainingConcern {
@@ -70,7 +71,7 @@ export const AccountOperatorTraining = () => {
         <Text fontSize="r1" fontWeight="SemiBold">
           {t['kymCoopUnionTrainingRelatedToCoop']}
         </Text>
-        <TextFields variant="bodyRegular">{t['kymCoopUnionTrainingAttended']}</TextFields>
+        <Text variant="bodyRegular">{t['kymCoopUnionTrainingAttended']}</Text>
       </Box>
 
       <div>

@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { formatTableAddress } from '@coop/cbs/utils';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 import { TablePopover } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 

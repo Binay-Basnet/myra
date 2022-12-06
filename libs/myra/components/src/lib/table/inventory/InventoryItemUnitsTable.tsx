@@ -2,9 +2,9 @@ import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 
+import { Column, PageHeader, Table } from '@myra-ui';
+
 import { useGetInventoryItemsQuery } from '@coop/cbs/data-access';
-import { InventoryPageHeader } from '@coop/myra/inventory/ui-layout';
-import { Column, Table } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const InventoryItemUnitsTable = () => {
@@ -14,26 +14,24 @@ export const InventoryItemUnitsTable = () => {
 
   const rowItems = data?.inventory.items?.list?.edges ?? [];
 
-  const columns = useMemo<Column<typeof rowItems[0]>[]>(
+  const columns = useMemo<Column<typeof rowItems[0] | any>[]>(
     () => [
       {
-        Header: t['itemUnitName'],
-        accessor: 'node.name',
-        width: '70%',
+        header: t['itemUnitName'],
+        accessorFn: ({ row }) => row?.node.name,
       },
       {
-        Header: t['itemUnitShortname'],
-        accessor: 'node.type',
+        header: t['itemUnitShortname'],
+        accessorFn: ({ row }) => row?.node.type,
       },
 
       {
-        Header: t['itemUnitAcceptFraction'],
-        accessor: 'node.unitPrice',
-        width: '20%',
+        header: t['itemUnitAcceptFraction'],
+        accessorFn: ({ row }) => row?.node.unitPrice,
       },
       {
-        accessor: 'actions',
-        Cell: () => (
+        accessorKey: 'actions',
+        cell: () => (
           <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
         ),
       },
@@ -43,9 +41,9 @@ export const InventoryItemUnitsTable = () => {
 
   return (
     <>
-      <InventoryPageHeader heading="itemUnitUnits" />
+      <PageHeader heading="itemUnitUnits" />
 
-      <Table isLoading={isFetching} data={rowItems} columns={columns} sort />
+      <Table isLoading={isFetching} data={rowItems} columns={columns} />
     </>
   );
 };

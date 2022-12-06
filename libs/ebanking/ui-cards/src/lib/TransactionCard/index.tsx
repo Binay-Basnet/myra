@@ -1,5 +1,6 @@
+import { Box, Icon, Text } from '@myra-ui';
+
 import { EbankingTransaction, EbankingTransactionDirection } from '@coop/ebanking/data-access';
-import { Box, Icon, TextFields } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 interface ITransactionCardProps {
@@ -24,16 +25,16 @@ export const TransactionCard = ({ transaction, accountName }: ITransactionCardPr
       )}
 
       <Box display="flex" flexDir="column" gap="s4">
-        <TextFields variant="navItems" color="gray.800" textTransform="capitalize">
+        <Text variant="navItems" color="gray.800" textTransform="capitalize">
           {transaction.name?.toLowerCase()}
-        </TextFields>
-        <TextFields variant="formHelper" color="gray.500" textTransform="capitalize">
+        </Text>
+        <Text variant="formHelper" color="gray.500" textTransform="capitalize">
           {accountName}
-        </TextFields>
+        </Text>
       </Box>
     </Box>
     <Box display="flex" flexDir="column" alignItems="flex-end" gap="s4">
-      <TextFields
+      <Text
         variant="tableHeader"
         color={
           transaction.transactionDirection === EbankingTransactionDirection.Outgoing
@@ -43,10 +44,10 @@ export const TransactionCard = ({ transaction, accountName }: ITransactionCardPr
       >
         {transaction.transactionDirection === EbankingTransactionDirection.Outgoing ? '-' : '+'}
         {amountConverter(transaction.amount as string)}
-      </TextFields>
-      <TextFields variant="formHelper" color="gray.500">
+      </Text>
+      <Text variant="formHelper" color="gray.500">
         {transaction?.date?.en}
-      </TextFields>
+      </Text>
     </Box>
   </Box>
 );

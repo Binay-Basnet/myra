@@ -1,4 +1,5 @@
-import { ChakraModal, Text } from '@myra-ui';
+import { Modal, Text } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 interface IOverrideAlertModalProps {
@@ -11,7 +12,7 @@ export const OverrideAlertModal = ({ isOpen, onCancel, onConfirm }: IOverrideAle
   const { t } = useTranslation();
 
   return (
-    <ChakraModal
+    <Modal
       open={isOpen}
       onClose={onCancel}
       title={t['agentAssignedMembersOverrideAlert']}
@@ -24,6 +25,6 @@ export const OverrideAlertModal = ({ isOpen, onCancel, onConfirm }: IOverrideAle
       <Text fontSize="r1" fontWeight={400} color="gray.600">
         {t['agentAssignedMembersHelperText']}
       </Text>
-    </ChakraModal>
+    </Modal>
   );
 };

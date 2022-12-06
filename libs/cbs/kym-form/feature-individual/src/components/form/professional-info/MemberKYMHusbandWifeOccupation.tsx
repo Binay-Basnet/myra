@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { Box, FormSection, GridItem, TextFields } from '@myra-ui';
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
 import pickBy from 'lodash/pickBy';
+
+import { Box, FormSection, GridItem, Text } from '@myra-ui';
 
 import {
   FormFieldSearchTerm,
@@ -220,7 +221,7 @@ const HusbandWifeOccupation = ({ setKymCurrentSection }: IHusbandWifeOccupationP
 
           <GridItem colSpan={3} display="flex" gap="9px" alignItems="center">
             <FormCheckbox name="isOwner" id="spouseIsOwner" />
-            <TextFields variant="formLabel">{t['kymIndAreyouowner']}</TextFields>
+            <Text variant="formLabel">{t['kymIndAreyouowner']}</Text>
           </GridItem>
 
           {isOwner && (

@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { Box, FormAccountSelect, FormMemberSelect, Grid, GridItem, Text } from '@myra-ui';
+
+import { Box, Grid, GridItem, Text } from '@myra-ui';
 
 import {
   DepositedBy,
@@ -17,6 +18,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/transactions/ui-containers';
 import {
+  FormAccountSelect,
   FormAgentSelect,
   FormAmountInput,
   FormCheckbox,
@@ -24,6 +26,7 @@ import {
   FormEditableTable,
   FormFileInput,
   FormInput,
+  FormMemberSelect,
   FormSelect,
   FormSwitch,
   FormSwitchTab,

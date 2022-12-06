@@ -1,6 +1,8 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
+import { asyncToast, Box, Grid, Modal } from '@myra-ui';
+
 import {
   Id_Type,
   MyraUserInput,
@@ -20,7 +22,6 @@ import {
   FormSelect,
   FormSwitch,
 } from '@coop/shared/form';
-import { asyncToast, Box, ChakraModal, Grid } from '@myra-ui';
 
 interface INewUserModalProps {
   isOpen: boolean;
@@ -96,7 +97,7 @@ export const NewUserModal = ({ isOpen, onClose, refetchUserList }: INewUserModal
   };
 
   return (
-    <ChakraModal
+    <Modal
       open={isOpen}
       onClose={handleModalClose}
       width="xl"
@@ -134,6 +135,6 @@ export const NewUserModal = ({ isOpen, onClose, refetchUserList }: INewUserModal
           </Box>
         </form>
       </FormProvider>
-    </ChakraModal>
+    </Modal>
   );
 };

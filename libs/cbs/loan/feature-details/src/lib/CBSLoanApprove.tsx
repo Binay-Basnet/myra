@@ -7,7 +7,7 @@ import { useDisclosure } from '@chakra-ui/react';
 import { LoanApproveOrCancel, useApproveLoanAccountMutation } from '@coop/cbs/data-access';
 import { CBSLoanDetails, LoanDetailsHeader } from '@coop/cbs/loan/details';
 import { FormTextArea } from '@coop/shared/form';
-import { asyncToast, Box, Button, ChakraModal, FormFooter } from '@myra-ui';
+import { asyncToast, Box, Button, Modal, FormFooter } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { useLoanDetails } from '../hooks/useLoanDetails';
@@ -78,7 +78,7 @@ export const CBSLoanApprove = () => {
           }`}
         />
       </Box>
-      <ChakraModal
+      <Modal
         open={isOpen}
         onClose={onClose}
         title="declineLoanApplication"
@@ -88,7 +88,7 @@ export const CBSLoanApprove = () => {
         <FormProvider {...methods}>
           <FormTextArea name="reason" label={t['reasonForDecliningLoan']} />
         </FormProvider>
-      </ChakraModal>
+      </Modal>
     </>
   );
 };

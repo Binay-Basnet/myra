@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Box, FormMemberSelect, GridItem } from '@myra-ui';
+
+import { Box, GridItem } from '@myra-ui';
 
 import {
   KymMemberTypesEnum,
@@ -19,6 +20,7 @@ import {
   FormAmountFilter,
   FormBranchSelect,
   FormCheckboxGroup,
+  FormMemberSelect,
   FormRadioGroup,
 } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';

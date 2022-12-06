@@ -8,3 +8,24 @@ mutation approveOrDeclineRequest($data: RequestApproveOrDeclineInput, $requestTy
     }
   }
 }
+
+mutation cancelWithdrawSlipRequest(
+  $accountId: ID!
+  $slipNumber: Int
+  $slipRange: SlipRangeInput
+  $reason: String
+) {
+  withdrawSlip {
+    cancelSlip(
+      accountId: $accountId
+      slipNumber: $slipNumber
+      slipRange: $slipRange
+      reason: $reason
+    ) {
+      recordId
+      error {
+        ...MutationError
+      }
+    }
+  }
+}

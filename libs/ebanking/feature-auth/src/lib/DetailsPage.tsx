@@ -6,8 +6,9 @@ import { useDisclosure } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
+import { Box, Button, Icon, Input, Modal, PasswordInput, Text } from '@myra-ui';
+
 import { useSetPasswordMutation } from '@coop/ebanking/data-access';
-import { Box, Button, ChakraModal, Icon, Input, PasswordInput, Text } from '@myra-ui';
 
 import { AuthContainer } from '../components/AuthContainer';
 import { SignUpStatus } from '../types/SignUpStatus';
@@ -104,7 +105,7 @@ export const DetailsPage = ({ setStatus }: IDetailsPageProps) => {
         </Button>
       </AuthContainer>
 
-      <ChakraModal width="sm" hasCloseBtn={false} open={isOpen} onClose={onClose}>
+      <Modal width="sm" hasCloseBtn={false} open={isOpen} onClose={onClose}>
         <Box display="flex" flexDir="column" alignItems="center" gap="s24" py="s32">
           <Box display="flex" flexDir="column" alignItems="center" gap="s12">
             <Icon as={IoMdCheckmarkCircleOutline} size="xl" color="primary.500" />
@@ -123,7 +124,7 @@ export const DetailsPage = ({ setStatus }: IDetailsPageProps) => {
             Continue
           </Button>
         </Box>
-      </ChakraModal>
+      </Modal>
     </form>
   );
 };

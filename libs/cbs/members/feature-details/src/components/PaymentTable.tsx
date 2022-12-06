@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Column, Table } from '@coop/shared/table';
 import { Tags } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 interface ILoanPaymentScheduleTableProps {
   data:

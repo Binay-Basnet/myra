@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { ChakraModal, Grid, GridItem, PageHeader, TablePopover } from '@myra-ui';
+
+import { Grid, GridItem, Modal, PageHeader, TablePopover } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import { useGetDepositProductSettingsListQuery } from '@coop/cbs/data-access';
 import { FormInput, FormSelect, FormTextArea } from '@coop/shared/form';
-import { Column, Table } from '@coop/shared/table';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -101,7 +102,7 @@ export const CbsSettingsFeatureDocuments = () => {
           pageInfo: data?.settings?.general?.depositProduct?.list?.pageInfo,
         }}
       />
-      <ChakraModal
+      <Modal
         open={openModal}
         onClose={onCloseModal}
         title="New Document"
@@ -138,7 +139,7 @@ export const CbsSettingsFeatureDocuments = () => {
             </GridItem>
           </Grid>
         </FormProvider>
-      </ChakraModal>
+      </Modal>
     </>
   );
 };

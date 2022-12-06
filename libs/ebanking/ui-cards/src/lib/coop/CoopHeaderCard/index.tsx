@@ -1,8 +1,9 @@
 import { FaUsers } from 'react-icons/fa';
 import { IoCashOutline } from 'react-icons/io5';
 
+import { Avatar, Box, Grid, Icon, Text } from '@myra-ui';
+
 import { useAppSelector, useGetCoopStatsQuery } from '@coop/ebanking/data-access';
-import { Avatar, Box, Grid, Icon, TextFields } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 export const COOPHeaderCard = () => {
@@ -33,9 +34,9 @@ export const COOPHeaderCard = () => {
           }
         />
 
-        <TextFields variant="stickyCardHeader" textTransform="capitalize">
+        <Text variant="stickyCardHeader" textTransform="capitalize">
           {coop?.cooperativeName}
-        </TextFields>
+        </Text>
       </Box>
 
       <Grid templateColumns="repeat(2, 1fr)" gap="s16">
@@ -52,10 +53,10 @@ export const COOPHeaderCard = () => {
             <Icon as={FaUsers} color="primary.500" size="sm" />
           </Box>
           <Box display="flex" flexDir="column">
-            <TextFields color="primary.200" variant="tableHeader">
+            <Text color="primary.200" variant="tableHeader">
               Members
-            </TextFields>
-            <TextFields variant="stickyCardHeader">{coopStats?.totalMembers}</TextFields>
+            </Text>
+            <Text variant="stickyCardHeader">{coopStats?.totalMembers}</Text>
           </Box>
         </Box>
         <Box display="flex" alignItems="center" gap="s12">
@@ -71,12 +72,12 @@ export const COOPHeaderCard = () => {
             <Icon as={IoCashOutline} color="primary.500" size="lg" />
           </Box>
           <Box display="flex" gap="s4" flexDir="column">
-            <TextFields color="primary.200" variant="tableHeader">
+            <Text color="primary.200" variant="tableHeader">
               Total Capital
-            </TextFields>
-            <TextFields variant="stickyCardHeader">
+            </Text>
+            <Text variant="stickyCardHeader">
               {coopStats?.totalCapital ? amountConverter(coopStats?.totalCapital) : 'N/A'}
-            </TextFields>
+            </Text>
           </Box>
         </Box>
       </Grid>

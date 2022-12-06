@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { SalesLayout } from '@coop/accounting/ui-layouts';
-import { Box, MainLayoutInventory, WIPState } from '@myra-ui';
+import { Box, WIPState } from '@myra-ui';
+
+import { AccountingLayout, SalesLayout } from '@coop/accounting/ui-layouts';
 
 const SalesSettings = () => (
   <Box display="flex" justifyContent="center" alignItems="center">
@@ -11,9 +12,9 @@ const SalesSettings = () => (
 
 SalesSettings.getLayout = function getLayout(page: ReactElement) {
   return (
-    <MainLayoutInventory>
+    <AccountingLayout>
       <SalesLayout>{page}</SalesLayout>
-    </MainLayoutInventory>
+    </AccountingLayout>
   );
 };
 export default SalesSettings;

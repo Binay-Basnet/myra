@@ -1,22 +1,21 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
+import omit from 'lodash/omit';
+
 import {
   asyncToast,
   Box,
   Button,
   Container,
   Divider,
-  FormAccountSelect,
   FormFooter,
   FormHeader,
-  FormMemberSelect,
   Grid,
   MemberCard,
   Text,
 } from '@myra-ui';
-import { useQueryClient } from '@tanstack/react-query';
-import omit from 'lodash/omit';
 
 import {
   CashValue,
@@ -34,7 +33,7 @@ import {
   useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
-import { FormAmountInput, FormInput } from '@coop/shared/form';
+import { FormAccountSelect, FormAmountInput, FormInput, FormMemberSelect } from '@coop/shared/form';
 import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 import { InstallmentModel, Payment } from '../components';

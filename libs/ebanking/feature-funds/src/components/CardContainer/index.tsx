@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Text, TextFields } from '@myra-ui';
+import { Box, Text } from '@myra-ui';
 
 interface CardContainerProps {
   children: React.ReactNode;
@@ -19,9 +19,9 @@ export const CardBodyContainer = ({ children }: CardContainerProps) => (
 );
 
 export const CardHeader = ({ children }: CardContainerProps) => (
-  <TextFields variant="tableHeader" color="gray.500">
+  <Text variant="tableHeader" color="gray.500">
     {children}
-  </TextFields>
+  </Text>
 );
 
 interface CardContentProps {
@@ -34,8 +34,8 @@ export const CardContent = ({ title, subtitle }: CardContentProps) => (
     <Text color="gray.800" fontSize="s3" fontWeight="600">
       {title}
     </Text>
-    <TextFields variant="formInput" textTransform="capitalize">
+    <Text variant="formInput" textTransform="capitalize">
       {subtitle}
-    </TextFields>
+    </Text>
   </Box>
 );

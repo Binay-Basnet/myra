@@ -5,12 +5,14 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import Script from 'next/script';
 import { ChakraProvider, createStandaloneToast } from '@chakra-ui/react';
-import { Box, Loader, Toaster } from '@myra-ui';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+import { Box, Loader, Toaster } from '@myra-ui';
+import { theme } from '@myra-ui/theme';
+
 import { store, useInit } from '@coop/cbs/data-access';
-import { theme, useSnap } from '@coop/shared/utils';
+import { useSnap } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
 import '@raralabs/react-patro/src/styles.css';

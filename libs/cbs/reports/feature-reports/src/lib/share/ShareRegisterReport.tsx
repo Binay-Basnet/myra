@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { GridItem } from '@myra-ui';
 
 import {
@@ -85,7 +86,7 @@ export const ShareRegisterReport = () => {
                     },
                   },
                   {
-                    header: 'Kitta Number Form ',
+                    header: 'Kitta Number From ',
                     accessorKey: 'kittaNumFrom',
                     meta: {
                       isNumeric: true,

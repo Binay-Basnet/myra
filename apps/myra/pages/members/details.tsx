@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+
 import { MainLayout } from '@myra-ui';
 
 import { MemberDetails } from '@coop/cbs/members/details';

@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
-import { DetailsCard } from '@myra-ui';
 
-import { Column, Table } from '@coop/shared/table';
+import { DetailsCard } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type InstallmentDetailsProps = {

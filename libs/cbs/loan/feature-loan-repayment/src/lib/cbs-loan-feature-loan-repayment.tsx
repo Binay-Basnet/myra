@@ -2,20 +2,21 @@ import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
+import omit from 'lodash/omit';
+
 import {
   asyncToast,
   Box,
   Button,
-  ChakraModal,
   Container,
   FormFooter,
   FormHeader,
-  FormMemberSelect,
   Grid,
   MemberCard,
+  Modal,
   Text,
 } from '@myra-ui';
-import omit from 'lodash/omit';
 
 import {
   CashValue,
@@ -29,7 +30,7 @@ import {
   useGetMemberLoanAccountsQuery,
   useSetLoanRepaymentMutation,
 } from '@coop/cbs/data-access';
-import { FormInput, FormSelect } from '@coop/shared/form';
+import { FormInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
 
 import { InstallmentData, LoanPaymentScheduleTable, LoanProductCard, Payment } from '../components';
 
@@ -60,6 +61,8 @@ const cashOptions: Record<string, string> = {
 
 export const LoanRepayment = () => {
   const [triggerQuery, setTriggerQuery] = useState(false);
+  const queryClient = useQueryClient();
+
   const { isOpen, onClose, onToggle } = useDisclosure();
 
   const [triggerLoanQuery, setTriggerLoanQuery] = useState(false);
@@ -169,7 +172,10 @@ export const LoanRepayment = () => {
         success: 'Loan has been Repayed',
         loading: 'Repaying Loan',
       },
-      onSuccess: () => router.push('/loan/accounts'),
+      onSuccess: () => {
+        queryClient.invalidateQueries(['getLoanPreview']);
+        router.push('/loan/accounts');
+      },
       promise: mutateAsync({
         data: {
           ...(filteredValues as LoanRepaymentInput),
@@ -261,9 +267,10 @@ export const LoanRepayment = () => {
                     </Box>
                     <LoanPaymentScheduleTable
                       data={loanPaymentScheduleSplice as LoanInstallment[]}
+                      nextInstallmentNumber={nextInstallmentNumber}
                       total={loanData?.paymentSchedule?.total as string}
                     />
-                    <ChakraModal
+                    <Modal
                       onClose={onClose}
                       open={isOpen}
                       title="Payment Schedule"
@@ -273,9 +280,10 @@ export const LoanRepayment = () => {
                     >
                       <LoanPaymentScheduleTable
                         data={loanPaymentSchedule as LoanInstallment[]}
+                        nextInstallmentNumber={nextInstallmentNumber}
                         total={loanData?.paymentSchedule?.total as string}
                       />
-                    </ChakraModal>
+                    </Modal>
                     <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">
                       <FormInput name="amountPaid" label="Amount to Pay" textAlign="right" />
                     </Grid>

@@ -1,8 +1,9 @@
 import React from 'react';
+
 import { DetailsCard } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import { Maybe, ServiceTypeFormState } from '@coop/ebanking/data-access';
-import { Column, Table } from '@coop/shared/table';
 import { amountConverter } from '@coop/shared/utils';
 
 interface IAccountCloseCharge {

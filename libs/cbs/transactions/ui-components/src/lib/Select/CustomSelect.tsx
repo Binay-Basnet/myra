@@ -7,7 +7,7 @@ import {
   SelectComponentsConfig,
 } from 'chakra-react-select';
 
-import { TextFields } from '@myra-ui';
+import { Text } from '@myra-ui';
 
 import { components as customComponents } from './SelectComponents';
 import { chakraDefaultStyles } from './SelectStyles';
@@ -54,9 +54,9 @@ export const Select = ({
   // }, [JSON.stringify(options)]);
 
   <Flex direction="column" gap="s4">
-    <TextFields variant="formLabel" color="gray.700">
+    <Text variant="formLabel" color="gray.700">
       {label}
-    </TextFields>
+    </Text>
     <ChakraSelect<SelectOption, boolean, GroupBase<SelectOption>>
       key={!isMulti ? `my_unique_select_key__${JSON.stringify(value)}` : 'isMulti'}
       // onMenuClose={() => {
@@ -95,14 +95,14 @@ export const Select = ({
       {...rest}
     />
     {errorText && (
-      <TextFields variant="formHelper" color="danger.500">
+      <Text variant="formHelper" color="danger.500">
         {errorText}
-      </TextFields>
+      </Text>
     )}
     {helperText && (
-      <TextFields variant="formHelper" color="gray.700">
+      <Text variant="formHelper" color="gray.700">
         {helperText}
-      </TextFields>
+      </Text>
     )}
   </Flex>
 );

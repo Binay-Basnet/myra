@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Box, GridItem, Text } from '@myra-ui';
 import dayjs from 'dayjs';
+
+import { Box, GridItem, Text } from '@myra-ui';
 
 import {
   Address,
@@ -63,7 +64,7 @@ export const MemberRegisterReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Member Reports', link: '/reports/cbs/savings' },
+            { label: 'Member Reports', link: '/reports/cbs/members' },
             { label: 'Member Register', link: '/reports/cbs/members/register/new' },
           ]}
         />
@@ -113,7 +114,7 @@ export const MemberRegisterReport = () => {
 
                     {
                       header: "Father's Name",
-                      accessorFn: (row) => row?.grandFatherName,
+                      accessorFn: (row) => row?.fatherName,
                     },
 
                     {
@@ -124,7 +125,7 @@ export const MemberRegisterReport = () => {
                       header: 'Share Information',
                       columns: [
                         {
-                          header: 'Per Amount Kitta',
+                          header: 'Per Share Kitta',
                           accessorFn: (row) => row?.shareInfo?.perShareAmount,
                           cell: (props) => amountConverter(props.getValue() as string),
                         },
@@ -134,18 +135,20 @@ export const MemberRegisterReport = () => {
                         },
                         {
                           header: 'Total Amount',
-                          accessorFn: (row) => row?.shareInfo?.perShareAmount,
+                          accessorFn: (row) => row?.shareInfo?.amount,
                         },
                       ],
                     },
                     {
                       header: 'FingerPrint',
                       accessorKey: 'fingerPrint',
+                      cell: (props) => (props?.getValue() ? 'Yes' : 'No'),
                     },
 
                     {
                       header: 'Photo',
                       accessorKey: 'photo',
+                      cell: (props) => (props?.getValue() ? 'Yes' : 'No'),
                     },
 
                     {
@@ -234,7 +237,7 @@ export const MemberRegisterReport = () => {
                         },
                         {
                           header: 'Total Amount',
-                          accessorFn: (row) => row?.shareInfo?.perShareAmount,
+                          accessorFn: (row) => row?.shareInfo?.amount,
                         },
                       ],
                     },
@@ -246,10 +249,10 @@ export const MemberRegisterReport = () => {
                       header: 'Post',
                       accessorKey: 'post',
                     },
-
                     {
                       header: 'Stamp',
                       accessorKey: 'stamp',
+                      cell: (props) => (props?.getValue() ? 'Yes' : 'No'),
                     },
 
                     {

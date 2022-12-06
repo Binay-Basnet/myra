@@ -1,16 +1,22 @@
 import { useMemo } from 'react';
 
-import { LoanInstallment } from '@coop/cbs/data-access';
-import { Column, Table } from '@coop/shared/table';
 import { Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
+import { LoanInstallment } from '@coop/cbs/data-access';
+import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanPaymentScheduleTableProps {
   data: LoanInstallment[];
-
+  nextInstallmentNumber?: number;
   total: string;
 }
 
-export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTableProps) => {
+export const LoanPaymentScheduleTable = ({
+  data,
+  total,
+  nextInstallmentNumber,
+}: ILoanPaymentScheduleTableProps) => {
   const columns = useMemo<Column<LoanInstallment>[]>(
     () => [
       {
@@ -36,6 +42,8 @@ export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTa
       {
         header: 'Payment',
         accessorKey: 'payment',
+        cell: (props) => amountConverter(props.getValue() as string),
+
         meta: {
           isNumeric: true,
           Footer: {
@@ -46,6 +54,8 @@ export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTa
       {
         header: 'Principal',
         accessorKey: 'principal',
+        cell: (props) => amountConverter(props.getValue() as string),
+
         meta: {
           isNumeric: true,
           Footer: {
@@ -56,6 +66,8 @@ export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTa
       {
         header: 'Interest',
         accessorKey: 'interest',
+        cell: (props) => amountConverter(props.getValue() as string),
+
         meta: {
           isNumeric: true,
           Footer: {
@@ -68,6 +80,8 @@ export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTa
         header: 'Remaining Amount',
 
         accessorKey: 'remainingPrincipal',
+        cell: (props) => amountConverter(props.getValue() as string),
+
         meta: {
           isNumeric: true,
         },
@@ -77,9 +91,10 @@ export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTa
       },
       {
         header: 'Status',
-        footer: total,
+        footer: () => amountConverter(total),
         accessorKey: 'paid',
         cell: (props) => {
+          const installmentNo = props?.row?.original?.installmentNo;
           const value = props.getValue();
 
           return (
@@ -87,15 +102,21 @@ export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTa
               textAlign="center"
               fontSize="r1"
               fontWeight="500"
-              color={value ? 'primary.500' : 'gray.600'}
+              color={
+                installmentNo === nextInstallmentNumber
+                  ? 'danger.500'
+                  : value
+                  ? 'primary.500'
+                  : 'gray.600'
+              }
             >
-              {value ? 'Paid' : '-'}
+              {installmentNo === nextInstallmentNumber ? 'Current' : value ? 'Paid' : '-'}
             </Text>
           );
         },
       },
     ],
-    []
+    [nextInstallmentNumber, total]
   );
   return (
     <Table size="small" variant="report" isStatic showFooter data={data ?? []} columns={columns} />

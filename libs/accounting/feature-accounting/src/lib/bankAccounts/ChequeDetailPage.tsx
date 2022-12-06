@@ -15,7 +15,7 @@ import { DetailPageTopCard } from '@coop/accounting/ui-components';
 import { ObjState, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
 import { FormInput, FormSelect } from '@coop/shared/form';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 import { Alert, Box, Button, Divider, Text } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 

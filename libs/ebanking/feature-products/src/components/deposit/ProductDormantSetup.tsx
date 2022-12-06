@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { DormantSetupFormState, Maybe } from '@coop/ebanking/data-access';
-import { Column, Table } from '@coop/shared/table';
 import { DetailsCard } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
+import { DormantSetupFormState, Maybe } from '@coop/ebanking/data-access';
 
 interface IProductDormantSetup {
   dormantSetup: Maybe<Maybe<DormantSetupFormState>[]> | undefined;

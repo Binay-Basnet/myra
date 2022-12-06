@@ -1,7 +1,8 @@
 import React from 'react';
 
+import { Column, Table } from '@myra-ui/table';
+
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
-import { Column, Table } from '@coop/shared/table';
 import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanPaymentScheduleTableProps {

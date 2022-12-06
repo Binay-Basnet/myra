@@ -20,7 +20,6 @@ import {
   Divider,
   Icon,
   Text,
-  TextFields,
 } from '@myra-ui';
 
 import { SettingsHeader } from '../components/SettingsHeader';
@@ -62,7 +61,7 @@ export const EbankingFeatureSettings = () => {
                     _hover={{ bg: 'highlight.500' }}
                     onClick={() => router.push('/settings/change-password')}
                   >
-                    <TextFields variant="formInput">Change Login Password</TextFields>
+                    <Text variant="formInput">Change Login Password</Text>
                   </Box>
                   <Box
                     borderTop="1px"
@@ -73,7 +72,7 @@ export const EbankingFeatureSettings = () => {
                     cursor="pointer"
                     _hover={{ bg: 'highlight.500' }}
                   >
-                    <TextFields variant="formInput">Change Transaction Pin</TextFields>
+                    <Text variant="formInput">Change Transaction Pin</Text>
                   </Box>
                   <Box
                     borderTop="1px"
@@ -85,7 +84,7 @@ export const EbankingFeatureSettings = () => {
                     _hover={{ bg: 'highlight.500' }}
                     onClick={() => router.push('/settings/change-pin')}
                   >
-                    <TextFields variant="formInput">Change COOP Login Pin</TextFields>
+                    <Text variant="formInput">Change COOP Login Pin</Text>
                   </Box>
                 </AccordionPanel>
               </>
@@ -143,7 +142,7 @@ export const EbankingFeatureSettings = () => {
                       })
                     }
                   >
-                    <TextFields variant="formInput">English (EN)</TextFields>
+                    <Text variant="formInput">English (EN)</Text>
                     {router.locale === 'en' && <Icon as={IoCheckmark} color="primary.500" />}
                   </Box>
                   <Box
@@ -164,7 +163,7 @@ export const EbankingFeatureSettings = () => {
                       })
                     }
                   >
-                    <TextFields variant="formInput">Nepali (ने)</TextFields>
+                    <Text variant="formInput">Nepali (ने)</Text>
                     {router.locale === 'ne' && <Icon as={IoCheckmark} color="primary.500" />}
                   </Box>
                 </AccordionPanel>
@@ -196,7 +195,7 @@ export const EbankingFeatureSettings = () => {
                     cursor="pointer"
                     _hover={{ bg: 'highlight.500' }}
                   >
-                    <TextFields variant="formInput">FAQs</TextFields>
+                    <Text variant="formInput">FAQs</Text>
                   </Box>
                   <Box
                     borderTop="1px"
@@ -207,7 +206,7 @@ export const EbankingFeatureSettings = () => {
                     cursor="pointer"
                     _hover={{ bg: 'highlight.500' }}
                   >
-                    <TextFields variant="formInput">Support Ticket</TextFields>
+                    <Text variant="formInput">Support Ticket</Text>
                   </Box>
                   <Box
                     borderTop="1px"
@@ -218,7 +217,7 @@ export const EbankingFeatureSettings = () => {
                     cursor="pointer"
                     _hover={{ bg: 'highlight.500' }}
                   >
-                    <TextFields variant="formInput">About Myra</TextFields>
+                    <Text variant="formInput">About Myra</Text>
                   </Box>
                 </AccordionPanel>
               </>

@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 
 import { AccountingPageHeader } from '@coop/accounting/ui-components';
 import { ExternalLoanPaymentMethod } from '@coop/cbs/data-access';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 import { TablePopover, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 

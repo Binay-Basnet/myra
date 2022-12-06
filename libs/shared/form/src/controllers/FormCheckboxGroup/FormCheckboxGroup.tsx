@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Control, Controller, Path, useFormContext } from 'react-hook-form';
 import { RiErrorWarningLine } from 'react-icons/ri';
-import { Box, Checkbox, Icon, TextFields } from '@myra-ui';
 import { get } from 'lodash';
+
+import { Box, Checkbox, Icon, Text } from '@myra-ui';
 
 import FormInput from '../FormInput/FormInput';
 
@@ -104,9 +105,9 @@ export const FormCheckboxGroup = <T extends Record<string, string[]>>({
           {errorText && (
             <Box display="flex" gap="s10">
               <Icon color="danger.500" as={RiErrorWarningLine} />
-              <TextFields variant="formHelper" color="danger.500">
+              <Text variant="formHelper" color="danger.500">
                 {errorText || 'Choose at least one option'}
-              </TextFields>
+              </Text>
             </Box>
           )}
         </Box>

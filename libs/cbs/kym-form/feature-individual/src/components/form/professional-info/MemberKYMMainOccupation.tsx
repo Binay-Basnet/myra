@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { Box, FormSection, GridItem, TextFields } from '@myra-ui';
 import { isEmpty, isEqual } from 'lodash';
 import debounce from 'lodash/debounce';
 import pickBy from 'lodash/pickBy';
+
+import { Box, FormSection, GridItem, Text } from '@myra-ui';
 
 import {
   FormFieldSearchTerm,
@@ -224,7 +225,7 @@ const MainOccupation = ({ setKymCurrentSection }: IMainOccupationProps) => {
 
           <GridItem colSpan={3} display="flex" gap="9px" alignItems="center">
             <FormCheckbox name="isOwner" />
-            <TextFields variant="formLabel">{t['kymIndAreyouowner']}</TextFields>
+            <Text variant="formLabel">{t['kymIndAreyouowner']}</Text>
           </GridItem>
 
           {isOwner && (

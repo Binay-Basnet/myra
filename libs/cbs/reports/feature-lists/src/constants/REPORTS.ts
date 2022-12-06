@@ -77,6 +77,7 @@ export enum Report {
   TRANSACTION_BANK_GL_REPORT = 'Bank GL Statement',
   TRANSACTION_TELLER_REPORT = 'Teller Report',
   TRANSACTION_CASH_LEDGER = 'Cash Ledger Report',
+  TRANSACTION_VAULT_BALANCE = 'Vault Balance Report',
 
   MB_REGISTRATION_REPORT = 'Mobile Banking Registration Report',
   MB_EXPIRY_REPORT = 'Mobile Banking Expiry Report',
@@ -267,6 +268,7 @@ export const REPORTS = {
     {
       id: '6.3',
       report: Report.LOAN_AGING_REPORT,
+      link: 'ageing',
     },
     {
       id: '6.4',
@@ -394,7 +396,11 @@ export const REPORTS = {
       report: Report.TRANSACTION_CASH_LEDGER,
       link: 'cash-ledger',
     },
-
+    {
+      id: '7.2.6',
+      report: Report.TRANSACTION_VAULT_BALANCE,
+      link: 'vault-balance',
+    },
     {
       id: '7.2.7',
       report: Report.TRANSACTION_TELLER_REPORT,

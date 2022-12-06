@@ -2032,10 +2032,10 @@ const en: Record<string, string> = {
   customerPayment: 'Customer Payment',
 
   // accounting tab menu
-  accountingAccountingTabMenuSales: 'Sales',
-  accountingAccountingTabMenuPurchase: 'Purchase',
-  accountingAccountingTabMenuAccounting: 'Accounting',
-  accountingAccountingTabMenuInvestment: 'Investment',
+  sales: 'Sales',
+  purchase: 'Purchase',
+  accounting: 'Accounting',
+  investment: 'Investment',
 
   // accounting purchase list
   accountingPurchaseListBillNo: 'Bill No',
@@ -3625,7 +3625,7 @@ const en: Record<string, string> = {
   settingsAlternativeChannel: 'Alternative Channels',
   acFeeAndCharges: 'Fee And Charges',
   acBasicCharge: 'Basic Charge for Alternative Channels.',
-  acMobileBanking: 'Mobile Banking',
+  acMBanking: 'Mobile Banking',
   acEBanking: 'eBanking',
   acSMSBanking: 'SMS Banking',
   acUsers: 'Users',
@@ -3800,7 +3800,7 @@ const en: Record<string, string> = {
   withdrawSlip: 'Withdraw Slip',
   withdrawSlipBook: 'Withdraw Slip',
   withdrawSlipRequests: 'Withdraw Slip Requests',
-  withdrawSlipBlockRequests: 'Block Withdraw Slip',
+  withdrawSlipBlockRequests: 'Block Withdraw Slip Requests',
 
   loanProductRemainingPrincipal: 'Remaining Principal',
   loanProductPenalInterest: 'Penal Interest',

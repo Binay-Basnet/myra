@@ -1,14 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useDisclosure } from '@chakra-ui/react';
+
 import {
   Accordion,
   AccordionButton,
   AccordionItem,
   AccordionPanel,
   Box,
-  ChakraModal,
   Input,
+  Modal,
   Text,
 } from '@myra-ui';
 
@@ -94,7 +95,7 @@ export const COASelectModal = ({ onChange, trigger, defaultValue }: ICOASelectMo
         {trigger(value)}
       </Box>
 
-      <ChakraModal
+      <Modal
         width="4xl"
         scrollBehavior="inside"
         open={isOpen}
@@ -258,7 +259,7 @@ export const COASelectModal = ({ onChange, trigger, defaultValue }: ICOASelectMo
             </AccordionItem>
           </Accordion>
         </Box>
-      </ChakraModal>
+      </Modal>
     </>
   );
 };

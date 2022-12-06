@@ -1,10 +1,11 @@
 import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useGetPreviousYearFundManagementQuery } from '@coop/cbs/data-access';
-import { Column } from '@coop/shared/editable-table';
-import { FormEditableTable } from '@coop/shared/form';
 import { GridItem } from '@myra-ui';
+import { Column } from '@myra-ui/editable-table';
+
+import { useGetPreviousYearFundManagementQuery } from '@coop/cbs/data-access';
+import { FormEditableTable } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
 import { TableOverview } from './TableOverview';

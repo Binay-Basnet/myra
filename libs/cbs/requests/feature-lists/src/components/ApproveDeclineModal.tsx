@@ -4,9 +4,10 @@ import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
+import { asyncToast, Box, Modal } from '@myra-ui';
+
 import { RequestType, useApproveOrDeclineRequestMutation } from '@coop/cbs/data-access';
 import { FormCheckbox, FormTextArea } from '@coop/shared/form';
-import { asyncToast, Box, ChakraModal } from '@myra-ui';
 
 interface IApproveDeclineModalProps {
   requestType: RequestType;
@@ -52,7 +53,7 @@ export const ApproveDeclineModal = ({
 
   return (
     <>
-      <ChakraModal
+      <Modal
         open={declineIsOpen}
         onClose={declineIsOnClose}
         primaryButtonHandler={methods.handleSubmit(async () => {
@@ -101,9 +102,9 @@ export const ApproveDeclineModal = ({
             <FormCheckbox name="notifyMember" label="Notify Member" />
           </Box>
         </FormProvider>
-      </ChakraModal>
+      </Modal>
 
-      <ChakraModal
+      <Modal
         width="2xl"
         primaryButtonLabel={status ? 'Approve' : undefined}
         primaryButtonHandler={async () => {
@@ -142,7 +143,7 @@ export const ApproveDeclineModal = ({
         hidePadding
       >
         {children}
-      </ChakraModal>
+      </Modal>
     </>
   );
 };

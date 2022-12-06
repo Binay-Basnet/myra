@@ -2,9 +2,9 @@ import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 
+import { Column, PageHeader, Table } from '@myra-ui';
+
 import { useGetInventoryItemsQuery } from '@coop/cbs/data-access';
-import { TableListPageHeader } from '@coop/myra/components';
-import { Column, Table } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const SupplierTable = () => {
@@ -16,31 +16,22 @@ export const SupplierTable = () => {
   const columns = useMemo<Column<typeof rowItems[0]>[]>(
     () => [
       {
-        Header: t['supplierName'],
-        accessor: 'node.name',
-        width: '80%',
+        header: t['supplierName'],
+        accessorFn: (row) => row?.node.name,
       },
       {
-        Header: t['supplierLocation'],
-        accessor: 'node.type',
-        width: '40%',
+        header: t['supplierLocation'],
+        accessorFn: (row) => row?.node.type,
       },
 
       {
-        Header: t['supplierPhoneNumber'],
-        accessor: 'node.unitPrice',
-        width: '40%',
+        header: t['supplierPhoneNumber'],
+        accessorFn: (row) => row?.node.unitPrice,
       },
 
       {
-        Header: t['supplierEmailAddress'],
-        accessor: 'node.itemQuantity',
-        width: '40%',
-      },
-
-      {
-        accessor: 'actions',
-        Cell: () => (
+        accessorKey: 'actions',
+        cell: () => (
           <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
         ),
       },
@@ -50,9 +41,9 @@ export const SupplierTable = () => {
 
   return (
     <>
-      <TableListPageHeader heading="supplier" />
+      <PageHeader heading="supplier" />
 
-      <Table data={rowItems} isLoading={isFetching} columns={columns} sort />
+      <Table data={rowItems} isLoading={isFetching} columns={columns} />
     </>
   );
 };
