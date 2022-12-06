@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+
 import { Box, Grid, GridItem, Text } from '@myra-ui';
-import { FormAccountSelect } from '@coop/shared/form';
 
 import { LoanRepaymentMethod, ObjState, useGetCoaBankListQuery } from '@coop/cbs/data-access';
 import { BoxContainer, ContainerWithDivider } from '@coop/cbs/transactions/ui-containers';
 import {
+  FormAccountSelect,
   FormEditableTable,
   FormInput,
   FormSelect,
@@ -151,11 +152,7 @@ export const Payment = ({ totalDeposit, loanTotal }: PaymentProps) => {
               <FormInput name="cash.cashPaid" type="number" label="Cash" textAlign="right" />
             </Grid>
 
-            <FormSwitch
-              name="cash.disableDenomination"
-              label="Disable Denomination"
-              defaultChecked={false}
-            />
+            <FormSwitch name="cash.disableDenomination" label="Disable Denomination" />
 
             {!disableDenomination && (
               <FormEditableTable<PaymentTableType>

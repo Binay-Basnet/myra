@@ -75,6 +75,9 @@ export const LoanRepayment = () => {
   const methods = useForm<LoanRepaymentInputType>({
     defaultValues: {
       paymentMethod: LoanRepaymentMethod?.Cash,
+      cash: {
+        disableDenomination: true,
+      },
     },
   });
 

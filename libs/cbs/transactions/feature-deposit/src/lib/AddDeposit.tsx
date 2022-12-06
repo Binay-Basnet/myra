@@ -92,7 +92,7 @@ export const AddDeposit = () => {
   const methods = useForm<DepositFormInput>({
     defaultValues: {
       payment_type: DepositPaymentType.Cash,
-      cash: { disableDenomination: false },
+      cash: { disableDenomination: true },
       depositedBy: DepositedBy.Self,
     },
   });

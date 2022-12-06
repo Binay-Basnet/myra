@@ -94,7 +94,7 @@ export const AddWithdraw = () => {
   const methods = useForm<WithdrawFormInput>({
     defaultValues: {
       payment_type: WithdrawPaymentType.Cash,
-      cash: { disableDenomination: false },
+      cash: { disableDenomination: true },
       withdrawnBy: WithdrawBy.Self,
       withdrawWith: WithdrawWith.WithdrawSlip,
     },

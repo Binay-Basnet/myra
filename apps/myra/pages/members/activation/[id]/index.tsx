@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { CbsMembersFeatureActivate } from '@coop/members/activations';
 import { MainLayout } from '@myra-ui';
+
+import { CbsMembersFeatureActivate } from '@coop/members/activations';
 
 export const MemberActivationPage = () => <CbsMembersFeatureActivate />;
 

@@ -139,7 +139,7 @@ export const AccountOpenNew = () => {
     defaultValues: {
       openingPayment: {
         payment_type: DepositPaymentType.Cash,
-        cash: { disableDenomination: false },
+        cash: { disableDenomination: true },
         depositedBy: DepositedBy.Self,
       },
     },
