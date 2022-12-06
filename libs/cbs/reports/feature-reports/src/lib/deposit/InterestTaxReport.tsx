@@ -73,7 +73,7 @@ export const InterestTaxReport = () => {
               },
               {
                 header: 'Address',
-                accessorFn: (row) => row?.address?.district,
+                accessorFn: (row) => row?.address?.district?.local,
               },
               {
                 header: 'PAN NO.',

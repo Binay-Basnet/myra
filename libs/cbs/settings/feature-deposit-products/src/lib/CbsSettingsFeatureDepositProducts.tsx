@@ -165,7 +165,6 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
         header: '',
         cell: (props) => {
           if (showSettingsAction) {
-            // console.log('hello', isInactive);
             if (isInactive) {
               return (
                 <ActionPopoverComponent

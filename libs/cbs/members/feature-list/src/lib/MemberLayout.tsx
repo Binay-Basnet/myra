@@ -72,17 +72,15 @@ interface MemberTypeButtonProps {
   subtitle: string;
   featCode: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
-  display: boolean | null | undefined;
 }
 
 type MemberType = 'INDIVIDUAL' | 'INSTITUTION' | 'COOPERATIVE' | 'COOPERATIVE_UNION';
 
 const MemberTypeButton = (props: MemberTypeButtonProps) => {
-  const { icon, title, featCode, subtitle, onClick, display } = props;
+  const { icon, title, featCode, subtitle, onClick } = props;
   const { t } = useTranslation();
   return (
     <Box
-      display={!display ? 'none' : ''}
       as="button"
       lineHeight="1.2"
       width={310}
@@ -202,6 +200,11 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
     },
   };
 
+  if (!memberListQuery?.individual) memberTypes?.splice(0, 1);
+  if (!memberListQuery?.institution) memberTypes?.splice(1, 1);
+  if (!memberListQuery?.cooperative) memberTypes?.splice(2, 1);
+  if (!memberListQuery?.cooperativeUnion) memberTypes?.splice(3, 1);
+
   useEffect(() => {
     refetch();
   }, [refetch]);
@@ -256,7 +259,6 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
                         featCode={memberTypesArray[dataItem]?.featureCode}
                         subtitle={memberTypesArray[dataItem]?.subtitle}
                         onClick={() => memberTypeRedirect(item as MemberType)}
-                        display={memberTypesArray[dataItem]?.display}
                       />
                     </GridItem>
                   );
@@ -264,6 +266,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
               </Grid>
             </Box>
           </Modal>
+
           <Divider my="s16" />
           <TabColumn list={memberColumns} />
           <Divider my="s16" />

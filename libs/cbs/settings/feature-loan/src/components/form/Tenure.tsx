@@ -109,7 +109,7 @@ export const Tenure = () => {
                   t,
                 })}
                 rules={{
-                  max: {
+                  min: {
                     value: minTenureUnitNumber,
                     message: 'Maximum tenure number should be greater than minimum number',
                   },

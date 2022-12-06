@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Box } from '@myra-ui';
 import dayjs from 'dayjs';
+
+import { Box } from '@myra-ui';
 
 import {
   LoanStatement,

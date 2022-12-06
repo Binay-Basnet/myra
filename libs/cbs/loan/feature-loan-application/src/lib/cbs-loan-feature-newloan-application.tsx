@@ -205,7 +205,7 @@ export const NewLoanApplication = () => {
   }, [id, isLoanFetching, loanApplication, methods]);
 
   const defaultAccount = loanProductOptions.find((d) => d?.value === productId);
-  const defaultAccountName = defaultAccount?.label;
+  const defaultAccountName = `${memberDetailData?.name} - ${defaultAccount?.label}`;
   useEffect(() => {
     if (!loanApplicationId) {
       setValue('loanAccountName', defaultAccountName);
