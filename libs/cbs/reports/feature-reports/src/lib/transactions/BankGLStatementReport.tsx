@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { GridItem } from '@myra-ui';
 
 import {
@@ -85,7 +86,7 @@ export const BankGLStatementReport = () => {
               },
               {
                 header: 'Bank',
-                accessorKey: 'name',
+                accessorFn: (row) => row?.name?.local,
               },
               {
                 header: 'Cheque No',
