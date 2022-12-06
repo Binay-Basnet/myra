@@ -197,6 +197,10 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
     resetField('withdrawSlip.depositedAt');
   }, [preference?.date]);
 
+  useEffect(() => {
+    if (watch('cash.disableDenomination') === undefined) setValue('cash.disableDenomination', true);
+  });
+
   return (
     <ContainerWithDivider
       borderRight="1px"

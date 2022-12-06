@@ -343,6 +343,7 @@ export type AccountingQuery = {
   bankAccounts: BankAccountQuery;
   externalLoan: ExternalLoanQuery;
   investment: AccountingInvestmentQuery;
+  journalVoucher: JournalVoucherQuery;
   sales: AccountingSalesQuery;
 };
 
@@ -3211,6 +3212,7 @@ export type EodSatusResult = {
   dormancy?: Maybe<EodState>;
   interestBooking?: Maybe<EodState>;
   interestPosting?: Maybe<EodState>;
+  loanInterestBooking?: Maybe<EodState>;
   maturity?: Maybe<EodState>;
   transactionDate?: Maybe<EodState>;
 };
@@ -5134,6 +5136,24 @@ export type JournalChartsOfAccount = {
   journalCode: Scalars['String'];
 };
 
+export type JournalVoucher = {
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  id?: Maybe<Scalars['String']>;
+  reference?: Maybe<Scalars['String']>;
+};
+
+export type JournalVoucherConnection = {
+  edges?: Maybe<Array<Maybe<JournalVoucherEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type JournalVoucherEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<JournalVoucher>;
+};
+
 export type JournalVoucherEntry = {
   accountId?: InputMaybe<Scalars['String']>;
   crAmount?: InputMaybe<Scalars['String']>;
@@ -5141,9 +5161,13 @@ export type JournalVoucherEntry = {
   drAmount?: InputMaybe<Scalars['String']>;
 };
 
+export type JournalVoucherFilter = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
 export type JournalVoucherInput = {
   chequeNo?: InputMaybe<Scalars['String']>;
-  date?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['Localized']>;
   entries?: InputMaybe<Array<InputMaybe<JournalVoucherEntry>>>;
   notes?: InputMaybe<Scalars['String']>;
   paymentMode?: InputMaybe<JournalVoucherPaymentMode>;
@@ -5164,7 +5188,12 @@ export enum JournalVoucherPaymentMode {
 }
 
 export type JournalVoucherQuery = {
-  list?: Maybe<Scalars['Any']>;
+  list?: Maybe<JournalVoucherConnection>;
+};
+
+export type JournalVoucherQueryListArgs = {
+  filter?: InputMaybe<JournalVoucherFilter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type JournalVoucherResult = {
