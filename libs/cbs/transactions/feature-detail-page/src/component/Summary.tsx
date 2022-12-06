@@ -68,7 +68,7 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
                   {amountConverter(summary.amount ?? 0)}
                 </Text>
               </Box>
-              <Box w="100px" display="flex" justifyContent="flex-end">
+              <Box display="flex" justifyContent="flex-end">
                 <Tags
                   type="chip"
                   label={summary.paymentMode ?? ''}

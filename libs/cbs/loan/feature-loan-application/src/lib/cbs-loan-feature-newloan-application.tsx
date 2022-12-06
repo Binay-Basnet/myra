@@ -27,9 +27,9 @@ import {
   useSendLoanApplicationForApprovalMutation,
 } from '@coop/cbs/data-access';
 import {
+  FormAmountInput,
   FormInput,
   FormMemberSelect,
-  FormNumberInput,
   FormSelect,
   FormTextArea,
 } from '@coop/shared/form';
@@ -328,7 +328,8 @@ export const NewLoanApplication = () => {
                     <>
                       <FormInput name="loanAccountName" label="Loan Account Name" />
                       <Box w="50%">
-                        <FormNumberInput
+                        <FormAmountInput
+                          type="number"
                           name="appliedLoanAmount"
                           label="Applied Loan Amount"
                           placeholder="0.00"
