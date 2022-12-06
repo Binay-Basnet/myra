@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
 
-import { useGetMemberDetailsShareBalanceQuery } from '@coop/cbs/data-access';
 import { DetailsCard } from '@myra-ui';
+
+import { useGetMemberDetailsShareBalanceQuery } from '@coop/cbs/data-access';
 
 import { ShareTableComponent } from './ShareBalanceTableComp';
 
@@ -20,7 +21,7 @@ export const ShareTable = () => {
       toFrom: `${data?.startNumber} - ${data?.endNumber}`,
       shareCr: data?.credit,
       shareDr: data?.debit,
-      balance: data?.shareAmount,
+      balance: data?.balance,
     })) || [];
   return (
     <DetailsCard hasTable bg="white" title="Share Balance Table">
