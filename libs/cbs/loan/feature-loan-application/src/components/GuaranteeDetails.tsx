@@ -6,11 +6,11 @@ import { omit } from 'lodash';
 import {
   Box,
   Button,
-  Modal,
   DEFAULT_PAGE_SIZE,
   Divider,
   GridItem,
   Icon,
+  Modal,
   Text,
   VStack,
 } from '@myra-ui';
@@ -35,7 +35,9 @@ export const GuaranteeDetails = () => {
   const { product } = useLoanProductContext();
 
   // Inner Modal Form State
-  const methods = useForm<GuaranteeDetailForm>();
+  const methods = useForm<GuaranteeDetailForm>({
+    mode: 'onChange',
+  });
   const editIndex = methods.getValues()?.index;
 
   // Outer Modal Form State
@@ -149,7 +151,16 @@ export const GuaranteeDetails = () => {
                 value={maxGuarantee}
                 isDisabled
               />
-              <FormNumberInput name="guranteeAmount" label="Guarantee Amount" />
+              <FormNumberInput
+                name="guranteeAmount"
+                label="Guarantee Amount"
+                rules={{
+                  max: {
+                    value: maxGuarantee,
+                    message: 'Guaranntee Limit Exceeeded',
+                  },
+                }}
+              />
             </Box>
             <GridItem
               colSpan={4}
