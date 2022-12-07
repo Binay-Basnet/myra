@@ -47909,6 +47909,22 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "sectionStatus",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "KymFormStatus",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -48197,6 +48213,22 @@
               "kind": "UNION",
               "name": "QueryError",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "sectionStatus",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "KymFormStatus",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -50945,7 +50977,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymCooperativeAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -51067,7 +51099,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymCooperativeAccountOperatorStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -51079,7 +51111,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymCooperativeBodDetailsStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -51091,7 +51123,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymCooperativeDeclarationStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -51103,7 +51135,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymCooperativeEconomicDetailsStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -51115,7 +51147,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymCooperativeInstitutionalInformationStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -53178,6 +53210,12 @@
             "deprecationReason": null
           },
           {
+            "name": "COOPERATIVE_DATE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "CURRENT_MEMBERS",
             "description": null,
             "isDeprecated": false,
@@ -53319,6 +53357,61 @@
       },
       {
         "kind": "OBJECT",
+        "name": "KymCooperativeOverallFormStatus",
+        "description": null,
+        "fields": [
+          {
+            "name": "accountOperatorDetails",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "KymFormStatus",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "coopDetails",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "KymFormStatus",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "directorsDetails",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "KymFormStatus",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "KymCooperativeQuery",
         "description": null,
         "fields": [
@@ -53404,6 +53497,35 @@
             "type": {
               "kind": "OBJECT",
               "name": "KymCoopDirectorQuery",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "overallFormStatus",
+            "description": null,
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "KymCooperativeOverallFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -76183,7 +76305,20 @@
           {
             "name": "cooperative",
             "description": null,
-            "args": [],
+            "args": [
+              {
+                "name": "includeRequiredErrors",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
             "type": {
               "kind": "OBJECT",
               "name": "KymCooperativeQuery",
