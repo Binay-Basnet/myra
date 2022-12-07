@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+
 import { Box, WIPState } from '@myra-ui';
 
 import { AccountDetailsPathBar } from '@coop/cbs/accounts/ui-components';
