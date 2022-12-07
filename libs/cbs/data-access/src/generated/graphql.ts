@@ -3235,11 +3235,11 @@ export type EbankingReportFilter = {
 
 export type EbankingReportResult = {
   branchCode?: Maybe<Scalars['String']>;
-  expDate?: Maybe<Scalars['String']>;
+  expDate?: Maybe<Scalars['Localized']>;
   memberId?: Maybe<Scalars['ID']>;
   memberName?: Maybe<Scalars['String']>;
   mobileNo?: Maybe<Scalars['String']>;
-  regDate?: Maybe<Scalars['String']>;
+  regDate?: Maybe<Scalars['Localized']>;
   registeredBy?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
 };
@@ -7074,7 +7074,7 @@ export type KymStatusReport = {
   lastKymUpdatedDate?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['ID']>;
   memberName?: Maybe<Scalars['String']>;
-  regDate?: Maybe<Scalars['String']>;
+  regDate?: Maybe<Scalars['Localized']>;
   riskCategory?: Maybe<Scalars['String']>;
 };
 
@@ -8344,7 +8344,7 @@ export type LoanSettingsResult = {
 };
 
 export type LoanStatement = {
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
   disbursePrinciple?: Maybe<Scalars['String']>;
   discount?: Maybe<Scalars['String']>;
   finePaid?: Maybe<Scalars['String']>;
@@ -8419,7 +8419,7 @@ export type MBankingTransactionData = {
   phoneNo?: Maybe<Scalars['String']>;
   srcAccount?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
-  transDate?: Maybe<Scalars['String']>;
+  transDate?: Maybe<Scalars['Localized']>;
   transThrough?: Maybe<Scalars['String']>;
   transactionType?: Maybe<Scalars['String']>;
 };
@@ -9885,7 +9885,7 @@ export type RebateTypeInput = {
 
 export type ReportDetail = {
   id: Scalars['ID'];
-  lastModifiedDate: Scalars['String'];
+  lastModifiedDate: Scalars['Localized'];
   name: Scalars['String'];
   reportType: Scalars['String'];
   savedBy: Scalars['String'];
@@ -10510,7 +10510,7 @@ export enum SavingServiceType {
 export type SavingStatement = {
   balanceAmount: Scalars['Float'];
   chequeOrVoucherNo: Scalars['String'];
-  date: Scalars['String'];
+  date: Scalars['Localized'];
   depositCr: Scalars['Float'];
   particular: Scalars['String'];
   withdrawDr: Scalars['Float'];
@@ -10632,7 +10632,7 @@ export type ServiceCenter = {
   branchStatus?: Maybe<Scalars['Boolean']>;
   contactNumber?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
-  estDate?: Maybe<Scalars['String']>;
+  estDate?: Maybe<Scalars['Localized']>;
   id: Scalars['ID'];
   isExtensionCounter?: Maybe<Scalars['Boolean']>;
   managerContact?: Maybe<Scalars['String']>;
@@ -11096,7 +11096,7 @@ export type ShareSettingsQuery = {
 
 export type ShareStatement = {
   balanceSheet: Scalars['Int'];
-  date: Scalars['String'];
+  date: Scalars['Localized'];
   noOfShares: Scalars['Int'];
   particular: Scalars['String'];
   purchaseAmountCr: Scalars['Int'];
@@ -11166,7 +11166,7 @@ export type ShareTransactionReport = {
   particular?: Maybe<Scalars['String']>;
   shareIssueCr?: Maybe<Scalars['String']>;
   shareReturnDr?: Maybe<Scalars['String']>;
-  transactionDate?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['Localized']>;
 };
 
 export type ShareTransactionReportFilter = {
@@ -11823,7 +11823,7 @@ export type UserReport = {
   accessForBranch?: Maybe<Scalars['String']>;
   accessForGroup?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Scalars['String']>;
-  createdDate?: Maybe<Scalars['String']>;
+  createdDate?: Maybe<Scalars['Localized']>;
   empCode?: Maybe<Scalars['String']>;
   employeeName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
@@ -13258,7 +13258,7 @@ export type SaveNewReportMutation = {
       statement?:
         | {
             shareStatement?: Array<{
-              date: string;
+              date: Record<'local' | 'en' | 'np', string>;
               particular: string;
               noOfShares: number;
               returnAmountDr: number;
@@ -15925,6 +15925,7 @@ export type GetCoOperativeKymEditDataQuery = {
 
 export type GetCoOperativeDirectorEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
+  hasPressedNext?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type GetCoOperativeDirectorEditDataQuery = {
@@ -15961,6 +15962,13 @@ export type GetCoOperativeDirectorEditDataQuery = {
             coordinates?: { longitude?: number | null; latitude?: number | null } | null;
           } | null;
         } | null> | null;
+        sectionStatus?: Array<{
+          errors?: Record<string, Array<string>> | null;
+          sectionStatus?: {
+            errors?: Array<string> | null;
+            incomplete?: Array<string> | null;
+          } | null;
+        } | null> | null;
       } | null;
     } | null;
   };
@@ -15968,6 +15976,7 @@ export type GetCoOperativeDirectorEditDataQuery = {
 
 export type GetCoOperativeAccountOperatorEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
+  hasPressedNext?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type GetCoOperativeAccountOperatorEditDataQuery = {
@@ -16008,6 +16017,13 @@ export type GetCoOperativeAccountOperatorEditDataQuery = {
             dateOfTraining?: string | null;
             trainingOrganization?: string | null;
           } | null> | null;
+        } | null> | null;
+        sectionStatus?: Array<{
+          errors?: Record<string, Array<string>> | null;
+          sectionStatus?: {
+            errors?: Array<string> | null;
+            incomplete?: Array<string> | null;
+          } | null;
         } | null> | null;
       } | null;
     } | null;
@@ -18358,7 +18374,7 @@ export type GetAllSavedReportsQuery = {
         cursor: string;
         node?: {
           id: string;
-          lastModifiedDate: string;
+          lastModifiedDate: Record<'local' | 'en' | 'np', string>;
           name: string;
           reportType: string;
           savedBy: string;
@@ -18412,7 +18428,7 @@ export type GetSavingStatementQuery = {
       statement?:
         | {
             savingStatement?: Array<{
-              date: string;
+              date: Record<'local' | 'en' | 'np', string>;
               balanceAmount: number;
               depositCr: number;
               chequeOrVoucherNo: string;
@@ -18490,7 +18506,7 @@ export type GetLoanStatementReportQuery = {
       statement?:
         | {
             loanStatement?: Array<{
-              date?: string | null;
+              date?: Record<'local' | 'en' | 'np', string> | null;
               particular?: string | null;
               txnId?: string | null;
               disbursePrinciple?: string | null;
@@ -18601,7 +18617,7 @@ export type GetBranchReportQuery = {
         managerName?: string | null;
         managerContact?: string | null;
         isExtensionCounter?: boolean | null;
-        estDate?: string | null;
+        estDate?: Record<'local' | 'en' | 'np', string> | null;
         branchStatus?: boolean | null;
         remarks?: string | null;
         address?: AddressFragment | null;
@@ -18628,8 +18644,8 @@ export type GetMBankingRegistrationReportQuery = {
         memberName?: string | null;
         mobileNo?: string | null;
         branchCode?: string | null;
-        regDate?: string | null;
-        expDate?: string | null;
+        regDate?: Record<'local' | 'en' | 'np', string> | null;
+        expDate?: Record<'local' | 'en' | 'np', string> | null;
         status?: string | null;
         registeredBy?: string | null;
       } | null> | null;
@@ -18649,8 +18665,8 @@ export type GetMBankingExpiryReportQuery = {
         memberName?: string | null;
         mobileNo?: string | null;
         branchCode?: string | null;
-        regDate?: string | null;
-        expDate?: string | null;
+        regDate?: Record<'local' | 'en' | 'np', string> | null;
+        expDate?: Record<'local' | 'en' | 'np', string> | null;
         status?: string | null;
         registeredBy?: string | null;
       } | null> | null;
@@ -18751,7 +18767,7 @@ export type GetKymStatusReportQuery = {
         memberName?: string | null;
         memberId?: string | null;
         contact?: string | null;
-        regDate?: string | null;
+        regDate?: Record<'local' | 'en' | 'np', string> | null;
         riskCategory?: string | null;
         lastKymUpdatedDate?: string | null;
         kymExpireDays?: string | null;
@@ -18777,7 +18793,7 @@ export type GetMbTransactionReportQuery = {
         amount?: string | null;
         transactionType?: string | null;
         transThrough?: string | null;
-        transDate?: string | null;
+        transDate?: Record<'local' | 'en' | 'np', string> | null;
         narration?: string | null;
         status?: string | null;
       } | null> | null;
@@ -18801,7 +18817,7 @@ export type GetUserReportQuery = {
         accessForBranch?: string | null;
         accessForGroup?: string | null;
         role?: string | null;
-        createdDate?: string | null;
+        createdDate?: Record<'local' | 'en' | 'np', string> | null;
         createdBy?: string | null;
         status?: string | null;
         remarks?: string | null;
@@ -18879,7 +18895,7 @@ export type GetShareTransactionReportQuery = {
       totalShareIssued?: string | null;
       avgSharePerMember?: string | null;
       data?: Array<{
-        transactionDate?: string | null;
+        transactionDate?: Record<'local' | 'en' | 'np', string> | null;
         memberId?: string | null;
         memberCode?: string | null;
         name?: string | null;
@@ -19272,7 +19288,7 @@ export type GetShareStatementQuery = {
       statement?:
         | {
             shareStatement?: Array<{
-              date: string;
+              date: Record<'local' | 'en' | 'np', string>;
               particular: string;
               noOfShares: number;
               returnAmountDr: number;
@@ -27088,9 +27104,9 @@ export const useGetCoOperativeKymEditDataQuery = <
     options
   );
 export const GetCoOperativeDirectorEditDataDocument = `
-    query getCoOperativeDirectorEditData($id: ID!) {
+    query getCoOperativeDirectorEditData($id: ID!, $hasPressedNext: Boolean) {
   members {
-    cooperative {
+    cooperative(includeRequiredErrors: $hasPressedNext) {
       listDirectors(id: $id) {
         data {
           id
@@ -27128,6 +27144,13 @@ export const GetCoOperativeDirectorEditDataDocument = `
           citizenshipNo
           panNo
         }
+        sectionStatus {
+          errors
+          sectionStatus {
+            errors
+            incomplete
+          }
+        }
       }
     }
   }
@@ -27148,9 +27171,9 @@ export const useGetCoOperativeDirectorEditDataQuery = <
     options
   );
 export const GetCoOperativeAccountOperatorEditDataDocument = `
-    query getCoOperativeAccountOperatorEditData($id: ID!) {
+    query getCoOperativeAccountOperatorEditData($id: ID!, $hasPressedNext: Boolean) {
   members {
-    cooperative {
+    cooperative(includeRequiredErrors: $hasPressedNext) {
       listAccountOperators(id: $id) {
         data {
           id
@@ -27191,6 +27214,13 @@ export const GetCoOperativeAccountOperatorEditDataDocument = `
             subjectOfTraining
             dateOfTraining
             trainingOrganization
+          }
+        }
+        sectionStatus {
+          errors
+          sectionStatus {
+            errors
+            incomplete
           }
         }
       }
