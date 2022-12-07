@@ -1,25 +1,18 @@
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
-import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
-import debounce from 'lodash/debounce';
 
-import {
-  KymCoopDirectorDetailsFormInput,
-  RootState,
-  useAllAdministrationQuery,
-  useAppSelector,
-  useGetCoOperativeDirectorEditDataQuery,
-  useSetCooPdirectorDataMutation,
-} from '@coop/cbs/data-access';
-import { DynamicBoxGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormDatePicker, FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
 import { Box, Button, Collapse, FormSection, GridItem, Icon, IconButton, Text } from '@myra-ui';
+
+import { KymCoopDirectorDetailsFormInput } from '@coop/cbs/data-access';
+import { DynamicBoxGroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { FormAddress, FormDatePicker, FormInput, FormSwitch } from '@coop/shared/form';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { Bottomdirectorcoop } from './boardDirectorDocuments';
+import { useCooperativeBOD } from '../hooks/useCooperativeBOD';
 
 interface ICOOPDirector {
   removeDirector: (sisterId: string) => void;
@@ -31,121 +24,13 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
   const { t } = useTranslation();
   const methods = useForm<KymCoopDirectorDetailsFormInput>();
 
-  const { watch, reset } = methods;
+  const { watch } = methods;
 
-  const router = useRouter();
-
-  const id = String(router?.query?.['id']);
-
-  const { mutate } = useSetCooPdirectorDataMutation();
-
-  const { data: editValues, refetch } = useGetCoOperativeDirectorEditDataQuery({
-    id,
-  });
-
-  useEffect(() => {
-    if (editValues) {
-      const editValueData = editValues?.members?.cooperative?.listDirectors?.data;
-
-      const directorDetails = editValueData?.find((data) => data?.id === directorId);
-
-      if (directorDetails) {
-        reset({
-          nameEn: directorDetails?.fullName,
-
-          designation: directorDetails?.designation,
-          permanentAddress: {
-            ...directorDetails?.permanentAddress,
-            locality: directorDetails?.permanentAddress?.locality?.local,
-          },
-          isPermanentAndTemporaryAddressSame: directorDetails?.isPermanentAndTemporaryAddressSame,
-          temporaryAddress: {
-            ...directorDetails?.temporaryAddress,
-            locality: directorDetails?.temporaryAddress?.locality?.local,
-          },
-          dateOfMembership: directorDetails?.dateOfMembership,
-          highestQualification: directorDetails?.highestQualification,
-          contactNumber: directorDetails?.contactNumber,
-          email: directorDetails?.email,
-          citizenshipNo: directorDetails?.citizenshipNo,
-          panNo: directorDetails?.panNo,
-        });
-      }
-    }
-  }, [editValues]);
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    refetch();
-  }, [preference?.date]);
-
-  useEffect(() => {
-    const subscription = watch(
-      debounce((data) => {
-        mutate({
-          id,
-          dirId: directorId,
-          data: { cooperativeId: id, ...data },
-        });
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
-
-  const { data } = useAllAdministrationQuery();
+  useCooperativeBOD({ methods, directorId });
 
   const [isOpen, setIsOpen] = React.useState(true);
 
   const isPermanentAndTemporaryAddressSame = watch(`isPermanentAndTemporaryAddressSame`);
-
-  const province = useMemo(
-    () =>
-      data?.administration?.all?.map((d) => ({
-        label: d.name,
-        value: d.id,
-      })) ?? [],
-    [data?.administration?.all]
-  );
-
-  // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch(`permanentAddress.provinceId`);
-  const currentDistrictId = watch(`permanentAddress.districtId`);
-  const currentLocalityId = watch('permanentAddress.localGovernmentId');
-
-  const districtList = useMemo(
-    () => data?.administration.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
-    [currentProvinceId]
-  );
-
-  const localityList = useMemo(
-    () => districtList.find((d) => d.id === currentDistrictId)?.municipalities ?? [],
-    [currentDistrictId]
-  );
-  const wardList = useMemo(
-    () => localityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
-    [currentLocalityId]
-  );
-  // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch(`temporaryAddress.provinceId`);
-  const currentTemptDistrictId = watch(`temporaryAddress.districtId`);
-  const currentTempLocalityId = watch('temporaryAddress.localGovernmentId');
-
-  const districtTempList = useMemo(
-    () => data?.administration.all.find((d) => d.id === currentTempProvinceId)?.districts ?? [],
-    [currentTempProvinceId]
-  );
-
-  const localityTempList = useMemo(
-    () => districtTempList.find((d) => d.id === currentTemptDistrictId)?.municipalities ?? [],
-    [currentTemptDistrictId]
-  );
-  const wardTempList = useMemo(
-    () => localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
-    [currentTempLocalityId]
-  );
 
   return (
     <>
@@ -213,7 +98,7 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
                 setSection(kymSection);
               }}
             >
-              <Box display="flex" flexDirection="column" gap="s48">
+              <Box display="flex" flexDirection="column">
                 <FormSection>
                   <FormInput
                     id="boardDirectorCoop"
@@ -229,51 +114,11 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
                   />
                 </FormSection>
 
-                <FormSection header="kymCoopPermanentAddress">
-                  <FormSelect
-                    id="boardDirectorCoop"
-                    name="permanentAddress.provinceId"
-                    label={t['kymCoopState']}
-                    options={province}
-                  />
-                  <FormSelect
-                    id="boardDirectorCoop"
-                    name="permanentAddress.districtId"
-                    label={t['kymCoopDistrict']}
-                    options={districtList.map((d) => ({
-                      label: d.name,
-                      value: d.id,
-                    }))}
-                  />
-                  <FormSelect
-                    id="boardDirectorCoop"
-                    name="permanentAddress.localGovernmentId"
-                    label={t['kymCoopLocalGovernment']}
-                    options={localityList.map((d) => ({
-                      label: d.name,
-                      value: d.id,
-                    }))}
-                  />
-                  <FormSelect
-                    id="boardDirectorCoop"
-                    name="permanentAddress.wardNo"
-                    label={t['kymCoopWardNo']}
-                    options={wardList?.map((d) => ({
-                      label: d,
-                      value: d,
-                    }))}
-                  />
-                  <FormInput
-                    id="boardDirectorCoop"
-                    type="text"
-                    name="permanentAddress.locality"
-                    label={t['kymCoopLocality']}
-                  />
-
-                  <GridItem colSpan={2}>
-                    <FormMap name="permanentAddress.coordinates" id="boardDirectorCoop" />
-                  </GridItem>
-                </FormSection>
+                <FormAddress
+                  sectionId="boardDirectorCoop"
+                  sectionHeader="kymCoopPermanentAddress"
+                  name="permanentAddress"
+                />
 
                 <FormSection header="kymCoopTemporaryAddress">
                   <GridItem colSpan={3}>
@@ -283,53 +128,8 @@ export const AddDirector = ({ directorId, removeDirector, setSection }: ICOOPDir
                       label={t['kymCoopTemporaryAddressPermanent']}
                     />
                   </GridItem>
-                  {!isPermanentAndTemporaryAddressSame && (
-                    <>
-                      <FormSelect
-                        id="boardDirectorCoop"
-                        name="temporaryAddress.provinceId"
-                        label={t['kymCoopState']}
-                        options={province}
-                      />
-                      <FormSelect
-                        id="boardDirectorCoop"
-                        name="temporaryAddress.districtId"
-                        label={t['kymCoopDistrict']}
-                        options={districtTempList.map((d) => ({
-                          label: d.name,
-                          value: d.id,
-                        }))}
-                      />
-                      <FormSelect
-                        id="boardDirectorCoop"
-                        name="temporaryAddress.localGovernmentId"
-                        label={t['kymCoopLocalGovernment']}
-                        options={localityTempList.map((d) => ({
-                          label: d.name,
-                          value: d.id,
-                        }))}
-                      />
-                      <FormSelect
-                        id="boardDirectorCoop"
-                        name="temporaryAddress.wardNo"
-                        label={t['kymCoopWardNo']}
-                        options={wardTempList.map((d) => ({
-                          label: d,
-                          value: d,
-                        }))}
-                      />
-                      <FormInput
-                        id="boardDirectorCoop"
-                        type="text"
-                        name="temporaryAddress.locality"
-                        label={t['kymCoopLocality']}
-                      />
 
-                      <GridItem colSpan={2}>
-                        <FormMap name="temporaryAddress.coordinates" />
-                      </GridItem>
-                    </>
-                  )}
+                  {!isPermanentAndTemporaryAddressSame && <FormAddress name="temporaryAddress" />}
                 </FormSection>
 
                 <FormSection>

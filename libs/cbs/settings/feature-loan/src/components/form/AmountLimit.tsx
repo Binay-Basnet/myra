@@ -23,7 +23,7 @@ export const AmountLimit = () => {
         name="maxLoanAmount"
         label={t['loanProductMaximumAmount']}
         rules={{
-          max: {
+          min: {
             value: minLoanAmount,
             message: 'Maximum loan amount should be greater than minimum amount',
           },

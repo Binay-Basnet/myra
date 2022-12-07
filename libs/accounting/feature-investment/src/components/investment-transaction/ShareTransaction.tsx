@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+
 import { FormSection, GridItem } from '@myra-ui';
 
 import { ShareInvestmentType } from '@coop/cbs/data-access';
@@ -30,13 +31,13 @@ export const ShareTransaction = () => {
 
       {shareType === ShareInvestmentType.ShareBonusDividend && (
         <>
-          <FormAmountInput type="number" name="share.bonusAmount" label="Bonus Amount" />
+          <FormAmountInput name="share.bonusAmount" label="Bonus Amount" />
 
-          <FormAmountInput type="number" name="share.dividendAmount" label="Dividend Amount" />
+          <FormAmountInput name="share.dividendAmount" label="Dividend Amount" />
 
           <FormNumberInput name="share.shareQuantity" label="Share Quantity" />
 
-          <FormAmountInput type="number" name="share.totalAmount" label="Total Amount" />
+          <FormAmountInput name="share.totalAmount" label="Total Amount" />
         </>
       )}
 

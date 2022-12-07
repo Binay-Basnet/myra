@@ -210,6 +210,7 @@ query getInterestTaxReport($data: InterestTaxReportFilter!) {
     interestTaxReport(data: $data) {
       data {
         memberId
+        memberCode
         name
         address {
           ...Address

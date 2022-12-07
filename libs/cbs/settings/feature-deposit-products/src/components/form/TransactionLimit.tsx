@@ -25,17 +25,15 @@ export const TransactionLimit = () => {
           </Box>
           <Grid templateColumns="repeat(3,1fr)" gap="s16">
             <FormAmountInput
-              type="number"
               name="depositAmount.minAmount"
               label={t['depositProductMinimumAmount']}
             />
 
             <FormAmountInput
-              type="number"
               name="depositAmount.maxAmount"
               label={t['depositProductMaximumAmount']}
               rules={{
-                max: {
+                min: {
                   value: minDepositAmount,
                   message: 'Maximum deposit amount should be greater than minimum amount',
                 },
@@ -54,17 +52,15 @@ export const TransactionLimit = () => {
           </Box>
           <Grid templateColumns="repeat(3,1fr)" gap="s16">
             <FormAmountInput
-              type="number"
               name="withdrawAmountLimit.minAmount"
               label={t['depositProductMinimumAmount']}
             />
 
             <FormAmountInput
-              type="number"
               name="withdrawAmountLimit.maxAmount"
               label={t['depositProductMaximumAmount']}
               rules={{
-                max: {
+                min: {
                   value: minWithdrawAmount,
                   message: 'Maximum withdraw amount should be greater than minimum amount',
                 },

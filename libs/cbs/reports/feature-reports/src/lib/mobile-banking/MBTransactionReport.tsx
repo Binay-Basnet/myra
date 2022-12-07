@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Box, GridItem } from '@myra-ui';
 import dayjs from 'dayjs';
+
+import { Box, GridItem } from '@myra-ui';
 
 import {
   EbankingReportResult,
@@ -105,7 +106,7 @@ export const MBTransactionsReport = () => {
               },
               {
                 header: 'Transaction Date',
-                accessorFn: (row) => row?.transDate,
+                accessorFn: (row) => row?.transDate?.local,
                 cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
               },
               {

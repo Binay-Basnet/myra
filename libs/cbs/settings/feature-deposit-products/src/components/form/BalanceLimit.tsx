@@ -13,17 +13,12 @@ export const BalanceLimit = () => {
 
   return (
     <FormSection header="depositProductBalanceLimit">
+      <FormAmountInput name="balanceLimit.minAmount" label={t['depositProductMinimumAmount']} />
       <FormAmountInput
-        type="number"
-        name="balanceLimit.minAmount"
-        label={t['depositProductMinimumAmount']}
-      />
-      <FormAmountInput
-        type="number"
         name="balanceLimit.maxAmount"
         label={t['depositProductMaximumAmount']}
         rules={{
-          max: {
+          min: {
             value: minAmount,
             message: 'Maximum balance amount should be greater than minimum amount',
           },

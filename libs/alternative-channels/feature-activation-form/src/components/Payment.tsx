@@ -107,7 +107,6 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
     <ContainerWithDivider borderRight="1px" borderColor="border.layout" p="s16" pb="100px">
       <BoxContainer>
         <FormSwitchTab label="Payment Mode" options={paymentModes} name="paymentMode" />
-
         {selectedPaymentMode === AlternativeChannelPaymentMode?.Account && (
           <Grid templateColumns="repeat(2,1fr)" gap="s20">
             <GridItem colSpan={2}>
@@ -123,7 +122,6 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
             </GridItem>
           </Grid>
         )}
-
         {selectedPaymentMode === AlternativeChannelPaymentMode?.BankVoucher && (
           <>
             <Grid templateColumns="repeat(2,1fr)" gap="s20">
@@ -145,13 +143,11 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
             <FormTextArea name="bankCheque.note" label="Note" />
           </>
         )}
-
         {selectedPaymentMode === AlternativeChannelPaymentMode.Cash && (
           <>
             <Grid templateColumns="repeat(2,1fr)" gap="s20">
               <FormInput name="cash.cashPaid" type="number" label="Cash" textAlign="right" />
             </Grid>
-
             <FormSwitch name="cash.disableDenomination" label="Disable Denomination" />
             {!disableDenomination && (
               <FormEditableTable<PaymentTableType>
@@ -193,7 +189,6 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
                 canAddRow={false}
               />
             )}
-
             <Box
               display="flex"
               flexDirection="column"
@@ -231,7 +226,6 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
                 </Text>
               </Box>
             </Box>
-
             <FormTextArea name="cash.note" label="Note" rows={5} />
           </>
         )}

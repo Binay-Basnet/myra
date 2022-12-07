@@ -44,6 +44,7 @@ export const Account = ({ totalAmount }: AmountType) => {
           memberId={memberId}
           label={t['sharePurchaseSelectAccount']}
           filterBy={ObjState.Active}
+          isLinkedAccounts
         />
         {availableBalance && availableBalance?.length > 0 && (
           <Box mt="s8">

@@ -1,0 +1,24 @@
+query getJournalVoucherList($pagination: Pagination, $filter: JournalVoucherFilter) {
+  accounting {
+    journalVoucher {
+      list(filter: $filter, pagination: $pagination) {
+        totalCount
+        edges {
+          node {
+            id
+            date
+            reference
+            amount
+          }
+          cursor
+        }
+        pageInfo {
+          startCursor
+          endCursor
+          hasNextPage
+          hasPreviousPage
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Box, GridItem, Text } from '@myra-ui';
 import dayjs from 'dayjs';
+
+import { Box, GridItem, Text } from '@myra-ui';
 
 import {
   ActiveInactiveMemberReportData,
@@ -55,7 +56,7 @@ export const MemberActiveInactiveReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Member Reports', link: '/reports/cbs/savings' },
+            { label: 'Member Reports', link: '/reports/cbs/member-report' },
             { label: 'Active/Inactive Member', link: '/reports/cbs/members/activations/new' },
           ]}
         />

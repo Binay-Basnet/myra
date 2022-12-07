@@ -163,7 +163,7 @@ export const GridItems = () => {
           criteria.indexOf('AGE') !== -1 && (
             <FormInput
               rules={{
-                max: {
+                min: {
                   value: minAge,
                   message: 'Max age should be greater than min age',
                 },

@@ -10,3 +10,16 @@ mutation setBankAccounts($data: NewBankAccountInput) {
     }
   }
 }
+
+mutation setJournalVoucherData($data: JournalVoucherInput) {
+  accounting {
+    journalVoucher {
+      new(data: $data) {
+        recordId
+        error {
+          ...MutationError
+        }
+      }
+    }
+  }
+}

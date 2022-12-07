@@ -8,7 +8,7 @@ import { useGetPreviousYearFundManagementQuery } from '@coop/cbs/data-access';
 import { FormEditableTable } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
-import { TableOverview } from './TableOverview';
+import { TableOverview, TableOverviewColumnType } from './TableOverview';
 import { CustomFundManagementInput, DistributionTableType } from '../lib/type';
 
 export const DistributionTable = () => {
@@ -84,7 +84,7 @@ export const DistributionTable = () => {
 
   const distributionTable = watch('distributionTable');
 
-  const distributionTableSummary = useMemo(
+  const distributionTableSummary: TableOverviewColumnType[] = useMemo(
     () => [
       { label: 'Net off Profit Balance', width: 'auto', isNumeric: false },
       { label: '', width: 'auto', isNumeric: false },

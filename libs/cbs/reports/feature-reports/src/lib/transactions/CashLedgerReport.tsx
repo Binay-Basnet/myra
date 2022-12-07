@@ -112,7 +112,7 @@ export const CashLedgersReport = () => {
                       header: 'Date',
                       footer: () => <Box textAlign="right">Total </Box>,
                       accessorFn: (row) => row?.date?.local,
-                      cell: ({ cell }) => dayjs(cell.row.original.date?.en).format('YYYY-MM-DD'),
+                      cell: ({ cell }) => dayjs(cell.row.original.date?.local).format('YYYY-MM-DD'),
 
                       meta: {
                         width: '60px',
@@ -205,7 +205,7 @@ export const CashLedgersReport = () => {
                       header: 'Date',
                       footer: () => <Box textAlign="right">Total </Box>,
                       accessorFn: (row) => row?.date?.local,
-                      cell: ({ cell }) => dayjs(cell.row.original.date?.en).format('YYYY-MM-DD'),
+                      cell: ({ cell }) => dayjs(cell.row.original.date?.local).format('YYYY-MM-DD'),
 
                       meta: {
                         width: '60px',

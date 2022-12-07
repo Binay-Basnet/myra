@@ -23,7 +23,7 @@ export const FixedDepositTransaction = () => (
 
   <FormSection header="Fixed Deposit">
     <FormSelect name="fd.type" label="Type" options={fdTypeOptions} />
-    <FormAmountInput type="number" name="fd.amount" label="FD Amount" />
+    <FormAmountInput name="fd.amount" label="FD Amount" />
     <GridItem colSpan={3} display="none">
       <Alert status="info" title="Bank Details" hideCloseIcon>
         {/* <Box display="flex" flexDirection="column"> */}

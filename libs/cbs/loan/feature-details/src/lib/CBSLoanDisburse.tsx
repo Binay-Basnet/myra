@@ -4,6 +4,9 @@ import { AiFillCheckCircle } from 'react-icons/ai';
 import { IoChevronBackOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { Box } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
+import { omit } from 'lodash';
+
 import {
   asyncToast,
   Button,
@@ -17,9 +20,6 @@ import {
   MemberCard,
   Text,
 } from '@myra-ui';
-import { useQueryClient } from '@tanstack/react-query';
-import { omit } from 'lodash';
-import { FormAccountSelect } from '@coop/shared/form';
 
 import {
   LoanDisbursementInput,
@@ -30,7 +30,13 @@ import {
   useSetDisburseLoanMutation,
 } from '@coop/cbs/data-access';
 import { LoanListLayout } from '@coop/cbs/loan/layouts';
-import { FormInput, FormSelect, FormSwitchTab, FormTextArea } from '@coop/shared/form';
+import {
+  FormAccountSelect,
+  FormInput,
+  FormSelect,
+  FormSwitchTab,
+  FormTextArea,
+} from '@coop/shared/form';
 import { featureCode } from '@coop/shared/utils';
 
 import CBSLoanDetails from './CbsLoanFeatureDetails';
@@ -235,7 +241,7 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
                       name="accountPayment.destinationAccount"
                       label="Destination Account"
                       memberId={memberId}
-                      loanLinkedAccounts
+                      isLinkedAccounts
                     />
                   </GridItem>
                   <FormInput

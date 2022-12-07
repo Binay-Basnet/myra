@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { CbsShareFeaturesShareReturn } from '@coop/cbs/share-return';
 import { MainLayout } from '@myra-ui';
+
+import { CbsShareFeaturesShareReturn } from '@coop/cbs/share-return';
 
 const ShareReturn = () => <CbsShareFeaturesShareReturn />;
 

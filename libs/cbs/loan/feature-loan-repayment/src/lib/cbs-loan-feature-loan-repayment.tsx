@@ -31,6 +31,7 @@ import {
   useSetLoanRepaymentMutation,
 } from '@coop/cbs/data-access';
 import { FormInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
+import { featureCode } from '@coop/shared/utils';
 
 import { InstallmentData, LoanPaymentScheduleTable, LoanProductCard, Payment } from '../components';
 
@@ -75,6 +76,9 @@ export const LoanRepayment = () => {
   const methods = useForm<LoanRepaymentInputType>({
     defaultValues: {
       paymentMethod: LoanRepaymentMethod?.Cash,
+      cash: {
+        disableDenomination: true,
+      },
     },
   });
 
@@ -227,7 +231,7 @@ export const LoanRepayment = () => {
   return (
     <Container minW="container.xl" p="0" bg="white">
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
-        <FormHeader title="Loan Repayment" />
+        <FormHeader title={`New Loan Repayment - ${featureCode.newLoanPayment} `} />
       </Box>
       <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
         <Box

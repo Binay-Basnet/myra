@@ -28,7 +28,7 @@ interface IAccountSelectProps {
   label?: string;
   memberId: string;
   placeholder?: string;
-  loanLinkedAccounts?: boolean;
+  isLinkedAccounts?: boolean;
   filterBy?: ObjState;
   excludeIds?: string[];
 }
@@ -37,7 +37,7 @@ export const FormAccountSelect = ({
   name,
   label,
   memberId,
-  loanLinkedAccounts,
+  isLinkedAccounts,
   placeholder,
   filterBy,
   excludeIds,
@@ -73,14 +73,14 @@ export const FormAccountSelect = ({
       filter: [NatureOfDepositProduct?.Current, NatureOfDepositProduct?.Saving],
     },
     {
-      enabled: !!loanLinkedAccounts,
+      enabled: !!isLinkedAccounts,
     }
   );
 
-  const loanLinkedData = linkedAccountData?.members?.getAllAccounts?.data?.depositAccount;
+  const linkedAccounts = linkedAccountData?.members?.getAllAccounts?.data?.depositAccount;
 
-  const loanLinkedOptions: Option[] =
-    loanLinkedData?.reduce(
+  const linkedAccountsOptions: Option[] =
+    linkedAccounts?.reduce(
       (prevVal, curVal) => [
         ...prevVal,
         {
@@ -130,8 +130,8 @@ export const FormAccountSelect = ({
         <AccountSelect
           label={label}
           value={
-            loanLinkedAccounts
-              ? loanLinkedOptions?.find((option) => option.value === value)
+            isLinkedAccounts
+              ? linkedAccountsOptions?.find((option) => option.value === value)
               : accountOptions?.find((option) => option.value === value)
           }
           isLoading={isFetching}
@@ -144,7 +144,7 @@ export const FormAccountSelect = ({
               onChange(newVal);
             }
           }}
-          options={loanLinkedAccounts ? loanLinkedOptions : accountOptions}
+          options={isLinkedAccounts ? linkedAccountsOptions : accountOptions}
         />
       )}
       name={name}

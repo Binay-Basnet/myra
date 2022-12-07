@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+
 import { Box, Grid, GridItem, Text } from '@myra-ui';
-import { FormAccountSelect } from '@coop/shared/form';
 
 import {
   AccountClosePaymentMode,
@@ -12,6 +12,7 @@ import {
 } from '@coop/cbs/data-access';
 import { BoxContainer, ContainerWithDivider } from '@coop/cbs/transactions/ui-containers';
 import {
+  FormAccountSelect,
   FormAmountInput,
   FormEditableTable,
   FormInput,
@@ -110,6 +111,10 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
     setValue('cash.cashPaid', String(Math.floor(totalDeposit)));
   }, [totalDeposit]);
 
+  useEffect(() => {
+    if (watch('cash.disableDenomination') === undefined) setValue('cash.disableDenomination', true);
+  });
+
   return (
     <ContainerWithDivider borderRight="1px" borderColor="border.layout" p="s16" pb="100px">
       <BoxContainer>
@@ -126,7 +131,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
               />
             </GridItem>
 
-            <FormAmountInput type="number" name="accountTransfer.amount" label="Amount" />
+            <FormAmountInput name="accountTransfer.amount" label="Amount" />
 
             {/* <FormDatePicker name="accountTransfer.depositedDate" label="Deposited Date" />
 
@@ -143,7 +148,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
               <FormSelect name="bankCheque.bank" label="Bank Name" options={bankList} />
             </GridItem>
             <FormInput name="bankCheque.cheque_no" label="Cheque No" placeholder="Cheque No" />
-            <FormAmountInput type="number" name="bankCheque.amount" label="Amount" />
+            <FormAmountInput name="bankCheque.amount" label="Amount" />
             <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
               <FormTextArea name="bankCheque.note" label="Note" />
             </GridItem>
@@ -155,11 +160,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
             <Grid templateColumns="repeat(2,1fr)" gap="s20">
               <FormInput name="cash.cashPaid" type="number" label="Cash" textAlign="right" />
             </Grid>
-            <FormSwitch
-              name="cash.disableDenomination"
-              label="Disable Denomination"
-              defaultChecked={false}
-            />
+            <FormSwitch name="cash.disableDenomination" label="Disable Denomination" />
             {!disableDenomination && (
               <FormEditableTable<PaymentTableType>
                 name="cash.denominations"
@@ -237,7 +238,6 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
                 </Text>
               </Box>
             </Box>
-
             <FormTextArea name="cash.note" label="Note" rows={5} />
           </>
         )}

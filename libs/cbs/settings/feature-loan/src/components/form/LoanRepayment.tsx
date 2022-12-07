@@ -23,7 +23,7 @@ export const LoanRepayment = () => {
         textAlign="right"
         label={t['loanProductMaxInstallmentInterest']}
         rules={{
-          max: {
+          min: {
             value: principalMaxGraceNumber,
             message: 'Maximum principal grace amount should be greater than minimum amount',
           },

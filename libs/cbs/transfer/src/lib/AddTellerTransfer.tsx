@@ -1,8 +1,9 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { asyncToast, Box, Container, FormFooter, FormHeader, Grid, Text } from '@myra-ui';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
+
+import { asyncToast, Box, Container, FormFooter, FormHeader, Grid, Text } from '@myra-ui';
 
 import {
   CashValue,
@@ -143,7 +144,7 @@ export const AddTellerTransfer = () => {
 
                   <Box display="flex" flexDirection="column" gap="s16" py="s20">
                     <InputGroupContainer>
-                      <FormAmountInput type="number" name="amount" label="Cash Amount" />
+                      <FormAmountInput name="amount" label="Cash Amount" />
                     </InputGroupContainer>
 
                     <FormEditableTable<PaymentTableType>
