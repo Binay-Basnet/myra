@@ -72,9 +72,9 @@ export const MemberDetailsSidebar = () => {
           'Loan',
           'Bio',
           'Transactions',
-          'Activity',
+          // 'Activity',
           'Cheque',
-          'Documents',
+          // 'Documents',
           'Tasks',
         ]}
       />
