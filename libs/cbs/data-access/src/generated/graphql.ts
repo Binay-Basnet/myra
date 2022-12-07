@@ -4696,6 +4696,7 @@ export type InterestTaxReportEntry = {
   closingBalance?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['Localized']>;
   interest?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['Localized']>;
   panNo?: Maybe<Scalars['String']>;
