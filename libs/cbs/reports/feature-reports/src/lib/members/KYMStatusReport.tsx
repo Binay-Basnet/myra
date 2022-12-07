@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Box, GridItem } from '@myra-ui';
 import dayjs from 'dayjs';
+
+import { Box, GridItem } from '@myra-ui';
 
 import {
   EbankingReportResult,
@@ -51,7 +52,7 @@ export const KYMStatusReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Members Reports', link: '/reports/cbs/members' },
+            { label: 'Members Reports', link: '/reports/cbs/member-report' },
             {
               label: 'KYM Status Report',
               link: '/reports/cbs/members/kym-status/new',

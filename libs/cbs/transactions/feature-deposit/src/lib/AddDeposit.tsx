@@ -180,7 +180,7 @@ export const AddDeposit = () => {
 
   const checkIsSubmitButtonDisabled = () => {
     if (mode === 0) {
-      return false;
+      return !totalDeposit;
     }
 
     if (selectedPaymentMode === DepositPaymentType.Cash) {
@@ -634,7 +634,7 @@ export const AddDeposit = () => {
                 )
               }
               mainButtonLabel={mode === 0 ? t['addDepositProceedPayment'] : t['addDepositSubmit']}
-              isMainButtonDisabled={mode === 0 ? !accountId : checkIsSubmitButtonDisabled()}
+              isMainButtonDisabled={checkIsSubmitButtonDisabled()}
               mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
             />
           </Container>

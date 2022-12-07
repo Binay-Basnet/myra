@@ -71,7 +71,7 @@ export const MemberClassificationReport = () => {
         <ReportHeader
           hasSave={false}
           paths={[
-            { label: 'Member Reports', link: '/reports/cbs/members' },
+            { label: 'Member Reports', link: '/reports/cbs/member-report' },
             { label: 'Member Classification Report', link: '/reports/cbs/members/classification' },
             {
               label: 'New Report',

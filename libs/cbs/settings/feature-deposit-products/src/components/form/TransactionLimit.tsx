@@ -35,7 +35,7 @@ export const TransactionLimit = () => {
               name="depositAmount.maxAmount"
               label={t['depositProductMaximumAmount']}
               rules={{
-                max: {
+                min: {
                   value: minDepositAmount,
                   message: 'Maximum deposit amount should be greater than minimum amount',
                 },
@@ -64,7 +64,7 @@ export const TransactionLimit = () => {
               name="withdrawAmountLimit.maxAmount"
               label={t['depositProductMaximumAmount']}
               rules={{
-                max: {
+                min: {
                   value: minWithdrawAmount,
                   message: 'Maximum withdraw amount should be greater than minimum amount',
                 },

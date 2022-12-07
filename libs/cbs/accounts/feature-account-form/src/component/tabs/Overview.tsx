@@ -76,6 +76,13 @@ export const Overview = () => {
           ? null
           : accountDetails?.interestEarned ?? '0',
     },
+    {
+      label: 'Interest Rate',
+      value:
+        accountDetails?.accountType === NatureOfDepositProduct.Current
+          ? null
+          : `${accountDetails?.interestRate} %`,
+    },
     { label: 'Guarantee Amount', value: accountDetails?.guaranteedAmount ?? '0' },
   ];
 
