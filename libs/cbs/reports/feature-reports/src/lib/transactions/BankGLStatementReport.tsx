@@ -78,7 +78,7 @@ export const BankGLStatementReport = () => {
               },
               {
                 header: 'Date',
-                accessorFn: (row) => row?.date?.en,
+                accessorFn: (row) => row?.date?.local,
               },
               {
                 header: 'Particular',

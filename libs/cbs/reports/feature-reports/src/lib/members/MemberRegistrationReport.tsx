@@ -136,6 +136,7 @@ export const MemberRegisterReport = () => {
                         {
                           header: 'Total Amount',
                           accessorFn: (row) => row?.shareInfo?.amount,
+                          cell: (props) => amountConverter(props.getValue() as string),
                         },
                       ],
                     },
@@ -196,7 +197,7 @@ export const MemberRegisterReport = () => {
                       cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
                     },
                     {
-                      header: 'Type of Institute',
+                      header: 'Type of Institution',
                       accessorKey: 'typeOfInstitution',
                       cell: (props) => (
                         <Box textTransform="capitalize">

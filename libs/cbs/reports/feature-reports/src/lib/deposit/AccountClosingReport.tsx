@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { GridItem } from '@myra-ui';
 import dayjs from 'dayjs';
+
+import { GridItem } from '@myra-ui';
 
 import {
   AccountClosingReport,
@@ -85,12 +86,14 @@ export const AccountCloseReport = () => {
               {
                 header: 'Account Opening Date',
                 accessorKey: 'openingDate',
-                cell: ({ cell }) => dayjs(cell.row.original.openingDate?.en).format('YYYY-MM-DD'),
+                cell: ({ cell }) =>
+                  dayjs(cell.row.original.openingDate?.local).format('YYYY-MM-DD'),
               },
               {
                 header: 'Account Closing Date',
                 accessorKey: 'closingDate',
-                cell: ({ cell }) => dayjs(cell.row.original.closingDate?.en).format('YYYY-MM-DD'),
+                cell: ({ cell }) =>
+                  dayjs(cell.row.original.closingDate?.local).format('YYYY-MM-DD'),
               },
               {
                 header: 'Closed Balance',

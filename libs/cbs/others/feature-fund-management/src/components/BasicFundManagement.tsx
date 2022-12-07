@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+
 import { FormSection, Text } from '@myra-ui';
 
 import { FormAmountInput, FormNumberInput } from '@coop/shared/form';
@@ -25,7 +26,7 @@ export const BasicFundManagement = () => {
 
   return (
     <FormSection>
-      <FormAmountInput type="number" name="grossProfit" label="Gross Profit" />
+      <FormAmountInput name="grossProfit" label="Gross Profit" />
 
       <FormNumberInput
         name="staffBonusFund"
@@ -37,7 +38,7 @@ export const BasicFundManagement = () => {
         }
       />
 
-      <FormAmountInput type="number" name="profitBeforeTax" label="Profit Before Tax" isDisabled />
+      <FormAmountInput name="profitBeforeTax" label="Profit Before Tax" isDisabled />
 
       <FormNumberInput
         name="incomeTax"
@@ -49,7 +50,7 @@ export const BasicFundManagement = () => {
         }
       />
 
-      <FormAmountInput type="number" name="netProfit" label="Net Profit" isDisabled />
+      <FormAmountInput name="netProfit" label="Net Profit" isDisabled />
     </FormSection>
   );
 };

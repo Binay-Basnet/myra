@@ -112,7 +112,7 @@ export const KYMStatusReport = () => {
               },
               {
                 header: 'Member Registration Date',
-                accessorFn: (row) => row?.regDate,
+                accessorFn: (row) => row?.regDate?.local,
                 cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
               },
               {

@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { LoanRepayment } from '@coop/cbs/loan/repayment';
 import { MainLayout } from '@myra-ui';
+
+import { LoanRepayment } from '@coop/cbs/loan/repayment';
 
 const AddLoanRepayment = () => <LoanRepayment />;
 

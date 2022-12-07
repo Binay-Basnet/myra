@@ -20,7 +20,7 @@ export const SavingsDepositsTransaction = () => (
 
     <FormDatePicker name="saving.date" label="Transaction Date" />
 
-    <FormAmountInput type="number" name="saving.amount" label="Transaction Amount" />
+    <FormAmountInput name="saving.amount" label="Transaction Amount" />
 
     <FormSelect
       name="saving.paymentMethod"

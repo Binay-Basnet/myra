@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { GridItem } from '@myra-ui';
 import dayjs from 'dayjs';
+
+import { GridItem } from '@myra-ui';
 
 import { PeriodInput, RolesFilter, useGetUserReportQuery, UserReport } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
@@ -121,7 +122,8 @@ export const UsersReport = () => {
               {
                 header: 'User Created Date',
                 accessorKey: 'createdDate',
-                cell: ({ cell }) => dayjs(cell.row.original.createdDate).format('YYYY-MM-DD'),
+                cell: ({ cell }) =>
+                  dayjs(cell.row.original.createdDate?.local).format('YYYY-MM-DD'),
               },
               {
                 header: 'User Created By',

@@ -131,7 +131,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
               />
             </GridItem>
 
-            <FormAmountInput type="number" name="accountTransfer.amount" label="Amount" />
+            <FormAmountInput name="accountTransfer.amount" label="Amount" />
 
             {/* <FormDatePicker name="accountTransfer.depositedDate" label="Deposited Date" />
 
@@ -148,7 +148,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
               <FormSelect name="bankCheque.bank" label="Bank Name" options={bankList} />
             </GridItem>
             <FormInput name="bankCheque.cheque_no" label="Cheque No" placeholder="Cheque No" />
-            <FormAmountInput type="number" name="bankCheque.amount" label="Amount" />
+            <FormAmountInput name="bankCheque.amount" label="Amount" />
             <GridItem colSpan={2} display="flex" flexDirection="column" gap="s4">
               <FormTextArea name="bankCheque.note" label="Note" />
             </GridItem>

@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { UsersReport } from '@coop/cbs/reports';
 import { MainLayout } from '@myra-ui';
+
+import { UsersReport } from '@coop/cbs/reports';
 
 export const LedgerReportPage = () => <UsersReport />;
 

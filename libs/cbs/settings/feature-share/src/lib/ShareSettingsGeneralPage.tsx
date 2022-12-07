@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
+import { asyncToast, Box, SettingsFooter, Text, toast } from '@myra-ui';
+
 import {
   BranchCategory,
   TypeOfShare,
@@ -9,7 +11,6 @@ import {
   useSetSettingsShareGeneralMutation,
 } from '@coop/cbs/data-access';
 import { FormCheckbox, FormCheckboxGroup, FormInput } from '@coop/shared/form';
-import { asyncToast, Box, SettingsFooter, Text, toast } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import ShareSettingsCard from '../components/ShareSettingsCard/ShareSettingsCard';
@@ -134,7 +135,7 @@ export const ShareSettingsGeneralPage = () => {
                   {t['sharePaidUpShare']}
                 </Text>
                 <Box>
-                  <FormInput name="paidUpShareRate" size="sm" __placeholder="100" />
+                  <FormInput isDisabled name="paidUpShareRate" size="sm" __placeholder="100" />
                 </Box>
               </Box>
             </Box>

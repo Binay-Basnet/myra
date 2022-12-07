@@ -1,5 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+
 import {
   asyncToast,
   Box,
@@ -120,7 +121,6 @@ export const AccountingFeatureAddBankAccount = () => {
                 />
                 <FormAmountInput
                   name="openingBalance"
-                  type="number"
                   textAlign="right"
                   label={t['accountingBankAccountAddOpeningBalance']}
                 />

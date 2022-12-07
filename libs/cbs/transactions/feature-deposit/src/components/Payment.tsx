@@ -287,7 +287,7 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
         {selectedPaymentMode === DepositPaymentType.Cash && (
           <>
             <InputGroupContainer>
-              <FormAmountInput type="number" name="cash.cashPaid" label={t['depositPaymentCash']} />
+              <FormAmountInput name="cash.cashPaid" label={t['depositPaymentCash']} />
             </InputGroupContainer>
             <FormSwitch
               name="cash.disableDenomination"

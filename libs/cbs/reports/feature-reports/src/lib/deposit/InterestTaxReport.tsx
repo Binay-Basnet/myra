@@ -65,7 +65,7 @@ export const InterestTaxReport = () => {
               },
               {
                 header: 'Member ID',
-                accessorKey: 'memberId',
+                accessorKey: 'memberCode',
               },
               {
                 header: 'Member Name',

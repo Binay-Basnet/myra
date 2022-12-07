@@ -135,7 +135,7 @@ const MainOccupation = ({ setKymCurrentSection }: IMainOccupationProps) => {
         }
       }
     }
-  }, [familyOccupationListData]);
+  }, [familyOccupationListData, watch]);
 
   // refetch data when calendar preference is updated
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
@@ -144,7 +144,7 @@ const MainOccupation = ({ setKymCurrentSection }: IMainOccupationProps) => {
     if (id) {
       refetchEdit();
     }
-  }, [preference?.date, id]);
+  }, [preference?.date, id, watch]);
 
   const { mutateAsync } = useSetMemberOccupationMutation({
     onSuccess: () => refetch(),

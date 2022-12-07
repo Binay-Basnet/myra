@@ -84,12 +84,12 @@ export const MBRegistrationReport = () => {
               },
               {
                 header: 'Registered Date',
-                accessorFn: (row) => row?.regDate,
+                accessorFn: (row) => row?.regDate?.local,
                 cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
               },
               {
                 header: 'Expiry Date',
-                accessorFn: (row) => row?.expDate,
+                accessorFn: (row) => row?.expDate?.local,
                 cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
               },
               {
