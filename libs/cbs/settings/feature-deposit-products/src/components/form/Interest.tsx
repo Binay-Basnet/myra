@@ -36,7 +36,7 @@ export const Interest = () => {
           </Text>
         }
         rules={{
-          max: {
+          min: {
             value: minRate,
             message: 'Maximum rate should be greater than minimum rate',
           },
