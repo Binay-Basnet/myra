@@ -2,8 +2,9 @@ import { IoCopyOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 import { Avatar } from '@chakra-ui/react';
 
-import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
 import { Box, DetailPageTabs, Icon, Tags, Text } from '@myra-ui';
+
+import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
 import { copyToClipboard } from '@coop/shared/utils';
 
 export const MemberDetailsSidebar = () => {
