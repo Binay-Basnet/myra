@@ -343,6 +343,7 @@ export type AccountingQuery = {
   bankAccounts: BankAccountQuery;
   externalLoan: ExternalLoanQuery;
   investment: AccountingInvestmentQuery;
+  journalVoucher: JournalVoucherQuery;
   sales: AccountingSalesQuery;
 };
 
@@ -3211,6 +3212,7 @@ export type EodSatusResult = {
   dormancy?: Maybe<EodState>;
   interestBooking?: Maybe<EodState>;
   interestPosting?: Maybe<EodState>;
+  loanInterestBooking?: Maybe<EodState>;
   maturity?: Maybe<EodState>;
   transactionDate?: Maybe<EodState>;
 };
@@ -5134,6 +5136,24 @@ export type JournalChartsOfAccount = {
   journalCode: Scalars['String'];
 };
 
+export type JournalVoucher = {
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  id?: Maybe<Scalars['String']>;
+  reference?: Maybe<Scalars['String']>;
+};
+
+export type JournalVoucherConnection = {
+  edges?: Maybe<Array<Maybe<JournalVoucherEdges>>>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount: Scalars['Int'];
+};
+
+export type JournalVoucherEdges = {
+  cursor?: Maybe<Scalars['Cursor']>;
+  node?: Maybe<JournalVoucher>;
+};
+
 export type JournalVoucherEntry = {
   accountId?: InputMaybe<Scalars['String']>;
   crAmount?: InputMaybe<Scalars['String']>;
@@ -5141,9 +5161,13 @@ export type JournalVoucherEntry = {
   drAmount?: InputMaybe<Scalars['String']>;
 };
 
+export type JournalVoucherFilter = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
 export type JournalVoucherInput = {
   chequeNo?: InputMaybe<Scalars['String']>;
-  date?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['Localized']>;
   entries?: InputMaybe<Array<InputMaybe<JournalVoucherEntry>>>;
   notes?: InputMaybe<Scalars['String']>;
   paymentMode?: InputMaybe<JournalVoucherPaymentMode>;
@@ -5164,7 +5188,12 @@ export enum JournalVoucherPaymentMode {
 }
 
 export type JournalVoucherQuery = {
-  list?: Maybe<Scalars['Any']>;
+  list?: Maybe<JournalVoucherConnection>;
+};
+
+export type JournalVoucherQueryListArgs = {
+  filter?: InputMaybe<JournalVoucherFilter>;
+  pagination?: InputMaybe<Pagination>;
 };
 
 export type JournalVoucherResult = {
@@ -5600,6 +5629,7 @@ export type KymCoopAccountOperatorDetailsFormInput = {
 export type KymCoopAccountOperatorQuery = {
   data?: Maybe<Array<Maybe<KymCooperativeAccountOperatorDetailsFormState>>>;
   error?: Maybe<QueryError>;
+  sectionStatus?: Maybe<Array<Maybe<KymFormStatus>>>;
 };
 
 export type KymCoopDirectorDetails = {
@@ -5635,6 +5665,7 @@ export type KymCoopDirectorDetailsFormInput = {
 export type KymCoopDirectorQuery = {
   data?: Maybe<Array<Maybe<KymCooperativeBodDetailsFormState>>>;
   error?: Maybe<QueryError>;
+  sectionStatus?: Maybe<Array<Maybe<KymFormStatus>>>;
 };
 
 export type KymCoopMembershipDetails = {
@@ -5964,7 +5995,7 @@ export type KymCooperativeAccountOperatorStatus = {
 export type KymCooperativeAddFormStatus = {
   formData?: Maybe<KymCooperativeFormData>;
   lastUpdated?: Maybe<KymCooperativeAddLus>;
-  sectionStatus?: Maybe<KymCooperativeAddSectionStatus>;
+  sectionStatus?: Maybe<KymFormStatus>;
 };
 
 export type KymCooperativeAddLus =
@@ -5982,11 +6013,11 @@ export type KymCooperativeAddResult = {
 };
 
 export type KymCooperativeAddSectionStatus = {
-  accountOperatorDetails?: Maybe<KymCooperativeAccountOperatorStatus>;
-  bodDetails?: Maybe<KymCooperativeBodDetailsStatus>;
-  declaration?: Maybe<KymCooperativeDeclarationStatus>;
-  economicDetails?: Maybe<KymCooperativeEconomicDetailsStatus>;
-  institutionInformation?: Maybe<KymCooperativeInstitutionalInformationStatus>;
+  accountOperatorDetails?: Maybe<KymFormStatus>;
+  bodDetails?: Maybe<KymFormStatus>;
+  declaration?: Maybe<KymFormStatus>;
+  economicDetails?: Maybe<KymFormStatus>;
+  institutionInformation?: Maybe<KymFormStatus>;
 };
 
 export type KymCooperativeBodDetailsFormState = {
@@ -6197,6 +6228,7 @@ export enum KymCooperativeInstitutionInformationSection {
   AdditionalCooperativeDetails = 'ADDITIONAL_COOPERATIVE_DETAILS',
   BasicInformation = 'BASIC_INFORMATION',
   ContactDetails = 'CONTACT_DETAILS',
+  CooperativeDate = 'COOPERATIVE_DATE',
   CurrentMembers = 'CURRENT_MEMBERS',
   NumberOfEmployee = 'NUMBER_OF_EMPLOYEE',
   OperatingAddress = 'OPERATING_ADDRESS',
@@ -6219,10 +6251,17 @@ export type KymCooperativeMutationAddArgs = {
   data: KymCooperativeFormInput;
 };
 
+export type KymCooperativeOverallFormStatus = {
+  accountOperatorDetails?: Maybe<Array<Maybe<KymFormStatus>>>;
+  coopDetails?: Maybe<KymFormStatus>;
+  directorsDetails?: Maybe<Array<Maybe<KymFormStatus>>>;
+};
+
 export type KymCooperativeQuery = {
   formState?: Maybe<KymCooperativeFormStateQuery>;
   listAccountOperators?: Maybe<KymCoopAccountOperatorQuery>;
   listDirectors?: Maybe<KymCoopDirectorQuery>;
+  overallFormStatus?: Maybe<KymCooperativeOverallFormStatus>;
 };
 
 export type KymCooperativeQueryFormStateArgs = {
@@ -6234,6 +6273,10 @@ export type KymCooperativeQueryListAccountOperatorsArgs = {
 };
 
 export type KymCooperativeQueryListDirectorsArgs = {
+  id: Scalars['ID'];
+};
+
+export type KymCooperativeQueryOverallFormStatusArgs = {
   id: Scalars['ID'];
 };
 
@@ -8819,6 +8862,10 @@ export type MemberQuery = {
   memberTypes: MemberTypeResult;
   officialUse?: Maybe<OfficialUseResult>;
   translate: TranslateQueryResult;
+};
+
+export type MemberQueryCooperativeArgs = {
+  includeRequiredErrors?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type MemberQueryDetailsArgs = {
@@ -15716,6 +15763,7 @@ export type GetConfigQuery = {
 
 export type GetCoOperativeKymEditDataQueryVariables = Exact<{
   id: Scalars['ID'];
+  hasPressedNext?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 export type GetCoOperativeKymEditDataQuery = {
@@ -15799,6 +15847,22 @@ export type GetCoOperativeKymEditDataQuery = {
               houseNo?: string | null;
               coordinates?: { longitude?: number | null; latitude?: number | null } | null;
             } | null;
+          } | null;
+          sectionStatus?: {
+            errors?: Record<string, Array<string>> | null;
+            sectionStatus?: {
+              errors?: Array<string> | null;
+              incomplete?: Array<string> | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+      overallFormStatus?: {
+        coopDetails?: {
+          id?: string | null;
+          sectionStatus?: {
+            errors?: Array<string> | null;
+            incomplete?: Array<string> | null;
           } | null;
         } | null;
       } | null;
@@ -15891,6 +15955,44 @@ export type GetCoOperativeAccountOperatorEditDataQuery = {
             dateOfTraining?: string | null;
             trainingOrganization?: string | null;
           } | null> | null;
+        } | null> | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetKymCooperativeOverallFormStatusQueryVariables = Exact<{
+  id: Scalars['ID'];
+  hasPressedNext?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type GetKymCooperativeOverallFormStatusQuery = {
+  members: {
+    cooperative?: {
+      overallFormStatus?: {
+        coopDetails?: {
+          id?: string | null;
+          errors?: Record<string, Array<string>> | null;
+          sectionStatus?: {
+            errors?: Array<string> | null;
+            incomplete?: Array<string> | null;
+          } | null;
+        } | null;
+        directorsDetails?: Array<{
+          id?: string | null;
+          errors?: Record<string, Array<string>> | null;
+          sectionStatus?: {
+            errors?: Array<string> | null;
+            incomplete?: Array<string> | null;
+          } | null;
+        } | null> | null;
+        accountOperatorDetails?: Array<{
+          id?: string | null;
+          errors?: Record<string, Array<string>> | null;
+          sectionStatus?: {
+            errors?: Array<string> | null;
+            incomplete?: Array<string> | null;
+          } | null;
         } | null> | null;
       } | null;
     } | null;
@@ -26718,9 +26820,9 @@ export const useGetConfigQuery = <TData = GetConfigQuery, TError = unknown>(
     options
   );
 export const GetCoOperativeKymEditDataDocument = `
-    query getCoOperativeKymEditData($id: ID!) {
+    query getCoOperativeKymEditData($id: ID!, $hasPressedNext: Boolean) {
   members {
-    cooperative {
+    cooperative(includeRequiredErrors: $hasPressedNext) {
       formState(id: $id) {
         data {
           formData {
@@ -26811,6 +26913,22 @@ export const GetCoOperativeKymEditDataDocument = `
             totalAssets
             accountHoldersName
             hasTCAccepted
+          }
+          sectionStatus {
+            errors
+            sectionStatus {
+              errors
+              incomplete
+            }
+          }
+        }
+      }
+      overallFormStatus(id: $id) {
+        coopDetails {
+          id
+          sectionStatus {
+            errors
+            incomplete
           }
         }
       }
@@ -26956,6 +27074,55 @@ export const useGetCoOperativeAccountOperatorEditDataQuery = <
       GetCoOperativeAccountOperatorEditDataQuery,
       GetCoOperativeAccountOperatorEditDataQueryVariables
     >(GetCoOperativeAccountOperatorEditDataDocument).bind(null, variables),
+    options
+  );
+export const GetKymCooperativeOverallFormStatusDocument = `
+    query getKYMCooperativeOverallFormStatus($id: ID!, $hasPressedNext: Boolean) {
+  members {
+    cooperative(includeRequiredErrors: $hasPressedNext) {
+      overallFormStatus(id: $id) {
+        coopDetails {
+          id
+          errors
+          sectionStatus {
+            errors
+            incomplete
+          }
+        }
+        directorsDetails {
+          id
+          errors
+          sectionStatus {
+            errors
+            incomplete
+          }
+        }
+        accountOperatorDetails {
+          id
+          errors
+          sectionStatus {
+            errors
+            incomplete
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetKymCooperativeOverallFormStatusQuery = <
+  TData = GetKymCooperativeOverallFormStatusQuery,
+  TError = unknown
+>(
+  variables: GetKymCooperativeOverallFormStatusQueryVariables,
+  options?: UseQueryOptions<GetKymCooperativeOverallFormStatusQuery, TError, TData>
+) =>
+  useQuery<GetKymCooperativeOverallFormStatusQuery, TError, TData>(
+    ['getKYMCooperativeOverallFormStatus', variables],
+    useAxios<
+      GetKymCooperativeOverallFormStatusQuery,
+      GetKymCooperativeOverallFormStatusQueryVariables
+    >(GetKymCooperativeOverallFormStatusDocument).bind(null, variables),
     options
   );
 export const GetCooperativeUnionKymEditDataDocument = `

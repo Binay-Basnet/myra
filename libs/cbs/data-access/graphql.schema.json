@@ -2686,6 +2686,22 @@
             "deprecationReason": null
           },
           {
+            "name": "journalVoucher",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "JournalVoucherQuery",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "sales",
             "description": null,
             "args": [],
@@ -28607,6 +28623,18 @@
             "deprecationReason": null
           },
           {
+            "name": "loanInterestBooking",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "EODState",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "maturity",
             "description": null,
             "args": [],
@@ -43775,6 +43803,155 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "JournalVoucher",
+        "description": null,
+        "fields": [
+          {
+            "name": "amount",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "date",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Localized",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "reference",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "JournalVoucherConnection",
+        "description": null,
+        "fields": [
+          {
+            "name": "edges",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "JournalVoucherEdges",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "pageInfo",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "PageInfo",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "totalCount",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "JournalVoucherEdges",
+        "description": null,
+        "fields": [
+          {
+            "name": "cursor",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Cursor",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "node",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "JournalVoucher",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "INPUT_OBJECT",
         "name": "JournalVoucherEntry",
         "description": null,
@@ -43835,6 +44012,29 @@
       },
       {
         "kind": "INPUT_OBJECT",
+        "name": "JournalVoucherFilter",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "id",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
         "name": "JournalVoucherInput",
         "description": null,
         "fields": null,
@@ -43856,7 +44056,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Localized",
               "ofType": null
             },
             "defaultValue": null,
@@ -43987,10 +44187,35 @@
           {
             "name": "list",
             "description": null,
-            "args": [],
+            "args": [
+              {
+                "name": "filter",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "JournalVoucherFilter",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "pagination",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "Pagination",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
             "type": {
-              "kind": "SCALAR",
-              "name": "Any",
+              "kind": "OBJECT",
+              "name": "JournalVoucherConnection",
               "ofType": null
             },
             "isDeprecated": false,
@@ -47684,6 +47909,22 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "sectionStatus",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "KymFormStatus",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -47972,6 +48213,22 @@
               "kind": "UNION",
               "name": "QueryError",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "sectionStatus",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "KymFormStatus",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -50720,7 +50977,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymCooperativeAddSectionStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -50842,7 +51099,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymCooperativeAccountOperatorStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -50854,7 +51111,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymCooperativeBodDetailsStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -50866,7 +51123,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymCooperativeDeclarationStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -50878,7 +51135,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymCooperativeEconomicDetailsStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -50890,7 +51147,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "KymCooperativeInstitutionalInformationStatus",
+              "name": "KymFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -52953,6 +53210,12 @@
             "deprecationReason": null
           },
           {
+            "name": "COOPERATIVE_DATE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "CURRENT_MEMBERS",
             "description": null,
             "isDeprecated": false,
@@ -53094,6 +53357,61 @@
       },
       {
         "kind": "OBJECT",
+        "name": "KymCooperativeOverallFormStatus",
+        "description": null,
+        "fields": [
+          {
+            "name": "accountOperatorDetails",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "KymFormStatus",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "coopDetails",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "KymFormStatus",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "directorsDetails",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "KymFormStatus",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "KymCooperativeQuery",
         "description": null,
         "fields": [
@@ -53179,6 +53497,35 @@
             "type": {
               "kind": "OBJECT",
               "name": "KymCoopDirectorQuery",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "overallFormStatus",
+            "description": null,
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "KymCooperativeOverallFormStatus",
               "ofType": null
             },
             "isDeprecated": false,
@@ -75958,7 +76305,20 @@
           {
             "name": "cooperative",
             "description": null,
-            "args": [],
+            "args": [
+              {
+                "name": "includeRequiredErrors",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
             "type": {
               "kind": "OBJECT",
               "name": "KymCooperativeQuery",
