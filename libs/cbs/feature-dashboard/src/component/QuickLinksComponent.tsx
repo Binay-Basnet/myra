@@ -128,12 +128,7 @@ export const QuickLinksComponent = () => {
       <Grid templateColumns="repeat(3,1fr)" columnGap="s16" rowGap="s16">
         {quickLinksList?.map((item) => (
           <GridItem key={item?.text}>
-            <QuickLinks
-              icon={item.icon}
-              text={item.text}
-              subText={item.subText}
-              onclick={item.onclick}
-            />
+            <QuickLinks icon={item.icon} text={item.text} onclick={item.onclick} />
           </GridItem>
         ))}
       </Grid>
@@ -171,7 +166,6 @@ export const QuickLinksComponent = () => {
                           editable
                           icon={item.icon}
                           text={item.text}
-                          subText={item.subText}
                           onclick={item.onclick}
                           editLinks
                         />
