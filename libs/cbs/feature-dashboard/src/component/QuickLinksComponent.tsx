@@ -6,7 +6,8 @@ import { ImStack } from 'react-icons/im';
 import { IoMdPersonAdd } from 'react-icons/io';
 import { IoCubeOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
-import { Box, Modal, Grid, GridItem, QuickLinks, Text } from '@myra-ui';
+
+import { Box, Grid, GridItem, Modal, QuickLinks, Text } from '@myra-ui';
 
 import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
@@ -59,7 +60,6 @@ export const QuickLinksComponent = () => {
     {
       id: 'g',
       text: 'New Saving Account',
-      subText: 'Member Profile',
       icon: ImStack,
       onclick: () =>
         newId
