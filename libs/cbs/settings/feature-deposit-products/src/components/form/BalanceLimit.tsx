@@ -23,7 +23,7 @@ export const BalanceLimit = () => {
         name="balanceLimit.maxAmount"
         label={t['depositProductMaximumAmount']}
         rules={{
-          max: {
+          min: {
             value: minAmount,
             message: 'Maximum balance amount should be greater than minimum amount',
           },
