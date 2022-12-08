@@ -3,7 +3,6 @@ import { AiOutlineSetting } from 'react-icons/ai';
 import { CgLoadbarDoc } from 'react-icons/cg';
 import { useRouter } from 'next/router';
 
-import { TabColumn } from '@coop/myra/components';
 import {
   AddButtonList,
   Box,
@@ -12,6 +11,8 @@ import {
   SettingsButton,
   Text,
 } from '@myra-ui';
+
+import { TabColumn } from '@coop/myra/components';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IAccountPageLayoutProps {

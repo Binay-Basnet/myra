@@ -13,7 +13,7 @@ import {
 } from '@myra-ui';
 
 import { JournalVoucherPaymentMode, useSetJournalVoucherDataMutation } from '@coop/cbs/data-access';
-import { FormInput, FormLocalDatePicker, FormSwitchTab, FormTextArea } from '@coop/shared/form';
+import { FormInput, FormLocalDatePicker, FormTextArea } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { JournalVouchersTable } from '../components';
@@ -22,10 +22,10 @@ import { CustomJournalVoucherInput } from '../types';
 /* eslint-disable-next-line */
 export interface AccountingFeatureAddJournalVoucherProps {}
 
-const PaymentModeOptions = [
-  { label: 'Cash', value: JournalVoucherPaymentMode.Cash },
-  { label: 'Cheque', value: JournalVoucherPaymentMode.Cheque },
-];
+// const PaymentModeOptions = [
+//   { label: 'Cash', value: JournalVoucherPaymentMode.Cash },
+//   { label: 'Cheque', value: JournalVoucherPaymentMode.Cheque },
+// ];
 
 export const AccountingFeatureAddJournalVoucher = () => {
   const { t } = useTranslation();
@@ -36,9 +36,12 @@ export const AccountingFeatureAddJournalVoucher = () => {
     defaultValues: { paymentMode: JournalVoucherPaymentMode.Cash },
   });
 
-  const { watch, getValues } = methods;
+  const {
+    // watch,
+    getValues,
+  } = methods;
 
-  const paymentMode = watch('paymentMode');
+  // const paymentMode = watch('paymentMode');
 
   const { mutateAsync: setJournalVoucherData } = useSetJournalVoucherDataMutation();
 
@@ -94,7 +97,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
                 </GridItem>
               </FormSection>
 
-              <FormSection>
+              {/* <FormSection>
                 <GridItem colSpan={3}>
                   <FormSwitchTab
                     name="paymentMode"
@@ -106,7 +109,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
                 {paymentMode === JournalVoucherPaymentMode.Cheque && (
                   <FormInput name="chequeNo" label="Cheque No" />
                 )}
-              </FormSection>
+              </FormSection> */}
               <FormSection divider={false}>
                 <GridItem colSpan={2}>
                   <FormTextArea
