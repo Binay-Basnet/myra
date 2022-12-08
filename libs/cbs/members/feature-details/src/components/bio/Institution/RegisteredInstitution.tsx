@@ -1,6 +1,6 @@
 import { DetailCardContent, DetailsCard } from '@myra-ui';
 
-export const MemberBasicInfo = () => (
+export const RegisteredDetails = () => (
   // const router = useRouter();
   // const memberDetails = useGetMemberDetailsOverviewQuery({
   //   id: router.query['id'] as string,
@@ -8,7 +8,9 @@ export const MemberBasicInfo = () => (
 
   // const memberBasicInfo =
   //   memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation;
-  <DetailsCard title="Registered Details" bg="white">
+  <DetailsCard title="Registered Details" bg="white" hasThreeRows>
+    <DetailCardContent title="Registered Number" subtitle="" />
+    <DetailCardContent title="Issuing Office" subtitle="" />
     <DetailCardContent title="Province" subtitle="" />
     <DetailCardContent title="District" subtitle="" />
     <DetailCardContent title="Local Government" subtitle="" />

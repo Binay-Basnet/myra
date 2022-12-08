@@ -4,7 +4,11 @@ import { useRouter } from 'next/router';
 
 import { Button, DetailsCard, Icon } from '@myra-ui';
 
-import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
+import {
+  IndividualBasicMinInfo,
+  useGetMemberDetailsOverviewQuery,
+  useGetMemberOverviewBasicDetailsQuery,
+} from '@coop/cbs/data-access';
 
 import { AccountCard } from './AccountCard';
 import { AccountTable } from './AccountTable';
@@ -34,9 +38,17 @@ export const AccountList = ({ title, accountList, isClosedAccounts }: IAccountLi
   const memberDetails = useGetMemberDetailsOverviewQuery({
     id: router.query['id'] as string,
   });
+  const memberDetailsData = useGetMemberOverviewBasicDetailsQuery({
+    id: router.query['id'] as string,
+  });
 
   const memberBasicDetails =
-    memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation;
+    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+      ?.__typename === 'IndividualBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+          ?.basicInformation as IndividualBasicMinInfo)
+      : null;
+
   const contactNo = memberBasicDetails?.contactNumber;
   const memberName = memberBasicDetails?.memberName;
   const memberAccountDetails =

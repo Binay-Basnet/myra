@@ -19,8 +19,8 @@ export const ShareTable = () => {
       date: data?.transactionDate,
       type: data?.transactionDirection,
       toFrom: `${data?.startNumber} - ${data?.endNumber}`,
-      shareCr: data?.credit,
-      shareDr: data?.debit,
+      shareCr: data?.credit ? Number(data?.credit) * 100 : null,
+      shareDr: data?.debit ? Number(data?.debit) * 100 : null,
       balance: data?.balance,
     })) || [];
   return (

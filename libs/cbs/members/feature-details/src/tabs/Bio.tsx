@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { Box, Grid, Icon, Text } from '@myra-ui';
 
 import {
+  BioInstitution,
   MemberAddressInfo,
   MemberBasicInfo,
   MemberContactInfo,
@@ -97,6 +98,7 @@ export const Bio = () => {
       <MemberAddressInfo />
       <MemberFamilyInfo />
       <MemberFamilyRelationsInfo />
+      <BioInstitution />
     </>
   );
 };
