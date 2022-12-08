@@ -4,10 +4,8 @@ import { useFormContext } from 'react-hook-form';
 import { Box, Grid, GridItem, Text } from '@myra-ui';
 
 import {
-  DepositAccount,
   DepositedBy,
   DepositPaymentType,
-  NatureOfDepositProduct,
   ObjState,
   RootState,
   useAppSelector,
@@ -75,8 +73,8 @@ const denominationsOptions = [
 export interface PaymentProps {
   mode: number;
   totalDeposit: number;
-  rebate: number;
-  selectedAccount?: DepositAccount;
+  // rebate: number;
+  // selectedAccount?: DepositAccount;
 }
 
 type PaymentTableType = {
@@ -85,7 +83,7 @@ type PaymentTableType = {
   amount: string;
 };
 
-export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: PaymentProps) => {
+export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
   const { t } = useTranslation();
 
   const paymentModes = [
@@ -165,13 +163,7 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
 
   const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
 
-  const returnAmount =
-    selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
-    selectedAccount?.product?.isMandatorySaving
-      ? 0
-      : rebate
-      ? totalCashPaid - totalDeposit + rebate
-      : totalCashPaid - totalDeposit;
+  const returnAmount = totalCashPaid - totalDeposit;
 
   // refetch data when calendar preference is updated
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);

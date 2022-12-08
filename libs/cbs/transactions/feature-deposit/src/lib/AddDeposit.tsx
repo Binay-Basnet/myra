@@ -411,7 +411,7 @@ export const AddDeposit = () => {
                         selectedAccount?.product?.isMandatorySaving)) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
-                          <FormInput name="voucherId" label={t['addDepositVoucherId']} />
+                          <FormInput name="voucherId" label="Deposit Slip No" />
 
                           <Box />
 
@@ -442,7 +442,7 @@ export const AddDeposit = () => {
                     selectedAccount?.product?.nature === NatureOfDepositProduct.TermSavingOrFd && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-start">
-                          <FormInput name="voucherId" label={t['addDepositVoucherId']} />
+                          <FormInput name="voucherId" label="Deposit Slip No" />
 
                           <FormAmountInput
                             type="number"
@@ -471,7 +471,7 @@ export const AddDeposit = () => {
                         !selectedAccount?.product?.isMandatorySaving)) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-start">
-                          <FormInput name="voucherId" label={t['addDepositVoucherId']} />
+                          <FormInput name="voucherId" label="Deposit Slip No" />
 
                           <FormAmountInput
                             type="number"
@@ -605,8 +605,8 @@ export const AddDeposit = () => {
               <Payment
                 mode={mode}
                 totalDeposit={rebate ? Number(totalDeposit) - Number(rebate) : Number(totalDeposit)}
-                rebate={Number(rebate ?? 0)}
-                selectedAccount={selectedAccount as DepositAccount}
+                // rebate={Number(rebate ?? 0)}
+                // selectedAccount={selectedAccount as DepositAccount}
               />
             </form>
           </FormProvider>
