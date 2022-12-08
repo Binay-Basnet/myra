@@ -94,7 +94,7 @@ export const AddWithdraw = () => {
   const methods = useForm<WithdrawFormInput>({
     defaultValues: {
       payment_type: WithdrawPaymentType.Cash,
-      cash: { disableDenomination: false },
+      cash: { disableDenomination: true },
       withdrawnBy: WithdrawBy.Self,
       withdrawWith: WithdrawWith.WithdrawSlip,
     },
@@ -154,7 +154,13 @@ export const AddWithdraw = () => {
 
   const withdrawn = watch('withdrawWith');
 
+  const withdrawSlipNo = watch('withdrawSlipNo');
+
+  const counterSlipNo = watch('counterSlipNo');
+
   const amountToBeWithdrawn = watch('amount') ?? 0;
+
+  const paymentType = watch('payment_type');
 
   const fine = useMemo(() => {
     if (!amountToBeWithdrawn) {
@@ -194,6 +200,8 @@ export const AddWithdraw = () => {
   const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
 
   const returnAmount = Number(totalCashPaid) - Number(totalWithdraw);
+
+  const bankChequeAmount = watch('bankCheque.amount');
 
   const handleSubmit = () => {
     const values = getValues();
@@ -271,6 +279,35 @@ export const AddWithdraw = () => {
       methods.setValue('accountId', String(redirectAccountId));
     }
   }, [memberId, redirectAccountId]);
+
+  const checkIsSubmitButtonDisabled = () => {
+    if (mode === 0) {
+      if (!totalWithdraw) {
+        return true;
+      }
+
+      if (withdrawn === WithdrawWith.WithdrawSlip && !withdrawSlipNo) {
+        return true;
+      }
+
+      if (withdrawn === WithdrawWith.CounterSlip && !counterSlipNo) {
+        return true;
+      }
+    }
+
+    if (paymentType === WithdrawPaymentType.Cash && totalCashPaid < totalWithdraw) {
+      return true;
+    }
+
+    if (
+      paymentType === WithdrawPaymentType.BankCheque &&
+      Number(bankChequeAmount) < totalWithdraw
+    ) {
+      return true;
+    }
+
+    return false;
+  };
 
   return (
     <>
@@ -467,7 +504,7 @@ export const AddWithdraw = () => {
                 mode === 0 ? t['addWithdrawProceedToPayment'] : t['addWithdrawSubmit']
               }
               mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
-              isMainButtonDisabled={mode === 0 && !accountId}
+              isMainButtonDisabled={checkIsSubmitButtonDisabled()}
             />
           </Container>
         </Box>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDeepCompareEffect } from 'react-use';
+
 import { Box, GridItem, Text } from '@myra-ui';
 
 import { SalesSaleEntryInput } from '@coop/cbs/data-access';
@@ -62,7 +63,7 @@ export const SalesBox = () => {
           </Text>
 
           <Box width="200px">
-            <FormAmountInput type="number" name="discount" bg="gray.0" size="sm" />
+            <FormAmountInput name="discount" bg="gray.0" size="sm" />
           </Box>
         </GridItem>
 

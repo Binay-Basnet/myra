@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
+
 import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import { useGetLoanRepaymentListQuery } from '@coop/cbs/data-access';
-import { Column, Table } from '@myra-ui/table';
-import { amountConverter, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const CBSLoanRepaymentList = () => {
   const router = useRouter();
@@ -103,7 +104,7 @@ export const CBSLoanRepaymentList = () => {
   return (
     <>
       <Box position="sticky" top="110px" zIndex={3}>
-        <PageHeader heading="Loan Repayment" />
+        <PageHeader heading={`Loan Repayment - ${featureCode.loanRepayment} `} />
       </Box>
 
       <Table

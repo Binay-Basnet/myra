@@ -1,13 +1,14 @@
 import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { useGetPreviousYearFundManagementQuery } from '@coop/cbs/data-access';
-import { Column } from '@myra-ui/editable-table';
-import { FormEditableTable } from '@coop/shared/form';
 import { GridItem } from '@myra-ui';
+import { Column } from '@myra-ui/editable-table';
+
+import { useGetPreviousYearFundManagementQuery } from '@coop/cbs/data-access';
+import { FormEditableTable } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
-import { TableOverview } from './TableOverview';
+import { TableOverview, TableOverviewColumnType } from './TableOverview';
 import { CustomFundManagementInput, ParticularTableType } from '../lib/type';
 
 export const ParticularTable = () => {
@@ -64,7 +65,7 @@ export const ParticularTable = () => {
 
   const generalReserveFund = watch('generalReserveFund');
 
-  const generalReserveFundSummary = useMemo(
+  const generalReserveFundSummary: TableOverviewColumnType[] = useMemo(
     () => [
       { label: 'Net off Profit Balance', width: 'auto', isNumeric: false },
       { label: '', width: 'auto', isNumeric: false },

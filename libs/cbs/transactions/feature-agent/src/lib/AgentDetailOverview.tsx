@@ -3,6 +3,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
 
+import { Alert, asyncToast, Box, Button, DetailPageContentCard, Text } from '@myra-ui';
+
 import {
   useGetAgentAssignedMemberListDataQuery,
   useGetAgentTodayListDataQuery,
@@ -10,7 +12,6 @@ import {
 } from '@coop/cbs/data-access';
 import { AssignedMembersCard } from '@coop/cbs/transactions/ui-components';
 import { FormEditableTable } from '@coop/shared/form';
-import { Alert, asyncToast, Box, Button, DetailPageContentCard, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -81,10 +82,11 @@ export const AgentDetailOverview = () => {
               assignedMemberListQueryData?.transaction?.assignedMemberList?.edges?.find(
                 (member) => member?.node?.account?.id === record?.account
               );
+
             return {
               member: record?.member,
               account: record?.account,
-              amount: record?.amount ?? account?.node?.account?.dues?.totalDue,
+              amount: record?.amount || account?.node?.account?.dues?.totalDue,
             };
           }
         ),

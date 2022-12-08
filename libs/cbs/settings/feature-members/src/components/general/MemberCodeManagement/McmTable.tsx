@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { asyncToast, Box, Button, Modal, Text } from '@myra-ui';
+import { Table } from '@myra-ui/table';
 
 import {
   GeneralMemberInput,
@@ -9,7 +10,6 @@ import {
   useGetGeneralMemberSettingsDataQuery,
 } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
-import { Table } from '@myra-ui/table';
 import { useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */

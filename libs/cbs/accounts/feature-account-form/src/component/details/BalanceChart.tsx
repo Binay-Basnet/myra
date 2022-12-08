@@ -3,8 +3,9 @@ import dynamic from 'next/dynamic';
 import format from 'date-fns/format';
 import subDays from 'date-fns/subDays';
 
-import { useAccountDetails, useGetAccountTransactionListsQuery } from '@coop/cbs/data-access';
 import { Box, DetailsCard, Text } from '@myra-ui';
+
+import { useAccountDetails, useGetAccountTransactionListsQuery } from '@coop/cbs/data-access';
 import { amountConverter, getRouterQuery } from '@coop/shared/utils';
 
 const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });
@@ -98,6 +99,7 @@ export const BalanceChart = () => {
         height="400px"
         w="100%"
         options={{
+          chart: { toolbar: { show: false } },
           xaxis: {
             type: 'datetime',
           },

@@ -230,6 +230,7 @@ export const NewAccountTransfer = () => {
                           label={t['newAccountTransferSourceAccount']}
                           memberId={memberId}
                           filterBy={ObjState.Active}
+                          isLinkedAccounts
                         />
                       )}
                     </BoxContainer>
@@ -249,6 +250,7 @@ export const NewAccountTransfer = () => {
                             memberId={memberId}
                             filterBy={ObjState.Active}
                             excludeIds={[srcAccountId]}
+                            isLinkedAccounts
                           />
                         )}
 

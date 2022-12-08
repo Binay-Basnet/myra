@@ -210,6 +210,7 @@ query getInterestTaxReport($data: InterestTaxReportFilter!) {
     interestTaxReport(data: $data) {
       data {
         memberId
+        memberCode
         name
         address {
           ...Address
@@ -773,6 +774,59 @@ query getLoanAgingStatementReport($data: LoanAgingStatementInput) {
           matured1To30DaysTotal
           matured1To12MonthsTotal
           maturedAbove12MonthsTotal
+        }
+      }
+    }
+  }
+}
+
+query getValutBalanceReport($data: VaultBalanceReportFilter!) {
+  report {
+    transactionReport {
+      financial {
+        vaultBalanceReport(data: $data) {
+          data {
+            opening {
+              denomination {
+                value
+                quantity
+                amount
+              }
+              noneAmount
+              noteTotal
+              amountTotal
+            }
+            vaultIn {
+              denomination {
+                value
+                quantity
+                amount
+              }
+              noneAmount
+              noteTotal
+              amountTotal
+            }
+            vaultOut {
+              denomination {
+                value
+                quantity
+                amount
+              }
+              noneAmount
+              noteTotal
+              amountTotal
+            }
+            closing {
+              denomination {
+                value
+                quantity
+                amount
+              }
+              noneAmount
+              noteTotal
+              amountTotal
+            }
+          }
         }
       }
     }

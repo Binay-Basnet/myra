@@ -184,6 +184,11 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
     resetField('openingPayment.bankVoucher.depositedAt');
   }, [preference?.date]);
 
+  useEffect(() => {
+    if (disableDenomination === undefined)
+      setValue('openingPayment.cash.disableDenomination', true);
+  });
+
   return (
     <ContainerWithDivider
       borderRight="1px"
@@ -281,13 +286,11 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
                 label={t['depositPaymentCash']}
               />
             </InputGroupContainer>
-
             <FormSwitch
               name="openingPayment.cash.disableDenomination"
               label={t['depositPaymentDisableDenomination']}
               defaultChecked={false}
             />
-
             {!disableDenomination && (
               <FormEditableTable<PaymentTableType>
                 name="openingPayment.cash.denominations"
@@ -328,7 +331,6 @@ export const Payment = ({ mode, totalAmount }: PaymentProps) => {
                 canAddRow={false}
               />
             )}
-
             <Box
               display="flex"
               flexDirection="column"

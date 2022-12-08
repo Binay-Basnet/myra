@@ -1,8 +1,9 @@
 import { IoCopyOutline, IoQrCodeOutline } from 'react-icons/io5';
 import { useDisclosure } from '@chakra-ui/react';
 
-import { NatureOfDepositProduct, useAccountDetails } from '@coop/cbs/data-access';
 import { AccountQRModal, Box, DetailPageMemberCard, DetailPageTabs, Icon, Text } from '@myra-ui';
+
+import { NatureOfDepositProduct, useAccountDetails } from '@coop/cbs/data-access';
 import { amountConverter, copyToClipboard } from '@coop/shared/utils';
 
 const accountTypes = {
@@ -95,10 +96,10 @@ export const AccountDetailsSidebar = () => {
           'Overview',
           'Transactions',
           'Withdraw Slip',
-          'ATM',
-          'Activity',
-          'Documents',
-          'Tasks',
+          // 'ATM',
+          // 'Activity',
+          // 'Documents',
+          // 'Tasks',
         ]}
       />
 

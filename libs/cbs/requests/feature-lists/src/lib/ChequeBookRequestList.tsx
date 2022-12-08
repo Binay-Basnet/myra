@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
+
 import {
   Box,
   DetailCardContent,
@@ -10,6 +11,7 @@ import {
   TablePopover,
   Text,
 } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import {
   ChequePickUpMethod,
@@ -17,7 +19,6 @@ import {
   RequestType,
   useGetChequeBookRequestsQuery,
 } from '@coop/cbs/data-access';
-import { Column, Table } from '@myra-ui/table';
 import { getRouterQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';

@@ -1,4 +1,4 @@
-# coop
+# Myra
 
 This project was generated using [Nx](https://nx.dev).
 
@@ -103,4 +103,3 @@ I know its weird. But I didn't find any other way. will be looking into solution
 3. Try not to use "any" as a type.
 4. Keep components shared by all apps in shared library.
 5. keep graphql and api related stuff in data-access librrary.
-

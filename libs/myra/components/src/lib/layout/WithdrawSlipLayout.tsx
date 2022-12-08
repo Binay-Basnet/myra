@@ -1,6 +1,8 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 
-import { Box, Text } from '@myra-ui';
+import { AddButtonList, Box, Divider, PopOverComponentForButtonList, Text } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 import { TabColumn } from '../tab/TabforMemberPage';
@@ -16,12 +18,21 @@ const shareColumns = [
   },
   {
     title: 'withdrawSlipBlockRequests',
-    link: '/withdraw/block-cheque',
+    link: '/withdraw/block-withdraw-slip-requests/list',
+    addLink: '/withdraw/block-withdraw-slip-requests/add',
+  },
+];
+
+const addButtoncolumns = [
+  {
+    title: 'Block Withdraw Slip Requests',
+    link: '/withdraw/block-withdraw-slip-requests/add',
   },
 ];
 
 export const WithdrawSlipLayout = ({ children }: IMemberPageLayout) => {
-  // const router = useRouter();
+  const router = useRouter();
+
   const { t } = useTranslation();
 
   return (
@@ -33,15 +44,18 @@ export const WithdrawSlipLayout = ({ children }: IMemberPageLayout) => {
           </Text>
         </Box>
         <Box p="s16">
-          {/* <PopOverComponentForButtonList buttonLabel="New">
+          <PopOverComponentForButtonList buttonLabel="New">
             {addButtoncolumns.map((item) => (
               <Box key={item?.title}>
-                <AddButtonList label={t[item.title]} onClick={() => router.push(`${item.link}`)} />
+                <AddButtonList
+                  label={t[item.title] ?? item.title}
+                  onClick={() => router.push(`${item.link}`)}
+                />
               </Box>
             ))}
-          </PopOverComponentForButtonList> */}
+          </PopOverComponentForButtonList>
 
-          {/* <Divider my="s16" /> */}
+          <Divider my="s16" />
           <TabColumn list={shareColumns} />
         </Box>
       </Box>

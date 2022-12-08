@@ -12,29 +12,29 @@ const tabList: TabList[] = [
     title: 'settingsUserSidebarSuperAdmin',
     to: '/settings/users/super-admin',
   },
-  {
-    title: 'settingsUserSidebarBranchManager',
-    to: '/settings/users/service-center-manager',
-  },
-  {
-    title: 'settingsUserSidebarAgent',
-    to: '/settings/users/agent',
-  },
-  {
-    title: 'settingsUserSidebarOtherUsers',
-    to: '/settings/users/other-users',
-  },
+  // {
+  //   title: 'settingsUserSidebarBranchManager',
+  //   to: '/settings/users/service-center-manager',
+  // },
+  // {
+  //   title: 'settingsUserSidebarAgent',
+  //   to: '/settings/users/agent',
+  // },
+  // {
+  //   title: 'settingsUserSidebarOtherUsers',
+  //   to: '/settings/users/other-users',
+  // },
 ];
 
 const otherTabList: TabList[] = [
-  {
-    title: 'settingsUserSidebarRoleReferences',
-    to: '/settings/users/role-references',
-  },
-  {
-    title: 'settingsUserSidebarInvitation',
-    to: '/settings/users/invitation',
-  },
+  // {
+  //   title: 'settingsUserSidebarRoleReferences',
+  //   to: '/settings/users/role-references',
+  // },
+  // {
+  //   title: 'settingsUserSidebarInvitation',
+  //   to: '/settings/users/invitation',
+  // },
 ];
 
 export const SettingsUserSideBar = () => (

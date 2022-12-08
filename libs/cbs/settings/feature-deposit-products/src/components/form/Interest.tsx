@@ -1,14 +1,16 @@
 import { useFormContext } from 'react-hook-form';
 
+import { FormSection, Text } from '@myra-ui';
+
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
-import { FormSection, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const Interest = () => {
   const { t } = useTranslation();
   const { watch } = useFormContext();
   const depositNature = watch('nature');
+  const minRate = watch('interest.minRate');
 
   return (
     <FormSection header="depositProductInterest">
@@ -33,13 +35,18 @@ export const Interest = () => {
             %
           </Text>
         }
+        rules={{
+          min: {
+            value: minRate,
+            message: 'Maximum rate should be greater than minimum rate',
+          },
+        }}
       />
       <FormInput
         name="interest.defaultRate"
         type="number"
         label={t['depositProductDefaultRate']}
         textAlign="right"
-        __placeholder="0.00"
         rightElement={
           <Text fontWeight="Medium" fontSize="r1" color="primary.500">
             %

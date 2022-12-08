@@ -2,12 +2,13 @@ import { IoAddOutline } from 'react-icons/io5';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
+import { Box, Grid, Icon, Text } from '@myra-ui';
+
 import {
   Id_Type,
   useGetMemberDetailsOverviewQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
-import { Box, Grid, Icon, Text } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 import {
@@ -59,7 +60,7 @@ export const Overview = () => {
       link: `/loan/repayments/add?memberId=${id}`,
     },
     {
-      title: 'New Cheques',
+      title: 'Withdraw Slip',
       link: `/withdraw/cheque-book?memberId=${id}`,
     },
   ];

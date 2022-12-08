@@ -4,6 +4,7 @@ import { IoFilterOutline } from 'react-icons/io5';
 import { TbArrowsDiagonalMinimize2 } from 'react-icons/tb';
 import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { AccordionPanel, Spinner } from '@chakra-ui/react';
+
 import {
   Accordion,
   AccordionButton,
@@ -15,10 +16,10 @@ import {
   NoDataState,
   Text,
 } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import { useReport } from '@coop/cbs/reports';
 import { ReportOrganizationHeader } from '@coop/cbs/reports/components';
-import { Column, Table } from '@myra-ui/table';
 
 export const ReportHeader = ({ children }: { children: React.ReactNode }) => (
   <Box position="sticky" bg="white" top="110px" zIndex="10">

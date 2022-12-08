@@ -2,8 +2,9 @@ import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 
-import { useGetInventoryItemsQuery } from '@coop/cbs/data-access';
 import { Column, PageHeader, Table } from '@myra-ui';
+
+import { useGetInventoryItemsQuery } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
 export const InventoryAdjustmentsTable = () => {

@@ -1,4 +1,5 @@
 import { Modal, Text } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 interface IOverrideAlertModalProps {

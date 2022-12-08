@@ -1,6 +1,7 @@
+import { FormSection } from '@myra-ui';
+
 import { Frequency } from '@coop/cbs/data-access';
 import { FormSwitchTab } from '@coop/shared/form';
-import { FormSection } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const DepositFrequency = () => {

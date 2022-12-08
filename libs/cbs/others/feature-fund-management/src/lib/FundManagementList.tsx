@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { DepositedBy, useGetDepositListDataQuery } from '@coop/cbs/data-access';
-import { Column, Table } from '@myra-ui/table';
 import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
+import { DepositedBy, useGetDepositListDataQuery } from '@coop/cbs/data-access';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [

@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { CoaView, useDeleteCoaMutation, useGetCoaFullViewQuery } from '@coop/cbs/data-access';
-import { Column, Table } from '@myra-ui/table';
 import { asyncToast, TablePopover } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
+import { CoaView, useDeleteCoaMutation, useGetCoaFullViewQuery } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
 import { arrayToTreeCOA, getArrLeafNodes } from '../../utils/arrayToTree';

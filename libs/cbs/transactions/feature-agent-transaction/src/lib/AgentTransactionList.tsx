@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
+
 import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
 
 import { useGetDepositListDataQuery } from '@coop/cbs/data-access';
-import { Column, Table } from '@myra-ui/table';
 import { amountConverter, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const MEMBER_TAB_ITEMS = [

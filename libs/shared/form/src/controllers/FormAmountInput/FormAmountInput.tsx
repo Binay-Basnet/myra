@@ -1,4 +1,6 @@
 import { Control, Controller, Path, UseControllerProps, useFormContext } from 'react-hook-form';
+import { get } from 'lodash';
+
 import { AmountInput, InputProps } from '@myra-ui';
 
 /* eslint-disable-next-line */
@@ -28,7 +30,7 @@ export const FormAmountInput = <T,>({ name, ...rest }: FormAmountInputProps<T>) 
           id={name}
           onChange={onChange}
           value={value}
-          errorText={errors[name]?.message as string}
+          errorText={get(errors, name)?.message as string}
           {...fieldProps}
           {...rest}
         />

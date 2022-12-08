@@ -139,7 +139,7 @@ export const AccountOpenNew = () => {
     defaultValues: {
       openingPayment: {
         payment_type: DepositPaymentType.Cash,
-        cash: { disableDenomination: false },
+        cash: { disableDenomination: true },
         depositedBy: DepositedBy.Self,
       },
     },
@@ -274,6 +274,7 @@ export const AccountOpenNew = () => {
 
   const selectedPaymentMode = watch('openingPayment.payment_type');
   const accountName = watch('accountName');
+
   const checkIsSubmitButtonDisabled = () => {
     if (mode === '0') {
       return false;
@@ -439,7 +440,7 @@ export const AccountOpenNew = () => {
   }, [refetch]);
 
   useEffect(() => {
-    if (routerAction === 'add') {
+    if (routerAction === 'add' || routerAction === 'edit') {
       setValue('accountName', defaultAccountName);
     }
   }, [defaultAccountName]);

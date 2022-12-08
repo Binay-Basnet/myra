@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
+import { Box, PageHeader } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
 import { useGetAllSavedReportsQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
-import { Column, Table } from '@myra-ui/table';
-import { Box, PageHeader } from '@myra-ui';
 import { getRouterQuery } from '@coop/shared/utils';
 
 export const SavedReportList = () => {

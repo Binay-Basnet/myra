@@ -84,8 +84,7 @@ export const ShareStatementReport = () => {
               {
                 header: 'Date',
                 accessorKey: 'date',
-                cell: (props: { getValue: () => unknown }) =>
-                  String(props?.getValue())?.split(' ')[0],
+                accessorFn: (row) => row?.date?.local,
                 meta: {
                   Footer: {
                     display: 'none',

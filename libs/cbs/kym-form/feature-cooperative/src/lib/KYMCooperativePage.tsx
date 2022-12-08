@@ -2,10 +2,29 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from '@coop/shared/utils';
-import { Box, Button, Checkbox, Container, FormFooter, FormHeader, Icon, Text } from '@myra-ui';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  FormFooter,
+  FormHeader,
+  Icon,
+  Text,
+  toast,
+} from '@myra-ui';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { BiSave } from 'react-icons/bi';
 import { AccordionKymCoopForm } from '@coop/cbs/kym-form/formElements';
+import {
+  addCooperativeAccountError,
+  addCooperativeDirectorError,
+  addCooperativeError,
+  setCooperativeHasPressedNext,
+  useAppSelector,
+  useGetKymCooperativeOverallFormStatusQuery,
+} from '@coop/cbs/data-access';
+import { useDispatch } from 'react-redux';
 import {
   KymAccountHolderDeclaration,
   KymCoopAccountOperatorDetail,
@@ -30,10 +49,18 @@ export const KYMCooperativePage = () => {
     section: string;
     subSection: string;
   }>();
+  const dispatch = useDispatch();
 
   const router = useRouter();
   const id = String(router?.query?.['id']);
 
+  const { refetch } = useGetKymCooperativeOverallFormStatusQuery(
+    { id, hasPressedNext: true },
+    {
+      enabled: false,
+    }
+  );
+  const isFormDirty = useAppSelector((state) => state.cooperative.isFormDirty);
   return (
     <>
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
@@ -141,7 +168,52 @@ export const KYMCooperativePage = () => {
               </Button>
             }
             mainButtonLabel={t['next']}
-            mainButtonHandler={() => router.push(`/members/translation/${id}`)}
+            isMainButtonDisabled={!isFormDirty}
+            mainButtonHandler={async () => {
+              const response = await refetch();
+              const sectionStatus = response?.data?.members?.cooperative?.overallFormStatus;
+
+              const basicErrors = sectionStatus?.coopDetails?.errors;
+
+              const directorDetailsErrors = sectionStatus?.accountOperatorDetails?.map(
+                (director, index) => ({
+                  directorId: String(index),
+                  errors: director?.errors ?? {},
+                })
+              );
+
+              const accountDetailsErrors = sectionStatus?.accountOperatorDetails?.map(
+                (accountOperator, index) => ({
+                  operatorId: String(index),
+                  errors: accountOperator?.errors ?? {},
+                })
+              );
+
+              if (basicErrors) {
+                dispatch(addCooperativeError(basicErrors));
+              }
+
+              if (directorDetailsErrors) {
+                dispatch(addCooperativeDirectorError(directorDetailsErrors));
+              }
+
+              if (accountDetailsErrors) {
+                dispatch(addCooperativeAccountError(accountDetailsErrors));
+              }
+
+              if (response) {
+                dispatch(setCooperativeHasPressedNext(true));
+                if (!basicErrors) {
+                  router.push(`/members/translation/${router.query['id']}`);
+                } else {
+                  toast({
+                    id: 'validation-error',
+                    message: 'Some fields are empty or have error',
+                    type: 'error',
+                  });
+                }
+              }
+            }}
           />
         </Container>
       </Box>

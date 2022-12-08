@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { IoList, IoLogoMicrosoft } from 'react-icons/io5';
 import { useRouter } from 'next/router';
+
 import { Button, DetailsCard, Icon } from '@myra-ui';
 
 import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';

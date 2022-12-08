@@ -6,8 +6,9 @@ import { useDisclosure } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
+import { Box, Button, Icon, Input, Modal, PasswordInput, Text } from '@myra-ui';
+
 import { useSetPasswordMutation } from '@coop/ebanking/data-access';
-import { Box, Button, Modal, Icon, Input, PasswordInput, Text } from '@myra-ui';
 
 import { AuthContainer } from '../components/AuthContainer';
 import { SignUpStatus } from '../types/SignUpStatus';

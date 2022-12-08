@@ -5,12 +5,14 @@ import { getSchemaPath } from '@coop/shared/utils';
 import { RootState, useAppSelector } from '../redux/store';
 import { useRefreshToken } from '../redux/useRefreshToken';
 
+const privateAgent = axios.create();
+
 // Request interceptors for API calls
-axios.interceptors.request.use(
+privateAgent.interceptors.request.use(
   (config) => {
     config.headers = {
       ...config.headers,
-      slug: 'neosys',
+      Slug: 'neosys',
     };
     return config;
   },
@@ -48,7 +50,7 @@ export const useAxios = <TData, TVariables>(
         };
       }
     }
-    return axios
+    return privateAgent
       .post<{ data: TData }>(url, { query, variables }, config)
       .then(
         (
@@ -89,7 +91,7 @@ export const useAxios = <TData, TVariables>(
               }
             }
 
-            return axios.post<{ data: TData }>(url, { query, variables }, config).then(
+            return privateAgent.post<{ data: TData }>(url, { query, variables }, config).then(
               (
                 res: AxiosResponse<{
                   data: TData;
@@ -110,5 +112,3 @@ export const useAxios = <TData, TVariables>(
       });
   };
 };
-
-axios.interceptors.response.use((response) => response);

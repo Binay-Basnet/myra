@@ -77,6 +77,9 @@
         "libs/cbs/settings/feature-deposit-products/src/index.ts"
       ],
       "@coop/cbs/settings/documents": ["libs/cbs/settings/feature-documents/src/index.ts"],
+      "@coop/cbs/settings/loan-product": [
+        "libs/cbs/settings/feature-loan-product-detail/src/index.ts"
+      ],
       "@coop/cbs/settings/loan-products": ["libs/cbs/settings/feature-loan-products/src/index.ts"],
       "@coop/cbs/settings/members": ["libs/cbs/settings/feature-members/src/index.ts"],
       "@coop/cbs/settings/organization": ["libs/cbs/settings/feature-organization/src/index.ts"],
@@ -137,6 +140,9 @@
       "@coop/neosys-admin/users": ["libs/neosys/feature-users/src/index.ts"],
       "@coop/settings/alternative-channels": [
         "libs/cbs/settings/feature-alternative-channels/src/index.ts"
+      ],
+      "@coop/settings/saving-product": [
+        "libs/cbs/settings/feature-saving-product-detail/src/index.ts"
       ],
       "@coop/shared/components": ["libs/shared/components/src/index.ts"],
       "@coop/shared/form": ["libs/shared/form/src/index.ts"],

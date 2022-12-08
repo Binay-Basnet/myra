@@ -1,14 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useDisclosure } from '@chakra-ui/react';
+
 import {
   Accordion,
   AccordionButton,
   AccordionItem,
   AccordionPanel,
   Box,
-  Modal,
   Input,
+  Modal,
   Text,
 } from '@myra-ui';
 

@@ -16,7 +16,6 @@ import {
   GridItem,
   Text,
 } from '@myra-ui';
-import { FormAccountSelect } from '@coop/shared/form';
 
 import {
   CashValue,
@@ -32,6 +31,7 @@ import {
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
 import {
+  FormAccountSelect,
   FormAgentSelect,
   FormAmountInput,
   FormCheckbox,
@@ -123,6 +123,7 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
       paymentMode: DepositPaymentType.Cash,
       cashData: {
         cash: String(totalAmount ?? 0),
+        disableDenomination: true,
       },
       withdrawSlipData: {
         amount: String(totalAmount ?? 0),

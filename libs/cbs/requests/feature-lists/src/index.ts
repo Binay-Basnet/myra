@@ -1,4 +1,6 @@
+export * from './lib/AddBlockWithdrawSlipRequest';
 export * from './lib/BlockChequeList';
+export * from './lib/BlockWithdrawSlipRequestsList';
 export * from './lib/BranchTransferRequestList';
 export * from './lib/ChequeBookRequestList';
 export * from './lib/LoanRequestList';

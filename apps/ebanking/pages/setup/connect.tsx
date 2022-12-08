@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Box, Button, Modal, getError, Icon, Input, Text } from '@myra-ui';
+import { Box, Button, getError, Icon, Input, Modal, Text } from '@myra-ui';
 
 import { GoBack } from '@coop/ebanking/components';
 import {

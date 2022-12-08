@@ -44,7 +44,7 @@ export const components: SelectComponentsConfig<Option, boolean, GroupBase<Optio
   ),
   Option: ({ data, ...props }) => (
     <chakraComponents.Option data={data} {...props}>
-      <Box display="flex" justifyContent="space-between" p="s12" width="100%">
+      <Box display="flex" justifyContent="space-between" p="s12" width="100%" gap="s16">
         <Box display="flex" flexDirection="column" gap="s8">
           <Box display="flex" flexDirection="column" gap="s4">
             <Box display="flex" flexDirection="column">

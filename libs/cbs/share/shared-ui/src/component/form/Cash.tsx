@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+
 import { Box, FormSection, GridItem, Text } from '@myra-ui';
 
 import { FormAmountInput, FormEditableTable, FormSwitch } from '@coop/shared/form';
@@ -47,11 +48,15 @@ export const Cash = ({
   return (
     <FormSection templateColumns={2}>
       <GridItem colSpan={1}>
-        <FormAmountInput type="number" name="cash.cashPaid" label={t['sharePurchaseCash']} />
+        <FormAmountInput name="cash.cashPaid" label={t['sharePurchaseCash']} />
       </GridItem>
 
       <GridItem colSpan={2}>
-        <FormSwitch name="cash.disableDenomination" label={t['sharePurchaseDisableDenomination']} />
+        <FormSwitch
+          name="cash.disableDenomination"
+          label={t['sharePurchaseDisableDenomination']}
+          defaultChecked
+        />
       </GridItem>
 
       {!disableDenomination && (

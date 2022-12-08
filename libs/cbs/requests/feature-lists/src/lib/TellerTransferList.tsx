@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { RequestStatus } from '@coop/cbs/data-access';
-import { Column, Table } from '@myra-ui/table';
 import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
+import { RequestStatus } from '@coop/cbs/data-access';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
 

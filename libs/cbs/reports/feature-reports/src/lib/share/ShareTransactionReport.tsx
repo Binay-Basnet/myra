@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { Box, GridItem } from '@myra-ui';
 
 import {
@@ -161,6 +162,7 @@ export const ShareTransactionsReport = () => {
                     header: 'Share Transaction Date',
                     footer: () => <Box textAlign="right">Total Balance</Box>,
                     accessorKey: 'transactionDate',
+                    accessorFn: (row) => row?.transactionDate?.local,
                     meta: {
                       width: '60px',
                       Footer: {

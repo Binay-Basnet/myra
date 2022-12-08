@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+
 import { Box, FormSection, GridItem, Text } from '@myra-ui';
 
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';

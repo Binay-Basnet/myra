@@ -83,7 +83,12 @@ export const SideBar = ({ summary, detailPage }: SidebarProps) => {
           <Summary detailPage={detailPage} summary={summary} />
         </>
       )}
-      <DetailPageTabs tabs={['OVERVIEW', 'REPORTS', 'ACTIVITY', 'DOCUMENTS', 'TASKS']} />
+      <DetailPageTabs
+        tabs={[
+          'OVERVIEW',
+          // , 'REPORTS', 'ACTIVITY', 'DOCUMENTS', 'TASKS'
+        ]}
+      />
     </>
   );
 };

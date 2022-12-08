@@ -1,15 +1,16 @@
 import { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { GridItem } from '@myra-ui';
+import { Column } from '@myra-ui/editable-table';
+
 import {
   useGetCoaAccountsUnderListQuery,
   useGetPreviousYearFundManagementQuery,
 } from '@coop/cbs/data-access';
-import { Column } from '@myra-ui/editable-table';
 import { FormEditableTable } from '@coop/shared/form';
-import { GridItem } from '@myra-ui';
 
-import { TableOverview } from './TableOverview';
+import { TableOverview, TableOverviewColumnType } from './TableOverview';
 import { CustomFundManagementInput, OtherFundDistributionTableType } from '../lib/type';
 
 export const OtherFundDistributionTable = () => {
@@ -87,7 +88,7 @@ export const OtherFundDistributionTable = () => {
 
   const otherFunds = watch('otherFunds');
 
-  const otherFundsSummary = useMemo(
+  const otherFundsSummary: TableOverviewColumnType[] = useMemo(
     () => [
       { label: 'Total', width: 'auto', isNumeric: true },
       {

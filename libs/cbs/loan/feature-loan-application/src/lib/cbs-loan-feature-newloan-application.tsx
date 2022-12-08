@@ -27,12 +27,13 @@ import {
   useSendLoanApplicationForApprovalMutation,
 } from '@coop/cbs/data-access';
 import {
+  FormAmountInput,
   FormInput,
   FormMemberSelect,
-  FormNumberInput,
   FormSelect,
   FormTextArea,
 } from '@coop/shared/form';
+import { featureCode } from '@coop/shared/utils';
 
 import {
   AccordianComponent,
@@ -205,7 +206,7 @@ export const NewLoanApplication = () => {
   }, [id, isLoanFetching, loanApplication, methods]);
 
   const defaultAccount = loanProductOptions.find((d) => d?.value === productId);
-  const defaultAccountName = defaultAccount?.label;
+  const defaultAccountName = `${memberDetailData?.name} - ${defaultAccount?.label}`;
   useEffect(() => {
     if (!loanApplicationId) {
       setValue('loanAccountName', defaultAccountName);
@@ -247,7 +248,7 @@ export const NewLoanApplication = () => {
   return (
     <Container minW="container.xl" p="0" bg="white">
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
-        <FormHeader title="New Loan Application" />
+        <FormHeader title={`New Loan Application - ${featureCode.newLoanApplication} `} />
       </Box>
       <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
         <Box
@@ -328,7 +329,8 @@ export const NewLoanApplication = () => {
                     <>
                       <FormInput name="loanAccountName" label="Loan Account Name" />
                       <Box w="50%">
-                        <FormNumberInput
+                        <FormAmountInput
+                          type="number"
                           name="appliedLoanAmount"
                           label="Applied Loan Amount"
                           placeholder="0.00"

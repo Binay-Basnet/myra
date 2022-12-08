@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { AccountOpenNew } from '@coop/cbs/accounts/account-form';
 import { MainLayout } from '@myra-ui';
+
+import { AccountOpenNew } from '@coop/cbs/accounts/account-form';
 
 const AccountOpen = () => <AccountOpenNew />;
 
