@@ -119,6 +119,10 @@ export type AccountDetailsQueryResult = {
   error?: Maybe<QueryError>;
 };
 
+export type AccountListFilter = {
+  productID?: InputMaybe<Scalars['ID']>;
+};
+
 export type AccountOpeningReport = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
@@ -2928,7 +2932,7 @@ export type DepositProductSettingsQuery = {
   depositProductDetail?: Maybe<DepositProductFormStateResult>;
   formState?: Maybe<DepositProductFormStateResult>;
   get?: Maybe<DepositProduct>;
-  getAccountlist?: Maybe<SavingAccountListResult>;
+  getAccountlist?: Maybe<DepositLoanAccountConnection>;
   getPenaltyRebateInfo?: Maybe<PenaltyRebateResult>;
   getProductCriteria?: Maybe<DepositProductCriteriaResult>;
   getProductList?: Maybe<DepositProductList>;
@@ -2948,7 +2952,8 @@ export type DepositProductSettingsQueryGetArgs = {
 };
 
 export type DepositProductSettingsQueryGetAccountlistArgs = {
-  productId: Scalars['ID'];
+  filter?: InputMaybe<AccountListFilter>;
+  paginate?: InputMaybe<Pagination>;
 };
 
 export type DepositProductSettingsQueryGetPenaltyRebateInfoArgs = {
@@ -10470,11 +10475,6 @@ export type SavedReportResponse = {
 };
 
 export type SavedReportSettings = ShareStatementReportSettingsType;
-
-export type SavingAccountListResult = {
-  data?: Maybe<Array<Maybe<DepositAccount>>>;
-  error?: Maybe<QueryError>;
-};
 
 export type SavingAmountRange = {
   max?: InputMaybe<Scalars['Int']>;

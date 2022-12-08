@@ -3,7 +3,6 @@ import { CgLoadbarDoc } from 'react-icons/cg';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
-import { TabColumn } from '@coop/myra/components';
 import {
   Box,
   Button,
@@ -16,6 +15,8 @@ import {
   SettingsButton,
   Text,
 } from '@myra-ui';
+
+import { TabColumn } from '@coop/myra/components';
 import { useTranslation } from '@coop/shared/utils';
 
 interface ITransactionsSidebarLayoutProps {
@@ -61,7 +62,7 @@ const transactionSidebarColumns = [
   },
   {
     title: 'transactionsSidebarJournalVoucher',
-    link: '/transactions/journal-vouchers/add',
+    link: '/transactions/journal-vouchers/list',
     name: 'journal-voucher',
     addLink: '/transactions/journal-vouchers/add',
   },
@@ -91,6 +92,10 @@ const dropdownButtons = [
   {
     label: 'transactionSidebarNewMarketRepresentativeTransaction',
     link: '/transactions/agent-transaction/add',
+  },
+  {
+    label: 'New Journal Voucher',
+    link: '/transactions/journal-vouchers/add',
   },
 ];
 
@@ -181,7 +186,7 @@ export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayo
                     >
                       <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
                       <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                        {t[addButton.label]}
+                        {t[addButton.label] ?? addButton.label}
                       </Text>
                     </Box>
                   ))}
