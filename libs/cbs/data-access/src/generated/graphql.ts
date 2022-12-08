@@ -2667,6 +2667,7 @@ export type DepositLoanAccountSearchFilter = {
   id?: InputMaybe<Scalars['ID']>;
   memberId?: InputMaybe<Scalars['String']>;
   objState?: InputMaybe<ObjState>;
+  productID?: InputMaybe<Scalars['String']>;
   query?: InputMaybe<Scalars['String']>;
 };
 
@@ -2952,7 +2953,7 @@ export type DepositProductSettingsQueryGetArgs = {
 };
 
 export type DepositProductSettingsQueryGetAccountlistArgs = {
-  filter?: InputMaybe<AccountListFilter>;
+  filter?: InputMaybe<DepositLoanAccountSearchFilter>;
   paginate?: InputMaybe<Pagination>;
 };
 
@@ -7517,6 +7518,7 @@ export type LoanAccountResult = {
 export type LoanAccountSearchFilter = {
   id?: InputMaybe<Scalars['ID']>;
   objectState?: InputMaybe<LoanObjState>;
+  productID?: InputMaybe<Scalars['ID']>;
   query?: InputMaybe<Scalars['String']>;
 };
 
@@ -7890,6 +7892,8 @@ export type LoanProduct = Base & {
   modifiedBy: Identity;
   natureOFBusinessCoop?: Maybe<Array<Maybe<Scalars['ID']>>>;
   natureOfBusinessInstitution?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  noOfMember?: Maybe<Scalars['Int']>;
+  noOfaccount?: Maybe<Scalars['Int']>;
   objState: ObjState;
   occupation?: Maybe<Array<Maybe<Scalars['ID']>>>;
   penaltyAmount?: Maybe<Scalars['Amount']>;
@@ -8138,10 +8142,26 @@ export type LoanProductsMutationUpsertArgs = {
 
 export type LoanProductsQuery = {
   formState?: Maybe<LoanProductData>;
+  getLoanAccountlist?: Maybe<LoanAccountConnection>;
+  getProductCriteria?: Maybe<LoanProductCriteriaResult>;
+  getProductDetail?: Maybe<LoanProductData>;
   list?: Maybe<LoanProductConnection>;
 };
 
 export type LoanProductsQueryFormStateArgs = {
+  id: Scalars['ID'];
+};
+
+export type LoanProductsQueryGetLoanAccountlistArgs = {
+  filter?: InputMaybe<LoanAccountSearchFilter>;
+  paginate?: InputMaybe<Pagination>;
+};
+
+export type LoanProductsQueryGetProductCriteriaArgs = {
+  productId: Scalars['ID'];
+};
+
+export type LoanProductsQueryGetProductDetailArgs = {
   id: Scalars['ID'];
 };
 
@@ -17271,6 +17291,8 @@ export type GetLoanInstallmentsQuery = {
     getLoanInstallments?: {
       data?: {
         total: string;
+        totalInterest?: string | null;
+        totalPrincipal?: string | null;
         installments?: Array<{
           interest: string;
           installmentDate: string;
@@ -17472,6 +17494,8 @@ export type GetLoanPreviewQuery = {
         } | null;
         paymentSchedule?: {
           total: string;
+          totalInterest?: string | null;
+          totalPrincipal?: string | null;
           installments?: Array<{
             installmentDate: string;
             installmentNo: number;
@@ -28822,6 +28846,8 @@ export const GetLoanInstallmentsDocument = `
     ) {
       data {
         total
+        totalInterest
+        totalPrincipal
         installments {
           interest
           installmentDate
@@ -29055,6 +29081,8 @@ export const GetLoanPreviewDocument = `
         productId
         paymentSchedule {
           total
+          totalInterest
+          totalPrincipal
           installments {
             installmentDate
             installmentNo
