@@ -1,6 +1,7 @@
 import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { CgLoadbarDoc } from 'react-icons/cg';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import {
@@ -90,10 +91,25 @@ export const LoanListLayout = ({ children }: IAccountPageLayoutProps) => {
         overflowY="auto"
         position="fixed"
       >
-        <Box height="50px" alignItems="center" display="flex" py="s12" px="s16">
-          <Text fontSize="l1" fontWeight="600" color="gray.800">
-            Loan
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="start"
+          py="s16"
+          pb="s8"
+          justifyContent="center"
+          gap="s2"
+          px="s16"
+        >
+          <Text fontSize="s2" fontWeight="600" color="primary.500">
+            {t['corebankingSystems']}
           </Text>
+
+          <Link href="/loan/applications">
+            <Text lineHeight="125%" fontSize="l1" fontWeight="600" color="gray.800">
+              {t['kymIndFinancialLoan']}
+            </Text>
+          </Link>
         </Box>
         <Box p="s16">
           {/* <Button

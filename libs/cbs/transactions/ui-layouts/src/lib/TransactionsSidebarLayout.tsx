@@ -1,5 +1,6 @@
 import React from 'react';
 import { CgLoadbarDoc } from 'react-icons/cg';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
 
@@ -148,10 +149,25 @@ export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayo
         overflowY="auto"
         position="fixed"
       >
-        <Box height="50px" alignItems="center" display="flex" py="s12" px="s16">
-          <Text fontSize="l1" fontWeight="600" color="gray.800">
-            {t['transactionSidebarTransaction']}
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="start"
+          py="s16"
+          pb="s8"
+          justifyContent="center"
+          gap="s2"
+          px="s16"
+        >
+          <Text fontSize="s2" fontWeight="600" color="primary.500">
+            {t['corebankingSystems']}
           </Text>
+
+          <Link href="/transactions/deposit/list">
+            <Text fontSize="l1" fontWeight="600" color="gray.800">
+              {t['transactions']}
+            </Text>
+          </Link>
         </Box>
 
         <Box p="s16">
@@ -161,7 +177,6 @@ export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayo
                 {t['transactionSidebarNewTransaction']}
               </Button>
             </PopoverTrigger>
-
             <PopoverContent
               // bg="gray.0"
               p={0}
@@ -194,6 +209,7 @@ export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayo
               </PopoverBody>
             </PopoverContent>
           </Popover>
+
           <Divider my="s16" />
 
           <TabColumn list={transactionSidebarColumns} />
