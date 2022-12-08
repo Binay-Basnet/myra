@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoClose } from 'react-icons/io5';
 
 import { Alert, Box, Button, Icon, IconButton, Text } from '@myra-ui';
-import { Table } from '@myra-ui/table';
+import { Column, Table } from '@myra-ui/table';
 
 import {
   LoanAccountInput,
@@ -67,6 +67,59 @@ export const LoanPaymentSchedule = () => {
     gracePeriod?.interestGracePeriod,
     gracePeriod?.principalGracePeriod,
   ]);
+
+  const loanInstallmentData = data?.loanAccount.getLoanInstallments?.data
+    ?.installments as LoanInstallment[];
+
+  const loanInstallmentColumns = useMemo<Column<typeof loanInstallmentData[0]>[]>(
+    () => [
+      {
+        header: 'Installment No.',
+        footer: 'Total Cost of Loan',
+        accessorKey: 'installmentNo',
+        meta: {
+          Footer: {
+            colspan: 1,
+          },
+        },
+      },
+      {
+        header: 'Principal',
+        accessorFn: (row) => amountConverter(row?.principal ?? 0),
+        footer: () =>
+          amountConverter(data?.loanAccount?.getLoanInstallments?.data?.totalPrincipal ?? 0),
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: 'Interest',
+        accessorFn: (row) => amountConverter(row?.interest ?? 0),
+        footer: () =>
+          amountConverter(data?.loanAccount?.getLoanInstallments?.data?.totalInterest ?? 0),
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: 'Payment',
+        accessorKey: 'payment',
+        accessorFn: (row) => amountConverter(row?.payment),
+        meta: {
+          isNumeric: true,
+        },
+      },
+      {
+        header: 'Remaining Principal',
+        accessorFn: (row) => amountConverter(row?.remainingPrincipal),
+        footer: () => amountConverter(data?.loanAccount.getLoanInstallments?.data?.total ?? 0),
+        meta: {
+          isNumeric: true,
+        },
+      },
+    ],
+    [loanInstallmentData]
+  );
 
   return (
     <Box display="flex" flexDirection="column" gap="s16">
@@ -139,54 +192,8 @@ export const LoanPaymentSchedule = () => {
             size="small"
             isStatic
             showFooter
-            data={data?.loanAccount.getLoanInstallments?.data?.installments as LoanInstallment[]}
-            columns={[
-              {
-                header: 'Installment No.',
-                footer: 'Total Cost of Loan',
-                accessorKey: 'installmentNo',
-                meta: {
-                  Footer: {
-                    colspan: 1,
-                  },
-                },
-              },
-              {
-                header: 'Principal',
-                accessorKey: 'principal',
-                footer: () =>
-                  amountConverter(
-                    data?.loanAccount?.getLoanInstallments?.data?.totalPrincipal ?? 0
-                  ),
-                meta: {
-                  isNumeric: true,
-                },
-              },
-              {
-                header: 'Interest',
-                accessorKey: 'interest',
-                footer: () =>
-                  amountConverter(data?.loanAccount?.getLoanInstallments?.data?.totalInterest ?? 0),
-                meta: {
-                  isNumeric: true,
-                },
-              },
-              {
-                header: 'Payment',
-                accessorKey: 'payment',
-                meta: {
-                  isNumeric: true,
-                },
-              },
-              {
-                header: 'Remaining Principal',
-                footer: data?.loanAccount.getLoanInstallments?.data?.total,
-                accessorKey: 'remainingPrincipal',
-                meta: {
-                  isNumeric: true,
-                },
-              },
-            ]}
+            data={loanInstallmentData}
+            columns={loanInstallmentColumns}
           />
         )
       )}
