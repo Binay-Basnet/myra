@@ -273,6 +273,8 @@ export const LoanRepayment = () => {
                       data={loanPaymentScheduleSplice as LoanInstallment[]}
                       nextInstallmentNumber={nextInstallmentNumber}
                       total={loanData?.paymentSchedule?.total as string}
+                      totalInterest={loanData?.paymentSchedule?.totalInterest ?? 0}
+                      totalPrincipal={loanData?.paymentSchedule?.totalPrincipal ?? 0}
                     />
                     <Modal
                       onClose={onClose}
@@ -286,6 +288,8 @@ export const LoanRepayment = () => {
                         data={loanPaymentSchedule as LoanInstallment[]}
                         nextInstallmentNumber={nextInstallmentNumber}
                         total={loanData?.paymentSchedule?.total as string}
+                        totalInterest={loanData?.paymentSchedule?.totalInterest ?? 0}
+                        totalPrincipal={loanData?.paymentSchedule?.totalPrincipal ?? 0}
                       />
                     </Modal>
                     <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">

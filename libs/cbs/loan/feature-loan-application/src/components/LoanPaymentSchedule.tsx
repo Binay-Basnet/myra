@@ -3,6 +3,9 @@ import { useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoClose } from 'react-icons/io5';
 
+import { Alert, Box, Button, Icon, IconButton, Text } from '@myra-ui';
+import { Table } from '@myra-ui/table';
+
 import {
   LoanAccountInput,
   LoanInstallment,
@@ -10,8 +13,7 @@ import {
   useGetLoanInstallmentsQuery,
 } from '@coop/cbs/data-access';
 import { FormInput } from '@coop/shared/form';
-import { Table } from '@myra-ui/table';
-import { Alert, Box, Button, Icon, IconButton, Text } from '@myra-ui';
+import { amountConverter } from '@coop/shared/utils';
 
 export const LoanPaymentSchedule = () => {
   const {
@@ -145,28 +147,28 @@ export const LoanPaymentSchedule = () => {
                 accessorKey: 'installmentNo',
                 meta: {
                   Footer: {
-                    colspan: 4,
+                    colspan: 1,
                   },
                 },
               },
               {
                 header: 'Principal',
                 accessorKey: 'principal',
+                footer: () =>
+                  amountConverter(
+                    data?.loanAccount?.getLoanInstallments?.data?.totalPrincipal ?? 0
+                  ),
                 meta: {
                   isNumeric: true,
-                  Footer: {
-                    display: 'none',
-                  },
                 },
               },
               {
                 header: 'Interest',
                 accessorKey: 'interest',
+                footer: () =>
+                  amountConverter(data?.loanAccount?.getLoanInstallments?.data?.totalInterest ?? 0),
                 meta: {
                   isNumeric: true,
-                  Footer: {
-                    display: 'none',
-                  },
                 },
               },
               {
@@ -174,9 +176,6 @@ export const LoanPaymentSchedule = () => {
                 accessorKey: 'payment',
                 meta: {
                   isNumeric: true,
-                  Footer: {
-                    display: 'none',
-                  },
                 },
               },
               {
