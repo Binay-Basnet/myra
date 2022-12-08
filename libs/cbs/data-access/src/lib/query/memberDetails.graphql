@@ -113,35 +113,34 @@ query getMemberDetailsOverview($id: ID!) {
             category
           }
         }
-        bio
         overview {
-          basicInformation {
-            memberName
-            profilePic
-            memberCode
-            memberJoined
-            genderId
-            gender
-            isStaff
-            maritalStatusId
-            maritalStatus
-            contactNumber
-            email
-            addressId
-            address
-            fathersName
-            mothersName
-            familyMembers {
-              relationship
-              fullName
-              dob
-            }
-            documents {
-              key
-              value
-            }
-            grandFathersName
-          }
+          # basicInformation {
+          #   memberName
+          #   profilePic
+          #   memberCode
+          #   memberJoined
+          #   genderId
+          #   gender
+          #   isStaff
+          #   maritalStatusId
+          #   maritalStatus
+          #   contactNumber
+          #   email
+          #   addressId
+          #   address
+          #   fathersName
+          #   mothersName
+          #   familyMembers {
+          #     relationship
+          #     fullName
+          #     dob
+          #   }
+          #   documents {
+          #     key
+          #     value
+          #   }
+          #   grandFathersName
+          # }
           memberGraphs {
             deposit {
               data {
@@ -218,6 +217,70 @@ query getMemberDetailsShareBalance($id: ID!) {
         bankId
         voucherNumber
         accountId
+      }
+    }
+  }
+}
+
+query getMemberOverviewBasicDetails($id: ID!) {
+  members {
+    memberOverview(id: $id) {
+      data {
+        overview {
+          basicInformation {
+            __typename
+            ... on IndividualBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              genderId
+              gender
+              maritalStatus
+              maritalStatusId
+              fathersName
+              mothersName
+              grandFathersName
+              familyMembers {
+                fullName
+                relationship
+                dob
+              }
+              isStaff
+            }
+            ... on InstitutionBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              type
+              nature
+              registrationDate
+              vatPanNo
+              noOfServiceCenters
+            }
+            ... on CooperativeBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              registrationNo
+              registrationOffice
+              registrationDate
+            }
+            ... on CooperativeUnionBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              type
+              nature
+              registrationDate
+              vatPanNo
+              noOfServiceCenters
+            }
+          }
+        }
       }
     }
   }

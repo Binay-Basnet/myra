@@ -119,6 +119,10 @@ export type AccountDetailsQueryResult = {
   error?: Maybe<QueryError>;
 };
 
+export type AccountListFilter = {
+  productID?: InputMaybe<Scalars['ID']>;
+};
+
 export type AccountOpeningReport = {
   accountName?: Maybe<Scalars['String']>;
   accountNumber?: Maybe<Scalars['String']>;
@@ -1970,6 +1974,16 @@ export type CooperativeBodDetails = {
   temporaryLongitude?: Maybe<Scalars['String']>;
 };
 
+export type CooperativeBasicMinInfo = {
+  memberCode?: Maybe<Scalars['String']>;
+  memberJoined?: Maybe<Scalars['Localized']>;
+  memberName?: Maybe<Scalars['String']>;
+  profilePic?: Maybe<Scalars['String']>;
+  registrationDate?: Maybe<Scalars['Localized']>;
+  registrationNo?: Maybe<Scalars['String']>;
+  registrationOffice?: Maybe<Scalars['String']>;
+};
+
 export type CooperativeDeclaration = {
   accountHolderdocuments?: Maybe<Array<Maybe<CooperativeDocuments>>>;
   accountHoldersName?: Maybe<Scalars['String']>;
@@ -2039,6 +2053,18 @@ export type CooperativeUnionAccountOperatorDetails = {
 
 export type CooperativeUnionBodDetails = {
   boardOfDirectorsDetails?: Maybe<Array<Maybe<KymCoopUnionBodDetails>>>;
+};
+
+export type CooperativeUnionBasicMinInfo = {
+  memberCode?: Maybe<Scalars['String']>;
+  memberJoined?: Maybe<Scalars['Localized']>;
+  memberName?: Maybe<Scalars['String']>;
+  nature?: Maybe<Scalars['String']>;
+  noOfServiceCenters?: Maybe<Scalars['Int']>;
+  profilePic?: Maybe<Scalars['String']>;
+  registrationDate?: Maybe<Scalars['Localized']>;
+  type?: Maybe<Scalars['String']>;
+  vatPanNo?: Maybe<Scalars['String']>;
 };
 
 export type CooperativeUnionCentralRepresentativeDetails = {
@@ -2765,7 +2791,10 @@ export type DepositProductFormStateData = {
   nature?: Maybe<NatureOfDepositProduct>;
   natureOFBusinessCoop?: Maybe<Array<Maybe<Scalars['ID']>>>;
   natureOfBusinessInstitution?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  noOfAccounts?: Maybe<Scalars['Int']>;
+  noOfMembers?: Maybe<Scalars['Int']>;
   noOftransactionAllowed?: Maybe<Scalars['Int']>;
+  objState?: Maybe<ObjState>;
   occupation?: Maybe<Array<Maybe<Scalars['ID']>>>;
   penalty?: Maybe<Scalars['Boolean']>;
   penaltyData?: Maybe<Penalty>;
@@ -2922,12 +2951,18 @@ export type DepositProductSettingsMutationMakeInactiveArgs = {
 };
 
 export type DepositProductSettingsQuery = {
+  depositProductDetail?: Maybe<DepositProductFormStateResult>;
   formState?: Maybe<DepositProductFormStateResult>;
   get?: Maybe<DepositProduct>;
+  getAccountlist?: Maybe<DepositLoanAccountConnection>;
   getPenaltyRebateInfo?: Maybe<PenaltyRebateResult>;
   getProductCriteria?: Maybe<DepositProductCriteriaResult>;
   getProductList?: Maybe<DepositProductList>;
   list?: Maybe<DepositProductConnection>;
+};
+
+export type DepositProductSettingsQueryDepositProductDetailArgs = {
+  id: Scalars['ID'];
 };
 
 export type DepositProductSettingsQueryFormStateArgs = {
@@ -2936,6 +2971,11 @@ export type DepositProductSettingsQueryFormStateArgs = {
 
 export type DepositProductSettingsQueryGetArgs = {
   id: Scalars['ID'];
+};
+
+export type DepositProductSettingsQueryGetAccountlistArgs = {
+  filter?: InputMaybe<AccountListFilter>;
+  paginate?: InputMaybe<Pagination>;
 };
 
 export type DepositProductSettingsQueryGetPenaltyRebateInfoArgs = {
@@ -3235,11 +3275,11 @@ export type EbankingReportFilter = {
 
 export type EbankingReportResult = {
   branchCode?: Maybe<Scalars['String']>;
-  expDate?: Maybe<Scalars['String']>;
+  expDate?: Maybe<Scalars['Localized']>;
   memberId?: Maybe<Scalars['ID']>;
   memberName?: Maybe<Scalars['String']>;
   mobileNo?: Maybe<Scalars['String']>;
-  regDate?: Maybe<Scalars['String']>;
+  regDate?: Maybe<Scalars['Localized']>;
   registeredBy?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
 };
@@ -4471,6 +4511,27 @@ export type IncompleteSection = {
   sectionName?: Maybe<Scalars['String']>;
 };
 
+export type IndividualBasicMinInfo = {
+  address?: Maybe<Scalars['Localized']>;
+  addressId?: Maybe<Scalars['String']>;
+  contactNumber?: Maybe<Scalars['String']>;
+  documents?: Maybe<Array<Maybe<MemberDocumentDetails>>>;
+  email?: Maybe<Scalars['String']>;
+  familyMembers?: Maybe<Array<Maybe<FamilyMemberDetails>>>;
+  fathersName?: Maybe<Scalars['String']>;
+  gender?: Maybe<Scalars['Localized']>;
+  genderId?: Maybe<Scalars['String']>;
+  grandFathersName?: Maybe<Scalars['String']>;
+  isStaff?: Maybe<Scalars['Boolean']>;
+  maritalStatus?: Maybe<Scalars['Localized']>;
+  maritalStatusId?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberJoined?: Maybe<Scalars['Localized']>;
+  memberName?: Maybe<Scalars['String']>;
+  mothersName?: Maybe<Scalars['String']>;
+  profilePic?: Maybe<Scalars['String']>;
+};
+
 export type IndividualMember = {
   cooperativeMembership?: Maybe<KymCoopMembershipDetails>;
   declaration?: Maybe<KymIndDeclarations>;
@@ -4529,6 +4590,18 @@ export type InstitutionAccountOperatoionsDetails = {
   companyStamp?: Maybe<Scalars['String']>;
   isCompanyStampCompulsory?: Maybe<Scalars['Boolean']>;
   specialInstruction?: Maybe<Scalars['String']>;
+};
+
+export type InstitutionBasicMinInfo = {
+  memberCode?: Maybe<Scalars['String']>;
+  memberJoined?: Maybe<Scalars['Localized']>;
+  memberName?: Maybe<Scalars['String']>;
+  nature?: Maybe<Scalars['String']>;
+  noOfServiceCenters?: Maybe<Scalars['Int']>;
+  profilePic?: Maybe<Scalars['String']>;
+  registrationDate?: Maybe<Scalars['Localized']>;
+  type?: Maybe<Scalars['String']>;
+  vatPanNo?: Maybe<Scalars['String']>;
 };
 
 export type InstitutionDeclaration = {
@@ -7074,7 +7147,7 @@ export type KymStatusReport = {
   lastKymUpdatedDate?: Maybe<Scalars['String']>;
   memberId?: Maybe<Scalars['ID']>;
   memberName?: Maybe<Scalars['String']>;
-  regDate?: Maybe<Scalars['String']>;
+  regDate?: Maybe<Scalars['Localized']>;
   riskCategory?: Maybe<Scalars['String']>;
 };
 
@@ -7700,6 +7773,8 @@ export type LoanInstallmentResult = {
 export type LoanInstallments = {
   installments?: Maybe<Array<Maybe<LoanInstallment>>>;
   total: Scalars['String'];
+  totalInterest?: Maybe<Scalars['String']>;
+  totalPrincipal?: Maybe<Scalars['String']>;
 };
 
 export enum LoanInsurancePaymentType {
@@ -8344,7 +8419,7 @@ export type LoanSettingsResult = {
 };
 
 export type LoanStatement = {
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
   disbursePrinciple?: Maybe<Scalars['String']>;
   discount?: Maybe<Scalars['String']>;
   finePaid?: Maybe<Scalars['String']>;
@@ -8419,7 +8494,7 @@ export type MBankingTransactionData = {
   phoneNo?: Maybe<Scalars['String']>;
   srcAccount?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['String']>;
-  transDate?: Maybe<Scalars['String']>;
+  transDate?: Maybe<Scalars['Localized']>;
   transThrough?: Maybe<Scalars['String']>;
   transactionType?: Maybe<Scalars['String']>;
 };
@@ -8578,26 +8653,11 @@ export type MemberAgeRange = {
   min?: InputMaybe<Scalars['Int']>;
 };
 
-export type MemberBasicInfoView = {
-  address?: Maybe<Scalars['Localized']>;
-  addressId?: Maybe<Scalars['String']>;
-  contactNumber?: Maybe<Scalars['String']>;
-  documents?: Maybe<Array<Maybe<MemberDocumentDetails>>>;
-  email?: Maybe<Scalars['String']>;
-  familyMembers?: Maybe<Array<Maybe<FamilyMemberDetails>>>;
-  fathersName?: Maybe<Scalars['String']>;
-  gender?: Maybe<Scalars['Localized']>;
-  genderId?: Maybe<Scalars['String']>;
-  grandFathersName?: Maybe<Scalars['String']>;
-  isStaff?: Maybe<Scalars['Boolean']>;
-  maritalStatus?: Maybe<Scalars['Localized']>;
-  maritalStatusId?: Maybe<Scalars['String']>;
-  memberCode?: Maybe<Scalars['String']>;
-  memberJoined?: Maybe<Scalars['String']>;
-  memberName?: Maybe<Scalars['String']>;
-  mothersName?: Maybe<Scalars['String']>;
-  profilePic?: Maybe<Scalars['String']>;
-};
+export type MemberBasicInfoView =
+  | CooperativeBasicMinInfo
+  | CooperativeUnionBasicMinInfo
+  | IndividualBasicMinInfo
+  | InstitutionBasicMinInfo;
 
 export type MemberChargeData = {
   charge: Scalars['Int'];
@@ -9885,7 +9945,7 @@ export type RebateTypeInput = {
 
 export type ReportDetail = {
   id: Scalars['ID'];
-  lastModifiedDate: Scalars['String'];
+  lastModifiedDate: Scalars['Localized'];
   name: Scalars['String'];
   reportType: Scalars['String'];
   savedBy: Scalars['String'];
@@ -10510,7 +10570,7 @@ export enum SavingServiceType {
 export type SavingStatement = {
   balanceAmount: Scalars['Float'];
   chequeOrVoucherNo: Scalars['String'];
-  date: Scalars['String'];
+  date: Scalars['Localized'];
   depositCr: Scalars['Float'];
   particular: Scalars['String'];
   withdrawDr: Scalars['Float'];
@@ -10632,7 +10692,7 @@ export type ServiceCenter = {
   branchStatus?: Maybe<Scalars['Boolean']>;
   contactNumber?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
-  estDate?: Maybe<Scalars['String']>;
+  estDate?: Maybe<Scalars['Localized']>;
   id: Scalars['ID'];
   isExtensionCounter?: Maybe<Scalars['Boolean']>;
   managerContact?: Maybe<Scalars['String']>;
@@ -11096,7 +11156,7 @@ export type ShareSettingsQuery = {
 
 export type ShareStatement = {
   balanceSheet: Scalars['Int'];
-  date: Scalars['String'];
+  date: Scalars['Localized'];
   noOfShares: Scalars['Int'];
   particular: Scalars['String'];
   purchaseAmountCr: Scalars['Int'];
@@ -11166,7 +11226,7 @@ export type ShareTransactionReport = {
   particular?: Maybe<Scalars['String']>;
   shareIssueCr?: Maybe<Scalars['String']>;
   shareReturnDr?: Maybe<Scalars['String']>;
-  transactionDate?: Maybe<Scalars['String']>;
+  transactionDate?: Maybe<Scalars['Localized']>;
 };
 
 export type ShareTransactionReportFilter = {
@@ -11823,7 +11883,7 @@ export type UserReport = {
   accessForBranch?: Maybe<Scalars['String']>;
   accessForGroup?: Maybe<Scalars['String']>;
   createdBy?: Maybe<Scalars['String']>;
-  createdDate?: Maybe<Scalars['String']>;
+  createdDate?: Maybe<Scalars['Localized']>;
   empCode?: Maybe<Scalars['String']>;
   employeeName?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['ID']>;
@@ -13258,7 +13318,7 @@ export type SaveNewReportMutation = {
       statement?:
         | {
             shareStatement?: Array<{
-              date: string;
+              date: Record<'local' | 'en' | 'np', string>;
               particular: string;
               noOfShares: number;
               returnAmountDr: number;
@@ -18134,7 +18194,6 @@ export type GetMemberDetailsOverviewQuery = {
   members: {
     memberOverview?: {
       data?: {
-        bio?: string | null;
         accounts?: {
           accounts?: Array<{
             accountName?: string | null;
@@ -18243,30 +18302,6 @@ export type GetMemberDetailsOverviewQuery = {
           } | null> | null;
         } | null;
         overview?: {
-          basicInformation?: {
-            memberName?: string | null;
-            profilePic?: string | null;
-            memberCode?: string | null;
-            memberJoined?: string | null;
-            genderId?: string | null;
-            gender?: Record<'local' | 'en' | 'np', string> | null;
-            isStaff?: boolean | null;
-            maritalStatusId?: string | null;
-            maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
-            contactNumber?: string | null;
-            email?: string | null;
-            addressId?: string | null;
-            address?: Record<'local' | 'en' | 'np', string> | null;
-            fathersName?: string | null;
-            mothersName?: string | null;
-            grandFathersName?: string | null;
-            familyMembers?: Array<{
-              relationship?: string | null;
-              fullName?: string | null;
-              dob?: string | null;
-            } | null> | null;
-            documents?: Array<{ key?: string | null; value?: string | null } | null> | null;
-          } | null;
           memberGraphs?: {
             deposit?: {
               periodType?: PeriodTypeEnum | null;
@@ -18339,6 +18374,77 @@ export type GetMemberDetailsShareBalanceQuery = {
   };
 };
 
+export type GetMemberOverviewBasicDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetMemberOverviewBasicDetailsQuery = {
+  members: {
+    memberOverview?: {
+      data?: {
+        overview?: {
+          basicInformation?:
+            | {
+                __typename: 'CooperativeBasicMinInfo';
+                memberName?: string | null;
+                profilePic?: string | null;
+                memberCode?: string | null;
+                memberJoined?: Record<'local' | 'en' | 'np', string> | null;
+                registrationNo?: string | null;
+                registrationOffice?: string | null;
+                registrationDate?: Record<'local' | 'en' | 'np', string> | null;
+              }
+            | {
+                __typename: 'CooperativeUnionBasicMinInfo';
+                memberName?: string | null;
+                profilePic?: string | null;
+                memberCode?: string | null;
+                memberJoined?: Record<'local' | 'en' | 'np', string> | null;
+                type?: string | null;
+                nature?: string | null;
+                registrationDate?: Record<'local' | 'en' | 'np', string> | null;
+                vatPanNo?: string | null;
+                noOfServiceCenters?: number | null;
+              }
+            | {
+                __typename: 'IndividualBasicMinInfo';
+                memberName?: string | null;
+                profilePic?: string | null;
+                memberCode?: string | null;
+                memberJoined?: Record<'local' | 'en' | 'np', string> | null;
+                genderId?: string | null;
+                gender?: Record<'local' | 'en' | 'np', string> | null;
+                maritalStatus?: Record<'local' | 'en' | 'np', string> | null;
+                maritalStatusId?: string | null;
+                fathersName?: string | null;
+                mothersName?: string | null;
+                grandFathersName?: string | null;
+                isStaff?: boolean | null;
+                familyMembers?: Array<{
+                  fullName?: string | null;
+                  relationship?: string | null;
+                  dob?: string | null;
+                } | null> | null;
+              }
+            | {
+                __typename: 'InstitutionBasicMinInfo';
+                memberName?: string | null;
+                profilePic?: string | null;
+                memberCode?: string | null;
+                memberJoined?: Record<'local' | 'en' | 'np', string> | null;
+                type?: string | null;
+                nature?: string | null;
+                registrationDate?: Record<'local' | 'en' | 'np', string> | null;
+                vatPanNo?: string | null;
+                noOfServiceCenters?: number | null;
+              }
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetMemberPdfQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -18358,7 +18464,7 @@ export type GetAllSavedReportsQuery = {
         cursor: string;
         node?: {
           id: string;
-          lastModifiedDate: string;
+          lastModifiedDate: Record<'local' | 'en' | 'np', string>;
           name: string;
           reportType: string;
           savedBy: string;
@@ -18412,7 +18518,7 @@ export type GetSavingStatementQuery = {
       statement?:
         | {
             savingStatement?: Array<{
-              date: string;
+              date: Record<'local' | 'en' | 'np', string>;
               balanceAmount: number;
               depositCr: number;
               chequeOrVoucherNo: string;
@@ -18490,7 +18596,7 @@ export type GetLoanStatementReportQuery = {
       statement?:
         | {
             loanStatement?: Array<{
-              date?: string | null;
+              date?: Record<'local' | 'en' | 'np', string> | null;
               particular?: string | null;
               txnId?: string | null;
               disbursePrinciple?: string | null;
@@ -18601,7 +18707,7 @@ export type GetBranchReportQuery = {
         managerName?: string | null;
         managerContact?: string | null;
         isExtensionCounter?: boolean | null;
-        estDate?: string | null;
+        estDate?: Record<'local' | 'en' | 'np', string> | null;
         branchStatus?: boolean | null;
         remarks?: string | null;
         address?: AddressFragment | null;
@@ -18628,8 +18734,8 @@ export type GetMBankingRegistrationReportQuery = {
         memberName?: string | null;
         mobileNo?: string | null;
         branchCode?: string | null;
-        regDate?: string | null;
-        expDate?: string | null;
+        regDate?: Record<'local' | 'en' | 'np', string> | null;
+        expDate?: Record<'local' | 'en' | 'np', string> | null;
         status?: string | null;
         registeredBy?: string | null;
       } | null> | null;
@@ -18649,8 +18755,8 @@ export type GetMBankingExpiryReportQuery = {
         memberName?: string | null;
         mobileNo?: string | null;
         branchCode?: string | null;
-        regDate?: string | null;
-        expDate?: string | null;
+        regDate?: Record<'local' | 'en' | 'np', string> | null;
+        expDate?: Record<'local' | 'en' | 'np', string> | null;
         status?: string | null;
         registeredBy?: string | null;
       } | null> | null;
@@ -18751,7 +18857,7 @@ export type GetKymStatusReportQuery = {
         memberName?: string | null;
         memberId?: string | null;
         contact?: string | null;
-        regDate?: string | null;
+        regDate?: Record<'local' | 'en' | 'np', string> | null;
         riskCategory?: string | null;
         lastKymUpdatedDate?: string | null;
         kymExpireDays?: string | null;
@@ -18777,7 +18883,7 @@ export type GetMbTransactionReportQuery = {
         amount?: string | null;
         transactionType?: string | null;
         transThrough?: string | null;
-        transDate?: string | null;
+        transDate?: Record<'local' | 'en' | 'np', string> | null;
         narration?: string | null;
         status?: string | null;
       } | null> | null;
@@ -18801,7 +18907,7 @@ export type GetUserReportQuery = {
         accessForBranch?: string | null;
         accessForGroup?: string | null;
         role?: string | null;
-        createdDate?: string | null;
+        createdDate?: Record<'local' | 'en' | 'np', string> | null;
         createdBy?: string | null;
         status?: string | null;
         remarks?: string | null;
@@ -18879,7 +18985,7 @@ export type GetShareTransactionReportQuery = {
       totalShareIssued?: string | null;
       avgSharePerMember?: string | null;
       data?: Array<{
-        transactionDate?: string | null;
+        transactionDate?: Record<'local' | 'en' | 'np', string> | null;
         memberId?: string | null;
         memberCode?: string | null;
         name?: string | null;
@@ -19272,7 +19378,7 @@ export type GetShareStatementQuery = {
       statement?:
         | {
             shareStatement?: Array<{
-              date: string;
+              date: Record<'local' | 'en' | 'np', string>;
               particular: string;
               noOfShares: number;
               returnAmountDr: number;
@@ -30079,35 +30185,7 @@ export const GetMemberDetailsOverviewDocument = `
             category
           }
         }
-        bio
         overview {
-          basicInformation {
-            memberName
-            profilePic
-            memberCode
-            memberJoined
-            genderId
-            gender
-            isStaff
-            maritalStatusId
-            maritalStatus
-            contactNumber
-            email
-            addressId
-            address
-            fathersName
-            mothersName
-            familyMembers {
-              relationship
-              fullName
-              dob
-            }
-            documents {
-              key
-              value
-            }
-            grandFathersName
-          }
           memberGraphs {
             deposit {
               data {
@@ -30215,6 +30293,85 @@ export const useGetMemberDetailsShareBalanceQuery = <
     ['getMemberDetailsShareBalance', variables],
     useAxios<GetMemberDetailsShareBalanceQuery, GetMemberDetailsShareBalanceQueryVariables>(
       GetMemberDetailsShareBalanceDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberOverviewBasicDetailsDocument = `
+    query getMemberOverviewBasicDetails($id: ID!) {
+  members {
+    memberOverview(id: $id) {
+      data {
+        overview {
+          basicInformation {
+            __typename
+            ... on IndividualBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              genderId
+              gender
+              maritalStatus
+              maritalStatusId
+              fathersName
+              mothersName
+              grandFathersName
+              familyMembers {
+                fullName
+                relationship
+                dob
+              }
+              isStaff
+            }
+            ... on InstitutionBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              type
+              nature
+              registrationDate
+              vatPanNo
+              noOfServiceCenters
+            }
+            ... on CooperativeBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              registrationNo
+              registrationOffice
+              registrationDate
+            }
+            ... on CooperativeUnionBasicMinInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              type
+              nature
+              registrationDate
+              vatPanNo
+              noOfServiceCenters
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberOverviewBasicDetailsQuery = <
+  TData = GetMemberOverviewBasicDetailsQuery,
+  TError = unknown
+>(
+  variables: GetMemberOverviewBasicDetailsQueryVariables,
+  options?: UseQueryOptions<GetMemberOverviewBasicDetailsQuery, TError, TData>
+) =>
+  useQuery<GetMemberOverviewBasicDetailsQuery, TError, TData>(
+    ['getMemberOverviewBasicDetails', variables],
+    useAxios<GetMemberOverviewBasicDetailsQuery, GetMemberOverviewBasicDetailsQueryVariables>(
+      GetMemberOverviewBasicDetailsDocument
     ).bind(null, variables),
     options
   );
