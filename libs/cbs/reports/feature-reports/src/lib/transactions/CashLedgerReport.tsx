@@ -93,7 +93,7 @@ export const CashLedgersReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Box display="flex" py="s32" flexDir="column">
             {summaryData && summaryLength !== 0 && (
               <Box display="flex" py="s8" flexDir="column">

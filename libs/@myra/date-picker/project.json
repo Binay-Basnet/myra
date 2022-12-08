@@ -1,0 +1,44 @@
+{
+  "name": "@myra-date-picker",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/@myra/date-picker/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lib-build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/@myra/date-picker",
+        "tsConfig": "libs/@myra/date-picker/tsconfig.lib.json",
+        "project": "libs/@myra/date-picker/package.json",
+        "entryFile": "libs/@myra/date-picker/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "compiler": "babel",
+        "assets": [
+          {
+            "glob": "libs/@myra/date-picker/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/@myra/date-picker/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/@myra/date-picker/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

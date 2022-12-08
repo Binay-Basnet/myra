@@ -150,7 +150,7 @@ export const ShareTransactionsReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<ShareTransactionReport>
             showFooter
             columns={[

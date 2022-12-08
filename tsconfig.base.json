@@ -156,6 +156,7 @@
       "@myra-ui/table": ["libs/@myra/table/src/index.ts"],
       "@myra-ui/templates": ["libs/@myra/templates/src/index.ts"],
       "@myra-ui/theme": ["libs/@myra/theme/src/index.ts"],
+      "@myra-ui/date-picker": ["libs/@myra/date-picker/src/index.ts"],
       "@myra/dump": ["libs/@myra/dump/src/index.ts"]
     },
     "jsx": "react"

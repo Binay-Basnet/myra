@@ -9,6 +9,7 @@
     "-inventory--feature-suppliers": "libs/inventory/feature-suppliers",
     "-inventory--feature-warehouse": "libs/inventory/feature-warehouse",
     "@myra-components": "libs/@myra/components",
+    "@myra-date-picker": "libs/@myra/date-picker",
     "@myra-editable-table": "libs/@myra/editable-table",
     "@myra-forms": "libs/@myra/forms",
     "@myra-foundations": "libs/@myra/foundations",

@@ -1,4 +1,12 @@
 {
   "name": "@myra-ui/forms",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "dependencies": {
+    "react": "18.2.0",
+    "react-icons": "4.4.0",
+    "@chakra-ui/icons": "1.1.7",
+    "@chakra-ui/react": "2.3.5",
+    "chakra-react-select": "4.2.2",
+    "dayjs": "1.11.5"
+  }
 }

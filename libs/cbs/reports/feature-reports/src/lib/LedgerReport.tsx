@@ -57,7 +57,7 @@ export const LedgerReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<GeneralLedgerReportEntry>
             hasSNo={false}
             columns={[

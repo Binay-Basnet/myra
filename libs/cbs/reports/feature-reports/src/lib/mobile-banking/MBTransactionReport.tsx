@@ -58,7 +58,7 @@ export const MBTransactionsReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period.periodType} />
+          <Report.Organization />
           <Report.Table<MBankingTransactionData & { index: number }>
             columns={[
               {

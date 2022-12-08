@@ -56,7 +56,7 @@ export const InterestPostingReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<InterestPostingReportEntry & { index: number }>
             columns={[
               {

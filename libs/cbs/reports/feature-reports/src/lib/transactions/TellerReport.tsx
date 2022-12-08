@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { Box, GridItem, Text } from '@myra-ui';
 
 import {
@@ -89,7 +90,7 @@ export const TellerReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Box display="flex" py="s32" flexDir="column">
             {headTellerData && (
               <Box display="flex" py="s8" flexDir="column">
