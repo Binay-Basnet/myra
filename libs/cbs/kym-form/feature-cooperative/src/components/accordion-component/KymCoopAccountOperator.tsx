@@ -1,26 +1,19 @@
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
-import { useRouter } from 'next/router';
 import { CloseIcon } from '@chakra-ui/icons';
-import debounce from 'lodash/debounce';
 
-import {
-  KymCoopAccountOperatorDetailsFormInput,
-  RootState,
-  useAllAdministrationQuery,
-  useAppSelector,
-  useGetCoOperativeAccountOperatorEditDataQuery,
-  useSetCoopAccOperatorDataMutation,
-} from '@coop/cbs/data-access';
-import { DynamicBoxGroupContainer } from '@coop/cbs/kym-form/ui-containers';
-import { FormDatePicker, FormInput, FormMap, FormSelect, FormSwitch } from '@coop/shared/form';
 import { Box, Button, Collapse, FormSection, GridItem, Icon, IconButton, Text } from '@myra-ui';
+
+import { KymCoopAccountOperatorDetailsFormInput } from '@coop/cbs/data-access';
+import { DynamicBoxGroupContainer } from '@coop/cbs/kym-form/ui-containers';
+import { FormAddress, FormDatePicker, FormInput, FormSwitch } from '@coop/shared/form';
 import { getKymCoopSection, useTranslation } from '@coop/shared/utils';
 
 import { BottomOperatorCoop } from './accountOperatorDocuments';
 import { DynamicAddtraining } from './acoountOperatorTraining';
+import { useAccountOperators } from '../hooks/useAccountOperators';
 
 interface IAddDirector {
   removeDirector: (directorId: string) => void;
@@ -30,119 +23,16 @@ interface IAddDirector {
 
 export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }: IAddDirector) => {
   const { t } = useTranslation();
-  const { data } = useAllAdministrationQuery();
 
   const methods = useForm<KymCoopAccountOperatorDetailsFormInput>();
-  const { watch, reset } = methods;
 
-  const router = useRouter();
+  useAccountOperators({ accountId, methods });
 
-  const id = String(router?.query?.['id']);
-  const { data: editValues, refetch } = useGetCoOperativeAccountOperatorEditDataQuery({
-    id,
-  });
+  const { watch } = methods;
 
-  const { mutate } = useSetCoopAccOperatorDataMutation();
-
-  useEffect(() => {
-    if (editValues) {
-      const editValueData = editValues?.members?.cooperative?.listAccountOperators?.data;
-
-      const familyMemberDetail = editValueData?.find((item) => item?.id === accountId);
-
-      if (familyMemberDetail) {
-        reset({
-          nameEn: familyMemberDetail?.fullName,
-          designation: familyMemberDetail?.designation,
-          permanentAddress: {
-            ...familyMemberDetail?.permanentAddress,
-            locality: familyMemberDetail?.permanentAddress?.locality?.local,
-          },
-          isPermanentAndTemporaryAddressSame:
-            familyMemberDetail?.isPermanentAndTemporaryAddressSame,
-          temporaryAddress: {
-            ...familyMemberDetail?.temporaryAddress,
-            locality: familyMemberDetail?.temporaryAddress?.locality?.local,
-          },
-          dateOfMembership: familyMemberDetail?.dateOfMembership,
-          highestQualification: familyMemberDetail?.highestQualification,
-          contactNumber: familyMemberDetail?.contactNumber,
-          email: familyMemberDetail?.email,
-          citizenshipNo: familyMemberDetail?.citizenshipNo,
-          panNo: familyMemberDetail?.panNo,
-          coopRelatedTraining: familyMemberDetail?.coopRelatedTraining,
-        });
-      }
-    }
-  }, [editValues]);
-
-  // refetch data when calendar preference is updated
-  const preference = useAppSelector((state: RootState) => state?.auth?.preference);
-
-  useEffect(() => {
-    refetch();
-  }, [preference?.date]);
-
-  useEffect(() => {
-    const subscription = watch(
-      debounce((item) => {
-        mutate({ id, accOperatorId: accountId, data: { ...item } });
-      }, 800)
-    );
-
-    return () => subscription.unsubscribe();
-  }, [watch, router.isReady]);
   const [isOpen, setIsOpen] = React.useState(true);
 
   const isPermanentAndTemporaryAddressSame = watch(`isPermanentAndTemporaryAddressSame`);
-
-  const province = useMemo(
-    () =>
-      data?.administration?.all?.map((d) => ({
-        label: d.name,
-        value: d.id,
-      })) ?? [],
-    [data?.administration?.all]
-  );
-
-  // FOR PERMANENT ADDRESS
-  const currentProvinceId = watch(`permanentAddress.provinceId`);
-  const currentDistrictId = watch(`permanentAddress.districtId`);
-  const currentLocalityId = watch(`permanentAddress.localGovernmentId`);
-
-  const districtList = useMemo(
-    () => data?.administration.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
-    [currentProvinceId]
-  );
-
-  const localityList = useMemo(
-    () => districtList.find((d) => d.id === currentDistrictId)?.municipalities ?? [],
-    [currentDistrictId]
-  );
-
-  const wardList = useMemo(
-    () => localityList.find((d) => d.id === currentLocalityId)?.wards ?? [],
-    [currentLocalityId]
-  );
-  // FOR TEMPORARY ADDRESS
-  const currentTempProvinceId = watch(`temporaryAddress.provinceId`);
-  const currentTemptDistrictId = watch(`temporaryAddress.districtId`);
-  const currentTempLocalityId = watch(`temporaryAddress.localGovernmentId`);
-
-  const districtTempList = useMemo(
-    () => data?.administration.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
-    [currentTempProvinceId]
-  );
-
-  const localityTempList = useMemo(
-    () => districtList.find((d) => d.id === currentDistrictId)?.municipalities ?? [],
-    [currentTemptDistrictId]
-  );
-
-  const wardTempList = useMemo(
-    () => localityTempList.find((d) => d.id === currentTempLocalityId)?.wards ?? [],
-    [currentTempLocalityId]
-  );
 
   return (
     <>
@@ -220,57 +110,11 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
                   />
                 </FormSection>
 
-                <FormSection header="kymCoopPermanentAddress">
-                  <FormSelect
-                    id="accountOperatorCoop"
-                    name="permanentAddress.provinceId"
-                    label={t['kymCoopState']}
-                    options={province}
-                  />
-                  <FormSelect
-                    id="accountOperatorCoop"
-                    name="permanentAddress.districtId"
-                    label={t['kymCoopDistrict']}
-                    options={districtList.map((d) => ({
-                      label: d.name,
-                      value: d.id,
-                    }))}
-                  />
-                  <FormSelect
-                    id="accountOperatorCoop"
-                    name="permanentAddress.localGovernmentId"
-                    label={t['kymCoopLocalGovernment']}
-                    options={localityList.map((d) => ({
-                      label: d.name,
-                      value: d.id,
-                    }))}
-                  />
-                  <FormSelect
-                    id="accountOperatorCoop"
-                    name="permanentAddress.wardNo"
-                    label={t['kymCoopWardNo']}
-                    options={wardList?.map((d) => ({
-                      label: d,
-                      value: d,
-                    }))}
-                  />
-                  <FormInput
-                    id="accountOperatorCoop"
-                    type="text"
-                    name="permanentAddress.locality"
-                    label={t['kymCoopLocality']}
-                  />
-                  <FormInput
-                    id="accountOperatorCoop"
-                    type="text"
-                    name="permanentAddress.houseNo"
-                    label={t['kymCoopRepresentativeHouseNo']}
-                  />
-
-                  <GridItem colSpan={2}>
-                    <FormMap name="permanentAddress.coordinates" />
-                  </GridItem>
-                </FormSection>
+                <FormAddress
+                  sectionId="accountOperatorCoop"
+                  sectionHeader="kymCoopPermanentAddress"
+                  name="permanentAddress"
+                />
 
                 <FormSection header="kymCoopTemporaryAddress">
                   <GridItem colSpan={3}>
@@ -280,59 +124,7 @@ export const AddOperator = ({ removeDirector, setKymCurrentSection, accountId }:
                     />
                   </GridItem>
 
-                  {!isPermanentAndTemporaryAddressSame && (
-                    <>
-                      <FormSelect
-                        id="accountOperatorCoop"
-                        name="temporaryAddress.provinceId"
-                        label={t['kymCoopState']}
-                        options={province}
-                      />
-                      <FormSelect
-                        id="accountOperatorCoop"
-                        name="temporaryAddress.districtId"
-                        label={t['kymCoopDistrict']}
-                        options={districtTempList.map((d) => ({
-                          label: d.name,
-                          value: d.id,
-                        }))}
-                      />
-                      <FormSelect
-                        id="accountOperatorCoop"
-                        name="temporaryAddress.localGovernmentId"
-                        label={t['kymCoopLocalGovernment']}
-                        options={localityTempList.map((d) => ({
-                          label: d.name,
-                          value: d.id,
-                        }))}
-                      />
-                      <FormSelect
-                        id="accountOperatorCoop"
-                        name="temporaryAddress.wardNo"
-                        label={t['kymCoopWardNo']}
-                        options={wardTempList.map((d) => ({
-                          label: d,
-                          value: d,
-                        }))}
-                      />
-                      <FormInput
-                        id="accountOperatorCoop"
-                        type="text"
-                        name="temporaryAddress.locality"
-                        label={t['kymCoopLocality']}
-                      />
-                      <FormInput
-                        id="accountOperatorCoop"
-                        type="text"
-                        name="temporaryAddress.houseNo"
-                        label={t['kymCoopRepresentativeHouseNo']}
-                      />
-
-                      <GridItem colSpan={2}>
-                        <FormMap name="temporaryAddress.coordinates" id="accountOperatorCoop" />
-                      </GridItem>
-                    </>
-                  )}
+                  {!isPermanentAndTemporaryAddressSame && <FormAddress name="temporaryAddress" />}
                 </FormSection>
 
                 <FormSection>

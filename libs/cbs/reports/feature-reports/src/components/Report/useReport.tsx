@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { DeepPartial, FormProvider, useForm } from 'react-hook-form';
 
+import { Box } from '@myra-ui';
+
 import { ReportHeader as ReportPageHeader, ReportOrganization } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { Box } from '@myra-ui';
 
 import {
   OrganizationHeader,
@@ -13,6 +14,7 @@ import {
   ReportFilters,
   ReportHeader,
   ReportInputs,
+  ReportMeta,
   ReportTable,
 } from './Report';
 
@@ -120,5 +122,6 @@ Report.Content = ReportContent;
 Report.Filters = ReportFilters;
 Report.Filter = ReportFilter;
 Report.Table = ReportTable;
+Report.Meta = ReportMeta;
 
 export { Report };

@@ -1,12 +1,15 @@
 import { IoAddOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
 
+import { Box, Grid, Icon, Text } from '@myra-ui';
+
 import {
   Id_Type,
+  ObjState,
+  useGetAccountTableListQuery,
   useGetMemberDetailsOverviewQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
-import { Box, Grid, Icon, Text } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 import { AccountList, UpcomingPaymentTable } from '../components';
@@ -37,6 +40,51 @@ export const Accounts = () => {
     amount: amountConverter(data?.amount as string),
   }));
   const newId = useGetNewIdMutation();
+
+  const memberAccountDetails =
+    memberDetails?.data?.members?.memberOverview?.data?.accounts?.accounts;
+  const memberLength = memberAccountDetails?.length ?? 0;
+  const title = `Saving Accounts List(${memberLength})`;
+  const accountList =
+    memberAccountDetails?.map((data, index) => ({
+      sn: Number(index) + 1,
+      accountType: data?.productType,
+      accountName: data?.accountName,
+      accountNumber: data?.accountNumber,
+      totalBalance: data?.totalBalance,
+      interestRate: data?.interestRate,
+      productName: data?.productName,
+    })) || [];
+
+  const { data: closedAccountListQueryData } = useGetAccountTableListQuery(
+    {
+      paginate: {
+        first: -1,
+        after: '',
+      },
+      filter: {
+        objState: ObjState.Inactive,
+        memberId: id,
+      },
+    },
+    {
+      enabled: !!id,
+    }
+  );
+
+  const closedAccountTitle = `Closed Accounts List (${
+    closedAccountListQueryData?.account?.list?.edges?.length ?? 0
+  })`;
+
+  const closedAccountList =
+    closedAccountListQueryData?.account?.list?.edges?.map((account, index) => ({
+      sn: Number(index) + 1,
+      accountType: account?.node?.product?.nature,
+      accountName: account?.node?.accountName,
+      accountNumber: account?.node?.id,
+      interestRate: account?.node?.product?.interest,
+      productName: account?.node?.product?.productName,
+    })) || [];
 
   return (
     <>
@@ -76,7 +124,9 @@ export const Accounts = () => {
           ))}
         </Grid>
       </Box>
-      <AccountList />
+
+      <AccountList title={title} accountList={accountList} />
+
       {memberPaymentUp && (
         <Box bg="white" display="flex" flexDirection="column" gap="s8" pb="s16" borderRadius="br2">
           <Box display="flex" justifyContent="space-between" p="s16">
@@ -90,6 +140,8 @@ export const Accounts = () => {
           </Box>
         </Box>
       )}
+
+      <AccountList title={closedAccountTitle} accountList={closedAccountList} isClosedAccounts />
     </>
   );
 };

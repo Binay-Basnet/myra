@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import dayjs from 'dayjs';
 
+import { Box, GridItem } from '@myra-ui';
+
 import {
   EbankingReportResult,
   ExpiryStatusFilter,
@@ -14,7 +16,6 @@ import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { formatTableAddress } from '@coop/cbs/utils';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
-import { Box, GridItem } from '@myra-ui';
 
 const riskCategory = [
   { label: 'All', value: RiskCategoryFilter.All },
@@ -51,14 +52,14 @@ export const KYMStatusReport = () => {
       <Report.Header>
         <Report.PageHeader
           paths={[
-            { label: 'Members Reports', link: '/reports/cbs/members' },
+            { label: 'Members Reports', link: '/reports/cbs/member-report' },
             {
               label: 'KYM Status Report',
               link: '/reports/cbs/members/kym-status/new',
             },
           ]}
         />
-        <Report.Inputs defaultFilters={null} setFilters={setFilters}>
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Branch" />
           </GridItem>
@@ -111,7 +112,7 @@ export const KYMStatusReport = () => {
               },
               {
                 header: 'Member Registration Date',
-                accessorFn: (row) => row?.regDate,
+                accessorFn: (row) => row?.regDate?.local,
                 cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
               },
               {

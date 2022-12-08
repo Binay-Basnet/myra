@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { Box, Grid, GridItem, Text } from '@myra-ui';
+
 import { useGetCoaBankListQuery, WithdrawBy, WithdrawPaymentType } from '@coop/cbs/data-access';
 import {
   BoxContainer,
@@ -18,7 +20,6 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { Box, Grid, GridItem, Text } from '@myra-ui';
 import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 const denominationsOptions = [
@@ -145,14 +146,22 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
 
             <FormInput name="bankCheque.chequeNo" label={t['withdrawPaymentChequeNo']} />
 
-            <FormAmountInput name="bankCheque.amount" label={t['withdrawPaymentAmount']} />
+            <FormAmountInput
+              type="number"
+              name="bankCheque.amount"
+              label={t['withdrawPaymentAmount']}
+            />
           </InputGroupContainer>
         )}
 
         {selectedPaymentMode === WithdrawPaymentType.Cash && (
           <>
             <InputGroupContainer>
-              <FormAmountInput name="cash.cashPaid" label={t['withdrawPaymentCash']} />
+              <FormAmountInput
+                type="number"
+                name="cash.cashPaid"
+                label={t['withdrawPaymentCash']}
+              />
             </InputGroupContainer>
 
             <FormSwitch

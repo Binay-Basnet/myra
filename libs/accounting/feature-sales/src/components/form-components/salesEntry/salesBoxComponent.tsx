@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDeepCompareEffect } from 'react-use';
 
+import { Box, GridItem, Text } from '@myra-ui';
+
 import { SalesSaleEntryInput } from '@coop/cbs/data-access';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormAmountInput, FormTextArea } from '@coop/shared/form';
-import { Box, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const SalesBox = () => {

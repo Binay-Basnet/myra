@@ -3,14 +3,15 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import debounce from 'lodash/debounce';
 
+import { Box, FormSection, GridItem } from '@myra-ui';
+
 import {
   FormFieldSearchTerm,
   useGetIndividualKymEditDataQuery,
   useGetIndividualKymOptionsQuery,
   useSetMemberDataMutation,
 } from '@coop/cbs/data-access';
-import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, FormMemberSelect, FormSection, GridItem } from '@myra-ui';
+import { FormInput, FormMemberSelect, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { KYMBasiccoopDetailsFamilyMember } from './KYMBasiccoopDetailsFamilyMember';

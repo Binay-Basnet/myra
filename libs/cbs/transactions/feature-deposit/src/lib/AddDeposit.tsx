@@ -5,6 +5,19 @@ import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
 import {
+  asyncToast,
+  Box,
+  Button,
+  Container,
+  Divider,
+  FormFooter,
+  FormHeader,
+  Grid,
+  MemberCard,
+  Text,
+} from '@myra-ui';
+
+import {
   CashValue,
   DateType,
   DepositAccount,
@@ -20,21 +33,7 @@ import {
   useGetInstallmentsListDataQuery,
   useSetDepositDataMutation,
 } from '@coop/cbs/data-access';
-import { FormAmountInput, FormInput } from '@coop/shared/form';
-import {
-  asyncToast,
-  Box,
-  Button,
-  Container,
-  Divider,
-  FormAccountSelect,
-  FormFooter,
-  FormHeader,
-  FormMemberSelect,
-  Grid,
-  MemberCard,
-  Text,
-} from '@myra-ui';
+import { FormAccountSelect, FormAmountInput, FormInput, FormMemberSelect } from '@coop/shared/form';
 import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 import { InstallmentModel, Payment } from '../components';
@@ -77,6 +76,8 @@ export const AddDeposit = () => {
 
   const redirectMemberId = router.query['memberId'];
 
+  const redirectAccountId = router.query['accountId'];
+
   const queryClient = useQueryClient();
 
   const { t } = useTranslation();
@@ -91,7 +92,7 @@ export const AddDeposit = () => {
   const methods = useForm<DepositFormInput>({
     defaultValues: {
       payment_type: DepositPaymentType.Cash,
-      cash: { disableDenomination: false },
+      cash: { disableDenomination: true },
       depositedBy: DepositedBy.Self,
     },
   });
@@ -133,7 +134,7 @@ export const AddDeposit = () => {
     () =>
       accountListData?.account?.list?.edges?.find((account) => account.node?.id === accountId)
         ?.node,
-    [accountId]
+    [accountId, accountListData]
   );
 
   const FINE = useMemo(() => selectedAccount?.dues?.fine ?? '0', [selectedAccount]);
@@ -179,7 +180,7 @@ export const AddDeposit = () => {
 
   const checkIsSubmitButtonDisabled = () => {
     if (mode === 0) {
-      return false;
+      return !totalDeposit;
     }
 
     if (selectedPaymentMode === DepositPaymentType.Cash) {
@@ -362,6 +363,12 @@ export const AddDeposit = () => {
     }
   }, [redirectMemberId]);
 
+  useEffect(() => {
+    if (redirectAccountId && memberId) {
+      methods.setValue('accountId', String(redirectAccountId));
+    }
+  }, [memberId, redirectAccountId]);
+
   return (
     <>
       <Container minW="container.xl" height="fit-content">
@@ -438,6 +445,7 @@ export const AddDeposit = () => {
                           <FormInput name="voucherId" label={t['addDepositVoucherId']} />
 
                           <FormAmountInput
+                            type="number"
                             name="amount"
                             min={0}
                             label={t['addDepositAmountToBeDeposited']}
@@ -466,6 +474,7 @@ export const AddDeposit = () => {
                           <FormInput name="voucherId" label={t['addDepositVoucherId']} />
 
                           <FormAmountInput
+                            type="number"
                             name="amount"
                             label={t['addDepositAmountToBeDeposited']}
                           />
@@ -565,7 +574,6 @@ export const AddDeposit = () => {
                       }}
                       // notice="KYM needs to be updated"
                       signaturePath={memberSignatureUrl}
-                      showSignaturePreview={false}
                       citizenshipPath={memberCitizenshipUrl}
                       accountInfo={
                         selectedAccount
@@ -626,7 +634,7 @@ export const AddDeposit = () => {
                 )
               }
               mainButtonLabel={mode === 0 ? t['addDepositProceedPayment'] : t['addDepositSubmit']}
-              isMainButtonDisabled={mode === 0 ? !accountId : checkIsSubmitButtonDisabled()}
+              isMainButtonDisabled={checkIsSubmitButtonDisabled()}
               mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
             />
           </Container>

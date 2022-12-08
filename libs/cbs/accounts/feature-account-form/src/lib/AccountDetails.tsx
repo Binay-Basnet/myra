@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
 
+import { Box, WIPState } from '@myra-ui';
+
 import { AccountDetailsPathBar } from '@coop/cbs/accounts/ui-components';
 import { AccountDetailsSidebar } from '@coop/cbs/accounts/ui-layouts';
-import { Box, WIPState } from '@myra-ui';
 
 import { Overview, Transactions, WithdrawSlip } from '../component';
 

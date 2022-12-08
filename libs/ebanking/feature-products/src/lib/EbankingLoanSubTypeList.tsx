@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
 
+import { Box, PathBar, SwitchTabs, Text } from '@myra-ui';
+
 import { InfoCard } from '@coop/ebanking/cards';
 import { useGetEbankingLoanProductSubTypeQuery } from '@coop/ebanking/data-access';
-import { Box, PathBar, SwitchTabs, TextFields } from '@myra-ui';
 
 import { ProductSelectCard } from '../components/ProductSelectCard';
 
@@ -45,9 +46,9 @@ export const EbankingLoanSubType = () => {
           />
 
           <Box display="flex" flexDir="column" gap="s4">
-            <TextFields variant="formLabel" color="gray.700">
+            <Text variant="formLabel" color="gray.700">
               Product List
-            </TextFields>
+            </Text>
 
             <Box display="flex" flexDir="column" gap="s16">
               {loanSubTypes?.map((type) => (

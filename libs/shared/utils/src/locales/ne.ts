@@ -1729,10 +1729,10 @@ const ne: Record<string, string> = {
   customerPayment: 'Customer Payment',
 
   // accounting tab menu
-  accountingAccountingTabMenuSales: 'Sales',
-  accountingAccountingTabMenuPurchase: 'Purchase',
-  accountingAccountingTabMenuAccounting: 'Accounting',
-  accountingAccountingTabMenuInvestment: 'Investment',
+  sales: 'Sales',
+  purchase: 'Purchase',
+  accounting: 'Accounting',
+  investment: 'Investment',
 
   // accounting purchase list
   accountingPurchaseListBillNo: 'Bill No',
@@ -3226,7 +3226,7 @@ const ne: Record<string, string> = {
   settingsAlternativeChannel: 'Alternative Channels',
   acFeeAndCharges: 'Fee And Charges',
   acBasicCharge: 'Basic Charge for Alternative Channels.',
-  acMobileBanking: 'Mobile Banking',
+  acMBanking: 'Mobile Banking',
   acEBanking: 'eBanking',
   acSMSBanking: 'SMS Banking',
   acUsers: 'Users',
@@ -3403,6 +3403,9 @@ const ne: Record<string, string> = {
   bankAccountsAccountNo: 'Account No',
   memberLayoutCreateKYMFormForCooperativeUnion: 'Create KYM form for Cooperative Union Members',
   kymCoopUnionInstitutionInformation: '१. सहकारी जानकारी',
+  settingsDocuments: 'Document',
+  bankAccountCurrent: 'Current',
+  bankAccountSaving: 'Saving',
 };
 
 export default ne;

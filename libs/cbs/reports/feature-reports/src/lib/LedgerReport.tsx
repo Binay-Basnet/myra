@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { GridItem } from '@myra-ui';
 
 import {
@@ -42,7 +43,7 @@ export const LedgerReport = () => {
             },
           ]}
         />
-        <Report.Inputs defaultFilters={null} setFilters={setFilters}>
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormCOASelect name="ledgerId" label="Ledger Name" />
           </GridItem>

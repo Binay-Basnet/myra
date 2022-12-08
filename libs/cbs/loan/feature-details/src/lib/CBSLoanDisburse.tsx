@@ -8,21 +8,10 @@ import { useQueryClient } from '@tanstack/react-query';
 import { omit } from 'lodash';
 
 import {
-  LoanDisbursementInput,
-  LoanDisbursementMethod,
-  useGetCoaBankListQuery,
-  useGetIndividualMemberDetails,
-  useGetLoanApplicationDetailsQuery,
-  useSetDisburseLoanMutation,
-} from '@coop/cbs/data-access';
-import { LoanListLayout } from '@coop/cbs/loan/layouts';
-import { FormInput, FormSelect, FormSwitchTab, FormTextArea } from '@coop/shared/form';
-import {
   asyncToast,
   Button,
   Container,
   Divider,
-  FormAccountSelect,
   FormFooter,
   FormHeader,
   Grid,
@@ -31,6 +20,23 @@ import {
   MemberCard,
   Text,
 } from '@myra-ui';
+
+import {
+  LoanDisbursementInput,
+  LoanDisbursementMethod,
+  useGetCoaBankListQuery,
+  useGetIndividualMemberDetails,
+  useGetLoanApplicationDetailsQuery,
+  useSetDisburseLoanMutation,
+} from '@coop/cbs/data-access';
+import { LoanListLayout } from '@coop/cbs/loan/layouts';
+import {
+  FormAccountSelect,
+  FormInput,
+  FormSelect,
+  FormSwitchTab,
+  FormTextArea,
+} from '@coop/shared/form';
 import { featureCode } from '@coop/shared/utils';
 
 import CBSLoanDetails from './CbsLoanFeatureDetails';
@@ -235,7 +241,7 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
                       name="accountPayment.destinationAccount"
                       label="Destination Account"
                       memberId={memberId}
-                      loanLinkedAccounts
+                      isLinkedAccounts
                     />
                   </GridItem>
                   <FormInput
@@ -301,7 +307,6 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
                   address: memberDetailData?.address,
                 }}
                 signaturePath={memberSignatureUrl}
-                showSignaturePreview={false}
                 citizenshipPath={memberCitizenshipUrl}
               />
               <Box p="s16" display="flex" flexDirection="column" gap="s16">

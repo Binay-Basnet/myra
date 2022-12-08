@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
+import { Alert, Box, FormSection, Grid, GridItem, Text } from '@myra-ui';
 
 import { FormAmountInput, FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Alert, Box, FormSection, Grid, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer, SubHeadingText, SubText, TextBoxContainer } from '../formui';
@@ -70,6 +70,7 @@ export const Rebate = () => {
                 </GridItem>
                 <GridItem>
                   <FormAmountInput
+                    type="number"
                     name="rebateData.rebateAmount"
                     label={t['depositProductRebateAmount']}
                   />

@@ -1,8 +1,9 @@
 import { useFormContext } from 'react-hook-form';
 
+import { Box, Button, Divider, Text } from '@myra-ui';
+
 import { LoanAccountInput } from '@coop/cbs/data-access';
-import { FormNumberInput, FormTextArea } from '@coop/shared/form';
-import { Box, Button, Divider, Text, TextFields } from '@myra-ui';
+import { FormAmountInput, FormTextArea } from '@coop/shared/form';
 
 export const LoanAmountDetails = () => {
   const { watch, getValues } = useFormContext<LoanAccountInput>();
@@ -48,21 +49,22 @@ export const LoanAmountDetails = () => {
           bg="background.500"
         >
           <Box display="flex" alignItems="center" justifyContent="space-between">
-            <TextFields variant="formLabel">Total Loan Applied</TextFields>
+            <Text variant="formLabel">Total Loan Applied</Text>
             <Text fontSize="r1" color="gray.800" fontWeight="600">
               {totalLoanApplied ?? '0'}
             </Text>
           </Box>
           <Box display="flex" alignItems="center" justifyContent="space-between">
-            <TextFields variant="formLabel">Total Valuation</TextFields>
+            <Text variant="formLabel">Total Valuation</Text>
             <Button variant="link" px={0} justifyContent="end">
               {collateralSum + guaranteeSum}
             </Button>
           </Box>
           <Box display="flex" alignItems="center" justifyContent="space-between">
-            <TextFields variant="formLabel">Total Sanctioned Loan Amount</TextFields>
+            <Text variant="formLabel">Total Sanctioned Loan Amount</Text>
             <Box>
-              <FormNumberInput
+              <FormAmountInput
+                type="number"
                 rules={{
                   validate: {
                     required: (value) => {

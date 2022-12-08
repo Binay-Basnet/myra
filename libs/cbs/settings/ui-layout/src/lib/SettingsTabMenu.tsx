@@ -1,10 +1,11 @@
 import { IconType } from 'react-icons';
-import { IoApps, IoArrowDownOutline, IoGridOutline, IoPerson } from 'react-icons/io5';
+import { IoGridOutline, IoPerson } from 'react-icons/io5';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, Tab, TabList, Tabs, Text } from '@chakra-ui/react';
 
 import { Icon } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 const demoTabs: { title: string; icon: IconType; link: string }[] = [
@@ -18,16 +19,16 @@ const demoTabs: { title: string; icon: IconType; link: string }[] = [
     icon: IoPerson,
     link: '/settings/users/super-admin',
   },
-  {
-    title: 'settingsTabMenuImport',
-    icon: IoArrowDownOutline,
-    link: '/settings/import',
-  },
-  {
-    title: 'settingsTabMenuSubscriptions',
-    icon: IoApps,
-    link: '/settings/subscriptions',
-  },
+  // {
+  //   title: 'settingsTabMenuImport',
+  //   icon: IoArrowDownOutline,
+  //   link: '/settings/import',
+  // },
+  // {
+  //   title: 'settingsTabMenuSubscriptions',
+  //   icon: IoApps,
+  //   link: '/settings/subscriptions',
+  // },
 ];
 
 const NAVBAR_TAB_OBJECT: Record<string, number> = {

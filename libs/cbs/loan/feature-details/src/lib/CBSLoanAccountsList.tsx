@@ -8,7 +8,7 @@ import {
   ObjState,
   useGetLoanListQuery,
 } from '@coop/cbs/data-access';
-import { Column, Table } from '@coop/shared/table';
+import { Column, Table } from '@myra-ui/table';
 import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { getRouterQuery } from '@coop/shared/utils';
 

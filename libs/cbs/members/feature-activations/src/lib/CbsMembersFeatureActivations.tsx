@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import { Box } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 
+import { Alert, Button, Container, Divider, FormFooter, Icon, Text, VStack } from '@myra-ui';
+
 import {
   NatureOfDepositProduct,
   useGetAccountCheckQuery,
@@ -12,7 +14,6 @@ import {
   useGetMemberCheckQuery,
   useGetMemberIndividualDataQuery,
 } from '@coop/cbs/data-access';
-import { Alert, Button, Container, Divider, FormFooter, Icon, Text, VStack } from '@myra-ui';
 
 import { MembershipPayment } from '../components/MembershipPayment';
 
@@ -311,7 +312,7 @@ export const AccountRow = ({ account, index }: AccountRowProps) => {
             </Text>
           </Box>
 
-          {showAlert && (
+          {showAlert && !hasFilledDetails && (
             <Alert
               hideCloseIcon
               status="warning"

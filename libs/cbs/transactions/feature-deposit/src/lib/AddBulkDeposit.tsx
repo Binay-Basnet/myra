@@ -1,8 +1,19 @@
 import { useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
+
+import {
+  asyncToast,
+  Box,
+  Button,
+  Container,
+  FormFooter,
+  FormHeader,
+  MemberCard,
+  Text,
+} from '@myra-ui';
 
 import {
   BulkDepositInput,
@@ -12,17 +23,7 @@ import {
   useGetIndividualMemberDetails,
   useSetBulkDepositDataMutation,
 } from '@coop/cbs/data-access';
-import {
-  asyncToast,
-  Box,
-  Button,
-  Container,
-  FormFooter,
-  FormHeader,
-  FormMemberSelect,
-  MemberCard,
-  Text,
-} from '@myra-ui';
+import { FormMemberSelect } from '@coop/shared/form';
 
 import { BulkDepositAccountsSummary, BulkDepositAccountsTable, Payment } from '../components';
 
@@ -203,7 +204,6 @@ export const AddBulkDeposit = () => {
                       }}
                       // notice="KYM needs to be updated"
                       signaturePath={memberSignatureUrl}
-                      showSignaturePreview={false}
                       citizenshipPath={memberCitizenshipUrl}
                       cardBg="neutralColorLight.Gray-10"
                     />

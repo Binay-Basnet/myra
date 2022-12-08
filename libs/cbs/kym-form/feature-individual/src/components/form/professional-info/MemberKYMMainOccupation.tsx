@@ -5,6 +5,8 @@ import { isEmpty, isEqual } from 'lodash';
 import debounce from 'lodash/debounce';
 import pickBy from 'lodash/pickBy';
 
+import { Box, FormSection, GridItem, Text } from '@myra-ui';
+
 import {
   FormFieldSearchTerm,
   FormOption,
@@ -28,7 +30,6 @@ import {
   FormPhoneNumber,
   FormSelect,
 } from '@coop/shared/form';
-import { Box, FormSection, GridItem, TextFields } from '@myra-ui';
 import { getKymSection, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 import { getFieldOption } from '../../../utils/getFieldOption';
@@ -134,7 +135,7 @@ const MainOccupation = ({ setKymCurrentSection }: IMainOccupationProps) => {
         }
       }
     }
-  }, [familyOccupationListData]);
+  }, [familyOccupationListData, watch]);
 
   // refetch data when calendar preference is updated
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
@@ -143,7 +144,7 @@ const MainOccupation = ({ setKymCurrentSection }: IMainOccupationProps) => {
     if (id) {
       refetchEdit();
     }
-  }, [preference?.date, id]);
+  }, [preference?.date, id, watch]);
 
   const { mutateAsync } = useSetMemberOccupationMutation({
     onSuccess: () => refetch(),
@@ -216,11 +217,15 @@ const MainOccupation = ({ setKymCurrentSection }: IMainOccupationProps) => {
 
           <FormInput type="number" name="panVatNo" label={t['kymIndPanVATNo']} />
           <FormInput type="text" name="address" label={t['kymIndAddress']} />
-          <FormAmountInput name="estimatedAnnualIncome" label={t['kymIndEstimatedAnnualIncome']} />
+          <FormAmountInput
+            type="number"
+            name="estimatedAnnualIncome"
+            label={t['kymIndEstimatedAnnualIncome']}
+          />
 
           <GridItem colSpan={3} display="flex" gap="9px" alignItems="center">
             <FormCheckbox name="isOwner" />
-            <TextFields variant="formLabel">{t['kymIndAreyouowner']}</TextFields>
+            <Text variant="formLabel">{t['kymIndAreyouowner']}</Text>
           </GridItem>
 
           {isOwner && (

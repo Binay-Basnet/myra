@@ -11,11 +11,20 @@ import {
   FormHeader,
   Icon,
   Text,
-  TextFields,
+  toast,
 } from '@myra-ui';
 import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { BiSave } from 'react-icons/bi';
 import { AccordionKymCoopForm } from '@coop/cbs/kym-form/formElements';
+import {
+  addCooperativeAccountError,
+  addCooperativeDirectorError,
+  addCooperativeError,
+  setCooperativeHasPressedNext,
+  useAppSelector,
+  useGetKymCooperativeOverallFormStatusQuery,
+} from '@coop/cbs/data-access';
+import { useDispatch } from 'react-redux';
 import {
   KymAccountHolderDeclaration,
   KymCoopAccountOperatorDetail,
@@ -40,10 +49,18 @@ export const KYMCooperativePage = () => {
     section: string;
     subSection: string;
   }>();
+  const dispatch = useDispatch();
 
   const router = useRouter();
   const id = String(router?.query?.['id']);
 
+  const { refetch } = useGetKymCooperativeOverallFormStatusQuery(
+    { id, hasPressedNext: true },
+    {
+      enabled: false,
+    }
+  );
+  const isFormDirty = useAppSelector((state) => state.cooperative.isFormDirty);
   return (
     <>
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
@@ -115,12 +132,12 @@ export const KYMCooperativePage = () => {
 
             <Box p="s20" display="flex" gap="s16" alignItems="start">
               <Checkbox fontSize="s3" />
-              <TextFields variant="formInput" mt="-6px">
+              <Text variant="formInput" mt="-6px">
                 I/We agree to the&nbsp;
-                <TextFields as="span" variant="link">
+                <Text as="span" variant="link">
                   Terms and condition.
-                </TextFields>
-              </TextFields>
+                </Text>
+              </Text>
             </Box>
           </Box>
         </Box>
@@ -151,7 +168,52 @@ export const KYMCooperativePage = () => {
               </Button>
             }
             mainButtonLabel={t['next']}
-            mainButtonHandler={() => router.push(`/members/translation/${id}`)}
+            isMainButtonDisabled={!isFormDirty}
+            mainButtonHandler={async () => {
+              const response = await refetch();
+              const sectionStatus = response?.data?.members?.cooperative?.overallFormStatus;
+
+              const basicErrors = sectionStatus?.coopDetails?.errors;
+
+              const directorDetailsErrors = sectionStatus?.accountOperatorDetails?.map(
+                (director, index) => ({
+                  directorId: String(index),
+                  errors: director?.errors ?? {},
+                })
+              );
+
+              const accountDetailsErrors = sectionStatus?.accountOperatorDetails?.map(
+                (accountOperator, index) => ({
+                  operatorId: String(index),
+                  errors: accountOperator?.errors ?? {},
+                })
+              );
+
+              if (basicErrors) {
+                dispatch(addCooperativeError(basicErrors));
+              }
+
+              if (directorDetailsErrors) {
+                dispatch(addCooperativeDirectorError(directorDetailsErrors));
+              }
+
+              if (accountDetailsErrors) {
+                dispatch(addCooperativeAccountError(accountDetailsErrors));
+              }
+
+              if (response) {
+                dispatch(setCooperativeHasPressedNext(true));
+                if (!basicErrors) {
+                  router.push(`/members/translation/${router.query['id']}`);
+                } else {
+                  toast({
+                    id: 'validation-error',
+                    message: 'Some fields are empty or have error',
+                    type: 'error',
+                  });
+                }
+              }
+            }}
           />
         </Container>
       </Box>

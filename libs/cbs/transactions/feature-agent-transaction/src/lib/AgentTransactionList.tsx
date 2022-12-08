@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { useGetDepositListDataQuery } from '@coop/cbs/data-access';
-import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
+import { useGetDepositListDataQuery } from '@coop/cbs/data-access';
 import { amountConverter, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const MEMBER_TAB_ITEMS = [
@@ -64,7 +65,6 @@ export const AgentTransactionList = () => {
           <Box display="flex" alignItems="center" gap="s12">
             <Avatar
               name={props.getValue() as string}
-              size="sm"
               src={props?.row?.original?.node?.agentPicUrl ?? ''}
             />
             <Text

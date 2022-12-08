@@ -1,13 +1,14 @@
 import { ReactElement } from 'react';
 
+import { MainLayout, PageHeader } from '@myra-ui';
+
 import { DepositProductTable } from '@coop/cbs/settings/deposit-products';
 import { AccountPagesLayout } from '@coop/myra/components';
-import { MainLayout, TableListPageHeader } from '@myra-ui';
 
 // TODO ( Update this page when design arrives )
 const AccountDepositProductPage = () => (
   <>
-    <TableListPageHeader heading="Savings Products" />
+    <PageHeader heading="Savings Products" />
     <DepositProductTable />
   </>
 );

@@ -7,9 +7,11 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import { store, useInit } from '@coop/neosys-admin/data-access';
 import { Box, FloatingShortcutButton, Toaster } from '@myra-ui';
-import { neosysTheme, useSnap } from '@coop/shared/utils';
+import { neosysTheme } from '@myra-ui/theme';
+
+import { store, useInit } from '@coop/neosys-admin/data-access';
+import { useSnap } from '@coop/shared/utils';
 
 import '@raralabs/web-feedback/dist/css/style.css'; // stylesheet
 

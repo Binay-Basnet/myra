@@ -1,8 +1,9 @@
 import { BsDownload } from 'react-icons/bs';
 import { useRouter } from 'next/router';
 
+import { Avatar, Box, Button, Icon, Text } from '@myra-ui';
+
 import { useAppSelector } from '@coop/ebanking/data-access';
-import { Avatar, Box, Button, Icon, Text, TextFields } from '@myra-ui';
 
 export const SettingsHeader = () => {
   const router = useRouter();
@@ -34,7 +35,7 @@ export const SettingsHeader = () => {
         justifyContent="space-between"
       >
         <Box display="flex" w="100%" justifyContent="space-between" alignItems="center">
-          <TextFields variant="stickyCardHeader">{coopUser?.memberName}</TextFields>
+          <Text variant="stickyCardHeader">{coopUser?.memberName}</Text>
           {router.pathname.includes('/profile') ? (
             <Button
               rightIcon={<Icon as={BsDownload} size="sm" />}

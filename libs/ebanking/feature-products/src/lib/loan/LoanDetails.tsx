@@ -1,6 +1,9 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 
+import { Box, DetailCardContent, DetailsCard, PathBar, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
 import { Penalty } from '@coop/cbs/data-access';
 import {
   useGetEbankingLoanProductCriteriaQuery,
@@ -8,8 +11,6 @@ import {
   useGetEbankingLoanProductSubTypeQuery,
   useGetEbankingLoanProductTypeListQuery,
 } from '@coop/ebanking/data-access';
-import { Column, Table } from '@coop/shared/table';
-import { Box, DetailCardContent, DetailsCard, PathBar, Text } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 import {

@@ -6,11 +6,14 @@ import { IoLocationSharp } from 'react-icons/io5';
 import { RiShareBoxFill } from 'react-icons/ri';
 import { debounce } from 'lodash';
 
+import { Avatar, Box, Grid, GridItem, Icon, Text } from '@myra-ui';
+
 import { useGetMemberIndividualDataQuery, useGetMemberListQuery } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormSelect } from '@coop/shared/form';
-import { Avatar, Box, Grid, GridItem, Icon, Text, TextFields } from '@myra-ui';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+
+type OptionType = { label: string; value: string };
 
 export const Member = () => {
   const { t } = useTranslation();
@@ -41,19 +44,18 @@ export const Member = () => {
     id: memberId,
   });
 
-  type optionType = { label: string; value: string };
-
-  const optionProductType = memberListData?.reduce((prevVal, curVal) => {
-    return [
+  const optionProductType = memberListData?.reduce(
+    (prevVal, curVal) => [
       ...prevVal,
       {
         label: `${curVal?.node?.name?.local} (ID:${curVal?.node?.id})`,
         value: curVal?.node?.id as string,
       },
-    ];
-  }, [] as optionType[]);
+    ],
+    [] as OptionType[]
+  );
   return (
-    <GroupContainer scrollMarginTop={'200px'} display="flex" flexDirection={'column'} gap="s16">
+    <GroupContainer scrollMarginTop="200px" display="flex" flexDirection="column" gap="s16">
       <Box
         w="100%"
         background="neutralColorLight.Gray-0"
@@ -66,7 +68,6 @@ export const Member = () => {
             name="memberId"
             label={t['accountOpenMemberId']}
             isLoading={isFetching}
-            __placeholder={t['accountOpenMemberId']}
             onInputChange={debounce((id) => {
               setIDMember(id);
               setTrigger(true);
@@ -93,12 +94,12 @@ export const Member = () => {
                   />
                 </Box>
                 <Box>
-                  <TextFields color="neutralColorLight.Gray-80" fontWeight="Medium" fontSize="s3">
+                  <Text color="neutralColorLight.Gray-80" fontWeight="Medium" fontSize="s3">
                     {/* {data?.personalInformation?.name?.firstName}{' '}
                         {data?.personalInformation?.name?.middleName}{' '}
                         {data?.personalInformation?.name?.lastName} */}
                     {memberData?.name?.local}{' '}
-                  </TextFields>
+                  </Text>
                   <Text color="neutralColorLight.Gray-80" fontSize="s3" fontWeight="Regular">
                     {t['shareReturnID']}: {memberData?.id}
                     {/* {data?.personalInformation?.panNumber} */}
@@ -125,7 +126,7 @@ export const Member = () => {
               >
                 <Box display="flex">
                   <Icon size="sm" as={BsFillTelephoneFill} color="primary.500" />
-                  <TextFields
+                  <Text
                     ml="10px"
                     color="neutralColorLight.Gray-80"
                     fontSize="s3"
@@ -133,24 +134,24 @@ export const Member = () => {
                   >
                     {/* {data?.contact?.mobile} */}
                     {memberData?.contact ?? '98555445454'}
-                  </TextFields>
+                  </Text>
                 </Box>
 
                 <Box display="flex">
                   <Icon size="sm" as={GrMail} color="primary.500" />
-                  <TextFields
+                  <Text
                     ml="10px"
                     color="neutralColorLight.Gray-80"
                     fontSize="s3"
                     fontWeight="Regular"
                   >
                     nepalemail@gmail.com{' '}
-                  </TextFields>
+                  </Text>
                 </Box>
 
                 <Box display="flex">
                   <Icon size="sm" as={IoLocationSharp} color="primary.500" />
-                  <TextFields
+                  <Text
                     ml="10px"
                     color="neutralColorLight.Gray-80"
                     fontSize="s3"
@@ -160,7 +161,7 @@ export const Member = () => {
                         {','}
                         {data?.address?.permanent?.state} */}
                     {memberData?.address?.locality?.local} , {memberData?.address?.district?.local},
-                  </TextFields>
+                  </Text>
                 </Box>
               </GridItem>
 

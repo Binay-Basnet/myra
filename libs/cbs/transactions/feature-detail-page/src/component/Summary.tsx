@@ -1,8 +1,9 @@
 import { IoCopyOutline } from 'react-icons/io5';
 
-import { TransferType } from '@coop/cbs/data-access';
 import { Box, Icon, Tags, Text } from '@myra-ui';
-import { useTranslation } from '@coop/shared/utils';
+
+import { TransferType } from '@coop/cbs/data-access';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type SummaryProps = {
   summary: {
@@ -56,21 +57,25 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
                 </Text>
               ) : (
                 <Text fontSize="r1" fontWeight="Regular" color="neutralColorLight.Gray-80">
-                  {t['transDetailDeposit']} -{' '}
+                  {t['transDetailDeposit']} -
                   {summary.method === 'AGENT' ? agentSlug[summary.method] : summary.method}
                 </Text>
               )}
             </Box>
             <Box gap="s4" display="flex" flexDirection="column">
-              <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
-                {summary.amount}
-              </Text>
-              <Tags
-                type="chip"
-                label={summary.paymentMode ?? ''}
-                tagColor="primary.100"
-                labelColor="success.500"
-              />
+              <Box display="flex" justifyContent="flex-end">
+                <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
+                  {amountConverter(summary.amount ?? 0)}
+                </Text>
+              </Box>
+              <Box display="flex" justifyContent="flex-end">
+                <Tags
+                  type="chip"
+                  label={summary.paymentMode ?? ''}
+                  tagColor="primary.100"
+                  labelColor="success.500"
+                />
+              </Box>
             </Box>
           </Box>
         </Box>
@@ -89,7 +94,7 @@ export const Summary = ({ summary, detailPage }: SummaryProps) => {
 
           <Box display="flex" flexDirection="column">
             <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
-              {summary.amount}
+              {amountConverter(summary.amount ?? 0)}
             </Text>
           </Box>
         </>

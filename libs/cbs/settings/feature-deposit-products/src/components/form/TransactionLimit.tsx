@@ -1,11 +1,18 @@
-import { FormAmountInput } from '@coop/shared/form';
+import { useFormContext } from 'react-hook-form';
+
 import { Box, FormSection, Grid, GridItem, Text } from '@myra-ui';
+
+import { FormAmountInput } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { BoxContainer } from '../formui';
 
 export const TransactionLimit = () => {
   const { t } = useTranslation();
+  const method = useFormContext();
+  const { watch } = method;
+  const minDepositAmount = watch('depositAmount.minAmount');
+  const minWithdrawAmount = watch('withdrawAmountLimit.minAmount');
 
   return (
     <FormSection header="depositProductTransactionLimit">
@@ -25,6 +32,12 @@ export const TransactionLimit = () => {
             <FormAmountInput
               name="depositAmount.maxAmount"
               label={t['depositProductMaximumAmount']}
+              rules={{
+                min: {
+                  value: minDepositAmount,
+                  message: 'Maximum deposit amount should be greater than minimum amount',
+                },
+              }}
             />
           </Grid>
         </BoxContainer>
@@ -46,6 +59,12 @@ export const TransactionLimit = () => {
             <FormAmountInput
               name="withdrawAmountLimit.maxAmount"
               label={t['depositProductMaximumAmount']}
+              rules={{
+                min: {
+                  value: minWithdrawAmount,
+                  message: 'Maximum withdraw amount should be greater than minimum amount',
+                },
+              }}
             />
           </Grid>
         </BoxContainer>

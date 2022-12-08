@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
+import { FormSection, GridItem, Text } from '@myra-ui';
 
 import { FormAmountInput, FormInput, FormSwitchTab } from '@coop/shared/form';
-import { FormSection, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const TDS = () => {
@@ -32,7 +32,11 @@ export const TDS = () => {
 
           <FormInput name="tdsType" label={t['accountingCustomerPaymentAddTDSType']} />
 
-          <FormAmountInput name="tdsAmount" label={t['accountingCustomerPaymentAddTDSAmount']} />
+          <FormAmountInput
+            type="number"
+            name="tdsAmount"
+            label={t['accountingCustomerPaymentAddTDSAmount']}
+          />
         </>
       )}
     </FormSection>

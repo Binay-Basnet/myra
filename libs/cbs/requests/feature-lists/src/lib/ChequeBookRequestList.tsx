@@ -3,13 +3,6 @@ import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
 import {
-  ChequePickUpMethod,
-  RequestStatus,
-  RequestType,
-  useGetChequeBookRequestsQuery,
-} from '@coop/cbs/data-access';
-import { Column, Table } from '@coop/shared/table';
-import {
   Box,
   DetailCardContent,
   DetailPageMemberCard,
@@ -18,6 +11,14 @@ import {
   TablePopover,
   Text,
 } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
+import {
+  ChequePickUpMethod,
+  RequestStatus,
+  RequestType,
+  useGetChequeBookRequestsQuery,
+} from '@coop/cbs/data-access';
 import { getRouterQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
@@ -97,7 +98,27 @@ export const ChequeBookRequestList = () => {
         header: '',
         cell: (props) =>
           props.row.original?.node ? (
-            <TablePopover items={[{ title: 'View Details' }]} node={props.row.original?.node} />
+            <TablePopover
+              items={[
+                {
+                  title: 'View Details',
+                  onClick: (row) => {
+                    router.push(
+                      {
+                        query: {
+                          id: row?.id,
+                          status: row?.approvalStatus === RequestStatus.Pending,
+                        },
+                      },
+                      undefined,
+                      { shallow: true }
+                    );
+                    modalProps.onToggle();
+                  },
+                },
+              ]}
+              node={props.row.original?.node}
+            />
           ) : null,
         meta: {
           width: '60px',

@@ -2,13 +2,13 @@ import { HStack } from '@chakra-ui/react';
 
 import { Box, Text } from '@myra-ui';
 
-const cellWidthObject = {
+const cellWidthObject: Record<string, string> = {
   lg: '50%',
   md: '20%',
   sm: '15%',
 };
 
-const flexBasisFunc = (width) => {
+const flexBasisFunc = (width: string) => {
   if (width === 'auto') {
     return '100%';
   }
@@ -18,7 +18,21 @@ const flexBasisFunc = (width) => {
   return '30%';
 };
 
-export const TableOverview = ({ columns }) => (
+export type TableOverviewColumnType = {
+  label: string | number;
+  width: 'auto' | 'lg' | 'md' | 'sm';
+  isNumeric: boolean;
+};
+
+interface ITableOverviewProps {
+  columns: {
+    label: string | number;
+    width: 'auto' | 'lg' | 'md' | 'sm';
+    isNumeric: boolean;
+  }[];
+}
+
+export const TableOverview = ({ columns }: ITableOverviewProps) => (
   <HStack
     bg="background.500"
     borderRadius="br2"

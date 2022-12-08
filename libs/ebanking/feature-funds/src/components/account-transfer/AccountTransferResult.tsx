@@ -3,10 +3,11 @@ import { useFormContext } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import dayjs from 'dayjs';
 
+import { Box, Button, Icon, Text } from '@myra-ui';
+
 import { TransactionHeaderCardWithChip, TransferModal } from '@coop/ebanking/cards';
 import { useAccountTransferMutation, useGetAccountListQuery } from '@coop/ebanking/data-access';
 import { AccountTransferFormType } from '@coop/ebanking/funds';
-import { Box, Button, Icon, Text, TextFields } from '@myra-ui';
 
 import { CardBodyContainer, CardContainer, CardContent, CardHeader } from '../CardContainer';
 
@@ -56,18 +57,18 @@ export const AccountTransferResult = ({
         >
           <Box display="flex" alignItems="center" gap="12px">
             <Icon as={TempIcon} />
-            <TextFields variant="navItems" color="gray.800" fontSize="r1">
+            <Text variant="navItems" color="gray.800" fontSize="r1">
               Account Transfer
-            </TextFields>
+            </Text>
           </Box>
 
           <Box display="flex" flexDir="column" alignItems="flex-end">
-            <TextFields
+            <Text
               variant="tableHeader"
               color={paymentStatus === 'success' ? 'primary.500' : 'gray.800'}
             >
               Rs. {Number(methods?.getValues().amount).toFixed(2)}
-            </TextFields>
+            </Text>
 
             <Text fontSize="s3" fontWeight="400" color="gray.500">
               {dayjs(successResult?.transactionDate).format('YYYY-MM-DD hh:mm A')}

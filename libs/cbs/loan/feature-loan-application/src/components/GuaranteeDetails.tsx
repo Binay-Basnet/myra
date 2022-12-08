@@ -3,22 +3,20 @@ import { FormProvider, useFieldArray, useForm, useFormContext } from 'react-hook
 import { AiOutlinePlus } from 'react-icons/ai';
 import { omit } from 'lodash';
 
-import { ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
-import { FormNumberInput } from '@coop/shared/form';
 import {
   Box,
   Button,
-  ChakraModal,
   DEFAULT_PAGE_SIZE,
   Divider,
-  FormAccountSelect,
-  FormMemberSelect,
   GridItem,
   Icon,
+  Modal,
   Text,
-  TextFields,
   VStack,
 } from '@myra-ui';
+
+import { ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
+import { FormAccountSelect, FormMemberSelect, FormNumberInput } from '@coop/shared/form';
 
 import { useLoanProductContext } from '../hooks/useLoanProduct';
 
@@ -37,7 +35,9 @@ export const GuaranteeDetails = () => {
   const { product } = useLoanProductContext();
 
   // Inner Modal Form State
-  const methods = useForm<GuaranteeDetailForm>();
+  const methods = useForm<GuaranteeDetailForm>({
+    mode: 'onChange',
+  });
   const editIndex = methods.getValues()?.index;
 
   // Outer Modal Form State
@@ -88,9 +88,9 @@ export const GuaranteeDetails = () => {
   return (
     <>
       <Box display="flex" flexDir="column" gap="s16">
-        <TextFields variant="formLabel" color="gray.700">
+        <Text variant="formLabel" color="gray.700">
           Guarantee Details
-        </TextFields>
+        </Text>
         <Box>
           <Button
             variant="outline"
@@ -106,7 +106,7 @@ export const GuaranteeDetails = () => {
         </Box>
       </Box>
 
-      <ChakraModal
+      <Modal
         width="3xl"
         open={isModal}
         onClose={() => setIsModal(false)}
@@ -151,7 +151,16 @@ export const GuaranteeDetails = () => {
                 value={maxGuarantee}
                 isDisabled
               />
-              <FormNumberInput name="guranteeAmount" label="Guarantee Amount" />
+              <FormNumberInput
+                name="guranteeAmount"
+                label="Guarantee Amount"
+                rules={{
+                  max: {
+                    value: maxGuarantee,
+                    message: 'Guaranntee Limit Exceeeded',
+                  },
+                }}
+              />
             </Box>
             <GridItem
               colSpan={4}
@@ -163,9 +172,9 @@ export const GuaranteeDetails = () => {
               bg="background.500"
               borderRadius="br2"
             >
-              <TextFields variant="formLabel" color="gray.600">
+              <Text variant="formLabel" color="gray.600">
                 Total Guaranteed Amount
-              </TextFields>
+              </Text>
 
               <Text color="gray.700" fontSize="r1" fontWeight="600">
                 {totalGuarantee}
@@ -173,7 +182,7 @@ export const GuaranteeDetails = () => {
             </GridItem>
           </Box>
         </FormProvider>
-      </ChakraModal>
+      </Modal>
 
       {fields?.length !== 0 && (
         <Box mt="-s16" border="1px" borderColor="border.layout" borderRadius="br2">

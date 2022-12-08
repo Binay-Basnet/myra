@@ -1,10 +1,11 @@
 import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
+import { Avatar, Box } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
 import { useGetShareBalanceListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
-import { Column, Table } from '@coop/shared/table';
-import { Avatar, Box } from '@myra-ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const ShareBalanceTable = () => {
@@ -77,6 +78,7 @@ export const ShareBalanceTable = () => {
         isLoading={isFetching}
         data={rowData ?? []}
         columns={columns}
+        rowOnClick={(row) => router.push(`/members/details?id=${row?.node?.member?.id}&tab=share`)}
         pagination={{
           total: data?.share?.balance?.totalCount as number,
           pageInfo: data?.share?.balance?.pageInfo,

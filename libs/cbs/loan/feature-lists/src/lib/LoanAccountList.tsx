@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
 
-import { LoanObjState, useGetLoanListQuery } from '@coop/cbs/data-access';
 import { PageHeader } from '@myra-ui';
-import { getRouterQuery } from '@coop/shared/utils';
+
+import { LoanObjState, useGetLoanListQuery } from '@coop/cbs/data-access';
+import { featureCode, getRouterQuery } from '@coop/shared/utils';
 
 import { LoanTable } from '../components/LoanTable';
 
@@ -17,7 +18,7 @@ export const LoanAccountList = () => {
   });
   return (
     <>
-      <PageHeader heading="Loan Account" />
+      <PageHeader heading={`Loan Account - ${featureCode.loanAccounts} `} />
       <LoanTable
         data={data}
         isLoading={isFetching}

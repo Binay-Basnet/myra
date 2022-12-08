@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { InterestTaxReport } from '@coop/cbs/reports';
 import { MainLayout } from '@myra-ui';
+
+import { InterestTaxReport } from '@coop/cbs/reports';
 
 export const SavingStatementReportPage = () => <InterestTaxReport />;
 

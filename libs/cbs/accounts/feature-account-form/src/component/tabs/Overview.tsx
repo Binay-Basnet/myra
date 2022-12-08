@@ -1,5 +1,6 @@
-import { NatureOfDepositProduct, useAccountDetails } from '@coop/cbs/data-access';
 import { DetailPageQuickLinks } from '@myra-ui';
+
+import { NatureOfDepositProduct, useAccountDetails } from '@coop/cbs/data-access';
 
 import {
   AccountStatistics,
@@ -18,21 +19,6 @@ import {
 
 // const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-const links = [
-  {
-    title: 'New Deposit',
-    link: '/transactions/deposit/add',
-  },
-  {
-    title: 'New Withdraw',
-    link: '/transactions/withdraw/add',
-  },
-  {
-    title: 'New Account Transfer',
-    link: '/transactions/account-transfer/add',
-  },
-];
-
 const accountTypes = {
   [NatureOfDepositProduct.Saving]: 'Saving Account',
   [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
@@ -42,6 +28,21 @@ const accountTypes = {
 
 export const Overview = () => {
   const { accountDetails } = useAccountDetails();
+
+  const links = [
+    {
+      title: 'New Deposit',
+      link: `/transactions/deposit/add?memberId=${accountDetails?.member?.id}&accountId=${accountDetails?.accountId}`,
+    },
+    {
+      title: 'New Withdraw',
+      link: `/transactions/withdraw/add?memberId=${accountDetails?.member?.id}&accountId=${accountDetails?.accountId}`,
+    },
+    {
+      title: 'New Account Transfer',
+      link: `/transactions/account-transfer/add?memberId=${accountDetails?.member?.id}&srcAccountId=${accountDetails?.accountId}`,
+    },
+  ];
 
   const generalInfos = [
     { label: 'Account Name', value: accountDetails?.accountName },
@@ -74,6 +75,13 @@ export const Overview = () => {
         accountDetails?.accountType === NatureOfDepositProduct.Current
           ? null
           : accountDetails?.interestEarned ?? '0',
+    },
+    {
+      label: 'Interest Rate',
+      value:
+        accountDetails?.accountType === NatureOfDepositProduct.Current
+          ? null
+          : `${accountDetails?.interestRate} %`,
     },
     { label: 'Guarantee Amount', value: accountDetails?.guaranteedAmount ?? '0' },
   ];

@@ -1,43 +1,71 @@
 import { FormProvider, useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
+import {} from 'lodash/omit';
 
-import { FormInput, FormTextArea } from '@coop/shared/form';
 import {
+  asyncToast,
   Box,
   Container,
   FormFooter,
   FormHeader,
   FormSection,
   GridItem,
-  SwitchTabs,
 } from '@myra-ui';
+
+import { JournalVoucherPaymentMode, useSetJournalVoucherDataMutation } from '@coop/cbs/data-access';
+import { FormInput, FormLocalDatePicker, FormSwitchTab, FormTextArea } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { JournalVouchersTable } from '../components';
+import { CustomJournalVoucherInput } from '../types';
 
 /* eslint-disable-next-line */
 export interface AccountingFeatureAddJournalVoucherProps {}
 
+const PaymentModeOptions = [
+  { label: 'Cash', value: JournalVoucherPaymentMode.Cash },
+  { label: 'Cheque', value: JournalVoucherPaymentMode.Cheque },
+];
+
 export const AccountingFeatureAddJournalVoucher = () => {
   const { t } = useTranslation();
 
-  const methods = useForm({
-    defaultValues: {
-      data: [
-        {
-          dr_amount: 4500,
-          cr_amount: '',
-          transferred_to: 'savings_account',
-          paymentMode: 'cash',
-        },
-        {
-          dr_amount: '',
-          cr_amount: 4500,
-          transferred_to: 'nic-asia',
-          paymentMode: 'cash',
-        },
-      ],
-    },
+  const router = useRouter();
+
+  const methods = useForm<CustomJournalVoucherInput>({
+    defaultValues: { paymentMode: JournalVoucherPaymentMode.Cash },
   });
+
+  const { watch, getValues } = methods;
+
+  const paymentMode = watch('paymentMode');
+
+  const { mutateAsync: setJournalVoucherData } = useSetJournalVoucherDataMutation();
+
+  const handleSave = () => {
+    const values = getValues();
+
+    const filteredValues = {
+      ...values,
+      // eslint-disable-next-line unused-imports/no-unused-vars
+      entries: values?.entries?.map((entry) => ({
+        accountId: entry.accountId,
+        drAmount: String(entry.drAmount),
+        crAmount: String(entry.crAmount),
+        description: entry.description,
+      })),
+    };
+
+    asyncToast({
+      id: 'set-accounting-journal-voucher-data',
+      msgs: {
+        loading: 'Adding journal voucher',
+        success: 'Journal voucher added',
+      },
+      promise: setJournalVoucherData({ data: filteredValues }),
+      onSuccess: () => router.push('/accounting/accounting/journal-vouchers/list'),
+    });
+  };
 
   return (
     <>
@@ -48,8 +76,8 @@ export const AccountingFeatureAddJournalVoucher = () => {
           <form>
             <Box bg="white" minH="calc(100vh - 220px)">
               <FormSection>
-                <FormInput
-                  name="dueDate"
+                <FormLocalDatePicker
+                  name="date"
                   type="date"
                   label={t['accountingJournalVoucherAddDueDate']}
                 />
@@ -68,25 +96,21 @@ export const AccountingFeatureAddJournalVoucher = () => {
 
               <FormSection>
                 <GridItem colSpan={3}>
-                  <SwitchTabs
+                  <FormSwitchTab
                     name="paymentMode"
                     label="Payment Mode"
-                    defaultValue="cash"
-                    options={[
-                      { label: 'Cash', value: 'cash' },
-                      { label: 'Cheque', value: 'cheque' },
-                    ]}
+                    options={PaymentModeOptions}
                   />
                 </GridItem>
 
-                <GridItem colSpan={1}>
+                {paymentMode === JournalVoucherPaymentMode.Cheque && (
                   <FormInput name="chequeNo" label="Cheque No" />
-                </GridItem>
+                )}
               </FormSection>
               <FormSection divider={false}>
                 <GridItem colSpan={2}>
                   <FormTextArea
-                    name="note"
+                    name="notes"
                     label={t['accountingJournalVoucherAddNotes']}
                     rows={3}
                   />
@@ -98,7 +122,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
       </Container>
       <Box bottom="0" position="fixed" width="100%" bg="gray.100">
         <Container minW="container.lg" height="fit-content">
-          <FormFooter mainButtonLabel={t['save']} />
+          <FormFooter mainButtonLabel={t['save']} mainButtonHandler={handleSave} />
         </Container>
       </Box>
     </>

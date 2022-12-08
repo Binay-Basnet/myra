@@ -5,6 +5,18 @@ import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
 import {
+  Alert,
+  asyncToast,
+  Box,
+  Button,
+  Container,
+  FormFooter,
+  FormHeader,
+  MemberCard,
+  Text,
+} from '@myra-ui';
+
+import {
   CashValue,
   NatureOfDepositProduct,
   ObjState,
@@ -18,20 +30,14 @@ import {
   WithdrawWith,
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/transactions/ui-containers';
-import { FormAmountInput, FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
 import {
-  Alert,
-  asyncToast,
-  Box,
-  Button,
-  Container,
   FormAccountSelect,
-  FormFooter,
-  FormHeader,
+  FormAmountInput,
+  FormInput,
   FormMemberSelect,
-  MemberCard,
-  Text,
-} from '@myra-ui';
+  FormSelect,
+  FormSwitchTab,
+} from '@coop/shared/form';
 import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 import { Payment } from '../components';
@@ -88,7 +94,7 @@ export const AddWithdraw = () => {
   const methods = useForm<WithdrawFormInput>({
     defaultValues: {
       payment_type: WithdrawPaymentType.Cash,
-      cash: { disableDenomination: false },
+      cash: { disableDenomination: true },
       withdrawnBy: WithdrawBy.Self,
       withdrawWith: WithdrawWith.WithdrawSlip,
     },
@@ -141,14 +147,20 @@ export const AddWithdraw = () => {
     () =>
       accountListData?.account?.list?.edges?.find((account) => account.node?.id === accountId)
         ?.node,
-    [accountId]
+    [accountId, accountListData]
   );
 
   const [mode, setMode] = useState<number>(0); // 0: form 1: payment
 
   const withdrawn = watch('withdrawWith');
 
+  const withdrawSlipNo = watch('withdrawSlipNo');
+
+  const counterSlipNo = watch('counterSlipNo');
+
   const amountToBeWithdrawn = watch('amount') ?? 0;
+
+  const paymentType = watch('payment_type');
 
   const fine = useMemo(() => {
     if (!amountToBeWithdrawn) {
@@ -188,6 +200,8 @@ export const AddWithdraw = () => {
   const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
 
   const returnAmount = Number(totalCashPaid) - Number(totalWithdraw);
+
+  const bankChequeAmount = watch('bankCheque.amount');
 
   const handleSubmit = () => {
     const values = getValues();
@@ -251,12 +265,49 @@ export const AddWithdraw = () => {
   };
   //  get redirect id from url
   const redirectMemberId = router.query['memberId'];
+  const redirectAccountId = router.query['accountId'];
+
   // redirect from member details
   useEffect(() => {
     if (redirectMemberId) {
       methods.setValue('memberId', String(redirectMemberId));
     }
   }, [redirectMemberId]);
+
+  useEffect(() => {
+    if (redirectAccountId && memberId) {
+      methods.setValue('accountId', String(redirectAccountId));
+    }
+  }, [memberId, redirectAccountId]);
+
+  const checkIsSubmitButtonDisabled = () => {
+    if (mode === 0) {
+      if (!totalWithdraw) {
+        return true;
+      }
+
+      if (withdrawn === WithdrawWith.WithdrawSlip && !withdrawSlipNo) {
+        return true;
+      }
+
+      if (withdrawn === WithdrawWith.CounterSlip && !counterSlipNo) {
+        return true;
+      }
+    }
+
+    if (paymentType === WithdrawPaymentType.Cash && totalCashPaid < totalWithdraw) {
+      return true;
+    }
+
+    if (
+      paymentType === WithdrawPaymentType.BankCheque &&
+      Number(bankChequeAmount) < totalWithdraw
+    ) {
+      return true;
+    }
+
+    return false;
+  };
 
   return (
     <>
@@ -324,7 +375,12 @@ export const AddWithdraw = () => {
                   )}
 
                   {memberId && accountId && (
-                    <FormAmountInput min={0} name="amount" label={t['addWithdrawWithdrawAmount']} />
+                    <FormAmountInput
+                      type="number"
+                      min={0}
+                      name="amount"
+                      label={t['addWithdrawWithdrawAmount']}
+                    />
                   )}
 
                   {memberId && accountId && (
@@ -389,7 +445,7 @@ export const AddWithdraw = () => {
                       }}
                       // notice="KYM needs to be updated"
                       signaturePath={memberSignatureUrl}
-                      showSignaturePreview={false}
+                      showSignaturePreview
                       citizenshipPath={memberCitizenshipUrl}
                       accountInfo={
                         selectedAccount
@@ -448,7 +504,7 @@ export const AddWithdraw = () => {
                 mode === 0 ? t['addWithdrawProceedToPayment'] : t['addWithdrawSubmit']
               }
               mainButtonHandler={mode === 0 ? () => setMode(1) : handleSubmit}
-              isMainButtonDisabled={mode === 0 && !accountId}
+              isMainButtonDisabled={checkIsSubmitButtonDisabled()}
             />
           </Container>
         </Box>

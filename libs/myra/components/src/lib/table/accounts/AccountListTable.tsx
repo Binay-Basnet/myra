@@ -29,30 +29,26 @@ export const AccountListTable = ({ data, isLoading }: IAccountListTableProps) =>
   const columns: Column<MemberData>[] = useMemo(
     () => [
       {
-        Header: 'Account Code',
-        accessor: 'id',
-        maxWidth: 4,
+        header: 'Account Code',
+        accessorKey: 'id',
       },
       {
-        Header: 'Name',
-        accessor: 'firstName',
-        width: '80%',
+        header: 'Name',
+        accessorKey: 'firstName',
       },
       {
-        Header: 'Account Type',
-        accessor: 'title',
-        width: '40%',
+        header: 'Account Type',
+        accessorKey: 'title',
       },
 
       {
-        Header: 'Parent Group',
-        accessor: 'gender',
-        width: '40%',
+        header: 'Parent Group',
+        accessorKey: 'gender',
       },
 
       {
-        accessor: 'actions',
-        Cell: () => (
+        accessorKey: 'actions',
+        cell: () => (
           <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
         ),
       },
@@ -62,5 +58,5 @@ export const AccountListTable = ({ data, isLoading }: IAccountListTableProps) =>
 
   const rowData = useMemo(() => data && data?.members?.list, [data]);
 
-  return <Table isLoading={isLoading} data={rowData?.slice(0, 10) ?? []} columns={columns} sort />;
+  return <Table isLoading={isLoading} data={rowData?.slice(0, 10) ?? []} columns={columns} />;
 };

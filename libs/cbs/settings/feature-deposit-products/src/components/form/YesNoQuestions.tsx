@@ -1,14 +1,16 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { Box, FormSection, GridItem, Text } from '@myra-ui';
+
 import { NatureOfDepositProduct } from '@coop/cbs/data-access';
 import { SubText } from '@coop/shared/components';
 import { FormInput, FormSwitchTab, FormTextArea } from '@coop/shared/form';
-import { Box, FormSection, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { AllowChequeIssue } from './AllowChequeIssue';
 import { AtmFacility } from './AtmFacility';
+import { WithdrawPenalty } from './WithdrawPenalty';
 import { SubHeadingText } from '../formui';
 
 type SalesTable = {
@@ -193,6 +195,7 @@ export const Questions = () => {
                       rows={3}
                     />
                   </Box>
+                  {depositNature === NatureOfDepositProduct.Saving && <WithdrawPenalty />}
                 </Box>
               )}
             </Box>

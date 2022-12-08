@@ -3,7 +3,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { LoanDisbursementMethod, ObjState, useGetBankListQuery } from '@coop/cbs/data-access';
 import { BoxContainer, ContainerWithDivider } from '@coop/cbs/transactions/ui-containers';
 import { FormInput, FormSelect, FormSwitchTab, FormTextArea } from '@coop/shared/form';
-import { Divider, FormAccountSelect, Grid, GridItem } from '@myra-ui';
+import { Divider, Grid, GridItem } from '@myra-ui';
+import { FormAccountSelect } from '@coop/shared/form';
 
 const paymentModes = [
   {

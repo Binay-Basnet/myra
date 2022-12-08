@@ -6,6 +6,22 @@ import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
 import {
+  asyncToast,
+  Box,
+  Button,
+  Container,
+  Divider,
+  findError,
+  FormFooter,
+  FormHeader,
+  getError,
+  Grid,
+  MemberCard,
+  Text,
+  toast,
+} from '@myra-ui';
+
+import {
   AccountClosePaymentMode,
   AccountCloseReason,
   CashValue,
@@ -16,25 +32,15 @@ import {
   useGetIndividualMemberDetails,
   useSetAccountCloseDataMutation,
 } from '@coop/cbs/data-access';
-import { FormAmountInput, FormInput, FormRadioGroup, FormTextArea } from '@coop/shared/form';
 import {
-  asyncToast,
-  Box,
-  Button,
-  Container,
-  Divider,
-  findError,
   FormAccountSelect,
-  FormFooter,
-  FormHeader,
+  FormAmountInput,
+  FormInput,
   FormMemberSelect,
-  getError,
-  Grid,
-  MemberCard,
-  Text,
-  toast,
-} from '@myra-ui';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+  FormRadioGroup,
+  FormTextArea,
+} from '@coop/shared/form';
+import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 import { Payment } from '../component/AccountCloseForm/payment';
 
@@ -102,7 +108,12 @@ export const CbsAccountClose = () => {
   const redirectAccountId = String(router?.query?.['accountId']);
 
   const methods = useForm<CustomAccountCloseInput>({
-    defaultValues: { paymentMode: AccountClosePaymentMode.Cash },
+    defaultValues: {
+      paymentMode: AccountClosePaymentMode.Cash,
+      cash: {
+        disableDenomination: true,
+      },
+    },
   });
 
   const { watch, getValues, setValue, reset } = methods;
@@ -130,7 +141,7 @@ export const CbsAccountClose = () => {
     },
     {
       staleTime: 0,
-      enabled: !!memberId,
+      enabled: !!memberId && memberId !== 'undefined',
     }
   );
 
@@ -183,11 +194,13 @@ export const CbsAccountClose = () => {
 
   useEffect(() => {
     let tempCharge = 0;
-    selectedAccount?.product?.accountClosingCharge?.forEach(({ serviceName, amount }) => {
+    selectedAccount?.product?.accountClosingCharge?.forEach(({ serviceName, amount }: any) => {
       setValue(`serviceCharge.${serviceName}`, amount);
 
       tempCharge += Number(amount ?? 0);
     });
+
+    tempCharge += Number(selectedAccount?.prematurePenalty ?? 0);
 
     setTotalCharge(tempCharge);
   }, [JSON.stringify(selectedAccount)]);
@@ -197,10 +210,13 @@ export const CbsAccountClose = () => {
   useEffect(() => {
     if (serviceCharge) {
       setTotalCharge(
-        Object.values(serviceCharge).reduce((sum, amount) => sum + Number(amount), 0) ?? 0
+        Object.values(serviceCharge).reduce(
+          (sum, amount) => sum + Number(amount),
+          Number(selectedAccount?.prematurePenalty ?? 0)
+        ) ?? 0
       );
     }
-  }, [JSON.stringify(serviceCharge)]);
+  }, [JSON.stringify(serviceCharge), JSON.stringify(selectedAccount)]);
 
   const mainButtonHandlermode0 = () => {
     const values = getValues();
@@ -445,11 +461,11 @@ export const CbsAccountClose = () => {
                               justifyContent="space-between"
                               alignItems="center"
                             >
-                              <Text fontWeight="500" fontSize="s3">
+                              <Text color="gray.600" fontWeight="500" fontSize="s3">
                                 Loan Amount
                               </Text>
-                              <Text fontWeight="600" fontSize="r1">
-                                {selectedAccount?.guaranteedAmount}
+                              <Text color="gray.600" fontWeight="600" fontSize="r1">
+                                {amountConverter(selectedAccount?.guaranteedAmount ?? 0)}
                               </Text>
                             </Box>
                           </Box>
@@ -465,11 +481,11 @@ export const CbsAccountClose = () => {
                             justifyContent="space-between"
                             alignItems="center"
                           >
-                            <Text fontWeight="500" fontSize="s3">
+                            <Text color="gray.600" fontWeight="500" fontSize="s3">
                               Interest Payable
                             </Text>
-                            <Text fontWeight="600" fontSize="r1">
-                              {selectedAccount?.interestAccured ?? '0'}
+                            <Text color="gray.600" fontWeight="600" fontSize="r1">
+                              {amountConverter(selectedAccount?.interestAccured ?? 0)}
                             </Text>
                           </Box>
 
@@ -479,11 +495,11 @@ export const CbsAccountClose = () => {
                             justifyContent="space-between"
                             alignItems="center"
                           >
-                            <Text fontWeight="500" fontSize="s3">
+                            <Text color="gray.600" fontWeight="500" fontSize="s3">
                               Total Interest Tax
                             </Text>
-                            <Text fontWeight="600" fontSize="r1">
-                              {selectedAccount?.interestTax ?? '0'}
+                            <Text color="gray.600" fontWeight="600" fontSize="r1">
+                              {amountConverter(selectedAccount?.interestTax ?? 0)}
                             </Text>
                           </Box>
 
@@ -493,11 +509,16 @@ export const CbsAccountClose = () => {
                             justifyContent="space-between"
                             alignItems="center"
                           >
-                            <Text fontWeight="500" fontSize="s3">
+                            <Text color="gray.600" fontWeight="500" fontSize="s3">
                               Adjusted Interest
                             </Text>
                             <Box>
-                              <FormAmountInput size="sm" name="adjustedInterest" isDisabled />
+                              <FormAmountInput
+                                type="number"
+                                size="sm"
+                                name="adjustedInterest"
+                                isDisabled
+                              />
                             </Box>
                           </Box>
 
@@ -507,21 +528,21 @@ export const CbsAccountClose = () => {
                             justifyContent="space-between"
                             alignItems="center"
                           >
-                            <Text fontWeight="500" fontSize="s3">
+                            <Text color="gray.600" fontWeight="500" fontSize="s3">
                               Net Interest Payable
                             </Text>
                             <Text fontWeight="600" fontSize="r1">
-                              {netInterestPayable}
+                              {amountConverter(netInterestPayable ?? 0)}
                             </Text>
                           </Box>
                         </Box>
-                        {selectedAccount?.product?.accountClosingCharge?.length && (
+                        {selectedAccount?.product?.accountClosingCharge?.length ? (
                           <Box display="flex" flexDirection="column" gap="s8">
                             <Text fontWeight="600" fontSize="s3">
                               Other Charges
                             </Text>
                             {selectedAccount.product?.accountClosingCharge?.map(
-                              ({ serviceName }) => (
+                              ({ serviceName }: any) => (
                                 <Box
                                   // h="36px"
                                   display="flex"
@@ -529,18 +550,38 @@ export const CbsAccountClose = () => {
                                   alignItems="center"
                                   key={`${serviceName}`}
                                 >
-                                  <Text fontWeight="500" fontSize="s3">
+                                  <Text color="gray.600" fontWeight="500" fontSize="s3">
                                     {serviceName}
                                   </Text>
                                   <FormAmountInput
+                                    type="number"
                                     size="sm"
                                     name={`serviceCharge.${serviceName}`}
                                   />
                                 </Box>
                               )
                             )}
+
+                            {(selectedAccount?.product?.nature ===
+                              NatureOfDepositProduct.RecurringSaving ||
+                              selectedAccount?.product?.nature ===
+                                NatureOfDepositProduct.TermSavingOrFd) && (
+                              <Box
+                                h="36px"
+                                display="flex"
+                                justifyContent="space-between"
+                                alignItems="center"
+                              >
+                                <Text color="gray.600" fontWeight="500" fontSize="s3">
+                                  Premature Penalty
+                                </Text>
+                                <Text fontWeight="600" fontSize="r1">
+                                  {amountConverter(selectedAccount?.prematurePenalty ?? 0)}
+                                </Text>
+                              </Box>
+                            )}
                           </Box>
-                        )}
+                        ) : null}
                         <Divider />
                         <Box
                           h="36px"
@@ -552,7 +593,7 @@ export const CbsAccountClose = () => {
                             Total Charges
                           </Text>
                           <Text fontWeight="600" fontSize="r1">
-                            {totalCharge}
+                            {amountConverter(totalCharge)}
                           </Text>
                         </Box>
                       </Box>
@@ -595,7 +636,6 @@ export const CbsAccountClose = () => {
                   }}
                   // notice="KYM needs to be updated"
                   signaturePath={memberSignatureUrl}
-                  showSignaturePreview={false}
                   citizenshipPath={memberCitizenshipUrl}
                   accountInfo={
                     selectedAccount

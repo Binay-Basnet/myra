@@ -1,8 +1,9 @@
 import { AiOutlineStock } from 'react-icons/ai';
 import { TbSum } from 'react-icons/tb';
 
+import { Box, Grid, Icon, Text } from '@myra-ui';
+
 import { useGetShareSummaryQuery } from '@coop/ebanking/data-access';
-import { Box, Grid, Icon, TextFields } from '@myra-ui';
 
 export const ShareHeader = () => {
   const { data: shareSummary } = useGetShareSummaryQuery();
@@ -17,7 +18,7 @@ export const ShareHeader = () => {
       gap="s24"
       borderRadius="br2"
     >
-      <TextFields variant="stickyCardHeader">My Share Information</TextFields>
+      <Text variant="stickyCardHeader">My Share Information</Text>
 
       <Grid templateColumns="repeat(2, 1fr)" gap="s16">
         <Box display="flex" alignItems="center" gap="s12">
@@ -33,12 +34,12 @@ export const ShareHeader = () => {
             <Icon as={AiOutlineStock} color="primary.500" size="lg" />
           </Box>
           <Box display="flex" flexDir="column">
-            <TextFields color="primary.200" variant="tableHeader">
+            <Text color="primary.200" variant="tableHeader">
               Total Shares
-            </TextFields>
-            <TextFields variant="stickyCardHeader">
+            </Text>
+            <Text variant="stickyCardHeader">
               {shareSummary?.eBanking?.share?.summary?.totalShare ?? 'N/A'}
-            </TextFields>
+            </Text>
           </Box>
         </Box>
         <Box display="flex" alignItems="center" gap="s12">
@@ -54,18 +55,18 @@ export const ShareHeader = () => {
             <Icon as={TbSum} color="primary.500" size="lg" />
           </Box>
           <Box display="flex" gap="s4" flexDir="column">
-            <TextFields color="primary.200" variant="tableHeader">
+            <Text color="primary.200" variant="tableHeader">
               Total Valuation
-            </TextFields>
+            </Text>
             {shareSummary?.eBanking?.share?.summary?.value ? (
-              <TextFields variant="stickyCardHeader">
+              <Text variant="stickyCardHeader">
                 Rs.{' '}
                 {Number(shareSummary?.eBanking?.share?.summary?.value)?.toLocaleString('en-IN', {
                   maximumFractionDigits: 0,
                 }) ?? 'N/A'}
-              </TextFields>
+              </Text>
             ) : (
-              <TextFields variant="stickyCardHeader">N/A </TextFields>
+              <Text variant="stickyCardHeader">N/A </Text>
             )}
           </Box>
         </Box>

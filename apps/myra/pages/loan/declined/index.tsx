@@ -1,8 +1,9 @@
 import { ReactElement } from 'react';
 
+import { MainLayout } from '@myra-ui';
+
 import { LoanListLayout } from '@coop/cbs/loan/layouts';
 import { DeclinedLoanList } from '@coop/cbs/loan/lists';
-import { MainLayout } from '@myra-ui';
 
 const LoanDeclinedList = () => <DeclinedLoanList />;
 

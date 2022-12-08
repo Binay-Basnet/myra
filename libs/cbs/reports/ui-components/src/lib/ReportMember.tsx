@@ -1,8 +1,8 @@
+import { Box, Grid, GridItem, Text } from '@myra-ui';
 import dayjs from 'dayjs';
 
 import { Member, useAppSelector } from '@coop/cbs/data-access';
 import { formatAddress } from '@coop/cbs/utils';
-import { Box, Grid, GridItem, Text } from '@myra-ui';
 
 interface ReportMemberProps {
   member: Partial<Member> | undefined | null;
@@ -12,7 +12,7 @@ export const ReportMember = ({ member }: ReportMemberProps) => {
   const branch = useAppSelector((state) => state?.auth?.user?.branch);
 
   return (
-    <Box p="s32" display="flex" justifyContent="space-between">
+    <Box px="s16" pt="s16" display="flex" justifyContent="space-between">
       <Box w="50%">
         <Box w="70%">
           <Grid templateColumns="repeat(2, 1fr)">

@@ -1,4 +1,5 @@
-import { Control, Controller, Path, useFormContext } from 'react-hook-form';
+import { Control, Controller, Path, UseControllerProps, useFormContext } from 'react-hook-form';
+import { get } from 'lodash';
 
 import { AmountInput, InputProps } from '@myra-ui';
 
@@ -7,6 +8,7 @@ import { AmountInput, InputProps } from '@myra-ui';
 interface FormAmountInputProps<T> extends InputProps {
   name: Path<T>;
   control?: Control<T>;
+  rules?: UseControllerProps['rules'];
 }
 
 export const FormAmountInput = <T,>({ name, ...rest }: FormAmountInputProps<T>) => {
@@ -14,6 +16,7 @@ export const FormAmountInput = <T,>({ name, ...rest }: FormAmountInputProps<T>) 
 
   const {
     formState: { errors },
+
     control,
   } = methods;
 
@@ -21,12 +24,13 @@ export const FormAmountInput = <T,>({ name, ...rest }: FormAmountInputProps<T>) 
     <Controller
       control={control}
       name={name}
+      rules={rest.rules}
       render={({ field: { onChange, value, ...fieldProps } }) => (
         <AmountInput
           id={name}
           onChange={onChange}
           value={value}
-          errorText={errors[name]?.message as string}
+          errorText={get(errors, name)?.message as string}
           {...fieldProps}
           {...rest}
         />

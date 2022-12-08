@@ -1,9 +1,16 @@
-import { ExternalLoanType, useExternalLoanAccountListQuery } from '@coop/cbs/data-access';
-import { FormInput, FormSelect } from '@coop/shared/form';
+import { useFormContext } from 'react-hook-form';
+
 import { FormSection, GridItem, Text } from '@myra-ui';
+
+import { ExternalLoanType, useExternalLoanAccountListQuery } from '@coop/cbs/data-access';
+import { FormAmountInput, FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
 import { getRouterQuery } from '@coop/shared/utils';
 
 export const ExternalLoanInfo = () => {
+  const { watch } = useFormContext();
+  const appliedAmount = watch('appliedAmount');
+  const loanAppliedDate = watch('loanAppliedDate');
+
   const { data } = useExternalLoanAccountListQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
   });
@@ -37,19 +44,34 @@ export const ExternalLoanInfo = () => {
         </GridItem>
         <FormSelect name="typeOfLoan" label="Type of Loan" options={loanTypeList} />
 
-        <FormInput name="loanAppliedDate" type="date" label="Loan Applied Date" />
-        <FormInput name="loanApprovedDate" type="date" label="Loan Approved Date" />
+        <FormDatePicker name="loanAppliedDate" label="Loan Applied Date" />
+        <FormDatePicker
+          maxDate={loanAppliedDate}
+          name="loanApprovedDate"
+          label="Loan Approved Date"
+        />
       </FormSection>
 
       <FormSection divider={false}>
-        <FormInput name="appliedAmount" type="text" label="Applied Amount" />
-        <FormInput name="approvedAmount" type="text" label="Approved Amount" />
+        <FormAmountInput name="appliedAmount" type="number" label="Applied Amount" />
+        <FormAmountInput
+          rules={{
+            max: {
+              value: appliedAmount,
+              message: 'Approved amount should not exceed Applied amount ',
+            },
+          }}
+          name="approvedAmount"
+          type="number"
+          label="Approved Amount"
+        />
+
         <FormInput name="loanNumber" type="text" label="Loan Number" />
       </FormSection>
 
       <FormSection>
-        <FormInput name="effectiveStartDate" type="date" label="Effective Start Date" />
-        <FormInput name="maturityDate" type="date" label="Maturity Date" />
+        <FormDatePicker name="effectiveStartDate" label="Effective Start Date" />
+        <FormDatePicker name="maturityDate" label="Maturity Date" />
         <FormInput
           name="interestRate"
           type="number"

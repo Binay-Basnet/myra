@@ -2,18 +2,27 @@ import { IoCopyOutline, IoQrCode } from 'react-icons/io5';
 import { useDisclosure } from '@chakra-ui/react';
 
 import { AccountQRModal, Box, Divider, Icon, IconButton, Text } from '@myra-ui';
-import { copyToClipboard } from '@coop/shared/utils';
+
+import { NatureOfDepositProduct } from '@coop/cbs/data-access';
+import { amountConverter, copyToClipboard } from '@coop/shared/utils';
 
 interface IAccountCardProps {
   accountName: string;
   accountNumber: string;
   productName: string;
   productType: string;
-  totalBalance: string;
+  totalBalance: string | number | null | undefined;
   interestRate: string;
   memberName: string;
   contactNo: string;
 }
+
+const accountTypes = {
+  [NatureOfDepositProduct.Saving]: 'Saving Account',
+  [NatureOfDepositProduct.RecurringSaving]: 'Recurring Saving Account',
+  [NatureOfDepositProduct.TermSavingOrFd]: 'Term Saving Account',
+  [NatureOfDepositProduct.Current]: 'Current Account',
+};
 
 export const AccountCard = ({
   accountName,
@@ -55,7 +64,7 @@ export const AccountCard = ({
               </Text>
             </Box>
             <Text fontWeight="500" fontSize="s3">
-              {productType}
+              {accountTypes[productType as NatureOfDepositProduct]}
             </Text>
           </Box>
           <IconButton
@@ -70,7 +79,7 @@ export const AccountCard = ({
         <Divider pt="s8" />
         <Box pt="s8" display="flex" justifyContent="space-between">
           <Text fontWeight="500" fontSize="r2" textAlign="right">
-            {totalBalance ?? '0'}
+            {totalBalance ? amountConverter(totalBalance ?? 0) : null}
           </Text>
           <Text fontWeight="400" fontSize="s3">
             Interest Rate : {interestRate} %

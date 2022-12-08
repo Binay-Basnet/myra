@@ -1,8 +1,10 @@
 import { ReactElement } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
+
+import { Box, Button, PasswordInput, Text } from '@myra-ui';
 
 import { GoBack } from '@coop/ebanking/components';
 import {
@@ -12,7 +14,6 @@ import {
   useLoginToCooperativeMutation,
 } from '@coop/ebanking/data-access';
 import { EbankingHeaderLayout } from '@coop/ebanking/ui-layout';
-import { Box, Button, PasswordInput, Text, TextFields } from '@myra-ui';
 
 const Switch = () => {
   const methods = useForm();
@@ -75,9 +76,9 @@ const Switch = () => {
           <Text fontSize="r3" color="primary.500" fontWeight="600">
             COOP Login Pin
           </Text>
-          <TextFields variant="bodyRegular" color="gray.700">
+          <Text variant="bodyRegular" color="gray.700">
             Enter 4-digit pin to continue with login page
-          </TextFields>
+          </Text>
         </Box>
         <FormProvider {...methods}>
           <Box display="flex" flexDir="column" gap="s20">

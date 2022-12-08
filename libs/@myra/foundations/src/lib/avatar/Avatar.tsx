@@ -13,11 +13,12 @@ export interface AvatarProps extends ChakraAvatarProps {
   shape?: 'circle' | 'square';
 }
 
-export const Avatar = ({ size = 'md', shape = 'circle', ...rest }: AvatarProps) => (
+export const Avatar = ({ size = 'sm', shape = 'circle', ...rest }: AvatarProps) => (
   <ChakraAvatar
     borderRadius={shape === 'circle' ? '100%' : 'br2'}
     w={SIZE[size]}
     h={SIZE[size]}
+    size={size}
     {...rest}
   />
 );

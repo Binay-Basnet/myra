@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { Box, Divider, Loader } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
 import {
   MemberClassificationReportData,
   PeriodInput,
@@ -15,8 +18,6 @@ import {
   ReportOrganizationHeader,
 } from '@coop/cbs/reports/components';
 import { Report } from '@coop/cbs/reports/list';
-import { Column, Table } from '@coop/shared/table';
-import { Box, Divider, Loader } from '@myra-ui';
 
 type ClassifyBy =
   | 'All'
@@ -70,8 +71,8 @@ export const MemberClassificationReport = () => {
         <ReportHeader
           hasSave={false}
           paths={[
-            { label: 'All Reports', link: '/reports/cbs/members' },
-            { label: 'Member Reports', link: '/reports/cbs/members' },
+            { label: 'Member Reports', link: '/reports/cbs/member-report' },
+            { label: 'Member Classification Report', link: '/reports/cbs/members/classification' },
             {
               label: 'New Report',
               link: '/reports/cbs/members/new',
@@ -203,7 +204,7 @@ export const MemberClassificationTable = ({
         },
       },
     ],
-    [type]
+    [type, JSON.stringify(data)]
   );
 
   if (!data || data.length === 0) return null;

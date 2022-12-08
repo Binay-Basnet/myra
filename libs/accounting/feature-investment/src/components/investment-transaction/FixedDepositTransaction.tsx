@@ -1,6 +1,7 @@
+import { Alert, Box, FormSection, GridItem, Text } from '@myra-ui';
+
 import { FdInvestmentType } from '@coop/cbs/data-access';
 import { FormAmountInput, FormSelect } from '@coop/shared/form';
-import { Alert, Box, FormSection, GridItem, Text } from '@myra-ui';
 
 const fdTypeOptions = [
   { label: 'Type 1', value: FdInvestmentType.Type_1 },

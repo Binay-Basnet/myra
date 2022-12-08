@@ -1,4 +1,7 @@
-import { Table } from '@coop/shared/table';
+import { useMemo } from 'react';
+
+import { Column, Table } from '@myra-ui/table';
+import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanPaymentScheduleTableProps {
   data: ({
@@ -12,18 +15,13 @@ interface ILoanPaymentScheduleTableProps {
   total: string;
 }
 
-export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTableProps) => (
-  <Table
-    variant="report"
-    size="small"
-    isStatic
-    showFooter
-    data={data ?? []}
-    columns={[
+export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTableProps) => {
+  const columns = useMemo<Column<typeof data[0]>[]>(
+    () => [
       {
         header: 'Installment No.',
         footer: 'Total Cost of Loan',
-        accessorKey: 'installmentNo',
+        accessorFn: (row) => row?.installmentNo,
         meta: {
           Footer: {
             colspan: 4,
@@ -32,7 +30,7 @@ export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTa
       },
       {
         header: 'Principal',
-        accessorKey: 'principal',
+        accessorFn: (row) => amountConverter(row?.principal ?? 0),
         meta: {
           isNumeric: true,
           Footer: {
@@ -42,7 +40,7 @@ export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTa
       },
       {
         header: 'Interest',
-        accessorKey: 'interest',
+        accessorFn: (row) => amountConverter(row?.interest ?? 0),
         meta: {
           isNumeric: true,
           Footer: {
@@ -52,7 +50,7 @@ export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTa
       },
       {
         header: 'Payment',
-        accessorKey: 'payment',
+        accessorFn: (row) => amountConverter(row?.payment ?? 0),
         meta: {
           isNumeric: true,
           Footer: {
@@ -63,11 +61,16 @@ export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTa
       {
         header: 'Remaining Principal',
         footer: total,
-        accessorKey: 'remainingPrincipal',
+        accessorFn: (row) => amountConverter(row?.remainingPrincipal ?? 0),
         meta: {
           isNumeric: true,
         },
       },
-    ]}
-  />
-);
+    ],
+    []
+  );
+
+  return (
+    <Table variant="report" size="small" isStatic showFooter data={data ?? []} columns={columns} />
+  );
+};

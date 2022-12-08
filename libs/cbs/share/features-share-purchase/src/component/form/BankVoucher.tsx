@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { FormSection, GridItem } from '@myra-ui';
 
 import { RootState, useAppSelector, useGetCoaBankListQuery } from '@coop/cbs/data-access';
 import { FormAmountInput, FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
-import { FormSection, GridItem } from '@myra-ui';
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 type PurchaseProps = {
@@ -49,6 +49,7 @@ export const BankVoucher = ({ totalAmount }: PurchaseProps) => {
 
       <GridItem colSpan={1}>
         <FormAmountInput
+          type="number"
           name="amount"
           isDisabled
           label={t['sharePurchaseAmount']}

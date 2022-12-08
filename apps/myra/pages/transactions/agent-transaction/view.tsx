@@ -1,13 +1,13 @@
 import { ReactElement } from 'react';
-
-import { LoanDetailsHeader } from '@coop/cbs/loan/details';
-import { AgentTransactionDetailPage } from '@coop/cbs/transactions/feature-detail-page';
-import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
 import { MainLayout } from '@myra-ui';
+
+import { AgentTransactionDetailPage } from '@coop/cbs/transactions/feature-detail-page';
+import { TransactionDetailPathBar } from '@coop/cbs/transactions/ui-components';
+import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
 
 const AgentTransactionDetailsPage = () => (
   <>
-    <LoanDetailsHeader title="Transactions List" />
+    <TransactionDetailPathBar title="Transaction List" />
     <AgentTransactionDetailPage />
   </>
 );

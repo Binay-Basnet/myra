@@ -7,9 +7,10 @@ import { Box, ChakraProvider } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import { store, useCoopInit, useInit } from '@coop/ebanking/data-access';
 import { Loader, Toaster } from '@myra-ui';
-import { theme } from '@coop/shared/utils';
+import { theme } from '@myra-ui/theme';
+
+import { store, useCoopInit, useInit } from '@coop/ebanking/data-access';
 
 import './styles.css';
 

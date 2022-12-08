@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import dayjs from 'dayjs';
 
+import { Box } from '@myra-ui';
+
 import {
   InterestPostingReportEntry,
   InterestStatementFilter,
@@ -10,7 +12,6 @@ import { Report } from '@coop/cbs/reports';
 import { InterestStatementInputs } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormAmountFilter } from '@coop/shared/form';
-import { Box } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 export const InterestPostingReport = () => {
@@ -47,7 +48,7 @@ export const InterestPostingReport = () => {
             },
           ]}
         />
-        <Report.Inputs defaultFilters={null} setFilters={setFilters}>
+        <Report.Inputs>
           <InterestStatementInputs />
         </Report.Inputs>
       </Report.Header>

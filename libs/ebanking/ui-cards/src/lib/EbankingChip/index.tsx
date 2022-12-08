@@ -1,7 +1,7 @@
 import { AiOutlineClockCircle } from 'react-icons/ai';
 import { IoMdCheckmark, IoMdClose } from 'react-icons/io';
 
-import { Box, Icon, TextFields } from '@myra-ui';
+import { Box, Icon, Text } from '@myra-ui';
 
 interface EbankingChipProps {
   type: 'success' | 'failure' | 'pending';
@@ -34,8 +34,8 @@ export const EbankingChip = ({ text, type }: EbankingChipProps) => (
     <Box bg="white" display="flex" p="2px" borderRadius="100%" color={bgDict[type]}>
       <Icon as={iconDict[type]} size="sm" />
     </Box>
-    <TextFields variant="formLabel" color={type === 'pending' ? 'primary.900' : 'primary.0'}>
+    <Text variant="formLabel" color={type === 'pending' ? 'primary.900' : 'primary.0'}>
       {text}
-    </TextFields>
+    </Text>
   </Box>
 );

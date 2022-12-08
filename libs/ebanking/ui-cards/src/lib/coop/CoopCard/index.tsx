@@ -1,7 +1,7 @@
 import { IconType } from 'react-icons';
 import Link from 'next/link';
 
-import { Box, Icon, TextFields } from '@myra-ui';
+import { Box, Icon, Text } from '@myra-ui';
 
 interface ICoopCardProps {
   icon?: IconType;
@@ -22,9 +22,9 @@ export const CoopCard = ({ icon, title, link }: ICoopCardProps) => (
       _hover={{ bg: 'gray.100' }}
     >
       <Icon as={icon} size="lg" color="primary.500" />
-      <TextFields variant="tableHeader" color="gray.800">
+      <Text variant="tableHeader" color="gray.800">
         {title}
-      </TextFields>
+      </Text>
     </Box>
   </Link>
 );

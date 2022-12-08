@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { TellerTransferType, useGetTellerTransactionListDataQuery } from '@coop/cbs/data-access';
-import { Column, Table } from '@coop/shared/table';
 import { Avatar, Box, PageHeader, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
+import { TellerTransferType, useGetTellerTransactionListDataQuery } from '@coop/cbs/data-access';
 import { getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */

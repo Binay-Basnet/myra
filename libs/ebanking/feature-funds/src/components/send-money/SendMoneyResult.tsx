@@ -4,13 +4,14 @@ import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 
+import { Box, Button, Grid, Icon, Text } from '@myra-ui';
+
 import { TransactionHeaderCardWithChip, TransferModal } from '@coop/ebanking/cards';
 import {
   EbankingSendMoneyInput,
   EbankingSendMoneyRecord,
   useGetAccountListQuery,
 } from '@coop/ebanking/data-access';
-import { Box, Button, Grid, Icon, Text, TextFields } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 import { CardBodyContainer, CardContainer, CardContent, CardHeader } from '../CardContainer';
@@ -62,18 +63,18 @@ export const SendMoneyResult = ({ paymentStatus, setPaymentStatus }: SendMoneyRe
         >
           <Box display="flex" alignItems="center" gap="12px">
             <Icon as={TempIcon} />
-            <TextFields variant="navItems" color="gray.800" fontSize="r1">
+            <Text variant="navItems" color="gray.800" fontSize="r1">
               Send Money
-            </TextFields>
+            </Text>
           </Box>
 
           <Box display="flex" flexDir="column" alignItems="flex-end">
-            <TextFields
+            <Text
               variant="tableHeader"
               color={paymentStatus === 'success' ? 'primary.500' : 'gray.800'}
             >
               Rs. {amountConverter(successResponse?.amount as string)}
-            </TextFields>
+            </Text>
 
             <Text fontSize="s3" fontWeight="400" color="gray.500">
               {dayjs(successResponse?.transactionDate).format('YYYY-MM-DD hh:mm A')}

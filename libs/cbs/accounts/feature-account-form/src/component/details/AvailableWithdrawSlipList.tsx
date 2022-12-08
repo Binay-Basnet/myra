@@ -6,7 +6,7 @@ import {
   useAppSelector,
   useGetAvailableSlipsListQuery,
 } from '@coop/cbs/data-access';
-import { Table } from '@coop/shared/table';
+import { Table } from '@myra-ui/table';
 import { DetailsCard } from '@myra-ui';
 
 export const AvailableWithdrawSlipList = () => {

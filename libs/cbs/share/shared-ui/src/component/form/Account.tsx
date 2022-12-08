@@ -1,15 +1,9 @@
 import { useFormContext } from 'react-hook-form';
 
+import { Alert, Box, DEFAULT_PAGE_SIZE, FormSection, GridItem } from '@myra-ui';
+
 import { ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
-import { FormAmountInput } from '@coop/shared/form';
-import {
-  Alert,
-  Box,
-  DEFAULT_PAGE_SIZE,
-  FormAccountSelect,
-  FormSection,
-  GridItem,
-} from '@myra-ui';
+import { FormAccountSelect, FormAmountInput } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 type AmountType = {
@@ -50,6 +44,7 @@ export const Account = ({ totalAmount }: AmountType) => {
           memberId={memberId}
           label={t['sharePurchaseSelectAccount']}
           filterBy={ObjState.Active}
+          isLinkedAccounts
         />
         {availableBalance && availableBalance?.length > 0 && (
           <Box mt="s8">
@@ -66,6 +61,7 @@ export const Account = ({ totalAmount }: AmountType) => {
 
       <GridItem colSpan={1}>
         <FormAmountInput
+          type="number"
           name="accountAmount"
           label={t['sharePurchaseAccountAmount']}
           defaultValue={totalAmount ?? 0}

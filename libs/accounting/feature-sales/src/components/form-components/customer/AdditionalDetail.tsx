@@ -1,5 +1,6 @@
-import { FormAmountInput, FormEmailInput, FormInput } from '@coop/shared/form';
 import { FormSection } from '@myra-ui';
+
+import { FormAmountInput, FormEmailInput, FormInput } from '@coop/shared/form';
 
 export const AdditionalDetail = () => (
   <FormSection>

@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { Box, FormSection, Grid, GridItem, Text } from '@myra-ui';
+
 import { FrequencyTenure } from '@coop/cbs/data-access';
 import { BoxContainer } from '@coop/shared/components';
 import { FormInput, FormSwitchTab } from '@coop/shared/form';
-import { Box, FormSection, Grid, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IRightElementProps {
@@ -35,7 +36,7 @@ export const Tenure = () => {
   const { resetField, watch } = useFormContext();
   const [rightElement, setRightElement] = useState('days');
   const minimumTenureUnit = watch('tenureUnit');
-  // const isTenureApplicable = watch('isTenureApplicable');
+  const minTenureUnitNumber = watch('minTenureUnitNumber');
   // const depositNature = watch('nature');
 
   // const applicableSwitch = [
@@ -124,6 +125,12 @@ export const Tenure = () => {
                   rightElement: rightElement as FrequencyTenure,
                   t,
                 })}
+                rules={{
+                  min: {
+                    value: minTenureUnitNumber,
+                    message: 'Maximum tenure unit should be greater than minimum tenure',
+                  },
+                }}
               />
             </GridItem>
           </Grid>

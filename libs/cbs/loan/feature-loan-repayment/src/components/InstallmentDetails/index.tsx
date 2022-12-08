@@ -1,5 +1,7 @@
-import { useGetLoanPreviewQuery } from '@coop/cbs/data-access';
 import { Box, Text } from '@myra-ui';
+
+import { useGetLoanPreviewQuery } from '@coop/cbs/data-access';
+import { amountConverter } from '@coop/shared/utils';
 
 interface IProps {
   loanAccountId: string;
@@ -33,7 +35,7 @@ export const InstallmentData = ({ loanAccountId }: IProps) => {
                 Principal Amount{' '}
               </Text>
               <Text fontWeight="600" fontSize="s3">
-                {data?.principal}{' '}
+                {amountConverter(data?.principal as string)}{' '}
               </Text>
             </Box>
             {data?.interestAmount && data.interestAmount !== '0' && (
@@ -42,7 +44,7 @@ export const InstallmentData = ({ loanAccountId }: IProps) => {
                   Interest Amount{' '}
                 </Text>
                 <Text fontWeight="600" fontSize="s3">
-                  {data?.interestAmount}{' '}
+                  {amountConverter(data?.interestAmount as string)}{' '}
                 </Text>
               </Box>
             )}
@@ -52,7 +54,7 @@ export const InstallmentData = ({ loanAccountId }: IProps) => {
                   Fine{' '}
                 </Text>
                 <Text fontWeight="600" fontSize="s3">
-                  {data?.fine}{' '}
+                  {amountConverter(data?.fine as string)}{' '}
                 </Text>
               </Box>
             )}
@@ -64,7 +66,7 @@ export const InstallmentData = ({ loanAccountId }: IProps) => {
             Total Amount{' '}
           </Text>
           <Text fontWeight="600" fontSize="s3">
-            {loanTotal}{' '}
+            {amountConverter(loanTotal as string)}{' '}
           </Text>
         </Box>
       </Box>

@@ -68,6 +68,7 @@ export const Penalty = () => {
                 />
 
                 <FormAmountInput
+                  type="number"
                   name="penaltyData.penaltyAmount"
                   label={t['depositProductPenaltyAmount']}
                 />

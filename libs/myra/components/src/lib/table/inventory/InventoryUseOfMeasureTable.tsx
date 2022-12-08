@@ -2,8 +2,9 @@ import { useMemo } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import { IconButton } from '@chakra-ui/react';
 
-import { useGetInventoryUnitOfMeasureQuery } from '@coop/cbs/data-access';
 import { Column, Table } from '@myra-ui';
+
+import { useGetInventoryUnitOfMeasureQuery } from '@coop/cbs/data-access';
 
 import { TableListPageHeader } from '../../TableListPageHeader';
 
@@ -12,27 +13,26 @@ export const InventoryUseOfMeasureTable = () => {
 
   const rowItems = data?.inventory.unitOfMeasure?.list?.edges ?? [];
 
-  const columns = useMemo<Column<typeof rowItems[0]>[]>(
+  const columns = useMemo<Column<typeof rowItems[0] | any>[]>(
     () => [
       {
-        Header: 'Name',
-        accessor: 'node.name',
-        width: '80%',
+        header: 'Name',
+        accessorFn: ({ row }) => row?.node.name,
       },
       {
-        Header: 'Short Name',
-        accessor: 'node.shortName',
-      },
-
-      {
-        Header: 'Accept Fraction',
-        accessor: 'node.acceptFraction',
-        Cell: ({ value }) => <div>{value.toString()}</div>,
+        header: 'Short Name',
+        accessorFn: ({ row }) => row?.node.shortName,
       },
 
       {
-        accessor: 'actions',
-        Cell: () => (
+        header: 'Accept Fraction',
+        accessorFn: ({ row }) => row?.node.acceptFraction,
+        cell: (props) => <div>{props.getValue()?.toString()}</div>,
+      },
+
+      {
+        accessorKey: 'actions',
+        cell: () => (
           <IconButton variant="ghost" aria-label="Search database" icon={<BsThreeDots />} />
         ),
       },
@@ -44,7 +44,7 @@ export const InventoryUseOfMeasureTable = () => {
     <>
       <TableListPageHeader heading="Units of Measure" />
 
-      <Table isLoading={isFetching} data={rowItems} columns={columns} sort />
+      <Table isLoading={isFetching} data={rowItems} columns={columns} />
     </>
   );
 };

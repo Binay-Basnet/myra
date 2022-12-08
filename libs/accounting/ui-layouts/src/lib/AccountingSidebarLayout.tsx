@@ -1,20 +1,17 @@
 import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import { AddIcon } from '@chakra-ui/icons';
-
-import { TabColumn } from '@coop/myra/components';
 import {
+  AddButtonList,
   Box,
   Button,
   Divider,
   Icon,
-  Popover,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
+  PopOverComponentForButtonList,
   Text,
 } from '@myra-ui';
+
+import { TabColumn } from '@coop/myra/components';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IAccountingSidebarLayoutProps {
@@ -26,37 +23,71 @@ const accountingSidebarColumns = [
     title: 'accountingAccountingSidebarJournalVouchers',
     link: '/accounting/accounting/journal-vouchers/list',
     name: 'journal-vouchers',
+    addLink: '/accounting/accounting/journal-vouchers/add',
   },
   {
     title: 'accountingAccountingSidebarCashTransfer',
     link: '/accounting/accounting/cash-transfer/list',
     name: 'cash-transfer',
+    addLink: '/accounting/accounting/cash-transfer/add',
   },
   // {
   //   title: 'accountingAccountingSidebarQuickPayment',
   //   link: '/accounting/accounting/quick-payment/list',
   //   name: 'quick-payment',
+  //   addLink: '/accounting/accounting/quick-payment/add',
   // },
   // {
   //   title: 'accountingAccountingSidebarQuickReceipt',
   //   link: '/accounting/accounting/quick-receipt/list',
   //   name: 'quick-receipt',
+  //   addLink: '/accounting/accounting/quick-receipt/add',
   // },
   {
     title: 'accountingAccountingSidebarBankAccounts',
     link: '/accounting/accounting/bank-accounts/list',
     name: 'bank-accounts',
+    addLink: '/accounting/accounting/bank-accounts/add',
   },
   {
     title: 'accountingAccountingSidebarChartsOfAccounts',
     link: '/accounting/accounting/charts-of-account/list',
     name: 'charts-of-account',
+    addLink: '/accounting/accounting/charts-of-accounts/add',
   },
 ];
 
 export const AccountingSidebarLayout = ({ children }: IAccountingSidebarLayoutProps) => {
   const router = useRouter();
   const { t } = useTranslation();
+
+  const addButtoncolumns = [
+    {
+      title: t['accountingAccountingSidebarJournalVouchers'],
+      link: '/accounting/accounting/journal-vouchers/add',
+    },
+    {
+      title: t['accountingAccountingSidebarCashTransfer'],
+      link: '/accounting/accounting/cash-transfer/add',
+    },
+    // {
+    //   title: t['accountingAccountingSidebarQuickPayment'],
+    //   link: '/accounting/accounting/quick-payment/add',
+    // },
+
+    // {
+    //   title: t['accountingAccountingSidebarQuickReceipt'],
+    //   link: '/accounting/accounting/quick-receipt/add',
+    // },
+    {
+      title: t['accountingAccountingSidebarBankAccounts'],
+      link: '/accounting/accounting/bank-accounts/add',
+    },
+    {
+      title: t['accountingAccountingSidebarChartsOfAccounts'],
+      link: '/accounting/accounting/charts-of-accounts/add',
+    },
+  ];
 
   return (
     <Box>
@@ -66,122 +97,13 @@ export const AccountingSidebarLayout = ({ children }: IAccountingSidebarLayoutPr
         </Text>
         <Divider my="s16" />
 
-        <Popover placement="bottom-start" gutter={3}>
-          <PopoverTrigger>
-            <Button width="full" size="lg" justifyContent="start" leftIcon={<AddIcon />}>
-              {t['accountingAccountingSidebarCreate']}
-            </Button>
-          </PopoverTrigger>
-
-          <PopoverContent
-            // bg="gray.0"
-            p={0}
-            w="225px"
-            _focus={{
-              boxShadow: 'none',
-            }}
-          >
-            <PopoverBody p={0}>
-              <Box>
-                <Box
-                  px="s16"
-                  py="s10"
-                  width="100%"
-                  display="flex"
-                  alignItems="center"
-                  _hover={{ bg: 'gray.100' }}
-                  cursor="pointer"
-                  onClick={() => router.push('/accounting/accounting/journal-vouchers/add')}
-                >
-                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
-                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                    {t['accountingAccountingSidebarJournalVouchers']}
-                  </Text>
-                </Box>
-
-                <Box
-                  px="s16"
-                  py="s10"
-                  width="100%"
-                  display="flex"
-                  alignItems="center"
-                  _hover={{ bg: 'gray.100' }}
-                  cursor="pointer"
-                  onClick={() => router.push('/accounting/accounting/cash-transfer/add')}
-                >
-                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
-                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                    {t['accountingAccountingSidebarCashTransfer']}
-                  </Text>
-                </Box>
-
-                <Box
-                  px="s16"
-                  py="s10"
-                  width="100%"
-                  display="flex"
-                  alignItems="center"
-                  _hover={{ bg: 'gray.100' }}
-                  cursor="pointer"
-                  onClick={() => router.push('/accounting/accounting/quick-payment/add')}
-                >
-                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
-                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                    {t['accountingAccountingSidebarQuickPayment']}
-                  </Text>
-                </Box>
-
-                <Box
-                  px="s16"
-                  py="s10"
-                  width="100%"
-                  display="flex"
-                  alignItems="center"
-                  _hover={{ bg: 'gray.100' }}
-                  cursor="pointer"
-                  onClick={() => router.push('/accounting/accounting/quick-receipt/add')}
-                >
-                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
-                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                    {t['accountingAccountingSidebarQuickReceipt']}
-                  </Text>
-                </Box>
-
-                <Box
-                  px="s16"
-                  py="s10"
-                  width="100%"
-                  display="flex"
-                  alignItems="center"
-                  _hover={{ bg: 'gray.100' }}
-                  cursor="pointer"
-                  onClick={() => router.push('/accounting/accounting/bank-accounts/add')}
-                >
-                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
-                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                    {t['accountingAccountingSidebarBankAccounts']}
-                  </Text>
-                </Box>
-
-                <Box
-                  px="s16"
-                  py="s10"
-                  width="100%"
-                  display="flex"
-                  alignItems="center"
-                  _hover={{ bg: 'gray.100' }}
-                  cursor="pointer"
-                  onClick={() => router.push('/accounting/accounting/charts-of-accounts/add')}
-                >
-                  <Icon mr="s16" size="sm" color="primary.500" as={AddIcon} />
-                  <Text variant="bodyRegular" color="neutralColorLight.Gray-80">
-                    {t['accountingAccountingSidebarChartsOfAccounts']}
-                  </Text>
-                </Box>
-              </Box>
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
+        <PopOverComponentForButtonList buttonLabel="accountingAccountingSidebarCreate">
+          {addButtoncolumns.map((item) => (
+            <Box key={item?.title}>
+              <AddButtonList label={item?.title} onClick={() => router.push(`${item.link}`)} />
+            </Box>
+          ))}
+        </PopOverComponentForButtonList>
 
         <Divider my="s16" />
         <TabColumn list={accountingSidebarColumns} />

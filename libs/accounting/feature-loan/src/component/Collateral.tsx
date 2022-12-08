@@ -1,47 +1,12 @@
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { CloseButton } from '@chakra-ui/react';
-
-import {
-  InvestmentType,
-  useGetInvestmentEntriesListDataQuery,
-  useGetSettingsUserListDataQuery,
-} from '@coop/cbs/data-access';
-import { FormInput, FormSelect } from '@coop/shared/form';
 import { Box, Button, FormSection, GridItem, Icon, IconButton } from '@myra-ui';
-import { getRouterQuery } from '@coop/shared/utils';
+
+import { FormInput } from '@coop/shared/form';
 
 export const Collateral = () => {
   const { control } = useFormContext();
-  const { data: investmentData } = useGetInvestmentEntriesListDataQuery({
-    pagination: getRouterQuery({ type: ['PAGINATION'] }),
-    filter: { type: InvestmentType.FixedDeposit },
-  });
-
-  const investmentList = investmentData?.accounting?.investment?.listEntry?.edges;
-
-  const fixedDepositList =
-    investmentList &&
-    investmentList?.map((item) => ({
-      label: item?.node?.name as string,
-      value: item?.node?.id as string,
-    }));
-
-  const { data: userListQueryData } = useGetSettingsUserListDataQuery(
-    {
-      paginate: getRouterQuery({ type: ['PAGINATION'] }),
-    },
-    { staleTime: 0 }
-  );
-
-  const userList = userListQueryData?.settings?.myraUser?.list?.edges;
-
-  const representativeList =
-    userList &&
-    userList?.map((item) => ({
-      label: item?.node?.name as string,
-      value: item?.node?.id as string,
-    }));
 
   const { append, remove, fields } = useFieldArray({
     control,
@@ -53,7 +18,7 @@ export const Collateral = () => {
   };
 
   return (
-    <FormSection header="Collaterals" divider={false}>
+    <FormSection header="Collaterals">
       <GridItem
         p="s10"
         border="1px solid"
@@ -118,19 +83,6 @@ export const Collateral = () => {
         >
           Add New
         </Button>
-      </GridItem>
-      <GridItem colSpan={3}>
-        <FormSelect name="fixDeposit" label="Fix Deposit" options={fixedDepositList ?? []} />
-      </GridItem>
-      <GridItem colSpan={2}>
-        <FormSelect
-          name="nameOfRepresentative"
-          label="Name of Representative"
-          options={representativeList ?? []}
-        />
-      </GridItem>
-      <GridItem colSpan={1}>
-        <FormInput name="position" type="text" label="Position" />
       </GridItem>
     </FormSection>
   );

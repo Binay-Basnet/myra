@@ -42,7 +42,7 @@ export const InterestTaxReport = () => {
             },
           ]}
         />
-        <Report.Inputs defaultFilters={null} setFilters={setFilters}>
+        <Report.Inputs>
           <ReportDateRange label="Tax Deduct Date Period" />
         </Report.Inputs>
       </Report.Header>
@@ -65,7 +65,7 @@ export const InterestTaxReport = () => {
               },
               {
                 header: 'Member ID',
-                accessorKey: 'memberId',
+                accessorKey: 'memberCode',
               },
               {
                 header: 'Member Name',
@@ -73,7 +73,7 @@ export const InterestTaxReport = () => {
               },
               {
                 header: 'Address',
-                accessorFn: (row) => row?.address?.district,
+                accessorFn: (row) => row?.address?.district?.local,
               },
               {
                 header: 'PAN NO.',

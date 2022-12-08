@@ -1,5 +1,7 @@
-import { Table } from '@coop/shared/table';
 import { DetailsCard } from '@myra-ui';
+
+import { Table } from '@myra-ui/table';
+import { amountConverter } from '@coop/shared/utils';
 
 import { useLoanDetails } from '../../hooks/useLoanDetails';
 
@@ -18,7 +20,11 @@ export const LoanCollateralDetails = () => {
     >
       {loanPreview?.collateralAndGuarantees && loanPreview?.collateralAndGuarantees?.length !== 0 && (
         <Table
-          data={loanPreview?.collateralAndGuarantees.map((d, index) => ({ ...d, id: index + 1 }))}
+          data={loanPreview?.collateralAndGuarantees.map((d, index) => ({
+            ...d,
+            valuation: amountConverter(d?.valuation ?? 0),
+            id: index + 1,
+          }))}
           variant="report"
           size="small"
           isStatic

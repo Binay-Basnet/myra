@@ -1,8 +1,6 @@
-// import { ThemeProvider as Emotion10ThemeProvider } from 'emotion-theming';
-import { RouterContext } from 'next/dist/shared/lib/router-context';
 import { ChakraProvider } from '@chakra-ui/react';
 
-import { theme } from '@coop/shared/utils';
+import { theme } from '@myra-ui/theme';
 
 const withThemeProvider = (Story, context) => {
   return (
@@ -19,8 +17,5 @@ export const parameters = {
   },
   backgrounds: {
     default: 'light',
-  },
-  nextRouter: {
-    Provider: RouterContext.Provider,
   },
 };

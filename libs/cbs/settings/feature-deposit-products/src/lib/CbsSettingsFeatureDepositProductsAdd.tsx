@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
+import { asyncToast, Box, Container, FormFooter, FormHeader, Text } from '@myra-ui';
+
 import {
   CriteriaSection,
   DepositFrequency as DepositFreq,
@@ -14,7 +16,6 @@ import {
   useGetDepositProductSettingsEditDataQuery,
   useSetDepositProductMutation,
 } from '@coop/cbs/data-access';
-import { asyncToast, Box, Container, FormFooter, FormHeader, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import {
@@ -79,13 +80,14 @@ export const SettingsDepositProductsAdd = () => {
   const { mutateAsync } = useSetDepositProductMutation();
 
   const methods = useForm<DepositForm>({
+    mode: 'onChange',
     defaultValues: {
       depositFrequency: Frequency.Daily,
       transactionAllowed: DepositFreq.Monthly,
       isTenureApplicable: false,
       penalty: false,
       rebate: false,
-      postingFrequency: DepositFreq.Monthly,
+      postingFrequency: DepositFreq.Daily,
       autoOpen: false,
       staffProduct: false,
       isForMinors: false,

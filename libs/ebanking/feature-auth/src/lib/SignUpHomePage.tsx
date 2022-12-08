@@ -4,8 +4,9 @@ import { AiOutlineMobile, AiOutlineWarning } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
+import { Box, Button, Icon, Input, Modal, Text } from '@myra-ui';
+
 import { useSignUpMutation } from '@coop/ebanking/data-access';
-import { Box, Button, ChakraModal, Icon, Input, Text } from '@myra-ui';
 
 import { AuthContainer } from '../components/AuthContainer';
 import { SignUpStatus } from '../types/SignUpStatus';
@@ -92,7 +93,7 @@ export const SignUpHomePage = ({ setStatus }: ISignUpHomePage) => {
           </Text>
         </Box>
       </AuthContainer>
-      <ChakraModal
+      <Modal
         closeOnOverlayClick={false}
         width="sm"
         hasCloseBtn={false}
@@ -120,7 +121,7 @@ export const SignUpHomePage = ({ setStatus }: ISignUpHomePage) => {
             Go Back
           </Button>
         </Box>
-      </ChakraModal>
+      </Modal>
     </form>
   );
 };

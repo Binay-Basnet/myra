@@ -1,7 +1,8 @@
 import { useFormContext } from 'react-hook-form';
 
-import { FormAmountInput, FormEditableTable, FormSwitch } from '@coop/shared/form';
 import { Box, FormSection, GridItem, Text } from '@myra-ui';
+
+import { FormAmountInput, FormEditableTable, FormSwitch } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 type PaymentTableType = {
@@ -51,7 +52,11 @@ export const Cash = ({
       </GridItem>
 
       <GridItem colSpan={2}>
-        <FormSwitch name="cash.disableDenomination" label={t['sharePurchaseDisableDenomination']} />
+        <FormSwitch
+          name="cash.disableDenomination"
+          label={t['sharePurchaseDisableDenomination']}
+          defaultChecked
+        />
       </GridItem>
 
       {!disableDenomination && (

@@ -1,6 +1,6 @@
-query getCoOperativeKymEditData($id: ID!) {
+query getCoOperativeKymEditData($id: ID!, $hasPressedNext: Boolean) {
   members {
-    cooperative {
+    cooperative(includeRequiredErrors: $hasPressedNext) {
       formState(id: $id) {
         data {
           formData {
@@ -100,15 +100,33 @@ query getCoOperativeKymEditData($id: ID!) {
             # accountHolderStamp
             hasTCAccepted
           }
+
+          sectionStatus {
+            errors
+            sectionStatus {
+              errors
+              incomplete
+            }
+          }
+        }
+      }
+      overallFormStatus(id: $id) {
+        coopDetails {
+          id
+
+          sectionStatus {
+            errors
+            incomplete
+          }
         }
       }
     }
   }
 }
 
-query getCoOperativeDirectorEditData($id: ID!) {
+query getCoOperativeDirectorEditData($id: ID!, $hasPressedNext: Boolean) {
   members {
-    cooperative {
+    cooperative(includeRequiredErrors: $hasPressedNext) {
       listDirectors(id: $id) {
         data {
           id
@@ -146,14 +164,22 @@ query getCoOperativeDirectorEditData($id: ID!) {
           citizenshipNo
           panNo
         }
+
+        sectionStatus {
+          errors
+          sectionStatus {
+            errors
+            incomplete
+          }
+        }
       }
     }
   }
 }
 
-query getCoOperativeAccountOperatorEditData($id: ID!) {
+query getCoOperativeAccountOperatorEditData($id: ID!, $hasPressedNext: Boolean) {
   members {
-    cooperative {
+    cooperative(includeRequiredErrors: $hasPressedNext) {
       listAccountOperators(id: $id) {
         data {
           id
@@ -194,6 +220,47 @@ query getCoOperativeAccountOperatorEditData($id: ID!) {
             subjectOfTraining
             dateOfTraining
             trainingOrganization
+          }
+        }
+
+        sectionStatus {
+          errors
+          sectionStatus {
+            errors
+            incomplete
+          }
+        }
+      }
+    }
+  }
+}
+
+query getKYMCooperativeOverallFormStatus($id: ID!, $hasPressedNext: Boolean) {
+  members {
+    cooperative(includeRequiredErrors: $hasPressedNext) {
+      overallFormStatus(id: $id) {
+        coopDetails {
+          id
+          errors
+          sectionStatus {
+            errors
+            incomplete
+          }
+        }
+        directorsDetails {
+          id
+          errors
+          sectionStatus {
+            errors
+            incomplete
+          }
+        }
+        accountOperatorDetails {
+          id
+          errors
+          sectionStatus {
+            errors
+            incomplete
           }
         }
       }

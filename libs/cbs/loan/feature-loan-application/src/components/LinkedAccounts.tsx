@@ -1,6 +1,8 @@
 import { useFormContext } from 'react-hook-form';
 
-import { Box, FormAccountSelect, Text } from '@myra-ui';
+import { Box, Text } from '@myra-ui';
+
+import { FormAccountSelect } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 export const LinkedAccounts = () => {
@@ -17,7 +19,7 @@ export const LinkedAccounts = () => {
         name="linkedAccountId"
         label={t['loanProductListofallthesavingaccounts']}
         memberId={memberId as string}
-        loanLinkedAccounts
+        isLinkedAccounts
       />
     </Box>
   );

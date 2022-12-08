@@ -306,6 +306,7 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
               penaltyAmount
               penaltyRate
             }
+            interest
           }
           dues {
             fine
@@ -487,6 +488,7 @@ query getAccountDetailsData($id: ID!) {
         isForMinors
         autoOpen
         isMandatory
+        interestRate
       }
     }
   }

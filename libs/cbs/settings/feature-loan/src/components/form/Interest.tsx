@@ -1,9 +1,10 @@
 import { useFormContext } from 'react-hook-form';
 
-import { DepositFrequency, LoanProductInput } from '@coop/cbs/data-access';
+import { Box, FormSection, GridItem, Text } from '@myra-ui';
+
+import { LoanProductInput, LoanProductInstallment } from '@coop/cbs/data-access';
 import { SubText } from '@coop/shared/components';
 import { FormInput, FormSelect, FormSwitchTab } from '@coop/shared/form';
-import { Box, FormSection, GridItem, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { SubHeadingText } from '../formui';
@@ -24,20 +25,24 @@ export const Interest = () => {
 
   const postingFrequency = [
     {
+      label: t['daily'],
+      value: LoanProductInstallment.Daily,
+    },
+    {
       label: t['monthly'],
-      value: DepositFrequency.Monthly,
+      value: LoanProductInstallment.Monthly,
     },
     {
       label: t['quaterly'],
-      value: DepositFrequency.Quarterly,
+      value: LoanProductInstallment.Quarterly,
     },
     {
       label: t['halfYearly'],
-      value: DepositFrequency.HalfYearly,
+      value: LoanProductInstallment.HalfYearly,
     },
     {
       label: t['yearly'],
-      value: DepositFrequency.Yearly,
+      value: LoanProductInstallment.Yearly,
     },
   ];
 
@@ -64,6 +69,12 @@ export const Interest = () => {
             %
           </Text>
         }
+        rules={{
+          min: {
+            value: minValueStr,
+            message: 'Maximum interest rate should be greater than minimum interest rate',
+          },
+        }}
       />
       <FormInput
         name="interest.defaultRate"

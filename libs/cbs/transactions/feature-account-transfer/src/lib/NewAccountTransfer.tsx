@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import { useQueryClient } from '@tanstack/react-query';
 import omit from 'lodash/omit';
 
+import { asyncToast, Box, Container, FormFooter, FormHeader, MemberCard, Text } from '@myra-ui';
+
 import {
   NatureOfDepositProduct,
   ObjState,
@@ -21,23 +23,14 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/transactions/ui-containers';
 import {
+  FormAccountSelect,
   FormAmountInput,
   FormInput,
+  FormMemberSelect,
   FormSelect,
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import {
-  asyncToast,
-  Box,
-  Container,
-  FormAccountSelect,
-  FormFooter,
-  FormHeader,
-  FormMemberSelect,
-  MemberCard,
-  Text,
-} from '@myra-ui';
 import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
@@ -156,7 +149,7 @@ export const NewAccountTransfer = () => {
     () =>
       accountListData?.account?.list?.edges?.find((account) => account.node?.id === srcAccountId)
         ?.node,
-    [srcAccountId]
+    [srcAccountId, accountListData]
   );
 
   const amountToBeDeposited = watch('amount') ?? 0;
@@ -189,12 +182,21 @@ export const NewAccountTransfer = () => {
   };
   //  get redirect id from url
   const redirectMemberId = router.query['memberId'];
+  const redirectSrcAccountId = router.query['srcAccountId'];
+
   // redirect from member details
   useEffect(() => {
     if (redirectMemberId) {
       methods.setValue('memberId', String(redirectMemberId));
     }
   }, [redirectMemberId]);
+
+  useEffect(() => {
+    if (redirectSrcAccountId && memberId) {
+      methods.setValue('srcAccountId', String(redirectSrcAccountId));
+    }
+  }, [memberId, redirectSrcAccountId]);
+
   return (
     <>
       <Container minW="container.xl" height="fit-content">
@@ -228,6 +230,7 @@ export const NewAccountTransfer = () => {
                           label={t['newAccountTransferSourceAccount']}
                           memberId={memberId}
                           filterBy={ObjState.Active}
+                          isLinkedAccounts
                         />
                       )}
                     </BoxContainer>
@@ -247,6 +250,7 @@ export const NewAccountTransfer = () => {
                             memberId={memberId}
                             filterBy={ObjState.Active}
                             excludeIds={[srcAccountId]}
+                            isLinkedAccounts
                           />
                         )}
 
@@ -298,6 +302,7 @@ export const NewAccountTransfer = () => {
                       <BoxContainer>
                         <InputGroupContainer>
                           <FormAmountInput
+                            type="number"
                             name="amount"
                             label={t['newAccountTransferTransferAmount']}
                           />
@@ -373,7 +378,6 @@ export const NewAccountTransfer = () => {
                           }}
                           // notice="KYM needs to be updated"
                           signaturePath={destMemberSignatureUrl}
-                          showSignaturePreview={false}
                           citizenshipPath={destMemberCitizenshipUrl}
                         />
                       </Box>

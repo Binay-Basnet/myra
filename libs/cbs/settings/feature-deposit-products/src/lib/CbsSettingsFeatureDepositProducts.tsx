@@ -2,6 +2,9 @@ import { useCallback, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
+import { asyncToast, Modal, PageHeader } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
 import {
   AccountTypeFilter,
   DepositProductInactiveData,
@@ -15,8 +18,6 @@ import {
 } from '@coop/cbs/data-access';
 import { ActionPopoverComponent } from '@coop/myra/components';
 import { FormTextArea } from '@coop/shared/form';
-import { Column, Table } from '@coop/shared/table';
-import { asyncToast, ChakraModal, PageHeader } from '@myra-ui';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const DEPOSIT_TAB_ITEMS = [
@@ -164,7 +165,6 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
         header: '',
         cell: (props) => {
           if (showSettingsAction) {
-            // console.log('hello', isInactive);
             if (isInactive) {
               return (
                 <ActionPopoverComponent
@@ -266,7 +266,7 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
           pageInfo: data?.settings?.general?.depositProduct?.list?.pageInfo,
         }}
       />
-      <ChakraModal
+      <Modal
         open={openModal}
         onClose={onCloseModal}
         title={isInactive ? 'depositProductActiveProduct' : 'depositProductInactiveProduct'}
@@ -282,7 +282,7 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
             label={isInactive ? t['depositProductActiveReason'] : t['depositProductInactiveReason']}
           />
         </FormProvider>
-      </ChakraModal>
+      </Modal>
     </>
   );
 };

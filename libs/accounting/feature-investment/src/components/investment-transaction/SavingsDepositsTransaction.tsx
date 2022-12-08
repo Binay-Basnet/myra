@@ -1,6 +1,7 @@
+import { FormSection, GridItem } from '@myra-ui';
+
 import { InvestmentTransactionMethod, SavingInvestmentType } from '@coop/cbs/data-access';
 import { FormAmountInput, FormDatePicker, FormSelect, FormTextArea } from '@coop/shared/form';
-import { FormSection, GridItem } from '@myra-ui';
 
 const savingInvestmentTypeOptions = [
   { label: 'Type 1', value: SavingInvestmentType.Type_1 },

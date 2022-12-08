@@ -2,18 +2,18 @@ import { useForm } from 'react-hook-form';
 import Image from 'next/legacy/image';
 import { useRouter } from 'next/router';
 
-import { login, setPreference, useAppDispatch, useLoginMutation } from '@coop/cbs/data-access';
 import {
   asyncToast,
   Box,
   Button,
   Checkbox,
+  Input,
   LocaleSwitcher,
   PasswordInput,
   Text,
-  TextFields,
-  TextInput,
 } from '@myra-ui';
+
+import { login, setPreference, useAppDispatch, useLoginMutation } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
 export const Login = () => {
@@ -91,10 +91,10 @@ export const Login = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Box display="flex" flexDir="column" gap={5}>
               <Box>
-                <TextFields variant="formLabel" color="gray.700">
+                <Text variant="formLabel" color="gray.700">
                   {t['loginEmail']}
-                </TextFields>
-                <TextInput
+                </Text>
+                <Input
                   placeholder={t['loginEmailPlaceholder']}
                   {...register('username')}
                   autoFocus

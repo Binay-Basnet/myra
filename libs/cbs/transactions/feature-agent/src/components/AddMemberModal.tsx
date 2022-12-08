@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
+import { asyncToast, Box, Modal } from '@myra-ui';
+
 import {
   AssignMembersInput,
   ObjState,
   useSetAddMemberToAgentDataMutation,
 } from '@coop/cbs/data-access';
-import { asyncToast, Box, ChakraModal, FormAccountSelect, FormMemberSelect } from '@myra-ui';
+import { FormAccountSelect, FormMemberSelect } from '@coop/shared/form';
 import { useTranslation } from '@coop/shared/utils';
 
 import { OverrideAlertModal } from './OverrideAlertModal';
@@ -90,7 +92,7 @@ export const AddMemberModal = ({
 
   return (
     <>
-      <ChakraModal
+      <Modal
         open={isOpen}
         onClose={onClose}
         title={t['agentAssignedMembersAddMember']}
@@ -109,7 +111,7 @@ export const AddMemberModal = ({
             />
           </Box>
         </FormProvider>
-      </ChakraModal>
+      </Modal>
       <OverrideAlertModal
         isOpen={isOverrideMemberAlertOpen}
         onCancel={handleCancelOverrideMemberAlert}

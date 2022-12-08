@@ -1,6 +1,7 @@
 import { Box, Text } from '@chakra-ui/react';
 
 import { Divider } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 import { VerticalSideBarForSettings } from '../components/VerticalSideBarForSettings';
@@ -61,6 +62,10 @@ const otherTabList: TabList[] = [
   {
     title: 'settingsAlternativeChannel',
     to: '/settings/general/alternative-channels/charges',
+  },
+  {
+    title: 'settingsDocuments',
+    to: '/settings/general/documents',
   },
 ];
 

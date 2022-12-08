@@ -1,6 +1,8 @@
 import { useEffect, useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { Box, Grid, GridItem, Text } from '@myra-ui';
+
 import {
   DepositAccount,
   DepositedBy,
@@ -18,6 +20,7 @@ import {
   InputGroupContainer,
 } from '@coop/cbs/transactions/ui-containers';
 import {
+  FormAccountSelect,
   FormAgentSelect,
   FormAmountInput,
   FormCheckbox,
@@ -25,12 +28,12 @@ import {
   FormEditableTable,
   FormFileInput,
   FormInput,
+  FormMemberSelect,
   FormSelect,
   FormSwitch,
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { Box, FormAccountSelect, FormMemberSelect, Grid, GridItem, Text } from '@myra-ui';
 import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
 
 // const sourceOfFundsList = [
@@ -194,6 +197,10 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
     resetField('withdrawSlip.depositedAt');
   }, [preference?.date]);
 
+  useEffect(() => {
+    if (watch('cash.disableDenomination') === undefined) setValue('cash.disableDenomination', true);
+  });
+
   return (
     <ContainerWithDivider
       borderRight="1px"
@@ -208,7 +215,6 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
           options={paymentModes}
           name="payment_type"
         />
-
         {selectedPaymentMode === DepositPaymentType.BankVoucher && (
           <InputGroupContainer>
             <GridItem colSpan={2}>
@@ -221,7 +227,11 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
 
             <FormInput name="bankVoucher.voucherId" label={t['addDepositVoucherId']} />
 
-            <FormAmountInput name="bankVoucher.amount" label={t['depositPaymentAmount']} />
+            <FormAmountInput
+              type="number"
+              name="bankVoucher.amount"
+              label={t['depositPaymentAmount']}
+            />
 
             <FormDatePicker
               name="bankVoucher.depositedAt"
@@ -236,7 +246,6 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
             />
           </InputGroupContainer>
         )}
-
         {selectedPaymentMode === DepositPaymentType.WithdrawSlip && (
           <InputGroupContainer>
             <GridItem colSpan={3}>
@@ -268,22 +277,22 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
               options={availableSlipListOptions}
             />
 
-            <FormAmountInput name="withdrawSlip.amount" label={t['depositPaymentAmount']} />
+            <FormAmountInput
+              type="number"
+              name="withdrawSlip.amount"
+              label={t['depositPaymentAmount']}
+            />
           </InputGroupContainer>
         )}
-
         {selectedPaymentMode === DepositPaymentType.Cash && (
           <>
             <InputGroupContainer>
               <FormAmountInput name="cash.cashPaid" label={t['depositPaymentCash']} />
             </InputGroupContainer>
-
             <FormSwitch
               name="cash.disableDenomination"
               label={t['depositPaymentDisableDenomination']}
-              defaultChecked={false}
             />
-
             {!disableDenomination && (
               <FormEditableTable<PaymentTableType>
                 name="cash.denominations"
@@ -324,7 +333,6 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
                 canAddRow={false}
               />
             )}
-
             <Box
               display="flex"
               flexDirection="column"
@@ -365,7 +373,6 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
           </>
         )}
       </BoxContainer>
-
       <BoxContainer>
         <Grid templateColumns="repeat(2, 1fr)" columnGap="s20">
           {/* <FormSelect
@@ -381,7 +388,6 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
           <FormFileInput size="md" label={t['depositPaymentFileUpload']} name="doc_identifiers" />
         </Grid>
       </BoxContainer>
-
       <BoxContainer>
         <FormSwitchTab
           label={t['depositPaymentDepositedBy']}
@@ -411,7 +417,6 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
           </>
         )}
       </BoxContainer>
-
       <BoxContainer>
         <FormTextArea name="notes" label={t['depositPaymentNote']} rows={5} />
       </BoxContainer>

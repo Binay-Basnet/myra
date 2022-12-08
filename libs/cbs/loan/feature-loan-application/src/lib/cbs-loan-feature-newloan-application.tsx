@@ -5,6 +5,17 @@ import { useQueryClient } from '@tanstack/react-query';
 import { omit } from 'lodash';
 
 import {
+  Alert,
+  asyncToast,
+  Box,
+  Container,
+  FormFooter,
+  FormHeader,
+  MemberCard,
+  Text,
+} from '@myra-ui';
+
+import {
   LoanAccountInput,
   NatureOfDepositProduct,
   useGetIndividualMemberDetails,
@@ -15,18 +26,14 @@ import {
   useGetNewIdMutation,
   useSendLoanApplicationForApprovalMutation,
 } from '@coop/cbs/data-access';
-import { FormInput, FormNumberInput, FormSelect, FormTextArea } from '@coop/shared/form';
 import {
-  Alert,
-  asyncToast,
-  Box,
-  Container,
-  FormFooter,
-  FormHeader,
+  FormAmountInput,
+  FormInput,
   FormMemberSelect,
-  MemberCard,
-  Text,
-} from '@myra-ui';
+  FormSelect,
+  FormTextArea,
+} from '@coop/shared/form';
+import { featureCode } from '@coop/shared/utils';
 
 import {
   AccordianComponent,
@@ -199,7 +206,7 @@ export const NewLoanApplication = () => {
   }, [id, isLoanFetching, loanApplication, methods]);
 
   const defaultAccount = loanProductOptions.find((d) => d?.value === productId);
-  const defaultAccountName = defaultAccount?.label;
+  const defaultAccountName = `${memberDetailData?.name} - ${defaultAccount?.label}`;
   useEffect(() => {
     if (!loanApplicationId) {
       setValue('loanAccountName', defaultAccountName);
@@ -215,27 +222,33 @@ export const NewLoanApplication = () => {
   }, [redirectMemberId]);
 
   // saving accounts check list
-  const { data: linkedAccountData } = useGetMemberLinkedAccountsQuery(
-    {
-      memberId: String(memberId),
+  const { data: linkedAccountData, isFetching: isLinkAccDataFetching } =
+    useGetMemberLinkedAccountsQuery(
+      {
+        memberId: String(memberId),
 
-      filter: [NatureOfDepositProduct?.Current, NatureOfDepositProduct?.Saving],
-      includeActiveAccountsOnly: true,
-    },
-    {
-      enabled: triggerAccountlist,
-    }
-  );
+        filter: [NatureOfDepositProduct?.Current, NatureOfDepositProduct?.Saving],
+        includeActiveAccountsOnly: true,
+      },
+      {
+        enabled: triggerAccountlist,
+      }
+    );
   const loanLinkedData = linkedAccountData?.members?.getAllAccounts?.data?.depositAccount;
   useEffect(() => {
     if (memberId) {
       setTriggerAccountList(true);
     }
   }, [memberId]);
+  useEffect(() => {
+    resetField('productType');
+    resetField('productSubType');
+    resetField('productId');
+  }, [loanLinkedData, resetField]);
   return (
     <Container minW="container.xl" p="0" bg="white">
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
-        <FormHeader title="New Loan Application" />
+        <FormHeader title={`New Loan Application - ${featureCode.newLoanApplication} `} />
       </Box>
       <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
         <Box
@@ -250,7 +263,7 @@ export const NewLoanApplication = () => {
               <Box display="flex" flexDirection="column" gap="s32" p="s20" w="100%">
                 <Box display="flex" flexDir="column" gap="s16">
                   <FormMemberSelect name="memberId" label="Member Id" isDisabled={!!id} />
-                  {memberId && !loanLinkedData && (
+                  {memberId && !loanLinkedData && !isLinkAccDataFetching && (
                     <Alert status="error"> Member does not have a Saving Account </Alert>
                   )}
                   {memberId && loanLinkedData && (
@@ -316,7 +329,8 @@ export const NewLoanApplication = () => {
                     <>
                       <FormInput name="loanAccountName" label="Loan Account Name" />
                       <Box w="50%">
-                        <FormNumberInput
+                        <FormAmountInput
+                          type="number"
                           name="appliedLoanAmount"
                           label="Applied Loan Amount"
                           placeholder="0.00"
@@ -363,7 +377,6 @@ export const NewLoanApplication = () => {
                   address: memberDetailData?.address,
                 }}
                 signaturePath={memberSignatureUrl}
-                showSignaturePreview={false}
                 citizenshipPath={memberCitizenshipUrl}
               />
             </Box>

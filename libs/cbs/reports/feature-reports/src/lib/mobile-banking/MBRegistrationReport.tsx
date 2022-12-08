@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { GridItem } from '@myra-ui';
 import dayjs from 'dayjs';
+
+import { GridItem } from '@myra-ui';
 
 import {
   EbankingReportFilter,
@@ -42,7 +43,7 @@ export const MBRegistrationReport = () => {
             },
           ]}
         />
-        <Report.Inputs defaultFilters={null} setFilters={setFilters}>
+        <Report.Inputs>
           <GridItem colSpan={3}>
             <FormBranchSelect name="branchId" label="Branch" />
           </GridItem>
@@ -78,17 +79,17 @@ export const MBRegistrationReport = () => {
                 accessorFn: (row) => row?.mobileNo,
               },
               {
-                header: 'Registered Branch (Code)',
+                header: 'Registered Service Center(Code)',
                 accessorFn: (row) => row?.branchCode,
               },
               {
                 header: 'Registered Date',
-                accessorFn: (row) => row?.regDate,
+                accessorFn: (row) => row?.regDate?.local,
                 cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
               },
               {
                 header: 'Expiry Date',
-                accessorFn: (row) => row?.expDate,
+                accessorFn: (row) => row?.expDate?.local,
                 cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
               },
               {
