@@ -209,7 +209,7 @@ export const ActivationForm = () => {
               label={t['acService']}
               options={[
                 {
-                  label: t['acMobileBanking'],
+                  label: t['acMBanking'],
                   value: AlternativeChannelServiceType.MobileBanking,
                   disabled: isMobileBankingDisabled ?? false,
                 },

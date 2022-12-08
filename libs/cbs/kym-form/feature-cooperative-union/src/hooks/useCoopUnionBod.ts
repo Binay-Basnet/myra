@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { useDeepCompareEffect } from 'react-use';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import debounce from 'lodash/debounce';
 import omit from 'lodash/omit';
 
@@ -26,6 +27,8 @@ export const useCoopUnionBod = ({ methods, directorId }: IUseCoopUnionBodProps) 
   const router = useRouter();
   const id = router.query['id'] as string;
   const dispatch = useAppDispatch();
+
+  const queryClient = useQueryClient();
 
   const bodErrors = useAppSelector((state) => state.coopUnion.bod.director);
   const { watch, reset, setError, clearErrors } = methods;
@@ -68,7 +71,7 @@ export const useCoopUnionBod = ({ methods, directorId }: IUseCoopUnionBodProps) 
   // Mutation To Set Data
   const { mutateAsync: setData } = useSetPersonnelDetailsMutation({
     onSuccess: async () => {
-      await refetchEdit();
+      await queryClient.invalidateQueries(['getBoardOfDirectorsDetailsList']);
     },
   });
 

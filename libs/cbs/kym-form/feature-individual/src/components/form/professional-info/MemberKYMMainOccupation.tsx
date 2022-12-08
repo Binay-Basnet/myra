@@ -102,14 +102,17 @@ const MainOccupation = ({ setKymCurrentSection }: IMainOccupationProps) => {
     searchTerm: FormFieldSearchTerm.Occupation,
   });
 
-  const { data: familyOccupationListData, refetch: refetchEdit } =
-    useGetIndividualKymFamilyOccupationListQuery(
-      {
-        id: String(id),
-        isSpouse: false,
-      },
-      { enabled: !!id }
-    );
+  const {
+    data: familyOccupationListData,
+    refetch: refetchEdit,
+    isFetching,
+  } = useGetIndividualKymFamilyOccupationListQuery(
+    {
+      id: String(id),
+      isSpouse: false,
+    },
+    { enabled: !!id }
+  );
 
   useEffect(() => {
     if (familyOccupationListData) {
@@ -173,7 +176,7 @@ const MainOccupation = ({ setKymCurrentSection }: IMainOccupationProps) => {
     );
 
     return () => subscription.unsubscribe();
-  }, [watch, router.isReady, familyOccupationListData]);
+  }, [watch, router.isReady, familyOccupationListData, occupationId]);
 
   const { mutate: newIDMutate } = useGetNewIdMutation({
     onSuccess: (res) => {
@@ -184,11 +187,12 @@ const MainOccupation = ({ setKymCurrentSection }: IMainOccupationProps) => {
   useEffect(() => {
     if (
       !occupationId &&
-      !familyOccupationListData?.members?.individual?.listOccupation?.data?.length
+      !familyOccupationListData?.members?.individual?.listOccupation?.data?.length &&
+      !isFetching
     ) {
       newIDMutate({});
     }
-  }, [familyOccupationListData, occupationId]);
+  }, [familyOccupationListData, occupationId, isFetching]);
 
   return (
     <FormProvider {...methods}>
