@@ -304,7 +304,7 @@ export const RangedDatePicker = ({
                   <PeriodWrapper
                     isSelected={dayjs(
                       `${adStartFiscalYear.year}-${adStartFiscalYear.month}-${adStartFiscalYear.day}`
-                    ).isSame(dayjs(value?.from?.en || 10), 'year')}
+                    ).isSame(dayjs(value?.from?.en || 10), 'day')}
                     onClick={() => {
                       onChange({
                         from: convertDate(fiscalYear.start, calendarType),

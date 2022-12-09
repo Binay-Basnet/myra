@@ -35,6 +35,8 @@ query getMe {
             registrationDetails {
               regdNo
               panOrVat
+
+
             }
           }
         }
