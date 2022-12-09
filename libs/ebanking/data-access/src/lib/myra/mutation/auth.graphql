@@ -116,6 +116,7 @@ mutation loginToCooperative($cooperativeId: ID!, $pinCode: String!, $mobileNumbe
         record {
           data {
             myraUserId
+            cooperativeSlug
             cooperativeId
             cooperativeName
             cooperativeProvince

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+
 import { asyncToast, Box, SettingsFooter, Text, toast } from '@myra-ui';
 
 import {
@@ -90,9 +91,9 @@ export const ShareSettingsReturn = () => {
                   <Text fontSize="r1" fontWeight="SemiBold" color="neutralColorLight.Gray-80">
                     {t['shareOtherCharge']}
                   </Text>
-                  <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-60">
+                  {/* <Text fontSize="s3" fontWeight="Medium" color="neutralColorLight.Gray-60">
                     {t['shareOtherBasicCharge']}
-                  </Text>
+                  </Text> */}
                 </Box>
                 <FormEditableTable<OtherChargeTable>
                   name="other"

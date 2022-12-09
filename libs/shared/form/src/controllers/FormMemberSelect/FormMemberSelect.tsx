@@ -41,6 +41,8 @@ export const FormMemberSelect = ({
       filter: {
         query: IDMember,
         id: IDMember,
+        memberCode: IDMember,
+        mobileNo: IDMember,
         filterMode: Filter_Mode.Or,
         objState: allMembers ? null : ObjState?.Approved,
       },

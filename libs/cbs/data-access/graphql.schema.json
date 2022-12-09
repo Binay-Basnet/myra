@@ -23942,6 +23942,18 @@
         "fields": null,
         "inputFields": [
           {
+            "name": "filterMode",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "FILTER_MODE",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "id",
             "description": null,
             "type": {

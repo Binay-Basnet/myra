@@ -5,12 +5,14 @@ import { getSchemaPath } from '@coop/shared/utils';
 
 import { RootState, useAppSelector } from '../../redux/store';
 
+const privateAgent = axios.create();
+
 // Request interceptors for API calls
-axios.interceptors.request.use(
+privateAgent.interceptors.request.use(
   (config) => {
     config.headers = {
       ...config.headers,
-      slug: 'myra',
+      Slug: localStorage.getItem('db') || 'myra',
     };
     return config;
   },
@@ -46,7 +48,7 @@ export const useAxios = <TData, TVariables>(
       config = { headers };
     }
 
-    return axios
+    return privateAgent
       .post<{ data: TData }>(url, { query, variables }, config)
       .then(
         (
@@ -83,7 +85,7 @@ export const useAxios = <TData, TVariables>(
               config = { headers };
             }
 
-            return axios.post<{ data: TData }>(url, { query, variables }, config).then(
+            return privateAgent.post<{ data: TData }>(url, { query, variables }, config).then(
               (
                 res: AxiosResponse<{
                   data: TData;
