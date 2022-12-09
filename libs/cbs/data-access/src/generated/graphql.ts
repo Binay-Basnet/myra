@@ -7287,7 +7287,9 @@ export type KymInstitutionDocumentsType = {
 export type KymMemberDataFilter = {
   filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
+  memberCode?: InputMaybe<Scalars['String']>;
   memberType?: InputMaybe<KymMemberTypesEnum>;
+  mobileNo?: InputMaybe<Scalars['String']>;
   objState?: InputMaybe<ObjState>;
   query?: InputMaybe<Scalars['String']>;
 };
@@ -8060,6 +8062,13 @@ export enum LoanPaymentMode {
   Installment = 'INSTALLMENT'
 }
 
+export type LoanPenalty = {
+  penaltyAmount?: Maybe<Scalars['Amount']>;
+  penaltyDayAfterInstallmentDate?: Maybe<Scalars['Int']>;
+  penaltyRate?: Maybe<Scalars['Float']>;
+  penaltyType?: Maybe<PenaltyType>;
+};
+
 export type LoanPreviewAdditionalFeatures = {
   allowPartialInstallment?: Maybe<Scalars['Boolean']>;
   collateral?: Maybe<Scalars['Boolean']>;
@@ -8173,6 +8182,7 @@ export type LoanProduct = Base & {
   noOfaccount?: Maybe<Scalars['Int']>;
   objState: ObjState;
   occupation?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  penalty?: Maybe<LoanPenalty>;
   penaltyAmount?: Maybe<Scalars['Amount']>;
   penaltyDayAfterInstallmentDate?: Maybe<Scalars['Int']>;
   penaltyRate?: Maybe<Scalars['Float']>;
@@ -12801,6 +12811,21 @@ export type DeleteCoaMutationVariables = Exact<{
 
 export type DeleteCoaMutation = { settings: { chartsOfAccount?: { account?: { delete: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
 
+export type AddGroupMutationVariables = Exact<{
+  data: NewCoaGroupInput;
+}>;
+
+
+export type AddGroupMutation = { settings: { chartsOfAccount?: { account?: { newGroup: { recordId: string, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } } | null } | null } };
+
+export type AddAccountInCoaMutationVariables = Exact<{
+  accountSetup: CoaAccountSetup;
+  parentAccountCode: Scalars['String'];
+}>;
+
+
+export type AddAccountInCoaMutation = { settings: { chartsOfAccount?: { account?: { addAccount?: { success: boolean, error?: MutationError_AuthorizationError_Fragment | MutationError_BadRequestError_Fragment | MutationError_NotFoundError_Fragment | MutationError_ServerError_Fragment | MutationError_ValidationError_Fragment | null } | null } | null } | null } };
+
 export type SetCooperativeDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: KymCooperativeFormInput;
@@ -14621,7 +14646,7 @@ export type GetCoaListQuery = { settings: { general?: { chartsOfAccount?: { acco
 export type GetCoaFullViewQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCoaFullViewQuery = { settings: { chartsOfAccount?: { fullView: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, under?: string | null, accountType: CoaTypesOfAccount, accountClass: string, accountCode: string, category?: CoaCategory | null } | null> | null } } | null } };
+export type GetCoaFullViewQuery = { settings: { chartsOfAccount?: { fullView: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, under?: string | null, accountType: CoaTypesOfAccount, accountClass: string, accountCode: string, category?: CoaCategory | null, allowedBalance?: CoaTypeOfTransaction | null, transactionAllowed?: CoaTypeOfTransaction | null } | null> | null } } | null } };
 
 export type SearchCoaQueryVariables = Exact<{
   coaName: Scalars['String'];
@@ -15735,6 +15760,56 @@ export const useDeleteCoaMutation = <
     useMutation<DeleteCoaMutation, TError, DeleteCoaMutationVariables, TContext>(
       ['deleteCOA'],
       useAxios<DeleteCoaMutation, DeleteCoaMutationVariables>(DeleteCoaDocument),
+      options
+    );
+export const AddGroupDocument = `
+    mutation AddGroup($data: NewCoaGroupInput!) {
+  settings {
+    chartsOfAccount {
+      account {
+        newGroup(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddGroupMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<AddGroupMutation, TError, AddGroupMutationVariables, TContext>) =>
+    useMutation<AddGroupMutation, TError, AddGroupMutationVariables, TContext>(
+      ['AddGroup'],
+      useAxios<AddGroupMutation, AddGroupMutationVariables>(AddGroupDocument),
+      options
+    );
+export const AddAccountInCoaDocument = `
+    mutation addAccountInCOA($accountSetup: COAAccountSetup!, $parentAccountCode: String!) {
+  settings {
+    chartsOfAccount {
+      account {
+        addAccount(accountSetup: $accountSetup, parentAccountCode: $parentAccountCode) {
+          success
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddAccountInCoaMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(options?: UseMutationOptions<AddAccountInCoaMutation, TError, AddAccountInCoaMutationVariables, TContext>) =>
+    useMutation<AddAccountInCoaMutation, TError, AddAccountInCoaMutationVariables, TContext>(
+      ['addAccountInCOA'],
+      useAxios<AddAccountInCoaMutation, AddAccountInCoaMutationVariables>(AddAccountInCoaDocument),
       options
     );
 export const SetCooperativeDataDocument = `
@@ -24784,6 +24859,8 @@ export const GetCoaFullViewDocument = `
           accountClass
           accountCode
           category
+          allowedBalance
+          transactionAllowed
         }
       }
     }

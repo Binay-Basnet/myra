@@ -46,6 +46,7 @@ const settingsColumn = [
 const reportColumn = [
   {
     label: 'shareLayoutRegisterReport',
+    navigate: '/reports/cbs/share/register/new',
   },
   {
     label: 'shareLayoutStateReport',
@@ -53,6 +54,7 @@ const reportColumn = [
   },
   {
     label: 'shareLayoutTransactionReport',
+    navigate: '/reports/cbs/share/transaction/new',
   },
 ];
 

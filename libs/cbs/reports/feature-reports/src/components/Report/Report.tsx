@@ -28,7 +28,7 @@ export const ReportHeader = ({ children }: { children: React.ReactNode }) => (
 );
 
 export const ReportBody = ({ children }: { children: React.ReactNode }) => (
-  <Box h="50vh" flexGrow={1} p="s16" gap="s16" display="flex" justifyContent="space-between">
+  <Box h="50vh" flexGrow={1} p="s16" py="s8" gap="s8" display="flex" justifyContent="space-between">
     {children}
   </Box>
 );
@@ -269,7 +269,7 @@ export const ReportInputs = <T extends FieldValues | null>({
   //
 
   return (
-    <Box display="flex" alignItems="flex-end" gap="s20" px="s16" py="s16">
+    <Box display="flex" alignItems="flex-end" gap="s20" px="s16" py="s8">
       <Box as="form" display="grid" width="100%" gridTemplateColumns="repeat(4, 1fr)" gap="s20">
         {children}
       </Box>
