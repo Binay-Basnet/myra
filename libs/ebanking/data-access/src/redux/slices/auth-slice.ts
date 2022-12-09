@@ -99,6 +99,7 @@ export const authSlice = createSlice({
 
     logoutCooperative: (state) => {
       localStorage.removeItem('coop-refreshToken');
+      localStorage.removeItem('db');
       state.cooperative.token = null;
       state.cooperative.isLogged = false;
       state.cooperative.user = null;

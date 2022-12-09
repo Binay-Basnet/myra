@@ -54,6 +54,7 @@ export const CoopConnectPage = () => {
         dispatch(switchCooperative({ user, token: accessToken }));
       }
       localStorage.setItem('coop-refreshToken', String(refreshToken));
+      localStorage.setItem('db', String(user?.cooperativeSlug));
 
       router.replace('/home');
     } else {

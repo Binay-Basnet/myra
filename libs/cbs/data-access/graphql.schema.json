@@ -25370,6 +25370,22 @@
             "deprecationReason": null
           },
           {
+            "name": "savingCharges",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ServiceTypeFormState",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "serviceCharge",
             "description": null,
             "args": [],
