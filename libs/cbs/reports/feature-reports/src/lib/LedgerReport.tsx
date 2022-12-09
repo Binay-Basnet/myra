@@ -39,7 +39,7 @@ export const LedgerReport = () => {
             { label: 'Other Reports', link: '/reports/cbs/others' },
             {
               label: 'Ledger Report',
-              link: '/reports/cbs/others/statement/new',
+              link: '/reports/cbs/others/ledger/new',
             },
           ]}
         />
