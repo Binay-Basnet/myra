@@ -191,18 +191,20 @@ export const AddDeposit = () => {
       if (!rebate && Number(totalCashPaid ?? 0) < Number(totalDeposit)) return true;
     }
 
-    if (
-      selectedPaymentMode === DepositPaymentType.BankVoucher &&
-      Number(bankVoucherAmount ?? 0) < Number(totalDeposit)
-    ) {
-      return true;
+    if (selectedPaymentMode === DepositPaymentType.BankVoucher) {
+      if (rebate && Number(bankVoucherAmount ?? 0) < Number(amountToBeDeposited)) {
+        return true;
+      }
+
+      if (!rebate && Number(bankVoucherAmount ?? 0) < Number(totalDeposit)) return true;
     }
 
-    if (
-      selectedPaymentMode === DepositPaymentType.WithdrawSlip &&
-      Number(withdrawSlipAmount ?? 0) < Number(totalDeposit)
-    ) {
-      return true;
+    if (selectedPaymentMode === DepositPaymentType.WithdrawSlip) {
+      if (rebate && Number(withdrawSlipAmount ?? 0) < Number(amountToBeDeposited)) {
+        return true;
+      }
+
+      if (!rebate && Number(withdrawSlipAmount ?? 0) < Number(totalDeposit)) return true;
     }
 
     return false;

@@ -3,18 +3,17 @@ import { useFormContext } from 'react-hook-form';
 
 import { Box, Grid, GridItem, Text } from '@myra-ui';
 
-import { LoanRepaymentMethod, ObjState, useGetCoaBankListQuery } from '@coop/cbs/data-access';
+import { LoanRepaymentMethod, ObjState } from '@coop/cbs/data-access';
 import { BoxContainer, ContainerWithDivider } from '@coop/cbs/transactions/ui-containers';
 import {
   FormAccountSelect,
+  FormBankSelect,
   FormEditableTable,
   FormInput,
-  FormSelect,
   FormSwitch,
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { featureCode } from '@coop/shared/utils';
 
 const paymentModes = [
   {
@@ -63,16 +62,6 @@ export const Payment = ({ totalDeposit, loanTotal }: PaymentProps) => {
 
   const denominations = watch('cash.denominations');
 
-  const { data: bank } = useGetCoaBankListQuery({
-    accountCode: featureCode.accountCode as string[],
-  });
-
-  const bankListArr = bank?.settings?.chartsOfAccount?.accountsUnder?.data;
-
-  const bankList = bankListArr?.map((item) => ({
-    label: item?.name?.local as string,
-    value: item?.id as string,
-  }));
   const denominationTotal =
     denominations?.reduce(
       (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
@@ -119,7 +108,7 @@ export const Payment = ({ totalDeposit, loanTotal }: PaymentProps) => {
           <Grid templateColumns="repeat(2,1fr)" gap="s20">
             {' '}
             <GridItem colSpan={2}>
-              <FormSelect name="bankVoucher.bank" label="Bank Name" options={bankList} />
+              <FormBankSelect name="bankVoucher.bank" label="Bank Name" />
             </GridItem>
             <FormInput name="bankVoucher.voucher_no" label="Voucher Number" />
             <FormInput name="bankVoucher.amount" value={loanTotal} isDisabled label="Amount" />

@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+
 import { FormSection, GridItem } from '@myra-ui';
 
-import { RootState, useAppSelector, useGetCoaBankListQuery } from '@coop/cbs/data-access';
-import { FormAmountInput, FormDatePicker, FormInput, FormSelect } from '@coop/shared/form';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import { RootState, useAppSelector } from '@coop/cbs/data-access';
+import { FormAmountInput, FormBankSelect, FormDatePicker, FormInput } from '@coop/shared/form';
+import { useTranslation } from '@coop/shared/utils';
 
 type PurchaseProps = {
   totalAmount: number;
@@ -12,17 +13,6 @@ type PurchaseProps = {
 
 export const BankVoucher = ({ totalAmount }: PurchaseProps) => {
   const { t } = useTranslation();
-
-  const { data: bank } = useGetCoaBankListQuery({
-    accountCode: featureCode.accountCode as string[],
-  });
-
-  const bankListArr = bank?.settings?.chartsOfAccount?.accountsUnder?.data;
-
-  const bankList = bankListArr?.map((item) => ({
-    label: item?.name?.local as string,
-    value: item?.id as string,
-  }));
 
   const { resetField } = useFormContext();
 
@@ -36,11 +26,7 @@ export const BankVoucher = ({ totalAmount }: PurchaseProps) => {
   return (
     <FormSection templateColumns={2}>
       <GridItem colSpan={2}>
-        <FormSelect
-          name="bankVoucher.bankId"
-          label={t['sharePurchaseBankName']}
-          options={bankList}
-        />
+        <FormBankSelect name="bankVoucher.bankId" label={t['sharePurchaseBankName']} />
       </GridItem>
 
       <GridItem colSpan={1}>
