@@ -1,5 +1,4 @@
 import React from 'react';
-import { CgLoadbarDoc } from 'react-icons/cg';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { AddIcon } from '@chakra-ui/icons';
@@ -13,7 +12,6 @@ import {
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
-  SettingsButton,
   Text,
 } from '@myra-ui';
 
@@ -147,7 +145,7 @@ export const OthersPageLayout = ({ children }: IOthersPageLayoutProps) => {
 
           <TabColumn list={othersColumns} />
           <Divider my="s16" />
-          <SettingsButton icon={CgLoadbarDoc} buttonLabel="Account and Finance Settings" />
+          {/* <SettingsButton icon={CgLoadbarDoc} buttonLabel="Account and Finance Settings" /> */}
         </Box>
       </Box>
       <Box

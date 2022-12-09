@@ -508,8 +508,8 @@ export const DateRangeFooter = ({
   return (
     <Box display="flex" alignItems="end" justifyContent="space-between" p="s10">
       <Box display="flex" gap="s16" alignItems="center">
-        <Box display="flex" flexDir="column" gap="s4">
-          <Text fontWeight={500} color="gray.700" size="s3">
+        <Box display="flex" flexDir="column" gap="s2">
+          <Text fontWeight={500} color="gray.700" fontSize="s3">
             {t.from}
           </Text>
           <Box
@@ -547,8 +547,8 @@ export const DateRangeFooter = ({
           </Box>
         </Box>
         <Icon as={HiArrowRight} color="gray.500" w="s24" h="s24" />
-        <Box display="flex" flexDir="column" gap="s4">
-          <Text fontWeight={500} color="gray.700" size="s3">
+        <Box display="flex" flexDir="column" gap="s2">
+          <Text fontWeight={500} color="gray.700" fontSize="s3">
             {t.to}
           </Text>
           <Box

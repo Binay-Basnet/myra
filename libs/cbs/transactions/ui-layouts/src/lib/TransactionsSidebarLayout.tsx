@@ -103,31 +103,31 @@ const dropdownButtons = [
 const reportColumn = [
   {
     label: 'transactionLayoutBalanceSheet',
-    navigate: '/settings/general/members',
+    navigate: '/reports/cbs/transactions/trial-sheet/new',
   },
-  {
-    label: 'transactionLayoutIncomeStatement',
-    navigate: '/settings/general/members/kym-individual',
-  },
+  // {
+  //   label: 'transactionLayoutIncomeStatement',
+  //   navigate: '/settings/general/members/kym-individual',
+  // },
   {
     label: 'transactionLayoutCashFlowStament',
-    navigate: '/settings/general/members/kym-individual',
+    navigate: '/reports/cbs/transactions/cash-ledger/new',
   },
-  {
-    label: 'transactionLayoutChangeOfEquity',
-    navigate: '/settings/general/members/kym-individual',
-  },
-  {
-    label: 'transactionLayoutAppropriationOfProfit',
-    navigate: '/settings/general/members/kym-individual',
-  },
-  {
-    label: 'transactionLayoutBankGLBalance',
-    navigate: '/settings/general/members/kym-individual',
-  },
+  // {
+  //   label: 'transactionLayoutChangeOfEquity',
+  //   navigate: '/settings/general/members/kym-individual',
+  // },
+  // {
+  //   label: 'transactionLayoutAppropriationOfProfit',
+  //   navigate: '/settings/general/members/kym-individual',
+  // },
+  // {
+  //   label: 'transactionLayoutBankGLBalance',
+  //   navigate: '/settings/general/members/kym-individual',
+  // },
   {
     label: 'transactionLayoutBankGLStatement',
-    navigate: '/settings/general/members/kym-individual',
+    navigate: '/reports/cbs/transactions/bank-gl-statement/new',
   },
 ];
 

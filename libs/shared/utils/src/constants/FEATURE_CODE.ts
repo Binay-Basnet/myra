@@ -11,9 +11,9 @@ export const featureCode = {
 
   newAccountOpen: '10201',
   newAccountClose: '10202',
-  accountList: '10204',
-  accountCloseList: '10205',
-  depositProductList: '10206',
+  accountList: '10203',
+  accountCloseList: '10204',
+  depositProductList: '10205',
 
   newDeposit: '10301',
   newWithdraw: '10302',
@@ -32,7 +32,7 @@ export const featureCode = {
 
   saveReports: '10601',
   favoriteReports: '10602',
-  shareRegister: '10603',
+  shareRegister: '10103',
   shareTransactionReport: '10604',
 
   accountCode: ['90.1', '90.2'],

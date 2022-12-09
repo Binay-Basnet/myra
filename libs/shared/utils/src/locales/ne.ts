@@ -2945,9 +2945,9 @@ const ne: Record<string, string> = {
   transactionSidebarNewLoanPayment: 'New Loan Payment',
   transactionSidebarNewMarketRepresentativeTransaction: 'New Market Representative Transaction',
 
-  transactionLayoutBalanceSheet: 'Balance Sheet',
+  transactionLayoutBalanceSheet: 'Trail Balance',
   transactionLayoutIncomeStatement: 'Income Statement',
-  transactionLayoutCashFlowStament: 'Cash Flow Statement',
+  transactionLayoutCashFlowStament: 'Cash Ledger',
   transactionLayoutChangeOfEquity: 'Change of Equity',
   transactionLayoutAppropriationOfProfit: 'Appropriation of Profit',
   transactionLayoutBankGLBalance: 'Bank GL Balance',

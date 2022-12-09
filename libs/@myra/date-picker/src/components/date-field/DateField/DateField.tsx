@@ -39,8 +39,6 @@ export const DateSegments = ({ value, onValueChange }: IDateSegments) => {
     value ?? { year: null, month: null, day: null }
   );
 
-  console.log(value);
-
   // TODO! Remove this effect
   useEffect(() => {
     if (onValueChange) {
@@ -53,7 +51,14 @@ export const DateSegments = ({ value, onValueChange }: IDateSegments) => {
   }, [value?.year, value?.month, value?.day]);
 
   return (
-    <Box display="flex" color="gray.500" fontWeight={400} alignItems="center" gap="s4">
+    <Box
+      display="flex"
+      fontSize="r1"
+      color="gray.500"
+      fontWeight={400}
+      alignItems="center"
+      gap="s4"
+    >
       <YearSegment
         year={state.year}
         onYearChange={(newYear) => {
