@@ -159,14 +159,14 @@ export const MemberDetailsSidebar = () => {
           'Overview',
           'Saving Accounts',
           'Share',
-          'Reports',
+          // 'Reports',
           'Loan',
-          'Bio',
+          // 'Bio',
           'Transactions',
           // 'Activity',
           'Withdraw Slip',
           // 'Documents',
-          'Tasks',
+          // 'Tasks',
         ]}
       />
     </Box>

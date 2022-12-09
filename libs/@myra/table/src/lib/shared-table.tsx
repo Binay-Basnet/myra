@@ -108,7 +108,7 @@ export const Table = <T extends Record<string, unknown>>({
       <TableContainer
         minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}
         {...(variant === 'report'
-          ? { borderRadius: 'br2', border: '1px', borderColor: 'border.element' }
+          ? { borderRadius: 'br1', border: '0px', borderColor: 'border.element' }
           : {})}
       >
         <ChakraTable
@@ -116,10 +116,10 @@ export const Table = <T extends Record<string, unknown>>({
           variant={variant}
           {...(variant === 'report'
             ? {
-                borderRadius: 'br2',
-                border: '1px',
+                border: '0',
+                borderRadius: 'br1',
+
                 borderColor: 'border.element',
-                overflow: 'hidden',
               }
             : {})}
         >

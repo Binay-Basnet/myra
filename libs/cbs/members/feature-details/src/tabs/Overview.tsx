@@ -1,12 +1,17 @@
-import { IoAddOutline } from 'react-icons/io5';
+import { IoAddOutline, IoCreateOutline } from 'react-icons/io5';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
 import { Box, Grid, Icon, Text } from '@myra-ui';
 
 import {
+  CooperativeBasicMinInfo,
+  CooperativeUnionBasicMinInfo,
   Id_Type,
+  IndividualBasicMinInfo,
+  InstitutionBasicMinInfo,
   useGetMemberDetailsOverviewQuery,
+  useGetMemberOverviewBasicDetailsQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
 import { amountConverter } from '@coop/shared/utils';
@@ -60,8 +65,8 @@ export const Overview = () => {
       link: `/loan/repayments/add?memberId=${id}`,
     },
     {
-      title: 'Withdraw Slip',
-      link: `/withdraw/cheque-book?memberId=${id}`,
+      title: 'Edit KYM',
+      link: `/members`,
     },
   ];
 
@@ -90,6 +95,52 @@ export const Overview = () => {
     amount: amountConverter(data?.amount as string),
   }));
   const newId = useGetNewIdMutation();
+
+  // to find out member type
+  const memberDetailsData = useGetMemberOverviewBasicDetailsQuery({
+    id: router.query['id'] as string,
+  });
+
+  const memberIndividual =
+    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+      ?.__typename === 'IndividualBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+          ?.basicInformation as IndividualBasicMinInfo)
+      : null;
+
+  const memberBasicInstitution =
+    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+      ?.__typename === 'InstitutionBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+          ?.basicInformation as InstitutionBasicMinInfo)
+      : null;
+
+  const memberBasicCooperative =
+    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+      ?.__typename === 'CooperativeBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+          ?.basicInformation as CooperativeBasicMinInfo)
+      : null;
+
+  const memberBasicCooperativeUnion =
+    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+      ?.__typename === 'CooperativeUnionBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+          ?.basicInformation as CooperativeUnionBasicMinInfo)
+      : null;
+
+  let memberType = 'individual';
+  if (memberIndividual) {
+    memberType = 'individual';
+  } else if (memberBasicInstitution) {
+    memberType = 'institution';
+  } else if (memberBasicCooperative) {
+    memberType = 'coop';
+  } else if (memberBasicCooperativeUnion) {
+    memberType = 'coop_union';
+  } else {
+    memberType = 'individual';
+  }
 
   return (
     <>
@@ -127,7 +178,29 @@ export const Overview = () => {
                   </Text>
                 </Box>
               )}
-              {item.title !== 'New Account' && (
+              {item.title === 'Edit KYM' && (
+                <Box
+                  display="flex"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                  bg="white"
+                  borderRadius="br2"
+                  gap="s12"
+                  h="58px"
+                  pl="s16"
+                  cursor="pointer"
+                  onClick={() => {
+                    router.push(`/members/${memberType}/edit/${router.query['id'] as string}`);
+                  }}
+                >
+                  <Icon as={IoCreateOutline} />
+
+                  <Text fontWeight="500" fontSize="s3">
+                    Edit KYM
+                  </Text>
+                </Box>
+              )}
+              {item.title !== 'New Account' && item.title !== 'Edit KYM' && (
                 <Box
                   display="flex"
                   justifyContent="flex-start"

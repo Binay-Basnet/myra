@@ -12880,6 +12880,53 @@ export type DeleteCoaMutation = {
   };
 };
 
+export type AddGroupMutationVariables = Exact<{
+  data: NewCoaGroupInput;
+}>;
+
+export type AddGroupMutation = {
+  settings: {
+    chartsOfAccount?: {
+      account?: {
+        newGroup: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        };
+      } | null;
+    } | null;
+  };
+};
+
+export type AddAccountInCoaMutationVariables = Exact<{
+  accountSetup: CoaAccountSetup;
+  parentAccountCode: Scalars['String'];
+}>;
+
+export type AddAccountInCoaMutation = {
+  settings: {
+    chartsOfAccount?: {
+      account?: {
+        addAccount?: {
+          success: boolean;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type SetCooperativeDataMutationVariables = Exact<{
   id: Scalars['ID'];
   data: KymCooperativeFormInput;
@@ -19902,6 +19949,8 @@ export type GetCoaFullViewQuery = {
           accountClass: string;
           accountCode: string;
           category?: CoaCategory | null;
+          allowedBalance?: CoaTypeOfTransaction | null;
+          transactionAllowed?: CoaTypeOfTransaction | null;
         } | null> | null;
       };
     } | null;
@@ -22447,6 +22496,59 @@ export const useDeleteCoaMutation = <TError = unknown, TContext = unknown>(
   useMutation<DeleteCoaMutation, TError, DeleteCoaMutationVariables, TContext>(
     ['deleteCOA'],
     useAxios<DeleteCoaMutation, DeleteCoaMutationVariables>(DeleteCoaDocument),
+    options
+  );
+export const AddGroupDocument = `
+    mutation AddGroup($data: NewCoaGroupInput!) {
+  settings {
+    chartsOfAccount {
+      account {
+        newGroup(data: $data) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddGroupMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<AddGroupMutation, TError, AddGroupMutationVariables, TContext>
+) =>
+  useMutation<AddGroupMutation, TError, AddGroupMutationVariables, TContext>(
+    ['AddGroup'],
+    useAxios<AddGroupMutation, AddGroupMutationVariables>(AddGroupDocument),
+    options
+  );
+export const AddAccountInCoaDocument = `
+    mutation addAccountInCOA($accountSetup: COAAccountSetup!, $parentAccountCode: String!) {
+  settings {
+    chartsOfAccount {
+      account {
+        addAccount(accountSetup: $accountSetup, parentAccountCode: $parentAccountCode) {
+          success
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useAddAccountInCoaMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    AddAccountInCoaMutation,
+    TError,
+    AddAccountInCoaMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<AddAccountInCoaMutation, TError, AddAccountInCoaMutationVariables, TContext>(
+    ['addAccountInCOA'],
+    useAxios<AddAccountInCoaMutation, AddAccountInCoaMutationVariables>(AddAccountInCoaDocument),
     options
   );
 export const SetCooperativeDataDocument = `
@@ -32313,6 +32415,8 @@ export const GetCoaFullViewDocument = `
           accountClass
           accountCode
           category
+          allowedBalance
+          transactionAllowed
         }
       }
     }
