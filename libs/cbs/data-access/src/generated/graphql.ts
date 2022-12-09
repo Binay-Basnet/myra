@@ -2716,6 +2716,7 @@ export type DepositLoanAccountResult = {
 };
 
 export type DepositLoanAccountSearchFilter = {
+  filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['ID']>;
   memberId?: InputMaybe<Scalars['String']>;
   objState?: InputMaybe<ObjState>;

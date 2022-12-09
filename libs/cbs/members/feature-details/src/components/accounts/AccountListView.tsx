@@ -9,7 +9,6 @@ import {
   CooperativeUnionBasicMinInfo,
   IndividualBasicMinInfo,
   InstitutionBasicMinInfo,
-  useGetMemberDetailsOverviewQuery,
   useGetMemberOverviewBasicDetailsQuery,
 } from '@coop/cbs/data-access';
 
@@ -31,16 +30,18 @@ interface IAccountListProps {
   isClosedAccounts?: boolean;
 }
 
-export const AccountList = ({ title, accountList, isClosedAccounts }: IAccountListProps) => {
+export const AccountList = ({
+  title,
+  accountList,
+  isClosedAccounts = false,
+}: IAccountListProps) => {
   const router = useRouter();
   const [showGrid, setShowGrid] = useState(true);
 
   const handleClick = () => {
     setShowGrid(!showGrid);
   };
-  const memberDetails = useGetMemberDetailsOverviewQuery({
-    id: router.query['id'] as string,
-  });
+
   const memberDetailsData = useGetMemberOverviewBasicDetailsQuery({
     id: router.query['id'] as string,
   });
@@ -78,9 +79,6 @@ export const AccountList = ({ title, accountList, isClosedAccounts }: IAccountLi
     memberBasicCooperativeUnion;
   const contactNo = memberIndividual ? memberIndividual?.contactNumber : '-';
   const memberName = memberBasicDetails?.memberName;
-  const memberAccountDetails =
-    memberDetails?.data?.members?.memberOverview?.data?.accounts?.accounts;
-  const memberLength = memberAccountDetails?.length;
 
   return (
     <>
@@ -88,7 +86,7 @@ export const AccountList = ({ title, accountList, isClosedAccounts }: IAccountLi
       {showGrid && (
         <DetailsCard
           bg="white"
-          title={memberLength ? title : 'Saving Accounts List (0)'}
+          title={title}
           leftBtn={
             <Button
               variant="ghost"
@@ -117,7 +115,8 @@ export const AccountList = ({ title, accountList, isClosedAccounts }: IAccountLi
         <DetailsCard
           hasTable
           bg="white"
-          title={memberLength ? title : 'Saving Accounts List (0)'}
+          // title={memberLength ? title : 'Saving Accounts List (0)'}
+          title={title}
           leftBtn={
             <Button
               variant="ghost"
