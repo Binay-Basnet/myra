@@ -11,7 +11,7 @@ export const WithdrawSlip = () => {
     <>
       <Box display="flex" flexDirection="row" justifyContent="space-between">
         <Text fontSize="r3" fontWeight="600">
-          Cheques
+          Withdraw Slip
         </Text>
         <Button leftIcon={<Icon as={IoAdd} onClick={() => router.push('/withdraw/cheque-book')} />}>
           New Withdraw Slip

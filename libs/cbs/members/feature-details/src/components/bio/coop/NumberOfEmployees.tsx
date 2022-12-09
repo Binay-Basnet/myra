@@ -1,6 +1,6 @@
 import { DetailCardContent, DetailsCard } from '@myra-ui';
 
-export const AccountOperationInstruction = () => (
+export const NumberOfEmployeesCoop = () => (
   // const router = useRouter();
   // const memberDetails = useGetMemberDetailsOverviewQuery({
   //   id: router.query['id'] as string,
@@ -8,9 +8,9 @@ export const AccountOperationInstruction = () => (
 
   // const memberBasicInfo =
   //   memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation;
-  <DetailsCard title="Account Operation Instruction Details" bg="white" hasThreeRows>
-    <DetailCardContent title="Account" subtitle="" />
-    <DetailCardContent title="Company Stamp Compulsory" subtitle="" />
-    <DetailCardContent title="Special Instruction" subtitle="" />
+  <DetailsCard title="No of Employees" bg="white" hasThreeRows>
+    <DetailCardContent title="Male" subtitle="" />
+    <DetailCardContent title="Female" subtitle="" />
+    <DetailCardContent title="Total" subtitle="" />
   </DetailsCard>
 );
