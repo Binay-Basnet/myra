@@ -1,7 +1,8 @@
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Skeleton } from '@chakra-ui/react';
 import { debounce } from 'lodash';
+
+import { AccordionPanel, Box } from '@myra-ui';
 
 import {
   DeclarationFor,
@@ -12,7 +13,6 @@ import {
   useUpdateDeclarationMutation,
 } from '@coop/cbs/data-access';
 import { FormTextArea } from '@coop/shared/form';
-import { AccordionPanel, Box } from '@myra-ui';
 
 import { IncomeSourceDetailsComponent } from '../components/KYMIncomeSource';
 import { KYMCategory, KYMSearchTerm } from '../types';
@@ -22,7 +22,7 @@ enum FieldTypeEnum {
 
   CustomComponent = 'CustomComponent',
   FormField = 'FormField',
-  FormSection = 'FormSection',
+  // FormSection = 'FormSection',
   Custom = 'custom',
 }
 
@@ -30,7 +30,7 @@ export type FieldType =
   | {
       type:
         | FieldTypeEnum.FormField
-        | FieldTypeEnum.FormSection
+        // | FieldTypeEnum.FormSection
         | FieldTypeEnum.Custom
         | FieldTypeEnum.CustomComponent;
 
@@ -219,12 +219,12 @@ export const KYM_FIELDS: FieldType[] = [
       },
     ],
   },
-  {
-    type: FieldTypeEnum.Custom,
-    label: 'settingsMemberSection5CustomFields',
-    children: [],
-    search_term: FormSearchTerm.Citizenship,
-  },
+  // {
+  //   type: FieldTypeEnum.Custom,
+  //   label: 'settingsMemberSection5CustomFields',
+  //   children: [],
+  //   search_term: FormSearchTerm.Citizenship,
+  // },
 ];
 
 export const INSTITUTION_KYM_FIELDS: FieldType[] = [
@@ -370,12 +370,12 @@ export const INSTITUTION_KYM_FIELDS: FieldType[] = [
       },
     ],
   },
-  {
-    type: FieldTypeEnum.Custom,
-    label: 'settingsMemberInstitutionSection6',
-    children: [],
-    search_term: FormSearchTerm.AccountOperatorDetails,
-  },
+  // {
+  //   type: FieldTypeEnum.Custom,
+  //   label: 'settingsMemberInstitutionSection6',
+  //   children: [],
+  //   search_term: FormSearchTerm.AccountOperatorDetails,
+  // },
 ];
 
 export const COOP_KYM_FIELDS: FieldType[] = [
@@ -490,12 +490,12 @@ export const COOP_KYM_FIELDS: FieldType[] = [
       },
     ],
   },
-  {
-    type: FieldTypeEnum.Custom,
-    label: 'settingsMemberInstitutionSection6',
-    children: [],
-    search_term: FormSearchTerm.AccountOperatorDetails,
-  },
+  // {
+  //   type: FieldTypeEnum.Custom,
+  //   label: 'settingsMemberInstitutionSection6',
+  //   children: [],
+  //   search_term: FormSearchTerm.AccountOperatorDetails,
+  // },
 ];
 
 export const COOP_UNION_FIELDS: FieldType[] = [
@@ -652,12 +652,12 @@ export const COOP_UNION_FIELDS: FieldType[] = [
       },
     ],
   },
-  {
-    type: FieldTypeEnum.Custom,
-    label: 'settingsCoopUnionSection7',
-    children: [],
-    search_term: FormSearchTerm.AccountOperatorDetails,
-  },
+  // {
+  //   type: FieldTypeEnum.Custom,
+  //   label: 'settingsCoopUnionSection7',
+  //   children: [],
+  //   search_term: FormSearchTerm.AccountOperatorDetails,
+  // },
 ];
 
 export const Declaration = ({
@@ -696,7 +696,7 @@ export const Declaration = ({
           });
         }, 800)}
       >
-        <AccordionPanel pb={'0'} display="flex" flexDirection="column" gap="s16">
+        <AccordionPanel pb="0" display="flex" flexDirection="column" gap="s16">
           <Box>
             <FormTextArea
               label="English"

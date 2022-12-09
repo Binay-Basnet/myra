@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Box } from '@myra-ui';
+
 import { featureCode, useTranslation } from '@coop/shared/utils';
 
 import { SettingsPageHeader } from './SettingsPageHeader';
@@ -11,15 +12,15 @@ const tabList = [
     title: 'settingsShareGeneral',
     to: '/settings/general/share',
   },
-  {
-    title: 'settingsShareBonus',
-    to: '/settings/general/share/bonus',
-  },
+  // {
+  //   title: 'settingsShareBonus',
+  //   to: '/settings/general/share/bonus',
+  // },
 
-  {
-    title: 'settingsShareDivident',
-    to: '/settings/general/share/dividend',
-  },
+  // {
+  //   title: 'settingsShareDivident',
+  //   to: '/settings/general/share/dividend',
+  // },
   {
     title: 'settingsShareIssues',
     to: '/settings/general/share/issues',

@@ -51,11 +51,14 @@ const Temp = () => (
   <Box display="flex" h="100vh" alignItems="center" justifyContent="center">
     <RangedDatePicker
       value={undefined}
-      onChange={(newDate) => console.log(newDate)}
+      // onChange={(newDate)}
       tillDateStart={new Date('2018-10-10')}
       calendarType="AD"
       label="helo"
     />{' '}
+    {/* <COASelectModal trigger={(
+      {}
+    ) => <Button>add</Button>} /> */}
   </Box>
 );
 

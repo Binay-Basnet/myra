@@ -12,10 +12,10 @@ type TabList = {
 };
 
 const orgTabList: TabList[] = [
-  {
-    title: 'settingsSideBarOrganization',
-    to: '/settings/general/organization',
-  },
+  // {
+  //   title: 'settingsSideBarOrganization',
+  //   to: '/settings/general/organization',
+  // },
   {
     title: 'serviceCenterSettings',
     to: '/settings/general/service-center',
@@ -63,10 +63,10 @@ const otherTabList: TabList[] = [
     title: 'settingsAlternativeChannel',
     to: '/settings/general/alternative-channels/charges',
   },
-  {
-    title: 'settingsDocuments',
-    to: '/settings/general/documents',
-  },
+  // {
+  //   title: 'settingsDocuments',
+  //   to: '/settings/general/documents',
+  // },
 ];
 
 export const SettingSideBar = () => {
