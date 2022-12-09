@@ -22,7 +22,7 @@ enum FieldTypeEnum {
 
   CustomComponent = 'CustomComponent',
   FormField = 'FormField',
-  // FormSection = 'FormSection',
+  FormSec = 'FormSection',
   Custom = 'custom',
 }
 
@@ -30,7 +30,7 @@ export type FieldType =
   | {
       type:
         | FieldTypeEnum.FormField
-        // | FieldTypeEnum.FormSection
+        | FieldTypeEnum.FormSec
         | FieldTypeEnum.Custom
         | FieldTypeEnum.CustomComponent;
 
@@ -86,7 +86,7 @@ export const KYM_FIELDS: FieldType[] = [
         label: 'settingsMemberEthnicity',
       },
       {
-        type: FieldTypeEnum.FormSection,
+        type: FieldTypeEnum.FormSec,
         search_term: KYMSearchTerm.ContactDetails,
         label: 'settingsMemberContactDetails',
       },
@@ -258,7 +258,7 @@ export const INSTITUTION_KYM_FIELDS: FieldType[] = [
         label: 'settingDetailsOfSisterConcern',
       },
       {
-        type: FieldTypeEnum.FormSection,
+        type: FieldTypeEnum.FormSec,
         search_term: KYMSearchTerm.ContactDetails,
         label: 'settingsMemberContactDetails',
       },
