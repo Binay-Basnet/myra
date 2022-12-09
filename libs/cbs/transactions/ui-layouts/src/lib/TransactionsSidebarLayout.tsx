@@ -145,7 +145,7 @@ export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayo
           },
         }}
         width="260px"
-        height="100%"
+        height="calc(100vh - 110px)"
         overflowY="auto"
         position="fixed"
       >
