@@ -13,6 +13,7 @@ import {
 
 import {
   BioCoop,
+  BioCoopUnion,
   BioInstitution,
   MemberAddressInfo,
   MemberBasicInfo,
@@ -157,6 +158,7 @@ export const Bio = () => {
       )}
       {memberBasicInstitution && <BioInstitution />}
       {memberBasicCooperative && <BioCoop />}
+      {memberBasicCooperativeUnion && <BioCoopUnion />}
     </>
   );
 };
