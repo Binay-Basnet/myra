@@ -63,11 +63,11 @@ const dropdownButtons = [
 const reportColumn = [
   {
     label: 'transferVaultBalanceReport',
-    navigate: '/settings/general/members',
+    navigate: '/reports/cbs/transactions/vault-balance/new',
   },
   {
     label: 'transferTellerReport',
-    navigate: '/settings/general/members/kym-individual',
+    navigate: '/reports/cbs/transactions/teller/new',
   },
 ];
 

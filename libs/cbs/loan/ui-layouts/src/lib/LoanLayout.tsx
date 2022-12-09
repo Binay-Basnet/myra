@@ -70,7 +70,7 @@ const reportColumn = [
   },
   {
     label: 'loanLayoutAgeingReport',
-    navigate: '/settings/general/members/kym-individual',
+    navigate: '/reports/cbs/loan/ageing/new',
   },
 ];
 
