@@ -101,6 +101,9 @@ export const AccountingFeatureJournalVouchersList = () => {
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
         columns={columns}
+        rowOnClick={(row) =>
+          router.push(`/accounting/accounting/journal-vouchers/view?id=${row?.node?.id}`)
+        }
         pagination={{
           total: data?.accounting?.journalVoucher?.list?.totalCount ?? 'Many',
           pageInfo: data?.accounting?.journalVoucher?.list?.pageInfo,

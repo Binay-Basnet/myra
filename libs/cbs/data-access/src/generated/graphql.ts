@@ -13641,6 +13641,31 @@ export type SetDepositProductInactiveMutation = {
   };
 };
 
+export type ActivateSavingsProductMutationVariables = Exact<{
+  productId: Scalars['ID'];
+  productType: AccountTypeFilter;
+  remarks: Scalars['String'];
+}>;
+
+export type ActivateSavingsProductMutation = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        activateProduct?: {
+          recordId: string;
+          error?:
+            | MutationError_AuthorizationError_Fragment
+            | MutationError_BadRequestError_Fragment
+            | MutationError_NotFoundError_Fragment
+            | MutationError_ServerError_Fragment
+            | MutationError_ValidationError_Fragment
+            | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type SetDepositIroMutationVariables = Exact<{
   data?: InputMaybe<DepositIroInput>;
 }>;
@@ -15465,6 +15490,34 @@ export type GetJournalVoucherListQuery = {
           endCursor?: string | null;
           hasNextPage: boolean;
           hasPreviousPage: boolean;
+        } | null;
+      } | null;
+    };
+  };
+};
+
+export type GetJournalVoucherDetailQueryVariables = Exact<{
+  entryId: Scalars['ID'];
+}>;
+
+export type GetJournalVoucherDetailQuery = {
+  accounting: {
+    journalVoucher: {
+      viewJournalVoucherDetail?: {
+        data?: {
+          id?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          amount?: string | null;
+          status?: string | null;
+          reference?: string | null;
+          note?: string | null;
+          totalDebit?: string | null;
+          totalCredit?: string | null;
+          glTransaction?: Array<{
+            account: string;
+            debit?: string | null;
+            credit?: string | null;
+          } | null> | null;
         } | null;
       } | null;
     };
@@ -20169,6 +20222,193 @@ export type GetLoanProductEditDataQuery = {
   };
 };
 
+export type GetLoanProductDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetLoanProductDetailQuery = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        getProductDetail?: {
+          data?: {
+            id: string;
+            noOfaccount?: number | null;
+            noOfMember?: number | null;
+            objState: ObjState;
+            createdAt: string;
+            modifiedAt: string;
+            productName: string;
+            productType: string;
+            productSubType: string;
+            productNature: NatureOfLoanProduct;
+            description?: string | null;
+            typeOfMember: Array<KymMemberTypesEnum | null>;
+            criteria?: Array<CriteriaSection | null> | null;
+            minAge?: number | null;
+            maxAge?: number | null;
+            genderId?: Array<string | null> | null;
+            maritalStatusId?: Array<string | null> | null;
+            educationQualification?: Array<string | null> | null;
+            ethnicity?: Array<string | null> | null;
+            occupation?: Array<string | null> | null;
+            foreignEmployment?: boolean | null;
+            natureOfBusinessInstitution?: Array<string | null> | null;
+            natureOFBusinessCoop?: Array<string | null> | null;
+            cooperativeType?: Array<string | null> | null;
+            isTenureApplicable?: boolean | null;
+            tenureUnit?: FrequencyTenure | null;
+            minTenureUnitNumber?: number | null;
+            maxTenureUnitNumber?: number | null;
+            minimumLoanAmount?: any | null;
+            maxLoanAmount?: any | null;
+            repaymentScheme?: Array<LoanRepaymentScheme | null> | null;
+            allowPartialInstallment?: boolean | null;
+            installmentFrequency?: LoanProductInstallment | null;
+            isMonthlyInstallmentCompulsory?: boolean | null;
+            interestMethod?: LoanInterestMethod | null;
+            isPenaltyApplicable?: boolean | null;
+            isRebateApplicable?: boolean | null;
+            principalMaxGraceNumber?: number | null;
+            interestMaxGraceNumber?: number | null;
+            updateInterest?: boolean | null;
+            waiveInterest?: boolean | null;
+            postingFrequency?: LoanProductInstallment | null;
+            isInsuranceApplicable?: boolean | null;
+            isStaffProduct?: boolean | null;
+            supportMultipleAccounts?: boolean | null;
+            loanScheduleChangeOverride?: boolean | null;
+            requiredDocuments?: Array<LoanRequiredDocuments | null> | null;
+            isCollateralRequired?: boolean | null;
+            allowGurantee?: boolean | null;
+            maxPercentOfGurantee?: number | null;
+            collateralTypes?: Array<string | null> | null;
+            isPrematurePenaltyApplicable?: boolean | null;
+            productCode?: { prefix: string; initialNo: string; noOfDigits?: number | null } | null;
+            penalty?: {
+              penaltyType?: PenaltyType | null;
+              penaltyDayAfterInstallmentDate?: number | null;
+              penaltyRate?: number | null;
+              penaltyAmount?: any | null;
+            } | null;
+            rebate?: {
+              dayBeforeInstallmentDate?: number | null;
+              rebateRate?: number | null;
+              rebateAmount?: any | null;
+              rebateLedgerMapping?: string | null;
+            } | null;
+            interest?: {
+              minRate?: number | null;
+              maxRate?: number | null;
+              defaultRate: number;
+              ceoAuthority?: number | null;
+              boardAuthority?: number | null;
+            } | null;
+            loanProcessingCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            insuranceType?: {
+              type?: string | null;
+              amount?: any | null;
+              rate?: number | null;
+            } | null;
+            ledgerMapping?: {
+              principal?: string | null;
+              interestAccuredDaily?: string | null;
+              interestIncome?: string | null;
+            } | null;
+            collateralValue?: Array<{
+              type?: string | null;
+              minFMV?: number | null;
+              maxFMV?: number | null;
+              minDV?: number | null;
+              maxDV?: number | null;
+              minValue?: number | null;
+              maxValue?: number | null;
+            } | null> | null;
+            prematurePenaltySetup?: {
+              penaltyDateType?: PrematurePenaltyDateType | null;
+              noOfDays?: number | null;
+              penaltyLedgerMapping?: string | null;
+              penaltyAmount?: any | null;
+              penaltyRate?: number | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanAccountListQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<LoanAccountSearchFilter>;
+}>;
+
+export type GetLoanAccountListQuery = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        getLoanAccountlist?: {
+          totalCount: number;
+          pageInfo?: {
+            hasNextPage: boolean;
+            hasPreviousPage: boolean;
+            startCursor?: string | null;
+            endCursor?: string | null;
+          } | null;
+          edges?: Array<{
+            node?: {
+              id: string;
+              objState: LoanObjState;
+              approvedDate?: string | null;
+              productType: string;
+              LoanAccountName?: string | null;
+              appliedLoanAmount: string;
+              member: { code: string; name?: Record<'local' | 'en' | 'np', string> | null };
+              productSubType: {
+                id?: string | null;
+                productSubType?: string | null;
+                productTypeID?: string | null;
+              };
+            } | null;
+          }> | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetLoanProductCriteriaQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+export type GetLoanProductCriteriaQuery = {
+  settings: {
+    general?: {
+      loanProducts?: {
+        getProductCriteria?: {
+          data?: {
+            gender?: Array<string | null> | null;
+            minAge?: number | null;
+            maxAge?: number | null;
+            ethnicity?: Array<string | null> | null;
+            educationQualification?: Array<string | null> | null;
+            maritalStatus?: Array<string | null> | null;
+            foreignEmployment?: boolean | null;
+            occupation?: Array<string | null> | null;
+            institutionType?: Array<string | null> | null;
+            cooperativeUnion?: Array<string | null> | null;
+            cooperativeType?: Array<string | null> | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetLoanGeneralSettingsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetLoanGeneralSettingsQuery = {
@@ -20645,6 +20885,225 @@ export type GetDepositProductSettingsEditDataQuery = {
               penaltyRate?: number | null;
             } | null;
           } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSavingsProductDetailQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetSavingsProductDetailQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        depositProductDetail?: {
+          data?: {
+            id?: string | null;
+            noOfAccounts?: number | null;
+            noOfMembers?: number | null;
+            objState?: ObjState | null;
+            supportMultiple?: boolean | null;
+            productName?: string | null;
+            nature?: NatureOfDepositProduct | null;
+            description?: string | null;
+            typeOfMember?: Array<KymMemberTypesEnum | null> | null;
+            criteria?: Array<CriteriaSection | null> | null;
+            minAge?: number | null;
+            maxAge?: number | null;
+            genderId?: Array<string | null> | null;
+            maritalStatusId?: Array<string | null> | null;
+            educationQualification?: Array<string | null> | null;
+            transactionAllowed?: DepositFrequency | null;
+            noOftransactionAllowed?: number | null;
+            ethnicity?: Array<string | null> | null;
+            occupation?: Array<string | null> | null;
+            foreignEmployment?: boolean | null;
+            natureOfBusinessInstitution?: Array<string | null> | null;
+            natureOFBusinessCoop?: Array<string | null> | null;
+            cooperativeType?: Array<string | null> | null;
+            isForMinors?: boolean | null;
+            depositFrequency?: Frequency | null;
+            penalty?: boolean | null;
+            rebate?: boolean | null;
+            isTenureApplicable?: boolean | null;
+            tenureUnit?: FrequencyTenure | null;
+            minTenureUnitNumber?: number | null;
+            maxTenureUnitNumber?: number | null;
+            ladderRate?: boolean | null;
+            postingFrequency?: DepositFrequency | null;
+            maxPostingFreqDifference?: number | null;
+            accountType?: DefaultAccountType | null;
+            isMandatorySaving?: boolean | null;
+            autoOpen?: boolean | null;
+            allowLoan?: boolean | null;
+            percentageOfDeposit?: number | null;
+            alternativeChannels?: boolean | null;
+            atmFacility?: boolean | null;
+            chequeIssue?: boolean | null;
+            staffProduct?: boolean | null;
+            withdrawRestricted?: boolean | null;
+            specifyWithdrawRestriction?: string | null;
+            wealthBuildingProduct?: boolean | null;
+            individualDocuments?: Array<IndividualRequiredDocument | null> | null;
+            institutionDocuments?: Array<InstitutionRequiredDocument | null> | null;
+            isPrematurePenaltyApplicable?: boolean | null;
+            productCode: { prefix: string; initialNo: string; noOfDigits?: number | null };
+            depositAmount?: { minAmount?: any | null; maxAmount?: any | null } | null;
+            withdrawAmountLimit?: { minAmount?: any | null; maxAmount?: any | null } | null;
+            fixedDepositAmountLimit?: { minAmount?: any | null; maxAmount?: any | null } | null;
+            penaltyData?: {
+              dayAfterInstallmentDate?: number | null;
+              penaltyRate?: number | null;
+              penaltyAmount?: any | null;
+              penaltyLedgerMapping?: string | null;
+            } | null;
+            rebateData?: {
+              dayBeforeInstallmentDate?: number | null;
+              noOfInstallment?: number | null;
+              rebateAmount?: any | null;
+              rebateRate?: number | null;
+              rebateLedgerMapping?: string | null;
+            } | null;
+            balanceLimit?: { minAmount?: any | null; maxAmount?: any | null } | null;
+            interest?: {
+              minRate?: number | null;
+              maxRate?: number | null;
+              defaultRate?: number | null;
+              ceoAuthority?: number | null;
+              boardAuthority?: number | null;
+              additionalRate?: number | null;
+            } | null;
+            ladderRateData?: Array<{ type: string; amount: any; rate: number } | null> | null;
+            serviceCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            accountCloseCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            chequeCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            atmCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            alternativeChannelCharge?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+            dormantSetup?: Array<{
+              duration?: DormantDuration | null;
+              condition?: DormantCondition | null;
+            } | null> | null;
+            withdrawPenalty?: {
+              penaltyLedgerMapping?: string | null;
+              penaltyAmount?: any | null;
+              penaltyRate?: number | null;
+            } | null;
+            prematurePenalty?: {
+              penaltyDateType?: PrematurePenaltyDateType | null;
+              noOfDays?: number | null;
+              penaltyLedgerMapping?: string | null;
+              penaltyAmount?: any | null;
+              penaltyRate?: number | null;
+            } | null;
+            savingCharges?: Array<{
+              serviceName?: string | null;
+              ledgerName?: string | null;
+              amount?: any | null;
+            } | null> | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSavingsProductCriteriaQueryVariables = Exact<{
+  productId: Scalars['ID'];
+}>;
+
+export type GetSavingsProductCriteriaQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        getProductCriteria?: {
+          data?: {
+            gender?: Array<string | null> | null;
+            minAge?: number | null;
+            maxAge?: number | null;
+            ethnicity?: Array<string | null> | null;
+            educationQualification?: Array<string | null> | null;
+            maritalStatus?: Array<string | null> | null;
+            foreignEmployment?: boolean | null;
+            occupation?: Array<string | null> | null;
+            institutionType?: Array<string | null> | null;
+            cooperativeUnion?: Array<string | null> | null;
+            cooperativeType?: Array<string | null> | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetSavingsAccountListQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<DepositLoanAccountSearchFilter>;
+}>;
+
+export type GetSavingsAccountListQuery = {
+  settings: {
+    general?: {
+      depositProduct?: {
+        getAccountlist?: {
+          totalCount: number;
+          pageInfo?: {
+            hasNextPage: boolean;
+            hasPreviousPage: boolean;
+            startCursor?: string | null;
+            endCursor?: string | null;
+          } | null;
+          edges?: Array<{
+            node?: {
+              id: string;
+              objState: ObjState;
+              closedAt?: string | null;
+              accountName?: string | null;
+              balance?: string | null;
+              interestAccured?: string | null;
+              interestTax?: string | null;
+              prematurePenalty?: string | null;
+              lastTransactionDate?: string | null;
+              accountOpenedDate?: string | null;
+              installmentAmount?: string | null;
+              accountExpiryDate?: string | null;
+              overDrawnBalance?: string | null;
+              guaranteedAmount?: string | null;
+              member?: {
+                code: string;
+                type: KymMemberTypesEnum;
+                name?: Record<'local' | 'en' | 'np', string> | null;
+              } | null;
+              product: { productCode: string; productName: string; nature: NatureOfDepositProduct };
+              dues?: {
+                fine?: string | null;
+                totalDue?: string | null;
+                dueInstallments?: number | null;
+              } | null;
+            } | null;
+          }> | null;
         } | null;
       } | null;
     } | null;
@@ -23994,6 +24453,46 @@ export const useSetDepositProductInactiveMutation = <TError = unknown, TContext 
     ),
     options
   );
+export const ActivateSavingsProductDocument = `
+    mutation activateSavingsProduct($productId: ID!, $productType: AccountTypeFilter!, $remarks: String!) {
+  settings {
+    general {
+      depositProduct {
+        activateProduct(
+          productId: $productId
+          productType: $productType
+          remarks: $remarks
+        ) {
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useActivateSavingsProductMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    ActivateSavingsProductMutation,
+    TError,
+    ActivateSavingsProductMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    ActivateSavingsProductMutation,
+    TError,
+    ActivateSavingsProductMutationVariables,
+    TContext
+  >(
+    ['activateSavingsProduct'],
+    useAxios<ActivateSavingsProductMutation, ActivateSavingsProductMutationVariables>(
+      ActivateSavingsProductDocument
+    ),
+    options
+  );
 export const SetDepositIroDocument = `
     mutation setDepositIro($data: DepositIroInput) {
   settings {
@@ -26541,6 +27040,45 @@ export const useGetJournalVoucherListQuery = <TData = GetJournalVoucherListQuery
     variables === undefined ? ['getJournalVoucherList'] : ['getJournalVoucherList', variables],
     useAxios<GetJournalVoucherListQuery, GetJournalVoucherListQueryVariables>(
       GetJournalVoucherListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetJournalVoucherDetailDocument = `
+    query getJournalVoucherDetail($entryId: ID!) {
+  accounting {
+    journalVoucher {
+      viewJournalVoucherDetail(entryId: $entryId) {
+        data {
+          id
+          date
+          amount
+          status
+          reference
+          note
+          glTransaction {
+            account
+            debit
+            credit
+          }
+          totalDebit
+          totalCredit
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetJournalVoucherDetailQuery = <
+  TData = GetJournalVoucherDetailQuery,
+  TError = unknown
+>(
+  variables: GetJournalVoucherDetailQueryVariables,
+  options?: UseQueryOptions<GetJournalVoucherDetailQuery, TError, TData>
+) =>
+  useQuery<GetJournalVoucherDetailQuery, TError, TData>(
+    ['getJournalVoucherDetail', variables],
+    useAxios<GetJournalVoucherDetailQuery, GetJournalVoucherDetailQueryVariables>(
+      GetJournalVoucherDetailDocument
     ).bind(null, variables),
     options
   );
@@ -32713,6 +33251,227 @@ export const useGetLoanProductEditDataQuery = <
     ).bind(null, variables),
     options
   );
+export const GetLoanProductDetailDocument = `
+    query getLoanProductDetail($id: ID!) {
+  settings {
+    general {
+      loanProducts {
+        getProductDetail(id: $id) {
+          data {
+            id
+            noOfaccount
+            noOfMember
+            objState
+            createdAt
+            modifiedAt
+            productName
+            productType
+            productSubType
+            productNature
+            productCode {
+              prefix
+              initialNo
+              noOfDigits
+            }
+            description
+            typeOfMember
+            criteria
+            minAge
+            maxAge
+            genderId
+            maritalStatusId
+            educationQualification
+            ethnicity
+            occupation
+            foreignEmployment
+            natureOfBusinessInstitution
+            natureOFBusinessCoop
+            cooperativeType
+            isTenureApplicable
+            tenureUnit
+            minTenureUnitNumber
+            maxTenureUnitNumber
+            minimumLoanAmount
+            maxLoanAmount
+            repaymentScheme
+            allowPartialInstallment
+            installmentFrequency
+            isMonthlyInstallmentCompulsory
+            interestMethod
+            isPenaltyApplicable
+            penalty {
+              penaltyType
+              penaltyDayAfterInstallmentDate
+              penaltyRate
+              penaltyAmount
+            }
+            isRebateApplicable
+            rebate {
+              dayBeforeInstallmentDate
+              rebateRate
+              rebateAmount
+              rebateLedgerMapping
+            }
+            principalMaxGraceNumber
+            interestMaxGraceNumber
+            interest {
+              minRate
+              maxRate
+              defaultRate
+              ceoAuthority
+              boardAuthority
+            }
+            updateInterest
+            waiveInterest
+            postingFrequency
+            loanProcessingCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            isInsuranceApplicable
+            insuranceType {
+              type
+              amount
+              rate
+            }
+            ledgerMapping {
+              principal
+              interestAccuredDaily
+              interestIncome
+            }
+            isStaffProduct
+            supportMultipleAccounts
+            loanScheduleChangeOverride
+            requiredDocuments
+            isCollateralRequired
+            allowGurantee
+            maxPercentOfGurantee
+            collateralTypes
+            collateralValue {
+              type
+              minFMV
+              maxFMV
+              minDV
+              maxDV
+              minValue
+              maxValue
+            }
+            isPrematurePenaltyApplicable
+            prematurePenaltySetup {
+              penaltyDateType
+              noOfDays
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProductDetailQuery = <TData = GetLoanProductDetailQuery, TError = unknown>(
+  variables: GetLoanProductDetailQueryVariables,
+  options?: UseQueryOptions<GetLoanProductDetailQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductDetailQuery, TError, TData>(
+    ['getLoanProductDetail', variables],
+    useAxios<GetLoanProductDetailQuery, GetLoanProductDetailQueryVariables>(
+      GetLoanProductDetailDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanAccountListDocument = `
+    query getLoanAccountList($paginate: Pagination, $filter: LoanAccountSearchFilter) {
+  settings {
+    general {
+      loanProducts {
+        getLoanAccountlist(paginate: $paginate, filter: $filter) {
+          totalCount
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+          edges {
+            node {
+              id
+              objState
+              approvedDate
+              member {
+                code
+                name
+              }
+              productType
+              productSubType {
+                id
+                productSubType
+                productTypeID
+              }
+              LoanAccountName
+              appliedLoanAmount
+              approvedDate
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanAccountListQuery = <TData = GetLoanAccountListQuery, TError = unknown>(
+  variables?: GetLoanAccountListQueryVariables,
+  options?: UseQueryOptions<GetLoanAccountListQuery, TError, TData>
+) =>
+  useQuery<GetLoanAccountListQuery, TError, TData>(
+    variables === undefined ? ['getLoanAccountList'] : ['getLoanAccountList', variables],
+    useAxios<GetLoanAccountListQuery, GetLoanAccountListQueryVariables>(
+      GetLoanAccountListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanProductCriteriaDocument = `
+    query getLoanProductCriteria($productId: ID!) {
+  settings {
+    general {
+      loanProducts {
+        getProductCriteria(productId: $productId) {
+          data {
+            gender
+            minAge
+            maxAge
+            ethnicity
+            educationQualification
+            maritalStatus
+            foreignEmployment
+            occupation
+            institutionType
+            cooperativeUnion
+            cooperativeType
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanProductCriteriaQuery = <
+  TData = GetLoanProductCriteriaQuery,
+  TError = unknown
+>(
+  variables: GetLoanProductCriteriaQueryVariables,
+  options?: UseQueryOptions<GetLoanProductCriteriaQuery, TError, TData>
+) =>
+  useQuery<GetLoanProductCriteriaQuery, TError, TData>(
+    ['getLoanProductCriteria', variables],
+    useAxios<GetLoanProductCriteriaQuery, GetLoanProductCriteriaQueryVariables>(
+      GetLoanProductCriteriaDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetLoanGeneralSettingsDocument = `
     query getLoanGeneralSettings {
   settings {
@@ -33368,6 +34127,279 @@ export const useGetDepositProductSettingsEditDataQuery = <
       GetDepositProductSettingsEditDataQuery,
       GetDepositProductSettingsEditDataQueryVariables
     >(GetDepositProductSettingsEditDataDocument).bind(null, variables),
+    options
+  );
+export const GetSavingsProductDetailDocument = `
+    query getSavingsProductDetail($id: ID!) {
+  settings {
+    general {
+      depositProduct {
+        depositProductDetail(id: $id) {
+          data {
+            id
+            noOfAccounts
+            noOfMembers
+            objState
+            supportMultiple
+            productName
+            nature
+            productCode {
+              prefix
+              initialNo
+              noOfDigits
+            }
+            description
+            typeOfMember
+            criteria
+            minAge
+            maxAge
+            genderId
+            maritalStatusId
+            educationQualification
+            transactionAllowed
+            noOftransactionAllowed
+            ethnicity
+            occupation
+            foreignEmployment
+            natureOfBusinessInstitution
+            natureOFBusinessCoop
+            cooperativeType
+            isForMinors
+            depositAmount {
+              minAmount
+              maxAmount
+            }
+            withdrawAmountLimit {
+              minAmount
+              maxAmount
+            }
+            fixedDepositAmountLimit {
+              minAmount
+              maxAmount
+            }
+            depositFrequency
+            penalty
+            penaltyData {
+              dayAfterInstallmentDate
+              penaltyRate
+              penaltyAmount
+              penaltyLedgerMapping
+            }
+            rebate
+            rebateData {
+              dayBeforeInstallmentDate
+              noOfInstallment
+              rebateAmount
+              rebateRate
+              rebateLedgerMapping
+            }
+            isTenureApplicable
+            tenureUnit
+            minTenureUnitNumber
+            maxTenureUnitNumber
+            balanceLimit {
+              minAmount
+              maxAmount
+            }
+            interest {
+              minRate
+              maxRate
+              defaultRate
+              ceoAuthority
+              boardAuthority
+              additionalRate
+            }
+            ladderRate
+            ladderRateData {
+              type
+              amount
+              rate
+            }
+            postingFrequency
+            maxPostingFreqDifference
+            accountType
+            serviceCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            accountCloseCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            chequeCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            atmCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            alternativeChannelCharge {
+              serviceName
+              ledgerName
+              amount
+            }
+            dormantSetup {
+              duration
+              condition
+            }
+            withdrawPenalty {
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+            isMandatorySaving
+            autoOpen
+            allowLoan
+            percentageOfDeposit
+            alternativeChannels
+            atmFacility
+            chequeIssue
+            supportMultiple
+            staffProduct
+            withdrawRestricted
+            specifyWithdrawRestriction
+            wealthBuildingProduct
+            individualDocuments
+            institutionDocuments
+            isPrematurePenaltyApplicable
+            prematurePenalty {
+              penaltyDateType
+              noOfDays
+              penaltyLedgerMapping
+              penaltyAmount
+              penaltyRate
+            }
+            savingCharges {
+              serviceName
+              ledgerName
+              amount
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSavingsProductDetailQuery = <
+  TData = GetSavingsProductDetailQuery,
+  TError = unknown
+>(
+  variables: GetSavingsProductDetailQueryVariables,
+  options?: UseQueryOptions<GetSavingsProductDetailQuery, TError, TData>
+) =>
+  useQuery<GetSavingsProductDetailQuery, TError, TData>(
+    ['getSavingsProductDetail', variables],
+    useAxios<GetSavingsProductDetailQuery, GetSavingsProductDetailQueryVariables>(
+      GetSavingsProductDetailDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSavingsProductCriteriaDocument = `
+    query getSavingsProductCriteria($productId: ID!) {
+  settings {
+    general {
+      depositProduct {
+        getProductCriteria(productId: $productId) {
+          data {
+            gender
+            minAge
+            maxAge
+            ethnicity
+            educationQualification
+            maritalStatus
+            foreignEmployment
+            occupation
+            institutionType
+            cooperativeUnion
+            cooperativeType
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSavingsProductCriteriaQuery = <
+  TData = GetSavingsProductCriteriaQuery,
+  TError = unknown
+>(
+  variables: GetSavingsProductCriteriaQueryVariables,
+  options?: UseQueryOptions<GetSavingsProductCriteriaQuery, TError, TData>
+) =>
+  useQuery<GetSavingsProductCriteriaQuery, TError, TData>(
+    ['getSavingsProductCriteria', variables],
+    useAxios<GetSavingsProductCriteriaQuery, GetSavingsProductCriteriaQueryVariables>(
+      GetSavingsProductCriteriaDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetSavingsAccountListDocument = `
+    query getSavingsAccountList($paginate: Pagination, $filter: DepositLoanAccountSearchFilter) {
+  settings {
+    general {
+      depositProduct {
+        getAccountlist(paginate: $paginate, filter: $filter) {
+          totalCount
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+          edges {
+            node {
+              id
+              objState
+              closedAt
+              accountName
+              member {
+                code
+                type
+                name
+              }
+              balance
+              interestAccured
+              interestTax
+              prematurePenalty
+              lastTransactionDate
+              accountOpenedDate
+              installmentAmount
+              product {
+                productCode
+                productName
+                nature
+              }
+              accountExpiryDate
+              overDrawnBalance
+              guaranteedAmount
+              dues {
+                fine
+                totalDue
+                dueInstallments
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSavingsAccountListQuery = <TData = GetSavingsAccountListQuery, TError = unknown>(
+  variables?: GetSavingsAccountListQueryVariables,
+  options?: UseQueryOptions<GetSavingsAccountListQuery, TError, TData>
+) =>
+  useQuery<GetSavingsAccountListQuery, TError, TData>(
+    variables === undefined ? ['getSavingsAccountList'] : ['getSavingsAccountList', variables],
+    useAxios<GetSavingsAccountListQuery, GetSavingsAccountListQueryVariables>(
+      GetSavingsAccountListDocument
+    ).bind(null, variables),
     options
   );
 export const GetSettingsOptionsFieldsDocument = `

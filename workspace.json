@@ -20,6 +20,7 @@
     "@myra-ui": "libs/@myra/myra-ui",
     "@myra-ui-e2e": "apps/@myra-ui-e2e",
     "accounting-feature-accounting": "libs/accounting/feature-accounting",
+    "accounting-feature-accounting-detail": "libs/accounting/feature-accounting-detail",
     "accounting-feature-investment": "libs/accounting/feature-investment",
     "accounting-feature-loan": "libs/accounting/feature-loan",
     "accounting-feature-purchase": "libs/accounting/feature-purchase",
