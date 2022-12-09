@@ -65,7 +65,7 @@ export const ShareStatementReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <ReportMember member={shareMember} />
           <Report.Table<ShareStatement & { index: number }>
             showFooter
@@ -84,8 +84,7 @@ export const ShareStatementReport = () => {
               {
                 header: 'Date',
                 accessorKey: 'date',
-                cell: (props: { getValue: () => unknown }) =>
-                  String(props?.getValue())?.split(' ')[0],
+                accessorFn: (row) => row?.date?.local,
                 meta: {
                   Footer: {
                     display: 'none',

@@ -33,6 +33,7 @@ import {
   FormSelect,
   FormTextArea,
 } from '@coop/shared/form';
+import { amountConverter, featureCode } from '@coop/shared/utils';
 
 import {
   AccordianComponent,
@@ -247,7 +248,7 @@ export const NewLoanApplication = () => {
   return (
     <Container minW="container.xl" p="0" bg="white">
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
-        <FormHeader title="New Loan Application" />
+        <FormHeader title={`New Loan Application - ${featureCode.newLoanApplication} `} />
       </Box>
       <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
         <Box
@@ -393,7 +394,7 @@ export const NewLoanApplication = () => {
         <FormFooter
           status={
             <>
-              Total Sanctioned Amount: <b>{watch('totalSanctionedAmount')}</b>
+              Total Sanctioned Amount: <b>{amountConverter(watch('totalSanctionedAmount') || 0)}</b>
             </>
           }
           mainButtonLabel="Send For Approval"

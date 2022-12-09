@@ -34,7 +34,7 @@ export const FixedDepositInvestment = () => {
     <FormSection header="Fixed Deposit">
       <FormSelect name="fd.type" label="FD Type" options={fdInvestmentTypeOptions} />
 
-      <FormAmountInput type="number" name="fd.fdAmount" label="FD Amount" />
+      <FormAmountInput name="fd.fdAmount" label="FD Amount" />
 
       <FormNumberInput
         name="fd.rate"

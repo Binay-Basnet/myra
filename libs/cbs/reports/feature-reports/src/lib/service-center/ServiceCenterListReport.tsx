@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { Box, GridItem } from '@myra-ui';
 
 import {
@@ -91,7 +92,7 @@ export const ServiceCenterListReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<ServiceCenter & { index: number }>
             columns={[
               {
@@ -166,7 +167,6 @@ export const ServiceCenterListReport = () => {
                     accessorKey: 'isExtensionCounter',
                     cell: (props) => (
                       <Box textTransform="capitalize">
-                        {' '}
                         {props?.row?.original?.isExtensionCounter === true ? 'Yes' : 'No'}
                       </Box>
                     ),
@@ -174,6 +174,7 @@ export const ServiceCenterListReport = () => {
                   {
                     header: 'Service Center Opening Date',
                     accessorKey: 'estDate',
+                    accessorFn: (row) => row?.estDate?.local,
                   },
                   {
                     header: 'Service Center Status',

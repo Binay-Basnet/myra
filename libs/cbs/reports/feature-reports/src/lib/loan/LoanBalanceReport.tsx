@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { Box, GridItem } from '@myra-ui';
 import dayjs from 'dayjs';
+
+import { Box, GridItem } from '@myra-ui';
 
 import {
   LoanBalanceFilterData,
@@ -60,7 +61,7 @@ export const LoanBalanceReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<LoanBalanceReportType & { index: number }>
             showFooter
             columns={[

@@ -150,7 +150,7 @@ export const ShareTransactionsReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<ShareTransactionReport>
             showFooter
             columns={[
@@ -162,6 +162,7 @@ export const ShareTransactionsReport = () => {
                     header: 'Share Transaction Date',
                     footer: () => <Box textAlign="right">Total Balance</Box>,
                     accessorKey: 'transactionDate',
+                    accessorFn: (row) => row?.transactionDate?.local,
                     meta: {
                       width: '60px',
                       Footer: {

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { Text } from '@myra-ui';
+import { Tags, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { LoanInstallment } from '@coop/cbs/data-access';
@@ -10,11 +10,15 @@ interface ILoanPaymentScheduleTableProps {
   data: LoanInstallment[];
   nextInstallmentNumber?: number;
   total: string;
+  totalInterest: string | number;
+  totalPrincipal: string | number;
 }
 
 export const LoanPaymentScheduleTable = ({
   data,
   total,
+  totalInterest,
+  totalPrincipal,
   nextInstallmentNumber,
 }: ILoanPaymentScheduleTableProps) => {
   const columns = useMemo<Column<LoanInstallment>[]>(
@@ -25,7 +29,7 @@ export const LoanPaymentScheduleTable = ({
         accessorKey: 'installmentNo',
         meta: {
           Footer: {
-            colspan: 5,
+            colspan: 3,
           },
         },
       },
@@ -55,24 +59,18 @@ export const LoanPaymentScheduleTable = ({
         header: 'Principal',
         accessorKey: 'principal',
         cell: (props) => amountConverter(props.getValue() as string),
-
+        footer: () => amountConverter(totalPrincipal),
         meta: {
           isNumeric: true,
-          Footer: {
-            display: 'none',
-          },
         },
       },
       {
         header: 'Interest',
         accessorKey: 'interest',
         cell: (props) => amountConverter(props.getValue() as string),
-
+        footer: () => amountConverter(totalInterest),
         meta: {
           isNumeric: true,
-          Footer: {
-            display: 'none',
-          },
         },
       },
 
@@ -104,13 +102,19 @@ export const LoanPaymentScheduleTable = ({
               fontWeight="500"
               color={
                 installmentNo === nextInstallmentNumber
-                  ? 'danger.500'
+                  ? 'info.500'
                   : value
                   ? 'primary.500'
                   : 'gray.600'
               }
             >
-              {installmentNo === nextInstallmentNumber ? 'Current' : value ? 'Paid' : '-'}
+              {installmentNo === nextInstallmentNumber ? (
+                <Tags borderRadius="br5" label="Current" type="tag" labelColor="info.500" />
+              ) : value ? (
+                <Tags borderRadius="br5" label="Paid" type="tag" labelColor="primary.500" />
+              ) : (
+                '-'
+              )}
             </Text>
           );
         },

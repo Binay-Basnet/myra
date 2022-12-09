@@ -138,7 +138,7 @@ export const LoanAgingStatementsReport = () => {
               {
                 header: 'Issue Date',
                 accessorKey: 'issueDate',
-                cell: ({ cell }) => dayjs(cell.row.original.issueDate?.en).format('YYYY-MM-DD'),
+                cell: ({ cell }) => dayjs(cell.row.original.issueDate?.local).format('YYYY-MM-DD'),
                 meta: {
                   Footer: {
                     display: 'none',
@@ -149,7 +149,7 @@ export const LoanAgingStatementsReport = () => {
                 header: 'Loan Maturity Date',
                 accessorKey: 'loanMaturityDate',
                 cell: ({ cell }) =>
-                  dayjs(cell.row.original?.loanMaturityDate?.en).format('YYYY-MM-DD'),
+                  dayjs(cell.row.original?.loanMaturityDate?.local).format('YYYY-MM-DD'),
                 meta: {
                   Footer: {
                     display: 'none',
@@ -270,7 +270,7 @@ export const LoanAgingStatementsReport = () => {
                 header: 'Last Principal Paid Date',
                 accessorKey: 'lastPrincipalPaidDate',
                 cell: ({ cell }) =>
-                  dayjs(cell.row.original.lastPrincipalPaidDate?.en).format('YYYY-MM-DD'),
+                  dayjs(cell.row.original.lastPrincipalPaidDate?.local).format('YYYY-MM-DD'),
 
                 meta: {
                   Footer: {
@@ -282,7 +282,7 @@ export const LoanAgingStatementsReport = () => {
                 header: 'Last Interest Paid Date',
                 accessorKey: 'lastInterestPaidDate',
                 cell: ({ cell }) =>
-                  dayjs(cell.row.original.lastInterestPaidDate?.en).format('YYYY-MM-DD'),
+                  dayjs(cell.row.original.lastInterestPaidDate?.local).format('YYYY-MM-DD'),
                 meta: {
                   Footer: {
                     display: 'none',

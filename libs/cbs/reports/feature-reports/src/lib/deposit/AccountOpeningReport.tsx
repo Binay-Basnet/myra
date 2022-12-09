@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { GridItem } from '@myra-ui';
 import dayjs from 'dayjs';
+
+import { GridItem } from '@myra-ui';
 
 import {
   AccountOpeningReport,
@@ -58,7 +59,7 @@ export const AccountOpenReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<AccountOpeningReport>
             hasSNo={false}
             columns={[
@@ -85,7 +86,8 @@ export const AccountOpenReport = () => {
               {
                 header: 'Account Opening Date',
                 accessorKey: 'openingDate',
-                cell: ({ cell }) => dayjs(cell.row.original.openingDate?.en).format('YYYY-MM-DD'),
+                cell: ({ cell }) =>
+                  dayjs(cell.row.original.openingDate?.local).format('YYYY-MM-DD'),
               },
               {
                 header: 'Account Opened By User',

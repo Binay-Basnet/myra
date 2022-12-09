@@ -50,7 +50,7 @@ export const InterestTaxReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<InterestTaxReportEntry & { index: number }>
             columns={[
               {
@@ -65,7 +65,7 @@ export const InterestTaxReport = () => {
               },
               {
                 header: 'Member ID',
-                accessorKey: 'memberId',
+                accessorKey: 'memberCode',
               },
               {
                 header: 'Member Name',

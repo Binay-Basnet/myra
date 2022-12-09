@@ -48,4 +48,12 @@ export const featureCode = {
   settingsLoan: '90008',
   settingsLoanProduct: '90009',
   settingsValuator: '90010',
+
+  newLoanApplication: '10301',
+  newLoanRepayment: '10302',
+  loanApplication: '10303',
+  loanAccounts: '10304',
+  loanRepayment: '10305',
+  loanProducts: '10306',
+  loanDeclined: '10307',
 };

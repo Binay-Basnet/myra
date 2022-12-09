@@ -48,7 +48,7 @@ export const Cash = ({
   return (
     <FormSection templateColumns={2}>
       <GridItem colSpan={1}>
-        <FormAmountInput type="number" name="cash.cashPaid" label={t['sharePurchaseCash']} />
+        <FormAmountInput name="cash.cashPaid" label={t['sharePurchaseCash']} />
       </GridItem>
 
       <GridItem colSpan={2}>

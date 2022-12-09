@@ -200,9 +200,8 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
               />
             );
           }
-          return (
-            <ActionPopoverComponent items={popoverTitle} id={props?.row?.original?.node?.id} />
-          );
+          return null;
+          // <ActionPopoverComponent items={popoverTitle} id={props?.row?.original?.node?.id} />
         },
         meta: {
           width: '50px',

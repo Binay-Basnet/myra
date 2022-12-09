@@ -7,7 +7,6 @@ import {
   Accounts,
   Activity,
   Bio,
-  Cheques,
   Documents,
   Loan,
   MemberShareInfo,
@@ -15,6 +14,7 @@ import {
   Reports,
   Tasks,
   Transactions,
+  WithdrawSlip,
 } from '../tabs';
 
 export const MemberDetails = () => {
@@ -52,7 +52,7 @@ export const MemberDetails = () => {
         {tabQuery === 'activity' && <Activity />}
         {tabQuery === 'loan' && <Loan />}
         {tabQuery === 'bio' && <Bio />}
-        {tabQuery === 'cheque' && <Cheques />}
+        {tabQuery === 'withdraw slip' && <WithdrawSlip />}
         {tabQuery === 'documents' && <Documents />}
         {tabQuery === 'reports' && <Reports />}
         {tabQuery === 'share' && <MemberShareInfo />}

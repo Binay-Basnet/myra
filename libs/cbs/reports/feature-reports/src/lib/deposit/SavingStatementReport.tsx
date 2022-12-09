@@ -63,7 +63,7 @@ export const SavingStatementReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<SavingStatement & { index: number }>
             showFooter
             columns={[
@@ -81,7 +81,7 @@ export const SavingStatementReport = () => {
               {
                 header: 'Date',
                 accessorKey: 'date',
-                cell: ({ cell }) => dayjs(cell.row.original.date).format('YYYY-MM-DD'),
+                cell: ({ cell }) => dayjs(cell.row.original.date?.local).format('YYYY-MM-DD'),
                 meta: {
                   Footer: {
                     display: 'none',

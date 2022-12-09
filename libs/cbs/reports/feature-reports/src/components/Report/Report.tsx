@@ -273,10 +273,10 @@ export const ReportInputs = <T extends FieldValues | null>({
       <Box as="form" display="grid" width="100%" gridTemplateColumns="repeat(4, 1fr)" gap="s20">
         {children}
       </Box>
-      <Box display="flex" gap="s16">
+      <Box display="flex" alignItems="end" gap="s16">
         <Button
           // TODO! Fix this
-          isDisabled={hideDate ? false : !watch()?.['period']?.['periodType']}
+          isDisabled={hideDate ? false : !watch()?.['period']?.['customPeriod']}
           size="lg"
           onClick={() => {
             setFilters({

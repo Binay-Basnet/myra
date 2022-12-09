@@ -16,7 +16,12 @@ export const LoanDetailsSidebar = () => {
         />
       </Box>
       <LoanProductSummary />
-      <DetailPageTabs tabs={['OVERVIEW', 'DOCUMENTS', 'ACTIVITY', 'REPORTS', 'TASKS']} />
+      <DetailPageTabs
+        tabs={[
+          'OVERVIEW',
+          // 'DOCUMENTS', 'ACTIVITY', 'REPORTS', 'TASKS'
+        ]}
+      />
     </>
   );
 };

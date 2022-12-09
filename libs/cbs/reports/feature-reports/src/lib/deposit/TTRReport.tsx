@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Box, GridItem, Text } from '@myra-ui';
 import dayjs from 'dayjs';
+
+import { Box, GridItem, Text } from '@myra-ui';
 
 import {
   Address,
@@ -107,7 +108,7 @@ export const TTRReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Box display="flex" py="s32" flexDir="column">
             <Box display="flex" py="s8" flexDir="column">
               <Text fontSize="r2" color="gray.800" px="s16" fontWeight={500}>

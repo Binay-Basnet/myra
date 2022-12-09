@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { GridItem } from '@myra-ui';
 import dayjs from 'dayjs';
+
+import { GridItem } from '@myra-ui';
 
 import {
   EbankingReportFilter,
@@ -55,7 +56,7 @@ export const MBExpiryReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<EbankingReportResult & { index: number }>
             columns={[
               {
@@ -86,7 +87,7 @@ export const MBExpiryReport = () => {
               },
               {
                 header: 'Expiry Date',
-                accessorFn: (row) => row?.expDate,
+                accessorFn: (row) => row?.expDate?.local,
                 cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
               },
             ]}

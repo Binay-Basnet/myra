@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { GridItem } from '@myra-ui';
 
 import {
@@ -56,7 +57,7 @@ export const LedgerReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<GeneralLedgerReportEntry>
             hasSNo={false}
             columns={[

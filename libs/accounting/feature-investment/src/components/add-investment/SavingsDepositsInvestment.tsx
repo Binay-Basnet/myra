@@ -47,7 +47,7 @@ export const SavingsDepositsInvestment = () => (
   <FormSection header="Savings / Deposits">
     <FormSelect name="saving.type" label="Saving Type" options={savingInvestmentTypeOptions} />
 
-    <FormAmountInput type="number" name="saving.installmentAmount" label="Installment Amount" />
+    <FormAmountInput name="saving.installmentAmount" label="Installment Amount" />
 
     <GridItem colSpan={3}>
       <FormSwitchTab

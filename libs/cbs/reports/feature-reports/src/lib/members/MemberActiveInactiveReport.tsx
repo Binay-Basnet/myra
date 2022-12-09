@@ -73,7 +73,7 @@ export const MemberActiveInactiveReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Box display="flex" flexDir="column" gap="s32">
             {individualReport?.length !== 0 ? (
               <Box pt="s16">

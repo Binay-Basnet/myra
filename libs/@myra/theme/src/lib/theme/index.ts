@@ -17,6 +17,9 @@ export const theme = extendTheme({
         scrollBehavior: 'smooth',
         fontFamily: 'Inter',
       },
+      // ':lang(ne)': {
+      //   fontFamily: 'Mukta',
+      // },
       ':not(.chakra-dont-set-collapse) > .chakra-collapse': {
         overflow: 'initial !important',
       },

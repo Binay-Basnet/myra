@@ -78,7 +78,7 @@ export const ShareBalanceTable = () => {
         isLoading={isFetching}
         data={rowData ?? []}
         columns={columns}
-        rowOnClick={(row) => router.push(`/members/details?id=${row?.node?.member?.id}`)}
+        rowOnClick={(row) => router.push(`/members/details?id=${row?.node?.member?.id}&tab=share`)}
         pagination={{
           total: data?.share?.balance?.totalCount as number,
           pageInfo: data?.share?.balance?.pageInfo,

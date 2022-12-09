@@ -90,7 +90,11 @@ const HusbandWifeOccupation = ({ setKymCurrentSection }: IHusbandWifeOccupationP
   // const occupationFieldNames =
   //   occupationData?.members.individual?.options.list?.data?.[0]?.options ?? [];
 
-  const { data: familyOccupationListData, refetch } = useGetIndividualKymFamilyOccupationListQuery({
+  const {
+    data: familyOccupationListData,
+    refetch,
+    isFetching,
+  } = useGetIndividualKymFamilyOccupationListQuery({
     id,
     isSpouse: true,
   });
@@ -100,6 +104,8 @@ const HusbandWifeOccupation = ({ setKymCurrentSection }: IHusbandWifeOccupationP
       const editValueData = familyOccupationListData?.members?.individual?.listOccupation?.data;
       if (editValueData) {
         const occupationDetail = editValueData[0];
+
+        setOccupationId(occupationDetail?.id as string);
 
         if (occupationDetail) {
           reset({
@@ -154,7 +160,7 @@ const HusbandWifeOccupation = ({ setKymCurrentSection }: IHusbandWifeOccupationP
     );
 
     return () => subscription.unsubscribe();
-  }, [watch, router.isReady, familyOccupationListData]);
+  }, [watch, router.isReady, familyOccupationListData, occupationId]);
 
   const { mutate: newIDMutate } = useGetNewIdMutation({
     onSuccess: (res) => {
@@ -165,11 +171,12 @@ const HusbandWifeOccupation = ({ setKymCurrentSection }: IHusbandWifeOccupationP
   useEffect(() => {
     if (
       !occupationId &&
-      !familyOccupationListData?.members?.individual?.listOccupation?.data?.length
+      !familyOccupationListData?.members?.individual?.listOccupation?.data?.length &&
+      !isFetching
     ) {
       newIDMutate({});
     }
-  }, [occupationId, familyOccupationListData]);
+  }, [occupationId, familyOccupationListData, isFetching]);
 
   return (
     <FormProvider {...methods}>

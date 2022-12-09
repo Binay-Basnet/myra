@@ -17,6 +17,9 @@ import { SectionContainer } from '@coop/cbs/kym-form/ui-containers';
 import { BiSave } from 'react-icons/bi';
 import { AccordionKymCoopForm } from '@coop/cbs/kym-form/formElements';
 import {
+  addCooperativeAccountError,
+  addCooperativeDirectorError,
+  addCooperativeError,
   setCooperativeHasPressedNext,
   useAppSelector,
   useGetKymCooperativeOverallFormStatusQuery,
@@ -171,6 +174,32 @@ export const KYMCooperativePage = () => {
               const sectionStatus = response?.data?.members?.cooperative?.overallFormStatus;
 
               const basicErrors = sectionStatus?.coopDetails?.errors;
+
+              const directorDetailsErrors = sectionStatus?.accountOperatorDetails?.map(
+                (director, index) => ({
+                  directorId: String(index),
+                  errors: director?.errors ?? {},
+                })
+              );
+
+              const accountDetailsErrors = sectionStatus?.accountOperatorDetails?.map(
+                (accountOperator, index) => ({
+                  operatorId: String(index),
+                  errors: accountOperator?.errors ?? {},
+                })
+              );
+
+              if (basicErrors) {
+                dispatch(addCooperativeError(basicErrors));
+              }
+
+              if (directorDetailsErrors) {
+                dispatch(addCooperativeDirectorError(directorDetailsErrors));
+              }
+
+              if (accountDetailsErrors) {
+                dispatch(addCooperativeAccountError(accountDetailsErrors));
+              }
 
               if (response) {
                 dispatch(setCooperativeHasPressedNext(true));

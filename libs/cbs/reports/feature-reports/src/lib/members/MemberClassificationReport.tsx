@@ -107,7 +107,7 @@ export const MemberClassificationReport = () => {
                 return (
                   <Box display="flex" flexDir="column" w="100%">
                     <ReportOrganizationHeader reportType={Report.MEMBER_CLASSIFICATION_REPORT} />
-                    <ReportOrganization statementDate={ReportPeriodType.Lifetime} />
+                    <ReportOrganization />
                     <Box px="s32" pb="s32">
                       <Divider />
                     </Box>

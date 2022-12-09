@@ -66,7 +66,7 @@ export const BankGLStatementReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<BankGlDataEntry & { index: number }>
             columns={[
               {
@@ -78,7 +78,7 @@ export const BankGLStatementReport = () => {
               },
               {
                 header: 'Date',
-                accessorFn: (row) => row?.date?.en,
+                accessorFn: (row) => row?.date?.local,
               },
               {
                 header: 'Particular',

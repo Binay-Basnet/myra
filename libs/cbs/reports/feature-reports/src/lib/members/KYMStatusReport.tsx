@@ -72,7 +72,7 @@ export const KYMStatusReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<KymStatusReport & { index: number }>
             columns={[
               {
@@ -112,7 +112,7 @@ export const KYMStatusReport = () => {
               },
               {
                 header: 'Member Registration Date',
-                accessorFn: (row) => row?.regDate,
+                accessorFn: (row) => row?.regDate?.local,
                 cell: (props) => dayjs(props.getValue() as string).format('YYYY-MM-DD'),
               },
               {

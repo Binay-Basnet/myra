@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Box } from '@myra-ui';
 import dayjs from 'dayjs';
+
+import { Box } from '@myra-ui';
 
 import {
   InterestPostingReportEntry,
@@ -55,7 +56,7 @@ export const InterestPostingReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<InterestPostingReportEntry & { index: number }>
             columns={[
               {

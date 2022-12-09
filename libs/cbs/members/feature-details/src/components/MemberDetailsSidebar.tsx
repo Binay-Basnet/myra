@@ -115,6 +115,15 @@ export const MemberDetailsSidebar = () => {
                 minW="fit-content"
               />
             )}
+            {memberBasicInstitution && (
+              <Tags label="institute" type="chip" bg="info.0" labelColor="info.500" />
+            )}
+            {memberBasicCooperative && (
+              <Tags label="coop" type="chip" bg="info.0" labelColor="info.500" />
+            )}
+            {memberBasicCooperativeUnion && (
+              <Tags label="coop-union" type="chip" bg="info.0" labelColor="info.500" />
+            )}
           </Box>
           {memberInfo?.memberCode && (
             <Box display="flex" alignItems="center" gap="s4">
@@ -163,9 +172,9 @@ export const MemberDetailsSidebar = () => {
           'Loan',
           'Bio',
           'Transactions',
-          'Activity',
-          'Cheque',
-          'Documents',
+          // 'Activity',
+          'Withdraw Slip',
+          // 'Documents',
           'Tasks',
         ]}
       />

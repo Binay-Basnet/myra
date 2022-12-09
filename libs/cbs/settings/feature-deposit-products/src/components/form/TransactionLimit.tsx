@@ -25,13 +25,11 @@ export const TransactionLimit = () => {
           </Box>
           <Grid templateColumns="repeat(3,1fr)" gap="s16">
             <FormAmountInput
-              type="number"
               name="depositAmount.minAmount"
               label={t['depositProductMinimumAmount']}
             />
 
             <FormAmountInput
-              type="number"
               name="depositAmount.maxAmount"
               label={t['depositProductMaximumAmount']}
               rules={{
@@ -54,13 +52,11 @@ export const TransactionLimit = () => {
           </Box>
           <Grid templateColumns="repeat(3,1fr)" gap="s16">
             <FormAmountInput
-              type="number"
               name="withdrawAmountLimit.minAmount"
               label={t['depositProductMinimumAmount']}
             />
 
             <FormAmountInput
-              type="number"
               name="withdrawAmountLimit.maxAmount"
               label={t['depositProductMaximumAmount']}
               rules={{

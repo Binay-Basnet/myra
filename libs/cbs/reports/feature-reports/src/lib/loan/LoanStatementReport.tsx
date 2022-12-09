@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Box } from '@myra-ui';
 import dayjs from 'dayjs';
+
+import { Box } from '@myra-ui';
 
 import {
   LoanStatement,
@@ -49,7 +50,7 @@ export const LoanStatementReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<LoanStatement & { index: number }>
             showFooter
             columns={[
@@ -67,7 +68,7 @@ export const LoanStatementReport = () => {
               {
                 header: 'Date',
                 accessorKey: 'date',
-                cell: ({ cell }) => dayjs(cell.row.original.date).format('YYYY-MM-DD'),
+                cell: ({ cell }) => dayjs(cell.row.original.date?.local).format('YYYY-MM-DD'),
                 meta: {
                   Footer: {
                     display: 'none',

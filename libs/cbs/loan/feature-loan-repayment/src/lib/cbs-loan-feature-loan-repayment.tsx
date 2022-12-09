@@ -31,6 +31,7 @@ import {
   useSetLoanRepaymentMutation,
 } from '@coop/cbs/data-access';
 import { FormInput, FormMemberSelect, FormSelect } from '@coop/shared/form';
+import { featureCode } from '@coop/shared/utils';
 
 import { InstallmentData, LoanPaymentScheduleTable, LoanProductCard, Payment } from '../components';
 
@@ -230,7 +231,7 @@ export const LoanRepayment = () => {
   return (
     <Container minW="container.xl" p="0" bg="white">
       <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
-        <FormHeader title="Loan Repayment" />
+        <FormHeader title={`New Loan Repayment - ${featureCode.newLoanPayment} `} />
       </Box>
       <Box display="flex" flexDirection="row" minH="calc(100vh - 230px)">
         <Box
@@ -272,6 +273,8 @@ export const LoanRepayment = () => {
                       data={loanPaymentScheduleSplice as LoanInstallment[]}
                       nextInstallmentNumber={nextInstallmentNumber}
                       total={loanData?.paymentSchedule?.total as string}
+                      totalInterest={loanData?.paymentSchedule?.totalInterest ?? 0}
+                      totalPrincipal={loanData?.paymentSchedule?.totalPrincipal ?? 0}
                     />
                     <Modal
                       onClose={onClose}
@@ -285,6 +288,8 @@ export const LoanRepayment = () => {
                         data={loanPaymentSchedule as LoanInstallment[]}
                         nextInstallmentNumber={nextInstallmentNumber}
                         total={loanData?.paymentSchedule?.total as string}
+                        totalInterest={loanData?.paymentSchedule?.totalInterest ?? 0}
+                        totalPrincipal={loanData?.paymentSchedule?.totalPrincipal ?? 0}
                       />
                     </Modal>
                     <Grid templateColumns="repeat(2, 1fr)" rowGap="s16" columnGap="s20">

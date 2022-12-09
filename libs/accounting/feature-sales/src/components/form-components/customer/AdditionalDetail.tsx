@@ -8,8 +8,8 @@ export const AdditionalDetail = () => (
 
     <FormInput name="creditTerms" label="Credit Terms" />
 
-    <FormAmountInput type="number" name="creditLimit" label="Credit Limit" />
+    <FormAmountInput name="creditLimit" label="Credit Limit" />
 
-    <FormAmountInput type="number" name="openingBalance" label="Opening Balance" />
+    <FormAmountInput name="openingBalance" label="Opening Balance" />
   </FormSection>
 );
