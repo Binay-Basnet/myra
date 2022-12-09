@@ -86,16 +86,34 @@ export const MemberDetailsSidebar = () => {
               {memberBasicCooperativeUnion?.memberName}
             </Text>
             {memberInfo?.isStaff && (
-              <Tags label="staff" type="chip" bg="info.0" labelColor="info.500" />
+              <Tags
+                label="staff"
+                type="chip"
+                bg="info.0"
+                labelColor="info.500"
+                minW="fit-content"
+              />
             )}
             {memberBasicInstitution && (
-              <Tags label="institute" type="chip" bg="info.0" labelColor="info.500" />
+              <Tags
+                label="institute"
+                type="chip"
+                bg="info.0"
+                labelColor="info.500"
+                minW="fit-content"
+              />
             )}
             {memberBasicCooperative && (
-              <Tags label="coop" type="chip" bg="info.0" labelColor="info.500" />
+              <Tags label="coop" type="chip" bg="info.0" labelColor="info.500" minW="fit-content" />
             )}
             {memberBasicCooperativeUnion && (
-              <Tags label="coop-union" type="chip" bg="info.0" labelColor="info.500" />
+              <Tags
+                label="coop-union"
+                type="chip"
+                bg="info.0"
+                labelColor="info.500"
+                minW="fit-content"
+              />
             )}
           </Box>
           {memberInfo?.memberCode && (
