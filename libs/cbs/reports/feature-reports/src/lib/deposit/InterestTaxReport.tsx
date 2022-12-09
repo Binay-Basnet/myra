@@ -38,7 +38,7 @@ export const InterestTaxReport = () => {
             { label: 'Saving Reports', link: '/reports/cbs/savings' },
             {
               label: 'Interest Tax Report',
-              link: '/reports/cbs/interest-tax/new',
+              link: '/reports/cbs/savings/interest-tax/new',
             },
           ]}
         />
