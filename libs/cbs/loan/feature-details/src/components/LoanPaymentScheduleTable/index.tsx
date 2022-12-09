@@ -50,13 +50,13 @@ export const LoanPaymentScheduleTable = ({
       {
         header: 'Payment',
         accessorFn: (row) => amountConverter(row?.payment ?? 0),
+        footer: total,
         meta: {
           isNumeric: true,
         },
       },
       {
         header: 'Remaining Principal',
-        footer: total,
         accessorFn: (row) => amountConverter(row?.remainingPrincipal ?? 0),
         meta: {
           isNumeric: true,
