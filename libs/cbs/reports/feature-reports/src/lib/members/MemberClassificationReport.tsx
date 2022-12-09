@@ -8,7 +8,6 @@ import {
   MemberClassificationReportData,
   PeriodInput,
   ReportEntry,
-  ReportPeriodType,
   useGetMemberClassificationReportQuery,
 } from '@coop/cbs/data-access';
 import {
@@ -72,10 +71,9 @@ export const MemberClassificationReport = () => {
           hasSave={false}
           paths={[
             { label: 'Member Reports', link: '/reports/cbs/member-report' },
-            { label: 'Member Classification Report', link: '/reports/cbs/members/classification' },
             {
-              label: 'New Report',
-              link: '/reports/cbs/members/new',
+              label: 'Member Classification Report',
+              link: '/reports/cbs/members/classification/new',
             },
           ]}
         />
