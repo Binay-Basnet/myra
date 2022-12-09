@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { HiArrowRight } from 'react-icons/hi';
-import { IoIosCloseCircleOutline } from 'react-icons/io';
+import { IoMdClose } from 'react-icons/io';
 import { CalendarIcon, Icon } from '@chakra-ui/icons';
 import {
   Box,
@@ -199,17 +199,22 @@ export const RangedDatePicker = ({
               }}
               placeholder="YYYY-MM-DD - YYYY-MM-DD"
             />
-            <InputRightElement>
-              <Icon
-                color="gray.400"
-                onClick={() => {
-                  onChange(undefined);
-                }}
-                as={IoIosCloseCircleOutline}
-                w="s20"
-                h="s20"
-              />
-            </InputRightElement>
+            {value && value?.from?.en && (
+              <InputRightElement>
+                <Icon
+                  color="gray.400"
+                  onClick={() => {
+                    onChange(undefined);
+                  }}
+                  _hover={{
+                    color: 'gray.700',
+                  }}
+                  as={IoMdClose}
+                  w="s20"
+                  h="s20"
+                />
+              </InputRightElement>
+            )}
           </InputGroup>
         </Box>
       </PopoverTrigger>
