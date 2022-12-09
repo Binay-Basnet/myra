@@ -1,16 +1,16 @@
 import { Box, FormSection, GridItem, Text } from '@myra-ui';
 
 import { InputGroupContainer } from '@coop/accounting/ui-components';
-import { FdInvestmentType, useGetCoaBankListQuery } from '@coop/cbs/data-access';
+import { FdInvestmentType } from '@coop/cbs/data-access';
 import {
   FormAmountInput,
+  FormBankSelect,
   FormInput,
   FormLocalDatePicker,
   FormNumberInput,
   FormSelect,
   FormTextArea,
 } from '@coop/shared/form';
-import { featureCode } from '@coop/shared/utils';
 
 const fdInvestmentTypeOptions = [
   { label: 'Type 1', value: FdInvestmentType.Type_1 },
@@ -18,69 +18,48 @@ const fdInvestmentTypeOptions = [
   { label: 'Type 3', value: FdInvestmentType.Type_3 },
 ];
 
-export const FixedDepositInvestment = () => {
-  const { data: bank } = useGetCoaBankListQuery({
-    accountCode: featureCode.accountCode as string[],
-  });
+export const FixedDepositInvestment = () => (
+  <FormSection header="Fixed Deposit">
+    <FormSelect name="fd.type" label="FD Type" options={fdInvestmentTypeOptions} />
 
-  const bankListArr = bank?.settings?.chartsOfAccount?.accountsUnder?.data;
+    <FormAmountInput name="fd.fdAmount" label="FD Amount" />
 
-  const bankList = bankListArr?.map((item) => ({
-    label: item?.name?.local as string,
-    value: item?.id as string,
-  }));
+    <FormNumberInput
+      name="fd.rate"
+      label="Interest Rate"
+      rightElement={
+        <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+          %
+        </Text>
+      }
+    />
 
-  return (
-    <FormSection header="Fixed Deposit">
-      <FormSelect name="fd.type" label="FD Type" options={fdInvestmentTypeOptions} />
+    <FormInput name="fd.certificateNo" label="FD Certificate Number" />
 
-      <FormAmountInput name="fd.fdAmount" label="FD Amount" />
+    <FormLocalDatePicker name="fd.startDate" label="FD Start Date" />
 
-      <FormNumberInput
-        name="fd.rate"
-        label="Interest Rate"
-        rightElement={
-          <Text fontWeight="Medium" fontSize="r1" color="primary.500">
-            %
-          </Text>
-        }
-      />
+    <FormLocalDatePicker name="fd.maturityDate" label="Maturity Date" />
 
-      <FormInput name="fd.certificateNo" label="FD Certificate Number" />
+    <GridItem colSpan={3}>
+      <Box display="flex" flexDirection="column" gap="s12">
+        <Text fontSize="s2" fontWeight="500" lineHeight="1.5">
+          Nominee Details
+        </Text>
 
-      <FormLocalDatePicker name="fd.startDate" label="FD Start Date" />
+        <InputGroupContainer>
+          <GridItem colSpan={2}>
+            <FormBankSelect name="fd.interestNomineeBank" label="Interest Nominee Bank" />
+          </GridItem>
 
-      <FormLocalDatePicker name="fd.maturityDate" label="Maturity Date" />
+          <FormInput name="fd.bankACNo" label="Bank Account Number" />
+        </InputGroupContainer>
+      </Box>
+    </GridItem>
 
-      <GridItem colSpan={3}>
-        <Box display="flex" flexDirection="column" gap="s12">
-          <Text fontSize="s2" fontWeight="500" lineHeight="1.5">
-            Nominee Details
-          </Text>
+    <FormBankSelect name="fd.interestLedgerMapping" label="Interest Received Ledger Mapping" />
 
-          <InputGroupContainer>
-            <GridItem colSpan={2}>
-              <FormSelect
-                name="fd.interestNomineeBank"
-                label="Interest Nominee Bank"
-                options={bankList}
-              />
-            </GridItem>
-
-            <FormInput name="fd.bankACNo" label="Bank Account Number" />
-          </InputGroupContainer>
-        </Box>
-      </GridItem>
-
-      <FormSelect
-        name="fd.interestLedgerMapping"
-        label="Interest Received Ledger Mapping"
-        options={bankList}
-      />
-
-      <GridItem colSpan={3}>
-        <FormTextArea name="fd.notes" label="Notes" rows={3} />
-      </GridItem>
-    </FormSection>
-  );
-};
+    <GridItem colSpan={3}>
+      <FormTextArea name="fd.notes" label="Notes" rows={3} />
+    </GridItem>
+  </FormSection>
+);

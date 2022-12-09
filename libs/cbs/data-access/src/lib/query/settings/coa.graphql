@@ -37,20 +37,6 @@ query getCoaFullView {
   }
 }
 
-query getCOABankList($accountCode: [String]) {
-  settings {
-    chartsOfAccount {
-      accountsUnder(accountCode: $accountCode) {
-        data {
-          id
-          accountCode
-          name
-        }
-      }
-    }
-  }
-}
-
 query searchCOA($coaName: String!) {
   settings {
     general {
@@ -81,10 +67,10 @@ query getCOAAccountsUnderList($accountCode: [String]) {
   }
 }
 
-query getCOAAccountsUnderLeafList($parentId: String!) {
+query getCOAAccountsUnderLeafList($parentId: [String]!, $currentBranch: Boolean) {
   settings {
     chartsOfAccount {
-      accountsUnderLeaf(parentId: $parentId) {
+      accountsUnderLeaf(parentId: $parentId, currentBranch: $currentBranch) {
         accountId
         name
       }

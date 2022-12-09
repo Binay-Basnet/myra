@@ -105,6 +105,7 @@ export const LoanPaymentSchedule = () => {
         header: 'Payment',
         accessorKey: 'payment',
         accessorFn: (row) => amountConverter(row?.payment),
+        footer: () => amountConverter(data?.loanAccount.getLoanInstallments?.data?.total ?? 0),
         meta: {
           isNumeric: true,
         },
@@ -112,7 +113,6 @@ export const LoanPaymentSchedule = () => {
       {
         header: 'Remaining Principal',
         accessorFn: (row) => amountConverter(row?.remainingPrincipal),
-        footer: () => amountConverter(data?.loanAccount.getLoanInstallments?.data?.total ?? 0),
         meta: {
           isNumeric: true,
         },

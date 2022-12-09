@@ -1395,6 +1395,16 @@ export type BulkInstallmentResult = {
   value?: Maybe<InstallmentResult>;
 };
 
+export enum CoaAccountSetup {
+  AllBranch = 'ALL_BRANCH',
+  ThisBranch = 'THIS_BRANCH'
+}
+
+export type CoaAddAccountResult = {
+  error?: Maybe<MutationError>;
+  success: Scalars['Boolean'];
+};
+
 export enum CoaCategory {
   SystemDefined = 'SYSTEM_DEFINED',
   UserDefined = 'USER_DEFINED'
@@ -1416,6 +1426,12 @@ export type CoaMinimalResult = {
   error?: Maybe<QueryError>;
 };
 
+export enum CoaTypeOfTransaction {
+  Both = 'BOTH',
+  Credit = 'CREDIT',
+  Debit = 'DEBIT'
+}
+
 export enum CoaTypesOfAccount {
   Bank = 'BANK',
   Cash = 'CASH',
@@ -1429,6 +1445,7 @@ export type CoaView = {
   accountTypeDetails?: Maybe<AccountTypeDetailsUnion>;
   allowFreeEntry: Scalars['Boolean'];
   allowTransaction: Scalars['Boolean'];
+  allowedBalance?: Maybe<CoaTypeOfTransaction>;
   category?: Maybe<CoaCategory>;
   createdAt: Scalars['Time'];
   creatorId: Scalars['ID'];
@@ -1446,6 +1463,7 @@ export type CoaView = {
   name: Scalars['Localized'];
   objState: ObjState;
   openingBalance: Scalars['Float'];
+  transactionAllowed?: Maybe<CoaTypeOfTransaction>;
   under?: Maybe<Scalars['ID']>;
 };
 
@@ -1565,7 +1583,9 @@ export type ChartsOfAccountFilter = {
 
 export type ChartsOfAccountMutation = {
   add: AddChartsOfAccountResult;
+  addAccount?: Maybe<CoaAddAccountResult>;
   delete: AddChartsOfAccountResult;
+  newGroup: NewCoaGroupResult;
 };
 
 
@@ -1574,8 +1594,19 @@ export type ChartsOfAccountMutationAddArgs = {
 };
 
 
+export type ChartsOfAccountMutationAddAccountArgs = {
+  accountSetup: CoaAccountSetup;
+  parentAccountCode: Scalars['String'];
+};
+
+
 export type ChartsOfAccountMutationDeleteArgs = {
   id: Scalars['ID'];
+};
+
+
+export type ChartsOfAccountMutationNewGroupArgs = {
+  data: NewCoaGroupInput;
 };
 
 export type ChartsOfAccountResult = {
@@ -1608,7 +1639,8 @@ export type ChartsOfAccountSettingsQueryAccountsUnderArgs = {
 
 
 export type ChartsOfAccountSettingsQueryAccountsUnderLeafArgs = {
-  parentId: Scalars['String'];
+  currentBranch?: InputMaybe<Scalars['Boolean']>;
+  parentId: Array<InputMaybe<Scalars['String']>>;
 };
 
 
@@ -5350,13 +5382,30 @@ export type JournalVoucherConnection = {
   totalCount: Scalars['Int'];
 };
 
+export type JournalVoucherDetail = {
+  amount?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  glTransaction?: Maybe<Array<Maybe<GlTransaction>>>;
+  id?: Maybe<Scalars['ID']>;
+  note?: Maybe<Scalars['String']>;
+  reference?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']>;
+  totalCredit?: Maybe<Scalars['String']>;
+  totalDebit?: Maybe<Scalars['String']>;
+};
+
+export type JournalVoucherDetailResult = {
+  data?: Maybe<JournalVoucherDetail>;
+  error?: Maybe<QueryError>;
+};
+
 export type JournalVoucherEdges = {
   cursor?: Maybe<Scalars['Cursor']>;
   node?: Maybe<JournalVoucher>;
 };
 
 export type JournalVoucherEntry = {
-  accountId?: InputMaybe<Scalars['String']>;
+  accountId: Scalars['String'];
   crAmount?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   drAmount?: InputMaybe<Scalars['String']>;
@@ -5391,12 +5440,18 @@ export enum JournalVoucherPaymentMode {
 
 export type JournalVoucherQuery = {
   list?: Maybe<JournalVoucherConnection>;
+  viewJournalVoucherDetail?: Maybe<JournalVoucherDetailResult>;
 };
 
 
 export type JournalVoucherQueryListArgs = {
   filter?: InputMaybe<JournalVoucherFilter>;
   pagination?: InputMaybe<Pagination>;
+};
+
+
+export type JournalVoucherQueryViewJournalVoucherDetailArgs = {
+  entryId: Scalars['ID'];
 };
 
 export type JournalVoucherResult = {
@@ -9607,6 +9662,22 @@ export type NewBankAccountResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<BankAccountQuery>;
   recordId?: Maybe<Scalars['String']>;
+};
+
+export type NewCoaGroupInput = {
+  accountClass?: InputMaybe<Scalars['String']>;
+  accountCode?: InputMaybe<Scalars['String']>;
+  accountSetup?: InputMaybe<CoaAccountSetup>;
+  allowedBalance?: InputMaybe<CoaTypeOfTransaction>;
+  groupName?: InputMaybe<Scalars['String']>;
+  typeOfTransaction?: InputMaybe<CoaTypeOfTransaction>;
+  underAccountCode?: InputMaybe<Scalars['String']>;
+};
+
+export type NewCoaGroupResult = {
+  error?: Maybe<MutationError>;
+  query?: Maybe<ChartsOfAccountSettingsQuery>;
+  recordId: Scalars['ID'];
 };
 
 export type Nominee = {
@@ -14552,13 +14623,6 @@ export type GetCoaFullViewQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCoaFullViewQuery = { settings: { chartsOfAccount?: { fullView: { data?: Array<{ id: string, name: Record<"local"|"en"|"np",string>, under?: string | null, accountType: CoaTypesOfAccount, accountClass: string, accountCode: string, category?: CoaCategory | null } | null> | null } } | null } };
 
-export type GetCoaBankListQueryVariables = Exact<{
-  accountCode?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
-}>;
-
-
-export type GetCoaBankListQuery = { settings: { chartsOfAccount?: { accountsUnder?: { data?: Array<{ id: string, accountCode: string, name: Record<"local"|"en"|"np",string> } | null> | null } | null } | null } };
-
 export type SearchCoaQueryVariables = Exact<{
   coaName: Scalars['String'];
 }>;
@@ -14574,7 +14638,8 @@ export type GetCoaAccountsUnderListQueryVariables = Exact<{
 export type GetCoaAccountsUnderListQuery = { settings: { chartsOfAccount?: { accountsUnder?: { data?: Array<{ id: string, accountCode: string, name: Record<"local"|"en"|"np",string> } | null> | null } | null } | null } };
 
 export type GetCoaAccountsUnderLeafListQueryVariables = Exact<{
-  parentId: Scalars['String'];
+  parentId: Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>;
+  currentBranch?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 
@@ -24737,33 +24802,6 @@ export const useGetCoaFullViewQuery = <
       useAxios<GetCoaFullViewQuery, GetCoaFullViewQueryVariables>(GetCoaFullViewDocument).bind(null, variables),
       options
     );
-export const GetCoaBankListDocument = `
-    query getCOABankList($accountCode: [String]) {
-  settings {
-    chartsOfAccount {
-      accountsUnder(accountCode: $accountCode) {
-        data {
-          id
-          accountCode
-          name
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetCoaBankListQuery = <
-      TData = GetCoaBankListQuery,
-      TError = unknown
-    >(
-      variables?: GetCoaBankListQueryVariables,
-      options?: UseQueryOptions<GetCoaBankListQuery, TError, TData>
-    ) =>
-    useQuery<GetCoaBankListQuery, TError, TData>(
-      variables === undefined ? ['getCOABankList'] : ['getCOABankList', variables],
-      useAxios<GetCoaBankListQuery, GetCoaBankListQueryVariables>(GetCoaBankListDocument).bind(null, variables),
-      options
-    );
 export const SearchCoaDocument = `
     query searchCOA($coaName: String!) {
   settings {
@@ -24821,10 +24859,10 @@ export const useGetCoaAccountsUnderListQuery = <
       options
     );
 export const GetCoaAccountsUnderLeafListDocument = `
-    query getCOAAccountsUnderLeafList($parentId: String!) {
+    query getCOAAccountsUnderLeafList($parentId: [String]!, $currentBranch: Boolean) {
   settings {
     chartsOfAccount {
-      accountsUnderLeaf(parentId: $parentId) {
+      accountsUnderLeaf(parentId: $parentId, currentBranch: $currentBranch) {
         accountId
         name
       }

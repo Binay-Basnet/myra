@@ -10,7 +10,6 @@ import {
   RootState,
   useAppSelector,
   useGetAvailableSlipsListQuery,
-  useGetCoaBankListQuery,
 } from '@coop/cbs/data-access';
 import {
   BoxContainer,
@@ -21,6 +20,7 @@ import {
   FormAccountSelect,
   FormAgentSelect,
   FormAmountInput,
+  FormBankSelect,
   FormCheckbox,
   FormDatePicker,
   FormEditableTable,
@@ -32,7 +32,7 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 // const sourceOfFundsList = [
 //   'Personal Savings',
@@ -140,17 +140,6 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
 
   const denominations = watch('cash.denominations');
 
-  const { data: bank } = useGetCoaBankListQuery({
-    accountCode: featureCode.accountCode as string[],
-  });
-
-  const bankListArr = bank?.settings?.chartsOfAccount?.accountsUnder?.data;
-
-  const bankList = bankListArr?.map((item) => ({
-    label: item?.name?.local as string,
-    value: item?.id as string,
-  }));
-
   const denominationTotal =
     denominations?.reduce(
       (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
@@ -210,11 +199,12 @@ export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
         {selectedPaymentMode === DepositPaymentType.BankVoucher && (
           <InputGroupContainer>
             <GridItem colSpan={2}>
-              <FormSelect
+              {/* <FormSelect
                 name="bankVoucher.bankId"
                 label={t['depositPaymentBankName']}
                 options={bankList}
-              />
+              /> */}
+              <FormBankSelect name="bankVoucher.bankId" label={t['depositPaymentBankName']} />
             </GridItem>
 
             <FormInput name="bankVoucher.voucherId" label={t['addDepositVoucherId']} />

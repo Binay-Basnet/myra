@@ -29,7 +29,7 @@ export const LoanPaymentScheduleTable = ({
         accessorKey: 'installmentNo',
         meta: {
           Footer: {
-            colspan: 3,
+            colspan: 2,
           },
         },
       },
@@ -43,18 +43,7 @@ export const LoanPaymentScheduleTable = ({
           },
         },
       },
-      {
-        header: 'Payment',
-        accessorKey: 'payment',
-        cell: (props) => amountConverter(props.getValue() as string),
 
-        meta: {
-          isNumeric: true,
-          Footer: {
-            display: 'none',
-          },
-        },
-      },
       {
         header: 'Principal',
         accessorKey: 'principal',
@@ -75,21 +64,31 @@ export const LoanPaymentScheduleTable = ({
       },
 
       {
-        header: 'Remaining Amount',
-
-        accessorKey: 'remainingPrincipal',
+        header: 'Payment',
+        accessorKey: 'payment',
         cell: (props) => amountConverter(props.getValue() as string),
 
         meta: {
           isNumeric: true,
+          Footer: {
+            display: 'none',
+          },
         },
-        Footer: {
-          display: 'none',
+      },
+
+      {
+        header: 'Remaining Amount',
+
+        accessorKey: 'remainingPrincipal',
+        cell: (props) => amountConverter(props.getValue() as string),
+        footer: () => amountConverter(total),
+
+        meta: {
+          isNumeric: true,
         },
       },
       {
         header: 'Status',
-        footer: () => amountConverter(total),
         accessorKey: 'paid',
         cell: (props) => {
           const installmentNo = props?.row?.original?.installmentNo;
