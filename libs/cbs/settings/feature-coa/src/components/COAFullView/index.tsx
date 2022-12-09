@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
 import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 
-import { CoaView, useGetChartOfAccountsQuery, useGetCoaFullViewQuery } from '@coop/cbs/data-access';
 import { Accordion, AccordionButton, AccordionItem, AccordionPanel, Box, Text } from '@myra-ui';
+
+import { CoaView, useGetChartOfAccountsQuery, useGetCoaFullViewQuery } from '@coop/cbs/data-access';
 
 import Tree from '../Tree';
 import { arrayToTreeCOA } from '../../utils/arrayToTree';
@@ -30,7 +31,7 @@ export const COAFullView = () => {
 
   const coaLiabilitiesTree = useMemo(
     () => arrayToTreeCOA(coaLiabilitiesFullView as CoaView[]),
-    [coaLiabilitiesFullView.length]
+    [coaLiabilitiesFullView.length, isFetching]
   );
 
   const coaAssetsFullView = useMemo(
@@ -51,7 +52,7 @@ export const COAFullView = () => {
 
   const coaAssetsTree = useMemo(
     () => arrayToTreeCOA(coaAssetsFullView as CoaView[]),
-    [coaAssetsFullView.length]
+    [coaAssetsFullView.length, isFetching]
   );
 
   const coaExpenditureFullView = useMemo(
@@ -65,7 +66,7 @@ export const COAFullView = () => {
 
   const coaExpenditureTree = useMemo(
     () => arrayToTreeCOA(coaExpenditureFullView as CoaView[]),
-    [coaExpenditureFullView.length]
+    [coaExpenditureFullView.length, isFetching]
   );
 
   const coaIncomeFullView = useMemo(
@@ -79,7 +80,7 @@ export const COAFullView = () => {
 
   const coaIncomeTree = useMemo(
     () => arrayToTreeCOA(coaIncomeFullView as CoaView[]),
-    [coaIncomeFullView.length]
+    [coaIncomeFullView.length, isFetching]
   );
 
   return (

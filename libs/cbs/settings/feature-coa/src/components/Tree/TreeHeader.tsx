@@ -1,12 +1,12 @@
+import { useState } from 'react';
 import { BsFillCaretRightFill } from 'react-icons/bs';
 import { MdOutlineCircle } from 'react-icons/md';
-import { useRouter } from 'next/router';
-import { AddIcon } from '@chakra-ui/icons';
 import { Text } from '@chakra-ui/react';
 
-import { Box, Button, Icon } from '@myra-ui';
+import { Box, Icon } from '@myra-ui';
 
 import { useAccordion } from './Accordion';
+import { AddGroup, ConfigureGroup } from './LeafNode';
 import { CoaTree } from '../../types';
 
 interface ITreeHeaderProps {
@@ -15,8 +15,7 @@ interface ITreeHeaderProps {
 
 const TreeHeader = ({ data }: ITreeHeaderProps) => {
   const { isOpen } = useAccordion();
-
-  const router = useRouter();
+  const [clickedAccount, setClickedAccount] = useState<CoaTree | null>(null);
 
   return (
     <Box display="flex" gap="s8" ml="-3px" alignItems="center">
@@ -40,23 +39,17 @@ const TreeHeader = ({ data }: ITreeHeaderProps) => {
           {data?.name?.local}
         </Text>
 
-        <Button
-          variant="link"
-          py="0"
-          lineHeight="0"
-          ml="s24"
-          display={isOpen ? 'flex' : 'none'}
-          gap="s8"
-          _groupHover={{ display: 'flex' }}
-          onClick={() =>
-            router.push(
-              `/settings/general/charts-of-accounts/add-new-account?under=${data.accountCode}`
-            )
-          }
-        >
-          <Icon as={AddIcon} w="14px" h="14px" />
-          Add Account
-        </Button>
+        <AddGroup
+          data={data}
+          clickedAccount={clickedAccount}
+          setClickedAccount={setClickedAccount}
+        />
+
+        <ConfigureGroup
+          data={data}
+          clickedAccount={clickedAccount}
+          setClickedAccount={setClickedAccount}
+        />
       </Box>
     </Box>
   );
