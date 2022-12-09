@@ -14,7 +14,7 @@ import {
 } from '@coop/cbs/data-access';
 import { InputGroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormAmountInput, FormEditableTable, FormInput, FormTellerSelect } from '@coop/shared/form';
-import { useTranslation } from '@coop/shared/utils';
+import { featureCode, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface AddTellerTransferProps {}
@@ -115,7 +115,7 @@ export const AddTellerTransfer = () => {
       <Container minW="container.xl" height="fit-content">
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
-            title="New Teller Transfer"
+            title={`New Teller Transfer - ${featureCode.newTellerTransfer}`}
             closeLink="/transfer/vault-transfer/list"
             // buttonLabel={t['addDepositAddBulkDeposit']}
             // buttonHandler={() => router.push('/transactions/deposit/add-bulk-deposit')}

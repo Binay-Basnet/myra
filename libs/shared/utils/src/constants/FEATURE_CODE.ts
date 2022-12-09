@@ -56,4 +56,18 @@ export const featureCode = {
   loanRepayment: '10305',
   loanProducts: '10306',
   loanDeclined: '10307',
+
+  cbsReports: '10801',
+  savedReports: '10802',
+
+  profitFundManagementList: '10905',
+  newProfitFundManagement: '10902',
+
+  withdrawSlipRequest: '10702',
+  blockWithdrawSlip: '10703',
+
+  vaultTransferList: '10503',
+  tellerTransferList: '10504',
+  newVaultTransfer: '10501',
+  newTellerTransfer: '10502',
 };

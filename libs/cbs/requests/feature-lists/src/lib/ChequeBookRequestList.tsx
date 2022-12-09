@@ -19,7 +19,7 @@ import {
   RequestType,
   useGetChequeBookRequestsQuery,
 } from '@coop/cbs/data-access';
-import { getRouterQuery } from '@coop/shared/utils';
+import { featureCode, getRouterQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
 import { ApproveDeclineModal } from '../components/ApproveDeclineModal';
@@ -135,7 +135,7 @@ export const ChequeBookRequestList = () => {
   return (
     <Box display="flex" flexDir="column">
       <Box position="sticky" top="110px" zIndex={3}>
-        <PageHeader heading="Chequebook Request List" />
+        <PageHeader heading={`Chequebook Request List - ${featureCode?.withdrawSlipRequest}`} />
       </Box>
 
       <Table

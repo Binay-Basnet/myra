@@ -5,7 +5,7 @@ import { Avatar, Box, PageHeader, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { TellerTransferType, useGetTellerTransactionListDataQuery } from '@coop/cbs/data-access';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface VaultTransferListProps {}
@@ -99,7 +99,7 @@ export const VaultTransferList = () => {
   return (
     <>
       <PageHeader
-        heading="Vault Transfer"
+        heading={`Vault Transfer - ${featureCode.vaultTransferList}`}
         // tabItems={tabList}
         button
         buttonTitle="Vault Transfer"
