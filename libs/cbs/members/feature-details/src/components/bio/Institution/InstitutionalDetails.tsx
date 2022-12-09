@@ -8,7 +8,6 @@ import {
   DetailsCard,
 } from '@myra-ui';
 
-import { AccordianMemberDetailsCardComponent } from './AccordianCard';
 import { AccountHolderDecleration } from './AccountHoldersDecleration';
 import { AccountOperationInstruction } from './AccountOperationInstruction';
 import { AddressDetails } from './AddressDetails';
@@ -18,6 +17,7 @@ import { OperatingOfficeAddress } from './OperatingOfficeAddressInstitution';
 import { RegisteredDetails } from './RegisteredInstitution';
 import { SisterConcernComponent } from './SisterConcernCard';
 import { TransactionProfileDetails } from './TransactionProfileDetails';
+import { AccordianMemberDetailsCardComponent } from '../components/AccordianCard';
 
 export const BioInstitution = () => (
   <>
