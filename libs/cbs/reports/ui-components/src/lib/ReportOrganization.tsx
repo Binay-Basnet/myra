@@ -57,13 +57,13 @@ export const ReportOrganization = () => {
           </Text>
 
           <Text fontSize="r1" color="gray.700" fontWeight="500">
-            {period.customPeriod?.from.en}
+            {period?.customPeriod?.from.en}
           </Text>
           <Text fontSize="r1" color="gray.700">
             to
           </Text>
           <Text fontSize="r1" color="gray.700" fontWeight="500">
-            {period.customPeriod?.to.en}
+            {period?.customPeriod?.to.en}
           </Text>
         </Box>
 
