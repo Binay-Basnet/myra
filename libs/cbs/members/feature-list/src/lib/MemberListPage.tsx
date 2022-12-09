@@ -5,7 +5,12 @@ import { useQueryClient } from '@tanstack/react-query';
 import { asyncToast, Avatar, Box, Modal, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { ObjState, useDeleteDraftMutation, useGetMemberListQuery } from '@coop/cbs/data-access';
+import {
+  Filter_Mode,
+  ObjState,
+  useDeleteDraftMutation,
+  useGetMemberListQuery,
+} from '@coop/cbs/data-access';
 import { formatTableAddress } from '@coop/cbs/utils';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
@@ -23,6 +28,7 @@ export const MemberListPage = () => {
   const [ID, setID] = useState('');
   const [openModal, setOpenModal] = useState(false);
   const { mutateAsync } = useDeleteDraftMutation();
+  const [IDMember, setIDMember] = useState('');
 
   const onOpenModal = () => {
     setOpenModal(true);
@@ -41,11 +47,17 @@ export const MemberListPage = () => {
     {
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
       filter: {
+        query: IDMember,
+        id: IDMember,
+        memberCode: IDMember,
+        mobileNo: IDMember,
+        filterMode: Filter_Mode.Or,
         objState: (router.query['objState'] ?? ObjState.Approved) as ObjState,
       },
     },
     {
       staleTime: 0,
+      enabled: IDMember !== 'undefined',
     }
   );
 
@@ -223,6 +235,7 @@ export const MemberListPage = () => {
           total: data?.members?.list?.totalCount ?? 'Many',
           pageInfo: data?.members?.list?.pageInfo,
         }}
+        onChange={(e) => setIDMember(e.target.value)}
       />
       <Modal
         open={openModal}

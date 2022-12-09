@@ -1,19 +1,17 @@
 import React, { ReactElement } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 import { useRouter } from 'next/router';
-import { Accordion, AccordionButton, AccordionItem, AccordionPanel, Flex } from '@chakra-ui/react';
 import { debounce } from 'lodash';
+
+import { Box, Container, FormFooter, FormHeader, MainLayout, Text } from '@myra-ui';
 
 import {
   OfficialUseRiskCategory,
-  useGetMemberTranslationQuery,
   useGetOfficialUseQuery,
   useSetOfficialUseMutation,
 } from '@coop/cbs/data-access';
 import { GroupContainer } from '@coop/cbs/kym-form/ui-containers';
 import { FormRadioGroup, FormSwitchTab } from '@coop/shared/form';
-import { Box, Container, FormFooter, FormHeader, Input, MainLayout, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 const Translation = () => {
@@ -21,8 +19,8 @@ const Translation = () => {
 
   const router = useRouter();
   const id = String(router?.query?.id);
-  const translatedData = useGetMemberTranslationQuery({ id });
-  const translationDataArray = translatedData?.data?.members?.translate.data;
+  // const translatedData = useGetMemberTranslationQuery({ id });
+  // const translationDataArray = translatedData?.data?.members?.translate.data;
 
   const { mutateAsync } = useSetOfficialUseMutation();
   const methods = useForm({});
@@ -148,7 +146,7 @@ const Translation = () => {
               </GroupContainer>
             </Box>
 
-            <Box p="s20">
+            {/* <Box p="s20">
               <Accordion allowToggle>
                 <AccordionItem>
                   {({ isExpanded }) => (
@@ -193,7 +191,7 @@ const Translation = () => {
                   )}
                 </AccordionItem>
               </Accordion>
-            </Box>
+            </Box> */}
           </Container>
         </form>
       </FormProvider>

@@ -372,7 +372,7 @@ export const TopLevelHeader = () => {
               color="white"
               borderRadius="br1"
               _hover={{ backgroundColor: 'secondary.900' }}
-              onClick={() => router.push('/settings/general/organization')}
+              onClick={() => router.push('/settings/general/service-center')}
               ref={settingShortcut}
             />
 

@@ -1,5 +1,6 @@
-import { useAccountDetails } from '@coop/cbs/data-access';
 import { Box, Grid, Text } from '@myra-ui';
+
+import { useAccountDetails } from '@coop/cbs/data-access';
 import { amountConverter } from '@coop/shared/utils';
 
 export const AccountStatistics = () => {
@@ -7,11 +8,11 @@ export const AccountStatistics = () => {
 
   const accountSummary = [
     {
-      title: 'Overall Account Balance',
+      title: 'Available Balance',
       value: amountConverter(accountDetails?.accountBalance ?? 0),
     },
     {
-      title: 'Total Deposit Balance',
+      title: 'Actual Balance',
       value: amountConverter(accountDetails?.totalDepositBalance ?? 0),
     },
   ];
