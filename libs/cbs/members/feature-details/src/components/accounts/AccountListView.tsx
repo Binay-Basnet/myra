@@ -5,7 +5,10 @@ import { useRouter } from 'next/router';
 import { Button, DetailsCard, Icon } from '@myra-ui';
 
 import {
+  CooperativeBasicMinInfo,
+  CooperativeUnionBasicMinInfo,
   IndividualBasicMinInfo,
+  InstitutionBasicMinInfo,
   useGetMemberDetailsOverviewQuery,
   useGetMemberOverviewBasicDetailsQuery,
 } from '@coop/cbs/data-access';
@@ -42,14 +45,38 @@ export const AccountList = ({ title, accountList, isClosedAccounts }: IAccountLi
     id: router.query['id'] as string,
   });
 
-  const memberBasicDetails =
+  const memberIndividual =
     memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
       ?.__typename === 'IndividualBasicMinInfo'
       ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
           ?.basicInformation as IndividualBasicMinInfo)
       : null;
+  const memberBasicInstitution =
+    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+      ?.__typename === 'InstitutionBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+          ?.basicInformation as InstitutionBasicMinInfo)
+      : null;
 
-  const contactNo = memberBasicDetails?.contactNumber;
+  const memberBasicCooperative =
+    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+      ?.__typename === 'CooperativeBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+          ?.basicInformation as CooperativeBasicMinInfo)
+      : null;
+  const memberBasicCooperativeUnion =
+    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+      ?.__typename === 'CooperativeUnionBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+          ?.basicInformation as CooperativeUnionBasicMinInfo)
+      : null;
+
+  const memberBasicDetails =
+    memberIndividual ??
+    memberBasicInstitution ??
+    memberBasicCooperative ??
+    memberBasicCooperativeUnion;
+  const contactNo = memberIndividual ? memberIndividual?.contactNumber : '-';
   const memberName = memberBasicDetails?.memberName;
   const memberAccountDetails =
     memberDetails?.data?.members?.memberOverview?.data?.accounts?.accounts;
