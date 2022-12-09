@@ -212,7 +212,17 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
 
   return (
     <Box display="flex">
-      <Box width="260px" position="fixed" flexShrink={0}>
+      <Box
+        sx={{
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        }}
+        width="260px"
+        height="calc(100vh - 110px)"
+        overflowY="auto"
+        position="fixed"
+      >
         <Box
           display="flex"
           flexDirection="column"
@@ -227,7 +237,7 @@ export const MemberPagesLayout = ({ children }: IMemberPageLayout) => {
             {t['corebankingSystems']}
           </Text>
 
-          <Link href="/transactions/deposit/list">
+          <Link href="/members/list">
             <Text lineHeight="125%" fontSize="l1" fontWeight="600" color="gray.800">
               {t['memberLayout']}
             </Text>

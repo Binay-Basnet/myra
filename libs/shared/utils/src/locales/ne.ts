@@ -3193,7 +3193,7 @@ const ne: Record<string, string> = {
   loanLayoutProductsSettings: 'Loan Product Settings',
 
   loanLayoutStatementReport: 'Loan Statement Report',
-  loanLayoutAgeingReport: 'Loan Ageing Report',
+  loanLayoutAgeingReport: 'Loan Aging Report',
 
   // account deposit product
   accountDepositProduct: 'Deposit Product',

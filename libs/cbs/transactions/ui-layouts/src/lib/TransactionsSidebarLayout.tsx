@@ -145,7 +145,7 @@ export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayo
           },
         }}
         width="260px"
-        height="100%"
+        height="calc(100vh - 110px)"
         overflowY="auto"
         position="fixed"
       >
@@ -164,7 +164,7 @@ export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayo
           </Text>
 
           <Link href="/transactions/deposit/list">
-            <Text fontSize="l1" fontWeight="600" color="gray.800">
+            <Text lineHeight="125%" fontSize="l1" fontWeight="600" color="gray.800">
               {t['transactions']}
             </Text>
           </Link>

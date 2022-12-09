@@ -1,4 +1,4 @@
-import { Box, DetailCardContent, Grid, Text } from '@myra-ui';
+import { Box, DetailCardContent, Divider, Grid, Text } from '@myra-ui';
 
 interface IAccordianDetailsCOmponentCard {
   mainDetails?: {
@@ -36,7 +36,7 @@ export const AccordianMemberDetailsCardComponent = ({
 
   // const memberBasicInfo =
   //   memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation;
-  <Box display="flex" flexDirection="column" p="s16" bg="white" borderRadius="br2">
+  <Box display="flex" flexDirection="column" p="s16" bg="white" borderRadius="br2" gap="s16">
     <Box display="flex" flexDirection="column" gap="s16">
       <Text fontWeight="400" fontSize="r2">
         Main Details
@@ -47,6 +47,7 @@ export const AccordianMemberDetailsCardComponent = ({
         <DetailCardContent title="Pan" subtitle={permanentAddress?.localGovernment} />
       </Grid>
     </Box>
+    <Divider />
     <Box display="flex" flexDirection="column" gap="s16">
       <Text fontWeight="400" fontSize="r2">
         Permanent Address
@@ -60,6 +61,8 @@ export const AccordianMemberDetailsCardComponent = ({
         <DetailCardContent title="House No" subtitle={permanentAddress?.houseNo} />
       </Grid>
     </Box>
+    <Divider />
+
     <Box display="flex" flexDirection="column" gap="s16">
       <Text fontWeight="400" fontSize="r2">
         Temporary Address

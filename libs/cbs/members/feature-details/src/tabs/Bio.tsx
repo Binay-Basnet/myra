@@ -4,6 +4,15 @@ import { useRouter } from 'next/router';
 import { Box, Grid, Icon, Text } from '@myra-ui';
 
 import {
+  CooperativeBasicMinInfo,
+  CooperativeUnionBasicMinInfo,
+  IndividualBasicMinInfo,
+  InstitutionBasicMinInfo,
+  useGetMemberOverviewBasicDetailsQuery,
+} from '@coop/cbs/data-access';
+
+import {
+  BioCoop,
   BioInstitution,
   MemberAddressInfo,
   MemberBasicInfo,
@@ -28,6 +37,50 @@ import {
 // ];
 export const Bio = () => {
   const router = useRouter();
+  const memberDetailsData = useGetMemberOverviewBasicDetailsQuery({
+    id: router.query['id'] as string,
+  });
+
+  const memberIndividual =
+    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+      ?.__typename === 'IndividualBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+          ?.basicInformation as IndividualBasicMinInfo)
+      : null;
+
+  const memberBasicInstitution =
+    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+      ?.__typename === 'InstitutionBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+          ?.basicInformation as InstitutionBasicMinInfo)
+      : null;
+
+  const memberBasicCooperative =
+    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+      ?.__typename === 'CooperativeBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+          ?.basicInformation as CooperativeBasicMinInfo)
+      : null;
+
+  const memberBasicCooperativeUnion =
+    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+      ?.__typename === 'CooperativeUnionBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+          ?.basicInformation as CooperativeUnionBasicMinInfo)
+      : null;
+
+  let memberType = 'individual';
+  if (memberIndividual) {
+    memberType = 'individual';
+  } else if (memberBasicInstitution) {
+    memberType = 'institution';
+  } else if (memberBasicCooperative) {
+    memberType = 'coop';
+  } else if (memberBasicCooperativeUnion) {
+    memberType = 'coop_union';
+  } else {
+    memberType = 'individual';
+  }
 
   return (
     <>
@@ -50,7 +103,7 @@ export const Bio = () => {
             pl="s16"
             cursor="pointer"
             onClick={() => {
-              router.push(`/members/individual/edit/${router.query['id'] as string}`);
+              router.push(`/members/${memberType}/edit/${router.query['id'] as string}`);
             }}
           >
             <Icon as={IoCreateOutline} />
@@ -93,12 +146,17 @@ export const Bio = () => {
           </Box>
         </Grid>
       </Box>
-      <MemberBasicInfo />
-      <MemberContactInfo />
-      <MemberAddressInfo />
-      <MemberFamilyInfo />
-      <MemberFamilyRelationsInfo />
-      <BioInstitution />
+      {memberIndividual && (
+        <Box display="flex" flexDirection="column" gap="s16">
+          <MemberBasicInfo />
+          <MemberContactInfo />
+          <MemberAddressInfo />
+          <MemberFamilyInfo />
+          <MemberFamilyRelationsInfo />
+        </Box>
+      )}
+      {memberBasicInstitution && <BioInstitution />}
+      {memberBasicCooperative && <BioCoop />}
     </>
   );
 };

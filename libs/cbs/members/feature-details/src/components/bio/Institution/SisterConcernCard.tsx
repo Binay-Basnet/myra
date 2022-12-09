@@ -23,7 +23,15 @@ export const SisterConcernComponent = ({
 
   // const memberBasicInfo =
   //   memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation;
-  <Box display="flex" flexDirection="column" p="s16" bg="white" borderRadius="br2">
+  <Box
+    display="flex"
+    flexDirection="column"
+    p="s16"
+    bg="white"
+    borderRadius="br2"
+    border="1px"
+    borderColor="border.layout"
+  >
     <Box>
       <Text fontSize="r1" fontWeight="600">
         {name}

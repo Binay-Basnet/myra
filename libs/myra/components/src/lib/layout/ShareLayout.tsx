@@ -73,7 +73,17 @@ export const SharePageLayout = ({ children }: IMemberPageLayout) => {
 
   return (
     <Box display="flex">
-      <Box width="260px" flexShrink={0} position="fixed" zIndex={1}>
+      <Box
+        sx={{
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        }}
+        width="260px"
+        height="calc(100vh - 110px)"
+        overflowY="auto"
+        position="fixed"
+      >
         <Box
           display="flex"
           flexDirection="column"
