@@ -26,10 +26,15 @@ interface IOthersPageLayoutProps {
 
 const othersColumns = [
   {
-    title: 'Market Representatives',
+    title: 'Market Representatives List',
     link: '/others/market-representatives/list',
     name: 'market-representatives',
-    addLink: '/others/market-representatives/add',
+  },
+  {
+    title: 'Market Representatives Transactions',
+    link: '/others/market-representatives-transactions/list',
+    name: 'market-representatives-transactions',
+    addLink: '/others/market-representatives-transactions/add',
   },
   {
     title: 'Profit to Fund Management',

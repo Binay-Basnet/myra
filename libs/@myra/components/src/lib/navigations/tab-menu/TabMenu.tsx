@@ -77,7 +77,7 @@ const cbsTabs: { title: keyof typeof en; icon: IconType; link: string; match: st
   {
     title: 'others',
     icon: IoPrismOutline,
-    link: '/others/fund-management/list',
+    link: '/others/market-representatives/list',
     match: ['others'],
   },
 ];
