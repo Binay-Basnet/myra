@@ -5,6 +5,12 @@ import { ProductInfo } from './ProductInfo';
 export const SideBar = () => (
   <>
     <ProductInfo />
-    <DetailPageTabs tabs={['OVERVIEW', 'Account List', 'ACTIVITY', 'DOCUMENTS', 'TASKS']} />
+    <DetailPageTabs
+      tabs={[
+        'OVERVIEW',
+        'Account List',
+        // 'ACTIVITY', 'DOCUMENTS', 'TASKS'
+      ]}
+    />
   </>
 );

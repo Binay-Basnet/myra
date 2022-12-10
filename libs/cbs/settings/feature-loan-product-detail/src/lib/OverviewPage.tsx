@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import { Box, DetailsCard } from '@myra-ui';
 
-import { Insurance, ObjState } from '@coop/cbs/data-access';
+import { ObjState } from '@coop/cbs/data-access';
 
 import {
   AlertEnable,
@@ -12,7 +12,6 @@ import {
   ProductDocuments,
   ProductFeatures,
   ProductGeneralInformation,
-  ProductInsurance,
   ProductLimits,
   ProductLoanProcessingCharge,
   ProductLoanRepayment,
@@ -84,7 +83,7 @@ export const OverviewPage = () => {
           <DetailsCard title="Features " hasTable>
             <Box display="flex" flexDir="column" gap="s32">
               <ProductFeatures features={featureTable} />
-              <ProductInsurance insurance={detailData?.insuranceType as Insurance} />
+              {/* <ProductInsurance insurance={detailData?.insuranceType as Insurance} /> */}
             </Box>
           </DetailsCard>
         </Box>

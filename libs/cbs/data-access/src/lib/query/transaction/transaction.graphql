@@ -323,3 +323,27 @@ query getEODStatus {
     }
   }
 }
+
+query getAllTransactionsList($filter: AllTransactionFilter, $pagination: Pagination) {
+  transaction {
+    listAllTransactions(filter: $filter, pagination: $pagination) {
+      totalCount
+      edges {
+        node {
+          id
+          transactionType
+          narration
+          amount
+          date
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}

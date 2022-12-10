@@ -67,6 +67,11 @@ const transactionSidebarColumns = [
     name: 'journal-voucher',
     addLink: '/transactions/journal-vouchers/add',
   },
+  {
+    title: 'transactionsSidebarAllTransactions',
+    link: '/transactions/all-transactions/list',
+    name: 'all-transactions',
+  },
 ];
 
 const dropdownButtons = [

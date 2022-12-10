@@ -37,12 +37,12 @@ const transactionSidebarColumns = [
     name: 'teller-transfer',
     addLink: '/transfer/teller-transfer/add',
   },
-  {
-    title: 'transferBranchTransfer',
-    link: '/transfer/branch-transfer',
-    name: 'branch-transfer',
-    // addLink: '/transactions/account-transfer/add',
-  },
+  // {
+  //   title: 'transferBranchTransfer',
+  //   link: '/transfer/branch-transfer',
+  //   name: 'branch-transfer',
+  //   // addLink: '/transactions/account-transfer/add',
+  // },
 ];
 
 const dropdownButtons = [
