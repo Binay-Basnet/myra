@@ -7,7 +7,7 @@ import { CbsSettingsSavingsDetailPage } from '@coop/settings/saving-product';
 
 const SavingProductDetailsPage = () => (
   <>
-    <DetailPathBar title="Deposit Product" />
+    <DetailPathBar title="Saving Product" />
     <CbsSettingsSavingsDetailPage />
   </>
 );

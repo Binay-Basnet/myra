@@ -39,7 +39,7 @@ export const ProductPenalty = ({ penaltyData }: IProductPenalty) => {
         },
       },
       {
-        header: 'Rebate Ledger Mapping',
+        header: 'Penalty Ledger Mapping',
         accessorKey: 'penaltyLedgerMapping',
         cell: (props) => (props.getValue() ? `${props.getValue()}` : 'N/A'),
         meta: {
