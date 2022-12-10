@@ -47,9 +47,9 @@ const reportColumn = [
     label: 'memberLayoutMemberClassification',
     navigate: '/reports/cbs/members/classification/new',
   },
-  {
-    label: 'memberLayoutMemberLedger',
-  },
+  // {
+  //   label: 'memberLayoutMemberLedger',
+  // },
   {
     label: 'memberLayoutIndividualReport',
   },

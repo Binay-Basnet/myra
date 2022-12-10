@@ -37,10 +37,10 @@ const settingsColumn = [
     label: 'shareLayoutShareSettings',
     navigate: '/settings/general/share',
   },
-  {
-    label: 'shareLayoutShareDistribution',
-    navigate: '/share/balance',
-  },
+  // {
+  //   label: 'shareLayoutShareDistribution',
+  //   navigate: '/share/balance',
+  // },
 ];
 
 const reportColumn = [

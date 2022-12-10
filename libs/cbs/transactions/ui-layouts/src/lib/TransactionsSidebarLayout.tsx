@@ -220,7 +220,11 @@ export const TransactionsSidebarLayout = ({ children }: ITransactionsSidebarLayo
           <TabColumn list={transactionSidebarColumns} />
           <Divider my="s16" />
           {reportColumn.map((item) => (
-            <SettingsButton icon={CgLoadbarDoc} buttonLabel={t[item?.label]} />
+            <SettingsButton
+              icon={CgLoadbarDoc}
+              buttonLabel={t[item?.label]}
+              onClick={() => router.push(item.navigate)}
+            />
           ))}
         </Box>
       </Box>

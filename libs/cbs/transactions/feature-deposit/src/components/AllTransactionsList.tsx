@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 
 import { Column, Table } from '@myra-ui/table';
 
@@ -12,7 +11,6 @@ export interface DepositListProps {}
 
 export const AllTransactionsList = () => {
   const { t } = useTranslation();
-  const router = useRouter();
 
   const { data, isFetching } = useGetAllTransactionsListQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
@@ -63,7 +61,6 @@ export const AllTransactionsList = () => {
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
         columns={columns}
-        rowOnClick={(row) => router.push(`/transactions/deposit/view?id=${row?.node?.id}`)}
         pagination={{
           total: data?.transaction?.listAllTransactions?.totalCount ?? 'Many',
           pageInfo: data?.transaction?.listAllTransactions?.pageInfo,

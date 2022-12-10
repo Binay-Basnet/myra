@@ -66,7 +66,7 @@ export const AccountingFeatureAddJournalVoucher = () => {
         success: 'Journal voucher added',
       },
       promise: setJournalVoucherData({ data: filteredValues }),
-      onSuccess: () => router.push('/accounting/accounting/journal-vouchers/list'),
+      onSuccess: () => router.back(),
     });
   };
 
