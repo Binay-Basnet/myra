@@ -25,9 +25,9 @@
   "private": true,
   "dependencies": {
     "@chakra-ui/icons": "^1.1.7",
-    "@chakra-ui/react": "^2.3.5",
-    "@emotion/react": "11.10.4",
-    "@emotion/styled": "11.10.4",
+    "@chakra-ui/react": "^2.4.3",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@fontsource/inter": "^4.5.10",
     "@hookform/resolvers": "^2.9.9",
     "@nrwl/next": "15.3.0",
@@ -38,6 +38,7 @@
     "@tanstack/react-query-devtools": "^4.16.1",
     "@tanstack/react-table": "^8.7.0",
     "@types/react-beautiful-dnd": "^13.1.2",
+    "add": "^2.0.6",
     "apexcharts": "^3.35.4",
     "axios": "^0.27.2",
     "chakra-react-select": "4.2.2",
@@ -45,7 +46,7 @@
     "core-js": "^3.6.5",
     "date-fns": "^2.28.0",
     "dayjs": "^1.11.4",
-    "framer-motion": "^6",
+    "framer-motion": "^7.6.19",
     "graphql": "^16.4.0",
     "leaflet": "^1.8.0",
     "leaflet-control-geocoder": "^2.4.0",
@@ -74,6 +75,7 @@
     "regenerator-runtime": "0.13.7",
     "to-words": "^3.3.0",
     "tslib": "^2.3.0",
+    "yarn": "^1.22.19",
     "yup": "^0.32.11"
   },
   "devDependencies": {
