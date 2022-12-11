@@ -1,8 +1,9 @@
 import { ReactElement } from 'react';
 
+import { MainLayout } from '@myra-ui';
+
 import { ChequeBookRequestList } from '@coop/cbs/requests/lists';
 import { WithdrawSlipLayout } from '@coop/myra/components';
-import { MainLayout } from '@myra-ui';
 
 const ChequeBookRequestPage = () => <ChequeBookRequestList />;
 

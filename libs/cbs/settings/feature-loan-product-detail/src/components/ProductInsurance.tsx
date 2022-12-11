@@ -1,43 +1,50 @@
-import { WIPState } from '@myra-ui';
+import { useMemo } from 'react';
 
-import { Maybe, ServiceTypeFormState } from '@coop/ebanking/data-access';
+import { Column, Table } from '@myra-ui';
 
-interface IProductInsurance {
-  insurance?: Maybe<Maybe<ServiceTypeFormState>[]> | undefined;
+import { Insurance, Maybe } from '@coop/cbs/data-access';
+import { amountConverter } from '@coop/shared/utils';
+
+export interface IProductInsurance {
+  insurance?: Maybe<Insurance> | undefined;
 }
 
 export const ProductInsurance = ({ insurance }: IProductInsurance) => {
-  // const columns = React.useMemo<Column<ServiceTypeFormState>[]>(
-  //   () => [
-  //     {
-  //       header: 'Insurance Type',
-  //       accessorKey: 'serviceName',
-  //       meta: {
-  //         width: '33%',
-  //       },
-  //     },
-  //     {
-  //       header: 'Insurance Rate',
-  //       accessorKey: 'ledgerName',
-  //       meta: {
-  //         width: '33%',
-  //       },
-  //     },
-  //     {
-  //       header: 'Insurance Amount',
-  //       accessorKey: 'amount',
-  //       cell: (props) => amountConverter(props.getValue() as string),
-  //       meta: {
-  //         isNumeric: true,
-  //         width: '33%',
-  //       },
-  //     },
-  //   ],
-  //   []
-  // );
+  const insuranceArray = [insurance ?? {}];
+  const columns = useMemo<Column<typeof insuranceArray[0]>[]>(
+    () => [
+      {
+        header: 'Insurance Type',
+        accessorKey: 'type',
+        cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
+        meta: {
+          width: '33%',
+        },
+      },
+      {
+        header: 'Insurance Rate',
+        accessorKey: 'rate',
+        cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
+        meta: {
+          width: '33%',
+        },
+      },
+      {
+        header: 'Insurance Amount',
+        accessorKey: 'amount',
+        cell: (props) => amountConverter(props.getValue() ? (props.getValue() as string) : 'N/A'),
+        meta: {
+          isNumeric: true,
+          width: '33%',
+        },
+      },
+    ],
+    []
+  );
 
-  if (insurance?.length === 0) return null;
+  if (insuranceArray?.length === 0) return null;
 
-  // return <Table variant="report" size="report" isStatic data={insurance ?? []} columns={columns} />;
-  return <WIPState />;
+  return (
+    <Table variant="report" size="report" isStatic data={insuranceArray ?? []} columns={columns} />
+  );
 };

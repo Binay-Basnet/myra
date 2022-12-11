@@ -4,10 +4,12 @@ import { Box } from '@myra-ui';
 
 import { SettingSideBar } from './SettingsSideBar';
 
-interface ITransactionsSidebarLayoutProps {
+interface ISavingDetailPageSidebarLayoutProps {
   children: React.ReactNode;
 }
-export const SavingDetailPageSidebarLayout = ({ children }: ITransactionsSidebarLayoutProps) => (
+export const SavingDetailPageSidebarLayout = ({
+  children,
+}: ISavingDetailPageSidebarLayoutProps) => (
   <Box minH="calc(100vh - 110px)">
     <SettingSideBar />
     <Box

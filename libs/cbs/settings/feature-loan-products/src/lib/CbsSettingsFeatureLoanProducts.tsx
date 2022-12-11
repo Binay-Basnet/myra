@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { asyncToast, Box, Divider, SettingsFooter, Text } from '@myra-ui';
+
 import {
   useGetLoanGeneralSettingsQuery,
   useSetLoanGeneralSettingsMutation,
 } from '@coop/cbs/data-access';
 import { FormCheckbox } from '@coop/shared/form';
-import { asyncToast, Box, Divider, SettingsFooter, Text } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { AcceptedCollateral } from '../components';

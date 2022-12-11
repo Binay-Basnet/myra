@@ -11,10 +11,10 @@ interface IAccountPageLayoutProps {
 }
 
 const accountColumns = [
-  {
-    title: 'Member Request',
-    link: '/requests/member',
-  },
+  // {
+  //   title: 'Member Request',
+  //   link: '/requests/member',
+  // },
   // {
   //   title: 'Chequebook Request',
   //   link: '/requests/cheque-book',

@@ -2996,6 +2996,7 @@ const en: Record<string, string> = {
   transactionsSidebarLoanPayment: 'Loan Repayment',
   transactionsSidebarAgentList: 'Market Representative List',
   transactionsSidebarJournalVoucher: 'Journal Voucher',
+  transactionsSidebarAllTransactions: 'All Transactions',
   transactionsSidebarAgentTransaction: 'Market Representative Transactions',
   depositProductMinimumRate: 'Minimum Rate',
   // Report page

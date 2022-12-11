@@ -1,50 +1,28 @@
 import { Box, DetailsCard, Text } from '@myra-ui';
 
-import {
-  IndividualRequiredDocument,
-  InstitutionRequiredDocument,
-  Maybe,
-} from '@coop/ebanking/data-access';
+import { LoanRequiredDocuments } from '@coop/cbs/data-access';
 
-interface IProductDocuments {
-  individualDocuments: Maybe<Maybe<IndividualRequiredDocument>[]> | undefined;
-  institutionDocuments: Maybe<Maybe<InstitutionRequiredDocument>[]> | undefined;
-}
+type DocType = {
+  requiredDocuments: (LoanRequiredDocuments | null)[] | null | undefined;
+};
 
-export const ProductDocuments = ({
-  institutionDocuments,
-  individualDocuments,
-}: IProductDocuments) => {
-  if (!individualDocuments && !institutionDocuments) return null;
-  if (individualDocuments?.length === 0 && institutionDocuments?.length === 0) return null;
+export const ProductDocuments = ({ requiredDocuments }: DocType) => {
+  if (!requiredDocuments) return null;
 
   return (
     <DetailsCard title="Required Documents">
-      {individualDocuments?.length !== 0 && (
-        <Box display="flex" flexDir="column" gap="s4" fontSize="r1" textTransform="capitalize">
-          <Text color="gray.800" fontWeight="500">
-            Individual
-          </Text>
-          <Box ml="s20" as="ul">
-            {individualDocuments?.map((document) => (
-              <li>{document?.toLowerCase()}</li>
+      <Box px="s16" fontSize="r1" textTransform="capitalize">
+        <ul>
+          {requiredDocuments &&
+            requiredDocuments?.map((item) => (
+              <li>
+                <Text fontSize="r1" fontWeight="Regular" color="gray.700">
+                  {item?.toLowerCase()?.replace('_', ' ')?.replace('_', ' ') ?? 'N/A'}
+                </Text>
+              </li>
             ))}
-          </Box>
-        </Box>
-      )}
-
-      {institutionDocuments?.length !== 0 && (
-        <Box display="flex" flexDir="column" gap="s4" fontSize="r1" textTransform="capitalize">
-          <Text color="gray.800" fontWeight="500">
-            Institutional
-          </Text>
-          <Box ml="s20" as="ul">
-            {institutionDocuments?.map((document) => (
-              <li>{document?.toLowerCase()}</li>
-            ))}
-          </Box>
-        </Box>
-      )}
+        </ul>
+      </Box>
     </DetailsCard>
   );
 };

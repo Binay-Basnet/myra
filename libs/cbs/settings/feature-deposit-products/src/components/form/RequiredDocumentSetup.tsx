@@ -1,12 +1,13 @@
 import { useFormContext } from 'react-hook-form';
 
+import { Box, FormSection } from '@myra-ui';
+
 import {
   IndividualRequiredDocument,
   InstitutionRequiredDocument,
   KymMemberTypesEnum,
 } from '@coop/cbs/data-access';
 import { FormCheckboxGroup } from '@coop/shared/form';
-import { Box, FormSection } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 import { TopText } from '../formui';
@@ -72,7 +73,7 @@ export const RequiredDocumentSetup = () => {
         typesOfMember?.includes(KymMemberTypesEnum.Cooperative) ||
         typesOfMember?.includes(KymMemberTypesEnum.CooperativeUnion)) && (
         <Box display="flex" flexDirection="column" gap="s16" w="25%">
-          <TopText>{t['depositProductInstitutional']} </TopText>
+          <TopText>Others</TopText>
           <FormCheckboxGroup
             name="institutionDocuments"
             list={instutionList}

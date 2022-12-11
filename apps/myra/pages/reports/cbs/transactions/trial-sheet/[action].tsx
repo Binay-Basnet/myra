@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { TrialSheetReport } from '@coop/cbs/reports';
 import { MainLayout } from '@myra-ui';
+
+import { TrialSheetReport } from '@coop/cbs/reports';
 
 const NewShareStatementReport = () => <TrialSheetReport />;
 

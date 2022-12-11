@@ -1,11 +1,14 @@
 import { ReactElement } from 'react';
 
-import { MainLayout } from '@myra-ui';
+import { Box, MainLayout, WIPState } from '@myra-ui';
 
-import { FundManagementList } from '@coop/cbs/others/fund-management';
 import { OthersPageLayout } from '@coop/cbs/others/ui-layouts';
 
-const FundManagementListPage = () => <FundManagementList />;
+const FundManagementListPage = () => (
+  <Box display="flex" justifyContent="center" alignItems="center" pt="s60">
+    <WIPState />
+  </Box>
+);
 
 export default FundManagementListPage;
 

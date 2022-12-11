@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
+import { Filter_Mode, ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const ACCOUNT_TAB_ITEMS = [
@@ -26,19 +26,23 @@ export const CBSAccountList = () => {
   const router = useRouter();
 
   const { t } = useTranslation();
-  const [IDAccount, setIDAccount] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const { data, isFetching } = useGetAccountTableListQuery(
     {
       paginate: getRouterQuery({ type: ['PAGINATION'] }),
       filter: {
-        query: IDAccount,
-        id: IDAccount,
+        query: searchTerm,
+        id: searchTerm,
+        memberId: searchTerm,
+        productID: searchTerm,
+        filterMode: Filter_Mode.Or,
         objState: (router.query['objState'] ?? ObjState.Active) as ObjState,
       },
     },
     {
       staleTime: 0,
+      enabled: searchTerm !== 'undefined',
     }
   );
 
@@ -134,7 +138,7 @@ export const CBSAccountList = () => {
           total: data?.account?.list?.totalCount ?? 'Many',
           pageInfo: data?.account?.list?.pageInfo,
         }}
-        onChange={(e) => setIDAccount(e.target.value)}
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
     </>
   );

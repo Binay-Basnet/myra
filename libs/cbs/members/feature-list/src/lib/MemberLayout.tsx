@@ -36,10 +36,10 @@ const settingsColumn = [
     label: 'memberLayoutMemberSettings',
     navigate: '/settings/general/members',
   },
-  {
-    label: 'memberLayoutKymSettings',
-    navigate: '/settings/general/members/kym-individual',
-  },
+  // {
+  //   label: 'memberLayoutKymSettings',
+  //   navigate: '/settings/general/members/kym-individual',
+  // },
 ];
 
 const reportColumn = [
@@ -47,20 +47,20 @@ const reportColumn = [
     label: 'memberLayoutMemberClassification',
     navigate: '/reports/cbs/members/classification/new',
   },
-  {
-    label: 'memberLayoutMemberLedger',
-  },
-  {
-    label: 'memberLayoutIndividualReport',
-  },
+  // {
+  //   label: 'memberLayoutMemberLedger',
+  // },
+  // {
+  //   label: 'memberLayoutIndividualReport',
+  // },
   {
     label: 'memberLayoutActiveInactiveMemberReport',
     navigate: '/reports/cbs/members/activations/new',
   },
-  {
-    label: 'memberLayoutInactiveMemberReport',
-    navigate: '/reports/cbs/members/activations/new',
-  },
+  // {
+  //   label: 'memberLayoutInactiveMemberReport',
+  //   navigate: '/reports/cbs/members/activations/new',
+  // },
   {
     label: 'memberLayoutKymStatusReport',
     navigate: '/reports/cbs/members/kym-status/new',

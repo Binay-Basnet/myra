@@ -16,13 +16,13 @@ export const ProductTenure = ({ tenureUnit, maxTenure, minTenure }: ProductTenur
       <Box px="s16" fontSize="r1" textTransform="capitalize">
         <ul>
           <li>
-            Minimum Tenure:
+            Minimum Tenure: &nbsp;
             <b>
               {minTenure} {tenureUnit?.toLowerCase()}
             </b>
           </li>
           <li>
-            Maximum Tenure:
+            Maximum Tenure: &nbsp;
             <b>
               {maxTenure} {tenureUnit?.toLowerCase()}
             </b>

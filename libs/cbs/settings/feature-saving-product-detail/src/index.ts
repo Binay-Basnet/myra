@@ -1,1 +1,1 @@
-export * from './lib/CbsSettingsFeatureSavingProductDetail';
+export * from './lib/CbsSettingsSavingsDetailPage';
