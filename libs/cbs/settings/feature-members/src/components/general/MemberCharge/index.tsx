@@ -42,7 +42,6 @@ export const NewMemberCharge = () => {
       divider={<Divider border="1px" borderColor="border.layout" />}
       borderColor="border.layout"
       borderRadius="br2"
-      pb="180px"
     >
       <Box display="flex" alignItems="center" px="s12" height="s60">
         <Box display="flex" flexDir="column" gap="s4">

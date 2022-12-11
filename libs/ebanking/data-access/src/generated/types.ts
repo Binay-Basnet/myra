@@ -1180,6 +1180,8 @@ export type EbankingTransaction = {
   month: Scalars['Localized'];
   name: Scalars['String'];
   transactionDirection: EbankingTransactionDirection;
+  transactionId?: Maybe<Scalars['String']>;
+  transactionType?: Maybe<Scalars['String']>;
 };
 
 export type EbankingTransactionConnection = {

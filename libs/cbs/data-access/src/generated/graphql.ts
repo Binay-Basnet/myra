@@ -12321,7 +12321,7 @@ export enum Week {
   Monday = 'MONDAY',
   Saturday = 'SATURDAY',
   Sunday = 'SUNDAY',
-  Thursaday = 'THURSADAY',
+  Thursday = 'THURSDAY',
   Tuesday = 'TUESDAY',
   Wednesday = 'WEDNESDAY',
 }

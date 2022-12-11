@@ -11,6 +11,7 @@ interface ICoopCardProps {
 export const CoopCard = ({ icon, title, link }: ICoopCardProps) => (
   <Link href={link}>
     <Box
+      w="100%"
       display="flex"
       flexDir="column"
       gap="s8"
