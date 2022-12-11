@@ -43,7 +43,7 @@ export const MBTransactionsReport = () => {
           paths={[
             { label: 'Mobile Banking Reports', link: '/reports/cbs/mobile-banking' },
             {
-              label: 'Mobile Banking Registration Report',
+              label: 'Mobile Banking Channel Transaction Report',
               link: '/reports/cbs/mobile-banking/transaction/new',
             },
           ]}

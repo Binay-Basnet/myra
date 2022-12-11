@@ -117,7 +117,7 @@ export const BlockWithdrawSlipRequestsList = () => {
   return (
     <Box display="flex" flexDir="column">
       <Box position="sticky" top="110px" zIndex={3}>
-        <PageHeader heading={`Block Cheque Request - ${featureCode.blockWithdrawSlip}`} />
+        <PageHeader heading={`Block Withdraw Slip Request - ${featureCode.blockWithdrawSlip}`} />
       </Box>
 
       <Table
