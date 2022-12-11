@@ -57,7 +57,7 @@ const Temp = () => (
     />{' '} */}
     {/* <COASelectModal trigger={(
       {}
-    ) => <Button>add</Button>} /> */}
+    ) => <Button>a bit drhvhd</Button>} /> */}
   </Box>
 );
 
