@@ -6,7 +6,7 @@ import { Column, Table } from '@myra-ui/table';
 
 import { useGetAllSavedReportsQuery } from '@coop/cbs/data-access';
 import { PopoverComponent } from '@coop/myra/components';
-import { getRouterQuery } from '@coop/shared/utils';
+import { featureCode, getRouterQuery } from '@coop/shared/utils';
 
 export const SavedReportList = () => {
   const router = useRouter();
@@ -79,7 +79,7 @@ export const SavedReportList = () => {
 
   return (
     <>
-      <PageHeader heading="Saved Reports" />
+      <PageHeader heading={`Saved Reports - ${featureCode?.savedReports}`} />
       <Table
         data={reportList}
         isLoading={isFetching}

@@ -61,7 +61,7 @@ export const LoanBalanceReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<LoanBalanceReportType & { index: number }>
             showFooter
             columns={[

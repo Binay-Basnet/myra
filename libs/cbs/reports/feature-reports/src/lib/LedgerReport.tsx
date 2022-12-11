@@ -39,7 +39,7 @@ export const LedgerReport = () => {
             { label: 'Other Reports', link: '/reports/cbs/others' },
             {
               label: 'Ledger Report',
-              link: '/reports/cbs/others/statement/new',
+              link: '/reports/cbs/others/ledger/new',
             },
           ]}
         />
@@ -57,7 +57,7 @@ export const LedgerReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<GeneralLedgerReportEntry>
             hasSNo={false}
             columns={[

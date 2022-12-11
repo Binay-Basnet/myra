@@ -36,12 +36,16 @@ const whatsNewData = {
   features: {
     title: 'New Features',
     data: [
-      'Accounting : External Loan',
-      'Accounting : Bank Accounts',
-      'CBS-Others: Fund Management ( Form )',
-      'Member Active and Inactive',
-      'Saving/Loan product Active and Inactive',
-      'Member Profile',
+      'Add Journal Voucher',
+      'Journal Voucher Detail Page',
+      'COA - Add Group , Add Account',
+      'Loan Product Detail Page',
+      'Saving Detail Page',
+      'User Creation and Credentials are sent on email',
+      'Service Center Creation',
+      'Member Detail Page for all member',
+      'Teller Account Validation ( Can only withdraw the amount if theres balance in tellers account)',
+
       'Completed Reports:',
       '1. Mobile Banking Registration',
       '2. Mobile Banking Expiry',
@@ -68,30 +72,24 @@ const whatsNewData = {
       '23. Share Transactions',
       '24. Share Return / Purchase Register',
       '25. Bank GL Statement',
+      '26. Vault Balance',
     ],
   },
   bugsSquashed: {
     title: 'Bug Squashed',
-    data: [
-      'Member code is generated with setup code.',
-      'Unit field is missing in Loan Repayment Start Grace Duration',
-      'Cant add more than 10 banks (also have to refresh each time while adding new bank)',
-      'Disbursement method: default account disbursement. Also, disbursed amount to be autofilled.',
-      'Nationality sometimes isnt selected.',
-      'Loan application that hasnt been disbursed is showing up as loan account. Also, declined loans are showing up as well. In upcoming payments list too.',
-      'Last FY in Place of Last Audit Date',
-    ],
+    data: [],
   },
   knownBugs: {
     title: 'Known Bugs',
     data: [
-      'Share Balance Export in excel.',
-      'Family Member in this institution and relationship should have multiple selecting options.',
-      'The declaration in member onboarding and in member setting is completely different.',
-      'The new custom field added in the member setting is not reflecting in member onboarding form.',
-      'Added Document Declaration  field are not reflexted while member onboard(Details of Affiliated Id also same issue ).',
-      'When adding bulk deposit through member profile new deposit link, member should be automatically selected. Also, disable changing member id dropdown when adding deposit (single or bulk) through the same.',
-      'Loan repayment principle and interest separation a/c to amount being paid (calculate and display near repective field)',
+      'Report filters might not be working properly.',
+      'Some links might not work functionally.',
+      'Global search doesn’t function completely sometimes.',
+      'Kym form validation has some unusual errands and issues.',
+      'Loan aging reports might not be working completely.',
+      'Other sections like profit to fund management, share dividend posting are not able to function, only UI level are handled properly.',
+      'Audit logs is currently only available for new user registration.',
+      'Calendar may not properly work in all forms cases.',
     ],
   },
 };
@@ -130,8 +128,8 @@ const WhatsNewModal = (props: WhatsNewModalProps) => {
     >
       <Box p={3} w="100%" display="flex" flexDirection="column" gap={5}>
         <Box display="flex" justifyContent="space-between">
-          <Text fontSize="r2">Version 1.0.8</Text>
-          <Text fontSize="s3">December 8, 2022</Text>
+          <Text fontSize="r2">Version 1.0.9</Text>
+          <Text fontSize="s3">December 10, 2022</Text>
         </Box>
         <Box>
           <Box display="flex" alignItems="center" gap={2}>

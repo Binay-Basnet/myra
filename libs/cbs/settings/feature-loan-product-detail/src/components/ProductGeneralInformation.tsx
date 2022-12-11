@@ -1,19 +1,23 @@
 import { DetailCardContent, DetailsCard } from '@myra-ui';
 
 import {
-  DefaultAccountType,
-  Frequency,
-  NatureOfDepositProduct,
-  ProductCodeFormState,
-} from '@coop/ebanking/data-access';
+  LoanInterestMethod,
+  LoanProductInstallment,
+  LoanRepaymentScheme,
+  NatureOfLoanProduct,
+  ProductCodeType,
+} from '@coop/cbs/data-access';
 
 interface IProductGeneralInformation {
   generalInformation: {
-    productName?: string | null;
-    productCode?: ProductCodeFormState | null;
-    nature?: NatureOfDepositProduct | null;
-    depositFrequency?: Frequency | null;
-    accountType?: DefaultAccountType | null;
+    productName: string | null | undefined;
+    productCode: ProductCodeType | null | undefined;
+    productType: string | null | undefined;
+    nature: NatureOfLoanProduct | null | undefined;
+    productSubType: string | null | undefined;
+    interestMethod: LoanInterestMethod | null | undefined;
+    loanRepaymentScheme: (LoanRepaymentScheme | null)[] | null | undefined;
+    installmentFrequency: LoanProductInstallment | null | undefined;
   };
 }
 
@@ -32,32 +36,32 @@ export const ProductGeneralInformation = ({ generalInformation }: IProductGenera
     <DetailCardContent
       title="Product Subtype"
       subtitle={
-        generalInformation?.depositFrequency
-          ? generalInformation?.depositFrequency?.toLowerCase()
+        generalInformation?.productSubType
+          ? generalInformation?.productSubType?.toLowerCase()
           : 'N/A'
       }
     />
     <DetailCardContent
       title="Interest Method"
       subtitle={
-        generalInformation?.depositFrequency
-          ? generalInformation?.depositFrequency?.toLowerCase()
+        generalInformation?.interestMethod
+          ? generalInformation?.interestMethod?.toLowerCase()
           : 'N/A'
       }
     />
     <DetailCardContent
       title="Loan Repayment Scheme"
       subtitle={
-        generalInformation?.depositFrequency
-          ? generalInformation?.depositFrequency?.toLowerCase()
+        generalInformation?.loanRepaymentScheme
+          ? generalInformation?.loanRepaymentScheme?.join(', ')
           : 'N/A'
       }
     />
     <DetailCardContent
       title="Installment Frequency"
       subtitle={
-        generalInformation?.depositFrequency
-          ? generalInformation?.depositFrequency?.toLowerCase()
+        generalInformation?.installmentFrequency
+          ? generalInformation?.installmentFrequency?.toLowerCase()
           : 'N/A'
       }
     />

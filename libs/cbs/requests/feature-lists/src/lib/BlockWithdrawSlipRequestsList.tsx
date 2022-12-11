@@ -6,7 +6,7 @@ import { Box, DetailCardContent, Grid, PageHeader, TablePopover, Text } from '@m
 import { Column, Table } from '@myra-ui/table';
 
 import { RequestStatus, RequestType, useGetBlockChequeListQuery } from '@coop/cbs/data-access';
-import { getRouterQuery } from '@coop/shared/utils';
+import { featureCode, getRouterQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
 import { ApproveDeclineModal } from '../components/ApproveDeclineModal';
@@ -117,7 +117,7 @@ export const BlockWithdrawSlipRequestsList = () => {
   return (
     <Box display="flex" flexDir="column">
       <Box position="sticky" top="110px" zIndex={3}>
-        <PageHeader heading="Block Cheque Request" />
+        <PageHeader heading={`Block Withdraw Slip Request - ${featureCode.blockWithdrawSlip}`} />
       </Box>
 
       <Table

@@ -43,7 +43,7 @@ export const MBTransactionsReport = () => {
           paths={[
             { label: 'Mobile Banking Reports', link: '/reports/cbs/mobile-banking' },
             {
-              label: 'Mobile Banking Registration Report',
+              label: 'Mobile Banking Channel Transaction Report',
               link: '/reports/cbs/mobile-banking/transaction/new',
             },
           ]}
@@ -58,7 +58,7 @@ export const MBTransactionsReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period.periodType} />
+          <Report.Organization />
           <Report.Table<MBankingTransactionData & { index: number }>
             columns={[
               {

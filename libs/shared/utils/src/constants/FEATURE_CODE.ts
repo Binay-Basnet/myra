@@ -11,9 +11,9 @@ export const featureCode = {
 
   newAccountOpen: '10201',
   newAccountClose: '10202',
-  accountList: '10204',
-  accountCloseList: '10205',
-  depositProductList: '10206',
+  accountList: '10203',
+  accountCloseList: '10204',
+  depositProductList: '10205',
 
   newDeposit: '10301',
   newWithdraw: '10302',
@@ -32,7 +32,7 @@ export const featureCode = {
 
   saveReports: '10601',
   favoriteReports: '10602',
-  shareRegister: '10603',
+  shareRegister: '10103',
   shareTransactionReport: '10604',
 
   accountCode: ['90.1', '90.2'],
@@ -56,4 +56,18 @@ export const featureCode = {
   loanRepayment: '10305',
   loanProducts: '10306',
   loanDeclined: '10307',
+
+  cbsReports: '10801',
+  savedReports: '10802',
+
+  profitFundManagementList: '10905',
+  newProfitFundManagement: '10902',
+
+  withdrawSlipRequest: '10702',
+  blockWithdrawSlip: '10703',
+
+  vaultTransferList: '10503',
+  tellerTransferList: '10504',
+  newVaultTransfer: '10501',
+  newTellerTransfer: '10502',
 };

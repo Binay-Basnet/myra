@@ -24,7 +24,6 @@ import {
 import {
   LoanDisbursementInput,
   LoanDisbursementMethod,
-  useGetCoaBankListQuery,
   useGetIndividualMemberDetails,
   useGetLoanApplicationDetailsQuery,
   useSetDisburseLoanMutation,
@@ -32,12 +31,11 @@ import {
 import { LoanListLayout } from '@coop/cbs/loan/layouts';
 import {
   FormAccountSelect,
+  FormBankSelect,
   FormInput,
-  FormSelect,
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { featureCode } from '@coop/shared/utils';
 
 import CBSLoanDetails from './CbsLoanFeatureDetails';
 import {
@@ -182,17 +180,6 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
     setMode('details');
   };
 
-  const { data: bank } = useGetCoaBankListQuery({
-    accountCode: featureCode.accountCode as string[],
-  });
-
-  const bankListArr = bank?.settings?.chartsOfAccount?.accountsUnder?.data;
-
-  const bankList = bankListArr?.map((item) => ({
-    label: item?.name?.local as string,
-    value: item?.id as string,
-  }));
-
   const { loanPreview } = useLoanDetails();
   const memberId = loanPreview?.memberId as string;
   const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
@@ -263,11 +250,7 @@ export const CBSLoanDisbursePayment = ({ setMode }: IProps) => {
                 <Grid templateColumns="repeat(2,1fr)" gap="s20" pt="s16">
                   {' '}
                   <GridItem colSpan={2}>
-                    <FormSelect
-                      name="bankChequePayment.bankAccountId"
-                      label="Bank Name"
-                      options={bankList}
-                    />
+                    <FormBankSelect name="bankChequePayment.bankAccountId" label="Bank Name" />
                   </GridItem>
                   <FormInput
                     name="bankChequePayment.chequeNo"

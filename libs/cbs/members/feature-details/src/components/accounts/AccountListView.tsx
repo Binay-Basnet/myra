@@ -4,7 +4,13 @@ import { useRouter } from 'next/router';
 
 import { Button, DetailsCard, Icon } from '@myra-ui';
 
-import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
+import {
+  CooperativeBasicMinInfo,
+  CooperativeUnionBasicMinInfo,
+  IndividualBasicMinInfo,
+  InstitutionBasicMinInfo,
+  useGetMemberOverviewBasicDetailsQuery,
+} from '@coop/cbs/data-access';
 
 import { AccountCard } from './AccountCard';
 import { AccountTable } from './AccountTable';
@@ -24,24 +30,55 @@ interface IAccountListProps {
   isClosedAccounts?: boolean;
 }
 
-export const AccountList = ({ title, accountList, isClosedAccounts }: IAccountListProps) => {
+export const AccountList = ({
+  title,
+  accountList,
+  isClosedAccounts = false,
+}: IAccountListProps) => {
   const router = useRouter();
   const [showGrid, setShowGrid] = useState(true);
 
   const handleClick = () => {
     setShowGrid(!showGrid);
   };
-  const memberDetails = useGetMemberDetailsOverviewQuery({
+
+  const memberDetailsData = useGetMemberOverviewBasicDetailsQuery({
     id: router.query['id'] as string,
   });
 
+  const memberIndividual =
+    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+      ?.__typename === 'IndividualBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+          ?.basicInformation as IndividualBasicMinInfo)
+      : null;
+  const memberBasicInstitution =
+    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+      ?.__typename === 'InstitutionBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+          ?.basicInformation as InstitutionBasicMinInfo)
+      : null;
+
+  const memberBasicCooperative =
+    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+      ?.__typename === 'CooperativeBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+          ?.basicInformation as CooperativeBasicMinInfo)
+      : null;
+  const memberBasicCooperativeUnion =
+    memberDetailsData?.data?.members?.memberOverview?.data?.overview?.basicInformation
+      ?.__typename === 'CooperativeUnionBasicMinInfo'
+      ? (memberDetailsData?.data?.members?.memberOverview?.data?.overview
+          ?.basicInformation as CooperativeUnionBasicMinInfo)
+      : null;
+
   const memberBasicDetails =
-    memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation;
-  const contactNo = memberBasicDetails?.contactNumber;
+    memberIndividual ??
+    memberBasicInstitution ??
+    memberBasicCooperative ??
+    memberBasicCooperativeUnion;
+  const contactNo = memberIndividual ? memberIndividual?.contactNumber : '-';
   const memberName = memberBasicDetails?.memberName;
-  const memberAccountDetails =
-    memberDetails?.data?.members?.memberOverview?.data?.accounts?.accounts;
-  const memberLength = memberAccountDetails?.length;
 
   return (
     <>
@@ -49,7 +86,7 @@ export const AccountList = ({ title, accountList, isClosedAccounts }: IAccountLi
       {showGrid && (
         <DetailsCard
           bg="white"
-          title={memberLength ? title : 'Saving Accounts List (0)'}
+          title={title}
           leftBtn={
             <Button
               variant="ghost"
@@ -78,7 +115,8 @@ export const AccountList = ({ title, accountList, isClosedAccounts }: IAccountLi
         <DetailsCard
           hasTable
           bg="white"
-          title={memberLength ? title : 'Saving Accounts List (0)'}
+          // title={memberLength ? title : 'Saving Accounts List (0)'}
+          title={title}
           leftBtn={
             <Button
               variant="ghost"

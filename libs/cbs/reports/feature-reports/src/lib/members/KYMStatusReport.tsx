@@ -72,7 +72,7 @@ export const KYMStatusReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<KymStatusReport & { index: number }>
             columns={[
               {

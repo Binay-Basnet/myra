@@ -2691,6 +2691,7 @@ const ne: Record<string, string> = {
   transactionsSidebarLoanPayment: 'Loan Payment',
   transactionsSidebarAgentList: 'Market Representative List',
   transactionsSidebarJournalVoucher: 'Journal Voucher',
+  transactionsSidebarAllTransactions: 'All Transactions',
   transactionsSidebarAgentTransaction: 'Market Representative Transactions',
 
   depositProductMinimumRate: 'Minimum Rate',
@@ -2945,9 +2946,9 @@ const ne: Record<string, string> = {
   transactionSidebarNewLoanPayment: 'New Loan Payment',
   transactionSidebarNewMarketRepresentativeTransaction: 'New Market Representative Transaction',
 
-  transactionLayoutBalanceSheet: 'Balance Sheet',
+  transactionLayoutBalanceSheet: 'Trail Balance',
   transactionLayoutIncomeStatement: 'Income Statement',
-  transactionLayoutCashFlowStament: 'Cash Flow Statement',
+  transactionLayoutCashFlowStament: 'Cash Ledger',
   transactionLayoutChangeOfEquity: 'Change of Equity',
   transactionLayoutAppropriationOfProfit: 'Appropriation of Profit',
   transactionLayoutBankGLBalance: 'Bank GL Balance',
@@ -3193,7 +3194,7 @@ const ne: Record<string, string> = {
   loanLayoutProductsSettings: 'Loan Product Settings',
 
   loanLayoutStatementReport: 'Loan Statement Report',
-  loanLayoutAgeingReport: 'Loan Ageing Report',
+  loanLayoutAgeingReport: 'Loan Aging Report',
 
   // account deposit product
   accountDepositProduct: 'Deposit Product',

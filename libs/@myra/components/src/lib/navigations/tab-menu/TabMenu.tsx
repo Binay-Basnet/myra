@@ -77,7 +77,7 @@ const cbsTabs: { title: keyof typeof en; icon: IconType; link: string; match: st
   {
     title: 'others',
     icon: IoPrismOutline,
-    link: '/others/fund-management/list',
+    link: '/others/market-representatives/list',
     match: ['others'],
   },
 ];
@@ -90,12 +90,12 @@ interface ITabMenuProps {
     // Match refers to array of string that needs to match with given route
     match: string[];
   }[];
-  app?: string;
+
   // Route Index is the index of the router?.asPath.split('/') that needs to be matched
   routeIndex?: number;
 }
 
-export const TabMenu = ({ tabs = cbsTabs, routeIndex = 1, app }: ITabMenuProps) => {
+export const TabMenu = ({ tabs = cbsTabs, routeIndex = 1 }: ITabMenuProps) => {
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -114,11 +114,6 @@ export const TabMenu = ({ tabs = cbsTabs, routeIndex = 1, app }: ITabMenuProps) 
       alignItems="center"
       display="flex"
     >
-      <Box w="200px">
-        <Text fontWeight="SemiBold" fontSize="s16" color="gray.0">
-          {app || t['corebankingSystems']}
-        </Text>
-      </Box>
       <Tabs index={currentIndex} size="md" height="100%" variant="enclosed">
         <TabList border="none" height="100%" display="flex" gap="s8">
           {tabs.map(({ title, icon, link, match }) => {

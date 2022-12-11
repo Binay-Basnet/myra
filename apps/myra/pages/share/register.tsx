@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { SharePageLayout, ShareRegisterTable } from '@coop/myra/components';
 import { MainLayout } from '@myra-ui';
+
+import { SharePageLayout, ShareRegisterTable } from '@coop/myra/components';
 
 // TODO ( Update this page when design arrives )
 const ShareRegister = () => <ShareRegisterTable />;

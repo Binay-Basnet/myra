@@ -31,6 +31,10 @@ export const AccountingFeatureJournalVouchersList = () => {
 
   const rowData = useMemo(() => data?.accounting?.journalVoucher?.list?.edges ?? [], [data]);
 
+  const baseRoute = router?.pathname?.includes('transactions')
+    ? 'transactions'
+    : 'accounting/accounting';
+
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -101,6 +105,7 @@ export const AccountingFeatureJournalVouchersList = () => {
         getRowId={(row) => String(row?.node?.id)}
         isLoading={isFetching}
         columns={columns}
+        rowOnClick={(row) => router.push(`/${baseRoute}/journal-vouchers/view?id=${row?.node?.id}`)}
         pagination={{
           total: data?.accounting?.journalVoucher?.list?.totalCount ?? 'Many',
           pageInfo: data?.accounting?.journalVoucher?.list?.pageInfo,

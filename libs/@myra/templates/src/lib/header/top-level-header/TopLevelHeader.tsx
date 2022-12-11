@@ -5,6 +5,7 @@ import { CgMenuGridO } from 'react-icons/cg';
 import Image from 'next/legacy/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 
 import {
@@ -112,6 +113,7 @@ const AppSwitcherText = (props: { children: React.ReactNode }) => {
 };
 
 export const TopLevelHeader = () => {
+  const queryClient = useQueryClient();
   const { t } = useTranslation();
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -370,7 +372,7 @@ export const TopLevelHeader = () => {
               color="white"
               borderRadius="br1"
               _hover={{ backgroundColor: 'secondary.900' }}
-              onClick={() => router.push('/settings/general/organization')}
+              onClick={() => router.push('/settings/general/service-center')}
               ref={settingShortcut}
             />
 
@@ -717,7 +719,7 @@ export const TopLevelHeader = () => {
                             cursor="pointer"
                             onClick={() => {
                               dispatch(logout());
-                              router.push('/login');
+                              router.push('/login').then(() => queryClient.clear());
                             }}
                           >
                             <Text

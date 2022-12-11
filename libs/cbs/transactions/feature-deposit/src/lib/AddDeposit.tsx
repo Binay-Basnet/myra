@@ -191,18 +191,20 @@ export const AddDeposit = () => {
       if (!rebate && Number(totalCashPaid ?? 0) < Number(totalDeposit)) return true;
     }
 
-    if (
-      selectedPaymentMode === DepositPaymentType.BankVoucher &&
-      Number(bankVoucherAmount ?? 0) < Number(totalDeposit)
-    ) {
-      return true;
+    if (selectedPaymentMode === DepositPaymentType.BankVoucher) {
+      if (rebate && Number(bankVoucherAmount ?? 0) < Number(amountToBeDeposited)) {
+        return true;
+      }
+
+      if (!rebate && Number(bankVoucherAmount ?? 0) < Number(totalDeposit)) return true;
     }
 
-    if (
-      selectedPaymentMode === DepositPaymentType.WithdrawSlip &&
-      Number(withdrawSlipAmount ?? 0) < Number(totalDeposit)
-    ) {
-      return true;
+    if (selectedPaymentMode === DepositPaymentType.WithdrawSlip) {
+      if (rebate && Number(withdrawSlipAmount ?? 0) < Number(amountToBeDeposited)) {
+        return true;
+      }
+
+      if (!rebate && Number(withdrawSlipAmount ?? 0) < Number(totalDeposit)) return true;
     }
 
     return false;
@@ -411,7 +413,7 @@ export const AddDeposit = () => {
                         selectedAccount?.product?.isMandatorySaving)) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-end">
-                          <FormInput name="voucherId" label={t['addDepositVoucherId']} />
+                          <FormInput name="voucherId" label="Deposit Slip No" />
 
                           <Box />
 
@@ -442,7 +444,7 @@ export const AddDeposit = () => {
                     selectedAccount?.product?.nature === NatureOfDepositProduct.TermSavingOrFd && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-start">
-                          <FormInput name="voucherId" label={t['addDepositVoucherId']} />
+                          <FormInput name="voucherId" label="Deposit Slip No" />
 
                           <FormAmountInput
                             type="number"
@@ -471,7 +473,7 @@ export const AddDeposit = () => {
                         !selectedAccount?.product?.isMandatorySaving)) && (
                       <>
                         <Grid templateColumns="repeat(2, 1fr)" gap="s24" alignItems="flex-start">
-                          <FormInput name="voucherId" label={t['addDepositVoucherId']} />
+                          <FormInput name="voucherId" label="Deposit Slip No" />
 
                           <FormAmountInput
                             type="number"
@@ -605,8 +607,8 @@ export const AddDeposit = () => {
               <Payment
                 mode={mode}
                 totalDeposit={rebate ? Number(totalDeposit) - Number(rebate) : Number(totalDeposit)}
-                rebate={Number(rebate ?? 0)}
-                selectedAccount={selectedAccount as DepositAccount}
+                // rebate={Number(rebate ?? 0)}
+                // selectedAccount={selectedAccount as DepositAccount}
               />
             </form>
           </FormProvider>

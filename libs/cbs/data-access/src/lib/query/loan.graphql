@@ -265,6 +265,8 @@ query getLoanInstallments(
     ) {
       data {
         total
+        totalInterest
+        totalPrincipal
         installments {
           interest
           installmentDate
@@ -460,6 +462,8 @@ query getLoanPreview($id: String!) {
         productId
         paymentSchedule {
           total
+          totalInterest
+          totalPrincipal
           installments {
             installmentDate
             installmentNo

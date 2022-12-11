@@ -1,8 +1,9 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
+
+import { MainLayout } from '@myra-ui';
 
 import { AgentList } from '@coop/cbs/transactions/agent';
 import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
-import { MainLayout } from '@myra-ui';
 
 const TransactionsAgentList = () => <AgentList />;
 

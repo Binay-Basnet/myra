@@ -4,15 +4,12 @@ import { useFormContext } from 'react-hook-form';
 import { Box, Grid, GridItem, Text } from '@myra-ui';
 
 import {
-  DepositAccount,
   DepositedBy,
   DepositPaymentType,
-  NatureOfDepositProduct,
   ObjState,
   RootState,
   useAppSelector,
   useGetAvailableSlipsListQuery,
-  useGetCoaBankListQuery,
 } from '@coop/cbs/data-access';
 import {
   BoxContainer,
@@ -23,6 +20,7 @@ import {
   FormAccountSelect,
   FormAgentSelect,
   FormAmountInput,
+  FormBankSelect,
   FormCheckbox,
   FormDatePicker,
   FormEditableTable,
@@ -34,7 +32,7 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 // const sourceOfFundsList = [
 //   'Personal Savings',
@@ -75,8 +73,8 @@ const denominationsOptions = [
 export interface PaymentProps {
   mode: number;
   totalDeposit: number;
-  rebate: number;
-  selectedAccount?: DepositAccount;
+  // rebate: number;
+  // selectedAccount?: DepositAccount;
 }
 
 type PaymentTableType = {
@@ -85,7 +83,7 @@ type PaymentTableType = {
   amount: string;
 };
 
-export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: PaymentProps) => {
+export const Payment = ({ mode, totalDeposit }: PaymentProps) => {
   const { t } = useTranslation();
 
   const paymentModes = [
@@ -142,17 +140,6 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
 
   const denominations = watch('cash.denominations');
 
-  const { data: bank } = useGetCoaBankListQuery({
-    accountCode: featureCode.accountCode as string[],
-  });
-
-  const bankListArr = bank?.settings?.chartsOfAccount?.accountsUnder?.data;
-
-  const bankList = bankListArr?.map((item) => ({
-    label: item?.name?.local as string,
-    value: item?.id as string,
-  }));
-
   const denominationTotal =
     denominations?.reduce(
       (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
@@ -165,13 +152,7 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
 
   const totalCashPaid = disableDenomination ? cashPaid : denominationTotal;
 
-  const returnAmount =
-    selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
-    selectedAccount?.product?.isMandatorySaving
-      ? 0
-      : rebate
-      ? totalCashPaid - totalDeposit + rebate
-      : totalCashPaid - totalDeposit;
+  const returnAmount = totalCashPaid - totalDeposit;
 
   // refetch data when calendar preference is updated
   const preference = useAppSelector((state: RootState) => state?.auth?.preference);
@@ -218,11 +199,12 @@ export const Payment = ({ mode, totalDeposit, rebate, selectedAccount }: Payment
         {selectedPaymentMode === DepositPaymentType.BankVoucher && (
           <InputGroupContainer>
             <GridItem colSpan={2}>
-              <FormSelect
+              {/* <FormSelect
                 name="bankVoucher.bankId"
                 label={t['depositPaymentBankName']}
                 options={bankList}
-              />
+              /> */}
+              <FormBankSelect name="bankVoucher.bankId" label={t['depositPaymentBankName']} />
             </GridItem>
 
             <FormInput name="bankVoucher.voucherId" label={t['addDepositVoucherId']} />

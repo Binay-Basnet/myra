@@ -101,7 +101,7 @@ export const useCooperative = ({ methods }: IInstitutionHookProps) => {
         if (id) {
           await mutateAsync({
             id: router.query['id'] as string,
-            data: pickBy(data, (v) => v !== 0 && v !== '' && v !== null && v !== undefined),
+            data: pickBy(data, (v) => v !== null && v !== undefined),
           });
         }
       }, 800)

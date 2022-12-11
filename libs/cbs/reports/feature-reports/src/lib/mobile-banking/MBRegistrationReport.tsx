@@ -56,7 +56,7 @@ export const MBRegistrationReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<EbankingReportResult & { index: number }>
             columns={[
               {

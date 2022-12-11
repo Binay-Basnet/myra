@@ -25,7 +25,6 @@ import {
   ObjState,
   PaymentDepositedBy,
   useGetAvailableSlipsListQuery,
-  useGetCoaBankListQuery,
   useGetMembershipFeeQuery,
   usePayMembershipMutation,
 } from '@coop/cbs/data-access';
@@ -34,6 +33,7 @@ import {
   FormAccountSelect,
   FormAgentSelect,
   FormAmountInput,
+  FormBankSelect,
   FormCheckbox,
   FormDatePicker,
   FormEditableTable,
@@ -45,7 +45,7 @@ import {
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 const denominationsOptions = [
   { label: '1000x', value: '1000' },
@@ -169,17 +169,6 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
       value: DepositPaymentType.BankVoucher,
     },
   ];
-
-  const { data: bank } = useGetCoaBankListQuery({
-    accountCode: featureCode.accountCode as string[],
-  });
-
-  const bankListArr = bank?.settings?.chartsOfAccount?.accountsUnder?.data;
-
-  const bankList = bankListArr?.map((item) => ({
-    label: item?.name?.local as string,
-    value: item?.id as string,
-  }));
 
   const withdrawSlipAccountId = watch('withdrawSlipData.accountId');
 
@@ -351,11 +340,7 @@ export const MembershipPayment = ({ setMode }: MembershipPaymentProps) => {
             <Box>
               <Grid px="s20" templateColumns="repeat(3, 1fr)" rowGap="s16" columnGap="s20">
                 <GridItem colSpan={3}>
-                  <FormSelect
-                    name="bankDeposit.bankId"
-                    label={t['depositPaymentBankName']}
-                    options={bankList}
-                  />
+                  <FormBankSelect name="bankDeposit.bankId" label={t['depositPaymentBankName']} />
                 </GridItem>
 
                 <FormInput name="bankDeposit.voucherId" label={t['addDepositVoucherId']} />

@@ -1,7 +1,9 @@
 import { IoCopyOutline, IoQrCode } from 'react-icons/io5';
+import { useRouter } from 'next/router';
 import { useDisclosure } from '@chakra-ui/react';
 
 import { AccountQRModal, Box, Divider, Icon, IconButton, Text } from '@myra-ui';
+
 import { copyToClipboard } from '@coop/shared/utils';
 
 interface IAccountCardProps {
@@ -26,6 +28,7 @@ export const LoanAccountCard = ({
   memberName,
 }: IAccountCardProps) => {
   const { onClose: modalOnClose, isOpen, onToggle } = useDisclosure();
+  const router = useRouter();
 
   return (
     <>
@@ -35,7 +38,13 @@ export const LoanAccountCard = ({
           <Box display="flex" flexDirection="column" gap="s8">
             <Box display="flex" flexDirection="column" gap="s4">
               <Box>
-                <Text fontWeight="600" fontSize="r1" color="primary.500">
+                <Text
+                  fontWeight="600"
+                  fontSize="r1"
+                  color="primary.500"
+                  cursor="pointer"
+                  onClick={() => router.push(`/loan/accounts/view?id=${accountNumber}`)}
+                >
                   {accountName}
                 </Text>
                 <Box display="flex" alignItems="center" gap="s4">

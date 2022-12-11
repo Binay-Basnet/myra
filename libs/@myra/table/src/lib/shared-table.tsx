@@ -41,6 +41,7 @@ export const Table = <T extends Record<string, unknown>>({
   rowOnClick,
   enableSorting,
   manualSorting = true,
+  onChange,
 }: TableProps<T>) => {
   const router = useRouter();
   const sortQuery = router?.query['sort'] as string;
@@ -95,7 +96,8 @@ export const Table = <T extends Record<string, unknown>>({
             pagination={pagination}
             size={tableSize}
             setSize={setTableSize}
-            onClick={() => setIsModalOpen(true)}
+            // onClick={() => setIsModalOpen(true)}
+            onChange={onChange}
           />
           <Modal open={isModalOpen} onClose={handleModalClose} isCentered width="3xl">
             <WIPState />
@@ -106,7 +108,7 @@ export const Table = <T extends Record<string, unknown>>({
       <TableContainer
         minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}
         {...(variant === 'report'
-          ? { borderRadius: 'br2', border: '1px', borderColor: 'border.element' }
+          ? { borderRadius: 'br1', border: '0px', borderColor: 'border.element' }
           : {})}
       >
         <ChakraTable
@@ -114,10 +116,10 @@ export const Table = <T extends Record<string, unknown>>({
           variant={variant}
           {...(variant === 'report'
             ? {
-                borderRadius: 'br2',
-                border: '1px',
+                border: '0',
+                borderRadius: 'br1',
+
                 borderColor: 'border.element',
-                overflow: 'hidden',
               }
             : {})}
         >

@@ -6,6 +6,8 @@ import isEqual from 'lodash/isEqual';
 import omit from 'lodash/omit';
 import pickBy from 'lodash/pickBy';
 
+import { Box, FormSection, Grid, GridItem, Text } from '@myra-ui';
+
 import {
   CooperativeUnionPersonnelSection,
   CoopUnionPersonnelInput,
@@ -28,7 +30,6 @@ import {
   FormRadioGroup,
   FormSwitch,
 } from '@coop/shared/form';
-import { Box, FormSection, Grid, GridItem, Text } from '@myra-ui';
 import { getKymSectionCoOperativeUnion, isDeepEmpty, useTranslation } from '@coop/shared/utils';
 
 import { CentralRepresentativeTraining } from './CentralRepresentativeTraining';

@@ -3,8 +3,9 @@ import { AiOutlineSetting } from 'react-icons/ai';
 import { HiPlus } from 'react-icons/hi';
 import { useRouter } from 'next/router';
 
-import { TabColumn } from '@coop/myra/components';
 import { Box, Button, Divider, Icon, Text } from '@myra-ui';
+
+import { TabColumn } from '@coop/myra/components';
 import { useTranslation } from '@coop/shared/utils';
 
 interface IAccountPageLayoutProps {
@@ -27,7 +28,7 @@ export const MobileBankingListLayout = ({ children }: IAccountPageLayoutProps) =
       <Box width="260px" flexShrink={0} position="fixed">
         <Box height="60px" py="s12" px="s16">
           <Text fontSize="l1" fontWeight="600" color="gray.800">
-            {t['acMobileBanking']}
+            {t['acMBanking']}
           </Text>
         </Box>
         <Box p="s16">

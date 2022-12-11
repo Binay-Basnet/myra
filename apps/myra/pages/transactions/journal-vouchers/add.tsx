@@ -1,11 +1,12 @@
 import { ReactElement } from 'react';
 
+import { MainLayout } from '@myra-ui';
+
 import { AccountingFeatureAddJournalVoucher } from '@coop/accounting/accounting';
-import { AccountingLayout } from '@coop/accounting/ui-layouts';
 
 const JournalVouchersAdd = () => <AccountingFeatureAddJournalVoucher />;
 
 JournalVouchersAdd.getLayout = function getLayout(page: ReactElement) {
-  return <AccountingLayout>{page}</AccountingLayout>;
+  return <MainLayout>{page}</MainLayout>;
 };
 export default JournalVouchersAdd;

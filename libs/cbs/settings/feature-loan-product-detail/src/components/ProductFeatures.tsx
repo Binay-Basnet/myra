@@ -3,7 +3,7 @@ import { Table } from '@myra-ui';
 interface IProductFeaturesProps {
   features: {
     feature: string;
-    status: 'yes' | 'no';
+    status: string;
   }[];
 }
 

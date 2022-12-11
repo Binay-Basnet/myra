@@ -1,13 +1,11 @@
 import { ReactElement } from 'react';
 
-import { OthersPageLayout } from '@coop/cbs/others/ui-layouts';
-import { Box, MainLayout, WIPState } from '@myra-ui';
+import { MainLayout } from '@myra-ui';
 
-const FundManagementListPage = () => (
-  <Box display="flex" justifyContent="center" alignItems="center" pt="s60">
-    <WIPState />
-  </Box>
-);
+import { OthersPageLayout } from '@coop/cbs/others/ui-layouts';
+import { AgentList } from '@coop/cbs/transactions/agent';
+
+const FundManagementListPage = () => <AgentList />;
 
 export default FundManagementListPage;
 

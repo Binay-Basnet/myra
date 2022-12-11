@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { Box, GridItem, Text } from '@myra-ui';
 
 import {
@@ -65,7 +66,7 @@ export const TrialSheetReport = () => {
         <Report.PageHeader
           paths={[
             { label: 'Transaction Reports', link: '/reports/cbs/transactions' },
-            { label: 'Trial Sheet', link: '/reports/cbs/transactions/trail-balance/new' },
+            { label: 'Trial Balance', link: '/reports/cbs/transactions/trail-sheet/new' },
           ]}
         />
 
@@ -81,7 +82,7 @@ export const TrialSheetReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
 
           {equityAndLiablities?.length !== 0 && (
             <Box display="flex" py="s16" flexDir="column">

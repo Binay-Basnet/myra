@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { Box, Grid, GridItem, Text } from '@myra-ui';
 
-import { useGetCoaBankListQuery, WithdrawBy, WithdrawPaymentType } from '@coop/cbs/data-access';
+import { WithdrawBy, WithdrawPaymentType } from '@coop/cbs/data-access';
 import {
   BoxContainer,
   ContainerWithDivider,
@@ -12,15 +12,15 @@ import {
 import {
   FormAgentSelect,
   FormAmountInput,
+  FormBankSelect,
   FormEditableTable,
   FormFileInput,
   FormInput,
-  FormSelect,
   FormSwitch,
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { amountConverter, featureCode, useTranslation } from '@coop/shared/utils';
+import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 const denominationsOptions = [
   { label: '1000x', value: '1000' },
@@ -88,17 +88,6 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
     setValue('bankCheque.amount', String(totalWithdraw));
   }, [totalWithdraw]);
 
-  const { data: bank } = useGetCoaBankListQuery({
-    accountCode: featureCode.accountCode as string[],
-  });
-
-  const bankListArr = bank?.settings?.chartsOfAccount?.accountsUnder?.data;
-
-  const bankList = bankListArr?.map((item) => ({
-    label: item?.name?.local as string,
-    value: item?.id as string,
-  }));
-
   const selectedPaymentMode = watch('payment_type');
 
   const withdrawnBy = watch('withdrawnBy');
@@ -137,11 +126,7 @@ export const Payment = ({ mode, totalWithdraw }: PaymentProps) => {
         {selectedPaymentMode === WithdrawPaymentType.BankCheque && (
           <InputGroupContainer>
             <GridItem colSpan={2}>
-              <FormSelect
-                name="bankCheque.bankId"
-                label={t['withdrawPaymentBankName']}
-                options={bankList}
-              />
+              <FormBankSelect name="bankCheque.bankId" label={t['withdrawPaymentBankName']} />
             </GridItem>
 
             <FormInput name="bankCheque.chequeNo" label={t['withdrawPaymentChequeNo']} />

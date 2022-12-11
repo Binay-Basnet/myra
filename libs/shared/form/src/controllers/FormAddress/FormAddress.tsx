@@ -1,6 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
 import { FormSection, GridItem } from '@myra-ui';
+
 import { useTranslation } from '@coop/shared/utils';
 
 import { useAddress } from './useAddress';
@@ -12,12 +13,13 @@ export interface IFormAddressProps {
   sectionId?: string;
   sectionHeader?: string;
   name: string;
+  noBorder?: boolean;
 }
 
-export const FormAddress = ({ sectionId, sectionHeader, name }: IFormAddressProps) => {
+export const FormAddress = ({ sectionId, sectionHeader, name, noBorder }: IFormAddressProps) => {
   if (sectionId && sectionHeader) {
     return (
-      <FormSection id={sectionId} header={sectionHeader}>
+      <FormSection id={sectionId} header={sectionHeader} divider={!noBorder}>
         <AddressGroup name={name} />
       </FormSection>
     );

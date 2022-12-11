@@ -5,7 +5,7 @@ import { Avatar, Box, PageHeader, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { TellerTransferType, useGetTellerTransactionListDataQuery } from '@coop/cbs/data-access';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 /* eslint-disable-next-line */
 export interface TellerTransferListProps {}
@@ -112,7 +112,7 @@ export const TellerTransferList = () => {
   return (
     <>
       <PageHeader
-        heading="Teller Transfer"
+        heading={`Teller Transfer - ${featureCode.tellerTransferList}`}
         // tabItems={tabList}
         button
         buttonTitle="Teller Transfer"

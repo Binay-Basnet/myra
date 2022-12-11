@@ -13,11 +13,11 @@ export const ProductLoanRepayment = ({ principal, interest }: ProductLoanRepayme
       <Box px="s16" fontSize="r1" textTransform="capitalize">
         <ul>
           <li>
-            Grace preiod on Principal:
+            Grace preiod on Principal: &nbsp;
             <b>{principal}</b>
           </li>
           <li>
-            Day Grace period on Interest:
+            Day Grace period on Interest: &nbsp;
             <b>{interest}</b>
           </li>
         </ul>

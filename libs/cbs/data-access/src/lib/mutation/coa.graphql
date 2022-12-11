@@ -27,3 +27,34 @@ mutation deleteCOA($id: ID!) {
     }
   }
 }
+
+mutation AddGroup($data:  NewCoaGroupInput!){
+  settings {
+    chartsOfAccount {
+      account {
+        newGroup(data: $data){
+          recordId
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
+
+
+mutation addAccountInCOA($accountSetup: COAAccountSetup!, $parentAccountCode: String!){
+  settings {
+    chartsOfAccount {
+      account {
+        addAccount(accountSetup: $accountSetup, parentAccountCode: $parentAccountCode){
+          success
+          error {
+            ...MutationError
+          }
+        }
+      }
+    }
+  }
+}
