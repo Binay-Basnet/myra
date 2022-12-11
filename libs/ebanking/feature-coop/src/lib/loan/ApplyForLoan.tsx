@@ -8,7 +8,7 @@ import { asyncToast, Box, PathBar } from '@myra-ui';
 
 import { InfoCard } from '@coop/ebanking/cards';
 import { useApplyForLoanMutation } from '@coop/ebanking/data-access';
-import { FormBranchSelect, FormInput, FormTextArea } from '@coop/shared/form';
+import { FormBranchSelectEbanking, FormInput, FormTextArea } from '@coop/shared/form';
 import { getLoggedInUserId } from '@coop/shared/utils';
 
 const formSchema = yup.object({
@@ -63,7 +63,7 @@ export const ApplyForLoan = () => {
         <FormProvider {...methods}>
           <form>
             <Box p="s16" display="flex" flexDirection="column" gap="s16">
-              <FormBranchSelect name="branch" label="Branch" />
+              <FormBranchSelectEbanking name="branch" label="Branch" />
               <FormInput name="amount" type="number" placeholder="0.00" label="Amount" />
               <FormTextArea name="purpose" label="Purpose of Loan" />
             </Box>

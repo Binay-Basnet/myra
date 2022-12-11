@@ -3,14 +3,20 @@ import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
+import { asyncToast, Box, PathBar, Text } from '@myra-ui';
+
 import { FormAccountHeader } from '@coop/ebanking/accounts';
 import { InfoCard } from '@coop/ebanking/cards';
 import {
   EBankingChequeWithdrawViaCollectorInput,
   useSetWithdrawViaCollectorRequestDataMutation,
 } from '@coop/ebanking/data-access';
-import { FormAgentSelect, FormBranchSelect, FormInput, FormTextArea } from '@coop/shared/form';
-import { asyncToast, Box, PathBar, Text } from '@myra-ui';
+import {
+  FormAgentSelectEbanking,
+  FormBranchSelectEbanking,
+  FormInput,
+  FormTextArea,
+} from '@coop/shared/form';
 import { getLoggedInUserId } from '@coop/shared/utils';
 
 const formSchema = yup.object({
@@ -71,9 +77,9 @@ export const EbankingFeaureWithdrawCollectorRequest = () => {
                 Request to withdraw via collector
               </Text>
 
-              <FormBranchSelect name="branch" label="Branch" />
+              <FormBranchSelectEbanking name="branch" label="Branch" />
 
-              <FormAgentSelect label="Collector" name="collector" />
+              <FormAgentSelectEbanking label="Collector" name="collector" />
 
               <FormInput type="date" name="date" label="Date" />
 
