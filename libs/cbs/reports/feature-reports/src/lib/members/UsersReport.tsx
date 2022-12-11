@@ -75,7 +75,7 @@ export const UsersReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<UserReport & { index: number }>
             columns={[
               {

@@ -1,9 +1,10 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
-import { Column, Table } from '@myra-ui/table';
 import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
+import { Filter_Mode, ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const ACCOUNT_TAB_ITEMS = [
@@ -25,16 +26,23 @@ export const CBSAccountList = () => {
   const router = useRouter();
 
   const { t } = useTranslation();
+  const [searchTerm, setSearchTerm] = useState('');
 
   const { data, isFetching } = useGetAccountTableListQuery(
     {
       paginate: getRouterQuery({ type: ['PAGINATION'] }),
       filter: {
+        query: searchTerm,
+        id: searchTerm,
+        memberId: searchTerm,
+        productID: searchTerm,
+        filterMode: Filter_Mode.Or,
         objState: (router.query['objState'] ?? ObjState.Active) as ObjState,
       },
     },
     {
       staleTime: 0,
+      enabled: searchTerm !== 'undefined',
     }
   );
 
@@ -130,6 +138,7 @@ export const CBSAccountList = () => {
           total: data?.account?.list?.totalCount ?? 'Many',
           pageInfo: data?.account?.list?.pageInfo,
         }}
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
     </>
   );

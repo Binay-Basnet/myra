@@ -1,21 +1,16 @@
 import { useFormContext } from 'react-hook-form';
 import dayjs from 'dayjs';
 
-import { ReportPeriodType, useAppSelector } from '@coop/cbs/data-access';
-import { formatAddress } from '@coop/cbs/utils';
 import { Box, Text } from '@myra-ui';
 
-import { getPeriodDate } from '../utils/getPeriodDate';
+import { PeriodInput, useAppSelector } from '@coop/cbs/data-access';
+import { formatAddress } from '@coop/cbs/utils';
 
-interface ReportOrganizationProps {
-  statementDate?: ReportPeriodType;
-}
-
-export const ReportOrganization = ({ statementDate }: ReportOrganizationProps) => {
+export const ReportOrganization = () => {
   const { watch } = useFormContext();
   const user = useAppSelector((state) => state.auth.user);
 
-  const period = watch('period');
+  const period = watch('period') as PeriodInput;
 
   return (
     <Box
@@ -60,18 +55,16 @@ export const ReportOrganization = ({ statementDate }: ReportOrganizationProps) =
           <Text fontSize="r1" color="gray.700">
             Statement from:
           </Text>
-          {period === 'lifetime' ? (
-            <Text fontSize="r1" color="gray.700" fontWeight="500">
-              Everything
-            </Text>
-          ) : (
-            statementDate && (
-              <Text fontSize="r1" color="gray.700" fontWeight="500">
-                {getPeriodDate({ period: statementDate }).from} to{' '}
-                {getPeriodDate({ period: statementDate }).to}
-              </Text>
-            )
-          )}
+
+          <Text fontSize="r1" color="gray.700" fontWeight="500">
+            {period?.customPeriod?.from.en}
+          </Text>
+          <Text fontSize="r1" color="gray.700">
+            to
+          </Text>
+          <Text fontSize="r1" color="gray.700" fontWeight="500">
+            {period?.customPeriod?.to.en}
+          </Text>
         </Box>
 
         <Box display="flex" gap="s4">

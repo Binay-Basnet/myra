@@ -93,7 +93,7 @@ export const SavingBalanceReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<SavingsBalanceReport & { index: number }>
             showFooter
             columns={[

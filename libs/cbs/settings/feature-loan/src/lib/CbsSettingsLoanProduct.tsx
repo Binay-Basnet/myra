@@ -141,15 +141,7 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
         header: t['loanProductsProductName'],
         accessorFn: (row) => row?.node.productName,
         cell: (props) => (
-          <Box
-            display="flex"
-            alignItems="center"
-            cursor="pointer"
-            gap="s12"
-            onClick={() => {
-              router.push('/settings/general/loan-products/detail/12123/overview');
-            }}
-          >
+          <Box display="flex" alignItems="center" cursor="pointer" gap="s12">
             <Text
               fontSize="s3"
               textTransform="capitalize"
@@ -261,6 +253,9 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
         isLoading={isLoading}
         data={rowData}
         columns={columns}
+        rowOnClick={(row) =>
+          router.push(`/settings/general/loan-products/view?id=${row?.node?.id}`)
+        }
         pagination={{
           total: data?.settings?.general?.loanProducts?.list?.totalCount ?? 'Many',
           pageInfo: data?.settings?.general?.loanProducts?.list?.pageInfo,

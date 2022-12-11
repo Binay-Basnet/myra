@@ -63,7 +63,7 @@ export const SavingStatementReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<SavingStatement & { index: number }>
             showFooter
             columns={[

@@ -44,7 +44,7 @@ export const InterestPostingReport = () => {
             { label: 'Saving Reports', link: '/reports/cbs/savings' },
             {
               label: 'Interest Statement',
-              link: '/reports/cbs/interest-statement/new',
+              link: '/reports/cbs/savings/interest-statement/new',
             },
           ]}
         />
@@ -56,7 +56,7 @@ export const InterestPostingReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<InterestPostingReportEntry & { index: number }>
             columns={[
               {

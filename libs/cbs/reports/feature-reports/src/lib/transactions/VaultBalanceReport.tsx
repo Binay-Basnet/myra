@@ -96,7 +96,7 @@ export const VaultBalanceReport = () => {
       filters={filters}
       setFilters={setFilters}
       isLoading={isFetching}
-      report={ReportEnum.SHARE_STATEMENT}
+      report={ReportEnum.TRANSACTION_VAULT_BALANCE}
     >
       <Report.Header>
         <Report.PageHeader

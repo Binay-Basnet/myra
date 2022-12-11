@@ -2,11 +2,13 @@ import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
+import { asyncToast, Box, Container, FormFooter, FormHeader, FormSection } from '@myra-ui';
+
 import {
   FundManagementInput,
   useAddProfitToFundManagementDataMutation,
 } from '@coop/cbs/data-access';
-import { asyncToast, Box, Container, FormFooter, FormHeader, FormSection } from '@myra-ui';
+import { featureCode } from '@coop/shared/utils';
 
 import { CustomFundManagementInput } from './type';
 import {
@@ -67,7 +69,7 @@ export const NewFundManagement = () => {
       <Container minW="container.xl" height="fit-content">
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
-            title="New Profit to Fund Management"
+            title={`New Profit to Fund Management - ${featureCode?.newProfitFundManagement}`}
             closeLink="/others/fund-management/list"
           />
         </Box>

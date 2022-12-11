@@ -92,7 +92,7 @@ export const ServiceCenterListReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<ServiceCenter & { index: number }>
             columns={[
               {

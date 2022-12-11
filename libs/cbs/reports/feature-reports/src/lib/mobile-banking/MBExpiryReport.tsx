@@ -38,7 +38,7 @@ export const MBExpiryReport = () => {
           paths={[
             { label: 'Mobile Banking Reports', link: '/reports/cbs/mobile-banking' },
             {
-              label: 'Mobile Banking Registration Report',
+              label: 'Mobile Banking Expiry Report',
               link: '/reports/cbs/mobile-banking/expiry/new',
             },
           ]}
@@ -56,7 +56,7 @@ export const MBExpiryReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<EbankingReportResult & { index: number }>
             columns={[
               {

@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { WithdrawSlipLayout } from '@coop/myra/components';
 import { Box, MainLayout, WIPState } from '@myra-ui';
+
+import { WithdrawSlipLayout } from '@coop/myra/components';
 
 const WithdrawSlip = () => (
   <Box display="flex" p={5} justifyContent="center" alignItems="center">

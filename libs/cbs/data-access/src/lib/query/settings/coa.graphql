@@ -31,20 +31,8 @@ query getCoaFullView {
           accountClass
           accountCode
           category
-        }
-      }
-    }
-  }
-}
-
-query getCOABankList($accountCode: [String]) {
-  settings {
-    chartsOfAccount {
-      accountsUnder(accountCode: $accountCode) {
-        data {
-          id
-          accountCode
-          name
+          allowedBalance
+          transactionAllowed
         }
       }
     }
@@ -81,10 +69,10 @@ query getCOAAccountsUnderList($accountCode: [String]) {
   }
 }
 
-query getCOAAccountsUnderLeafList($parentId: String!) {
+query getCOAAccountsUnderLeafList($parentId: [String]!, $currentBranch: Boolean) {
   settings {
     chartsOfAccount {
-      accountsUnderLeaf(parentId: $parentId) {
+      accountsUnderLeaf(parentId: $parentId, currentBranch: $currentBranch) {
         accountId
         name
       }

@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import { Column, Table } from '@myra-ui/table';
+
 import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanPaymentScheduleTableProps {
@@ -13,54 +14,49 @@ interface ILoanPaymentScheduleTableProps {
     remainingPrincipal: string;
   } | null)[];
   total: string;
+  totalInterest: string | number;
+  totalPrincipal: string | number;
 }
 
-export const LoanPaymentScheduleTable = ({ data, total }: ILoanPaymentScheduleTableProps) => {
+export const LoanPaymentScheduleTable = ({
+  data,
+  total,
+  totalInterest,
+  totalPrincipal,
+}: ILoanPaymentScheduleTableProps) => {
   const columns = useMemo<Column<typeof data[0]>[]>(
     () => [
       {
         header: 'Installment No.',
         footer: 'Total Cost of Loan',
         accessorFn: (row) => row?.installmentNo,
-        meta: {
-          Footer: {
-            colspan: 4,
-          },
-        },
       },
       {
         header: 'Principal',
         accessorFn: (row) => amountConverter(row?.principal ?? 0),
+        footer: () => amountConverter(totalPrincipal),
         meta: {
           isNumeric: true,
-          Footer: {
-            display: 'none',
-          },
         },
       },
       {
         header: 'Interest',
         accessorFn: (row) => amountConverter(row?.interest ?? 0),
+        footer: () => amountConverter(totalInterest),
         meta: {
           isNumeric: true,
-          Footer: {
-            display: 'none',
-          },
         },
       },
       {
         header: 'Payment',
         accessorFn: (row) => amountConverter(row?.payment ?? 0),
+        footer: total,
         meta: {
           isNumeric: true,
-          Footer: {
-            display: 'none',
-          },
         },
       },
       {
         header: 'Remaining Principal',
-        footer: total,
         accessorFn: (row) => amountConverter(row?.remainingPrincipal ?? 0),
         meta: {
           isNumeric: true,

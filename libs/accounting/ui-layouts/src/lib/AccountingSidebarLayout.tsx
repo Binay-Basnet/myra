@@ -1,6 +1,7 @@
 import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { useRouter } from 'next/router';
+
 import {
   AddButtonList,
   Box,
@@ -119,13 +120,7 @@ export const AccountingSidebarLayout = ({ children }: IAccountingSidebarLayoutPr
           {t['accountingAccountingSiderbarAccountingSettings']}
         </Button>
       </Box>
-      <Box
-        width="calc(100% - 275px)"
-        position="relative"
-        left="275px"
-        minH="calc(100vh - 110px)"
-        bg="white"
-      >
+      <Box width="calc(100% - 275px)" position="relative" left="275px" minH="calc(100vh - 110px)">
         {children}
       </Box>
     </Box>

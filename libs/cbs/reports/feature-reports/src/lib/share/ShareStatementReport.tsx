@@ -65,7 +65,7 @@ export const ShareStatementReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <ReportMember member={shareMember} />
           <Report.Table<ShareStatement & { index: number }>
             showFooter

@@ -44,7 +44,7 @@ export const LoanAgingStatementsReport = () => {
         <Report.PageHeader
           paths={[
             { label: 'Other Reports', link: '/reports/cbs/others' },
-            { label: 'Loan Balance Report', link: '/reports/cbs/others/loan-ageing/new' },
+            { label: 'Loan Aging Report', link: '/reports/cbs/others/loan-ageing/new' },
           ]}
         />
         <Report.Inputs hideDate>

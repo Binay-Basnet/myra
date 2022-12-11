@@ -10,11 +10,15 @@ interface ILoanPaymentScheduleTableProps {
   data: LoanInstallment[];
   nextInstallmentNumber?: number;
   total: string;
+  totalInterest: string | number;
+  totalPrincipal: string | number;
 }
 
 export const LoanPaymentScheduleTable = ({
   data,
   total,
+  totalInterest,
+  totalPrincipal,
   nextInstallmentNumber,
 }: ILoanPaymentScheduleTableProps) => {
   const columns = useMemo<Column<LoanInstallment>[]>(
@@ -25,7 +29,7 @@ export const LoanPaymentScheduleTable = ({
         accessorKey: 'installmentNo',
         meta: {
           Footer: {
-            colspan: 5,
+            colspan: 2,
           },
         },
       },
@@ -39,33 +43,29 @@ export const LoanPaymentScheduleTable = ({
           },
         },
       },
-      {
-        header: 'Payment',
-        accessorKey: 'payment',
-        cell: (props) => amountConverter(props.getValue() as string),
 
-        meta: {
-          isNumeric: true,
-          Footer: {
-            display: 'none',
-          },
-        },
-      },
       {
         header: 'Principal',
         accessorKey: 'principal',
         cell: (props) => amountConverter(props.getValue() as string),
-
+        footer: () => amountConverter(totalPrincipal),
         meta: {
           isNumeric: true,
-          Footer: {
-            display: 'none',
-          },
         },
       },
       {
         header: 'Interest',
         accessorKey: 'interest',
+        cell: (props) => amountConverter(props.getValue() as string),
+        footer: () => amountConverter(totalInterest),
+        meta: {
+          isNumeric: true,
+        },
+      },
+
+      {
+        header: 'Payment',
+        accessorKey: 'payment',
         cell: (props) => amountConverter(props.getValue() as string),
 
         meta: {
@@ -81,17 +81,14 @@ export const LoanPaymentScheduleTable = ({
 
         accessorKey: 'remainingPrincipal',
         cell: (props) => amountConverter(props.getValue() as string),
+        footer: () => amountConverter(total),
 
         meta: {
           isNumeric: true,
         },
-        Footer: {
-          display: 'none',
-        },
       },
       {
         header: 'Status',
-        footer: () => amountConverter(total),
         accessorKey: 'paid',
         cell: (props) => {
           const installmentNo = props?.row?.original?.installmentNo;

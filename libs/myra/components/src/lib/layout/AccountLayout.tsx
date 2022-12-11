@@ -1,9 +1,9 @@
 import React from 'react';
 import { AiOutlineSetting } from 'react-icons/ai';
 import { CgLoadbarDoc } from 'react-icons/cg';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
 import {
   AddButtonList,
   Box,
@@ -12,6 +12,8 @@ import {
   SettingsButton,
   Text,
 } from '@myra-ui';
+
+import { Id_Type, useGetNewIdMutation } from '@coop/cbs/data-access';
 import { useTranslation } from '@coop/shared/utils';
 
 import { TabColumn } from '../tab/TabforMemberPage';
@@ -100,12 +102,38 @@ export const AccountPagesLayout = ({ children }: IAccountPageLayoutProps) => {
 
   return (
     <Box display="flex">
-      <Box width="260px" flexShrink={0} position="fixed">
-        <Box height="50px" alignItems="center" display="flex" py="s12" px="s16">
-          <Text fontSize="l1" fontWeight="600" color="gray.800">
-            {t['savings']}
+      <Box
+        sx={{
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        }}
+        width="260px"
+        height="calc(100vh - 110px)"
+        overflowY="auto"
+        position="fixed"
+      >
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="start"
+          py="s16"
+          pb="s8"
+          justifyContent="center"
+          gap="s2"
+          px="s16"
+        >
+          <Text fontSize="s2" fontWeight="600" color="primary.500">
+            {t['corebankingSystems']}
           </Text>
+
+          <Link href="/savings/list">
+            <Text lineHeight="125%" fontSize="l1" fontWeight="600" color="gray.800">
+              {t['savings']}
+            </Text>
+          </Link>
         </Box>
+
         <Box p="s16">
           {/* <Button
           width="full"

@@ -5,7 +5,7 @@ import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { DepositedBy, useGetDepositListDataQuery } from '@coop/cbs/data-access';
-import { getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const tabList = [
 //   {
@@ -118,7 +118,7 @@ export const FundManagementList = () => {
   return (
     <>
       <PageHeader
-        heading="Fund Management List"
+        heading={`Fund Management List - ${featureCode?.profitFundManagementList}`}
         // tabItems={tabList}
       />
 

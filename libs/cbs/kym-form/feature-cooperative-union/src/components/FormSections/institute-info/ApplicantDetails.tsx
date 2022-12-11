@@ -2,10 +2,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { GridItem } from '@chakra-ui/react';
 
+import { FormSection } from '@myra-ui';
+
 import { CoopUnionInstitutionInformationInput } from '@coop/cbs/data-access';
 import { KYMDocumentField } from '@coop/cbs/kym-form/formElements';
 import { FormAddress, FormInput, FormSwitch } from '@coop/shared/form';
-import { Box, FormSection } from '@myra-ui';
 import { getKymSectionCoOperativeUnion, useTranslation } from '@coop/shared/utils';
 
 import { useCoopUnionInstitution } from '../../../hooks/useCoopUnionInstitution';
@@ -37,7 +38,7 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
             setSection(kymSection);
           }}
         >
-          <FormSection id="Current Member Details" header="kymCoopUnionApplicant">
+          <FormSection id="Current Member Details" header="kymCoopUnionApplicant" divider={false}>
             {' '}
             <FormInput type="text" name="applicantName" label={t['kymCoopUnionName']} />
             <FormInput
@@ -45,19 +46,23 @@ export const ApplicantDetails = ({ setSection }: IApplicantDetailsProps) => {
               name="applicantDesignationEn"
               label={t['kymCoopUnionDesignation']}
             />
-            <Box></Box>
             <FormInput type="text" name="applicantEmail" label={t['kymCoopUnionEmailAddress']} />
             <FormInput type="text" name="applicantContactNo" label={t['kymCoopUnionContactNo']} />
             <FormInput type="text" name="applicantPanNo" label={t['kymCoopUnionPANNo']} />
           </FormSection>
 
           <FormAddress
+            noBorder
             name="applicantPermanentAddress"
             sectionHeader="kymIndPermanentAddress"
             sectionId="kymAccIndPermanentAddress"
           />
 
-          <FormSection id="kymAccIndTemporaryAddress" header="kymIndTemporaryAddress">
+          <FormSection
+            id="kymAccIndTemporaryAddress"
+            header="kymIndTemporaryAddress"
+            divider={false}
+          >
             <GridItem colSpan={3}>
               <FormSwitch
                 name="applicantIsPermanentAndTemporaryAddrSame"

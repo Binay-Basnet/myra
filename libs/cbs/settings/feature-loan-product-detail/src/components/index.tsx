@@ -1,11 +1,9 @@
-export * from './AccountCloseCharge';
 export * from './AlertEnable';
 export * from './Overview';
 export * from './ProductCharges';
 export * from './ProductCriteria';
 export * from './ProductDescription';
 export * from './ProductDocuments';
-export * from './ProductDormantSetup';
 export * from './ProductFeatures';
 export * from './ProductGeneralInformation';
 export * from './ProductInfo';
@@ -16,5 +14,4 @@ export * from './ProductLoanRepayment';
 export * from './ProductPenalty';
 export * from './ProductPrematurePenalty';
 export * from './ProductRebate';
-export * from './ProductServiceCharge';
 export * from './SideBar';

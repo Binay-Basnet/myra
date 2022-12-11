@@ -417,7 +417,6 @@ export const CbsAccountClose = () => {
                 )}
                 {memberId && memberId !== 'undefined' && accountId && accountId !== 'undefined' && (
                   <Box>
-                    {' '}
                     <Divider />
                     <Box display="flex" flexDirection="column" gap="s4" pt="s16">
                       <Text fontSize="s3" fontWeight="600">
@@ -671,6 +670,7 @@ export const CbsAccountClose = () => {
                     ? 'Close Account'
                     : 'Proceed to Payment'
                 }
+                isMainButtonDisabled={!radioOther}
                 dangerButton={
                   !!(Number(selectedAccount?.balance ?? 0) - netInterestPayable - totalCharge === 0)
                 }

@@ -59,7 +59,7 @@ export const AccountOpenReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<AccountOpeningReport>
             hasSNo={false}
             columns={[

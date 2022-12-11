@@ -70,7 +70,7 @@ export const LoanTable = ({ data, isLoading, type, viewLink }: ILoanTable) => {
         accessorFn: (row) => row?.node?.product.productName,
       },
       {
-        header: 'Account Open Date',
+        header: 'Loan Applied Date',
         accessorFn: (row) => row?.node?.createdAt,
         cell: (props) => <span>{props?.row?.original?.node?.createdAt.split('T')[0]} </span>,
       },

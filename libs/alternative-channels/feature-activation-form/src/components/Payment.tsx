@@ -8,19 +8,18 @@ import {
   AlternativeChannelDepositedBy,
   AlternativeChannelPaymentMode,
   ObjState,
-  useGetCoaBankListQuery,
 } from '@coop/cbs/data-access';
 import { BoxContainer, ContainerWithDivider } from '@coop/cbs/transactions/ui-containers';
 import {
   FormAccountSelect,
+  FormBankSelect,
   FormEditableTable,
   FormInput,
-  FormSelect,
   FormSwitch,
   FormSwitchTab,
   FormTextArea,
 } from '@coop/shared/form';
-import { featureCode, useTranslation } from '@coop/shared/utils';
+import { useTranslation } from '@coop/shared/utils';
 
 const paymentModes = [
   {
@@ -71,17 +70,6 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
   const cashPaid = watch('cash.cashPaid');
   const memberId = watch('memberId');
 
-  const { data: bank } = useGetCoaBankListQuery({
-    accountCode: featureCode.accountCode as string[],
-  });
-
-  const bankListArr = bank?.settings?.chartsOfAccount?.accountsUnder?.data;
-
-  const bankList = bankListArr?.map((item) => ({
-    label: item?.name?.local as string,
-    value: item?.id as string,
-  }));
-
   const denominationTotal =
     denominations?.reduce(
       (accumulator: number, curr: { amount: string }) => accumulator + Number(curr.amount),
@@ -126,7 +114,7 @@ export const Payment = ({ totalDeposit }: PaymentProps) => {
           <>
             <Grid templateColumns="repeat(2,1fr)" gap="s20">
               <GridItem colSpan={2}>
-                <FormSelect name="bankCheque.bank" label="Bank Name" options={bankList} />
+                <FormBankSelect name="bankCheque.bank" label="Bank Name" />
               </GridItem>
               <FormInput name="bankCheque.voucher_id" label="Voucher Number" />
 

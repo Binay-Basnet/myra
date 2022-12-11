@@ -22,3 +22,27 @@ query getJournalVoucherList($pagination: Pagination, $filter: JournalVoucherFilt
     }
   }
 }
+
+query getJournalVoucherDetail($entryId: ID!) {
+  accounting {
+    journalVoucher {
+      viewJournalVoucherDetail(entryId: $entryId) {
+        data {
+          id
+          date
+          amount
+          status
+          reference
+          note
+          glTransaction {
+            account
+            debit
+            credit
+          }
+          totalDebit
+          totalCredit
+        }
+      }
+    }
+  }
+}

@@ -16,7 +16,6 @@ export const ACMainLayout = (props: ACMainLayoutProps) => {
         <TopLevelHeader />
         <TabMenu
           routeIndex={2}
-          app="Alternative Channels"
           tabs={[
             {
               title: 'acMBanking',

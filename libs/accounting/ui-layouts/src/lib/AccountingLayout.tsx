@@ -51,7 +51,6 @@ export const AccountingLayout = (props: AccountingLayoutProps) => {
               match: ['investment'],
             },
           ]}
-          app="Accounting"
           routeIndex={2}
         />
       </Box>

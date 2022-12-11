@@ -261,6 +261,9 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
         isLoading={isLoading}
         data={rowData}
         columns={columns}
+        rowOnClick={(row) =>
+          router.push(`/settings/general/deposit-products/view?id=${row?.node?.id}`)
+        }
         pagination={{
           total: data?.settings?.general?.depositProduct?.list?.totalCount ?? 'Many',
           pageInfo: data?.settings?.general?.depositProduct?.list?.pageInfo,

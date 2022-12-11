@@ -59,7 +59,7 @@ export const ShareRegisterReport = () => {
       <Report.Body>
         <Report.Content>
           <Report.OrganizationHeader />
-          <Report.Organization statementDate={filters?.period?.periodType} />
+          <Report.Organization />
           <Report.Table<SharePurchaseRegisterReport>
             hasSNo={false}
             columns={[

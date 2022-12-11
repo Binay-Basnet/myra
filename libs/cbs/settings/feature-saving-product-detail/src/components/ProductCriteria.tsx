@@ -1,8 +1,14 @@
 import { Box, DetailsCard } from '@myra-ui';
 
-import { DepositProductCriteria } from '@coop/ebanking/data-access';
+import { DepositProductCriteria, KymMemberTypesEnum } from '@coop/cbs/data-access';
 
-export const ProductCriteria = ({ criteria }: { criteria: DepositProductCriteria }) => (
+export const ProductCriteria = ({
+  criteria,
+  memberType,
+}: {
+  criteria: DepositProductCriteria | null | undefined;
+  memberType: (KymMemberTypesEnum | null)[] | null | undefined;
+}) => (
   <DetailsCard title="Criteria">
     <Box px="s16" fontSize="r1">
       <ul>
@@ -29,11 +35,11 @@ export const ProductCriteria = ({ criteria }: { criteria: DepositProductCriteria
     <Box px="s16" fontSize="r1" textTransform="capitalize">
       <ul>
         <li>
-          Member Type: <b>{criteria?.foreignEmployment ? 'Yes' : 'No'}</b>
+          Member Type: <b>{memberType?.join(', ') ?? 'N/A'}</b>
         </li>
-        <li>
-          Targaeted Profession: <b>{criteria?.institutionType ?? 'N/A'}</b>
-        </li>
+        {/* <li>
+          Targeted Profession: <b>{criteria?.institutionType?.join(', ') ?? 'N/A'}</b>
+        </li> */}
       </ul>
     </Box>
   </DetailsCard>
