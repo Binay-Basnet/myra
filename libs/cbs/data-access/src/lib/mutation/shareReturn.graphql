@@ -2,6 +2,9 @@ mutation addShareReturn($data: ShareReturnInput!) {
   share {
     return(data: $data) {
       recordId
+      error {
+        ...MutationError
+      }
     }
   }
 }
