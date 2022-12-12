@@ -14638,7 +14638,20 @@ export type AddShareReturnMutationVariables = Exact<{
   data: ShareReturnInput;
 }>;
 
-export type AddShareReturnMutation = { share: { return: { recordId: string } } };
+export type AddShareReturnMutation = {
+  share: {
+    return: {
+      recordId: string;
+      error?:
+        | MutationError_AuthorizationError_Fragment
+        | MutationError_BadRequestError_Fragment
+        | MutationError_NotFoundError_Fragment
+        | MutationError_ServerError_Fragment
+        | MutationError_ValidationError_Fragment
+        | null;
+    };
+  };
+};
 
 export type SetDepositDataMutationVariables = Exact<{
   data: DepositInput;
@@ -25859,10 +25872,13 @@ export const AddShareReturnDocument = `
   share {
     return(data: $data) {
       recordId
+      error {
+        ...MutationError
+      }
     }
   }
 }
-    `;
+    ${MutationErrorFragmentDoc}`;
 export const useAddShareReturnMutation = <TError = unknown, TContext = unknown>(
   options?: UseMutationOptions<
     AddShareReturnMutation,
