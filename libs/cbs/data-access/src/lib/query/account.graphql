@@ -314,6 +314,7 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
             dueInstallments
           }
           prematurePenalty
+          installmentAmount
         }
       }
     }

@@ -353,6 +353,13 @@ export const NewAccountTransfer = () => {
                               expiryDate: sourceAccount?.accountExpiryDate ?? 'N/A',
                               lastTransactionDate: sourceAccount?.lastTransactionDate ?? 'N/A',
                               productName: sourceAccount?.product?.productName,
+                              installmentAmount:
+                                sourceAccount?.product?.nature ===
+                                  NatureOfDepositProduct.RecurringSaving ||
+                                (sourceAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+                                  sourceAccount?.product?.isMandatorySaving)
+                                  ? sourceAccount?.installmentAmount
+                                  : null,
                             }
                           : null
                       }

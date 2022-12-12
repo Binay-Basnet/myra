@@ -655,6 +655,13 @@ export const CbsAccountClose = () => {
                           expiryDate: selectedAccount?.accountExpiryDate ?? 'N/A',
                           lastTransactionDate: selectedAccount?.lastTransactionDate ?? 'N/A',
                           productName: selectedAccount?.product?.productName,
+                          installmentAmount:
+                            selectedAccount?.product?.nature ===
+                              NatureOfDepositProduct.RecurringSaving ||
+                            (selectedAccount?.product?.nature === NatureOfDepositProduct.Saving &&
+                              selectedAccount?.product?.isMandatorySaving)
+                              ? selectedAccount?.installmentAmount
+                              : null,
                         }
                       : null
                   }

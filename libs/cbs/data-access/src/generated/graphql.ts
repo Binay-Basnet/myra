@@ -26455,6 +26455,7 @@ export const GetAccountTableListDocument = `
             dueInstallments
           }
           prematurePenalty
+          installmentAmount
         }
       }
     }
