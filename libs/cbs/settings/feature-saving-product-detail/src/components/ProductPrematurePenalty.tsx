@@ -65,7 +65,7 @@ export const ProductPrematurePenalty = ({ penaltyData }: IProductPrematurePenalt
 
   return (
     <DetailsCard title="Premature Penalty Setup" hasTable>
-      <Table variant="report" size="report" isStatic data={penaltyDataArray} columns={columns} />
+      <Table isStatic data={penaltyDataArray} columns={columns} />
     </DetailsCard>
   );
 };

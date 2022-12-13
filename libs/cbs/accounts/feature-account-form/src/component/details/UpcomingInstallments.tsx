@@ -1,13 +1,15 @@
 import { useMemo } from 'react';
 
+import { DetailsCard, Text } from '@myra-ui';
+import { Column, Table } from '@myra-ui/table';
+
 import {
   DateType,
   useAccountDetails,
   useAppSelector,
   useGetInstallmentsListDataQuery,
 } from '@coop/cbs/data-access';
-import { Table } from '@myra-ui/table';
-import { DetailsCard } from '@myra-ui';
+import { amountConverter } from '@coop/shared/utils';
 
 export const UpcomingInstallments = () => {
   const preferenceDate = useAppSelector((state) => state?.auth?.preference?.date);
@@ -34,40 +36,47 @@ export const UpcomingInstallments = () => {
     [installmentsListQueryData]
   );
 
+  const columns = useMemo<Column<typeof data[0]>[]>(
+    () => [
+      {
+        header: 'Installment No.',
+        accessorKey: 'installmentNo',
+      },
+      {
+        header: 'Date',
+        accessorKey: 'date',
+      },
+      {
+        header: 'Installment Amount',
+        accessorKey: 'installmentAmount',
+      },
+      {
+        header: 'Fine',
+        accessorKey: 'fine',
+      },
+      {
+        header: 'Rebate',
+        accessorKey: 'rebate',
+      },
+      {
+        header: 'Total',
+        accessorKey: 'total',
+        cell: (props) =>
+          props.getValue() ? (
+            <Text fontWeight="Medium" fontSize="r1" color="primary.500">
+              {amountConverter(props.getValue() as string)}
+            </Text>
+          ) : (
+            'N/A'
+          ),
+      },
+    ],
+    []
+  );
+
   return (
     <DetailsCard title="Upcoming Payments" bg="white" hasTable>
-      <Table
-        isStatic
-        showFooter
-        data={data}
-        noDataTitle="upcoming payment"
-        columns={[
-          {
-            header: 'Installment No.',
-            accessorKey: 'installmentNo',
-          },
-          {
-            header: 'Date',
-            accessorKey: 'date',
-          },
-          {
-            header: 'Installment Amount',
-            accessorKey: 'installmentAmount',
-          },
-          {
-            header: 'Fine',
-            accessorKey: 'fine',
-          },
-          {
-            header: 'Rebate',
-            accessorKey: 'rebate',
-          },
-          {
-            header: 'Total',
-            accessorKey: 'total',
-          },
-        ]}
-      />
+      <Table isStatic showFooter data={data} columns={columns} noDataTitle="upcoming payment" />
     </DetailsCard>
   );
 };

@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
 
-import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
 import { Box, Grid, Text } from '@myra-ui';
+
+import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
 import { amountConverter } from '@coop/shared/utils';
 
 export const MemberStatistics = () => {

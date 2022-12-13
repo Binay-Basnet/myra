@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { amountConverter } from '@coop/shared/utils';
@@ -58,6 +59,14 @@ export const LoanPaymentScheduleTable = ({
       {
         header: 'Remaining Principal',
         accessorFn: (row) => amountConverter(row?.remainingPrincipal ?? 0),
+        cell: (props) =>
+          props.getValue() ? (
+            <Text fontWeight="500" fontSize="r1" color="primary.500">
+              {props.getValue() as string}
+            </Text>
+          ) : (
+            'N/A'
+          ),
         meta: {
           isNumeric: true,
         },
@@ -66,7 +75,5 @@ export const LoanPaymentScheduleTable = ({
     []
   );
 
-  return (
-    <Table variant="report" size="small" isStatic showFooter data={data ?? []} columns={columns} />
-  );
+  return <Table isStatic showFooter data={data ?? []} columns={columns} />;
 };

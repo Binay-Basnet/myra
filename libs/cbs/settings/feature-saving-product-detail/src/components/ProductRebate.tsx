@@ -64,7 +64,7 @@ export const ProductRebate = ({ rebateData }: IProductRebateProps) => {
 
   return (
     <DetailsCard title="Rebate" hasTable>
-      <Table variant="report" size="report" isStatic data={rebateDataArray} columns={columns} />
+      <Table isStatic data={rebateDataArray} columns={columns} />
     </DetailsCard>
   );
 };

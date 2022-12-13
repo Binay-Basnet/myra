@@ -50,13 +50,7 @@ export const ProductDormantSetup = ({ dormantSetup }: IProductDormantSetup) => {
 
   return (
     <DetailsCard title="Dormant Setup" hasTable>
-      <Table
-        variant="report"
-        size="report"
-        isStatic
-        data={dormantSetupWithIndex}
-        columns={columns}
-      />
+      <Table isStatic data={dormantSetupWithIndex} columns={columns} />
     </DetailsCard>
   );
 };

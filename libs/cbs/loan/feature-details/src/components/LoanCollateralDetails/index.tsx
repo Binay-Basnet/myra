@@ -1,6 +1,6 @@
 import { DetailsCard } from '@myra-ui';
-
 import { Table } from '@myra-ui/table';
+
 import { amountConverter } from '@coop/shared/utils';
 
 import { useLoanDetails } from '../../hooks/useLoanDetails';
@@ -25,7 +25,6 @@ export const LoanCollateralDetails = () => {
             valuation: amountConverter(d?.valuation ?? 0),
             id: index + 1,
           }))}
-          variant="report"
           size="small"
           isStatic
           columns={[

@@ -1,7 +1,6 @@
 export * from './AccountCloseCharge';
 export * from './AlertEnable';
 export * from './Overview';
-export * from './ProductCharges';
 export * from './ProductCriteria';
 export * from './ProductDescription';
 export * from './ProductDocuments';
