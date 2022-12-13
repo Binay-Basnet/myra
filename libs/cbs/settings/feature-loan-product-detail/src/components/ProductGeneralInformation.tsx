@@ -22,7 +22,7 @@ interface IProductGeneralInformation {
 }
 
 export const ProductGeneralInformation = ({ generalInformation }: IProductGeneralInformation) => (
-  <DetailsCard title="General Information">
+  <DetailsCard title="General Information" hasThreeRows>
     <DetailCardContent title="Product Name" subtitle={generalInformation?.productName} />
     <DetailCardContent
       title="Product Code"

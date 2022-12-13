@@ -3,7 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import { asyncToast, Modal, PageHeader } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import {
   AccountTypeFilter,
@@ -16,7 +16,6 @@ import {
   useSetDepositProductInactiveMutation,
   useSetProductActiveMutation,
 } from '@coop/cbs/data-access';
-import { ActionPopoverComponent } from '@coop/myra/components';
 import { FormTextArea } from '@coop/shared/form';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
@@ -98,32 +97,6 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
   );
   const rowData = useMemo(() => data?.settings?.general?.depositProduct?.list?.edges ?? [], [data]);
 
-  const popoverActiveTitle = [
-    {
-      title: 'loanProductMakeActive',
-      onClick: (id: string) => {
-        onOpenModal();
-        setID(id);
-      },
-    },
-  ];
-
-  const popoverInactiveTitle = [
-    {
-      title: 'loanProductMakeInactive',
-      onClick: (id: string) => {
-        onOpenModal();
-        setID(id);
-      },
-    },
-  ];
-
-  const popoverTitle = [
-    {
-      title: 'loanProductViewDetails',
-    },
-  ];
-
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -167,21 +140,44 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
           if (showSettingsAction) {
             if (isInactive) {
               return (
-                <ActionPopoverComponent
-                  items={popoverActiveTitle}
-                  id={props?.row?.original?.node?.id}
+                <TablePopover
+                  node={props?.row?.original?.node}
+                  items={[
+                    {
+                      title: 'loanProductMakeActive',
+                      onClick: (row) => {
+                        onOpenModal();
+                        setID(row?.id);
+                      },
+                    },
+                  ]}
                 />
               );
             }
             return (
-              <ActionPopoverComponent
-                items={popoverInactiveTitle}
-                id={props?.row?.original?.node?.id}
+              <TablePopover
+                node={props?.row?.original?.node}
+                items={[
+                  {
+                    title: 'loanProductMakeInactive',
+                    onClick: (row) => {
+                      onOpenModal();
+                      setID(row?.id);
+                    },
+                  },
+                ]}
               />
             );
           }
           return (
-            <ActionPopoverComponent items={popoverTitle} id={props?.row?.original?.node?.id} />
+            <TablePopover
+              node={props?.row?.original?.node}
+              items={[
+                {
+                  title: 'loanProductViewDetails',
+                },
+              ]}
+            />
           );
         },
         meta: {
@@ -189,7 +185,7 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
         },
       },
     ],
-    [t, router, popoverTitle]
+    [t, router]
   );
 
   const makeInactive = useCallback(async () => {
@@ -261,6 +257,7 @@ export const DepositProductTable = ({ showSettingsAction }: DepositTableProps) =
         isLoading={isLoading}
         data={rowData}
         columns={columns}
+        getRowId={(row) => String(row?.node?.id)}
         rowOnClick={(row) =>
           router.push(`/settings/general/deposit-products/view?id=${row?.node?.id}`)
         }

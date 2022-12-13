@@ -3,7 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
 import { asyncToast, Box, Modal, PageHeader, Text } from '@myra-ui';
-import { Column, Table } from '@myra-ui/table';
+import { Column, Table, TablePopover } from '@myra-ui/table';
 
 import {
   AccountTypeFilter,
@@ -15,7 +15,6 @@ import {
   useSetLoanProductInactiveMutation,
   useSetProductActiveMutation,
 } from '@coop/cbs/data-access';
-import { ActionPopoverComponent } from '@coop/myra/components';
 import { FormTextArea } from '@coop/shared/form';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
@@ -104,32 +103,6 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
 
   const rowData = useMemo(() => data?.settings?.general?.loanProducts?.list?.edges ?? [], [data]);
 
-  const popoverActiveTitle = [
-    {
-      title: 'loanProductMakeActive',
-      onClick: (id: string) => {
-        onOpenModal();
-        setID(id);
-      },
-    },
-  ];
-
-  const popoverInactiveTitle = [
-    {
-      title: 'loanProductMakeInactive',
-      onClick: (id: string) => {
-        onOpenModal();
-        setID(id);
-      },
-    },
-  ];
-
-  const popoverTitle = [
-    {
-      title: 'loanProductViewDetails',
-    },
-  ];
-
   const columns = useMemo<Column<typeof rowData[0]>[]>(
     () => [
       {
@@ -179,28 +152,52 @@ export const LoanProductTable = ({ showSettingsAction }: { showSettingsAction?: 
           if (showSettingsAction) {
             if (isInactive) {
               return (
-                <ActionPopoverComponent
-                  items={popoverActiveTitle}
-                  id={props?.row?.original?.node?.id}
+                <TablePopover
+                  node={props?.row?.original?.node}
+                  items={[
+                    {
+                      title: 'loanProductMakeActive',
+                      onClick: (row) => {
+                        onOpenModal();
+                        setID(row?.id);
+                      },
+                    },
+                  ]}
                 />
               );
             }
             return (
-              <ActionPopoverComponent
-                items={popoverInactiveTitle}
-                id={props?.row?.original?.node?.id}
+              <TablePopover
+                node={props?.row?.original?.node}
+                items={[
+                  {
+                    title: 'loanProductMakeInactive',
+                    onClick: (row) => {
+                      onOpenModal();
+                      setID(row?.id);
+                    },
+                  },
+                ]}
               />
             );
           }
-          return null;
-          // <ActionPopoverComponent items={popoverTitle} id={props?.row?.original?.node?.id} />
+          return (
+            <TablePopover
+              node={props?.row?.original?.node}
+              items={[
+                {
+                  title: 'loanProductViewDetails',
+                },
+              ]}
+            />
+          );
         },
         meta: {
           width: '50px',
         },
       },
     ],
-    [t, router, popoverTitle]
+    [t, router]
   );
 
   const makeInactive = useCallback(async () => {

@@ -20,7 +20,8 @@ export const ProductPrematurePenalty = ({ penaltyData }: IProductPrematurePenalt
         meta: {
           width: '33%',
         },
-        cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
+        cell: (props) =>
+          props.getValue() ? (props.getValue() as string)?.replace(/_/g, ' ') : 'N/A',
       },
       {
         header: 'No. of days',

@@ -14,7 +14,7 @@ type DetailDataType = {
 export const TransactionDetails = ({ detailData }: DetailDataType) => {
   const { t } = useTranslation();
   return (
-    <DetailsCard title={t['transDetailTransactionDetails']}>
+    <DetailsCard title={t['transDetailTransactionDetails']} hasThreeRows>
       <DetailCardContent title="ID" subtitle={detailData?.id} />
       <DetailCardContent title="Date" subtitle={detailData?.date} />
       <DetailCardContent title="Reference" subtitle={detailData?.reference} />
