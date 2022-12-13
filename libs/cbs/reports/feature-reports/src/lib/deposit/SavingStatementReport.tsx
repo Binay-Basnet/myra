@@ -27,7 +27,7 @@ export const SavingStatementReport = () => {
     },
     { enabled: !!filters }
   );
-  const savingData = data?.report?.savingStatementReport?.statement;
+  const savingData = data?.report?.depositReport?.savingStatementReport?.statement;
   const savingReport =
     savingData && 'savingStatement' in savingData ? savingData.savingStatement : [];
   const savingReportTotal = (

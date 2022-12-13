@@ -2,9 +2,12 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { IoFilterOutline } from 'react-icons/io5';
 
-import { PeriodInput, ReportPeriodType } from '@coop/cbs/data-access';
-import { FormSelect } from '@coop/shared/form';
 import { Box, Button, GridItem, Icon } from '@myra-ui';
+
+import { LocalizedDateFilter } from '@coop/cbs/data-access';
+import { FormSelect } from '@coop/shared/form';
+
+import { ReportDateRange } from '../components';
 
 type ClassifyBy =
   | 'All'
@@ -18,7 +21,7 @@ type ClassifyBy =
 
 type MemberClassificationFilter = {
   classificationBy: ClassifyBy[];
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 interface ReportInputsProps {
@@ -33,7 +36,7 @@ export const MemberClassificationInputs = ({
   setHasShownFilter,
 }: ReportInputsProps) => {
   const methods = useFormContext<{
-    period: PeriodInput;
+    period: LocalizedDateFilter;
     classificationBy: { label: string; value: string }[];
   }>();
 
@@ -90,42 +93,7 @@ export const MemberClassificationInputs = ({
           />
         </GridItem>
         <GridItem colSpan={1}>
-          <FormSelect
-            name="period.periodType"
-            hasRadioOption
-            options={[
-              { label: 'Today', value: ReportPeriodType.Today },
-              {
-                label: 'Yesterday',
-                value: ReportPeriodType.Yesterday,
-              },
-              {
-                label: 'Last 7 Days',
-                value: ReportPeriodType.Last_7Days,
-              },
-              {
-                label: 'Last 14 Days',
-                value: ReportPeriodType.Last_14Days,
-              },
-              {
-                label: 'Last 30 Days',
-                value: ReportPeriodType.Last_30Days,
-              },
-              {
-                label: 'This Fiscal Year To Date',
-                value: ReportPeriodType.ThisFiscalYearToDate,
-              },
-              {
-                label: 'Custom Period',
-                value: ReportPeriodType.CustomPeriod,
-              },
-              {
-                label: 'Lifetime',
-                value: ReportPeriodType.Lifetime,
-              },
-            ]}
-            label="Select Period"
-          />
+          <ReportDateRange />
         </GridItem>
       </Box>
 
@@ -135,15 +103,6 @@ export const MemberClassificationInputs = ({
           isDisabled={!methods.watch()['classificationBy'] || !methods.watch()['period']}
           onClick={methods.handleSubmit((data) => {
             if (!data['classificationBy'] || !data['period']) return;
-
-            if (data['period'].periodType === ReportPeriodType.CustomPeriod) {
-              setFilter({
-                classificationBy: data['classificationBy'].map((a) => a.value) as ClassifyBy[],
-                period: {
-                  periodType: ReportPeriodType.Lifetime,
-                },
-              });
-            }
 
             setFilter({
               classificationBy: data['classificationBy'].map((a) => a.value) as ClassifyBy[],

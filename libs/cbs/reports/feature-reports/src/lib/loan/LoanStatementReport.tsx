@@ -23,7 +23,7 @@ export const LoanStatementReport = () => {
     { enabled: !!filters }
   );
 
-  const loanData = data?.report?.loanStatementReport?.statement;
+  const loanData = data?.report?.loanReport?.loanStatementReport?.statement;
   const loanReport = loanData && 'loanStatement' in loanData ? loanData.loanStatement : [];
 
   return (

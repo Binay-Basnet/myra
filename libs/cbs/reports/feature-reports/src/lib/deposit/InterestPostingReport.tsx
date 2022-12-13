@@ -27,7 +27,8 @@ export const InterestPostingReport = () => {
     },
     { enabled: !!filters }
   );
-  const interestStatementReport = data?.report?.interestStatementReport?.data?.entries ?? [];
+  const interestStatementReport =
+    data?.report?.depositReport?.interestStatementReport?.data?.entries ?? [];
 
   return (
     <Report
