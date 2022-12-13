@@ -1,17 +1,26 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
+import debounce from 'lodash/debounce';
 
 import { Avatar, Box } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { useGetShareBalanceListQuery } from '@coop/cbs/data-access';
+import { Filter_Mode, useGetShareBalanceListQuery } from '@coop/cbs/data-access';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const ShareBalanceTable = () => {
+  const [searchTerm, setSearchTerm] = useState<string>('');
+
   const { data, isFetching, refetch } = useGetShareBalanceListQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
+    filter: {
+      memberName: searchTerm,
+      memberCode: searchTerm,
+      filterMode: Filter_Mode.Or,
+    },
   });
+
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -83,6 +92,9 @@ export const ShareBalanceTable = () => {
           total: data?.share?.balance?.totalCount as number,
           pageInfo: data?.share?.balance?.pageInfo,
         }}
+        onChange={debounce((e) => {
+          setSearchTerm(e.target.value);
+        }, 800)}
       />
     </>
   );

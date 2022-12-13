@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { ShareBalanceTable, SharePageLayout } from '@coop/myra/components';
 import { MainLayout } from '@myra-ui';
+
+import { ShareBalanceTable, SharePageLayout } from '@coop/myra/components';
 
 const ShareBalance = () => <ShareBalanceTable />;
 

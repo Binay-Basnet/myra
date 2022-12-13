@@ -1,6 +1,6 @@
-query getShareBalanceList($pagination: Pagination) {
+query getShareBalanceList($pagination: Pagination, $filter: ShareBalanceFilter) {
   share {
-    balance(pagination: $pagination) {
+    balance(pagination: $pagination, filter: $filter) {
       totalCount
       pageInfo {
         hasNextPage
