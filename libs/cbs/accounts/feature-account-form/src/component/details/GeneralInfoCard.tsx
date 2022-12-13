@@ -6,7 +6,7 @@ interface IGeneralInfoCardProps {
 }
 
 export const GeneralInfoCard = ({ title, items }: IGeneralInfoCardProps) => (
-  <DetailsCard title={title} bg="white">
+  <DetailsCard title={title} bg="white" hasThreeRows>
     {items.map(
       (item) =>
         item.value && (

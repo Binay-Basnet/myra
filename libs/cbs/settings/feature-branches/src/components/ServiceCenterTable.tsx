@@ -39,7 +39,7 @@ export const SettingsServiceCenterTable = () => {
         accessorFn: (row) => row?.node?.address?.locality?.local,
         cell: (props) => (
           <span>
-            {props?.row?.original?.node?.address?.locality?.local} - &nbsp;
+            {props?.row?.original?.node?.address?.localGovernment?.local} - &nbsp;
             {props?.row?.original?.node?.address?.wardNo}
           </span>
         ),

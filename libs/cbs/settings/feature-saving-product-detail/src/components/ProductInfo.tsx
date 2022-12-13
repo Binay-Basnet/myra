@@ -2,7 +2,7 @@ import { IoCopyOutline } from 'react-icons/io5';
 
 import { Box, Icon, Text } from '@myra-ui';
 
-import { useSavingDepositHook } from '../hoooks/useSavingDepositHook';
+import { useSavingDepositHook } from '../hooks/useSavingDepositHook';
 
 export const ProductInfo = () => {
   const { sidebarData } = useSavingDepositHook();

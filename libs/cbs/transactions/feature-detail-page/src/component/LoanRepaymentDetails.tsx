@@ -9,7 +9,7 @@ export const LoanRepaymentDetails = () => {
   const { loanRepaymentDetailData } = useTransactionDetailHooks();
 
   return (
-    <DetailsCard title={t['transDetailLoanRepaymentDetails']}>
+    <DetailsCard title={t['transDetailLoanRepaymentDetails']} hasThreeRows>
       <DetailCardContent
         title={t['transDetailLoanRepaymentID']}
         subtitle={loanRepaymentDetailData?.repaymentId}

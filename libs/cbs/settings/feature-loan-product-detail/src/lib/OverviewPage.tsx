@@ -22,7 +22,7 @@ import {
 } from '../components';
 import { ProductInterestRate } from '../components/ProductInterestRate';
 import { ProductTenure } from '../components/ProductTenure';
-import { useLoanProductDepositHook } from '../hoooks/useLoanProductDepositHook';
+import { useLoanProductDepositHook } from '../hooks/useLoanProductDepositHook';
 
 export const OverviewPage = () => {
   const router = useRouter();
