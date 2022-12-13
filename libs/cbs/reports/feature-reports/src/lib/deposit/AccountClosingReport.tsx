@@ -27,7 +27,7 @@ export const AccountCloseReport = () => {
     },
     { enabled: !!filters }
   );
-  const accountClosingReport = data?.report?.accountClosingReport?.data;
+  const accountClosingReport = data?.report?.depositReport?.accountClosingReport?.data;
   const userList = userListData?.settings?.myraUser?.list?.edges;
 
   return (

@@ -28,8 +28,8 @@ export const LoanAgingStatementsReport = () => {
     { enabled: !!filters }
   );
 
-  const loanReport = data?.report?.loanAgingStatementReport?.data?.report;
-  const summary = data?.report?.loanAgingStatementReport?.data?.summary;
+  const loanReport = data?.report?.loanReport?.loanAgingStatementReport?.data?.report;
+  const summary = data?.report?.loanReport?.loanAgingStatementReport?.data?.summary;
 
   return (
     <Report

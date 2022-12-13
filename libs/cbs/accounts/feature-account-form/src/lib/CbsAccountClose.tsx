@@ -128,7 +128,6 @@ export const CbsAccountClose = () => {
 
   const [totalDeposit, setTotalDeposit] = useState<number>(0);
 
-  const FINE = '0';
   const { memberDetailData, memberSignatureUrl, memberCitizenshipUrl } =
     useGetIndividualMemberDetails({ memberId });
   const { data: accountListData } = useGetAccountTableListQuery(
@@ -649,7 +648,7 @@ export const CbsAccountClose = () => {
                           interestAccured: selectedAccount?.interestAccured ?? '0',
                           guaranteeBalance: selectedAccount?.guaranteedAmount ?? '0',
                           overdrawnBalance: selectedAccount?.overDrawnBalance ?? '0',
-                          fine: FINE,
+                          fine: selectedAccount?.dues?.fine ?? 0,
                           // branch: 'Kumaripati',
                           openDate: selectedAccount?.accountOpenedDate ?? 'N/A',
                           expiryDate: selectedAccount?.accountExpiryDate ?? 'N/A',

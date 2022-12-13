@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Box, GridItem } from '@myra-ui';
 
-import { useGetValutBalanceReportQuery, VaultBalanceReportFilter } from '@coop/cbs/data-access';
+import { useGetVaultBalanceReportQuery, VaultBalanceReportFilter } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect } from '@coop/shared/form';
@@ -29,7 +29,7 @@ const cashOptions = ['1,000', '500', '100', '50', '25', '20', '10', '5', '2', '1
 export const VaultBalanceReport = () => {
   const [filters, setFilters] = useState<VaultBalanceReportFilter | null>(null);
 
-  const { data, isFetching } = useGetValutBalanceReportQuery(
+  const { data, isFetching } = useGetVaultBalanceReportQuery(
     { data: filters as VaultBalanceReportFilter },
     { enabled: !!filters }
   );

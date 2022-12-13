@@ -106,7 +106,7 @@ export type AccountClosingReport = {
 export type AccountClosingReportInput = {
   branchId: Scalars['String'];
   filter?: InputMaybe<AccountOpeningReportInputFilter>;
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type AccountClosingReportResult = {
@@ -134,7 +134,7 @@ export type AccountOpeningReport = {
 export type AccountOpeningReportInput = {
   branchId: Scalars['String'];
   filter?: InputMaybe<AccountOpeningReportInputFilter>;
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type AccountOpeningReportInputFilter = {
@@ -472,7 +472,7 @@ export type ActiveInactiveMemberReport = {
 export type ActiveInactiveMemberReportData = {
   branchId: Scalars['ID'];
   filter?: InputMaybe<MemberReportFilters>;
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type ActiveInactiveMemberReportSummary = {
@@ -1121,7 +1121,7 @@ export type BankGlDataEntry = {
 export type BankGlStatementFilter = {
   branchId: Scalars['String'];
   filter?: InputMaybe<GlStatementFilter>;
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type BankGlStatementResult = {
@@ -1302,9 +1302,17 @@ export enum BranchPaymentMode {
   Cash = 'CASH',
 }
 
+export type BranchReport = {
+  branchReport?: Maybe<BranchReportResult>;
+};
+
+export type BranchReportBranchReportArgs = {
+  data?: InputMaybe<BranchReportFilter>;
+};
+
 export type BranchReportFilter = {
   filter?: InputMaybe<BranchReportFilterType>;
-  period?: InputMaybe<PeriodInput>;
+  period: LocalizedDateFilter;
 };
 
 export type BranchReportFilterType = {
@@ -1475,7 +1483,7 @@ export type CashLedgerReportFilter = {
 export type CashLedgerReportFilterData = {
   branchId?: InputMaybe<Scalars['String']>;
   filter?: InputMaybe<CashLedgerReportFilter>;
-  period?: InputMaybe<PeriodInput>;
+  period: LocalizedDateFilter;
 };
 
 export type CashLedgerReportResult = {
@@ -1496,6 +1504,14 @@ export enum CashLedgerWiseFilter {
   Details = 'DETAILS',
   Summary = 'SUMMARY',
 }
+
+export type CashReport = {
+  cashLedgerReport?: Maybe<CashLedgerReportResult>;
+};
+
+export type CashReportCashLedgerReportArgs = {
+  data?: InputMaybe<CashLedgerReportFilterData>;
+};
 
 export enum CashValue {
   Cash_1 = 'CASH_1',
@@ -3076,6 +3092,39 @@ export enum DepositProductStatus {
   Inactive = 'INACTIVE',
 }
 
+export type DepositReport = {
+  accountClosingReport?: Maybe<AccountClosingReportResult>;
+  accountOpeningReport?: Maybe<AccountOpeningReportResult>;
+  interestStatementReport: InterestPostingReportResult;
+  interestTaxReport: InterestTaxReportResult;
+  savingStatementReport?: Maybe<ReportResult>;
+  thresholdTransactionReport: TtrReportResult;
+};
+
+export type DepositReportAccountClosingReportArgs = {
+  data?: InputMaybe<AccountClosingReportInput>;
+};
+
+export type DepositReportAccountOpeningReportArgs = {
+  data?: InputMaybe<AccountOpeningReportInput>;
+};
+
+export type DepositReportInterestStatementReportArgs = {
+  data: InterestStatementFilter;
+};
+
+export type DepositReportInterestTaxReportArgs = {
+  data: InterestTaxReportFilter;
+};
+
+export type DepositReportSavingStatementReportArgs = {
+  data: SavingStatementReportSettings;
+};
+
+export type DepositReportThresholdTransactionReportArgs = {
+  data: TtrReportFilter;
+};
+
 export type DepositResult = {
   error?: Maybe<MutationError>;
   query?: Maybe<TransactionQuery>;
@@ -3346,7 +3395,7 @@ export type EbankingRegistrationReportResult = {
 
 export type EbankingReportFilter = {
   branchId?: InputMaybe<Scalars['ID']>;
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type EbankingReportResult = {
@@ -3399,6 +3448,14 @@ export type EbankingTransactionFilter = {
   accounts?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   date?: InputMaybe<DateFilter>;
   transactionDirection?: InputMaybe<EbankingTransactionCrOrDr>;
+};
+
+export type EmployeeReport = {
+  userReport?: Maybe<UserReportResult>;
+};
+
+export type EmployeeReportUserReportArgs = {
+  data?: InputMaybe<UserReportFilter>;
 };
 
 export type Example = {
@@ -3746,9 +3803,15 @@ export type FamilyMemberDetails = {
 };
 
 export type FianancialTransactionReport = {
+  bankGLStatementReport: BankGlStatementResult;
   dayBookReport: DayBookReportResult;
   tellerReport: TellerReportResult;
+  trialSheetReport: TrialSheetReportResult;
   vaultBalanceReport: VaultBalanceReportResult;
+};
+
+export type FianancialTransactionReportBankGlStatementReportArgs = {
+  data: BankGlStatementFilter;
 };
 
 export type FianancialTransactionReportDayBookReportArgs = {
@@ -3757,6 +3820,10 @@ export type FianancialTransactionReportDayBookReportArgs = {
 
 export type FianancialTransactionReportTellerReportArgs = {
   data: TellerReportFilter;
+};
+
+export type FianancialTransactionReportTrialSheetReportArgs = {
+  data: TrialSheetReportFilter;
 };
 
 export type FianancialTransactionReportVaultBalanceReportArgs = {
@@ -4403,7 +4470,7 @@ export type GeneralBranchSettingsQueryListArgs = {
 
 export type GeneralLedgerFilter = {
   ledgerId: Scalars['ID'];
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type GeneralLedgerReportEntry = {
@@ -4923,7 +4990,7 @@ export type InterestRateType = {
 export type InterestStatementFilter = {
   accountId: Scalars['ID'];
   filter?: InputMaybe<InterestStatementRangeFilter>;
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type InterestStatementRangeFilter = {
@@ -4953,7 +5020,7 @@ export type InterestTaxReportEntry = {
 
 export type InterestTaxReportFilter = {
   filter?: InputMaybe<InterestTaxFilter>;
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type InterestTaxReportResult = {
@@ -7351,7 +7418,7 @@ export type KymStatusReport = {
 export type KymStatusReportFilter = {
   branchId?: InputMaybe<Scalars['String']>;
   filter?: InputMaybe<KymStatusFilter>;
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type KymStatusReportResult = {
@@ -7801,7 +7868,7 @@ export enum LoanAgingPeriod {
 }
 
 export type LoanAgingPeriodInput = {
-  customPeriod?: InputMaybe<LocalizedDateFilter>;
+  period: LocalizedDateFilter;
   periodType: LoanAgingPeriod;
 };
 
@@ -7876,7 +7943,7 @@ export type LoanBalanceFilter = {
 export type LoanBalanceFilterData = {
   branchId?: InputMaybe<Scalars['String']>;
   filter?: InputMaybe<LoanBalanceFilter>;
-  period?: InputMaybe<PeriodInput>;
+  period: LocalizedDateFilter;
 };
 
 export type LoanBalanceReport = {
@@ -8533,6 +8600,24 @@ export type LoanRepaymentViewResult = {
   error?: Maybe<QueryError>;
 };
 
+export type LoanReport = {
+  loanAgingStatementReport?: Maybe<LoanAgingStatementReportResult>;
+  loanBalanceReport: LoanBalanceReportResult;
+  loanStatementReport?: Maybe<ReportResult>;
+};
+
+export type LoanReportLoanAgingStatementReportArgs = {
+  data?: InputMaybe<LoanAgingStatementInput>;
+};
+
+export type LoanReportLoanBalanceReportArgs = {
+  data: LoanBalanceFilterData;
+};
+
+export type LoanReportLoanStatementReportArgs = {
+  data: LoanStatementReportSettings;
+};
+
 export type LoanRequestConnection = {
   edges?: Maybe<Array<Maybe<LoanRequestEdges>>>;
   pageInfo?: Maybe<PageInfo>;
@@ -8671,7 +8756,7 @@ export type LoanStatementReport = {
 export type LoanStatementReportSettings = {
   loanAccountId: Scalars['ID'];
   memberId: Scalars['ID'];
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type LocalizationExample = {
@@ -8725,7 +8810,7 @@ export type MBankingTransactionData = {
 
 export type MBankingTransactionFilter = {
   filter?: InputMaybe<MBankingTransactionFilterData>;
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type MBankingTransactionFilterData = {
@@ -8904,7 +8989,7 @@ export type MemberChequeDetails = {
 };
 
 export type MemberClassificationFilter = {
-  period?: InputMaybe<PeriodInput>;
+  period: LocalizedDateFilter;
 };
 
 export type MemberClassificationReportAddressData = {
@@ -9224,12 +9309,35 @@ export type MemberRegistrationReport = {
 
 export type MemberRegistrationReportData = {
   filter?: InputMaybe<MemberRegFilters>;
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type MemberRegistrationReportResult = {
   data?: Maybe<MemberRegistrationReport>;
   error?: Maybe<QueryError>;
+};
+
+export type MemberReport = {
+  activeInactiveMemberReport?: Maybe<ReportResult>;
+  kymStatusReport?: Maybe<KymStatusReportResult>;
+  memberClassificationReport: MemberClassificationReportResult;
+  memberRegistrationReport?: Maybe<MemberRegistrationReportResult>;
+};
+
+export type MemberReportActiveInactiveMemberReportArgs = {
+  data?: InputMaybe<ActiveInactiveMemberReportData>;
+};
+
+export type MemberReportKymStatusReportArgs = {
+  data?: InputMaybe<KymStatusReportFilter>;
+};
+
+export type MemberReportMemberClassificationReportArgs = {
+  data: MemberClassificationFilter;
+};
+
+export type MemberReportMemberRegistrationReportArgs = {
+  data?: InputMaybe<MemberRegistrationReportData>;
 };
 
 export type MemberReportFilters = {
@@ -9329,6 +9437,24 @@ export enum MinorWiseFilter {
   MinorProduct = 'MINOR_PRODUCT',
   NotMinorProduct = 'NOT_MINOR_PRODUCT',
 }
+
+export type MobileBankingReport = {
+  mBankingExpiryReport?: Maybe<EbankingRegistrationReportResult>;
+  mBankingTransactionReport?: Maybe<MBankingTransactionResult>;
+  mbankingRegistrationReport?: Maybe<EbankingRegistrationReportResult>;
+};
+
+export type MobileBankingReportMBankingExpiryReportArgs = {
+  data?: InputMaybe<EbankingReportFilter>;
+};
+
+export type MobileBankingReportMBankingTransactionReportArgs = {
+  data?: InputMaybe<MBankingTransactionFilter>;
+};
+
+export type MobileBankingReportMbankingRegistrationReportArgs = {
+  data?: InputMaybe<EbankingReportFilter>;
+};
 
 export type MonthlyDividendRate = {
   eightMonth?: Maybe<Scalars['Float']>;
@@ -9857,6 +9983,19 @@ export type OtherFundDistribution = {
   percent?: InputMaybe<Scalars['Float']>;
 };
 
+export type OtherReport = {
+  generalLedgerReport: GenderLedgerReportResult;
+  savingsBalanceReport: SavingsBalanceReportResult;
+};
+
+export type OtherReportGeneralLedgerReportArgs = {
+  data: GeneralLedgerFilter;
+};
+
+export type OtherReportSavingsBalanceReportArgs = {
+  data: SavingsBalanceFilterData;
+};
+
 export type OverviewView = {
   basicInformation?: Maybe<MemberBasicInfoView>;
   memberGraphs?: Maybe<MemberOverviewGraphs>;
@@ -9960,13 +10099,8 @@ export type PendingRequestInfo = {
   withdrawSlipCount?: Maybe<Scalars['Int']>;
 };
 
-export type PeriodInput = {
-  customPeriod?: InputMaybe<LocalizedDateFilter>;
-  periodType: ReportPeriodType;
-};
-
 export type PeriodType = {
-  customPeriod?: Maybe<CustomPeriodType>;
+  period?: Maybe<CustomPeriodType>;
   periodType: ReportPeriodType;
 };
 
@@ -10238,149 +10372,28 @@ export enum ReportPeriodType {
 }
 
 export type ReportQuery = {
-  accountClosingReport?: Maybe<AccountClosingReportResult>;
-  accountOpeningReport?: Maybe<AccountOpeningReportResult>;
-  activeInactiveMemberReport?: Maybe<ReportResult>;
-  bankGLStatementReport: BankGlStatementResult;
-  branchReport?: Maybe<BranchReportResult>;
-  cashLedgerReport?: Maybe<CashLedgerReportResult>;
-  generalLedgerReport: GenderLedgerReportResult;
+  branchReport: BranchReport;
+  cashReport: CashReport;
+  depositReport: DepositReport;
+  employeeReport: EmployeeReport;
   getReport?: Maybe<SavedReportResponse>;
-  interestStatementReport: InterestPostingReportResult;
-  interestTaxReport: InterestTaxReportResult;
-  kymStatusReport?: Maybe<KymStatusReportResult>;
   listReports: ReportListConnection;
-  loanAgingStatementReport?: Maybe<LoanAgingStatementReportResult>;
-  loanBalanceReport: LoanBalanceReportResult;
-  loanStatementReport?: Maybe<ReportResult>;
-  mBankingExpiryReport?: Maybe<EbankingRegistrationReportResult>;
-  mBankingTransactionReport?: Maybe<MBankingTransactionResult>;
-  mbankingRegistrationReport?: Maybe<EbankingRegistrationReportResult>;
-  memberClassificationReport: MemberClassificationReportResult;
-  memberRegistrationReport?: Maybe<MemberRegistrationReportResult>;
-  savingStatementReport?: Maybe<ReportResult>;
-  savingsBalanceReport: SavingsBalanceReportResult;
-  sharePurchaseRegisterReport?: Maybe<SharePurchaseRegisterResult>;
-  shareStatementReport?: Maybe<ReportResult>;
-  shareTransactionReport?: Maybe<ShareTransactionReportResult>;
-  thresholdTransactionReport: TtrReportResult;
+  loanReport: LoanReport;
+  memberReport: MemberReport;
+  mobileBankingReport: MobileBankingReport;
+  otherReport: OtherReport;
+  shareReport: ShareReport;
   transactionReport: TransactionReport;
-  trialSheetReport: TrialSheetReportResult;
-  userReport?: Maybe<UserReportResult>;
-};
-
-export type ReportQueryAccountClosingReportArgs = {
-  data?: InputMaybe<AccountClosingReportInput>;
-};
-
-export type ReportQueryAccountOpeningReportArgs = {
-  data?: InputMaybe<AccountOpeningReportInput>;
-};
-
-export type ReportQueryActiveInactiveMemberReportArgs = {
-  data?: InputMaybe<ActiveInactiveMemberReportData>;
-};
-
-export type ReportQueryBankGlStatementReportArgs = {
-  data: BankGlStatementFilter;
-};
-
-export type ReportQueryBranchReportArgs = {
-  data?: InputMaybe<BranchReportFilter>;
-};
-
-export type ReportQueryCashLedgerReportArgs = {
-  data?: InputMaybe<CashLedgerReportFilterData>;
-};
-
-export type ReportQueryGeneralLedgerReportArgs = {
-  data: GeneralLedgerFilter;
 };
 
 export type ReportQueryGetReportArgs = {
   reportId: Scalars['ID'];
 };
 
-export type ReportQueryInterestStatementReportArgs = {
-  data: InterestStatementFilter;
-};
-
-export type ReportQueryInterestTaxReportArgs = {
-  data: InterestTaxReportFilter;
-};
-
-export type ReportQueryKymStatusReportArgs = {
-  data?: InputMaybe<KymStatusReportFilter>;
-};
-
 export type ReportQueryListReportsArgs = {
   filter?: InputMaybe<ReportListFilter>;
   organizationId?: InputMaybe<Scalars['ID']>;
   pagination?: InputMaybe<Pagination>;
-};
-
-export type ReportQueryLoanAgingStatementReportArgs = {
-  data?: InputMaybe<LoanAgingStatementInput>;
-};
-
-export type ReportQueryLoanBalanceReportArgs = {
-  data: LoanBalanceFilterData;
-};
-
-export type ReportQueryLoanStatementReportArgs = {
-  data: LoanStatementReportSettings;
-};
-
-export type ReportQueryMBankingExpiryReportArgs = {
-  data?: InputMaybe<EbankingReportFilter>;
-};
-
-export type ReportQueryMBankingTransactionReportArgs = {
-  data?: InputMaybe<MBankingTransactionFilter>;
-};
-
-export type ReportQueryMbankingRegistrationReportArgs = {
-  data?: InputMaybe<EbankingReportFilter>;
-};
-
-export type ReportQueryMemberClassificationReportArgs = {
-  data: MemberClassificationFilter;
-};
-
-export type ReportQueryMemberRegistrationReportArgs = {
-  data?: InputMaybe<MemberRegistrationReportData>;
-};
-
-export type ReportQuerySavingStatementReportArgs = {
-  data: SavingStatementReportSettings;
-};
-
-export type ReportQuerySavingsBalanceReportArgs = {
-  data: SavingsBalanceFilterData;
-};
-
-export type ReportQuerySharePurchaseRegisterReportArgs = {
-  data?: InputMaybe<SharePurchaseRegisterReportFilter>;
-};
-
-export type ReportQueryShareStatementReportArgs = {
-  data: ShareStatementReportSettings;
-};
-
-export type ReportQueryShareTransactionReportArgs = {
-  data?: InputMaybe<ShareTransactionReportFilter>;
-};
-
-export type ReportQueryThresholdTransactionReportArgs = {
-  data: TtrReportFilter;
-};
-
-export type ReportQueryTrialSheetReportArgs = {
-  data: TrialSheetReportFilter;
-};
-
-export type ReportQueryUserReportArgs = {
-  data?: InputMaybe<UserReportFilter>;
 };
 
 export type ReportResult = {
@@ -10827,7 +10840,7 @@ export type SavingStatementReportSettings = {
   accountId: Scalars['ID'];
   filter?: InputMaybe<SavingFilters>;
   memberId: Scalars['ID'];
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type SavingTotalReport = {
@@ -10853,7 +10866,7 @@ export type SavingsBalanceFilter = {
 export type SavingsBalanceFilterData = {
   branchId?: InputMaybe<Scalars['String']>;
   filter?: InputMaybe<SavingsBalanceFilter>;
-  period?: InputMaybe<PeriodInput>;
+  period: LocalizedDateFilter;
 };
 
 export type SavingsBalanceReport = {
@@ -11200,7 +11213,7 @@ export type SharePurchaseRegisterReport = {
 export type SharePurchaseRegisterReportFilter = {
   branchId?: InputMaybe<Scalars['String']>;
   filter?: InputMaybe<SharePurchaseRegisterFilter>;
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type SharePurchaseRegisterResult = {
@@ -11294,6 +11307,24 @@ export type ShareRegisterFilter = {
   memberSearchText?: InputMaybe<Scalars['String']>;
   status?: InputMaybe<Share_Status>;
   transactionDirection?: InputMaybe<Share_Transaction_Direction>;
+};
+
+export type ShareReport = {
+  sharePurchaseRegisterReport?: Maybe<SharePurchaseRegisterResult>;
+  shareStatementReport?: Maybe<ReportResult>;
+  shareTransactionReport?: Maybe<ShareTransactionReportResult>;
+};
+
+export type ShareReportSharePurchaseRegisterReportArgs = {
+  data?: InputMaybe<SharePurchaseRegisterReportFilter>;
+};
+
+export type ShareReportShareStatementReportArgs = {
+  data: ShareStatementReportSettings;
+};
+
+export type ShareReportShareTransactionReportArgs = {
+  data?: InputMaybe<ShareTransactionReportFilter>;
 };
 
 export type ShareReturnChargesInput = {
@@ -11419,7 +11450,7 @@ export type ShareStatementReport = {
 export type ShareStatementReportSettings = {
   filter?: InputMaybe<ShareTransactionType>;
   memberId: Scalars['ID'];
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type ShareStatementReportSettingsType = {
@@ -11463,7 +11494,7 @@ export type ShareTransactionFilter = {
 export type ShareTransactionFooter = {
   totalBalance?: Maybe<Scalars['String']>;
   totalCr?: Maybe<Scalars['String']>;
-  totatDr?: Maybe<Scalars['String']>;
+  totalDr?: Maybe<Scalars['String']>;
 };
 
 export type ShareTransactionReport = {
@@ -11480,7 +11511,7 @@ export type ShareTransactionReport = {
 export type ShareTransactionReportFilter = {
   branchId?: InputMaybe<Scalars['String']>;
   filter?: InputMaybe<ShareTransactionFilter>;
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type ShareTransactionReportResult = {
@@ -11637,7 +11668,7 @@ export type TtrReportData = {
 export type TtrReportFilter = {
   branchId: Scalars['String'];
   filter?: InputMaybe<TtrFilter>;
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type TtrReportResult = {
@@ -11708,7 +11739,7 @@ export type TellerReportData = {
 export type TellerReportFilter = {
   branchId: Scalars['String'];
   filter?: InputMaybe<TellerFilter>;
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type TellerReportResult = {
@@ -12036,7 +12067,7 @@ export type TrialSheetReportDataEntry = {
 export type TrialSheetReportFilter = {
   branchId: Scalars['String'];
   filter?: InputMaybe<TrialSheetFilter>;
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type TrialSheetReportResult = {
@@ -12160,7 +12191,7 @@ export type UserReport = {
 export type UserReportFilter = {
   branchId?: InputMaybe<Scalars['String']>;
   filter?: InputMaybe<UserReportFilterData>;
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export type UserReportFilterData = {
@@ -12314,7 +12345,7 @@ export type VaultBalanceReportData = {
 
 export type VaultBalanceReportFilter = {
   branchId: Scalars['String'];
-  date?: InputMaybe<LocalizedDateFilter>;
+  date: LocalizedDateFilter;
 };
 
 export type VaultBalanceReportResult = {
@@ -15091,6 +15122,49 @@ export type GetAccountTableListQuery = {
             totalDue?: string | null;
             dueInstallments?: number | null;
           } | null;
+        } | null;
+      }> | null;
+    } | null;
+  };
+};
+
+export type GetAccountTableListMinimalQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<DepositLoanAccountSearchFilter>;
+}>;
+
+export type GetAccountTableListMinimalQuery = {
+  account: {
+    list?: {
+      totalCount: number;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+      edges?: Array<{
+        node?: {
+          id: string;
+          objState: ObjState;
+          createdAt: string;
+          accountName?: string | null;
+          balance?: string | null;
+          accountOpenedDate?: string | null;
+          accountExpiryDate?: string | null;
+          closedAt?: string | null;
+          member?: {
+            id: string;
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            profilePicUrl?: string | null;
+          } | null;
+          product: {
+            id: string;
+            productCode: string;
+            productName: string;
+            nature: NatureOfDepositProduct;
+            interest?: number | null;
+          };
         } | null;
       }> | null;
     } | null;
@@ -18846,6 +18920,689 @@ export type GetMemberPdfQueryVariables = Exact<{
 
 export type GetMemberPdfQuery = { members: { memberPDF: string } };
 
+export type GetBranchReportQueryVariables = Exact<{
+  data?: InputMaybe<BranchReportFilter>;
+}>;
+
+export type GetBranchReportQuery = {
+  report: {
+    branchReport: {
+      branchReport?: {
+        data?: Array<{
+          id: string;
+          serviceCenterCode?: string | null;
+          name?: string | null;
+          contactNumber?: string | null;
+          email?: string | null;
+          managerName?: string | null;
+          managerContact?: string | null;
+          isExtensionCounter?: boolean | null;
+          estDate?: Record<'local' | 'en' | 'np', string> | null;
+          branchStatus?: boolean | null;
+          remarks?: string | null;
+          address?: AddressFragment | null;
+        } | null> | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
+export type GetCashLedgerReportQueryVariables = Exact<{
+  data?: InputMaybe<CashLedgerReportFilterData>;
+}>;
+
+export type GetCashLedgerReportQuery = {
+  report: {
+    cashReport: {
+      cashLedgerReport?: {
+        openingBalance?: string | null;
+        closingBalance?: string | null;
+        summary?: Array<{
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          ledgerCode?: string | null;
+          particular?: string | null;
+          voucherNo?: string | null;
+          cashDr?: string | null;
+          cashCr?: string | null;
+          balance?: string | null;
+        } | null> | null;
+        details?: Array<{
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          ledgerCode?: string | null;
+          particular?: string | null;
+          voucherNo?: string | null;
+          cashDr?: string | null;
+          cashCr?: string | null;
+          balance?: string | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetAccountOpeningReportQueryVariables = Exact<{
+  data?: InputMaybe<AccountOpeningReportInput>;
+}>;
+
+export type GetAccountOpeningReportQuery = {
+  report: {
+    depositReport: {
+      accountOpeningReport?: {
+        data?: Array<{
+          accountName?: string | null;
+          accountNumber?: string | null;
+          memberId?: string | null;
+          openedBy?: string | null;
+          openingDate?: Record<'local' | 'en' | 'np', string> | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetAccountClosingReportQueryVariables = Exact<{
+  data?: InputMaybe<AccountClosingReportInput>;
+}>;
+
+export type GetAccountClosingReportQuery = {
+  report: {
+    depositReport: {
+      accountClosingReport?: {
+        data?: Array<{
+          memberId?: string | null;
+          accountNumber?: string | null;
+          accountName?: string | null;
+          openingDate?: Record<'local' | 'en' | 'np', string> | null;
+          closingDate?: Record<'local' | 'en' | 'np', string> | null;
+          closedBalance?: string | null;
+          closedBy?: string | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetInterestTaxReportQueryVariables = Exact<{
+  data: InterestTaxReportFilter;
+}>;
+
+export type GetInterestTaxReportQuery = {
+  report: {
+    depositReport: {
+      interestTaxReport: {
+        data?: Array<{
+          memberId?: string | null;
+          memberCode?: string | null;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          panNo?: string | null;
+          accountNo?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          interest?: string | null;
+          tax?: string | null;
+          savingBalance?: string | null;
+          closingBalance?: string | null;
+          remarks?: string | null;
+          address?: AddressFragment | null;
+        } | null> | null;
+      };
+    };
+  };
+};
+
+export type GetTtrReportQueryVariables = Exact<{
+  data: TtrReportFilter;
+}>;
+
+export type GetTtrReportQuery = {
+  report: {
+    depositReport: {
+      thresholdTransactionReport: {
+        data?: {
+          yearly?: Array<{
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            memberId?: string | null;
+            branch?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            nature?: NatureOfTransaction | null;
+            accountNo?: string | null;
+            amount?: string | null;
+            sourceOfFund?: string | null;
+            remarks?: string | null;
+            address?: AddressFragment | null;
+          } | null> | null;
+          perTranx?: Array<{
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            memberId?: string | null;
+            branch?: string | null;
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            nature?: NatureOfTransaction | null;
+            accountNo?: string | null;
+            amount?: string | null;
+            sourceOfFund?: string | null;
+            remarks?: string | null;
+            address?: AddressFragment | null;
+          } | null> | null;
+        } | null;
+      };
+    };
+  };
+};
+
+export type GetSavingStatementQueryVariables = Exact<{
+  data: SavingStatementReportSettings;
+}>;
+
+export type GetSavingStatementQuery = {
+  report: {
+    depositReport: {
+      savingStatementReport?: {
+        memberId?: string | null;
+        member?: {
+          id: string;
+          code: string;
+          name?: Record<'local' | 'en' | 'np', string> | null;
+          dateJoined?: string | null;
+          address?: {
+            wardNo?: string | null;
+            state?: Record<'local' | 'en' | 'np', string> | null;
+            district?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+          } | null;
+        } | null;
+        statement?:
+          | {
+              savingStatement?: Array<{
+                date: Record<'local' | 'en' | 'np', string>;
+                balanceAmount: number;
+                depositCr: number;
+                chequeOrVoucherNo: string;
+                particular: string;
+                withdrawDr: number;
+              } | null> | null;
+              totals?: { totalBalance: number; totalWithdraw: number; totalDeposit: number } | null;
+            }
+          | {}
+          | null;
+      } | null;
+    };
+  };
+};
+
+export type GetInterestStatementReportQueryVariables = Exact<{
+  data: InterestStatementFilter;
+}>;
+
+export type GetInterestStatementReportQuery = {
+  report: {
+    depositReport: {
+      interestStatementReport: {
+        data?: {
+          memberId?: string | null;
+          accountNo?: string | null;
+          accountType?: NatureOfDepositProduct | null;
+          currentInterestRate?: number | null;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          entries?: Array<{
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            amount?: string | null;
+            balance?: string | null;
+            days?: number | null;
+            rate?: number | null;
+            remarks?: string | null;
+          } | null> | null;
+          address?: {
+            wardNo?: string | null;
+            state?: Record<'local' | 'en' | 'np', string> | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+            district?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            coordinates?: { longitude?: number | null; latitude?: number | null } | null;
+          } | null;
+        } | null;
+      };
+    };
+  };
+};
+
+export type GetUserReportQueryVariables = Exact<{
+  data?: InputMaybe<UserReportFilter>;
+}>;
+
+export type GetUserReportQuery = {
+  report: {
+    employeeReport: {
+      userReport?: {
+        data?: Array<{
+          isCoreEmployee?: boolean | null;
+          employeeName?: string | null;
+          empCode?: string | null;
+          username?: string | null;
+          usernameCode?: string | null;
+          accessForBranch?: string | null;
+          accessForGroup?: string | null;
+          role?: string | null;
+          createdDate?: Record<'local' | 'en' | 'np', string> | null;
+          createdBy?: string | null;
+          status?: string | null;
+          remarks?: string | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetLoanBalanceReportQueryVariables = Exact<{
+  data: LoanBalanceFilterData;
+}>;
+
+export type GetLoanBalanceReportQuery = {
+  report: {
+    loanReport: {
+      loanBalanceReport: {
+        totalOutstandingBalance?: string | null;
+        totalRemainingBalance?: string | null;
+        data?: Array<{
+          memberId?: string | null;
+          loanAccountId?: string | null;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          productName?: string | null;
+          productCode?: string | null;
+          outstandingBalance?: string | null;
+          remainingBalance?: string | null;
+          remainingInterest?: string | null;
+          lastPaymentDate?: string | null;
+        } | null> | null;
+      };
+    };
+  };
+};
+
+export type GetLoanAgingStatementReportQueryVariables = Exact<{
+  data?: InputMaybe<LoanAgingStatementInput>;
+}>;
+
+export type GetLoanAgingStatementReportQuery = {
+  report: {
+    loanReport: {
+      loanAgingStatementReport?: {
+        data?: {
+          report?: Array<{
+            memberNo?: string | null;
+            loanNo?: string | null;
+            name?: string | null;
+            address?: string | null;
+            phoneNo?: string | null;
+            loanType?: string | null;
+            paymentMode?: string | null;
+            issueDate?: Record<'local' | 'en' | 'np', string> | null;
+            loanMaturityDate?: Record<'local' | 'en' | 'np', string> | null;
+            disbursePrincipal?: string | null;
+            remainingPrincipal?: string | null;
+            installmentAmount?: string | null;
+            remainingInstallmentAmount?: string | null;
+            remainingInterest?: string | null;
+            remainingPenalty?: string | null;
+            totalDueAmount?: string | null;
+            goodAmount?: string | null;
+            matured1To30Days?: string | null;
+            matured1To12Months?: string | null;
+            maturedAbove12Months?: string | null;
+            lastPrincipalPaidDate?: Record<'local' | 'en' | 'np', string> | null;
+            lastInterestPaidDate?: Record<'local' | 'en' | 'np', string> | null;
+            installmentLateDays?: number | null;
+          } | null> | null;
+          summary?: {
+            disbursePrincipalTotal?: string | null;
+            remainingPrincipalTotal?: string | null;
+            installmentAmountTotal?: string | null;
+            remainingInstallmentAmountTotal?: string | null;
+            remainingInterestTotal?: string | null;
+            remainingPenaltyTotal?: string | null;
+            dueAmountTotal?: string | null;
+            goodAmountTotal?: string | null;
+            matured1To30DaysTotal?: string | null;
+            matured1To12MonthsTotal?: string | null;
+            maturedAbove12MonthsTotal?: string | null;
+          } | null;
+        } | null;
+      } | null;
+    };
+  };
+};
+
+export type GetLoanStatementReportQueryVariables = Exact<{
+  data: LoanStatementReportSettings;
+}>;
+
+export type GetLoanStatementReportQuery = {
+  report: {
+    loanReport: {
+      loanStatementReport?: {
+        memberId?: string | null;
+        member?: { name?: Record<'local' | 'en' | 'np', string> | null; code: string } | null;
+        statement?:
+          | {
+              loanStatement?: Array<{
+                date?: Record<'local' | 'en' | 'np', string> | null;
+                particular?: string | null;
+                txnId?: string | null;
+                disbursePrinciple?: string | null;
+                paidPrinciple?: string | null;
+                interestPaid?: string | null;
+                finePaid?: string | null;
+                discount?: string | null;
+                remainingPrinciple?: string | null;
+              } | null> | null;
+            }
+          | {}
+          | null;
+      } | null;
+    };
+  };
+};
+
+export type GetMemberClassificationReportQueryVariables = Exact<{
+  data: MemberClassificationFilter;
+}>;
+
+export type GetMemberClassificationReportQuery = {
+  report: {
+    memberReport: {
+      memberClassificationReport: {
+        data?: {
+          gender?: Array<{
+            entryName?: string | null;
+            inNumber?: number | null;
+            inPercent?: string | null;
+          } | null> | null;
+          age?: Array<{
+            entryName?: string | null;
+            inNumber?: number | null;
+            inPercent?: string | null;
+          } | null> | null;
+          occupation?: Array<{
+            entryName?: string | null;
+            inNumber?: number | null;
+            inPercent?: string | null;
+          } | null> | null;
+          education?: Array<{
+            entryName?: string | null;
+            inNumber?: number | null;
+            inPercent?: string | null;
+          } | null> | null;
+          memberCategory?: Array<{
+            entryName?: string | null;
+            inNumber?: number | null;
+            inPercent?: string | null;
+          } | null> | null;
+          income?: Array<{ entryName?: string | null; inPercent?: string | null } | null> | null;
+          address?: {
+            province?: Array<{
+              entryName?: string | null;
+              inNumber?: number | null;
+              inPercent?: string | null;
+            } | null> | null;
+            district?: Array<{
+              entryName?: string | null;
+              inNumber?: number | null;
+              inPercent?: string | null;
+            } | null> | null;
+          } | null;
+        } | null;
+      };
+    };
+  };
+};
+
+export type GetActiveInactiveMemberReportQueryVariables = Exact<{
+  data?: InputMaybe<ActiveInactiveMemberReportData>;
+}>;
+
+export type GetActiveInactiveMemberReportQuery = {
+  report: {
+    memberReport: {
+      activeInactiveMemberReport?: {
+        statement?:
+          | {
+              summary?: {
+                activeTotal?: number | null;
+                inactiveTotal?: number | null;
+                totalMember?: number | null;
+              } | null;
+              reportStatement?: Array<{
+                memberId?: string | null;
+                memberName?: string | null;
+                district?: string | null;
+                wardNo?: string | null;
+                address?: string | null;
+                dob?: Record<'local' | 'en' | 'np', string> | null;
+                age?: number | null;
+                contactNo?: string | null;
+                gender?: string | null;
+                pan?: string | null;
+                occupation?: string | null;
+                memberRegistrationDate?: Record<'local' | 'en' | 'np', string> | null;
+                status?: MemberStatus | null;
+                memberType?: KymMemberTypesEnum | null;
+              } | null> | null;
+            }
+          | {}
+          | null;
+      } | null;
+    };
+  };
+};
+
+export type GetKymStatusReportQueryVariables = Exact<{
+  data?: InputMaybe<KymStatusReportFilter>;
+}>;
+
+export type GetKymStatusReportQuery = {
+  report: {
+    memberReport: {
+      kymStatusReport?: {
+        Summary?: Record<string, string> | null;
+        data?: Array<{
+          memberName?: string | null;
+          memberId?: string | null;
+          contact?: string | null;
+          regDate?: Record<'local' | 'en' | 'np', string> | null;
+          riskCategory?: string | null;
+          lastKymUpdatedDate?: string | null;
+          kymExpireDays?: string | null;
+          kymStatus?: string | null;
+          address?: AddressFragment | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetMemberRegistrationReportQueryVariables = Exact<{
+  data?: InputMaybe<MemberRegistrationReportData>;
+}>;
+
+export type GetMemberRegistrationReportQuery = {
+  report: {
+    memberReport: {
+      memberRegistrationReport?: {
+        data?: {
+          individual?: Array<{
+            memberId?: string | null;
+            memberCode?: string | null;
+            name?: string | null;
+            dob?: Record<'local' | 'en' | 'np', string> | null;
+            grandFatherName?: string | null;
+            fatherName?: string | null;
+            SpouseName?: string | null;
+            profession?: string | null;
+            fingerPrint?: boolean | null;
+            photo?: boolean | null;
+            contactNo?: string | null;
+            email?: string | null;
+            other?: string | null;
+            address?: AddressFragment | null;
+            shareInfo?: {
+              perShareAmount?: string | null;
+              kitta?: string | null;
+              amount?: string | null;
+            } | null;
+          } | null> | null;
+          other?: Array<{
+            memberId?: string | null;
+            memberCode?: string | null;
+            name?: string | null;
+            doe?: Record<'local' | 'en' | 'np', string> | null;
+            typeOfInstitution?: string | null;
+            workingArea?: string | null;
+            totalMember?: string | null;
+            balanceSheet?: string | null;
+            post?: string | null;
+            authPersonName?: string | null;
+            logo?: boolean | null;
+            stamp?: boolean | null;
+            contactNo?: string | null;
+            email?: string | null;
+            other?: string | null;
+            address?: AddressFragment | null;
+            shareInfo?: {
+              perShareAmount?: string | null;
+              kitta?: string | null;
+              amount?: string | null;
+            } | null;
+          } | null> | null;
+        } | null;
+      } | null;
+    };
+  };
+};
+
+export type GetMBankingRegistrationReportQueryVariables = Exact<{
+  data?: InputMaybe<EbankingReportFilter>;
+}>;
+
+export type GetMBankingRegistrationReportQuery = {
+  report: {
+    mobileBankingReport: {
+      mbankingRegistrationReport?: {
+        data?: Array<{
+          memberId?: string | null;
+          memberName?: string | null;
+          mobileNo?: string | null;
+          branchCode?: string | null;
+          regDate?: Record<'local' | 'en' | 'np', string> | null;
+          expDate?: Record<'local' | 'en' | 'np', string> | null;
+          status?: string | null;
+          registeredBy?: string | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetMBankingExpiryReportQueryVariables = Exact<{
+  data?: InputMaybe<EbankingReportFilter>;
+}>;
+
+export type GetMBankingExpiryReportQuery = {
+  report: {
+    mobileBankingReport: {
+      mbankingRegistrationReport?: {
+        data?: Array<{
+          memberId?: string | null;
+          memberName?: string | null;
+          mobileNo?: string | null;
+          branchCode?: string | null;
+          regDate?: Record<'local' | 'en' | 'np', string> | null;
+          expDate?: Record<'local' | 'en' | 'np', string> | null;
+          status?: string | null;
+          registeredBy?: string | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetMbTransactionReportQueryVariables = Exact<{
+  data?: InputMaybe<MBankingTransactionFilter>;
+}>;
+
+export type GetMbTransactionReportQuery = {
+  report: {
+    mobileBankingReport: {
+      mBankingTransactionReport?: {
+        data?: Array<{
+          initiatorName?: string | null;
+          phoneNo?: string | null;
+          srcAccount?: string | null;
+          destAccount?: string | null;
+          amount?: string | null;
+          transactionType?: string | null;
+          transThrough?: string | null;
+          transDate?: Record<'local' | 'en' | 'np', string> | null;
+          narration?: string | null;
+          status?: string | null;
+        } | null> | null;
+      } | null;
+    };
+  };
+};
+
+export type GetLedgerReportQueryVariables = Exact<{
+  data: GeneralLedgerFilter;
+}>;
+
+export type GetLedgerReportQuery = {
+  report: {
+    otherReport: {
+      generalLedgerReport: {
+        data?: Array<{
+          id?: string | null;
+          date?: Record<'local' | 'en' | 'np', string> | null;
+          account?: string | null;
+          balance?: string | null;
+          credit?: string | null;
+          debit?: string | null;
+        } | null> | null;
+      };
+    };
+  };
+};
+
+export type GetSavingsBalanceReportQueryVariables = Exact<{
+  data: SavingsBalanceFilterData;
+}>;
+
+export type GetSavingsBalanceReportQuery = {
+  report: {
+    otherReport: {
+      savingsBalanceReport: {
+        totalBalance?: string | null;
+        data?: Array<{
+          accountId?: string | null;
+          memberId?: string | null;
+          memberCode?: string | null;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          productId?: string | null;
+          productName?: string | null;
+          productCode?: string | null;
+          accountOpeningDate?: string | null;
+          memberType?: KymMemberTypesEnum | null;
+          balance?: string | null;
+        } | null> | null;
+      };
+    };
+  };
+};
+
 export type GetAllSavedReportsQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
 }>;
@@ -18877,497 +19634,77 @@ export type GetSavedReportQuery = {
   report: {
     getReport?: {
       name?: string | null;
-      settings?: {
-        filter?: ShareTransactionType | null;
-        memberId: string;
-        period: {
-          periodType: ReportPeriodType;
-          customPeriod?: { from: string; to: string } | null;
-        };
-      } | null;
+      settings?: { filter?: ShareTransactionType | null; memberId: string } | null;
     } | null;
   };
 };
 
-export type GetSavingStatementQueryVariables = Exact<{
-  data: SavingStatementReportSettings;
+export type GetShareStatementQueryVariables = Exact<{
+  data: ShareStatementReportSettings;
 }>;
 
-export type GetSavingStatementQuery = {
+export type GetShareStatementQuery = {
   report: {
-    savingStatementReport?: {
-      memberId?: string | null;
-      member?: {
-        id: string;
-        code: string;
-        name?: Record<'local' | 'en' | 'np', string> | null;
-        dateJoined?: string | null;
-        address?: {
-          wardNo?: string | null;
-          state?: Record<'local' | 'en' | 'np', string> | null;
-          district?: Record<'local' | 'en' | 'np', string> | null;
-          houseNo?: string | null;
-          localGovernment?: Record<'local' | 'en' | 'np', string> | null;
-        } | null;
-      } | null;
-      statement?:
-        | {
-            savingStatement?: Array<{
-              date: Record<'local' | 'en' | 'np', string>;
-              balanceAmount: number;
-              depositCr: number;
-              chequeOrVoucherNo: string;
-              particular: string;
-              withdrawDr: number;
-            } | null> | null;
-            totals?: { totalBalance: number; totalWithdraw: number; totalDeposit: number } | null;
-          }
-        | {}
-        | null;
-    } | null;
-  };
-};
-
-export type GetMemberClassificationReportQueryVariables = Exact<{
-  data: MemberClassificationFilter;
-}>;
-
-export type GetMemberClassificationReportQuery = {
-  report: {
-    memberClassificationReport: {
-      data?: {
-        gender?: Array<{
-          entryName?: string | null;
-          inNumber?: number | null;
-          inPercent?: string | null;
-        } | null> | null;
-        age?: Array<{
-          entryName?: string | null;
-          inNumber?: number | null;
-          inPercent?: string | null;
-        } | null> | null;
-        occupation?: Array<{
-          entryName?: string | null;
-          inNumber?: number | null;
-          inPercent?: string | null;
-        } | null> | null;
-        education?: Array<{
-          entryName?: string | null;
-          inNumber?: number | null;
-          inPercent?: string | null;
-        } | null> | null;
-        memberCategory?: Array<{
-          entryName?: string | null;
-          inNumber?: number | null;
-          inPercent?: string | null;
-        } | null> | null;
-        income?: Array<{ entryName?: string | null; inPercent?: string | null } | null> | null;
-        address?: {
-          province?: Array<{
-            entryName?: string | null;
-            inNumber?: number | null;
-            inPercent?: string | null;
-          } | null> | null;
-          district?: Array<{
-            entryName?: string | null;
-            inNumber?: number | null;
-            inPercent?: string | null;
-          } | null> | null;
-        } | null;
-      } | null;
-    };
-  };
-};
-
-export type GetLoanStatementReportQueryVariables = Exact<{
-  data: LoanStatementReportSettings;
-}>;
-
-export type GetLoanStatementReportQuery = {
-  report: {
-    loanStatementReport?: {
-      memberId?: string | null;
-      member?: { name?: Record<'local' | 'en' | 'np', string> | null; code: string } | null;
-      statement?:
-        | {
-            loanStatement?: Array<{
-              date?: Record<'local' | 'en' | 'np', string> | null;
-              particular?: string | null;
-              txnId?: string | null;
-              disbursePrinciple?: string | null;
-              paidPrinciple?: string | null;
-              interestPaid?: string | null;
-              finePaid?: string | null;
-              discount?: string | null;
-              remainingPrinciple?: string | null;
-            } | null> | null;
-          }
-        | {}
-        | null;
-    } | null;
-  };
-};
-
-export type GetLedgerReportQueryVariables = Exact<{
-  data: GeneralLedgerFilter;
-}>;
-
-export type GetLedgerReportQuery = {
-  report: {
-    generalLedgerReport: {
-      data?: Array<{
-        id?: string | null;
-        date?: Record<'local' | 'en' | 'np', string> | null;
-        account?: string | null;
-        balance?: string | null;
-        credit?: string | null;
-        debit?: string | null;
-      } | null> | null;
-    };
-  };
-};
-
-export type GetInterestStatementReportQueryVariables = Exact<{
-  data: InterestStatementFilter;
-}>;
-
-export type GetInterestStatementReportQuery = {
-  report: {
-    interestStatementReport: {
-      data?: {
-        memberId?: string | null;
-        accountNo?: string | null;
-        accountType?: NatureOfDepositProduct | null;
-        currentInterestRate?: number | null;
-        memberName?: Record<'local' | 'en' | 'np', string> | null;
-        entries?: Array<{
-          date?: Record<'local' | 'en' | 'np', string> | null;
-          amount?: string | null;
-          balance?: string | null;
-          days?: number | null;
-          rate?: number | null;
-          remarks?: string | null;
-        } | null> | null;
-        address?: {
-          wardNo?: string | null;
-          state?: Record<'local' | 'en' | 'np', string> | null;
-          locality?: Record<'local' | 'en' | 'np', string> | null;
-          localGovernment?: Record<'local' | 'en' | 'np', string> | null;
-          district?: Record<'local' | 'en' | 'np', string> | null;
-          houseNo?: string | null;
-          coordinates?: { longitude?: number | null; latitude?: number | null } | null;
-        } | null;
-      } | null;
-    };
-  };
-};
-
-export type GetInterestTaxReportQueryVariables = Exact<{
-  data: InterestTaxReportFilter;
-}>;
-
-export type GetInterestTaxReportQuery = {
-  report: {
-    interestTaxReport: {
-      data?: Array<{
-        memberId?: string | null;
-        memberCode?: string | null;
-        name?: Record<'local' | 'en' | 'np', string> | null;
-        panNo?: string | null;
-        accountNo?: string | null;
-        date?: Record<'local' | 'en' | 'np', string> | null;
-        interest?: string | null;
-        tax?: string | null;
-        savingBalance?: string | null;
-        closingBalance?: string | null;
-        remarks?: string | null;
-        address?: AddressFragment | null;
-      } | null> | null;
-    };
-  };
-};
-
-export type GetBranchReportQueryVariables = Exact<{
-  data?: InputMaybe<BranchReportFilter>;
-}>;
-
-export type GetBranchReportQuery = {
-  report: {
-    branchReport?: {
-      data?: Array<{
-        id: string;
-        serviceCenterCode?: string | null;
-        name?: string | null;
-        contactNumber?: string | null;
-        email?: string | null;
-        managerName?: string | null;
-        managerContact?: string | null;
-        isExtensionCounter?: boolean | null;
-        estDate?: Record<'local' | 'en' | 'np', string> | null;
-        branchStatus?: boolean | null;
-        remarks?: string | null;
-        address?: AddressFragment | null;
-      } | null> | null;
-      error?:
-        | QueryError_AuthorizationError_Fragment
-        | QueryError_BadRequestError_Fragment
-        | QueryError_NotFoundError_Fragment
-        | QueryError_ServerError_Fragment
-        | null;
-    } | null;
-  };
-};
-
-export type GetMBankingRegistrationReportQueryVariables = Exact<{
-  data?: InputMaybe<EbankingReportFilter>;
-}>;
-
-export type GetMBankingRegistrationReportQuery = {
-  report: {
-    mbankingRegistrationReport?: {
-      data?: Array<{
-        memberId?: string | null;
-        memberName?: string | null;
-        mobileNo?: string | null;
-        branchCode?: string | null;
-        regDate?: Record<'local' | 'en' | 'np', string> | null;
-        expDate?: Record<'local' | 'en' | 'np', string> | null;
-        status?: string | null;
-        registeredBy?: string | null;
-      } | null> | null;
-    } | null;
-  };
-};
-
-export type GetMBankingExpiryReportQueryVariables = Exact<{
-  data?: InputMaybe<EbankingReportFilter>;
-}>;
-
-export type GetMBankingExpiryReportQuery = {
-  report: {
-    mbankingRegistrationReport?: {
-      data?: Array<{
-        memberId?: string | null;
-        memberName?: string | null;
-        mobileNo?: string | null;
-        branchCode?: string | null;
-        regDate?: Record<'local' | 'en' | 'np', string> | null;
-        expDate?: Record<'local' | 'en' | 'np', string> | null;
-        status?: string | null;
-        registeredBy?: string | null;
-      } | null> | null;
-    } | null;
-  };
-};
-
-export type GetActiveInactiveMemberReportQueryVariables = Exact<{
-  data?: InputMaybe<ActiveInactiveMemberReportData>;
-}>;
-
-export type GetActiveInactiveMemberReportQuery = {
-  report: {
-    activeInactiveMemberReport?: {
-      statement?:
-        | {
-            summary?: {
-              activeTotal?: number | null;
-              inactiveTotal?: number | null;
-              totalMember?: number | null;
-            } | null;
-            reportStatement?: Array<{
-              memberId?: string | null;
-              memberName?: string | null;
-              district?: string | null;
-              wardNo?: string | null;
-              address?: string | null;
-              dob?: Record<'local' | 'en' | 'np', string> | null;
-              age?: number | null;
-              contactNo?: string | null;
-              gender?: string | null;
-              pan?: string | null;
-              occupation?: string | null;
-              memberRegistrationDate?: Record<'local' | 'en' | 'np', string> | null;
-              status?: MemberStatus | null;
-              memberType?: KymMemberTypesEnum | null;
-            } | null> | null;
-          }
-        | {}
-        | null;
-    } | null;
-  };
-};
-
-export type GetTrialSheetReportQueryVariables = Exact<{
-  data: TrialSheetReportFilter;
-}>;
-
-export type GetTrialSheetReportQuery = {
-  report: {
-    trialSheetReport: {
-      data?: {
-        equityAndLiablitiesTotal?: string | null;
-        assetsTotal?: string | null;
-        expenseTotal?: string | null;
-        incomeTotal?: string | null;
-        totalAssetExpense?: string | null;
-        totalLiablitiesIncome?: string | null;
-        totalProfitLoss?: string | null;
-        equityAndLiablities?: Array<{
-          balance?: string | null;
-          ledgerId?: string | null;
-          ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-          under?: string | null;
-        } | null> | null;
-        expenses?: Array<{
-          balance?: string | null;
-          ledgerId?: string | null;
-          ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-          under?: string | null;
-        } | null> | null;
-        income?: Array<{
-          balance?: string | null;
-          ledgerId?: string | null;
-          ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-          under?: string | null;
-        } | null> | null;
-        assets?: Array<{
-          balance?: string | null;
-          ledgerId?: string | null;
-          ledgerName?: Record<'local' | 'en' | 'np', string> | null;
-          under?: string | null;
-        } | null> | null;
-      } | null;
-    };
-  };
-};
-
-export type GetKymStatusReportQueryVariables = Exact<{
-  data?: InputMaybe<KymStatusReportFilter>;
-}>;
-
-export type GetKymStatusReportQuery = {
-  report: {
-    kymStatusReport?: {
-      Summary?: Record<string, string> | null;
-      data?: Array<{
-        memberName?: string | null;
-        memberId?: string | null;
-        contact?: string | null;
-        regDate?: Record<'local' | 'en' | 'np', string> | null;
-        riskCategory?: string | null;
-        lastKymUpdatedDate?: string | null;
-        kymExpireDays?: string | null;
-        kymStatus?: string | null;
-        address?: AddressFragment | null;
-      } | null> | null;
-    } | null;
-  };
-};
-
-export type GetMbTransactionReportQueryVariables = Exact<{
-  data?: InputMaybe<MBankingTransactionFilter>;
-}>;
-
-export type GetMbTransactionReportQuery = {
-  report: {
-    mBankingTransactionReport?: {
-      data?: Array<{
-        initiatorName?: string | null;
-        phoneNo?: string | null;
-        srcAccount?: string | null;
-        destAccount?: string | null;
-        amount?: string | null;
-        transactionType?: string | null;
-        transThrough?: string | null;
-        transDate?: Record<'local' | 'en' | 'np', string> | null;
-        narration?: string | null;
-        status?: string | null;
-      } | null> | null;
-    } | null;
-  };
-};
-
-export type GetUserReportQueryVariables = Exact<{
-  data?: InputMaybe<UserReportFilter>;
-}>;
-
-export type GetUserReportQuery = {
-  report: {
-    userReport?: {
-      data?: Array<{
-        isCoreEmployee?: boolean | null;
-        employeeName?: string | null;
-        empCode?: string | null;
-        username?: string | null;
-        usernameCode?: string | null;
-        accessForBranch?: string | null;
-        accessForGroup?: string | null;
-        role?: string | null;
-        createdDate?: Record<'local' | 'en' | 'np', string> | null;
-        createdBy?: string | null;
-        status?: string | null;
-        remarks?: string | null;
-      } | null> | null;
-    } | null;
-  };
-};
-
-export type GetTtrReportQueryVariables = Exact<{
-  data: TtrReportFilter;
-}>;
-
-export type GetTtrReportQuery = {
-  report: {
-    thresholdTransactionReport: {
-      data?: {
-        yearly?: Array<{
+    shareReport: {
+      shareStatementReport?: {
+        member?: {
+          id: string;
+          code: string;
           name?: Record<'local' | 'en' | 'np', string> | null;
-          memberId?: string | null;
-          branch?: string | null;
-          date?: Record<'local' | 'en' | 'np', string> | null;
-          nature?: NatureOfTransaction | null;
-          accountNo?: string | null;
-          amount?: string | null;
-          sourceOfFund?: string | null;
-          remarks?: string | null;
-          address?: AddressFragment | null;
-        } | null> | null;
-        perTranx?: Array<{
-          name?: Record<'local' | 'en' | 'np', string> | null;
-          memberId?: string | null;
-          branch?: string | null;
-          date?: Record<'local' | 'en' | 'np', string> | null;
-          nature?: NatureOfTransaction | null;
-          accountNo?: string | null;
-          amount?: string | null;
-          sourceOfFund?: string | null;
-          remarks?: string | null;
-          address?: AddressFragment | null;
-        } | null> | null;
+          dateJoined?: string | null;
+          address?: {
+            wardNo?: string | null;
+            state?: Record<'local' | 'en' | 'np', string> | null;
+            district?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+            localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+          } | null;
+        } | null;
+        statement?:
+          | {
+              shareStatement?: Array<{
+                date: Record<'local' | 'en' | 'np', string>;
+                particular: string;
+                noOfShares: number;
+                returnAmountDr: number;
+                purchaseAmountCr: number;
+                balanceSheet: number;
+              } | null> | null;
+              totals?: {
+                totalShares?: number | null;
+                totalDr?: number | null;
+                totalCr?: number | null;
+                totalBalanceSheet?: number | null;
+              } | null;
+            }
+          | {}
+          | null;
       } | null;
     };
   };
 };
 
-export type GetshareRegisterReportQueryVariables = Exact<{
+export type GetShareRegisterReportQueryVariables = Exact<{
   data: SharePurchaseRegisterReportFilter;
 }>;
 
-export type GetshareRegisterReportQuery = {
+export type GetShareRegisterReportQuery = {
   report: {
-    sharePurchaseRegisterReport?: {
-      data?: Array<{
-        memberId?: string | null;
-        memberCode?: string | null;
-        name?: string | null;
-        particular?: string | null;
-        perShareAmount?: string | null;
-        kittaNumFrom?: string | null;
-        kittaNumTo?: string | null;
-        totalKitta?: string | null;
-        totalAmount?: string | null;
-      } | null> | null;
-    } | null;
+    shareReport: {
+      sharePurchaseRegisterReport?: {
+        data?: Array<{
+          memberId?: string | null;
+          memberCode?: string | null;
+          name?: string | null;
+          particular?: string | null;
+          perShareAmount?: string | null;
+          kittaNumFrom?: string | null;
+          kittaNumTo?: string | null;
+          totalKitta?: string | null;
+          totalAmount?: string | null;
+        } | null> | null;
+      } | null;
+    };
   };
 };
 
@@ -19377,131 +19714,74 @@ export type GetShareTransactionReportQueryVariables = Exact<{
 
 export type GetShareTransactionReportQuery = {
   report: {
-    shareTransactionReport?: {
-      totalShareIssued?: string | null;
-      avgSharePerMember?: string | null;
-      data?: Array<{
-        transactionDate?: Record<'local' | 'en' | 'np', string> | null;
-        memberId?: string | null;
-        memberCode?: string | null;
-        name?: string | null;
-        particular?: string | null;
-        shareReturnDr?: string | null;
-        shareIssueCr?: string | null;
-        balance?: string | null;
-      } | null> | null;
-      footer?: {
-        totalCr?: string | null;
-        totatDr?: string | null;
-        totalBalance?: string | null;
+    shareReport: {
+      shareTransactionReport?: {
+        totalShareIssued?: string | null;
+        avgSharePerMember?: string | null;
+        data?: Array<{
+          transactionDate?: Record<'local' | 'en' | 'np', string> | null;
+          memberId?: string | null;
+          memberCode?: string | null;
+          name?: string | null;
+          particular?: string | null;
+          shareReturnDr?: string | null;
+          shareIssueCr?: string | null;
+          balance?: string | null;
+        } | null> | null;
+        footer?: {
+          totalCr?: string | null;
+          totalDr?: string | null;
+          totalBalance?: string | null;
+        } | null;
       } | null;
-    } | null;
-  };
-};
-
-export type GetAccountOpeningReportQueryVariables = Exact<{
-  data?: InputMaybe<AccountOpeningReportInput>;
-}>;
-
-export type GetAccountOpeningReportQuery = {
-  report: {
-    accountOpeningReport?: {
-      data?: Array<{
-        accountName?: string | null;
-        accountNumber?: string | null;
-        memberId?: string | null;
-        openedBy?: string | null;
-        openingDate?: Record<'local' | 'en' | 'np', string> | null;
-      } | null> | null;
-    } | null;
-  };
-};
-
-export type GetLoanBalanceReportQueryVariables = Exact<{
-  data: LoanBalanceFilterData;
-}>;
-
-export type GetLoanBalanceReportQuery = {
-  report: {
-    loanBalanceReport: {
-      totalOutstandingBalance?: string | null;
-      totalRemainingBalance?: string | null;
-      data?: Array<{
-        memberId?: string | null;
-        loanAccountId?: string | null;
-        memberName?: Record<'local' | 'en' | 'np', string> | null;
-        productName?: string | null;
-        productCode?: string | null;
-        outstandingBalance?: string | null;
-        remainingBalance?: string | null;
-        remainingInterest?: string | null;
-        lastPaymentDate?: string | null;
-      } | null> | null;
     };
   };
 };
 
-export type GetSavingsBalanceReportQueryVariables = Exact<{
-  data: SavingsBalanceFilterData;
+export type GetTrialSheetReportQueryVariables = Exact<{
+  data: TrialSheetReportFilter;
 }>;
 
-export type GetSavingsBalanceReportQuery = {
+export type GetTrialSheetReportQuery = {
   report: {
-    savingsBalanceReport: {
-      totalBalance?: string | null;
-      data?: Array<{
-        accountId?: string | null;
-        memberId?: string | null;
-        memberCode?: string | null;
-        memberName?: Record<'local' | 'en' | 'np', string> | null;
-        productId?: string | null;
-        productName?: string | null;
-        productCode?: string | null;
-        accountOpeningDate?: string | null;
-        memberType?: KymMemberTypesEnum | null;
-        balance?: string | null;
-      } | null> | null;
-    };
-  };
-};
-
-export type GetAccountClosingReportQueryVariables = Exact<{
-  data?: InputMaybe<AccountClosingReportInput>;
-}>;
-
-export type GetAccountClosingReportQuery = {
-  report: {
-    accountClosingReport?: {
-      data?: Array<{
-        memberId?: string | null;
-        accountNumber?: string | null;
-        accountName?: string | null;
-        openingDate?: Record<'local' | 'en' | 'np', string> | null;
-        closingDate?: Record<'local' | 'en' | 'np', string> | null;
-        closedBalance?: string | null;
-        closedBy?: string | null;
-      } | null> | null;
-    } | null;
-  };
-};
-
-export type GetBankGlStatementReportQueryVariables = Exact<{
-  data: BankGlStatementFilter;
-}>;
-
-export type GetBankGlStatementReportQuery = {
-  report: {
-    bankGLStatementReport: {
-      data?: Array<{
-        date?: Record<'local' | 'en' | 'np', string> | null;
-        name?: Record<'local' | 'en' | 'np', string> | null;
-        particular?: string | null;
-        chequeNo?: string | null;
-        depositAmount?: string | null;
-        withdrawAmount?: string | null;
-        balance?: string | null;
-        remarks?: string | null;
-      } | null> | null;
+    transactionReport: {
+      financial: {
+        trialSheetReport: {
+          data?: {
+            equityAndLiablitiesTotal?: string | null;
+            assetsTotal?: string | null;
+            expenseTotal?: string | null;
+            incomeTotal?: string | null;
+            totalAssetExpense?: string | null;
+            totalLiablitiesIncome?: string | null;
+            totalProfitLoss?: string | null;
+            equityAndLiablities?: Array<{
+              balance?: string | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            expenses?: Array<{
+              balance?: string | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            income?: Array<{
+              balance?: string | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+            assets?: Array<{
+              balance?: string | null;
+              ledgerId?: string | null;
+              ledgerName?: Record<'local' | 'en' | 'np', string> | null;
+              under?: string | null;
+            } | null> | null;
+          } | null;
+        };
+      };
     };
   };
 };
@@ -19555,150 +19835,11 @@ export type GetTransactionTellerReportQuery = {
   };
 };
 
-export type GetCashLedgerReportQueryVariables = Exact<{
-  data?: InputMaybe<CashLedgerReportFilterData>;
-}>;
-
-export type GetCashLedgerReportQuery = {
-  report: {
-    cashLedgerReport?: {
-      openingBalance?: string | null;
-      closingBalance?: string | null;
-      summary?: Array<{
-        date?: Record<'local' | 'en' | 'np', string> | null;
-        ledgerCode?: string | null;
-        particular?: string | null;
-        voucherNo?: string | null;
-        cashDr?: string | null;
-        cashCr?: string | null;
-        balance?: string | null;
-      } | null> | null;
-      details?: Array<{
-        date?: Record<'local' | 'en' | 'np', string> | null;
-        ledgerCode?: string | null;
-        particular?: string | null;
-        voucherNo?: string | null;
-        cashDr?: string | null;
-        cashCr?: string | null;
-        balance?: string | null;
-      } | null> | null;
-    } | null;
-  };
-};
-
-export type GetMemberRegistrationReportQueryVariables = Exact<{
-  data?: InputMaybe<MemberRegistrationReportData>;
-}>;
-
-export type GetMemberRegistrationReportQuery = {
-  report: {
-    memberRegistrationReport?: {
-      data?: {
-        individual?: Array<{
-          memberId?: string | null;
-          memberCode?: string | null;
-          name?: string | null;
-          dob?: Record<'local' | 'en' | 'np', string> | null;
-          grandFatherName?: string | null;
-          fatherName?: string | null;
-          SpouseName?: string | null;
-          profession?: string | null;
-          fingerPrint?: boolean | null;
-          photo?: boolean | null;
-          contactNo?: string | null;
-          email?: string | null;
-          other?: string | null;
-          address?: AddressFragment | null;
-          shareInfo?: {
-            perShareAmount?: string | null;
-            kitta?: string | null;
-            amount?: string | null;
-          } | null;
-        } | null> | null;
-        other?: Array<{
-          memberId?: string | null;
-          memberCode?: string | null;
-          name?: string | null;
-          doe?: Record<'local' | 'en' | 'np', string> | null;
-          typeOfInstitution?: string | null;
-          workingArea?: string | null;
-          totalMember?: string | null;
-          balanceSheet?: string | null;
-          post?: string | null;
-          authPersonName?: string | null;
-          logo?: boolean | null;
-          stamp?: boolean | null;
-          contactNo?: string | null;
-          email?: string | null;
-          other?: string | null;
-          address?: AddressFragment | null;
-          shareInfo?: {
-            perShareAmount?: string | null;
-            kitta?: string | null;
-            amount?: string | null;
-          } | null;
-        } | null> | null;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetLoanAgingStatementReportQueryVariables = Exact<{
-  data?: InputMaybe<LoanAgingStatementInput>;
-}>;
-
-export type GetLoanAgingStatementReportQuery = {
-  report: {
-    loanAgingStatementReport?: {
-      data?: {
-        report?: Array<{
-          memberNo?: string | null;
-          loanNo?: string | null;
-          name?: string | null;
-          address?: string | null;
-          phoneNo?: string | null;
-          loanType?: string | null;
-          paymentMode?: string | null;
-          issueDate?: Record<'local' | 'en' | 'np', string> | null;
-          loanMaturityDate?: Record<'local' | 'en' | 'np', string> | null;
-          disbursePrincipal?: string | null;
-          remainingPrincipal?: string | null;
-          installmentAmount?: string | null;
-          remainingInstallmentAmount?: string | null;
-          remainingInterest?: string | null;
-          remainingPenalty?: string | null;
-          totalDueAmount?: string | null;
-          goodAmount?: string | null;
-          matured1To30Days?: string | null;
-          matured1To12Months?: string | null;
-          maturedAbove12Months?: string | null;
-          lastPrincipalPaidDate?: Record<'local' | 'en' | 'np', string> | null;
-          lastInterestPaidDate?: Record<'local' | 'en' | 'np', string> | null;
-          installmentLateDays?: number | null;
-        } | null> | null;
-        summary?: {
-          disbursePrincipalTotal?: string | null;
-          remainingPrincipalTotal?: string | null;
-          installmentAmountTotal?: string | null;
-          remainingInstallmentAmountTotal?: string | null;
-          remainingInterestTotal?: string | null;
-          remainingPenaltyTotal?: string | null;
-          dueAmountTotal?: string | null;
-          goodAmountTotal?: string | null;
-          matured1To30DaysTotal?: string | null;
-          matured1To12MonthsTotal?: string | null;
-          maturedAbove12MonthsTotal?: string | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetValutBalanceReportQueryVariables = Exact<{
+export type GetVaultBalanceReportQueryVariables = Exact<{
   data: VaultBalanceReportFilter;
 }>;
 
-export type GetValutBalanceReportQuery = {
+export type GetVaultBalanceReportQuery = {
   report: {
     transactionReport: {
       financial: {
@@ -19751,46 +19892,28 @@ export type GetValutBalanceReportQuery = {
   };
 };
 
-export type GetShareStatementQueryVariables = Exact<{
-  data: ShareStatementReportSettings;
+export type GetBankGlStatementReportQueryVariables = Exact<{
+  data: BankGlStatementFilter;
 }>;
 
-export type GetShareStatementQuery = {
+export type GetBankGlStatementReportQuery = {
   report: {
-    shareStatementReport?: {
-      member?: {
-        id: string;
-        code: string;
-        name?: Record<'local' | 'en' | 'np', string> | null;
-        dateJoined?: string | null;
-        address?: {
-          wardNo?: string | null;
-          state?: Record<'local' | 'en' | 'np', string> | null;
-          district?: Record<'local' | 'en' | 'np', string> | null;
-          houseNo?: string | null;
-          localGovernment?: Record<'local' | 'en' | 'np', string> | null;
-        } | null;
-      } | null;
-      statement?:
-        | {
-            shareStatement?: Array<{
-              date: Record<'local' | 'en' | 'np', string>;
-              particular: string;
-              noOfShares: number;
-              returnAmountDr: number;
-              purchaseAmountCr: number;
-              balanceSheet: number;
-            } | null> | null;
-            totals?: {
-              totalShares?: number | null;
-              totalDr?: number | null;
-              totalCr?: number | null;
-              totalBalanceSheet?: number | null;
-            } | null;
-          }
-        | {}
-        | null;
-    } | null;
+    transactionReport: {
+      financial: {
+        bankGLStatementReport: {
+          data?: Array<{
+            date?: Record<'local' | 'en' | 'np', string> | null;
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            particular?: string | null;
+            chequeNo?: string | null;
+            depositAmount?: string | null;
+            withdrawAmount?: string | null;
+            balance?: string | null;
+            remarks?: string | null;
+          } | null> | null;
+        };
+      };
+    };
   };
 };
 
@@ -26479,6 +26602,61 @@ export const useGetAccountTableListQuery = <TData = GetAccountTableListQuery, TE
     ).bind(null, variables),
     options
   );
+export const GetAccountTableListMinimalDocument = `
+    query getAccountTableListMinimal($paginate: Pagination, $filter: DepositLoanAccountSearchFilter) {
+  account {
+    list(paginate: $paginate, filter: $filter) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          id
+          objState
+          createdAt
+          accountName
+          balance
+          accountOpenedDate
+          accountExpiryDate
+          closedAt
+          member {
+            id
+            name
+            profilePicUrl
+          }
+          product {
+            id
+            productCode
+            productName
+            nature
+            interest
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountTableListMinimalQuery = <
+  TData = GetAccountTableListMinimalQuery,
+  TError = unknown
+>(
+  variables?: GetAccountTableListMinimalQueryVariables,
+  options?: UseQueryOptions<GetAccountTableListMinimalQuery, TError, TData>
+) =>
+  useQuery<GetAccountTableListMinimalQuery, TError, TData>(
+    variables === undefined
+      ? ['getAccountTableListMinimal']
+      : ['getAccountTableListMinimal', variables],
+    useAxios<GetAccountTableListMinimalQuery, GetAccountTableListMinimalQueryVariables>(
+      GetAccountTableListMinimalDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAccountDocumentsListDocument = `
     query getAccountDocumentsList($subscriptionId: String!) {
   document {
@@ -31364,6 +31542,928 @@ export const useGetMemberPdfQuery = <TData = GetMemberPdfQuery, TError = unknown
     ),
     options
   );
+export const GetBranchReportDocument = `
+    query getBranchReport($data: BranchReportFilter) {
+  report {
+    branchReport {
+      branchReport(data: $data) {
+        data {
+          id
+          serviceCenterCode
+          name
+          contactNumber
+          email
+          address {
+            ...Address
+          }
+          managerName
+          managerContact
+          isExtensionCounter
+          estDate
+          branchStatus
+          remarks
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}
+${QueryErrorFragmentDoc}`;
+export const useGetBranchReportQuery = <TData = GetBranchReportQuery, TError = unknown>(
+  variables?: GetBranchReportQueryVariables,
+  options?: UseQueryOptions<GetBranchReportQuery, TError, TData>
+) =>
+  useQuery<GetBranchReportQuery, TError, TData>(
+    variables === undefined ? ['getBranchReport'] : ['getBranchReport', variables],
+    useAxios<GetBranchReportQuery, GetBranchReportQueryVariables>(GetBranchReportDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetCashLedgerReportDocument = `
+    query getCashLedgerReport($data: CashLedgerReportFilterData) {
+  report {
+    cashReport {
+      cashLedgerReport(data: $data) {
+        openingBalance
+        closingBalance
+        summary {
+          date
+          ledgerCode
+          particular
+          voucherNo
+          cashDr
+          cashCr
+          balance
+        }
+        details {
+          date
+          ledgerCode
+          particular
+          voucherNo
+          cashDr
+          cashCr
+          balance
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetCashLedgerReportQuery = <TData = GetCashLedgerReportQuery, TError = unknown>(
+  variables?: GetCashLedgerReportQueryVariables,
+  options?: UseQueryOptions<GetCashLedgerReportQuery, TError, TData>
+) =>
+  useQuery<GetCashLedgerReportQuery, TError, TData>(
+    variables === undefined ? ['getCashLedgerReport'] : ['getCashLedgerReport', variables],
+    useAxios<GetCashLedgerReportQuery, GetCashLedgerReportQueryVariables>(
+      GetCashLedgerReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountOpeningReportDocument = `
+    query getAccountOpeningReport($data: AccountOpeningReportInput) {
+  report {
+    depositReport {
+      accountOpeningReport(data: $data) {
+        data {
+          accountName
+          accountNumber
+          memberId
+          openedBy
+          openingDate
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountOpeningReportQuery = <
+  TData = GetAccountOpeningReportQuery,
+  TError = unknown
+>(
+  variables?: GetAccountOpeningReportQueryVariables,
+  options?: UseQueryOptions<GetAccountOpeningReportQuery, TError, TData>
+) =>
+  useQuery<GetAccountOpeningReportQuery, TError, TData>(
+    variables === undefined ? ['getAccountOpeningReport'] : ['getAccountOpeningReport', variables],
+    useAxios<GetAccountOpeningReportQuery, GetAccountOpeningReportQueryVariables>(
+      GetAccountOpeningReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountClosingReportDocument = `
+    query getAccountClosingReport($data: AccountClosingReportInput) {
+  report {
+    depositReport {
+      accountClosingReport(data: $data) {
+        data {
+          memberId
+          accountNumber
+          accountName
+          openingDate
+          closingDate
+          closedBalance
+          closedBy
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountClosingReportQuery = <
+  TData = GetAccountClosingReportQuery,
+  TError = unknown
+>(
+  variables?: GetAccountClosingReportQueryVariables,
+  options?: UseQueryOptions<GetAccountClosingReportQuery, TError, TData>
+) =>
+  useQuery<GetAccountClosingReportQuery, TError, TData>(
+    variables === undefined ? ['getAccountClosingReport'] : ['getAccountClosingReport', variables],
+    useAxios<GetAccountClosingReportQuery, GetAccountClosingReportQueryVariables>(
+      GetAccountClosingReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInterestTaxReportDocument = `
+    query getInterestTaxReport($data: InterestTaxReportFilter!) {
+  report {
+    depositReport {
+      interestTaxReport(data: $data) {
+        data {
+          memberId
+          memberCode
+          name
+          address {
+            ...Address
+          }
+          panNo
+          accountNo
+          date
+          interest
+          tax
+          savingBalance
+          closingBalance
+          remarks
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}`;
+export const useGetInterestTaxReportQuery = <TData = GetInterestTaxReportQuery, TError = unknown>(
+  variables: GetInterestTaxReportQueryVariables,
+  options?: UseQueryOptions<GetInterestTaxReportQuery, TError, TData>
+) =>
+  useQuery<GetInterestTaxReportQuery, TError, TData>(
+    ['getInterestTaxReport', variables],
+    useAxios<GetInterestTaxReportQuery, GetInterestTaxReportQueryVariables>(
+      GetInterestTaxReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetTtrReportDocument = `
+    query getTtrReport($data: TTRReportFilter!) {
+  report {
+    depositReport {
+      thresholdTransactionReport(data: $data) {
+        data {
+          yearly {
+            name
+            memberId
+            address {
+              ...Address
+            }
+            branch
+            date
+            nature
+            accountNo
+            amount
+            sourceOfFund
+            remarks
+          }
+          perTranx {
+            name
+            memberId
+            address {
+              ...Address
+            }
+            branch
+            date
+            nature
+            accountNo
+            amount
+            sourceOfFund
+            remarks
+          }
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}`;
+export const useGetTtrReportQuery = <TData = GetTtrReportQuery, TError = unknown>(
+  variables: GetTtrReportQueryVariables,
+  options?: UseQueryOptions<GetTtrReportQuery, TError, TData>
+) =>
+  useQuery<GetTtrReportQuery, TError, TData>(
+    ['getTtrReport', variables],
+    useAxios<GetTtrReportQuery, GetTtrReportQueryVariables>(GetTtrReportDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetSavingStatementDocument = `
+    query getSavingStatement($data: SavingStatementReportSettings!) {
+  report {
+    depositReport {
+      savingStatementReport(data: $data) {
+        memberId
+        member {
+          id
+          code
+          name
+          address {
+            wardNo
+            state
+            district
+            houseNo
+            localGovernment
+          }
+          dateJoined
+        }
+        statement {
+          ... on SavingStatementReport {
+            savingStatement {
+              date
+              balanceAmount
+              depositCr
+              chequeOrVoucherNo
+              particular
+              withdrawDr
+            }
+            totals {
+              totalBalance
+              totalWithdraw
+              totalDeposit
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetSavingStatementQuery = <TData = GetSavingStatementQuery, TError = unknown>(
+  variables: GetSavingStatementQueryVariables,
+  options?: UseQueryOptions<GetSavingStatementQuery, TError, TData>
+) =>
+  useQuery<GetSavingStatementQuery, TError, TData>(
+    ['getSavingStatement', variables],
+    useAxios<GetSavingStatementQuery, GetSavingStatementQueryVariables>(
+      GetSavingStatementDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetInterestStatementReportDocument = `
+    query getInterestStatementReport($data: InterestStatementFilter!) {
+  report {
+    depositReport {
+      interestStatementReport(data: $data) {
+        data {
+          entries {
+            date
+            amount
+            balance
+            days
+            rate
+            remarks
+          }
+          memberId
+          accountNo
+          accountType
+          currentInterestRate
+          memberName
+          address {
+            wardNo
+            state
+            locality
+            localGovernment
+            district
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInterestStatementReportQuery = <
+  TData = GetInterestStatementReportQuery,
+  TError = unknown
+>(
+  variables: GetInterestStatementReportQueryVariables,
+  options?: UseQueryOptions<GetInterestStatementReportQuery, TError, TData>
+) =>
+  useQuery<GetInterestStatementReportQuery, TError, TData>(
+    ['getInterestStatementReport', variables],
+    useAxios<GetInterestStatementReportQuery, GetInterestStatementReportQueryVariables>(
+      GetInterestStatementReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetUserReportDocument = `
+    query getUserReport($data: UserReportFilter) {
+  report {
+    employeeReport {
+      userReport(data: $data) {
+        data {
+          isCoreEmployee
+          employeeName
+          empCode
+          username
+          usernameCode
+          accessForBranch
+          accessForGroup
+          role
+          createdDate
+          createdBy
+          status
+          remarks
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetUserReportQuery = <TData = GetUserReportQuery, TError = unknown>(
+  variables?: GetUserReportQueryVariables,
+  options?: UseQueryOptions<GetUserReportQuery, TError, TData>
+) =>
+  useQuery<GetUserReportQuery, TError, TData>(
+    variables === undefined ? ['getUserReport'] : ['getUserReport', variables],
+    useAxios<GetUserReportQuery, GetUserReportQueryVariables>(GetUserReportDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetLoanBalanceReportDocument = `
+    query getLoanBalanceReport($data: LoanBalanceFilterData!) {
+  report {
+    loanReport {
+      loanBalanceReport(data: $data) {
+        data {
+          memberId
+          loanAccountId
+          memberName
+          productName
+          productCode
+          outstandingBalance
+          remainingBalance
+          remainingInterest
+          lastPaymentDate
+        }
+        totalOutstandingBalance
+        totalRemainingBalance
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanBalanceReportQuery = <TData = GetLoanBalanceReportQuery, TError = unknown>(
+  variables: GetLoanBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetLoanBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanBalanceReportQuery, TError, TData>(
+    ['getLoanBalanceReport', variables],
+    useAxios<GetLoanBalanceReportQuery, GetLoanBalanceReportQueryVariables>(
+      GetLoanBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanAgingStatementReportDocument = `
+    query getLoanAgingStatementReport($data: LoanAgingStatementInput) {
+  report {
+    loanReport {
+      loanAgingStatementReport(data: $data) {
+        data {
+          report {
+            memberNo
+            loanNo
+            name
+            address
+            phoneNo
+            loanType
+            paymentMode
+            issueDate
+            loanMaturityDate
+            disbursePrincipal
+            remainingPrincipal
+            installmentAmount
+            remainingInstallmentAmount
+            remainingInterest
+            remainingPenalty
+            totalDueAmount
+            goodAmount
+            matured1To30Days
+            matured1To12Months
+            maturedAbove12Months
+            lastPrincipalPaidDate
+            lastInterestPaidDate
+            installmentLateDays
+          }
+          summary {
+            disbursePrincipalTotal
+            remainingPrincipalTotal
+            installmentAmountTotal
+            remainingInstallmentAmountTotal
+            remainingInterestTotal
+            remainingPenaltyTotal
+            dueAmountTotal
+            goodAmountTotal
+            matured1To30DaysTotal
+            matured1To12MonthsTotal
+            maturedAbove12MonthsTotal
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanAgingStatementReportQuery = <
+  TData = GetLoanAgingStatementReportQuery,
+  TError = unknown
+>(
+  variables?: GetLoanAgingStatementReportQueryVariables,
+  options?: UseQueryOptions<GetLoanAgingStatementReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanAgingStatementReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getLoanAgingStatementReport']
+      : ['getLoanAgingStatementReport', variables],
+    useAxios<GetLoanAgingStatementReportQuery, GetLoanAgingStatementReportQueryVariables>(
+      GetLoanAgingStatementReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLoanStatementReportDocument = `
+    query getLoanStatementReport($data: LoanStatementReportSettings!) {
+  report {
+    loanReport {
+      loanStatementReport(data: $data) {
+        memberId
+        member {
+          name
+          code
+        }
+        statement {
+          ... on LoanStatementReport {
+            loanStatement {
+              date
+              particular
+              txnId
+              disbursePrinciple
+              paidPrinciple
+              interestPaid
+              finePaid
+              discount
+              remainingPrinciple
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLoanStatementReportQuery = <
+  TData = GetLoanStatementReportQuery,
+  TError = unknown
+>(
+  variables: GetLoanStatementReportQueryVariables,
+  options?: UseQueryOptions<GetLoanStatementReportQuery, TError, TData>
+) =>
+  useQuery<GetLoanStatementReportQuery, TError, TData>(
+    ['getLoanStatementReport', variables],
+    useAxios<GetLoanStatementReportQuery, GetLoanStatementReportQueryVariables>(
+      GetLoanStatementReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberClassificationReportDocument = `
+    query getMemberClassificationReport($data: MemberClassificationFilter!) {
+  report {
+    memberReport {
+      memberClassificationReport(data: $data) {
+        data {
+          gender {
+            entryName
+            inNumber
+            inPercent
+          }
+          age {
+            entryName
+            inNumber
+            inPercent
+          }
+          occupation {
+            entryName
+            inNumber
+            inPercent
+          }
+          education {
+            entryName
+            inNumber
+            inPercent
+          }
+          memberCategory {
+            entryName
+            inNumber
+            inPercent
+          }
+          income {
+            entryName
+            inPercent
+            inPercent
+          }
+          address {
+            province {
+              entryName
+              inNumber
+              inPercent
+            }
+            district {
+              entryName
+              inNumber
+              inPercent
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberClassificationReportQuery = <
+  TData = GetMemberClassificationReportQuery,
+  TError = unknown
+>(
+  variables: GetMemberClassificationReportQueryVariables,
+  options?: UseQueryOptions<GetMemberClassificationReportQuery, TError, TData>
+) =>
+  useQuery<GetMemberClassificationReportQuery, TError, TData>(
+    ['getMemberClassificationReport', variables],
+    useAxios<GetMemberClassificationReportQuery, GetMemberClassificationReportQueryVariables>(
+      GetMemberClassificationReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetActiveInactiveMemberReportDocument = `
+    query getActiveInactiveMemberReport($data: ActiveInactiveMemberReportData) {
+  report {
+    memberReport {
+      activeInactiveMemberReport(data: $data) {
+        statement {
+          ... on ActiveInactiveMemberReport {
+            summary {
+              activeTotal
+              inactiveTotal
+              totalMember
+            }
+            reportStatement {
+              memberId
+              memberName
+              district
+              wardNo
+              address
+              dob
+              age
+              contactNo
+              gender
+              pan
+              occupation
+              memberRegistrationDate
+              status
+              memberType
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetActiveInactiveMemberReportQuery = <
+  TData = GetActiveInactiveMemberReportQuery,
+  TError = unknown
+>(
+  variables?: GetActiveInactiveMemberReportQueryVariables,
+  options?: UseQueryOptions<GetActiveInactiveMemberReportQuery, TError, TData>
+) =>
+  useQuery<GetActiveInactiveMemberReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getActiveInactiveMemberReport']
+      : ['getActiveInactiveMemberReport', variables],
+    useAxios<GetActiveInactiveMemberReportQuery, GetActiveInactiveMemberReportQueryVariables>(
+      GetActiveInactiveMemberReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetKymStatusReportDocument = `
+    query getKymStatusReport($data: KymStatusReportFilter) {
+  report {
+    memberReport {
+      kymStatusReport(data: $data) {
+        Summary
+        data {
+          address {
+            ...Address
+          }
+          memberName
+          memberId
+          contact
+          regDate
+          riskCategory
+          lastKymUpdatedDate
+          kymExpireDays
+          kymStatus
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}`;
+export const useGetKymStatusReportQuery = <TData = GetKymStatusReportQuery, TError = unknown>(
+  variables?: GetKymStatusReportQueryVariables,
+  options?: UseQueryOptions<GetKymStatusReportQuery, TError, TData>
+) =>
+  useQuery<GetKymStatusReportQuery, TError, TData>(
+    variables === undefined ? ['getKymStatusReport'] : ['getKymStatusReport', variables],
+    useAxios<GetKymStatusReportQuery, GetKymStatusReportQueryVariables>(
+      GetKymStatusReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberRegistrationReportDocument = `
+    query getMemberRegistrationReport($data: MemberRegistrationReportData) {
+  report {
+    memberReport {
+      memberRegistrationReport(data: $data) {
+        data {
+          individual {
+            memberId
+            memberCode
+            name
+            address {
+              ...Address
+            }
+            dob
+            grandFatherName
+            fatherName
+            SpouseName
+            profession
+            shareInfo {
+              perShareAmount
+              kitta
+              amount
+            }
+            fingerPrint
+            photo
+            contactNo
+            email
+            other
+          }
+          other {
+            memberId
+            memberCode
+            name
+            address {
+              ...Address
+            }
+            doe
+            typeOfInstitution
+            workingArea
+            totalMember
+            balanceSheet
+            shareInfo {
+              perShareAmount
+              kitta
+              amount
+            }
+            post
+            authPersonName
+            logo
+            stamp
+            contactNo
+            email
+            other
+          }
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}`;
+export const useGetMemberRegistrationReportQuery = <
+  TData = GetMemberRegistrationReportQuery,
+  TError = unknown
+>(
+  variables?: GetMemberRegistrationReportQueryVariables,
+  options?: UseQueryOptions<GetMemberRegistrationReportQuery, TError, TData>
+) =>
+  useQuery<GetMemberRegistrationReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getMemberRegistrationReport']
+      : ['getMemberRegistrationReport', variables],
+    useAxios<GetMemberRegistrationReportQuery, GetMemberRegistrationReportQueryVariables>(
+      GetMemberRegistrationReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMBankingRegistrationReportDocument = `
+    query getMBankingRegistrationReport($data: EbankingReportFilter) {
+  report {
+    mobileBankingReport {
+      mbankingRegistrationReport(data: $data) {
+        data {
+          memberId
+          memberName
+          mobileNo
+          branchCode
+          regDate
+          expDate
+          status
+          registeredBy
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMBankingRegistrationReportQuery = <
+  TData = GetMBankingRegistrationReportQuery,
+  TError = unknown
+>(
+  variables?: GetMBankingRegistrationReportQueryVariables,
+  options?: UseQueryOptions<GetMBankingRegistrationReportQuery, TError, TData>
+) =>
+  useQuery<GetMBankingRegistrationReportQuery, TError, TData>(
+    variables === undefined
+      ? ['getMBankingRegistrationReport']
+      : ['getMBankingRegistrationReport', variables],
+    useAxios<GetMBankingRegistrationReportQuery, GetMBankingRegistrationReportQueryVariables>(
+      GetMBankingRegistrationReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMBankingExpiryReportDocument = `
+    query getMBankingExpiryReport($data: EbankingReportFilter) {
+  report {
+    mobileBankingReport {
+      mbankingRegistrationReport(data: $data) {
+        data {
+          memberId
+          memberName
+          mobileNo
+          branchCode
+          regDate
+          expDate
+          status
+          registeredBy
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMBankingExpiryReportQuery = <
+  TData = GetMBankingExpiryReportQuery,
+  TError = unknown
+>(
+  variables?: GetMBankingExpiryReportQueryVariables,
+  options?: UseQueryOptions<GetMBankingExpiryReportQuery, TError, TData>
+) =>
+  useQuery<GetMBankingExpiryReportQuery, TError, TData>(
+    variables === undefined ? ['getMBankingExpiryReport'] : ['getMBankingExpiryReport', variables],
+    useAxios<GetMBankingExpiryReportQuery, GetMBankingExpiryReportQueryVariables>(
+      GetMBankingExpiryReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMbTransactionReportDocument = `
+    query getMBTransactionReport($data: MBankingTransactionFilter) {
+  report {
+    mobileBankingReport {
+      mBankingTransactionReport(data: $data) {
+        data {
+          initiatorName
+          phoneNo
+          srcAccount
+          destAccount
+          amount
+          transactionType
+          transThrough
+          transDate
+          narration
+          status
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMbTransactionReportQuery = <
+  TData = GetMbTransactionReportQuery,
+  TError = unknown
+>(
+  variables?: GetMbTransactionReportQueryVariables,
+  options?: UseQueryOptions<GetMbTransactionReportQuery, TError, TData>
+) =>
+  useQuery<GetMbTransactionReportQuery, TError, TData>(
+    variables === undefined ? ['getMBTransactionReport'] : ['getMBTransactionReport', variables],
+    useAxios<GetMbTransactionReportQuery, GetMbTransactionReportQueryVariables>(
+      GetMbTransactionReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetLedgerReportDocument = `
+    query getLedgerReport($data: GeneralLedgerFilter!) {
+  report {
+    otherReport {
+      generalLedgerReport(data: $data) {
+        data {
+          id
+          date
+          account
+          balance
+          credit
+          debit
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetLedgerReportQuery = <TData = GetLedgerReportQuery, TError = unknown>(
+  variables: GetLedgerReportQueryVariables,
+  options?: UseQueryOptions<GetLedgerReportQuery, TError, TData>
+) =>
+  useQuery<GetLedgerReportQuery, TError, TData>(
+    ['getLedgerReport', variables],
+    useAxios<GetLedgerReportQuery, GetLedgerReportQueryVariables>(GetLedgerReportDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetSavingsBalanceReportDocument = `
+    query getSavingsBalanceReport($data: SavingsBalanceFilterData!) {
+  report {
+    otherReport {
+      savingsBalanceReport(data: $data) {
+        data {
+          accountId
+          memberId
+          memberCode
+          memberName
+          productId
+          productName
+          productCode
+          accountOpeningDate
+          memberType
+          balance
+        }
+        totalBalance
+      }
+    }
+  }
+}
+    `;
+export const useGetSavingsBalanceReportQuery = <
+  TData = GetSavingsBalanceReportQuery,
+  TError = unknown
+>(
+  variables: GetSavingsBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetSavingsBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetSavingsBalanceReportQuery, TError, TData>(
+    ['getSavingsBalanceReport', variables],
+    useAxios<GetSavingsBalanceReportQuery, GetSavingsBalanceReportQueryVariables>(
+      GetSavingsBalanceReportDocument
+    ).bind(null, variables),
+    options
+  );
 export const GetAllSavedReportsDocument = `
     query getAllSavedReports($pagination: Pagination) {
   report {
@@ -31406,13 +32506,6 @@ export const GetSavedReportDocument = `
         ... on ShareStatementReportSettingsType {
           filter
           memberId
-          period {
-            customPeriod {
-              from
-              to
-            }
-            periodType
-          }
         }
       }
     }
@@ -31431,408 +32524,40 @@ export const useGetSavedReportQuery = <TData = GetSavedReportQuery, TError = unk
     ),
     options
   );
-export const GetSavingStatementDocument = `
-    query getSavingStatement($data: SavingStatementReportSettings!) {
+export const GetShareStatementDocument = `
+    query getShareStatement($data: ShareStatementReportSettings!) {
   report {
-    savingStatementReport(data: $data) {
-      memberId
-      member {
-        id
-        code
-        name
-        address {
-          wardNo
-          state
-          district
-          houseNo
-          localGovernment
-        }
-        dateJoined
-      }
-      statement {
-        ... on SavingStatementReport {
-          savingStatement {
-            date
-            balanceAmount
-            depositCr
-            chequeOrVoucherNo
-            particular
-            withdrawDr
-          }
-          totals {
-            totalBalance
-            totalWithdraw
-            totalDeposit
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetSavingStatementQuery = <TData = GetSavingStatementQuery, TError = unknown>(
-  variables: GetSavingStatementQueryVariables,
-  options?: UseQueryOptions<GetSavingStatementQuery, TError, TData>
-) =>
-  useQuery<GetSavingStatementQuery, TError, TData>(
-    ['getSavingStatement', variables],
-    useAxios<GetSavingStatementQuery, GetSavingStatementQueryVariables>(
-      GetSavingStatementDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetMemberClassificationReportDocument = `
-    query getMemberClassificationReport($data: MemberClassificationFilter!) {
-  report {
-    memberClassificationReport(data: $data) {
-      data {
-        gender {
-          entryName
-          inNumber
-          inPercent
-        }
-        age {
-          entryName
-          inNumber
-          inPercent
-        }
-        occupation {
-          entryName
-          inNumber
-          inPercent
-        }
-        education {
-          entryName
-          inNumber
-          inPercent
-        }
-        memberCategory {
-          entryName
-          inNumber
-          inPercent
-        }
-        income {
-          entryName
-          inPercent
-          inPercent
-        }
-        address {
-          province {
-            entryName
-            inNumber
-            inPercent
-          }
-          district {
-            entryName
-            inNumber
-            inPercent
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetMemberClassificationReportQuery = <
-  TData = GetMemberClassificationReportQuery,
-  TError = unknown
->(
-  variables: GetMemberClassificationReportQueryVariables,
-  options?: UseQueryOptions<GetMemberClassificationReportQuery, TError, TData>
-) =>
-  useQuery<GetMemberClassificationReportQuery, TError, TData>(
-    ['getMemberClassificationReport', variables],
-    useAxios<GetMemberClassificationReportQuery, GetMemberClassificationReportQueryVariables>(
-      GetMemberClassificationReportDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetLoanStatementReportDocument = `
-    query getLoanStatementReport($data: LoanStatementReportSettings!) {
-  report {
-    loanStatementReport(data: $data) {
-      memberId
-      member {
-        name
-        code
-      }
-      statement {
-        ... on LoanStatementReport {
-          loanStatement {
-            date
-            particular
-            txnId
-            disbursePrinciple
-            paidPrinciple
-            interestPaid
-            finePaid
-            discount
-            remainingPrinciple
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetLoanStatementReportQuery = <
-  TData = GetLoanStatementReportQuery,
-  TError = unknown
->(
-  variables: GetLoanStatementReportQueryVariables,
-  options?: UseQueryOptions<GetLoanStatementReportQuery, TError, TData>
-) =>
-  useQuery<GetLoanStatementReportQuery, TError, TData>(
-    ['getLoanStatementReport', variables],
-    useAxios<GetLoanStatementReportQuery, GetLoanStatementReportQueryVariables>(
-      GetLoanStatementReportDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetLedgerReportDocument = `
-    query getLedgerReport($data: GeneralLedgerFilter!) {
-  report {
-    generalLedgerReport(data: $data) {
-      data {
-        id
-        date
-        account
-        balance
-        credit
-        debit
-      }
-    }
-  }
-}
-    `;
-export const useGetLedgerReportQuery = <TData = GetLedgerReportQuery, TError = unknown>(
-  variables: GetLedgerReportQueryVariables,
-  options?: UseQueryOptions<GetLedgerReportQuery, TError, TData>
-) =>
-  useQuery<GetLedgerReportQuery, TError, TData>(
-    ['getLedgerReport', variables],
-    useAxios<GetLedgerReportQuery, GetLedgerReportQueryVariables>(GetLedgerReportDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
-export const GetInterestStatementReportDocument = `
-    query getInterestStatementReport($data: InterestStatementFilter!) {
-  report {
-    interestStatementReport(data: $data) {
-      data {
-        entries {
-          date
-          amount
-          balance
-          days
-          rate
-          remarks
-        }
-        memberId
-        accountNo
-        accountType
-        currentInterestRate
-        memberName
-        address {
-          wardNo
-          state
-          locality
-          localGovernment
-          district
-          houseNo
-          coordinates {
-            longitude
-            latitude
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetInterestStatementReportQuery = <
-  TData = GetInterestStatementReportQuery,
-  TError = unknown
->(
-  variables: GetInterestStatementReportQueryVariables,
-  options?: UseQueryOptions<GetInterestStatementReportQuery, TError, TData>
-) =>
-  useQuery<GetInterestStatementReportQuery, TError, TData>(
-    ['getInterestStatementReport', variables],
-    useAxios<GetInterestStatementReportQuery, GetInterestStatementReportQueryVariables>(
-      GetInterestStatementReportDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetInterestTaxReportDocument = `
-    query getInterestTaxReport($data: InterestTaxReportFilter!) {
-  report {
-    interestTaxReport(data: $data) {
-      data {
-        memberId
-        memberCode
-        name
-        address {
-          ...Address
-        }
-        panNo
-        accountNo
-        date
-        interest
-        tax
-        savingBalance
-        closingBalance
-        remarks
-      }
-    }
-  }
-}
-    ${AddressFragmentDoc}`;
-export const useGetInterestTaxReportQuery = <TData = GetInterestTaxReportQuery, TError = unknown>(
-  variables: GetInterestTaxReportQueryVariables,
-  options?: UseQueryOptions<GetInterestTaxReportQuery, TError, TData>
-) =>
-  useQuery<GetInterestTaxReportQuery, TError, TData>(
-    ['getInterestTaxReport', variables],
-    useAxios<GetInterestTaxReportQuery, GetInterestTaxReportQueryVariables>(
-      GetInterestTaxReportDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetBranchReportDocument = `
-    query getBranchReport($data: BranchReportFilter) {
-  report {
-    branchReport(data: $data) {
-      data {
-        id
-        serviceCenterCode
-        name
-        contactNumber
-        email
-        address {
-          ...Address
-        }
-        managerName
-        managerContact
-        isExtensionCounter
-        estDate
-        branchStatus
-        remarks
-      }
-      error {
-        ...QueryError
-      }
-    }
-  }
-}
-    ${AddressFragmentDoc}
-${QueryErrorFragmentDoc}`;
-export const useGetBranchReportQuery = <TData = GetBranchReportQuery, TError = unknown>(
-  variables?: GetBranchReportQueryVariables,
-  options?: UseQueryOptions<GetBranchReportQuery, TError, TData>
-) =>
-  useQuery<GetBranchReportQuery, TError, TData>(
-    variables === undefined ? ['getBranchReport'] : ['getBranchReport', variables],
-    useAxios<GetBranchReportQuery, GetBranchReportQueryVariables>(GetBranchReportDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
-export const GetMBankingRegistrationReportDocument = `
-    query getMBankingRegistrationReport($data: EbankingReportFilter) {
-  report {
-    mbankingRegistrationReport(data: $data) {
-      data {
-        memberId
-        memberName
-        mobileNo
-        branchCode
-        regDate
-        expDate
-        status
-        registeredBy
-      }
-    }
-  }
-}
-    `;
-export const useGetMBankingRegistrationReportQuery = <
-  TData = GetMBankingRegistrationReportQuery,
-  TError = unknown
->(
-  variables?: GetMBankingRegistrationReportQueryVariables,
-  options?: UseQueryOptions<GetMBankingRegistrationReportQuery, TError, TData>
-) =>
-  useQuery<GetMBankingRegistrationReportQuery, TError, TData>(
-    variables === undefined
-      ? ['getMBankingRegistrationReport']
-      : ['getMBankingRegistrationReport', variables],
-    useAxios<GetMBankingRegistrationReportQuery, GetMBankingRegistrationReportQueryVariables>(
-      GetMBankingRegistrationReportDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetMBankingExpiryReportDocument = `
-    query getMBankingExpiryReport($data: EbankingReportFilter) {
-  report {
-    mbankingRegistrationReport(data: $data) {
-      data {
-        memberId
-        memberName
-        mobileNo
-        branchCode
-        regDate
-        expDate
-        status
-        registeredBy
-      }
-    }
-  }
-}
-    `;
-export const useGetMBankingExpiryReportQuery = <
-  TData = GetMBankingExpiryReportQuery,
-  TError = unknown
->(
-  variables?: GetMBankingExpiryReportQueryVariables,
-  options?: UseQueryOptions<GetMBankingExpiryReportQuery, TError, TData>
-) =>
-  useQuery<GetMBankingExpiryReportQuery, TError, TData>(
-    variables === undefined ? ['getMBankingExpiryReport'] : ['getMBankingExpiryReport', variables],
-    useAxios<GetMBankingExpiryReportQuery, GetMBankingExpiryReportQueryVariables>(
-      GetMBankingExpiryReportDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetActiveInactiveMemberReportDocument = `
-    query getActiveInactiveMemberReport($data: ActiveInactiveMemberReportData) {
-  report {
-    activeInactiveMemberReport(data: $data) {
-      statement {
-        ... on ActiveInactiveMemberReport {
-          summary {
-            activeTotal
-            inactiveTotal
-            totalMember
-          }
-          reportStatement {
-            memberId
-            memberName
-            district
+    shareReport {
+      shareStatementReport(data: $data) {
+        member {
+          id
+          code
+          name
+          address {
             wardNo
-            address
-            dob
-            age
-            contactNo
-            gender
-            pan
-            occupation
-            memberRegistrationDate
-            status
-            memberType
+            state
+            district
+            houseNo
+            localGovernment
+          }
+          dateJoined
+        }
+        statement {
+          ... on ShareStatementReport {
+            shareStatement {
+              date
+              particular
+              noOfShares
+              returnAmountDr
+              purchaseAmountCr
+              balanceSheet
+            }
+            totals {
+              totalShares
+              totalDr
+              totalCr
+              totalBalanceSheet
+            }
           }
         }
       }
@@ -31840,279 +32565,75 @@ export const GetActiveInactiveMemberReportDocument = `
   }
 }
     `;
-export const useGetActiveInactiveMemberReportQuery = <
-  TData = GetActiveInactiveMemberReportQuery,
-  TError = unknown
->(
-  variables?: GetActiveInactiveMemberReportQueryVariables,
-  options?: UseQueryOptions<GetActiveInactiveMemberReportQuery, TError, TData>
+export const useGetShareStatementQuery = <TData = GetShareStatementQuery, TError = unknown>(
+  variables: GetShareStatementQueryVariables,
+  options?: UseQueryOptions<GetShareStatementQuery, TError, TData>
 ) =>
-  useQuery<GetActiveInactiveMemberReportQuery, TError, TData>(
-    variables === undefined
-      ? ['getActiveInactiveMemberReport']
-      : ['getActiveInactiveMemberReport', variables],
-    useAxios<GetActiveInactiveMemberReportQuery, GetActiveInactiveMemberReportQueryVariables>(
-      GetActiveInactiveMemberReportDocument
+  useQuery<GetShareStatementQuery, TError, TData>(
+    ['getShareStatement', variables],
+    useAxios<GetShareStatementQuery, GetShareStatementQueryVariables>(
+      GetShareStatementDocument
     ).bind(null, variables),
     options
   );
-export const GetTrialSheetReportDocument = `
-    query getTrialSheetReport($data: TrialSheetReportFilter!) {
+export const GetShareRegisterReportDocument = `
+    query getShareRegisterReport($data: SharePurchaseRegisterReportFilter!) {
   report {
-    trialSheetReport(data: $data) {
-      data {
-        equityAndLiablities {
-          balance
-          ledgerId
-          ledgerName
-          under
-        }
-        expenses {
-          balance
-          ledgerId
-          ledgerName
-          under
-        }
-        income {
-          balance
-          ledgerId
-          ledgerName
-          under
-        }
-        assets {
-          balance
-          ledgerId
-          ledgerName
-          under
-        }
-        equityAndLiablitiesTotal
-        assetsTotal
-        expenseTotal
-        incomeTotal
-        totalAssetExpense
-        totalLiablitiesIncome
-        totalProfitLoss
-      }
-    }
-  }
-}
-    `;
-export const useGetTrialSheetReportQuery = <TData = GetTrialSheetReportQuery, TError = unknown>(
-  variables: GetTrialSheetReportQueryVariables,
-  options?: UseQueryOptions<GetTrialSheetReportQuery, TError, TData>
-) =>
-  useQuery<GetTrialSheetReportQuery, TError, TData>(
-    ['getTrialSheetReport', variables],
-    useAxios<GetTrialSheetReportQuery, GetTrialSheetReportQueryVariables>(
-      GetTrialSheetReportDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetKymStatusReportDocument = `
-    query getKymStatusReport($data: KymStatusReportFilter) {
-  report {
-    kymStatusReport(data: $data) {
-      Summary
-      data {
-        address {
-          ...Address
-        }
-        memberName
-        memberId
-        contact
-        regDate
-        riskCategory
-        lastKymUpdatedDate
-        kymExpireDays
-        kymStatus
-      }
-    }
-  }
-}
-    ${AddressFragmentDoc}`;
-export const useGetKymStatusReportQuery = <TData = GetKymStatusReportQuery, TError = unknown>(
-  variables?: GetKymStatusReportQueryVariables,
-  options?: UseQueryOptions<GetKymStatusReportQuery, TError, TData>
-) =>
-  useQuery<GetKymStatusReportQuery, TError, TData>(
-    variables === undefined ? ['getKymStatusReport'] : ['getKymStatusReport', variables],
-    useAxios<GetKymStatusReportQuery, GetKymStatusReportQueryVariables>(
-      GetKymStatusReportDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetMbTransactionReportDocument = `
-    query getMBTransactionReport($data: MBankingTransactionFilter) {
-  report {
-    mBankingTransactionReport(data: $data) {
-      data {
-        initiatorName
-        phoneNo
-        srcAccount
-        destAccount
-        amount
-        transactionType
-        transThrough
-        transDate
-        narration
-        status
-      }
-    }
-  }
-}
-    `;
-export const useGetMbTransactionReportQuery = <
-  TData = GetMbTransactionReportQuery,
-  TError = unknown
->(
-  variables?: GetMbTransactionReportQueryVariables,
-  options?: UseQueryOptions<GetMbTransactionReportQuery, TError, TData>
-) =>
-  useQuery<GetMbTransactionReportQuery, TError, TData>(
-    variables === undefined ? ['getMBTransactionReport'] : ['getMBTransactionReport', variables],
-    useAxios<GetMbTransactionReportQuery, GetMbTransactionReportQueryVariables>(
-      GetMbTransactionReportDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetUserReportDocument = `
-    query getUserReport($data: UserReportFilter) {
-  report {
-    userReport(data: $data) {
-      data {
-        isCoreEmployee
-        employeeName
-        empCode
-        username
-        usernameCode
-        accessForBranch
-        accessForGroup
-        role
-        createdDate
-        createdBy
-        status
-        remarks
-      }
-    }
-  }
-}
-    `;
-export const useGetUserReportQuery = <TData = GetUserReportQuery, TError = unknown>(
-  variables?: GetUserReportQueryVariables,
-  options?: UseQueryOptions<GetUserReportQuery, TError, TData>
-) =>
-  useQuery<GetUserReportQuery, TError, TData>(
-    variables === undefined ? ['getUserReport'] : ['getUserReport', variables],
-    useAxios<GetUserReportQuery, GetUserReportQueryVariables>(GetUserReportDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
-export const GetTtrReportDocument = `
-    query getTtrReport($data: TTRReportFilter!) {
-  report {
-    thresholdTransactionReport(data: $data) {
-      data {
-        yearly {
-          name
+    shareReport {
+      sharePurchaseRegisterReport(data: $data) {
+        data {
           memberId
-          address {
-            ...Address
-          }
-          branch
-          date
-          nature
-          accountNo
-          amount
-          sourceOfFund
-          remarks
-        }
-        perTranx {
+          memberCode
           name
-          memberId
-          address {
-            ...Address
-          }
-          branch
-          date
-          nature
-          accountNo
-          amount
-          sourceOfFund
-          remarks
+          particular
+          perShareAmount
+          kittaNumFrom
+          kittaNumTo
+          totalKitta
+          totalAmount
         }
-      }
-    }
-  }
-}
-    ${AddressFragmentDoc}`;
-export const useGetTtrReportQuery = <TData = GetTtrReportQuery, TError = unknown>(
-  variables: GetTtrReportQueryVariables,
-  options?: UseQueryOptions<GetTtrReportQuery, TError, TData>
-) =>
-  useQuery<GetTtrReportQuery, TError, TData>(
-    ['getTtrReport', variables],
-    useAxios<GetTtrReportQuery, GetTtrReportQueryVariables>(GetTtrReportDocument).bind(
-      null,
-      variables
-    ),
-    options
-  );
-export const GetshareRegisterReportDocument = `
-    query getshareRegisterReport($data: SharePurchaseRegisterReportFilter!) {
-  report {
-    sharePurchaseRegisterReport(data: $data) {
-      data {
-        memberId
-        memberCode
-        name
-        particular
-        perShareAmount
-        kittaNumFrom
-        kittaNumTo
-        totalKitta
-        totalAmount
       }
     }
   }
 }
     `;
-export const useGetshareRegisterReportQuery = <
-  TData = GetshareRegisterReportQuery,
+export const useGetShareRegisterReportQuery = <
+  TData = GetShareRegisterReportQuery,
   TError = unknown
 >(
-  variables: GetshareRegisterReportQueryVariables,
-  options?: UseQueryOptions<GetshareRegisterReportQuery, TError, TData>
+  variables: GetShareRegisterReportQueryVariables,
+  options?: UseQueryOptions<GetShareRegisterReportQuery, TError, TData>
 ) =>
-  useQuery<GetshareRegisterReportQuery, TError, TData>(
-    ['getshareRegisterReport', variables],
-    useAxios<GetshareRegisterReportQuery, GetshareRegisterReportQueryVariables>(
-      GetshareRegisterReportDocument
+  useQuery<GetShareRegisterReportQuery, TError, TData>(
+    ['getShareRegisterReport', variables],
+    useAxios<GetShareRegisterReportQuery, GetShareRegisterReportQueryVariables>(
+      GetShareRegisterReportDocument
     ).bind(null, variables),
     options
   );
 export const GetShareTransactionReportDocument = `
     query getShareTransactionReport($data: ShareTransactionReportFilter) {
   report {
-    shareTransactionReport(data: $data) {
-      data {
-        transactionDate
-        memberId
-        memberCode
-        name
-        particular
-        shareReturnDr
-        shareIssueCr
-        balance
+    shareReport {
+      shareTransactionReport(data: $data) {
+        data {
+          transactionDate
+          memberId
+          memberCode
+          name
+          particular
+          shareReturnDr
+          shareIssueCr
+          balance
+        }
+        footer {
+          totalCr
+          totalDr
+          totalBalance
+        }
+        totalShareIssued
+        avgSharePerMember
       }
-      footer {
-        totalCr
-        totatDr
-        totalBalance
-      }
-      totalShareIssued
-      avgSharePerMember
     }
   }
 }
@@ -32133,162 +32654,59 @@ export const useGetShareTransactionReportQuery = <
     ).bind(null, variables),
     options
   );
-export const GetAccountOpeningReportDocument = `
-    query getAccountOpeningReport($data: AccountOpeningReportInput) {
+export const GetTrialSheetReportDocument = `
+    query getTrialSheetReport($data: TrialSheetReportFilter!) {
   report {
-    accountOpeningReport(data: $data) {
-      data {
-        accountName
-        accountNumber
-        memberId
-        openedBy
-        openingDate
+    transactionReport {
+      financial {
+        trialSheetReport(data: $data) {
+          data {
+            equityAndLiablities {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            expenses {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            income {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            assets {
+              balance
+              ledgerId
+              ledgerName
+              under
+            }
+            equityAndLiablitiesTotal
+            assetsTotal
+            expenseTotal
+            incomeTotal
+            totalAssetExpense
+            totalLiablitiesIncome
+            totalProfitLoss
+          }
+        }
       }
     }
   }
 }
     `;
-export const useGetAccountOpeningReportQuery = <
-  TData = GetAccountOpeningReportQuery,
-  TError = unknown
->(
-  variables?: GetAccountOpeningReportQueryVariables,
-  options?: UseQueryOptions<GetAccountOpeningReportQuery, TError, TData>
+export const useGetTrialSheetReportQuery = <TData = GetTrialSheetReportQuery, TError = unknown>(
+  variables: GetTrialSheetReportQueryVariables,
+  options?: UseQueryOptions<GetTrialSheetReportQuery, TError, TData>
 ) =>
-  useQuery<GetAccountOpeningReportQuery, TError, TData>(
-    variables === undefined ? ['getAccountOpeningReport'] : ['getAccountOpeningReport', variables],
-    useAxios<GetAccountOpeningReportQuery, GetAccountOpeningReportQueryVariables>(
-      GetAccountOpeningReportDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetLoanBalanceReportDocument = `
-    query getLoanBalanceReport($data: LoanBalanceFilterData!) {
-  report {
-    loanBalanceReport(data: $data) {
-      data {
-        memberId
-        loanAccountId
-        memberName
-        productName
-        productCode
-        outstandingBalance
-        remainingBalance
-        remainingInterest
-        lastPaymentDate
-      }
-      totalOutstandingBalance
-      totalRemainingBalance
-    }
-  }
-}
-    `;
-export const useGetLoanBalanceReportQuery = <TData = GetLoanBalanceReportQuery, TError = unknown>(
-  variables: GetLoanBalanceReportQueryVariables,
-  options?: UseQueryOptions<GetLoanBalanceReportQuery, TError, TData>
-) =>
-  useQuery<GetLoanBalanceReportQuery, TError, TData>(
-    ['getLoanBalanceReport', variables],
-    useAxios<GetLoanBalanceReportQuery, GetLoanBalanceReportQueryVariables>(
-      GetLoanBalanceReportDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetSavingsBalanceReportDocument = `
-    query getSavingsBalanceReport($data: SavingsBalanceFilterData!) {
-  report {
-    savingsBalanceReport(data: $data) {
-      data {
-        accountId
-        memberId
-        memberCode
-        memberName
-        productId
-        productName
-        productCode
-        accountOpeningDate
-        memberType
-        balance
-      }
-      totalBalance
-    }
-  }
-}
-    `;
-export const useGetSavingsBalanceReportQuery = <
-  TData = GetSavingsBalanceReportQuery,
-  TError = unknown
->(
-  variables: GetSavingsBalanceReportQueryVariables,
-  options?: UseQueryOptions<GetSavingsBalanceReportQuery, TError, TData>
-) =>
-  useQuery<GetSavingsBalanceReportQuery, TError, TData>(
-    ['getSavingsBalanceReport', variables],
-    useAxios<GetSavingsBalanceReportQuery, GetSavingsBalanceReportQueryVariables>(
-      GetSavingsBalanceReportDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetAccountClosingReportDocument = `
-    query getAccountClosingReport($data: AccountClosingReportInput) {
-  report {
-    accountClosingReport(data: $data) {
-      data {
-        memberId
-        accountNumber
-        accountName
-        openingDate
-        closingDate
-        closedBalance
-        closedBy
-      }
-    }
-  }
-}
-    `;
-export const useGetAccountClosingReportQuery = <
-  TData = GetAccountClosingReportQuery,
-  TError = unknown
->(
-  variables?: GetAccountClosingReportQueryVariables,
-  options?: UseQueryOptions<GetAccountClosingReportQuery, TError, TData>
-) =>
-  useQuery<GetAccountClosingReportQuery, TError, TData>(
-    variables === undefined ? ['getAccountClosingReport'] : ['getAccountClosingReport', variables],
-    useAxios<GetAccountClosingReportQuery, GetAccountClosingReportQueryVariables>(
-      GetAccountClosingReportDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetBankGlStatementReportDocument = `
-    query getBankGLStatementReport($data: BankGLStatementFilter!) {
-  report {
-    bankGLStatementReport(data: $data) {
-      data {
-        date
-        name
-        particular
-        chequeNo
-        depositAmount
-        withdrawAmount
-        balance
-        remarks
-      }
-    }
-  }
-}
-    `;
-export const useGetBankGlStatementReportQuery = <
-  TData = GetBankGlStatementReportQuery,
-  TError = unknown
->(
-  variables: GetBankGlStatementReportQueryVariables,
-  options?: UseQueryOptions<GetBankGlStatementReportQuery, TError, TData>
-) =>
-  useQuery<GetBankGlStatementReportQuery, TError, TData>(
-    ['getBankGLStatementReport', variables],
-    useAxios<GetBankGlStatementReportQuery, GetBankGlStatementReportQueryVariables>(
-      GetBankGlStatementReportDocument
+  useQuery<GetTrialSheetReportQuery, TError, TData>(
+    ['getTrialSheetReport', variables],
+    useAxios<GetTrialSheetReportQuery, GetTrialSheetReportQueryVariables>(
+      GetTrialSheetReportDocument
     ).bind(null, variables),
     options
   );
@@ -32352,185 +32770,8 @@ export const useGetTransactionTellerReportQuery = <
     ).bind(null, variables),
     options
   );
-export const GetCashLedgerReportDocument = `
-    query getCashLedgerReport($data: CashLedgerReportFilterData) {
-  report {
-    cashLedgerReport(data: $data) {
-      openingBalance
-      closingBalance
-      summary {
-        date
-        ledgerCode
-        particular
-        voucherNo
-        cashDr
-        cashCr
-        balance
-      }
-      details {
-        date
-        ledgerCode
-        particular
-        voucherNo
-        cashDr
-        cashCr
-        balance
-      }
-    }
-  }
-}
-    `;
-export const useGetCashLedgerReportQuery = <TData = GetCashLedgerReportQuery, TError = unknown>(
-  variables?: GetCashLedgerReportQueryVariables,
-  options?: UseQueryOptions<GetCashLedgerReportQuery, TError, TData>
-) =>
-  useQuery<GetCashLedgerReportQuery, TError, TData>(
-    variables === undefined ? ['getCashLedgerReport'] : ['getCashLedgerReport', variables],
-    useAxios<GetCashLedgerReportQuery, GetCashLedgerReportQueryVariables>(
-      GetCashLedgerReportDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetMemberRegistrationReportDocument = `
-    query getMemberRegistrationReport($data: MemberRegistrationReportData) {
-  report {
-    memberRegistrationReport(data: $data) {
-      data {
-        individual {
-          memberId
-          memberCode
-          name
-          address {
-            ...Address
-          }
-          dob
-          grandFatherName
-          fatherName
-          SpouseName
-          profession
-          shareInfo {
-            perShareAmount
-            kitta
-            amount
-          }
-          fingerPrint
-          photo
-          contactNo
-          email
-          other
-        }
-        other {
-          memberId
-          memberCode
-          name
-          address {
-            ...Address
-          }
-          doe
-          typeOfInstitution
-          workingArea
-          totalMember
-          balanceSheet
-          shareInfo {
-            perShareAmount
-            kitta
-            amount
-          }
-          post
-          authPersonName
-          logo
-          stamp
-          contactNo
-          email
-          other
-        }
-      }
-    }
-  }
-}
-    ${AddressFragmentDoc}`;
-export const useGetMemberRegistrationReportQuery = <
-  TData = GetMemberRegistrationReportQuery,
-  TError = unknown
->(
-  variables?: GetMemberRegistrationReportQueryVariables,
-  options?: UseQueryOptions<GetMemberRegistrationReportQuery, TError, TData>
-) =>
-  useQuery<GetMemberRegistrationReportQuery, TError, TData>(
-    variables === undefined
-      ? ['getMemberRegistrationReport']
-      : ['getMemberRegistrationReport', variables],
-    useAxios<GetMemberRegistrationReportQuery, GetMemberRegistrationReportQueryVariables>(
-      GetMemberRegistrationReportDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetLoanAgingStatementReportDocument = `
-    query getLoanAgingStatementReport($data: LoanAgingStatementInput) {
-  report {
-    loanAgingStatementReport(data: $data) {
-      data {
-        report {
-          memberNo
-          loanNo
-          name
-          address
-          phoneNo
-          loanType
-          paymentMode
-          issueDate
-          loanMaturityDate
-          disbursePrincipal
-          remainingPrincipal
-          installmentAmount
-          remainingInstallmentAmount
-          remainingInterest
-          remainingPenalty
-          totalDueAmount
-          goodAmount
-          matured1To30Days
-          matured1To12Months
-          maturedAbove12Months
-          lastPrincipalPaidDate
-          lastInterestPaidDate
-          installmentLateDays
-        }
-        summary {
-          disbursePrincipalTotal
-          remainingPrincipalTotal
-          installmentAmountTotal
-          remainingInstallmentAmountTotal
-          remainingInterestTotal
-          remainingPenaltyTotal
-          dueAmountTotal
-          goodAmountTotal
-          matured1To30DaysTotal
-          matured1To12MonthsTotal
-          maturedAbove12MonthsTotal
-        }
-      }
-    }
-  }
-}
-    `;
-export const useGetLoanAgingStatementReportQuery = <
-  TData = GetLoanAgingStatementReportQuery,
-  TError = unknown
->(
-  variables?: GetLoanAgingStatementReportQueryVariables,
-  options?: UseQueryOptions<GetLoanAgingStatementReportQuery, TError, TData>
-) =>
-  useQuery<GetLoanAgingStatementReportQuery, TError, TData>(
-    variables === undefined
-      ? ['getLoanAgingStatementReport']
-      : ['getLoanAgingStatementReport', variables],
-    useAxios<GetLoanAgingStatementReportQuery, GetLoanAgingStatementReportQueryVariables>(
-      GetLoanAgingStatementReportDocument
-    ).bind(null, variables),
-    options
-  );
-export const GetValutBalanceReportDocument = `
-    query getValutBalanceReport($data: VaultBalanceReportFilter!) {
+export const GetVaultBalanceReportDocument = `
+    query getVaultBalanceReport($data: VaultBalanceReportFilter!) {
   report {
     transactionReport {
       financial {
@@ -32583,49 +32824,32 @@ export const GetValutBalanceReportDocument = `
   }
 }
     `;
-export const useGetValutBalanceReportQuery = <TData = GetValutBalanceReportQuery, TError = unknown>(
-  variables: GetValutBalanceReportQueryVariables,
-  options?: UseQueryOptions<GetValutBalanceReportQuery, TError, TData>
+export const useGetVaultBalanceReportQuery = <TData = GetVaultBalanceReportQuery, TError = unknown>(
+  variables: GetVaultBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetVaultBalanceReportQuery, TError, TData>
 ) =>
-  useQuery<GetValutBalanceReportQuery, TError, TData>(
-    ['getValutBalanceReport', variables],
-    useAxios<GetValutBalanceReportQuery, GetValutBalanceReportQueryVariables>(
-      GetValutBalanceReportDocument
+  useQuery<GetVaultBalanceReportQuery, TError, TData>(
+    ['getVaultBalanceReport', variables],
+    useAxios<GetVaultBalanceReportQuery, GetVaultBalanceReportQueryVariables>(
+      GetVaultBalanceReportDocument
     ).bind(null, variables),
     options
   );
-export const GetShareStatementDocument = `
-    query getShareStatement($data: ShareStatementReportSettings!) {
+export const GetBankGlStatementReportDocument = `
+    query getBankGLStatementReport($data: BankGLStatementFilter!) {
   report {
-    shareStatementReport(data: $data) {
-      member {
-        id
-        code
-        name
-        address {
-          wardNo
-          state
-          district
-          houseNo
-          localGovernment
-        }
-        dateJoined
-      }
-      statement {
-        ... on ShareStatementReport {
-          shareStatement {
+    transactionReport {
+      financial {
+        bankGLStatementReport(data: $data) {
+          data {
             date
+            name
             particular
-            noOfShares
-            returnAmountDr
-            purchaseAmountCr
-            balanceSheet
-          }
-          totals {
-            totalShares
-            totalDr
-            totalCr
-            totalBalanceSheet
+            chequeNo
+            depositAmount
+            withdrawAmount
+            balance
+            remarks
           }
         }
       }
@@ -32633,14 +32857,17 @@ export const GetShareStatementDocument = `
   }
 }
     `;
-export const useGetShareStatementQuery = <TData = GetShareStatementQuery, TError = unknown>(
-  variables: GetShareStatementQueryVariables,
-  options?: UseQueryOptions<GetShareStatementQuery, TError, TData>
+export const useGetBankGlStatementReportQuery = <
+  TData = GetBankGlStatementReportQuery,
+  TError = unknown
+>(
+  variables: GetBankGlStatementReportQueryVariables,
+  options?: UseQueryOptions<GetBankGlStatementReportQuery, TError, TData>
 ) =>
-  useQuery<GetShareStatementQuery, TError, TData>(
-    ['getShareStatement', variables],
-    useAxios<GetShareStatementQuery, GetShareStatementQueryVariables>(
-      GetShareStatementDocument
+  useQuery<GetBankGlStatementReportQuery, TError, TData>(
+    ['getBankGLStatementReport', variables],
+    useAxios<GetBankGlStatementReportQuery, GetBankGlStatementReportQueryVariables>(
+      GetBankGlStatementReportDocument
     ).bind(null, variables),
     options
   );

@@ -7,7 +7,7 @@ import {
   CashLedgerReport,
   CashLedgerTransactionWiseFilter,
   CashLedgerWiseFilter,
-  PeriodInput,
+  LocalizedDateFilter,
   useGetCashLedgerReportQuery,
   useGetSettingsUserListDataQuery,
 } from '@coop/cbs/data-access';
@@ -27,7 +27,7 @@ type Filter = {
       value: string;
     }[];
   };
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 export const CashLedgersReport = () => {
   const [filters, setFilters] = useState<Filter | null>(null);
@@ -46,7 +46,7 @@ export const CashLedgersReport = () => {
     {
       data: {
         branchId: filters?.branchId as string,
-        period: filters?.period as PeriodInput,
+        period: filters?.period as LocalizedDateFilter,
         filter: {
           ...filters?.filter,
           userIds: UserIds,
@@ -56,11 +56,11 @@ export const CashLedgersReport = () => {
     { enabled: !!filters }
   );
 
-  const summaryData = data?.report?.cashLedgerReport?.summary;
+  const summaryData = data?.report?.cashReport?.cashLedgerReport?.summary;
   const summaryLength = summaryData?.length;
-  const openingBalance = data?.report?.cashLedgerReport?.openingBalance;
-  const closingBalance = data?.report?.cashLedgerReport?.closingBalance;
-  const detailsData = data?.report?.cashLedgerReport?.details;
+  const openingBalance = data?.report?.cashReport?.cashLedgerReport?.openingBalance;
+  const closingBalance = data?.report?.cashReport?.cashLedgerReport?.closingBalance;
+  const detailsData = data?.report?.cashReport?.cashLedgerReport?.details;
   const detailsLength = detailsData?.length;
 
   return (

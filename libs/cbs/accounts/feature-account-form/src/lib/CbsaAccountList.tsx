@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { Filter_Mode, ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
+import { Filter_Mode, ObjState, useGetAccountTableListMinimalQuery } from '@coop/cbs/data-access';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 const ACCOUNT_TAB_ITEMS = [
@@ -28,7 +28,7 @@ export const CBSAccountList = () => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
 
-  const { data, isFetching } = useGetAccountTableListQuery(
+  const { data, isFetching } = useGetAccountTableListMinimalQuery(
     {
       paginate: getRouterQuery({ type: ['PAGINATION'] }),
       filter: {

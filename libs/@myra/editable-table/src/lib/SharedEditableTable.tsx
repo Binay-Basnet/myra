@@ -771,6 +771,7 @@ const EditableCell = <T extends RecordWithId & Record<string, string | number | 
                   },
                 });
               }}
+              menuIsOpen
               chakraStyles={chakraDefaultStyles}
               loadOptions={() => column.loadOptions && column.loadOptions(data)}
               noOptionsMessage={({ inputValue }) => (!inputValue ? 'Type to Search' : 'No Options')}

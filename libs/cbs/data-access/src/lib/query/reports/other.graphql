@@ -1,0 +1,38 @@
+query getLedgerReport($data: GeneralLedgerFilter!) {
+  report {
+    otherReport {
+      generalLedgerReport(data: $data) {
+        data {
+          id
+          date
+          account
+          balance
+          credit
+          debit
+        }
+      }
+    }
+  }
+}
+
+query getSavingsBalanceReport($data: SavingsBalanceFilterData!) {
+  report {
+    otherReport {
+      savingsBalanceReport(data: $data) {
+        data {
+          accountId
+          memberId
+          memberCode
+          memberName
+          productId
+          productName
+          productCode
+          accountOpeningDate
+          memberType
+          balance
+        }
+        totalBalance
+      }
+    }
+  }
+}

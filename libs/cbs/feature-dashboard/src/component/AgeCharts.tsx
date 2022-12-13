@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
+import dayjs from 'dayjs';
 
-import { ReportPeriodType, useGetMemberClassificationReportQuery } from '@coop/cbs/data-access';
+import { useGetMemberClassificationReportQuery } from '@coop/cbs/data-access';
 
 const Charts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
@@ -8,12 +9,21 @@ export const AgeCharts = () => {
   const { data } = useGetMemberClassificationReportQuery({
     data: {
       period: {
-        periodType: ReportPeriodType.Lifetime,
+        from: {
+          local: '',
+          en: '2019-10-10',
+          np: '',
+        },
+        to: {
+          local: '',
+          en: dayjs(new Date()).format('YYYY-MM-DD'),
+          np: '',
+        },
       },
     },
   });
 
-  const ageData = data?.report?.memberClassificationReport?.data?.age;
+  const ageData = data?.report?.memberReport?.memberClassificationReport?.data?.age;
 
   const ageList =
     ageData &&

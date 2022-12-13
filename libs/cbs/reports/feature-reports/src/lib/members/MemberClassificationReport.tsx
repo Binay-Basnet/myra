@@ -5,8 +5,8 @@ import { Box, Divider, Loader } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import {
+  LocalizedDateFilter,
   MemberClassificationReportData,
-  PeriodInput,
   ReportEntry,
   useGetMemberClassificationReportQuery,
 } from '@coop/cbs/data-access';
@@ -48,7 +48,7 @@ const classificationKeys = {
 
 type MemberClassificationFilter = {
   classificationBy: ClassifyBy[];
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export const MemberClassificationReport = () => {
@@ -57,12 +57,12 @@ export const MemberClassificationReport = () => {
   const [filter, setFilter] = useState<MemberClassificationFilter | null>(null);
 
   const { data: memberClassificationData, isLoading } = useGetMemberClassificationReportQuery(
-    { data: { period: filter?.period } },
+    { data: { period: filter?.period as LocalizedDateFilter } },
     { enabled: !!filter }
   );
 
-  const memberClassification = memberClassificationData?.report?.memberClassificationReport
-    ?.data as MemberClassificationReportData;
+  const memberClassification = memberClassificationData?.report?.memberReport
+    ?.memberClassificationReport?.data as MemberClassificationReportData;
 
   return (
     <FormProvider {...methods}>

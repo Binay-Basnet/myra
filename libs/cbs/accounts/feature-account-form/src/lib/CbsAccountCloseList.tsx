@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
-import { Avatar, Box, PageHeader, Text } from '@myra-ui';
 
-import { ObjState, useGetAccountTableListQuery } from '@coop/cbs/data-access';
+import { Avatar, Box, PageHeader, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
+
+import { ObjState, useGetAccountTableListMinimalQuery } from '@coop/cbs/data-access';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const CBSAccountCloseList = () => {
@@ -11,7 +12,7 @@ export const CBSAccountCloseList = () => {
 
   const { t } = useTranslation();
 
-  const { data, isLoading } = useGetAccountTableListQuery(
+  const { data, isLoading } = useGetAccountTableListMinimalQuery(
     {
       paginate: getRouterQuery({ type: ['PAGINATION'], query: router.query }),
       filter: {
