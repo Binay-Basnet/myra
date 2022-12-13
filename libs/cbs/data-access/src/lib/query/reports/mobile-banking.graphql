@@ -56,5 +56,3 @@ query getMBTransactionReport($data: MBankingTransactionFilter) {
     }
   }
 }
-
-
