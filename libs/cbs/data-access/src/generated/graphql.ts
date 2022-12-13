@@ -11002,8 +11002,11 @@ export type ShareBalanceEdge = {
 };
 
 export type ShareBalanceFilter = {
+  filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['String']>;
+  memberCode?: InputMaybe<Scalars['String']>;
   memberId?: InputMaybe<Scalars['String']>;
+  memberName?: InputMaybe<Scalars['String']>;
   memberSearchText?: InputMaybe<Scalars['String']>;
 };
 
@@ -11283,8 +11286,11 @@ export type ShareRegisterEdge = {
 export type ShareRegisterFilter = {
   dateFrom?: InputMaybe<Scalars['String']>;
   dateTo?: InputMaybe<Scalars['String']>;
+  filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['String']>;
+  memberCode?: InputMaybe<Scalars['String']>;
   memberId?: InputMaybe<Scalars['String']>;
+  memberName?: InputMaybe<Scalars['String']>;
   memberSearchText?: InputMaybe<Scalars['String']>;
   status?: InputMaybe<Share_Status>;
   transactionDirection?: InputMaybe<Share_Transaction_Direction>;

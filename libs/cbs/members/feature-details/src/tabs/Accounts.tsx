@@ -5,6 +5,7 @@ import { Box, Grid, Icon, Text } from '@myra-ui';
 
 import {
   Id_Type,
+  NatureOfDepositProduct,
   ObjState,
   useGetAccountTableListQuery,
   useGetMemberDetailsOverviewQuery,
@@ -52,7 +53,8 @@ export const Accounts = () => {
       accountName: data?.accountName,
       accountNumber: data?.accountNumber,
       totalBalance: data?.totalBalance,
-      interestRate: data?.interestRate,
+      interestRate:
+        data?.productType !== NatureOfDepositProduct?.Current ? data?.interestRate : '-',
       productName: data?.productName,
     })) || [];
 
