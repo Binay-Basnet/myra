@@ -2613,6 +2613,12 @@ export type GetCoopMeQuery = {
           memberProfilePicUrl?: string | null;
           memberMobileNo?: string | null;
         } | null;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | null;
       } | null;
     } | null;
   };

@@ -37,6 +37,18 @@ function useReplace() {
   return replace;
 }
 
+const privateAgent = axios.create({});
+// Request interceptors for API calls
+privateAgent.interceptors.request.use(
+  (config) => {
+    config.headers = {
+      ...config.headers,
+      Slug: localStorage.getItem('db') || 'neosys',
+    };
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 export const useRefreshToken = (url: string, type: EBankingTokenType = EBankingTokenType.Myra) => {
   const replace = useReplace();
   const dispatch = useDispatch();
@@ -49,7 +61,7 @@ export const useRefreshToken = (url: string, type: EBankingTokenType = EBankingT
     // eslint-disable-next-line prefer-promise-reject-errors
     if (!refreshToken) return Promise.reject(() => 'No refresh Token');
 
-    return axios
+    return privateAgent
       .post<RefreshTokenResponse>(url, {
         query: `mutation {
   eBanking {

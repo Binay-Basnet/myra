@@ -65,6 +65,7 @@ export const useInit = () => {
         dispatch(logout());
         replace('/login').then(() => {
           queryClient.clear();
+          localStorage.removeItem('db');
           setIsLoading(false);
         });
       }

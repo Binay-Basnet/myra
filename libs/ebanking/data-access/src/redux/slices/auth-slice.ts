@@ -68,6 +68,7 @@ export const authSlice = createSlice({
     },
     logout: (state) => {
       localStorage.removeItem('master-refreshToken');
+      localStorage.removeItem('db');
       state.user = null;
       state.token = null;
       state.isLogged = false;
