@@ -26,17 +26,17 @@ export const useAddress = ({ name }: IUseAddressProps) => {
 
   const districtList = useMemo(
     () => data?.administration?.all.find((d) => d.id === currentProvinceId)?.districts ?? [],
-    [currentProvinceId]
+    [currentProvinceId, data?.administration?.all]
   );
 
   const localityList = useMemo(
     () => districtList.find((d) => d.id === currentDistrictId)?.municipalities ?? [],
-    [currentDistrictId]
+    [currentDistrictId, districtList]
   );
 
   const wardList = useMemo(
     () => localityList.find((d) => d.id === localGovernmentId)?.wards ?? [],
-    [localGovernmentId]
+    [localGovernmentId, localityList]
   );
 
   return {
