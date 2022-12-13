@@ -321,6 +321,44 @@ query getAccountTableList($paginate: Pagination, $filter: DepositLoanAccountSear
   }
 }
 
+query getAccountTableListMinimal($paginate: Pagination, $filter: DepositLoanAccountSearchFilter) {
+  account {
+    list(paginate: $paginate, filter: $filter) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          id
+          objState
+          createdAt
+          accountName
+          balance
+          accountOpenedDate
+          accountExpiryDate
+          closedAt
+          member {
+            id
+            name
+            profilePicUrl
+          }
+          product {
+            id
+            productCode
+            productName
+            nature
+            interest
+          }
+        }
+      }
+    }
+  }
+}
+
 query getAccountDocumentsList($subscriptionId: String!) {
   document {
     listSubscriptionDocuments(subscriptionId: $subscriptionId) {

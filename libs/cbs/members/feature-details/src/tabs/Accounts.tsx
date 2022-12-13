@@ -6,7 +6,7 @@ import { Box, Grid, Icon, Text } from '@myra-ui';
 import {
   Id_Type,
   ObjState,
-  useGetAccountTableListQuery,
+  useGetAccountTableListMinimalQuery,
   useGetMemberDetailsOverviewQuery,
   useGetNewIdMutation,
 } from '@coop/cbs/data-access';
@@ -56,7 +56,7 @@ export const Accounts = () => {
       productName: data?.productName,
     })) || [];
 
-  const { data: closedAccountListQueryData } = useGetAccountTableListQuery(
+  const { data: closedAccountListQueryData } = useGetAccountTableListMinimalQuery(
     {
       paginate: {
         first: -1,

@@ -11002,8 +11002,11 @@ export type ShareBalanceEdge = {
 };
 
 export type ShareBalanceFilter = {
+  filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['String']>;
+  memberCode?: InputMaybe<Scalars['String']>;
   memberId?: InputMaybe<Scalars['String']>;
+  memberName?: InputMaybe<Scalars['String']>;
   memberSearchText?: InputMaybe<Scalars['String']>;
 };
 
@@ -11283,8 +11286,11 @@ export type ShareRegisterEdge = {
 export type ShareRegisterFilter = {
   dateFrom?: InputMaybe<Scalars['String']>;
   dateTo?: InputMaybe<Scalars['String']>;
+  filterMode?: InputMaybe<Filter_Mode>;
   id?: InputMaybe<Scalars['String']>;
+  memberCode?: InputMaybe<Scalars['String']>;
   memberId?: InputMaybe<Scalars['String']>;
+  memberName?: InputMaybe<Scalars['String']>;
   memberSearchText?: InputMaybe<Scalars['String']>;
   status?: InputMaybe<Share_Status>;
   transactionDirection?: InputMaybe<Share_Transaction_Direction>;
@@ -15085,6 +15091,49 @@ export type GetAccountTableListQuery = {
             totalDue?: string | null;
             dueInstallments?: number | null;
           } | null;
+        } | null;
+      }> | null;
+    } | null;
+  };
+};
+
+export type GetAccountTableListMinimalQueryVariables = Exact<{
+  paginate?: InputMaybe<Pagination>;
+  filter?: InputMaybe<DepositLoanAccountSearchFilter>;
+}>;
+
+export type GetAccountTableListMinimalQuery = {
+  account: {
+    list?: {
+      totalCount: number;
+      pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      } | null;
+      edges?: Array<{
+        node?: {
+          id: string;
+          objState: ObjState;
+          createdAt: string;
+          accountName?: string | null;
+          balance?: string | null;
+          accountOpenedDate?: string | null;
+          accountExpiryDate?: string | null;
+          closedAt?: string | null;
+          member?: {
+            id: string;
+            name?: Record<'local' | 'en' | 'np', string> | null;
+            profilePicUrl?: string | null;
+          } | null;
+          product: {
+            id: string;
+            productCode: string;
+            productName: string;
+            nature: NatureOfDepositProduct;
+            interest?: number | null;
+          };
         } | null;
       }> | null;
     } | null;
@@ -26470,6 +26519,61 @@ export const useGetAccountTableListQuery = <TData = GetAccountTableListQuery, TE
     variables === undefined ? ['getAccountTableList'] : ['getAccountTableList', variables],
     useAxios<GetAccountTableListQuery, GetAccountTableListQueryVariables>(
       GetAccountTableListDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetAccountTableListMinimalDocument = `
+    query getAccountTableListMinimal($paginate: Pagination, $filter: DepositLoanAccountSearchFilter) {
+  account {
+    list(paginate: $paginate, filter: $filter) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        node {
+          id
+          objState
+          createdAt
+          accountName
+          balance
+          accountOpenedDate
+          accountExpiryDate
+          closedAt
+          member {
+            id
+            name
+            profilePicUrl
+          }
+          product {
+            id
+            productCode
+            productName
+            nature
+            interest
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetAccountTableListMinimalQuery = <
+  TData = GetAccountTableListMinimalQuery,
+  TError = unknown
+>(
+  variables?: GetAccountTableListMinimalQueryVariables,
+  options?: UseQueryOptions<GetAccountTableListMinimalQuery, TError, TData>
+) =>
+  useQuery<GetAccountTableListMinimalQuery, TError, TData>(
+    variables === undefined
+      ? ['getAccountTableListMinimal']
+      : ['getAccountTableListMinimal', variables],
+    useAxios<GetAccountTableListMinimalQuery, GetAccountTableListMinimalQueryVariables>(
+      GetAccountTableListMinimalDocument
     ).bind(null, variables),
     options
   );

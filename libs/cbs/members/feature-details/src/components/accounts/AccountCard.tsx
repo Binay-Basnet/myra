@@ -89,9 +89,11 @@ export const AccountCard = ({
           <Text fontWeight="500" fontSize="r2" textAlign="right">
             {totalBalance ? amountConverter(totalBalance ?? 0) : null}
           </Text>
-          <Text fontWeight="400" fontSize="s3">
-            Interest Rate : {interestRate} %
-          </Text>
+          {productType !== NatureOfDepositProduct.Current && (
+            <Text fontWeight="400" fontSize="s3">
+              Interest Rate : {interestRate} %
+            </Text>
+          )}
         </Box>
       </Box>
       <AccountQRModal
