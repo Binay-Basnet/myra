@@ -43,7 +43,7 @@ export const ProductServiceCharge = ({ serviceCharge }: IProductServiceCharge) =
 
   return (
     <DetailsCard title="Account Service Charge" hasTable>
-      <Table variant="report" size="report" isStatic data={serviceCharge ?? []} columns={columns} />
+      <Table isStatic data={serviceCharge ?? []} columns={columns} />
     </DetailsCard>
   );
 };

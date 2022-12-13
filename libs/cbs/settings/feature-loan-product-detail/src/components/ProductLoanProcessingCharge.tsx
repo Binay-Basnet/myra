@@ -45,13 +45,7 @@ export const ProductLoanProcessingCharge = ({
 
   return (
     <DetailsCard title="Loan Processing Charge" hasTable>
-      <Table
-        variant="report"
-        size="report"
-        isStatic
-        data={loanProcessingCharge ?? []}
-        columns={columns}
-      />
+      <Table isStatic data={loanProcessingCharge ?? []} columns={columns} />
     </DetailsCard>
   );
 };

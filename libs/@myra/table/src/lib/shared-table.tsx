@@ -135,6 +135,7 @@ export const Table = <T extends Record<string, unknown>>({
                     textAlign={header.column.columns.length !== 0 ? 'center' : 'left'}
                     px="s12"
                     py="0"
+                    bg={isStatic ? 'highlight.500' : ''}
                   >
                     {header.isPlaceholder ? null : (
                       <Box

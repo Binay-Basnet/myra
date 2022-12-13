@@ -41,7 +41,5 @@ export const ProductServiceTable = ({ serviceList }: IProductServiceTable) => {
 
   if (serviceList?.length === 0) return null;
 
-  return (
-    <Table variant="report" size="report" isStatic data={serviceList ?? []} columns={columns} />
-  );
+  return <Table isStatic data={serviceList ?? []} columns={columns} />;
 };

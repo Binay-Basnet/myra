@@ -9,8 +9,6 @@ interface IProductFeaturesProps {
 
 export const ProductFeatures = ({ features }: IProductFeaturesProps) => (
   <Table
-    variant="report"
-    size="report"
     isStatic
     data={features}
     columns={[

@@ -1,6 +1,9 @@
 import React from 'react';
 
+import { Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
+
+import { amountConverter } from '@coop/shared/utils';
 
 interface ILoanPaymentScheduleTableProps {
   data:
@@ -52,6 +55,14 @@ export const UpcomingLoanPaymentTable = ({ data }: ILoanPaymentScheduleTableProp
       {
         header: 'Amount',
         accessorKey: 'amount',
+        cell: (props) =>
+          props.getValue() ? (
+            <Text fontWeight="500" fontSize="r1" color="primary.500">
+              {amountConverter(props.getValue() as string)}
+            </Text>
+          ) : (
+            'N/A'
+          ),
         meta: {
           isNumeric: true,
         },

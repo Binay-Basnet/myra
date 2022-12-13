@@ -44,7 +44,5 @@ export const ProductInsurance = ({ insurance }: IProductInsurance) => {
 
   if (insuranceArray?.length === 0) return null;
 
-  return (
-    <Table variant="report" size="report" isStatic data={insuranceArray ?? []} columns={columns} />
-  );
+  return <Table isStatic data={insuranceArray ?? []} columns={columns} />;
 };
