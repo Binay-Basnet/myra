@@ -1,0 +1,27 @@
+query getBranchReport($data: BranchReportFilter) {
+  report {
+    branchReport {
+      branchReport(data: $data) {
+        data {
+          id
+          serviceCenterCode
+          name
+          contactNumber
+          email
+          address {
+            ...Address
+          }
+          managerName
+          managerContact
+          isExtensionCounter
+          estDate
+          branchStatus
+          remarks
+        }
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}

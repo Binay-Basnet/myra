@@ -28,7 +28,7 @@ export const BankGLStatementReport = () => {
     { enabled: !!filters }
   );
 
-  const bankGlReport = data?.report?.bankGLStatementReport?.data;
+  const bankGlReport = data?.report?.transactionReport?.financial?.bankGLStatementReport?.data;
 
   return (
     <Report

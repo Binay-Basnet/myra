@@ -28,9 +28,9 @@ export const LoanBalanceReport = () => {
     { enabled: !!filters }
   );
 
-  const loanReport = data?.report?.loanBalanceReport?.data;
-  const outstandingTotal = data?.report?.loanBalanceReport?.totalOutstandingBalance;
-  const totalRemainingBalance = data?.report?.loanBalanceReport?.totalRemainingBalance;
+  const loanReport = data?.report?.loanReport?.loanBalanceReport?.data;
+  const outstandingTotal = data?.report?.loanReport?.loanBalanceReport?.totalOutstandingBalance;
+  const totalRemainingBalance = data?.report?.loanReport?.loanBalanceReport?.totalRemainingBalance;
 
   return (
     <Report

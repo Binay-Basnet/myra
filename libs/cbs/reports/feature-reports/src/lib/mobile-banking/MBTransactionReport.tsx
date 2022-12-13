@@ -25,7 +25,7 @@ export const MBTransactionsReport = () => {
     },
     { enabled: !!filters }
   );
-  const mobileBankingReport = data?.report?.mBankingTransactionReport?.data;
+  const mobileBankingReport = data?.report?.mobileBankingReport?.mBankingTransactionReport?.data;
 
   return (
     <Report

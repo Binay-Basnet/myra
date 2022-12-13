@@ -124,13 +124,7 @@ export const ReportHeader = ({ paths, hasSave = false }: PathBarProps) => {
                   return saveReport({
                     data: {
                       id: idResponse.newId,
-                      data: {
-                        memberId: filters().memberId,
-                        period: {
-                          periodType: filters().period.periodType,
-                        },
-                        filter: filters().filter,
-                      },
+                      data: filters(),
                       name: getValues()['name'],
                       reportType: 'Share Report',
                     },

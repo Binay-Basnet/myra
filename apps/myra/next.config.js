@@ -41,7 +41,7 @@ const nextConfig = {
   // },
   images: {
     domains: ['images.unsplash.com', 'cdn.raralabs.live'],
-    // unoptimized: true,
+    unoptimized: true,
   },
   i18n: {
     locales: ['en', 'ne'],

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Box, GridItem } from '@myra-ui';
 
 import {
-  PeriodInput,
+  LocalizedDateFilter,
   ServiceCenter,
   useGetAllDistrictsQuery,
   useGetAllLocalGovernmentQuery,
@@ -22,7 +22,7 @@ type Filter = {
     localGovernmentId?: { label: string; value: number }[];
     provinceId?: { label: string; value: number }[];
   };
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 
 export const ServiceCenterListReport = () => {
@@ -46,7 +46,7 @@ export const ServiceCenterListReport = () => {
   const { data: serviceCenterReportData, isFetching } = useGetBranchReportQuery(
     {
       data: {
-        period: filters?.period,
+        period: filters?.period as LocalizedDateFilter,
         filter: {
           ...filters?.filter,
           provinceId: provinceIDs,
@@ -57,7 +57,8 @@ export const ServiceCenterListReport = () => {
     },
     { enabled: !!filters }
   );
-  const serviceCenterReport = serviceCenterReportData?.report?.branchReport?.data ?? [];
+  const serviceCenterReport =
+    serviceCenterReportData?.report?.branchReport?.branchReport?.data ?? [];
 
   const { data: provinceData } = useGetAllProvinceQuery();
   const { data: districtsData } = useGetAllDistrictsQuery();

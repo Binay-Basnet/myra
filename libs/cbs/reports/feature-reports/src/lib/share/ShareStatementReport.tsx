@@ -21,7 +21,7 @@ export const ShareStatementReport = () => {
     { enabled: !!filters }
   );
 
-  const shareMember = data?.report?.shareStatementReport?.member;
+  const shareMember = data?.report?.shareReport?.shareStatementReport?.member;
   // const branch = useAppSelector((state) => state?.auth?.user?.branch);
 
   // const member = {
@@ -32,7 +32,7 @@ export const ShareStatementReport = () => {
   //   'Membership Date': dayjs(shareMember?.dateJoined).format('YYYY-MM-DD') as string,
   // };
 
-  const shareData = data?.report?.shareStatementReport?.statement;
+  const shareData = data?.report?.shareReport?.shareStatementReport?.statement;
   const shareReport = shareData && 'shareStatement' in shareData ? shareData.shareStatement : [];
   const shareReportTotal = shareData && 'shareStatement' in shareData ? shareData.totals : {};
 

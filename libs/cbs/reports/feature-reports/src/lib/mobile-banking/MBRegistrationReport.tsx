@@ -22,7 +22,7 @@ export const MBRegistrationReport = () => {
     },
     { enabled: !!filters }
   );
-  const mobileBankingReport = data?.report?.mbankingRegistrationReport?.data;
+  const mobileBankingReport = data?.report?.mobileBankingReport?.mbankingRegistrationReport?.data;
 
   return (
     <Report

@@ -1,0 +1,168 @@
+query getMemberClassificationReport($data: MemberClassificationFilter!) {
+  report {
+    memberReport {
+      memberClassificationReport(data: $data) {
+        data {
+          gender {
+            entryName
+            inNumber
+            inPercent
+          }
+          age {
+            entryName
+            inNumber
+            inPercent
+          }
+          occupation {
+            entryName
+            inNumber
+            inPercent
+          }
+          education {
+            entryName
+            inNumber
+            inPercent
+          }
+          memberCategory {
+            entryName
+            inNumber
+            inPercent
+          }
+          income {
+            entryName
+            inPercent
+            inPercent
+          }
+          address {
+            province {
+              entryName
+              inNumber
+              inPercent
+            }
+            district {
+              entryName
+              inNumber
+              inPercent
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getActiveInactiveMemberReport($data: ActiveInactiveMemberReportData) {
+  report {
+    memberReport {
+      activeInactiveMemberReport(data: $data) {
+        statement {
+          ... on ActiveInactiveMemberReport {
+            summary {
+              activeTotal
+              inactiveTotal
+              totalMember
+            }
+            reportStatement {
+              memberId
+              memberName
+              district
+              wardNo
+              address
+              dob
+              age
+              contactNo
+              gender
+              pan
+              occupation
+              memberRegistrationDate
+              status
+              memberType
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getKymStatusReport($data: KymStatusReportFilter) {
+  report {
+    memberReport {
+      kymStatusReport(data: $data) {
+        Summary
+        data {
+          address {
+            ...Address
+          }
+          memberName
+          memberId
+          contact
+          regDate
+          riskCategory
+          lastKymUpdatedDate
+          kymExpireDays
+          kymStatus
+        }
+      }
+    }
+  }
+}
+
+query getMemberRegistrationReport($data: MemberRegistrationReportData) {
+  report {
+    memberReport {
+      memberRegistrationReport(data: $data) {
+        data {
+          individual {
+            memberId
+            memberCode
+            name
+            address {
+              ...Address
+            }
+            dob
+            grandFatherName
+            fatherName
+            SpouseName
+            profession
+            shareInfo {
+              perShareAmount
+              kitta
+              amount
+            }
+            fingerPrint
+            photo
+            contactNo
+            email
+            other
+          }
+          other {
+            memberId
+            memberCode
+            name
+            address {
+              ...Address
+            }
+            doe
+            typeOfInstitution
+            workingArea
+            totalMember
+            balanceSheet
+            shareInfo {
+              perShareAmount
+              kitta
+              amount
+            }
+            post
+            authPersonName
+            logo
+            stamp
+            contactNo
+            email
+            other
+          }
+        }
+      }
+    }
+  }
+}

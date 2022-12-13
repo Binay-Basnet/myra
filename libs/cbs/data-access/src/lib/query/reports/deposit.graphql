@@ -1,0 +1,192 @@
+query getAccountOpeningReport($data: AccountOpeningReportInput) {
+  report {
+    depositReport {
+      accountOpeningReport(data: $data) {
+        data {
+          accountName
+          accountNumber
+          memberId
+          openedBy
+          openingDate
+        }
+      }
+    }
+  }
+}
+
+query getAccountClosingReport($data: AccountClosingReportInput) {
+  report {
+    depositReport {
+      accountClosingReport(data: $data) {
+        data {
+          memberId
+          accountNumber
+          accountName
+          openingDate
+          closingDate
+          closedBalance
+          closedBy
+        }
+      }
+    }
+  }
+}
+
+query getAccountClosingReport($data: AccountClosingReportInput) {
+  report {
+    depositReport {
+      accountClosingReport(data: $data) {
+        data {
+          memberId
+          accountNumber
+          accountName
+          openingDate
+          closingDate
+          closedBalance
+          closedBy
+        }
+      }
+    }
+  }
+}
+
+query getInterestTaxReport($data: InterestTaxReportFilter!) {
+  report {
+    depositReport {
+      interestTaxReport(data: $data) {
+        data {
+          memberId
+          memberCode
+          name
+          address {
+            ...Address
+          }
+          panNo
+          accountNo
+          date
+          interest
+          tax
+          savingBalance
+          closingBalance
+          remarks
+        }
+      }
+    }
+  }
+}
+
+query getTtrReport($data: TTRReportFilter!) {
+  report {
+    depositReport {
+      thresholdTransactionReport(data: $data) {
+        data {
+          yearly {
+            name
+            memberId
+            address {
+              ...Address
+            }
+
+            branch
+            date
+            nature
+            accountNo
+            amount
+            sourceOfFund
+            remarks
+          }
+          perTranx {
+            name
+            memberId
+            address {
+              ...Address
+            }
+            branch
+            date
+            nature
+            accountNo
+            amount
+            sourceOfFund
+            remarks
+          }
+        }
+      }
+    }
+  }
+}
+
+query getSavingStatement($data: SavingStatementReportSettings!) {
+  report {
+    depositReport {
+      savingStatementReport(data: $data) {
+        memberId
+        member {
+          id
+          code
+          name
+          address {
+            wardNo
+            state
+            district
+            houseNo
+            localGovernment
+          }
+          dateJoined
+        }
+        statement {
+          ... on SavingStatementReport {
+            savingStatement {
+              date
+              balanceAmount
+              depositCr
+              chequeOrVoucherNo
+              particular
+              withdrawDr
+            }
+            totals {
+              totalBalance
+              totalWithdraw
+              totalDeposit
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+query getInterestStatementReport($data: InterestStatementFilter!) {
+  report {
+    depositReport {
+      interestStatementReport(data: $data) {
+        data {
+          entries {
+            date
+            amount
+            balance
+            days
+            rate
+            remarks
+          }
+          memberId
+          accountNo
+          accountType
+          currentInterestRate
+          memberName
+          address {
+            wardNo
+            state
+            locality
+            localGovernment
+            district
+            houseNo
+            coordinates {
+              longitude
+              latitude
+            }
+          }
+        }
+      }
+    }
+  }
+}

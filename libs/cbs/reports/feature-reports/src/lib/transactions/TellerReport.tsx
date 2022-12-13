@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Box, GridItem, Text } from '@myra-ui';
 
 import {
-  PeriodInput,
+  LocalizedDateFilter,
   Roles,
   TellerDataEntry,
   TellerType,
@@ -25,7 +25,7 @@ type Filter = {
       value: string;
     }[];
   };
-  period: PeriodInput;
+  period: LocalizedDateFilter;
 };
 export const TellerReport = () => {
   const [filters, setFilters] = useState<Filter | null>(null);
@@ -44,7 +44,7 @@ export const TellerReport = () => {
     {
       data: {
         branchId: filters?.branchId as string,
-        period: filters?.period as PeriodInput,
+        period: filters?.period as LocalizedDateFilter,
         filter: {
           ...filters?.filter,
           tellerId: tellerIds,
