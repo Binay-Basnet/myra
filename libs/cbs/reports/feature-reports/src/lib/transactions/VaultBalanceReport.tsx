@@ -4,6 +4,7 @@ import { Box, GridItem } from '@myra-ui';
 
 import { useGetVaultBalanceReportQuery, VaultBalanceReportFilter } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
+import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
@@ -106,8 +107,11 @@ export const VaultBalanceReport = () => {
           ]}
         />
         <Report.Inputs hideDate>
-          <GridItem colSpan={3}>
+          <GridItem colSpan={2}>
             <FormBranchSelect name="branchId" label="Branch" />
+          </GridItem>
+          <GridItem colSpan={1}>
+            <ReportDateRange name="date" />
           </GridItem>
           {/* <GridItem colSpan={1}>
             <ReportDateRange />
