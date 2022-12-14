@@ -10823,12 +10823,12 @@ export enum SavingServiceType {
 }
 
 export type SavingStatement = {
-  balanceAmount: Scalars['Float'];
-  chequeOrVoucherNo: Scalars['String'];
-  date: Scalars['Localized'];
-  depositCr: Scalars['Float'];
-  particular: Scalars['String'];
-  withdrawDr: Scalars['Float'];
+  balanceAmount?: Maybe<Scalars['String']>;
+  chequeOrVoucherNo?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['Localized']>;
+  depositCr?: Maybe<Scalars['String']>;
+  particular?: Maybe<Scalars['String']>;
+  withdrawDr?: Maybe<Scalars['String']>;
 };
 
 export type SavingStatementReport = {
@@ -10844,9 +10844,9 @@ export type SavingStatementReportSettings = {
 };
 
 export type SavingTotalReport = {
-  totalBalance: Scalars['Float'];
-  totalDeposit: Scalars['Float'];
-  totalWithdraw: Scalars['Float'];
+  totalBalance?: Maybe<Scalars['String']>;
+  totalDeposit?: Maybe<Scalars['String']>;
+  totalWithdraw?: Maybe<Scalars['String']>;
 };
 
 export enum SavingTransactionType {
@@ -19311,14 +19311,18 @@ export type GetSavingStatementQuery = {
         statement?:
           | {
               savingStatement?: Array<{
-                date: Record<'local' | 'en' | 'np', string>;
-                balanceAmount: number;
-                depositCr: number;
-                chequeOrVoucherNo: string;
-                particular: string;
-                withdrawDr: number;
+                date?: Record<'local' | 'en' | 'np', string> | null;
+                balanceAmount?: string | null;
+                depositCr?: string | null;
+                chequeOrVoucherNo?: string | null;
+                particular?: string | null;
+                withdrawDr?: string | null;
               } | null> | null;
-              totals?: { totalBalance: number; totalWithdraw: number; totalDeposit: number } | null;
+              totals?: {
+                totalBalance?: string | null;
+                totalWithdraw?: string | null;
+                totalDeposit?: string | null;
+              } | null;
             }
           | {}
           | null;
