@@ -20,4 +20,3 @@ query getUserReport($data: UserReportFilter) {
     }
   }
 }
-

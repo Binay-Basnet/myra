@@ -1,20 +1,34 @@
+import { useRouter } from 'next/router';
+
 import { DetailCardContent, DetailsCard } from '@myra-ui';
 
-export const ContactDetailsInstitution = () => (
-  // const router = useRouter();
-  // const memberDetails = useGetMemberDetailsOverviewQuery({
-  //   id: router.query['id'] as string,
-  // });
+import { useGetMemberOverviewBioDetailsQuery } from '@coop/cbs/data-access';
 
-  // const memberBasicInfo =
-  //   memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation;
-  <DetailsCard title="Contact Details" bg="white" hasThreeRows>
-    <DetailCardContent title="Phone Number" subtitle="" />
-    <DetailCardContent title="Fax" subtitle="" />
-    <DetailCardContent title="Email Address" subtitle="" />
-    <DetailCardContent title="Website" subtitle="" />
-    <DetailCardContent title="Post Box No" subtitle="" />
-    <DetailCardContent title="Number of Employees" subtitle="" />
-    <DetailCardContent title="AGM Details" subtitle="" />
-  </DetailsCard>
-);
+export const ContactDetailsInstitution = () => {
+  const router = useRouter();
+  const memberBioData = useGetMemberOverviewBioDetailsQuery({
+    id: router.query['id'] as string,
+  });
+
+  const bioDataInstitution =
+    memberBioData?.data?.members?.memberOverview?.data?.bio?.__typename === 'InstitutionBio'
+      ? memberBioData?.data?.members?.memberOverview?.data?.bio?.contactDetails
+      : null;
+  return (
+    <DetailsCard title="Contact Details" bg="white" hasThreeRows>
+      <DetailCardContent title="Phone Number" subtitle={bioDataInstitution?.phoneNumber ?? '-'} />
+      <DetailCardContent title="Fax" subtitle={bioDataInstitution?.fax ?? '-'} />
+      <DetailCardContent title="Email Address" subtitle={bioDataInstitution?.email ?? '-'} />
+      <DetailCardContent title="Website" subtitle={bioDataInstitution?.website ?? '-'} />
+      <DetailCardContent title="Post Box No" subtitle={bioDataInstitution?.poBoxNo ?? '-'} />
+      <DetailCardContent
+        title="Number of Employees"
+        subtitle={bioDataInstitution?.noOfEmployees ?? '-'}
+      />
+      <DetailCardContent
+        title="AGM Details"
+        subtitle={bioDataInstitution?.agmDetails?.local ?? '-'}
+      />
+    </DetailsCard>
+  );
+};

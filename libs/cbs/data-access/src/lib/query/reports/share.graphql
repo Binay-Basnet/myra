@@ -38,7 +38,6 @@ query getShareStatement($data: ShareStatementReportSettings!) {
   }
 }
 
-
 query getShareRegisterReport($data: SharePurchaseRegisterReportFilter!) {
   report {
     shareReport {

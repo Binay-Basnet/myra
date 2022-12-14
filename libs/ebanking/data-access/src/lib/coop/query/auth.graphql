@@ -17,6 +17,9 @@ query getCoopMe {
           memberProfilePicUrl
           memberMobileNo
         }
+        error {
+          ...QueryError
+        }
       }
     }
   }

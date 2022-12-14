@@ -75,7 +75,7 @@ const cashOptions: Record<string, string> = {
 
 export const ActivationForm = () => {
   const [mode, setMode] = useState<'form' | 'payment'>('form');
-  const [pin, setPin] = useState<number | null>(null);
+  // const [pin, setPin] = useState<number | null>(null);
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -182,7 +182,7 @@ export const ActivationForm = () => {
           ...filteredValues,
           paymentMode: values.paymentMode as AlternativeChannelPaymentMode,
           service: selectedService,
-          pin,
+          pin: null,
           totalAmount: String(serviceCharges?.reduce((a, b) => a + Number(b?.amount), 0)),
         },
       }),
@@ -236,10 +236,10 @@ export const ActivationForm = () => {
             <FormInput name="email" label={t['acEmail']} />
           </FormSection>
 
-          {(selectedService?.includes(AlternativeChannelServiceType.Ebanking) ||
-            selectedService?.includes(AlternativeChannelServiceType.MobileBanking)) && (
-            <GeneratePin pin={pin} setPin={setPin} />
-          )}
+          {/* {(selectedService?.includes(AlternativeChannelServiceType.Ebanking) || */}
+          {/*   selectedService?.includes(AlternativeChannelServiceType.MobileBanking)) && ( */}
+          {/*   <GeneratePin pin={pin} setPin={setPin} /> */}
+          {/* )} */}
 
           <FormSection flexLayout header="acFeeAndCharges" subHeader="acFeeDes">
             <Box
