@@ -16,9 +16,9 @@ export const DocumentComponent = ({ keyText, value }: IDocumentCard) => (
   // const memberBasicInfo =
   //   memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation;
   <Box
-    borderRadius="br2"
-    borderColor="border.light"
     border="1px"
+    borderRadius="br2"
+    borderColor="border.layout"
     display="flex"
     justifyContent="space-between"
     alignItems="center"
