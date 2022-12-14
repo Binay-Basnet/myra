@@ -332,6 +332,7 @@ export const ReportTable = <T extends Record<string, unknown>>({
         variant="report"
         size="report"
         isStatic
+        getSubRows={(row) => row['children'] as T[]}
         data={
           tableData
             ? ((hasSNo

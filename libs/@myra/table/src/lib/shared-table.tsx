@@ -13,12 +13,12 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { flexRender, SortingState } from '@tanstack/react-table';
+import { ExpandedState, flexRender, SortingState } from '@tanstack/react-table';
 import qs from 'qs';
 
-import { Loader, Modal, Pagination } from '@myra-ui/components';
+import { Loader, Pagination } from '@myra-ui/components';
 import { Text } from '@myra-ui/foundations';
-import { NoDataState, WIPState } from '@myra-ui/templates';
+import { NoDataState } from '@myra-ui/templates';
 
 // eslint-disable-next-line import/no-cycle
 import { TableSearch, TableSelectionBar } from '../components';
@@ -41,18 +41,15 @@ export const Table = <T extends Record<string, unknown>>({
   rowOnClick,
   enableSorting,
   manualSorting = true,
+  getSubRows,
 }: TableProps<T>) => {
   const router = useRouter();
   const sortQuery = router?.query['sort'] as string;
 
+  const [expanded, setExpanded] = React.useState<ExpandedState>({});
   const [tableSize, setTableSize] = React.useState(size);
   const [rowSelection, setRowSelection] = React.useState({});
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
 
   const table = useTable<T>({
     columns,
@@ -62,13 +59,17 @@ export const Table = <T extends Record<string, unknown>>({
     state: {
       sorting,
       rowSelection,
+      expanded,
     },
+
+    onExpandedChange: setExpanded,
 
     onSortingChange: setSorting,
     onRowSelectionChange: setRowSelection,
     getRowId,
     enableSorting,
     manualSorting,
+    getSubRows,
   });
 
   useEffect(() => {
@@ -89,50 +90,32 @@ export const Table = <T extends Record<string, unknown>>({
         <TableSelectionBar tableInstance={table} columns={columns as Column<T>[]} />
       </Collapse>
       {!isStatic && (
-        <>
-          <TableSearch
-            placeholder={searchPlaceholder}
-            pagination={pagination}
-            size={tableSize}
-            setSize={setTableSize}
-          />
-          <Modal open={isModalOpen} onClose={handleModalClose} isCentered width="3xl">
-            <WIPState />
-          </Modal>
-        </>
+        <TableSearch
+          placeholder={searchPlaceholder}
+          pagination={pagination}
+          size={tableSize}
+          setSize={setTableSize}
+        />
       )}
 
-      <TableContainer
-        minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}
-        {...(variant === 'report'
-          ? { borderRadius: 'br1', border: '0px', borderColor: 'border.element' }
-          : {})}
-      >
-        <ChakraTable
-          size={tableSize}
-          variant={variant}
-          {...(variant === 'report'
-            ? {
-                border: '0',
-                borderRadius: 'br1',
-
-                borderColor: 'border.element',
-              }
-            : {})}
-        >
+      <TableContainer minH={isLoading || !data || data.length === 0 ? '400px' : 'auto'}>
+        <ChakraTable size={tableSize} variant={variant}>
           <Thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <Tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
+                {headerGroup.headers.map((header, index) => (
                   <Th
                     key={header.id}
                     colSpan={header.colSpan}
                     isNumeric={header.column.columnDef.meta?.isNumeric}
-                    width={header.column.columnDef.meta?.width}
+                    minW={header.column.columnDef.meta?.width}
+                    w={header.column.columnDef.meta?.width}
                     textAlign={header.column.columns.length !== 0 ? 'center' : 'left'}
+                    position={index === 0 ? 'sticky' : 'static'}
+                    top={0}
+                    left={0}
                     px="s12"
                     py="0"
-                    bg={isStatic ? 'highlight.500' : 'gray.0'}
                   >
                     {header.isPlaceholder ? null : (
                       <Box
@@ -179,7 +162,10 @@ export const Table = <T extends Record<string, unknown>>({
               </Tr>
             ))}
           </Thead>
-          <Tbody position={isLoading || !data || data?.length === 0 ? 'relative' : 'static'}>
+          <Tbody
+            h={isLoading || !data || data.length === 0 ? '400px' : 'auto'}
+            position={isLoading || !data || data?.length === 0 ? 'relative' : 'static'}
+          >
             {isLoading ? (
               <Box as="tr">
                 <Box
@@ -224,11 +210,15 @@ export const Table = <T extends Record<string, unknown>>({
                   e.stopPropagation();
                 }}
               >
-                {row.getVisibleCells().map((cell) => (
+                {row.getVisibleCells().map((cell, index) => (
                   <Td
                     key={cell.id}
                     isNumeric={cell.column.columnDef.meta?.isNumeric}
-                    width={cell.column.columnDef.meta?.width}
+                    minW={cell.column.columnDef.meta?.width}
+                    w={cell.column.columnDef.meta?.width}
+                    position={index === 0 ? 'sticky' : 'static'}
+                    top={0}
+                    left={0}
                     px="s12"
                     py="0"
                   >

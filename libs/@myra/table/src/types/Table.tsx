@@ -53,6 +53,9 @@ export interface TableProps<TData extends Maybe<Record<string, unknown>>> {
   manualSorting?: boolean;
   onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
   nClick?: MouseEventHandler<HTMLInputElement> | undefined;
+
+  // Expand Props
+  getSubRows?: (row: TData) => TData[];
 }
 
 export type TableInstance<T> = Table<T>;

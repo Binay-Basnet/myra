@@ -2,6 +2,7 @@ import React from 'react';
 import { BsFillCaretRightFill } from 'react-icons/bs';
 import { MdOutlineCircle } from 'react-icons/md';
 import { Box, Collapse, Text } from '@chakra-ui/react';
+
 import { Icon, NoDataState } from '@myra-ui';
 
 import Accordion, { useAccordion } from './useAccordion';
@@ -56,7 +57,7 @@ export const MultiTree = <T extends ArrayTree>({
 export interface ArrayTree extends Record<string, unknown> {
   id: string;
   name: string;
-  under: string;
+  under: string | null;
 }
 
 interface ITreeProps<T extends BaseType> {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Box, GridItem, Text } from '@myra-ui';
+import { Box, ExpandedCell, ExpandedHeader, GridItem, Text } from '@myra-ui';
 
 import {
   LocalizedDateFilter,
@@ -11,6 +11,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { arrayToTree } from '@coop/shared/components';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -255,22 +256,24 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
     return null;
   }
 
+  const tree = arrayToTree(
+    data.map((d) => ({ ...d, id: d?.ledgerId as string })).filter((d) => !!d.id),
+    ''
+  );
+
   return (
     <Report.Table<TrialSheetReportDataEntry>
       showFooter
-      data={data as TrialSheetReportDataEntry[]}
+      data={tree}
       columns={[
         {
-          header: 'General Ledger Name',
+          header: ({ table }) => <ExpandedHeader table={table} value="General Ledger Name" />,
           accessorKey: 'ledgerName',
           cell: (props) => (
-            <Text
-              fontSize="r1"
-              fontWeight={props.row.original.ledgerId?.includes('.') ? '400' : '600'}
-              color="gray.700"
-            >
-              {props.row.original.ledgerId} - {props?.row?.original?.ledgerName?.local}
-            </Text>
+            <ExpandedCell
+              row={props.row}
+              value={` ${props.row.original.ledgerId} - ${props?.row?.original?.ledgerName?.local}`}
+            />
           ),
           footer: () => <>Total {type}</>,
           meta: {
