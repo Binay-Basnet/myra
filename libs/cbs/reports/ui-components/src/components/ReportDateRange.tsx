@@ -7,9 +7,10 @@ import { useAppSelector } from '@coop/cbs/data-access';
 
 interface IReportDateRange {
   label?: string;
+  name?: string;
 }
 
-export const ReportDateRange = ({ label = 'Select Period' }: IReportDateRange) => {
+export const ReportDateRange = ({ label = 'Select Period', name }: IReportDateRange) => {
   const { control } = useFormContext();
   const { locale } = useRouter();
   const calendarType = useAppSelector((state) => state?.auth?.preference?.date);
@@ -38,7 +39,7 @@ export const ReportDateRange = ({ label = 'Select Period' }: IReportDateRange) =
         />
       )}
       control={control}
-      name="period"
+      name={name ?? 'period'}
     />
   );
 };
