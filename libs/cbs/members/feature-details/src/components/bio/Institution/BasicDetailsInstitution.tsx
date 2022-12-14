@@ -1,19 +1,53 @@
+import { useRouter } from 'next/router';
+
 import { DetailCardContent, DetailsCard } from '@myra-ui';
 
-export const MemberInstitutionBasicInfo = () => (
-  // const router = useRouter();
-  // const memberDetails = useGetMemberDetailsOverviewQuery({
-  //   id: router.query['id'] as string,
-  // });
+import { InstitutionBio, useGetMemberOverviewBioDetailsQuery } from '@coop/cbs/data-access';
 
-  // const memberBasicInfo =
-  //   memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation;
-  <DetailsCard title="Basic Information " bg="white" hasThreeRows>
-    <DetailCardContent title="Name of Institution" subtitle="" />
-    <DetailCardContent title="Institution Type" subtitle="" />
-    <DetailCardContent title="Nature of Institution" subtitle="" />
-    <DetailCardContent title="Registration Details" subtitle="" />
-    <DetailCardContent title="VAT/PAN" subtitle="" />
-    <DetailCardContent title="Number of Service Center" subtitle="" />
-  </DetailsCard>
-);
+export const MemberInstitutionBasicInfo = () => {
+  const router = useRouter();
+  const memberBioData = useGetMemberOverviewBioDetailsQuery({
+    id: router.query['id'] as string,
+  });
+
+  const bioDataInstitution =
+    memberBioData?.data?.members?.memberOverview?.data?.bio?.__typename === 'InstitutionBio'
+      ? (memberBioData?.data?.members?.memberOverview?.data?.bio as InstitutionBio)
+      : null;
+
+  return (
+    // const router = useRouter();
+    // const memberDetails = useGetMemberDetailsOverviewQuery({
+    //   id: router.query['id'] as string,
+    // });
+
+    // const memberBasicInfo =
+    //   memberDetails?.data?.members?.memberOverview?.data?.overview?.basicInformation;
+    <DetailsCard title="Basic Information " bg="white" hasThreeRows>
+      <DetailCardContent
+        title="Name of Institution"
+        subtitle={bioDataInstitution?.basicInfo?.memberName}
+      />
+      <DetailCardContent
+        title="Institution Type"
+        subtitle={bioDataInstitution?.basicInfo?.type ?? '-'}
+      />
+      <DetailCardContent
+        title="Nature of Institution"
+        subtitle={bioDataInstitution?.basicInfo?.nature ?? '-'}
+      />
+      <DetailCardContent
+        title="Registration Details"
+        subtitle={bioDataInstitution?.basicInfo?.registrationDate?.local ?? '-'}
+      />
+      <DetailCardContent
+        title="VAT/PAN"
+        subtitle={bioDataInstitution?.basicInfo?.vatPanNo ?? '-'}
+      />
+      <DetailCardContent
+        title="Number of Service Center"
+        subtitle={bioDataInstitution?.basicInfo?.noOfServiceCenters ?? '-'}
+      />
+    </DetailsCard>
+  );
+};

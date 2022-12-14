@@ -285,3 +285,168 @@ query getMemberOverviewBasicDetails($id: ID!) {
     }
   }
 }
+
+query getMemberOverviewBioDetails($id: ID!) {
+  members {
+    memberOverview(id: $id) {
+      data {
+        bio {
+          __typename
+          ... on InstitutionBio {
+            basicInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              type
+              nature
+              registrationDate
+              vatPanNo
+              noOfServiceCenters
+            }
+            addressDetails {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+            }
+            registrationDetails {
+              registeredNumber
+              issuingOffice
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+            }
+            operatingOfficeAddress {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+            }
+            serviceCenterOfficeAddress {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+            }
+            contactDetails {
+              phoneNumber
+              fax
+              email
+              website
+              poBoxNo
+              noOfEmployees
+              agmDetails
+            }
+            bankAcDetails {
+              bank
+              accountNumber
+              accountName
+            }
+            partnerDirectorDetails {
+              name
+              permAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              tempAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              dateOfMembership
+              highestQualification
+              mobileNo
+              email
+              citizenshipNo
+              panNo
+              docs {
+                key
+                value
+              }
+            }
+            operatorDetails {
+              name
+              contactNo
+              email
+              panNo
+              pemAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              tempAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              docs {
+                key
+                value
+              }
+            }
+            transactionProfileDetails {
+              nature
+              annualTurnover
+              initialDepositAmount
+              expectedMonthlyTurnover
+              expectedMonthlyTransaction
+            }
+            sisterConcernDetails {
+              Name
+              Address
+              Phone
+              NatureOfBusiness
+            }
+            operatorInstructionDetails {
+              accountType
+              stampCompulsory
+              specialInstruction
+            }
+            declaration {
+              name
+              phoneNo
+              email
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+            }
+            docs {
+              key
+              value
+            }
+          }
+        }
+      }
+    }
+  }
+}
