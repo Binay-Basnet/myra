@@ -167,6 +167,7 @@ export const REPORTS = {
     {
       id: '3.4',
       report: Report.SHARE_BALANCE_REPORT,
+      link: 'balance',
     },
     {
       id: '3.4.1',

@@ -1,21 +1,22 @@
 import { useState } from 'react';
+import dayjs from 'dayjs';
 
-import { GridItem } from '@myra-ui';
+import { Box, GridItem } from '@myra-ui';
 
 import {
+  Address,
   ShareBalanceReportData,
   ShareBalanceReportFilter,
-  SharePurchaseRegisterReport,
-  ShareTransactionType,
   useGetShareBalanceReportQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
-import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
+import { formatAddress } from '@coop/cbs/utils';
+import { FormAmountFilter, FormBranchSelect } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
 
-export const ShareRegisterReport = () => {
+export const ShareBalanceReport = () => {
   const [filters, setFilters] = useState<ShareBalanceReportFilter | null>(null);
 
   const { data, isFetching } = useGetShareBalanceReportQuery(
@@ -26,6 +27,7 @@ export const ShareRegisterReport = () => {
   );
 
   const shareBalanceData = data?.report?.shareReport?.shareBalanceReport?.data;
+  const totalShareBalance = data?.report?.shareReport?.shareBalanceReport?.totalBalance;
 
   return (
     <Report
@@ -57,77 +59,100 @@ export const ShareRegisterReport = () => {
         <Report.Content>
           <Report.OrganizationHeader />
           <Report.Organization />
-          <Report.Table<SharePurchaseRegisterReport>
+          <Report.Table<ShareBalanceReportData>
             hasSNo={false}
+            showFooter
             columns={[
               {
-                header: 'Member Id',
+                header: 'Share Type',
+                accessorKey: 'shareType',
+                footer: () => <Box textAlign="right"> Total</Box>,
+                meta: {
+                  width: '60px',
+                  Footer: {
+                    colspan: 8,
+                  },
+                },
+              },
+              {
+                header: 'Share Certification Number',
+                accessorKey: 'shareCertificateNo',
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
+              },
+              {
+                header: 'Member ID',
                 accessorKey: 'memberCode',
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
               },
               {
-                header: 'Name',
-                accessorKey: 'name',
+                header: 'Member Name',
+                accessorFn: (row) => row?.memberName?.local,
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
               },
               {
-                header: 'Particular',
-                accessorKey: 'particular',
+                header: 'Address',
+                accessorKey: 'address',
+                cell: (props) => formatAddress(props.getValue() as Address),
+                meta: {
+                  Footer: {
+                    display: 'none',
+                  },
+                },
               },
               {
-                header: 'Share Information',
-                columns: [
-                  {
-                    header: 'Per Share Amount(100)',
-                    accessorKey: 'perShareAmount',
-                    meta: {
-                      isNumeric: true,
-                    },
+                header: 'Contact No',
+                accessorKey: 'contactNo',
+                meta: {
+                  Footer: {
+                    display: 'none',
                   },
-                  {
-                    header: 'Kitta Number From ',
-                    accessorKey: 'kittaNumFrom',
-                    meta: {
-                      isNumeric: true,
-                    },
+                },
+              },
+              {
+                header: 'Membership Date',
+                accessorKey: 'membershipDate',
+                accessorFn: (row) => row?.membershipDate?.local,
+                cell: ({ cell }) =>
+                  dayjs(cell.row.original.membershipDate?.local).format('YYYY-MM-DD'),
+                meta: {
+                  Footer: {
+                    display: 'none',
                   },
-
-                  {
-                    header: 'Kitta Number To ',
-                    accessorKey: 'kittaNumTo',
-                    meta: {
-                      isNumeric: true,
-                    },
+                },
+              },
+              {
+                header: 'No. of Kitta',
+                accessorKey: 'noOfKitta',
+                meta: {
+                  Footer: {
+                    display: 'none',
                   },
-                  {
-                    header: 'Total Kitta ',
-                    accessorKey: 'totalKitta',
-                    meta: {
-                      isNumeric: true,
-                    },
-                  },
-                  {
-                    header: 'Total Amount ',
-                    accessorKey: 'totalAmount',
-                    cell: (props) => amountConverter(props.getValue() as string),
-                    meta: {
-                      isNumeric: true,
-                    },
-                  },
-                ],
+                },
+              },
+              {
+                header: 'Balance',
+                footer: () => amountConverter(totalShareBalance as string),
+                accessorKey: 'balance',
+                cell: (props) => amountConverter(props.getValue() as string),
               },
             ]}
           />
         </Report.Content>
         <Report.Filters>
-          <Report.Filter title="Type of Share Transaction">
-            <FormRadioGroup
-              name="filter.type"
-              options={[
-                { label: 'All', value: ShareTransactionType.All },
-                { label: 'Issue', value: ShareTransactionType.Issue },
-                { label: 'Return', value: ShareTransactionType.Return },
-              ]}
-              direction="column"
-            />
+          <Report.Filter title="Balance Range">
+            <FormAmountFilter name="filter.balanceRange" />
           </Report.Filter>
         </Report.Filters>
       </Report.Body>
