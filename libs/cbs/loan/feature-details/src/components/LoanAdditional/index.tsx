@@ -6,7 +6,7 @@ export const LoanAdditional = () => {
   const { loanPreview } = useLoanDetails();
 
   return (
-    <DetailsCard title="Additional Features, Booleans">
+    <DetailsCard title="Additional Features, Booleans" hasThreeRows>
       <DetailCardContent
         title="Allow Partial Installment"
         subtitle={loanPreview?.additionalFeatures?.allowPartialInstallment ? 'Yes' : 'No'}

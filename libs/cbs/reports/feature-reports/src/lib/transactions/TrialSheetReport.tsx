@@ -97,7 +97,7 @@ export const TrialSheetReport = () => {
                 type="Liabilities"
                 total={
                   data?.report?.transactionReport?.financial?.trialSheetReport?.data
-                    ?.totalLiablitiesIncome
+                    ?.equityAndLiablitiesTotal
                 }
                 data={equityAndLiablities as TrialSheetReportDataEntry[]}
               />

@@ -1,8 +1,9 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import { FormSection, GridItem } from '@myra-ui';
+
 import { KymIndMemberInput } from '@coop/cbs/data-access';
 import { FormAddress, FormInput, FormSwitch } from '@coop/shared/form';
-import { FormSection, GridItem } from '@myra-ui';
 import { getKymSection, useTranslation } from '@coop/shared/utils';
 
 import { useIndividual } from '../../hooks/useIndividual';
@@ -20,6 +21,7 @@ export const MemberKYMAddress = ({ setKymCurrentSection }: IMemberKYMAddressProp
   const { watch } = methods;
 
   const isPermanentAndTemporaryAddressSame = watch('sameTempAsPermanentAddress');
+
   // const { data } = useAllAdministrationQuery();
 
   // const province = useMemo(

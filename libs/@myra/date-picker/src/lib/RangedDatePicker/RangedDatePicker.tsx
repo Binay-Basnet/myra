@@ -597,6 +597,7 @@ export const DateRangeFooter = ({
         <Button
           w="100px"
           type="button"
+          isDisabled={!rangeEndDate || !rangeEndDate}
           onClick={() => {
             onChange({
               from: convertDate(rangeStartDate),

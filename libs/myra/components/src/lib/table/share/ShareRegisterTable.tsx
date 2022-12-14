@@ -1,10 +1,15 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
+import debounce from 'lodash/debounce';
 
 import { Avatar, Box } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
-import { Share_Transaction_Direction, useGetShareRegisterListQuery } from '@coop/cbs/data-access';
+import {
+  Filter_Mode,
+  Share_Transaction_Direction,
+  useGetShareRegisterListQuery,
+} from '@coop/cbs/data-access';
 import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
@@ -12,9 +17,16 @@ export const ShareRegisterTable = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
+  const [searchTerm, setSearchTerm] = useState<string>('');
+
   const { data, isFetching, refetch } = useGetShareRegisterListQuery(
     {
       pagination: getRouterQuery({ type: ['PAGINATION'] }),
+      filter: {
+        memberName: searchTerm,
+        memberCode: searchTerm,
+        filterMode: Filter_Mode.Or,
+      },
     },
     {
       staleTime: 0,
@@ -134,6 +146,9 @@ export const ShareRegisterTable = () => {
           total: data?.share?.register?.totalCount ?? 'Many',
           pageInfo: data?.share?.register?.pageInfo,
         }}
+        onChange={debounce((e) => {
+          setSearchTerm(e.target.value);
+        }, 800)}
       />
     </>
   );

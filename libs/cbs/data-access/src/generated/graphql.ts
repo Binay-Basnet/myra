@@ -21967,6 +21967,7 @@ export type GetChartOfAccountsQuery = {
 
 export type GetShareBalanceListQueryVariables = Exact<{
   pagination?: InputMaybe<Pagination>;
+  filter?: InputMaybe<ShareBalanceFilter>;
 }>;
 
 export type GetShareBalanceListQuery = {
@@ -35758,9 +35759,9 @@ export const useGetChartOfAccountsQuery = <TData = GetChartOfAccountsQuery, TErr
     options
   );
 export const GetShareBalanceListDocument = `
-    query getShareBalanceList($pagination: Pagination) {
+    query getShareBalanceList($pagination: Pagination, $filter: ShareBalanceFilter) {
   share {
-    balance(pagination: $pagination) {
+    balance(pagination: $pagination, filter: $filter) {
       totalCount
       pageInfo {
         hasNextPage

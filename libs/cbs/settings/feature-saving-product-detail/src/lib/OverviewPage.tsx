@@ -25,7 +25,7 @@ import {
 } from '../components';
 import { ProductInterestRate } from '../components/ProductInterestRate';
 import { ProductTenure } from '../components/ProductTenure';
-import { useSavingDepositHook } from '../hoooks/useSavingDepositHook';
+import { useSavingDepositHook } from '../hooks/useSavingDepositHook';
 
 export const OverviewPage = () => {
   const router = useRouter();

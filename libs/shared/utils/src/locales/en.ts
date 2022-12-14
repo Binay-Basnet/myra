@@ -3322,7 +3322,6 @@ const en: Record<string, string> = {
   transactionSidebarNewLoanPayment: 'New Loan Repayment',
   transactionSidebarNewMarketRepresentativeTransaction: 'New Market Representative Transaction',
 
-  transactionLayoutBalanceSheet: 'Trail Balance',
   transactionLayoutIncomeStatement: 'Income Statement',
   transactionLayoutCashFlowStament: 'Cash Ledger',
   transactionLayoutChangeOfEquity: 'Change of Equity',
@@ -3732,7 +3731,6 @@ const en: Record<string, string> = {
   transDetailTransactionDate: 'Transaction Date',
   transDetailAccount: 'Account',
   transDetailVoucherID: 'Voucher ID',
-  transDetailAmountDeposited: 'Amount to be Deposited',
   transDetailFine: 'Fine',
   transDetailRebate: 'Rebate',
   transDetailTotalDepositAmount: 'Total Deposit Amount',
@@ -3846,6 +3844,9 @@ const en: Record<string, string> = {
   accountClose: 'Closed Account',
   bankAccountCurrent: 'Current',
   bankAccountSaving: 'Saving',
+
+  transactionLayoutBalanceSheet: 'Trial Balance',
+  transDetailAmountDeposited: 'Deposit Amount',
 };
 
 export default en;

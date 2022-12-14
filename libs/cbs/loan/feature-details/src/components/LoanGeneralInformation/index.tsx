@@ -6,7 +6,7 @@ export const LoanGeneralInformation = () => {
   const { loanPreview } = useLoanDetails();
 
   return (
-    <DetailsCard title="General Information">
+    <DetailsCard title="General Information" hasThreeRows>
       <DetailCardContent title="Loan Type" subtitle={loanPreview?.generalInformation?.loanType} />
       <DetailCardContent
         title="Loan SubType"

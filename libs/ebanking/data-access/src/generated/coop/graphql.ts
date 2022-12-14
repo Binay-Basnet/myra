@@ -769,11 +769,14 @@ export const GetCoopMeDocument = `
           memberProfilePicUrl
           memberMobileNo
         }
+        error {
+          ...QueryError
+        }
       }
     }
   }
 }
-    `;
+    ${QueryErrorFragmentDoc}`;
 export const useGetCoopMeQuery = <TData = Types.GetCoopMeQuery, TError = unknown>(
   variables?: Types.GetCoopMeQueryVariables,
   options?: UseQueryOptions<Types.GetCoopMeQuery, TError, TData>
