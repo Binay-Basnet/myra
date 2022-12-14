@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import dayjs from 'dayjs';
 
-import { Box } from '@myra-ui';
+import { Box, Text } from '@myra-ui';
 
 import {
   LoanStatement,
@@ -99,7 +99,7 @@ export const SavingStatementReport = () => {
                 },
               },
               {
-                header: 'Cheque/Voucher no',
+                header: 'Transaction ID',
                 accessorKey: 'chequeOrVoucherNo',
                 meta: {
                   isNumeric: true,
@@ -112,7 +112,7 @@ export const SavingStatementReport = () => {
                 header: 'Withdraw Amount (Dr.)',
                 accessorKey: 'withdrawDr',
                 cell: (props) => amountConverter(props.getValue() as string),
-                footer: () => amountConverter(savingReportTotal?.totalWithdraw),
+                footer: () => amountConverter(savingReportTotal?.totalWithdraw as string),
                 meta: {
                   isNumeric: true,
                 },
@@ -122,7 +122,7 @@ export const SavingStatementReport = () => {
                 accessorKey: 'depositCr',
                 cell: (props) => amountConverter(props.getValue() as string),
 
-                footer: () => amountConverter(savingReportTotal?.totalDeposit),
+                footer: () => amountConverter(savingReportTotal?.totalDeposit as string),
                 meta: {
                   isNumeric: true,
                 },
@@ -130,9 +130,18 @@ export const SavingStatementReport = () => {
               {
                 header: 'Balance Amount',
                 accessorKey: 'balanceAmount',
-                cell: (props) => amountConverter(props.getValue() as string),
+                cell: (props) => (
+                  <Box display="flex" gap="s16">
+                    <Text fontSize="r1" fontWeight="400">
+                      {amountConverter(props.getValue() as string)}
+                    </Text>
+                    <Text fontSize="r1" fontWeight="400">
+                      {props?.row?.original?.depositCr !== '0' ? 'CR' : 'DR'}
+                    </Text>
+                  </Box>
+                ),
 
-                footer: () => amountConverter(savingReportTotal?.totalBalance),
+                footer: () => amountConverter(savingReportTotal?.totalBalance as string),
                 meta: {
                   isNumeric: true,
                 },

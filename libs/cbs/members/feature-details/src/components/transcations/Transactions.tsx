@@ -26,19 +26,12 @@ export const TransactionTable = () => {
       {
         header: 'SN',
         accessorKey: 'index',
-        meta: {
-          width: '33%',
-        },
         cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
       },
       {
         header: 'Date',
         accessorKey: 'date',
         cell: (props) => (props.getValue() ? `${props.getValue()}  %` : 'N/A'),
-        meta: {
-          // isNumeric: true,
-          width: '33%',
-        },
       },
       {
         header: 'Transaction ID',
@@ -51,19 +44,12 @@ export const TransactionTable = () => {
           ) : (
             'N/A'
           ),
-        meta: {
-          width: '33%',
-        },
       },
       {
         header: 'Type',
         accessorKey: 'txnType',
         cell: (props) =>
           props.getValue() ? `${(props.getValue() as string).toLowerCase()}` : 'N/A',
-        meta: {
-          isNumeric: true,
-          width: '33%',
-        },
       },
 
       {
@@ -79,40 +65,6 @@ export const TransactionTable = () => {
         accessorKey: 'amount',
         cell: (props) =>
           props.getValue() ? `${amountConverter(props.getValue() as string)}` : '-',
-        meta: {
-          isNumeric: true,
-          width: '33%',
-        },
-      },
-      {
-        header: 'Fine',
-        accessorKey: 'noOfShares',
-        cell: (props) => (props.getValue() ? `${props.getValue()}` : '-'),
-        meta: {
-          isNumeric: true,
-          width: '33%',
-        },
-      },
-      {
-        header: 'Rebate',
-        accessorKey: 'noOfShares',
-        cell: (props) => (props.getValue() ? `${props.getValue()}` : '-'),
-        meta: {
-          isNumeric: true,
-          width: '33%',
-        },
-      },
-      {
-        header: 'Total',
-        accessorKey: 'noOfShares',
-        cell: (props) =>
-          props.getValue() ? (
-            <Text fontWeight="500" fontSize="r1" color="primary.500">
-              {amountConverter(props.getValue() as string)}
-            </Text>
-          ) : (
-            'N/A'
-          ),
         meta: {
           isNumeric: true,
           width: '33%',

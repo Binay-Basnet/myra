@@ -29,19 +29,12 @@ export const Transactions = () => {
       {
         header: 'SN',
         accessorKey: 'index',
-        meta: {
-          width: '33%',
-        },
         cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
       },
       {
         header: 'Date',
         accessorKey: 'date',
         cell: (props) => (props.getValue() ? `${props.getValue()}  %` : 'N/A'),
-        meta: {
-          // isNumeric: true,
-          width: '33%',
-        },
       },
       {
         header: 'Transaction ID',
@@ -54,19 +47,12 @@ export const Transactions = () => {
           ) : (
             'N/A'
           ),
-        meta: {
-          width: '33%',
-        },
       },
       {
         header: 'Type',
         accessorKey: 'transactionDirection',
         cell: (props) =>
           props.getValue() ? `${(props.getValue() as string).toLowerCase()}` : 'N/A',
-        meta: {
-          isNumeric: true,
-          width: '33%',
-        },
       },
 
       {

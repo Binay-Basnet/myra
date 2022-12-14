@@ -325,7 +325,7 @@ export const ShareTransactionsReport = () => {
             </Box>
           </Report.Filter>
           <Report.Filter title="Age Range">
-            <FormAmountFilter name="filter.ageRange" />
+            <FormAmountFilter placeholder="Age" name="filter.ageRange" />
           </Report.Filter>
         </Report.Filters>
       </Report.Body>
