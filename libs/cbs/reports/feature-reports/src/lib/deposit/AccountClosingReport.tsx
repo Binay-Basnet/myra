@@ -114,7 +114,7 @@ export const AccountCloseReport = () => {
                 label: user.node?.name as string,
                 value: user.node?.id as string,
               }))}
-              name="user"
+              name="filter.user"
             />
           </Report.Filter>
         </Report.Filters>
