@@ -18,19 +18,8 @@ export const ProductDormantSetup = ({ dormantSetup }: IProductDormantSetup) => {
   const columns = React.useMemo<Column<typeof dormantSetupWithIndex[0]>[]>(
     () => [
       {
-        header: 'S.N.',
-        accessorKey: 'index',
-        meta: {
-          width: '33%',
-        },
-      },
-      {
         header: 'Condition',
         accessorKey: 'condition',
-        meta: {
-          isNumeric: true,
-          width: '33%',
-        },
         cell: (props) => (props.getValue() ? props.getValue() : 'N/A'),
       },
       {
@@ -38,7 +27,6 @@ export const ProductDormantSetup = ({ dormantSetup }: IProductDormantSetup) => {
         accessorKey: 'duration',
         meta: {
           isNumeric: true,
-          width: '33%',
         },
         cell: (props) => (props.getValue() ? `${props.getValue()} months` : 'N/A'),
       },

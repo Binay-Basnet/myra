@@ -141,7 +141,7 @@ export const WithdrawViaCollectorList = () => {
             Transfer Detail
           </Text>
         </Box>
-        <Grid templateColumns="repeat(2, 1fr)" gap="s20" p="s16">
+        <Grid templateColumns="repeat(3, 1fr)" gap="s20" p="s16">
           <DetailCardContent
             title="Requested By"
             subtitle={String(selectedRequest?.memberName.local)}
