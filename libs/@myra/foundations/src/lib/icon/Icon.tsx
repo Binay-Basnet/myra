@@ -12,8 +12,6 @@ export const Icon: ComponentWithAs<'svg', IconProps> = (props: IconProps) => {
   const { size, ...rest } = props;
 
   switch (size) {
-    case 'xs':
-      return <ChakraIcon h="12px" w="12px" {...rest} />;
     case 'sm':
       return <ChakraIcon h="16px" w="16px" {...rest} />;
     case 'md':
