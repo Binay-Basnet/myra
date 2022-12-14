@@ -5,6 +5,7 @@ export const amountConverter = (amount: number | string) => {
     parsedAmount &&
     parsedAmount.toLocaleString('en-IN', {
       minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     })
   );
 };

@@ -11023,6 +11023,35 @@ export type ShareBalanceFilter = {
   memberSearchText?: InputMaybe<Scalars['String']>;
 };
 
+export type ShareBalanceFilterData = {
+  balanceRange?: InputMaybe<MinMaxFilter>;
+};
+
+export type ShareBalanceReportData = {
+  address?: Maybe<Address>;
+  balance?: Maybe<Scalars['String']>;
+  contactNo?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  membershipDate?: Maybe<Scalars['Localized']>;
+  noOfKitta?: Maybe<Scalars['Int']>;
+  shareCertificateNo?: Maybe<Scalars['String']>;
+  shareType?: Maybe<Scalars['String']>;
+};
+
+export type ShareBalanceReportFilter = {
+  branchId: Scalars['ID'];
+  filter?: InputMaybe<ShareBalanceFilterData>;
+  period: LocalizedDateFilter;
+};
+
+export type ShareBalanceReportResult = {
+  data?: Maybe<Array<Maybe<ShareBalanceReportData>>>;
+  error?: Maybe<QueryError>;
+  totalBalance?: Maybe<Scalars['String']>;
+};
+
 export type ShareBonusSettingsBonusResult = {
   accountMapping?: Maybe<Scalars['ID']>;
   taxPayer?: Maybe<TaxPayerOptions>;
@@ -11310,9 +11339,14 @@ export type ShareRegisterFilter = {
 };
 
 export type ShareReport = {
+  shareBalanceReport?: Maybe<ShareBalanceReportResult>;
   sharePurchaseRegisterReport?: Maybe<SharePurchaseRegisterResult>;
   shareStatementReport?: Maybe<ReportResult>;
   shareTransactionReport?: Maybe<ShareTransactionReportResult>;
+};
+
+export type ShareReportShareBalanceReportArgs = {
+  data?: InputMaybe<ShareBalanceReportFilter>;
 };
 
 export type ShareReportSharePurchaseRegisterReportArgs = {
