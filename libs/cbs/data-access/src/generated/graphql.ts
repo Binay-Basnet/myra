@@ -11023,6 +11023,35 @@ export type ShareBalanceFilter = {
   memberSearchText?: InputMaybe<Scalars['String']>;
 };
 
+export type ShareBalanceFilterData = {
+  balanceRange?: InputMaybe<MinMaxFilter>;
+};
+
+export type ShareBalanceReportData = {
+  address?: Maybe<Address>;
+  balance?: Maybe<Scalars['String']>;
+  contactNo?: Maybe<Scalars['String']>;
+  memberCode?: Maybe<Scalars['String']>;
+  memberId?: Maybe<Scalars['String']>;
+  memberName?: Maybe<Scalars['Localized']>;
+  membershipDate?: Maybe<Scalars['Localized']>;
+  noOfKitta?: Maybe<Scalars['Int']>;
+  shareCertificateNo?: Maybe<Scalars['String']>;
+  shareType?: Maybe<Scalars['String']>;
+};
+
+export type ShareBalanceReportFilter = {
+  branchId: Scalars['ID'];
+  filter?: InputMaybe<ShareBalanceFilterData>;
+  period: LocalizedDateFilter;
+};
+
+export type ShareBalanceReportResult = {
+  data?: Maybe<Array<Maybe<ShareBalanceReportData>>>;
+  error?: Maybe<QueryError>;
+  totalBalance?: Maybe<Scalars['String']>;
+};
+
 export type ShareBonusSettingsBonusResult = {
   accountMapping?: Maybe<Scalars['ID']>;
   taxPayer?: Maybe<TaxPayerOptions>;
@@ -11310,9 +11339,14 @@ export type ShareRegisterFilter = {
 };
 
 export type ShareReport = {
+  shareBalanceReport?: Maybe<ShareBalanceReportResult>;
   sharePurchaseRegisterReport?: Maybe<SharePurchaseRegisterResult>;
   shareStatementReport?: Maybe<ReportResult>;
   shareTransactionReport?: Maybe<ShareTransactionReportResult>;
+};
+
+export type ShareReportShareBalanceReportArgs = {
+  data?: InputMaybe<ShareBalanceReportFilter>;
 };
 
 export type ShareReportSharePurchaseRegisterReportArgs = {
@@ -18908,6 +18942,164 @@ export type GetMemberOverviewBasicDetailsQuery = {
                 noOfServiceCenters?: number | null;
               }
             | null;
+        } | null;
+      } | null;
+    } | null;
+  };
+};
+
+export type GetMemberOverviewBioDetailsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetMemberOverviewBioDetailsQuery = {
+  members: {
+    memberOverview?: {
+      data?: {
+        bio?: {
+          __typename: 'InstitutionBio';
+          basicInfo?: {
+            memberName?: string | null;
+            profilePic?: string | null;
+            memberCode?: string | null;
+            memberJoined?: Record<'local' | 'en' | 'np', string> | null;
+            type?: string | null;
+            nature?: string | null;
+            registrationDate?: Record<'local' | 'en' | 'np', string> | null;
+            vatPanNo?: string | null;
+            noOfServiceCenters?: number | null;
+          } | null;
+          addressDetails?: {
+            state?: Record<'local' | 'en' | 'np', string> | null;
+            district?: Record<'local' | 'en' | 'np', string> | null;
+            localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+            wardNo?: string | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+          } | null;
+          registrationDetails?: {
+            registeredNumber?: string | null;
+            issuingOffice?: string | null;
+            address?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+            } | null;
+          } | null;
+          operatingOfficeAddress?: {
+            state?: Record<'local' | 'en' | 'np', string> | null;
+            district?: Record<'local' | 'en' | 'np', string> | null;
+            localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+            wardNo?: string | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+          } | null;
+          serviceCenterOfficeAddress?: {
+            state?: Record<'local' | 'en' | 'np', string> | null;
+            district?: Record<'local' | 'en' | 'np', string> | null;
+            localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+            wardNo?: string | null;
+            locality?: Record<'local' | 'en' | 'np', string> | null;
+            houseNo?: string | null;
+          } | null;
+          contactDetails?: {
+            phoneNumber?: string | null;
+            fax?: string | null;
+            email?: string | null;
+            website?: string | null;
+            poBoxNo?: string | null;
+            noOfEmployees?: number | null;
+            agmDetails?: Record<'local' | 'en' | 'np', string> | null;
+          } | null;
+          bankAcDetails?: {
+            bank?: string | null;
+            accountNumber?: string | null;
+            accountName?: string | null;
+          } | null;
+          partnerDirectorDetails?: Array<{
+            name?: string | null;
+            dateOfMembership?: Record<'local' | 'en' | 'np', string> | null;
+            highestQualification?: string | null;
+            mobileNo?: string | null;
+            email?: string | null;
+            citizenshipNo?: string | null;
+            panNo?: string | null;
+            permAddress?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+            } | null;
+            tempAddress?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+            } | null;
+            docs?: Array<{ key?: string | null; value?: string | null } | null> | null;
+          } | null> | null;
+          operatorDetails?: Array<{
+            name?: string | null;
+            contactNo?: string | null;
+            email?: string | null;
+            panNo?: string | null;
+            pemAddress?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+            } | null;
+            tempAddress?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+            } | null;
+            docs?: Array<{ key?: string | null; value?: string | null } | null> | null;
+          } | null> | null;
+          transactionProfileDetails?: {
+            nature?: string | null;
+            annualTurnover?: string | null;
+            initialDepositAmount?: string | null;
+            expectedMonthlyTurnover?: string | null;
+            expectedMonthlyTransaction?: string | null;
+          } | null;
+          sisterConcernDetails?: Array<{
+            Name?: Record<'local' | 'en' | 'np', string> | null;
+            Address?: string | null;
+            Phone?: string | null;
+            NatureOfBusiness?: string | null;
+          } | null> | null;
+          operatorInstructionDetails?: {
+            accountType?: string | null;
+            stampCompulsory?: boolean | null;
+            specialInstruction?: string | null;
+          } | null;
+          declaration?: {
+            name?: string | null;
+            phoneNo?: string | null;
+            email?: string | null;
+            address?: {
+              state?: Record<'local' | 'en' | 'np', string> | null;
+              district?: Record<'local' | 'en' | 'np', string> | null;
+              localGovernment?: Record<'local' | 'en' | 'np', string> | null;
+              wardNo?: string | null;
+              locality?: Record<'local' | 'en' | 'np', string> | null;
+              houseNo?: string | null;
+            } | null;
+          } | null;
+          docs?: Array<{ key?: string | null; value?: string | null } | null> | null;
         } | null;
       } | null;
     } | null;
@@ -31520,6 +31712,186 @@ export const useGetMemberOverviewBasicDetailsQuery = <
     ['getMemberOverviewBasicDetails', variables],
     useAxios<GetMemberOverviewBasicDetailsQuery, GetMemberOverviewBasicDetailsQueryVariables>(
       GetMemberOverviewBasicDetailsDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetMemberOverviewBioDetailsDocument = `
+    query getMemberOverviewBioDetails($id: ID!) {
+  members {
+    memberOverview(id: $id) {
+      data {
+        bio {
+          __typename
+          ... on InstitutionBio {
+            basicInfo {
+              memberName
+              profilePic
+              memberCode
+              memberJoined
+              type
+              nature
+              registrationDate
+              vatPanNo
+              noOfServiceCenters
+            }
+            addressDetails {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+            }
+            registrationDetails {
+              registeredNumber
+              issuingOffice
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+            }
+            operatingOfficeAddress {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+            }
+            serviceCenterOfficeAddress {
+              state
+              district
+              localGovernment
+              wardNo
+              locality
+              houseNo
+            }
+            contactDetails {
+              phoneNumber
+              fax
+              email
+              website
+              poBoxNo
+              noOfEmployees
+              agmDetails
+            }
+            bankAcDetails {
+              bank
+              accountNumber
+              accountName
+            }
+            partnerDirectorDetails {
+              name
+              permAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              tempAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              dateOfMembership
+              highestQualification
+              mobileNo
+              email
+              citizenshipNo
+              panNo
+              docs {
+                key
+                value
+              }
+            }
+            operatorDetails {
+              name
+              contactNo
+              email
+              panNo
+              pemAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              tempAddress {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+              docs {
+                key
+                value
+              }
+            }
+            transactionProfileDetails {
+              nature
+              annualTurnover
+              initialDepositAmount
+              expectedMonthlyTurnover
+              expectedMonthlyTransaction
+            }
+            sisterConcernDetails {
+              Name
+              Address
+              Phone
+              NatureOfBusiness
+            }
+            operatorInstructionDetails {
+              accountType
+              stampCompulsory
+              specialInstruction
+            }
+            declaration {
+              name
+              phoneNo
+              email
+              address {
+                state
+                district
+                localGovernment
+                wardNo
+                locality
+                houseNo
+              }
+            }
+            docs {
+              key
+              value
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetMemberOverviewBioDetailsQuery = <
+  TData = GetMemberOverviewBioDetailsQuery,
+  TError = unknown
+>(
+  variables: GetMemberOverviewBioDetailsQueryVariables,
+  options?: UseQueryOptions<GetMemberOverviewBioDetailsQuery, TError, TData>
+) =>
+  useQuery<GetMemberOverviewBioDetailsQuery, TError, TData>(
+    ['getMemberOverviewBioDetails', variables],
+    useAxios<GetMemberOverviewBioDetailsQuery, GetMemberOverviewBioDetailsQueryVariables>(
+      GetMemberOverviewBioDetailsDocument
     ).bind(null, variables),
     options
   );

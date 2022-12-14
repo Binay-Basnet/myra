@@ -161,7 +161,7 @@ export const MemberDetailsSidebar = () => {
           'Share',
           // 'Reports',
           'Loan',
-          // 'Bio',
+          'Bio',
           'Transactions',
           // 'Activity',
           'Withdraw Slip',
