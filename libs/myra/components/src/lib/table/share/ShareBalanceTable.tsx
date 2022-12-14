@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
-import debounce from 'lodash/debounce';
 
 import { Avatar, Box } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
@@ -10,7 +9,8 @@ import { PopoverComponent, TableListPageHeader } from '@coop/myra/components';
 import { featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 export const ShareBalanceTable = () => {
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const router = useRouter();
+  const searchTerm = router?.query['search'] as string;
 
   const { data, isFetching, refetch } = useGetShareBalanceListQuery({
     pagination: getRouterQuery({ type: ['PAGINATION'] }),
@@ -22,7 +22,6 @@ export const ShareBalanceTable = () => {
   });
 
   const { t } = useTranslation();
-  const router = useRouter();
 
   useEffect(() => {
     refetch();
@@ -92,9 +91,6 @@ export const ShareBalanceTable = () => {
           total: data?.share?.balance?.totalCount as number,
           pageInfo: data?.share?.balance?.pageInfo,
         }}
-        onChange={debounce((e) => {
-          setSearchTerm(e.target.value);
-        }, 800)}
       />
     </>
   );

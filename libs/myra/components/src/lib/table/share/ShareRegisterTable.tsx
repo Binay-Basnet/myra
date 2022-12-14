@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
-import debounce from 'lodash/debounce';
 
 import { Avatar, Box } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
@@ -17,7 +16,7 @@ export const ShareRegisterTable = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const searchTerm = router?.query['search'] as string;
 
   const { data, isFetching, refetch } = useGetShareRegisterListQuery(
     {
@@ -146,9 +145,6 @@ export const ShareRegisterTable = () => {
           total: data?.share?.register?.totalCount ?? 'Many',
           pageInfo: data?.share?.register?.pageInfo,
         }}
-        onChange={debounce((e) => {
-          setSearchTerm(e.target.value);
-        }, 800)}
       />
     </>
   );

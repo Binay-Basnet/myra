@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
@@ -26,7 +26,7 @@ export const CBSAccountList = () => {
   const router = useRouter();
 
   const { t } = useTranslation();
-  const [searchTerm, setSearchTerm] = useState('');
+  const searchTerm = router?.query['search'] as string;
 
   const { data, isFetching } = useGetAccountTableListMinimalQuery(
     {
@@ -138,7 +138,6 @@ export const CBSAccountList = () => {
           total: data?.account?.list?.totalCount ?? 'Many',
           pageInfo: data?.account?.list?.pageInfo,
         }}
-        onChange={(e) => setSearchTerm(e.target.value)}
       />
     </>
   );

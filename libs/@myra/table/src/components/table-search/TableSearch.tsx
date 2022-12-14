@@ -1,7 +1,8 @@
-import { ChangeEventHandler, MouseEventHandler } from 'react';
+import React from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { useRouter } from 'next/router';
 import { Input, InputGroup, InputLeftElement, Popover, Text } from '@chakra-ui/react';
+import debounce from 'lodash/debounce';
 import qs from 'qs';
 
 import { DEFAULT_PAGE_SIZE, PopoverTrigger, SmallPagination } from '@myra-ui/components';
@@ -38,7 +39,7 @@ export const OptionsIcon = () => (
     <path
       d="M8.89961 10.5187C9.73839 10.5187 10.4184 9.83874 10.4184 8.99995C10.4184 8.16117 9.73839 7.4812 8.89961 7.4812C8.06083 7.4812 7.38086 8.16117 7.38086 8.99995C7.38086 9.83874 8.06083 10.5187 8.89961 10.5187Z"
       fill="#91979F"
-    />
+    />{' '}
     <path
       d="M13.9621 10.5187C14.8009 10.5187 15.4809 9.83874 15.4809 8.99995C15.4809 8.16117 14.8009 7.4812 13.9621 7.4812C13.1233 7.4812 12.4434 8.16117 12.4434 8.99995C12.4434 9.83874 13.1233 10.5187 13.9621 10.5187Z"
       fill="#91979F"
@@ -63,25 +64,24 @@ export type TableSearchProps = {
   };
   size: 'default' | 'compact' | 'report' | 'small';
   setSize: (size: 'default' | 'compact') => void;
-  onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
-  onClick?: MouseEventHandler<HTMLInputElement> | undefined;
 };
 
-export const TableSearch = ({
-  placeholder,
-  pagination,
-  size,
-  setSize,
-  onChange,
-  onClick,
-}: TableSearchProps) => {
+export const TableSearch = ({ placeholder, pagination, size, setSize }: TableSearchProps) => {
+  const [search, setSearch] = React.useState('');
   const router = useRouter();
+  const searchTerm = router?.query['search'] as string;
 
   const paginationParams = qs.parse(router?.query['paginate'] as string);
 
   const pageSize = Number(
     paginationParams['first'] ?? paginationParams['last'] ?? DEFAULT_PAGE_SIZE
   );
+
+  React.useEffect(() => {
+    if (searchTerm) {
+      setSearch(searchTerm);
+    }
+  }, []);
 
   return (
     <Box h="50px" bg="white" display="flex" borderBottom="1px" borderColor="border.layout">
@@ -106,8 +106,14 @@ export const TableSearch = ({
           }}
           _focus={{ border: 'solid 1px', borderColor: 'primary.300' }}
           _active={{ border: 'solid 1px', borderColor: 'primary.500' }}
-          onChange={onChange}
-          onClick={onClick}
+          defaultValue={search && search}
+          onChange={debounce((e) => {
+            router.push({
+              query: {
+                search: e.target.value,
+              },
+            });
+          }, 800)}
         />
       </InputGroup>
       <Box

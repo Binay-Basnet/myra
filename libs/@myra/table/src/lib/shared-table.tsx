@@ -41,7 +41,6 @@ export const Table = <T extends Record<string, unknown>>({
   rowOnClick,
   enableSorting,
   manualSorting = true,
-  onChange,
 }: TableProps<T>) => {
   const router = useRouter();
   const sortQuery = router?.query['sort'] as string;
@@ -96,8 +95,6 @@ export const Table = <T extends Record<string, unknown>>({
             pagination={pagination}
             size={tableSize}
             setSize={setTableSize}
-            // onClick={() => setIsModalOpen(true)}
-            onChange={onChange}
           />
           <Modal open={isModalOpen} onClose={handleModalClose} isCentered width="3xl">
             <WIPState />
