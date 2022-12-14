@@ -13,7 +13,7 @@ import {
   useGetSavingStatementQuery,
 } from '@coop/cbs/data-access';
 import { Report } from '@coop/cbs/reports';
-import { SavingReportInputs } from '@coop/cbs/reports/components';
+import { ReportMember, SavingReportInputs } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormAmountFilter, FormRadioGroup } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
@@ -27,6 +27,9 @@ export const SavingStatementReport = () => {
     },
     { enabled: !!filters }
   );
+
+  const savingMember = data?.report?.depositReport?.savingStatementReport?.member;
+
   const savingData = data?.report?.depositReport?.savingStatementReport?.statement;
   const savingReport =
     savingData && 'savingStatement' in savingData ? savingData.savingStatement : [];
@@ -64,6 +67,8 @@ export const SavingStatementReport = () => {
         <Report.Content>
           <Report.OrganizationHeader />
           <Report.Organization />
+          <ReportMember member={savingMember} />
+
           <Report.Table<SavingStatement & { index: number }>
             showFooter
             columns={[
