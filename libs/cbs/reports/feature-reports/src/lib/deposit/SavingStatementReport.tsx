@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import dayjs from 'dayjs';
 
-import { Box, Text } from '@myra-ui';
+import { Box } from '@myra-ui';
 
 import {
   LoanStatement,
@@ -130,16 +130,14 @@ export const SavingStatementReport = () => {
               {
                 header: 'Balance Amount',
                 accessorKey: 'balanceAmount',
-                cell: (props) => (
-                  <Box display="flex" gap="s16">
-                    <Text fontSize="r1" fontWeight="400">
-                      {amountConverter(props.getValue() as string)}
-                    </Text>
-                    <Text fontSize="r1" fontWeight="400">
-                      {props?.row?.original?.depositCr !== '0' ? 'CR' : 'DR'}
-                    </Text>
-                  </Box>
-                ),
+                // cell: (props) => (
+                //   <Box display="flex" gap="s16">
+                //     <Text fontSize="r1" fontWeight="400">
+                //       {amountConverter(props.getValue() as string)}
+                //     </Text>
+
+                //   </Box>
+                // ),
 
                 footer: () => amountConverter(savingReportTotal?.totalBalance as string),
                 meta: {

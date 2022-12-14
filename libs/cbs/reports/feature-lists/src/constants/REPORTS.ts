@@ -29,6 +29,7 @@ export enum Report {
   SHARE_REGISTER = 'Share Register',
   SHARE_STATEMENT = 'Share Statement Report',
   SHARE_TRANSACTION_REPORT = 'Share Transaction Report',
+  SHARE_BALANCE_REPORT = 'Share Balance Report',
   SHARE_CONSOLIDATED_REPORT = 'Share Consolidated Report',
   SHARE_CERTIFICATE_PRINT = 'Share Certificate Print',
   SHARE_BONUS_DISTRIBUTION_REPORT = 'Share Bonus Distribution Report',
@@ -165,6 +166,11 @@ export const REPORTS = {
     },
     {
       id: '3.4',
+      report: Report.SHARE_BALANCE_REPORT,
+      link: 'balance',
+    },
+    {
+      id: '3.4.1',
       report: Report.SHARE_CONSOLIDATED_REPORT,
     },
     {

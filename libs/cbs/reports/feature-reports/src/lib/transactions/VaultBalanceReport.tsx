@@ -314,6 +314,7 @@ export const VaultBalanceReport = () => {
                   fontSize="r1"
                   fontWeight={600}
                   color="gray.700"
+                  flexShrink={0}
                 >
                   Total
                 </Box>
@@ -326,6 +327,7 @@ export const VaultBalanceReport = () => {
                     borderRight="1px"
                     borderRightColor="border.element"
                     textAlign="right"
+                    flexShrink={0}
                   >
                     {amountConverter(item as string)}
                   </Box>

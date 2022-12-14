@@ -83,3 +83,30 @@ query getShareTransactionReport($data: ShareTransactionReportFilter) {
     }
   }
 }
+
+query getShareBalanceReport($data: ShareBalanceReportFilter!) {
+  report {
+    shareReport {
+      shareBalanceReport(data: $data) {
+        data {
+          shareType
+          shareCertificateNo
+          memberId
+          memberCode
+          memberName
+          address {
+            ...Address
+          }
+          contactNo
+          membershipDate
+          noOfKitta
+          balance
+        }
+        totalBalance
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
