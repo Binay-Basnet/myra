@@ -19934,6 +19934,38 @@ export type GetShareTransactionReportQuery = {
   };
 };
 
+export type GetShareBalanceReportQueryVariables = Exact<{
+  data: ShareBalanceReportFilter;
+}>;
+
+export type GetShareBalanceReportQuery = {
+  report: {
+    shareReport: {
+      shareBalanceReport?: {
+        totalBalance?: string | null;
+        data?: Array<{
+          shareType?: string | null;
+          shareCertificateNo?: string | null;
+          memberId?: string | null;
+          memberCode?: string | null;
+          memberName?: Record<'local' | 'en' | 'np', string> | null;
+          contactNo?: string | null;
+          membershipDate?: Record<'local' | 'en' | 'np', string> | null;
+          noOfKitta?: number | null;
+          balance?: string | null;
+          address?: AddressFragment | null;
+        } | null> | null;
+        error?:
+          | QueryError_AuthorizationError_Fragment
+          | QueryError_BadRequestError_Fragment
+          | QueryError_NotFoundError_Fragment
+          | QueryError_ServerError_Fragment
+          | null;
+      } | null;
+    };
+  };
+};
+
 export type GetTrialSheetReportQueryVariables = Exact<{
   data: TrialSheetReportFilter;
 }>;
@@ -33028,6 +33060,46 @@ export const useGetShareTransactionReportQuery = <
       : ['getShareTransactionReport', variables],
     useAxios<GetShareTransactionReportQuery, GetShareTransactionReportQueryVariables>(
       GetShareTransactionReportDocument
+    ).bind(null, variables),
+    options
+  );
+export const GetShareBalanceReportDocument = `
+    query getShareBalanceReport($data: ShareBalanceReportFilter!) {
+  report {
+    shareReport {
+      shareBalanceReport(data: $data) {
+        data {
+          shareType
+          shareCertificateNo
+          memberId
+          memberCode
+          memberName
+          address {
+            ...Address
+          }
+          contactNo
+          membershipDate
+          noOfKitta
+          balance
+        }
+        totalBalance
+        error {
+          ...QueryError
+        }
+      }
+    }
+  }
+}
+    ${AddressFragmentDoc}
+${QueryErrorFragmentDoc}`;
+export const useGetShareBalanceReportQuery = <TData = GetShareBalanceReportQuery, TError = unknown>(
+  variables: GetShareBalanceReportQueryVariables,
+  options?: UseQueryOptions<GetShareBalanceReportQuery, TError, TData>
+) =>
+  useQuery<GetShareBalanceReportQuery, TError, TData>(
+    ['getShareBalanceReport', variables],
+    useAxios<GetShareBalanceReportQuery, GetShareBalanceReportQueryVariables>(
+      GetShareBalanceReportDocument
     ).bind(null, variables),
     options
   );
