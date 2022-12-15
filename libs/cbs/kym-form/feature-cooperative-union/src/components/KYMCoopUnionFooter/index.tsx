@@ -1,6 +1,8 @@
 import { BiSave } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 
+import { Box, Button, Container, FormFooter, Icon, Text, toast } from '@myra-ui';
+
 import {
   addAccountError,
   addBodError,
@@ -11,7 +13,6 @@ import {
   useAppSelector,
   useGetCoopUnionSectionStatusQuery,
 } from '@coop/cbs/data-access';
-import { Box, Button, Container, FormFooter, Icon, Text, toast } from '@myra-ui';
 import { useTranslation } from '@coop/shared/utils';
 
 export const KYMCoopUnionFooter = () => {
@@ -104,11 +105,12 @@ export const KYMCoopUnionFooter = () => {
 
             if (response) {
               dispatch(setHasPressedNext(true));
+
               if (
                 !sectionStatus.institutionInformation?.errors &&
                 !sectionStatus.centralRepresentativeDetails?.errors &&
-                sectionStatus.bodDetails?.some((bod) => !bod.errors) &&
-                sectionStatus.accountOperatorDetails?.some((bod) => !bod.errors)
+                !sectionStatus.bodDetails?.some((bod) => !!bod.errors) &&
+                !sectionStatus.accountOperatorDetails?.some((bod) => !!bod.errors)
               ) {
                 router.push(`/members/translation/${router.query['id']}`);
               } else {

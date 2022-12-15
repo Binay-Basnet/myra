@@ -1,15 +1,16 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { Column, DetailsCard, Table, Text } from '@myra-ui';
+import { Button, Column, DetailsCard, Table, Text } from '@myra-ui';
 
 import { useGetMemberDetailsOverviewQuery } from '@coop/cbs/data-access';
 import { amountConverter } from '@coop/shared/utils';
 
 export const RecentTransactions = () => {
   const router = useRouter();
+  const id = router.query['id'] as string;
   const memberDetails = useGetMemberDetailsOverviewQuery({
-    id: router.query['id'] as string,
+    id: id as string,
   });
 
   const memberRecentTrans =
@@ -31,7 +32,7 @@ export const RecentTransactions = () => {
       {
         header: 'Date',
         accessorKey: 'date',
-        cell: (props) => (props.getValue() ? `${props.getValue()}  %` : 'N/A'),
+        cell: (props) => (props.getValue() ? `${props.getValue()}` : 'N/A'),
       },
       {
         header: 'Transaction ID',
@@ -104,7 +105,18 @@ export const RecentTransactions = () => {
     return null;
 
   return (
-    <DetailsCard title="Recent Transactions" hasTable>
+    <DetailsCard
+      title="Recent Transactions"
+      hasTable
+      leftBtn={
+        <Button
+          variant="link"
+          onClick={() => router.push(`/members/details?id=${id}&tab=transactions`)}
+        >
+          View All Transactions
+        </Button>
+      }
+    >
       <Table isStatic data={memberRecentTransWithIndex} columns={columns} />
     </DetailsCard>
     // <Box p="s16" bg="white" borderRadius="br2">

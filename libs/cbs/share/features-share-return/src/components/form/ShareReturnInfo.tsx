@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useDeepCompareEffect } from 'react-use';
 
+import { Box, FormSection, GridItem, Text } from '@myra-ui';
+
 import {
   Share_Transaction_Direction,
   useGetSettingsShareGeneralDataQuery,
@@ -10,7 +12,6 @@ import {
 } from '@coop/cbs/data-access';
 import { FieldCardComponents } from '@coop/shared/components';
 import { FormCheckbox, FormNumberInput } from '@coop/shared/form';
-import { Box, FormSection, GridItem, Text } from '@myra-ui';
 import { amountConverter, useTranslation } from '@coop/shared/utils';
 
 type IReturnInfo = {
@@ -65,6 +66,7 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
       resetField('extraFee');
       chargeList.forEach((charge, index) => {
         setValue(`extraFee.${index}.Id`, charge?.id);
+        setValue(`extraFee.${index}.name`, charge?.name);
         setValue(`extraFee.${index}.value`, charge?.charge);
       });
     }
@@ -133,7 +135,9 @@ export const ShareReturnInfo = ({ totalAmount }: IReturnInfo) => {
                 register(`extraFee.${index}.Id`, {
                   value: item?.id,
                 });
-
+                register(`extraFee.${index}.name`, {
+                  value: item?.name,
+                });
                 register(`extraFee.${index}.value`, {
                   value: item?.charge,
                 });
