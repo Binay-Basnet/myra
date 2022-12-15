@@ -118,8 +118,8 @@ export const SavingBalanceReport = () => {
                 },
               },
               {
-                header: 'Member ID',
-                accessorKey: 'memberId',
+                header: 'Member COde',
+                accessorKey: 'memberCode',
                 meta: {
                   Footer: {
                     display: 'none',
@@ -145,8 +145,8 @@ export const SavingBalanceReport = () => {
                 },
               },
               {
-                header: 'Product ID',
-                accessorKey: 'productId',
+                header: 'Product Code',
+                accessorKey: 'productCode',
                 meta: {
                   Footer: {
                     display: 'none',
