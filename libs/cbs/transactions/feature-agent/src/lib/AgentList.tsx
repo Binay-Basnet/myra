@@ -117,7 +117,7 @@ export const AgentList = () => {
   return (
     <>
       <PageHeader
-        heading={`${t['agentListMarketRepresentativeList']} - ${featureCode?.agentList}`}
+        heading={`${t['agentListMarketRepresentativeList']} - ${featureCode?.marketRepresentativeList}`}
         // tabItems={MEMBER_TAB_ITEMS}
       />
 

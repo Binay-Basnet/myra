@@ -6,7 +6,7 @@ import { Box, DetailCardContent, Grid, PageHeader, TablePopover, Text } from '@m
 import { Column, Table } from '@myra-ui/table';
 
 import { RequestStatus, RequestType, useGetWithdrawViaCollectorQuery } from '@coop/cbs/data-access';
-import { amountConverter, getRouterQuery } from '@coop/shared/utils';
+import { amountConverter, featureCode, getRouterQuery } from '@coop/shared/utils';
 
 import { ApprovalStatusItem } from '../components/ApprovalStatusItem';
 import { ApproveDeclineModal } from '../components/ApproveDeclineModal';
@@ -106,7 +106,9 @@ export const WithdrawViaCollectorList = () => {
   return (
     <Box display="flex" flexDir="column">
       <Box position="sticky" top="110px" zIndex={3}>
-        <PageHeader heading="Withdraw via Collector Request" />
+        <PageHeader
+          heading={`Withdraw via Collector Request - ${featureCode.withdrawRequestList}`}
+        />
       </Box>
 
       <Table

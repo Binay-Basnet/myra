@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 
-import { AddAgentTransaction } from '@coop/cbs/transactions/agent-transaction';
 import { MainLayout } from '@myra-ui';
+
+import { AddAgentTransaction } from '@coop/cbs/transactions/agent-transaction';
 
 const TransactionsAddAgentTransaction = () => <AddAgentTransaction />;
 
