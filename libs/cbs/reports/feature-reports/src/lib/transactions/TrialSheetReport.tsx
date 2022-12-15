@@ -11,6 +11,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedText } from '@coop/cbs/utils';
 import { arrayToTree } from '@coop/shared/components';
 import { FormBranchSelect, FormRadioGroup } from '@coop/shared/form';
 import { amountConverter } from '@coop/shared/utils';
@@ -272,7 +273,9 @@ const COATable = ({ data, type, total }: ICOATableProps) => {
           cell: (props) => (
             <ExpandedCell
               row={props.row}
-              value={` ${props.row.original.ledgerId} - ${props?.row?.original?.ledgerName?.local}`}
+              value={` ${props.row.original.ledgerId} - ${localizedText(
+                props?.row?.original?.ledgerName
+              )}`}
             />
           ),
           footer: () => <>Total {type}</>,

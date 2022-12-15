@@ -27,11 +27,11 @@ export const ReportDateRange = ({ label = 'Select Period', name }: IReportDateRa
             onChange({
               from: {
                 en: newDate?.from?.en,
-                ne: newDate?.from?.ne,
+                np: newDate?.from?.np,
               },
               to: {
                 en: newDate?.to?.en,
-                ne: newDate?.to?.ne,
+                np: newDate?.to?.np,
               },
             })
           }

@@ -11,6 +11,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange, ReportMember } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedDate } from '@coop/cbs/utils';
 import { FormMemberSelect, FormRadioGroup } from '@coop/shared/form';
 
 export const ShareStatementReport = () => {
@@ -84,7 +85,7 @@ export const ShareStatementReport = () => {
               {
                 header: 'Date',
                 accessorKey: 'date',
-                accessorFn: (row) => row?.date?.local,
+                accessorFn: (row) => localizedDate(row?.date),
                 meta: {
                   Footer: {
                     display: 'none',

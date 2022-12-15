@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 import { LoanAccReportDetails, Member, useAppSelector } from '@coop/cbs/data-access';
-import { formatAddress } from '@coop/cbs/utils';
+import { formatAddress, localizedDate } from '@coop/cbs/utils';
 import { Box, Grid, GridItem, Text } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
@@ -36,7 +36,7 @@ export const LoanReportMember = ({ member, account }: ReportMemberProps) => {
                 <Text>{formatAddress(member?.address)}</Text>
                 <Text>{profile?.branch?.name}</Text>
                 <Text>{amountConverter(account?.approvedAmount ?? 0)}</Text>
-                <Text> {dayjs(account?.issuedDate).format('YYYY-MM-DD')}</Text>
+                <Text> {localizedDate(account?.issuedDate)}</Text>
                 <Text>2955</Text>
               </Box>
             </GridItem>

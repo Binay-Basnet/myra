@@ -162,3 +162,36 @@ query getBankGLStatementReport($data: BankGLStatementFilter!) {
     }
   }
 }
+
+
+query getDayBookReport($data: DayBookReportFilter!){
+  report {
+    transactionReport {
+      financial {
+        dayBookReport(data: $data){
+          data {
+            closingAmount
+            openingBalance
+            payments {
+              particular
+              accountHead
+              ledger
+              amount
+              voucherNo
+            }
+            receipts {
+              particular
+              accountHead
+              ledger
+              amount
+              voucherNo
+            }
+            totalAmount
+            totalPayment
+            totalReceipts
+          }
+        }
+      }
+    }
+  }
+}

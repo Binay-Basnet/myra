@@ -67,7 +67,11 @@ export const CreateWithdrawSlipModal = ({ isOpen, onClose }: ICreateWithdrawSlip
         loading: 'Issuing withdraw slip',
         success: 'Withdraw slip issued',
       },
-      promise: issueWithdrawSlip({ accountId: accountDetails?.accountId as string, count }),
+      promise: issueWithdrawSlip({
+        branchId: 'TESTBRANCH',
+        accountId: accountDetails?.accountId as string,
+        count,
+      }),
       onSuccess: () => {
         queryClient.invalidateQueries(['getAvailableSlipsList']);
         setValue('count', '');

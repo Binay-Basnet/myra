@@ -16,6 +16,7 @@ import {
 import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
+import { localizedDate } from '@coop/cbs/utils';
 import {
   FormAmountFilter,
   FormBranchSelect,
@@ -163,7 +164,7 @@ export const ShareTransactionsReport = () => {
                     header: 'Share Transaction Date',
                     footer: () => <Box textAlign="right">Total Balance</Box>,
                     accessorKey: 'transactionDate',
-                    accessorFn: (row) => row?.transactionDate?.local,
+                    accessorFn: (row) => localizedDate(row?.transactionDate),
                     meta: {
                       width: '60px',
                       Footer: {
