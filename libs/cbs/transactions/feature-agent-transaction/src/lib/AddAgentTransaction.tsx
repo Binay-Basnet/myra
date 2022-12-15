@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 
+import { asyncToast, Box, Container, FormFooter, FormHeader, Text } from '@myra-ui';
+
 import {
   useGetAgentAssignedMemberListDataQuery,
   useGetAgentTodayListDataQuery,
@@ -9,8 +11,7 @@ import {
 } from '@coop/cbs/data-access';
 import { BoxContainer } from '@coop/cbs/transactions/ui-containers';
 import { FormAgentSelect, FormEditableTable } from '@coop/shared/form';
-import { asyncToast, Box, Container, FormFooter, FormHeader, Text } from '@myra-ui';
-import { getRouterQuery } from '@coop/shared/utils';
+import { featureCode, getRouterQuery } from '@coop/shared/utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface AddAgentTransactionProps {}
@@ -127,7 +128,7 @@ export const AddAgentTransaction = () => {
       <Container minW="container.xl" height="fit-content">
         <Box position="sticky" top="110px" bg="gray.100" width="100%" zIndex="10">
           <FormHeader
-            title="New Market Representative Transaction"
+            title={`New Market Representative Transaction - ${featureCode?.newMarketRepresentativeTransaction}`}
             closeLink="/transactions/agent-transaction/list"
           />
         </Box>

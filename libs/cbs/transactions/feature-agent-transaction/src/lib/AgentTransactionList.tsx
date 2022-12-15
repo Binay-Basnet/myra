@@ -5,7 +5,7 @@ import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useGetDepositListDataQuery } from '@coop/cbs/data-access';
-import { amountConverter, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
 
 // const MEMBER_TAB_ITEMS = [
 //   {
@@ -115,7 +115,9 @@ export const AgentTransactionList = () => {
 
   return (
     <>
-      <PageHeader heading="Market Representative Transaction" />
+      <PageHeader
+        heading={`Market Representative Transaction - ${featureCode?.marketRepresentativeTransactionsList}`}
+      />
 
       <Table
         data={rowData}
