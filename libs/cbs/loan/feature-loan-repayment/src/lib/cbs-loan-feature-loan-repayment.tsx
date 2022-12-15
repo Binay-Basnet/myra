@@ -282,7 +282,7 @@ export const LoanRepayment = () => {
                       title="Payment Schedule"
                       scrollBehavior="inside"
                       blockScrollOnMount
-                      width="3xl"
+                      width="4xl"
                     >
                       <LoanPaymentScheduleTable
                         data={loanPaymentSchedule as LoanInstallment[]}

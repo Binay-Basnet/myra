@@ -38,7 +38,7 @@ export const Tags = (props: TagsProps) => {
           borderRadius="none"
           {...rest}
         >
-          <TagLabel>{label}</TagLabel>
+          <TagLabel fontSize="s3">{label}</TagLabel>
           {isRemovable && (
             <TagCloseButton isDisabled={isDisabled} color="gray.500" onClick={onClick} />
           )}
