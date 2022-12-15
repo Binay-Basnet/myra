@@ -68,6 +68,7 @@
       "@coop/cbs/reports/layout": ["libs/cbs/reports/ui-layouts/src/index.ts"],
       "@coop/cbs/reports/list": ["libs/cbs/reports/feature-lists/src/index.ts"],
       "@coop/cbs/requests/details": ["libs/cbs/requests/feature-details/src/index.ts"],
+      "@coop/cbs/requests/forms": ["libs/cbs/requests/feature-forms/src/index.ts"],
       "@coop/cbs/requests/layout": ["libs/cbs/requests/ui-layouts/src/index.ts"],
       "@coop/cbs/requests/lists": ["libs/cbs/requests/feature-lists/src/index.ts"],
       "@coop/cbs/settings//feature-loan": ["libs/cbs/settings/feature-loan/src/index.ts"],

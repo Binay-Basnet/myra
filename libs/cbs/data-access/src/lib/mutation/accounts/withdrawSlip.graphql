@@ -1,6 +1,6 @@
-mutation setIssueNewSlip($accountId: ID!, $branchId: String!,  $count: Int!) {
+mutation setIssueNewSlip($data: WithdrawSlipIssueInput!) {
   withdrawSlip {
-    issueNew(branchId: $branchId, pickupMethod: MARKET_REPRESENTATIVE, accountId: $accountId, count: $count) {
+    issueNew(data: $data) {
       recordId
       error {
         ...MutationError

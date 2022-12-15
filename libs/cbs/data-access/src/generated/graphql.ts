@@ -12847,6 +12847,14 @@ export type WithdrawSlipDepositData = {
   withdrawSlipNo: Scalars['String'];
 };
 
+export type WithdrawSlipIssueInput = {
+  accountId: Scalars['ID'];
+  branchId: Scalars['String'];
+  count: Scalars['Int'];
+  marketRepresentative?: InputMaybe<Scalars['String']>;
+  pickupMethod: PickupMethod;
+};
+
 export type WithdrawSlipMutation = {
   cancelSlip?: Maybe<AccountWithdrawSlipMutationResult>;
   issueNew?: Maybe<AccountWithdrawSlipMutationResult>;
@@ -12862,11 +12870,7 @@ export type WithdrawSlipMutationCancelSlipArgs = {
 
 
 export type WithdrawSlipMutationIssueNewArgs = {
-  accountId: Scalars['ID'];
-  branchId: Scalars['String'];
-  count: Scalars['Int'];
-  marketRepresentative?: InputMaybe<Scalars['String']>;
-  pickupMethod: PickupMethod;
+  data: WithdrawSlipIssueInput;
 };
 
 export type WithdrawSlipQuery = {
@@ -13070,9 +13074,7 @@ export type SetAccountDocumentDataMutationVariables = Exact<{
 export type SetAccountDocumentDataMutation = { document: { Subscription: { Upsert: { recordId?: string | null } } } };
 
 export type SetIssueNewSlipMutationVariables = Exact<{
-  accountId: Scalars['ID'];
-  branchId: Scalars['String'];
-  count: Scalars['Int'];
+  data: WithdrawSlipIssueInput;
 }>;
 
 
@@ -15939,14 +15941,9 @@ export const useSetAccountDocumentDataMutation = <
       options
     );
 export const SetIssueNewSlipDocument = `
-    mutation setIssueNewSlip($accountId: ID!, $branchId: String!, $count: Int!) {
+    mutation setIssueNewSlip($data: WithdrawSlipIssueInput!) {
   withdrawSlip {
-    issueNew(
-      branchId: $branchId
-      pickupMethod: MARKET_REPRESENTATIVE
-      accountId: $accountId
-      count: $count
-    ) {
+    issueNew(data: $data) {
       recordId
       error {
         ...MutationError

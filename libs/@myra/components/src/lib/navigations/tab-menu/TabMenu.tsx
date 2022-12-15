@@ -65,7 +65,7 @@ const cbsTabs: { title: keyof typeof en; icon: IconType; link: string; match: st
   {
     title: 'withdrawSlip',
     icon: TbMailForward,
-    link: '/withdraw/cheque-book',
+    link: '/withdraw/withdraw-slip-book/list',
     match: ['withdraw'],
   },
   {

@@ -58,6 +58,7 @@
     "cbs-reports-ui-components": "libs/cbs/reports/ui-components",
     "cbs-reports-ui-layouts": "libs/cbs/reports/ui-layouts",
     "cbs-requests-feature-details": "libs/cbs/requests/feature-details",
+    "cbs-requests-feature-forms": "libs/cbs/requests/feature-forms",
     "cbs-requests-feature-lists": "libs/cbs/requests/feature-lists",
     "cbs-requests-ui-layouts": "libs/cbs/requests/ui-layouts",
     "cbs-settings--feature-loan": "libs/cbs/settings/feature-loan",

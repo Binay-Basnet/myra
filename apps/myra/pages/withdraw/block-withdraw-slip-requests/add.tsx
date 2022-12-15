@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 
 import { MainLayout } from '@myra-ui';
 
-import { AddBlockWithdrawSlipRequest } from '@coop/cbs/requests/lists';
+import { AddBlockWithdrawSlipRequest } from '@coop/cbs/requests/forms';
 
 const AddBlockWithdrawSlipRequestPage = () => <AddBlockWithdrawSlipRequest />;
 
