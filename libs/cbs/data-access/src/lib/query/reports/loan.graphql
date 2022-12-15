@@ -80,6 +80,17 @@ query getLoanStatementReport($data: LoanStatementReportSettings!) {
         }
         statement {
           ... on LoanStatementReport {
+            meta {
+              accountNo
+              approvedAmount
+              interestRate
+              loanType
+              loanSubtype
+              issuedDate
+              installment
+              charge
+            }
+
             loanStatement {
               date
               particular
