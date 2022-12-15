@@ -111,8 +111,6 @@ export const Table = <T extends Record<string, unknown>>({
                     minW={header.column.columnDef.meta?.width}
                     w={header.column.columnDef.meta?.width}
                     textAlign={header.column.columns.length !== 0 ? 'center' : 'left'}
-                    px="s12"
-                    py="0"
                   >
                     {header.isPlaceholder ? null : (
                       <Box
@@ -216,8 +214,7 @@ export const Table = <T extends Record<string, unknown>>({
                     position={index === 0 ? 'sticky' : 'static'}
                     top={0}
                     left={0}
-                    px="s12"
-                    py="0"
+
                   >
                     <Text
                       as="div"
