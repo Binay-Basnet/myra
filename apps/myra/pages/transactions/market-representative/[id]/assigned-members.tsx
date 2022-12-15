@@ -1,11 +1,12 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
+
+import { MainLayout } from '@myra-ui';
 
 import { AgentAssignedMembers } from '@coop/cbs/transactions/agent';
 import {
   AgentDetailPageLayout,
   TransactionsSidebarLayout,
 } from '@coop/cbs/transactions/ui-layouts';
-import { MainLayout } from '@myra-ui';
 
 const TransactionAgentDetail = () => <AgentAssignedMembers />;
 

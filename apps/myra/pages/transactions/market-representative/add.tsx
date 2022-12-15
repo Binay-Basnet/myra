@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 // import { AgentList } from '@coop/cbs/transactions/agent';
 import { Box, MainLayout, WIPState } from '@myra-ui';

@@ -19,5 +19,6 @@ export * from './utilFunctions/getKymSectionsInstitutions';
 export * from './utilFunctions/getLoggedInUserId';
 export * from './utilFunctions/getRouterQuery';
 export * from './utilFunctions/getSchemaPath';
+export * from './utilFunctions/getUrl';
 export * from './utilFunctions/isDeepEmpty';
 export * from './utilFunctions/quantityConverter';

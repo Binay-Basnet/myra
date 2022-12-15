@@ -1,10 +1,11 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
+
+import { Box, MainLayout, WIPState } from '@myra-ui';
 
 import {
   AgentDetailPageLayout,
   TransactionsSidebarLayout,
 } from '@coop/cbs/transactions/ui-layouts';
-import { Box, MainLayout, WIPState } from '@myra-ui';
 
 const TransactionAgentActivity = () => (
   <Box display="flex" justifyContent="center" alignItems="center">

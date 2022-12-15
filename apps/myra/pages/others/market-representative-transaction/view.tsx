@@ -1,9 +1,10 @@
 import { ReactElement } from 'react';
+
 import { MainLayout } from '@myra-ui';
 
+import { OthersPageLayout } from '@coop/cbs/others/ui-layouts';
 import { AgentTransactionDetailPage } from '@coop/cbs/transactions/feature-detail-page';
 import { TransactionDetailPathBar } from '@coop/cbs/transactions/ui-components';
-import { TransactionsSidebarLayout } from '@coop/cbs/transactions/ui-layouts';
 
 const AgentTransactionDetailsPage = () => (
   <>
@@ -15,7 +16,7 @@ const AgentTransactionDetailsPage = () => (
 AgentTransactionDetailsPage.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout>
-      <TransactionsSidebarLayout>{page}</TransactionsSidebarLayout>
+      <OthersPageLayout>{page}</OthersPageLayout>
     </MainLayout>
   );
 };

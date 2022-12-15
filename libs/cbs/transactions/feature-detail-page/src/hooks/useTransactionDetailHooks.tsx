@@ -40,7 +40,10 @@ export const useTransactionDetailHooks = () => {
   // agent transaction
   const { data: agentTransaction } = useAgentTransactionDetailQuery(
     { agentId: id as string, date: date as string },
-    { staleTime: 0, enabled: !!date && router?.asPath?.includes('/agent-transaction/') }
+    {
+      staleTime: 0,
+      enabled: !!date && router?.asPath?.includes('/market-representative-transaction/'),
+    }
   );
 
   const agentTransactionDetailData = agentTransaction?.transaction?.viewAgentList?.data;

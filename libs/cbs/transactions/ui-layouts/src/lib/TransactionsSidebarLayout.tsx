@@ -51,13 +51,13 @@ const transactionSidebarColumns = [
   },
   {
     title: 'transactionsSidebarAgentTransaction',
-    link: '/transactions/agent-transaction/list',
+    link: '/transactions/market-representative-transaction/list',
     name: 'agent-transaction',
-    addLink: '/transactions/agent-transaction/add',
+    addLink: '/transactions/market-representative-transaction/add',
   },
   {
     title: 'transactionsSidebarAgentList',
-    link: '/transactions/agent/list',
+    link: '/transactions/market-representative/list',
     name: 'agent-list',
     // addLink: '/transactions/agent/add',
   },

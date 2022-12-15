@@ -5,7 +5,13 @@ import { Avatar, Box, PageHeader, TablePopover, Text } from '@myra-ui';
 import { Column, Table } from '@myra-ui/table';
 
 import { useGetDepositListDataQuery } from '@coop/cbs/data-access';
-import { amountConverter, featureCode, getRouterQuery, useTranslation } from '@coop/shared/utils';
+import {
+  amountConverter,
+  featureCode,
+  getRouterQuery,
+  getUrl,
+  useTranslation,
+} from '@coop/shared/utils';
 
 // const MEMBER_TAB_ITEMS = [
 //   {
@@ -98,7 +104,7 @@ export const AgentTransactionList = () => {
                   title: t['transDetailViewDetail'],
                   onClick: (row) => {
                     router.push(
-                      `/transactions/agent-transaction/view?id=${row?.agentId}&date=${row?.date}`
+                      `/${getUrl(router.pathname, 2)}/view?id=${row?.agentId}&date=${row?.date}`
                     );
                   },
                 },
@@ -126,7 +132,7 @@ export const AgentTransactionList = () => {
         columns={columns}
         rowOnClick={(row) =>
           router.push(
-            `/transactions/agent-transaction/view?id=${row?.node?.agentId}&date=${row?.node?.date}`
+            `/${getUrl(router.pathname, 2)}/view?id=${row?.node?.agentId}&date=${row?.node?.date}`
           )
         }
         noDataTitle="Market Representative Transaction"
