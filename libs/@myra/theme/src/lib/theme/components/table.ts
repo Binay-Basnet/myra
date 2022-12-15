@@ -235,7 +235,7 @@ const baseStyle = definePartsStyle({
     overflow: 'hidden',
   },
   th: {
-    minWidth: '150px',
+    minWidth: '100px',
     fontFamily: 'heading',
     fontWeight: '600',
     textTransform: 'capitalize',
@@ -243,7 +243,7 @@ const baseStyle = definePartsStyle({
     textAlign: 'start',
   },
   td: {
-    minWidth: '150px',
+    minWidth: '100px',
     textOverflow: 'hidden',
     textAlign: 'start',
     transition: 'height 0.2s ease',
@@ -279,6 +279,9 @@ const variantSimple = definePartsStyle((props) => {
       color: mode('gray.600', 'gray.100')(props),
     },
     tfoot: {
+      th: {
+        fontSize: 's3',
+      },
       tr: {
         '&:last-of-type': {
           th: { borderBottomWidth: 0 },
@@ -314,7 +317,7 @@ const variantReport = definePartsStyle((props) => {
       },
     },
     th: {
-      bg: 'gray.100',
+      bg: 'highlight.500',
       border: '1px',
       borderRightWidth: '1px',
       borderTopWidth: '0px',
@@ -328,6 +331,9 @@ const variantReport = definePartsStyle((props) => {
       ...numericStyles,
     },
     td: {
+      // // TODO! Experiment
+      // maxWidth: '250px',
+
       border: '1px',
       borderColor: mode(`border.layout`, `${c}.700`)(props),
       borderRightWidth: '1px',
@@ -357,13 +363,13 @@ const sizes = {
   reportCompact: definePartsStyle({
     th: {
       px: 's8',
-      lineHeight: '15px',
+      lineHeight: '125%',
       fontSize: 's2',
       height: '24px',
     },
     td: {
       px: 's8',
-      lineHeight: '24px',
+      lineHeight: '125%',
       fontSize: 's2',
       height: '26px',
     },
@@ -371,14 +377,14 @@ const sizes = {
   report: definePartsStyle({
     th: {
       px: 's16',
-      lineHeight: '15px',
-      fontSize: 's2',
+      lineHeight: '125%',
+      fontSize: 's3',
       height: '35px',
     },
     td: {
       px: 's16',
-      lineHeight: '24px',
-      fontSize: 's2',
+      lineHeight: '125%',
+      fontSize: 's3',
       height: '35px',
     },
   }),
@@ -387,13 +393,13 @@ const sizes = {
   compact: definePartsStyle({
     th: {
       px: 's16',
-      lineHeight: '5',
+      lineHeight: '125%',
       fontSize: 's3',
       height: '50px',
     },
     td: {
       px: 's16',
-      lineHeight: '5',
+      lineHeight: '125%',
       fontSize: 's3',
       height: '50px',
     },
@@ -401,13 +407,13 @@ const sizes = {
   default: definePartsStyle({
     th: {
       px: 's16',
-      lineHeight: '4',
+      lineHeight: '125%',
       fontSize: 's3',
       height: '50px',
     },
     td: {
       px: 's16',
-      lineHeight: '4',
+      lineHeight: '125%',
       fontSize: 's3',
       height: '60px',
     },

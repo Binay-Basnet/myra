@@ -28,6 +28,7 @@ export const LoanPaymentScheduleTable = ({
         footer: 'Total Cost of Loan',
         accessorKey: 'installmentNo',
         meta: {
+          width: '50px',
           Footer: {
             colspan: 2,
           },
@@ -70,9 +71,6 @@ export const LoanPaymentScheduleTable = ({
 
         meta: {
           isNumeric: true,
-          Footer: {
-            display: 'none',
-          },
         },
       },
 
@@ -81,7 +79,7 @@ export const LoanPaymentScheduleTable = ({
 
         accessorKey: 'remainingPrincipal',
         cell: (props) => amountConverter(props.getValue() as string),
-        footer: () => amountConverter(total),
+        footer: () => amountConverter(total) || '-',
 
         meta: {
           isNumeric: true,
@@ -90,6 +88,7 @@ export const LoanPaymentScheduleTable = ({
       {
         header: 'Status',
         accessorKey: 'paid',
+
         cell: (props) => {
           const installmentNo = props?.row?.original?.installmentNo;
           const value = props.getValue();
@@ -97,7 +96,7 @@ export const LoanPaymentScheduleTable = ({
           return (
             <Text
               textAlign="center"
-              fontSize="r1"
+              fontSize="s3"
               fontWeight="500"
               color={
                 installmentNo === nextInstallmentNumber
@@ -122,6 +121,6 @@ export const LoanPaymentScheduleTable = ({
     [nextInstallmentNumber, total]
   );
   return (
-    <Table size="small" variant="report" isStatic showFooter data={data ?? []} columns={columns} />
+    <Table size="report" variant="report" isStatic showFooter data={data ?? []} columns={columns} />
   );
 };

@@ -69,7 +69,7 @@ const TableExpanded = ({
         justifyContent="center"
         borderRadius="br1"
         bg={isExpanded ? 'transparent' : 'gray.200'}
-        _hover={{ bg: !isExpanded ? 'gray.100' : 'gray.200' }}
+        _hover={{ bg: isExpanded ? 'gray.100' : 'gray.200' }}
         h="s20"
         w="s20"
       >
@@ -78,7 +78,7 @@ const TableExpanded = ({
           cursor="pointer"
           size="sm"
           transition="all 0.1s ease"
-          transform={isExpanded ? 'rotate(90deg)' : 'rotate(0deg)'}
+          transform={!isExpanded ? 'rotate(90deg)' : 'rotate(0deg)'}
           as={BiChevronRight}
         />
       </Box>

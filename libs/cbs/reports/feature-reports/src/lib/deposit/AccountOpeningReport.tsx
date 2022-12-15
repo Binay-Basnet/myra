@@ -27,12 +27,13 @@ export const AccountOpenReport = () => {
     },
     { enabled: !!filters }
   );
+
   const accountOpeningReport = data?.report?.depositReport?.accountOpeningReport?.data;
   const userList = userListData?.settings?.myraUser?.list?.edges;
 
   return (
     <Report
-      defaultFilters={null}
+      defaultFilters={{}}
       data={accountOpeningReport as AccountOpeningReport[]}
       filters={filters}
       setFilters={setFilters}

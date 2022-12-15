@@ -65,7 +65,7 @@ export const LoanPaymentScheduleTable = ({
               {props.getValue() as string}
             </Text>
           ) : (
-            'N/A'
+            '-'
           ),
         meta: {
           isNumeric: true,
@@ -75,5 +75,7 @@ export const LoanPaymentScheduleTable = ({
     []
   );
 
-  return <Table isStatic showFooter data={data ?? []} columns={columns} />;
+  return (
+    <Table variant="report" size="report" isStatic showFooter data={data ?? []} columns={columns} />
+  );
 };
