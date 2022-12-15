@@ -261,6 +261,7 @@ const variantSimple = definePartsStyle((props) => {
 
   return {
     th: {
+      bg: 'white',
       color: mode('gray.800', 'gray.400')(props),
       borderBottom: '1px',
       borderColor: mode(`border.layout`, `${c}.700`)(props),
@@ -271,7 +272,7 @@ const variantSimple = definePartsStyle((props) => {
     td: {
       color: mode('gray.800', 'gray.400')(props),
       borderBottom: '1px',
-      borderColor: mode(`${c}.100`, `${c}.700`)(props),
+      borderColor: mode('border.layout', `${c}.700`)(props),
       maxWidth: '300px',
       ...numericStyles,
     },

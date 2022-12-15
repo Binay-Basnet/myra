@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Column, Table } from '@myra-ui/table';
 
+import { amountConverter } from '@coop/shared/utils';
+
 interface ILoanPaymentScheduleTableProps {
   data:
     | {
@@ -27,7 +29,7 @@ export const ShareTableComponent = ({ data }: ILoanPaymentScheduleTableProps) =>
         header: 'Type',
         accessorKey: 'type',
         meta: {
-          width: '50%',
+          width: '25%',
         },
       },
       {
@@ -37,14 +39,17 @@ export const ShareTableComponent = ({ data }: ILoanPaymentScheduleTableProps) =>
       {
         header: 'Share Cr',
         accessorKey: 'shareCr',
+        cell: (props) => amountConverter(props.getValue() as string),
       },
       {
         header: 'Share Dr',
         accessorKey: 'shareDr',
+        cell: (props) => amountConverter(props.getValue() as string),
       },
       {
         header: 'Balance',
         accessorKey: 'balance',
+        cell: (props) => amountConverter(props.getValue() as string),
       },
     ],
     []

@@ -31,7 +31,7 @@ export const RecentTransactions = () => {
       {
         header: 'Date',
         accessorKey: 'date',
-        cell: (props) => (props.getValue() ? `${props.getValue()}  %` : 'N/A'),
+        cell: (props) => (props.getValue() ? `${props.getValue()}` : 'N/A'),
       },
       {
         header: 'Transaction ID',
