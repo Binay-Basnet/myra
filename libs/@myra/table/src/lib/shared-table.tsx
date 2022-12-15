@@ -214,7 +214,6 @@ export const Table = <T extends Record<string, unknown>>({
                     position={index === 0 ? 'sticky' : 'static'}
                     top={0}
                     left={0}
-
                   >
                     <Text
                       as="div"
@@ -233,24 +232,28 @@ export const Table = <T extends Record<string, unknown>>({
 
           {showFooter && (
             <Tfoot>
-              {table.getFooterGroups().map((footerGroup) => (
-                <Tr key={footerGroup.id}>
-                  {footerGroup.headers.map((footer) =>
-                    footer.column.columnDef.meta?.Footer?.display === 'none' ? null : (
-                      <Th
-                        key={footer.id}
-                        isNumeric={footer.column.columnDef.meta?.isNumeric}
-                        width={footer.column.columnDef.meta?.width}
-                        colSpan={footer.column.columnDef.meta?.Footer?.colspan}
-                      >
-                        {footer.isPlaceholder
-                          ? null
-                          : flexRender(footer.column.columnDef.footer, footer.getContext())}
-                      </Th>
-                    )
-                  )}
-                </Tr>
-              ))}
+              {table.getFooterGroups().map((footerGroup, index) => {
+                if (index !== 0) return null;
+
+                return (
+                  <Tr key={footerGroup.id}>
+                    {footerGroup.headers.map((footer) =>
+                      footer.column.columnDef.meta?.Footer?.display === 'none' ? null : (
+                        <Th
+                          key={footer.id}
+                          isNumeric={footer.column.columnDef.meta?.isNumeric}
+                          width={footer.column.columnDef.meta?.width}
+                          colSpan={footer.column.columnDef.meta?.Footer?.colspan}
+                        >
+                          {footer.isPlaceholder
+                            ? null
+                            : flexRender(footer.column.columnDef.footer, footer.getContext())}
+                        </Th>
+                      )
+                    )}
+                  </Tr>
+                );
+              })}
             </Tfoot>
           )}
         </ChakraTable>

@@ -1,5 +1,3 @@
-
-
 import { tableAnatomy as parts } from '@chakra-ui/anatomy';
 import { createMultiStyleConfigHelpers, defineStyle } from '@chakra-ui/styled-system';
 import { mode } from '@chakra-ui/theme-tools';
@@ -188,6 +186,11 @@ const sizes = {
       lineHeight: '125%',
       fontSize: 's3',
       height: '35px',
+    },
+    tfoot: {
+      th: {
+        minH: '35px',
+      },
     },
   }),
 
