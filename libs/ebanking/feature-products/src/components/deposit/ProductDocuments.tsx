@@ -1,9 +1,10 @@
+import { Box, DetailsCard, Text } from '@myra-ui';
+
 import {
   IndividualRequiredDocument,
   InstitutionRequiredDocument,
   Maybe,
 } from '@coop/ebanking/data-access';
-import { Box, DetailsCard, Text } from '@myra-ui';
 
 interface IProductDocuments {
   individualDocuments: Maybe<Maybe<IndividualRequiredDocument>[]> | undefined;
@@ -26,7 +27,7 @@ export const ProductDocuments = ({
           </Text>
           <Box ml="s20" as="ul">
             {individualDocuments?.map((document) => (
-              <li>{document?.toLowerCase()}</li>
+              <li>{document?.toLowerCase()?.replace(/_/g, ' ')}</li>
             ))}
           </Box>
         </Box>
@@ -39,7 +40,7 @@ export const ProductDocuments = ({
           </Text>
           <Box ml="s20" as="ul">
             {institutionDocuments?.map((document) => (
-              <li>{document?.toLowerCase()}</li>
+              <li>{document?.toLowerCase()?.replace(/_/g, ' ')}</li>
             ))}
           </Box>
         </Box>

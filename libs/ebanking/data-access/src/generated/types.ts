@@ -277,6 +277,11 @@ export type Coordinate = {
   longitude?: Maybe<Scalars['Float']>;
 };
 
+export type CoordinateInput = {
+  latitude?: InputMaybe<Scalars['Float']>;
+  longitude?: InputMaybe<Scalars['Float']>;
+};
+
 export enum CriteriaSection {
   Age = 'AGE',
   CooperativeType = 'COOPERATIVE_TYPE',
@@ -835,6 +840,7 @@ export type EBankingMutation = {
   account?: Maybe<EBankingAccountMutation>;
   auth?: Maybe<EBankingAuthMutation>;
   cooperativeServices?: Maybe<EBankingCooperativeServiceMutation>;
+  membershipRequest?: Maybe<MembershipRequestMutation>;
   utilityPayment: UtilityPayemntMutation;
   webUtilityPayments?: Maybe<EbankingWebUtilityPaymentsMutation>;
 };
@@ -1260,6 +1266,12 @@ export enum FrequencyTenure {
   Year = 'YEAR',
 }
 
+export type GenderOption = {
+  id?: Maybe<Scalars['String']>;
+  nameEn?: Maybe<Scalars['String']>;
+  nameNp?: Maybe<Scalars['String']>;
+};
+
 export enum Id_Type {
   Account = 'ACCOUNT',
   Address = 'ADDRESS',
@@ -1377,6 +1389,16 @@ export type KymAddress = {
   locality?: Maybe<Scalars['Localized']>;
   provinceId?: Maybe<Scalars['Int']>;
   wardNo?: Maybe<Scalars['Int']>;
+};
+
+export type KymAddressInput = {
+  coordinates?: InputMaybe<CoordinateInput>;
+  districtId?: InputMaybe<Scalars['Int']>;
+  houseNo?: InputMaybe<Scalars['String']>;
+  localGovernmentId?: InputMaybe<Scalars['Int']>;
+  locality?: InputMaybe<Scalars['String']>;
+  provinceId?: InputMaybe<Scalars['Int']>;
+  wardNo?: InputMaybe<Scalars['Int']>;
 };
 
 export enum KymMemberTypesEnum {
@@ -1575,6 +1597,32 @@ export type MeMyraUserResult = {
 export type MemberFamilyDetails = {
   name?: Maybe<Scalars['Localized']>;
   relationship?: Maybe<Scalars['Localized']>;
+};
+
+export type MembershipRequestInput = {
+  dateOfBirth?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']>;
+  gender?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']>;
+  middleName?: InputMaybe<Scalars['String']>;
+  mobileNumber?: InputMaybe<Scalars['String']>;
+  permanentAddress?: InputMaybe<KymAddressInput>;
+  phoneNumber?: InputMaybe<Scalars['String']>;
+};
+
+export type MembershipRequestMutation = {
+  new?: Maybe<MembershipRequestResult>;
+};
+
+export type MembershipRequestMutationNewArgs = {
+  cooperativeId: Scalars['String'];
+  data?: InputMaybe<MembershipRequestInput>;
+};
+
+export type MembershipRequestResult = {
+  error?: Maybe<MutationError>;
+  recordId?: Maybe<Scalars['String']>;
 };
 
 export type MonthlyTransactions = {
@@ -1879,6 +1927,11 @@ export enum PurposeOfTransaction {
 export type Query = {
   administration: AdministrationQuery;
   eBanking: EBankingQuery;
+  genderOptions: Array<Maybe<GenderOption>>;
+};
+
+export type QueryGenderOptionsArgs = {
+  cooperativeId: Scalars['String'];
 };
 
 export type QueryError = AuthorizationError | BadRequestError | NotFoundError | ServerError;
