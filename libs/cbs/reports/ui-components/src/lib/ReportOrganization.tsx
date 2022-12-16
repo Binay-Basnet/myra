@@ -11,7 +11,6 @@ export const ReportOrganization = () => {
   const user = useAppSelector((state) => state.auth.user);
 
   const period = watch('period') as LocalizedDateFilter;
-  console.log(period);
 
   return (
     <Box

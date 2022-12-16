@@ -1,8 +1,7 @@
-import dayjs from 'dayjs';
+import { Box, Grid, GridItem, Text } from '@myra-ui';
 
 import { LoanAccReportDetails, Member, useAppSelector } from '@coop/cbs/data-access';
 import { formatAddress, localizedDate } from '@coop/cbs/utils';
-import { Box, Grid, GridItem, Text } from '@myra-ui';
 import { amountConverter } from '@coop/shared/utils';
 
 interface ReportMemberProps {
