@@ -3579,6 +3579,32 @@ export type ResetPasswordMutation = {
   };
 };
 
+export type MembershipRequestMutationVariables = Exact<{
+  cooperativeId: Scalars['String'];
+  data?: InputMaybe<MembershipRequestInput>;
+}>;
+
+export type MembershipRequestMutation = {
+  eBanking: {
+    membershipRequest?: {
+      new?: {
+        recordId?: string | null;
+        error?:
+          | { __typename: 'AuthorizationError'; code: number; authorizationErrorMsg: string }
+          | { __typename: 'BadRequestError'; code: number; badRequestErrorMessage: string }
+          | { __typename: 'NotFoundError'; code: number; notFoundErrorMsg: string }
+          | { __typename: 'ServerError'; code: number; serverErrorMessage: string }
+          | {
+              __typename: 'ValidationError';
+              code: number;
+              validationErrorMsg: Record<string, Array<string>>;
+            }
+          | null;
+      } | null;
+    } | null;
+  };
+};
+
 export type GetMyraMeQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetMyraMeQuery = {
@@ -3612,4 +3638,16 @@ export type GetCoopListQuery = {
       localGovernmentId?: string | null;
     } | null> | null;
   };
+};
+
+export type GetKymGenderQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+export type GetKymGenderQuery = {
+  genderOptions: Array<{
+    id?: string | null;
+    nameEn?: string | null;
+    nameNp?: string | null;
+  } | null>;
 };

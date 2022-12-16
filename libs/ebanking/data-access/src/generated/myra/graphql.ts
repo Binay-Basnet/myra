@@ -370,6 +370,40 @@ export const useResetPasswordMutation = <TError = unknown, TContext = unknown>(
     ),
     options
   );
+export const MembershipRequestDocument = `
+    mutation membershipRequest($cooperativeId: String!, $data: MembershipRequestInput) {
+  eBanking {
+    membershipRequest {
+      new(data: $data, cooperativeId: $cooperativeId) {
+        error {
+          ...MutationError
+        }
+        recordId
+      }
+    }
+  }
+}
+    ${MutationErrorFragmentDoc}`;
+export const useMembershipRequestMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    Types.MembershipRequestMutation,
+    TError,
+    Types.MembershipRequestMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    Types.MembershipRequestMutation,
+    TError,
+    Types.MembershipRequestMutationVariables,
+    TContext
+  >(
+    ['membershipRequest'],
+    useAxios<Types.MembershipRequestMutation, Types.MembershipRequestMutationVariables>(
+      MembershipRequestDocument
+    ),
+    options
+  );
 export const GetMyraMeDocument = `
     query getMyraMe {
   eBanking {
@@ -422,6 +456,27 @@ export const useGetCoopListQuery = <TData = Types.GetCoopListQuery, TError = unk
   useQuery<Types.GetCoopListQuery, TError, TData>(
     variables === undefined ? ['getCoopList'] : ['getCoopList', variables],
     useAxios<Types.GetCoopListQuery, Types.GetCoopListQueryVariables>(GetCoopListDocument).bind(
+      null,
+      variables
+    ),
+    options
+  );
+export const GetKymGenderDocument = `
+    query getKYMGender($id: String!) {
+  genderOptions(cooperativeId: $id) {
+    id
+    nameEn
+    nameNp
+  }
+}
+    `;
+export const useGetKymGenderQuery = <TData = Types.GetKymGenderQuery, TError = unknown>(
+  variables: Types.GetKymGenderQueryVariables,
+  options?: UseQueryOptions<Types.GetKymGenderQuery, TError, TData>
+) =>
+  useQuery<Types.GetKymGenderQuery, TError, TData>(
+    ['getKYMGender', variables],
+    useAxios<Types.GetKymGenderQuery, Types.GetKymGenderQueryVariables>(GetKymGenderDocument).bind(
       null,
       variables
     ),

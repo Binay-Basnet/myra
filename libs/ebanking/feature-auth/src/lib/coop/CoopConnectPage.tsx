@@ -113,15 +113,27 @@ export const CoopConnectPage = () => {
                 ))}
               </Box>
 
-              <Button
-                variant="outline"
-                width="100%"
-                onClick={() => {
-                  router.push('/setup/connect');
-                }}
-              >
-                Connect to an existing COOP
-              </Button>
+              <Box display="flex" flexDir="column" gap="s16" w="100%">
+                <Button
+                  variant="outline"
+                  width="100%"
+                  onClick={() => {
+                    router.push('/setup/connect');
+                  }}
+                >
+                  Connect to an existing COOP
+                </Button>
+
+                <Button
+                  variant="outline"
+                  width="100%"
+                  onClick={() => {
+                    router.push('/setup/apply');
+                  }}
+                >
+                  Apply for COOP membership
+                </Button>
+              </Box>
             </>
           );
         }
