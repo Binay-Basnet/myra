@@ -83,6 +83,20 @@ export const COAFullView = () => {
     [coaIncomeFullView.length, isFetching]
   );
 
+  const coaOffBalanceSheetFullView = useMemo(
+    () =>
+      fullView?.settings?.chartsOfAccount?.fullView.data
+        ?.filter((account) => account?.accountClass === 'OFF_BALANCE_SHEET')
+        .sort((a, b) => (String(a?.accountCode) > String(b?.accountCode) ? 1 : -1)) ?? [],
+
+    [isFetching]
+  );
+
+  const coaOffBalanceSheetFullTree = useMemo(
+    () => arrayToTreeCOA(coaOffBalanceSheetFullView as CoaView[]),
+    [coaOffBalanceSheetFullView.length, isFetching]
+  );
+
   return (
     <Box p="10px" display="flex" flexDirection="column" justifyContent="space-between">
       <Accordion allowMultiple allowToggle mb="0" border="none">
@@ -117,6 +131,10 @@ export const COAFullView = () => {
                     ))}
                   {memberType.name.toLowerCase() === 'income' &&
                     coaIncomeTree.map((account) => (
+                      <Tree current={account} data={account.children} />
+                    ))}
+                  {memberType.name.toLowerCase() === 'off balance sheet' &&
+                    coaOffBalanceSheetFullTree.map((account) => (
                       <Tree current={account} data={account.children} />
                     ))}
                 </AccordionPanel>
