@@ -28,3 +28,11 @@ query getCoopList {
     }
   }
 }
+
+query getKYMGender($id: String!) {
+  genderOptions(cooperativeId: $id) {
+    id
+    nameEn
+    nameNp
+  }
+}

@@ -13,6 +13,7 @@ import { Report } from '@coop/cbs/reports';
 import { ReportDateRange } from '@coop/cbs/reports/components';
 import { Report as ReportEnum } from '@coop/cbs/reports/list';
 import { FormBranchSelect, FormSelect } from '@coop/shared/form';
+import { amountConverter } from '@coop/shared/utils';
 
 export const AccountCloseReport = () => {
   const [filters, setFilters] = useState<AccountClosingReportInput | null>(null);
@@ -81,7 +82,7 @@ export const AccountCloseReport = () => {
                 header: 'Account Name',
                 accessorKey: 'accountName',
                 meta: {
-                  width: '70%',
+                  width: '50%',
                 },
               },
               {
@@ -99,6 +100,10 @@ export const AccountCloseReport = () => {
               {
                 header: 'Closed Balance',
                 accessorKey: 'closedBalance',
+                cell: (props) => amountConverter(props.getValue() as string),
+                meta: {
+                  isNumeric: true,
+                },
               },
               {
                 header: 'Account Closed By User',
