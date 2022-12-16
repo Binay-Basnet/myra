@@ -66,7 +66,7 @@ export const LoanStatementReport = () => {
                 meta: {
                   width: '60px',
                   Footer: {
-                    colspan: 3,
+                    colspan: 4,
                   },
                 },
               },
