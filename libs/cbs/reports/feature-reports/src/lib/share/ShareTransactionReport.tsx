@@ -29,8 +29,8 @@ type Filter = {
   branchId: string;
   period: LocalizedDateFilter;
   filter: {
-    gender?: { label: string; value: string }[];
-    eductaion?: { label: string; value: string }[];
+    gender?: string[];
+    eductaion?: string[];
     occupation?: { label: string; value: string }[];
     districtId?: { label: string; value: number }[];
     localGovernmentId?: { label: string; value: number }[];
@@ -45,15 +45,9 @@ export const ShareTransactionsReport = () => {
     filters?.filter?.occupation && filters?.filter?.occupation?.length !== 0
       ? filters?.filter?.occupation?.map((occ) => occ.value)
       : null;
-  const educationIds =
-    filters?.filter?.eductaion && filters?.filter?.eductaion?.length !== 0
-      ? filters?.filter?.eductaion?.map((edu) => edu.value)
-      : null;
+  const educationIds = filters?.filter?.eductaion ?? null;
 
-  const genderIds =
-    filters?.filter?.gender && filters?.filter?.gender?.length !== 0
-      ? filters?.filter?.gender?.map((gen) => gen.value)
-      : null;
+  const genderIds = filters?.filter?.gender ?? null;
   const provinceIDs =
     filters?.filter?.provinceId && filters?.filter?.provinceId?.length !== 0
       ? filters?.filter?.provinceId?.map((province) => province.value)
@@ -107,16 +101,15 @@ export const ShareTransactionsReport = () => {
     searchTerm: FormFieldSearchTerm.Occupation,
   });
 
-  const genderOptions =
-    genderFields?.form?.options?.predefined?.data?.map((g) => ({
-      label: String(g?.name?.local),
-      value: g?.id as string,
-    })) || [];
-  const educationOptions =
-    educationFields?.form?.options?.predefined?.data?.map((g) => ({
-      label: String(g?.name?.local),
-      value: g?.id as string,
-    })) || [];
+  const genderOptions = genderFields?.form?.options?.predefined?.data?.map((g) => ({
+    label: String(g?.name?.local),
+    value: g?.id as string,
+  }));
+
+  const educationOptions = educationFields?.form?.options?.predefined?.data?.map((g) => ({
+    label: String(g?.name?.local),
+    value: g?.id as string,
+  }));
   const occupationOptions =
     occupationData?.form?.options?.predefined?.data?.map((g) => ({
       label: String(g?.name?.local),
