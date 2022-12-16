@@ -2839,38 +2839,6 @@ export type GetCollectorListEbankingQuery = {
   };
 };
 
-export type GetBranchListEbankingQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetBranchListEbankingQuery = {
-  eBanking: {
-    cooperativeServices?: {
-      cheque?: {
-        branchList?: {
-          data?: Array<{
-            id?: string | null;
-            branchCode?: string | null;
-            name?: string | null;
-          } | null> | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
-
-export type GetCollectorListEbankingQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetCollectorListEbankingQuery = {
-  eBanking: {
-    cooperativeServices?: {
-      cheque?: {
-        collectors?: {
-          data?: Array<{ id?: string | null; name?: string | null } | null> | null;
-        } | null;
-      } | null;
-    } | null;
-  };
-};
-
 export type GetLoanHistoryQueryVariables = Exact<{
   memberId: Scalars['ID'];
   filter?: InputMaybe<EBankingCooperativeServiceFilter>;
