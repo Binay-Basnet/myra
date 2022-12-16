@@ -12,8 +12,6 @@ import {
 } from '@coop/cbs/data-access';
 
 import {
-  BioCoop,
-  BioCoopUnion,
   BioInstitution,
   MemberAddressInfo,
   MemberBasicInfo,
@@ -157,8 +155,8 @@ export const Bio = () => {
         </Box>
       )}
       {memberBasicInstitution && <BioInstitution />}
-      {memberBasicCooperative && <BioCoop />}
-      {memberBasicCooperativeUnion && <BioCoopUnion />}
+      {/* {memberBasicCooperative && <BioCoop />} */}
+      {/* {memberBasicCooperativeUnion && <BioCoopUnion />} */}
     </>
   );
 };
