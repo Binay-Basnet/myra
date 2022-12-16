@@ -52,7 +52,7 @@
     "leaflet-control-geocoder": "^2.4.0",
     "leaflet-defaulticon-compatibility": "^0.1.1",
     "leaflet-geosearch": "^3.6.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "lottie-react": "^2.3.1",
     "nepali-date-converter": "^3.3.1",
     "next": "13.0.0",
