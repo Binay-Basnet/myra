@@ -30,7 +30,7 @@ type Filter = {
   period: LocalizedDateFilter;
   filter: {
     gender?: string[];
-    eductaion?: string[];
+    education?: string[];
     occupation?: { label: string; value: string }[];
     districtId?: { label: string; value: number }[];
     localGovernmentId?: { label: string; value: number }[];
@@ -45,9 +45,10 @@ export const ShareTransactionsReport = () => {
     filters?.filter?.occupation && filters?.filter?.occupation?.length !== 0
       ? filters?.filter?.occupation?.map((occ) => occ.value)
       : null;
-  const educationIds = filters?.filter?.eductaion ?? null;
+  const educationIds = filters?.filter?.education ?? null;
 
   const genderIds = filters?.filter?.gender ?? null;
+
   const provinceIDs =
     filters?.filter?.provinceId && filters?.filter?.provinceId?.length !== 0
       ? filters?.filter?.provinceId?.map((province) => province.value)
