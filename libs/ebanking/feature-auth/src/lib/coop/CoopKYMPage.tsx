@@ -9,7 +9,7 @@ import { InfoCard } from '@coop/ebanking/cards';
 import {
   useGetCoopListQuery,
   useGetKymGenderQuery,
-  useMembershipRequestMutation,
+  useNewMembershipRequestMutation,
 } from '@coop/ebanking/data-access';
 import { FormAddress, FormInput, FormSelect } from '@coop/shared/form';
 
@@ -19,7 +19,7 @@ export const CoopKYMPage = () => {
   const id = router.query['id'] as string;
 
   const { data: genderOptionsData } = useGetKymGenderQuery({ id }, { enabled: !!id });
-  const { mutateAsync: requestMember } = useMembershipRequestMutation();
+  const { mutateAsync: requestMember } = useNewMembershipRequestMutation();
   const { data: coopListData } = useGetCoopListQuery();
 
   const selectedCoop = coopListData?.eBanking?.neosysClientsList?.find((coop) => coop?.id === id);

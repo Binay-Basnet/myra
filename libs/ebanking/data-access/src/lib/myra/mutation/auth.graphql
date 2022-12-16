@@ -165,10 +165,10 @@ mutation resetPassword($mobileNo: String!, $newPassword: String!) {
   }
 }
 
-mutation membershipRequest($cooperativeId: String!, $data:  MembershipRequestInput){
+mutation newMembershipRequest($cooperativeId: String!, $data: MembershipRequestInput) {
   eBanking {
     membershipRequest {
-      new(data: $data, cooperativeId: $cooperativeId){
+      new(data: $data, cooperativeId: $cooperativeId) {
         error {
           ...MutationError
         }

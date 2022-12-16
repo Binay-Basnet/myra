@@ -6,7 +6,7 @@ export {
   useGetKymGenderQuery,
   useGetMyraMeQuery,
   useLoginToCooperativeMutation,
-  useMembershipRequestMutation,
+  useNewMembershipRequestMutation,
   useResendOtpMutation,
   useResetPasswordMutation,
   useSetNewPinMutation,
